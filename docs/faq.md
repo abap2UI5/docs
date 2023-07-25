@@ -1,3 +1,5 @@
+# FAQ
+
 ## Client & UI
 
 #### **1. How to read URL parameters?**
