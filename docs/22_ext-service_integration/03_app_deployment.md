@@ -6,7 +6,7 @@
 <br>
 <img width="350" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/6bc46022-045b-48da-9ac6-7fff49de87e6">
 
-2. Create a new UI5 app (or Import the branch ui5_app)
+2. Create a new UI5 app (or Import the branch [ui5_app](https://github.com/abap2UI5/ext-service_integration/tree/ui5_app))
 
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/9b3ba6b7-742b-48ec-a165-03d7143ee61d">
 
@@ -19,30 +19,22 @@ Add to the controller the following onAfterRendering method:
 
 <br>
 
-3. Deploy your App to SAP BTP (or to your ABAP system)
-
-npx fiori add deploy-config
-And choose your target:
+3. Deploy your App to SAP BTP (or to your ABAP system) <br>
+Command "npx fiori add deploy-config" and choose your target:
 <img width="500" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/ffea36b0-b311-48d6-8e96-725262023662">
-And destination:
+<br> And destination: <br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/8f4af03c-eeba-4de8-a941-2403905147ec">
-for use in sap workzone launchapad choose Add application to managed application router (yes):
+<br> For use in sap workzone launchapad choose: Add application to managed application router (yes): <br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/c4d43c4b-e39b-40ce-9d3c-979dd9fc887e">
-
-
-Next add launchpad configuration:
-npx fiori add flp-config
-
+<br>Next add launchpad configuration with command "npx fiori add flp-config": <br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/41d8dbf7-ea60-4d62-bd1b-a9f3e3c1519d">
-
-npm run build:mta
+<br> And build the app with command "npm run build:mta": <br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/d426a249-951d-4a9f-bb2c-68becee41c5f">
-
-npm run deploy
+<br> Now you can deploy the app with command "npm run deploy": <br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/5518073e-46a3-4e73-92d5-4509815a7563">
-
-Check 
+<br> And check: <br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/06231cea-19f5-42aa-ae8b-33146c30e639">
 <br><br>
-It is now running on BTP with odata connection to the abap2UI5 apps in the backend:
-![image](https://github.com/abap2UI5/ext-service_integration/assets/102328295/224f0942-f28a-4e3b-b7cc-c3cacf33c5ba)
+It is now running on BTP with odata connection to the abap2UI5 apps in the backend: <br>
+<img width="1320" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/5c623492-278e-4a78-8d4b-746e1b66b976">
+
