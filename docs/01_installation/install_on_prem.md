@@ -10,5 +10,5 @@ Press "create online repository" and you can see this: <br>
 Next press "pull" and overwrite all artifacts: <br>
 <img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/8a0a8187-bd4c-45d8-bfea-b9f523e1435c"><br> <br>
 Now the installtion is finished:<br>
-<img width="1315" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/861befda-6238-4bc7-9387-bb4bdb4abb64"><br><br>
+<img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/861befda-6238-4bc7-9387-bb4bdb4abb64"><br><br>
 You can continue with creating an http service.
