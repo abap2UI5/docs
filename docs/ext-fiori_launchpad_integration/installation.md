@@ -8,7 +8,7 @@ If errors pop up, activate anyway:<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/ce33cdc1-57a8-4e64-af8d-d5cc8135c137"><br>
 Sometimes there are small diffs with the ICF handler (this is no problem):<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/743f836e-7926-46ed-9b01-38c5efff5fbc"><br>
-
+<br>
 ### 2/4 Check the OData Service
 Go to transaction SICF:<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/62cd37d7-131c-4dcc-967f-6571a6dba5f7"><br>
@@ -16,7 +16,7 @@ Search for "2UI5" and check if there are three ICF Nodes and they are all activa
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/f280fedc-47fe-4133-b826-e28ad97796b1"><br>
 Next test the odata service (/sap/opu/odata/sap/z2ui5_odata_srv):<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/5546d3fc-886c-4f28-b814-20da96386bf6"><br>
-
+<br>
 ### 3/4 Create a new System Alias
 Sometimes this error occurs:<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/30ff5c7e-96da-4e42-9921-f599cdda90da"><br>
@@ -28,7 +28,7 @@ Now it should look similar to this:<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/30d5e299-2670-4c05-896c-df948919688c"><br>
 Test the service again and now it looks like this:<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/4e55d569-c662-4514-b054-3ba9f4fade33"><br>
-
+<br>
 ### 4/4 Check the UI5 Appp
 Go again to transaction SICF and search for "2UI5":<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/f280fedc-47fe-4133-b826-e28ad97796b1"><br>
