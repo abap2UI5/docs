@@ -29,7 +29,7 @@ Now it should look similar to this:<br>
 Test the service again and now it looks like this:<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/4e55d569-c662-4514-b054-3ba9f4fade33"><br>
 <br>
-### 4/4 Check the UI5 Appp
+### 4/4 Check the UI5 App
 Go again to transaction SICF and search for "2UI5":<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/f280fedc-47fe-4133-b826-e28ad97796b1"><br>
 Now start the UI5 app (/sap/bc/ui5_ui5/sap/zabap2ui5/index.html):<br>
