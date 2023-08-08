@@ -14,9 +14,9 @@
 
 ### Contribution
 * Create a Pull Request ([on-premise](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/pr_onprem) / [cloud](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/pr_cloud.md))
-* Open Tasks
-    - [Extend the View with a new Property](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/property.md)
-    - [Extend the View with a new Control](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/control.md)
+* Extensions
+    - [Add a new Property](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/property.md)
+    - [Add a new Control](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/control.md)
 
 ### Extension - SAP Fiori Launchpad Integration
 * [Installation](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/installation.md)
