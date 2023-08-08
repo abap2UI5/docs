@@ -23,5 +23,5 @@
 * [Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/launchpad_setup)
 
 ### FAQ
-Still open questions? Check out the [**FAQ**](https://github.com/abap2UI5/abap2UI5/blob/main/docs/faq.md)
+Still open questions? Check out the [FAQ](https://github.com/abap2UI5/abap2UI5/blob/main/docs/faq.md)
 
