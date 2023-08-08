@@ -13,12 +13,14 @@
 * [Debugging](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/02_development/debugging.md)
 
 ### Contribution
-* Find a bug or miss a feature?
-* Want to help out? <br>
-        * Create a Pull Request (on-premise / [cloud](https://github.com/abap2UI5/abap2UI5/blob/main/docs/contribution/how_to_pr.md))
+* Create a Pull Request ([on-premise](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/pr_onprem) / [cloud](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/pr_cloud.md))
+* Open Tasks
+    - [Extend the View with a new Property](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/property.md)
+    - [Extend the View with a new Control](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/control.md)
 
 ### Extension - SAP Fiori Launchpad Integration
-* Installation
+* [Installation](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/installation.md)
+* [Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/launchpad_setup)
 
 ### FAQ
 Still open questions? Check out the [**FAQ**](https://github.com/abap2UI5/abap2UI5/blob/main/docs/faq.md)
