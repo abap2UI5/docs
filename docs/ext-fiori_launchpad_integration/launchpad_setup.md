@@ -1,4 +1,7 @@
-Maintain the launchpad in your preferred way or check this guideline:<br>
+Maintain the launchpad with your installed abap2UI5 UI5 app. 
+<br>
+
+Use the following guideline:<br>
 [https://blogs.sap.com/2017/11/19/sap-fiori-ui5-app-configuration-in-sap-fiori-launchpad/](https://blogs.sap.com/2017/11/19/sap-fiori-ui5-app-configuration-in-sap-fiori-launchpad/)
 
 <br>
