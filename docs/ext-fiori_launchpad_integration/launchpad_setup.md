@@ -1,4 +1,4 @@
-Maintain the launchpad with your installed abap2UI5 UI5 app. 
+Maintain the launchpad with the newly installed abap2UI5 UI5 app. 
 <br>
 
 Use the following guideline:<br>
