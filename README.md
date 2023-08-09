@@ -24,10 +24,16 @@ _This project is open source and developed alongside other projects or during fr
     - [Add a new Control](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/control.md)
 
 ### Extension - SAP Fiori Launchpad Integration (On-Premise)
-_Integrate your abap2UI5 apps into Launchpads with this extension:_
+_Add your abap2UI5 apps to Launchpads with this extension:_
 * [Installation](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/installation.md)
 * [Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/launchpad_setup.md)
 
+### Extension - SAP Business Technology Platform
+_Integrate your abap2UI5 apps with SAP Business Technology Platform:_
+* Install an OData Service
+* [Deploy the UI5 Application](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/03_app_deployment.md)
+* [Build Workzone Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/04_build_workzone_configuration.md)
+* [Mobile Start Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/05_mobile_start_configuration.md)
 ### FAQ
 _Still have questions? Please refer to the [FAQ section](https://github.com/abap2UI5/abap2UI5/blob/main/docs/faq.md) for answers._
 
