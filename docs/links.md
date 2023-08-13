@@ -3,7 +3,7 @@
 * downport of abap2UI5 for NW 7.02 to NW 7.42 [(github/abap2UI5/abap2UI5-downport)](https://github.com/abap2UI5/abap2UI5-downport)
 
 #### Demos
-* Examples of how to create apps in abap2UI5 [(github/abap2UI5/demo-demos)](https://github.com/abap2UI5/demo-demos)
+* Examples of how to create apps in abap2UI5 [(github/abap2UI5/demo-demos)](https://github.com/abap2UI5/abap2UI5-samples)
 * Open-source project Mustache used with abap2UI5 [(github/abap2UI5/demo-mustache)](https://github.com/abap2UI5/demo-mustache)
 * SAP Developer Code Challenge using Axage with abap2UI5 [(scn/dev-challenge)](https://groups.community.sap.com/t5/application-development/sap-developer-challenge-open-source-abap-week-4/td-p/263470)
 
