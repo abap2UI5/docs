@@ -15,7 +15,7 @@ You can contribute in various ways: <br>
 Or feel free to develop something new - every [PR ](https://github.com/abap2UI5/abap2UI5/pulls) is welcome!
 
 ### How to create a PR
-See this guidelines [here.](https://github.com/abap2UI5/abap2UI5/blob/main/docs/how_to_contribute.md)
+See this guidelines [here.](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/pr_onprem.md)
 
 
 _Just try it out and create an issue if you run into problems!_
