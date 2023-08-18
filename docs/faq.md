@@ -1,5 +1,37 @@
 # FAQ
 
+## Setup
+#### **1. How to change the theme?**
+Change the initial Get call of abap2UI5 to:
+```abap
+DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value( 
+      (  n = `data-sap-ui-theme`         v = `sap_belize` ) "<- adjusted
+      (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-core.js` )
+      (  n = `data-sap-ui-libs`          v = `sap.m` )
+      (  n = `data-sap-ui-bindingSyntax` v = `complex` )
+      (  n = `data-sap-ui-frameOptions`  v = `trusted` )
+      (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
+
+DATA(lv_resp) = SWITCH #( request->get_method( )
+   WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( lt_config )
+   WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
+```
+#### **1. How to change the bootstrapping of UI5?**
+Change the initial get call of abap2UI5 to:
+```abap
+DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value( 
+      (  n = `data-sap-ui-theme`         v = `sap_belize` ) 
+      (  n = `src`                       v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) "<- adjusted ( for example to load from sap cdn)
+      (  n = `data-sap-ui-libs`          v = `sap.m` )
+      (  n = `data-sap-ui-bindingSyntax` v = `complex` )
+      (  n = `data-sap-ui-frameOptions`  v = `trusted` )
+      (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
+
+DATA(lv_resp) = SWITCH #( request->get_method( )
+   WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( lt_config )
+   WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
+```
+
 ## Client & UI
 
 #### **1. How to read URL parameters?**
@@ -26,7 +58,6 @@ client->timer_set(
       event_finished = client->_event_client( action = client->cs_event-open_new_tab t_arg = value #( ( `https://www.github.com/abap2UI5` )  )
 ) ).
 ```
-
 #### 5. **Which values can be send back via client->_event( t_arg = value # ( ( ... ?**
 Check the documentation [here.](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) There are different ways for adressing the event handler ($event, $source, $params) and you can select your value for example with /mProperties/property.<br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/6de59970-f766-46fd-a35a-933d26287564">
@@ -36,6 +67,7 @@ You can also call functions directly in the view as explained [here.](https://sa
 <br>
 #### 5. **How can I change the logon language?**
 Set the url parameter sap-language for this and check all other options [here.](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
+
 ## Productive Usage
 #### **1. Can abap2UI5 used in a productive system?**
 Yes, the project is technically just an implementation of an HTTP handler and can be used like any other HTTP Service in a productive scenario.
