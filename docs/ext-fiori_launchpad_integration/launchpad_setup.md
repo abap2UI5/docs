@@ -7,5 +7,10 @@ Use the following guideline:<br>
 
 Start a specific app by maintaining the starting parameter (app_start=appname).
 <br><br>
-Here you can see an example (replace "appid" with "app_start"):
-<img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/0d4176ca-b259-448c-ab01-a32b6447d8d4">
+
+Target Mapping:<br>
+<img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/a5052435-3ef5-4f3e-a65d-3877a6ba3526">
+
+Tile Configuration:<br>
+<img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/eabc669e-3755-42b4-9af9-0182d08036a0">
+
