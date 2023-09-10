@@ -68,6 +68,14 @@ You can also call functions directly in the view as explained [here.](https://sa
 #### 5. **How can I change the logon language?**
 Set the url parameter sap-language for this and check all other options [here.](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
 
+## Extension
+#### 1. **How can i call my own custom function?**
+Extend the initial HTTP Get call:<br>
+<img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/b671b89f-530b-4a35-98ba-e1a779fc0087"><br>
+And in your application, call the function in the view definition:<br>
+<img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/2f041184-a8c1-4d11-893a-ee6800b3214c">
+
+
 ## Productive Usage
 #### **1. Can abap2UI5 used in a productive system?**
 Yes, the project is technically just an implementation of an HTTP handler and can be used like any other HTTP Service in a productive scenario.
