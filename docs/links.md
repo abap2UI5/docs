@@ -1,6 +1,7 @@
 #### Repository
 * abap2UI5 [(github/abap2UI5/abap2UI5)](https://github.com/abap2UI5/abap2UI5)
 * downport of abap2UI5 for NW 7.02 to NW 7.42 [(github/abap2UI5/abap2UI5-downport)](https://github.com/abap2UI5/abap2UI5-downport)
+* samples of how to create apps in abap2UI5 [(github/abap2UI5/demo-demos)](https://github.com/abap2UI5/abap2UI5-samples)
 
 #### Extensions
 * Integrate your apps to the on-premise fiori laúnchpad [(abap2UI5/integration_fiori_launchpad)](https://github.com/abap2UI5/ext-fiori_launchpad_on_premise)
@@ -9,10 +10,6 @@
 #### Open Source 
 * Mustache & abap2UI5 [(github/abap2UI5/demo-mustache)](https://github.com/abap2UI5/demo-mustache)
 * open-abap & abap2UI5 [(abap2UI5-web)](https://github.com/larshp/abap2ui5-web)
-
-#### Demos & More
-* Samples of how to create apps in abap2UI5 [(github/abap2UI5/demo-demos)](https://github.com/abap2UI5/abap2UI5-samples)
-* SAP Developer Code Challenge using Axage with abap2UI5 [(scn/dev-challenge)](https://groups.community.sap.com/t5/application-development/sap-developer-challenge-open-source-abap-week-4/td-p/263470)
 
 #### Apps
 * [abap2UI5-tools](https://github.com/abap2UI5/app-tools) [(abap2UI5)](https://github.com/abap2UI5/ext-app_tools)  <br> A useful collection of tools & apps 
