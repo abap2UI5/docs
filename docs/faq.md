@@ -16,7 +16,7 @@ DATA(lv_resp) = SWITCH #( request->get_method( )
    WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( lt_config )
    WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
 ```
-#### **1. How to change the bootstrapping of UI5?**
+#### **2. How to change the bootstrapping of UI5?**
 Change the initial get call of abap2UI5 to:
 ```abap
 DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value( 
