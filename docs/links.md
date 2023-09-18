@@ -12,7 +12,7 @@
 * open-abap & abap2UI5 [(abap2UI5-web)](https://github.com/larshp/abap2ui5-web)
 
 #### Apps
-* [abap2UI5-tools](https://github.com/abap2UI5/app-tools) [(abap2UI5)](https://github.com/abap2UI5/ext-app_tools)  <br> A useful collection of tools & apps 
+* [abap2UI5-tools](https://github.com/abap2UI5/app-tools) [(abap2UI5)](https://github.com/abap2UI5/ext-app_tools)  <br> A collection of tools & utility functions 
 * [Axage](https://github.com/nomssi/axage/) [(nomssi)](https://github.com/nomssi)  <br>  A wizard's adventure game based on a fork of the [AXAGE game engine](https://github.com/Ennowulff/axage) (ABAP teXt Adventure Game Engine) by [ennowulff](https://github.com/Ennowulff)
 
 <br>
