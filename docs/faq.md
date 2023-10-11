@@ -78,7 +78,7 @@ And in your application, call the function in the view definition:<br>
 
 ## Productive Usage
 #### **1. Can abap2UI5 used in a productive system?**
-The project is technically just an implementation of an HTTP handler and therefore can be used as any other HTTP Service also in a productive scenario.
+The project is technically just an implementation of an HTTP handler and can be used as any other HTTP Service also in a productive scenario.
 #### **2. Are there any dependencies or preparations needed before using abap2UI5 in a productiv scenario?**
 No, but it is recommended to follow these steps before using abap2UI5 apps in a productive scenario:
 1. Transport the abap2UI5 HTTP service and the framework first
