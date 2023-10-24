@@ -1,6 +1,6 @@
 ### Custom Controls & external Libraries
-| UI5 Control  | external Library | Link | Description |
+| UI5 Control / ext. Lib  | Sample App | Link | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| File Uploader  |  | | Upload Files  |
-| Spreadsheet  |   |  | Download internal Tables in XLSX  |
-|   | bwip-js  | http://bwip-js.metafloor.com | Generate Barcodes  |
+| File Uploader  | Z2UI5_CL_DEMO_APP_075 | | Upload Files  |
+| Spreadsheet  |  Z2UI5_CL_DEMO_APP_077 |  | Download internal Tables in XLSX  |
+| bwip-js  |  Z2UI5_CL_DEMO_APP_102 | http://bwip-js.metafloor.com | Generate Barcodes  |
