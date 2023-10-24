@@ -1,5 +1,5 @@
 ### Custom Controls & external Libraries
-| UI5 Control / ext. Lib  | Link | Saple App | Description |
+| UI5 Control / ext. Lib  | Link | Demo | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | File Uploader  | | Z2UI5_CL_DEMO_APP_075 | Upload Files  |
 | Spreadsheet  | | Z2UI5_CL_DEMO_APP_077 | Download internal Tables in XLSX  |
