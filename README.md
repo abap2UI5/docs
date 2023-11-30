@@ -4,8 +4,7 @@
 _Install the project with abapGit and create a new HTTP Service. Use the downport repository for lower releases and the offline installation if your abap system has no access to the internet. More details here:_
 1. Install the project with abapGit ([cloud](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/01_installation/install_cloud.md) / [on-premise](https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/01_installation))
 2. Create a new HTTP service ([cloud](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/01_installation/create_http_cloud.md) / [on-premise](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/01_installation/create_http_on_prem.md))
-3. Configuration ([URL Parameters & Setup](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/01_installation/configuration.md))
-4. More
+3. More
     - ABAP System without Internet Connection ([Offline Installation](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/01_installation/install_on_prem_offline.md))
     - Old Netweaver Releases lower v7.50 ([Use of the Downport Repository](https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/01_installation))
 
@@ -35,5 +34,5 @@ _Integrate your abap2UI5 apps with SAP Business Technology Platform:_
 * [Build Workzone Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/04_build_workzone_configuration.md)
 * [Mobile Start Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/05_mobile_start_configuration.md)
 ### FAQ
-_Still have questions? Please refer to the [FAQ section](https://github.com/abap2UI5/abap2UI5/blob/main/docs/faq.md) for answers._
+_Still have questions? Please refer to the [FAQ section](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/faq.md) for answers._
 
