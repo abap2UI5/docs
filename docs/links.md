@@ -1,6 +1,6 @@
 #### Repository
 * abap2UI5 [(github/abap2UI5/abap2UI5)](https://github.com/abap2UI5/abap2UI5)
-* downport of abap2UI5 for NW 7.02 to NW 7.42 [(github/abap2UI5/abap2UI5-downport)](https://github.com/abap2UI5/abap2UI5-downport)
+* Downport of abap2UI5 for NW 7.02 to NW 7.42 [(github/abap2UI5/abap2UI5-downport)](https://github.com/abap2UI5/abap2UI5-downport)
 
 #### Extensions
 * Integrate your apps to the on-premise Fiori Laúnchpad [(abap2UI5/integration_fiori_launchpad)](https://github.com/abap2UI5/ext-fiori_launchpad_on_premise)
