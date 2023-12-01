@@ -7,7 +7,7 @@
 * Integrate your apps to the Business Technology Platform [(abap2UI5-ext_btp)](https://github.com/abap2UI5/ext-business_technology_platform)
 
 #### Samples
-* samples of how to create apps in abap2UI5 [(github/abap2UI5/demo-demos)](https://github.com/abap2UI5/abap2UI5-samples)
+* Samples of how to develop apps in abap2UI5 [(github/abap2UI5/demo-demos)](https://github.com/abap2UI5/abap2UI5-samples)
 
 #### Apps & More
 * Mustache & abap2UI5 [(github/abap2UI5/demo-mustache)](https://github.com/abap2UI5/demo-mustache)
