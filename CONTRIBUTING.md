@@ -7,10 +7,10 @@ _It would be helpful if you could provide a working code snippet of your applica
 
 ### Contribution
 You can contribute in various ways: <br>
-* extend the view with a new property (https://github.com/abap2UI5/abap2UI5/issues/248)
-*  add a completely new control (https://github.com/abap2UI5/abap2UI5/issues/303)
-*  provide on-premise corrections (https://github.com/abap2UI5/abap2UI5/issues/305)
-*  share your demos and apps (https://github.com/abap2UI5/abap2UI5/issues/304)
+* extend the view with a new property [(link)](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/property.md)
+* add a completely new control [(link)](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/21_contribution/control.md)
+* add a new custom control
+* share your demos and apps
 
 Or feel free to develop something new - every [PR ](https://github.com/abap2UI5/abap2UI5/pulls) is welcome!
 
