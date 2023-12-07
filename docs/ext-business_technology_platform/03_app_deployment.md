@@ -6,7 +6,7 @@
 <br>
 <img width="350" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/6bc46022-045b-48da-9ac6-7fff49de87e6">
 
-2. Create a new UI5 app (or Import the branch [ui5_app](https://github.com/abap2UI5/abap2UI5-btp_proxy_app/tree/ui5_app))
+2. Create a new UI5 app (or Import the [main branch](https://github.com/abap2UI5/abap2UI5-btp_proxy_app))
 
 <img width="700" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/9b3ba6b7-742b-48ec-a165-03d7143ee61d">
 
