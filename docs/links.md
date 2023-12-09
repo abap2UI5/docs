@@ -18,5 +18,5 @@
 
 <br>
 
-_Your app is not listed here? Feel free to extend the list and send a PR_
+_Your app is not listed here? Feel free to extend the list and send a PR._
 
