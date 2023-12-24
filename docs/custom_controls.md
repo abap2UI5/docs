@@ -11,4 +11,5 @@
 Check out this guideline to learn how to create your own custom control:<br>
 https://github.com/abap2UI5/abap2UI5-template_cc_development
 <br><br>
-_Your Custom Control is not listed here? Feel to send a PR, more information [here.](https://blogs.sap.com/2023/12/11/abap2ui5-a4-extensions-ii-guideline-for-developing-new-features-in-javascript/)_
+Your Custom Control is not listed here? Feel to send a PR, more information here:<br>
+https://blogs.sap.com/2023/12/11/abap2ui5-a4-extensions-ii-guideline-for-developing-new-features-in-javascript/
