@@ -1,6 +1,8 @@
 ## External Libraries & Custom Controls in abap2UI5
 
-You can integrate your own JavasScript code into abap2UI5 by implementing UI5 Custom Controls. Call for example third party libraries or extend your ABAP apps with additional functionalities. Check out this guideline to learn how to create your own custom control:<br>
+You can integrate your own JavasScript code into abap2UI5 by implementing UI5 Custom Controls. Call for example third party libraries or extend your ABAP apps with additional functionalities. 
+
+Check out this guideline to learn how to create your own custom control:<br>
 **https://github.com/abap2UI5/abap2UI5-template_cc_development**
 <br><br>
 _Your Custom Control is not listed here? Feel to send a PR!_
