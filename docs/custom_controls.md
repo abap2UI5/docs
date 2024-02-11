@@ -5,7 +5,7 @@ You can integrate your own JavasScript code into abap2UI5 by implementing UI5 Cu
 Check out this guideline to learn how to create your own custom control:<br>
 **https://github.com/abap2UI5/abap2UI5-template_cc_development**
 <br><br>
-_Your Custom Control is not listed here? Feel to send a PR!_
+_Your Custom Control is not listed here? Feel free to send a PR! Special thanks to [choper725](https://github.com/choper725) contributing most of the CCs_
 
 ### 1. Driver JS
  * Product tours, highlights, contextual help and more
