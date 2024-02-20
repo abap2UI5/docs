@@ -13,8 +13,8 @@ DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value(
       (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
 
 DATA(lv_resp) = SWITCH #( request->get_method( )
-   WHEN 'GET'  THEN z2ui5_cl_fw_http_handler=>http_get( lt_config )
-   WHEN 'POST' THEN z2ui5_cl_fw_http_handler=>http_post( request->get_text( ) ) ).
+   WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( value #( lt_config = t_config ) )
+   WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
 ```
 #### **2. How to change the bootstrapping of UI5?**
 Change the initial get call of abap2UI5 to:
@@ -28,8 +28,8 @@ DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value(
       (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
 
 DATA(lv_resp) = SWITCH #( request->get_method( )
-   WHEN 'GET'  THEN z2ui5_cl_fw_http_handler=>http_get( lt_config )
-   WHEN 'POST' THEN z2ui5_cl_fw_http_handler=>http_post( request->get_text( ) ) ).
+   WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( value #( t_config = lt_config ) )
+   WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
 ```
 
 ## Client & UI
