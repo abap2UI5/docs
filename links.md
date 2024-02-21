@@ -10,7 +10,7 @@
 | [abap2UI5-samples-downport](https://github.com/abap2UI5/abap2UI5-samples-downport) | Samples & Code Snippets with syntax for lower releases  |
 
 
-### Addons
+### More
 
 |  Repository | Description |
 | ------------- | ------------- |
