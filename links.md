@@ -15,7 +15,7 @@
 |  Repository | Description |
 | ------------- | ------------- |
 | [Launchpad Proxy App](https://github.com/abap2UI5/abap2UI5-launchpad_proxy_app) | Integrate your apps to the on-premise fiori launchpad  |
-| [BTP Proxy App](https://github.com/abap2UI5/abap2UI5-btp_proxy_app) | Integrate your apps with Business Techznology Platform & SAP Mobile Start  |
+| [BTP Proxy App](https://github.com/abap2UI5/abap2UI5-btp_proxy_app) | Integrate your apps with Business Technology Platform & SAP Mobile Start  |
 | [S-RTTI](https://github.com/sandraros/S-RTTI) | Install this repository to use dynamically types variables and tables in your abap2UI5 apps  |
 | [abap2UI5-web](https://github.com/abap2UI5/abap2UI5-web) | Run abap2UI5 with open-abap on Node.js  |
 
