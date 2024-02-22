@@ -14,6 +14,7 @@
 
 |  Repository | Description |
 | ------------- | ------------- |
+| [Custom Controls](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/custom_controls.md) | Pimp up your apps with custom controls and external libraries  |
 | [Launchpad Proxy App](https://github.com/abap2UI5/abap2UI5-launchpad_proxy_app) | Integrate your apps to the on-premise fiori launchpad  |
 | [BTP Proxy App](https://github.com/abap2UI5/abap2UI5-btp_proxy_app) | Integrate your apps with Business Technology Platform & SAP Mobile Start  |
 | [S-RTTI](https://github.com/sandraros/S-RTTI) | Install this repository to use dynamically types variables and tables in your abap2UI5 apps  |
