@@ -11,7 +11,7 @@ Use the following guideline:<br>
 * If your classname is developed in a custom namespace, use -MY_NS-CL_MY_CLASS instead of /MY_NS/CL_MY_CLASS, "-" is mapped to "/" automatically
 
 
-## Create Business Catalog
+## Create Semantic Object
 _/n/UI2/SEMOBJ_
 
 <img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/1e23934c-aded-4c99-af19-393db8c4b011">
