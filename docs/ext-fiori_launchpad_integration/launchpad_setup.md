@@ -11,6 +11,8 @@ Use the following guideline:<br>
 * If your classname is developed in a custom namespace, use -MY_NS-CL_MY_CLASS instead of /MY_NS/CL_MY_CLASS, "-" is mapped to "/" automatically
 
 
+
+
 ## Create Business Catalog
 _http://<host>:<port>/sap/bc/ui5_ui5/sap/arsrvc_upb_admn/main.html_
 
@@ -31,7 +33,7 @@ Target Mapping:<br>
 <img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/6458c8c4-aa72-43b9-8ca0-c999502ca6f4">
 
 
-## Create Business 
+## Create Business Group
 _http://<host>:<port>/sap/bc/ui5_ui5/sap/arsrvc_upb_admn/main.html_
 <br>
 <img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/f470c172-4073-46b0-bf74-c21f6588e42e">
