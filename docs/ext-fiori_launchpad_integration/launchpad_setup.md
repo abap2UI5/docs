@@ -9,9 +9,6 @@ Use the following guideline:<br>
 * Start a specific app by maintaining the starting parameter (app_start=appname). <br>
 * If your classname is developed in a custom namespace, use -MY_NS-CL_MY_CLASS instead of /MY_NS/CL_MY_CLASS, "-" is mapped to "/" automatically
 
-
-<br><br>
-
 ##### Configuration:
 Target Mapping:<br>
 <img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/a5052435-3ef5-4f3e-a65d-3877a6ba3526">
