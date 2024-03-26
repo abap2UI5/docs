@@ -17,3 +17,7 @@ Target Mapping:<br>
 Tile Configuration:<br>
 <img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/eabc669e-3755-42b4-9af9-0182d08036a0">
 
+
+#### Configuration II:
+<img width="800" alt="Bildschirmfoto 2024-03-26 um 15 37 22" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/2f4f50f4-3382-49a0-82a3-b41f12c5e918">
+<img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/6458c8c4-aa72-43b9-8ca0-c999502ca6f4">
