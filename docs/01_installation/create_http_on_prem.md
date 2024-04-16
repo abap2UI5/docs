@@ -54,3 +54,8 @@ Now test the service:<br>
 <img width="579" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/a4a1746f-3bae-47dc-a6a9-244610480c33"><br><br>
 You should see the starting page now:<br>
 <img width="1270" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/d72be34e-9873-43db-821f-0039719e6647"><br><br>
+
+### Known Issues
+Sometimes you need to activate manually SSL:
+<img width="798" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/be927699-7923-40c3-824d-391f574488e6">
+
