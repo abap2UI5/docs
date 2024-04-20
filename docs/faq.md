@@ -4,7 +4,7 @@
 #### **1. How to change the theme?**
 Change the initial Get call of abap2UI5 to:
 ```abap
-DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value( 
+DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value( 
       (  n = `data-sap-ui-theme`         v = `sap_belize` ) "<- adjusted
       (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-core.js` )
       (  n = `data-sap-ui-libs`          v = `sap.m` )
@@ -19,7 +19,7 @@ DATA(lv_resp) = SWITCH #( request->get_method( )
 #### **2. How to change the bootstrapping of UI5?**
 Change the initial get call of abap2UI5 to:
 ```abap
-DATA(lt_config) = VALUE z2ui5_if_client=>ty_t_name_value( 
+DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value( 
       (  n = `data-sap-ui-theme`         v = `sap_belize` ) 
       (  n = `src`                       v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) "<- adjusted ( for example to load from sap cdn)
       (  n = `data-sap-ui-libs`          v = `sap.m` )
