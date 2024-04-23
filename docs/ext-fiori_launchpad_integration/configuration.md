@@ -1,7 +1,7 @@
 # Configuration Launchpad On-Premise
 
 The Launchpad tools have evolved over time. Some are deprecated and should not be used for maintenance anymore.
-For more information, please visit:
+For more information, please visit: <br>
 https://community.sap.com/t5/technology-blogs-by-sap/sap-fiori-for-sap-s-4hana-overview-of-tools-for-maintaining-custom/ba-p/13463870
 
 Starting from S/4 1909 and above, you can utilize the following configuration guideline.
