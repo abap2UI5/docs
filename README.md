@@ -29,7 +29,6 @@ _Add your abap2UI5 apps to Launchpads with this extension:_
 
 ### Extension - SAP Business Technology Platform
 _Integrate your abap2UI5 apps with SAP Business Technology Platform:_
-* Install the OData Service with abapGit
 * [Deploy the UI5 Application](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/03_app_deployment.md)
 * [Build Workzone Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/04_build_workzone_configuration.md)
 * [Mobile Start Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-business_technology_platform/05_mobile_start_configuration.md)
