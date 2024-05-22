@@ -1,5 +1,16 @@
 ### Guideline - Develop and deploy a new UI5 app
 
+Use Visual Studio Code e.g. for deployment:
+```
+git clone https://github.com/abap2UI5/abap2UI5-btp_proxy_app.git
+cf login
+npm i
+npm run build:mta
+npm run deploy
+```
+
+Or use the following more detailed guideline:
+
 1. Start your Business Application Studio and Login to BTP
 
 <img width="350" alt="image" src="https://github.com/abap2UI5/ext-service_integration/assets/102328295/88247f70-2661-4f12-990c-06f99075b075">
