@@ -11,7 +11,6 @@ Transaction /UI2/SEMOBJ <br>
 Create a semantic object for each abap class:
 ![image](https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/fe0a45a3-aa1d-4a18-8497-0a5b71bf6369)
 
-
 ### Create a Target Mapping
 Transaction /UI2/FLPD_CUST
 Select the Catalog of your choice and create a new Target Mapping:
@@ -32,7 +31,8 @@ Action: display<br>
 <br>
 ___Repeat these first 3 steps for every app you want to add to the launchpad.___
 
-### Transaction /UI2/FLP
+### Edit the Launchpad Side
+Transaction /UI2/FLP
 Go to your Launchpad and edit the current page:
 ![image](https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/30f7ebeb-80ef-4e6e-b8ae-7b0f7e5e0101)<br>
 Press add a tile:
