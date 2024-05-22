@@ -1,5 +1,5 @@
 # Setup Startup Parameters
-Transaction
+Transaction /UI2/FLPD_CUST <br>
 Go to the Target Mapping of your tile and add an additional Parameter:
 ![image](https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/c1383769-34ab-4be0-af6b-21bf2f2ddbba)
 <br>
