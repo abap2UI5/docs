@@ -1,4 +1,4 @@
-# Setup Startup Parameters
+# Setup Startup Parameters & Title
 
 ### Add Parameter to the Target Mapping
 Transaction /UI2/FLPD_CUST <br>
@@ -12,4 +12,13 @@ Use the following code to read the value in ABAP:
 ```abap
     DATA(lt_params) = client->get( )-t_comp_params.
 ```
-Check also out sample: z2ui5_cl_demo_app_187 
+Check out sample: z2ui5_cl_demo_app_187 
+
+
+### Set a Title
+You can set the launchpad title in the view definiiton of your app:
+```abap
+      page->_z2ui5( )->lp_title( client->_bind_edit( mv_title ) ).
+```
+
+Check out sample: z2ui5_cl_demo_app_188
