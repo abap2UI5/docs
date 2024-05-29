@@ -7,7 +7,7 @@ Go to the Target Mapping of your tile and add an additional Parameter:
 <br>
 If you want to customize a parameter with a namespace eg. /YYY/MY_VAL use -YYY-MY_VAL instead, abap2UI5 will map the values accordingly.
 
-### Read the value in your App
+### Read the Parameters in your App Implementation
 Use the following code to read the value in ABAP:
 ```abap
     DATA(lt_params) = client->get( )-t_comp_params.
