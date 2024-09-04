@@ -1,7 +1,6 @@
 # Links
- _Your app is not listed her? Feel free to send a PR and extend this file..._
+ _Your app is not listed her? Feel free to send a PR and extend this file!_
 
-### Apps
 
 |  Repository | Description |
 | ------------- | ------------- |
