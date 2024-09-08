@@ -2,7 +2,7 @@
 
 ## Setup
 #### **1. How to change the theme?**
-Change the initial Get call of abap2UI5 to:
+Change the HTTP handler of abap2UI5 to:
 ```abap
     DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value(
           (  n = `data-sap-ui-theme`         v = `sap_belize` ) "<- adjusted
@@ -21,7 +21,7 @@ Change the initial Get call of abap2UI5 to:
     server->response->set_status( code = 200 reason = `success` ).
 ```
 #### **2. How to change the bootstrapping of UI5?**
-Change the initial get call of abap2UI5 to:
+Change the HTTP handler of abap2UI5 to:
 ```abap
 DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value( 
       (  n = `data-sap-ui-theme`         v = `sap_belize` ) 
