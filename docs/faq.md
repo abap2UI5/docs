@@ -4,17 +4,21 @@
 #### **1. How to change the theme?**
 Change the initial Get call of abap2UI5 to:
 ```abap
-DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value( 
-      (  n = `data-sap-ui-theme`         v = `sap_belize` ) "<- adjusted
-      (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-core.js` )
-      (  n = `data-sap-ui-libs`          v = `sap.m` )
-      (  n = `data-sap-ui-bindingSyntax` v = `complex` )
-      (  n = `data-sap-ui-frameOptions`  v = `trusted` )
-      (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
+    DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value(
+          (  n = `data-sap-ui-theme`         v = `sap_belize` ) "<- adjusted
+          (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-core.js` )
+          (  n = `data-sap-ui-libs`          v = `sap.m` )
+          (  n = `data-sap-ui-bindingSyntax` v = `complex` )
+          (  n = `data-sap-ui-frameOptions`  v = `trusted` )
+          (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
 
-DATA(lv_resp) = SWITCH #( request->get_method( )
-   WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( value #( lt_config = t_config ) )
-   WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
+    DATA(response) = z2ui5_cl_http_handler=>main(
+                       body   = server->request->get_cdata( )
+                       config = VALUE #( t_config = lt_config ) ).
+
+    server->response->set_cdata( response ).
+    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
+    server->response->set_status( code = 200 reason = `success` ).
 ```
 #### **2. How to change the bootstrapping of UI5?**
 Change the initial get call of abap2UI5 to:
@@ -27,9 +31,13 @@ DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value(
       (  n = `data-sap-ui-frameOptions`  v = `trusted` )
       (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
 
-DATA(lv_resp) = SWITCH #( request->get_method( )
-   WHEN 'GET'  THEN z2ui5_cl_http_handler=>http_get( value #( t_config = lt_config ) )
-   WHEN 'POST' THEN z2ui5_cl_http_handler=>http_post( request->get_text( ) ) ).
+    DATA(response) = z2ui5_cl_http_handler=>main(
+                       body   = server->request->get_cdata( )
+                       config = VALUE #( t_config = lt_config ) ).
+
+    server->response->set_cdata( response ).
+    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
+    server->response->set_status( code = 200 reason = `success` ).
 ```
 
 ## Client & UI
