@@ -25,7 +25,7 @@ Change the HTTP handler of abap2UI5 to:
 ```abap
 DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value( 
       (  n = `data-sap-ui-theme`         v = `sap_belize` ) 
-      (  n = `src`                       v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) "<- adjusted ( for example to load from sap cdn)
+      (  n = `src`                       v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) "<- adjusted
       (  n = `data-sap-ui-libs`          v = `sap.m` )
       (  n = `data-sap-ui-bindingSyntax` v = `complex` )
       (  n = `data-sap-ui-frameOptions`  v = `trusted` )
