@@ -1,6 +1,6 @@
 ## HTTP Handler Configuration
 
-abap2UI5 can be run with various custom configuration. start with defualt setup looks as follows:
+abap2UI5 can be run with various custom configurations. This is the call for the default setup:
 ```abap
   METHOD if_http_extension~handle_request.
 
@@ -10,7 +10,7 @@ abap2UI5 can be run with various custom configuration. start with defualt setup 
 
   ENDMETHOD.
 ```
-For custom configuration, just change the method call as described here:
+For custom configurations, simply modify the method call as follow:
 
 #### Theme
 ```abap
