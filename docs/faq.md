@@ -1,44 +1,7 @@
 # FAQ
 
 ## Setup
-#### **1. How to change the theme?**
-Change the HTTP handler of abap2UI5 to:
-```abap
-    DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value(
-          (  n = `data-sap-ui-theme`         v = `sap_belize` ) "<- adjusted
-          (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-core.js` )
-          (  n = `data-sap-ui-libs`          v = `sap.m` )
-          (  n = `data-sap-ui-bindingSyntax` v = `complex` )
-          (  n = `data-sap-ui-frameOptions`  v = `trusted` )
-          (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
-
-    DATA(response) = z2ui5_cl_http_handler=>main(
-                       body   = server->request->get_cdata( )
-                       config = VALUE #( t_config = lt_config ) ).
-
-    server->response->set_cdata( response ).
-    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
-    server->response->set_status( code = 200 reason = `success` ).
-```
-#### **2. How to change the bootstrapping of UI5?**
-Change the HTTP handler of abap2UI5 to:
-```abap
-DATA(lt_config) = VALUE z2ui5_if_types=>ty_t_name_value( 
-      (  n = `data-sap-ui-theme`         v = `sap_belize` ) 
-      (  n = `src`                       v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) "<- adjusted
-      (  n = `data-sap-ui-libs`          v = `sap.m` )
-      (  n = `data-sap-ui-bindingSyntax` v = `complex` )
-      (  n = `data-sap-ui-frameOptions`  v = `trusted` )
-      (  n = `data-sap-ui-compatVersion` v = `edge` ) ).
-
-    DATA(response) = z2ui5_cl_http_handler=>main(
-                       body   = server->request->get_cdata( )
-                       config = VALUE #( t_config = lt_config ) ).
-
-    server->response->set_cdata( response ).
-    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
-    server->response->set_status( code = 200 reason = `success` ).
-```
+Change the HTTP Handler and URL Paramters for various configuration possibilities, as described [**here.**](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/handler_config.md)
 
 ## Client & UI
 
