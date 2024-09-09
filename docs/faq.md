@@ -1,7 +1,7 @@
 # FAQ
 
-## Setup
-Change the HTTP Handler and URL Paramters for various configuration possibilities, as described [**here.**](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/handler_config.md)
+_Change the HTTP Handler and URL Paramters for various configuration possibilities: Theme, Bootstrapping, Conten-Security-Policy etc.
+Check it out [**here.**](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/handler_config.md)_
 
 ## Client & UI
 
