@@ -67,3 +67,5 @@ For custom configuration, just change the method call as described here:
         config = s_config ).
 
 ```
+#### URL Parameter
+Further configuration can be done by changing the URL [**here.**](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
