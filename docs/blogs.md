@@ -24,7 +24,7 @@
 #### General
 * Community Feedback, New Features & Outlook 2024 [(SCN - 08.01.2024)](https://blogs.sap.com/2024/01/08/abap2ui5-12-update-ii-community-feedback-new-features-outlook-january-2024/)<br>
 * Calling Apps Remotely via RFC [(LinkedIn - 25.06.2024)](https://www.linkedin.com/pulse/calling-abap2ui5-apps-remotely-via-rfc-abap2ui5-btoue/)
-* abap2UI5 on old R/3 Releases: Project Setup, Downporting & Installation [(LinkedIn - 14.07.2024)](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
+* Compatibility for old R/3 Releases: Project Setup, Downporting & Installation [(LinkedIn - 14.07.2024)](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
 * Use Cases in On-Stack & Side-by-Side Extension Scenarios [(LinkedIn - 04.08.2024)](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde)
   
 #### SAP Fiori Launchpad Integration
