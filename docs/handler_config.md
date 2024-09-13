@@ -67,6 +67,15 @@ Use this for example to install additional custom controls [here:](https://githu
 
 ```
 
+#### Style / CSS
+
+```abap
+    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
+        t_param = VALUE #(
+            (  n = `STYLE` v = `<< style definiiton here>>` ) ) ).
+
+```
+
 #### Class of the HTML Body
 
 ```abap
@@ -83,9 +92,17 @@ If nothing is imported the following default values are used:
    `ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com ` &&
    `sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>`.
 
+    data(lv_style) =  `        html, body, body > div, #container, #container-uiarea {` && |\n| &&
+               `            height: 100%;` && |\n| &&
+               `        }` && |\n| &&
+               `        .dbg-ltr {` && |\n| &&
+               `            direction: ltr !important;` && |\n| &&
+               `        }`.
+
     result = VALUE #(
         t_param = VALUE #(
             (  n = `TITLE`                   v = `abap2UI5` )
+            (  n = `STYLE`                   v =  lv_style )
             (  n = `BODY_CLASS`              v = `sapUiBody sapUiSizeCompact`   )
             )
         t_config = VALUE #(
