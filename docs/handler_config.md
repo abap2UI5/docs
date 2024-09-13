@@ -41,7 +41,7 @@ eg. for changing the theme the source code looks like this:
 ```
 
 #### Custom JS
-
+Use this for example to install additional custom controls [here:](https://github.com/abap2UI5-addons/custom-controls)
 ```abap
     DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
         custom_js = z2ui5add_cl_cc_websocket=>get_js( ) ).
