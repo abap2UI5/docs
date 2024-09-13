@@ -21,9 +21,9 @@ eg. for changing the theme the source code looks like this:
         t_config = VALUE #(
             (  n = `data-sap-ui-theme` v = `sap_belize` ) ) ).
 
-    DATA(response) = z2ui5_cl_http_handler=>main(
+   server->response->set_cdata( z2ui5_cl_http_handler=>main(
         body   = server->request->get_cdata( )
-        config = s_config ).
+        config = s_config ) ).
 
     server->response->set_header_field( name = `cache-control` value = `no-cache` ).
     server->response->set_status( code = 200 reason = `success` ).
