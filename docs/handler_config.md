@@ -53,9 +53,9 @@ For custom configurations, simply modify the method call as follow:
 
 ```abap
     DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        content_security_policy = ```<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` && |\n|  &&
-                                  `   ``ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com ` && |\n|  &&
-                                  `   ``sdk.openui5.org *.sdk.openui5.org "/>` ).
+        content_security_policy = ` <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` && |\n|  &&
+                                  `   ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com ` && |\n|  &&
+                                  `   sdk.openui5.org *.sdk.openui5.org "/>` ).
 
     DATA(response) = z2ui5_cl_http_handler=>main(
         body   = server->request->get_cdata( )
