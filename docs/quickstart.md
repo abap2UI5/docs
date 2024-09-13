@@ -2,10 +2,10 @@
 
 ### 1. Installation with abapGit
 
-Install with [abapGit](https://abapgit.org) ![abapGit](https://docs.abapgit.org/img/favicon.png).
+Install the project with [abapGit.](https://abapgit.org) ![abapGit](https://docs.abapgit.org/img/favicon.png)
 
 ### 2. Set up a new HTTP service
-Implement the following handler:
+Cretae a new HTTP Service with the following handler implementation:
 ##### Standard ABAP  🏠
 ```abap
 METHOD if_http_extension~handle_request.
@@ -33,7 +33,7 @@ ENDMETHOD.
 </details>
 
 ### 3. Create your first App
-Implement the abap2UI5 interface as shown in the following example:
+Create a new ABAP class and implement the abap2UI5 interface or just copy&paste this snippet:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -64,3 +64,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+### 4. Start your App
+Call your HTTP Service in the browser and start your app:
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56"><br>
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/beee0551-494f-4e29-98bd-529395e27405">
+
