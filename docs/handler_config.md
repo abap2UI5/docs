@@ -13,7 +13,10 @@ abap2UI5 can be run with various custom configurations. This is the call for the
 For custom configurations, simply create a config variable and import it to the main method:
 
 #### Theme
+eg. for changing the theme the source code looks like this:
 ```abap
+  METHOD if_http_extension~handle_request.
+
     DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
         t_config = VALUE #(
             (  n = `data-sap-ui-theme` v = `sap_belize` ) ) ).
@@ -22,6 +25,10 @@ For custom configurations, simply create a config variable and import it to the 
         body   = server->request->get_cdata( )
         config = s_config ).
 
+    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
+    server->response->set_status( code = 200 reason = `success` ).
+
+  ENDMETHOD.
 ``` 
 
 #### UI5 Bootstrapping
@@ -66,6 +73,30 @@ For custom configurations, simply create a config variable and import it to the 
     DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
         t_param = VALUE #(
            (  n = `BODY_CLASS`   v = `sapUiBody`   )
+
+```
+
+#### Default
+If nothing is imported the following default values are used:
+```abap
+    DATA(lv_csp)  = `<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` &&
+   `ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com ` &&
+   `sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>`.
+
+    result = VALUE #(
+        t_param = VALUE #(
+            (  n = `TITLE`                   v = `abap2UI5` )
+            (  n = `BODY_CLASS`              v = `sapUiBody sapUiSizeCompact`   )
+            )
+        t_config = VALUE #(
+            (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-cachebuster/sap-ui-core.js` )
+            (  n = `data-sap-ui-theme`         v = `sap_horizon` )
+            (  n = `data-sap-ui-async`         v = `true` )
+            (  n = `id`                        v = `sap-ui-bootstrap` )
+            (  n = `data-sap-ui-bindingSyntax` v = `complex` )
+            (   n = `data-sap-ui-frameOptions`  v = `trusted` )
+            (  n = `data-sap-ui-compatVersion` v = `edge` ) )
+        content_security_policy = lv_csp ).
 
 ```
 
