@@ -10,7 +10,7 @@ abap2UI5 can be run with various custom configurations. This is the call for the
 
   ENDMETHOD.
 ```
-For custom configurations, simply modify the method call as follow:
+For custom configurations, simply create a config variable and import it to the main method:
 
 #### Theme
 ```abap
@@ -31,10 +31,6 @@ For custom configurations, simply modify the method call as follow:
         t_config = VALUE #(
             (  n = `src` v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) ) ).
 
-    DATA(response) = z2ui5_cl_http_handler=>main(
-        body   = server->request->get_cdata( )
-        config = s_config ).
-
 ```
 
 #### Custom JS
@@ -42,10 +38,6 @@ For custom configurations, simply modify the method call as follow:
 ```abap
     DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
         custom_js = z2ui5add_cl_cc_websocket=>get_js( ) ).
-
-    DATA(response) = z2ui5_cl_http_handler=>main(
-        body   = server->request->get_cdata( )
-        config = s_config ).
 
 ```
 
@@ -57,10 +49,25 @@ For custom configurations, simply modify the method call as follow:
                                   `   ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com ` && |\n|  &&
                                   `   sdk.openui5.org *.sdk.openui5.org "/>` ).
 
-    DATA(response) = z2ui5_cl_http_handler=>main(
-        body   = server->request->get_cdata( )
-        config = s_config ).
+```
+
+#### Title
+
+```abap
+    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
+        t_param = VALUE #(
+            (  n = `TITLE` v = `My custom Title` ) ) ).
 
 ```
+
+#### Class of the HTML Body
+
+```abap
+    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
+        t_param = VALUE #(
+           (  n = `BODY_CLASS`   v = `sapUiBody`   )
+
+```
+
 #### URL Parameter
 Further configuration can be done by changing the URL [**here.**](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
