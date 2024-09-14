@@ -7,7 +7,7 @@ You now have a copy of the project in your own repositories:
 <img width="700" alt="image" src="https://github.com/abap2UI5/abap2UI5/assets/102328295/081134d2-d54b-4179-ab20-6c8a51a91930">
 <br><br>
 **2. Link your local system with your new fork in abapGit:** <br>
-Copy the url of your abap2UI5 repository:
+Copy the url of your abap2UI5 repository:<br>
 <img width="700" alt="image" src="https://github.com/abap2UI5/abap2UI5/assets/102328295/c4973738-06e9-47e8-b23a-56f856125284"><br><br>
 Link your system to this repository:<br>
 (adt-abapgit or abapGit on-premise)<br>
