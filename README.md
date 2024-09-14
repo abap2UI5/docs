@@ -1,4 +1,4 @@
-## Documentation of abap2UI5 <img src="https://github.com/abap2UI5/abap2UI5/assets/102328295/52ac0bb6-a219-4e9d-9e4f-62698dab3063" width="30">
+## Documentation for abap2UI5 <img src="https://github.com/abap2UI5/abap2UI5/assets/102328295/52ac0bb6-a219-4e9d-9e4f-62698dab3063" width="30">
 Running into problems or found a bug? Create an issue [here](https://github.com/abap2UI5/abap2UI5)
 ### Installation
 _Install the project with abapGit and create a new HTTP Service. Use the downport repository for lower releases and the offline installation if your abap system has no access to the internet. More details here:_
