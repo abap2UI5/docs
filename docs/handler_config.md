@@ -84,6 +84,14 @@ Use this for example to install additional custom controls [here:](https://githu
            (  n = `BODY_CLASS`   v = `sapUiBody`   )
 
 ```
+#### SetSizeLimit of View Models
+Increase/Decrease the number of shown entries of tables and lists [here.](https://sdk.openui5.org/1.38.62/docs/api/symbols/sap.ui.model.Model.html#setSizeLimit)
+```abap
+    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
+        t_param = VALUE #(
+           (  n = `SET_SIZE_LIMIT`   v = `120`   )
+
+```
 
 #### Default
 If nothing is imported the following default values are used:
