@@ -1,13 +1,13 @@
 _Every help and PR extending abap2UI5 view class with additional properties is welcome!_
 
  If you create a view and you miss a specific property or event of an UI5 control, you can extend the class z2ui5_cl_xml_view. It is an ABAP copy of the UI5 API. Just extend the importing parameters of the method with the additional property by doing the following:<br><br>
-**(1) Check the UI5 API for the UI5 Control you want to extend:**
+**(1) Check the UI5 API for the UI5 Control you want to extend:**<br>
 Go to the [UI5 API](https://sapui5.hana.ondemand.com/#/api) and search for your UI5 Control. (for example "Input") <br>
 <img width="500" alt="image" src="https://github.com/abap2UI5/abap2UI5/assets/102328295/3c395aa6-c787-43fb-b40d-ae05df207ee6">
 <br>
 **(2) Check the properties and events of the UI5 Control:**<br>
 Scroll down to see the properties:<br>
-<img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5/assets/102328295/95d5be73-b2df-4a18-9c78-8ab52c32c4c6">
+<img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5/assets/102328295/95d5be73-b2df-4a18-9c78-8ab52c32c4c6"><br>
 And events:<br>
 <img width="600" alt="image" src="https://github.com/abap2UI5/abap2UI5/assets/102328295/8c37437f-36b7-4faf-a4d5-28c2b4662455"><br>
 **(3) Find the property or event you newly want to add: (for instance "showclearicon")**<br>
