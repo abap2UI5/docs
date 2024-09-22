@@ -1,4 +1,4 @@
-## abap2UI5 in stateful model
+## abap2UI5 in stateful mode
 
 #### Handler Implemention
 
