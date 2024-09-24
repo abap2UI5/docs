@@ -8,13 +8,11 @@ Install the project with [abapGit.](https://abapgit.org) ![abapGit](https://docs
 Cretae a new HTTP Service with the following handler implementation:
 ##### Standard ABAP  🏠
 ```abap
-METHOD if_http_extension~handle_request.
+  METHOD if_http_extension~handle_request.
 
-   server->response->set_cdata( z2ui5_cl_http_handler=>main( server->request->get_cdata( ) ) ).
-   server->response->set_header_field( name = `cache-control` value = `no-cache` ).
-   server->response->set_status( code = 200 reason = `success` ).
+    z2ui5_cl_http_handler=>factory( server )->main( ).
 
-ENDMETHOD.
+  ENDMETHOD.
 ```
 ##### ABAP for Cloud  :cloud:
 <details>
@@ -23,9 +21,7 @@ ENDMETHOD.
 ```abap
 METHOD if_http_service_extension~handle_request.
 
-   response->set_text( z2ui5_cl_http_handler=>main( request->get_text( ) ) ).
-   response->set_header_field( i_name = `cache-control` i_value = `no-cache` ).
-   response->set_status( 200 ).
+   z2ui5_cl_http_handler=>factory_cloud( req = request res = response )->main( ).
 
 ENDMETHOD.
 ```
