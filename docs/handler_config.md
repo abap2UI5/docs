@@ -4,9 +4,7 @@ abap2UI5 can be run with various custom configurations. This is the call for the
 ```abap
   METHOD if_http_extension~handle_request.
 
-    server->response->set_cdata( z2ui5_cl_http_handler=>main( server->request->get_cdata( ) ) ).
-    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
-    server->response->set_status( code = 200 reason = `success` ).
+    z2ui5_cl_http_handler=>factory( server )->main( ).
 
   ENDMETHOD.
 ```
@@ -17,16 +15,10 @@ eg. for changing the theme the source code looks like this:
 ```abap
   METHOD if_http_extension~handle_request.
 
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        t_config = VALUE #(
-            (  n = `data-sap-ui-theme` v = `sap_belize` ) ) ).
-
-   server->response->set_cdata( z2ui5_cl_http_handler=>main(
-        body   = server->request->get_cdata( )
-        config = s_config ) ).
-
-    server->response->set_header_field( name = `cache-control` value = `no-cache` ).
-    server->response->set_status( code = 200 reason = `success` ).
+    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
+    lo_server->main( VALUE #(
+        theme = `sap_belize`
+    ) ).
 
   ENDMETHOD.
 ``` 
@@ -34,95 +26,48 @@ eg. for changing the theme the source code looks like this:
 #### UI5 Bootstrapping
 
 ```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        t_config = VALUE #(
-            (  n = `src` v = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js` ) ) ).
-
+    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
+    lo_server->main( VALUE #(
+        src = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js`
+    ) ).
 ```
 
 #### Custom JS
 Use this for example to install additional custom controls [here:](https://github.com/abap2UI5-addons/custom-controls)
 ```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        custom_js = z2ui5add_cl_cc_websocket=>get_js( ) ).
-
+    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
+    lo_server->main( VALUE #(
+        custom_js = z2ui5add_cl_cc_websocket=>get_js( ) 
+    ) ).
 ```
 
 #### Content-Security-Policy
 
 ```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
+    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
+    lo_server->main( VALUE #(
         content_security_policy = ` <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` && |\n|  &&
                                   `   ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com ` && |\n|  &&
-                                  `   sdk.openui5.org *.sdk.openui5.org "/>` ).
-
+                                  `   sdk.openui5.org *.sdk.openui5.org "/>`
+    ) ).
 ```
 
 #### Title
 
 ```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        t_param = VALUE #(
-            (  n = `TITLE` v = `My custom Title` ) ) ).
-
+    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
+    lo_server->main( VALUE #(
+        title = `My Title`
+    ) ).
 ```
 
 #### Style / CSS
 
 ```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        t_param = VALUE #(
-            (  n = `STYLE` v = `<< style definiiton here>>` ) ) ).
-
-```
-
-#### Class of the HTML Body
-
-```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        t_param = VALUE #(
-           (  n = `BODY_CLASS`   v = `sapUiBody`   )
-
-```
-#### SetSizeLimit of View Models
-Increase/Decrease the number of shown entries of tables and lists [here.](https://sdk.openui5.org/1.38.62/docs/api/symbols/sap.ui.model.Model.html#setSizeLimit)
-```abap
-    DATA(s_config) = VALUE z2ui5_if_types=>ty_s_http_request_get(
-        t_param = VALUE #(
-           (  n = `SET_SIZE_LIMIT`   v = `120`   )
-
-```
-
-#### Default
-If nothing is imported the following default values are used:
-```abap
-    DATA(lv_csp)  = `<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` &&
-   `ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com ` &&
-   `sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>`.
-
-    data(lv_style) =  `        html, body, body > div, #container, #container-uiarea {` && |\n| &&
-               `            height: 100%;` && |\n| &&
-               `        }` && |\n| &&
-               `        .dbg-ltr {` && |\n| &&
-               `            direction: ltr !important;` && |\n| &&
-               `        }`.
-
-    result = VALUE #(
-        t_param = VALUE #(
-            (  n = `TITLE`                   v = `abap2UI5` )
-            (  n = `STYLE`                   v =  lv_style )
-            (  n = `BODY_CLASS`              v = `sapUiBody sapUiSizeCompact`   )
-            )
-        t_config = VALUE #(
-            (  n = `src`                       v = `https://sdk.openui5.org/resources/sap-ui-cachebuster/sap-ui-core.js` )
-            (  n = `data-sap-ui-theme`         v = `sap_horizon` )
-            (  n = `data-sap-ui-async`         v = `true` )
-            (  n = `id`                        v = `sap-ui-bootstrap` )
-            (  n = `data-sap-ui-bindingSyntax` v = `complex` )
-            (   n = `data-sap-ui-frameOptions`  v = `trusted` )
-            (  n = `data-sap-ui-compatVersion` v = `edge` ) )
-        content_security_policy = lv_csp ).
-
+    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
+    lo_server->main( VALUE #(
+        styles_css =  `<< style definiiton here>>`
+    ) ).
 ```
 
 #### URL Parameter
