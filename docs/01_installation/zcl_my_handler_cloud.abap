@@ -10,7 +10,6 @@ CLASS zcl_my_handler_cloud DEFINITION
 ENDCLASS.
 
 
-
 CLASS zcl_my_handler_cloud IMPLEMENTATION.
 
   METHOD if_http_service_extension~handle_request.
