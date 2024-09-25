@@ -15,9 +15,7 @@ CLASS zcl_my_handler_cloud IMPLEMENTATION.
 
   METHOD if_http_service_extension~handle_request.
 
-   response->set_text( z2ui5_cl_http_handler=>main( request->get_text( ) ) ).
-   response->set_header_field( i_name = `cache-control` i_value = `no-cache` ).
-   response->set_status( 200 ).
+   z2ui5_cl_http_handler=>factory_cloud( req = request res = response )->main( ).
 
   ENDMETHOD.
 
