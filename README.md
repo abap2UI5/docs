@@ -25,7 +25,7 @@ _This project is open source and developed alongside other projects or during fr
 ### Extension - SAP Fiori Launchpad Integration (On-Premise)
 _Add your abap2UI5 apps to Launchpads with this extension:_
 * [Installation](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/installation.md)
-* [Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/launchpad_setup.md)
+* [Launchpad Configuration](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/ext-fiori_launchpad_integration/configuration.md)
 
 ### Extension - SAP Business Technology Platform
 _Integrate your abap2UI5 apps with SAP Business Technology Platform:_
