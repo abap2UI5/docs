@@ -26,6 +26,7 @@
 * Calling Apps Remotely via RFC [(LinkedIn - 25.06.2024)](https://www.linkedin.com/pulse/calling-abap2ui5-apps-remotely-via-rfc-abap2ui5-btoue/)
 * Compatibility for old R/3 Releases: Project Setup, Downporting & Installation [(LinkedIn - 14.07.2024)](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
 * Use Cases in On-Stack & Side-by-Side Extension Scenarios [(LinkedIn - 04.08.2024)](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde)
+* Renaming of ABAP Artifacts - Rhe Power of abaplint & Github actions in ABAP Development [(LinkedIn - 06.10.2024)](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
   
 #### SAP Fiori Launchpad Integration
 1. Installation & Configration [(LinkedIn - 03.06.2024)](https://www.linkedin.com/pulse/copy-abap2ui5-host-your-apps-sap-fiori-launchpad-abap2ui5-ocn2e/?trackingId=Eot1XiIJHbM2a2ebDSF3dg%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)<br>
