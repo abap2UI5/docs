@@ -5,7 +5,7 @@ layout: home
 hero:
   text: "Developing UI5 Apps Purely in ABAP"
   image:
-      src: /media/logo.png
+      src: /logo.png
       alt: abap2UI5 Logo
       width: 200px
       height: 200px
