@@ -12,10 +12,7 @@ hero:
       width: 200px
       height: 200px
   actions:
-    - theme: brand
-      text: About
-      link: /get_started/quickstart
-    - theme: alt   
+    - theme: brand   
       text: Get Started
       link: /get_started/quickstart
     - theme: alt    
@@ -23,6 +20,10 @@ hero:
       link: /resources/release_notes
 
 features:
+  - title: Documentation
+    icon: 🧐
+    details: Find & Install the project from GitHub. Explore the repository and contribute to the codebase.
+    link: /get_started/quickstart
   - title: GitHub
     icon: 🦖
     details: Find & Install the project from GitHub. Explore the repository and contribute to the codebase.
