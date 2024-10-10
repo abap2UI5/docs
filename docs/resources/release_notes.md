@@ -134,13 +134,3 @@
 ## 2024-01-03 v1.113.0
 - Added New debugging tools
 - Changed UI5 module loading
-
-## 2023-12-20 v1.112.0
-- Added Binding on cell level
-- Added Custom control - MultiInput with backend token handling
-- Added Custom control - ui.table filtering after model update
-- Fixed Downport ready syntax
-
-## 2023-12-15 v1.110.0
-- Added Custom control - image mapster
-- Changed Package structure
