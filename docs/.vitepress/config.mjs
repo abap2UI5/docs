@@ -9,6 +9,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Get Started', link: '/get_started/quickstart' },
+      { text: 'Features', link: '/' },
       { text: 'Contribution', link: '/' },
       { text: 'Integration', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
@@ -18,8 +19,20 @@ export default defineConfig({
         text: 'Get Started',
         collapsed: true,
         items: [
-          { text: 'Markdown Examples', link: '/get_started/quickstart' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'Installation', link: '/get_started/quickstart' },
+          { text: 'Hello World', link: '/get_started/quickstart' },
+          { text: 'Configuration', link: '/get_started/configuration' },
+          { text: 'Sample Apps', link: '/get_started/configuration' }
+        ]
+      },
+      {
+        text: 'Features',
+        collapsed: true,
+        items: [
+          { text: 'Feature I', link: '/features/' },
+          { text: 'Feature II', link: '/features/' },
+          { text: 'Feature III', link: '/features/' },
+          { text: 'FAQ', link: '/features/faq' }
         ]
       },
       {
@@ -31,12 +44,14 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Integration',
+        text: 'Setup & Launchpad',
         collapsed: true,
         items: [
           { text: 'Business Technology Platform', link: '/markdown-examples' },
-          { text: 'Build Workzone', link: '/markdown-examples' },
-          { text: 'Fiori Launchpad', link: '/api-examples' }
+          { text: 'BTP ABAP Environment', link: '/markdown-examples' },
+          { text: 'S/4 Public Cloud', link: '/api-examples' },
+          { text: 'S/4 Private or On-Premise', link: '/api-examples' },
+          { text: 'R/3 Netweaver', link: '/api-examples' }
         ]
       },
       {

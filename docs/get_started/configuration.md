@@ -1,4 +1,4 @@
-## HTTP Handler Configuration
+# Configuration
 
 abap2UI5 can be run with various custom configurations. This is the call for the default setup:
 ```abap
@@ -10,7 +10,7 @@ abap2UI5 can be run with various custom configurations. This is the call for the
 ```
 For custom configurations, simply create a config variable and import it to the main method:
 
-#### Theme
+## Theme
 eg. for changing the theme the source code looks like this:
 ```abap
   METHOD if_http_extension~handle_request.
@@ -23,7 +23,7 @@ eg. for changing the theme the source code looks like this:
   ENDMETHOD.
 ``` 
 
-#### UI5 Bootstrapping
+## UI5 Bootstrapping
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -32,7 +32,7 @@ eg. for changing the theme the source code looks like this:
     ) ).
 ```
 
-#### Custom JS
+## Custom JS
 Use this for example to install additional custom controls [here:](https://github.com/abap2UI5-addons/custom-controls)
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -41,7 +41,7 @@ Use this for example to install additional custom controls [here:](https://githu
     ) ).
 ```
 
-#### Content-Security-Policy
+## Content-Security-Policy
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -52,7 +52,7 @@ Use this for example to install additional custom controls [here:](https://githu
     ) ).
 ```
 
-#### Title
+## Title
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -61,7 +61,7 @@ Use this for example to install additional custom controls [here:](https://githu
     ) ).
 ```
 
-#### Style / CSS
+## Style / CSS
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -70,5 +70,5 @@ Use this for example to install additional custom controls [here:](https://githu
     ) ).
 ```
 
-#### URL Parameter
+## URL Parameter
 Further configuration can be done by changing the URL [**here.**](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
