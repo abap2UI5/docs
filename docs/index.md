@@ -3,7 +3,9 @@
 layout: home
 
 hero:
-  text: "Developing UI5 Apps Purely in ABAP"
+  text: "abap2UI5"
+  tagline:
+    Developing UI5 Apps Purely in ABAP
   image:
       src: /logo.png
       alt: abap2UI5 Logo
@@ -11,6 +13,9 @@ hero:
       height: 200px
   actions:
     - theme: brand
+      text: About
+      link: /get_started/quickstart
+    - theme: alt   
       text: Get Started
       link: /get_started/quickstart
     - theme: alt    
@@ -18,17 +23,17 @@ hero:
       link: /resources/release_notes
 
 features:
-  - title: 100% ABAP
-    details: No JavaScript, DDL, EML or Customizing
-  - title: User-Friendly
-    details: Implement a single interface to create a standalone UI5 application
-  - title: Minimal System Footprint
-    details: Uses a simple HTTP handler (no BSP, OData, CDS or RAP)
-  - title: Cloud & On-Premise Ready
-    details: Supports both ABAP Cloud and Standard ABAP
-  - title: Broad System Compatibility
-    details: Runs on all ABAP releases (from NW 7.02 to ABAP Cloud)
-  - title: Easy Installation
-    details: Install via abapGit, no additional app deployment required
----
+  - title: GitHub
+    icon: 🦖
+    details: Find & Install the project from GitHub. Explore the repository, contribute to the codebase.
+    link: https://www.github.com/abap2UI5/abap2UI5
+  - title: Blogs
+    icon: 📚
+    details: Dive into abap2UI5 blogs for in-depth insights. Read articles, tutorials, and enhance your understanding and skills.
+    link: /resources/blogs
+  - title: LinkedIn
+    icon: ❤️
+    details: Stay connected and follow on social media. Join our LinkedIn community to network with others and stay updated with the latest changes.
+    link: https://www.linkedin.com/company/abap2ui5
 
+---
