@@ -10,8 +10,7 @@ export default defineConfig({
     nav: [
       { text: 'Get Started', link: '/get_started/quickstart' },
       { text: 'Features', link: '/' },
-      { text: 'Contribution', link: '/' },
-      { text: 'Integration', link: '/' },
+      { text: 'Setup & Launchpad', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
     ],
     sidebar: [
@@ -36,14 +35,6 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Contribution',
-        collapsed: true,
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      },
-      {
         text: 'Setup & Launchpad',
         collapsed: true,
         items: [
@@ -60,12 +51,13 @@ export default defineConfig({
         items: [
           { text: 'Release Notes', link: '/resources/release_notes' },
           { text: 'Blogs', link: '/resources/blogs' },
+          { text: 'Contribution', link: '/resources/release_notes' },
           { text: 'Links', link: '/resources/links' }
         ]
       }
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/abap2UI5' }
+      { icon: 'github', link: 'https://github.com/abap2UI5-documentation' }
     ]
   },
   markdown: {
