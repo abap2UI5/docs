@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/abap2UI5-documentation/', // Set your base URL here
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
   themeConfig: {
