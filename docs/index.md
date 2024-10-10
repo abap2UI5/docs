@@ -3,16 +3,23 @@
 layout: home
 
 hero:
-  name: "abap2UI5"
-  text: "Developing Purely in ABAP"
+  text: "Developing UI5 Apps Purely in ABAP"
+  image:
+      src: /media/logo.png
+      alt: abap2UI5 Logo
+      width: 200px
+      height: 200px
   actions:
     - theme: brand
-      text: Documentation
-      link: /markdown-examples
+      text: Get Started
+      link: /get_started/quickstart
+    - theme: alt    
+      text: Release Notes
+      link: /resources/release_notes
 
 features:
   - title: 100% ABAP
-    details: Developing Purely in ABAP (no JavaScript, DDL, EML or Customizing)
+    details: No JavaScript, DDL, EML or Customizing
   - title: User-Friendly
     details: Implement a single interface to create a standalone UI5 application
   - title: Minimal System Footprint
