@@ -28,8 +28,8 @@ export default defineConfig({
         text: 'Features',
         collapsed: true,
         items: [
-          { text: 'Feature I', link: '/features/' },
-          { text: 'Feature II', link: '/features/' },
+          { text: 'Remotely App Calls', link: '/features/' },
+          { text: 'Stateful Sessions', link: '/features/' },
           { text: 'Feature III', link: '/features/' },
           { text: 'FAQ', link: '/features/faq' }
         ]
@@ -41,7 +41,7 @@ export default defineConfig({
           { text: 'Business Technology Platform', link: '/markdown-examples' },
           { text: 'BTP ABAP Environment', link: '/markdown-examples' },
           { text: 'S/4 Public Cloud', link: '/api-examples' },
-          { text: 'S/4 Private or On-Premise', link: '/api-examples' },
+          { text: 'S/4 Private Cloud', link: '/api-examples' },
           { text: 'R/3 Netweaver', link: '/api-examples' }
         ]
       },
