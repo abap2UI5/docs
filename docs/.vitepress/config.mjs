@@ -6,11 +6,15 @@ export default defineConfig({
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
   themeConfig: {
+      search: {
+        provider: 'local'
+      },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Get Started', link: '/get_started/quickstart' },
-      { text: 'Features', link: '/' },
-      { text: 'Setup & Launchpad', link: '/' },
+      { text: 'Development', link: '/' },
+      { text: 'Administration', link: '/' },
+      { text: 'Technical Details', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
     ],
     sidebar: [
@@ -19,30 +23,72 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Installation', link: '/get_started/quickstart' },
-          { text: 'Hello World', link: '/get_started/quickstart' },
-          { text: 'Configuration', link: '/get_started/configuration' },
-          { text: 'Sample Apps', link: '/get_started/configuration' }
+          { text: 'Hello World', link: '/get_started/hello_world' },
+          { text: 'Sample Apps', link: '/get_started/configuration' },
+          { text: 'Configuration', collapsed: true , items: [
+            { text: 'Theme', link: '/get_started/configuration#theme' },
+            { text: 'UI5 Bootstrapping', link: '/get_started/configuration#ui5-bootstrapping' },
+            { text: 'CSP', link: '/get_started/configuration#Content-Security-Policy' },
+            { text: 'Title', link: '/get_started/configuration#title' }
+          ]},
+          { text: `Overview`, collapsed: true , items: [
+            { text: 'Connectors', link: '/get_started/configuration#theme' },
+            { text: 'Addons', link: '/get_started/configuration#ui5-bootstrapping' },
+            { text: 'Apps', link: '/get_started/configuration#Content-Security-Policy' },
+          ]},
         ]
       },
       {
-        text: 'Features',
+        text: 'Development',
         collapsed: true,
         items: [
-          { text: 'Remotely App Calls', link: '/features/' },
+          { text: 'Basics', link: '/features/faq' },
+          { text: 'Debugging', link: '/features/' },
           { text: 'Stateful Sessions', link: '/features/' },
-          { text: 'Feature III', link: '/features/' },
-          { text: 'FAQ', link: '/features/faq' }
+          { text: 'Popups', link: '/features/' },
+          { text: 'Localization, i18n', link: '/features/' },
+          { text: 'External Libraries', link: '/features/' },
+          { text: 'Custom Controls', link: '/features/' },
         ]
       },
       {
-        text: 'Setup & Launchpad',
+        text: 'Administration',
         collapsed: true,
         items: [
-          { text: 'Business Technology Platform', link: '/markdown-examples' },
-          { text: 'BTP ABAP Environment', link: '/markdown-examples' },
-          { text: 'S/4 Public Cloud', link: '/api-examples' },
-          { text: 'S/4 Private Cloud', link: '/api-examples' },
-          { text: 'R/3 Netweaver', link: '/api-examples' }
+          { text: 'Remotely App Call', link: '/features/' },
+          { text: 'Downporting', link: '/features/' },
+          { text: 'Multiple Installations', link: '/features/' },
+          { text: 'Productive Usage', link: '/features/' },
+          { text: 'Performance', link: '/features/faq' },
+          { text: 'Security', link: '/features/faq' },
+          { text: 'UI5 Framework', link: '/features/faq' },
+          {
+            text: 'Compatibility', collapsed: true, items: [
+              { text: 'BTP ABAP Env.', link: '/markdown-examples' },
+              { text: 'S/4 Public Cloud', link: '/api-examples' },
+              { text: 'S/4 Private Cloud', link: '/api-examples' },
+              { text: 'R/3 Netweaver', link: '/api-examples' }
+            ]
+          },
+          {
+            text: 'Launchpads', collapsed: true,
+            items: [
+              { text: 'BTP Workzone', link: '/features/faq' },
+              { text: 'BTP ABAP Env.', link: '/markdown-examples' },
+              { text: 'S/4 Public Cloud', link: '/markdown-examples' },
+              { text: 'S/4 Private Cloud', link: '/markdown-examples' }
+            ]
+          }
+        ]
+      },
+      {
+        text: 'Technical Details',
+        collapsed: true,
+        items: [
+          { text: 'Communication', link: '/features/' },
+          { text: 'Persistence', link: '/features/' },
+          { text: 'Data Binding', link: '/features/' },
+          { text: 'User Interface', link: '/features/faq' },
         ]
       },
       {
