@@ -14,7 +14,7 @@ hero:
   actions:
     - theme: brand   
       text: Get Started
-      link: /get_started/quickstart
+      link: /get_started/introduction
     - theme: alt    
       text: Release Notes
       link: /resources/release_notes
