@@ -42,18 +42,23 @@ export default defineConfig({
         items: [
           { text: 'Basics', link: '/features/faq' },
           { text: 'Debugging', link: '/features/' },
-          { text: 'Stateful Sessions', link: '/features/' },
-          { text: 'Popups', link: '/features/' },
           { text: 'Localization, i18n', link: '/features/' },
-          { text: 'External Libraries', link: '/features/' },
-          { text: 'Custom Controls', link: '/features/' },
+          { text: 'Stateful Sessions', link: '/features/' },
           {
-            text: 'Addons', collapsed: true, items: [
+            text: 'Addons', collapsed: false, items: [
               { text: 'Custom Controls', link: '/markdown-examples' },
               { text: 'Popups', link: '/api-examples' },
               { text: 'Layout & Variants', link: '/api-examples' },
             ]
           },
+        ]
+      },
+      {
+        text: 'Extensibility',
+        collapsed: true,
+        items: [
+          { text: 'Custom Controls', link: '/features/' },
+          { text: 'External Libraries', link: '/features/' },
         ]
       },
       {
