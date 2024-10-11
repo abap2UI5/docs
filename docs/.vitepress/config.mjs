@@ -116,7 +116,7 @@ export default defineConfig({
     ],
     socialLinks: [
       { icon: 'linkedin', link: 'https://www.linkedin.com/company/abap2ui5/' },
-      { icon: 'github', link: 'https://github.com/abap2UI5' },
+      { icon: 'github', link: 'https://www.github.com/abap2UI5/abap2UI5' },
     
     ]
   },

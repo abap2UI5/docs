@@ -24,10 +24,6 @@ features:
     icon: 🎓
     details: Get started with abap2UI5. Learn how to set up, configure, and develop UI5 applications using abap2UI5.
     link: /get_started/quickstart
-  - title: Blogs
-    icon: 📚
-    details: Dive into abap2UI5 blogs. Read articles, tutorials, and enhance your understanding and skills.
-    link: /resources/blogs
   - title: GitHub
     icon: 🦖
     details: Find & Install the project from GitHub. Explore the repository and contribute to the codebase.
