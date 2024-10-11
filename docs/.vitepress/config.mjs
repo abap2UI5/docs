@@ -6,6 +6,11 @@ export default defineConfig({
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
   themeConfig: {
+    footer: {
+      message: 'Released under the MIT License',
+      copyright: '2023-present abap2UI5'
+    },
+
     editLink: {
       pattern: 'https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/:path',
       text: 'Edit this page on GitHub'
