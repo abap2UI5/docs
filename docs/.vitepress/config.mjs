@@ -15,15 +15,14 @@ export default defineConfig({
       },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Get Started', link: '/get_started/quickstart' },
+      { text: 'Getting Started', link: '/get_started/quickstart' },
       { text: 'Development', link: '/' },
       { text: 'Administration', link: '/' },
-      { text: 'Technical Details', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
     ],
     sidebar: [
       {
-        text: 'Get Started',
+        text: 'Getting Started',
         link: '/get_started/introduction',
         collapsed: true,
         items: [
@@ -67,17 +66,13 @@ export default defineConfig({
             { text: 'CSP', link: '/get_started/configuration#Content-Security-Policy' },
             { text: 'Title', link: '/get_started/configuration#title' }
           ]},
-          { text: 'Remotely App Call', link: '/features/' },
-          { text: 'Downporting', link: '/features/' },
-          { text: 'Multiple Installations', link: '/features/' },
           { text: 'Fiori Launchpad', link: '/features/' },
-          { text: 'BTP Workzone', link: '/features/' },
           { text: 'Productive Usage', link: '/features/' },
           { text: 'Performance', link: '/features/faq' },
           { text: 'Security', link: '/features/faq' },
           { text: 'UI5 Framework', link: '/features/faq' },
           {
-            text: 'Setup', collapsed: true,
+            text: 'Setup', 
             items: [
               { text: 'BTP ABAP Environment', link: '/markdown-examples' },
               { text: 'S/4 Public Cloud', link: '/markdown-examples' },
@@ -97,6 +92,16 @@ export default defineConfig({
       //     { text: 'User Interface', link: '/features/faq' },
       //   ]
       // },
+     {
+         text: 'Extended Features',
+         collapsed: true,
+         items: [
+         { text: 'BTP Workzone', link: '/features/' },
+        { text: 'Remotely App Call', link: '/features/' },
+        { text: 'Downporting', link: '/features/' },
+        { text: 'Multiple Installations', link: '/features/' },
+        ]
+       },
       {
         text: 'Resources',
         collapsed: true,
