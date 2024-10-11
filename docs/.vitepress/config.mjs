@@ -17,10 +17,13 @@ export default defineConfig({
     nav: [
       { text: 'Getting Started', link: '/get_started/quickstart' },
       { text: 'Development', link: '/' },
-      { text: 'Administration', link: '/' },
+      { text: 'Setup', link: '/' },
       { text: 'More', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
     ],
+
+
+    
     sidebar: [
       {
         text: 'Getting Started',
@@ -68,7 +71,7 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Administration',
+        text: 'Setup',
         collapsed: true,
         items: [
           { text: 'Basics', collapsed: true , items: [
@@ -79,11 +82,10 @@ export default defineConfig({
           ]},
           { text: 'Performance', link: '/features/faq' },
           { text: 'Security', link: '/features/faq' },
-          { text: 'Productive Usage', link: '/features/' },
           { text: 'UI5 Framework', link: '/features/faq' },
           { text: 'Fiori Launchpad', link: '/features/' },
           {
-            text: 'Setup', 
+            text: 'Productive Usage', 
             items: [
               { text: 'BTP ABAP Environment', link: '/markdown-examples' },
               { text: 'S/4 Public Cloud', link: '/markdown-examples' },

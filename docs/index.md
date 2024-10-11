@@ -4,24 +4,23 @@ layout: home
 
 hero:
   text: "abap2UI5"
-  tagline:
-    Developing UI5 Apps Purely in ABAP
+  tagline: "Developing UI5 Apps Purely in ABAP"
   image:
-      src: /logo.png
-      alt: abap2UI5 Logo
-      width: 200px
-      height: 200px
+    src: /logo.png
+    alt: abap2UI5 Logo
+    width: 200px
+    height: 200px
   actions:
-    - theme: brand   
+    - theme: brand
       text: Get Started
       link: /get_started/introduction
-    - theme: alt    
+    - theme: alt
       text: Release Notes
       link: /resources/release_notes
 
 features:
-  - title: Documentation
-    icon: 🎓
+  - title: Guide
+    icon: 🚀
     details: Learn how to develop, configure, and administrate UI5 apps using abap2UI5.
     link: /get_started/quickstart
   - title: GitHub
@@ -32,5 +31,4 @@ features:
     icon: ❤️
     details: Join our LinkedIn community and stay updated with the latest changes.
     link: https://www.linkedin.com/company/abap2ui5
-
 ---
