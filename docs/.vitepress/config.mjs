@@ -23,7 +23,7 @@ export default defineConfig({
       { text: 'Getting Started', link: '/get_started/quickstart' },
       { text: 'Development', link: '/' },
       { text: 'Setup', link: '/' },
-      { text: 'More', link: '/' },
+      { text: 'Features', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
     ],
 
@@ -49,20 +49,22 @@ export default defineConfig({
         text: 'Development',
         collapsed: true,
         items: [
-          { text: 'Basics', collapsed: true , items: [
+          { text: 'Basic', items: [
               { text: 'Theme', link: '/get_started/configuration#theme' },
-              { text: 'UI5 Bootstrapping', link: '/get_started/configuration#ui5-bootstrapping' },
               { text: 'CSP', link: '/get_started/configuration#Content-Security-Policy' },
               { text: 'Title', link: '/get_started/configuration#title' }
             ]},
           { text: 'Debugging', link: '/features/' },
-          { text: 'Localization, i18n', link: '/features/' },
+          { text: 'Message & Error', link: '/features/' },
+          { text: 'Translation, i18n', link: '/features/' },
+          { text: 'Authorization', link: '/features/' },
           { text: 'Stateful Sessions', link: '/features/' },
+          { text: 'Runtime Typed Data', link: '/features/' },
           {
             text: 'Addons',  items: [
-              { text: 'Custom Controls', link: '/markdown-examples' },
               { text: 'Popups', link: '/api-examples' },
               { text: 'Layouts & Variants', link: '/api-examples' },
+              { text: 'External Libraries', link: '/markdown-examples' },
             ]
           },
           {
@@ -79,7 +81,7 @@ export default defineConfig({
         text: 'Setup',
         collapsed: true,
         items: [
-          { text: 'Basics', collapsed: true , items: [
+          { text: 'Basic', collapsed: true , items: [
             { text: 'Theme', link: '/get_started/configuration#theme' },
             { text: 'UI5 Bootstrapping', link: '/get_started/configuration#ui5-bootstrapping' },
             { text: 'CSP', link: '/get_started/configuration#Content-Security-Policy' },
@@ -88,6 +90,7 @@ export default defineConfig({
           { text: 'Performance', link: '/features/faq' },
           { text: 'Security', link: '/features/faq' },
           { text: 'UI5 Framework', link: '/features/faq' },
+          { text: 'SE80 or ADT', link: '/features/faq' },
           { text: 'Fiori Launchpad', link: '/features/' },
           {
             text: 'Productive Usage', 
