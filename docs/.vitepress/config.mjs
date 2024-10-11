@@ -18,6 +18,7 @@ export default defineConfig({
       { text: 'Getting Started', link: '/get_started/quickstart' },
       { text: 'Development', link: '/' },
       { text: 'Administration', link: '/' },
+      { text: 'More', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
     ],
     sidebar: [
@@ -40,42 +41,47 @@ export default defineConfig({
         text: 'Development',
         collapsed: true,
         items: [
-          { text: 'Basics', link: '/features/faq' },
+          { text: 'Basics', collapsed: true , items: [
+              { text: 'Theme', link: '/get_started/configuration#theme' },
+              { text: 'UI5 Bootstrapping', link: '/get_started/configuration#ui5-bootstrapping' },
+              { text: 'CSP', link: '/get_started/configuration#Content-Security-Policy' },
+              { text: 'Title', link: '/get_started/configuration#title' }
+            ]},
           { text: 'Debugging', link: '/features/' },
           { text: 'Localization, i18n', link: '/features/' },
           { text: 'Stateful Sessions', link: '/features/' },
           {
-            text: 'Addons', collapsed: false, items: [
+            text: 'Addons',  items: [
               { text: 'Custom Controls', link: '/markdown-examples' },
               { text: 'Popups', link: '/api-examples' },
-              { text: 'Layout & Variants', link: '/api-examples' },
+              { text: 'Layouts & Variants', link: '/api-examples' },
             ]
           },
-        ]
-      },
-      {
-        text: 'Extensibility',
-        collapsed: true,
-        items: [
-          { text: 'Custom Controls', link: '/features/' },
-          { text: 'External Libraries', link: '/features/' },
+          {
+            text: 'Extensibility',
+            items: [
+              { text: 'Custom JS', link: '/features/' },
+              { text: 'Custom Controls', link: '/features/' },
+              { text: 'External Libraries', link: '/features/' },
+            ]
+          },
         ]
       },
       {
         text: 'Administration',
         collapsed: true,
         items: [
-          { text: 'Configuration', collapsed: true , items: [
+          { text: 'Basics', collapsed: true , items: [
             { text: 'Theme', link: '/get_started/configuration#theme' },
             { text: 'UI5 Bootstrapping', link: '/get_started/configuration#ui5-bootstrapping' },
             { text: 'CSP', link: '/get_started/configuration#Content-Security-Policy' },
             { text: 'Title', link: '/get_started/configuration#title' }
           ]},
-          { text: 'Fiori Launchpad', link: '/features/' },
-          { text: 'Productive Usage', link: '/features/' },
           { text: 'Performance', link: '/features/faq' },
           { text: 'Security', link: '/features/faq' },
+          { text: 'Productive Usage', link: '/features/' },
           { text: 'UI5 Framework', link: '/features/faq' },
+          { text: 'Fiori Launchpad', link: '/features/' },
           {
             text: 'Setup', 
             items: [
@@ -87,24 +93,14 @@ export default defineConfig({
           }
         ]
       },
-      // {
-      //   text: 'Technical Details',
-      //   collapsed: true,
-      //   items: [
-      //     { text: 'Communication', link: '/features/' },
-      //     { text: 'Persistence', link: '/features/' },
-      //     { text: 'Data Binding', link: '/features/' },
-      //     { text: 'User Interface', link: '/features/faq' },
-      //   ]
-      // },
      {
          text: 'More Features',
          collapsed: true,
          items: [
-         { text: 'BTP Workzone', link: '/features/' },
-        { text: 'Remotely App Call', link: '/features/' },
-        { text: 'Downporting', link: '/features/' },
-        { text: 'Multiple Installations', link: '/features/' },
+                  { text: 'BTP Workzone', link: '/features/' },
+                  { text: 'Remotely App Call', link: '/features/' },
+                  { text: 'Downporting', link: '/features/' },
+                  { text: 'Renaming', link: '/features/' },
         ]
        },
       {

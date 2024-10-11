@@ -15,7 +15,7 @@ Create a new HTTP Service with the following handler implementation:
 ```abap
 CLASS zcl_my_handler_onprem DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES if_http_extension.
@@ -37,7 +37,7 @@ ENDCLASS.
 ```abap
 CLASS zcl_my_handler_cloud DEFINITION
   PUBLIC
-  CREATE PUBLIC .
+  CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES if_http_service_extension.
