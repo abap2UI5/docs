@@ -113,6 +113,7 @@ export default defineConfig({
           { text: 'Blogs', link: '/resources/blogs' },
           { text: 'Contribution', link: '/resources/release_notes' },
           { text: 'License', link: '/resources/license' },
+          { text: 'Support', link: '/resources/license' },
         ]
       }
     ],
