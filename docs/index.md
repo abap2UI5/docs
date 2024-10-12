@@ -13,7 +13,7 @@ hero:
     height: 200px
   actions:
     - theme: brand
-      text: About abap2UI5
+      text: About
       link: /get_started/introduction
     - theme: alt
       text: Quickstart
