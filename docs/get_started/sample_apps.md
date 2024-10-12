@@ -1,8 +1,17 @@
+---
+outline: [2, 4]
+---
+
 # Sample Apps
 
-[The samples repository](https://github.com/abap2UI5/abap2UI5-samples) is the easiest way to learn how to develop with abap2UI5. 
-Try out samples for various use cases, such as tables, lists, trees, and many other UI5 controls. Quickly copy & paste code snippets and accelerate your development process. Soon you will become an abap2UI5 expert ;)
-
-
-## Overview
+The [samples repository](https://github.com/abap2UI5/abap2UI5-samples) is the easiest way to learn how to develop with abap2UI5. 
+Try out samples for various use cases, such as tables, lists, trees, and many other UI5 controls. Quickly copy & paste code snippets and accelerate your development process.
+### Samples
+With over 200 samples available, you can dive right in and start experimenting:
 ![alt text](image-1.png)
+
+### Jump into the Code
+Don’t forget to press Ctrl+F12 for an in-depth look:
+![alt text](image-2.png)
+
+Check out the source code for every sample, and soon you’ll be an abap2UI5 expert! 😉

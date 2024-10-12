@@ -4,12 +4,12 @@ outline: [2, 4]
 
 # Installation
 
-## 1. Installation with abapGit
+### 1. Installation with abapGit
 
 Install the project with [abapGit.](https://abapgit.org)
 ![alt text](image.png)
 
-## 2. Set up a new HTTP service
+### 2. Set up a new HTTP service
 Create a new HTTP Service with the following handler implementation:
 
 ::: code-group
@@ -62,7 +62,7 @@ ENDCLASS.
 :::
 
 
-## 3. Start your App
+### 3. Start your App
 Call your HTTP Service in the browser, press check and start the app:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56"><br>
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/beee0551-494f-4e29-98bd-529395e27405">

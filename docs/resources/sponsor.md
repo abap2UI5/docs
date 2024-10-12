@@ -1,12 +1,12 @@
 # Sponsor
 
 
-## Contributors
+### Contributors
 This project greatly benefits from its [contributors](https://github.com/abap2UI5/abap2UI5/graphs/contributors)
 
 
 
-## Used Tools
+### Used Tools
 
  and supporting tools:
 * Code versioning & distribution via [abapGit](https://abapgit.org/) [(authors)](https://abapgit.org/sponsor.html)
@@ -21,4 +21,4 @@ This project greatly benefits from its [contributors](https://github.com/abap2UI
 * Developed on an [ABAP Cloud Dev Trial 2022](https://hub.docker.com/r/sapse/abap-cloud-developer-trial) [(hosted by Nuve Platform)](https://www.nuveplatform.com/)
 
 
-## Social Media
+### Social Media

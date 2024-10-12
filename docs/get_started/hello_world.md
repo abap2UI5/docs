@@ -1,7 +1,25 @@
-# Create your first App
+---
+outline: [2, 4]
+---
+# Hello World
 
+### First App
 Create a new class and implement the abap2UI5 interface or just copy&paste this snippet:
+```abap
+CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
 
+CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+    client->message_box_display( `Hello World`)
+  ENDMETHOD.
+ENDCLASS.
+```
+
+### More Functions
+Now we add some features to get a data exchange between browser and abap:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -32,3 +50,9 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+
+::: tip **ABAP Language Versions**
+
+While we need to differ between Standard ABAP and ABAP for Cloud in the HTTP Handler, her
+
+:::

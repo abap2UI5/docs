@@ -25,27 +25,39 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Guide',  items: [
-        { text: 'Addons', link: '/item-1' },
-        { text: 'Alln', link: '/item-2' },
+        { text: 'Getting Started', link: '/get_started/get_started' },
+        { text: 'Development', link: '/development/development' },
+        { text: 'Configuration' , link: '/configuration/configuration'  },
+        { text: 'Advanced Topics', link: '/advanced/advanced' },
+        { text: 'Technical Insights', link: '/insights/insights' },
+        { text: 'Resources', link: '/resources/resources' },
+      ]},
+      { text: 'Jump',  items: [
+        { text: 'Repositories',  items: [
+          { text: 'Project', link: '/item-1' },
+          { text: 'Downports', link: '/item-2' },
+          { text: 'Issues', link: '/item-2' },
+        ]},
+        { text: 'Connectors',  items: [
+          { text: 'Addons', link: '/item-1' },
+          { text: 'Alln', link: '/item-2' },
+          { text: 'Issues', link: '/item-2' }
+        ]},
         { text: 'Addons',  items: [
           { text: 'Addons', link: '/item-1' },
           { text: 'Alln', link: '/item-2' },
           { text: 'Issues', link: '/item-2' },
         ]},
-      ]},
-      { text: 'Quick Links',  items: [
-        { text: 'Addons', link: '/item-1' },
-        { text: 'Alln', link: '/item-2' },
-        { text: 'Addons',  items: [
-          { text: 'Addons', link: '/item-1' },
-          { text: 'Alln', link: '/item-2' },
-          { text: 'Issues', link: '/item-2' },
+       { text: 'Apps',  items: [
+            { text: 'Addons', link: '/item-1' },
+            { text: 'Alln', link: '/item-2' },
+            { text: 'Issues', link: '/item-2' },
         ]},
       ]},
       { text: '1.134.0',  items: [
-        { text: 'Changelog', link: '/item-1' },
-        { text: 'Contribution', link: '/item-2' },
-        { text: 'Support', link: '/item-2' },
+        { text: 'Changelog', link: '/resources/changelog' },
+        { text: 'Contribution', link: '/resources/contribution' },
+        { text: 'Support', link: '/resources/support' },
       ]},
     ],
     sidebar: [
@@ -67,9 +79,10 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Basic Concepts' },
-          { text: 'Messages & Errors', link: '/features/' },
-          { text: 'Translation (i18n)', link: '/features/' },
+          { text: 'Messages, Errors', link: '/features/' },
+          { text: 'Translation, 18n', link: '/features/' },
           { text: 'User Interface', link: '/features/' },
+          { text: 'Data Binding', link: '/features/' },
           { text: 'Navigation', link: '/features/' },
           { text: 'Runtime Typed Data', link: '/features/' },
           { text: 'Debugging', link: '/features/' },
@@ -90,7 +103,7 @@ export default defineConfig({
           { text: 'General Settings' },
           { text: 'Productive Usage', link: '/features/' },
           { text: 'Performance', link: '/features/faq' },
-          { text: 'Security & Authorization', link: '/features/faq' },
+          { text: 'Security, Authorization', link: '/features/faq' },
           { text: 'Fiori Launchpad', link: '/features/' },
           {
             text: 'Installation', 

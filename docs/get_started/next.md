@@ -1,20 +1,19 @@
 # Overview
 
-## Connectors
+Next check out the Development Category to learn more functionalitis.
 
-## Addons
+### Addons
 
-## Apps
+https://github.com/abap2UI5-addons
 
-## More
+### Connectors
+You want to fully integrate your abap2UI5 apps in your systeem landscape? Check out the setup categroy. Or go directly to the following reposiories:
+https://github.com/abap2UI5-connectors
+
+### Apps
+
+https://github.com/abap2UI5-apps
 
 Check out other projects form the ABAP Open Source Community:
 
-|  Repository | Description |
-| ------------- | ------------- |
-| [The Quest](https://github.com/nomssi/axage)  | A wizard's adventure game based on a fork of the AXAGE game engine (ABAP teXt Adventure Game Engine) and abap2UI5.  |
-| [Advent of Code](https://github.com/joltdx/abap-advent-2023-template) | Template for the Advent of Code 2023 in ABAP  |
-| [Generic DDIC Searchhelp](https://github.com/axelmohnen/a2UI5-generic_search_hlp) | Generic DDIC searchhelp generator  |
 
-
- _Your app is not listed her? Feel free to send a PR and extend this file!_
