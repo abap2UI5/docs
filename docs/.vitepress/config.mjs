@@ -55,10 +55,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Introduction', link: '/get_started/introduction' },
-          { text: 'Quickstart', items: [
-            { text: 'Standard ABAP', link: '/get_started/quickstart_standard' },
-            { text: 'ABAP for Cloud', link: '/get_started/quickstart_cloud' },
-          ]},
+          { text: 'Quickstart', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
           { text: 'Sample Apps', link: '/get_started/sample_apps' },
           { text: `What's next?`, link: '/get_started/next'  }
@@ -85,7 +82,6 @@ export default defineConfig({
           },
         ]
       },
-
       {
         text: 'Configuration',
         link: '/configuration/configuration',
@@ -109,8 +105,8 @@ export default defineConfig({
             text: 'More', 
             items: [
               { text: 'SE80 or ADT', link: '/features/faq' },
-              { text: 'UI5 Compatibility', link: '/features/faq' },
-              { text: 'ABAP Language Versions', link: '/features/faq' },
+              { text: 'UI5 Versions', link: '/features/faq' },
+              { text: 'ABAP Versions', link: '/features/faq' },
             ]
           }
         ]
@@ -140,23 +136,20 @@ export default defineConfig({
         text: 'Technical Insights',
         link: '/insights/insights',
         collapsed: true,
-        items: [
-                 { text: 'BTP Workzone', link: '/features/' },
-                 { text: 'Remotely App Call', link: '/features/' },
-                 { text: 'Downporting', link: '/features/' },
-                 { text: 'Renaming', link: '/features/' },
-       ]
+        items: [  { text: '...', link: '/insights/insights' }, ]
       },
       {
         text: 'Resources',
         link: '/resources/resources',
         collapsed: true,
         items: [
-          { text: 'Changelog', link: '/resources/release_notes' },
+          { text: 'Changelog', link: '/resources/changelog' },
           { text: 'Blogs', link: '/resources/blogs' },
-          { text: 'Contribution', link: '/resources/release_notes' },
+          { text: 'References', link: '/resources/references' },
+          { text: 'Contribution', link: '/resources/contribution' },
+          { text: 'Support', link: '/resources/support' },
+          { text: 'Sponsor', link: '/resources/sponsor' },
           { text: 'License', link: '/resources/license' },
-          { text: 'Support', link: '/resources/license' },
         ]
       }
     ],

@@ -11,8 +11,10 @@ Install the project with [abapGit.](https://abapgit.org)
 
 ## 2. Set up a new HTTP service
 Create a new HTTP Service with the following handler implementation:
-### Standard ABAP
-```abap
+
+::: code-group
+
+```abap [ABAP]
 CLASS zcl_my_handler_onprem DEFINITION
   PUBLIC
   CREATE PUBLIC.
@@ -26,15 +28,16 @@ ENDCLASS.
 
 CLASS zcl_my_handler_onprem IMPLEMENTATION.
 
- METHOD if_http_extension~handle_request.
+  METHOD if_http_extension~handle_request.
+
     z2ui5_cl_http_handler=>factory( server )->main( ).
+
   ENDMETHOD.
 
 ENDCLASS.
 ```
-### ABAP for Cloud
-   
-```abap
+
+```abap [ABAP Cloud]
 CLASS zcl_my_handler_cloud DEFINITION
   PUBLIC
   CREATE PUBLIC.
@@ -49,11 +52,16 @@ ENDCLASS.
 CLASS zcl_my_handler_cloud IMPLEMENTATION.
 
   METHOD if_http_service_extension~handle_request.
-   z2ui5_cl_http_handler=>factory_cloud( req = request res = response )->main( ).
+
+    z2ui5_cl_http_handler=>factory( req = request res = response )->main( ).
+
   ENDMETHOD.
 
 ENDCLASS.
 ```
+:::
+
+
 ## 3. Start your App
 Call your HTTP Service in the browser, press check and start the app:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56"><br>
