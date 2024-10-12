@@ -2,8 +2,11 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   base: '/docs/', // Set your base URL here
+  head: [
+    ['link', { rel: 'shortcut icon', href: '/public/favicon.ico' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/public/favicon.ico' }],
+  ],
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
   themeConfig: {
