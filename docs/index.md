@@ -4,7 +4,7 @@ layout: home
 
 hero:
   text: "abap2UI5"
-  tagline:  "Simple & Open Source. \nDeveloping UI5 Apps Purely in ABAP."
+  tagline:  "Simple. Powerful. Open Source. \nDeveloping UI5 Apps Purely in ABAP."
   image:
     src: /logo.png
     alt: abap2UI5 Logo
