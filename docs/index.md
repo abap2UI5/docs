@@ -4,7 +4,7 @@ layout: home
 
 hero:
   text: "abap2UI5"
-  tagline:  "Simple. Powerful. Open Source. \nDeveloping UI5 Apps Purely in ABAP."
+  tagline:  "Developing UI5 Apps Purely in ABAP.\nEfficient. Simple. Open Source. "
   image:
     src: /logo.png
     alt: abap2UI5 Logo
@@ -21,7 +21,7 @@ hero:
 features:
   - title: Guide
     icon: 🚀
-    details: Learn how to develop, configure, and manage apps with abap2UI5.
+    details: Learn how to develop, configure, and run apps with abap2UI5.
     link: /get_started/quickstart
   - title: GitHub
     icon: 🦖
@@ -29,6 +29,6 @@ features:
     link: https://www.github.com/abap2UI5/abap2UI5
   - title: LinkedIn
     icon: ❤️
-    details: Join our LinkedIn community to stay informed about updates and latest changes.
+    details: Follow on LinkedIn to stay informed about updates and latest changes.
     link: https://www.linkedin.com/company/abap2ui5
 ---
