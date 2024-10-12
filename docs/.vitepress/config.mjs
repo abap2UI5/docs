@@ -2,10 +2,12 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
   base: '/docs/', // Set your base URL here
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
   themeConfig: {
+      logo: '/logo.png',
     footer: {
       message: 'Released under the MIT License',
       copyright: '2023-present abap2UI5'
@@ -19,9 +21,13 @@ export default defineConfig({
       },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Getting Started', link: '/get_started/quickstart' },
+      { text: 'Getting Started',  items: [
+        { text: 'Item A', link: '/item-1' },
+        { text: 'Item B', link: '/item-2' },
+        { text: 'Item C', link: '/item-3' }
+      ]},
       { text: 'Development', link: '/' },
-      { text: 'Setup', link: '/' },
+      { text: 'Configuration', link: '/' },
       { text: 'Advanced', link: '/' },
       { text: 'Insights', link: '/' },
       { text: 'Resources', link: '/resources/blogs' }
