@@ -4,8 +4,8 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   base: '/docs/', // Set your base URL here
   head: [
-    ['link', { rel: 'shortcut icon', href: '/public/favicon.ico' }],
-    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/public/favicon.ico' }],
+    ['link', { rel: 'shortcut icon', href: '/docs/favicon.ico' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/docs/favicon.ico' }],
   ],
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
@@ -24,16 +24,29 @@ export default defineConfig({
       },
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Getting Started',  items: [
-        { text: 'Item A', link: '/item-1' },
-        { text: 'Item B', link: '/item-2' },
-        { text: 'Item C', link: '/item-3' }
+      { text: 'Guide',  items: [
+        { text: 'Addons', link: '/item-1' },
+        { text: 'Alln', link: '/item-2' },
+        { text: 'Addons',  items: [
+          { text: 'Addons', link: '/item-1' },
+          { text: 'Alln', link: '/item-2' },
+          { text: 'Issues', link: '/item-2' },
+        ]},
       ]},
-      { text: 'Development', link: '/' },
-      { text: 'Configuration', link: '/' },
-      { text: 'Advanced', link: '/' },
-      { text: 'Insights', link: '/' },
-      { text: 'Resources', link: '/resources/blogs' }
+      { text: 'Quick Links',  items: [
+        { text: 'Addons', link: '/item-1' },
+        { text: 'Alln', link: '/item-2' },
+        { text: 'Addons',  items: [
+          { text: 'Addons', link: '/item-1' },
+          { text: 'Alln', link: '/item-2' },
+          { text: 'Issues', link: '/item-2' },
+        ]},
+      ]},
+      { text: '1.134.0',  items: [
+        { text: 'Changelog', link: '/item-1' },
+        { text: 'Contribution', link: '/item-2' },
+        { text: 'Support', link: '/item-2' },
+      ]},
     ],
     sidebar: [
       {
