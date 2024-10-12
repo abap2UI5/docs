@@ -70,12 +70,12 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Basic Concepts' },
-          { text: 'Debugging', link: '/features/' },
           { text: 'Messages & Errors', link: '/features/' },
           { text: 'Translation (i18n)', link: '/features/' },
           { text: 'User Interface', link: '/features/' },
           { text: 'Navigation', link: '/features/' },
           { text: 'Runtime Typed Data', link: '/features/' },
+          { text: 'Debugging', link: '/features/' },
           {
             text: 'Addons',  items: [
               { text: 'Popups', link: '/api-examples' },
@@ -152,7 +152,7 @@ export default defineConfig({
         link: '/resources/resources',
         collapsed: true,
         items: [
-          { text: 'Release Notes', link: '/resources/release_notes' },
+          { text: 'Changelog', link: '/resources/release_notes' },
           { text: 'Blogs', link: '/resources/blogs' },
           { text: 'Contribution', link: '/resources/release_notes' },
           { text: 'License', link: '/resources/license' },
