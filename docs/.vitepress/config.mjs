@@ -102,7 +102,7 @@ export default defineConfig({
         link: '/configuration/configuration',
         collapsed: true,
         items: [
-          { text: 'General',          link: '/configuration/general'  },
+          { text: 'Setup',          link: '/configuration/general'  },
           {
             text: 'Installation', 
             link: '/configuration/installation',
@@ -168,9 +168,8 @@ export default defineConfig({
         collapsed: true,
         items: [  
             { text: 'General', link: '/insights/general' }, 
-            { text: 'CI/CD', link: '/insights/general' }, 
+            { text: 'CI/CD', link: '/insights/ci' }, 
             { text: 'open-abap', link: '/advanced/open_abap' },
-            { text: 'Testing', link: '/advanced/open_abap' },
           ]
       },
       {
