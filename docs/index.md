@@ -29,7 +29,7 @@ features:
     details: Jump into the code! Explore the repository, report issues, and contribute to the project.
     link: https://www.github.com/abap2UI5/abap2UI5
   - title: LinkedIn
-    icon: ❤️
+    icon: linkedin
     details: Follow on LinkedIn and stay informed about latest updates and changes.
     link: https://www.linkedin.com/company/abap2ui5
 ---

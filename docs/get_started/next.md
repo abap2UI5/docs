@@ -1,19 +1,18 @@
 # Overview
 
-Next check out the Development Category to learn more functionalitis.
+Next check out the [Development Category](/development/development) to learn more or jump directly to:
 
 ### Addons
-
+Spruce up your apps 💅 <br>
 https://github.com/abap2UI5-addons
 
 ### Connectors
-You want to fully integrate your abap2UI5 apps in your systeem landscape? Check out the setup categroy. Or go directly to the following reposiories:
+ABAP apps everywhere 🪐 <br>
 https://github.com/abap2UI5-connectors
 
 ### Apps
-
+Put ABAP to work 🚜 <br>
 https://github.com/abap2UI5-apps
 
-Check out other projects form the ABAP Open Source Community:
 
 

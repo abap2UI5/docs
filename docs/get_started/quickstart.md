@@ -67,3 +67,10 @@ Call your HTTP Service in the browser, press check and start the app:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56"><br>
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/beee0551-494f-4e29-98bd-529395e27405">
 
+
+::: warning Security
+
+The project does not connect to external systems. It communicates solely with the HTTP handler that you define. You are in complete control—decide who can access this handler and establish custom authentication methods. As your needs evolve, you can further refine the handler as you can see [here.](/configuration/general)
+
+:::
+
