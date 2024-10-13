@@ -33,13 +33,17 @@ export default defineConfig({
         { text: 'Resources', link: '/resources/resources' },
       ]},
       { text: 'Jump',  items: [
-        { text: 'Repositories',  items: [
-          { text: 'Project', link: '/item-1' },
-          { text: 'Downports', link: '/item-2' },
-          { text: 'Issues', link: '/item-2' },
+        { text: 'GitHub',  items: [
+          { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
+          { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
+          { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
+          { text: 'addons', link: https://github.com/abap2UI5-addons' },
+          { text: 'connectors', link: 'https://github.com/abap2UI5-addons' },
+          { text: 'apps', link: 'https://github.com/abap2UI5-apps' },
+          { text: 'downports', link: 'https://github.com/abap2UI5-downports' },
         ]},
-        { text: 'Connectors',  items: [
-          { text: 'Addons', link: '/item-1' },
+        { text: 'Link',  items: [
+          { text: 'Issues', link: '/item-1' },
           { text: 'Alln', link: '/item-2' },
           { text: 'Issues', link: '/item-2' }
         ]},
