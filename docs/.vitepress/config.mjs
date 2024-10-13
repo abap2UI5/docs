@@ -46,13 +46,14 @@ export default defineConfig({
           { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
           { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
           { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
+          { text: 'frontend', link: 'https://github.com/abap2UI5/frontend' },
           { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
         ]},
         { text: 'More',  items: [
           { text: 'addons', link: 'https://github.com/abap2UI5-addons' },
-          { text: 'connectors', link: 'https://github.com/abap2UI5-connectors' },
           { text: 'apps', link: 'https://github.com/abap2UI5-apps' },
-          { text: 'downports', link: 'https://github.com/abap2UI5-downports' },
+          { text: 'downported', link: 'https://github.com/abap2UI5-downported' },
+          { text: 'renamed', link: 'https://github.com/abap2UI5-renamed' },
         ]},
       ]},
       { text: '1.134.0',  items: [
@@ -102,19 +103,16 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'General',          link: '/configuration/general'  },
-          { text: 'Productive Usage', link:  '/configuration/productive_usage'  },
           {
             text: 'Installation', 
             link: '/configuration/installation',
-            items: [
-              { text: 'BTP ABAP Environment', link: '/configuration/installation' },
-              { text: 'S/4 Public Cloud', link: '/configuration/installation' },
-              { text: 'S/4 Private Cloud', link: '/configuration/installation' },
-              { text: 'R/3 Netweaver', link: '/configuration/installation' },
-            ]
+            // items: [
+            //   { text: 'BTP ABAP Environment', link: '/configuration/installation' },
+            //   { text: 'S/4 Public Cloud', link: '/configuration/installation' },
+            //   { text: 'S/4 Private Cloud', link: '/configuration/installation' },
+            //   { text: 'R/3 Netweaver', link: '/configuration/installation' },
+            // ]
           },
-          { text: 'Performance',        link: '/configuration/performance'  },
-          { text: 'Clean Core',        link: '/configuration/clean_core'  },
           {
             text: 'Launchpad', 
             link: '/configuration/installation',
@@ -123,12 +121,19 @@ export default defineConfig({
             //   { text: 'ABAP for Cloud', link: '/configuration/launchpad' },
             // ]
            },
+          { text: 'Productive Usage', link:  '/configuration/productive_usage'  },
+          { text: 'Security',         link:  '/configuration/productive_usage'  },
+          { text: 'Performance',      link: '/configuration/performance'  },
+          { text: 'Clean Core',       link: '/configuration/clean_core'  },
+          { text: 'UI5 Versions',     link: '/features/faq' },
+          { text: 'ABAP Versions',    link: '/features/faq' },
+   
         //   {
         //     text: 'More', 
         //     items: [
-        //       { text: 'SE80 or ADT', link: '/features/faq' },
-        //       { text: 'UI5 Versions', link: '/features/faq' },
-        //       { text: 'ABAP Versions', link: '/features/faq' },
+        //      
+        //      
+        //       
         //     ]
         //   }
         ]
@@ -138,13 +143,14 @@ export default defineConfig({
          link: '/advanced/advanced',
          collapsed: true,
          items: [
-                   { text: 'BTP Workzone', link: '/advanced/btp' },
-                   { text: 'Stateful Sessions', link: '/advanced/stateful' },
+                 { text: 'BTP Workzone', link: '/advanced/btp' },
+                  { text: 'Stateful Sessions', link: '/advanced/stateful' },
                   { text: 'KPIs', link: '/advanced/kpi' },
                   { text: 'Remote App Call', link: '/advanced/rfc' },
                   { text: 'Downporting', link: '/advanced/downporting' },
                   { text: 'Renaming', link: '/advanced/renaming' },
-                  { text: 'open-abap', link: '/advanced/open_abap' },
+                  { text: 'SE80 or ADT', link: '/features/faq' },
+                 
         //           { text: 'JS Transpiling', link: '/features/' },
         //           {
         //             text: 'Extensibility',
@@ -160,7 +166,12 @@ export default defineConfig({
         text: 'Technical Insights',
         link: '/insights/insights',
         collapsed: true,
-        items: [  { text: 'General', link: '/insights/general' }, ]
+        items: [  
+            { text: 'General', link: '/insights/general' }, 
+            { text: 'CI/CD', link: '/insights/general' }, 
+            { text: 'open-abap', link: '/advanced/open_abap' },
+            { text: 'Testing', link: '/advanced/open_abap' },
+          ]
       },
       {
         text: 'Resources',
