@@ -13,6 +13,8 @@ export default defineConfig({
   head: [
     ['link', { rel: 'shortcut icon', href: '/docs/favicon.ico' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/docs/favicon.ico' }],
+    ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css' }],
+   
   ],
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
