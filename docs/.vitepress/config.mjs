@@ -41,7 +41,7 @@ export default defineConfig({
         { text: 'Technical Insights', link: '/insights/insights' },
         { text: 'Resources', link: '/resources/resources' },
       ]},
-      { text: 'Jump',  items: [
+      { text: 'Links',  items: [
         { text: 'Project',  items: [
           { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
           { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
