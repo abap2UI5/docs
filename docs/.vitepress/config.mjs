@@ -101,20 +101,27 @@ export default defineConfig({
         link: '/configuration/configuration',
         collapsed: true,
         items: [
-          { text: 'General',  link: '/configuration/general'  },
-          // { text: 'Productive Usage', link: '/features/' },
-          // { text: 'Performance', link: '/features/faq' },
-          // { text: 'Security, Authorization', link: '/features/faq' },
-          // { text: 'Fiori Launchpad', link: '/features/' },
-          // {
-          //   text: 'Installation', 
-          //   items: [
-          //     { text: 'BTP ABAP Environment', link: '/markdown-examples' },
-          //     { text: 'S/4 Public Cloud', link: '/markdown-examples' },
-          //     { text: 'S/4 Private Cloud', link: '/markdown-examples' },
-          //     { text: 'R/3 Netweaver', link: '/markdown-examples' }
-          //   ]
-        //   },
+          { text: 'General',          link: '/configuration/general'  },
+          { text: 'Clean Core',        link: '/configuration/clean_core'  },
+          { text: 'Productive Usage', link:  '/configuration/productive_usage'  },
+          {
+             text: 'Installation', 
+             link: '/configuration/installation',
+             items: [
+               { text: 'BTP ABAP Environment', link: '/configuration/installation' },
+               { text: 'S/4 Public Cloud', link: '/configuration/installation' },
+               { text: 'S/4 Private Cloud', link: '/configuration/installation' },
+               { text: 'R/3 Netweaver', link: '/configuration/installation' },
+             ]
+           },
+           {
+            text: 'Launchpad', 
+            link: '/configuration/installation',
+            items: [
+              { text: 'Standard ABAP',  link: '/configuration/launchpad' },
+              { text: 'ABAP for Cloud', link: '/configuration/launchpad' },
+            ]
+           },
         //   {
         //     text: 'More', 
         //     items: [
@@ -130,9 +137,10 @@ export default defineConfig({
          link: '/advanced/advanced',
          collapsed: true,
          items: [
-        //           { text: 'BTP Workzone', link: '/features/' },
+                   { text: 'BTP Workzone', link: '/advanced/btp' },
         //           { text: 'Stateful Sessions', link: '/features/' },
-        //           { text: 'Remotely App Call', link: '/features/' },
+                  { text: 'KPIs', link: '/advanced/kpi' },
+                  { text: 'Remote App Call', link: '/advanced/rfc' },
                   { text: 'Downporting', link: '/advanced/downporting/' },
                   { text: 'Renaming', link: '/advanced/renaming/' },
         //           { text: 'JS Transpiling', link: '/features/' },
