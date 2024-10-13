@@ -10,7 +10,6 @@ On BTP ABAP Environment, S/4 Public Cloud we have to install the cloud version o
 
 ##### 2. Routing
 
-
 ### ABAP Standard
 
 On S/4 Private Cloud or high R/3 Netweaver Releases we habe to install the standard version of the frontend artifacts and then continue with these steps:

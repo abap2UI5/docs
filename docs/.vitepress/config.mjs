@@ -102,25 +102,26 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'General',          link: '/configuration/general'  },
-          { text: 'Clean Core',        link: '/configuration/clean_core'  },
           { text: 'Productive Usage', link:  '/configuration/productive_usage'  },
           {
-             text: 'Installation', 
-             link: '/configuration/installation',
-             items: [
-               { text: 'BTP ABAP Environment', link: '/configuration/installation' },
-               { text: 'S/4 Public Cloud', link: '/configuration/installation' },
-               { text: 'S/4 Private Cloud', link: '/configuration/installation' },
-               { text: 'R/3 Netweaver', link: '/configuration/installation' },
-             ]
-           },
-           {
-            text: 'Launchpad', 
+            text: 'Installation', 
             link: '/configuration/installation',
             items: [
-              { text: 'Standard ABAP',  link: '/configuration/launchpad' },
-              { text: 'ABAP for Cloud', link: '/configuration/launchpad' },
+              { text: 'BTP ABAP Environment', link: '/configuration/installation' },
+              { text: 'S/4 Public Cloud', link: '/configuration/installation' },
+              { text: 'S/4 Private Cloud', link: '/configuration/installation' },
+              { text: 'R/3 Netweaver', link: '/configuration/installation' },
             ]
+          },
+          { text: 'Performance',        link: '/configuration/performance'  },
+          { text: 'Clean Core',        link: '/configuration/clean_core'  },
+          {
+            text: 'Launchpad', 
+            link: '/configuration/installation',
+            // items: [
+            //   { text: 'Standard ABAP',  link: '/configuration/launchpad' },
+            //   { text: 'ABAP for Cloud', link: '/configuration/launchpad' },
+            // ]
            },
         //   {
         //     text: 'More', 
@@ -138,11 +139,12 @@ export default defineConfig({
          collapsed: true,
          items: [
                    { text: 'BTP Workzone', link: '/advanced/btp' },
-        //           { text: 'Stateful Sessions', link: '/features/' },
+                   { text: 'Stateful Sessions', link: '/advanced/stateful' },
                   { text: 'KPIs', link: '/advanced/kpi' },
                   { text: 'Remote App Call', link: '/advanced/rfc' },
-                  { text: 'Downporting', link: '/advanced/downporting/' },
-                  { text: 'Renaming', link: '/advanced/renaming/' },
+                  { text: 'Downporting', link: '/advanced/downporting' },
+                  { text: 'Renaming', link: '/advanced/renaming' },
+                  { text: 'open-abap', link: '/advanced/open_abap' },
         //           { text: 'JS Transpiling', link: '/features/' },
         //           {
         //             text: 'Extensibility',
