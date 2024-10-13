@@ -1,4 +1,10 @@
-# Configuration
+---
+outline: [2, 4]
+---
+
+# General
+
+### HTTP Handler
 
 abap2UI5 can be run with various custom configurations. This is the call for the default setup:
 ```abap
@@ -10,7 +16,7 @@ abap2UI5 can be run with various custom configurations. This is the call for the
 ```
 For custom configurations, simply create a config variable and import it to the main method:
 
-## Theme
+### Theme
 eg. for changing the theme the source code looks like this:
 ```abap
   METHOD if_http_extension~handle_request.
@@ -23,7 +29,7 @@ eg. for changing the theme the source code looks like this:
   ENDMETHOD.
 ``` 
 
-## UI5 Bootstrapping
+### UI5 Bootstrapping
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -32,27 +38,7 @@ eg. for changing the theme the source code looks like this:
     ) ).
 ```
 
-## Custom JS
-Use this for example to install additional custom controls [here:](https://github.com/abap2UI5-addons/custom-controls)
-```abap
-    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
-    lo_server->main( VALUE #(
-        custom_js = z2ui5add_cl_cc_websocket=>get_js( ) 
-    ) ).
-```
-
-## Content-Security-Policy
-
-```abap
-    DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
-    lo_server->main( VALUE #(
-        content_security_policy = ` <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` && |\n|  &&
-                                  `   ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com ` && |\n|  &&
-                                  `   sdk.openui5.org *.sdk.openui5.org "/>`
-    ) ).
-```
-
-## Title
+### Title
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).
@@ -61,7 +47,7 @@ Use this for example to install additional custom controls [here:](https://githu
     ) ).
 ```
 
-## Style / CSS
+### Style / CSS
 
 ```abap
     DATA(lo_server) = z2ui5_cl_http_handler=>factory( server ).

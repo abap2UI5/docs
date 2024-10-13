@@ -2,10 +2,19 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  lastUpdated: {
+    text: 'Updated at',
+    formatOptions: {
+      dateStyle: 'full',
+      timeStyle: 'medium'
+    }
+  },
   base: '/docs/', // Set your base URL here
   head: [
     ['link', { rel: 'shortcut icon', href: '/docs/favicon.ico' }],
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/docs/favicon.ico' }],
+    ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css' }],
+   
   ],
   title: "abap2UI5",
   description: "Developing Purely in ABAP",
@@ -32,26 +41,18 @@ export default defineConfig({
         { text: 'Technical Insights', link: '/insights/insights' },
         { text: 'Resources', link: '/resources/resources' },
       ]},
-      { text: 'Jump',  items: [
-        { text: 'Repositories',  items: [
-          { text: 'Project', link: '/item-1' },
-          { text: 'Downports', link: '/item-2' },
-          { text: 'Issues', link: '/item-2' },
+      { text: 'Links',  items: [
+        { text: 'Project',  items: [
+          { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
+          { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
+          { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
+          { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
         ]},
-        { text: 'Connectors',  items: [
-          { text: 'Addons', link: '/item-1' },
-          { text: 'Alln', link: '/item-2' },
-          { text: 'Issues', link: '/item-2' }
-        ]},
-        { text: 'Addons',  items: [
-          { text: 'Addons', link: '/item-1' },
-          { text: 'Alln', link: '/item-2' },
-          { text: 'Issues', link: '/item-2' },
-        ]},
-       { text: 'Apps',  items: [
-            { text: 'Addons', link: '/item-1' },
-            { text: 'Alln', link: '/item-2' },
-            { text: 'Issues', link: '/item-2' },
+        { text: 'More',  items: [
+          { text: 'addons', link: 'https://github.com/abap2UI5-addons' },
+          { text: 'connectors', link: 'https://github.com/abap2UI5-connectors' },
+          { text: 'apps', link: 'https://github.com/abap2UI5-apps' },
+          { text: 'downports', link: 'https://github.com/abap2UI5-downports' },
         ]},
       ]},
       { text: '1.134.0',  items: [
@@ -78,21 +79,21 @@ export default defineConfig({
         link: '/development/development',
         collapsed: true,
         items: [
-          { text: 'Basic Concepts' },
-          { text: 'Messages, Errors', link: '/features/' },
-          { text: 'Translation, 18n', link: '/features/' },
-          { text: 'User Interface', link: '/features/' },
-          { text: 'Data Binding', link: '/features/' },
-          { text: 'Navigation', link: '/features/' },
-          { text: 'Runtime Typed Data', link: '/features/' },
-          { text: 'Debugging', link: '/features/' },
-          {
-            text: 'Addons',  items: [
-              { text: 'Popups', link: '/api-examples' },
-              { text: 'Layouts & Variants', link: '/api-examples' },
-              { text: 'External Libraries', link: '/markdown-examples' },
-            ]
-          },
+          { text: 'General',  link: '/development/general' }, 
+        //   { text: 'Messages, Errors', link: '/features/' },
+        //   { text: 'Translation, 18n', link: '/features/' },
+        //   { text: 'User Interface', link: '/features/' },
+        //   { text: 'Data Binding', link: '/features/' },
+        //   { text: 'Navigation', link: '/features/' },
+        //   { text: 'Runtime Typed Data', link: '/features/' },
+        //   { text: 'Debugging', link: '/features/' },
+        //   {
+        //     text: 'Addons',  items: [
+        //       { text: 'Popups', link: '/api-examples' },
+        //       { text: 'Layouts & Variants', link: '/api-examples' },
+        //       { text: 'External Libraries', link: '/markdown-examples' },
+        //     ]
+        //   },
         ]
       },
       {
@@ -100,28 +101,28 @@ export default defineConfig({
         link: '/configuration/configuration',
         collapsed: true,
         items: [
-          { text: 'General Settings' },
-          { text: 'Productive Usage', link: '/features/' },
-          { text: 'Performance', link: '/features/faq' },
-          { text: 'Security, Authorization', link: '/features/faq' },
-          { text: 'Fiori Launchpad', link: '/features/' },
-          {
-            text: 'Installation', 
-            items: [
-              { text: 'BTP ABAP Environment', link: '/markdown-examples' },
-              { text: 'S/4 Public Cloud', link: '/markdown-examples' },
-              { text: 'S/4 Private Cloud', link: '/markdown-examples' },
-              { text: 'R/3 Netweaver', link: '/markdown-examples' }
-            ]
-          },
-          {
-            text: 'More', 
-            items: [
-              { text: 'SE80 or ADT', link: '/features/faq' },
-              { text: 'UI5 Versions', link: '/features/faq' },
-              { text: 'ABAP Versions', link: '/features/faq' },
-            ]
-          }
+          { text: 'General',  link: '/configuration/general'  },
+          // { text: 'Productive Usage', link: '/features/' },
+          // { text: 'Performance', link: '/features/faq' },
+          // { text: 'Security, Authorization', link: '/features/faq' },
+          // { text: 'Fiori Launchpad', link: '/features/' },
+          // {
+          //   text: 'Installation', 
+          //   items: [
+          //     { text: 'BTP ABAP Environment', link: '/markdown-examples' },
+          //     { text: 'S/4 Public Cloud', link: '/markdown-examples' },
+          //     { text: 'S/4 Private Cloud', link: '/markdown-examples' },
+          //     { text: 'R/3 Netweaver', link: '/markdown-examples' }
+          //   ]
+        //   },
+        //   {
+        //     text: 'More', 
+        //     items: [
+        //       { text: 'SE80 or ADT', link: '/features/faq' },
+        //       { text: 'UI5 Versions', link: '/features/faq' },
+        //       { text: 'ABAP Versions', link: '/features/faq' },
+        //     ]
+        //   }
         ]
       },
      {
@@ -129,27 +130,27 @@ export default defineConfig({
          link: '/advanced/advanced',
          collapsed: true,
          items: [
-                  { text: 'BTP Workzone', link: '/features/' },
-                  { text: 'Stateful Sessions', link: '/features/' },
-                  { text: 'Remotely App Call', link: '/features/' },
-                  { text: 'Downporting', link: '/features/' },
-                  { text: 'Renaming', link: '/features/' },
-                  { text: 'JS Transpiling', link: '/features/' },
-                  {
-                    text: 'Extensibility',
-                    items: [
-                      { text: 'Custom JS', link: '/features/' },
-                      { text: 'Custom Controls', link: '/features/' },
-                      { text: 'External Libraries', link: '/features/' },
-                    ]
-                  },
+        //           { text: 'BTP Workzone', link: '/features/' },
+        //           { text: 'Stateful Sessions', link: '/features/' },
+        //           { text: 'Remotely App Call', link: '/features/' },
+                  { text: 'Downporting', link: '/advanced/downporting/' },
+                  { text: 'Renaming', link: '/advanced/renaming/' },
+        //           { text: 'JS Transpiling', link: '/features/' },
+        //           {
+        //             text: 'Extensibility',
+        //             items: [
+        //               { text: 'Custom JS', link: '/features/' },
+        //               { text: 'Custom Controls', link: '/features/' },
+        //               { text: 'External Libraries', link: '/features/' },
+        //             ]
+        //           },
         ]
        },
        {
         text: 'Technical Insights',
         link: '/insights/insights',
         collapsed: true,
-        items: [  { text: '...', link: '/insights/insights' }, ]
+        items: [  { text: 'General', link: '/insights/general' }, ]
       },
       {
         text: 'Resources',
