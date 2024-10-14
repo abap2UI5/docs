@@ -80,21 +80,14 @@ export default defineConfig({
         link: '/development/development',
         collapsed: true,
         items: [
-          { text: 'General',  link: '/development/general' }, 
-        //   { text: 'Messages, Errors', link: '/features/' },
-        //   { text: 'Translation, 18n', link: '/features/' },
-        //   { text: 'User Interface', link: '/features/' },
-        //   { text: 'Data Binding', link: '/features/' },
-        //   { text: 'Navigation', link: '/features/' },
-        //   { text: 'Runtime Typed Data', link: '/features/' },
-        //   { text: 'Debugging', link: '/features/' },
-           {
-             text: 'Addons',  items: [
-               { text: 'Popups', link: '/development/addon_popup'  },
-               { text: 'Layouts & Variants', link: '/development/addon_layout' },
-               { text: 'JS Libraries', link: '/development/addon_js' },
-               ]
-           },
+          { text: 'General',  link: '/development/general' },
+          { text: 'View, UI', link: '/features/' }, 
+          { text: 'Model, Data Binding', link: '/features/' },
+          { text: 'Translation, i18n', link: '/features/' },
+          { text: 'Messages, Errors', link: '/features/' },
+          { text: 'Popups, Popover', link: '/features/' },
+          { text: 'Navigation', link: '/features/' },
+          { text: 'Debugging', link: '/features/' },
         ]
       },
       {
@@ -145,11 +138,11 @@ export default defineConfig({
          items: [
                  { text: 'BTP Workzone', link: '/advanced/btp' },
                   { text: 'Stateful Sessions', link: '/advanced/stateful' },
-                  { text: 'KPIs', link: '/advanced/kpi' },
-                  { text: 'Remote App Call', link: '/advanced/rfc' },
                   { text: 'Downporting', link: '/advanced/downporting' },
                   { text: 'Renaming', link: '/advanced/renaming' },
-                  { text: 'SE80 or ADT', link: '/features/faq' },
+                  { text: 'Runtime Typed Data', link: '/features/' },
+                  { text: 'SE80, ADT', link: '/features/faq' },
+                  { text: 'Extensibility', link: '/features/faq' },
                  
         //           { text: 'JS Transpiling', link: '/features/' },
         //           {
@@ -170,6 +163,16 @@ export default defineConfig({
             { text: 'General', link: '/insights/general' }, 
             { text: 'CI/CD', link: '/insights/ci' }, 
             { text: 'open-abap', link: '/advanced/open_abap' },
+          ]
+      },
+      {
+        text: 'Addons',  link: '/addons/addons', collapsed: true, items: [
+          { text: 'KPIs', link: '/advanced/kpi' },
+          { text: 'Remote App Calls', link: '/advanced/rfc' },
+          { text: 'Popups', link: '/development/addon_popup'  },
+          { text: 'Layouts, Variants', link: '/development/addon_layout' },
+          { text: 'JS Libraries', link: '/development/addon_js' },
+          { text: 'Apps & more', link: '/addons/apps' },
           ]
       },
       {

@@ -13,15 +13,6 @@
 * Check out Cust&Code Videos with abap2UI5 [(youtube - 20.05.2024)](https://www.youtube.com/watch?v=SD1vIt_ty0k)
 * Featured on SAP Developer News [(youtube - 14.06.2024)](https://youtu.be/7n16u-Rx8IY?t=7)
   
-### ABAP Open Source
-|  Repository | Description |
-| ------------- | ------------- |
-| [The Quest](https://github.com/nomssi/axage)  | A wizard's adventure game based on a fork of the AXAGE game engine (ABAP teXt Adventure Game Engine) and abap2UI5.  |
-| [Advent of Code](https://github.com/joltdx/abap-advent-2023-template) | Template for the Advent of Code 2023 in ABAP  |
-| [Generic DDIC Searchhelp](https://github.com/axelmohnen/a2UI5-generic_search_hlp) | Generic DDIC searchhelp generator  |
-
-
- _Your app is not listed her? Feel free to send a PR and extend this file!_
 
 ### Companies
 Are you using abap2UI5? 
