@@ -31,3 +31,6 @@ This project offers a pure ABAP approach for developing UI5 apps - entirely with
 * Stay updated! Follow us on [LinkedIn.](https://www.linkedin.com/company/abap2ui5)
 
 _We welcome all contributions! Share your knowledge, hunt for or fix bugs, submit a PR, write a comment, give us a like, or simply tell your friends how much you love abap2UI5. This project thrives on your support! 🚀_ 
+
+## imp
+not my ideas all here current state, evolving
