@@ -88,13 +88,13 @@ export default defineConfig({
         //   { text: 'Navigation', link: '/features/' },
         //   { text: 'Runtime Typed Data', link: '/features/' },
         //   { text: 'Debugging', link: '/features/' },
-        //   {
-        //     text: 'Addons',  items: [
-        //       { text: 'Popups', link: '/api-examples' },
-        //       { text: 'Layouts & Variants', link: '/api-examples' },
-        //       { text: 'External Libraries', link: '/markdown-examples' },
-        //     ]
-        //   },
+           {
+             text: 'Addons',  items: [
+               { text: 'Popups', link: '/development/addon_popup'  },
+               { text: 'Layouts & Variants', link: '/development/addon_layout' },
+               { text: 'JS Libraries', link: '/development/addon_js' },
+               ]
+           },
         ]
       },
       {
