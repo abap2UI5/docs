@@ -167,7 +167,7 @@ export default defineConfig({
       },
       {
         text: 'Addons',  link: '/addons/addons', collapsed: true, items: [
-          { text: 'KPIs', link: '/advanced/kpi' },
+          { text: 'Launchpad KPIs', link: '/advanced/kpi' },
           { text: 'Remote App Calls', link: '/advanced/rfc' },
           { text: 'Popups', link: '/development/addon_popup'  },
           { text: 'Layouts, Variants', link: '/development/addon_layout' },
