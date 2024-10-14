@@ -1,4 +1,3 @@
-## Documentation
+## abap2UI5 Documentation
 
-Check out:
-[https://abap2ui5.github.io/docs/](https://abap2ui5.github.io/docs/)
+📖 [Documentation](https://abap2ui5.github.io/docs/)
