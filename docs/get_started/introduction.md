@@ -11,14 +11,11 @@ Launched in 2023 as a personal project, abap2UI5 started with basic functionalit
 ##### Key Features
 This project offers a pure ABAP approach for developing UI5 apps - entirely without JavaScript, OData or RAP. Just like in the past, when a few lines of ABAP were enough to display input forms and tables using Selection Screens & ALVs. Designed with a minimal system footprint, it works in both on-premise and cloud environments. Developing purely in ABAP (no JavaScript, DDL, EML or Customizing)
 
+##### Compatibility
+Runs on all ABAP releases (from NW 7.02 to ABAP Cloud). every system fro 702 to cloud releases is compative to abap2UI5. in on premise landscapes it can be used with S/4 Private Cloud or On-Premise, R/3 NetWeaver AS ABAP 7.50 or higher, R/3 NetWeaver AS ABAP 7.02 to 7.42  and in cloud envornments with BTP ABAP Environment, S/4 Public Cloud
+
 ##### Installation
 Install via abapGit, no additional app deployment required. Implement a single interface to create a standalone UI5 application. Uses a simple HTTP handler (no BSP, OData, CDS or RAP)
-Runs on all ABAP releases (from NW 7.02 to ABAP Cloud):
-* BTP ABAP Environment (ABAP for Cloud)
-* S/4 Public Cloud (ABAP for Cloud)
-* S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
-* R/3 NetWeaver AS ABAP 7.50 or higher (Standard ABAP)
-* R/3 NetWeaver AS ABAP 7.02 to 7.42: Use the [downported repositories](https://github.com/abap2UI5-downports)
 
 ##### Development
 Every abap2UI5 app is just an implentation of a single method of an interface.
@@ -35,7 +32,7 @@ The abap2UI5 system footprint is kept minimal. In its base version, it includes 
 ##### Security
 You need to manually create an HTTP handler, providing full control over the externalization of the project. Learn more here.
 
-##### Usage in Production
+##### Go Live
 abapUI5 is technically just an implementation of an HTTP handler and can be used as any other HTTP Service also in a productive scenario.
 
 ##### Support
