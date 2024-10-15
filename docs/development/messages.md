@@ -1,18 +1,23 @@
 # Messages, Errors
 
-### Message Toast
 
-### Message Box
+## Messages
 
-### Assert 
+#### Message Toast
 
-### Uncatched Exception
+#### Message Box
 
-### Catched Exception with Message Box
-
-
-### Popup Messages
+#### Popup Messages
 PRs welcome
 
-### Popup Exception
+
+## Errors
+
+#### Assert 
+
+#### Uncatched Exception
+
+#### Catched Exception with Message Box
+
+#### Popup Exception
 PRs Welcome
