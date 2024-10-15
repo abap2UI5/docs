@@ -12,13 +12,15 @@ ENDCLASS.
 
 CLASS z2ui5_cl_my_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    data(lv_message) = 'this is a translatable message in english'(001).
-    client->message_box_display( lv_message ).
+// [!code focus]
+    data(lv_message) = 'this is a translatable message in english'(001).// [!code focus]
+    client->message_box_display( lv_message ).// [!code focus]
+// [!code focus]
   ENDMETHOD.
 ENDCLASS.
 ```
 
-### Message Texts
+### Messages
 In this case, messages are translated using the ABAP message class, which ensures that translations are managed centrally and can be maintained easily in different languages:
 ```abap
 CLASS z2ui5_cl_my_app DEFINITION PUBLIC.
@@ -28,8 +30,12 @@ ENDCLASS.
 
 CLASS z2ui5_cl_my_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO DATA(lv_message).
-    client->message_box_display( lv_message ).
+// [!code focus]
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno // [!code focus]
+        WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 // [!code focus]
+        INTO DATA(lv_message).// [!code focus]
+    client->message_box_display( lv_message ). // [!code focus]
+// [!code focus]
   ENDMETHOD.
 ENDCLASS.
 ```
