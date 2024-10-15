@@ -8,7 +8,7 @@ Welcome to abap2UI5 – an open-source project that allows you to develop UI5 ap
 ##### Evolution
 Launched in 2023 as a personal project, abap2UI5 started with basic functionality like displaying selection screens and an initial blog post on SCN. Thanks to contributions from the ABAP open-source community, the project has grown significantly in UI capabilities, system compatibility, and extensibility. Today, abap2UI5 is a thriving, community-driven initiative.
 
-##### Key Features
+##### Features
 This project offers a pure ABAP approach for developing UI5 apps - entirely without JavaScript, OData or RAP. Just like in the past, when a few lines of ABAP were enough to display input forms and tables using Selection Screens & ALVs. Designed with a minimal system footprint, it works in both on-premise and cloud environments. Developing purely in ABAP (no JavaScript, DDL, EML or Customizing)
 
 ##### Compatibility
