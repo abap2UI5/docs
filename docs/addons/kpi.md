@@ -1,12 +1,8 @@
-# KPIs
+# Launchpad KPIs
 
-Integrate KPIs in your Launchpad. Find all information [here.](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/?trackingId=bOVbNH171LDtGAqrDcAt4Q%3D%3D)
+<i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
-
-
-## abap2UI5 - KPI Connector for SAP Fori Launchpad
-
-_Running into problems or found a bug? Create an issue [**here**](https://github.com/abap2UI5/abap2UI5/issues)_
+Find more information [here.](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/?trackingId=bOVbNH171LDtGAqrDcAt4Q%3D%3D)
 
 ### Key Features
 * KPI Connector: Send KPIs of your abap2UI5 Apps to SAP Fiori Launchpad

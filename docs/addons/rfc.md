@@ -1,11 +1,8 @@
-# RFC Connector
+# Remote App Calls
+
+<i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/rfc-connector)
 
 Find all information [here.](https://www.linkedin.com/pulse/calling-abap2ui5-apps-remotely-via-rfc-abap2ui5-btoue/?trackingId=x648I3DPaEwjw1bW9PNavg%3D%3D)
-
-
-## abap2UI5 - RFC Connector
-
-_Running into problems or found a bug? Create an issue [**here**](https://github.com/abap2UI5/abap2UI5/issues)_
 
 ### Approach
 Remotely call abap2UI5 apps via RFC:

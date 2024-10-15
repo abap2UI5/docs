@@ -1,5 +1,6 @@
 # Layout-Variant-Management
 
+<i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/layout-variant-management)
 
 ### Demos
 

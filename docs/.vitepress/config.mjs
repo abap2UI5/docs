@@ -95,7 +95,7 @@ export default defineConfig({
           { text: 'Model, Data Binding', link: '/features/' },
           { text: 'Translation, i18n', link: '/features/' },
           { text: 'Messages, Errors', link: '/features/' },
-          { text: 'Popups, Popover', link: '/features/' },
+          { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Navigation', link: '/features/' },
           { text: 'Debugging', link: '/features/' },
         ]
@@ -112,7 +112,7 @@ export default defineConfig({
           },
           { text: 'Launchpad', link: '/configuration/installation', },
           { text: 'Use in Production', link: '/configuration/productive_usage' },
-          { text: 'Security', link: '/configuration/productive_usage' },
+          { text: 'Security', link: '/configuration/security' },
           { text: 'Performance', link: '/configuration/performance' },
           { text: 'Clean Core', link: '/configuration/clean_core' },
           { text: 'Architecture', link: '/advanced/renaming' },
@@ -145,12 +145,12 @@ export default defineConfig({
 
       {
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
-          { text: 'Runtime Typed Data', link: '/features/' },
-          { text: 'Layouts, Variants', link: '/development/addon_layout' },
-          { text: 'Popups', link: '/development/addon_popup' },
-          { text: 'Launchpad KPIs', link: '/advanced/kpi' },
-          { text: 'Remote App Calls', link: '/advanced/rfc' },
-          { text: 'JS Libraries', link: '/development/addon_js' },
+          { text: 'Runtime Typed Data', link: '/addons/srtti' },
+          { text: 'Layouts, Variants', link: '/addons/layout' },
+          { text: 'Popups', link: '/addons/popup' },
+          { text: 'Launchpad KPIs', link: '/addons/kpi' },
+          { text: 'Remote App Calls', link: '/addons/rfc' },
+          { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'Apps & more', link: '/addons/apps' },
         ]
       },

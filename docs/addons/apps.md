@@ -1,8 +1,10 @@
-# Apps
+# More
 
-Check out the [app repository](https://github.com/abap2UI5-apps) for ready to use apps.
+### Apps
 
-### ABAP Open Source
+Check out the <i class="fa-brands fa-github"></i> [app repository](https://github.com/abap2UI5-apps) for ready to use apps.
+
+### ABAP Open Source Projects using abap2UI5
 |  Repository | Description |
 | ------------- | ------------- |
 | [The Quest](https://github.com/nomssi/axage)  | A wizard's adventure game based on a fork of the AXAGE game engine (ABAP teXt Adventure Game Engine) and abap2UI5.  |

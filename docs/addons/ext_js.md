@@ -1,12 +1,7 @@
+# JS Libraries
 
-## JS Libraries
+<i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/js-libraries)
 
-You can integrate your own JavasScript code into abap2UI5 by implementing UI5 Custom Controls. Call for example third party libraries or extend your ABAP apps with additional functionalities. 
-
-Check out this guideline to learn how to create your own custom control:<br>
-**https://github.com/abap2UI5/abap2UI5-template_cc_development**
-
-_Your Custom Control is not listed here? Feel free to send a PR! Special thanks to [choper725](https://github.com/choper725) contributing most of the CCs_
 <br>
 
 Included Custom Controls:
@@ -42,3 +37,5 @@ Included Custom Controls:
 <img width="1300" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/bd95df6a-4929-4fec-a337-56592fc21bb1">
 <img width="1300" alt="image" src="https://github.com/abap2UI5/abap2UI5-documentation/assets/102328295/da99bd6b-04af-4f03-9dc6-d6f69967781b">
 <br>
+
+_Your Custom Control is not listed here? Feel free to send a PR! Special thanks to [choper725](https://github.com/choper725) contributing most of the CCs_

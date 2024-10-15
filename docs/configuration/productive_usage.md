@@ -1,4 +1,4 @@
-# Productive Usage
+# Use in Production
 
 abapUI5 is technically just an implementation of an HTTP handler and can be used as any other HTTP Service also in a productive scenario.
 
