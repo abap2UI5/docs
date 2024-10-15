@@ -1,9 +1,18 @@
 # Messages, Errors
 
-Message and errors
-   Raise exception as always 
-   Trick worth assert 
-   Message bix
-   Popup exception 
-   Popup messages 
-   Link sample build your own 
+### Message Toast
+
+### Message Box
+
+### Assert 
+
+### Uncatched Exception
+
+### Catched Exception with Message Box
+
+
+### Popup Messages
+PRs welcome
+
+### Popup Exception
+PRs Welcome

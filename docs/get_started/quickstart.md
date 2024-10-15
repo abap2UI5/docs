@@ -13,6 +13,10 @@ Install the project with [abapGit.](https://abapgit.org)
 ![alt text](image-3.png)
 :::
 
+<details>
+ <IMG src="/docs/get_started/image.png"  alt="/docs/get_started/image.png"/>
+</details>
+
 ### 2. Create HTTP Handler
 Create a new HTTP service with the appropriate handler implementation for your system:
 
