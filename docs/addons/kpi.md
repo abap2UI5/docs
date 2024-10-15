@@ -1,26 +1,27 @@
+---
+outline: [2, 6]
+---
+
 # Launchpad KPIs
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
-Find more information [here.](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/?trackingId=bOVbNH171LDtGAqrDcAt4Q%3D%3D)
+Find more information in the blog article on [LinkedIn.](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/)
 
-### Key Features
+##### Key Features
 * KPI Connector: Send KPIs of your abap2UI5 Apps to SAP Fiori Launchpad
 * User-Friendly: Implement just a single interface and method to return the KPI value
 * Project Consistency: Easily integrable with your abap2UI5 apps
 * Compatibility: Runs with SAP Netweaver (v.7.30 or higher) or S/4 Private (Standard ABAP)
 
-### Functionality
+##### Functionality
 <img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
 <br>
 
-[link](https://excalidraw.com/#json=d-kRyy0bzOtYQgxweVXon,u2mAWDGdB9dg-J0NXbMvnw)
+##### Preview
+<img width="621" alt="Pasted Graphic 3" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/1b24c31e-5570-4324-92d0-5db915394ceb"><br>
 
-### Preview
-<img width="621" alt="Pasted Graphic 3" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/1b24c31e-5570-4324-92d0-5db915394ceb">
-
-
-### Approach
+##### Approach
 (1/4) Use a single Interface:
 ```abap
 INTERFACE z2ui5_if_lp_kpi
@@ -93,7 +94,6 @@ ENDCLASS.
   ENDMETHOD.
 ```
 (4/4) Maintain the KPI at the Launchpad with the following endpoint:
+```
 .../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_proxy_kpi_hello_world'
-
-#### Installation
-[**Guideline**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/)
+```

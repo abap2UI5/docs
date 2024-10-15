@@ -1,6 +1,6 @@
 # Addons
 
-The abap2UI5 framework is designed to be minimal, including only essential features by default. However, if you need additional functionality, you can easily install further add-ons. Explore the following addons:
+The abap2UI5 framework is designed with a minimal system footprint, including only essential features by default. However, if you need additional functionality, you can easily install more add-ons:
 
 1. Runtime Typed Data [(link)](/addons/srtti)
 2. Layout-Variant-Management [(link)](/addons/layout)

@@ -1,3 +1,6 @@
+---
+outline: [2, 6]
+---
 # Remote App Calls
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/rfc-connector)
