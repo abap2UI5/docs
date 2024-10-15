@@ -130,16 +130,6 @@ export default defineConfig({
           { text: 'UI5, ABAP Versions', link: '/features/faq' },
           { text: 'SE80, ADT', link: '/features/faq' },
           { text: 'Extensibility', link: '/features/faq' },
-
-          //           { text: 'JS Transpiling', link: '/features/' },
-          //           {
-          //             text: 'Extensibility',
-          //             items: [
-          //               { text: 'Custom JS', link: '/features/' },
-          //               { text: 'Custom Controls', link: '/features/' },
-          //               { text: 'External Libraries', link: '/features/' },
-          //             ]
-          //           },
         ]
       },
 
@@ -151,7 +141,7 @@ export default defineConfig({
           { text: 'Launchpad KPIs', link: '/addons/kpi' },
           { text: 'Remote App Calls', link: '/addons/rfc' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
-          { text: 'Apps & more', link: '/addons/apps' },
+          { text: 'Apps, Community', link: '/addons/apps' },
         ]
       },
       {
@@ -185,8 +175,9 @@ export default defineConfig({
 
     ]
   },
-  markdown: {
+  
     // Aktiviert den "On This Page"-Bereich
-    outline: "deep"
-  }
+    outline: { 
+      level: [2,6]
+    }
 })

@@ -9,6 +9,10 @@ outline: [2, 4]
 Install the project with [abapGit.](https://abapgit.org)
 ![alt text](image.png)
 
+::: details S/4 Public Cloud
+![alt text](image-3.png)
+:::
+
 ### 2. Create HTTP Handler
 Create a new HTTP service with the appropriate handler implementation for your system:
 
