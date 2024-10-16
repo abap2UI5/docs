@@ -1,23 +1,20 @@
-# Messages, Errors
+# Messages
 
-
-## Messages
+For translation, check this section.
 
 #### Message Toast
 
+
 #### Message Box
 
-#### Popup Messages
+
+#### Popup T100/BAPIRET
+Most often you will get Message Popups in T100 or bairet format, you can use the following popup to display these messages:
 PRs welcome
 
+#### Popup To Inform
+Popup
 
-## Errors
 
-#### Assert 
+#### Popup To Decide 
 
-#### Uncatched Exception
-
-#### Catched Exception with Message Box
-
-#### Popup Exception
-PRs Welcome

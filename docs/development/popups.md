@@ -1,5 +1,6 @@
 # Popups
 
+
 ### Popup
 
 
@@ -9,7 +10,7 @@
 
 
 ### Built-in Popups
-a few you already saw at message and errors
+a few you already saw at message and errors section.
 
 ```
 .
@@ -21,6 +22,7 @@ a few you already saw at message and errors
 Feel free to send a PR if you extend a need a new popup.
 
 #### Popup to Select
+
 
 #### Popup to Confirm
 
