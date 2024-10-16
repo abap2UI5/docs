@@ -82,6 +82,7 @@ export default defineConfig({
           { text: 'Quickstart', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
           { text: 'Sample Apps', link: '/get_started/sample_apps' },
+          { text: 'Use Cases', link: '/get_started/architecture' },
           { text: `What's next?`, link: '/get_started/next' }
         ]
       },
@@ -129,7 +130,7 @@ export default defineConfig({
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'UI5, ABAP Versions', link: '/features/faq' },
-          { text: 'SE80, ADT', link: '/features/faq' },
+          { text: 'SE80, ADT', link: '/advanced/se80' },
           { text: 'Extensibility', link: '/features/faq' },
         ]
       },

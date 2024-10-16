@@ -1,6 +1,9 @@
 # Security & Authorization
 
 
+
+PICTURE with 
+
 ## Content-Security-Policy
 
 ```abap
@@ -11,3 +14,5 @@
                                   `   sdk.openui5.org *.sdk.openui5.org "/>`
     ) ).
 ```
+
+

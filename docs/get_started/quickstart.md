@@ -90,11 +90,10 @@ Your system structure should now look like this:<br>
    └─ icf artifact
 ```
 
-### 3. Start your App
+### 4. Start your App
 Call your HTTP service in the browser, press check, and start your app:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56"><br>
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/beee0551-494f-4e29-98bd-529395e27405">
-
 
 
 ::: warning Information Security 💡
