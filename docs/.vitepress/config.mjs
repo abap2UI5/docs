@@ -108,14 +108,12 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Setup', link: '/configuration/general' },
-          {
-            text: 'Installation',
-            link: '/configuration/installation',
-          },
-          { text: 'Launchpad', link: '/configuration/installation', },
+          { text: 'Installation', link: '/configuration/installation'},
           { text: 'Use in Production', link: '/configuration/productive_usage' },
           { text: 'Security', link: '/configuration/security' },
           { text: 'Performance', link: '/configuration/performance' },
+          { text: 'Fiori Launchpad', link: '/configuration/installation', },
+          { text: 'BTP Workzone', link: '/configuration/btp' },
         ]
       },
       {
@@ -123,7 +121,6 @@ export default defineConfig({
         link: '/advanced/advanced',
         collapsed: true,
         items: [
-          { text: 'BTP Workzone', link: '/advanced/btp' },
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
@@ -151,6 +148,7 @@ export default defineConfig({
         items: [
           { text: 'General', link: '/insights/general' },
           { text: 'CI/CD', link: '/insights/ci' },
+          { text: 'abaplint', link: '/insights/ci' },
           { text: 'open-abap', link: '/advanced/open_abap' },
         ]
       },
