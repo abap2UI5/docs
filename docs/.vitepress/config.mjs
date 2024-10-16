@@ -82,7 +82,7 @@ export default defineConfig({
           { text: 'Quickstart', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
           { text: 'Sample Apps', link: '/get_started/sample_apps' },
-          { text: 'Use Cases', link: '/get_started/architecture' },
+          { text: 'Use Cases', link: '/get_started/use_cases' },
           { text: `What's next?`, link: '/get_started/next' }
         ]
       },
