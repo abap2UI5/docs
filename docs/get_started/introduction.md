@@ -20,7 +20,9 @@ Install via abapGit, no additional app deployment required. Implement a single i
 ##### Development
 Every abap2UI5 app is just an implentation of a single method of an interface.
 
-##### ABAP Cloud
+##### Clean Core
+
+##### Cloud Ready
 abap2UI5 relies only on released APIs, making it ready for clean core implementations with the new language version ABAP for Cloud making the abap2UI5 apps "cloud-ready and upgrade-stable. All new CDS capabilities and EML features can be used inside the app implementations.
 
 ##### ABAP Classic

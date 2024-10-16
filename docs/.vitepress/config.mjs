@@ -116,8 +116,6 @@ export default defineConfig({
           { text: 'Use in Production', link: '/configuration/productive_usage' },
           { text: 'Security', link: '/configuration/security' },
           { text: 'Performance', link: '/configuration/performance' },
-          { text: 'Clean Core', link: '/configuration/clean_core' },
-          { text: 'Architecture', link: '/advanced/renaming' },
         ]
       },
       {
