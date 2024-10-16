@@ -44,4 +44,4 @@ Running into problems or found a bug? Create an issue or join the abap2UI5 commu
 We welcome all contributions! Share your knowledge, hunt for or fix bugs, submit a PR, extend this documentation, leave a comment, or simply spread the word about abap2UI5. This project thrives on your support!
 
 ##### Sponsor
-abap2UI5 relies on dedicated developers investing their free time. If you or your company can't contribute directly, consider supporting the project in other ways, as detailed here. 🙏
+abap2UI5 relies on dedicated developers investing their free time. If you or your company can't contribute directly, consider supporting the project in other ways, as detailed here.
