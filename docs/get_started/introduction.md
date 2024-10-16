@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # Introduction
 
-Welcome to abap2UI5 – an open-source project that allows you to develop UI5 apps purely in ABAP. 🦖
+Welcome to abap2UI5 – an open-source project that allows you to develop UI5 apps purely in ABAP.
 
 ##### Evolution
 Launched in 2023 as a personal project, abap2UI5 started with basic functionality like displaying selection screens and an initial blog post on SCN. Thanks to contributions from the ABAP open-source community, the project has grown significantly in UI capabilities, system compatibility, and extensibility. Today, abap2UI5 is a thriving, community-driven initiative.
