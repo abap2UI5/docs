@@ -15,4 +15,3 @@ Ready to contribute? Check out the guidelines on how to create and submit a PR. 
 
 ### Need Help?
 If you encounter any issues or have questions, feel free to open an issue.
-
