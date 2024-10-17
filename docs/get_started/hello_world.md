@@ -73,7 +73,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Data Exchange, Model
+### Data Exchange
 Finally, we send data to the backend:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.

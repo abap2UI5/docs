@@ -1,6 +1,6 @@
 # Sponsor
 
-
+![alt text](image-1.png)
 ### Contributors
 This project greatly benefits from its [contributors](https://github.com/abap2UI5/abap2UI5/graphs/contributors)
 
