@@ -1,7 +1,9 @@
 # Support
 
-If you find any bugs or unexpected behavior, please open an issue. If you require a missing functionality, opening an issue can also help to determine if the project can be extended in this direction.
+Support for abap2UI5 is provided by the community on a best-effort basis. 
 
-It is always helpful if you could provide a working code snippet of your application that reproduces the problem. This enables quickly identifying the cause of the error by copying and pasting it into another system.
+If you encounter any bugs or unexpected behavior, please open an [issue.](https://github.com/abap2UI5/abap2UI5/issues) Including a code snippet that reproduces the issue is always helpful, as it allows others to quickly test and identify the problem.
 
+Join the abap2UI5 channel on [Slack](https://communityinviter.com/apps/abapgit/abap) to ask questions, share insights, or get help from fellow developers.
 
+_If you need a specific feature that isn’t available yet, opening an issue is a great way to discuss potential extensions to the project._

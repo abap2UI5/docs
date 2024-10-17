@@ -2,8 +2,6 @@
 
 This project is open source and developed alongside other projects or during free time. Contributions are greatly appreciated!
 
-
-## Contribution
 You can contribute in various ways:
 
 extend the view with a new property (link)

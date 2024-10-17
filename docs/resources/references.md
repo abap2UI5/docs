@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # References
 
 #### 2024
@@ -17,9 +20,3 @@
 
 #### More
 * Find abap2UI5 on ABAP Open Source Projects [(dotabap.org)](https://dotabap.org/)
-
-
-#### Companies
-Are you using abap2UI5? 
- _Your app is not listed her? Feel free to send a PR and extend this file!_
-...

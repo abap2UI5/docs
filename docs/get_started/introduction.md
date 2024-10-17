@@ -6,45 +6,45 @@ outline: [2, 6]
 Welcome to abap2UI5 – an open-source project for developing UI5 apps purely in ABAP.
 
 ##### Features
-This project offers a pure ABAP approach for developing UI5 apps – entirely without JavaScript, OData, or RAP. Just like in classic ABAP, when a few lines of code were enough to display input forms and tables using Selection Screens & ALVs. It enables you to build apps with minimal system footprint, running seamlessly in both on-premise and cloud environments.
+abap2UI5 offers a pure ABAP approach to developing UI5 apps, without the need for JavaScript, OData, or RAP. Similar to classic ABAP, where a few lines of code were enough to display input forms and tables using Selection Screens & ALVs.
 
 ##### Evolution
-Launched in 2023 as a free-time project, abap2UI5 began with the basic functionality of a selection screen feature for ABAP Cloud and an initial blog post on SCN. Thanks to contributions from the ABAP open-source community, the project has continuously evolved, incorporating additional UI5 capabilities and expanding system compatibility. Today, abap2UI5 boasts a wide range of features and is a thriving, community-driven initiative.
+Launched in 2023 as a personal project, abap2UI5 began with basic selection screen functionality for ABAP Cloud and an initial blog post on SCN. Thanks to contributions from the ABAP open-source community, the project has continuously evolved. Today, abap2UI5 boasts a wide range of features and is a thriving, community-driven initiative.
 
 ##### Compatibility
 ![alt text](image-15.png){ width=50% }
-Running on all ABAP releases, from NW 7.02 to ABAP Cloud. It is compatible with on-premise landscapes, S/4HANA Private Cloud, On-Premise, and R/3 NetWeaver AS ABAP 7.50 or higher, as well as cloud environments BTP ABAP Environment and S/4HANA Public Cloud.
+abap2UI5 runs on all ABAP releases, from NW 7.02 to ABAP Cloud. It is compatible with on-premise landscapes, including S/4HANA Private Cloud, On-Premise, and R/3 NetWeaver AS ABAP 7.50 or higher. It also works in cloud environments like BTP ABAP Environment and S/4HANA Public Cloud.
 
 ##### Installation
 ![alt text](image-14.png){ width=50% }
-The framework only consists of classes and interfaces and can be easily isntalled via abapGit – no additional app deployment is required. For frontend backend communicaton you just need to create a single HTTP service.
+The framework consists only of classes and interfaces and can be easily installed via abapGit – no additional app deployment is required. To communicate with the client, you simply need to create a new HTTP service.
 
 ##### Development
-Simply implement a single interface to create a standalone UI5 application. Every abap2UI5 app is just an implentation of a single method of an interface. Every app is therefore again a full supported abapGit project which can be easily installed on various systems.
+UI5 apps are created by defining a new ABAP class and implementing a single method from the abap2UI5 interface. Each app is fully supported as an abapGit project, making installation across various systems straightforward.
 
 ##### Cloud Ready
-abap2UI5 relies only on released APIs, making it ready for clean core implementations with the new ABAP for Cloud language version. The abap2ui5 framework is "cloud ready". In your app implementation you have all freedom and can also use all new CDS, ABAP SQL or EML language features.
+abap2UI5 relies solely on released APIs, making it suitable for on-stack and side-by-side extensions using the new ABAP for Cloud language version. In your app implementation, you have full freedom to use new features like CDS, ABAP SQL, and EML.
 
 ##### Clean Core
-If you call in your app implementation only released APIs your whole develpment can be called "cloud ready & Upgrade stable", ready for the future.
+By ensuring your app only uses released APIs, your development remains "cloud-ready & upgrade-stable," adhering to clean core principles and ensuring future compatibility.
 
 ##### ABAP Classic
-As abap2UI5 only relies on class and interfaces it can also be used for onpremise abnd classic abap implementations. For older systeme there is also a downported verison availible.
+The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is also available for older systems.
 
 ##### Architecture
-The abap2UI5 system footprint is kept minimal. In its base version, it includes only essential classes and interfaces. If you need extended functionality, you can install additional addons.
+The abap2UI5 system footprint is kept minimal. In its base version, it includes only the essential classes and interfaces. Additional functionality can be added by installing optional addons.
 
 ##### Security
-You manually create an HTTP handler for the frontend comunication of this framwork, giving you full control over all external communication.
+Since you manually create the HTTP handler for client communication, you have complete control over all external interactions, ensuring security.
 
 ##### Use in Production
 abap2UI5 is simply an implementation of an HTTP handler and can be used like any other HTTP service in a productive environment.
 
 ##### Support
-Running into problems or found a bug? Create an issue or join the abap2UI5 community on Slack for assistance. Community support is provided on a best-effort basis.
+Running into problems or found a bug? Submit an issue or join the abap2UI5 community on Slack for help. Community support is provided on a best-effort basis.
 
 ##### Contribution
-We welcome all contributions! Share your knowledge, hunt for or fix bugs, submit a PR, extend this documentation, leave a comment, or simply spread the word about abap2UI5. This project thrives on your support!
+Contributions are welcome! Share your knowledge, hunt for or fix bugs, submit a pull request, expand this documentation, leave a comment, or help spread the word about abap2UI5. The project thrives on your involvement!
 
 ##### Sponsor
-abap2UI5 relies on dedicated developers investing their free time. If you or your company can't contribute directly, consider supporting the project in other ways. Details are available here.
+abap2UI5 is maintained by dedicated developers volunteering their time. If you or your company use abap2UI5 in production but cannot contribute directly, consider supporting the project in other ways. More details can be found [here.](/resources/sponsor)
