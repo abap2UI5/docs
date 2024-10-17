@@ -124,12 +124,11 @@ export default defineConfig({
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
-          { text: 'UI5, ABAP Versions', link: '/features/faq' },
-          { text: 'SE80, ADT', link: '/advanced/se80' },
-          { text: 'Extensibility', link: '/features/faq' },
+          // { text: 'UI5, ABAP Versions', link: '/features/faq' },
+          // { text: 'SE80, ADT', link: '/advanced/se80' },
+          // { text: 'Extensibility', link: '/advanced/extension' },
         ]
       },
-
       {
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'Runtime Typed Data', link: '/addons/srtti' },
@@ -146,10 +145,10 @@ export default defineConfig({
         link: '/insights/insights',
         collapsed: true,
         items: [
-          { text: 'General', link: '/insights/general' },
-          { text: 'CI/CD', link: '/insights/ci' },
-          { text: 'abaplint', link: '/insights/ci' },
-          { text: 'open-abap', link: '/advanced/open_abap' },
+          { text: 'General', link: '/insights/insights' },
+          // { text: 'CI/CD', link: '/insights/ci' },
+          // { text: 'abaplint', link: '/insights/ci' },
+          // { text: 'open-abap', link: '/advanced/open_abap' },
         ]
       },
       {
