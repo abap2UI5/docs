@@ -146,6 +146,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'General', link: '/insights/insights' },
+          { text: 'open-abap', link: '/insights/open_abap' },
           // { text: 'CI/CD', link: '/insights/ci' },
           // { text: 'abaplint', link: '/insights/ci' },
           // { text: 'open-abap', link: '/advanced/open_abap' },

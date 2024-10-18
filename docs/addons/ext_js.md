@@ -5,7 +5,7 @@ outline: [2, 6]
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/js-libraries)
 
-Included Custom Controls:
+Install this addon to access a wide range of additional JS libraries. Explore the samples to see how they can be implemented. Included Custom Controls:
 
 #### 1. Driver JS
  * Product tours, highlights, contextual help and more
