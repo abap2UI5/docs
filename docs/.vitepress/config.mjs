@@ -39,7 +39,7 @@ export default defineConfig({
           { text: 'Development', link: '/development/development' },
           { text: 'Configuration', link: '/configuration/configuration' },
           { text: 'Advanced Topics', link: '/advanced/advanced' },
-          { text: 'Technical Insights', link: '/insights/insights' },
+          { text: 'Under The Hood', link: '/insights/insights' },
           { text: 'Resources', link: '/resources/resources' },
         ]
       },

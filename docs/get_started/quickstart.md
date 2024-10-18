@@ -73,7 +73,7 @@ Create a new HTTP service. Follow [this guide](https://developers.sap.com/tutori
 ![alt text](image-5.png)
 
 ::: details ABAP Cloud
-![alt text](image-5.png)
+![alt text](image-20.png)
 :::
 ::: tip Security
 This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.

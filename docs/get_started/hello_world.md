@@ -4,7 +4,7 @@ outline: [2, 4]
 # Hello World
 
 ### Basic Example
-Every abap2UI5 app is just an implementation of the `z2ui5_if_app` interface. Create a new class with the following code:
+Every abap2UI5 app is an implementation of the `z2ui5_if_app` interface. Create a new class with the following code:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -17,10 +17,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Go back to the landing page in your browser and enter `z2ui5_cl_app_hello_world`. Then you can start your first own app.
+Go back to the landing page in your browser and enter `z2ui5_cl_app_hello_world`. Your first app will then launch.
 
 ### View
-Now, let's extend the app with a view that shows a simple form:
+Now, let's add our first view to display a simple form:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'POST'.
         client->message_box_display( |Hello World!| ).
-        return.
+        RETURN.
     ENDCASE.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN 'POST'.
         client->message_box_display( |Your name is { name }.| ).
-        return.
+        RETURN.
     ENDCASE.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
