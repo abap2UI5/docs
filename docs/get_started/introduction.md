@@ -29,7 +29,7 @@ abap2UI5 relies solely on released APIs, making it suitable for on-stack and sid
 By ensuring your app only uses released APIs, your development remains "cloud-ready & upgrade-stable," adhering to clean core principles and ensuring future compatibility.
 
 ##### ABAP Classic
-The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is also available for older systems.
+The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is also available for systems below ABAP 7.50.
 
 ##### Architecture
 The abap2UI5 system footprint is kept minimal. In its base version, it includes only the essential classes and interfaces. Additional functionality can be added by installing optional addons.
@@ -41,10 +41,10 @@ Since you manually create the HTTP handler for client communication, you have co
 abap2UI5 is simply an implementation of an HTTP handler and can be used like any other HTTP service in a productive environment.
 
 ##### Support
-Running into problems or found a bug? Submit an issue or join the abap2UI5 community on Slack for help. Community support is provided on a best-effort basis.
+Support is provided by the community on a best-effort basis. Submit an issue or join the abap2UI5 community on Slack for help. 
 
 ##### Contribution
-Contributions are welcome! Share your knowledge, hunt for or fix bugs, submit a pull request, expand this documentation, leave a comment, or help spread the word about abap2UI5. The project thrives on your involvement!
+Contributions are always welcome. Share your knowledge, hunt for or fix bugs, submit a pull request, expand this documentation, leave a comment, or help spread the word about abap2UI5. The project thrives on your involvement!
 
 ##### Sponsor
 abap2UI5 is maintained by dedicated developers volunteering their time. If you or your company use abap2UI5 in production but cannot contribute directly, consider supporting the project in other ways. More details can be found [here.](/resources/sponsor)

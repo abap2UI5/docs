@@ -92,14 +92,14 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'General', link: '/development/general' },
-          { text: 'View, UI', link: '/features/' },
-          { text: 'Model, Data Binding', link: '/features/' },
+          // { text: 'View, UI', link: '/features/' },
+          // { text: 'Model, Data Binding', link: '/features/' },
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Messages', link: '/development/messages' },
           { text: 'Errors', link: '/development/errors' },
-          { text: 'Popups, Popover', link: '/development/popups' },
-          { text: 'Navigation', link: '/features/' },
-          { text: 'Debugging', link: '/features/' },
+          // { text: 'Popups, Popover', link: '/development/popups' },
+          // { text: 'Navigation', link: '/features/' },
+          // { text: 'Debugging', link: '/features/' },
         ]
       },
       {
@@ -108,11 +108,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Setup', link: '/configuration/general' },
-          { text: 'Installation', link: '/configuration/installation'},
+          // { text: 'Installation', link: '/configuration/installation'},
           { text: 'Use in Production', link: '/configuration/productive_usage' },
-          { text: 'Security', link: '/configuration/security' },
-          { text: 'Performance', link: '/configuration/performance' },
-          { text: 'Fiori Launchpad', link: '/configuration/installation', },
+          // { text: 'Security', link: '/configuration/security' },
+          // { text: 'Performance', link: '/configuration/performance' },
+          { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
           { text: 'BTP Workzone', link: '/configuration/btp' },
         ]
       },
