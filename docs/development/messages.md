@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Messages
 
 For translation, check this section.

@@ -1,6 +1,9 @@
+---
+outline: [2, 4]
+---
 # Translation, i18n
 
-In typical UI5 development, translation is handled through i18n files, with translations stored in frontend artifacts. However, in abap2UI5, all apps are stored entirely in the backend ABAP stack, allowing us to utilize standard ABAP translation mechanisms such as text elements or message texts.
+In UI5 development, translation is handled through i18n files, with translations stored in frontend artifacts. However, in abap2UI5, all apps are stored entirely in the backend ABAP stack, allowing us to utilize standard ABAP translation mechanisms such as text elements or message texts.
 
 ### Text Elements
 In this example, the message can be translated using the ABAP text element mechanism, making it available in different languages without changing the code:

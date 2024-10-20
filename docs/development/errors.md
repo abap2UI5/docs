@@ -1,15 +1,69 @@
+---
+outline: [2, 4]
+---
 # Errors
 
-#### Assert 
-A pragmatic apporach is to work with an assert, tho I how ABAP throws all his exceptions 
+### Uncatched Errors
 
+#### Assert
+The most simple apporach is to just use an assert and output the error directly via the http handler:
+```abap
+CLASS zcl_my_app IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
 
-#### Uncatched Exception
-Goes into the default of the http handler not showing any error
+    ASSERT 1 = `This is an error message!`.
 
-#### Catched Exception with Message Box
-Raise exception with catch
-More elegant as you can stay with 
+  ENDMETHOD.
+ENDCLASS.
+```
+####  Exception
+You can achieve the same behavior with an uncaught exception. The framework will convert it into an assert and stop execution:
+```abap
+CLASS zcl_my_app IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    RAISE EXCEPTION NEW lcx_error( ).
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+### Catched Errors
+
+For end users, it’s better to create a UI5 popup that displays the error:
+
+#### Exception with Message Box
+```abap
+CLASS zcl_my_app IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    TRY.
+
+        "implementation here...
+        RAISE EXCEPTION NEW lcx_error( ).
+
+      CATCH cx_root INTO DATA(lx).
+        client->message_box_display( |An error occured: { lx->get_text( ) }| ).
+    ENDTRY.
+
+  ENDMETHOD.
+ENDCLASS.
+```
 
 #### Popup Exception
-PRs Welcome
+Or use the built-in error popup to display more details:
+
+```abap
+CLASS zcl_my_app IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+    TRY.
+
+        "implementation here...
+        RAISE EXCEPTION NEW lcx_error( ).
+
+      CATCH cx_root INTO DATA(lx).
+        client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+```
