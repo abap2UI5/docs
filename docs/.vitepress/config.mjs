@@ -109,7 +109,7 @@ export default defineConfig({
         items: [
           { text: 'Setup', link: '/configuration/general' },
           // { text: 'Installation', link: '/configuration/installation'},
-          { text: 'Use in Production', link: '/configuration/productive_usage' },
+          // { text: 'Use in Production', link: '/configuration/productive_usage' },
           // { text: 'Security', link: '/configuration/security' },
           // { text: 'Performance', link: '/configuration/performance' },
           { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
