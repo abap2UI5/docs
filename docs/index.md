@@ -16,7 +16,7 @@ hero:
       text: About
       link: /get_started/introduction
     - theme: alt
-      text: Quickstart
+      text: Getting Started
       link: /get_started/quickstart
 
 features:
