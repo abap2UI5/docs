@@ -22,4 +22,4 @@ Several open-source projects extend the functionality of abap2UI5, ensure compat
 * Browser testing with [Playwright](https://playwright.dev/) & [web-abap2UI5](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
 * Live demos running via [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
 
-_Supporting any of these projects and contributors, whether through financial sponsorship or by spreading the word, helps keep abap2UI5 and the entire ABAP open-source community thriving!_
+_Your support keeps abap2UI5 and the entire ABAP open-source community thriving!_
