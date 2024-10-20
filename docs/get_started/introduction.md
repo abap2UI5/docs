@@ -1,33 +1,50 @@
 ---
-outline: [2, 4]
+outline: [2, 6]
 ---
 # Introduction
 
-Welcome to abap2UI5 – an open-source framework that allows you to develop UI5 apps purely in ABAP.
+Welcome to abap2UI5 – an open-source project for developing UI5 apps purely in ABAP.
 
-#### Why abap2UI5?
-This project offers a pure ABAP approach for developing UI5 apps - entirely without JavaScript, OData or RAP. Just like in the past, when a few lines of ABAP were enough to display input forms and tables using Selection Screens & ALVs. Designed with a minimal system footprint, it works in both on-premise and cloud environments.
+##### Features
+abap2UI5 offers a pure ABAP approach to developing UI5 apps, without the need for JavaScript, OData, or RAP. Similar to classic ABAP, where a few lines of code were enough to display input forms and tables using Selection Screens & ALVs.
 
-#### Key Features
+##### Evolution
+Launched in 2023 as a personal project, abap2UI5 began with basic selection screen functionality for ABAP Cloud and an initial blog post on SCN. Thanks to contributions from the ABAP open-source community, the project has continuously evolved. Today, abap2UI5 boasts a wide range of features and is a thriving, community-driven initiative.
 
-* **100% ABAP:** Developing purely in ABAP (no JavaScript, DDL, EML or Customizing)
-* **User-Friendly:** Implement a single interface to create a standalone UI5 application
-* **Minimal System Footprint:** Uses a simple HTTP handler (no BSP, OData, CDS or RAP)
-* **Cloud & On-Premise Ready:** Supports both ABAP Cloud and Standard ABAP
-* **Broad System Compatibility:** Runs on all ABAP releases (from NW 7.02 to ABAP Cloud)
-* **Easy Installation:** Install via abapGit, no additional app deployment required
+##### Compatibility
+![alt text](image-15.png){ width=50% }
+abap2UI5 runs on all ABAP releases, from NW 7.02 to ABAP Cloud. It is compatible with on-premise landscapes, including S/4HANA Private Cloud, On-Premise, and R/3 NetWeaver AS ABAP 7.50 or higher. It also works in cloud environments like BTP ABAP Environment and S/4HANA Public Cloud.
 
-#### Compatibility
+##### Installation
+![alt text](image-14.png){ width=50% }
+The framework consists only of classes and interfaces and can be easily installed via abapGit – no additional app deployment is required. To communicate with the client, you simply need to create a new HTTP service.
 
-* BTP ABAP Environment (ABAP for Cloud)
-* S/4 Public Cloud (ABAP for Cloud)
-* S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
-* R/3 NetWeaver AS ABAP 7.50 or higher (Standard ABAP)
-* R/3 NetWeaver AS ABAP 7.02 to 7.42: Use the [downported repositories](https://github.com/abap2UI5-downports)
+##### Development
+UI5 apps are created by defining a new ABAP class and implementing a single method from the abap2UI5 interface. Each app is fully supported as an abapGit project, making installation across various systems straightforward.
 
-#### Get Involved
-* Questions, feedback or bugs? Check out the [documentation](https://github.com/abap2UI5/abap2UI5-documentation/), [FAQ](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/docs/faq.md) or create an [issue.](https://github.com/abap2UI5/abap2UI5/issues)
-* Want to help out? Review our [contribution guidelines](https://github.com/abap2UI5/abap2UI5-documentation/blob/main/CONTRIBUTING.md) to get started.
-* Stay updated! Follow us on [LinkedIn.](https://www.linkedin.com/company/abap2ui5)
+##### Cloud Ready
+abap2UI5 relies solely on released APIs, making it suitable for on-stack and side-by-side extensions using the new ABAP for Cloud language version. In your app implementation, you have full freedom to use new features like CDS, ABAP SQL, and EML.
 
-_We welcome all contributions! Share your knowledge, hunt for or fix bugs, submit a PR, write a comment, give us a like, or simply tell your friends how much you love abap2UI5. This project thrives on your support! 🚀_ 
+##### Clean Core
+By ensuring your app only uses released APIs, your development remains "cloud-ready & upgrade-stable," adhering to clean core principles and ensuring future compatibility.
+
+##### ABAP Classic
+The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is also available for systems below ABAP 7.50.
+
+##### Architecture
+The abap2UI5 system footprint is kept minimal. In its base version, it includes only the essential classes and interfaces. Additional functionality can be added by installing optional addons.
+
+##### Security
+Since you manually create the HTTP handler for client communication, you have complete control over all external interactions, ensuring security.
+
+##### Use in Production
+abap2UI5 is simply an implementation of an HTTP handler and can be used like any other HTTP service in a productive environment.
+
+##### Support
+Support is provided by the community on a best-effort basis. Submit an issue or join the abap2UI5 community on Slack for help. 
+
+##### Contribution
+Contributions are always welcome. Share your knowledge, hunt for or fix bugs, submit a pull request, expand this documentation, leave a comment, or help spread the word about abap2UI5. The project thrives on your involvement!
+
+##### Sponsor
+abap2UI5 is maintained by dedicated developers volunteering their time. If you or your company use abap2UI5 in production but cannot contribute directly, consider supporting the project in other ways. More details can be found [here.](/resources/sponsor)

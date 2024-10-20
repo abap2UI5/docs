@@ -7,15 +7,21 @@ outline: [2, 4]
 ### 1. Installation with abapGit
 
 Install the project with [abapGit.](https://abapgit.org)
+
 ![alt text](image.png)
 
-### 2. Create HTTP Handler
-Create a new HTTP service with the appropriate handler implementation for your system:
+::: details ABAP Cloud
+![alt text](image-4.png)
+:::
+
+
+### 2. Implement HTTP Handler
+Create a new package and define a new class for the HTTP implementation:
 
 ::: code-group
 
 ```abap [ABAP]
-CLASS zcl_my_handler_onprem DEFINITION
+CLASS zcl_my_abap2UI5_http_handler DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -26,7 +32,7 @@ CLASS zcl_my_handler_onprem DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_my_handler_onprem IMPLEMENTATION.
+CLASS zcl_my_abap2UI5_http_handler IMPLEMENTATION.
 
   METHOD if_http_extension~handle_request.
 
@@ -38,7 +44,7 @@ ENDCLASS.
 ```
 
 ```abap [ABAP Cloud]
-CLASS zcl_my_handler_cloud DEFINITION
+CLASS zcl_my_abap2UI5_http_handler DEFINITION
   PUBLIC
   CREATE PUBLIC.
 
@@ -49,7 +55,7 @@ CLASS zcl_my_handler_cloud DEFINITION
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_my_handler_cloud IMPLEMENTATION.
+CLASS zcl_my_abap2UI5_http_handler IMPLEMENTATION.
 
   METHOD if_http_service_extension~handle_request.
 
@@ -61,37 +67,22 @@ ENDCLASS.
 ```
 :::
 
-Your system structure now looks like this:
-```
-.
-├─ abap2UI5
-│─ package
-│  ├─ zcl_my_handler
-```
+### 3. Create HTTP Service
+Create a new HTTP service. Follow [this guide](https://developers.sap.com/tutorials/abap-environment-create-http-service..html) for ABAP Cloud.
 
+![alt text](image-5.png)
 
-### 3. Create HTTP Endpoint
-Create a new HTTP service and assign the handler implementation you created. <br>
-Now, you can access abap2UI5 from your browser. The abap2UI5 framework and your custom HTTP handler have been successfully installed.<br>
-Your system structure should now look like this:<br>
-```
-.
-├─ abap2UI5
-└─ package
-   ├─ zcl_my_handler
-   └─ icf artifact
-```
-
-### 3. Start your App
-Call your HTTP service in the browser, press check, and start your app:
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56"><br>
-<img width="800" alt="image" src="https://github.com/user-attachments/assets/beee0551-494f-4e29-98bd-529395e27405">
-
-
-
-::: warning Information Security 💡
-
-This project communicates solely with the HTTP handler that you define. You have complete control—decide who can access this handler and customize authentication methods. As your needs evolve, you can further refine the handler. See more details [here.](/configuration/general)
-
+::: details ABAP Cloud
+![alt text](image-20.png)
 :::
+::: tip Security
+This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
+:::
+
+### 4. First Start
+The abap2UI5 framework and your custom HTTP handler have been successfully installed. You can now access the HTTP endpoint from your browser.
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+Press check, and start the test app.
+
+
 
