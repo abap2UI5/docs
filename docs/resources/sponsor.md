@@ -3,7 +3,7 @@
 ![alt text](image-1.png){ width=75% }
 
 ##### Why Sponsor?
-abap2UI5 is a community-driven project built by developers who invest their free time to create, maintain, and improve it. Your sponsorship helps support their efforts and ensures the continued growth and enhancement of the project. Whether you're a company using abap2UI5 or an individual who finds value in it, sponsoring is a way to give back and ensure the longevity of this open-source initiative.
+abap2UI5 is a community-driven project built by developers who invest their free time to create, maintain, and improve it. Your sponsorship helps support their efforts and ensures the continued growth and enhancement of the project.
 
 ##### Support the Contributors
 abap2UI5 thrives on the contributions from its passionate developers. Every contributor brings unique value to the project. Consider sponsoring these developers to help them continue their work. You can find a full list of contributors [here.](https://github.com/abap2UI5/abap2UI5/graphs/contributors)
