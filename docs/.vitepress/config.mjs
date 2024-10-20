@@ -95,7 +95,7 @@ export default defineConfig({
           // { text: 'View, UI', link: '/features/' },
           // { text: 'Model, Data Binding', link: '/features/' },
           { text: 'Translation, i18n', link: '/development/translation' },
-          { text: 'Messages', link: '/development/messages' },
+          // { text: 'Messages', link: '/development/messages' },
           { text: 'Errors', link: '/development/errors' },
           // { text: 'Popups, Popover', link: '/development/popups' },
           // { text: 'Navigation', link: '/features/' },
