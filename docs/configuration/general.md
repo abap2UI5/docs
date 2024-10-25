@@ -4,6 +4,18 @@ outline: [2, 4]
 
 # General
 
+
+### **URL Parameters**
+Use the following snippet:
+```abap
+DATA(lv_search) = client->get( )-s_config-search.
+DATA(lv_param) = z2ui5_cl_xml_view=>factory( client )->hlp_get_url_param( `myparam` ).
+```
+
+#### Logon Language
+Set the url parameter sap-language for this and check all other options [here.](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
+
+
 ### HTTP Handler
 
 abap2UI5 can be run with various custom configurations. This is the call for the default setup:
