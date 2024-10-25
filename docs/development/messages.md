@@ -2,75 +2,148 @@
 outline: [2, 4]
 ---
 
-# Messages
+# Messages & Errors
+
+Outputting messages and errors is an everyday requirement for ABAP developers. abap2UI5 provides functions for the most common situations.
 
 #### Message Toast
 
-Messages only displayed for a short period of time eg. sucesses can be displayed via the client method:
+Messages that are displayed for a short period, such as success notifications, can be shown with:
 
 ```abap
-CLASS zcl_my_app IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
-    client->message_toast_display( `this is my message` ).
+  client->message_toast_display( `this is a message` ).
 
-  ENDMETHOD.
-ENDCLASS.
+ENDMETHOD.
 ```
 
 #### Message Box
 
-Messages wihch need to be closed manually can be displayed via the message box:
+If you want to ensure that the user acknowledges the message, you can display a message box that requires a manual close:
 
 ```abap
-CLASS zcl_my_app IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
-    client->message_box_display( `this is my message` ).
+  client->message_box_display( `this is a message` ).
 
-  ENDMETHOD.
-ENDCLASS.
+ENDMETHOD.
 ```
 
-Or use an error
+For error messages, simply change the type:
 
 ```abap
-CLASS zcl_my_app IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-     client->message_box_display( text = 'Select a team in the "Development" area.' && cl_abap_char_utilities=>cr_lf &&
-                                            '"Marketing" isn’t assigned to this area.' type = 'error' ).
+METHOD z2ui5_if_app~main.
 
-  ENDMETHOD.
-ENDCLASS.
+  client->message_box_display( 
+    text = 'This is an error message' 
+    type = 'error' ).
+
+ENDMETHOD.
 ```
 
-#### Popup T100/BAPIRET
-
+#### SY, BAPIRET, CX_ROOT
+abap2UI5 contains a few functions to automatically generate a message popup in certain situations:
+###### SY
 ```abap
-CLASS z2ui5_cl_demo_app_154 IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
+  
+  MESSAGE ID 'NET' TYPE 'I' NUMBER '001' into data(lv_dummy).
+  client->message_box_display( sy ).
 
-     DATA(lo_app) = z2ui5_cl_pop_messages=>factory( VALUE #(
-            ( message = 'An empty Report field causes an empty XML Message to be sent' type = 'E' id = 'MSG1' number = '001' )
-            ( message = 'Check was executed for wrong Scenario' type = 'E' id = 'MSG1' number = '002' )
-            ( message = 'Request was handled without errors' type = 'S' id = 'MSG1' number = '003' )
-            ( message = 'product activated' type = 'S' id = 'MSG4' number = '375' )
-            ( message = 'check the input values' type = 'W' id = 'MSG2' number = '375' )
-            ( message = 'product already in use' type = 'I' id = 'MSG2' number = '375' )
-       ) ).
-
-  client->nav_app_call( lo_app ).
-
-  ENDMETHOD.
-ENDCLASS.
+ENDMETHOD.
 ```
+###### BAPIRET
+```abap
+METHOD z2ui5_if_app~main.
 
-if you need interaction, you can use built-in popups. The commen messages in format T100 or bairet, you can use the following popup to display these messages:
+  DATA lt_bapiret TYPE STANDARD TABLE OF bapiret2.
+  CALL FUNCTION 'BAPI_USER_GET_DETAIL'
+    EXPORTING
+      username = sy-uname
+    TABLES
+      return   = lt_bapiret.
+  IF sy-subrc <> 0.
+    client->message_box_display( lt_bapiret ).
+  ENDIF.
 
-PRs welcome
+ENDMETHOD.
+```
+###### CX_ROOT
+```abap
+METHOD z2ui5_if_app~main.
 
-#### Popup To Inform
+  TRY.
+    DATA(lv_val) = 1 / 0.
+  CATCH cx_root INTO DATA(lx).
+    client->message_box_display( lx ).
+  ENDTRY.
 
-Popup
+ENDMETHOD. 
+```
+A lot more imports are possible, just import your message structure, and the message box will display the content.
 
-#### Popup To Decide
+#### Popup Multi Message 
+The message box provides basic output, if you want to generate a detailed output, use the popup `z2ui5_cl_pop_messages`:
+```abap
+METHOD z2ui5_if_app~main.
+
+  data(lt_msg) = value bapirettab(
+    ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
+    ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' ) ).
+
+  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
+
+ENDMETHOD.
+```
+#### Popup Error
+To output a detailed view of your exception:
+```abap
+METHOD z2ui5_if_app~main.
+
+  TRY.
+    DATA(lv_val) = 1 / 0.
+  CATCH cx_root INTO DATA(lx).
+    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
+  ENDTRY.
+
+ENDMETHOD.
+```
+#### Popup Confirm
+If interaction is required, the `z2ui5_cl_pop_to_confirm` can be used:
+```abap
+METHOD z2ui5_if_app~main.
+
+  IF client->check_on_init( ).
+   client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
+ ENDIF.
+
+  CASE client->get( )-event.
+    WHEN z2ui5_cl_pop_to_confirm=>cs_event-confirmed.
+      client->message_box_display( `the result is confirmed` ).
+    WHEN z2ui5_cl_pop_to_confirm=>cs_event-canceled.
+      client->message_box_display( `the result is rejected` ).
+  ENDCASE.
+
+ENDMETHOD.
+```
+#### Uncatched Errors
+What happens if errors are uncaught? In this case, the SAP handler exception output is used. The processing is interrupted and the user need to restart the browser. So only use this for unexpected behaviour:
+```abap
+METHOD z2ui5_if_app~main.
+
+    ASSERT 1 = `This is an error message!`.
+
+ENDMETHOD.
+```
+Or achieve the same behavior with an uncaught exception:
+```abap
+METHOD z2ui5_if_app~main.
+
+    RAISE EXCEPTION NEW lcx_error( ).
+
+ENDMETHOD.
+```
+::: tip **Improvements**
+All these message functions are continually improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
+:::

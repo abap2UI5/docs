@@ -17,7 +17,7 @@ abap2UI5 runs on all ABAP releases, from NW 7.02 to ABAP Cloud. It is compatible
 
 ##### Installation
 ![alt text](image-14.png){ width=50% }
-The framework consists only of classes and interfaces and can be easily installed via abapGit – no additional app deployment is required. To communicate with the client, you simply need to create a new HTTP service.
+The framework consists only of classes and interfaces and can be easily installed via abapGit – no additional app deployment is required. To communicate with the client, you simply create a new HTTP service.
 
 ##### Development
 UI5 apps are created by defining a new ABAP class and implementing a single method from the abap2UI5 interface. Each app is fully supported as an abapGit project, making installation across various systems straightforward.

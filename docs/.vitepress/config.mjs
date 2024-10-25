@@ -49,8 +49,8 @@ export default defineConfig({
             text: 'Project', items: [
               { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
               { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
-              { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
               { text: 'frontend', link: 'https://github.com/abap2UI5/frontend' },
+              { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
               { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
             ]
           },
@@ -92,14 +92,13 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'General', link: '/development/general' },
-          // { text: 'View, UI', link: '/features/' },
-          // { text: 'Model, Data Binding', link: '/features/' },
+          { text: 'View', link: '/development/view' },
+          { text: 'Model', link: '/development/model'  },
+          { text: 'Events, Navigation', link: '/development/events' },
+          { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
-          // { text: 'Messages', link: '/development/messages' },
-          { text: 'Errors', link: '/development/errors' },
-          // { text: 'Popups, Popover', link: '/development/popups' },
-          // { text: 'Navigation', link: '/features/' },
-          // { text: 'Debugging', link: '/features/' },
+          { text: 'Popups, Popover', link: '/development/popups' },
+          { text: 'Debugging', link: '/development/debugging' },
         ]
       },
       {
@@ -107,26 +106,14 @@ export default defineConfig({
         link: '/configuration/configuration',
         collapsed: true,
         items: [
+          { text: 'Installation', link: '/configuration/installation'},
           { text: 'Setup', link: '/configuration/general' },
-          // { text: 'Installation', link: '/configuration/installation'},
+          { text: 'Security', link: '/configuration/security' },
+          { text: 'Authorization', link: '/configuration/authorization' },
           // { text: 'Use in Production', link: '/configuration/productive_usage' },
-          // { text: 'Security', link: '/configuration/security' },
           // { text: 'Performance', link: '/configuration/performance' },
           { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
           { text: 'BTP Workzone', link: '/configuration/btp' },
-        ]
-      },
-      {
-        text: 'Advanced Topics',
-        link: '/advanced/advanced',
-        collapsed: true,
-        items: [
-          { text: 'Stateful Sessions', link: '/advanced/stateful' },
-          { text: 'Downporting', link: '/advanced/downporting' },
-          { text: 'Renaming', link: '/advanced/renaming' },
-          // { text: 'UI5, ABAP Versions', link: '/features/faq' },
-          // { text: 'SE80, ADT', link: '/advanced/se80' },
-          // { text: 'Extensibility', link: '/advanced/extension' },
         ]
       },
       {
@@ -141,17 +128,37 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Under The Hood',
-        link: '/insights/insights',
+        text: 'Advanced Topics',
+        link: '/advanced/advanced',
         collapsed: true,
         items: [
-          { text: 'General', link: '/insights/insights' },
-          { text: 'open-abap', link: '/insights/open_abap' },
-          // { text: 'CI/CD', link: '/insights/ci' },
-          // { text: 'abaplint', link: '/insights/ci' },
-          // { text: 'open-abap', link: '/advanced/open_abap' },
-        ]
+          { text: 'Stateful Sessions', link: '/advanced/stateful' },
+          { text: 'Downporting', link: '/advanced/downporting' },
+          { text: 'Renaming', link: '/advanced/renaming' },
+          // { text: 'UI5, ABAP Versions', link: '/features/faq' },
+          // { text: 'SE80, ADT', link: '/advanced/se80' },
+          // { text: 'Extensibility', link: '/advanced/extension' },
+          { text: 'Technical Background', link: '/advanced/renaming' , items: [
+            { text: 'General', link: '/insights/insights' },
+            { text: 'open-abap', link: '/insights/open_abap' },
+            // { text: 'CI/CD', link: '/insights/ci' },
+            // { text: 'abaplint', link: '/insights/ci' },
+            // { text: 'open-abap', link: '/advanced/open_abap' },
+          ]
+          } ]
       },
+      // {
+      //   text: 'Under The Hood',
+      //   link: '/insights/insights',
+      //   collapsed: true,
+      //   items: [
+      //     { text: 'General', link: '/insights/insights' },
+      //     { text: 'open-abap', link: '/insights/open_abap' },
+      //     // { text: 'CI/CD', link: '/insights/ci' },
+      //     // { text: 'abaplint', link: '/insights/ci' },
+      //     // { text: 'open-abap', link: '/advanced/open_abap' },
+      //   ]
+      // },
       {
         text: 'Resources',
         link: '/resources/resources',

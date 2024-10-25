@@ -5,10 +5,10 @@ outline: [2, 6]
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/popups)
 
-abap2UI5 provides a collection of built-in popups with basic functionality, as demonstrated [here.](/development/popups) However, for more advanced popup requirements, this addon provides additional options, including:
+abap2UI5 provides a collection of built-in popups for the most common requirements. For more advanced popup requirements, this addon provides additional popups, including:
 * F4 Value Help
 * Display Transport Requests
-
+* ...
 
 ### Demo
 

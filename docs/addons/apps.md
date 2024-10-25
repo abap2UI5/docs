@@ -1,7 +1,7 @@
 ---
 outline: [2, 6]
 ---
-# More
+# Apps, Community
 
 #### Apps
 
