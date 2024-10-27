@@ -10,7 +10,7 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    
+
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
@@ -21,10 +21,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Go back to the landing page in your browser and enter `z2ui5_cl_app_hello_world`. Your first app will then launch.
+Go back to the landing page in your browser and enter `z2ui5_cl_app_hello_world`. Your app will then launch.
 
-### View
-Now, let's add our first view to display a simple form:
+### View Display
+Now, let's add our first view to display a simple text:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -34,20 +34,19 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
-         )->simple_form( )->content( ns = `form`
+         )->text( text = `My Text`
       )->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
 ```
 
-### Event Handling
-Next, we extend the app with an event:
+### Event Handler
+Next, we extend the app with a button and an event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -58,7 +57,6 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
@@ -69,8 +67,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
-         )->simple_form( )->content( ns = `form`
-            )->button( text = 'post' press = client->_event( 'POST' )
+          )->text( text = `My Text`
+          )->button( text = 'post' press = client->_event( 'POST' )
       )->stringify( ) ).
 
   ENDMETHOD.
@@ -78,7 +76,7 @@ ENDCLASS.
 ```
 
 ### Data Exchange
-Finally, we send data to the backend:
+Finally, we add a public attribute and can send data to the backend:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -89,7 +87,6 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
@@ -100,10 +97,9 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
-         )->simple_form( )->content( ns = `form`
-            )->label( 'Name'
-            )->input( client->_bind_edit( name )
-            )->button( text = 'post' press = client->_event( 'POST' )
+          )->text( text = `My Text`
+          )->button( text = 'post' press = client->_event( 'POST' )
+          )->input( client->_bind_edit( name )
       )->stringify( ) ).
 
   ENDMETHOD.

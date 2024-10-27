@@ -4,9 +4,10 @@ outline: [2, 6]
 # Apps, Community
 
 #### Apps
+<i class="fa-brands fa-github"></i> [GitHub](https://github.com/abap2UI5-apps) <br>
 
-Install ready to use abap2UI5 apps for various use cases:<br>
-<i class="fa-brands fa-github"></i> [GitHub](https://github.com/abap2UI5-apps)
+Install ready to use abap2UI5 apps for various use cases.   <br>
+
 
 #### Community
 ABAP Open Source Projects using abap2UI5:

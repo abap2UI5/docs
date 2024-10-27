@@ -26,9 +26,6 @@ outline: [2, 4]
 ### 2023
 <br>
 
-##### General
-- Development of UI5 Selection Screens in Pure ABAP [(SCN - 22.01.2023)](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-development-of-ui5-selection-screens-in-pure-abap/ba-p/13553176)
-
 ##### Development & Technical Background
 1. Introduction: Developing UI5 Apps Purely in ABAP [(SCN - 22.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-development-of-ui5-apps-in-pure-abap-1-3/)
 2. Displaying Selection Screens & Tables [(SCN - 23.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-output-of-lists-and-tables-toolbar-and-editable-2-3/)
@@ -42,3 +39,5 @@ outline: [2, 4]
 10. Extensions I: Exploring External Libraries & Native Device Capabilities [(SCN - 04.12.2023)](https://blogs.sap.com/2023/12/04/abap2ui5-a3-extensions-i-exploring-external-libraries-native-device-capabilities/)
 11. Extensions II: Guideline for Developing New Features in JavaScript [(SCN - 11.12.2023)](https://blogs.sap.com/2023/12/11/abap2ui5-a4-extensions-ii-guideline-for-developing-new-features-in-javascript/)
 
+##### More
+- Development of UI5 Selection Screens in Pure ABAP [(SCN - 22.01.2023)](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-development-of-ui5-selection-screens-in-pure-abap/ba-p/13553176)

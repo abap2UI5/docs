@@ -1,28 +1,28 @@
+---
+outline: [2, 4]
+---
+
 # Installation
 
-your app already runs with the own created http handler 
-
-BILD
-
-in productive environemnts in mirgth be a requeirement to also call this app via bsp on ine premise (lvevegring the Fiori laucnhapd) and on s/4 puvli clud and you need to install as you would do with fior elements and RAP.
-
-The project is compatible with all ABAP releases and language versions. As explained in the quickstart guide, you can use it by just calling directly the HTTP handler. However, when deploying to end users, there may sometimes be a need for further integration into launchpads or similar environments.
-
-### Standard ABAP
-
-In `S/4 Private Cloud` and `R/3 Netweaver` you ned ton install the BSP
-
-ABAP GIT
-
-PICTURE
+This project is compatible with most ABAP releases and language versions. As outlined in the Quickstart Guide, you can run the app directly through the HTTP handler:
+![alt text](image.png){ width=70% }
 
 
-usw.
+
+### ABAP Standard
+
+In `S/4 Private` or `S/4 On-Premise` systems you can just transport it as it is into production and use it. However it may be required to make this app accessible via BSP on-premise (leveraging the Fiori launchpad). Therefore you can install the abap2UI5 frontend:
+
+![alt text](image-1.png){ width=80% }
+
+Check out this [section](/configuration/launchpad) for more details.
+
 
 ### ABAP Cloud 
+In `S/4 Public Cloud` or `BTP ABAP` without the authoriy `S_DEVELOP` you can not acces the HTTP endpoint, so this is not a valid scenario for producvive usage. Deploy therefor the cloud branch of the abap2UI5-frontend and maintain a new fiori launchpad:
 
-In `S/4 Public Cloud` and `BTP ABAP Environemnt` you ned to deploy the UI5 app
+![alt text](image-2.png){ width=80% }
 
+### R/3 Netweaver
 
-
-
+For old `R/3 Netweaver` check out the [downport section.](/advanced/downported)

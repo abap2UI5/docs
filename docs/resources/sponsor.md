@@ -21,5 +21,6 @@ Several open-source projects extend the functionality of abap2UI5. Consider spon
 * Namespace renaming via the [mirror repository](https://github.com/abap2UI5/abap2UI5-mirror-renamed) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 * Browser testing with [Playwright](https://playwright.dev/) & [web-abap2UI5](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
 * Live demos running via [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
+* Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner)  [(authors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
 
 _Your support keeps abap2UI5 and the entire ABAP open-source community thriving!_
