@@ -38,7 +38,7 @@ The abap2UI5 system footprint is kept minimal. In its base version, it includes 
 Since you manually create the HTTP handler for client communication, you have complete control over all external interactions, ensuring security.
 
 ##### Use in Production
-abap2UI5 is simply an implementation of an HTTP handler and can be used like any other HTTP service in a productive environment.
+abap2UI5 is an implementation of an HTTP handler and can be also used like any other HTTP service in a productive environment.
 
 ##### Support
 Support is provided by the community on a best-effort basis. Submit an issue or join the abap2UI5 community on Slack for help. 

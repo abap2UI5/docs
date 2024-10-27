@@ -1,6 +1,16 @@
 # Changelog
 
-### v1.134.0
+
+## v1.135.0
+2024-10-27
+- Stateful Session Handling
+- Object List Item now supports “type” attribute
+- Message Strip with formatted text options
+- Customizable Icons for Links, Expandable Text with class attributes
+- Improved Frontend File Organization
+- Various Bugfixes For Launchpad Compatibility
+
+## v1.134.0
 2024-09-22
 - Added Tile Controls
 - Added Color Control
@@ -9,7 +19,7 @@
 - Fixed Separated Custom Controls & Layouts from abap2UI5 Core
 - Fixed Multiple Bugfixes and new Properties added
 
-### v1.133.0
+## v1.133.0
 2024-08-24
 - Added Controls & Properties for Splitter, Grid, Generic Tag, Content Areas, Step Input, News Content, Numeric Content etc.
 - Added Shell Bar Properties & Events
@@ -19,7 +29,7 @@
 - Fixed Low Release Compatibility of Method to Read Fixvalues
 - Fixed Multiple Bugfixes and new Properties added
 
-### v1.132.0
+## v1.132.0
 2024-07-28
 - Added Properties for Multi Input, Slider, Search Field etc.
 - Added Date Range Selection Control etc.

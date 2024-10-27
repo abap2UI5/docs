@@ -2,9 +2,9 @@
 outline: [2, 4]
 ---
 
-# Messages & Errors
+# Messages, Errors
 
-Outputting messages and errors is an everyday requirement for ABAP developers. abap2UI5 provides functions for the most common situations.
+Outputting messages and errors is an everyday requirement for ABAP developers. Functions are provided for the most common situations.
 
 #### Message Toast
 
@@ -43,7 +43,7 @@ ENDMETHOD.
 ```
 
 #### SY, BAPIRET, CX_ROOT
-abap2UI5 contains a few functions to automatically generate a message popup in certain situations:
+Common message structures, objects, and variables can be passed directly to the functions:
 ###### SY
 ```abap
 METHOD z2ui5_if_app~main.
@@ -81,7 +81,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD. 
 ```
-A lot more imports are possible, just import your message structure, and the message box will display the content.
+Many other imports are supported. Just import your message structure, and the message box will display it.
 
 #### Popup Multi Message 
 The message box provides basic output, if you want to generate a detailed output, use the popup `z2ui5_cl_pop_messages`:
@@ -97,7 +97,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Popup Error
-To output a detailed view of your exception:
+To show a detailed view of your exception:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -128,7 +128,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Uncatched Errors
-What happens if errors are uncaught? In this case, the SAP handler exception output is used. The processing is interrupted and the user need to restart the browser. So only use this for unexpected behaviour:
+What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted and the user need to restart the browser. So only use this for unexpected behaviour:
 ```abap
 METHOD z2ui5_if_app~main.
 

@@ -38,8 +38,7 @@ export default defineConfig({
           { text: 'Getting Started', link: '/get_started/get_started' },
           { text: 'Development', link: '/development/development' },
           { text: 'Configuration', link: '/configuration/configuration' },
-          { text: 'Advanced Topics', link: '/advanced/advanced' },
-          { text: 'Under The Hood', link: '/insights/insights' },
+          { text: 'Advanced', link: '/advanced/advanced' },
           { text: 'Resources', link: '/resources/resources' },
         ]
       },
@@ -65,7 +64,7 @@ export default defineConfig({
         ]
       },
       {
-        text: '1.134.0', items: [
+        text: '1.135.0', items: [
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'Contribution', link: '/resources/contribution' },
           { text: 'Support', link: '/resources/support' },
@@ -75,30 +74,30 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Getting Started',
-        link: '/get_started/get_started',
+        link: '/get_started/introduction',
         collapsed: true,
         items: [
           { text: 'Introduction', link: '/get_started/introduction' },
           { text: 'Quickstart', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
-          { text: 'Sample Apps', link: '/get_started/sample_apps' },
+          { text: 'Sample Apps', link: '/get_started/samples' },
           { text: 'Use Cases', link: '/get_started/use_cases' },
           { text: `What's next?`, link: '/get_started/next' }
         ]
       },
       {
         text: 'Development',
-        link: '/development/development',
+        link: '/development/general',
         collapsed: true,
         items: [
           { text: 'General', link: '/development/general' },
           { text: 'View', link: '/development/view' },
           { text: 'Model', link: '/development/model'  },
-          { text: 'Events, Navigation', link: '/development/events' },
+          // { text: 'Events, Navigation', link: '/development/events' },
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
-          { text: 'Popups, Popover', link: '/development/popups' },
-          { text: 'Debugging', link: '/development/debugging' },
+          // { text: 'Popups, Popover', link: '/development/popups' },
+          { text: 'Troubleshooting', link: '/development/troubleshooting' },
         ]
       },
       {
@@ -107,7 +106,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Installation', link: '/configuration/installation'},
-          { text: 'Setup', link: '/configuration/general' },
+          { text: 'Setup', link: '/configuration/setup' },
           { text: 'Security', link: '/configuration/security' },
           { text: 'Authorization', link: '/configuration/authorization' },
           // { text: 'Use in Production', link: '/configuration/productive_usage' },
@@ -128,7 +127,7 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Advanced Topics',
+        text: 'Advanced',
         link: '/advanced/advanced',
         collapsed: true,
         items: [
@@ -138,9 +137,9 @@ export default defineConfig({
           // { text: 'UI5, ABAP Versions', link: '/features/faq' },
           // { text: 'SE80, ADT', link: '/advanced/se80' },
           // { text: 'Extensibility', link: '/advanced/extension' },
-          { text: 'Technical Background', link: '/advanced/renaming' , items: [
-            { text: 'General', link: '/insights/insights' },
-            { text: 'open-abap', link: '/insights/open_abap' },
+           { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
+            { text: 'General', link: '/advanced/insights/insights' },
+            { text: 'open-abap', link: '/advanced/insights/open_abap' },
             // { text: 'CI/CD', link: '/insights/ci' },
             // { text: 'abaplint', link: '/insights/ci' },
             // { text: 'open-abap', link: '/advanced/open_abap' },
