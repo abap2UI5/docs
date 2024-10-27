@@ -25,4 +25,4 @@ In `S/4 Public Cloud` or `BTP ABAP` without the authoriy `S_DEVELOP` you can not
 
 ### R/3 Netweaver
 
-For old `R/3 Netweaver` check out the [downport section.](/advanced/downported)
+For old `R/3 Netweaver` check out the [downport section.](/advanced/downporting)
