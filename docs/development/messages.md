@@ -128,7 +128,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Uncatched Errors
-What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted and the user need to restart the browser. So only use this for unexpected behaviour:
+What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted and the user need to refresh the browser. So only use this for unexpected behaviour:
 ```abap
 METHOD z2ui5_if_app~main.
 
