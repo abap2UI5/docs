@@ -5,6 +5,9 @@
 
 
 
+Popups it’s recommend to use for every popup an own app so use navigation 
+
+### Popup in separated App
 ### Popover
 
 
@@ -20,6 +23,10 @@ a few you already saw at message and errors section.
         ├─ 01 (popups)
 ```
 Feel free to send a PR if you extend a need a new popup.
+
+
+
+
 
 #### Popup to Select
 

@@ -13,7 +13,7 @@ Launched in 2023 as a personal project, abap2UI5 began with basic selection scre
 
 ##### Compatibility
 ![alt text](image-15.png){ width=50% }
-abap2UI5 runs on all ABAP releases, from NW 7.02 to ABAP Cloud. It is compatible with on-premise landscapes, including S/4HANA Private Cloud, On-Premise, and R/3 NetWeaver AS ABAP 7.50 or higher. It also works in cloud environments like BTP ABAP Environment and S/4HANA Public Cloud.
+abap2UI5 runs with both language versions `ABAP Cloud` and `Standard ABAP`. It is compatible with all ABAP releases, starting from ABAP v7.02 up to ABAP for Cloud, including systems R/3 NetWeaver, S/4 On-Premise, S/4 Private Cloud and in cloud environments BTP ABAP Environment and S/4 Public Cloud.
 
 ##### Installation
 ![alt text](image-14.png){ width=50% }

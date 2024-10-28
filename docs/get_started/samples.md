@@ -11,14 +11,14 @@ Try out samples for use cases, such as tables, lists, trees, and many other UI5 
 ![alt text](image-1.png)
 
 ### Jump into the Code
-Don’t forget to press Ctrl+F12 and check out the source code for each sample:
+Press `CTRL+F12` and check out the source code, view and model for each sample:
 ![alt text](image-2.png)
 
 
 <br>
 
-_Don’t have a system available? You can also run_ the samples directly in your browser [here.](https://abap2ui5.github.io/web-abap2ui5-samples/)
+_Don’t have a system available? You can also run the samples directly in your browser [here.](https://abap2ui5.github.io/web-abap2ui5-samples/)_
 
 ::: tip **Contribution**
-The samples are continuously evolving. Have a sample you'd like to share? Feel free to open a PR so others can learn from your example!
+The samples are continuously evolving. Have a sample you'd like to share? Feel free to open a PR so others can learn from your code!
 :::

@@ -12,7 +12,7 @@ METHOD if_http_extension~handle_request.
 
 ENDMETHOD.
 ```
-For custom configurations, simply create a config variable and import it to the main method:
+For custom configurations, simply fill the config structure and import it to the run method:
 
 ### Theme
 eg. for changing the theme the source code looks like this:

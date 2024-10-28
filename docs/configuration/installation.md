@@ -4,14 +4,14 @@ outline: [2, 4]
 
 # Installation
 
-This project is compatible with most ABAP releases and language versions. As outlined in the Quickstart Guide, you can run the app directly through the HTTP handler:
+As outlined in the Quickstart Guide, you can run the abap2UI5 amd its apps directly through an HTTP service:
 ![alt text](image.png){ width=70% }
 
-
+This is the quickest and most programmatic approach; however, for productive usage, you have additional options.
 
 ### ABAP Standard
 
-In `S/4 Private` or `S/4 On-Premise` systems you can just transport it as it is into production and use it. However it may be required to make this app accessible via BSP on-premise (leveraging the Fiori launchpad). Therefore you can install the abap2UI5 frontend:
+In `S/4 Private` or `S/4 On-Premise` it may be required to make this app accessible via BSP on-premise (leveraging the Fiori launchpad). Therefore you can install the [abap2UI5-frontend:](https://github.com/abap2UI5/frontend)
 
 ![alt text](image-1.png){ width=80% }
 
@@ -19,7 +19,7 @@ Check out this [section](/configuration/launchpad) for more details.
 
 
 ### ABAP Cloud 
-In `S/4 Public Cloud` or `BTP ABAP` without the authoriy `S_DEVELOP` you can not acces the HTTP endpoint, so this is not a valid scenario for producvive usage. Deploy therefor the cloud branch of the abap2UI5-frontend and maintain a new fiori launchpad:
+In `S/4 Public Cloud` or `BTP ABAP Environment` without the S_DEVELOP authority, you cannot access the HTTP endpoint, making this scenario unsuitable for productive usage. Instead, deploy the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) and set up a new Fiori tile:
 
 ![alt text](image-2.png){ width=80% }
 

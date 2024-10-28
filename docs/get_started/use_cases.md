@@ -26,7 +26,7 @@ Classic extension — use unreleased APIs and benefit from the freedom to make e
 ### Side-by-Side Extension
 
 #### Tier 1 Extension
-Separate the development lifecycle of your apps from your S/4 system using only remote API calls.
+Separate the development lifecycle of your apps from your S/4 system using only remote API calls. By only using released APIs your apps are also compatible to S/4 Public Cloud.
 ![alt text](image-22.png){ width=60% }
 
 #### Tier 3 Extension

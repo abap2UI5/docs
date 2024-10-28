@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # Model
 
-there are three different ways to exchange data with the frontend.
+There are three ways to exchange data with the frontend in abap2UI5.
 
-#### One Way Binding
+#### One-Way Binding
 
-If you just need to display data to the frontend, and now changes must be made, you just use one way binding with the method `client->_bind` and the framework sends the data to the frontend and connects it with the view:
+When you need to display data on the frontend without allowing any changes, use one-way binding. The `client->_bind` method sends the data to the frontend and connects it to the view:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -29,10 +29,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Same works for tables, trees are other deep data structures. Check out the samples repository and take a look to the table or tree samples.
+This method also works for tables, trees, and other complex data structures. For more details, refer to the samples repository and explore the table or tree samples.
 
-#### Two Way Binding
-If the user should be able top change the data, you habe to make sure that the data will also be updated in the ABAP backend. Therefor use two way binding and use the mehtod `client->_bind_edit`. After an event the framework will update the value in you abap class.
+#### Two-Way Binding
+If the user should be able to modify data, enable two-way binding to update data in the ABAP backend. Use the `client->_bind_edit` method so that after an event, the framework will synchronize the data with your ABAP class.
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -63,12 +63,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-::: tip **Data in Public Attributes**
-Be aware that in both cases the binded data is public attribute in your class, because the framework needs to access it from outside. A bit like in the old pbo/pai screen days where the needed t be saved in global attributes too.
-:::
-
 #### Local Binding
-If you only have access to the data locally but still want to bind it, you have the chance to use bind local. This is especcially helpful for value helps when no changes at the frontend are made and dont need to chenge the data in the app logic. the framework will imeediatley copy the data in the bind method and then sned it to the frontend:
+When you only have local access to data but want to bind it for display (e.g., for a value help or lookup), use local binding. The `client->_bind_local` method copies the data and sends it to the frontend without impacting backend logic:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -82,7 +78,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     DATA(lv_name) TYPE string.
-    
+
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
           )->text( text = `My Text`
@@ -92,5 +88,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+For an example of local binding in action, see the value help use case in `Z2UI5_CL_DEMO_APP_002`.
 
-Check out the `Z2UI5_CL_DEMO_APP_002` to see the value help use case for local binding in action.
+::: tip **Data in Public Attributes**
+Be aware that you need to store your data in pubic attributes of your class when using One-Way or Two-Way binding, because the framework needs to access it from outside. This is similar to the PBO/PAI screen days, where data needed to be stored in global variables. 
+:::
