@@ -37,9 +37,8 @@ METHOD Z2UI5_if_app~main.
                 )->button(
                     text  = 'popup rendering, no background rendering'
                     press = client->_event( 'POPUP_OPEN' ) ).
-        client->view_display( lo_view->stringify( ) ).
 
-      RETURN.
+        client->view_display( lo_view->stringify( ) ).
     ENDIF.
 
     CASE client->get( )-event.
@@ -84,7 +83,6 @@ METHOD Z2UI5_if_app~main.
                     id    = 'TEST' ).
 
       client->view_display( view->stringify( ) ).
-
     ENDIF.
 
     CASE client->get( )-event.
