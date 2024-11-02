@@ -95,12 +95,13 @@ METHOD Z2UI5_if_app~main.
             )->popover( placement = 'Left'
                 )->text( `this is a popover`
                 )->button(
-                    text = `close`
+                    id    = `my_id`
+                    text  = `close`
                     press = client->_event( `POPOVER_CLOSE` ) ).
 
         client->popover_display(
-            xml = view->stringify( )
-            by_id = `test` ).
+            xml   = view->stringify( )
+            by_id = `my_id` ).
 
       WHEN 'POPOVER_CLOSE'.
         client->popover_destroy( ).
