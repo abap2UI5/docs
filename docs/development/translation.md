@@ -27,7 +27,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### Data Element Texts
+### Data Elements
 You can also retrieve and display the short, medium, or long descriptions of data elements (DD04T). Here’s how to access these text types programmatically:
 
 ::: code-group
