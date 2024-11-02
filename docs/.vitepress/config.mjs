@@ -77,7 +77,7 @@ export default defineConfig({
         link: '/get_started/introduction',
         collapsed: true,
         items: [
-          { text: 'Introduction', link: '/get_started/introduction' },
+          { text: 'About', link: '/get_started/about' },
           { text: 'Quickstart', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
           { text: 'Sample Apps', link: '/get_started/samples' },
@@ -96,7 +96,7 @@ export default defineConfig({
           // { text: 'Events, Navigation', link: '/development/events' },
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
-          // { text: 'Popups, Popover', link: '/development/popups' },
+         { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Troubleshooting', link: '/development/troubleshooting' },
         ]
       },

@@ -14,7 +14,7 @@ hero:
   actions:
     - theme: brand
       text: About
-      link: /get_started/introduction
+      link: /get_started/about
     - theme: alt
       text: Getting Started
       link: /get_started/quickstart
@@ -23,7 +23,7 @@ features:
   - title: Guide
     icon: <i class="fa-solid fa-book"></i>
     details: Learn how to develop, configure, and run apps with abap2UI5.
-    link: /get_started/introduction
+    link: /get_started/about
   - title: GitHub
     icon: <i class="fa-brands fa-github"></i>
     details: Jump into the code! Explore the repository, report issues, and contribute to the project.

@@ -91,5 +91,5 @@ ENDCLASS.
 For an example of local binding in action, see the value help use case in `Z2UI5_CL_DEMO_APP_002`.
 
 ::: tip **Data in Public Attributes**
-Be aware that you need to store your data in pubic attributes of your class when using One-Way or Two-Way binding, because the framework needs to access it from outside. This is similar to the PBO/PAI screen days, where data needed to be stored in global variables. 
+When using One-Way or Two-Way binding, remember to store your data in public attributes of your class, as the framework needs to access it from outside. This is similar to the PBO/PAI screen days, where data needed to be stored in global variables.
 :::

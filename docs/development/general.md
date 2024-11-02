@@ -14,7 +14,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     TRY.
 
-        "first app start,
+        "first app start
         IF client->check_on_init( ).
           "init values here
           "display view
@@ -22,15 +22,15 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
         ENDIF.
 
 
-        "callback after previous app.
+        "callback after previous app
         IF client->check_on_navigated( ).
           DATA(lo_app_prev) = client->get_app_prev( ).
-          "read attributes of previous app here
+          "read attributes of previous app
           RETURN.
         ENDIF.
 
 
-        "handle events..
+        "handle events
         CASE client->get( )-event.
           WHEN 'OK'.
             data(lt_arg) = client->get_event_arg( ).
