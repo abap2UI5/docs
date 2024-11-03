@@ -74,7 +74,7 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Getting Started',
-        link: '/get_started/introduction',
+        link: '/get_started/about',
         collapsed: true,
         items: [
           { text: 'About', link: '/get_started/about' },
