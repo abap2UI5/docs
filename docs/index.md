@@ -27,7 +27,7 @@ features:
   - title: GitHub
     icon: <i class="fa-brands fa-github"></i>
     details: Jump into the code! Explore the repository, report issues, and contribute to the project.
-    link: https://www.github.com/abap2UI5/abap2UI5
+    link: https://www.linkedin.com/company/abap2ui5/
   - title: LinkedIn
     icon: <i class="fab fa-linkedin"></i>
     details: Follow on LinkedIn and stay informed about latest updates and changes.
