@@ -62,8 +62,7 @@ ENDMETHOD.
 ```
 
 #### Separated App
-
-For each popup, it’s recommended to use a separated app by using navigation.
+For better source code structure, it's possible to encapsulate the popups in separate classes and call them through navigation.
 
 ### Popover
 
