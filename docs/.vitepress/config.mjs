@@ -122,7 +122,7 @@ export default defineConfig({
           { text: 'Layouts, Variants', link: '/addons/layout' },
           { text: 'Popups', link: '/addons/popup' },
           { text: 'Logging, BAL', link: '/addons/logging' },
-          { text: 'xlsx', link: '/addons/xlsx' },
+          { text: 'XLSX', link: '/addons/xlsx' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'Apps, Community', link: '/addons/apps' },
         ]
