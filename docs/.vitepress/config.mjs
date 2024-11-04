@@ -112,6 +112,7 @@ export default defineConfig({
           // { text: 'Use in Production', link: '/configuration/productive_usage' },
           // { text: 'Performance', link: '/configuration/performance' },
           { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
+          { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
           { text: 'BTP Workzone', link: '/configuration/btp' },
         ]
       },
