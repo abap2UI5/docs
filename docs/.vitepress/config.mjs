@@ -118,7 +118,7 @@ export default defineConfig({
       },
       {
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
-          { text: 'S-RTTI', link: '/addons/srtti' },
+          { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
           { text: 'Popups', link: '/addons/popup' },
           { text: 'Logging, BAL', link: '/addons/logging' },
