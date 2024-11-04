@@ -5,7 +5,7 @@ outline: [2, 4]
 
 In UI5 development, translations are typically managed through i18n files, with translation content stored in frontend artifacts. In abap2UI5, however, since all apps reside on the ABAP backend, we can leverage ABAP's built-in translation mechanisms, such as text elements or message classes.
 
-### Text Elements
+### Text Element
 The message can be translated using the ABAP text element mechanism, making it available in different languages without changing the code:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -27,7 +27,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### Data Elements
+### Data Element
 You can also retrieve and display the short, medium, or long descriptions of data elements (DD04T). Here’s how to access these text types programmatically:
 
 ::: code-group
