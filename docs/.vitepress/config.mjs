@@ -120,7 +120,7 @@ export default defineConfig({
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
-          { text: 'Popups', link: '/addons/popup' },
+     //     { text: 'Popups', link: '/addons/popup' },
           { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'XLSX', link: '/addons/xlsx' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
