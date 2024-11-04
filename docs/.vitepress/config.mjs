@@ -122,8 +122,7 @@ export default defineConfig({
           { text: 'Layouts, Variants', link: '/addons/layout' },
           { text: 'Popups', link: '/addons/popup' },
           { text: 'Logging, BAL', link: '/addons/logging' },
-          { text: 'Launchpad KPIs', link: '/addons/kpi' },
-          { text: 'Remote App Calls', link: '/addons/rfc' },
+          { text: 'xlsx', link: '/addons/xlsx' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'Apps, Community', link: '/addons/apps' },
         ]
@@ -136,6 +135,8 @@ export default defineConfig({
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
+          { text: 'Launchpad KPIs', link: '/addons/kpi' },
+          { text: 'Remote App Calls', link: '/addons/rfc' },
           // { text: 'UI5, ABAP Versions', link: '/features/faq' },
           // { text: 'SE80, ADT', link: '/advanced/se80' },
           // { text: 'Extensibility', link: '/advanced/extension' },
