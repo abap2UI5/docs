@@ -23,5 +23,5 @@ Manually deploy the app folder from [abap2UI5-frontend](https://github.com/abap2
 For detailed steps, follow this [guide.](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
 
 ::: tip **BTP ABAP Environemnt**
-Die BTP ABAP ENvoronment hat die selbe technische Basis wie S/4 Public Cloud. Deshab kann obige HInweise für beide Systeme. 
+The BTP ABAP Environment has the same technical foundation as S/4 Public Cloud, so the above instructions apply to both systems.
 :::
