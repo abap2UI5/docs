@@ -4,7 +4,7 @@ outline: [2, 4]
 
 # Installation
 
-As outlined in the Quickstart Guide, you can run abap2UI5 and its apps directly through an HTTP service on any release. This is always the fastest and most straightforward setup option.
+abap2UI5 apps run directly through an HTTP service, this is always the fastest and most straightforward setup option and works on any release and language version.
 <br><br> 
 However, for productive usage, consider additional requirements for different systems.
 
