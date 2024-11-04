@@ -4,27 +4,24 @@ outline: [2, 4]
 
 # Installation
 
-As outlined in the Quickstart Guide, you can run the abap2UI5 and its apps directly through an HTTP service:
-![alt text](image.png){ width=50% }
+As outlined in the Quickstart Guide, you can run abap2UI5 and its apps directly through an HTTP service on any release. This is always the fastest and most straightforward setup option.
+<br><br> 
+However, for productive usage, consider additional requirements for different systems.
 
-This is the quickest and most programmatic approach; however, for productive usage, you have additional options.
+### S/4 Public Cloud
+In `S/4 Public Cloud`, the HTTP endpoint is accessible only with `S_DEVELOP` authorization, which makes it unsuitable for productive use. To make this app accessible for business users, you can install a separate frontend app and create an additional tile. Find more information [here.](/configuration/s4_public_cloud)
 
-<br>
+### S/4 Private Cloud
+In `S/4 Private Cloud` you can make the HTTP endpoint accessible for business users and manage additional authorizations. However, if you want to use the SAP Fiori Launchpad as well, you can install an additional frontend app. Find all the information [here.](/configuration/launchpad)
 
-### ABAP Standard
-
-In `S/4 Private` or `S/4 On-Premise` it may be required to make this app accessible via Fiori launchpad. Therefore you can install the [abap2UI5-frontend:](https://github.com/abap2UI5/frontend)
-
-![alt text](image-1.png){ width=50% }
-
-Check out this [section](/configuration/launchpad) for more details.
-
-
-### ABAP Cloud 
-In `S/4 Public Cloud` or `BTP ABAP Environment` you can only access the HTTP endpoint with `S_DEVELOP` authority, making this scenario unsuitable for productive usage. Therefore you need to deploy the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) and set up a new Fiori tile:
-
-![alt text](image-2.png){ width=50% }
+### S/4 On-Premise
+The setup in `S/4 On-Premise` is the same as in `S/4 Private Cloud`. Follow the guide [here.](/configuration/launchpad)
 
 ### R/3 Netweaver
+The setup is the same as in `S/4 Private Cloud`. Depending on your release level, you may be able to add the apps to Launchpads. Follow the guide [here.](/configuration/launchpad)
 
-For old `R/3 Netweaver` check out the [downport section.](/advanced/downporting)
+### R/3 Netweaver (<7.50)
+For older versions of R/3 NetWeaver lower v7.50, install the downported version with syntax adjustments for earlier releases. abap2UI5 runs on versions down to 7.02. See the downport section for more information [here.](/advanced/downporting)
+
+### BTP ABAP Environment
+The setup in `BTP ABAP Environment` is the same as in `S/4 Public Cloud`. Follow the guide [here.](/configuration/s4_public_cloud)
