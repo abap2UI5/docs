@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # JS Libraries
 
-<i class="fa-brands fa-github"></i> [JS Lib Adoon on GitHub](https://github.com/abap2UI5-addons/js-libraries)
+<i class="fa-brands fa-github"></i> [JS Library Addon on GitHub](https://github.com/abap2UI5-addons/js-libraries)
 
 It's easy to extend abap2UI5 with additional JavaScript libraries and make them accessible via custom controls in the backend. In this add-on, all external libraries are collected and ready to use after installation with abapGit. Check out the samples to get an idea of how to use them. <br>
 
