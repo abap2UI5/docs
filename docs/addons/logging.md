@@ -9,7 +9,7 @@ ABAP development is nearly impossible without BAL logging. Whether you prefer us
 
 Instead of creating multiple BAL popups individually, we can centralize the functionality here and collaboratively expand it. Currently, only basic functionality is available, but PRs are welcome!
 
-### 1. UI for Business Application Log (classic)
+### 1. BAL Messages (classic)
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -35,7 +35,7 @@ Instead of creating multiple BAL popups individually, we can centralize the func
   ENDMETHOD.
 ```
 
-### 2. UI for Business Application Log (cloud)
+### 2. BAL Messages (cloud)
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -89,7 +89,7 @@ In ABAP for Cloud
 ```
 
 
-### 4. UI for abap-logger
+### 4. abap-logger
 
 UI for the Open Source Project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger)
 
