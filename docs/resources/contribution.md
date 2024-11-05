@@ -2,7 +2,7 @@
 
 abap2UI5 is an open-source project developed from the ABAP community, often during free time or alongside other projects. Contributions of all kinds are warmly welcomed!
 
-### How You Can Contribute
+#### How You Can Contribute
 There are many ways to get involved and make a difference:
 * Extend the view by adding a new property
 * Create a new control to enhance the existing functionality
