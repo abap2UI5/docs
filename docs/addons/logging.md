@@ -89,7 +89,7 @@ In ABAP for Cloud
 ```
 
 
-### 4. abap-logger
+### 4. ABAP-Logger
 
 UI for the Open Source Project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger)
 
