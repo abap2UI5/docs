@@ -1,6 +1,6 @@
 # Runtime Typed Data with S-RTTI
 
-<i class="fa-brands fa-github"></i> [S-RTTI on GitHub](https://github.com/sandraros/S-RTTI)
+<i class="fa-brands fa-github"></i> [S-RTTI Project on GitHub](https://github.com/sandraros/S-RTTI)
 
 In abap2UI5, you don’t necessarily need to type your data model at design time. You can just work with generic data references and apply typing at runtime based on your program logic. This is particularly useful for tables where, depending on user input, you may want to display different columns.<br>
 abap2UI5 serializes your app instances to ensure stateless behavior in client communication. Unfortunately, the SAP standard transformation features are limited; for example, they do not support local types created at runtime. If you encounter problems, the project S-RTTI fills this gap and can assist you.
