@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # S/4 Public Cloud
 
-In `S/4 Public Cloud` or `BTP ABAP Environment` you can only access the HTTP endpoint with `S_DEVELOP` authorization, making this scenario unsuitable for productive usage. <br>
+In `S/4 Public Cloud` and `BTP ABAP Environment` you can only access the HTTP endpoint with `S_DEVELOP` authorization, making this scenario unsuitable for productive usage. <br>
 
 Install the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) project to set up abap2UI5 apps as tiles for business users including managing permissions.
 
