@@ -7,6 +7,7 @@ In abap2UI5, you don’t necessarily need to type your data model at design time
 abap2UI5 serializes your app instances to ensure stateless behavior in client communication. Unfortunately, the SAP standard transformation features are limited; for example, they do not support local types created at runtime. If you encounter problems, the project S-RTTI fills this gap and can assist you.
 
 #### Normal
+Fully typed at design time, it works out of the box:
 
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
@@ -41,6 +42,7 @@ ENDCLASS.
 ```
 
 #### Generic Data Reference (local type)
+Typed at runtime with local types; this only works with S-RTTI:
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
