@@ -1,3 +1,6 @@
+---
+outline: [2, 6]
+---
 # Logging, BAL
 
 <i class="fa-brands fa-github"></i> [GitHub](https://github.com/abap2UI5-addons/logging)
