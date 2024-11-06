@@ -37,7 +37,7 @@ export default defineConfig({
         text: 'Guide', items: [
           { text: 'Getting Started', link: '/get_started/about' },
           { text: 'Development', link: '/development/general' },
-          { text: 'Configuration', link: '/configuration/configuration' },
+          { text: 'Configuration', link: '/configuration/setup' },
           { text: 'Advanced', link: '/advanced/advanced' },
           { text: 'Resources', link: '/resources/resources' },
         ]
