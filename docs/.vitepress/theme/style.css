@@ -12,6 +12,12 @@
     border-color: var(--vp-button-brand-border-hover);
 }
 
+.VPButton.brand[data-v-fa7799d5]:hover {
+    background-color: var(--vp-button-brand-bg-hover);
+    border-color: var(--vp-button-brand-border-hover);
+    color: var(--vp-button-brand-text);
+}
+
 button:hover {
     background-color: darkred;
 }
