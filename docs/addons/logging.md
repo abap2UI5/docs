@@ -5,9 +5,11 @@ outline: [2, 6]
 
 <i class="fa-brands fa-github"></i> [Logging Addon on GitHub](https://github.com/abap2UI5-addons/logging)
 
-ABAP development in business contexts is impossible without using the Business Application Log (BAL). Whether you prefer using the standard API or working with open-source projects like the fantastic [abap-logger](https://github.com/ABAP-Logger/ABAP-Logger), we ultimately need a way to display these messages in an abap2UI5 app or a popup. This add-on brings together all BAL logging functionality for both cloud and on-premise environments. <br>
+Developing end-user business processes is not possible without adequate logging. The standard method for this in ABAP systems is the integrated Business Application Log (BAL), which works in on-premise systems and, with the new APIs, in ABAP Cloud. You might also consider open-source projects like the excellent [abap-logger](https://github.com/ABAP-Logger/ABAP-Logger).<br>
 
-Instead of creating multiple BAL popups individually, we can centralize the functionality here and collaboratively expand it. Currently, only basic functionality is available. Have you already created BAL functionality with abap2UI5? Consider sharing it — PRs are welcome!
+Ultimately, we need a way to display these messages for end users in abap2UI5 apps. This add-on centralizes BAL logging UIs for abap2UI5 apps.<br>
+
+Instead of creating multiple BAL popups individually, the goal of this add-on is to consolidate BAL functionality here for collaborative expansion. Currently, only basic functionality is available. Have you already implemented BAL functionality with abap2UI5? Consider sharing it — PRs are welcome!
 
 ### 1. BAL Messages (classic)
 
