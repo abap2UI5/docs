@@ -1,6 +1,6 @@
 # UI5 Versions
 
-abap2UI5 is compatible with every ABAP system. The UI is created with the UI5 framework, which exists in different versions, and you can choose the version for abap2UI5 during bootstrapping. It’s recommended to bootstrap abap2UI5 using the same repository that you use for other UI5 apps in your system.
+The frontend UI is created with the UI5 framework, which exists in different versions, and you can choose the version for abap2UI5 during bootstrapping. It’s recommended to bootstrap abap2UI5 using the same repository that you use for other UI5 apps in your system.
 
 ### OpenUI5
 This is the open-source version of UI5. It has slightly fewer controls than the full UI5 framework. Most samples work with this version, and issues should only arise with very specific apps.
