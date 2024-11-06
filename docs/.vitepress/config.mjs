@@ -93,10 +93,12 @@ export default defineConfig({
           { text: 'General', link: '/development/general' },
           { text: 'View', link: '/development/view' },
           { text: 'Model', link: '/development/model'  },
-          // { text: 'Events, Navigation', link: '/development/events' },
+          { text: 'Events', link: '/development/events' },
+          { text: 'Navigation', link: '/development/navigation' },
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
-         { text: 'Popups, Popover', link: '/development/popups' },
+          { text: 'Popups, Popover', link: '/development/popups' },
+
           { text: 'Troubleshooting', link: '/development/troubleshooting' },
         ]
       },
@@ -121,7 +123,7 @@ export default defineConfig({
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
-     //     { text: 'Popups', link: '/addons/popup' },
+          { text: 'Popups', link: '/addons/popup' },
           { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'XLSX', link: '/addons/xlsx' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
@@ -138,30 +140,15 @@ export default defineConfig({
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Launchpad KPIs', link: '/addons/kpi' },
           { text: 'Remote App Calls', link: '/addons/rfc' },
-          // { text: 'UI5, ABAP Versions', link: '/features/faq' },
-          // { text: 'SE80, ADT', link: '/advanced/se80' },
            { text: 'Extensibility', link: '/advanced/extensibility' },
            { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
             // { text: 'CI/CD', link: '/insights/ci' },
             // { text: 'abaplint', link: '/insights/ci' },
-            // { text: 'open-abap', link: '/advanced/open_abap' },
           ]
           } ]
       },
-      // {
-      //   text: 'Under The Hood',
-      //   link: '/insights/insights',
-      //   collapsed: true,
-      //   items: [
-      //     { text: 'General', link: '/insights/insights' },
-      //     { text: 'open-abap', link: '/insights/open_abap' },
-      //     // { text: 'CI/CD', link: '/insights/ci' },
-      //     // { text: 'abaplint', link: '/insights/ci' },
-      //     // { text: 'open-abap', link: '/advanced/open_abap' },
-      //   ]
-      // },
       {
         text: 'Resources',
         link: '/resources/resources',

@@ -1,9 +1,10 @@
 ---
 outline: [2, 4]
 ---
-# Events, Navigation
+# Events
 
-### Events
+### Backend
+
 `client->_event( t_arg = value # ( ( ...`
 
 Check the documentation [here.](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) There are different ways for adressing the event handler ($event, $source, $params) and you can select your value for example with /mProperties/property.<br>
@@ -14,25 +15,11 @@ You can also call functions directly in the view as explained [here.](https://sa
 <br>
 
 
-##### **Open new tab**
-Use the following snippet:
-```abap
-client->timer_set(
-      interval_ms    = 0
-      event_finished = client->_event_client( action = client->cs_event-open_new_tab t_arg = value #( ( `https://www.github.com/abap2UI5` )  )
-) ).
-```
 
-
-### Navigation
+#### Frontend
 
 
 
-##### Backend
-Navigation
-       Backend 
-       Frontend 
+#### Follow Up Action
 
 
-
-###### Frontend (Launchpad)
