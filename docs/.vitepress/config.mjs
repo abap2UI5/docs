@@ -111,6 +111,7 @@ export default defineConfig({
           { text: 'Authorization', link: '/configuration/authorization' },
           // { text: 'Use in Production', link: '/configuration/productive_usage' },
           // { text: 'Performance', link: '/configuration/performance' },
+          { text: 'UI5 Versions', link: '/configuration/ui5_versions' },
           { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
           { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
           { text: 'BTP Workzone', link: '/configuration/btp' },
@@ -139,7 +140,7 @@ export default defineConfig({
           { text: 'Remote App Calls', link: '/addons/rfc' },
           // { text: 'UI5, ABAP Versions', link: '/features/faq' },
           // { text: 'SE80, ADT', link: '/advanced/se80' },
-          // { text: 'Extensibility', link: '/advanced/extension' },
+           { text: 'Extensibility', link: '/advanced/extensibility' },
            { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
