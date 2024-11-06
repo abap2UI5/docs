@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Fiori Launchpad
 
 Integrate your abap2UI5 apps into SAP Fiori Launchpads. Find all information here: <br>

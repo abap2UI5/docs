@@ -105,17 +105,19 @@ export default defineConfig({
         text: 'Configuration',
         link: '/configuration/configuration',
         collapsed: true,
-        items: [
-          { text: 'Installation', link: '/configuration/installation'},
-          { text: 'Setup', link: '/configuration/setup' },
+        items: [      
+          { text: 'Settings', link: '/configuration/setup' },
           { text: 'Security', link: '/configuration/security' },
           { text: 'Authorization', link: '/configuration/authorization' },
           { text: 'Performance', link: '/configuration/performance' },
           { text: 'UI5 Versions', link: '/configuration/ui5_versions' },
-          { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
-          { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
-          { text: 'BTP Workzone', link: '/configuration/btp' },
           { text: 'Productive Usage', link: '/configuration/productive_usage' },
+          { text: 'Installation', link: '/configuration/installation' , items: [
+            { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
+            { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
+            { text: 'BTP Workzone', link: '/configuration/btp' },
+           ]
+          },
         ]
       },
       {

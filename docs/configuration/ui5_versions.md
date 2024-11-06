@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # UI5 Versions
 
 The frontend UI is created with the UI5 framework, which exists in different versions, and you can choose the version for abap2UI5 during bootstrapping. It’s recommended to bootstrap abap2UI5 using the same repository that you use for other UI5 apps in your system.
