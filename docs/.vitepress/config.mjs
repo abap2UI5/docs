@@ -98,7 +98,6 @@ export default defineConfig({
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
-
           { text: 'Troubleshooting', link: '/development/troubleshooting' },
         ]
       },
@@ -112,7 +111,7 @@ export default defineConfig({
           { text: 'Security', link: '/configuration/security' },
           { text: 'Authorization', link: '/configuration/authorization' },
           { text: 'Productive Usage', link: '/configuration/productive_usage' },
-          // { text: 'Performance', link: '/configuration/performance' },
+          { text: 'Performance', link: '/configuration/performance' },
           { text: 'UI5 Versions', link: '/configuration/ui5_versions' },
           { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
           { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
@@ -140,10 +139,10 @@ export default defineConfig({
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Launchpad KPIs', link: '/addons/kpi' },
           { text: 'Remote App Calls', link: '/addons/rfc' },
-           { text: 'Extensibility', link: '/advanced/extensibility' },
-           { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
-            { text: 'General', link: '/advanced/insights/insights' },
-            { text: 'open-abap', link: '/advanced/insights/open_abap' },
+          { text: 'Extensibility', link: '/advanced/extensibility' },
+          { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
+          { text: 'General', link: '/advanced/insights/insights' },
+          { text: 'open-abap', link: '/advanced/insights/open_abap' },
             // { text: 'CI/CD', link: '/insights/ci' },
             // { text: 'abaplint', link: '/insights/ci' },
           ]
