@@ -11,3 +11,7 @@
     background-color: var(--vp-button-brand-bg-hover);
     border-color: var(--vp-button-brand-border-hover);
 }
+
+button:hover {
+    background-color: darkred;
+}
