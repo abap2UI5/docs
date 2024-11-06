@@ -110,12 +110,12 @@ export default defineConfig({
           { text: 'Setup', link: '/configuration/setup' },
           { text: 'Security', link: '/configuration/security' },
           { text: 'Authorization', link: '/configuration/authorization' },
-          { text: 'Productive Usage', link: '/configuration/productive_usage' },
           { text: 'Performance', link: '/configuration/performance' },
           { text: 'UI5 Versions', link: '/configuration/ui5_versions' },
           { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
           { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
           { text: 'BTP Workzone', link: '/configuration/btp' },
+          { text: 'Productive Usage', link: '/configuration/productive_usage' },
         ]
       },
       {
