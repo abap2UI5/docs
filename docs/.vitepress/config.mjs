@@ -35,8 +35,8 @@ export default defineConfig({
     nav: [
       {
         text: 'Guide', items: [
-          { text: 'Getting Started', link: '/get_started/get_started' },
-          { text: 'Development', link: '/development/development' },
+          { text: 'Getting Started', link: '/get_started/about' },
+          { text: 'Development', link: '/development/general' },
           { text: 'Configuration', link: '/configuration/configuration' },
           { text: 'Advanced', link: '/advanced/advanced' },
           { text: 'Resources', link: '/resources/resources' },
