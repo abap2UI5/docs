@@ -22,4 +22,4 @@ If you're starting new development but already have abap2UI5 apps running in pro
 
 #### Transport
 Install the project using abapGit into your development system. Then, use the normal transport process for deployment to production:
-![alt text](image-3.png){ width=50% }
+![alt text](image-3.png){ width=80% }
