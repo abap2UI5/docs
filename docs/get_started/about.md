@@ -13,7 +13,7 @@ Launched in 2023 as a personal project, abap2UI5 initially focused on offering b
 
 ##### Compatibility
 ![alt text](image-15.png){ width=50% }
-abap2UI5 is compatible with both `ABAP Cloud` and `Standard ABAP`, supporting all ABAP releases from version 7.02 to ABAP for Cloud. It runs seamlessly on systems including R/3 NetWeaver, S/4HANA On-Premise, and S/4HANA Private Cloud, as well as cloud environments such as the BTP ABAP Environment and S/4HANA Public Cloud.
+abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from version 7.02 to ABAP for Cloud. It runs seamlessly on systems including R/3 NetWeaver, S/4HANA On-Premise, and S/4HANA Private Cloud, as well as cloud environments such as the BTP ABAP Environment and S/4HANA Public Cloud.
 
 ##### Installation
 ![alt text](image-14.png){ width=50% }
@@ -29,7 +29,7 @@ abap2UI5 relies exclusively on released APIs, making it ideal for both on-stack 
 By using only released APIs, abap2UI5 ensures your app is "cloud-ready and upgrade-stable," aligning with clean core principles and guaranteeing compatibility with future upgrades.
 
 ##### ABAP Classic
-The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is also available for systems below ABAP 7.50.
+The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is available for systems below ABAP 7.50.
 
 ##### Architecture
 The abap2UI5 system footprint is kept minimal. The base version includes only essential classes and interfaces, and additional functionality can be incorporated by installing optional add-ons.
