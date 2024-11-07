@@ -8,10 +8,10 @@ Integrate your abap2UI5 apps into BTP Services like Build Workzone. Find all inf
 [**Setup SAP Build Work Zone**](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-23-setup-ujdqe/?trackingId=vFwHvpI9oBk2igiz5P5CWA%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BFGBWUSIZRzeRjUNKBFD0uA%3D%3D)<br>
 [**Setup SAP Mobile Start**](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-33-setup-uzure/?trackingId=He2W8FnZZ5UxpbGKHOeLEg%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BFGBWUSIZRzeRjUNKBFD0uA%3D%3D)<br>
 
-### Destination Configuration
+### Configuration
 <br>
 
-##### Additional Properties
+##### Destination
 
 * Name: BACKEND_ABAP2UI5 
 * Type: HTTP 

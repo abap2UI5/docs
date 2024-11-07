@@ -4,7 +4,8 @@ outline: [2, 4]
 
 # General
 
-abap2UI5 can be run with various custom configurations. This is the call for the default setup:
+abap2UI5 can be run with various custom configurations. The default setup can be invoked using the following call:
+
 ```abap
 METHOD if_http_extension~handle_request.
 
@@ -12,10 +13,10 @@ METHOD if_http_extension~handle_request.
 
 ENDMETHOD.
 ```
-For custom configurations, simply fill the config structure and import it to the run method:
+For custom configurations, simply populate the config structure and pass it to the run method:
 
 ### Theme
-eg. for changing the theme the source code looks like this:
+For example, to change the theme, the source code would look like this:
 ```abap
 METHOD if_http_extension~handle_request.
 
@@ -27,7 +28,7 @@ ENDMETHOD.
 ``` 
 
 ### UI5 Bootstrapping
-
+To specify the source for bootstrapping UI5:
 ```abap
 METHOD if_http_extension~handle_request.
 
@@ -39,7 +40,7 @@ ENDMETHOD.
 ```
 
 ### Title
-
+To set a custom title for the application:
 ```abap
 METHOD if_http_extension~handle_request.
 
@@ -51,7 +52,7 @@ ENDMETHOD.
 ```
 
 ### Style / CSS
-
+To apply custom styles or CSS, use the following:
 ```abap
 METHOD if_http_extension~handle_request.
 
@@ -62,8 +63,11 @@ METHOD if_http_extension~handle_request.
 ENDMETHOD.
 ```
 
+### Logon Language
+To set the logon language, use the `sap-language` URL parameter. For more options via URL parameters, check out the documentation [here.](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
+
 ### URL Parameters
-Use the following snippet to read URL parameters:
+You can read URL parameters using the following snippet:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -71,8 +75,3 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-You also have the option to do further configuration, check it out [**here.**](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
-
-
-### Logon Language
-Set the url parameter sap-language for this and check all other options [here.](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)

@@ -40,19 +40,14 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
 
 ENDCLASS.
 ```
-##### Using Authorization Objects in Service Handlers
+##### Example: Authorization Objects in Service Handlers
 You can also use the SAP authorization objects:
 ```abap
-CLASS z2ui5_cl_launchpad_handler DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES if_http_extension.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
@@ -75,22 +70,23 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+By creating multiple HTTP endpoints for different users or departments, you can further fine-tune access control.
 
 ### Application-Level
 Alternatively, you can handle authorization within individual app classes. This approach is useful if you want to delegate authorization to each app, ensuring that it checks user permissions before performing any actions.
 
 ##### Example: Authorization Check in an App Class
 In this method, each app is responsible for checking the user’s permissions, similar to how it's done in traditional SAP ABAP applications.
-abap
+
 ```abap
-CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
+CLASS z2ui5_cl_app DEFINITION PUBLIC.
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
+CLASS z2ui5_cl_app IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
     " Perform an authorization check before launching the app
