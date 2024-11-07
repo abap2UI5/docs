@@ -6,7 +6,7 @@ Expand your skills and explore more!
 Looking to sharpen your development skills? Explore advanced guides and best practices to take your abap2UI5 projects to the next level. Start learning [here.](/development/general)
 
 #### Configuration
-Ready to prepare abap2UI5 for production? Follow the configuration guides to ensure a smooth, optimized setup for your system. Get started [here.](/configuration/configuration)
+Ready to prepare abap2UI5 for production? Follow the configuration guides to ensure a smooth, optimized setup for your system. Get started [here.](/configuration/settings)
 
 #### Addons
 Enhance your abap2UI5 apps with additional features and functionalities by installing new add-ons. Discover them [here.](/addons/addons)
