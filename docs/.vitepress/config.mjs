@@ -107,7 +107,7 @@ export default defineConfig({
         link: '/configuration/configuration',
         collapsed: true,
         items: [      
-          { text: 'Settings', link: '/configuration/setup' },
+          { text: 'General', link: '/configuration/setup' },
           { text: 'Security', link: '/configuration/security' },
           { text: 'Authorization', link: '/configuration/authorization' },
           { text: 'Performance', link: '/configuration/performance' },
@@ -144,13 +144,16 @@ export default defineConfig({
           { text: 'Remote App Calls', link: '/addons/rfc' },
           { text: 'Extensibility', link: '/advanced/extensibility' },
           { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
-          { text: 'General', link: '/advanced/insights/insights' },
-          { text: 'open-abap', link: '/advanced/insights/open_abap' },
+            { text: 'General', link: '/advanced/insights/insights' },
+            { text: 'open-abap', link: '/advanced/insights/open_abap' },
             // { text: 'CI/CD', link: '/insights/ci' },
             // { text: 'abaplint', link: '/insights/ci' },
           ]
-          } ]
+          },
+      
+         ]
       },
+      
       {
         text: 'Resources',
         link: '/resources/resources',

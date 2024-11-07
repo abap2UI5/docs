@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 
-# Settings
+# General
 
 abap2UI5 can be run with various custom configurations. This is the call for the default setup:
 ```abap

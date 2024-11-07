@@ -16,7 +16,7 @@ Install the project with [abapGit.](https://abapgit.org)
 
 
 ### 2. Implement HTTP Handler
-Create a new package and define a new class for the HTTP implementation:
+Create a new package and define a new class for the HTTP handler implementation:
 
 ::: code-group
 
@@ -64,7 +64,7 @@ ENDCLASS.
 :::
 
 ### 3. Create HTTP Service
-Create a new HTTP service. Follow [this guide](https://developers.sap.com/tutorials/abap-environment-create-http-service..html) for ABAP Cloud.
+Create a new HTTP service for abap2UI5. For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tutorials/abap-environment-create-http-service..html)
 
 ![alt text](image-5.png)
 
@@ -75,10 +75,10 @@ Create a new HTTP service. Follow [this guide](https://developers.sap.com/tutori
 This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
 :::
 
-### 4. First Start
-The abap2UI5 framework and your custom HTTP handler have been successfully installed. You can now access the HTTP endpoint from your browser.
+### 4. Initial Launch
+After installing the abap2UI5 framework and configuring your HTTP handler, you can access the HTTP endpoint from a web browser:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press check, and start the test app.
+Press "Check" and launch the test app. That’s it! Now you can create a new class and start developing your own abap2UI5 applications.
 
 
 
