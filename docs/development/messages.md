@@ -4,11 +4,11 @@ outline: [2, 4]
 
 # Messages, Errors
 
-Outputting messages and errors is an everyday requirement for ABAP developers. Functions are provided for the most common situations.
+Displaying messages and errors is an everyday requirement for ABAP developers. The following functions handle the most common scenarios.
 
 #### Message Toast
 
-Messages that are displayed for a short period, such as success notifications, can be shown with:
+For short-duration messages, such as success notifications, you can use the message toast:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -20,7 +20,7 @@ ENDMETHOD.
 
 #### Message Box
 
-If you want to ensure that the user acknowledges the message, you can display a message box that requires a manual close:
+If you want the user to acknowledge the message, you can display a message box that requires manual closure:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -43,7 +43,7 @@ ENDMETHOD.
 ```
 
 #### SY, BAPIRET, CX_ROOT
-Common message structures, objects, and variables can be passed directly to the functions:
+You can directly pass common message structures, objects, and variables to the functions:
 ###### SY
 ```abap
 METHOD z2ui5_if_app~main.
@@ -81,10 +81,10 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD. 
 ```
-Many other imports are supported. Just import your message structure, and the message box will display it.
+Other imports are supported as well. Simply import your message structure, and the message box will display it.
 
 #### Popup Multi Message 
-The message box provides basic output, if you want to generate a detailed output, use the popup `z2ui5_cl_pop_messages`:
+The message box provides basic output. For a more detailed output, use the popup `z2ui5_cl_pop_messages`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -97,7 +97,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Popup Error
-To show a detailed view of your exception:
+To show a detailed view of your exception, use the following code:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -110,7 +110,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Popup Confirm
-If interaction is required, the `z2ui5_cl_pop_to_confirm` can be used:
+If interaction is required, you can use `z2ui5_cl_pop_to_confirm`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -128,7 +128,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Uncatched Errors
-What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted and the user need to refresh the browser. So only use this for unexpected behaviour:
+What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted, and the user will need to refresh the browser. Use this only for unexpected behavior:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -136,7 +136,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-Or achieve the same behavior with an uncaught exception:
+Alternatively, achieve the same behavior with an uncaught exception:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -145,5 +145,5 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 ::: tip **Improvements**
-All these message functions are continually improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
+These message functions are continually being improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
 :::

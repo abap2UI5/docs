@@ -23,8 +23,7 @@ ENDMETHOD.
 ```
 
 #### Flow Logic
-Typically, a common flow for using popups involves displaying a normal view, then showing a popup, and finally closing it. Here’s how this can be structured:
-
+A common flow for using popups typically involves displaying a normal view, then showing a popup, and finally closing it. Here’s how to structure this:
 ```abap
 METHOD Z2UI5_if_app~main.
 
@@ -62,12 +61,10 @@ ENDMETHOD.
 ```
 
 #### Separated App
-For better source code structure, it's possible to encapsulate the popups in separate classes and call them through navigation.
+For better source code structure, it's possible to encapsulate popups in separate classes and call them through navigation.
 
 ### Popover
-
-Use the method client->popover_display and specify the ID of the control where you want to display the popover:
-
+To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
  ```abap
 METHOD Z2UI5_if_app~main.
 
@@ -108,7 +105,6 @@ ENDMETHOD.
  ```
 
 ### Built-in Popups
-
 Several pre-built popup classes are available for specific scenarios:
 
 * z2ui5_cl_pop_error

@@ -18,5 +18,3 @@ Here, you can inspect the XML View and check the Data Model bound to the view.
 ##### UI5 Inspector
 
 Another useful option is SAP’s default debugging tool, the [UI5 Inspector.](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo?hl=es)
-
-

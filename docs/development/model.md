@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # Model
 
-There are three ways to exchange data with the frontend in abap2UI5.
+In abap2UI5, there are three ways to exchange data with the frontend.
 
 #### One-Way Binding
+Use one-way binding when you need to display data on the frontend without allowing changes. The `client->_bind` method sends data to the frontend and connects it to the view:
 
-When you need to display data on the frontend without allowing any changes, use one-way binding. The `client->_bind` method sends the data to the frontend and connects it to the view:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -29,10 +29,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-This method also works for tables, trees, and other complex data structures. For more details, refer to the samples repository and explore the table or tree samples.
+This method works with tables, trees, and other complex data structures. For more details, refer to the samples repository and explore the table or tree samples.
 
 #### Two-Way Binding
-If the user should be able to modify data, enable two-way binding to update data in the ABAP backend. Use the `client->_bind_edit` method so that after an event, the framework will synchronize the data with your ABAP class.
+If the user should be able to modify data, enable two-way binding to update the data in the ABAP backend. Use the `client->_bind_edit` method so that, after an event, the framework will synchronize the data with your ABAP class:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -64,7 +64,7 @@ ENDCLASS.
 ```
 
 #### Local Binding
-When you only have local access to data but want to bind it for display (e.g., for a value help or lookup), use local binding. The `client->_bind_local` method copies the data and sends it to the frontend without impacting backend logic:
+When you only have local access to data but still want to bind it for display (e.g., for value help or lookups), use local binding. The `client->_bind_local` method copies the data and sends it to the frontend:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -88,8 +88,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-For an example of local binding in action, see the value help use case in `Z2UI5_CL_DEMO_APP_002`.
+For an example of local binding in action, refer to the value help use case in `Z2UI5_CL_DEMO_APP_002`.
 
 ::: tip **Data in Public Attributes**
-When using One-Way or Two-Way binding, remember to store your data in public attributes of your class, as the framework needs to access it from outside. This is similar to the PBO/PAI screen days, where data needed to be stored in global variables.
+When using One-Way or Two-Way binding, ensure your data is stored in the public attributes of your class. This allows the framework to access it from outside. This is similar to the PBO/PAI screen days, where data had to be stored in global variables.
 :::
