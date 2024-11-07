@@ -68,6 +68,7 @@ export default defineConfig({
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'Contribution', link: '/resources/contribution' },
           { text: 'Support', link: '/resources/support' },
+          { text: 'Sponsor', link: '/resources/sponsor' },
         ]
       },
     ],
