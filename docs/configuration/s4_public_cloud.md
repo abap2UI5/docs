@@ -19,7 +19,6 @@ Use the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/fron
 Manually deploy the app folder from [abap2UI5-frontend](https://github.com/abap2UI5/frontend) into the system.  Follow this [guideline.](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui..html#4c15de5c-bce6-46d0-a634-0008261b3117) 
 
 
-
 ### 3. Configure Launchpad & Tiles
 
 For detailed steps, follow this [guide.](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
