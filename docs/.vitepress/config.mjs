@@ -104,7 +104,7 @@ export default defineConfig({
       },
       {
         text: 'Configuration',
-        link: '/configuration/configuration',
+        link: '/configuration/setup',
         collapsed: true,
         items: [      
           { text: 'General', link: '/configuration/setup' },

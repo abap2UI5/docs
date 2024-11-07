@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 
-# Samples
+# Sample Apps
 
 With over 250 samples the [samples repository](https://github.com/abap2UI5/abap2UI5-samples) is the easiest way to learn how to develop with abap2UI5. 
 
