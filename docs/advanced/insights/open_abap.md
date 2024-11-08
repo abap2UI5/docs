@@ -17,31 +17,29 @@ abap2UI5 can be used with open-abap, providing the ability to run unit tests in 
 * Browser Tests with [Playwright](https://playwright.dev/)
 * Webpacking, Unit Testing...
 
-### Tasks
-
 Pull the repository and try out:
 
-#### Downport & Transpile
+### Downport & Transpile
 ```
 npm run init
 npm run build
 ```
-#### Run Unit Tests
+### Run Unit Tests
 ```
 npm run unit
 ```
-#### Run Webservice
+### Run Webservice
 ```
 npm run express
 ```
-#### Run Playwright Tests
+### Run Playwright Tests
 ```
 npm run init_play
 npx playwright install --with-deps && npm i
 npx playwright test
 ```
 
-#### Webpack Build Strategy
+### Webpack Build Strategy
 
 1. Clone repositories into /src/
 2. Downport /src/ into /downport/
