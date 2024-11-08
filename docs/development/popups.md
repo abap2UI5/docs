@@ -13,7 +13,7 @@ To display a popup, use the method `client->popup_display` instead of `client->v
 ```abap
 METHOD z2ui5_if_app~main.
 
-    data(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
+    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( 'Popup - Info'
             )->text( 'this is an information shown in a popup' ).
 
