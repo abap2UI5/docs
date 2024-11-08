@@ -38,6 +38,7 @@ export default defineConfig({
           { text: 'Getting Started', link: '/get_started/about' },
           { text: 'Development', link: '/development/general' },
           { text: 'Configuration', link: '/configuration/setup' },
+          { text: 'Addons', link: '/addons/addons' },
           { text: 'Advanced', link: '/advanced/advanced' },
           { text: 'Resources', link: '/resources/resources' },
         ]
