@@ -5,9 +5,9 @@ outline: [2, 6]
 
 <i class="fa-brands fa-github"></i> [JS Library Addon on GitHub](https://github.com/abap2UI5-addons/js-libraries)
 
-It's easy to extend abap2UI5 with additional JavaScript libraries and make them accessible via custom controls in the backend. In this add-on, all external libraries are collected and ready to use after installation with abapGit. Check out the samples to get an idea of how to use them. <br>
+It's easy to extend abap2UI5 with additional JavaScript libraries and make them accessible via custom controls in the backend. In this add-on, all external libraries are collected and ready to use after installation with abapGit. Check out the samples to see how it works. <br>
 
-You use an external library but it is not listed here? Feel free to send a PR to this addon. Special thanks to [choper725](https://github.com/choper725) contributing most of the Libraries.
+You use an external library, but it is not listed here? Feel free to send a PR to this addon. Special thanks to [choper725](https://github.com/choper725) contributing most of the Libraries.
 
 #### 1. Driver JS
  * Product tours, highlights, contextual help and more
