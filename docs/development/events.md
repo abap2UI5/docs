@@ -13,16 +13,15 @@ If an UI5 property is an event, just import the result of the method `client->_e
 METHOD z2ui5_if_app~main.
  
     client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text  = 'post' press = client->_event( 'BUTTON_POST' )
-    )->stringify( ) ).
- 
+        )->button(
+            text  = 'post'
+            press = client->_event( 'BUTTON_POST' )
+        )->stringify( ) ).
+
     CASE client->get( )-event.
-
-      WHEN 'BUTTON_POST'.
-        client->message_box_display( |Your name is { name }| ).
-
-      WHEN OTHERS.
-    ENDCASE.
+        WHEN 'BUTTON_POST'.
+            client->message_box_display( |Your name is { name }| ).
+     ENDCASE.
  
 ENDMETHOD.
 ```
@@ -37,14 +36,11 @@ METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button( text = `post` press = client->_event( val = `BUTTON_POST` 
             t_arg = VALUE #( ( `${$source>/text}` ) ) ) 
-    )->stringify( ) ).
+        )->stringify( ) ).
  
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POST'.
         client->message_box_display( |The button text is { client->get_event_arg( 1 ) }| ).
-
-      WHEN OTHERS.
     ENDCASE.
  
 ENDMETHOD.
@@ -58,13 +54,11 @@ METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button( text = `post` press = client->_event( val = `BUTTON_POST` 
             t_arg = VALUE #( ( `${$source>/text}` ) ) ) 
-    )->stringify( ) ).
+        )->stringify( ) ).
  
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POST'.
         client->message_box_display( |The button text is { client->get_event_arg( 1 ) }| ).
-
       WHEN OTHERS.
     ENDCASE.
  
@@ -79,13 +73,11 @@ METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button( text = `post` press = client->_event( val = `BUTTON_POST` 
             t_arg = VALUE #( ( `${$source>/text}` ) ) ) 
-    )->stringify( ) ).
+        )->stringify( ) ).
  
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POST'.
         client->message_box_display( |The button text is { client->get_event_arg( 1 ) }| ).
-
       WHEN OTHERS.
     ENDCASE.
  
@@ -101,14 +93,11 @@ METHOD z2ui5_if_app~main.
         )->button( text = `post` press = client->_event( 
             val   = `BUTTON_POST` 
             t_arg = VALUE #( ( `${$source>/text}` ) ) ) 
-    )->stringify( ) ).
+        )->stringify( ) ).
  
     CASE client->get( )-event.
-
       WHEN 'BUTTON_POST'.
         client->message_box_display( |The button text is { client->get_event_arg( 1 ) }| ).
-
-      WHEN OTHERS.
     ENDCASE.
  
 ENDMETHOD.
@@ -141,10 +130,12 @@ The following frontend events re availibkle:
 METHOD z2ui5_if_app~main.
  
     client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` press = client->_event( client->_event_client( 
-            val   = client->cs_event-open_new_tab 
-            t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ) 
-    )->stringify( ) ).
+        )->button(
+            text = `post`
+            press = client->_event( client->_event_client( 
+                 val   = client->cs_event-open_new_tab 
+                 t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ) 
+        )->stringify( ) ).
  
 ENDMETHOD.
 ```
