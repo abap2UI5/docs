@@ -125,10 +125,10 @@ export default defineConfig({
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
-          { text: 'Popups', link: '/addons/popup' },
           { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'XLSX', link: '/addons/xlsx' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
+          { text: 'More Popups', link: '/addons/popup' },
           { text: 'Apps, Community', link: '/addons/apps' },
         ]
       },
@@ -146,8 +146,6 @@ export default defineConfig({
           { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
-            // { text: 'CI/CD', link: '/insights/ci' },
-            // { text: 'abaplint', link: '/insights/ci' },
           ]
           },
       
