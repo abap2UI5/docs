@@ -47,18 +47,19 @@ export default defineConfig({
           {
             text: 'Project', items: [
               { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
+              { text: 'addons', link: 'https://github.com/abap2UI5-addons' },
+              { text: 'apps', link: 'https://github.com/abap2UI5-apps' },
               { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
-              { text: 'frontend', link: 'https://github.com/abap2UI5/frontend' },
-              { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
-              { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
             ]
           },
           {
             text: 'More', items: [
-              { text: 'addons', link: 'https://github.com/abap2UI5-addons' },
+              { text: 'frontend', link: 'https://github.com/abap2UI5/frontend' },
               { text: 'downported', link: 'https://github.com/abap2UI5-downported' },
               { text: 'renamed', link: 'https://github.com/abap2UI5-renamed' },
-              { text: 'apps', link: 'https://github.com/abap2UI5-apps' },
+              { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
+              { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
+             
             ]
           },
         ]
@@ -148,7 +149,6 @@ export default defineConfig({
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
           ]
           },
-      
          ]
       },
       
