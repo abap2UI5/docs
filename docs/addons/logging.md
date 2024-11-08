@@ -12,7 +12,7 @@ This add-on centralizes BAL logging UIs for abap2UI5 apps. Instead of creating m
 ### 1. BAL Messages (classic)
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
     DATA(lo_log) = cl_bali_log=>create( ).
 
@@ -29,16 +29,15 @@ This add-on centralizes BAL logging UIs for abap2UI5 apps. Instead of creating m
                                                                            number     = '002'
                                                                            message_v1 = 'Dummy' ) ).
     lo_log->add_item( lo_bapi ).
-
     client->nav_app_call( z2ui5add_cl_bal_cl=>factory_popup( lo_log ) ).
 
-  ENDMETHOD.
+ENDMETHOD.
 ```
 
 ### 2. BAL Messages (cloud)
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
     DATA(lo_log) = cl_bali_log=>create( ).
 
@@ -55,17 +54,16 @@ This add-on centralizes BAL logging UIs for abap2UI5 apps. Instead of creating m
                                                                            number     = '002'
                                                                            message_v1 = 'Dummy' ) ).
     lo_log->add_item( lo_bapi ).
-
     client->nav_app_call( z2ui5add_cl_bal_cl=>factory_popup( lo_log ) ).
 
-  ENDMETHOD.
+ENDMETHOD.
 ```
 
 ### 3. BAL Cockpit
 In ABAP for Cloud 
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
     DATA(lo_log) = cl_bali_log=>create( ).
 
@@ -82,10 +80,9 @@ In ABAP for Cloud
                                                                            number     = '002'
                                                                            message_v1 = 'Dummy' ) ).
     lo_log->add_item( lo_bapi ).
-
     client->nav_app_call( z2ui5add_cl_bal_cl=>factory_popup( lo_log ) ).
 
-  ENDMETHOD.
+ENDMETHOD.
 ```
 
 
@@ -112,7 +109,6 @@ CLASS z2ui5add_cl_abap_logger_sample IMPLEMENTATION.
                                           desc = 'Stuff imported from legacy systems' ).
 
     log->e( 'You see, what had happened was...' ).
-
     client->nav_app_call( z2ui5add_cl_abap_logger_ui=>display_popup( log ) ).
 
   ENDMETHOD.
