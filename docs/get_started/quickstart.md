@@ -21,9 +21,7 @@ Create a new package and define a new class for the HTTP handler implementation:
 ::: code-group
 
 ```abap [ABAP]
-CLASS zcl_my_abap2UI5_http_handler DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
+CLASS zcl_my_abap2UI5_http_handler DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES if_http_extension.
@@ -40,9 +38,7 @@ ENDCLASS.
 ```
 
 ```abap [ABAP Cloud]
-CLASS zcl_my_abap2UI5_http_handler DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
+CLASS zcl_my_abap2UI5_http_handler DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES if_http_service_extension.
