@@ -22,4 +22,4 @@ Install the project using abapGit into your development system. Then, use the no
 ![alt text](image-3.png){ width=80% }
 
 #### Renaming
-If you're starting new development but already have abap2UI5 apps running in production, and you're concerned about updating to the latest release, consider installing abap2UI5 multiple times in your system using the renaming feature. This way, you can safely continue development without affecting your existing apps in production.
+If you're starting new development but already have abap2UI5 apps running in production, and you're concerned about updating to the latest release, consider installing abap2UI5 multiple times in your system using the [renaming feature](/advanced/renaming). This way, you can safely continue development without affecting your existing apps in production.
