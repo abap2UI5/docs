@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # RTTI
 
 <i class="fa-brands fa-github"></i> [S-RTTI Project on GitHub](https://github.com/sandraros/S-RTTI)
@@ -7,7 +10,7 @@ In abap2UI5, you don’t necessarily need to type your data model at design time
 abap2UI5 serializes your app instances to ensure stateless behavior in client communication. Unfortunately, the SAP standard serialization features are limited; for example, they do not support local types created at runtime. If you encounter problems, just install the fantastic project [S-RTTI](https://github.com/sandraros/S-RTTI) filling this gap.
 
 #### Basic
-Fully typed at design time, it works out of the box:
+Fully typed data at design time, it works out of the box:
 
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
@@ -32,8 +35,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
     mt_tab = VALUE #(
         ( title = 'entry 01'  value = 'red'  descr = 'this is a description' )
-        ( title = 'entry 02'  value = 'blue'  descr = 'this is a description' )
-        ( title = 'entry 02'  value = 'gray'  descr = 'this is a description' ) ).
+        ( title = 'entry 02'  value = 'blue' descr = 'this is a description' ) ).
 
     client->message_box_display( `this works without problems` ).
 
@@ -42,7 +44,7 @@ ENDCLASS.
 ```
 
 #### Generic Data Reference (local type)
-Typed at runtime with local types; this only works with S-RTTI:
+Data typed at runtime with local types; this only works with S-RTTI:
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
@@ -71,8 +73,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
     ASSIGN mr_tab->* TO <tab>.
     <tab> = VALUE #(
         ( title = 'entry 01'  value = 'red'  descr = 'this is a description' )
-        ( title = 'entry 02'  value = 'blue' descr = 'this is a description' )
-        ( title = 'entry 02'  value = 'gray' descr = 'this is a description' ) ).
+        ( title = 'entry 02'  value = 'blue' descr = 'this is a description' ) ).
 
     client->message_box_display( `this works only with S-RTTI` ).
 
