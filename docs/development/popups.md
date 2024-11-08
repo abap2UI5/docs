@@ -27,8 +27,6 @@ A common flow for using popups typically involves displaying a normal view, then
 ```abap
 METHOD Z2UI5_if_app~main.
 
-    me->client = client.
-
     IF client->check_on_init( ).
       
         DATA(lo_view) = z2ui5_cl_xml_view=>factory(
