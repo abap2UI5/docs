@@ -22,7 +22,7 @@ The framework consists solely of classes and interfaces, making it easy to insta
 ##### Development
 Creating UI5 applications in abap2UI5 is straightforward: define a new ABAP class and implement a single method from the abap2UI5 interface. Each app is fully supported as an abapGit project, allowing seamless installation across different systems.
 
-##### Cloud Ready
+##### ABAP Cloud
 abap2UI5 relies exclusively on released APIs, making it ideal for both on-stack and side-by-side extensions in the new ABAP for Cloud language version. Within your app, you’re free to utilize modern ABAP capabilities such as CDS, ABAP SQL, and EML.
 
 ##### Clean Core
