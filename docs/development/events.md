@@ -59,7 +59,6 @@ METHOD z2ui5_if_app~main.
     CASE client->get( )-event.
         WHEN 'BUTTON_POST'.
             client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
-        WHEN OTHERS.
     ENDCASE.
  
 ENDMETHOD.
@@ -78,7 +77,6 @@ METHOD z2ui5_if_app~main.
     CASE client->get( )-event.
         WHEN 'BUTTON_POST'.
             client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
-      WHEN OTHERS.
     ENDCASE.
  
 ENDMETHOD.
