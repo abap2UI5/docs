@@ -8,11 +8,11 @@ METHOD z2ui5_if_app~main.
 
     client->view_display( 
         |<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" | &
-        |   displayBlock="true" height="100%">| &
+        |          displayBlock="true" height="100%">| &
         |  <Shell>| &
-        |    <Page title="My title">| &
-        |          <Text text="My text"/>| &
-        |    </Page>| &
+        |     <Page title="My title">| &
+        |         <Text text="My text"/>| &
+        |     </Page>| &
         |  </Shell>| &
         |</mvc:View>| ).
 
