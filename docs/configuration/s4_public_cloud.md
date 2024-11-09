@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # S/4 Public Cloud
 
-In `S/4 Public Cloud` and `BTP ABAP Environment` you can only access the HTTP endpoint with `S_DEVELOP` authorization, making this scenario unsuitable for productive usage. <br>
+In S/4 Public Cloud and BTP ABAP Environment you can only access the HTTP endpoint with `S_DEVELOP` authorization, making this scenario unsuitable for productive usage. <br>
 
 Install the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) project to set up abap2UI5 apps as tiles for business users including managing permissions.
 
-Unfortunately, UI5 apps (BSPs) are not supported via ADT abapGit. As a result, you need to deploy this app manually and complete a few additional steps.
+UI5 apps (BSPs) are not supported via ADT abapGit. As a result, you need to deploy this app manually and complete a few additional steps.
 
 ### 1. Install the HTTP Service
 
@@ -21,7 +21,7 @@ Manually deploy the app folder from [abap2UI5-frontend](https://github.com/abap2
 
 ### 3. Configure Launchpad & Tiles
 
-For detailed steps, follow this [guide.](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
+Setup Launchpad, Pages, Section and Tiles for your abap2UI5 app, follow this [guide.](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
 
 ::: tip **BTP ABAP Environment**
 The BTP ABAP Environment has the same technical foundation as S/4 Public Cloud, so the above instructions apply to both systems.
