@@ -32,7 +32,7 @@ By using only released APIs, abap2UI5 ensures your app is "cloud-ready and upgra
 The abap2UI5 framework does not use any newer ABAP syntax features. This makes it also compatible for on-premise and R/3 NetWeaver systems, enabling development in classic ABAP (Tier 3) extensions. A downported version is available for systems below ABAP 7.50.
 
 ##### Architecture
-The abap2UI5 system footprint is kept minimal. The base version includes only essential classes and interfaces, and additional functionality can be incorporated by installing optional add-ons.
+The abap2UI5 system footprint is kept as small as possible. The base version includes only essential classes and interfaces, and additional functionality can be incorporated by installing optional [addons.](/addons/addons)
 
 ##### Security
 Since you configure the HTTP handler yourself, you retain complete control over all external communications, ensuring security.
@@ -41,7 +41,7 @@ Since you configure the HTTP handler yourself, you retain complete control over 
 abap2UI5 is technically just an implementation of an HTTP handler and can be used as any other HTTP service in a productive scenario.
 
 ##### Launchpad
-Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems or Build Workzone websites on SAP BTP, as well as into tiles on S/4HANA Public Cloud. See the Configuration section for more details.
+Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems or Build Workzone websites on SAP BTP, as well as into tiles on S/4HANA Public Cloud. See the [configuration](/configuration/launchpad) for more details.
 
 ##### Support
 Support for abap2UI5 is provided by the community on a best-effort basis. If you need assistance, submit an issue or join the abap2UI5 community on Slack.
