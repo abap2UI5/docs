@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # About
 
-Welcome to **abap2UI5** – an open-source project designed to enable UI5 app development purely in ABAP.
+Welcome to abap2UI5 – an open-source project designed to enable UI5 app development purely in ABAP.
 
 ##### Features
 abap2UI5 provides a purely ABAP-based approach for developing UI5 applications, with no need for JavaScript, OData, or RAP. It recalls the simplicity of classic ABAP, where just a few lines of code could generate input forms and tables using Selection Screens and ALVs.
