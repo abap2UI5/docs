@@ -7,7 +7,7 @@ In S/4 Public Cloud and BTP ABAP Environment you can only access the HTTP endpoi
 
 Install the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) project to set up abap2UI5 apps as tiles for business users including managing permissions.
 
-UI5 apps (BSPs) are not supported via ADT abapGit. As a result, you need to deploy this app manually and complete a few additional steps.
+Since UI5 apps (BSPs) are not supported directly via ADT abapGit, you'll need to manually deploy the app and complete a few additional configuration steps:
 
 ### 1. Install the HTTP Service
 
