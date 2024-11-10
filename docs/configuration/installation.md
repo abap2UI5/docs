@@ -5,7 +5,6 @@ outline: [2, 4]
 # Installation
 abap2UI5 apps run directly through an HTTP service, making this the fastest and most straightforward setup option. It works on any release and language version.
 
-<br><br> 
 However, for productive usage, additional considerations may be required for different system environments.
 
 ### S/4 Public Cloud
