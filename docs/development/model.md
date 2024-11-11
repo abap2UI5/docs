@@ -77,7 +77,7 @@ ENDCLASS.
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(lv_name) TYPE string.
+    DATA(lv_name) = 'my local value'.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
