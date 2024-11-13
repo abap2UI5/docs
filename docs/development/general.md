@@ -16,7 +16,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
         "first app start
         IF client->check_on_init( ).
-          "init values here
+          "init values
           "display view
           RETURN.
         ENDIF.
