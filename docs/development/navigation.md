@@ -36,7 +36,7 @@ METHOD z2ui5_if_app~main. root app
 ENDMETHOD.
 ```
 ::: tipp
-Sound familiar? The abap2UI5 framework is designed to emulate the classic “call screen” and “leave to screen” logic.
+Sound familiar? The abap2UI5 framework is designed to emulate the classic `call screen` and `leave to screen` logic.
 :::
 
 ### Launchpad
@@ -48,6 +48,6 @@ client->_event_client(
             `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }` 
     ) ) ).
 ```
-To learn more about launchpads and routing, refer to the documentation (here.)[configuration/launchpad]
+To learn more about launchpads and routing, refer to the documentation [here.](configuration/launchpad)
 ### Frontend
-Further frontend navigation features, including back button support with routing, are currently a work in progress. Track updates (here.)[https://github.com/abap2UI5/abap2UI5/issues/1420] 
+Further frontend navigation features, including back button support with routing, are currently a work in progress. Track updates [here.](https://github.com/abap2UI5/abap2UI5/issues/1420)
