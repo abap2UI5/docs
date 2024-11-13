@@ -36,7 +36,7 @@ METHOD z2ui5_if_app~main. root app
 ENDMETHOD.
 ```
 ::: tip
-Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `leave to screen` logic here.
+Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `leave to screen` behaviour here.
 :::
 
 ### Launchpad
