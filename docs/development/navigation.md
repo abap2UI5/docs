@@ -35,7 +35,7 @@ METHOD z2ui5_if_app~main. root app
     client->nav_app_call( lo_app ).
 ENDMETHOD.
 ```
-::: tipp
+::: tip
 Sound familiar? The abap2UI5 framework is designed to emulate the classic `call screen` and `leave to screen` logic.
 :::
 
