@@ -31,6 +31,6 @@ You can use any UI5 control available in the UI5 SDK. However, working with XML 
 
   ENDMETHOD.
 ```
-Check the API of the `Z2UI5_CL_XML_VIEW` class and leverage code completion to easily find the correct controls and properties. Additionally, it’s recommended to explore the sample repository, which contains pre-written XML examples for most use cases. These examples are available for easy copy-pasting and can be adjusted to suit your specific needs.
+Check the API of `Z2UI5_CL_XML_VIEW` and leverage code completion to easily find the correct controls and properties. Additionally, it’s recommended to explore the sample repository, which contains pre-written XML examples for most use cases. These examples are available for easy copy-pasting and can be adjusted to suit your specific needs.
 
 Currently, this setup is quite static. In the next section, we will explore how to bind and exchange data between the view and the app logic.
