@@ -21,14 +21,12 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
           RETURN.
         ENDIF.
 
-
         "callback after previous app
         IF client->check_on_navigated( ).
           DATA(lo_app_prev) = client->get_app_prev( ).
           "read attributes of previous app
           RETURN.
         ENDIF.
-
 
         "handle events
         CASE client->get( )-event.
@@ -38,7 +36,6 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
           WHEN 'CANCEL'.
             "event handling
         ENDCASE.
-
 
         "error handling
       CATCH cx_root INTO DATA(lx).
