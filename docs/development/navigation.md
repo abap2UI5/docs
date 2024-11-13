@@ -9,30 +9,38 @@ In abap2UI5, each application is represented by a single ABAP class. While you c
 To call an ABAP class, use the following code:
 ```abap
 METHOD z2ui5_if_app~main.
+
     DATA(lo_app) = NEW z2ui5_cl_demo_app_025( ).
     client->nav_app_call( lo_app ).
+
 ENDMETHOD.
 ```
 The framework maintains a call stack. In the newly called class, you can return to the previous application using:
 ```abap
 METHOD z2ui5_if_app~main.
+
     client->nav_app_leave( ).
+
 ENDMETHOD.
 ```
 If you need to access data from the previous application, use casting as follows:
 ```abap
 METHOD z2ui5_if_app~main.
+
     IF client->check_on_navigated( ).
         DATA(lo_called_app) = CAST z2ui5_cl_demo_app_025( client->get_app_prev( ) ).
         client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
     ENDIF.
+
 ENDMETHOD.
 ```
 To navigate to an application without adding it to the call stack, use:
 ```abap
-METHOD z2ui5_if_app~main. root app
+METHOD z2ui5_if_app~main.
+
     DATA(lo_app) = NEW z2ui5_cl_demo_app_025( ).
     client->nav_app_call( lo_app ).
+
 ENDMETHOD.
 ```
 ::: tip
