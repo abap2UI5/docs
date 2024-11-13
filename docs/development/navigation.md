@@ -10,7 +10,7 @@ To call an ABAP class, use the following code:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(lo_app) = NEW z2ui5_cl_demo_app_025( ).
+    DATA(lo_app) = NEW z2ui5_cl_new_app( ).
     client->nav_app_call( lo_app ).
 
 ENDMETHOD.
@@ -28,7 +28,7 @@ If you need to access data from the previous application, use casting as follows
 METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-        DATA(lo_called_app) = CAST z2ui5_cl_demo_app_025( client->get_app_prev( ) ).
+        DATA(lo_called_app) = CAST z2ui5_cl_new_app( client->get_app_prev( ) ).
         client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
     ENDIF.
 
@@ -38,8 +38,8 @@ To navigate to an application without adding it to the call stack, use:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(lo_app) = NEW z2ui5_cl_demo_app_025( ).
-    client->nav_app_call( lo_app ).
+    DATA(lo_app) = NEW z2ui5_cl_new_app( ).
+    client->nav_app_leave( lo_app ).
 
 ENDMETHOD.
 ```
