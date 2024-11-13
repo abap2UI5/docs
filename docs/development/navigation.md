@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Navigation
 
-In abap2UI5, each application is represented by a single ABAP class. While you can embed all logic within a single class and call different views or popups within it, it is generally better practice to keep individual classes manageable in size. This can be achieved by creating multiple classes that interact with each other, allowing you to build reusable, generic applications and popups that can be called in various contexts.
+In abap2UI5, each application is represented by a single ABAP class. While you can embed all logic within a single class, it is generally better practice to keep individual classes manageable in size. This can be achieved by creating multiple classes that interact with each other, allowing you to build reusable, generic applications and popups that can be called in various contexts.
 
 ### Backend
 To call an ABAP class, use the following code:
