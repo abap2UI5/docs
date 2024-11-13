@@ -7,7 +7,7 @@ outline: [2, 4]
 ### Popup
 
 
-#### Simple Example
+#### General
 
 To display a popup, use the method `client->popup_display` instead of `client->view_display`:
 ```abap
