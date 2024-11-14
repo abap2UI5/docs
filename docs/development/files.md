@@ -35,7 +35,6 @@ METHOD z2ui5_if_app~main.
         client->follow_up_action( val = client->_event_client(
             val   = client->cs_event-download_b64_file
             t_arg = VALUE #( ( lv_content ) ( lv_name ) ) ) ).
-
     ENDCASE.
 
 ENDMETHOD.
