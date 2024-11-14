@@ -41,7 +41,7 @@ Since you configure the HTTP handler yourself, you retain complete control over 
 abap2UI5 is technically just an implementation of an HTTP handler and can be used as any other HTTP service in a productive scenario.
 
 ##### Launchpad
-Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems or Build Workzone websites on SAP BTP, as well as into tiles on S/4HANA Public Cloud. See the [configuration](/configuration/launchpad) for more details.
+Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems or Build Workzone websites on SAP BTP, as well as into tiles on S/4HANA Public Cloud.
 
 ##### Support
 Support for abap2UI5 is provided by the community on a best-effort basis. If you need assistance, submit an issue or join the abap2UI5 community on Slack.
