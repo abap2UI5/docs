@@ -42,8 +42,11 @@ Since you configure the HTTP handler yourself, you retain complete control over 
 ##### Productive Usage
 abap2UI5 is essentially an HTTP handler implementation and can be used like any other HTTP service in a production environment.
 
+##### Enterprise Ready
+Relying on SAP’s official UI5 in the frontend and ABAP on the server side, abap2UI5 is an enterprise-ready framework compatible with a wide range of SAP products. It is specifically tailored to meet the needs of ABAP developers, particularly in the context of business applications.
+
 ##### Launchpad
-Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems, SAP Build Workzone websites on SAP BTP, and tiles on S/4HANA Public Cloud.
+Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems, Build Workzone websites on BTP, and tiles on S/4HANA Public Cloud.
 
 ##### Support
 Support for abap2UI5 is provided by the community on a best-effort basis. If you need assistance, submit an issue or join the abap2UI5 community on Slack.
