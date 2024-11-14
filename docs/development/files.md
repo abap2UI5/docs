@@ -17,11 +17,8 @@ METHOD z2ui5_if_app~main.
                 press = client->_event( 'BUTTON_DOWNLOAD' )
         )->stringify( ) ).
 
-
     CASE client->get( )-event.
-
       WHEN 'BUTTON_DOWNLOAD'.
-
         DATA(lv_name) = `Default_File_Name.jpg`.
         DATA(lv_content) = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAA` &&
         `KYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIp` &&
