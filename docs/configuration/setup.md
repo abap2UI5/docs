@@ -4,7 +4,7 @@ outline: [2, 4]
 
 # General
 
-abap2UI5 can be run with various custom configurations. The default setup can be invoked using the following call:
+abap2UI5 can be run with various custom configurations. The default setup can be invoked using the following call.
 
 ```abap
 METHOD if_http_extension~handle_request.
@@ -71,7 +71,7 @@ You can read URL parameters using the following snippet:
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(lv_search) = client->get( )-s_config-search.s
+  DATA(lv_search) = client->get( )-s_config-search.
 
 ENDMETHOD.
 ```
