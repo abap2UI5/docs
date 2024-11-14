@@ -103,7 +103,7 @@ export default defineConfig({
           { text: 'Troubleshooting', link: '/development/troubleshooting' },
           { text: 'Specifics', collapsed : "false" , items: [
             { text: 'Barcode Scanning', link: '/development/barcodes' },
-            { text: 'Upload, Download Files', link: '/development/files', },
+            { text: 'File Handling', link: '/development/files', },
             { text: 'Native Device Capabilities', link: '/development/ndc' },
            ]
           },
