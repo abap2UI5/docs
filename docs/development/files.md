@@ -3,9 +3,10 @@ outline: [2, 4]
 ---
 # Upload, Download Files
 
+File handling with abap2UI5 is achieved through base64 data exchange using two-way binding.
 
 #### Upload
-
+See also `Z2UI5_CL_DEMO_APP_075`:
 ```abap
 CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 
@@ -39,7 +40,7 @@ ENDCLASS.
 ```
 
 #### Download
-
+See also `Z2UI5_CL_DEMO_APP_186`
 ```abap
 METHOD z2ui5_if_app~main.
 

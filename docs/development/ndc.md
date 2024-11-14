@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Native Device Capabilities
 
-Modern browsers and HTML make it easy to access native device capabilities directly. For more details and examples, check out the blog post Exploring External Libraries & Native Device Capabilities with abap2UI5 [here.](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-10-extensions-i-exploring-external-libraries-native-device/ba-p/13576910)
+Modern browsers and HTML5 make it easy to access native device capabilities directly. A detailed blog post can be found [here.](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-10-extensions-i-exploring-external-libraries-native-device/ba-p/13576910)
 
 #### Geolocation
 This example demonstrates how to retrieve geolocation data such as longitude, latitude, altitude, and speed. Also see `Z2UI5_CL_DEMO_APP_120`.
