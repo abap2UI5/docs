@@ -59,7 +59,7 @@ ENDMETHOD.
 ```
 
 #### Separated App
-For better source code structure, it's possible to encapsulate popups in separate classes and call them through navigation.
+For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](development/navigation).
 
 ### Popover
 To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
@@ -121,3 +121,5 @@ Several pre-built popup classes are available for specific scenarios:
 * z2ui5_cl_pop_to_confirm
 * z2ui5_cl_pop_to_inform
 * z2ui5_cl_pop_to_select
+
+This collection of popups can be further extended to cover additional common use cases. Contributions are welcome!
