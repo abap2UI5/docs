@@ -3,9 +3,9 @@ outline: [2, 4]
 ---
 # Popups, Popovers
 
+UI5 offers functionality for displaying popups and popovers that overlay only specific areas of the view. Let’s see how this can be implemented using abap2UI5.
 
 ### Popup
-
 
 #### General
 
@@ -60,6 +60,9 @@ ENDMETHOD.
 
 #### Separated App
 For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](/development/navigation).
+
+#### Stack
+If you need to manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
 
 ### Popover
 To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
@@ -122,4 +125,4 @@ Several pre-built popup classes are available for specific scenarios:
 * z2ui5_cl_pop_to_inform
 * z2ui5_cl_pop_to_select
 
-This collection of popups can be further extended to cover additional common use cases. Contributions are welcome!
+This collection can be further expanded to cover additional common use cases. Contributions are always welcome!

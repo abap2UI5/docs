@@ -23,7 +23,7 @@ METHOD z2ui5_if_app~main.
     CASE client->get( )-event.
         WHEN 'BUTTON_POST'.
             client->message_box_display( |Your name is { name }| ).
-     ENDCASE.
+    ENDCASE.
  
 ENDMETHOD.
 ```

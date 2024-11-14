@@ -101,6 +101,12 @@ export default defineConfig({
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Troubleshooting', link: '/development/troubleshooting' },
+          { text: 'Specifics', collapsed : "false" , items: [
+            { text: 'Barcode Scanning', link: '/development/barcodes' },
+            { text: 'File Download, Upload', link: '/development/files', },
+            { text: 'Native Device Capabilities', link: '/development/ndc' },
+           ]
+          },
         ]
       },
       {
