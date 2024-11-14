@@ -27,7 +27,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-Check out `z2ui5_cl_demo_app_124` to see barcode scanning in action.
+Check out `z2ui5_cl_demo_app_124` to see barcode scanning in action. If you also need to display barcodes, you can use tools like bwip-js, available as part of the js-libraries addon. More details can be found [here](/addons/ext_js).
 
 ::: tip **UI5 Versions**
 Please note that this feature is only available when bootstrapping with the UI5 version and does not work with OpenUI5.
