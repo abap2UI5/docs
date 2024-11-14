@@ -59,7 +59,7 @@ ENDMETHOD.
 ```
 
 #### Separated App
-For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](development/navigation).
+For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](/development/navigation).
 
 ### Popover
 To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
