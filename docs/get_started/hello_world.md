@@ -67,7 +67,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
-          )->text( text = `My Text`
+          )->text( `My Text`
           )->button( text = 'post' press = client->_event( 'POST' )
       )->stringify( ) ).
 
@@ -97,7 +97,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( 'abap2UI5 - Hello World'
-          )->text( text = `My Text`
+          )->text( `My Text`
           )->button( text = 'post' press = client->_event( 'POST' )
           )->input( client->_bind_edit( name )
       )->stringify( ) ).

@@ -1,9 +1,42 @@
 ---
 outline: [2, 4]
 ---
-# File Download, Upload
+# Upload, Download Files
 
 
+#### Upload
+
+```abap
+CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES Z2UI5_if_app.
+    DATA mv_path  TYPE string.
+    DATA mv_value TYPE string.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
+  METHOD Z2UI5_if_app~main.
+
+    client->view_display( z2ui5_cl_xml_view=>factory(
+        )->page(
+            )->_z2ui5( )->file_uploader(
+                value       = client->_bind_edit( mv_value )
+                path        = client->_bind_edit( mv_path )
+                placeholder = 'filepath here...'
+                upload      = client->_event( 'UPLOAD' )
+        )->stringify( ) ).
+
+    CASE client->get( )-event.
+      WHEN 'UPLOAD'.
+        "process with mv_value and mv_path...
+        client->message_box_display( `file uploaded` ).
+    ENDCASE.
+
+  ENDMETHOD.
+ENDCLASS.
+```
 
 #### Download
 
@@ -41,36 +74,3 @@ ENDMETHOD.
 ```
 
 
-#### Upload
-
-```abap
-CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
-    DATA mv_path  TYPE string.
-    DATA mv_value TYPE string.
-
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
-  METHOD Z2UI5_if_app~main.
-
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->_z2ui5( )->file_uploader(
-                value       = client->_bind_edit( mv_value )
-                path        = client->_bind_edit( mv_path )
-                placeholder = 'filepath here...'
-                upload      = client->_event( 'UPLOAD' )
-        )->stringify( ) ).
-
-    CASE client->get( )-event.
-      WHEN 'UPLOAD'.
-        "process with mv_value and mv_path...
-        client->message_box_display( `file uploaded` ).
-    ENDCASE.
-
-  ENDMETHOD.
-ENDCLASS.
-```

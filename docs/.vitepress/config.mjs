@@ -103,7 +103,7 @@ export default defineConfig({
           { text: 'Troubleshooting', link: '/development/troubleshooting' },
           { text: 'Specifics', collapsed : "false" , items: [
             { text: 'Barcode Scanning', link: '/development/barcodes' },
-            { text: 'File Download, Upload', link: '/development/files', },
+            { text: 'Upload, Download Files', link: '/development/files', },
             { text: 'Native Device Capabilities', link: '/development/ndc' },
            ]
           },
@@ -179,7 +179,6 @@ export default defineConfig({
 
     ]
   },
-  
     // Aktiviert den "On This Page"-Bereich
     outline: { 
       level: [2,6]

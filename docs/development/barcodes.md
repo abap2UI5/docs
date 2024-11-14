@@ -7,22 +7,26 @@ The barcode scanner control can be used like any other UI5 control with abap2UI5
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
+    data(lo_view) = z2ui5_cl_xml_view=>factory(
         )->page(
             )->barcode_scanner_button(
                 dialogtitle = `Barcode Scanner`
                 scansuccess = client->_event( 
                     val   = 'SCAN_SUCCESS' 
                     t_arg = VALUE #( 
-                        ( `${$parameters>/text}` )
-                        ( `${$parameters>/format}` ) ) )
-        )->stringify( ) ).
+                        ( `${$parameters>/text}`   )
+                        ( `${$parameters>/format}` ) ) ) ).
+
+    client->view_display( lo_view->stringify( ) ).
+
 
     IF client->get( )-event = 'SCAN_SUCCESS'.
+
         DATA(lv_input)  = client->get_event_arg( 1 ).
         DATA(lv_format) = client->get_event_arg( 2 ).
         "custom processing...
         client->message_box_display( |Scan finished: { lv_input } { lv_format }| ).
+
     ENDIF.
 
 ENDMETHOD.

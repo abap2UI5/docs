@@ -34,8 +34,8 @@ METHOD Z2UI5_if_app~main.
                 )->button(
                     text  = 'popup rendering, no background rendering'
                     press = client->_event( 'POPUP_OPEN' ) ).
-
         client->view_display( lo_view->stringify( ) ).
+
     ENDIF.
 
     CASE client->get( )-event.
@@ -48,11 +48,11 @@ METHOD Z2UI5_if_app~main.
                 )->button(
                     text  = 'close'
                     press = client->_event( 'POPUP_CLOSE' ) ).
-
         client->popup_display( lo_popup->stringify( ) ).
 
       WHEN 'POPUP_CLOSE'.
         client->popup_destroy( ).
+        
     ENDCASE.
 
 ENDMETHOD.

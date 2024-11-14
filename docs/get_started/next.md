@@ -1,6 +1,6 @@
 # What's Next?
 
-Expand your skills and dive deeper into **abap2UI5!**
+Expand your skills and dive deeper into abap2UI5!
 
 #### Development
 Want to level up your development skills? Explore advanced guides and best practices to elevate your abap2UI5 projects. Start learning [here.](/development/general)
