@@ -112,6 +112,6 @@ ENDCLASS.
 For camera capabilities, refer to the addon section under [js-libraries.](/addons/ext_js)
 
 
-::: tip **UI5 Versions**
+::: tip **Browser Restrictions**
 Depending on browser permissions and configuration settings, access to or use of native device capabilities (NDC) may be restricted. Watch out for any warning messages directly from your browser during testing.
 :::
