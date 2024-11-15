@@ -3,8 +3,7 @@ outline: [2, 6]
 ---
 # XLSX
 
-The abap2UI5 framework, being purely ABAP, allows you to leverage the existing XLSX features of your ABAP system seamlessly. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables or exporting tables to XLSX files.
-
+The abap2UI5 framework, allows you to leverage the existing XLSX features of your ABAP system. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables and vice versa.
 
 #### Upload
 
