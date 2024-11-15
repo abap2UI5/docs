@@ -12,7 +12,7 @@ abap2UI5 has been successfully tested with tables containing large numbers of en
 
 ### Suggestions
 If you still want to optimize your app, consider the following tips:
-* Only call the `client->view_display` method when absolutely necessary. Instead, prefer using `client->model_update` so that the UI5 framework only re-renders the controls that have actually changed.
+* Only call the `client->view_display` method when necessary. Instead, prefer using `client->model_update` so that the UI5 framework only re-renders the controls that have actually changed.
 * Prefer using `client->bind` and use `client->bind_edit` only when users need to make changes that are processed in the backend. Otherwise, it leads to unnecessary data transfers.
 * Use public attributes in your app class only for variables that are also displayed in the frontend. Otherwise, the framework may unnecessarily access unused values.
 * Follow standard ABAP best practices: reduce loops, use sorted tables, etc., just as you would with ALV.
