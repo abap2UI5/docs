@@ -6,6 +6,71 @@ outline: [2, 6]
 The abap2UI5 framework, being purely ABAP, allows you to leverage the existing XLSX features of your ABAP system seamlessly. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables or exporting tables to XLSX files.
 
 
+#### Upload
+
+Transform uploaded content into an internal table:
+
+::: code-group
+
+```abap
+METHOD z2ui5_if_app~main.
+
+    client->view_display( z2ui5_cl_xml_view=>factory(
+        )->page(
+            )->_z2ui5( )->file_uploader(
+                value       = client->_bind_edit( mv_value )
+                path        = client->_bind_edit( mv_path )
+                placeholder = 'filepath here...'
+                upload      = client->_event( 'UPLOAD' )
+        )->stringify( ) ).
+
+    CASE client->get( )-event.
+      WHEN 'UPLOAD'.
+
+       data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
+        "further process with itab...
+        client->message_box_display( `xlsx uploaded` ).
+    ENDCASE.
+
+ENDMETHOD.
+```
+
+```abap [LCL_HELP]
+CLASS lcl_help DEFINITION.
+
+  PUBLIC SECTION.
+
+    CLASS-METHODS itab_get_by_xlsx
+      IMPORTING
+        VALUE(val)    TYPE string
+      RETURNING
+        VALUE(result) TYPE REF TO data.
+
+ENDCLASS.
+
+CLASS lcl_help IMPLEMENTATION.
+
+  METHOD itab_get_by_xlsx.
+
+    SPLIT val AT `;` INTO DATA(lv_dummy) DATA(lv_data).
+    SPLIT lv_data AT `,` INTO lv_dummy lv_data.
+
+    DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
+    DATA(lo_excel) = NEW cl_fdt_xl_spreadsheet(
+                            document_name = `test`
+                            xdocument     = lv_xdata ) .
+
+    lo_excel->if_fdt_doc_spreadsheet~get_worksheet_names(
+      IMPORTING worksheet_names = DATA(lt_worksheets) ).
+
+    result = lo_excel->if_fdt_doc_spreadsheet~get_itab_from_worksheet( lt_worksheets[ 1 ] ).
+
+  ENDMETHOD.
+
+ENDCLASS.
+```
+:::
+
 #### Download
 
 Convert an internal table to an XLSX file and download it as a Base64-encoded file:
@@ -101,71 +166,6 @@ CLASS lcl_help IMPLEMENTATION.
 
     result = z2ui5_cl_util=>conv_encode_x_base64( lv_xstring ).
     result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
-
-  ENDMETHOD.
-
-ENDCLASS.
-```
-:::
-
-#### Upload
-
-Transform uploaded content into an internal table:
-
-::: code-group
-
-```abap
-METHOD z2ui5_if_app~main.
-
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->_z2ui5( )->file_uploader(
-                value       = client->_bind_edit( mv_value )
-                path        = client->_bind_edit( mv_path )
-                placeholder = 'filepath here...'
-                upload      = client->_event( 'UPLOAD' )
-        )->stringify( ) ).
-
-    CASE client->get( )-event.
-      WHEN 'UPLOAD'.
-
-       data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
-        "further process with itab...
-        client->message_box_display( `xlsx uploaded` ).
-    ENDCASE.
-
-ENDMETHOD.
-```
-
-```abap [LCL_HELP]
-CLASS lcl_help DEFINITION.
-
-  PUBLIC SECTION.
-
-    CLASS-METHODS itab_get_by_xlsx
-      IMPORTING
-        VALUE(val)    TYPE string
-      RETURNING
-        VALUE(result) TYPE REF TO data.
-
-ENDCLASS.
-
-CLASS lcl_help IMPLEMENTATION.
-
-  METHOD itab_get_by_xlsx.
-
-    SPLIT val AT `;` INTO DATA(lv_dummy) DATA(lv_data).
-    SPLIT lv_data AT `,` INTO lv_dummy lv_data.
-
-    DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
-    DATA(lo_excel) = NEW cl_fdt_xl_spreadsheet(
-                            document_name = `test`
-                            xdocument     = lv_xdata ) .
-
-    lo_excel->if_fdt_doc_spreadsheet~get_worksheet_names(
-      IMPORTING worksheet_names = DATA(lt_worksheets) ).
-
-    result = lo_excel->if_fdt_doc_spreadsheet~get_itab_from_worksheet( lt_worksheets[ 1 ] ).
 
   ENDMETHOD.
 
