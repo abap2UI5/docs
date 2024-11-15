@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # XLSX
 
-The abap2UI5 framework, being purely ABAP, allows you to leverage the existing XLSX features of your ABAP system seamlessly. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables or exporting tables to XLSX files. This add-on simplifies the process with APIs and examples.
+The abap2UI5 framework, being purely ABAP, allows you to leverage the existing XLSX features of your ABAP system seamlessly. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables or exporting tables to XLSX files.
 
 
 #### Download
@@ -52,6 +52,7 @@ Convert an internal table to an XLSX file and download it as a Base64-encoded fi
 
 ENDMETHOD.
 ```
+
 ```abap [LCL_HELP]
 class lcl_help DEFINITION.
 
@@ -105,7 +106,7 @@ CLASS lcl_help IMPLEMENTATION.
 
 ENDCLASS.
 ```
-::: code-group
+:::
 
 #### Upload
 
@@ -135,6 +136,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
+
 ```abap [LCL_HELP]
 CLASS lcl_help DEFINITION.
 
@@ -169,7 +171,7 @@ CLASS lcl_help IMPLEMENTATION.
 
 ENDCLASS.
 ```
-::: code-group
+:::
 
 For advanced functionality, consider leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations.
 
