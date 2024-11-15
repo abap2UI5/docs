@@ -24,7 +24,6 @@ METHOD z2ui5_if_app~main.
 
     client->view_display( lo_view->stringify( ) ).
 
-
     IF client->get( )-event = 'SCAN_SUCCESS'.
 
         DATA(lv_input)  = client->get_event_arg( 1 ).
