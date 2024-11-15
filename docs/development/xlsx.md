@@ -56,8 +56,8 @@ CLASS lcl_help IMPLEMENTATION.
 
     DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
     DATA(lo_excel) = NEW cl_fdt_xl_spreadsheet(
-                            document_name = `test`
-                            xdocument     = lv_xdata ) .
+        document_name = `test`
+        xdocument     = lv_xdata ) .
 
     lo_excel->if_fdt_doc_spreadsheet~get_worksheet_names(
       IMPORTING worksheet_names = DATA(lt_worksheets) ).
@@ -121,7 +121,7 @@ ENDMETHOD.
 class lcl_help DEFINITION.
 
 PUBLIC SECTION.
-    CLASS-METHODS: xlsx_get_by_itab
+    CLASS-METHODS xlsx_get_by_itab
       IMPORTING
         VALUE(val)    TYPE STANDARD TABLE
       RETURNING
@@ -157,9 +157,8 @@ CLASS lcl_help IMPLEMENTATION.
       EXPORTING
         is_format            = if_salv_bs_lex_format=>mc_format_xlsx
         ir_result_data_table =  cl_salv_ex_util=>factory_result_data_table(
-             r_data                      = lt_data
-            t_fieldcatalog              = lt_fcat
-                                                 )
+            r_data           = lt_data
+            t_fieldcatalog   = lt_fcat )
       IMPORTING
         er_result_file       = DATA(lv_xstring) ).
 

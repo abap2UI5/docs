@@ -16,7 +16,6 @@ Fully typed data at design time, it works out of the box:
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
     TYPES:
@@ -49,7 +48,6 @@ Data typed at runtime with local types; this only works with S-RTTI:
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
     DATA mr_tab TYPE REF TO data.
 

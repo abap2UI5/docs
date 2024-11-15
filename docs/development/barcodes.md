@@ -47,7 +47,7 @@ Most scanner devices have an integrated scanning function. In such cases, you ca
 Below is an example showing how to handle input focus and manage transitions between input fields after scanning and triggering ENTER:
 
 ```abap
-CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC FINAL CREATE PUBLIC .
+CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
