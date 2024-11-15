@@ -2,6 +2,8 @@
 
 Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple and straightforward.
 
+#### Scanner Button
+
 The barcode scanner control can be used like any other UI5 control with abap2UI5. Below is a snippet demonstrating the basic functionality. You can add your custom barcode handling after the scanning event is triggered:
 
 ```abap
@@ -36,3 +38,6 @@ Check out `z2ui5_cl_demo_app_124` to see barcode scanning in action. If you also
 ::: tip **UI5 Versions**
 Please note that this feature is only available when bootstrapping with the UI5 version and does not work with OpenUI5.
 :::
+
+#### Device
+Most scanner devices have an integrated scanning function. In such cases, you can simply create an input field and ensure the focus is correctly set. The scanned data will populate the input field as if it were typed via a keyboard.
