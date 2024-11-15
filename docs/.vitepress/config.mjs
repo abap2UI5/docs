@@ -104,6 +104,7 @@ export default defineConfig({
           { text: 'Specifics', collapsed : "false" , items: [
             { text: 'Barcode Scanning', link: '/development/barcodes' },
             { text: 'File Handling', link: '/development/files', },
+            { text: 'XLSX', link: '/development/xlsx', },
             { text: 'Native Device Capabilities', link: '/development/ndc' },
            ]
           },
@@ -132,8 +133,7 @@ export default defineConfig({
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
-    //      { text: 'Logging, BAL', link: '/addons/logging' },
-    //      { text: 'XLSX', link: '/addons/xlsx' },
+          { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'More Popups', link: '/addons/popup' },
           { text: 'Apps, Community', link: '/addons/apps' },
