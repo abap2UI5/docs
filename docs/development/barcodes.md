@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Barcode Scanning 
 
 Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple and straightforward.
