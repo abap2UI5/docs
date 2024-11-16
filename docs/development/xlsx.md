@@ -23,13 +23,12 @@ METHOD z2ui5_if_app~main.
                 upload      = client->_event( 'UPLOAD' )
         )->stringify( ) ).
 
-    CASE client->get( )-event.
-      WHEN 'UPLOAD'.
+    IF client->get( )-event = 'UPLOAD'.
 
        data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
         "further process with itab...
         client->message_box_display( `xlsx uploaded` ).
-    ENDCASE.
+    ENDIF.
 
 ENDMETHOD.
 ```
@@ -83,13 +82,10 @@ Convert an internal table to an XLSX file and download it as a Base64-encoded fi
         )->page(
             )->button(
                 text = 'Open Download Popup'
-                press = client->_event( 'BUTTON_DOWNLOAD' )
+                press = client->_event( 'DOWNLOAD' )
         )->stringify( ) ).
 
-
-    CASE client->get( )-event.
-
-      WHEN 'BUTTON_DOWNLOAD'.
+    IF client->get( )-event = `DOWNLOAD`.
 
         TYPES:
           BEGIN OF ty_row,
@@ -102,17 +98,13 @@ Convert an internal table to an XLSX file and download it as a Base64-encoded fi
         DATA(lt_tab) = VALUE ty_tab(
         ( count = '1' value = `red` descr = `this is a description` )
         ( count = '2' value = `red` descr = `this is a description` )
-        ( count = '3' value = `red` descr = `this is a description` )
-        ( count = '4' value = `red` descr = `this is a description` )
-        ( count = '5' value = `red` descr = `this is a description` ) ).
+        ( count = '3' value = `red` descr = `this is a description` ) ).
 
         DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
-
         client->follow_up_action( val = client->_event_client(
             val = client->cs_event-download_b64_file
             t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ) ).
-
-    ENDCASE.
+    ENDIF.
 
 ENDMETHOD.
 ```
