@@ -157,7 +157,6 @@ export default defineConfig({
           },
          ]
       },
-      
       {
         text: 'Resources',
         link: '/resources/resources',
@@ -166,10 +165,13 @@ export default defineConfig({
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'Blogs', link: '/resources/blogs' },
           { text: 'References', link: '/resources/references' },
-          { text: 'Contribution', link: '/resources/contribution' },
-          { text: 'Support', link: '/resources/support' },
-          { text: 'Sponsor', link: '/resources/sponsor' },
           { text: 'License', link: '/resources/license' },
+          { text: 'Community',  items: [
+            { text: 'Support', link: '/resources/support' },
+            { text: 'Contribution', link: '/resources/contribution' },
+            { text: 'Sponsor', link: '/resources/sponsor' },
+           ]
+          },
         ]
       }
     ],
