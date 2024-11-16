@@ -135,7 +135,7 @@ export default defineConfig({
           { text: 'Layouts, Variants', link: '/addons/layout' },
           { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
-          { text: 'More Popups', link: '/addons/popup' },
+          { text: 'UI Extensions', link: '/addons/popup' },
           { text: 'Apps, Community', link: '/addons/apps' },
         ]
       },
