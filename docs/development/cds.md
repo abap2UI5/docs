@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # CDS, EML
 
 For compatibility reasons, all examples and snippets are provided without CDS and EML calls. However, if you're using the latest ABAP releases, you can leverage these modern features in your abap2UI5 applications.
