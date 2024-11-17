@@ -72,12 +72,11 @@ METHOD z2ui5_if_app~main.
            RESPONSE OF i_salesordertp
            FAILED   DATA(ls_save_failed)
            REPORTED DATA(ls_save_reported).
-
     COMMIT ENTITIES END.
 
 ENDMETHOD.
 ```
 
 Key Considerations:
-* Transaction Management: EML calls in abap2UI5 apps are executed externally, outside the RAP framework. Therefore, you must explicitly commit transactions using `COMMIT ENTITIES`.
-* RAP Commit Limitations: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in transaction management.
+* Transaction Management: EML calls in abap2UI5 apps are executed outside the RAP framework. Therefore, don't forget to explicitly commit transactions using `COMMIT ENTITIES`
+* Commit Limitations: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in commit management
