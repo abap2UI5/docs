@@ -8,13 +8,18 @@ Welcome to abap2UI5 – an open-source framework designed to enable UI5 app deve
 Whether you're developing in the cloud or on-premise, abap2UI5 simplifies UI5 development, making it fast and efficient without the need for JavaScript, OData, or RAP. It recalls the simplicity of classic ABAP, where just a few lines of code could generate input forms and tables using Selection Screens and ALVs.
 
 ##### Evolution
-Launched in 2023 as a personal project, abap2UI5 initially focused on offering basic selection screen functionality for ABAP Cloud, accompanied by an introductory blog post on the SAP Community Network. With the support of the ABAP open-source community, it has grown significantly, adding a broad range of features. Today, abap2UI5 is a community-driven project, with contributions and feedback helping shape its development.
+Launched in 2023 as a personal project, abap2UI5 initially focused on offering basic selection screen functionality for ABAP Cloud, introduced through a blog post on the SAP Community Network. With the support of the ABAP open-source community, it has grown significantly, adding a broad range of features. Today, abap2UI5 is a community-driven project, with contributions and feedback helping shape its development.
 
 ##### Development
-Creating UI5 applications with abap2UI5 is straightforward: define a new ABAP class, implement a method from the abap2UI5 interface, and your app is ready. Each app is supported as an abapGit project, which simplifies installation across different systems and version control. 
+Creating UI5 applications with abap2UI5 is straightforward:
+1. Define a new ABAP class
+2. Implement a method from the abap2UI5 interface
+3. Your app is ready!
+
+Each application is supported as an abapGit project, simplifying installation across systems and enabling seamless version control.
 
 ##### Architecture
-abap2UI5 follows a "thin frontend" approach, handling all processing, logic, and data management in the backend. This simplifies the setup, reduces the need for client-side actions (such as clearing caches), and keeps business logic and sensitive data on the server. The approach also enhances performance by leveraging server-side processing.
+abap2UI5 employs a "thin frontend" approach, handling all processing, logic, and data management in the backend. This setup simplifies configuration, minimizes client-side actions (like clearing caches), and keeps business logic and sensitive data securely on the server. The architecture also optimizes performance by leveraging server-side processing.
 
 ##### System Footprint
 The abap2UI5 system footprint is kept as small as possible including only essential classes and interfaces in the base version. Additional functionality can be added by installing optional addons.
@@ -43,7 +48,7 @@ Since you configure the HTTP handler yourself, you retain complete control over 
 abap2UI5 is essentially an HTTP handler implementation and can be used like any other HTTP service in a production environment.
 
 ##### Enterprise Ready
-Relying on SAP’s official UI5 in the frontend and SAP's proprietary ABAP language on the server side, abap2UI5 is an enterprise-ready framework compatible with a wide range of SAP products. It is specifically tailored to meet the needs of ABAP developers in the context of business applications.
+This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s official UI5 for the frontend and adhering to clean core principles on the backend with SAP’s proprietary ABAP language, abap2UI5 provides an enterprise-ready solution compatible with a wide range of SAP products. 
 
 ##### Launchpad
 Apps developed with abap2UI5 can be integrated into Fiori Launchpads on S/4 Systems, Build Workzone websites on BTP, and tiles on S/4HANA Public Cloud.
