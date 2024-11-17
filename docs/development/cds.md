@@ -76,5 +76,5 @@ ENDMETHOD.
 ```
 
 Key Considerations:
-* Transaction Management: EML call in abap2UI5 apps are executed externally, outside the RAP framework. Therefore, you must explicitly commit transactions using `COMMIT ENTITIES`.
+* Transaction Management: EML calls in abap2UI5 apps are executed externally, outside the RAP framework. Therefore, you must explicitly commit transactions using `COMMIT ENTITIES`.
 * RAP Commit Limitations: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in transaction management.
