@@ -106,6 +106,7 @@ export default defineConfig({
             { text: 'File Handling', link: '/development/files', },
             { text: 'XLSX', link: '/development/xlsx', },
             { text: 'Device Capabilities', link: '/development/ndc' },
+            { text: 'CDS, EML', link: '/development/cds' },
            ]
           },
         ]

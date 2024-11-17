@@ -1,0 +1,80 @@
+# CDS, EML
+
+For compatibility reasons, all examples and snippets are provided without CDS and EML calls. However, if you're using the latest ABAP releases, you can leverage these modern features in your abap2UI5 applications.
+
+### ABAP CDS
+ABAP CDS provides a powerful way to define and consume data models in ABAP. The example below demonstrates how to use the I_SalesOrder CDS view from the Virtual Data Model (VDM) to fetch sales order data and display it in a UI5 table control:
+```abap
+CLASS z2ui5_cl_sample_cds DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA mt_salesorder TYPE STANDARD TABLE OF I_SalesOrder WITH EMPTY KEY.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    SELECT FROM I_SalesOrder
+     FIELDS salesorder, salesordertype, salesorganization
+     INTO TABLE @DATA(mt_salesorder)
+     UP TO 10 ROWS.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
+    view->columns(
+         )->column( )->text( 'SalesOrder' )->get_parent(
+         )->column( )->text( 'SalesOrderType' )->get_parent(
+         )->column( )->text( 'SalesOrganization' ).
+
+    view->items( )->column_list_item( )->cells(
+       )->text( '{SALESORDER}'
+       )->text( '{SALESORDERTYPE}'
+       )->text( '{SALESORGANIZATION}' ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+ENDCLASS.
+```
+
+### EML
+Entity Manipulation Language (EML) simplifies the creation, update, and deletion of business objects. In place of traditional BAPI methods like BAPI_SALESORDER_CREATE, EML uses RAP (Restful ABAP Programming) objects. The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
+```abap
+METHOD z2ui5_if_app~main.
+
+    MODIFY ENTITIES OF i_salesordertp
+           ENTITY salesorder
+           CREATE
+           FIELDS ( salesordertype
+                    salesorganization
+                    distributionchannel
+                    organizationdivision
+                    soldtoparty )
+           WITH VALUE #( ( %cid  = '0001'
+                           %data = VALUE #( SalesOrderType       = 'TA'
+                                            SalesOrganization    = '1010'
+                                            DistributionChannel  = '10'
+                                            OrganizationDivision = '00'
+                                            SoldToParty          = '0033500056' ) ) )
+           MAPPED   DATA(ls_mapped)
+           FAILED   DATA(ls_failed)
+           REPORTED DATA(ls_reported_modify).
+
+    COMMIT ENTITIES BEGIN
+           RESPONSE OF i_salesordertp
+           FAILED   DATA(ls_save_failed)
+           REPORTED DATA(ls_save_reported).
+
+    COMMIT ENTITIES END.
+
+ENDMETHOD.
+```
+
+Key Considerations:
+* Manual Transaction Management: EML operations are executed externally, outside the RAP framework. Therefore, you must explicitly commit transactions using COMMIT ENTITIES.
+* Commit Limitations Bypassed: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. However, these restrictions do not apply when using EML in abap2UI5 applications, allowing greater flexibility in transaction management.
