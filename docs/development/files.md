@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # File Handling
 
-File handling with abap2UI5 is achieved through base64 data exchange using two-way binding.
+Implement File handling with base64 data exchange using two-way binding.
 
 #### Upload
 See also `Z2UI5_CL_DEMO_APP_075`:
