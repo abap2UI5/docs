@@ -133,7 +133,7 @@ export default defineConfig({
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
-          { text: 'Logging, BAL', link: '/addons/logging' },
+      //    { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'UI Extensions', link: '/addons/popup' },
           { text: 'Apps, Community', link: '/addons/apps' },
