@@ -3,7 +3,7 @@
 For compatibility reasons, all examples and snippets are provided without CDS and EML calls. However, if you're using the latest ABAP releases, you can leverage these modern features in your abap2UI5 applications.
 
 ### ABAP CDS
-ABAP CDS provides a powerful way to define and consume data models in ABAP. The example below demonstrates how to use the I_SalesOrder CDS view from the Virtual Data Model (VDM) to fetch sales order data and display it in a UI5 table control:
+ABAP CDS provides a powerful way to define and consume data models in ABAP. The example below demonstrates how to use the `I_SalesOrder` view from the Virtual Data Model to fetch data and display it in a UI5 table control:
 ```abap
 CLASS z2ui5_cl_sample_cds DEFINITION
   PUBLIC
@@ -43,7 +43,7 @@ ENDCLASS.
 ```
 
 ### EML
-Entity Manipulation Language (EML) simplifies the creation, update, and deletion of business objects. In place of traditional BAPI methods like BAPI_SALESORDER_CREATE, EML uses RAP (Restful ABAP Programming) objects. The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
+Entity Manipulation Language simplifies the creation, update, and deletion of RAP business objects. The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -76,5 +76,5 @@ ENDMETHOD.
 ```
 
 Key Considerations:
-* Manual Transaction Management: EML operations are executed externally, outside the RAP framework. Therefore, you must explicitly commit transactions using COMMIT ENTITIES.
-* Commit Limitations Bypassed: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. However, these restrictions do not apply when using EML in abap2UI5 applications, allowing greater flexibility in transaction management.
+* Transaction Management: EML call in abap2UI5 apps are executed externally, outside the RAP framework. Therefore, you must explicitly commit transactions using `COMMIT ENTITIES`.
+* RAP Commit Limitations: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in transaction management.
