@@ -5,7 +5,7 @@ outline: [2, 4]
 
 Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple and straightforward.
 
-#### Scanner Button
+#### Scanning
 
 The barcode scanner control can be used like any other UI5 control with abap2UI5. Below is a snippet demonstrating the basic functionality. You can add your custom barcode handling after the scanning event is triggered:
 
@@ -35,7 +35,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-Check out `z2ui5_cl_demo_app_124` to see barcode scanning in action. If you also need to display barcodes, you can use tools like bwip-js, available as part of the js-libraries addon. More details can be found [here](/addons/ext_js).
+Check out `z2ui5_cl_demo_app_124` to see barcode scanning in action.
 
 ::: tip **UI5 Versions**
 Please note that this feature is only available when bootstrapping with the UI5 version and does not work with OpenUI5.
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Sound
+#### Play Sounds
 In certain contexts it is helpful to give the user feedback via sounds. The following sample plays a sound whenevr the user did not scan a value. In this case the sound is stored in a `.wav` file which need to be uploaded into the sap mime repository previously here `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
 ```abap
@@ -142,3 +142,5 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+#### Display Barcodes
+If you also need to display barcodes, you can use tools like bwip-js, available as part of the js-libraries addon. More details can be found [here](/addons/ext_js).
