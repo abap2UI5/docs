@@ -3,11 +3,16 @@ outline: [2, 4]
 ---
 # Barcode Scanning 
 
-Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple and straightforward.
+Barcode scanning functionality is widely used in enterprises. With abap2UI5, you can:
+* Scan barcodes
+* Handle focus transitions
+* Play sounds for user feedback
+* Display barcodes
+This section provides all the information you need to get started easily.
 
 #### Scanning
 
-The barcode scanner control can be used like any other UI5 control with abap2UI5. Below is a snippet demonstrating the basic functionality. You can add your custom barcode handling after the scanning event is triggered:
+Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple and straightforward. You can use the barcode scanner control like any other UI5 control with abap2UI5. Below is an example demonstrating basic functionality. You can customize the handling after the scanning event is triggered:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -35,16 +40,16 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-Check out `z2ui5_cl_demo_app_124` to see barcode scanning in action.
+To see barcode scanning in action, refer to the `z2ui5_cl_demo_app_124` sample application.
 
 ::: tip **UI5 Versions**
-Please note that this feature is only available when bootstrapping with the UI5 version and does not work with OpenUI5.
+This feature is only available when using the UI5 framework and is not supported with OpenUI5.
 :::
 
 #### Focus Handling
-Most scanner devices have an integrated scanning function. In such cases, you can simply create an input field and ensure the focus is correctly set. The scanned data will populate the input field as if it were typed via a keyboard. 
+Most scanner devices have an integrated scanning function. In such cases, you can create an input field and ensure that focus is properly set. The scanned data will populate the input field as if it were typed via a keyboard.
 
-Below is an example showing how to handle input focus and manage transitions between input fields after scanning and triggering ENTER:
+Here’s an example that demonstrates how to handle input focus and manage transitions between fields after scanning and pressing ENTER:
 
 ```abap
 CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC FINAL CREATE PUBLIC.
@@ -96,7 +101,8 @@ ENDCLASS.
 ```
 
 #### Play Sounds
-In certain contexts it is helpful to give the user feedback via sounds. The following sample plays a sound whenevr the user did not scan a value. In this case the sound is stored in a `.wav` file which need to be uploaded into the sap mime repository previously here `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
+
+Providing audio feedback can be helpful in specific contexts. Below is an example that plays a sound if a user fails to scan a value. The sound file is a .wav file stored in the SAP MIME repository at /SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav:
 
 ```abap
 CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC CREATE PUBLIC.
@@ -143,4 +149,4 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
 ENDCLASS.
 ```
 #### Display Barcodes
-If you also need to display barcodes, you can use tools like bwip-js, available as part of the js-libraries addon. More details can be found [here](/addons/ext_js).
+If you also need to display barcodes, you can use tools like bwip-js, which is available as part of the js-libraries addon. More details can be found [here](/addons/ext_js).
