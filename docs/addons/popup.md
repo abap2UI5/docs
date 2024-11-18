@@ -14,12 +14,20 @@ Generate value help dialogs based on DDIC information:
 
 <img width="800" alt="Google Chrome 2024-09-12 15 18 44" src="https://github.com/user-attachments/assets/130dd242-bd05-46eb-9ebc-1f2fad9716c9">
 
-
 #### Transport Requests
 Display transport requests in a user-friendly way.
 
 ### UI
-More UI features are on the way... Stay tuned!
+
+#### Camera
+
+
+#### Messaging
+
+
+
+#### Favicon
+
 
 ::: tip
 Have you implemented features with abap2UI5 that could help others? Consider sharing them! Contributions and pull requests are welcome.
