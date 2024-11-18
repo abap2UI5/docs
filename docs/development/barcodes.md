@@ -36,7 +36,6 @@ METHOD z2ui5_if_app~main.
         DATA(lv_format) = client->get_event_arg( 2 ).
         "custom processing...
         client->message_box_display( |Scan finished: { lv_input } { lv_format }| ).
-
     ENDIF.
 
 ENDMETHOD.
@@ -83,7 +82,7 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
               value = client->_bind_edit( two )
               submit = client->_event( 'two_enter' ) ).
 
-      page->_z2ui5( )->focus( focusid = client->_bind( focus_id ) ).
+      page->_z2ui5( )->focus( client->_bind( focus_id ) ).
       client->view_display( page->stringify( ) ).
 
     ENDIF.
