@@ -16,7 +16,7 @@ Creating UI5 applications with abap2UI5 is straightforward:
 2. Implement a method from the abap2UI5 interface
 3. Your app is ready!
 
-Each application is supported as an abapGit project, simplifying installation across systems and enabling seamless version control.
+Each application is supported as an abapGit project, simplifying installation across systems without the need for extra deployment of front artifacts.
 
 ##### Architecture
 abap2UI5 employs a "thin frontend" approach, handling all processing, logic, and data management in the backend. This setup simplifies configuration, minimizes client-side actions (like clearing caches), and keeps business logic and sensitive data securely on the server. The architecture also optimizes performance by leveraging server-side processing.
@@ -30,7 +30,7 @@ abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting ABAP r
 
 ##### Installation
 ![alt text](image-14.png){ width=50% }
-The framework consists solely of ABAP classes and interfaces, making it easy to install via abapGit, with no additional deployment steps required. You only need to create a new HTTP service to establish communication with the client.
+The framework consists solely of ABAP classes and interfaces, making it easy to install via abapGit, with no additional deployment steps required. You only need to create a new HTTP service to establish communication with your browser.
 
 ##### ABAP Cloud
 abap2UI5 uses only released APIs, making it suitable for both on-stack and side-by-side extensions in ABAP for Cloud. You can use modern ABAP syntax features like CDS, ABAP SQL, and EML within your app.
