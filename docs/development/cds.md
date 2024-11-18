@@ -28,12 +28,13 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
      UP TO 10 ROWS.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
-    view->columns(
+    DATA(table) = view->table( client->_bind( mt_salesorder ) ).
+    table->columns(
          )->column( )->text( 'SalesOrder' )->get_parent(
          )->column( )->text( 'SalesOrderType' )->get_parent(
          )->column( )->text( 'SalesOrganization' ).
 
-    view->items( )->column_list_item( )->cells(
+    table->items( )->column_list_item( )->cells(
        )->text( '{SALESORDER}'
        )->text( '{SALESORDERTYPE}'
        )->text( '{SALESORGANIZATION}' ).
