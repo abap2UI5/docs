@@ -45,7 +45,7 @@ By relying only on released APIs, abap2UI5 ensures that your applications remain
 Since you configure the HTTP handler yourself, you retain complete control over all external communications, ensuring security.
 
 ##### Enterprise Ready
-This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s official UI5 for the frontend and adhering to clean core principles on the backend with SAP’s proprietary ABAP language, abap2UI5 provides an enterprise-ready solution compatible with a wide range of SAP products. 
+This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready solution compatible with a wide range of SAP products. 
 
 ##### Productive Usage
 abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment.
