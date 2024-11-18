@@ -60,11 +60,12 @@ METHOD z2ui5_if_app~main.
                     organizationdivision
                     soldtoparty )
            WITH VALUE #( ( %cid  = '0001'
-                           %data = VALUE #( SalesOrderType       = 'TA'
-                                            SalesOrganization    = '1010'
-                                            DistributionChannel  = '10'
-                                            OrganizationDivision = '00'
-                                            SoldToParty          = '0033500056' ) ) )
+                           %data = VALUE #(
+                SalesOrderType       = 'TA'
+                SalesOrganization    = '1010'
+                DistributionChannel  = '10'
+                OrganizationDivision = '00'
+                SoldToParty          = '0033500056' ) ) )
            MAPPED   DATA(ls_mapped)
            FAILED   DATA(ls_failed)
            REPORTED DATA(ls_reported_modify).
