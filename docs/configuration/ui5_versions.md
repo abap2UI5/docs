@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 # UI5 Versions
-The frontend of abap2UI5 is built using the SAP UI5 framework, which is available in various versions. You can select the version to use for abap2UI5 during [bootstrapping](configuration/setup.html#ui5-bootstrapping). 
+The frontend of abap2UI5 is built using the SAP UI5 framework, which is available in various versions. You can select the version to use for abap2UI5 during [bootstrapping](/configuration/setup.html#ui5-bootstrapping). 
 
 It is recommended to bootstrap abap2UI5 in the same way as other UI5 apps in your system.
 
