@@ -28,7 +28,6 @@ abap2UI5 is fast. By leveraging the power of the ABAP backend for most processes
 The abap2UI5 system footprint is kept as small as possible including only essential classes and interfaces in the base version. Additional functionality can be added by installing optional addons.
 
 ##### Compatibility
-![alt text](image-15.png){ width=50% }
 abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from version 7.02 to ABAP Cloud:
 * S/4 Public Cloud
 * BTP ABAP Environment
@@ -37,7 +36,6 @@ abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all AB
 * R/3 NetWeaver
 
 ##### Installation
-![alt text](image-14.png){ width=50% }
 Installing abap2UI5 is easy:
 1. Import the framework via abapGit
 2. Create a new HTTP service to establish browser communication
