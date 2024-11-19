@@ -59,7 +59,7 @@ With complete control over HTTP handler configuration, you maintain oversight of
 This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready solution compatible with a wide range of SAP products. 
 
 ##### Productive Usage
-abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Just übernehme das framework und deine apps in eine transportauftrag und transportiere es zum go live in dein produktivsystem.
+abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Simply include the framework and your apps in a transport request to deploy them to your production system.
 
 ##### Launchpad
 Apps developed with abap2UI5 can be integrated into:
