@@ -65,7 +65,7 @@ abap2UI5 can be used like any other UI5 app or ABAP program in a productive envi
 Apps developed with abap2UI5 can be integrated into:
 * Fiori Launchpads on S/4 On-Premise
 * Build Workzone Websites on BTP
-* Tiles in S/4 Public Cloud
+* Tiles on S/4 Public Cloud
 
 ##### Support
 Support is provided on a best-effort basis by the community. Need help? Submit an issue or join the abap2UI5 Slack community for assistance.
