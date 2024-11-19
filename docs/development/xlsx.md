@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # XLSX
 
-The abap2UI5 framework, allows you to leverage the existing XLSX features of your ABAP system. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables and vice versa.
+The abap2UI5 framework allows you to leverage the existing XLSX features of your ABAP system. You can implement file uploads or downloads, converting the contents of XLSX files into internal ABAP tables and vice versa.
 
 #### Upload
 
@@ -164,11 +164,11 @@ ENDCLASS.
 :::
 
 ::: tip **ABAP Cloud**
-The snippets provided above are not compatible with ABAP Cloud, just replace the code in the `lcl_help` class with function from the new  XCO_CP_XLSX APIs.
+The snippets provided above are not compatible with ABAP Cloud. To make them compatible, replace the code in the lcl_help class with functions from the new XCO_CP_XLSX APIs.
 :::
 
 #### abap2xlsx
-For advanced functionality, consider leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations.
+For advanced functionality, consider leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations. It works entirely within the ABAP stack and, therefore, seamlessly with abap2UI5.
 
 #### UI5 Spreadsheet
-SAP offers the `sap.ui.export.Spreadsheet`control to export table content directly at the frontend. With some additional logic this control is also usable with abap2UI5. Check out the UI-Extension addon for more details [here.](/addons/popup)
+If you want to export the data directly at the frontend, SAP offers the sap.ui.export.Spreadsheet control to export table content. With some additional logic, this control is also usable with abap2UI5. Check out the UI-Extension add-on for more details [here.](/addons/popup) However, the programming effort might be higher compared to the file-based approach shown above.
