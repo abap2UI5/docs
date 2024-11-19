@@ -168,7 +168,7 @@ The snippets provided above are not compatible with ABAP Cloud. To make them com
 :::
 
 #### abap2xlsx
-For advanced functionality, consider leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations. It works entirely within the ABAP stack and, therefore, seamlessly with abap2UI5.
+Instead of using the code in `lcl_help`, consider leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations. It works entirely within the ABAP stack and, therefore, seamlessly with abap2UI5.
 
 #### UI5 Spreadsheet
 If you want to export the data directly at the frontend, SAP offers the sap.ui.export.Spreadsheet control to export table content. With some additional logic, this control is also usable with abap2UI5. Check out the UI-Extension add-on for more details [here.](/addons/popup) However, the programming effort might be higher compared to the file-based approach shown above.
