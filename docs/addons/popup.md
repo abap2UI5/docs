@@ -20,10 +20,11 @@ Display transport requests in a user-friendly way.
 ### UI
 
 #### Favicon
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/a4dbaeee-071e-4b1c-b701-b37799d97d1a">
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/a4dbaeee-071e-4b1c-b701-b37799d97d1a">
 
 #### XLSX Export
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/548b70df-c0d0-46f5-9731-9acb390ea630">
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/4fb90a2b-feb9-46ae-98e2-d9974505619f">
+
 
 ::: tip
 Have you implemented features with abap2UI5 that could help others? Consider sharing them! Contributions and pull requests are welcome.
