@@ -71,7 +71,7 @@ Apps developed with abap2UI5 can be integrated into:
 * Tiles on S/4 Public Cloud
 
 ##### Support
-Support is provided on a best-effort basis by the community. Need help? Submit an issue or join the abap2UI5 Slack community for assistance.
+Support is provided on a best-effort basis by the community. Need help? Submit an issue or join the abap2UI5 Slack channel for assistance.
 
 ##### Contribution
 Contributions are always welcome! Whether you’re fixing bugs, requesting features, or improving documentation, your input helps the project grow. You can submit pull requests, provide feedback, or share your experience with the community.
