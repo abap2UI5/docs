@@ -8,7 +8,7 @@ Welcome to abap2UI5 – an open-source framework designed to enable UI5 app deve
 Whether you're developing in the cloud or on-premise, abap2UI5 simplifies UI5 development, making it fast and efficient without the need for JavaScript, OData, or RAP. It brings back the simplicity of classic ABAP, where just a few lines of code could generate input forms and tables using Selection Screens and ALVs.
 
 ##### Evolution
-Launched in 2023 as a personal project, abap2UI5 initially focused on providing basic selection screen functionality for ABAP Cloud, introduced through a blog post on the SAP Community Network. Thanks to the support of the ABAP community, it has since grown significantly, adding a wide range of features. Today, it is a community-driven project, continuously evolving through contributions and feedback.
+Launched in 2023 as a personal project, abap2UI5 initially focused on providing basic selection screen functionality for ABAP Cloud, introduced via a blog post on the SAP Community Network. Thanks to the support of the ABAP community, it has since grown significantly, adding numerous features. Today, it is a community-driven project, continuously evolving through contributions and feedback.
 
 ##### Development
 Creating UI5 applications with abap2UI5 is straightforward:
@@ -62,7 +62,7 @@ Transparency is a core principle of abap2UI5. The entire source code is publicly
 This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready solution compatible with a wide range of SAP products. 
 
 ##### Productive Usage
-abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Simply include the framework and your apps in a transport request to deploy them to your production system.
+abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Simply add the framework and your apps to a transport request to deploy them to your production system.
 
 ##### Launchpad
 Apps developed with abap2UI5 can be integrated into:
@@ -74,7 +74,7 @@ Apps developed with abap2UI5 can be integrated into:
 Support is provided on a best-effort basis by the community. Need help? Submit an issue or join the abap2UI5 Slack community for assistance.
 
 ##### Contribution
-Contributions are always welcome! Whether you’re fixing bugs, requesting features, or improving documentation, your input helps the project grow. You can submit pull requests, provide feedback, or share your experience with the community.
+Contributions are always welcome! Whether you’re fixing bugs, requesting features, or improving documentation, your input helps the project grow. You can submit pull requests, provide feedback, or share your experience with the community. Get started with abap2UI5 today!
 
 ##### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project but cannot contribute directly, consider supporting the project in other ways. Learn more about sponsorship opportunities [here.](/resources/sponsor)
