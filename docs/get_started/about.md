@@ -55,7 +55,7 @@ By relying only on released APIs, abap2UI5 ensures that your applications remain
 ##### Security
 With complete control over HTTP handler configuration, you maintain oversight of all external communication, ensuring security.
 
-#### Transparency
+##### Transparency
 Transparency is a core principle of abap2UI5. The entire source code is publicly accessible, key concepts are explained in blog posts, and issues are openly discussed. Urgent changes can be promptly implemented and distributed via abapGit.
 
 ##### Enterprise Ready
