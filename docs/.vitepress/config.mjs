@@ -100,7 +100,6 @@ export default defineConfig({
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
-          { text: 'Troubleshooting', link: '/development/troubleshooting' },
           { text: 'Specifics', collapsed : "false" , items: [
             { text: 'Barcode Scanning', link: '/development/barcodes' },
             { text: 'File Handling', link: '/development/files', },
@@ -122,6 +121,7 @@ export default defineConfig({
           { text: 'Performance', link: '/configuration/performance' },
           { text: 'UI5 Versions', link: '/configuration/ui5_versions' },
           { text: 'Productive Usage', link: '/configuration/productive_usage' },
+          { text: 'Troubleshooting', link: '/configuration/troubleshooting' },
           { text: 'Installation', link: '/configuration/installation' , items: [
             { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
             { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
