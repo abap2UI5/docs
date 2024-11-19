@@ -163,8 +163,12 @@ ENDCLASS.
 ```
 :::
 
+::: tip **ABAP Cloud**
+The snippets provided above are not compatible with ABAP Cloud, just replace the code in the `lcl_help` class with function from the new  XCO_CP_XLSX APIs.
+:::
+
+#### abap2xlsx
 For advanced functionality, consider leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations.
 
-::: tip **ABAP Cloud**
-The snippets provided above are not compatible with ABAP Cloud. Use the XCO_CP_XLSX APIs for such scenarios.
-:::
+#### UI5 Spreadsheet
+SAP offers the `sap.ui.export.Spreadsheet`control to export table content directly at the frontend. With some additional logic this control is also usable with abap2UI5. Check out the UI-Extension addon for more details [here.](/addons/popup)
