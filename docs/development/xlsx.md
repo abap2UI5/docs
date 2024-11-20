@@ -7,33 +7,44 @@ The abap2UI5 framework allows you to leverage the existing XLSX features of your
 
 #### Upload
 
-Transform uploaded content into an internal table:
+Transform uploaded xlsx files into an internal table:
 
 ::: code-group
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->_z2ui5( )->file_uploader(
-                value       = client->_bind_edit( mv_value )
-                path        = client->_bind_edit( mv_path )
-                placeholder = 'filepath here...'
-                upload      = client->_event( 'UPLOAD' )
-        )->stringify( ) ).
+  PUBLIC SECTION.
+    INTERFACES Z2UI5_if_app.
+    DATA mv_path  TYPE string.
+    DATA mv_value TYPE string.
 
-    IF client->get( )-event = 'UPLOAD'.
+ENDCLASS.
 
-       data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
-        "further process with itab...
-        client->message_box_display( `xlsx uploaded` ).
-    ENDIF.
+CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
+    METHOD z2ui5_if_app~main.
 
-ENDMETHOD.
+        client->view_display( z2ui5_cl_xml_view=>factory(
+            )->page(
+                )->_z2ui5( )->file_uploader(
+                    value       = client->_bind_edit( mv_value )
+                    path        = client->_bind_edit( mv_path )
+                    placeholder = 'filepath here...'
+                    upload      = client->_event( 'UPLOAD' )
+            )->stringify( ) ).
+
+        IF client->get( )-event = 'UPLOAD'.
+
+            data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
+            "further process with itab...
+            client->message_box_display( `xlsx uploaded` ).
+        ENDIF.
+
+    ENDMETHOD.
+ENDCLASS.
 ```
 
-```abap [LCL_HELP]
+```abap [lcl_help]
 CLASS lcl_help DEFINITION.
 
   PUBLIC SECTION.
@@ -71,7 +82,7 @@ ENDCLASS.
 
 #### Download
 
-Convert an internal table to an XLSX file and download it as a Base64-encoded file:
+Convert an internal table to an XLSX file and download it to the frontend:
 
 ::: code-group
 
@@ -109,7 +120,7 @@ Convert an internal table to an XLSX file and download it as a Base64-encoded fi
 ENDMETHOD.
 ```
 
-```abap [LCL_HELP]
+```abap [lcl_help]
 class lcl_help DEFINITION.
 
 PUBLIC SECTION.
