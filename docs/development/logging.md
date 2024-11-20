@@ -6,10 +6,17 @@ outline: [2, 6]
 Logging is essential for developing end-user business processes. In ABAP systems, the standard tool for this is the Business Application Log, which is supported in both on-premise systems and ABAP Cloud (via new APIs). With abap2UI5 you can use the BAL functions as you would do it in classic development. to display logs just create a table with the entries or use predefinded popups of the framework.
 
 ###### BAL structure
-
 In on-premise ABAP systems, you can use the classic BAL APIs. As no specific logging object exists, simply import the BAL table into `z2ui5add_cl_bal_cl`:
+```abp
+METHOD z2ui5_if_app~main.
 
+  DATA(lt_bal) = VALUE bal_t_msgr(
+    ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = '21354' msgnumber = '01' )
+    ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = '21354' msgnumber = '02' ) ).
 
+  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_bal ) ).
+
+```
 
 ###### ABAP Cloud Log
 Similar to messages you can display bal log directly in the message_popup. Just drop the into it:
