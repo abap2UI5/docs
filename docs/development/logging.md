@@ -50,13 +50,11 @@ In on-premise systems, you also have the option to use the fantastic open-source
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(lo_log) = zcl_logger_factory=>create_log( 
-            object    = 'ZINTERFACES'
-            subobject = 'ACCOUNTING'
-            desc      = 'my abap-logger logger' ).
-  log->e( 'There is an error...' ).
+  DATA(log) = zcl_logger_factory=>create_log( desc = 'ABAP Logger' ).
+  log->e( 'This is an error...' ).
+  log->s( 'This is a success message...' ).
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
+  client->nav_app_call( z2ui5_cl_pop_messages=>factory( log ) ).
 
 ENDMETHOD.
 ```
@@ -67,11 +65,8 @@ Compared to message classes, BAL logs include more detailed information, such as
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(lo_log) = zcl_logger_factory=>create_log( 
-            object    = 'ZINTERFACES'
-            subobject = 'ACCOUNTING'
-            desc      = 'my abap-logger logger' ).
-  log->e( 'There is an error...' ).
+  DATA(lo_log) = zcl_logger_factory=>create_log( desc = 'ABAP Logger' ).
+  log->e( 'This is an error...' ).
 
   client->nav_app_call( z2ui5_cl_pop_bal=>factory( lo_log ) ).
 
