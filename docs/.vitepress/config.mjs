@@ -104,8 +104,10 @@ export default defineConfig({
             { text: 'Barcode Scanning', link: '/development/barcodes' },
             { text: 'File Handling', link: '/development/files', },
             { text: 'XLSX', link: '/development/xlsx', },
+            { text: 'Logging', link: '/development/logging' },
             { text: 'Device Capabilities', link: '/development/ndc' },
             { text: 'CDS, EML', link: '/development/cds' },
+            { text: 'Custom JS', link: '/development/custom_js' },
            ]
           },
         ]

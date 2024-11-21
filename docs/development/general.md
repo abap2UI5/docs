@@ -21,14 +21,14 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
           RETURN.
         ENDIF.
 
-        "callback after previous app
+        "callback after navigation
         IF client->check_on_navigated( ).
           DATA(lo_app_prev) = client->get_app_prev( ).
           "read attributes of previous app
           RETURN.
         ENDIF.
 
-        "handle events
+        "handle events after frontend
         CASE client->get( )-event.
           WHEN 'OK'.
             data(lt_arg) = client->get_event_arg( ).

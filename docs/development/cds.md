@@ -19,7 +19,6 @@ CLASS z2ui5_cl_sample_cds DEFINITION
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     SELECT FROM I_SalesOrder
@@ -42,7 +41,6 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
 ENDCLASS.
 ```
 
