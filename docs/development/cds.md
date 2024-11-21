@@ -6,7 +6,7 @@ outline: [2, 4]
 For compatibility reasons, all examples and snippets are provided without CDS and EML calls. However, if you're using the latest ABAP releases, you can leverage these modern features in your abap2UI5 applications.
 
 ### ABAP CDS
-ABAP CDS provides a powerful way to define and consume data models in ABAP. The example below demonstrates how to use the `I_SalesOrder` view from the Virtual Data Model to fetch data and display it in a UI5 table control:
+ABAP CDS provides a powerful way to define views and consume data from the database. The example below demonstrates how to use the `I_SalesOrder` view from the Virtual Data Model to fetch data and display it in a UI5 table control:
 ```abap
 CLASS z2ui5_cl_sample_cds DEFINITION
   PUBLIC
