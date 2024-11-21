@@ -45,7 +45,7 @@ ENDCLASS.
 ```
 
 ### EML
-Entity Manipulation Language simplifies the creation, update, and deletion of RAP business objects. The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
+The Entity Manipulation Language simplifies the creation, update, and deletion of RAP business objects. The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
 ```abap
 METHOD z2ui5_if_app~main.
 
