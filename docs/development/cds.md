@@ -45,7 +45,10 @@ ENDCLASS.
 ```
 
 ### EML
-The Entity Manipulation Language simplifies the creation, update, and deletion of RAP business objects. The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
+The Entity Manipulation Language simplifies the read, creation, update, and deletion of RAP business objects. 
+
+#### Modify
+The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -81,6 +84,7 @@ Key Considerations:
 * Transaction Management: EML calls in abap2UI5 apps are executed outside the RAP framework. Therefore, don't forget to explicitly commit transactions using `COMMIT ENTITIES`
 * Commit Limitations: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in commit management
 
+#### Read
 You can also use the `READ ENTITY` command:
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION
