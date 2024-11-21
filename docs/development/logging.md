@@ -74,5 +74,5 @@ ENDMETHOD.
 ```
 
 ::: tip
-This popup is still in its early stages and offers basic functionality only. If you’ve implemented BAL features with abap2UI5, consider contributing to extend its capabilities. Contributions are always welcome!
+This popup is still in its early stages and offers basic functionality only. If you’ve implemented BAL features with abap2UI5, consider contributing to extend its capabilities.
 :::
