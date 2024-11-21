@@ -15,7 +15,8 @@ METHOD z2ui5_if_app~main.
     ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = '21354' msgnumber = '02' ) ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_bal ) ).
-
+  
+ENDMETHOD.
 ```
 
 ##### ABAP Cloud
