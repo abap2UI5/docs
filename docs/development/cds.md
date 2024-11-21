@@ -80,3 +80,42 @@ ENDMETHOD.
 Key Considerations:
 * Transaction Management: EML calls in abap2UI5 apps are executed outside the RAP framework. Therefore, don't forget to explicitly commit transactions using `COMMIT ENTITIES`
 * Commit Limitations: RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in commit management
+
+You can also do an `READ ENTITY`:
+```abap
+CLASS z2ui5_cl_sample_eml_read DEFINITION
+  PUBLIC
+  CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA mt_salesorder TYPE TABLE FOR READ RESULT i_salesordertp\\salesorder.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    READ ENTITIES OF I_SalesOrderTP
+      ENTITY SalesOrder
+      ALL FIELDS WITH
+      VALUE #( ( SalesOrder = `0000000001` ) )
+      RESULT mt_salesorder.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
+    DATA(table) = view->table( client->_bind( mt_salesorder ) ).
+    table->columns(
+         )->column( )->text( 'SalesOrder' )->get_parent(
+         )->column( )->text( 'SalesOrderType' )->get_parent(
+         )->column( )->text( 'SalesOrganization' ).
+
+    table->items( )->column_list_item( )->cells(
+       )->text( '{SALESORDER}'
+       )->text( '{SALESORDERTYPE}'
+       )->text( '{SALESORGANIZATION}' ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+ENDCLASS.
+```
