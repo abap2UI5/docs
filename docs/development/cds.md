@@ -47,45 +47,8 @@ ENDCLASS.
 ### EML
 The Entity Manipulation Language simplifies the read, creation, update, and deletion of RAP business objects. 
 
-#### Modify
-The example below demonstrates how to create a sales order using EML in an abap2UI5 application:
-```abap
-METHOD z2ui5_if_app~main.
-
-    MODIFY ENTITIES OF i_salesordertp
-           ENTITY salesorder
-           CREATE
-           FIELDS ( salesordertype
-                    salesorganization
-                    distributionchannel
-                    organizationdivision
-                    soldtoparty )
-           WITH VALUE #( ( %cid  = '0001'
-                           %data = VALUE #(
-                SalesOrderType       = 'TA'
-                SalesOrganization    = '1010'
-                DistributionChannel  = '10'
-                OrganizationDivision = '00'
-                SoldToParty          = '0033500056' ) ) )
-           MAPPED   DATA(ls_mapped)
-           FAILED   DATA(ls_failed)
-           REPORTED DATA(ls_reported_modify).
-
-    COMMIT ENTITIES BEGIN
-           RESPONSE OF i_salesordertp
-           FAILED   DATA(ls_save_failed)
-           REPORTED DATA(ls_save_reported).
-    COMMIT ENTITIES END.
-
-ENDMETHOD.
-```
-
-Key Considerations:
-* EML calls in abap2UI5 apps are executed outside the RAP framework. Therefore, don't forget to explicitly commit transactions using `COMMIT ENTITIES`
-* RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in commit management
-
 #### Read
-You can also use the `READ ENTITY` command:
+Use the `READ ENTITY` command and display the result in an UI5 tabel control:
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION
   PUBLIC
@@ -123,3 +86,41 @@ CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+
+#### Modify
+Create a sales order using EML in an abap2UI5 application:
+```abap
+METHOD z2ui5_if_app~main.
+
+    MODIFY ENTITIES OF i_salesordertp
+           ENTITY salesorder
+           CREATE
+           FIELDS ( salesordertype
+                    salesorganization
+                    distributionchannel
+                    organizationdivision
+                    soldtoparty )
+           WITH VALUE #( ( %cid  = '0001'
+                           %data = VALUE #(
+                SalesOrderType       = 'TA'
+                SalesOrganization    = '1010'
+                DistributionChannel  = '10'
+                OrganizationDivision = '00'
+                SoldToParty          = '0033500056' ) ) )
+           MAPPED   DATA(ls_mapped)
+           FAILED   DATA(ls_failed)
+           REPORTED DATA(ls_reported_modify).
+
+    COMMIT ENTITIES BEGIN
+           RESPONSE OF i_salesordertp
+           FAILED   DATA(ls_save_failed)
+           REPORTED DATA(ls_save_reported).
+    COMMIT ENTITIES END.
+
+ENDMETHOD.
+```
+Key Considerations:
+* EML calls in abap2UI5 apps are executed outside the RAP framework. Therefore, don't forget to explicitly commit transactions using `COMMIT ENTITIES`
+* RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in commit management
+
+
