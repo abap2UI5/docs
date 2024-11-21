@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # Logging, BAL
 
-Logging is essential for developing end-user business processes. In ABAP systems, the standard tool for this purpose is the Business Application Log (BAL), supported in both on-premise systems and ABAP Cloud (via new APIs). With abap2UI5, you can use BAL functions just as you would in classic development and create a table with the entries or use predefined popups provided by the framework.
+Logging is essential for developing end-user business processes. In ABAP systems, the standard tool for this purpose is the Business Application Log (BAL), which is supported in both on-premise systems and ABAP Cloud. With abap2UI5, you can use BAL functions just as you would in classic development. Logs can be displayed in tables or using the predefined popups provided by the framework.
 
 ##### BAL Variables
 In ABAP classic, you can use the classic BAL function modules and display the BAL table with the popup `z2ui5_cl_pop_messages`:
@@ -19,7 +19,7 @@ METHOD z2ui5_if_app~main.
 ```
 
 ##### ABAP Cloud
-In ABAP cloud, you can just import the logging object into the message popup:
+In ABAP Cloud, you can directly pass the logging object into the popup:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -61,7 +61,7 @@ ENDMETHOD.
 ```
 
 ##### BAL Popup
-Compared to T100 messages, BAL logs include more detailed information, such as timestamps. You can also use the BAL log popup to display this information. All the examples above can be used as is, but for the popup app, you should use the `z2ui5_cl_pop_bal` popup instead:
+Compared to message classes, BAL logs include more detailed information, such as timestamps. You can also use the specific BAL log popup to display this information. All the examples above can be used with the `z2ui5_cl_pop_bal` popup instead. Here’s an example using the abap-logger:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -78,6 +78,5 @@ ENDMETHOD.
 ```
 
 ::: tip
-This popup is still in its early stages, offering basic functionality. If you’ve implemented BAL features with abap2UI5, consider sharing your work! Contributions and pull requests are always welcome.
+This popup is still in its early stages and offers basic functionality. If you’ve implemented BAL features with abap2UI5, consider contributing to extend its capabilities. Contributions are always welcome!
 :::
-
