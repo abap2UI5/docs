@@ -8,9 +8,7 @@ For compatibility reasons, all examples and snippets are provided without CDS an
 ### ABAP CDS
 ABAP CDS provides a powerful way to define views and consume data from the database. The example below demonstrates how to use the `I_SalesOrder` view from the Virtual Data Model to fetch data and display it in a UI5 table control:
 ```abap
-CLASS z2ui5_cl_sample_cds DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
+CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -50,9 +48,7 @@ The Entity Manipulation Language simplifies the read, creation, update, and dele
 #### Read
 Use the `READ ENTITY` command and display the result in an UI5 tabel control:
 ```abap
-CLASS z2ui5_cl_sample_eml_read DEFINITION
-  PUBLIC
-  CREATE PUBLIC.
+CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
