@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # CDS, EML
 
-For compatibility reasons, all examples and snippets are provided without CDS and EML calls. However, if you're using the latest ABAP releases, you can leverage these modern features in your abap2UI5 applications.
+While all examples and snippets in our documentation are designed for compatibility without requiring CDS or EML, you can leverage these modern ABAP features in your abap2UI5 applications if you're using the latest ABAP releases.
 
 ### ABAP CDS
-ABAP CDS provides a powerful way to define views and consume data from the database. The example below demonstrates how to use the `I_SalesOrder` view from the Virtual Data Model to fetch data and display it in a UI5 table control:
+ABAP Core Data Services (CDS) enable you to define powerful views and consume data directly from the database. The following example demonstrates how to fetch sales orders using the I_SalesOrder view from the Virtual Data Model (VDM) and display them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC CREATE PUBLIC.
 
@@ -43,10 +43,10 @@ ENDCLASS.
 ```
 
 ### EML
-The Entity Manipulation Language simplifies the read, creation, update, and deletion of RAP business objects. 
+The Entity Manipulation Language simplifies working with RAP business objects by providing a consistent way to perform operations such as reading, creating, updating, and deleting entities.
 
 #### Read
-Use the `READ ENTITY` command and display the result in an UI5 tabel control:
+Here’s how to use `READ ENTITIES` to fetch sales orders and display them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC CREATE PUBLIC.
 
@@ -84,7 +84,8 @@ ENDCLASS.
 ```
 
 #### Modify
-Create a sales order using EML in an abap2UI5 application:
+The following example demonstrates how to create a sales order using `MODIFY` in an abap2UI5 application:
+
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -116,7 +117,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 Key Considerations:
-* EML calls in abap2UI5 apps are executed outside the RAP framework. Therefore, don't forget to explicitly commit transactions using `COMMIT ENTITIES`
-* RAP enforces strict limitations, such as disallowing direct calls to posting function modules or explicit commits within its framework. These restrictions do not apply when using EML in abap2UI5 apps, allowing greater flexibility in commit management
+* EML calls in abap2UI5 applications are executed outside the RAP framework. Therefore, explicit transaction commits (COMMIT ENTITIES) are necessary
+* Restrictions within the RAP framework, such as disallowing direct calls to posting function modules or explicit commits, do not apply to abap2UI5 EML operations. This provides greater flexibility in managing commits and other actions
 
 
