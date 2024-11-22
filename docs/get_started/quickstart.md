@@ -15,7 +15,7 @@ Install the project with [abapGit.](https://abapgit.org)
 :::
 
 
-### 2. Implement HTTP Handler
+### 2. Create HTTP Handler
 Create a new package and define a new class for the HTTP handler implementation:
 
 ::: code-group
