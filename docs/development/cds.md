@@ -21,7 +21,7 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
 
     SELECT FROM I_SalesOrder
      FIELDS salesorder, salesordertype, salesorganization
-     INTO TABLE @DATA(mt_salesorder)
+     INTO TABLE @mt_salesorder
      UP TO 10 ROWS.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
