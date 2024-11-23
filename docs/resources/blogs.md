@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Blogs & Articles
+# Blogs
 
 ### 2024
 <br>
