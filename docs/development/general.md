@@ -25,16 +25,17 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
         IF client->check_on_navigated( ).
           DATA(lo_app_prev) = client->get_app_prev( ).
           "read attributes of previous app
+          "do something
           RETURN.
         ENDIF.
 
         "handle events after frontend
         CASE client->get( )-event.
           WHEN 'OK'.
-            data(lt_arg) = client->get_event_arg( ).
+            DATA(lt_arg) = client->get_event_arg( ).
             "event handling
           WHEN 'CANCEL'.
-            "event handling
+            "...
         ENDCASE.
 
         "error handling
