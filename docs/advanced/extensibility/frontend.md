@@ -24,8 +24,8 @@ npm i
 npm run start-noflp
 ```
 This is the output in the terminal:
+<img width="1000" alt="388832058-b7df2e48-7bf4-4454-9d05-d2bc8c4a6b49" src="https://github.com/user-attachments/assets/3e0118e8-d05f-48d1-bcc0-28073adf6e47">
 
-<img width="1000" alt="Screenshot 2024-11-22 at 07 45 55" src="https://github.com/user-attachments/assets/b7df2e48-7bf4-4454-9d05-d2bc8c4a6b49">
 
 #### Before PR
 Transform UI5 App to stringified ABAP
