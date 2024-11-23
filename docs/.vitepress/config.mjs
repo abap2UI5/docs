@@ -151,12 +151,12 @@ export default defineConfig({
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Launchpad KPIs', link: '/addons/kpi' },
           { text: 'Remote App Calls', link: '/addons/rfc' },
-          { text: 'Extensibility', link: '/advanced/extensibility' , items: [
+          { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Controls', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
-          { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
+          { text: 'Technical Background',  collapsed : "false" , link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
           ]
