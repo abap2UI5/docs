@@ -138,7 +138,7 @@ export default defineConfig({
       //    { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'UI Extensions', link: '/addons/popup' },
-          { text: 'Apps, Community', link: '/addons/apps' },
+          { text: 'Apps', link: '/addons/apps' },
         ]
       },
       {
