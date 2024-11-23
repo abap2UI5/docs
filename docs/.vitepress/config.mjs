@@ -153,7 +153,7 @@ export default defineConfig({
           { text: 'Remote App Calls', link: '/addons/rfc' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
-            { text: 'Custom Controls', link: '/advanced/extensibility/custom_control' },
+            { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/insights/insights' , items: [
