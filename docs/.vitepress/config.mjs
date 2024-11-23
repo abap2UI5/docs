@@ -107,7 +107,6 @@ export default defineConfig({
             { text: 'Logging', link: '/development/logging' },
             { text: 'Device Capabilities', link: '/development/ndc' },
             { text: 'CDS, EML', link: '/development/cds' },
-            { text: 'Custom JS', link: '/development/custom_js' },
            ]
           },
         ]
@@ -152,7 +151,11 @@ export default defineConfig({
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Launchpad KPIs', link: '/addons/kpi' },
           { text: 'Remote App Calls', link: '/addons/rfc' },
-          { text: 'Extensibility', link: '/advanced/extensibility' },
+          { text: 'Extensibility', link: '/advanced/extensibility' , items: [
+            { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
+            { text: 'Custom Controls', link: '/advanced/extensibility/custom_control' },
+            { text: 'Frontend', link: '/advanced/extensibility/frontend' },
+          ] },
           { text: 'Technical Background', link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
