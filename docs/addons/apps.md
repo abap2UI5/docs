@@ -1,7 +1,7 @@
 ---
 outline: [2, 6]
 ---
-# Apps, Community
+# Apps
 
 #### Apps
 <i class="fa-brands fa-github"></i> [More Apps on GitHub](https://github.com/abap2UI5-apps) <br>
