@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # abaplint
 
 The project is static code checked with [abaplint.](https://abaplint.app/) 
