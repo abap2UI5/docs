@@ -35,7 +35,7 @@ You can also retrieve and display the short, medium, or long descriptions of dat
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(ls_product_label) = lcl_help=>get_data_element_texts( 'PRODUCT' ).
+  DATA(ls_product_label) = lcl_help=>get_data_element_text( 'PRODUCT' ).
   client->message_box_display( |{ ls_product_label-short }: 100 | ).
 
 ENDMETHOD.
@@ -55,7 +55,7 @@ CLASS lcl_help DEFINITION
         long   TYPE string,
       END OF ty_s_data_element_text.
 
-    CLASS-METHODS get_data_element_texts
+    CLASS-METHODS get_data_element_text
       IMPORTING
         i_data_element_name TYPE string
       RETURNING
@@ -65,7 +65,7 @@ ENDCLASS.
 
 CLASS lcl_help IMPLEMENTATION.
 
-  METHOD get_data_element_texts.
+  METHOD get_data_element_text.
 
     DATA ddic_ref     TYPE REF TO data.
     DATA data_element TYPE REF TO object.
