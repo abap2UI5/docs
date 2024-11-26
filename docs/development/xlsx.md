@@ -179,7 +179,130 @@ The code snippets above are not compatible with ABAP Cloud, modify the lcl_help 
 :::
 
 #### abap2xlsx
-Instead of using the code in `lcl_help`, consider taking the easy route and leveraging the wonderful open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx), which offers reusable APIs for all common XLSX operations. It works entirely within the ABAP stack and, therefore, seamlessly with abap2UI5.
+Instead of using the above XLSX API (which may change between releases), consider leveraging the excellent open-source project abap2xlsx. It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack, ensuring seamless integration with abap2UI5. The following example demonstrates using abap2xlsx in the LCL_HELP class:
+::: code-group
+
+```abap
+METHOD z2ui5_if_app~main.
+
+  client->view_display( z2ui5_cl_xml_view=>factory(
+    )->page(
+      )->button(
+        text = 'Open Download Popup'
+        press = client->_event( 'DOWNLOAD' )
+    )->stringify( ) ).
+
+  IF client->get( )-event = `DOWNLOAD`.
+
+    TYPES:
+      BEGIN OF ty_row,
+        count TYPE i,
+        value TYPE string,
+        descr TYPE string,
+      END OF ty_row.
+    TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+
+    DATA(lt_tab) = VALUE ty_tab(
+      ( count = '1' value = `red` descr = `this is a description` )
+      ( count = '2' value = `red` descr = `this is a description` )
+      ( count = '3' value = `red` descr = `this is a description` ) ).
+
+    DATA(lv_file) = lcl_help=>get_xlsx_by_itab( lt_tab ).
+      client->follow_up_action( val = client->_event_client(
+        val = client->cs_event-download_b64_file
+        t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ) ).
+  ENDIF.
+
+ENDMETHOD.
+```
+
+```abap [LCL_HELP]
+CLASS lcl_help DEFINITION
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    CLASS-METHODS get_itab_by_xlsx
+      IMPORTING
+        val           TYPE string
+      RETURNING
+        VALUE(result) TYPE REF TO data.
+
+    CLASS-METHODS get_xlsx_by_itab
+      IMPORTING
+        val           TYPE any
+      RETURNING
+        VALUE(result) TYPE string.
+
+ENDCLASS.
+
+
+CLASS lcl_help IMPLEMENTATION.
+
+  METHOD get_xlsx_by_itab.
+    TRY.
+
+        DATA: lo_excel     TYPE REF TO zcl_excel,
+              lo_writer    TYPE REF TO zif_excel_writer,
+              lo_worksheet TYPE REF TO zcl_excel_worksheet.
+
+        DATA: lt_field_catalog  TYPE zexcel_t_fieldcatalog,
+              ls_table_settings TYPE zexcel_s_table_settings.
+
+
+        " Creates active sheet
+        CREATE OBJECT lo_excel.
+
+        " Get active sheet
+        lo_worksheet = lo_excel->get_active_worksheet( ).
+        lo_worksheet->set_title( 'Internal table' ).
+
+        lt_field_catalog = zcl_excel_common=>get_fieldcatalog( ip_table = val ).
+        ls_table_settings-table_style  = zcl_excel_table=>builtinstyle_medium5.
+        lo_worksheet->bind_table( ip_table          = val
+                                  is_table_settings = ls_table_settings
+                                  it_field_catalog  = lt_field_catalog ).
+
+        lo_worksheet->freeze_panes( ip_num_rows = 1 ).
+
+        CREATE OBJECT lo_writer TYPE zcl_excel_writer_2007.
+        DATA(lv_file) = lo_writer->write_file( lo_excel ).
+
+        result = z2ui5_cl_util=>conv_encode_x_base64( lv_file ).
+        result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
+
+
+      CATCH cx_root INTO DATA(x).
+        z2ui5_cL_util=>x_raise( x->get_text( ) ).
+    ENDTRY.
+  ENDMETHOD.
+
+  METHOD get_itab_by_xlsx.
+    TRY.
+
+        SPLIT val AT `;` INTO DATA(lv_dummy) DATA(lv_data).
+        SPLIT lv_data AT `,` INTO lv_dummy lv_data.
+        DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
+
+        DATA: lo_excel     TYPE REF TO zcl_excel,
+              lo_reader    TYPE REF TO zif_excel_reader,
+              lo_worksheet TYPE REF TO zcl_excel_worksheet.
+
+        CREATE OBJECT lo_reader TYPE zcl_excel_reader_2007.
+        lo_excel = lo_reader->load( lv_xdata ).
+        lo_worksheet = lo_excel->get_worksheet_by_index( 1 ).
+        lo_worksheet->convert_to_table(
+          IMPORTING
+            er_data = result ).
+
+      CATCH cx_root INTO DATA(x).
+        z2ui5_cL_util=>x_raise( x->get_text( ) ).
+    ENDTRY.
+  ENDMETHOD.
+ENDCLASS.
+```
+:::
 
 #### UI5 Control
 If you want to export the data directly at the frontend, SAP offers the sap.ui.export.Spreadsheet control to export table content. With some additional logic, this control is also usable with abap2UI5. Check out the UI-Extension add-on for a running sample [here.](/addons/popup) However, the programming effort might be higher compared to the file-based approach shown above.
