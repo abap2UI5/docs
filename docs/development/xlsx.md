@@ -179,7 +179,7 @@ The code snippets above are not compatible with ABAP Cloud, modify the lcl_help 
 :::
 
 #### abap2xlsx
-Instead of using the above XLSX API (which may change between releases), consider leveraging the excellent open-source project abap2xlsx. It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack, ensuring seamless integration with abap2UI5. The following example demonstrates using abap2xlsx in the LCL_HELP class:
+Instead of using the above XLSX API (which may change between releases), consider leveraging the excellent open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack. The following example demonstrates using abap2xlsx in the `LCL_HELP` class:
 ::: code-group
 
 ```abap
@@ -217,18 +217,9 @@ ENDMETHOD.
 ```
 
 ```abap [LCL_HELP]
-CLASS lcl_help DEFINITION
-  FINAL
-  CREATE PUBLIC .
+CLASS lcl_help DEFINITION FINAL CREATE PUBLIC .
 
   PUBLIC SECTION.
-
-    CLASS-METHODS get_itab_by_xlsx
-      IMPORTING
-        val           TYPE string
-      RETURNING
-        VALUE(result) TYPE REF TO data.
-
     CLASS-METHODS get_xlsx_by_itab
       IMPORTING
         val           TYPE any
@@ -237,9 +228,7 @@ CLASS lcl_help DEFINITION
 
 ENDCLASS.
 
-
 CLASS lcl_help IMPLEMENTATION.
-
   METHOD get_xlsx_by_itab.
     TRY.
 
@@ -249,7 +238,6 @@ CLASS lcl_help IMPLEMENTATION.
 
         DATA: lt_field_catalog  TYPE zexcel_t_fieldcatalog,
               ls_table_settings TYPE zexcel_s_table_settings.
-
 
         " Creates active sheet
         CREATE OBJECT lo_excel.
@@ -272,29 +260,6 @@ CLASS lcl_help IMPLEMENTATION.
         result = z2ui5_cl_util=>conv_encode_x_base64( lv_file ).
         result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
 
-
-      CATCH cx_root INTO DATA(x).
-        z2ui5_cL_util=>x_raise( x->get_text( ) ).
-    ENDTRY.
-  ENDMETHOD.
-
-  METHOD get_itab_by_xlsx.
-    TRY.
-
-        SPLIT val AT `;` INTO DATA(lv_dummy) DATA(lv_data).
-        SPLIT lv_data AT `,` INTO lv_dummy lv_data.
-        DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
-
-        DATA: lo_excel     TYPE REF TO zcl_excel,
-              lo_reader    TYPE REF TO zif_excel_reader,
-              lo_worksheet TYPE REF TO zcl_excel_worksheet.
-
-        CREATE OBJECT lo_reader TYPE zcl_excel_reader_2007.
-        lo_excel = lo_reader->load( lv_xdata ).
-        lo_worksheet = lo_excel->get_worksheet_by_index( 1 ).
-        lo_worksheet->convert_to_table(
-          IMPORTING
-            er_data = result ).
 
       CATCH cx_root INTO DATA(x).
         z2ui5_cL_util=>x_raise( x->get_text( ) ).
