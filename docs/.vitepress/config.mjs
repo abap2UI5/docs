@@ -171,9 +171,10 @@ export default defineConfig({
         items: [
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'Blogs', link: '/resources/blogs' },
-          { text: 'References', link: '/resources/references' },
           { text: 'License', link: '/resources/license' },
+          { text: 'Contact', link: '/resources/contact' },
           { text: 'Community',  items: [
+            { text: 'References', link: '/resources/references' },
             { text: 'Support', link: '/resources/support' },
             { text: 'Contribution', link: '/resources/contribution' },
             { text: 'Sponsor', link: '/resources/sponsor' },
@@ -182,14 +183,11 @@ export default defineConfig({
         ]
       }
     ],
+    outline: [2,6],
     socialLinks: [
+      { icon: 'mail', link: 'oblomov-dev@outlook.com' },
       { icon: 'linkedin', link: 'https://www.linkedin.com/company/abap2ui5/' },
       { icon: 'github', link: 'https://www.github.com/abap2UI5/abap2UI5' },
-
     ]
   },
-    // Aktiviert den "On This Page"-Bereich
-    outline: { 
-      level: [2,6]
-    }
 })
