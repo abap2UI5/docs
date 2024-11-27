@@ -20,8 +20,10 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.png',
     footer: {
-      message: 'Released under the MIT License',
-      copyright: '2023-present abap2UI5'
+      message: `
+      <a href="/docs/resources/license">License</a> |
+      <a href="/docs/resources/contact">Contact</a>`,
+    copyright: `Copyright © 2023-${new Date().getFullYear()} abap2UI5`,
     },
     editLink: {
       pattern: 'https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/:path',
@@ -185,7 +187,6 @@ export default defineConfig({
     ],
     outline: [2,6],
     socialLinks: [
-      { icon: 'mail', link: 'oblomov-dev@outlook.com' },
       { icon: 'linkedin', link: 'https://www.linkedin.com/company/abap2ui5/' },
       { icon: 'github', link: 'https://www.github.com/abap2UI5/abap2UI5' },
     ]
