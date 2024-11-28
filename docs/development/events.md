@@ -119,8 +119,8 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-::: tipp
-This is just a demonstration. In this case, it would be easier to access `mv_name` directly since it’s automatically updated by the framework.
+::: tip
+This is just a demonstration. In this case, it would be easier to access `name` directly since it’s automatically updated by the framework.
 :::
 
 ### Frontend

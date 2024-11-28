@@ -20,8 +20,10 @@ export default defineConfig({
   themeConfig: {
     logo: '/logo.png',
     footer: {
-      message: 'Released under the MIT License',
-      copyright: '2023-present abap2UI5'
+      message: `
+      <a href="/docs/resources/license">License</a> |
+      <a href="/docs/resources/contact">Contact</a>`,
+    copyright: `Copyright © 2023-${new Date().getFullYear()} abap2UI5`,
     },
     editLink: {
       pattern: 'https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/:path',
@@ -101,12 +103,13 @@ export default defineConfig({
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Specifics', collapsed : "false" , items: [
-            { text: 'Barcode Scanning', link: '/development/barcodes' },
-            { text: 'File Handling', link: '/development/files', },
-            { text: 'XLSX', link: '/development/xlsx', },
-            { text: 'Logging', link: '/development/logging' },
-            { text: 'Device Capabilities', link: '/development/ndc' },
-            { text: 'CDS, EML', link: '/development/cds' },
+            { text: 'Barcode Scanning', link: '/development/specific/barcodes' },
+            { text: 'File Handling', link: '/development/specific/files', },
+            { text: 'XLSX', link: '/development/specific/xlsx', },
+            { text: 'Logging', link: '/development/specific/logging' },
+            { text: 'Device Capabilities', link: '/development/specific/ndc' },
+            { text: 'Drag & Drop', link: '/development/specific/drag' },
+            { text: 'CDS, EML', link: '/development/specific/cds' },
            ]
           },
         ]
@@ -158,7 +161,7 @@ export default defineConfig({
           ] },
           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
-            { text: 'abaplint', link: '/advanced/insights/abaplint' },
+            { text: 'Linting', link: '/advanced/insights/linting' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
           ]
           },
@@ -171,9 +174,10 @@ export default defineConfig({
         items: [
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'Blogs', link: '/resources/blogs' },
-          { text: 'References', link: '/resources/references' },
           { text: 'License', link: '/resources/license' },
+          { text: 'Contact', link: '/resources/contact' },
           { text: 'Community',  items: [
+            { text: 'References', link: '/resources/references' },
             { text: 'Support', link: '/resources/support' },
             { text: 'Contribution', link: '/resources/contribution' },
             { text: 'Sponsor', link: '/resources/sponsor' },
@@ -182,14 +186,10 @@ export default defineConfig({
         ]
       }
     ],
+    outline: [2,6],
     socialLinks: [
       { icon: 'linkedin', link: 'https://www.linkedin.com/company/abap2ui5/' },
       { icon: 'github', link: 'https://www.github.com/abap2UI5/abap2UI5' },
-
     ]
   },
-    // Aktiviert den "On This Page"-Bereich
-    outline: { 
-      level: [2,6]
-    }
 })

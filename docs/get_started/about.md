@@ -22,7 +22,7 @@ Each application is supported as an abapGit project, simplifying installation ac
 abap2UI5 employs a "thin frontend" approach, with all processing, logic, and data management handled in the backend. This design simplifies configuration, minimizes client-side actions (such as clearing caches), and ensures that business logic and sensitive data remain securely on the server. 
 
 ##### Performance 
-abap2UI5 is fast. By leveraging the power of the ABAP backend for most processes, it ensures faster execution compared to client-side operations. The frontend focuses solely on rendering UI via the UI5 framework.
+abap2UI5 is fast! By leveraging the power of the ABAP backend for most processes, it ensures faster execution compared to client-side operations. The frontend focuses solely on rendering UI via the UI5 framework.
 
 ##### System Footprint
 The abap2UI5 system footprint is kept as small as possible including only essential classes and interfaces in the base version. Additional functionality can be added by installing optional addons.
