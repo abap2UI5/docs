@@ -108,6 +108,7 @@ export default defineConfig({
             { text: 'XLSX', link: '/development/specific/xlsx', },
             { text: 'Logging', link: '/development/specific/logging' },
             { text: 'Device Capabilities', link: '/development/specific/ndc' },
+            { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'CDS, EML', link: '/development/specific/cds' },
            ]
           },
