@@ -17,7 +17,7 @@ All statistics and results from the abaplint analysis are available on the abapl
 
 ### ui5lint
 
-The project uses the [ui5linter]((https://github.com/SAP/ui5-linter)) for static code analysis of frontend artifacts. The linter checks for issues such as deprecated API usage and ensures compatibility with UI5 2.x. 
+The project uses the [ui5linter](https://github.com/SAP/ui5-linter) for static code analysis of frontend artifacts. The linter checks for issues such as deprecated API usage and ensures compatibility with UI5 2.x. 
 
 #### Configuration
 The default configuration is applied.
