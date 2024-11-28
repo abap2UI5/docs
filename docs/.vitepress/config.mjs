@@ -160,7 +160,7 @@ export default defineConfig({
           ] },
           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/insights/insights' , items: [
             { text: 'General', link: '/advanced/insights/insights' },
-            { text: 'abaplint', link: '/advanced/insights/abaplint' },
+            { text: 'Linting', link: '/advanced/insights/linting' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
           ]
           },
