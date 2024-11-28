@@ -103,12 +103,12 @@ export default defineConfig({
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Specifics', collapsed : "false" , items: [
-            { text: 'Barcode Scanning', link: '/development/barcodes' },
-            { text: 'File Handling', link: '/development/files', },
-            { text: 'XLSX', link: '/development/xlsx', },
-            { text: 'Logging', link: '/development/logging' },
-            { text: 'Device Capabilities', link: '/development/ndc' },
-            { text: 'CDS, EML', link: '/development/cds' },
+            { text: 'Barcode Scanning', link: '/development/specific/barcodes' },
+            { text: 'File Handling', link: '/development/specific/files', },
+            { text: 'XLSX', link: '/development/specific/xlsx', },
+            { text: 'Logging', link: '/development/specific/logging' },
+            { text: 'Device Capabilities', link: '/development/specific/ndc' },
+            { text: 'CDS, EML', link: '/development/specific/cds' },
            ]
           },
         ]
