@@ -74,7 +74,6 @@ METHOD Z2UI5_if_app~main.
                     text  = 'display popover'
                     press = client->_event( 'POPOVER_OPEN' )
                     id    = 'TEST' ).
-
       client->view_display( view->stringify( ) ).
     ENDIF.
 
@@ -88,7 +87,6 @@ METHOD Z2UI5_if_app~main.
                     id    = `my_id`
                     text  = `close`
                     press = client->_event( `POPOVER_CLOSE` ) ).
-
         client->popover_display(
             xml   = view->stringify( )
             by_id = `my_id` ).
