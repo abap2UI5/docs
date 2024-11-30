@@ -74,7 +74,7 @@ Apps developed with abap2UI5 can be integrated into:
 Support is provided by the community. Need help? Submit an issue or join the abap2UI5 Slack channel for assistance.
 
 ##### Contribution
-Contributions are always welcome! Whether you’re fixing bugs, requesting features, or improving documentation, your input helps the project grow.
+Contributions are always welcome! Whether you’re fixing bugs, creating new features, or improving documentation, your input helps the project grow.
 
 ##### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project but cannot contribute directly, consider supporting the project in other ways. Learn more about sponsorship opportunities [here.](/resources/sponsor)
