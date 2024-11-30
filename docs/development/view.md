@@ -18,7 +18,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-You can use any UI5 control available in the UI5 SDK. However, working with XML can become cumbersome. A more efficient approach is to use the `Z2UI5_CL_XML_VIEW` class. Here's an improved version of the code using this class:
+You can use any UI5 control available in the UI5 SDK. However, working with XML can become cumbersome. A more efficient approach is to use the `Z2UI5_CL_XML_VIEW` class. Here's an improved version of the code above:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -31,6 +31,9 @@ You can use any UI5 control available in the UI5 SDK. However, working with XML 
 
   ENDMETHOD.
 ```
-Check the API of `Z2UI5_CL_XML_VIEW` and leverage code completion to easily find the correct controls and properties. Additionally, it’s recommended to explore the sample repository, which contains pre-written XML examples for most use cases. These examples are available for easy copy-pasting and can be adjusted to suit your specific needs.
+Tips for Usage:
+* Explore the API: Check the API of Z2UI5_CL_XML_VIEW and use code completion to easily identify the available controls and properties.
+* Sample Repository: Refer to the sample repository for pre-written XML examples that you can copy, paste, and adjust as needed.
 
-Currently, this setup is quite static. In the next section, we will explore how to bind and exchange data between the view and the app logic.
+#### What’s Next?
+This current setup is static. In the next section, we will explore how to bind and exchange data between the view and the application logic.
