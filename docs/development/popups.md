@@ -16,7 +16,6 @@ METHOD z2ui5_if_app~main.
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( 'Popup - Info'
             )->text( 'this is an information shown in a popup' ).
-
     client->popup_display( lo_popup->stringify( ) ).
 
 ENDMETHOD.
@@ -28,7 +27,6 @@ A common flow for using popups typically involves displaying a normal view, then
 METHOD Z2UI5_if_app~main.
 
     IF client->check_on_init( ).
-      
         DATA(lo_view) = z2ui5_cl_xml_view=>factory(
             )->page( 'abap2UI5 - Popups'
                 )->button(
@@ -41,7 +39,6 @@ METHOD Z2UI5_if_app~main.
     CASE client->get( )-event.
 
       WHEN 'POPUP_OPEN'.
-        
         DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( 
             )->dialog( 'Popup'
                 )->text( 'this is a text in a popup'
@@ -70,7 +67,6 @@ To display a popover, use the method `client->popover_display` and specify the I
 METHOD Z2UI5_if_app~main.
 
     IF client->check_on_init( ).
-
       DATA(view) = z2ui5_cl_xml_view=>factory( 
         )->shell(
             )->page( 'Popover Example'
@@ -85,7 +81,6 @@ METHOD Z2UI5_if_app~main.
     CASE client->get( )-event.
 
       WHEN 'POPOVER_OPEN'.
-
         DATA(popover) = Z2UI5_cl_xml_view=>factory_popup(
             )->popover( placement = 'Left'
                 )->text( `this is a popover`
