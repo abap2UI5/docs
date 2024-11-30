@@ -61,7 +61,7 @@ Create a new HTTP service for abap2UI5. For ABAP Cloud environments, follow [thi
 ![alt text](image-5.png)
 
 ::: details ABAP Cloud
-![alt text](image-20.png)
+<img width="846" alt="image-20 BiFOuUXZ" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
 ::: tip Security
 This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
