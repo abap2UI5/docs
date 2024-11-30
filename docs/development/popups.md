@@ -75,6 +75,7 @@ METHOD Z2UI5_if_app~main.
                     press = client->_event( 'POPOVER_OPEN' )
                     id    = 'TEST' ).
       client->view_display( view->stringify( ) ).
+
     ENDIF.
 
     CASE client->get( )-event.
