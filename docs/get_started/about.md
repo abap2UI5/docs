@@ -67,14 +67,14 @@ abap2UI5 can be used like any other UI5 app or ABAP program in a productive envi
 ##### Launchpad
 Apps developed with abap2UI5 can be integrated into:
 * Fiori Launchpads on S/4 On-Premise
-* Build Workzone Websites on BTP
 * Tiles on S/4 Public Cloud
+* Build Workzone Websites on BTP
 
 ##### Support
 Support is provided by the community. Need help? Submit an issue or join the abap2UI5 Slack channel for assistance.
 
 ##### Contribution
-Contributions are always welcome! Whether you’re fixing bugs, requesting features, or improving documentation, your input helps the project grow. You can submit pull requests, provide feedback, or share your experience with the community.
+Contributions are always welcome! Whether you’re fixing bugs, requesting features, or improving documentation, your input helps the project grow.
 
 ##### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project but cannot contribute directly, consider supporting the project in other ways. Learn more about sponsorship opportunities [here.](/resources/sponsor)
