@@ -20,7 +20,7 @@ Integrate your abap2UI5 apps into SAP Fiori Launchpads. Find all information her
 
 
 
-# Launchpad KPIs
+### Launchpad KPIs
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
