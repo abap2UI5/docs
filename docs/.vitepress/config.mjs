@@ -152,8 +152,8 @@ export default defineConfig({
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
-          { text: 'Launchpad KPIs', link: '/addons/kpi' },
-          { text: 'Remote App Calls', link: '/addons/rfc' },
+          { text: 'Remote App Calls', link: '/advanced/rfc' },
+          { text: 'OData, Smart Controls', link: '/advanced/odata' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
