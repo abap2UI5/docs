@@ -110,6 +110,7 @@ export default defineConfig({
             { text: 'Device Capabilities', link: '/development/specific/ndc' },
             { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'CDS, EML', link: '/development/specific/cds' },
+            { text: 'OData', link: '/development/odata' },
            ]
           },
         ]
@@ -152,8 +153,8 @@ export default defineConfig({
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
-          { text: 'Launchpad KPIs', link: '/addons/kpi' },
-          { text: 'Remote App Calls', link: '/addons/rfc' },
+          { text: 'Remote App Calls', link: '/advanced/rfc' },
+          { text: 'Smart Controls', link: '/advanced/smart_controls' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
