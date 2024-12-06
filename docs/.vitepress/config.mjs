@@ -101,6 +101,7 @@ export default defineConfig({
           { text: 'Navigation', link: '/development/navigation' },
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
+          { text: 'Tables, Trees', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Specifics', collapsed : "false" , items: [
             { text: 'Barcode Scanning', link: '/development/specific/barcodes' },
@@ -111,6 +112,10 @@ export default defineConfig({
             { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'CDS, EML', link: '/development/specific/cds' },
             { text: 'OData', link: '/development/odata' },
+            { text: 'Smart Controls', link: '/advanced/smart_controls' },
+            { text: 'Fuzzy Search', link: '/development/fuzzy' },
+            { text: 'Geolocation, Maps', link: '/development/side_effects' },
+            { text: 'Side Effects', link: '/development/side_effects' },
            ]
           },
         ]
@@ -139,7 +144,6 @@ export default defineConfig({
         text: 'Addons', link: '/addons/addons', collapsed: true, items: [
           { text: 'RTTI', link: '/addons/srtti' },
           { text: 'Layouts, Variants', link: '/addons/layout' },
-      //    { text: 'Logging, BAL', link: '/addons/logging' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'UI Extensions', link: '/addons/popup' },
           { text: 'Apps', link: '/addons/apps' },
@@ -154,14 +158,16 @@ export default defineConfig({
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Remote App Calls', link: '/advanced/rfc' },
-          { text: 'Smart Controls', link: '/advanced/smart_controls' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/insights/insights' , items: [
-            { text: 'General', link: '/advanced/insights/insights' },
+            { text: 'Architecture', link: '/advanced/technical/insights' },
+            { text: 'Designtime, Runtime', link: '/advanced/technical/insights' },
+            { text: 'Drafts, REST', link: '/advanced/insights/insights' },
+            { text: 'Deployment, abapGit', link: '/advanced/insights/insights' },
             { text: 'Linting', link: '/advanced/insights/linting' },
             { text: 'open-abap', link: '/advanced/insights/open_abap' },
           ]
