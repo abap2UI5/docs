@@ -27,7 +27,7 @@ METHOD z2ui5_if_app~main.
  
 ENDMETHOD.
 ```
-If the backend requires additional information about the specific event, use parameters like `$event`, `$source`, and `$params` to send further details. Use the t_arg parameter to include these details. See (this documentation)[(https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe)] for more information, and refer to sample `Z2UI5_CL_DEMO_APP_167`.
+If the backend requires additional information about the specific event, use parameters like `$event`, `$source`, and `$params` to send further details. Use the t_arg parameter to include these details. See [this documentation](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) for more information, and refer to sample `Z2UI5_CL_DEMO_APP_167`.
 
 #### Source
 Send properties of the event source control to the backend:
