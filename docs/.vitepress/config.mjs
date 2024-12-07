@@ -101,7 +101,7 @@ export default defineConfig({
           { text: 'Navigation', link: '/development/navigation' },
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
-          { text: 'Tables, Trees', link: '/development/translation' },
+          { text: 'Tables, Trees', link: '/development/tables' },
           { text: 'Popups, Popover', link: '/development/popups' },
           { text: 'Specifics', collapsed : "false" , items: [
             { text: 'Barcode Scanning', link: '/development/specific/barcodes' },
@@ -111,11 +111,11 @@ export default defineConfig({
             { text: 'Device Capabilities', link: '/development/specific/ndc' },
             { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'CDS, EML', link: '/development/specific/cds' },
-            { text: 'OData', link: '/development/odata' },
-            { text: 'Smart Controls', link: '/advanced/smart_controls' },
-            { text: 'Fuzzy Search', link: '/development/fuzzy' },
-            { text: 'Geolocation, Maps', link: '/development/side_effects' },
-            { text: 'Side Effects', link: '/development/side_effects' },
+            { text: 'OData', link: '/development/specific/odata' },
+            { text: 'Smart Controls', link: '/development/specific/smart_controls' },
+            { text: 'Fuzzy Search', link: '/development/specific/fuzzy' },
+            { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
+            { text: 'Side Effects', link: '/development/specific/side_effects' },
            ]
           },
         ]
@@ -163,13 +163,13 @@ export default defineConfig({
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
-          { text: 'Technical Background',  collapsed : "false" , link: '/advanced/insights/insights' , items: [
-            { text: 'Architecture', link: '/advanced/technical/insights' },
-            { text: 'Designtime, Runtime', link: '/advanced/technical/insights' },
-            { text: 'Drafts, REST', link: '/advanced/insights/insights' },
-            { text: 'Deployment, abapGit', link: '/advanced/insights/insights' },
-            { text: 'Linting', link: '/advanced/insights/linting' },
-            { text: 'open-abap', link: '/advanced/insights/open_abap' },
+          { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
+            { text: 'Architecture', link: '/advanced/technical/architecture' },
+            { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
+            { text: 'Draft, REST', link: '/advanced/technical/rest' },
+            { text: 'Deployment, abapGit', link: '/advanced/technical/abapgit' },
+            { text: 'Linting', link: '/advanced/technical/linting' },
+            { text: 'open-abap', link: '/advanced/technical/open_abap' },
           ]
           },
          ]
