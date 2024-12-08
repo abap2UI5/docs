@@ -96,10 +96,10 @@ export default defineConfig({
         items: [
           { text: 'General', link: '/development/general' },
           { text: 'View', link: '/development/view' },
-          { text: 'Model', link: '/development/model',  collapsed: true , items:[
-        //    { text: 'Tables, Trees', link: '/development/tables' },
-            { text: 'OData', link: '/development/specific/odata' },
-       //     { text: 'Device Model', link: '/development/specific/device' },
+          { text: 'Model', link: '/development/model/model',  collapsed: true , items:[
+            { text: 'Tables, Trees', link: '/development/model/tables' },
+            { text: 'OData', link: '/development/model/odata' },
+            { text: 'Device Model', link: '/development/model/device' },
           ]},
           { text: 'Events', link: '/development/events' },     
           { text: 'Navigation', link: '/development/navigation' },
