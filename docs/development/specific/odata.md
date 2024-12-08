@@ -8,8 +8,8 @@ As an example, we will use the test OData service `/sap/opu/odata/DMO/API_TRAVEL
 client->follow_up_action( client->_event_client(
     val = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = value #(
-        ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).
+        ( `/sap/opu/odata/DMO/API_FLIGHT_R_V2/` )
+        ( `FLIGHT` ) ) ) ).
 ```
 ### Bind Data
 Next, bind this OData model to your view definition. Since we’re using a non-default model, we must explicitly specify the model name for each binding. Here's an example:
@@ -38,32 +38,26 @@ Here’s the complete source code for one OData model:
 METHOD z2ui5_if_app~main.
   
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-        items = `{TRAVEL>/BookingSupplement}`
+        items = `{FLIGHT>/Airport}`
         growing = abap_true ).
- 
+
     tab->columns(
-          )->column(  )->text( 'TravelID' )->get_parent(
-          )->column( )->text( 'BookingID' )->get_parent(
-          )->column( )->text( 'BookingSupplementID' )->get_parent(
-          )->column( )->text( 'SupplementID' )->get_parent(
-          )->column( )->text( 'SupplementText' )->get_parent(
-          )->column( )->text( 'Price' )->get_parent(
-          )->column( )->text( 'CurrencyCode' )->get_parent( ).
+        )->column(  )->text( 'AirportID' )->get_parent(
+        )->column( )->text( 'Name' )->get_parent(
+        )->column( )->text( 'City' )->get_parent(
+        )->column( )->text( 'CountryCode' ).
  
     tab->items( )->column_list_item( )->cells(
-         )->text( '{TRAVEL>TravelID}'
-         )->text( '{TRAVEL>BookingID}'
-         )->text( '{TRAVEL>BookingSupplementID}'
-         )->text( '{TRAVEL>SupplementID}'
-         )->text( '{TRAVEL>SupplementText}'
-         )->text( '{TRAVEL>Price}'
-         )->text( '{TRAVEL>CurrencyCode}' ).
+        )->text( '{FLIGHT>AirportID}'
+        )->text( '{FLIGHT>Name}'
+        )->text( '{FLIGHT>City}'
+        )->text( '{FLIGHT>CountryCode}' ).
  
     client->follow_up_action( client->_event_client(
         val = z2ui5_if_client=>cs_event-set_odata_model
         t_arg = value #(
-            ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-            ( `TRAVEL` ) ) ) ).
+            ( `/sap/opu/odata/DMO/API_FLIGHT_R_V2/` )
+            ( `FLIGHT` ) ) ) ).
  
 ENDMETHOD.
 ```
