@@ -7,7 +7,9 @@ outline: [2, 4]
 
 The device model is bound to the view by default with the name `device`. You can access it easily in your view. For example:
 ```abap
-page->input( description = `device model - resize - width` value = `{device>/resize/width}` enabled = abap_false ).
+page->input( 
+  description = `device model - resize - width` 
+  value       = `{device>/resize/width}`  ).
 ```
 Explore all available parameters in the [UI5 Documentation.](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device)
 
@@ -59,7 +61,7 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
     client->view_display( lo_view->stringify( ) ).
 
     IF client->get( )-event = 'POST'.
-      client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack  ) ).
+      "process device info here...
     ENDIF.
 
   ENDMETHOD.
