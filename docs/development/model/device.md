@@ -1,9 +1,18 @@
+---
+outline: [2, 4]
+---
 # Device Model
 
+### Frontend
 
+The device model is bound to the view by default with the name `device`. You can access it easily in your view. For example:
+```abap
+page->input( description = `device model - resize - width` value = `{device>/resize/width}` enabled = abap_false ).
+```
+Explore all available parameters in the [UI5 Documentation.](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device)
 
-#### Device Information
-This example demonstrates how to retrieve detailed device information such as UI5 version, device type, OS, browser, and screen dimensions. Also see `z2ui5_cl_demo_app_122`.
+### Backend
+You can also retrieve detailed device information on the backend using a custom info frontend control. This allows you to access UI5 version, device type, OS, browser details, and screen dimensions. Below is an example implementation, which demonstrates how to collect and use this information:
 ```abap
 CLASS z2ui5_cl_sample_device DEFINITION PUBLIC CREATE PUBLIC.
 
@@ -57,3 +66,4 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
 ENDCLASS.
 ```
+For a working example, refer to `z2ui5_cl_demo_app_122`.

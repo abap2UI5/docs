@@ -1,8 +1,11 @@
+---
+outline: [2, 4]
+---
 # OData
 
 By default, you can bind all public attributes of your implementation class to UI5 properties, enabling the display of internal tables and, with bind_edit, even updating data. Additionally, in scenarios where direct access to database tables is required, using pre-defined OData services can be beneficial. Leveraging OData protocols provides features such as pagination and growing, which enhance performance when handling large datasets.
 
-### Define Second Model
+#### Define Second Model
 As an example, we will use the test OData service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `TRAVEL`:
 ```abap
 client->follow_up_action( client->_event_client(
@@ -11,7 +14,7 @@ client->follow_up_action( client->_event_client(
         ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
         ( `FLIGHT` ) ) ) ).
 ```
-### Bind Data
+#### Bind Data
 Next, bind this OData model to your view definition. Since we’re using a non-default model, we must explicitly specify the model name for each binding. Here's an example:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
@@ -32,7 +35,7 @@ tab->items( )->column_list_item( )->cells(
 ```
 By using the growing property we can make use of the feature that not all data is loaded at once, leveraging performance.
 
-### Full Example
+#### Full Example
 Here’s the complete source code:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -62,7 +65,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### Multiple OData Models
+#### Multiple OData Models
 You can also bind multiple OData models simultaneously. Here’s an example:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
