@@ -33,12 +33,12 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
         items = client->_bind( t_tab ) ).
  
     tab->columns(
-        )->column( )->text( 'Color' )->get_parent(
-        )->column( )->text( 'Info' )->get_parent(
+        )->column( )->text( 'Counter' )->get_parent(
+        )->column( )->text( 'Value' )->get_parent(
         )->column( )->text( 'Description' ).
     tab->items( )->column_list_item( )->cells(
+       )->text( '{COUNT}'
        )->text( '{VALUE}'
-       )->text( '{INFO}'
        )->text( '{DESCR}' ).
  
     client->view_display( view->stringify( ) ).
@@ -63,12 +63,12 @@ Making a table editable is a simple change. You just need to switch the binding 
     DATA(view) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items = client->_bind_edit( t_tab ) ).
     tab->columns(
-        )->column( )->text( 'Color' )->get_parent(
-        )->column( )->text( 'Info' )->get_parent(
+        )->column( )->text( 'Count' )->get_parent(
+        )->column( )->text( 'Value' )->get_parent(
         )->column( )->text( 'Description' ).
     tab->items( )->column_list_item( )->cells(
+       )->text( '{COUNT}'
        )->text( '{VALUE}'
-       )->text( '{INFO}'
        )->text( '{DESCR}' ).
  
     client->view_display( view->stringify( ) ).
