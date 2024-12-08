@@ -1,5 +1,5 @@
 # Tables, Trees
-In this section, we will explore how to bind deep data models, such as tables and trees.
+In this section, we will explore how to display deep data models, such as tables and trees.
 
 ### Tables 
 The example below demonstrates how to bind a simple table to a UI5 control:
