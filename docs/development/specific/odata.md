@@ -30,10 +30,10 @@ tab->items( )->column_list_item( )->cells(
     )->text( '{FLIGHT>City}'
     )->text( '{FLIGHT>CountryCode}' ).
 ```
-By using the growing property we can make use of the feautre that not all data is loaded at once, leveraging performance.
+By using the growing property we can make use of the feature that not all data is loaded at once, leveraging performance.
 
 ### Full Example
-Here’s the complete source code for one OData model:
+Here’s the complete source code:
 ```abap
 METHOD z2ui5_if_app~main.
   
@@ -63,7 +63,7 @@ ENDMETHOD.
 ```
 
 ### Multiple OData Models
-You can also bind multiple OData models simultaneously by defining additional OData models. Here’s an example:
+You can also bind multiple OData models simultaneously. Here’s an example:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items = `{TRAVEL>/BookingSupplement}`
