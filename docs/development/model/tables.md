@@ -8,7 +8,6 @@ CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
  
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
     TYPES:
       BEGIN OF ty_row,
         count      TYPE i,
@@ -46,7 +45,6 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
  
   ENDMETHOD.
 ENDCLASS.
-
 ```
 
 ### Editable
@@ -64,7 +62,6 @@ Making a table editable is a simple change. You just need to switch the binding 
  
     DATA(view) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items = client->_bind_edit( t_tab ) ).
- 
     tab->columns(
         )->column( )->text( 'Color' )->get_parent(
         )->column( )->text( 'Info' )->get_parent(
@@ -82,14 +79,10 @@ Making a table editable is a simple change. You just need to switch the binding 
 ### Tree
 To work with trees, you need to use nested structures. Here is an example:
 ```abap
-CLASS z2ui5_cl_sample_tree DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC CREATE PUBLIC.
  
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
- 
     TYPES:
       BEGIN OF ty_prodh_node_level3,
         is_selected TYPE abap_bool,
@@ -109,7 +102,6 @@ CLASS z2ui5_cl_sample_tree DEFINITION
         nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
       END OF ty_prodh_node_level1,
       ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
- 
     DATA prodh_nodes    TYPE ty_prodh_nodes.
 
 ENDCLASS.
@@ -148,8 +140,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
             )->standard_tree_item( selected = '{IS_SELECTED}'
                                    title    = '{TEXT}' ).
  
-    client->view_display( page->button( text  = 'Open Popup here...'
-                                        press = client->_event( 'POPUP_TREE' ) )->stringify( ) ).
+    client->view_display( page->stringify( ) ).
 
  ENDMETHOD.
 ENDCLASS.
