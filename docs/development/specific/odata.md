@@ -1,9 +1,9 @@
 # OData
 
-By default, you can bind all public attributes of your implementation class to UI5 properties. This allows you to display data, and, with bind_edit, even update data. In some scenarios, using pre-defined OData services can be particularly helpful, especially for displaying data in tables. Leveraging OData protocols enables features like pagination and growing, which improve performance when handling large datasets.
+By default, you can bind all public attributes of your implementation class to UI5 properties, enabling the display of internal tables and, with bind_edit, even updating data. Additionally, in scenarios where direct access to database tables is required, using pre-defined OData services can be beneficial. Leveraging OData protocols provides features such as pagination and growing, which enhance performance when handling large datasets.
 
 ### Define Second Model
-As an example, we will use the test OData service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible before use. Use the following method to define the model and make it available under the name `TRAVEL`:
+As an example, we will use the test OData service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `TRAVEL`:
 ```abap
     client->follow_up_action( client->_event_client(
         val = z2ui5_if_client=>cs_event-set_odata_model
@@ -31,7 +31,7 @@ Next, bind this OData model to your view definition. Since we’re using a non-d
          )->text( '{FLIGHT>City}'
          )->text( '{FLIGHT>CountryCode}' ).
 ```
-By using the growing property we can make use of the feautre that not all data is loaded at once, leveraging performance when accessing large tables.
+By using the growing property we can make use of the feautre that not all data is loaded at once, leveraging performance.
 
 ### Multiple OData Models
 You can bind multiple OData models simultaneously by defining additional OData models. Here’s an example:
@@ -95,6 +95,6 @@ METHOD z2ui5_if_app~main.
  
 ENDMETHOD.
 ```
-Check out sample `Z2UI5_CL_DEMO_APP_315` for a running code snippet.
+For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
 
 
