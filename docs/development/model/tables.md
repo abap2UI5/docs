@@ -29,7 +29,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
  
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( )->table(
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items = client->_bind( t_tab ) ).
  
     tab->columns(
@@ -60,7 +60,7 @@ Making a table editable is a simple change. You just need to switch the binding 
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
  
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( )->table(
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items = client->_bind_edit( t_tab ) ).
     tab->columns(
         )->column( )->text( 'Count' )->get_parent(
@@ -136,9 +136,9 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
     DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
  
     page->tree( items = client->_bind_edit( prodh_nodes )
-        )->items(
-            )->standard_tree_item( selected = '{IS_SELECTED}'
-                                   title    = '{TEXT}' ).
+        )->items( )->standard_tree_item(
+           selected = '{IS_SELECTED}'
+           title    = '{TEXT}' ).
  
     client->view_display( page->stringify( ) ).
 
