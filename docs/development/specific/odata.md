@@ -5,67 +5,39 @@ By default, you can bind all public attributes of your implementation class to U
 ### Define Second Model
 As an example, we will use the test OData service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `TRAVEL`:
 ```abap
-    client->follow_up_action( client->_event_client(
-        val = z2ui5_if_client=>cs_event-set_odata_model
-        t_arg = value #(
-            ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-            ( `TRAVEL` ) ) ) ).
+client->follow_up_action( client->_event_client(
+    val = z2ui5_if_client=>cs_event-set_odata_model
+    t_arg = value #(
+        ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
+        ( `TRAVEL` ) ) ) ).
 ```
 ### Bind Data
 Next, bind this OData model to your view definition. Since we’re using a non-default model, we must explicitly specify the model name for each binding. Here's an example:
 ```abap
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
-    DATA(tab) = view->table(
-        items = `{FLIGHT>/Airport}`
-        growing = abap_true ).
+DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
+    items = `{FLIGHT>/Airport}`
+    growing = abap_true ).
+
+tab->columns(
+    )->column(  )->text( 'AirportID' )->get_parent(
+    )->column( )->text( 'Name' )->get_parent(
+    )->column( )->text( 'City' )->get_parent(
+    )->column( )->text( 'CountryCode' ).
  
-    tab->columns(
-          )->column(  )->text( 'AirportID' )->get_parent(
-          )->column( )->text( 'Name' )->get_parent(
-          )->column( )->text( 'City' )->get_parent(
-          )->column( )->text( 'CountryCode' ).
- 
-    tab->items( )->column_list_item( )->cells(
-         )->text( '{FLIGHT>AirportID}'
-         )->text( '{FLIGHT>Name}'
-         )->text( '{FLIGHT>City}'
-         )->text( '{FLIGHT>CountryCode}' ).
+tab->items( )->column_list_item( )->cells(
+    )->text( '{FLIGHT>AirportID}'
+    )->text( '{FLIGHT>Name}'
+    )->text( '{FLIGHT>City}'
+    )->text( '{FLIGHT>CountryCode}' ).
 ```
 By using the growing property we can make use of the feautre that not all data is loaded at once, leveraging performance.
-
-### Multiple OData Models
-You can bind multiple OData models simultaneously by defining additional OData models. Here’s an example:
-```abap
-    tab = page->table(
-        items = `{FLIGHT>/Airport}`
-        growing = abap_true ).
- 
-    tab->columns(
-        )->column( )->text( 'AirportID' )->get_parent(
-        )->column( )->text( 'Name' )->get_parent(
-        )->column( )->text( 'City' )->get_parent(
-        )->column( )->text( 'CountryCode' )->get_parent( ).
- 
-    tab->items( )->column_list_item( )->cells(
-        )->text( '{FLIGHT>AirportID}'
-        )->text( '{FLIGHT>Name}'
-        )->text( '{FLIGHT>City}'
-        )->text( '{FLIGHT>CountryCode}' ).
-
-    client->follow_up_action( client->_event_client(
-        val = z2ui5_if_client=>cs_event-set_odata_model
-        t_arg = value #(
-            ( `/sap/opu/odata/DMO/ui_flight_r_v2/` )
-            ( `FLIGHT` )  ) ) ).      
-```
 
 ### Full Example
 Here’s the complete source code for one OData model:
 ```abap
 METHOD z2ui5_if_app~main.
   
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
-    DATA(tab) = view->table(
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items = `{TRAVEL>/BookingSupplement}`
         growing = abap_true ).
  
@@ -95,6 +67,30 @@ METHOD z2ui5_if_app~main.
  
 ENDMETHOD.
 ```
+
+### Multiple OData Models
+You can also bind multiple OData models simultaneously by defining additional OData models. Here’s an example:
+```abap
+    tab = page->table(
+        items = `{FLIGHT>/Airport}`
+        growing = abap_true ).
+ 
+    tab->columns(
+        )->column( )->text( 'AirportID' )->get_parent(
+        )->column( )->text( 'Name' )->get_parent(
+        )->column( )->text( 'City' )->get_parent(
+        )->column( )->text( 'CountryCode' )->get_parent( ).
+ 
+    tab->items( )->column_list_item( )->cells(
+        )->text( '{FLIGHT>AirportID}'
+        )->text( '{FLIGHT>Name}'
+        )->text( '{FLIGHT>City}'
+        )->text( '{FLIGHT>CountryCode}' ).
+
+    client->follow_up_action( client->_event_client(
+        val = z2ui5_if_client=>cs_event-set_odata_model
+        t_arg = value #(
+            ( `/sap/opu/odata/DMO/ui_flight_r_v2/` )
+            ( `FLIGHT` )  ) ) ).      
+```
 For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
-
-
