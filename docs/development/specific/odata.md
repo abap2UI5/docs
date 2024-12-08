@@ -41,7 +41,7 @@ You can bind multiple OData models simultaneously by defining additional OData m
         growing = abap_true ).
  
     tab->columns(
-        )->column(  )->text( 'AirportID' )->get_parent(
+        )->column( )->text( 'AirportID' )->get_parent(
         )->column( )->text( 'Name' )->get_parent(
         )->column( )->text( 'City' )->get_parent(
         )->column( )->text( 'CountryCode' )->get_parent( ).

@@ -96,26 +96,28 @@ export default defineConfig({
         items: [
           { text: 'General', link: '/development/general' },
           { text: 'View', link: '/development/view' },
-          { text: 'Model', link: '/development/model'  },
-          { text: 'Events', link: '/development/events' },
+          { text: 'Model', link: '/development/model',  collapsed: true , items:[
+        //    { text: 'Tables, Trees', link: '/development/tables' },
+            { text: 'OData', link: '/development/specific/odata' },
+       //     { text: 'Device Model', link: '/development/specific/device' },
+          ]},
+          { text: 'Events', link: '/development/events' },     
           { text: 'Navigation', link: '/development/navigation' },
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
-          { text: 'Tables, Trees', link: '/development/tables' },
           { text: 'Popups, Popover', link: '/development/popups' },
-          { text: 'Specifics', collapsed : "false" , items: [
+          { text: 'Specifics', collapsed : true , items: [
             { text: 'Barcode Scanning', link: '/development/specific/barcodes' },
             { text: 'File Handling', link: '/development/specific/files', },
             { text: 'XLSX', link: '/development/specific/xlsx', },
             { text: 'Logging', link: '/development/specific/logging' },
-            { text: 'Device Capabilities', link: '/development/specific/ndc' },
-            { text: 'Drag & Drop', link: '/development/specific/drag' },
+       //     { text: 'Camera', link: '/development/specific/ndc' },
             { text: 'CDS, EML', link: '/development/specific/cds' },
-            { text: 'OData', link: '/development/specific/odata' },
+       //     { text: 'Fuzzy Search', link: '/development/specific/fuzzy' },
+            { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'Smart Controls', link: '/development/specific/smart_controls' },
-            { text: 'Fuzzy Search', link: '/development/specific/fuzzy' },
-            { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
-            { text: 'Side Effects', link: '/development/specific/side_effects' },
+      //      { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
+      //      { text: 'Side Effects', link: '/development/specific/side_effects' },
            ]
           },
         ]
@@ -164,10 +166,10 @@ export default defineConfig({
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
-            { text: 'Architecture', link: '/advanced/technical/architecture' },
-            { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
-            { text: 'Draft, REST', link: '/advanced/technical/rest' },
-            { text: 'Deployment, abapGit', link: '/advanced/technical/abapgit' },
+      //      { text: 'Architecture', link: '/advanced/technical/architecture' },
+      //      { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
+      //      { text: 'Draft, REST', link: '/advanced/technical/rest' },
+       //     { text: 'Deployment, abapGit', link: '/advanced/technical/abapgit' },
             { text: 'Linting', link: '/advanced/technical/linting' },
             { text: 'open-abap', link: '/advanced/technical/open_abap' },
           ]
