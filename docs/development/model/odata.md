@@ -73,7 +73,7 @@ DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     growing = abap_true ).
 
 tab->columns(
-    )->column(  )->text( 'TravelID' )->get_parent(
+    )->column( )->text( 'TravelID' )->get_parent(
     )->column( )->text( 'BookingID' )->get_parent(
     )->column( )->text( 'BookingSupplementID' )->get_parent(
     )->column( )->text( 'SupplementID' )->get_parent( ).
