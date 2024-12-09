@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 6]
 ---
 # Fiori Launchpad
 
@@ -11,7 +11,7 @@ Integrate your abap2UI5 apps into SAP Fiori Launchpads. Find all information her
 
 
 ### Target Mapping
-
+Use the following parameters for target mapping in your Launchpad configuration:
 * Semantic Object: Z2UI5_CL_MY_APP
 * Action: display
 * URL: /sap/bc/ui5_ui5/sap/z2ui5
@@ -19,27 +19,46 @@ Integrate your abap2UI5 apps into SAP Fiori Launchpads. Find all information her
 * Parameter: app_start / Z2UI5_CL_MY_APP
 
 
+### Troubleshooting
+Sometimes, installation via abapGit can cause cache-related issues. Follow these steps to resolve them:
+
+#### Cache Management
+
+1. Recalculate app index of z2ui5 with report /UI5/APP_INDEX_CALCULATE
+![389816897-f18e791e-1e07-4381-a8a8-deb5af3ec02c](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
+![389816886-093d087f-4d7d-48b3-b7c4-75c16046af5b](https://github.com/user-attachments/assets/81f8feae-fcfe-4175-aa91-28ce8d681539)
+
+2. Recalculate index of distribution layer with report /UI5/APP_INDEX_CALCULATE (if tab isn't visible try switching to another tab, then it usually appears)
+![389817086-2a480005-f9f9-46e8-a432-456494957665](https://github.com/user-attachments/assets/3fce0f2e-96f9-4487-9226-7940336582b1)
+![389817130-389f2be1-d75b-4dbb-aa81-e5b5e4202440](https://github.com/user-attachments/assets/dc149874-6731-496d-90bf-79cb83d8c97d)
+
+3. Invalidate http caches in transaction SMICM
+![389817432-f6568b5e-0588-4a98-83cc-f1bd58e0dd64](https://github.com/user-attachments/assets/497b7677-8009-472e-9b50-34719105a12e)
+
+4. Clear browser caches and hard reload
+
+#### Manual Deployment
+If cache clearing doesn’t resolve the issue, manually upload the frontend application:
+
+1. Download the webapp folder of the project.
+
+2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to upload the application to the server.
+<img width="942" alt="image" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
+
 
 ### Launchpad KPIs
+
+Enhance your Fiori Launchpad with Key Performance Indicators (KPIs) using the abap2UI5 Launchpad KPI Add-On.
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
 Find more information in the blog article on [LinkedIn.](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/)
 
-##### Key Features
-* KPI Connector: Send KPIs of your abap2UI5 Apps to SAP Fiori Launchpad
-* User-Friendly: Implement just a single interface and method to return the KPI value
-* Project Consistency: Easily integrable with your abap2UI5 apps
-* Compatibility: Runs with SAP Netweaver (v.7.30 or higher) or S/4 Private (Standard ABAP)
-
-##### Functionality
+#### Functionality
 <img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
 <br>
 
-##### Preview
-<img width="621" alt="Pasted Graphic 3" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/1b24c31e-5570-4324-92d0-5db915394ceb"><br>
-
-##### Approach
+#### Approach
 (1/4) Use a single Interface:
 ```abap
 INTERFACE z2ui5_if_lp_kpi
