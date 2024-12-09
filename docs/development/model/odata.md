@@ -6,7 +6,7 @@ outline: [2, 4]
 By default, you can bind all public attributes of your implementation class to UI5 properties, enabling the display of internal tables and, with bind_edit, even updating data. Additionally, in scenarios where direct access to database tables is required, using pre-defined OData services can be beneficial. Leveraging OData protocols provides features such as pagination and growing, which enhance performance when handling large datasets.
 
 #### Define Additional Model
-As an example, we will use the test OData service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `FLIGHT`:
+As an example, we will use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `FLIGHT`:
 ```abap
 client->follow_up_action( client->_event_client(
     val = z2ui5_if_client=>cs_event-set_odata_model
