@@ -68,9 +68,9 @@ export default defineConfig({
       },
       {
         text: '1.136.0', items: [
-          { text: 'Changelog', link: '/resources/changelog' },
-          { text: 'Contribution', link: '/resources/contribution' },
+          { text: 'Changelog', link: '/resources/changelog' },          
           { text: 'Support', link: '/resources/support' },
+          { text: 'Contribution', link: '/resources/contribution' },
           { text: 'Sponsor', link: '/resources/sponsor' },
         ]
       },
