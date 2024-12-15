@@ -58,6 +58,7 @@ ENDCLASS.
 ### 3. Create HTTP Service
 Create a new HTTP service for abap2UI5. For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tutorials/abap-environment-create-http-service..html)
 
+![395892553-dd699c28-1b4e-4751-a049-0f01962a70ae](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
 ![alt text](image-5.png)
 
 ::: details ABAP Cloud
