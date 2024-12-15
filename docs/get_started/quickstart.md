@@ -56,11 +56,12 @@ ENDCLASS.
 :::
 
 ### 3. Create HTTP Service
-Create a new HTTP service for abap2UI5. For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tutorials/abap-environment-create-http-service..html)
+Use the transaction SICF and create a new HTTP service for abap2UI5:
 
 ![395892553-dd699c28-1b4e-4751-a049-0f01962a70ae](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
 ![alt text](image-5.png)
 
+For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tutorials/abap-environment-create-http-service..html)
 ::: details ABAP Cloud
 <img width="846" alt="image-20 BiFOuUXZ" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
