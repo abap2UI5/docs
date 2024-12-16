@@ -3,13 +3,13 @@
 
 ## v1.136.0
 2024-12-15
-+ Extended Model Handling with OData Support
-+ UI5 2.x Compatibility
-+ New Documentation
-+ Navigation Container in Popover
-+ New UI Controls: AvatarGroup, Viz Charts, and more
-+ SetMaxWidth for Launchpads
-* Multiple Bugfixes and new Properties added
+- Extended Model Handling with OData Support
+- UI5 2.x Compatibility
+- New Documentation
+- Navigation Container in Popover
+- New UI Controls: AvatarGroup, Viz Charts, and more
+- SetMaxWidth for Launchpads
+- Multiple Bugfixes and new Properties added
   
 ## v1.135.0
 2024-10-27
