@@ -5,7 +5,9 @@ outline: [2, 4]
 
 In abap2UI5, each application is represented by a single ABAP class. While you can embed all logic within a single class, it is generally better practice to keep individual classes manageable in size. This can be achieved by creating multiple classes that interact with each other, allowing you to build reusable, generic applications and popups that can be called in various contexts.
 
-### Backend
+### Cross App Navigation
+
+#### Backend
 To call an ABAP class, use the following code:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -47,7 +49,7 @@ ENDMETHOD.
 Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `leave to screen` behaviour here.
 :::
 
-### Launchpad
+#### Launchpad
 It is recommended to use backend communication exclusively for view changes or popup calls. If you’re using a launchpad, consider navigating through the launchpad to utilize browser navigation and history. Here’s an example:
 ```abap
 client->_event_client(
@@ -57,5 +59,7 @@ client->_event_client(
     ) ) ).
 ```
 To learn more about launchpads and routing, refer to the documentation [here.](/configuration/launchpad)
-### Frontend
-Further frontend navigation features, including back button support with routing, are currently a work in progress. Track updates [here.](https://github.com/abap2UI5/abap2UI5/issues/1420)
+
+### Inner App Navigation
+
+### App State Handling
