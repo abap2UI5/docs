@@ -11,7 +11,7 @@ Is your company using abap2UI5? We’d love to hear about your use case! By shar
 
 
 ### Integrations, Workshops
-Are you hosting workshops, building integrations, or exploring unique ways to use abap2UI5? Showcase your work to help others discover it and connect with you:
+Are you hosting workshops, building integrations, or exploring other ways to use abap2UI5? Showcase your work to help others discover it and connect with you:
 
 |  Company | Description |
 | ------------- | ------------- |
@@ -19,7 +19,7 @@ Are you hosting workshops, building integrations, or exploring unique ways to us
 
 
 ### Open Source Projects
-Do you maintain an open-source project using abap2UI5? Let the world know about it! Share your project to help others find it and even contribute to it:
+Do you maintain an open-source project using abap2UI5? Share your project to help others find it and even contribute to it:
 
 |  Repository | Description |
 | ------------- | ------------- |
