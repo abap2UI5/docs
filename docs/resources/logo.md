@@ -4,10 +4,10 @@
 ![alt text](/public/logo.png)
 
 #### Logo without Backgound
-![alt text](/docs/public/logo_white_back.png)
+![alt text](/public/logo_white_back.png)
 
 #### Favicon
-![alt text](/docs/public/favicon.ico)
+![alt text](/public/favicon.ico)
 
 #### Code Cover
-![alt text](/docs/public/code_cover.png)
+![alt text](/public/code_cover.png)
