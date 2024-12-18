@@ -105,6 +105,6 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-::: tip Information
+::: tip Warning
  If you don't implement authorization checks at the app level, make sure that end users cannot bypass service-level authorization checks by navigating between apps.
 :::
