@@ -9,7 +9,7 @@
  _Your Company is not listed here? Feel free to send a PR and extend this file!_
 
 
-### Integration, Workshops & more
+### Integrations, Workshops & more
 
 |  Company | Description |
 | ------------- | ------------- |
