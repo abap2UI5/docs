@@ -182,7 +182,6 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Changelog', link: '/resources/changelog' },
-  //        { text: 'Blogs', link: '/resources/blogs' },
           { text: 'License', link: '/resources/license' },
           { text: 'Contact', link: '/resources/contact' },
           { text: 'Community',  items: [
