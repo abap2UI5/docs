@@ -36,6 +36,6 @@ Do you maintain an open-source project using abap2UI5? Let the world know about 
 
 _How to Extend this Page?_
 
-_Fork the repository, navigate to this file, fill in your company, project, or activity information in the relevant section, and submit a PR. If you need help or have any questions, don’t hesitate to reach out. Let’s grow this community together!_
+_Simply send us an [email](<contact@abap2UI5.org>) or contribute directly yourself: fork the repository, navigate to this file, fill in your company, project, or activity information in the relevant section, and submit a PR. Let’s grow this community together!_
 
 ❤️ Thank you for being a part of the abap2UI5 community!
