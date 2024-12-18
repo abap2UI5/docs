@@ -183,12 +183,12 @@ export default defineConfig({
         items: [
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'License', link: '/resources/license' },
-          { text: 'Contact', link: '/resources/contact' },
           { text: 'Who Uses abap2UI5?', link: '/resources/who_uses' },
       //    { text: 'Community',  items: [
      //       { text: 'Logos', link: '/resources/logo' },
             { text: 'References, Blogs', link: '/resources/references' },
             { text: 'Support', link: '/resources/support' },
+            { text: 'Contact', link: '/resources/contact' },
             { text: 'Contribution', link: '/resources/contribution' },
             { text: 'Sponsor', link: '/resources/sponsor' },
     //       ]
