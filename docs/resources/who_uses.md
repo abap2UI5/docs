@@ -1,6 +1,6 @@
 # Who Uses abap2UI5?
 
-Your contributions are invaluable! We warmly encourage you to share details about your customer projects, integrations, workshops, or open-source projects. By doing so, you help showcase the diverse ways abap2UI5 can be used and inspire others to explore it too.
+Your contributions are invaluable! We warmly encourage you to share details about your customer projects, integrations, workshops, open-source projects or any other initiatives. By doing so, you help showcase the diverse ways abap2UI5 can be used and inspire others to explore it too.
 
 ### Customer Projects
 **Is your company using abap2UI5?** <br>
