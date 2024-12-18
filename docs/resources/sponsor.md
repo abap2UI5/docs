@@ -13,12 +13,12 @@ Several open-source projects extend the functionality of abap2UI5. Consider spon
 * Code analysis & testing via [abaplint](https://abaplint.org/) & [open-abap](https://github.com/open-abap) [(larshp)](https://github.com/larshp) 
 * JSON handling through [ajson](https://github.com/sbcgua/ajson) [(sbcgua)](https://github.com/sbcgua)
 * Runtime serialization using [S-RTTI](https://github.com/sandraros/S-RTTI) [(sandrarossi)](https://github.com/sandraros)
-* ABAP Cloud & Standard ABAP compatibility through [Steampunkification](https://github.com/heliconialabs/steampunkification) [(authors)](https://github.com/heliconialabs/steampunkification/graphs/contributors)
-* Syntax downporting via the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
+* ABAP Cloud & Standard ABAP compatibility through [Steampunkification](https://github.com/heliconialabs/steampunkification) [(contributors)](https://github.com/heliconialabs/steampunkification/graphs/contributors)
+* Syntax downporting via the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(contributors)](https://github.com/abaplint/abaplint/graphs/contributors)
 * Namespace renaming via the [mirror repository](https://github.com/abap2UI5/abap2UI5-mirror-renamed) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 * Browser testing with [Playwright](https://playwright.dev/) & [web-abap2UI5](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
 * Live demos running via [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
-* Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner)  [(authors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
-* Documentation created with [VitePress](https://vitepress.dev/)
+* Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner)  [(contributors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
+* Documentation created with [VitePress](https://vitepress.dev/) [(contributors)](https://github.com/vuejs/vitepress/graphs/contributors)
 
 _Your support keeps abap2UI5 and the entire ABAP open-source community thriving!_
