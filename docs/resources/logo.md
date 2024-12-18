@@ -1,7 +1,7 @@
 # Logo
 
 #### Logo
-![alt text](/docs/public/logo.png)
+![alt text](/public/logo.png)
 
 #### Logo without Backgound
 ![alt text](/docs/public/logo_white_back.png)
