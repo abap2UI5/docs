@@ -32,7 +32,6 @@ Do you maintain an open-source project using abap2UI5? Let the world know about 
 | [SM30](https://github.com/abap2UI5-apps/SM30) | ABAP SM30 for Cloud  |
 
 <br>
-<br>
 
 _How to Extend this Page?_
 
