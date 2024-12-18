@@ -182,11 +182,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Changelog', link: '/resources/changelog' },
-          { text: 'Blogs', link: '/resources/blogs' },
+  //        { text: 'Blogs', link: '/resources/blogs' },
           { text: 'License', link: '/resources/license' },
           { text: 'Contact', link: '/resources/contact' },
           { text: 'Community',  items: [
-            { text: 'References', link: '/resources/references' },
+            { text: 'Blogs, References', link: '/resources/references' },
             { text: 'Support', link: '/resources/support' },
             { text: 'Contribution', link: '/resources/contribution' },
             { text: 'Sponsor', link: '/resources/sponsor' },
