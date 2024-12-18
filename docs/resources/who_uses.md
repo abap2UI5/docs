@@ -17,7 +17,7 @@
 
  _Your Workshop or Integration is not listed here? Feel free to send a PR and extend this file!_
 
-### Community
+### Open Source Projects
 
 ABAP Open Source Projects using abap2UI5:
 |  Repository | Description |
