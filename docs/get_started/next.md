@@ -15,4 +15,4 @@ Enhance your abap2UI5 applications with additional features and functionalities 
 Jumpstart your projects by exploring ready-to-use apps. Find them [here.](/addons/apps)
 
 #### Blogs
-Stay informed with the latest insights and community content. Check out the latest blog posts [here.](/resources/blogs)
+Stay informed with the latest insights and community content. Check out the latest blog posts [here.](/resources/references)
