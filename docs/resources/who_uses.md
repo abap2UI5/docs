@@ -1,6 +1,6 @@
 # Who Uses abap2UI5?
 
-This page showcases the diverse ways abap2UI5 is being used within the community. Your contributions matter! We warmly invite you to add your customer projects, integrations, workshops, or open-source projects here to help grow the abap2UI5 ecosystem.
+Your contributions matter! We warmly invite you to add your customer projects, integrations, workshops, or open-source projects here to show the diverse ways abap2UI5 is used.
 
 ### Customer Projects
 Is your company using abap2UI5? We’d love to hear about your use case! By sharing it, you can inspire others to adopt and innovate with abap2UI5:
@@ -32,8 +32,6 @@ Do you maintain an open-source project using abap2UI5? Let the world know about 
 
 <br>
 
-_How to Extend this Page?_
-
-_Simply send us an email at <contact@abap2UI5.org> or contribute directly yourself: fork the repository, navigate to this file, fill in your company, project, or activity information in the relevant section, and submit a PR._
+_How to Extend this Page? Simply send us an email at <contact@abap2UI5.org> or contribute directly yourself._
 
 ❤️ Thank you for being a part of the abap2UI5 community!
