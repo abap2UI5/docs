@@ -1,7 +1,7 @@
 ---
 outline: [2, 6]
 ---
-# About
+# What is abap2UI5?
 Welcome to abap2UI5 – an open-source framework designed to enable UI5 app development purely in ABAP. 
 
 ##### Features
