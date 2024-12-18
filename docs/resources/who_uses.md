@@ -1,25 +1,26 @@
 # Who Uses abap2UI5?
 
-This page summarizes the diverse ways individuals and organizations are using abap2UI5. We invite you to add your success stories, integrations, workshops, or open-source projects to inspire others and grow the ecosystem.
-Your contributions matter! Help us build an inspiring community by sharing your use cases and projects.
+This page summarizes the diverse ways abap2UI5 can be used. We invite you to add your success stories, integrations, workshops, or open-source projects to inspire others and help to grow the ecosystem.
+Your contributions matter!
 
-### Customer
-
+### Customer Projects
+Is your company using abap2UI5? We’d love to hear your use case! By sharing how you’re leveraging abap2UI5, you can inspire others to adopt and innovate.
+ 
 |  Company | System | Use Case |
 | ------------- | ------------- | ------------- |
 | Test | System  | Description |
 
-Is your company using abap2UI5? We’d love to hear your use case! By sharing how you’re leveraging abap2UI5, you can inspire others to adopt and innovate.
 
 ### Integrations, Workshops & More
+Are you hosting workshops, creating integrations, or exploring unique ways to use abap2UI5? Showcase your work and help others discover how they can benefit from your expertise or connect with you!
 
 |  Company | Description |
 | ------------- | ------------- |
 | Test | Description |
 
-Are you hosting workshops, creating integrations, or exploring unique ways to use abap2UI5? Showcase your work and help others discover how they can benefit from your expertise or connect with you!
 
 ### Open Source Projects
+Do you maintain or contribute an open-source project using abap2UI5? Let the world know about it! Adding your project here can help others discover your work and even contribute to it.
 
 |  Repository | Description |
 | ------------- | ------------- |
@@ -31,11 +32,9 @@ Are you hosting workshops, creating integrations, or exploring unique ways to us
 | [SE16](https://github.com/abap2UI5-apps/SE16) | ABAP SE16 for Cloud  |
 | [SM30](https://github.com/abap2UI5-apps/SM30) | ABAP SM30 for Cloud  |
 
-Do you maintain or contribute an open-source project using abap2UI5? Let the world know about it! Adding your project here can help others discover your work and even contribute to it.
 
-###  How to Extend this File
-Fork the Repository: Start by forking this repository and navigating to this file.
-Add Your Details: Fill in your company, project, or activity information in the relevant section.
-Submit a PR: Once you've made your changes, submit a Pull Request. We'll review it and merge it into the main page!
-If you need help or have any questions, don’t hesitate to reach out. Let’s grow this community together!
+_How to Extend this File_
+_Fork the Repository, Navigating to this file, Fill in your company, project, or activity information in the relevant section, Submit a PR.
+If you need help or have any questions, don’t hesitate to reach out. Let’s grow this community together!_
+
 ❤️ Thank you for being a part of the abap2UI5 journey!
