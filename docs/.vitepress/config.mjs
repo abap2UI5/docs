@@ -81,7 +81,7 @@ export default defineConfig({
         link: '/get_started/about',
         collapsed: true,
         items: [
-          { text: 'About', link: '/get_started/about' },
+          { text: 'What is abap2UI5?', link: '/get_started/about' },
           { text: 'Getting Started', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
           { text: 'Sample Apps', link: '/get_started/samples' },
