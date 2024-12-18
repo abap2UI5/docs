@@ -37,4 +37,4 @@ _How to Extend this File_
 _Fork the Repository, Navigating to this file, Fill in your company, project, or activity information in the relevant section, Submit a PR.
 If you need help or have any questions, don’t hesitate to reach out. Let’s grow this community together!_
 
-❤️ Thank you for being a part of the abap2UI5 journey!
+❤️ Thank you for being a part of the abap2UI5 community!
