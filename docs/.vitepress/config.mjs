@@ -187,7 +187,7 @@ export default defineConfig({
           { text: 'Who Uses abap2UI5?', link: '/resources/who_uses' },
       //    { text: 'Community',  items: [
      //       { text: 'Logos', link: '/resources/logo' },
-            { text: 'Blogs, References', link: '/resources/references' },
+            { text: 'References, Blogs', link: '/resources/references' },
             { text: 'Support', link: '/resources/support' },
             { text: 'Contribution', link: '/resources/contribution' },
             { text: 'Sponsor', link: '/resources/sponsor' },
