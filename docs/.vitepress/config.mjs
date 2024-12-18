@@ -148,7 +148,8 @@ export default defineConfig({
           { text: 'Layouts, Variants', link: '/addons/layout' },
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'UI Extensions', link: '/addons/popup' },
-          { text: 'Apps', link: '/addons/apps' },
+          { text: 'Remote App Calls', link: '/addons/rfc' },
+     //     { text: 'Apps', link: '/addons/apps' },
         ]
       },
       {
@@ -159,7 +160,6 @@ export default defineConfig({
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
-          { text: 'Remote App Calls', link: '/advanced/rfc' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
@@ -184,7 +184,9 @@ export default defineConfig({
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'License', link: '/resources/license' },
           { text: 'Contact', link: '/resources/contact' },
+          { text: 'Who Uses abap2UI5?', link: '/resources/who_uses' },
           { text: 'Community',  items: [
+            { text: 'Logos', link: '/resources/logo' },
             { text: 'Blogs, References', link: '/resources/references' },
             { text: 'Support', link: '/resources/support' },
             { text: 'Contribution', link: '/resources/contribution' },
