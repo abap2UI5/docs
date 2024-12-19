@@ -37,4 +37,4 @@ Let the world know about it! Add your project here to help others find it and co
 
 _How to Extend this Page? Simply send us an email at <contact@abap2UI5.org> or contribute directly yourself._
 
-❤️ Thank you for being a part of the abap2UI5 community!
+Thank you for being a part of the abap2UI5 community! ❤️ 
