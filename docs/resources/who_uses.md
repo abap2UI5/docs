@@ -35,6 +35,6 @@ Let the world know about it! Adding it here helps others find and contribute to 
 
 <br>
 
-_Ready to share your project? Feel free to extend this page directy or just reach out to us at <contact@abap2UI5.org>. We’re excited to see what you’re working on!_
+_Ready to share your project? Feel free to extend this list directy or just reach out to us at <contact@abap2UI5.org>. We’re excited to hear what you’re working on!_
 
 Thank you for being a part of the abap2UI5 community! ❤️ 
