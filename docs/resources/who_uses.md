@@ -4,7 +4,7 @@ We’d love to hear how you’re using abap2UI5! Whether it’s in customer proj
 
 ### Customer Projects
 **Is your company using abap2UI5?** <br>
-Let others learn how abap2UI5 apps running in real-world scenarios. Share your project here:
+Let others learn how abap2UI5 apps running in real-world scenarios. Share your use case here:
  
 |  Company | System | Use Case |
 | ------------- | ------------- | ------------- |
@@ -22,7 +22,7 @@ Your work could be a source of inspiration for others. Share your details here a
 
 ### Open Source Projects
 **Do you use abap2UI5 in an open-source project?** <br>
-Let the world know about your project! Adding it here helps others find and contribute to it:
+Let the world know about it! Adding it here helps others find and contribute to it:
 
 |  Repository | Description |
 | ------------- | ------------- |
