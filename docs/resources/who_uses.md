@@ -1,10 +1,10 @@
 # Who Uses abap2UI5?
 
-Your contributions matter! We warmly welcome you to share details about your customer projects, integrations, workshops, open-source projects, or any other initiatives with abap2UI5. By doing so, you help showcase the diverse ways this project can be used and encourage others to adopt it as well.
+We’d love to hear how you’re using abap2UI5! Whether it's in customer projects, integrations, workshops, open-source projects, or any other initiatives, sharing your experience encourages others to use the project as well, helping the abap2UI5 community continue to grow.
 
 ### Customer Projects
 **Is your company using abap2UI5?** <br>
-We’d love to hear about your use case! Share it here and inspire others to adopt and innovate with abap2UI5 too:
+Tell us about your use case! By sharing it here, you can help others learn how abap2UI5 is being used in real-world scenarios:
  
 |  Company | System | Use Case |
 | ------------- | ------------- | ------------- |
@@ -13,7 +13,7 @@ We’d love to hear about your use case! Share it here and inspire others to ado
 
 ### Integrations, Workshops & More
 **Are you hosting workshops, building integrations, or using abap2UI5 in other ways?** <br>
-We’re curious! List your work here to help others discover it and connect with you:
+We’re curious! Your work could be a source of inspiration for others. Share your details here and help others connect with you:
 
 |  Company | Description |
 | ------------- | ------------- |
@@ -21,8 +21,8 @@ We’re curious! List your work here to help others discover it and connect with
 
 
 ### Open Source Projects
-**Do you use abap2UI5 in your open-source project?** <br>
-Let the world know about it! Add your project here to help others find it and contribute to it:
+**Do you use abap2UI5 in an open-source project?** <br>
+Let others know about your project! Adding it here helps others find and contribute to it.
 
 |  Repository | Description |
 | ------------- | ------------- |
@@ -35,6 +35,6 @@ Let the world know about it! Add your project here to help others find it and co
 
 <br>
 
-_Have a project you want to share? Just reach out to us at <contact@abap2UI5.org>, or feel free to edit the page directly. We’re excited to see what you’re working on!_
+_Ready to share your project? Just reach out to us at <contact@abap2UI5.org>, or feel free to edit the page directly. We’re excited to see what you’re working on!_
 
 Thank you for being a part of the abap2UI5 community! ❤️ 
