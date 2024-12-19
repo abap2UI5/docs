@@ -21,7 +21,7 @@ List your work here to help others discover it and connect with you:
 
 
 ### Open Source Projects
-**Do you maintain or contribute to an open-source project using abap2UI5?** <br>
+**Do you use abap2UI5 in your open-source project?** <br>
 Add your project here to help others find it and contribute to it:
 
 |  Repository | Description |
