@@ -13,7 +13,7 @@ We’d love to hear about your use case! By sharing it, you can inspire others t
 
 ### Integrations, Workshops
 **Are you hosting workshops, building integrations, or using abap2UI5 on other ways?** <br>
-Showcase your work here to help others discover it and connect with you:
+List your work here and help others to discover it and connect with you:
 
 |  Company | Description |
 | ------------- | ------------- |
