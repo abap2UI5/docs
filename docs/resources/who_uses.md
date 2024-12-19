@@ -1,10 +1,10 @@
 # Who Uses abap2UI5?
 
-We’d love to hear how you’re using abap2UI5! Whether it's in customer projects, integrations, workshops, open-source contributions, or any other initiatives, sharing your experience encourages others to use the project as well, helping the abap2UI5 community continue to grow.
+We’d love to hear how you’re using abap2UI5! Whether it’s for customer projects, integrations, workshops, open-source contributions, or any other initiatives, sharing your experience encourages others to use the project and helps the abap2UI5 community continue to grow.
 
 ### Customer Projects
 **Is your company using abap2UI5?** <br>
-Tell us about your use case! Let others learn how abap2UI5 can be used in real-world scenarios and share your project here:
+Let others learn how abap2UI5 is being applied in real-world scenarios. Share your project here:
  
 |  Company | System | Use Case |
 | ------------- | ------------- | ------------- |
@@ -13,7 +13,7 @@ Tell us about your use case! Let others learn how abap2UI5 can be used in real-w
 
 ### Integrations, Workshops & More
 **Are you hosting workshops, building integrations, or using abap2UI5 in other ways?** <br>
-We’re curious! Your work could be a source of inspiration for others. Share your details here and help others connect with you:
+Your work could be a source of inspiration for others. Share your details here and help others connect with you:
 
 |  Company | Description |
 | ------------- | ------------- |
@@ -22,7 +22,7 @@ We’re curious! Your work could be a source of inspiration for others. Share yo
 
 ### Open Source Projects
 **Do you use abap2UI5 in an open-source project?** <br>
-Let others know about your project! Adding it here helps others find and contribute to it:
+Let the world know about your project! Adding it here helps others find and contribute to it:
 
 |  Repository | Description |
 | ------------- | ------------- |
