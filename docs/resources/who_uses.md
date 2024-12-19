@@ -22,7 +22,7 @@ We’re curious! Your work could be a source of inspiration for others. Share yo
 
 ### Open Source Projects
 **Do you use abap2UI5 in an open-source project?** <br>
-Let others know about your project! Adding it here helps others find and contribute to it.
+Let others know about your project! Adding it here helps others find and contribute to it:
 
 |  Repository | Description |
 | ------------- | ------------- |
