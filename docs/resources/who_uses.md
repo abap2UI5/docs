@@ -12,7 +12,7 @@ We’d love to hear about your use case! Share it here and inspire others to ado
 
 
 ### Integrations, Workshops & More
-**Are you hosting workshops, building integrations, or using abap2UI5 on other ways?** <br>
+**Are you hosting workshops, building integrations, or using abap2UI5 in other ways?** <br>
 We’re curious! List your work here to help others discover it and connect with you:
 
 |  Company | Description |
