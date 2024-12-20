@@ -28,7 +28,6 @@ outline: [2, 4]
 ### Blogs
 
 #### 2024
-<br>
 
 ##### General
 - Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development [(06.10.2024)](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
@@ -48,7 +47,6 @@ outline: [2, 4]
 3. Setup SAP Mobile Start [(17.06.2024)](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-33-setup-uzure/?trackingId=He2W8FnZZ5UxpbGKHOeLEg%3D%3D)
 
 #### 2023
-<br>
 
 ##### Development & Technical Background
 1. Introduction: Developing UI5 Apps Purely in ABAP [(SCN - 22.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-development-of-ui5-apps-in-pure-abap-1-3/)
