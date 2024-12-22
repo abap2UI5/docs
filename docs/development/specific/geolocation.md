@@ -1,4 +1,4 @@
-# Geoloaction, Maps
+# Geolocation, Maps
 
 This example demonstrates how to retrieve geolocation data such as longitude, latitude, altitude, and speed. Also see `Z2UI5_CL_DEMO_APP_120`.
 
