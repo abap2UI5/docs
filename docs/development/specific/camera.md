@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-#### Camera
+# Camera
 
 
 For camera capabilities, refer to the sample `z2ui5_cl_sample_app_306`:
