@@ -4,25 +4,26 @@ We’d love to hear how you’re using abap2UI5! Whether it’s in customer proj
 
 ### Customer Projects
 **Is your company using abap2UI5?** <br>
-Let others discover how abap2UI5 apps are being used in real-world scenarios. Share your use case here:
+Showcase how abap2UI5 apps are transforming real-world scenarios. Share your use case here:
  
 |  Company | System | Use Case |
 | ------------- | ------------- | ------------- |
-| Test | System  | Description |
+| [Emineo](https://emineo.ch/) | ABAP 7.57  | Apps for EWM and PP running on desktop and mobile devices |
 
 
 ### Integrations, Workshops & More
-**Are you hosting workshops, building integrations, or using abap2UI5 in other ways?** <br>
-Your work could inspire others. Share your details here to help the community connect and learn from you:
+**Are you hosting workshops, building integrations, or using abap2UI5 in innovative ways?** <br>
+Inspire the community by sharing your initiatives. Let others learn and grow from your contributions:
 
 |  Company | Description |
 | ------------- | ------------- |
-| Test | Description |
+| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP Systems with automations to install abap2UI5 |
+| [Logali Group](https://logaligroup.com) | Webinars and Certification for abap2UI5 |
 
 
 ### Open Source Projects
 **Do you use abap2UI5 in an open-source project?** <br>
-Let the world know about it! Adding your project here helps others discover, use, and contribute to it:
+Help others discover, use, and contribute to your work. Add your project here:
 
 |  Repository | Description |
 | ------------- | ------------- |
@@ -35,6 +36,6 @@ Let the world know about it! Adding your project here helps others discover, use
 
 <br>
 
-_Ready to share your project? Feel free to extend this list directy or just reach out to us at <contact@abap2UI5.org>. We’re excited to hear what you’re working on!_
+_Ready to showcase your project? Extend this list directly or reach out to us at <contact@abap2UI5.org>. We’re excited to hear what you’re working on!_
 
 Thank you for being a part of the abap2UI5 community! ❤️ 
