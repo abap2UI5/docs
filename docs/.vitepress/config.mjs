@@ -100,6 +100,7 @@ export default defineConfig({
             { text: 'Tables, Trees', link: '/development/model/tables' },
             { text: 'OData', link: '/development/model/odata' },
             { text: 'Device Model', link: '/development/model/device' },
+            { text: 'Expression Binding', link: '/development/specific/expression_binding' },
             { text: 'Fuzzy Search', link: '/development/model/fuzzy' },
           ]},
           { text: 'Events', link: '/development/events' },     
@@ -120,7 +121,6 @@ export default defineConfig({
             { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'Smart Controls', link: '/development/specific/smart_controls' },
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
-            { text: 'Side Effects', link: '/development/specific/side_effects' },
            ]
           },
         ]
