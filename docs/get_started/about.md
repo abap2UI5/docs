@@ -59,10 +59,10 @@ With complete control over HTTP handler configuration, you maintain oversight of
 Transparency is a core principle of abap2UI5. The entire source code is publicly accessible, key concepts are explained in blog posts, and issues are openly discussed. Urgent changes are promptly implemented and distributed via abapGit.
 
 ##### Enterprise Ready
-This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready solution compatible with a wide range of SAP products. 
+This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready way to create software compatible to a wide range of SAP products. 
 
 ##### Productive Usage
-abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Simply add the framework and your apps to a transport request to deploy them to your production system.
+abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Simply add the framework and your apps to a transport request to deploy them to your productive system.
 
 ##### Launchpad
 Apps developed with abap2UI5 can be integrated into:
