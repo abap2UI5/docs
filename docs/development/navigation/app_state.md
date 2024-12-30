@@ -1,0 +1,41 @@
+# App State
+
+In UI5 applications, you have the ability to save the current app state and return to it later. This functionality is supported in the abap2UI5 framework too, where each state is saved as a draft with a unique ID. You can display this ID in the URL using the `client->set_app_state_active` method. This command generates a URL that you can copy&paste into another browser window. An example URL might look like this:
+`.../sap/bc/z2ui5?sap-client=001&app_start=z2ui5_cl_demo_app_000#/z2ui5-xapp-state=024251849E5A1EDFB1DAE2C97C8CE8C2`
+
+### Sample Code
+Below is an example implementation of app state functionality:
+```abap
+CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC FINAL CREATE PUBLIC.
+ 
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA mv_quantity TYPE string.
+ 
+ENDCLASS.
+ 
+CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+ 
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( ).
+      client->view_display(
+        view->label( 'quantity'
+            )->input( client->_bind_edit( mv_quantity )
+            )->button(
+                text  = 'post with state'
+                press = client->_event( val = 'BUTTON_POST' )
+              )->stringify( ) ).
+    ENDIF.
+ 
+    CASE client->get( )-event.
+      WHEN `BUTTON_POST`.
+        client->message_toast_display( `data updated and url adjusted` ).
+        client->set_app_state_active( ).
+    ENDCASE.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+A working implementation of this code can be found in the sample class `z2ui5_cl_demo_app_321`.

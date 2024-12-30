@@ -105,8 +105,8 @@ export default defineConfig({
           ]},
           { text: 'Events', link: '/development/events' },     
           { text: 'Navigation', link: '/development/navigation/navigation' , collapsed: true , items:[
-            { text: 'App State', link: '/development/model/tables' },
-            { text: 'Share, Bookmark', link: '/development/model/odata' },
+            { text: 'App State', link: '/development/model/app_state' },
+            { text: 'Share, Bookmark', link: '/development/model/share' },
           ]},
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
