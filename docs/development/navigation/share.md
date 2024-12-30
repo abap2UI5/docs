@@ -5,7 +5,7 @@ Making use of the app state leads to a various additional use cases.
 ### Share
  For exmaple you can easily intgerate a share button, which copies the actiual state into the clpiboard for sharing with your collegues. Check out the followig snippet:
  ```abap
-CLASS z2ui5_cl_demo_app_323 DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS z2ui5_cl_sample_share DEFINITION PUBLIC FINAL CREATE PUBLIC.
  
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -13,7 +13,7 @@ CLASS z2ui5_cl_demo_app_323 DEFINITION PUBLIC FINAL CREATE PUBLIC.
  
 ENDCLASS.
  
-CLASS z2ui5_cl_demo_app_323 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_share IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
  
     IF client->check_on_navigated( ).
