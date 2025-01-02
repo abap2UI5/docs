@@ -8,7 +8,7 @@ Showcase how abap2UI5 apps are transforming real-world scenarios. Share your use
  
 |  Company | System | Use Case |
 | ------------- | ------------- | ------------- |
-| [Emineo](https://emineo.ch/) | ABAP 7.57  | Apps for EWM and PP running on desktop and mobile devices |
+| [Emineo](https://emineo.ch/) | ABAP 7.57  | Applications for EWM and PP, running on desktop and mobile devices |
 
 
 ### Integrations, Workshops & More
@@ -17,8 +17,8 @@ Inspire the community by sharing your initiatives. Let others learn and grow fro
 
 |  Company | Description |
 | ------------- | ------------- |
-| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP Systems with automations to install abap2UI5 |
-| [Logali Group](https://logaligroup.com) | Webinars and Certification for abap2UI5 |
+| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP systems with automated abap2UI5 installations |
+| [Logali Group](https://logaligroup.com) | Webinars and certifications for abap2UI5 |
 
 
 ### Open Source Projects
