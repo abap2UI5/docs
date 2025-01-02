@@ -56,7 +56,7 @@ ENDMETHOD.
 ```
 
 #### Separated App
-For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](/development/navigation).
+For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
 
 #### Call Stack
 If you need to manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
