@@ -100,9 +100,14 @@ export default defineConfig({
             { text: 'Tables, Trees', link: '/development/model/tables' },
             { text: 'OData', link: '/development/model/odata' },
             { text: 'Device Model', link: '/development/model/device' },
+            { text: 'Expression Binding', link: '/development/specific/expression_binding' },
+            { text: 'Fuzzy Search', link: '/development/model/fuzzy' },
           ]},
           { text: 'Events', link: '/development/events' },     
-          { text: 'Navigation', link: '/development/navigation' },
+          { text: 'Navigation', link: '/development/navigation/navigation' , collapsed: true , items:[
+            { text: 'App State', link: '/development/model/app_state' },
+            { text: 'Share, Bookmark', link: '/development/model/share' },
+          ]},
           { text: 'Messages, Errors', link: '/development/messages' },
           { text: 'Translation, i18n', link: '/development/translation' },
           { text: 'Popups, Popover', link: '/development/popups' },
@@ -113,11 +118,9 @@ export default defineConfig({
             { text: 'Logging', link: '/development/specific/logging' },
             { text: 'Camera', link: '/development/specific/camera' },
             { text: 'CDS, EML', link: '/development/specific/cds' },
-       //     { text: 'Fuzzy Search', link: '/development/specific/fuzzy' },
             { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'Smart Controls', link: '/development/specific/smart_controls' },
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
-      //      { text: 'Side Effects', link: '/development/specific/side_effects' },
            ]
           },
         ]

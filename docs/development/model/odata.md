@@ -66,7 +66,7 @@ ENDMETHOD.
 ```
 
 #### Multiple OData Models
-You can also bind multiple OData models simultaneously. Here’s an example:
+You can also bind multiple OData models simultaneously. For example, here’s how to bind an additional OData model under the name `TRAVEL`:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items = `{TRAVEL>/BookingSupplement}`
@@ -91,3 +91,43 @@ client->follow_up_action( client->_event_client(
         ( `TRAVEL` ) ) ) ).  
 ```
 For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
+
+#### Metadata Binding
+In SAP contexts, OData services are often enriched with additional annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. You find the definitions for the entity `Currency`:
+```xml
+<EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">
+<Key>
+<PropertyRef Name="Currency"/>
+</Key>
+<Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="UpperCase" sap:text="Currency_Text" sap:label="Währung" sap:quickinfo="Währungsschlüssel" sap:semantics="currency-code"/>
+<Property Name="Currency_Text" Type="Edm.String" MaxLength="40" sap:label="Beschreibung" sap:creatable="false" sap:updatable="false"/>
+<Property Name="Decimals" Type="Edm.Byte" sap:label="Dezimalstellen" sap:quickinfo="Anzahl Dezimalstellen"/>
+<Property Name="CurrencyISOCode" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="ISO-Code" sap:quickinfo="ISO-Währungscode"/>
+<Property Name="AlternativeCurrencyKey" Type="Edm.String" MaxLength="3" sap:display-format="UpperCase" sap:label="Alternativschlüssel" sap:quickinfo="Alternativer Schlüssel"/>
+<Property Name="IsPrimaryCurrencyForISOCrcy" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="primär" sap:quickinfo="primärer SAP-Währungscode zum ISO-Code"/>
+</EntityType>
+```
+We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. Here’s an example:
+```abap
+     data(tab) = page->table(
+        items = `{TRAVEL>/Currency}`
+        growing = abap_true ).
+
+    tab->header_toolbar( )->toolbar(
+      )->title( 'table with OData model TRAVEL' ).
+
+    tab->columns(
+      )->column(  )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
+      )->column(  )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
+      )->column(  )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
+      )->column(  )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' )->get_parent(
+      ).
+
+    tab->items( )->column_list_item( )->cells(
+      )->text( '{TRAVEL>Currency}'
+      )->text( '{TRAVEL>Currency_Text}'
+      )->text( '{TRAVEL>Decimals}'
+      )->text( '{TRAVEL>CurrencyISOCode}'
+      ).
+```
+The column titles are now automatically set with the correct title in the user’s language.
