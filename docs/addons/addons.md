@@ -4,11 +4,11 @@ The abap2UI5 framework is designed to have a minimal system footprint, including
 
 |  Name |
 | ------------- |
-| [RTTI](/addons/rtti)  |
+| [RTTI](/addons/srtti)  |
 | [Layouts, Variants](/addons/layout) |
-| [JS Libraries](/addons/layout) |
-| [UI Extensions](/addons/layout) |
-| [Remote App Calls](/addons/layout) |
+| [JS Libraries](/addons/ext_js) |
+| [UI Extensions](/addons/popup) |
+| [Remote App Calls](/addons/rfc) |
 
 
 _You created an addon but it is not listed here? Feel free to send a PR, every contribution is welcome!_
