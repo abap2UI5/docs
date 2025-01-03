@@ -1,6 +1,6 @@
 # Expression Binding
 
-Expression Binding in UI5 allows you to dynamically compute values directly in XML views using JavaScript-like expressions. It simplifies coding, especially in the ABAP2UI5 context, by enabling calculations, logical conditions, and string operations directly at the frontend—eliminating the need for additional server roundtrips.
+Expression Binding in UI5 allows you to compute values directly in XML views using JavaScript-like expressions. This feature is especially useful in abap2UI5 development, as it can reduce server roundtrips by enabling calculations, logical conditions, and string operations directly on the frontend.
 
 #### Calculate the Maximum Value at the Frontend
 
