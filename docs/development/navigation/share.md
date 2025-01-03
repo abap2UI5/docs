@@ -1,9 +1,9 @@
 # Share, Bookmark
 
-Making use of the app state leads to a various additional use cases.
+The app state feature leads to various additional use cases.
 
 ### Share
- For exmaple you can easily intgerate a share button, which copies the actiual state into the clpiboard for sharing with your collegues. Check out the followig snippet:
+You can easily intgerate a share button, which copies the actiual state into the clpiboard for sharing with your collegues. Check out the followig snippet:
  ```abap
 CLASS z2ui5_cl_sample_share DEFINITION PUBLIC FINAL CREATE PUBLIC.
  
