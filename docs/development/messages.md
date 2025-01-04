@@ -140,7 +140,7 @@ Alternatively, achieve the same behavior with an uncaught exception:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    RAISE EXCEPTION NEW lcx_error( ).
+    RAISE EXCEPTION NEW cx_sy_itab_line_not_found( ).
 
 ENDMETHOD.
 ```
