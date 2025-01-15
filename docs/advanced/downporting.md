@@ -32,3 +32,6 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
 
 ENDCLASS.
 ```
+
+Adjust the sql syntax in the following class z2ui5_cl_core_srv_draft: <br>
+https://github.com/abap2UI5-downported/abap2UI5/blob/main/src/01/01/z2ui5_cl_core_srv_draft.clas.abap
