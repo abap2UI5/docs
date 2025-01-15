@@ -9,3 +9,26 @@ All downported versions of abap2UI5 and its addons can be found  here: <br>
 For more information on this concept, check out this blog post: <br>
 [Running abap2UI5 on older releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
 
+The HTTP handler implemenation for lower releases looks like this:
+```abap
+CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC FINAL CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES if_http_extension.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
+
+  METHOD if_http_extension~handle_request.
+
+    DATA lo_handler type ref to z2ui5_cl_http_handler.
+    lo_handler = z2ui5_cl_http_handler=>factory( server ).
+    lo_handler->main( ).
+
+  ENDMETHOD.
+
+ENDCLASS.
+```
