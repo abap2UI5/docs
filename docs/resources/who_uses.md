@@ -7,7 +7,7 @@ We’d love to hear how you’re using abap2UI5! Whether it’s in customer proj
 Showcase how abap2UI5 apps are transforming real-world scenarios. Share your use case here:
  
 |  Company | System | Use Case |
-| ------------- | ------------- | ------------- |
+| ------------------- | ------------- | ------------- |
 | [Emineo](https://emineo.ch/) | ABAP 7.57  | Applications for EWM and PP, running on desktop and mobile devices |
 | [Swiss Chrono](https://www.swisskrono.com/) | ABAP 7.55  | Applications for EWM, running on mobile devices |
 
