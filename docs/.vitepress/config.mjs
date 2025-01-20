@@ -100,8 +100,7 @@ export default defineConfig({
             { text: 'Tables, Trees', link: '/development/model/tables' },
             { text: 'OData', link: '/development/model/odata' },
             { text: 'Device Model', link: '/development/model/device' },
-            { text: 'Expression Binding', link: '/development/model/expression_binding' },
-            { text: 'Fuzzy Search', link: '/development/model/fuzzy' },
+            { text: 'Expression Binding', link: '/development/model/expression_binding' }
           ]},
           { text: 'Events', link: '/development/events' },     
           { text: 'Navigation', link: '/development/navigation/navigation' , collapsed: true , items:[
