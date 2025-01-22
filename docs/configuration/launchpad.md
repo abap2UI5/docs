@@ -59,7 +59,7 @@ Find more information in the blog article on [LinkedIn.](https://www.linkedin.co
 <br>
 
 #### Approach
-(1/4) Use a single Interface:
+(1/3) Use a single Interface:
 ```abap
 INTERFACE z2ui5_if_lp_kpi
   PUBLIC.
@@ -72,7 +72,7 @@ INTERFACE z2ui5_if_lp_kpi
 
 ENDINTERFACE.
 ```
-(2/4) Which can be used on app level to return KPIs:
+(2/3) Which can be used on app level to return KPIs:
 ```abap
 CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION
   PUBLIC
@@ -98,39 +98,7 @@ CLASS z2ui5_cl_proxy_kpi_hello_world IMPLEMENTATION.
 
 ENDCLASS.
 ```
-(3/4) A generic OData service takes care of everything else (which just returns n dummy entries):
-```abap
-  METHOD /iwbep/if_mgw_appl_srv_runtime~get_entityset.
-
-    DATA lt_result TYPE zcl_z2ui5_proxy_kpi_mpc=>tt_entity.
-    DATA(lt_filter_cond) = io_tech_request_context->get_filter( )->get_filter_select_options( ).
-
-    TRY.
-        DATA(lv_classname)   = to_upper( lt_filter_cond[ property = `CLASS` ]-select_options[ 1 ]-low ).
-      CATCH cx_root.
-        INSERT VALUE #( id = `ERROR_NO_PARAMETER_FOUND_WITH_NAME_CLASS` ) INTO TABLE lt_result.
-        copy_data_to_ref( EXPORTING is_data = lt_result CHANGING cr_data = er_entityset ).
-        RETURN.
-    ENDTRY.
-
-    TRY.
-        DATA(lv_filter) = to_upper( lt_filter_cond[ property = `FILTER` ]-select_options[ 1 ]-low ).
-      CATCH cx_root.
-    ENDTRY.
-
-    DATA li_lp_kpi TYPE REF TO z2ui5_if_lp_kpi.
-    CREATE OBJECT li_lp_kpi TYPE (lv_classname).
-    DATA(lv_count) = li_lp_kpi->count( lv_filter ).
-
-    DO lv_count TIMES.
-      INSERT VALUE #( id = sy-index ) INTO TABLE lt_result.
-    ENDDO.
-
-    copy_data_to_ref( EXPORTING is_data = lt_result CHANGING cr_data = er_entityset ).
-
-  ENDMETHOD.
-```
-(4/4) Maintain the KPI at the Launchpad with the following endpoint:
+(3/3) A generic OData service takes care of everything else (which just returns n dummy entries). Just maintain the KPI at the Launchpad with the following endpoint:
 ```
 .../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_proxy_kpi_hello_world'
 ```
