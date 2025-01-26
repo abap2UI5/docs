@@ -1,6 +1,15 @@
 # Changelog
 
 
+## v1.137.0
+2024-01-26
+- Introduced App State feature
+- Added App State Persistence for Navigation
+- Fixed long string bugs for older releases
+- Resolved popup get value issues
+- Ensured Launchpad compatibility with OpenUI5 2.x
+- Multiple Bugfixes and new Properties added
+
 ## v1.136.0
 2024-12-15
 - Extended Model Handling with OData Support
