@@ -183,7 +183,7 @@ export default defineConfig({
         link: '/resources/resources',
         collapsed: true,
         items: [
-          { text: 'References, Blogs', link: '/resources/references' },
+          { text: 'References', link: '/resources/references' },
           { text: 'Who Uses abap2UI5?', link: '/resources/who_uses' },
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'License', link: '/resources/license' },
