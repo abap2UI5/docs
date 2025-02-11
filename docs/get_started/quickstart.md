@@ -56,7 +56,7 @@ ENDCLASS.
 :::
 
 ### 3. Create HTTP Service
-Use the transaction SICF and create a new HTTP service for the handler above:
+Use the transaction SICF and create a new HTTP service with the handler above:
 
 ![395892553-dd699c28-1b4e-4751-a049-0f01962a70ae](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
 ![alt text](image-5.png)
