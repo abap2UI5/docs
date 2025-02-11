@@ -65,14 +65,13 @@ Use the transaction SICF and create a new HTTP service with the handler above:
 For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tutorials/abap-environment-create-http-service..html)
 <img width="846" alt="image-20 BiFOuUXZ" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
-::: tip Security
-This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
-:::
 
 ### 4. Initial Launch
 You can now access the HTTP endpoint from a web browser:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press "Check" and launch the test app. That’s it! Now you can create a new class and start developing your own abap2UI5 apps.
 
-
+::: tip Security
+This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
+:::
 
