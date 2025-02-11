@@ -16,7 +16,7 @@ Install [this project](https://github.com/abap2UI5/abap2UI5) with [abapGit.](htt
 
 
 ### 2. Create HTTP Handler
-Create a new package with a new HTTP handler class:
+Create a new package with and define a new HTTP handler class:
 
 ::: code-group
 
@@ -56,7 +56,7 @@ ENDCLASS.
 :::
 
 ### 3. Create HTTP Service
-Use the transaction SICF and create a new HTTP service with the handler above:
+Use the transaction SICF to create a new HTTP service with the handler above:
 
 ![395892553-dd699c28-1b4e-4751-a049-0f01962a70ae](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
 ![alt text](image-5.png)
@@ -67,7 +67,7 @@ For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tut
 :::
 
 ### 4. Initial Launch
-You can now access the HTTP endpoint from a web browser:
+Now access the HTTP endpoint from a web browser:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press "Check" and launch the test app. That’s it! Now you can create a new class and start developing your own abap2UI5 apps.
 
