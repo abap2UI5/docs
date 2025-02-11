@@ -57,8 +57,6 @@ export default defineConfig({
           {
             text: 'More', items: [
               { text: 'frontend', link: 'https://github.com/abap2UI5/frontend' },
-              { text: 'downported', link: 'https://github.com/abap2UI5-downported' },
-              { text: 'renamed', link: 'https://github.com/abap2UI5-renamed' },
               { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
               { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
              
