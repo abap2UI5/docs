@@ -121,9 +121,9 @@ export default defineConfig({
            ]
           },
           { text: 'Addons', collapsed : true , items: [
-            { text: 'Layouts, Variants', link: '/addons/layout' },
-            { text: 'JS Libraries', link: '/addons/ext_js' },
-            { text: 'UI Extensions', link: '/addons/popup' },
+            { text: 'Layouts, Variants', link: '/development/addons/layout' },
+            { text: 'JS Libraries', link: '/development/addons/ext_js' },
+            { text: 'UI Extensions', link: '/development/addons/popup' },
            ]
           },
         ]
