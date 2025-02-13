@@ -120,6 +120,12 @@ export default defineConfig({
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
            ]
           },
+          { text: 'Addons', collapsed : true , items: [
+            { text: 'Layouts, Variants', link: '/addons/layout' },
+            { text: 'JS Libraries', link: '/addons/ext_js' },
+            { text: 'UI Extensions', link: '/addons/popup' },
+           ]
+          },
         ]
       },
       {
@@ -143,15 +149,6 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Addons', link: '/addons/addons', collapsed: true, items: [
-          { text: 'RTTI', link: '/addons/srtti' },
-          { text: 'Layouts, Variants', link: '/addons/layout' },
-          { text: 'JS Libraries', link: '/addons/ext_js' },
-          { text: 'UI Extensions', link: '/addons/popup' },
-          { text: 'Remote App Calls', link: '/addons/rfc' },
-        ]
-      },
-      {
         text: 'Advanced',
         link: '/advanced/advanced',
         collapsed: true,
@@ -160,6 +157,7 @@ export default defineConfig({
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Builds', link: '/advanced/downporting' },
+          { text: 'Remote App Calls', link: '/advanced/rfc' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
@@ -170,6 +168,7 @@ export default defineConfig({
       //      { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
       //      { text: 'Draft, REST', link: '/advanced/technical/rest' },
        //     { text: 'Deployment, abapGit', link: '/advanced/technical/abapgit' },
+            { text: 'RTTI', link: '/advanced/technical/rtti' },
             { text: 'Linting', link: '/advanced/technical/linting' },
             { text: 'open-abap', link: '/advanced/technical/open_abap' },
           ]
