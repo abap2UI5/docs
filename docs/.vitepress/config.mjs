@@ -137,6 +137,7 @@ export default defineConfig({
           { text: 'Installation', link: '/configuration/installation' , items: [
             { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
             { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
+            { text: 'Fiori Launchpad KPI', link: '/configuration/launchpad', },
             { text: 'BTP Workzone', link: '/configuration/btp' },
            ]
           },
@@ -159,6 +160,7 @@ export default defineConfig({
         items: [
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
+          { text: 'Builds', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
