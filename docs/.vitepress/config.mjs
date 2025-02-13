@@ -137,7 +137,6 @@ export default defineConfig({
           { text: 'Installation', link: '/configuration/installation' , items: [
             { text: 'S/4 Public Cloud', link: '/configuration/s4_public_cloud' },
             { text: 'Fiori Launchpad', link: '/configuration/launchpad', },
-            { text: 'Fiori Launchpad KPI', link: '/configuration/launchpad', },
             { text: 'BTP Workzone', link: '/configuration/btp' },
            ]
           },
@@ -150,7 +149,6 @@ export default defineConfig({
           { text: 'JS Libraries', link: '/addons/ext_js' },
           { text: 'UI Extensions', link: '/addons/popup' },
           { text: 'Remote App Calls', link: '/addons/rfc' },
-     //     { text: 'Apps', link: '/addons/apps' },
         ]
       },
       {
@@ -160,8 +158,8 @@ export default defineConfig({
         items: [
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
-          { text: 'Builds', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
+          { text: 'Builds', link: '/advanced/downporting' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
@@ -187,14 +185,10 @@ export default defineConfig({
           { text: 'Who Uses abap2UI5?', link: '/resources/who_uses' },
           { text: 'Changelog', link: '/resources/changelog' },
           { text: 'License', link: '/resources/license' },
-      //    { text: 'Community',  items: [
-     //       { text: 'Logos', link: '/resources/logo' },
-            { text: 'Support', link: '/resources/support' },
-            { text: 'Contact', link: '/resources/contact' },
-            { text: 'Contribution', link: '/resources/contribution' },
-            { text: 'Sponsor', link: '/resources/sponsor' },
-    //       ]
-    //      },
+          { text: 'Support', link: '/resources/support' },
+          { text: 'Contact', link: '/resources/contact' },
+          { text: 'Contribution', link: '/resources/contribution' },
+          { text: 'Sponsor', link: '/resources/sponsor' },
         ]
       }
     ],
