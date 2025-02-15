@@ -120,15 +120,6 @@ export default defineConfig({
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
            ]
           },
-          { text: 'Addons, Apps', collapsed : true , items: [
-            { text: 'Layouts, Variants', link: '/development/addons/layout' },
-            { text: 'JS Libraries', link: '/development/addons/ext_js' },
-            { text: 'UI Extensions', link: '/development/addons/popup' },
-            { text: 'SE16', link: '/development/addons/popup' },
-            { text: 'table-content-loader', link: '/development/addons/popup' },
-            { text: 'abap-sql-console', link: '/development/addons/popup' },
-           ]
-          },
         ]
       },
       {
@@ -156,6 +147,7 @@ export default defineConfig({
         link: '/advanced/advanced',
         collapsed: true,
         items: [
+          { text: 'Addons' , link: '/advanced/addons' },
           { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
