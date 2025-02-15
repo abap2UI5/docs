@@ -110,6 +110,7 @@ export default defineConfig({
             { text: 'Drag & Drop', link: '/development/specific/drag' },
             { text: 'Smart Controls', link: '/development/specific/smart_controls' },
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
+            { text: 'Stateful Sessions', link: '/development/specific/stateful' },
            ]
           },
         ]
@@ -140,11 +141,9 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: 'Addons' , link: '/advanced/addons' },
-          { text: 'Stateful Sessions', link: '/advanced/stateful' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Builds', link: '/advanced/downporting' },
-          { text: 'Remote App Calls', link: '/advanced/rfc' },
           { text: 'Extensibility',  collapsed : "false" , link: '/advanced/extensibility' , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
