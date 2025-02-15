@@ -50,16 +50,9 @@ export default defineConfig({
             text: 'Project', items: [
               { text: 'abap2UI5', link: 'https://github.com/abap2UI5/abap2UI5' },
               { text: 'addons', link: 'https://github.com/abap2UI5-addons' },
-              { text: 'apps', link: 'https://github.com/abap2UI5-apps' },
               { text: 'samples', link: 'https://github.com/abap2UI5/samples' },
-            ]
-          },
-          {
-            text: 'More', items: [
-              { text: 'frontend', link: 'https://github.com/abap2UI5/frontend' },
               { text: 'docs', link: 'https://github.com/abap2UI5/docs' },
               { text: 'issues', link: 'https://github.com/abap2UI5/abap2UI5/issues' },
-             
             ]
           },
         ]
