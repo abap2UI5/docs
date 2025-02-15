@@ -1,3 +1,3 @@
 ## abap2UI5 Guide
 
-🚀 [Guide](https://abap2ui5.github.io/docs/)
+The files of the abap2UI5 documentation. Feel free to contribute if you find any typos or have additional content to add.
