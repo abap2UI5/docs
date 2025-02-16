@@ -29,11 +29,9 @@ The abap2UI5 system footprint is kept as small as possible including only essent
 
 ##### Compatibility
 abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from version 7.02 to ABAP Cloud:
-* S/4 Public Cloud
-* BTP ABAP Environment
-* S/4 Private Cloud
-* S/4 On-Premise
-* R/3 NetWeaver
+* S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
+* S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
+* R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
 
 ##### Installation
 Installing abap2UI5 is easy:
