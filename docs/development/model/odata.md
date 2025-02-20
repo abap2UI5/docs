@@ -55,7 +55,9 @@ METHOD z2ui5_if_app~main.
         )->text( '{FLIGHT>Name}'
         )->text( '{FLIGHT>City}'
         )->text( '{FLIGHT>CountryCode}' ).
- 
+
+    client->view_display( tab->stringify( ) ).
+
     client->follow_up_action( client->_event_client(
         val = z2ui5_if_client=>cs_event-set_odata_model
         t_arg = value #(
@@ -84,6 +86,8 @@ tab->items( )->column_list_item( )->cells(
     )->text( '{TRAVEL>BookingSupplementID}'
     )->text( '{TRAVEL>SupplementID}' ).
 
+client->view_display( tab->stringify( ) ).
+
 client->follow_up_action( client->_event_client(
     val = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = value #(
@@ -109,25 +113,29 @@ In SAP contexts, OData services are often enriched with additional annotations. 
 ```
 We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. Here’s an example:
 ```abap
-     data(tab) = page->table(
-        items = `{TRAVEL>/Currency}`
-        growing = abap_true ).
 
-    tab->header_toolbar( )->toolbar(
-      )->title( 'table with OData model TRAVEL' ).
+data(tab) = page->table(
+    items = `{TRAVEL>/Currency}`
+    growing = abap_true ).
 
-    tab->columns(
-      )->column(  )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
-      )->column(  )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
-      )->column(  )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
-      )->column(  )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' )->get_parent(
-      ).
+tab->columns(
+    )->column(  )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
+    )->column(  )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
+    )->column(  )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
+    )->column(  )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' ).
 
-    tab->items( )->column_list_item( )->cells(
-      )->text( '{TRAVEL>Currency}'
-      )->text( '{TRAVEL>Currency_Text}'
-      )->text( '{TRAVEL>Decimals}'
-      )->text( '{TRAVEL>CurrencyISOCode}'
-      ).
+tab->items( )->column_list_item( )->cells(
+    )->text( '{TRAVEL>Currency}'
+    )->text( '{TRAVEL>Currency_Text}'
+    )->text( '{TRAVEL>Decimals}'
+    )->text( '{TRAVEL>CurrencyISOCode}' ).
+
+client->view_display( tab->stringify( ) ).
+
+client->follow_up_action( client->_event_client(
+    val = z2ui5_if_client=>cs_event-set_odata_model
+    t_arg = value #(
+        ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
+        ( `TRAVEL` ) ) ) ).  
 ```
 The column titles are now automatically set with the correct title in the user’s language.
