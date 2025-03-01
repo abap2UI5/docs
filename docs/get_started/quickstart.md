@@ -16,7 +16,7 @@ Install [this project](https://github.com/abap2UI5/abap2UI5) with [abapGit.](htt
 
 
 ### 2. Create HTTP Handler
-Create a new package with and define a new HTTP handler class:
+Create a new package and define a new HTTP handler class:
 
 ::: code-group
 
