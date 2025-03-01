@@ -69,7 +69,7 @@ For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tut
 ### 4. Initial Launch
 Now access the HTTP endpoint from a web browser:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press "Check" and launch the test app. That’s it! Now you can create a new class and start developing your own abap2UI5 apps.
+Press `check` and launch the test app. That’s it! Now you can create a new class and start developing your own abap2UI5 apps.
 
 ::: tip Security
 This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
