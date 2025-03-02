@@ -7,7 +7,7 @@ In abap2UI5, you don’t necessarily need to define your data model at design ti
 
 abap2UI5 serializes app instances to ensure stateless behavior in client communication. However, SAP’s standard transformation features are limited and do not support data references with local types created at runtime. 
 
-To overcome this limitation, the project [S-RTTI](https://github.com/sandraros/S-RTTI) is integrated into abap2UI5 under the `z2ui5` namespace.
+To overcome this limitation, the project [S-RTTI](https://github.com/sandraros/S-RTTI) is integrated into abap2UI5.
 
 
 #### Standard Transformation
@@ -91,3 +91,12 @@ With generic types, the standard transformation throws an error. abap2UI5 resolv
 - On the way back, the object is recreated, and the table content is deserialized back into the attributes.
 
 This approach ensures compatibility with dynamic types while maintaining a robust transformation process. This process works in the background and independently of the two app implementations above.
+
+#### Integration
+
+It is integrated into the project under the `z2ui5` namespace and automatically installed with every abap2UI5 installation. You can access it directly using:
+```abap
+z2ui5_cl_srt_datadescr=>
+```
+#### Updates
+Every update and bug fix in s-rtti is automatically reflected in abap2UI5 via GitHub Actions and the [mirror-s-rtti](https://github.com/abap2UI5/mirror-srtti) repository, ensuring always using the latest version.
