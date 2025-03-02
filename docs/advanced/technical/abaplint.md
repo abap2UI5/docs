@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Linting
+# abaplint
 
 The frontend JS code and the backend abap code are static code checked with every PR.
 
@@ -21,3 +21,10 @@ The project uses the [ui5linter](https://github.com/SAP/ui5-linter) for static c
 
 #### Configuration
 The default configuration is applied.
+
+
+#### Renaming
+
+#### Downporting
+
+#### Code Checks
