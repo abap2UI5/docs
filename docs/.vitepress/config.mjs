@@ -154,7 +154,8 @@ export default defineConfig({
       //      { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
       //      { text: 'Draft, REST', link: '/advanced/technical/rest' },
        //     { text: 'Deployment, abapGit', link: '/advanced/technical/abapgit' },
-            { text: 'RTTI', link: '/advanced/technical/srtti' },
+            { text: 'ajson', link: '/advanced/technical/ajson' },
+            { text: 'S-RTTI', link: '/advanced/technical/srtti' },
             { text: 'Linting', link: '/advanced/technical/linting' },
             { text: 'open-abap', link: '/advanced/technical/open_abap' },
           ]
