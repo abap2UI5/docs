@@ -149,12 +149,6 @@ export default defineConfig({
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
-          { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
-      //      { text: 'Architecture', link: '/advanced/technical/architecture' },
-      //      { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
-      //      { text: 'Draft, REST', link: '/advanced/technical/rest' },
-          ]
-          },
           { text: 'Tools',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
             { text: 'abapGit', link: '/advanced/technical/abapgit' },
             { text: 'ajson', link: '/advanced/technical/ajson' },
@@ -163,6 +157,7 @@ export default defineConfig({
             { text: 'open-abap', link: '/advanced/technical/open_abap' },
           ]
           },
+           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/insights' },
          ]
       },
       {
