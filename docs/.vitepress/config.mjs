@@ -153,7 +153,9 @@ export default defineConfig({
       //      { text: 'Architecture', link: '/advanced/technical/architecture' },
       //      { text: 'Designtime, Runtime', link: '/advanced/technical/designtime' },
       //      { text: 'Draft, REST', link: '/advanced/technical/rest' },
-       //     { text: 'Deployment, abapGit', link: '/advanced/technical/abapgit' },
+          ]
+          },
+          { text: 'Used Tools',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
             { text: 'abapGit', link: '/advanced/technical/abapgit' },
             { text: 'ajson', link: '/advanced/technical/ajson' },
             { text: 'S-RTTI', link: '/advanced/technical/srtti' },
