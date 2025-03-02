@@ -155,7 +155,7 @@ export default defineConfig({
       //      { text: 'Draft, REST', link: '/advanced/technical/rest' },
           ]
           },
-          { text: 'Used Tools',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
+          { text: 'Tools',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
             { text: 'abapGit', link: '/advanced/technical/abapgit' },
             { text: 'ajson', link: '/advanced/technical/ajson' },
             { text: 'S-RTTI', link: '/advanced/technical/srtti' },
