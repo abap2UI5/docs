@@ -159,7 +159,7 @@ export default defineConfig({
             { text: 'abapGit', link: '/advanced/technical/abapgit' },
             { text: 'ajson', link: '/advanced/technical/ajson' },
             { text: 'S-RTTI', link: '/advanced/technical/srtti' },
-            { text: 'abaplint', link: '/advanced/technical/linting' },
+            { text: 'abaplint', link: '/advanced/technical/abaplint' },
             { text: 'open-abap', link: '/advanced/technical/open_abap' },
           ]
           },
