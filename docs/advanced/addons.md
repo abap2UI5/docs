@@ -1,7 +1,20 @@
 # Addons
 
-You can extend abap2UI5 with various additional functionalities and ready-to-use apps. Check out the abap2UI5-addons page and find the functionality you need [here.](https://github.com/abap2UI5-addons)
+The abap2UI5 project is designed to be as lightweight as possible, focusing on the following core functionalities:
+* Rendering views
+* Event handling
+* Data exchange
 
-There are features like layout-variant management, just as you know it from classic SAP GUI selection screens or ALV development. You can also find table maintenance tools or enhance your apps with third-party libraries like Chart.js.
+This approach reduces complexity, making the project easier to maintain and improve. However, if you need additional functionality, you can install addons for common features.
 
-Already created a new functionality? Feel free to contribute to existing repositories or create your own. The abap2UI5 community welcomes everyone who wants to contribute!
+#### Addons
+Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) to find the functionality you need. Available features include:
+- Layout-variant management, similar to classic SAP GUI selection screens or ALV development
+- Table maintenance tools
+- Integration with third-party libraries like Chart.js for enhanced visualization
+- And much more.
+
+And many more.
+
+#### Contribution
+Have you developed a new feature? Feel free to contribute to existing repositories or create your own. We welcome all contributors!
