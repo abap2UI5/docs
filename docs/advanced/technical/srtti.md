@@ -1,16 +1,15 @@
 ---
 outline: [2, 4]
 ---
-# RTTI
+# S-RTTI
 
-<i class="fa-brands fa-github"></i> [S-RTTI Project on GitHub](https://github.com/sandraros/S-RTTI)
+In abap2UI5, you don’t necessarily need to define your data model at design time. Instead, you can work with generic data references and apply typing dynamically at runtime based on your program logic. This is particularly useful for scenarios like tables, where different columns and table types may be displayed depending on user input.
 
-In abap2UI5, you don’t necessarily need to type your data model at design time, just work with generic data references and apply typing at runtime based on your program logic. This is for example useful for tables where, depending on user input, you may want to display different columns.<br>
+abap2UI5 serializes app instances to ensure stateless behavior in client communication. However, SAP’s standard transformation features are limited and do not support data references with local types created at runtime. To overcome this limitation, the project [S-RTTI](https://github.com/sandraros/S-RTTI) is integrated into abap2UI5 under the `z2ui5` namespace.
 
-abap2UI5 serializes your app instances to ensure stateless behavior in client communication. The SAP standard serialization features are limited; they do not support data references with local types created at runtime. If you encounter problems, just install the fantastic project [S-RTTI](https://github.com/sandraros/S-RTTI) filling this gap.
 
-#### Basic
-Fully typed data at design time, it works out of the box:
+#### Standard Transformation
+With fully typed data at design time, the standard SAP transformation works out of the box:
 
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
@@ -47,8 +46,8 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Generic Data Reference (local type)
-Data typed at runtime with local types; this only works with S-RTTI:
+#### Transformation with S-RTTI
+When working with data typed dynamically at runtime using local types, S-RTTI is required:
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
@@ -82,3 +81,11 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 ENDCLASS.
 
 ```
+#### Functionality
+With generic types, the standard transformation throws an error. abap2UI5 resolves this issue by looping over all attributes and applying a workaround:
+- For each generic attribute, a separate serialization is performed using S-RTTI beforehand.
+- The data is stored in a separate table.
+- The variable is initialized, and the standard SAP transformation is called again.
+- On the way back, the object is recreated, and the table content is deserialized back into the attributes.
+- 
+This approach ensures compatibility with dynamic types while maintaining a robust transformation process. This process works in the background and independently of the two app implementations above.
