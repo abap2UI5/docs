@@ -149,15 +149,15 @@ export default defineConfig({
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
           ] },
-          { text: 'Tools',  collapsed : "false" , link: '/advanced/technical/insights' , items: [
-            { text: 'abapGit', link: '/advanced/technical/abapgit' },
-            { text: 'ajson', link: '/advanced/technical/ajson' },
-            { text: 'S-RTTI', link: '/advanced/technical/srtti' },
-            { text: 'abaplint', link: '/advanced/technical/abaplint' },
-            { text: 'open-abap', link: '/advanced/technical/open_abap' },
+          { text: 'Tools',  collapsed : "false" , items: [
+            { text: 'abapGit', link: '/advanced/tools/abapgit' },
+            { text: 'ajson', link: '/advanced/tools/ajson' },
+            { text: 'S-RTTI', link: '/advanced/tools/srtti' },
+            { text: 'abaplint', link: '/advanced/tools/abaplint' },
+            { text: 'open-abap', link: '/advanced/tools/open_abap' },
           ]
           },
-           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/insights' },
+           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/technical' },
          ]
       },
       {
