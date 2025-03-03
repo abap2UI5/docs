@@ -111,6 +111,7 @@ export default defineConfig({
             { text: 'Smart Controls', link: '/development/specific/smart_controls' },
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
             { text: 'Stateful Sessions', link: '/development/specific/stateful' },
+            { text: 'URL, ', link: '/development/specific/url' },
            ]
           },
         ]
