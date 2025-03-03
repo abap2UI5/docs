@@ -1,30 +1,26 @@
 ---
 outline: [2, 4]
 ---
-# abaplint
 
-The frontend JS code and the backend abap code are static code checked with every PR.
+# abaplint  
 
-### abaplint
+This project uses [abaplint](https://abaplint.app/) for static code analysis and various additional tasks.  
 
-The project uses [abaplint](https://abaplint.app/) for static code analysis, ensuring code quality and adherence to ABAP best practices.
+#### Static Code Analysis  
 
-#### Configuration
-You can review the project-specific abaplint configuration [here.](https://github.com/abap2UI5/abap2UI5/blob/main/ci/abaplint/abaplint.jsonc)
+With every PR, the ABAP code is checked using **abaplint**, ensuring code quality and adherence to ABAP best practices. You can review the project-specific abaplint configuration [here](https://github.com/abap2UI5/abap2UI5/abaplint.jsonc). All statistics and analysis results are available on the abaplint app dashboard [here](https://abaplint.app/stats/abap2UI5/abap2UI5).  
 
-#### Dashboard
-All statistics and results from the abaplint analysis are available on the abaplint dashboard [here.](https://abaplint.app/stats/abap2UI5/abap2UI5)
+#### Downporting  
 
-### ui5lint
+An **abap2UI5** version with **compatible syntax for ABAP v702** is automatically built using the abaplint downport feature:  
 
-The project uses the [ui5linter](https://github.com/SAP/ui5-linter) for static code analysis of frontend artifacts. The linter checks for issues such as deprecated API usage and ensures compatibility with UI5 2.x. 
-
-#### Configuration
-The default configuration is applied.
-
+```sh
+abaplint --fix .github/abaplint/abap_702.jsonc
+```
 
 #### Renaming
+All artifacts are compatible with the abaplint renaming feature, allowing you to use abap2UI5 under different custom namespaces:
 
-#### Downporting
-
-#### Code Checks
+```sh
+abaplint .github/abaplint/rename_test.jsonc --rename
+```
