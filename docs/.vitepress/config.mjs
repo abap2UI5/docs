@@ -147,8 +147,8 @@ export default defineConfig({
           { text: 'Builds', link: '/advanced/builds' },
           { text: 'Extensibility',  collapsed : "false" , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
-            { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
+            { text: 'Custom Control', link: '/advanced/extensibility/custom_control' }
           ] },
           { text: 'Tools',  collapsed : "false" , items: [
             { text: 'abapGit', link: '/advanced/tools/abapgit' },
