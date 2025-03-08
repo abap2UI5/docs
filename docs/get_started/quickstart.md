@@ -6,7 +6,7 @@ outline: [2, 4]
 
 ### 1. Installation with abapGit
 
-Install [this project](https://github.com/abap2UI5/abap2UI5) with [abapGit.](https://abapgit.org)
+Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit.](https://abapgit.org)
 
 ![alt text](image.png)
 
