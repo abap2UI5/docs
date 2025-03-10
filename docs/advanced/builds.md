@@ -1,4 +1,4 @@
-# Builds
+# Builder
 
 If you use abap2UI5 extensively, you may consider creating your own build by defining a custom namespace and including the specific addons you need:
 - Use abap2UI5 in the `z2ui5` namespace for improvements and pull requests, while maintaining a separate namespace for your production version.
