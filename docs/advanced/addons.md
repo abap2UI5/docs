@@ -5,7 +5,7 @@ The abap2UI5 project focuses solely on the following core functionalities:
 * Event handling
 * Data exchange
 
-This approach reduces complexity, making the project easier to maintain and improve. However, if you need additional functionality, you can install addons for common features.
+This approach makes the project easier to maintain and improve. However, if you need additional functionality, you can install addons for common features.
 
 #### Addons
 Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) to find the functionality you need. Available features include:
