@@ -144,7 +144,7 @@ export default defineConfig({
           { text: 'Addons' , link: '/advanced/addons' },
           { text: 'Downporting', link: '/advanced/downporting' },
           { text: 'Renaming', link: '/advanced/renaming' },
-          { text: 'Builds', link: '/advanced/builds' },
+          { text: 'Builder', link: '/advanced/builds' },
           { text: 'Extensibility',  collapsed : "false" , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
