@@ -3,8 +3,6 @@ outline: [2, 4]
 ---
 # References
 
-#### 2025
-
 #### 2024
 * Automated Deployment of abap2UI5 [(Blog - 17.12.2024)](https://www.nuveplatform.com/blog/deploy-abap2ui5)
 * Webinar on creation of UI5 Interfaces from ABAP using abap2UI5 [(YouTube - 12.12.2024)](https://www.youtube.com/watch?v=N2OAdxf7Lng)
