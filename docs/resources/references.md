@@ -3,6 +3,9 @@ outline: [2, 4]
 ---
 # References
 
+#### 2025
+* Featured on SAP Developer News [(YouTube - 21.03.2025)](https://www.youtube.com/watch?v=vKrpkDe2mkU&list=PL6RpkC85SLQAVBSQXN9522_1jNvPavBgg&t=90s)
+
 #### 2024
 * Automated Deployment of abap2UI5 [(Blog - 17.12.2024)](https://www.nuveplatform.com/blog/deploy-abap2ui5)
 * Webinar on creation of UI5 Interfaces from ABAP using abap2UI5 [(YouTube - 12.12.2024)](https://www.youtube.com/watch?v=N2OAdxf7Lng)
