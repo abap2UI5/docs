@@ -1,6 +1,6 @@
 # Formatter
 
-You can format values like Currencies, Numerics or Times directly at the frontend with formatter functions:
+You can format values such as currencies, numerics, or timestamps directly in the frontend using formatter functions.
 
 ```abap
 
@@ -126,3 +126,5 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 ENDCLASS.
 
 ```
+
+Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting using formatOptions and constraints. You can also check out the sample implementation in class `z2ui5_cl_demo_app_067`.
