@@ -112,6 +112,7 @@ export default defineConfig({
             { text: 'Geolocation, Maps', link: '/development/specific/geolocation' },
             { text: 'Stateful Sessions', link: '/development/specific/stateful' },
             { text: 'URL', link: '/development/specific/url' },
+            { text: 'Formatter', link: '/development/specific/formatter' },
            ]
           },
         ]
