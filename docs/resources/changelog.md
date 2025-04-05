@@ -1,8 +1,16 @@
 # Changelog
 
 
+## v1.138.0
+2025-03-31
+- Introduced a Copy to Clipboard feature for improved usability
+- Enhanced the BAL message popup with multiple improvements
+- Resolved serialization issues for numeric values
+- Fixed Launchpad compatibility problems with older UI5 versions
+- Updated the bundled ajson library to the latest version
+
 ## v1.137.0
-2024-01-26
+2025-01-26
 - Introduced App State feature
 - Added App State Persistence for Navigation
 - Fixed long string bugs for older releases
