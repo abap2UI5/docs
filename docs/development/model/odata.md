@@ -59,7 +59,7 @@ METHOD z2ui5_if_app~main.
     client->view_display( tab->stringify( ) ).
 
     client->follow_up_action( client->_event_client(
-        val = z2ui5_if_client=>cs_event-set_odata_model
+        val   = z2ui5_if_client=>cs_event-set_odata_model
         t_arg = value #(
             ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
             ( `FLIGHT` ) ) ) ).
