@@ -22,7 +22,7 @@ DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     growing = abap_true ).
 
 tab->columns(
-    )->column(  )->text( 'AirportID' )->get_parent(
+    )->column( )->text( 'AirportID' )->get_parent(
     )->column( )->text( 'Name' )->get_parent(
     )->column( )->text( 'City' )->get_parent(
     )->column( )->text( 'CountryCode' ).
