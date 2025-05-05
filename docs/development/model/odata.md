@@ -41,7 +41,7 @@ Here’s the complete source code:
 METHOD z2ui5_if_app~main.
   
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-        items = `{FLIGHT>/Airport}`
+        items   = `{FLIGHT>/Airport}`
         growing = abap_true ).
 
     tab->columns(
@@ -71,7 +71,7 @@ ENDMETHOD.
 You can also bind multiple OData models simultaneously. For example, here’s how to bind an additional OData model under the name `TRAVEL`:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-    items = `{TRAVEL>/BookingSupplement}`
+    items   = `{TRAVEL>/BookingSupplement}`
     growing = abap_true ).
 
 tab->columns(
@@ -89,7 +89,7 @@ tab->items( )->column_list_item( )->cells(
 client->view_display( tab->stringify( ) ).
 
 client->follow_up_action( client->_event_client(
-    val = z2ui5_if_client=>cs_event-set_odata_model
+    val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = value #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).  
@@ -115,7 +115,7 @@ We can use these SAP annotations in our UI5 view to utilize backend translations
 ```abap
 
 data(tab) = page->table(
-    items = `{TRAVEL>/Currency}`
+    items   = `{TRAVEL>/Currency}`
     growing = abap_true ).
 
 tab->columns(
@@ -133,7 +133,7 @@ tab->items( )->column_list_item( )->cells(
 client->view_display( tab->stringify( ) ).
 
 client->follow_up_action( client->_event_client(
-    val = z2ui5_if_client=>cs_event-set_odata_model
+    val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = value #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).  
