@@ -45,7 +45,7 @@ METHOD z2ui5_if_app~main.
         growing = abap_true ).
 
     tab->columns(
-        )->column(  )->text( 'AirportID' )->get_parent(
+        )->column( )->text( 'AirportID' )->get_parent(
         )->column( )->text( 'Name' )->get_parent(
         )->column( )->text( 'City' )->get_parent(
         )->column( )->text( 'CountryCode' ).
@@ -119,10 +119,10 @@ data(tab) = page->table(
     growing = abap_true ).
 
 tab->columns(
-    )->column(  )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
-    )->column(  )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
-    )->column(  )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
-    )->column(  )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' ).
+    )->column( )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
+    )->column( )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
+    )->column( )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
+    )->column( )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' ).
 
 tab->items( )->column_list_item( )->cells(
     )->text( '{TRAVEL>Currency}'
