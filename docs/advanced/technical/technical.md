@@ -11,7 +11,7 @@ This is what HTML Over The Wire is all about. It’s a celebration of the simpli
 
 I came across this concept on SCN when I read this blog post, which explained how to use htmx to create Fiori-like apps. Over-the-wire approaches include server-side rendering (SSR) similar to that of a multi-page application (MPA). However, after the initial request, the browser retrieves only HTML fragments asynchronously via AJAX, so the entire page is not re-rendered anymore. Unlike a single-page application (SPA), the server handles also the application's logic and state:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
 HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 
