@@ -54,7 +54,7 @@ But one specific characteristic we should examine closely is how the UI5 framewo
 
 UI5 normally - ABAP delivers only Data
 
-##### (6) abap2UI5 Architecture
+##### 6. abap2UI5 Architecture
 
 And here is now the trick: what if, in addition to sending data from the backend, we also send the view?
 
