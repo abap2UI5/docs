@@ -16,7 +16,7 @@ I came across this concept on SCN when I read this blog post, which explained h
 
 The idea of combining View & Data and transferring them together to the frontend is significantly distinct from most of the current approach where HTML, CSS & JavaScript are strictly separated and stored at the frontend whereas the data is sent by the backend.
 
-##### 2. Hypermedia Driven Application (HDA)
+##### 2. Hypermedia Driven App
 
 This leads to a concept that we could refer to as a hypermedia-driven application (HDA), which is introduced here. Let's compare this approach to that of multi-page applications (MPA) and single-page applications (SPA):
 
@@ -42,7 +42,7 @@ Most of my knowledge about this subject comes from this blog posts, and it's sti
 
 But now let's start to ask what we can bring of this concept to UI5 and the ABAP environment?
 
-##### (5) UI5 Architecture
+##### 5. UI5 Architecture
 
 UI5 differs significantly from frameworks like htmx and unpoly. In an UI5 app, all of the logic is handled at the frontend, while the backend utilizes an OData-Implementation. This means that ABAP is only used for delivering data and has no opportunities to implement its own logic or UI. We have a "heavy javascript" approach here in a classic SPA architecture (we'll take a closer look at RAP later).
 
@@ -52,7 +52,7 @@ But one specific characteristic we should examine closely is how the UI5 framewo
 
 UI5 normally - ABAP delivers only Data
 
-##### (6) "UI5 Over the Wire" Architecture
+##### (6) abap2UI5 Architecture
 
 And here is now the trick: what if, in addition to sending data from the backend, we also send the view?
 
@@ -80,7 +80,7 @@ UI5 vs. "UI5 Over the Wire" - Communication
 
 We use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but in this case, we cannot send HTML directly. Instead, we send a View combined with its Data. This results in a concept that we could refer to as "UI5-View Over the Wire".
 
-##### (7) Carrying Data and Presentation together
+##### 7. Merging Data & Presentation
 
 A typical "UI5-View Over the Wire" response looks like this:
 
@@ -90,7 +90,7 @@ A typical "UI5-View Over the Wire" response looks like this:
 
 But is this maybe just the same like RAP, but in a different format?
 
-##### (8) RAP
+##### 8. RAP
 
 RAP also aims to find a "sweet spot" between a SPA and MPA. I am not certain of the exact approach they use to bring their view and model to the frontend, but they enrich responses either within the JSON itself or within the metadata of the initial OData-Request and the view and the model is defined previously in CDS Views in the backend:
 
