@@ -12,6 +12,7 @@ This is what HTML Over The Wire is all about. It’s a celebration of the simpli
 I came across this concept on SCN when I read this blog post, which explained how to use htmx to create Fiori-like apps. Over-the-wire approaches include server-side rendering (SSR) similar to that of a multi-page application (MPA). However, after the initial request, the browser retrieves only HTML fragments asynchronously via AJAX, so the entire page is not re-rendered anymore. Unlike a single-page application (SPA), the server handles also the application's logic and state:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
+
 [HTML "Over the Wire" Lifecycle](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 
 The idea of combining View & Data and transferring them together to the frontend is significantly distinct from most of the current approach where HTML, CSS & JavaScript are strictly separated and stored at the frontend whereas the data is sent by the backend.
@@ -21,6 +22,7 @@ The idea of combining View & Data and transferring them together to the frontend
 This leads to a concept that we could refer to as a hypermedia-driven application (HDA), which is introduced here. Let's compare this approach to that of multi-page applications (MPA) and single-page applications (SPA):
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/8117dc10-f0ba-4c52-9d1d-6b9d0986401d" />
+
 [MPA vs. SPA vs. HDA](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)
 
 In a hypermedia-driven application (HDA), the browser is limited to displaying HTML, processing JavaScript and CSS, but has no knowledge of the application's state (i.e., what has happened before and what will happen next). The application's logic is completely maintained on the server. In contrast, in a single-page application (SPA), all routes and potential actions are defined upfront and implemented at the frontend. As a result, any modifications to the application requires rebuilding the frontend app (more information here).
