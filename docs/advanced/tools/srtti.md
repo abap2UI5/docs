@@ -65,10 +65,9 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
     DATA(o_struct_desc) = cl_abap_structdescr=>describe_by_name( 'USR01' ).
     DATA(o_table_desc) = cl_abap_tabledescr=>create(
-                                                     p_line_type  = CAST #( o_struct_desc )           " Spalten
-                                                     p_table_kind = cl_abap_tabledescr=>tablekind_std " Tabellentyp STANDARD TABLE
-                                                     p_unique     = abap_false                        " NON-UNIQUE KEY
-                                                   ).
+      p_line_type  = CAST #( o_struct_desc )           
+      p_table_kind = cl_abap_tabledescr=>tablekind_std 
+      p_unique     = abap_false ).
 
     DATA: o_table TYPE REF TO data.
     CREATE DATA mr_tab TYPE HANDLE o_table_desc.
