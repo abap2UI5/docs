@@ -23,7 +23,7 @@ This leads to a concept that we could refer to as a hypermedia-driven applicatio
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/8117dc10-f0ba-4c52-9d1d-6b9d0986401d" />
 
-[MPA vs. SPA vs. HDA](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)
+test [MPA vs. SPA vs. HDA](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)
 
 In a hypermedia-driven application (HDA), the browser is limited to displaying HTML, processing JavaScript and CSS, but has no knowledge of the application's state (i.e., what has happened before and what will happen next). The application's logic is completely maintained on the server. In contrast, in a single-page application (SPA), all routes and potential actions are defined upfront and implemented at the frontend. As a result, any modifications to the application requires rebuilding the frontend app (more information here).
 
