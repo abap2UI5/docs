@@ -32,7 +32,7 @@ The first approaches in this direction were introduced back in Phoenix LiveView 
 
 In the end, all of these concepts share the belief that it's possible to develop apps with much less complexity, but only slightly lower level of UI fidelity compared to SPAs. Or, when we try to illustrate it visually, they aim to find a "sweet spot" between MPAs and SPAs:
 
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/41af4a41-829e-4289-82f5-18ee7408054b" />
 "Sweet Spot" between SPA and MPA (Quelle)
 
 Most of my knowledge about this subject comes from this blog posts, and it's still relatively new to me (so I don't consider myself an expert). However, it's fascinating to see the existing frameworks and to contemplate what might be achievable in the future, such as selectively re-rendering specific parts of the view or implementing smoother page transitions. I recommend taking an hour to watch this video, where all of these concepts are presented very well.
@@ -45,6 +45,7 @@ UI5 differs significantly from frameworks like htmx and unpoly. In an UI5 app, a
 
 But one specific characteristic we should examine closely is how the UI5 framework creates views. Each HTML output is rendered from an XML-View (let's ignore the former HTML/JS/JSON-Views), with its associated data from the server. The view is stored at the frontend as part of the app:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
 UI5 normally - ABAP delivers only Data
 
@@ -52,22 +53,25 @@ UI5 normally - ABAP delivers only Data
 
 And here is now the trick: what if, in addition to sending data from the backend, we also send the view?
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 
 "UI5 Over the Wire" - ABAP delivers Data & View together
 
 Despite still relying on frontend HTML rendering, all necessary information (view & data) is now retrieved via AJAX from the backend. As a result, the UI5 app remains a SPA, but its role is now reduced to that of a HDA, which is responsible solely for displaying the view and its data:
 
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
 UI5 app downgraded to an HDA - Displaying Data & View received from the server
 
 This means that the frontend app is not aware of what it is currently displaying (whether it's a table, list or input) and neither is it aware of what actions will be taken next. The app logic remains completely on the server and the frontend app is just a small HDA transmitted with the first request:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 
 "UI5 Over the Wire" - Server to Client Communication
 
 The HDA displays the view with its data and sends back each event to the server for determination of the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
 UI5 vs. "UI5 Over the Wire" - Communication
 
@@ -77,6 +81,7 @@ We use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but i
 
 A typical "UI5-View Over the Wire" response looks like this:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 
 "UI5 Over the Wire" - Response with View & Data together
 
@@ -86,10 +91,11 @@ But is this maybe just the same like RAP, but in a different format?
 
 RAP also aims to find a "sweet spot" between a SPA and MPA. I am not certain of the exact approach they use to bring their view and model to the frontend, but they enrich responses either within the JSON itself or within the metadata of the initial OData-Request and the view and the model is defined previously in CDS Views in the backend:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/a79f07ff-594d-422c-b66f-8acf8058c81a" />
 
 RAP - Definition of Views with UI Annotations
 
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/66b8935f-f23a-4b08-bd1d-6ec79f220499" />
 
 RAP - Definition of Data Models with DDL
 
@@ -103,11 +109,13 @@ Overall RAP does not mix View, Model and Logic as radically as the "Over the Wir
 
 First, we do not define a specific HTTP-Service for transmitting the View and the Data. Instead, every app uses the same generic HTTP-Handler including two strings (one for the View and one for the Data) eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime the ABAP variables & tables are transformed into a JSON-Model and transmitted as a string to the frontend. In JavaScript it is parsed again into a JSON-Model and binded to the UI5-View:
 
+<img width="1396008" alt="image" src="https://github.com/user-attachments/assets/163ca12b-fe37-43e8-80b6-a5eaae703d69" />
 
 Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model
 
 Furthermore we not only send the data but also the metadata (Data Model) with every request (7). This is different from classic OData communication, where the metadata is sent with the initial OData request to establish the model at the beginning, and only the data is exchanged afterward. With this approach, we can now send different models with every request:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/95fe59c3-7e8a-4e21-8690-12de1110779f" />
 
 OData vs. UI5 Over the Wire - Model & Data transfer
 
@@ -115,11 +123,13 @@ OData vs. UI5 Over the Wire - Model & Data transfer
 
 This enables the possibility to define models not only at design time, but also at runtime. The user doesn't have to do any extra work because abap2UI5 handles the entire process in the background during every AJAX request:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/e9f1bf8c-6d8c-44ad-ba89-c3648b638335" />
 
 abap2UI5 - Dynamic Data Binding & Model Creation
 
 In apps we can use RTTI now again in a way that is similar to how it was used with ALVs. This means that there is no need to create separated apps for each model. In this demo, you can see an abap2UI5 app with a view including a table output that displays a generic table and its type is created and modified at runtime (similar to SE16):
 
+![gif_se16_2](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
 
 Replacing the Model (metadata) at Runtime
 
