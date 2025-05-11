@@ -1,6 +1,6 @@
 # Technical Background
 
-test
+This post will focus on the technical background and summarize all the project's key ideas by covering topics such as its architecture, codebase and compatibility.
 
 ###### 1. HTML Over the Wire
 
