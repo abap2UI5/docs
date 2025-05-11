@@ -13,7 +13,7 @@ I came across this concept on SCN when I read this blog post, which explained h
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
-[HTML "Over the Wire" Lifecycle](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
+HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 
 The idea of combining View & Data and transferring them together to the frontend is significantly distinct from most of the current approach where HTML, CSS & JavaScript are strictly separated and stored at the frontend whereas the data is sent by the backend.
 
