@@ -1,7 +1,8 @@
 # Technical Background
 
 
-##### (1) HTML Over the Wire
+
+###### 1. HTML Over the Wire
 
 Let's start by taking a closer look at the concept of "HTML Over the Wire", an approach that influenced abap2UI5 and is well explained in this blog post:
 You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that (with a little help) directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines. But you do need to think different. [...] 
@@ -15,7 +16,7 @@ HTML "Over the Wire" Lifecycle ([Quelle](https://community.sap.com/t5/technology
 
 The idea of combining View & Data and transferring them together to the frontend is significantly distinct from most of the current approach where HTML, CSS & JavaScript are strictly separated and stored at the frontend whereas the data is sent by the backend.
 
-##### (2) Hypermedia Driven Application (HDA)
+#### 2. Hypermedia Driven Application (HDA)
 
 This leads to a concept that we could refer to as a hypermedia-driven application (HDA), which is introduced here. Let's compare this approach to that of multi-page applications (MPA) and single-page applications (SPA):
 
