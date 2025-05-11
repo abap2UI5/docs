@@ -2,7 +2,7 @@
 
 This post will focus on the technical background and summarize all the project's key ideas by covering topics such as its architecture, codebase and compatibility.
 
-###### 1. HTML Over the Wire
+##### 1.HTML Over the Wire
 
 Let's start by taking a closer look at the concept of "HTML Over the Wire", an approach that influenced abap2UI5 and is well explained in this blog post:
 You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that (with a little help) directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines. But you do need to think different. [...] 
@@ -16,7 +16,7 @@ HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technolog
 
 The idea of combining View & Data and transferring them together to the frontend is significantly distinct from most of the current approach where HTML, CSS & JavaScript are strictly separated and stored at the frontend whereas the data is sent by the backend.
 
-#### 2. Hypermedia Driven Application (HDA)
+##### 2.Hypermedia Driven Application (HDA)
 
 This leads to a concept that we could refer to as a hypermedia-driven application (HDA), which is introduced here. Let's compare this approach to that of multi-page applications (MPA) and single-page applications (SPA):
 
@@ -25,11 +25,11 @@ MPA vs. SPA vs. HDA [(Quelle)](https://craftcms.com/events/dot-all-2022/sessions
 
 In a hypermedia-driven application (HDA), the browser is limited to displaying HTML, processing JavaScript and CSS, but has no knowledge of the application's state (i.e., what has happened before and what will happen next). The application's logic is completely maintained on the server. In contrast, in a single-page application (SPA), all routes and potential actions are defined upfront and implemented at the frontend. As a result, any modifications to the application requires rebuilding the frontend app (more information here).
 
-##### (3) Separation of Concerns
+##### 3.Separation of Concerns
 
 In a HDA, the idea of separation of concerns is not highly prioritized. CSS, JavaScript, and HTML are not cleanly separated, and the backend is responsible not only for the data but also for generating the UI and the program flow. However, the advantage of this approach is that we can maintain and customize everything in one place, as we're accustomed to in the past for example in former SAP GUI applications (more information here).
 
-##### (4) Dive Deeper
+##### 4.Dive Deeper
 
 The first approaches in this direction were introduced back in Phoenix LiveView (2018) and in Laravel Livewire (2019). Now, there are several frameworks that work on similar principles, such as htmx, hotwire or unpoly (check out newer blog posts here and here).
 
