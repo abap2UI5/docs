@@ -6,17 +6,18 @@ It covers the core ideas behind the framework — including its architecture, co
 
 ##### 1. HTML Over the Wire
 
-The concept of HTML Over the Wire has significantly influenced abap2UI5. This approach advocates generating HTML on the server and delivering it directly to the browser, bypassing intermediate formats like JSON and eliminating the need for client-side MVC frameworks, complex bundling, or transpilation pipelines.
+One of the core ideas behind abap2UI5 is inspired by the concept of **"HTML Over the Wire"**. This approach suggests rendering HTML directly on the server and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
 
-> “HTML Over The Wire” celebrates simplicity by merging data and presentation in a single format, transmitted together for both initial loads and dynamic updates."
+> "HTML Over the Wire" embraces simplicity by merging data and presentation into a single format, sent together for both initial page loads and dynamic updates.
 
-The idea was introduced via an SCN blog post on using htmx to build Fiori-like applications. Unlike SPAs, where logic and state reside on the frontend, HTML Over the Wire retains application state and logic on the server. After the initial page load, only HTML fragments are asynchronously retrieved, avoiding full page reloads:
+The idea was introduced in the SAP community through examples using the JavaScript library **htmx** to build Fiori-like apps. Unlike typical Single Page Applications (SPAs), where state and logic reside on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
+
+After the initial page load, only small HTML fragments are sent asynchronously via AJAX to update parts of the page — avoiding full reloads.
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
-
 _HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
-This method contrasts with the common practice of separating HTML, CSS, and JavaScript on the frontend, with the backend serving only data.
+This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are managed independently on the frontend while the backend only delivers data.
 
 ##### 2. Hypermedia Driven App
 
