@@ -62,7 +62,6 @@ With its pure ABAP approach and seamless abapGit integration, abap2UI5 enables r
 
 ## Further Reading
 
-- [abap2UI5 GitHub Repository](https://github.com/abap2UI5/abap2UI5)
 - [SAPUI5 Freestyle App Development Guide](https://sapui5.hana.ondemand.com/)
 - [RAP (ABAP RESTful Application Programming Model)](https://help.sap.com/viewer/product/ABAP_RESTFUL_APPLICATION_PROGRAMMING_MODEL/latest/en-US)
 - [Fiori Elements Overview](https://experience.sap.com/fiori-design-web/floorplans/)
