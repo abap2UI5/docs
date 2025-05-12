@@ -6,8 +6,6 @@ This page compares **abap2UI5** with both:
 
 The goal is to show how abap2UI5 combines Over-the-Wire simplicity with SAP-specific technologies, offering a lightweight alternative for UI5 development.
 
----
-
 ## 1. abap2UI5 vs LiveView, Livewire & htmx
 
 | Concept                   | LiveView / Livewire / htmx                             | abap2UI5                                                       |
@@ -22,8 +20,6 @@ The goal is to show how abap2UI5 combines Over-the-Wire simplicity with SAP-spec
 | **Deployment**             | Part of backend app, simple web deployment            | Pure ABAP code, no separate UI deployment, fully via abapGit   |
 
 > **Summary:** abap2UI5 applies the "HTML Over the Wire" principle to SAP UI5 applications. Like LiveView, Livewire, and htmx, it keeps state and logic on the server, simplifying frontend complexity. The difference: it leverages UI5 XML Views and integrates natively into ABAP workflows.
-
----
 
 ## 2. abap2UI5 vs SAP Freestyle UI5 & RAP
 
@@ -40,8 +36,6 @@ The goal is to show how abap2UI5 combines Over-the-Wire simplicity with SAP-spec
 | **Versioning & Deployment**| Single ABAP code line, full abapGit integration         | Separate transport of frontend & backend                   | CDS, OData, UI5 app artifacts transported separately       |
 
 > **Summary:** abap2UI5 avoids the complexity of OData, CDS, and separate frontend deployments. Unlike UI5 Freestyle (which requires full-stack JS development) and RAP (which follows strict structures), abap2UI5 allows for rapid, flexible UI5 development directly in ABAP — all in a single code line.
-
----
 
 ## Conclusion
 
