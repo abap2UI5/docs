@@ -21,7 +21,7 @@ The goal is to show how abap2UI5 combines Over-the-Wire simplicity with SAP-spec
 | **Deployment**             | Pure ABAP code, no frontend build/deploy, via abapGit    | Standard web app deployment, no frontend frameworks needed   |
 
 > **Summary:**  
-abap2UI5 adopts the same backend-driven approach as htmx, LiveView, and Livewire, but uses UI5 XML Views and integrates natively into ABAP environments — combining Over-the-Wire simplicity with SAP UI technology.
+abap2UI5 adopts the same backend-driven approach as htmx, LiveView, and Livewire, but uses UI5 XML Views and integrates natively into ABAP environments — combining Over-the-Wire simplicity with SAP UI5 technology.
 
 
 ## 2. abap2UI5 vs UI5 Freestyle
