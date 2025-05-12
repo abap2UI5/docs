@@ -356,14 +356,11 @@ Downporting abap2UI5 code normally would result in a release that is difficult t
 
 The low-syntax branch is automatically generated using abaplint. The separate branch enables development with all new ABAP expressions available since ABAP v750 while still ensuring that all abap2UI5 features added in the future are automatically downported and available for ABAP v702.
 
-I'd like to extend a thank you to lars.hvam here -- he both recommended using a separated downport version and kindly helped to set abaplint up for this project. At a point when I was tediously downporting everything manually, this was a great shortcut. The functionality of automated ABAP downporting is impressive and greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint.
+The functionality of automated ABAP downporting is impressive and greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint. Besides abaplint this framework uses abapGit and benefits from the work of the people who built it:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
 
 ##### 30. Summary
-
-This was the explanation of the technical background. If you are interested in more information, take a look at the previous version of this project. It provides a more in-depth explanation of the server-client communication and you can see how it all started: abap2UI5 - Development of UI5 Selection Screens in pure ABAP.
-Summary
 
 Long blog post short: Inspired by "HTML Over the Wire" (1)(2)(3) we mixed UI and Data together (7) and created an "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13) independent from the View and Data Model (12). It provides us with great flexibility allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
 
