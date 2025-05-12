@@ -6,10 +6,7 @@ All of these frameworks simplify web development by rendering the UI on the serv
 
 abap2UI5 adapts this idea to the SAP world, allowing developers to build UI5 applications purely in ABAP, without OData, CDS, or complex frontend stacks.
 
-
----
-
-## Comparison at a Glance
+#### Comparison at a Glance
 
 | Concept                   | LiveView / Livewire / htmx                             | abap2UI5                                                       | UI5 Freestyle                                              | RAP (Fiori Elements)                                       |
 |---------------------------|------------------------------------------------------|----------------------------------------------------------------|-----------------------------------------------------------|------------------------------------------------------------|
@@ -23,9 +20,7 @@ abap2UI5 adapts this idea to the SAP world, allowing developers to build UI5 app
 | **Backend-driven flexibility** | Full flexibility, logic stays on server               | Complete control in ABAP classes (Views, Models, Logic)        | Backend delivers data only, UI logic in JS                 | Backend defines UI behavior via annotations, limited runtime flexibility |
 | **Custom UI controls**     | Can be added via normal HTML/JS                       | Possible via Over-the-Wire delivery of JS/HTML                 | Developed separately, integrated in frontend               | Limited to RAP-defined extensibility options                |
 
----
-
-## What makes abap2UI5 different?
+#### What makes abap2UI5 different?
 
 While abap2UI5 follows the "Over the Wire" principle like LiveView, Livewire, and htmx, it is adapted to the SAP ecosystem:
 
@@ -39,17 +34,14 @@ Compared to UI5 Freestyle and RAP:
 - abap2UI5 offers more flexibility than RAP but avoids the complexity of Freestyle frontend stacks.
 - UI logic and state remain entirely in ABAP, without maintaining separate frontend projects.
 
----
 
-## Conclusion
+#### Conclusion
 
 abap2UI5 combines the simplicity of "HTML Over the Wire" with SAP UI5's capabilities — fully backend-driven, minimalistic, and flexible. It offers ABAP developers a way to build UI5 applications without the overhead of OData, CAP, or JavaScript-heavy frontend apps.
 
 For developers used to SAP GUI or ALV-based programming, abap2UI5 feels familiar while embracing modern web technologies under the hood.
 
----
-
-## Further Reading
+#### Further Reading
 
 - [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html)
 - [Laravel Livewire](https://laravel-livewire.com/)
