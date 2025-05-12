@@ -1,54 +1,48 @@
 # Technical Background
 
-This post will focus on the technical background and summarize all the project's key ideas by covering topics such as its architecture, codebase and compatibility.
+This article provides an overview of the technical foundations of abap2UI5, summarizing its key ideas regarding architecture, codebase, and compatibility.
 
 ##### 1. HTML Over the Wire
 
-Let's start by taking a closer look at the concept of "HTML Over the Wire", an approach that influenced abap2UI5 and is well explained in this blog post:
-You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that (with a little help) directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines. But you do need to think different. [...] 
+The concept of HTML Over the Wire has significantly influenced abap2UI5. This approach advocates generating HTML on the server and delivering it directly to the browser, bypassing intermediate formats like JSON and eliminating the need for client-side MVC frameworks, complex bundling, or transpilation pipelines.
 
-This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
+“HTML Over The Wire” celebrates simplicity by merging data and presentation in a single format, transmitted together for both initial loads and dynamic updates."
 
-I came across this concept on SCN when I read this blog post, which explained how to use htmx to create Fiori-like apps. Over-the-wire approaches include server-side rendering (SSR) similar to that of a multi-page application (MPA). However, after the initial request, the browser retrieves only HTML fragments asynchronously via AJAX, so the entire page is not re-rendered anymore. Unlike a single-page application (SPA), the server handles also the application's logic and state:
+The idea was introduced via an SCN blog post on using htmx to build Fiori-like applications. Unlike SPAs, where logic and state reside on the frontend, HTML Over the Wire retains application state and logic on the server. After the initial page load, only HTML fragments are asynchronously retrieved, avoiding full page reloads:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
 HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 
-The idea of combining View & Data and transferring them together to the frontend is significantly distinct from most of the current approach where HTML, CSS & JavaScript are strictly separated and stored at the frontend whereas the data is sent by the backend.
+This method contrasts with the common practice of separating HTML, CSS, and JavaScript on the frontend, with the backend serving only data.
 
 ##### 2. Hypermedia Driven App
 
-This leads to a concept that we could refer to as a hypermedia-driven application (HDA), which is introduced here. Let's compare this approach to that of multi-page applications (MPA) and single-page applications (SPA):
+This concept evolves into what is termed a Hypermedia-Driven Application (HDA). In HDAs, the browser focuses solely on rendering HTML, CSS, and JavaScript without knowledge of the application's state. All logic is maintained on the server.
+
+In contrast, SPAs define all routes and actions upfront on the frontend, requiring a full rebuild for any modification. The following illustration compares MPAs, SPAs, and HDAs:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/8117dc10-f0ba-4c52-9d1d-6b9d0986401d" />
 
 MPA vs. SPA vs. HDA [(Quelle)](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)
 
-In a hypermedia-driven application (HDA), the browser is limited to displaying HTML, processing JavaScript and CSS, but has no knowledge of the application's state (i.e., what has happened before and what will happen next). The application's logic is completely maintained on the server. In contrast, in a single-page application (SPA), all routes and potential actions are defined upfront and implemented at the frontend. As a result, any modifications to the application requires rebuilding the frontend app (more information here).
 
-##### 3. Separation of Concerns
+##### 3. Rethinking Separation of Concerns
 
-In a HDA, the idea of separation of concerns is not highly prioritized. CSS, JavaScript, and HTML are not cleanly separated, and the backend is responsible not only for the data but also for generating the UI and the program flow. However, the advantage of this approach is that we can maintain and customize everything in one place, as we're accustomed to in the past for example in former SAP GUI applications (more information here).
+Unlike traditional architectures, HDAs do not prioritize strict separation of CSS, JavaScript, and HTML. The backend generates the UI and handles program flow, much like SAP GUI applications in the past. This centralized approach simplifies customization and maintenance.
 
 ##### 4. Dive Deeper
 
-The first approaches in this direction were introduced back in Phoenix LiveView (2018) and in Laravel Livewire (2019). Now, there are several frameworks that work on similar principles, such as htmx, hotwire or unpoly (check out newer blog posts here and here).
-
-In the end, all of these concepts share the belief that it's possible to develop apps with much less complexity, but only slightly lower level of UI fidelity compared to SPAs. Or, when we try to illustrate it visually, they aim to find a "sweet spot" between MPAs and SPAs:
+Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among the first to adopt this principle. Tools like htmx, hotwire, and unpoly followed, aiming to reduce complexity while maintaining high UI fidelity. These frameworks seek a "sweet spot" between SPA and MPA architectures:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/41af4a41-829e-4289-82f5-18ee7408054b" />
 "Sweet Spot" between SPA and MPA (Quelle)
 
-Most of my knowledge about this subject comes from this blog posts, and it's still relatively new to me (so I don't consider myself an expert). However, it's fascinating to see the existing frameworks and to contemplate what might be achievable in the future, such as selectively re-rendering specific parts of the view or implementing smoother page transitions. I recommend taking an hour to watch this video, where all of these concepts are presented very well.
-
-But now let's start to ask what we can bring of this concept to UI5 and the ABAP environment?
+A recommended video offers an excellent introduction to these ideas.
 
 ##### 5. UI5 Architecture
 
-UI5 differs significantly from frameworks like htmx and unpoly. In an UI5 app, all of the logic is handled at the frontend, while the backend utilizes an OData-Implementation. This means that ABAP is only used for delivering data and has no opportunities to implement its own logic or UI. We have a "heavy javascript" approach here in a classic SPA architecture (we'll take a closer look at RAP later).
-
-But one specific characteristic we should examine closely is how the UI5 framework creates views. Each HTML output is rendered from an XML-View (let's ignore the former HTML/JS/JSON-Views), with its associated data from the server. The view is stored at the frontend as part of the app:
+UI5 applications typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering occur on the frontend. But one specific characteristic we should examine closely is how the UI5 framework creates views. Each HTML output is rendered from an XML-View (let's ignore the former HTML/JS/JSON-Views), with its associated data from the server. The view is stored at the frontend as part of the app:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
@@ -56,7 +50,7 @@ UI5 normally - ABAP delivers only Data
 
 ##### 6. abap2UI5 Architecture
 
-And here is now the trick: what if, in addition to sending data from the backend, we also send the view?
+abap2UI5 introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards an HDA, displaying views and data received from the server:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 
