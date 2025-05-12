@@ -68,3 +68,20 @@ abap2UI5 takes the best of the "HTML Over the Wire" philosophy and applies it to
 
 For developers familiar with SAP GUI and ALV, abap2UI5 offers a modern yet minimalistic approach to build UI5 applications — fast, backend-driven, and efficient.
 
+## Further Reading
+
+If you want to dive deeper into the technologies and concepts mentioned in this comparison, the following resources are recommended:
+
+##### abap2UI5
+- [abap2UI5 GitHub Repository](https://github.com/abap2UI5/abap2UI5)
+- [abap2UI5 – Introduction Blog Post](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-1-introduction-developing-ui5-apps-purely-in-abap/ba-p/13567635)
+
+##### "HTML Over the Wire" Frameworks
+- [Phoenix LiveView Documentation](https://hexdocs.pm/phoenix_live_view/Phoenix.LiveView.html)
+- [Laravel Livewire Documentation](https://laravel-livewire.com/docs)
+- [htmx Documentation](https://htmx.org/docs/)
+
+##### SAP UI5 & RAP
+- [SAPUI5 Freestyle App Development Guide](https://sapui5.hana.ondemand.com/)
+- [SAP RAP Guide (ABAP RESTful Application Programming Model)](https://help.sap.com/viewer/product/ABAP_RESTFUL_APPLICATION_PROGRAMMING_MODEL/latest/en-US)
+- [Fiori Elements Overview](https://experience.sap.com/fiori-design-web/floorplans/)
