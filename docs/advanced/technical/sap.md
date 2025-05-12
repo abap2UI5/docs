@@ -1,4 +1,4 @@
-# abap2UI5 vs SAP UI5 & RAP
+# abap2UI5 vs. UI5 Freestyle & RAP
 
 This page compares **abap2UI5** with SAP's typical UI development approaches:
 - **UI5 Freestyle apps**
