@@ -163,7 +163,7 @@ export default defineConfig({
           ]
           },
            { text: 'Technical Background',  collapsed : "true" , items: [
-            { text: 'How it All Works', link: '/advanced/technical/how_it_all_works' }
+            { text: 'How it All Works', link: '/advanced/technical/how_it_all_works' },
             { text: 'Comparison', link: '/advanced/technical/comparison' }
           ]
            },
