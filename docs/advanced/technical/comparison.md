@@ -1,8 +1,11 @@
 # Comparison to LiveView, Livewire & htmx
 
-**abap2UI5** follows the same fundamental principles as modern "HTML Over the Wire" frameworks like **Phoenix LiveView**, **Laravel Livewire**, and **htmx** — while also contrasting it with **UI5 Freestyle** development and **RAP (Fiori Elements)**.
+**abap2UI5** follows the same fundamental principles as modern "HTML Over the Wire" frameworks like **Phoenix LiveView**, **Laravel Livewire**, and **htmx** (while also contrasting it with **RAP (Fiori Elements)**).
 
-The goal is to reduce frontend complexity by keeping logic and state in the backend, enabling ABAP developers to build UI5 applications with a clean, backend-driven approach.
+All of these frameworks simplify web development by rendering the UI on the server and sending it directly to the browser — reducing frontend complexity and keeping logic and state in the backend.
+
+abap2UI5 adapts this idea to the SAP world, allowing developers to build UI5 applications purely in ABAP, without OData, CDS, or complex frontend stacks.
+
 
 ---
 
