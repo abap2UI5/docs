@@ -155,7 +155,7 @@ export default defineConfig({
           { text: 'Tools',  collapsed : "false" , items: [
             { text: 'abapGit', link: '/advanced/tools/abapgit' },
             { text: 'ajson', link: '/advanced/tools/ajson' },
-            { text: 'S-RTTI', link: '/advanced/tools/srtti' },
+            { text: 's-rtti', link: '/advanced/tools/srtti' },
             { text: 'abaplint', link: '/advanced/tools/abaplint' },
             { text: 'open-abap', link: '/advanced/tools/open_abap' },
             { text: 'abap-cleaner', link: '/advanced/tools/abap_cleaner' },
