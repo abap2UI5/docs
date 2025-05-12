@@ -158,6 +158,8 @@ export default defineConfig({
             { text: 'S-RTTI', link: '/advanced/tools/srtti' },
             { text: 'abaplint', link: '/advanced/tools/abaplint' },
             { text: 'open-abap', link: '/advanced/tools/open_abap' },
+            { text: 'abap-cleaner', link: '/advanced/tools/abap_cleaner' },
+            { text: 'abapmerge', link: '/advanced/tools/abapmerge' },
           ]
           },
            { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/technical' },
