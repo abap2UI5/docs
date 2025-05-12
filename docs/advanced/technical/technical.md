@@ -114,7 +114,7 @@ Overall RAP does not mix View, Model and Logic as radically as the "Over the Wir
 
 First, we do not define a specific HTTP-Service for transmitting the View and the Data. Instead, every app uses the same generic HTTP-Handler including two strings (one for the View and one for the Data) eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime the ABAP variables & tables are transformed into a JSON-Model and transmitted as a string to the frontend. In JavaScript it is parsed again into a JSON-Model and binded to the UI5-View:
 
-<img width="1396008" alt="image" src="https://github.com/user-attachments/assets/163ca12b-fe37-43e8-80b6-a5eaae703d69" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/163ca12b-fe37-43e8-80b6-a5eaae703d69" />
 
 Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model
 
@@ -142,13 +142,14 @@ Replacing the Model (metadata) at Runtime
 
 Same for the view: In RAP, only certain predefined control attributes can be modified at runtime, while the view is defined in CDS artifacts with UI annotations previously. However, in an abap2UI5 app, it is possible to replace entire view controls. For example, in the following app, a table control is replaced with a list control and vice versa:
 
-
+![gif_ui_change2-1](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
 Replacing the View at Runtime
 
 ##### 12. View & Model independent from the HTTP-Service
 
 In the end, the View & Model are defined independent from the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/6fb61790-87bc-47fa-855e-83d5292b70f3" />
 
 RAP vs. Model & View decoupled from the (single & generic) HTTP-Service
 
@@ -158,6 +159,7 @@ Let's take a look to the HTTP-Handler that provides us with this flexibility.
 
 All apps and data models use the same single generic HTTP-Handler, which can be observed by setting a breakpoint in your app and examining the call stack.
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/1ce80652-4105-4ee5-84e8-35a87eb47556" />
 
 Call stack of an abap2UI5 app
 
@@ -167,6 +169,7 @@ Every app implementation is a REST-based HTTP-Post implementation, in which no s
 
 This makes it compatible with all mobile use cases and devices, as well as with 'RESTful' Environments such as the BTP ABAP Environment and the new language version 'ABAP Cloud'. Similar to an OData-Implementation, where data changes are reflected in the app without requiring an app restart, it is now possible to develop the entire application and modify its view without restarting the frontend app. Take a look at this demo:
 
+![gif_dev](https://github.com/user-attachments/assets/c2c1afce-7d72-46a2-b0a7-7725c70bf5f4)
 
 Developing the ABAP class without restarting the frontend app
 
@@ -178,6 +181,7 @@ Up until now, we have observed that the abap2UI5 frontend app is unaware of the 
 
 The only non-generic part of this concept is the app of the user implementing the interface z2ui5_if_app:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/167b1078-14d7-4354-9561-f4e5c7345544" />
 
 abap2UI5 app - one place for everything
 
@@ -189,16 +193,19 @@ However, this is not a big deal for ABAP! From an ABAP perspective, this is simi
 
 With RAP, users can save interim results in drafts, giving them the opportunity to interrupt their work and continue later. The abap2UI5 architecture works as if we send a completely new app to the frontend after every event, but we still want to preserve the inputs and state that the user has made before. To achieve this, the z2ui5_if_app interface includes the if_serializable_object interface, which enables us to serialize and persist all important information of every request (such as the current view or its status):
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/fc13f32d-3145-4510-a2d8-a0b646fdd6c4" />
 
 z2ui5_t_draft - the abap2UI5 persistence for interim results
 
 Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity that we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Similar to the HTTP-Service, these drafts are also defined only in a generic way, eliminating the need to manually create typed draft tables for every data model, as required in RAP, and reducing again the number of backend artifacts:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/c32335ae-6d10-4b12-9fd1-786a0da595fe" />
 
 RAP vs. Single (generic) Draft Table in abap2UI5
 
 With this approach, we achieve a stateful-like PAI/PBO feeling similar to SAP GUI apps, even though we are still operating within the AJAX roundtrip logic. Furthermore since every request can be made to a different application server, abap2UI5 is compatible with scalable cloud environments, ensuring compatibility for future use:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/0c62e222-06b7-4f16-af2d-3663fd6df796" />
 
 SAP GUI (stateful) vs. abap2UI5 (restful)
 
