@@ -6,7 +6,7 @@ This article provides an overview of the technical foundations of abap2UI5, summ
 
 The concept of HTML Over the Wire has significantly influenced abap2UI5. This approach advocates generating HTML on the server and delivering it directly to the browser, bypassing intermediate formats like JSON and eliminating the need for client-side MVC frameworks, complex bundling, or transpilation pipelines.
 
-_“HTML Over The Wire” celebrates simplicity by merging data and presentation in a single format, transmitted together for both initial loads and dynamic updates."_
+> “HTML Over The Wire” celebrates simplicity by merging data and presentation in a single format, transmitted together for both initial loads and dynamic updates."
 
 The idea was introduced via an SCN blog post on using htmx to build Fiori-like applications. Unlike SPAs, where logic and state reside on the frontend, HTML Over the Wire retains application state and logic on the server. After the initial page load, only HTML fragments are asynchronously retrieved, avoiding full page reloads:
 
