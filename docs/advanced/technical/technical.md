@@ -217,10 +217,12 @@ We have gained a lot of flexibility with (9) (10) (11) (16), now the next sectio
 
 The first GET request sends the artifacts of the UI5 (HDA) app to the browser. Typically, we would deploy a BSP to the ABAP stack for this, but in abap2UI5, the code is copied as a string into the implementation of the initial request of the HTTP-Handler:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/e69d5a12-c0e3-4e17-be8a-4da3bc740c97" />
 
 index.html stored in ABAP Source Code instead of using a BSP
 
 This provides us a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separated frontend artifacts or deployments.
+
 ##### 18. Everything is maintained & developed in the Backend
 
 Considering the fact that all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming or other refactoring takes only a few moments. The deployment process is reduced to just activating an ABAP class, enabling us to create many apps in a short amount of time. For example, all the apps of the sample section were created rapidly using mostly copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
@@ -235,28 +237,32 @@ UI5 is evolving rapidly, and additional layers can quickly become outdated. With
 
 But not having an extra layer also means that the framework does not necessarily abstract away complexity, unlike what other frameworks aim for. In abap2UI5, the user directly sends his XML-View to the frontend and is responsible for ensuring that it is valid and executable:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/cbfdc72f-31f1-460b-afa3-d03179e9b173" />
 
 XML-View created by the user and ready for the 'Wire'
 
 Luckily, we can significantly simplify the creation process by creating utility classes. For instance, by offering with z2ui5_cl_xml_view a class-based approach to create views that provide access to the UI5 API via ADT code completion:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b8aa5f41-d958-4181-bdc3-bc92a4a57b4b" />
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
 This is in contrast to RAP, where you benefit of well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to use the +, -, and * operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available at the frontend:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
 Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript
 
 ##### 21. Separated _bind and _event method
 In the first approach of this framework the event and data binding were included in every method call:
 
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/3bc268e0-e08f-40b3-b152-b3fa375c0faf" />
 
 First approach - Data binding and events are not separated from the view
 
 In the current approach, they are separated from the view and created using additional methods. Moreover, the entire process of data binding and transfer is automatically handled by the framework (9):
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/4708b4c1-a031-48d5-823c-5b8434a98c0c" />
 
 Actual Approach - extra methods for the event and binding
 
@@ -266,11 +272,13 @@ This is a difference from many other UI rendering processes, where data and UI a
 
 Furthermore we can also add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, let's take the Upload Files App as an example, which has its own custom control that is not part of the framework and is sent "Over the Wire" after calling the app:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/5960c1c9-1675-440f-80f9-a3e52db31c1c" />
 
 App delivering its own JavaScript "Over the Wire"
 
 With any request there is the chance to sent own JavaScript or Custom Controls to the frontend. The abap2UI5 framework just sends it as it is to the frontend. All upcoming requests can now use this JavaScript for example to use Custom Controls in their UI5 Views:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/66345bd4-6208-4dfc-9870-c82e3a45f74a" />
 
 abap2UI5 app sending custom Javascript to the client
 
@@ -278,6 +286,7 @@ abap2UI5 app sending custom Javascript to the client
 
 So, we have seen in (22), apps can be made very complex, but the opposite is also possible - we can make them extremely simple. One beautifully minimalistic approach is the use of if_oo_adt_classrun. By implementing just one method, we can generate an output with a single click (F9). This is extremely efficient and was one of the role models for abap2UI5. Here's a comparison of both approaches:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
 
 if_oo_adt_classrun vs. abap2UI5
 
@@ -297,17 +306,20 @@ Additionally Fiori Elements with all its floorplans & templates is very straight
 
 The system footprint is kept as small as possible, abap2UI5 is based only on ABAP classes without the use of CDS and RAP artifacts. Most of the coding is outside of the framework delegated to the user (21) (22). In total the framework consists only around of 2,300 lines of code, spread over one HTTP-Handler, two interfaces and one database table:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
 System footprint of abap2UI5
 
 The entire framework logic is implemented in the HTTP-Handler class:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/9c54e6b9-18a0-4582-a8cf-345d41d61a00" />
 
 This is all that abap2UI5 does
 
 The functionality focuses solely on the communication between the backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). The POST request is handled by this implementation:
 
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
 
 AJAX Post Handler
 
@@ -317,10 +329,12 @@ In the end, we get a pure source code-based framework, which offers us the follo
 
 Essentially, abap2UI5 generates two strings, one containing an XML-View and the other containing the JSON-View-Model. These strings are then transmitted to and from the frontend. As a result, there is no need for a high ABAP release, as this can be accomplished even with very old releases. This approach allows us to run on both the latest ABAP Cloud stack and on-premise systems, as well as very old releases, making it a release-independent solution. Additionally, we do not necessarily lose access to new UI5 features, as we have the option to bootstrap the UI5 framework at the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on very old releases:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 
 Local Bootstrapping - UI5 version depends on the SAP release
 
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/a8477539-45c4-4a43-a53b-c4078d5057aa" />
 
 CDN Bootstrapping - UI5 version independent from the SAP release
 
@@ -330,6 +344,7 @@ As a result, abap2UI5 apps can also be developed to be portable across various S
 
 With this approach, the use of dependencies is limited to cloud-released APIs and functions available in lower Netweaver releases simultaneously. To handle this, abap2UI5 only uses SAP dependencies when it is really needed -- for instance in the GUID creation:
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/8039f152-1f39-4428-93a3-6cf80b38da5d" />
 
 GUID creation compatible to ABAP Cloud and Standard ABAP
 
@@ -343,11 +358,12 @@ The low-syntax branch is automatically generated using abaplint. The separate br
 
 I'd like to extend a thank you to lars.hvam here -- he both recommended using a separated downport version and kindly helped to set abaplint up for this project. At a point when I was tediously downporting everything manually, this was a great shortcut. The functionality of automated ABAP downporting is impressive and greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint.
 
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
+
 ##### 30. Summary
 
 This was the explanation of the technical background. If you are interested in more information, take a look at the previous version of this project. It provides a more in-depth explanation of the server-client communication and you can see how it all started: abap2UI5 - Development of UI5 Selection Screens in pure ABAP.
 Summary
-
 
 Long blog post short: Inspired by "HTML Over the Wire" (1)(2)(3) we mixed UI and Data together (7) and created an "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13) independent from the View and Data Model (12). It provides us with great flexibility allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
 
