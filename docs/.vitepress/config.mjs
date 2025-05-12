@@ -163,7 +163,7 @@ export default defineConfig({
           ]
           },
            { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/technical' , items: [
-            { text: 'Comparison', link: '/technical/technical/comparison' }
+            { text: 'Comparison', link: '/advanced/technical/comparison' }
           ]
            },
          ]
