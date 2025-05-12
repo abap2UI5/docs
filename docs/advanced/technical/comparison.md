@@ -1,4 +1,4 @@
-# abap2UI5 and "HTML Over the Wire" – Similarities to LiveView, Livewire & htmx
+# Comparison to LiveView, Livewire & htmx
 
 **abap2UI5** follows the same fundamental principles as modern "HTML Over the Wire" frameworks like **Phoenix LiveView**, **Laravel Livewire**, and **htmx**.
 
