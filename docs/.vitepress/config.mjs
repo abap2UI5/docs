@@ -162,7 +162,10 @@ export default defineConfig({
             { text: 'abapmerge', link: '/advanced/tools/abapmerge' },
           ]
           },
-           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/technical' },
+           { text: 'Technical Background',  collapsed : "false" , link: '/advanced/technical/technical' , items: [
+            { text: 'Comparison', link: '/technical/technical/comparison' }
+          ]
+           },
          ]
       },
       {
