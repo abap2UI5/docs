@@ -1,41 +1,63 @@
 # abap2UI5 Compared to UI5, RAP & Over-the-Wire Frameworks
 
-This page compares **abap2UI5** with both:
-1. Modern "HTML Over the Wire" frameworks like **Phoenix LiveView**, **Laravel Livewire**, and **htmx**.
-2. Traditional SAP UI5 approaches: **Freestyle UI5** and **RAP (Fiori Elements)**.
+This page provides a structured comparison of **abap2UI5** with:
+1. Modern "HTML Over the Wire" frameworks like **htmx, LiveView, Livewire**
+2. Traditional **UI5 Freestyle** development
+3. SAP’s **RAP (Fiori Elements)** approach
 
 The goal is to show how abap2UI5 combines Over-the-Wire simplicity with SAP-specific technologies, offering a lightweight alternative for UI5 development.
 
-## 1. abap2UI5 vs LiveView, Livewire & htmx
+## 1. abap2UI5 vs Over-the-Wire Frameworks
 
-| Concept                   | LiveView / Livewire / htmx                             | abap2UI5                                                       |
-|---------------------------|------------------------------------------------------|----------------------------------------------------------------|
-| **Server-rendered UI**     | HTML is rendered on the server, sent as fragments     | UI5 XML Views are generated in ABAP and rendered in browser    |
-| **Frontend knowledge**     | Browser is "dumb", no app state, only rendering HTML  | UI5 app does not know app state or logic, renders Views + Data |
-| **Interactivity**          | User events trigger AJAX/WebSocket requests to server | User events trigger AJAX roundtrips to ABAP backend            |
-| **State Management**       | Server maintains state (LiveView via WebSockets, Livewire via stateless diffs) | State and flow managed fully in ABAP (Drafts simulate statefulness) |
-| **Delta Rendering**        | Only changed HTML parts are sent                      | View & Data sent as JSON diff, UI5 Controls are selectively updated |
-| **APIs required?**         | No REST/OData needed, server returns UI directly      | No OData/CDS needed, simple generic HTTP handler               |
-| **Frontend development**   | Minimal JS needed, declarative, markup-driven         | No custom JS needed, all UI logic in ABAP                      |
-| **Deployment**             | Part of backend app, simple web deployment            | Pure ABAP code, no separate UI deployment, fully via abapGit   |
+| Concept                   | abap2UI5                                               | htmx / LiveView / Livewire                                  |
+|---------------------------|--------------------------------------------------------|-------------------------------------------------------------|
+| **UI Rendering**           | ABAP generates UI5 XML Views, rendered in browser       | Server renders HTML, sends fragments to browser              |
+| **Frontend knowledge**     | Frontend app only renders Views & Data, no app logic    | Browser is "dumb", no application state or logic             |
+| **Interactivity**          | UI events trigger AJAX calls to ABAP backend            | Events trigger AJAX/WebSocket calls to backend               |
+| **State Management**       | Backend holds full application state, Drafts simulate session | Backend maintains state (LiveView: WebSockets, Livewire: stateless diffs) |
+| **Delta Rendering**        | View & Data sent as JSON diff, only updated controls re-rendered | HTML diffs / fragments sent, partial DOM updates             |
+| **APIs required?**         | Simple HTTP handler, no OData/CDS                       | No explicit API, server returns ready-to-render UI           |
+| **Frontend development effort** | No custom JS needed, pure ABAP                      | Minimal JS, declarative HTML attributes                     |
+| **Deployment**             | Pure ABAP code, no frontend build/deploy, via abapGit    | Standard web app deployment, no frontend frameworks needed   |
 
-> **Summary:** abap2UI5 applies the "HTML Over the Wire" principle to SAP UI5 applications. Like LiveView, Livewire, and htmx, it keeps state and logic on the server, simplifying frontend complexity. The difference: it leverages UI5 XML Views and integrates natively into ABAP workflows.
+> **Summary:**  
+abap2UI5 adopts the same backend-driven approach as htmx, LiveView, and Livewire, but uses UI5 XML Views and integrates natively into ABAP environments — combining Over-the-Wire simplicity with SAP UI technology.
 
-## 2. abap2UI5 vs SAP Freestyle UI5 & RAP
 
-| Concept                   | abap2UI5                                               | UI5 Freestyle                                              | RAP (Fiori Elements)                                       |
-|---------------------------|--------------------------------------------------------|-----------------------------------------------------------|------------------------------------------------------------|
-| **UI Rendering**           | UI5 XML Views generated in ABAP, rendered in browser    | XML Views & JS Controllers render data in frontend         | UI generated from annotations & templates                  |
-| **Frontend knowledge**     | Frontend shows Views & Data from backend, no app logic  | Application logic resides in frontend JS Controllers       | Frontend driven by annotations, minimal logic              |
-| **Interactivity**          | Events sent via AJAX to ABAP backend                    | Event handling in frontend JS, calls backend via OData     | OData calls on interaction, bound to annotations           |
-| **State Management**       | Managed in ABAP, Drafts emulate stateful flow           | Frontend models handle state, backend only for persistence | RAP Draft handling via framework abstractions              |
-| **APIs required?**         | Simple generic HTTP handler, no OData/CDS necessary     | Requires SEGW / OData / CAP service layers                 | Requires typed OData & CDS artifacts                      |
-| **Flexibility**            | Full control in ABAP for Views, Models & Logic          | Flexible, but high frontend development effort             | Highly structured, less runtime flexibility                |
-| **Frontend Artifacts**     | No BSP / UI5 app deployment needed, index.html in ABAP  | BSP App, UI5 repository deployment required                | UI5 App generated from annotations, deployment required    |
-| **Development Workflow**   | Pure ABAP development, deploy via ABAP class activation | Frontend/backend developed & deployed separately           | Backend annotations drive frontend generation              |
-| **Versioning & Deployment**| Single ABAP code line, full abapGit integration         | Separate transport of frontend & backend                   | CDS, OData, UI5 app artifacts transported separately       |
+## 2. abap2UI5 vs UI5 Freestyle
 
-> **Summary:** abap2UI5 avoids the complexity of OData, CDS, and separate frontend deployments. Unlike UI5 Freestyle (which requires full-stack JS development) and RAP (which follows strict structures), abap2UI5 allows for rapid, flexible UI5 development directly in ABAP — all in a single code line.
+| Concept                   | abap2UI5                                               | UI5 Freestyle                                                |
+|---------------------------|--------------------------------------------------------|--------------------------------------------------------------|
+| **UI Rendering**           | ABAP generates UI5 XML Views, browser renders UI        | UI5 XML Views created & rendered in frontend (WebIDE/BAS)     |
+| **Frontend knowledge**     | Frontend does not know application state or flow        | Full application logic in frontend JS Controllers             |
+| **Interactivity**          | Events sent to ABAP backend via AJAX                    | Events handled in frontend, backend provides data via OData   |
+| **State Management**       | Managed in ABAP, Drafts emulate frontend state          | State managed in frontend models, backend only persists data  |
+| **APIs required?**         | Generic HTTP handler, no OData/CDS needed               | Requires OData Service (SEGW / CAP)                           |
+| **Flexibility**            | Full runtime control of Views, Models, Logic in ABAP    | High flexibility in frontend, but complex coordination        |
+| **Frontend Artifacts**     | No BSP, index.html is stored in ABAP source code        | BSP App or UI5 repository deployment required                 |
+| **Development Workflow**   | Pure ABAP, deploy by class activation                   | Separate frontend & backend development & deployment          |
+| **Versioning & Deployment**| Single abapGit project, backend-only transports         | Frontend and backend transported separately                   |
+
+> **Summary:**  
+Compared to UI5 Freestyle, abap2UI5 eliminates the need for separate frontend apps, OData services, and JavaScript controllers — enabling faster development cycles with a pure ABAP approach while keeping UI5's capabilities.
+
+## 3. abap2UI5 vs RAP (Fiori Elements)
+
+| Concept                   | abap2UI5                                               | RAP (Fiori Elements)                                         |
+|---------------------------|--------------------------------------------------------|--------------------------------------------------------------|
+| **UI Rendering**           | UI5 XML Views generated dynamically in ABAP             | UI generated from CDS annotations & templates                 |
+| **Frontend knowledge**     | Frontend renders server-provided Views & Data, no logic | Frontend uses annotations, limited runtime flexibility        |
+| **Interactivity**          | Events trigger AJAX requests to backend                 | Interactions call OData services defined via CDS & RAP classes |
+| **State Management**       | ABAP-driven state & drafts simulate statefulness        | RAP framework handles drafts & state abstraction              |
+| **APIs required?**         | No OData/CDS needed, simple generic HTTP handler        | Requires typed OData Services, CDS Views                      |
+| **Flexibility**            | Full control of View, Model, Logic in ABAP, runtime changes possible | High structure, runtime changes limited by RAP framework       |
+| **Frontend Artifacts**     | No separate UI5 deployment, index.html in ABAP code     | Generated UI5 app artifacts, deployment required               |
+| **Development Workflow**   | Pure ABAP, deploy via class activation                  | CDS, OData, UI5 artifacts developed & transported separately   |
+| **Versioning & Deployment**| Single abapGit project, cloud & on-prem compatible      | Separate transport of backend & frontend artifacts             |
+
+> **Summary:**  
+While RAP enforces structured development through annotations, OData, and CDS artifacts, abap2UI5 offers more runtime flexibility and simpler development by avoiding these layers and keeping everything within ABAP.
+
 
 ## Conclusion
 
