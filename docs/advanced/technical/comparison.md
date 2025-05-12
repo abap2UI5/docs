@@ -1,4 +1,4 @@
-# The Big Picture: abap2UI5 Compared to UI5, RAP & Over-the-Wire Frameworks
+# abap2UI5 Compared to UI5, RAP & Over-the-Wire Frameworks
 
 This page compares **abap2UI5** with both:
 1. Modern "HTML Over the Wire" frameworks like **Phoenix LiveView**, **Laravel Livewire**, and **htmx**.
