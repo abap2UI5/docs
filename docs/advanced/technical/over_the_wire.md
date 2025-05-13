@@ -56,15 +56,15 @@ While Over-the-Wire offers significant advantages for backend-driven application
 
 ## Popular Frameworks and Tools Following Over-the-Wire Principles
 
-| Framework              | Primary Use                                   | Technology Stack          | Link |
-|------------------------|-----------------------------------------------|---------------------------|------|
-| **[htmx](https://htmx.org/)**                | Enhances existing HTML pages with minimal JS  | Technology-agnostic        | [htmx.org](https://htmx.org/) |
-| **[Hotwire (Turbo)](https://hotwired.dev/)**     | Full Over-the-Wire framework for modern web apps | Ruby on Rails          | [hotwired.dev](https://hotwired.dev/) |
-| **[Phoenix LiveView](https://hexdocs.pm/phoenix_live_view)**    | Real-time UI updates via WebSockets           | Elixir / Phoenix           | [hexdocs.pm](https://hexdocs.pm/phoenix_live_view) |
-| **[Livewire](https://livewire.laravel.com/)**            | Server-driven UI components for Laravel       | PHP / Laravel              | [livewire.laravel.com](https://livewire.laravel.com/) |
-| **[Unpoly](https://unpoly.com/)**              | Simplifies partial page updates without SPAs  | Technology-agnostic        | [unpoly.com](https://unpoly.com/) |
-| **[Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/)**       | Server-side UI rendering with SignalR         | .NET / C#                  | [learn.microsoft.com](https://learn.microsoft.com/en-us/aspnet/core/blazor/) |
-| **[Inertia.js](https://inertiajs.com/)**          | SPA-like experience without APIs              | JavaScript + Laravel/Rails | [inertiajs.com](https://inertiajs.com/) |
+| Framework | Primary Use | Technology Stack |
+|-----------|-------------|-----------------|
+| **[htmx](https://htmx.org/)** | Enhances existing HTML pages with minimal JS | Technology-agnostic |
+| **[Hotwire (Turbo)](https://hotwired.dev/)** | Full Over-the-Wire framework for modern web apps | Ruby on Rails |
+| **[Phoenix LiveView](https://hexdocs.pm/phoenix_live_view)** | Real-time UI updates via WebSockets | Elixir / Phoenix |
+| **[Livewire](https://livewire.laravel.com/)** | Server-driven UI components for Laravel | PHP / Laravel |
+| **[Unpoly](https://unpoly.com/)** | Simplifies partial page updates without SPAs | Technology-agnostic |
+| **[Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/)** | Server-side UI rendering with SignalR | .NET / C# |
+| **[Inertia.js](https://inertiajs.com/)** | SPA-like experience without APIs | JavaScript + Laravel/Rails |
 
 
 ## Conclusion
