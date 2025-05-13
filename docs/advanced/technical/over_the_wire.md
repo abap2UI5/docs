@@ -48,7 +48,7 @@ flowchart TD
         B2 --> C2(Server responds with HTML fragment)
         C2 --> D2(Browser inserts HTML directly)
     end
-
+```
 
 ## Benefits of Over-the-Wire for Business Applications
 
