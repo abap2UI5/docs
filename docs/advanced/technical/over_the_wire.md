@@ -32,6 +32,24 @@ In contrast, with Over-the-Wire:
 
 This shifts the responsibility for UI rendering back to the server, simplifying the frontend layer.
 
+## How does it differ from Single Page Applications (SPA)?
+
+```mermaid
+flowchart TD
+    subgraph SPA Approach
+        A1(User Action) --> B1(Frontend requests Data via API)
+        B1 --> C1(Server responds with JSON)
+        C1 --> D1(Frontend renders UI dynamically)
+        D1 --> E1(Display in Browser)
+    end
+
+    subgraph Over-the-Wire Approach
+        A2(User Action) --> B2(Frontend requests UI Fragment)
+        B2 --> C2(Server responds with HTML fragment)
+        C2 --> D2(Browser inserts HTML directly)
+    end
+
+
 ## Benefits of Over-the-Wire for Business Applications
 
 - **Reduced Frontend Complexity**: No need for heavy JavaScript frameworks or complex build pipelines.
