@@ -4,7 +4,7 @@ This page compares **abap2UI5** with other common SAP UI technologies to help un
 
 While many SAP applications rely on client-side Single Page Applications (SPAs) or traditional Server-Side Rendering (SSR), abap2UI5 follows a pragmatic **Over-the-Wire** approach. It bridges the gap between simplicity and flexibility by shifting UI control back to the ABAP backend — without sacrificing the power of UI5 on the frontend.
 
-### abap2UI5: Over-the-Wire for ABAP/UI5
+### abap2UI5: Over-the-Wire for ABAP/UI5 (2023+)
 abap2UI5 applies the Over-the-Wire principle to SAP UI5 apps. The backend (ABAP) defines UI5 XML Views and ViewModels, which are sent to the browser. A generic, static UI5 app dynamically renders this content.
 
 - Frontend stays generic & static
