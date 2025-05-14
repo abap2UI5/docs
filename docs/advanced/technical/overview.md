@@ -1,4 +1,4 @@
-# Technology Comparison: abap2UI5 vs RAP, UI5 Freestyle, Web Dynpro, ITS Mobile
+# Technology Comparison: abap2UI5, RAP, UI5 Freestyle, Web Dynpro, ITS Mobile
 
 This page compares **abap2UI5** with other common SAP UI technologies to help understand its architectural position and when to use it.
 
