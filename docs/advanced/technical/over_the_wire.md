@@ -6,7 +6,7 @@ The core principle of **abap2UI5** is to apply the proven **Over-the-Wire** conc
 
 While popular frameworks like Hotwire, Livewire, and Phoenix LiveView follow this approach, **abap2UI5 adapts it to SAP’s technological environment**, using SAP UI5 for frontend rendering and ABAP for backend-driven UI definitions.
 
-## Concept Overview
+#### Concept Overview
 
 ```plaintext
 +------------------------+        +-----------------------+        +--------------------+
@@ -21,7 +21,7 @@ Flow:
 - The browser renders these definitions using a static UI5 application
 - Users interact with the UI — the backend handles logic and updates
 
-## From SSR to Over-the-Wire: A Brief History
+### From SSR to Over-the-Wire: A Brief History
 
 In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
@@ -37,7 +37,7 @@ As a reaction, the **Over-the-Wire** paradigm re-emerged:
 - Browsers update only specific parts of the page.
 - Frontends stay simple and declarative.
 
-### Architectural Comparison
+#### Architectural Comparison
 
 | Approach | Data Flow | Rendering Location | Period |
 |----------|-----------|-------------------|--------|
@@ -45,7 +45,7 @@ As a reaction, the **Over-the-Wire** paradigm re-emerged:
 | **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript) | 2010s – today |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-## Over-the-Wire Frameworks
+#### Over-the-Wire Frameworks
 
 Several frameworks successfully implement this pattern:
 
@@ -59,20 +59,20 @@ Several frameworks successfully implement this pattern:
 | [Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/) | Server-side UI rendering with SignalR | .NET / C# |
 | [Inertia.js](https://inertiajs.com/) | SPA-like experience with server-driven UI | JavaScript + Laravel/Rails |
 
-## abap2UI5: Over-the-Wire for SAP
+### abap2UI5: Over-the-Wire for SAP
 
 **abap2UI5** transfers the Over-the-Wire idea into SAP’s world by combining:
 - ABAP-based UI definitions (XML Views & JSON View-Models)
 - A static SAP UI5 frontend app for rendering
 - Backend-controlled UI logic and state management
 
-### Key Characteristics
+#### Key Characteristics
 - Static UI5 frontend delivered once.
 - Backend defines and controls UI structure and behavior.
 - Pure ABAP development — no custom JavaScript needed.
 - Seamless alignment with SAP's UI5 and ABAP technology stack.
 
-### Benefits for SAP Applications
+#### Benefits for SAP Applications
 
 - **Simplified Frontend**: No custom JavaScript, no separate frontend development.
 - **Faster Development Cycles**: All logic and UI changes are managed in ABAP.
@@ -80,13 +80,13 @@ Several frameworks successfully implement this pattern:
 - **Full SAP Integration**: Runs on any ERP or S/4HANA release, compatible with standard SAP infrastructure.
 - **Perfect for Business Apps**: Ideal for CRUD-heavy applications, forms, tables, and dashboards.
 
-### Limitations to Consider
+#### Limitations to Consider
 
 - Not suitable for highly interactive, real-time collaboration apps.
 - Offline functionality or complex client-side interactions are not covered.
 - Less effective if frontend and backend teams work independently.
 
-## Conclusion
+### Conclusion
 
 The **key idea of abap2UI5** is to bring the simplicity and efficiency of the Over-the-Wire pattern into the SAP ecosystem.
 
@@ -94,7 +94,7 @@ By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rende
 
 For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
 
-## Further Reading
+### Further Reading
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
 - [HTML Over the Wire – Basecamp’s approach](https://signalvnoise.com/svn3/html-over-the-wire/)
