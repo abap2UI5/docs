@@ -73,9 +73,9 @@ Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveV
 #### Limitations to Consider
 
 While Over-the-Wire (and abap2UI5) offers many advantages, it may not be suitable for:
-- Highly interactive, real-time collaboration tools (e.g., design apps, chat platforms).
-- Applications requiring offline capabilities.
-- Large-scale frontend projects developed independently from backend teams.
+* Highly interactive, real-time collaboration tools (e.g., design apps, chat platforms)
+* Applications requiring offline capabilities or rich client-side interactions
+* Scenarios where frontend and backend are developed by separate, independent teams
 
 #### Conclusion
 
