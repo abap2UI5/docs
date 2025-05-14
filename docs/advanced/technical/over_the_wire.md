@@ -25,7 +25,7 @@ Flow:
 
 In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
-The rise of **Single Page Applications (SPAs)** shifted rendering to the browser. SPAs fetch raw data (often via OData in SAP) and dynamically build UIs with JavaScript frameworks like React, Angular, or Vue.
+The rise of **Single Page Applications (SPAs)** shifted rendering to the browser. SPAs fetch raw data (often via OData in SAP) and dynamically build UIs with JavaScript frameworks like React, Angular, Vue or in the SAP world UI5.
 
 However, SPAs brought new challenges:
 - API layers and data contracts
