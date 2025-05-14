@@ -9,12 +9,12 @@ While popular frameworks like Hotwire, Livewire, and Phoenix LiveView follow thi
 ## Concept Overview
 
 ```plaintext
-+------------------------+          +-----------------------+        +--------------------+
-|        ABAP Backend     |          |         Browser        |        |       User         |
-|------------------------|          |-----------------------|        |--------------------|
-| - XML View Definition   |  -->     | Receives Response    |  -->   | Interacts with UI  |
-| - JSON View-Model       |          | Renders with UI5      |        | (clicks, inputs)   |
-+------------------------+          +-----------------------+        +--------------------+
++------------------------+        +-----------------------+        +--------------------+
+|        ABAP Backend    |        |         Browser       |        |       User         |
+|------------------------|        |-----------------------|        |--------------------|
+| - XML View Definition  |  -->   | Receives Response     |  -->   | Interacts with UI  |
+| - JSON View-Model      |        | Renders with UI5      |        | (clicks, inputs)   |
++------------------------+        +-----------------------+        +--------------------+
 ```
 Flow:
 - The backend defines UI5 XML Views and JSON View-Models
