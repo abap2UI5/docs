@@ -1,8 +1,8 @@
 # Technology Evolution: From ITS to abap2UI5
 
-This page explains how SAP UI technologies have evolved over the years — from classic Server-Side Rendering approaches like **ITS** and **Web Dynpro**, to client-side SPAs with **UI5 Freestyle** and **RAP**, and finally to the **Over-the-Wire** paradigm of **abap2UI5**.
+This page explains how web development in the SAP Environment has evolved over the years — from classic Server-Side Rendering approaches like **ITS** and **Web Dynpro**, to client-side SPAs with **UI5 Freestyle** and **RAP**, and finally to the **Over-the-Wire** paradigm of **abap2UI5**.
 
-### 1. ITS Mobile: Bringing SAP GUI to the Web (2000+)
+### 1. ITS Mobile: Bringing SAP GUI to the Web (2000+) (SAP)
 The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GUI screens (Dynpro) to the web. ITS Mobile converts classical Dynpro screens into basic HTML pages.
 
 - Pure **Server-Side Rendering (SSR)**: HTML is generated on the server for every interaction.
@@ -10,7 +10,7 @@ The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GU
 - Focus on reusing existing Dynpro logic for web & mobile use cases.
 - Still used today for specific legacy scenarios.
 
-### 2. Web Dynpro ABAP: Structured Web Applications (2003+)
+### 2. Web Dynpro ABAP: Structured Web Applications (2003+) (SAP)
 **Web Dynpro ABAP** introduced a component-based UI framework for web applications.
 
 - UI definitions are created in ABAP (Views, Context, Controllers).
@@ -18,7 +18,7 @@ The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GU
 - Suitable for transactional business applications.
 - More structured and modular than ITS, but limited for modern UX expectations.
 
-### 3. UI5 Freestyle: Full Client-Side SPAs (2010+)
+### 3. UI5 Freestyle: Full Client-Side SPAs (2010+) (SAP)
 With the advent of smartphones and richer web experiences, **UI5 Freestyle** was introduced.
 
 - Based on **JavaScript, XML Views, and UI5 Controls**.
@@ -27,7 +27,7 @@ With the advent of smartphones and richer web experiences, **UI5 Freestyle** was
 - Enables highly customized, interactive applications.
 - Requires dedicated frontend development expertise.
 
-### 4. RAP / Fiori Elements: Standardized Backend-Driven SPA (2019+)
+### 4. RAP / Fiori Elements: Standardized Backend-Driven SPA (2019+) (SAP)
 The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim to standardize application development.
 
 - Developers define **CDS Annotations** in ABAP to describe UI behavior.
@@ -35,7 +35,7 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim t
 - Simplifies UI development by using predefined floorplans and templates.
 - Still SPA complexity (OData Metadata handling, UI5 runtime in browser).
 
-### 5. abap2UI5: Over-the-Wire for SAP (2023+)
+### 5. abap2UI5: Over-the-Wire for ABAP/UI5 (2023+) (Open Soure)
 **abap2UI5** brings the simplicity of the **Over-the-Wire** concept to SAP UI5 development.
 
 - The ABAP backend defines **UI5 XML Views** and **JSON ViewModels**.
