@@ -1,4 +1,4 @@
-# The Key Conept: UI Over-the-Wire for ABAP/UI5
+# The Key Conept: UI5 Over-the-Wire
 
 The core principle of **abap2UI5** is to apply the proven **Over-the-Wire** concept to SAP UI5 application development.
 
@@ -59,7 +59,7 @@ Several frameworks successfully implement this pattern:
 | [Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/) | Server-side UI rendering with SignalR | .NET / C# |
 | [Inertia.js](https://inertiajs.com/) | SPA-like experience with server-driven UI | JavaScript + Laravel/Rails |
 
-### abap2UI5: Over-the-Wire for SAP
+### abap2UI5: UI5 Over-the-Wire
 
 **abap2UI5** transfers the Over-the-Wire idea into SAP’s world by combining:
 - ABAP-based UI definitions (XML Views & JSON View-Models)
