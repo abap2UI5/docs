@@ -1,4 +1,4 @@
-#  How it All Works
+#  Deep Dive: How it All Works
 
 This article provides a technical deep dive into **abap2UI5**. It is aimed at developers who want to understand how abap2UI5 works "under the hood" and how it simplifies UI5 development by keeping both logic and UI generation on the backend.
 
