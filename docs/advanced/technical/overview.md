@@ -1,4 +1,4 @@
-# UI Overview: From ITS to abap2UI5
+# Technology Overview: From ITS to abap2UI5
 
 This page explains how web development in the SAP environment has evolved over the years — from classic server-side rendering approaches like ITS and Web Dynpro to client-side SPAs with UI5 Freestyle and RAP, while contextualizing the open-source framework abap2UI5 and its Over-the-Wire paradigm.
 
