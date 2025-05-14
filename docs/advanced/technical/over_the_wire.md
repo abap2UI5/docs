@@ -1,97 +1,100 @@
 # Over-the-Wire in SAP: The Key Idea of abap2UI5
 
-The key idea of **abap2UI5** is to apply the principles of **Over-the-Wire** web development to the SAP ecosystem.
+The core principle of **abap2UI5** is to apply the proven **Over-the-Wire** concept to SAP UI5 application development.
 
-Over-the-Wire refers to a pattern where the server is responsible for rendering the user interface and sends ready-to-render HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lean and maintainable.
+**Over-the-Wire** refers to a web architecture where the server renders user interfaces and sends ready-to-use HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lightweight and maintainable.
 
-While this approach is widely used in frameworks like Hotwire, Livewire, or Phoenix LiveView, **abap2UI5 adapts this idea for the SAP technoligal environment**, using the SAP UI5 framework to render the UI based on server-provided definitions created in ABAP.
+While popular frameworks like Hotwire, Livewire, and Phoenix LiveView follow this approach, **abap2UI5 adapts it to SAP’s technological environment**, using SAP UI5 for frontend rendering and ABAP for backend-driven UI definitions.
 
+## Concept Overview
+
+```plaintext
 +------------------------+          +-----------------------+        +--------------------+
 |        ABAP Backend     |          |         Browser        |        |       User         |
 |------------------------|          |-----------------------|        |--------------------|
-| - XML View Definition   |  -->     | Receives JSON View    |  -->   | Interacts with UI  |
+| - XML View Definition   |  -->     | Receives Response    |  -->   | Interacts with UI  |
 | - JSON View-Model       |          | Renders with UI5      |        | (clicks, inputs)   |
 +------------------------+          +-----------------------+        +--------------------+
+```
+Flow:
+- The backend defines UI5 XML Views and JSON View-Models
+- The browser renders these definitions using a static UI5 application
+- Users interact with the UI — the backend handles logic and updates
 
+## From SSR to Over-the-Wire: A Brief History
 
-### History: From SSR to Over-the-Wire
+In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
-In the early days of web development, Server-Side Rendering (SSR) was the standard approach. Every user interaction triggered a request to the server, which returned a fully rendered HTML page.
+The rise of **Single Page Applications (SPAs)** shifted rendering to the browser. SPAs fetch raw data (often via OData in SAP) and dynamically build UIs with JavaScript frameworks like React, Angular, or Vue.
 
-With the rise of Single Page Applications (SPAs), UI rendering shifted to the browser. SPAs request raw data (e.g., JSON) from the server typically send via OData and build the UI dynamically using JavaScript frameworks like React, Angular, or Vue at the frontend.
-
-While SPAs enable rich client-side experiences, they also introduce significant complexity:
+However, SPAs brought new challenges:
 - API layers and data contracts
-- Separate frontend-backend development
+- Separate frontend-backend development workflows
 - Complex build & deployment pipelines
 
-As a response to this complexity, the Over-the-Wire approach re-emerged:
-- The server renders UI fragments, not full pages
-- The browser simply inserts those fragments into the page
-- The frontend remains simple and declarative
+As a reaction, the **Over-the-Wire** paradigm re-emerged:
+- Servers send UI fragments, not full pages.
+- Browsers update only specific parts of the page.
+- Frontends stay simple and declarative.
 
-##### Architectural Comparison
+### Architectural Comparison
 
-| Approach | Data Flow | Rendering Location | Time |
-|----------|-----------|-------------------|-------------|
+| Approach | Data Flow | Rendering Location | Period |
+|----------|-----------|-------------------|--------|
 | **SSR** | Full-page HTML responses | Entirely on the server | 1990s – 2010s |
-| **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript framework) | 2010s – today |
+| **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript) | 2010s – today |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-##### Over-the-Wire Frameworks
+## Over-the-Wire Frameworks
 
-The followring frameworks are implementations of this concept.
+Several frameworks successfully implement this pattern:
 
 | Framework | Key Use Case | Technology |
 |-----------|--------------|------------|
-| **[htmx](https://htmx.org/)** | Progressive enhancement for server-rendered apps | Any web stack |
-| **[Hotwire (Turbo)](https://hotwired.dev/)** | Modern Over-the-Wire for Rails apps | Ruby on Rails |
-| **[Phoenix LiveView](https://hexdocs.pm/phoenix_live_view)** | Real-time server-rendered UIs | Elixir / Phoenix |
-| **[Livewire](https://livewire.laravel.com/)** | Server-driven UI components | PHP / Laravel |
-| **[Unpoly](https://unpoly.com/)** | Simplifies partial page updates | Any web stack |
-| **[Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/)** | Server-side UI rendering with SignalR | .NET / C# |
-| **[Inertia.js](https://inertiajs.com/)** | SPA-like experience with server-driven UI | JavaScript + Laravel/Rails |
+| [htmx](https://htmx.org/) | Progressive enhancement for server-rendered apps | Any web stack |
+| [Hotwire (Turbo)](https://hotwired.dev/) | Modern Over-the-Wire for Rails apps | Ruby on Rails |
+| [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view) | Real-time server-rendered UIs | Elixir / Phoenix |
+| [Livewire](https://livewire.laravel.com/) | Server-driven UI components | PHP / Laravel |
+| [Unpoly](https://unpoly.com/) | Simplified partial page updates | Any web stack |
+| [Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/) | Server-side UI rendering with SignalR | .NET / C# |
+| [Inertia.js](https://inertiajs.com/) | SPA-like experience with server-driven UI | JavaScript + Laravel/Rails |
 
-### Over-the-Wire in abap2UI5
+## abap2UI5: Over-the-Wire for SAP
 
-**abap2UI5** adopts the Over-the-Wire principle but tailors it to SAP's technical environment:
+**abap2UI5** transfers the Over-the-Wire idea into SAP’s world by combining:
+- ABAP-based UI definitions (XML Views & JSON View-Models)
+- A static SAP UI5 frontend app for rendering
+- Backend-controlled UI logic and state management
 
-- The ABAP backend defines the UI via a UI5 XML View and UI5 JSON View-Model
-- This data is sent to the browser
-- A static UI5 frontend app renders the UI dynamically based on this responses
-- The frontend code itself is never generated dynamically. It remains stable and generic.
-- All business logic, UI definitions, and dynamic behavior are maintained on the backend in an ABAP Class
+### Key Characteristics
+- Static UI5 frontend delivered once.
+- Backend defines and controls UI structure and behavior.
+- Pure ABAP development — no custom JavaScript needed.
+- Seamless alignment with SAP's UI5 and ABAP technology stack.
 
-##### Key Characteristics:
-- Frontend code is a static UI5 app and send with the first request
-- Backend fully controls UI definitions and logic
-- No separate frontend development needed, all apps are pure backend abap artifacts
-- Aligns with SAP's technology stack (ABAP & UI5) while following Over-the-Wire principles
+### Benefits for SAP Applications
 
-##### Benefits for SAP Applications
+- **Simplified Frontend**: No custom JavaScript, no separate frontend development.
+- **Faster Development Cycles**: All logic and UI changes are managed in ABAP.
+- **Maintainable Architecture**: UI definitions reside in ABAP Classes — no frontend builds required.
+- **Full SAP Integration**: Runs on any ERP or S/4HANA release, compatible with standard SAP infrastructure.
+- **Perfect for Business Apps**: Ideal for CRUD-heavy applications, forms, tables, and dashboards.
 
-- **Reduced Frontend Complexity**: No need for custom JavaScript development
-- **Faster Development Cycles**: UI and logic are controlled via ABAP in the backend
-- **Maintainable Architecture**: No frontend code, all apps are ABAP Classes
-- **Seamless SAP Integration**: abap2UI5 app run on any ERP and S/4 release
-- **Ideal for Business Applications**: CRUD-heavy apps, forms, dashboards, transactions etc.
+### Limitations to Consider
 
-##### Limitations to Consider
+- Not suitable for highly interactive, real-time collaboration apps.
+- Offline functionality or complex client-side interactions are not covered.
+- Less effective if frontend and backend teams work independently.
 
-While Over-the-Wire (and abap2UI5) offers many advantages, it may not be suitable for:
-* Highly interactive, real-time collaboration tools (e.g., design apps, chat platforms)
-* Applications requiring offline capabilities or rich client-side interactions
-* Scenarios where frontend and backend are developed by separate, independent teams
+## Conclusion
 
-### Conclusion
+The **key idea of abap2UI5** is to bring the simplicity and efficiency of the Over-the-Wire pattern into the SAP ecosystem.
 
-The **key idea of abap2UI5** is to apply the simplicity of the Over-the-Wire approach to the SAP world. It enables building efficient, maintainable business applications by shifting UI control back to the backend, while using SAP UI5 as a frontend framework.
+By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rendering, abap2UI5 enables maintainable, pragmatic business applications — without the overhead of SPA architectures.
 
-This reduces development complexity, shortens time-to-market, and ensures a clean architecture — without giving up the flexibility of SAPUI5.
+For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
 
-For typical business applications — such as forms, tables, and dashboards — abap2UI5 offers a pragmatic alternative to traditional SPA architectures.
-
-### Further Reading
-* [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
-* [htmx in a nutshell](https://htmx.org/docs/#introduction)
-* [html-over-the-wire](https://signalvnoise.com/svn3/html-over-the-wire/)
+## Further Reading
+- [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
+- [htmx in a nutshell](https://htmx.org/docs/#introduction)
+- [HTML Over the Wire – Basecamp’s approach](https://signalvnoise.com/svn3/html-over-the-wire/)
