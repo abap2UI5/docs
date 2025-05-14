@@ -164,9 +164,9 @@ export default defineConfig({
           },
            { text: 'Technical Background',  collapsed : "true" , items: [
              { text: 'Key Concept', link: '/advanced/technical/over_the_wire' },
-             { text: 'UI5 & RAP', link: '/advanced/technical/sap' },
              { text: 'Technology Overview', link: '/advanced/technical/overview' },
-             { text: 'Deep Dive', link: '/advanced/technical/how_it_all_works' },
+             { text: 'UI5 & RAP', link: '/advanced/technical/sap' },
+             { text: 'Deep Dive', link: '/advanced/technical/how_it_all_works' }
           ]
            },
          ]
