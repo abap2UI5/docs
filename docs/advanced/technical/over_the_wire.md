@@ -90,6 +90,6 @@ By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rende
 For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
 
 ### Further Reading
-- [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
-- [HTML Over the Wire – Basecamp’s approach](https://signalvnoise.com/svn3/html-over-the-wire/)
+- [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
+- [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
