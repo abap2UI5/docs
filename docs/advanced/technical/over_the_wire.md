@@ -83,3 +83,7 @@ It enables building efficient, maintainable business applications by shifting UI
 This reduces development complexity, shortens time-to-market, and ensures a clean architecture — without giving up the flexibility of SAPUI5.
 
 For typical business applications — such as forms, tables, and dashboards — abap2UI5 offers a pragmatic alternative to traditional SPA architectures.
+
+### Further Reading
+* [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
+* [htmx in a nutshell](https://htmx.org/docs/#introduction)
