@@ -7,8 +7,8 @@ While many SAP applications rely on client-side Single Page Applications (SPAs) 
 ### abap2UI5: Over-the-Wire for ABAP/UI5
 abap2UI5 applies the Over-the-Wire principle to SAP UI5 apps. The backend (ABAP) defines UI5 XML Views and ViewModels, which are sent to the browser. A generic, static UI5 app dynamically renders this content.
 
-- **Frontend stays generic & static**
-- **No custom JavaScript development needed**
+- Frontend stays generic & static
+- No custom JavaScript development needed
 - Perfect for CRUD-heavy business applications
 - Inspired by modern Over-the-Wire frameworks like Hotwire, Livewire
 - Addresses SAP's "Clean Core" approach by keeping custom code backend-driven
