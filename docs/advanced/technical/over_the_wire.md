@@ -1,6 +1,6 @@
 # Key Idea: Over-the-Wire in abap2UI5
 
-The key idea of **abap2UI5** is to apply the principles of **Over-the-Wire (OtW)** web development to the SAP ecosystem.  
+The key idea of **abap2UI5** is to apply the principles of **Over-the-Wire (OtW)** web development to the SAP ecosystem.
 
 Over-the-Wire refers to a pattern where the **server is responsible for rendering the user interface (UI)** and sends **ready-to-render HTML fragments** to the browser. This avoids complex client-side frameworks and keeps the frontend lean and maintainable.
 
