@@ -44,7 +44,7 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim t
 - Still SPA complexity (OData Metadata handling, UI5 runtime in browser).
 
 ### abap2UI5 (2023+) (Open Soure)
-_Over-the-Wire for ABAP/UI5_ 
+_UI Over-the-Wire for ABAP/UI5_ 
 
 **abap2UI5** brings the simplicity of the **Over-the-Wire** concept to SAP UI5 development.
 
