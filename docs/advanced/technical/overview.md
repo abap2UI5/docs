@@ -35,7 +35,7 @@ Web Dynpro ABAP is SAP's traditional web UI framework. It renders HTML on the se
 - Component-based UI framework fully implemented in ABAP
 - Classic Server-Side Rendering paradigm (SSR)
 - Suitable for transactional SAP applications
-- Limited flexibility for modern UI patterns, but robust and widely used
+- Limited flexibility for modern UI patterns, but robust
 
 ### ITS Mobile: Legacy SSR for Mobile Devices (2000+)
 **Internet Transaction Server (ITS) Mobile** converts classical SAP Dynpro (SAP GUI) screens into HTML pages for mobile browsers.
