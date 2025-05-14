@@ -1,14 +1,12 @@
 # Key Idea: Over-the-Wire in abap2UI5
 
-## Introduction
-
 The core idea of **abap2UI5** is to apply the principles of **Over-the-Wire (OtW)** web development to the SAP ecosystem.  
 Over-the-Wire refers to a pattern where the **server is responsible for rendering the user interface (UI)** and sends **ready-to-render HTML fragments** to the browser.  
 This avoids complex client-side frameworks and keeps the frontend lean and maintainable.
 
 While this approach is widely used in frameworks like Hotwire, Livewire, or Phoenix LiveView, **abap2UI5 adapts this idea for SAP**, using the SAPUI5 runtime to render the UI based on server-provided definitions.
 
-## Historical Context: From SSR to Over-the-Wire
+#### Historical Context: From SSR to Over-the-Wire
 
 In the early days of web development, **Server-Side Rendering (SSR)** was the standard approach.  
 Every user interaction triggered a request to the server, which returned a fully rendered HTML page.
@@ -28,7 +26,7 @@ As a response to this complexity, the **Over-the-Wire approach re-emerged**:
 
 Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveView (Elixir)** are modern implementations of this concept.
 
-## Architectural Comparison
+#### Architectural Comparison
 
 | Approach | Data Flow | Rendering Location | Time |
 |----------|-----------|-------------------|-------------|
@@ -36,7 +34,7 @@ Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveV
 | **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript framework) | ~2010s – today |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | ~2020s (re-emerging) |
 
-## Related Frameworks with Similar Ideas
+#### Over-the-Wire Frameworks
 
 | Framework | Key Use Case | Technology |
 |-----------|--------------|------------|
@@ -48,7 +46,7 @@ Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveV
 | **[Blazor Server](https://learn.microsoft.com/en-us/aspnet/core/blazor/)** | Server-side UI rendering with SignalR | .NET / C# |
 | **[Inertia.js](https://inertiajs.com/)** | SPA-like experience with server-driven UI | JavaScript + Laravel/Rails |
 
-## Over-the-Wire in abap2UI5
+#### Over-the-Wire in abap2UI5
 
 **abap2UI5** adopts the Over-the-Wire principle but tailors it to SAP's technical environment:
 
@@ -58,13 +56,13 @@ Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveV
 - The frontend code itself is **never generated dynamically**. It remains stable and generic.
 - All business logic, UI definitions, and dynamic behavior are maintained on the backend.
 
-### Key Characteristics:
+#### Key Characteristics:
 - **Frontend code is static** (SAPUI5 components).
 - **Backend fully controls UI definitions and logic**.
 - No separate frontend development needed.
 - Aligns with SAP's technology stack while following Over-the-Wire principles.
 
-## Benefits for SAP Applications
+#### Benefits for SAP Applications
 
 - **Reduced Frontend Complexity**: No need for custom JavaScript development per app.
 - **Faster Development Cycles**: UI and logic are controlled via ABAP.
@@ -72,14 +70,14 @@ Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveV
 - **Seamless SAP Integration**: abap2UI5 fits into existing SAP systems.
 - **Ideal for Business Applications**: CRUD-heavy apps, forms, dashboards, transactions.
 
-## Limitations to Consider
+#### Limitations to Consider
 
 While Over-the-Wire (and abap2UI5) offers many advantages, it may not be suitable for:
 - Highly interactive, real-time collaboration tools (e.g., design apps, chat platforms).
 - Applications requiring offline capabilities.
 - Large-scale frontend projects developed independently from backend teams.
 
-## Conclusion
+#### Conclusion
 
 The **key idea of abap2UI5** is to apply the simplicity of the Over-the-Wire approach to the SAP world.  
 It enables building efficient, maintainable business applications by shifting UI control back to the backend, while using SAPUI5 as a stable frontend runtime.
