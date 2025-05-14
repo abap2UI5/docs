@@ -1,10 +1,18 @@
-# Key Idea: Over-the-Wire in abap2UI5
+# Over-the-Wire in SAP: The Key Idea of abap2UI5
 
 The key idea of **abap2UI5** is to apply the principles of **Over-the-Wire** web development to the SAP ecosystem.
 
 Over-the-Wire refers to a pattern where the server is responsible for rendering the user interface and sends ready-to-render HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lean and maintainable.
 
 While this approach is widely used in frameworks like Hotwire, Livewire, or Phoenix LiveView, **abap2UI5 adapts this idea for the SAP technoligal environment**, using the SAP UI5 framework to render the UI based on server-provided definitions created in ABAP.
+
++------------------------+          +-----------------------+        +--------------------+
+|        ABAP Backend     |          |         Browser        |        |       User         |
+|------------------------|          |-----------------------|        |--------------------|
+| - XML View Definition   |  -->     | Receives JSON View    |  -->   | Interacts with UI  |
+| - JSON View-Model       |          | Renders with UI5      |        | (clicks, inputs)   |
++------------------------+          +-----------------------+        +--------------------+
+
 
 ### History: From SSR to Over-the-Wire
 
