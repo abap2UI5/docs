@@ -1,4 +1,4 @@
-# abap2UI5 vs. UI5 Freestyle & RAP
+# abap2UI5 & UI5 Freestyle & RAP
 
 This page compares **abap2UI5** with SAP's typical UI development approaches:
 - **UI5 Freestyle apps**
@@ -6,7 +6,7 @@ This page compares **abap2UI5** with SAP's typical UI development approaches:
 
 The focus is on architecture, development workflow, flexibility, and deployment.
 
-## Comparison: abap2UI5 vs UI5 Freestyle
+### abap2UI5 vs UI5 Freestyle
 
 | Concept                   | abap2UI5                                               | UI5 Freestyle                                                |
 |---------------------------|--------------------------------------------------------|--------------------------------------------------------------|
@@ -23,7 +23,7 @@ The focus is on architecture, development workflow, flexibility, and deployment.
 > **Summary:**  
 Compared to UI5 Freestyle, abap2UI5 eliminates the need for separate frontend apps, OData services, and JavaScript controllers — enabling faster development cycles with a pure ABAP approach while keeping UI5's capabilities.
 
-## Comparison: abap2UI5 vs RAP (Fiori Elements)
+### abap2UI5 vs RAP (Fiori Elements)
 
 | Concept                   | abap2UI5                                               | RAP (Fiori Elements)                                         |
 |---------------------------|--------------------------------------------------------|--------------------------------------------------------------|
@@ -40,7 +40,7 @@ Compared to UI5 Freestyle, abap2UI5 eliminates the need for separate frontend ap
 > **Summary:**  
 While RAP enforces structured development through annotations, OData, and CDS artifacts, abap2UI5 offers more runtime flexibility and simpler development by avoiding these layers and keeping everything within ABAP.
 
-## Conclusion
+### Summary
 
 abap2UI5 provides an alternative to traditional SAP UI development approaches like UI5 Freestyle and RAP.
 
