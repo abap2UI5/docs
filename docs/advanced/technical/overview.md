@@ -61,7 +61,7 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim t
 
 - **ITS & Web Dynpro**: Full SSR, but limited UX flexibility.
 - **UI5 Freestyle**: Richer UIs, but introduce SPA complexity
-- **RAP**: Limited Felxibility, CDS and UI Annotations
+- **RAP**: Limited Flexibility, UI based on CDS and UI Annotations
 - **abap2UI5**: Bridges the gap — backend-driven like ITS/Web Dynpro, but with modern UI5 rendering & Over-the-Wire efficiency.
 
 For typical business applications (forms, tables, dashboards), abap2UI5 offers a pragmatic and maintainable alternative to SPA-heavy approaches — fully in line with SAP UI5 and clean core principles.
