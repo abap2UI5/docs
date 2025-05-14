@@ -22,7 +22,7 @@ As a response to this complexity, the **Over-the-Wire approach re-emerged**:
 - The **browser simply inserts those fragments** into the page.
 - The frontend remains simple and declarative.
 
-###### Architectural Comparison
+##### Architectural Comparison
 
 | Approach | Data Flow | Rendering Location | Time |
 |----------|-----------|-------------------|-------------|
@@ -30,7 +30,7 @@ As a response to this complexity, the **Over-the-Wire approach re-emerged**:
 | **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript framework) | 2010s – today |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-###### Over-the-Wire Frameworks
+##### Over-the-Wire Frameworks
 
 The followring frameworks are modern implementations of this concept.
 
@@ -54,13 +54,13 @@ The followring frameworks are modern implementations of this concept.
 - The frontend code itself is **never generated dynamically**. It remains stable and generic.
 - All business logic, UI definitions, and dynamic behavior are maintained on the backend.
 
-###### Key Characteristics:
+##### Key Characteristics:
 - Frontend code is astatic UI5 app and send with the first request
 - Backend fully controls UI definitions and logic
 - No separate frontend development needed, all apps are pure backend abap artifacts
 - Aligns with SAP's technology stack (ABAP & UI5) while following Over-the-Wire principles
 
-###### Benefits for SAP Applications
+##### Benefits for SAP Applications
 
 - **Reduced Frontend Complexity**: No need for custom JavaScript development per app.
 - **Faster Development Cycles**: UI and logic are controlled via ABAP in the backend
@@ -68,7 +68,7 @@ The followring frameworks are modern implementations of this concept.
 - **Seamless SAP Integration**: abap2UI5 app fits into existing ABAP Stacks on any release
 - **Ideal for Business Applications**: CRUD-heavy apps, forms, dashboards, transactions.
 
-###### Limitations to Consider
+##### Limitations to Consider
 
 While Over-the-Wire (and abap2UI5) offers many advantages, it may not be suitable for:
 * Highly interactive, real-time collaboration tools (e.g., design apps, chat platforms)
