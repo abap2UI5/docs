@@ -24,6 +24,7 @@ _Structured Web Applications_
 
 ### UI5 Freestyle (2010+) (SAP)
 _Full Client-Side SPAs_
+
 With the advent of smartphones and richer web experiences, **UI5 Freestyle** was introduced.
 
 - Based on **JavaScript, XML Views, and UI5 Controls**.
@@ -34,6 +35,7 @@ With the advent of smartphones and richer web experiences, **UI5 Freestyle** was
 
 ### RAP / Fiori Elements (2019+) (SAP)
 _Standardized Backend-Driven SPA_ 
+
 The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim to standardize application development.
 
 - Developers define **CDS Annotations** in ABAP to describe UI behavior.
@@ -43,6 +45,7 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim t
 
 ### abap2UI5 (2023+) (Open Soure)
 _Over-the-Wire for ABAP/UI5_ 
+
 **abap2UI5** brings the simplicity of the **Over-the-Wire** concept to SAP UI5 development.
 
 - The ABAP backend defines **UI5 XML Views** and **JSON ViewModels**.
