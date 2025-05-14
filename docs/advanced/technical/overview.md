@@ -2,8 +2,8 @@
 
 This page explains how web development in the SAP environment has evolved over the years — from classic server-side rendering approaches like ITS and Web Dynpro to client-side SPAs with UI5 Freestyle and RAP, while contextualizing the open-source framework abap2UI5 and its Over-the-Wire paradigm.
 
-### ITS Mobile
-_Bringing SAP GUI to the Web (2000+) (SAP)_
+### ITS Mobile (2000+) (SAP)
+_Bringing SAP GUI to the Web_
 
 The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GUI screens (Dynpro) to the web. ITS Mobile converts classical Dynpro screens into basic HTML pages.
 
