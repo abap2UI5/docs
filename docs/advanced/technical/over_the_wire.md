@@ -1,4 +1,4 @@
-# The Key Conept: UI5 Over-the-Wire
+# The Key Concept: UI5 Over-the-Wire
 
 The core principle of **abap2UI5** is to apply the proven **Over-the-Wire** concept to SAP UI5 application development.
 
@@ -65,20 +65,15 @@ Several frameworks successfully implement this pattern:
 - ABAP-based UI definitions (XML Views & JSON View-Models)
 - A static SAP UI5 frontend app for rendering
 - Backend-controlled UI logic and state management
+- Targeted ViewModel updates ensure that only specific UI5 controls are re-rendered
 
-#### Key Characteristics
-- Static UI5 frontend delivered once.
-- Backend defines and controls UI structure and behavior.
-- Pure ABAP development — no custom JavaScript needed.
-- Seamless alignment with SAP's UI5 and ABAP technology stack.
-
-#### Benefits for SAP Applications
-
-- **Simplified Frontend**: No custom JavaScript, no separate frontend development.
-- **Faster Development Cycles**: All logic and UI changes are managed in ABAP.
-- **Maintainable Architecture**: UI definitions reside in ABAP Classes — no frontend builds required.
-- **Full SAP Integration**: Runs on any ERP or S/4HANA release, compatible with standard SAP infrastructure.
-- **Perfect for Business Apps**: Ideal for CRUD-heavy applications, forms, tables, and dashboards.
+#### Key Benefits and Characteristics
+- Static UI5 Frontend: Delivered once, remaining generic and stable.
+- Backend-Driven UI Control: All UI structures, logic, and dynamic behavior are defined and maintained in ABAP.
+- Pure ABAP Development: No need for custom JavaScript or separate frontend development.
+- Simplified Architecture: No frontend builds, no complex SPA frameworks — everything managed through backend artifacts.
+- Seamless SAP Integration: Fully aligned with SAP’s UI5 and ABAP technology stack, compatible with ERP and S/4HANA releases.
+- Efficient for Business Applications: Especially suitable for CRUD-heavy apps, forms, tables, dashboards, and typical enterprise use cases.
 
 #### Limitations to Consider
 
@@ -86,7 +81,7 @@ Several frameworks successfully implement this pattern:
 - Offline functionality or complex client-side interactions are not covered.
 - Less effective if frontend and backend teams work independently.
 
-### Conclusion
+### Summary
 
 The **key idea of abap2UI5** is to bring the simplicity and efficiency of the Over-the-Wire pattern into the SAP ecosystem.
 
