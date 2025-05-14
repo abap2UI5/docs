@@ -57,7 +57,7 @@ _Over-the-Wire for ABAP/UI5_
 ### Summary
 
 Why abap2UI5?
-- **ITS & Web Dynpro**: Full SSR, but limited UX flexibility.
+- **ITS & Web Dynpro**: Full SSR, but limited UX flexibility
 - **UI5 Freestyle**: Richer UIs, but introduce SPA complexity
 - **RAP**: Limited Flexibility, UI based on CDS and UI Annotations
 - **abap2UI5**: Bridges the gap — backend-driven like ITS/Web Dynpro, but with modern UI5 rendering & Over-the-Wire efficiency.
