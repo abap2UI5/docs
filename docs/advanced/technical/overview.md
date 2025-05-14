@@ -4,26 +4,6 @@ This page compares **abap2UI5** with other common SAP UI technologies to help un
 
 While many SAP applications rely on client-side Single Page Applications (SPAs) or traditional Server-Side Rendering (SSR), abap2UI5 follows a pragmatic **Over-the-Wire** approach. It bridges the gap between simplicity and flexibility by shifting UI control back to the ABAP backend — without sacrificing the power of UI5 on the frontend.
 
-The following table highlights key differences between:
-- **abap2UI5** (Over-the-Wire)
-- **RAP / Fiori Elements** (Backend-driven SPA)
-- **UI5 Freestyle** (Custom SPA)
-- **Web Dynpro (ABAP)** (SSR)
-- **ITS Mobile** (Legacy SSR for mobile devices)
-
-### Comparison Table
-
-| Feature | abap2UI5 | RAP (Fiori Elements) | UI5 Freestyle | Web Dynpro (ABAP) | ITS Mobile |
-|----------|----------|---------------------|---------------|------------------|------------|
-| **UI Definition** | ABAP Class (XML View & JSON ViewModel) | CDS Annotations | JavaScript + XML Views | Dynpro / Floorplan Components | Dynpro (SAP GUI Screens) |
-| **Data Flow** | View + ViewModel via JSON (Over-the-Wire) | OData V4: Metadata & Data | OData / Custom APIs | Server-side (Context Nodes) | Server-side (Dynpro → HTML) |
-| **UI Rendering** | UI5 Shell renders dynamic View from backend definitions | UI5 Fiori Elements renders UI in Browser (SPA) | UI5 Framework renders UI in Browser (SPA) | Server-side Rendering (SSR) | Server-side Rendering (SSR) |
-| **Frontend Code** | Static generic UI5 Shell | UI5 Fiori Elements SPA Runtime | Custom UI5 App (SPA) | Generated HTML/JS from ABAP runtime | Generated HTML from ITS Service |
-| **Developer Focus** | 100% ABAP (no JS needed) | 100% ABAP (no JS needed) | ABAP + JavaScript development | ABAP development | ABAP Dynpro development |
-| **Architecture** | Over-the-Wire | Backend-driven SPA | Custom SPA | Server-Side Rendering (SSR) | Server-Side Rendering (SSR) |
-| **Complexity (Frontend)** | Very Low | Medium (predefined SPA runtime) | High (full frontend stack) | Low (no client-side rendering logic) | Very Low (HTML rendering of GUI screens) |
-| **Typical Use Cases** | CRUD-heavy apps, forms, dashboards | Standard apps with CDS-based annotations | Custom UIs, interactive dashboards | Classic SAP transactional apps | Legacy mobile apps (scanner, warehouse) |
-
 ### Technology Overview
 
 #### abap2UI5: Over-the-Wire
@@ -66,3 +46,17 @@ Web Dynpro ABAP is SAP's traditional web UI framework. It renders HTML on the se
 - Pure server-side HTML rendering (SSR)
 - Very basic UI, optimized for keyboard-based navigation
 - Still relevant for niche use cases with rugged devices
+
+
+### Comparison Table
+
+| Feature | abap2UI5 | RAP (Fiori Elements) | UI5 Freestyle | Web Dynpro (ABAP) | ITS Mobile |
+|----------|----------|---------------------|---------------|------------------|------------|
+| **UI Definition** | ABAP Class (XML View & JSON ViewModel) | CDS Annotations | JavaScript + XML Views | Dynpro / Floorplan Components | Dynpro (SAP GUI Screens) |
+| **Data Flow** | View + ViewModel via JSON (Over-the-Wire) | OData V4: Metadata & Data | OData / Custom APIs | Server-side (Context Nodes) | Server-side (Dynpro → HTML) |
+| **UI Rendering** | UI5 Shell renders dynamic View from backend definitions | UI5 Fiori Elements renders UI in Browser (SPA) | UI5 Framework renders UI in Browser (SPA) | Server-side Rendering (SSR) | Server-side Rendering (SSR) |
+| **Frontend Code** | Static generic UI5 Shell | UI5 Fiori Elements SPA Runtime | Custom UI5 App (SPA) | Generated HTML/JS from ABAP runtime | Generated HTML from ITS Service |
+| **Developer Focus** | 100% ABAP (no JS needed) | 100% ABAP (no JS needed) | ABAP + JavaScript development | ABAP development | ABAP Dynpro development |
+| **Architecture** | Over-the-Wire | Backend-driven SPA | Custom SPA | Server-Side Rendering (SSR) | Server-Side Rendering (SSR) |
+| **Complexity (Frontend)** | Very Low | Medium (predefined SPA runtime) | High (full frontend stack) | Low (no client-side rendering logic) | Very Low (HTML rendering of GUI screens) |
+| **Typical Use Cases** | CRUD-heavy apps, forms, dashboards | Standard apps with CDS-based annotations | Custom UIs, interactive dashboards | Classic SAP transactional apps | Legacy mobile apps (scanner, warehouse) |
