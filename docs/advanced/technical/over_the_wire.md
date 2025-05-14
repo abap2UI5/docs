@@ -1,4 +1,4 @@
-# Over-the-Wire in SAP: The Key Idea of abap2UI5
+# The Key Conept: Over-the-Wire for ABAP/UI5
 
 The core principle of **abap2UI5** is to apply the proven **Over-the-Wire** concept to SAP UI5 application development.
 
