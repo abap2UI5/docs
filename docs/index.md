@@ -5,7 +5,7 @@ title: Home
 
 hero:
   name: "abap2UI5"
-  tagline: "Developing UI5 Apps Purely in ABAP.\nEfficient. Simple. Open Source."
+  tagline: "Developing UI5 Apps Purely in ABAP.\nFast. Efficient. Open Source."
   image:
     src: /logo.png
     alt: abap2UI5 Logo
