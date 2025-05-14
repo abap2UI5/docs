@@ -30,11 +30,11 @@ Frameworks like **Hotwire (Rails)**, **Livewire (Laravel)**, and **Phoenix LiveV
 
 ## Architectural Comparison
 
-| Approach | Data Flow | Rendering Location |
-|----------|-----------|-------------------|
-| **SSR (classic)** | Full-page HTML responses | Entirely on the server |
-| **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript framework) |
-| **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts |
+| Approach | Data Flow | Rendering Location | Time |
+|----------|-----------|-------------------|-------------|
+| **SSR (classic)** | Full-page HTML responses | Entirely on the server | 1990s – early 2010s |
+| **SPA** | Raw data (JSON), client builds UI | Client-side (JavaScript framework) | ~2010s – today |
+| **Over-the-Wire (modern)** | HTML fragments for partial updates | Server renders, browser inserts | ~2020s (re-emerging) |
 
 ## Related Frameworks with Similar Ideas
 
