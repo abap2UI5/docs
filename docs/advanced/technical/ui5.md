@@ -38,7 +38,7 @@ This page compares **UI5 Freestyle applications** with **abap2UI5**, focusing on
 | Aspect | UI5 Freestyle | abap2UI5 |
 |--------|---------------|----------|
 | **UI Definition** | XML Views & JS Controllers developed in frontend | XML View & ViewModel defined in ABAP |
-| **APIs** | OData services required (SEGW, CAP) | Generic HTTP event handler, no OData needed |
+| **APIs** | OData services required (SEGW, CAP) | Generic HTTP event handler, no OData needed, Unstructured through a generic service |
 | **Frontend Artifacts** | BSP or UI5 repository deployment required | Static UI5 Shell, no app-specific frontend deployment |
 | **Development Scope** | Separate frontend and backend development | Pure ABAP development |
 | **Deployment** | Frontend & backend deployed separately | Single ABAP transport / abapGit project |
