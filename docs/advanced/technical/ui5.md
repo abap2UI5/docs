@@ -1,8 +1,3 @@
----
-title: UI5 Freestyle vs abap2UI5: Architecture, State, Workflow & Communication
-description: Compare UI5 Freestyle with abap2UI5, focusing on architecture, state handling, developer workflow, and client-server communication.
----
-
 # UI5 Freestyle vs abap2UI5: Architecture, State, Workflow & Communication
 
 This page compares **UI5 Freestyle applications** with **abap2UI5**, focusing on architecture, state handling, developer workflow, and client-server communication patterns.
