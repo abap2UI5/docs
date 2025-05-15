@@ -163,7 +163,7 @@ export default defineConfig({
           ]
           },
            { text: 'Technical Background',  collapsed : "true" , items: [
-             { text: 'Key Concept', link: '/advanced/technical/over_the_wire' },
+             { text: 'Key Concept', link: '/advanced/technical/concept' },
              { text: 'Technology Overview', link: '/advanced/technical/overview' },
              { text: 'UI5', link: '/advanced/technical/ui5' },
              { text: 'RAP', link: '/advanced/technical/rap' },
