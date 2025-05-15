@@ -21,7 +21,7 @@ Flow:
 - The browser renders these definitions using a static UI5 application
 - Users interact with the UI — the backend handles logic and updates
 
-### From SSR to Over-the-Wire: A Brief History
+### From SSR to HTML Over-the-Wire
 
 In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
