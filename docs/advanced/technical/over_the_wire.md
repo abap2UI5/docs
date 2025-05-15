@@ -33,9 +33,9 @@ However, SPAs brought new challenges:
 - Complex build & deployment pipelines
 
 As a reaction, the **Over-the-Wire** paradigm re-emerged:
-- Servers send UI fragments, not full pages.
-- Browsers update only specific parts of the page.
-- Frontends stay simple and declarative.
+- Servers send UI fragments, not full pages
+- Browsers update only specific parts of the page
+- Frontends stay simple and declarative
 
 #### Architectural Comparison
 
