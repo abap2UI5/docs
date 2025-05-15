@@ -167,6 +167,7 @@ export default defineConfig({
              { text: 'Technology Overview', link: '/advanced/technical/overview' },
              { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
              { text: 'RAP, Fiori Elements', link: '/advanced/technical/rap' },
+             { text: 'Domain-Driven, UI-Driven', link: '/advanced/technical/domain' },
              { text: 'Deep Dive', link: '/advanced/technical/how_it_all_works' }
           ]
            },
