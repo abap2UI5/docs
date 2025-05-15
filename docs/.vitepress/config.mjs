@@ -165,8 +165,8 @@ export default defineConfig({
            { text: 'Technical Background',  collapsed : "true" , items: [
              { text: 'Key Concept', link: '/advanced/technical/concept' },
              { text: 'Technology Overview', link: '/advanced/technical/overview' },
-             { text: 'UI5', link: '/advanced/technical/ui5' },
-             { text: 'RAP', link: '/advanced/technical/rap' },
+             { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
+             { text: 'RAP, Fiori Elements', link: '/advanced/technical/rap' },
              { text: 'Deep Dive', link: '/advanced/technical/how_it_all_works' }
           ]
            },
