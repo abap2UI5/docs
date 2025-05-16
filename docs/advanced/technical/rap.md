@@ -1,4 +1,4 @@
-# RAP vs abap2UI5: Architecture, State, Workflow & Communication
+# RAP: Architecture, State, Workflow & Communication
 
 This page compares **RAP (Fiori Elements)** with **abap2UI5**, highlighting their differences in architecture, state handling, developer workflow, and client-server communication patterns.
 
