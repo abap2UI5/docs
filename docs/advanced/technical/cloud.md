@@ -1,1 +1,1 @@
-# Cloud Ready: Risk it?
+# Cloud Readiness: Future?
