@@ -1,4 +1,4 @@
-# Key Concept - UI5 Over-the-Wire?
+# Key Concept - Is it UI5 Over-the-Wire?
 
 The key concept of **abap2UI5** is to apply the **HTML Over-the-Wire** concept to SAP UI5 application development.
 
