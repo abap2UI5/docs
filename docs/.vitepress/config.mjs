@@ -163,6 +163,7 @@ export default defineConfig({
           ]
           },
            { text: 'Technical Background',  collapsed : "true" , items: [
+           { text: 'test',  collapsed : "true" , items: [
              { text: 'Key Concept', link: '/advanced/technical/concept' },
              { text: 'Architecture', link: '/advanced/technical/domain' },
              { text: 'Development Experience', link: '/advanced/technical/dx' },
@@ -172,7 +173,7 @@ export default defineConfig({
                  { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
                  { text: 'RAP', link: '/advanced/technical/rap' },
              ] },  
-          ]
+          ] , },  ] },  
            },
          ]
       },
