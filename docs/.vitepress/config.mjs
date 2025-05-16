@@ -163,14 +163,14 @@ export default defineConfig({
           ]
           },
            { text: 'Technical Background',  collapsed : "true" , items: [
-             { text: 'UI5 over-the-wire', link: '/advanced/technical/concept' },
-             { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
-             { text: 'RAP', link: '/advanced/technical/rap' },
-             { text: 'Architecture, UI-Driven', link: '/advanced/technical/domain' },
+             { text: 'Key Concept', link: '/advanced/technical/concept' },
+             { text: 'Architecture', link: '/advanced/technical/domain' },
              { text: 'Development Experience', link: '/advanced/technical/dx' },
              { text: 'Cloud Readiness', link: '/advanced/technical/cloud' },
-             { text: 'Technology Overview', link: '/advanced/technical/overview' },
              { text: 'Deep Dive', link: '/advanced/technical/how_it_all_works' }
+             { text: 'Technology Overview', link: '/advanced/technical/overview' },
+             { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
+             { text: 'RAP', link: '/advanced/technical/rap' },
           ]
            },
          ]
