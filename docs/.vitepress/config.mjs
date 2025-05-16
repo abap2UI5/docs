@@ -163,7 +163,7 @@ export default defineConfig({
           ]
           },
            { text: 'test',  collapsed : "true" , items: [
-           { text: 'Technical Background',  collapsed : "true" , items: [
+           { text: '___',  collapsed : "true" , items: [
              { text: 'Key Concept', link: '/advanced/technical/concept' },
              { text: 'Architecture', link: '/advanced/technical/domain' },
              { text: 'Development Experience', link: '/advanced/technical/dx' },
