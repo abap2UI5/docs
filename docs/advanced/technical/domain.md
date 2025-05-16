@@ -1,4 +1,4 @@
-# Architecture - Can we call it UI-Driven?
+# Architecture: UI-Driven-Design?
 
 Domain-Driven Architecture with RAP (and contrast to UI-Driven)
 
