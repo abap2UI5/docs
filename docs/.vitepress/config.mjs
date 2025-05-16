@@ -173,7 +173,7 @@ export default defineConfig({
                  { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
                  { text: 'RAP', link: '/advanced/technical/rap' },
              ] },  
-          ] , },  ] },  
+          ] , },  ],
            },
          ]
       },
