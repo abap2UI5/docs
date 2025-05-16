@@ -1,4 +1,6 @@
-# Domain-Driven Architecture with RAP (and contrast to UI-Driven)
+# Architecture - Can we call it UI-Driven?
+
+Domain-Driven Architecture with RAP (and contrast to UI-Driven)
 
 **Domain-Driven Design (DDD)** is an architectural approach that models software systems based on real-world business domains. It promotes aligning code with business terminology and processes.
 
