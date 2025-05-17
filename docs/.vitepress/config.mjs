@@ -168,6 +168,7 @@ export default defineConfig({
              { text: 'Architecture', link: '/advanced/technical/domain' },
              { text: 'Development Experience', link: '/advanced/technical/dx' },
              { text: 'Cloud Ready', link: '/advanced/technical/cloud' },
+             { text: 'REST', link: '/advanced/technical/rest' },
              { text: 'Deep Dive', link: '/advanced/technical/how_it_all_works' },
              { text: 'Technology Overview', link: '/advanced/technical/overview', items: [
                  { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },

@@ -2,18 +2,18 @@
 
 The key concept of **abap2UI5** is to apply the **HTML Over-the-Wire** concept to SAP UI5 application development.
 
-**HTML Over-the-Wire** refers to a web architecture where the server renders user interfaces and sends ready-to-use HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lightweight and maintainable.
+**HTML Over-the-Wire** refers to a web architecture where the server renders user interfaces and sends ready-to-use HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lightweight and maintainable. The UI and Business Logic stays on the server.
 
 ```plaintext
-+---------------------+       +------------------+       +-------------------+
-|     Backend         |       |     Browser      |       |       User        |
-|---------------------|       |------------------|       |-------------------|
-| HTML Definition     |  -->  | Receives Response|  -->  | Interacts with UI |
-|                     |       | Renders UI       |       | (clicks, inputs)  |
-+---------------------+       +------------------+       +-------------------+
++-------------------+       +------------------+       +-------------------+
+|     Server        |       |     Browser      |       |       User        |
+|-------------------|       |------------------|       |-------------------|
+| HTML Definition   |  -->  | Receives Response|  -->  | Interacts with UI |
+|                   |       | Renders UI       |       | (clicks, inputs)  |
++-------------------+       +------------------+       +-------------------+
 ```
 Flow:
-- The backend defines HTML
+- The server defines HTML
 - The browser inserts these Definitions
 - Users interact with the UI — the backend handles logic and updates
 
@@ -56,9 +56,9 @@ Several frameworks successfully implement the HTML over-the-wire approach:
 | [Unpoly](https://unpoly.com)            | Simplified partial page updates            | Any web stack        |
 
 
-### From HTML to UI5 Over-the-Wire
+### UI5 Over-the-Wire
 
-In this architecture, the UI is defined on the ABAP server and transmitted to the browser. The browser renders the interface using a static UI5 application — without requiring additional JavaScript logic, OData services, or frontend frameworks.
+So how can a UI5 over-the-wire approach look like? In this architecture, the UI is defined on the ABAP server and transmitted to the browser. The browser renders the interface using a static UI5 application — without requiring additional JavaScript logic, OData services, or frontend frameworks.
 
 ```plaintext
 +---------------------+       +------------------+       +-------------------+
@@ -94,6 +94,13 @@ Flow:
 - Not suitable for highly interactive, real-time collaboration apps.
 - Offline functionality or complex client-side interactions are not covered.
 - Less effective if frontend and backend teams work independently.
+
+#### Partly updates of the HTML page
+One key feature is that the browser that the browser does ot rerender all the html but only specific parts. Are we ablte to adapt this with UI5. While changing the XML view would cause a complete rerender process, by foucsn on view model updates ony and binding ui attribtues to the model, the ui5 framwork automtically update only specific psrt. Try out this snippet:
+```abap
+
+```
+Ist that beatuiful?
 
 ### Summary
 
