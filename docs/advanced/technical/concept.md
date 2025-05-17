@@ -1,4 +1,4 @@
-# Key Concept: UI5 Over-the-Wire
+# Key Concept: UI5 Over-the-Wire?
 
 The key concept of **abap2UI5** is to apply the **HTML Over-the-Wire** approach to SAP UI5 application development.
 
@@ -6,14 +6,15 @@ The key concept of **abap2UI5** is to apply the **HTML Over-the-Wire** approach 
 
 **HTML Over-the-Wire** refers to a web architecture where the server renders user interfaces and sends ready-to-use HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lightweight and maintainable. Both the UI and business logic remain on the server.
 
-    ```plaintext
+```plaintext
     +-------------------+       +------------------+       +-------------------+
     |     Server        |       |     Browser      |       |       User        |
     |-------------------|       |------------------|       |-------------------|
     | HTML Definition   |  -->  | Receives Response|  -->  | Interacts with UI |
     |                   |       | Renders UI       |       | (clicks, inputs)  |
     +-------------------+       +------------------+       +-------------------+
-    ```
+```
+
 Flow:
 - The server defines HTML
 - The browser inserts these definitions
@@ -78,6 +79,7 @@ In this approach, the UI5 View and UI5 View-Model is defined on the ABAP server 
 | UI5 View-Model      |       | Renders UI       |       | (clicks, inputs)  |
 +---------------------+       +------------------+       +-------------------+
 ```
+
 Flow:
 - The backend defines UI5 XML views and JSON view-models
 - The browser renders these definitions using a static UI5 application
