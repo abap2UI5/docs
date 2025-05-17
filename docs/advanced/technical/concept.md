@@ -19,7 +19,7 @@ Flow:
 
 While popular frameworks like Hotwire, Livewire, and Phoenix LiveView follow this approach, **abap2UI5 adapts it to SAP’s technological environment**, using SAP UI5 for frontend rendering and ABAP for backend-driven UI definitions.
 
-### From SSR to HTML Over-the-Wire
+#### From SSR to HTML Over-the-Wire
 
 In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
@@ -56,7 +56,7 @@ Several frameworks successfully implement the HTML over-the-wire approach:
 | [Unpoly](https://unpoly.com)            | Simplified partial page updates            | Any web stack        |
 
 
-### UI5 Over-the-Wire
+#### UI5 Over-the-Wire
 
 So how can a UI5 over-the-wire approach look like? In this architecture, the UI is defined on the ABAP server and transmitted to the browser. The browser renders the interface using a static UI5 application — without requiring additional JavaScript logic, OData services, or frontend frameworks.
 
@@ -96,13 +96,15 @@ Flow:
 - Less effective if frontend and backend teams work independently.
 
 #### Partly updates of the HTML page
-One key feature is that the browser that the browser does ot rerender all the html but only specific parts. Are we ablte to adapt this with UI5. While changing the XML view would cause a complete rerender process, by foucsn on view model updates ony and binding ui attribtues to the model, the ui5 framwork automtically update only specific psrt. Try out this snippet:
+One key feature is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5?
+While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
+
 ```abap
 
 ```
 Ist that beatuiful?
 
-### Summary
+#### Summary
 
 The **key concept of abap2UI5** is to bring the simplicity and efficiency of the HTML Over-the-Wire pattern into the SAP ecosystem.
 
@@ -110,7 +112,7 @@ By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rende
 
 For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
 
-### Further Reading
+#### Further Reading
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
 - [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
