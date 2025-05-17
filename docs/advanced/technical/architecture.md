@@ -1,5 +1,65 @@
 # Architecture: UI-Driven-Design?
 
+
+abap2UI5 introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards an HDA, displaying views and data received from the server:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
+
+"UI5 Over the Wire" - ABAP delivers Data & View together
+
+Despite still relying on frontend HTML rendering, all necessary information (view & data) is now retrieved via AJAX from the backend. As a result, the UI5 app remains a SPA, but its role is now reduced to that of a HDA, which is responsible solely for displaying the view and its data:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
+
+UI5 app downgraded to an HDA - Displaying Data & View received from the server
+
+This means that the frontend app is not aware of what it is currently displaying (whether it's a table, list or input) and neither is it aware of what actions will be taken next. The app logic remains completely on the server and the frontend app is just a small HDA transmitted with the first request:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
+
+"UI5 Over the Wire" - Server to Client Communication
+
+The HDA displays the view with its data and sends back each event to the server for determination of the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
+
+UI5 vs. "UI5 Over the Wire" - Communication
+
+We use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but in this case, we cannot send HTML directly. Instead, we send a View combined with its Data. This results in a concept that we could refer to as "UI5-View Over the Wire".
+
+##### 7. Merging Data & Presentation
+
+A typical "UI5-View Over the Wire" response looks like this:
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
+
+"UI5 Over the Wire" - Response with View & Data together
+
+But is this maybe just the same like RAP, but in a different format?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### new
+
 Domain-Driven Architecture with RAP (and contrast to UI-Driven)
 
 **Domain-Driven Design (DDD)** is an architectural approach that models software systems based on real-world business domains. It promotes aligning code with business terminology and processes.

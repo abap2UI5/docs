@@ -165,7 +165,7 @@ export default defineConfig({
            { text: 'test',  collapsed : "true" , items: [
            { text: '___',  collapsed : "true" , items: [
              { text: 'Key Concept', link: '/advanced/technical/concept' },
-             { text: 'Architecture', link: '/advanced/technical/domain' },
+             { text: 'Architecture', link: '/advanced/technical/architecture' },
              { text: 'Development Experience', link: '/advanced/technical/dx' },
              { text: 'Cloud Ready', link: '/advanced/technical/cloud' },
              { text: 'REST', link: '/advanced/technical/rest' },
