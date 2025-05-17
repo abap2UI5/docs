@@ -166,8 +166,8 @@ export default defineConfig({
            { text: '___',  collapsed : "true" , items: [
              { text: 'Key Concept', link: '/advanced/technical/concept' },
              { text: 'Architecture', link: '/advanced/technical/architecture' },
-             { text: 'Development Experience', link: '/advanced/technical/dx' },
-             { text: 'Cloud Ready', link: '/advanced/technical/cloud' },
+             { text: 'Developer Experience', link: '/advanced/technical/dx' },
+             { text: 'Cloud Readiness', link: '/advanced/technical/cloud' },
              { text: 'REST', link: '/advanced/technical/rest' },
              { text: 'Technology', link: '/advanced/technical/overview', items: [
                  { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
