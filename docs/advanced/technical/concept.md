@@ -117,14 +117,18 @@ CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
+
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->input( enabled = client->_bind( enabled ) value = client->_bind( text )
         )->button( text  = 'partly rerender html'    press = client->_event( 'POST' )
         )->stringify( ) ).
+
     ELSE.
+    
       enabled = xsdbool( enabled = abap_false ).
       text = text && ` text`.
       client->view_model_update( ).
+
     ENDIF.
 
   ENDMETHOD.
