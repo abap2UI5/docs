@@ -6,14 +6,14 @@ The key concept of **abap2UI5** is to apply the **HTML Over-the-Wire** approach 
 
 **HTML Over-the-Wire** refers to a web architecture where the server renders user interfaces and sends ready-to-use HTML fragments to the browser. This avoids complex client-side frameworks and keeps the frontend lightweight and maintainable. Both the UI and business logic remain on the server.
 
-```plaintext
-+-------------------+       +------------------+       +-------------------+
-|     Server        |       |     Browser      |       |       User        |
-|-------------------|       |------------------|       |-------------------|
-| HTML Definition   |  -->  | Receives Response|  -->  | Interacts with UI |
-|                   |       | Renders UI       |       | (clicks, inputs)  |
-+-------------------+       +------------------+       +-------------------+
-```
+    ```plaintext
+    +-------------------+       +------------------+       +-------------------+
+    |     Server        |       |     Browser      |       |       User        |
+    |-------------------|       |------------------|       |-------------------|
+    | HTML Definition   |  -->  | Receives Response|  -->  | Interacts with UI |
+    |                   |       | Renders UI       |       | (clicks, inputs)  |
+    +-------------------+       +------------------+       +-------------------+
+    ```
 Flow:
 - The server defines HTML
 - The browser inserts these definitions
@@ -21,7 +21,7 @@ Flow:
 
 While popular frameworks like Hotwire, Livewire, and Phoenix LiveView follow this approach, **abap2UI5 adapts it to SAP’s technological environment**, using SAP UI5 for frontend rendering and ABAP for backend-driven UI definitions.
 
-#### From SSR to HTML Over-the-Wire
+#### History
 
 In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
@@ -60,7 +60,15 @@ Several frameworks successfully implement the HTML Over-the-Wire approach:
 
 #### UI5 Over-the-Wire
 
-So what does a UI5 Over-the-Wire approach look like? In this architecture, the UI is defined on the ABAP server and transmitted to the browser. The browser renders the interface using a static UI5 application — without requiring additional JavaScript logic, OData services, or frontend frameworks.
+So what does a UI5 Over-the-Wire approach look like? 
+
+In this approach, the UI5 View and UI5 View-Model is defined on the ABAP server and transmitted to the browser. The browser renders the interface using a static UI5 application — without requiring additional JavaScript logic, OData services, or frontend frameworks.
+
+**abap2UI5** brings the Over-the-Wire idea into the SAP world by combining:
+- ABAP-based UI definitions (UI5 views & view-models)
+- A static SAP UI5 frontend app for rendering
+- Backend-controlled UI and business logic
+- Targeted view-model updates, so only specific UI5 controls are re-rendered
 
 ```plaintext
 +---------------------+       +------------------+       +-------------------+
@@ -74,12 +82,6 @@ Flow:
 - The backend defines UI5 XML views and JSON view-models
 - The browser renders these definitions using a static UI5 application
 - Users interact with the UI — the backend handles logic and updates
-
-**abap2UI5** brings the Over-the-Wire idea into the SAP world by combining:
-- ABAP-based UI definitions (UI5 views & view-models)
-- A static SAP UI5 frontend app for rendering
-- Backend-controlled UI and business logic
-- Targeted view-model updates, so only specific UI5 controls are re-rendered
 
 Key Benefits:
 - **Static UI5 Frontend App:** Delivered with the first HTTP request and remains generic and stable across all applications.
@@ -96,8 +98,7 @@ Limitations:
 
 #### Partial HTML Updates
 
-A key feature is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5?  
-While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
+A key feature of HTML over-the-wire is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5? While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
 
 ```abap
 CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
