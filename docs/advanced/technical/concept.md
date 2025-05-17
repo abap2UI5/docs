@@ -100,9 +100,35 @@ One key feature is that the browser does not re-render the entire HTML page, but
 While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
 
 ```abap
+CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
 
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA text TYPE string.
+    DATA enabled TYPE abap_bool.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+      client->view_display( z2ui5_cl_xml_view=>factory(
+        )->input( enabled = client->_bind( enabled ) value = client->_bind( text )
+        )->button( text  = 'partly rerender html'    press = client->_event( 'POST' )
+        )->stringify( ) ).
+    ELSE.
+      enabled = xsdbool( enabled = abap_false ).
+      text = text && ` text`.
+      client->view_model_update( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+ENDCLASS.
 ```
-Ist that beatuiful?
+Isn't that beatuiful?
 
 #### Summary
 
