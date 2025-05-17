@@ -95,7 +95,7 @@ Flow:
 - Offline functionality or complex client-side interactions are not covered.
 - Less effective if frontend and backend teams work independently.
 
-#### Partly updates of the HTML page
+#### Partly HTML Updates
 One key feature is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5?
 While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
 
