@@ -81,9 +81,38 @@ go_salv->display( ).
 ```
 15 lines of code, a single file, and the snippet is ready to use to transport to production for the use of end users. this is strong! unfortunately it is not cloud ready and therefor not future. let mix this with the baap2ui5 approach from above. a abap2ui5 we can create somethig quite similar with the follwoing snippet:
 ```abap
-"app
-"app
-"app
+CLASS z2ui5_cl_test_test DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
+
+CLASS z2ui5_cl_test_test IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    SELECT FROM t100
+     FIELDS *
+     INTO TABLE @DATA(gt_t100)
+     UP TO 10 ROWS.
+
+    DATA(tab) = z2ui5_cl_xml_view=>factory(
+        )->table( client->_bind_local( gt_t100 ) ).
+
+    DATA(lo_columns) = tab->columns( ).
+    lo_columns->column( )->text( text = `SPRSL` ).
+    lo_columns->column( )->text( text = `ARBGB` ).
+    lo_columns->column( )->text( text = `MSGNR` ).
+    lo_columns->column( )->text( text = `TEXT` ).
+
+    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    lo_cells->text( `{SPRSL}` ).
+    lo_cells->text( `{ARBGB}` ).
+    lo_cells->text( `{MSGNR}` ).
+    lo_cells->text( `{TEXT}` ).
+
+    client->view_display( tab ).
+
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 
