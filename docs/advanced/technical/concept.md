@@ -97,7 +97,6 @@ CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA text TYPE string.
-    DATA enabled TYPE abap_bool.
 
 ENDCLASS.
 
@@ -106,19 +105,15 @@ CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-
       client->view_display( z2ui5_cl_xml_view=>factory(
-        )->input( enabled = client->_bind( enabled ) value = client->_bind( text )
-        )->button( text  = 'partly rerender html'    press = client->_event( 'POST' )
+        )->input( value = client->_bind( text )
+        )->button( text = 'partly rerender html' press = client->_event( 'POST' )
         )->stringify( ) ).
-
-    ELSE.
-    
-      enabled = xsdbool( enabled = abap_false ).
-      text = text && ` text`.
-      client->view_model_update( ).
-
+      RETURN.
     ENDIF.
+
+    text = text && ` text`.
+    client->view_model_update( ).
 
   ENDMETHOD.
 
