@@ -1,22 +1,22 @@
 # Key Concept: UI5 Over-the-Wire?
 
-This page outlines the technical foundation of abap2UI5, a framework designed to streamline SAP UI5 application development by shifting both UI rendering and application logic to the ABAP backend. Central to this design is the architectural model known as HTML Over the Wire, which is adapted to SAP-specific technologies in this approach.
+This page outlines the technical foundation of abap2UI5, a framework developed to streamline SAP UI5 application development by shifting both UI rendering and application logic to the ABAP backend. At its core lies an architectural model known as HTML Over the Wire, which has been adapted to SAP-specific technologies in this context.
 
 #### What is HTML Over-the-Wire?
 
-HTML Over the Wire describes a server-centric web architecture where the user interface is rendered on the server and transmitted as ready-to-use HTML to the browser. This eliminates the need for JSON data transfers, client-side MVC frameworks, and associated build pipelines. Application logic remains fully on the server.
+HTML Over the Wire describes a server-centric web architecture in which the user interface is rendered on the server and transmitted to the browser as ready-to-use HTML. This eliminates the need for JSON data transfers, client-side MVC frameworks, and complex build pipelines. All application logic remains fully on the server.
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-Compared to Single Page Applications (SPAs), which shift most responsibilities to the browser, HTML Over the Wire maintains control on the backend. UI updates are performed by sending partial HTML fragments over AJAX, which the browser inserts without full page reloads.
+In contrast to Single Page Applications (SPAs), which delegate most responsibilities to the browser, HTML Over the Wire keeps control on the backend. UI updates are performed by sending partial HTML fragments via AJAX, which the browser inserts without reloading the entire page.
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
 _HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
-Several frameworks implement this pattern:
+Several frameworks adopt this pattern:
 
 | Framework             | Focus                                | Tech Stack           |
 |-----------------------|--------------------------------------|----------------------|
@@ -28,16 +28,16 @@ Several frameworks implement this pattern:
 
 #### Historical Context
 
-In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
+In early web development, **Server-Side Rendering (SSR)** was the norm. Each user interaction triggered a full-page reload, with the server returning the complete HTML content.
 
-The rise of **Single Page Applications (SPAs)** shifted rendering to the browser. SPAs fetch raw data (often via OData in SAP) and dynamically build UIs with JavaScript frameworks like React, Angular, Vue, or, in the SAP world, UI5.
+With the rise of Single Page Applications (SPAs), rendering responsibilities shifted to the browser. SPAs retrieve raw data—often via OData in SAP systems—and dynamically build UIs using JavaScript frameworks such as React, Angular, or Vue, or in the SAP context, UI5.
 
-However, SPAs introduced new challenges:
+However, SPAs brought along new complexities:
 - API layers and data contracts
 - Separate frontend-backend development workflows
 - Complex build and deployment pipelines
 
-As an alternative, the HTML Over the Wire model reintroduced server-controlled UI:
+As a counter-approach, HTML Over the Wire reestablishes server-driven UI updates:
 - Servers send UI fragments, not full pages
 - Browsers update only specific parts of the page
 - Frontends stay simple and declarative
@@ -53,35 +53,35 @@ Architectural Comparison:
 
 #### How can we adapt this to UI5?
 
-UI5 applications typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering occur on the frontend:
+UI5 applications typically follow the SPA model. The backend supplies data through OData, while all rendering and logic execution occur in the browser:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
 UI5 Freestyle - ABAP delivers only Data
 
-One specific characteristic we should examine closely is how the UI5 framework creates views. Each HTML output is rendered from an XML-View, with its associated data from the server. The view is stored at the frontend as part of the app. abap2UI5 now introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards displaying views and data received from the server:
+A defining feature of UI5 is its use of XML views to generate HTML. These views reside on the frontend and are populated with server JSON data. abap2UI5 introduces a fundamental shift: the server also delivers the view. The frontend becomes a passive display layer for views and data received from the server:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 
 "UI5 Over the Wire" - ABAP delivers Data & View
 
-Despite still relying on frontend HTML rendering, all necessary information (view & data) is now retrieved via AJAX from the backend. As a result, the UI5 app remains a SPA, but its role is now reduced to solely displaying the view and its data:
+Although the frontend still renders HTML, all relevant information (view and data) is obtained from the backend via AJAX. The UI5 application technically remains an SPA but now functions solely as a rendering layer for the server-defined UI and Data:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
 UI5 app downgraded - Displaying Data & View received from the server
 
-This means that the frontend app is not aware of what it is currently displaying (whether it's a table, list or input) and neither is it aware of what actions will be taken next. The app logic remains completely on the server and the frontend app is just a generic UI5 app send with the first request:
+The frontend is unaware of the current view (e.g., table, list, input) or the next actions. All logic is handled on the backend. The frontend app is a static UI5 application delivered with the first request:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 
-The app displays the view with its data and sends back each event to the server for determination of the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
+The app renders the provided view and data, then returns any triggered events to the backend, which decides what should happen next. This process resembles the classical PAI/PBO model from SAP GUI applications:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
-For communication we use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but in this case, we cannot send HTML directly because wen need the ui5 fornten to render the html. Instead, we send a View combined with its vieww model and with that use a second characteristic of the ui5 framework that it can use html out of xml views and ists json model. This results in a concept that we could refer to as "UI5-View Over the Wire".
+Communication relies on AJAX roundtrips akin to HTML Over the Wire, but pure HTML cannot be sent since UI5 still requires XML views and JSON models. abap2UI5 leverages UI5's capability to render HTML from these constructs. This results in a model referred to as UI5-View Over the Wire.
 
-A typical "UI5-View Over the Wire" response looks like this:
+A typical response in this pattern includes both view and model data:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 
@@ -90,7 +90,7 @@ A typical "UI5-View Over the Wire" response looks like this:
 
 #### Partial HTML Updates
 
-A key feature of HTML over-the-wire is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5? While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
+A central feature of HTML Over the Wire is that only the affected parts of the page are updated, rather than the entire document. Can this be achieved in UI5? While altering the XML view would typically trigger a full re-render, updating only the view model and binding attributes accordingly allows UI5 to update just the relevant UI elements. Consider this example:
 
 ```abap
 CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
@@ -123,22 +123,22 @@ ENDCLASS.
 
 #### Summary
 
-The **key concept of abap2UI5** is to bring the simplicity and efficiency of the HTML Over-the-Wire pattern into the SAP ecosystem.
+The core idea behind abap2UI5 is to bring the simplicity and efficiency of the HTML Over-the-Wire paradigm into the SAP ecosystem.
 
 Key Benefits:
-- Static UI5 Frontend Application: Delivered with the initial HTTP request; generic and consistent across all use cases.
-- Backend-Driven UI Control: UI definitions and business logic are implemented entirely in ABAP classes.
-- ABAP-Centric Development: Eliminates the need for additional JavaScript or dedicated frontend development.
-- Simplified Deployment Model: No SPA-specific tooling or build processes; application logic and artifacts are maintained via abapGit and standard transport mechanisms.
-- Tight SAP Integration: Fully aligned with existing UI5 and ABAP technology stacks; compatible with ERP and S/4HANA systems.
-- Efficient for Business Applications: Particularly well-suited for CRUD-heavy apps, forms, tables, dashboards, and typical enterprise use cases.
+- Static UI5 Frontend Application: Delivered with the initial HTTP request; generic and consistent across all use cases
+- Backend-Driven UI Control: UI definitions and business logic are implemented entirely in ABAP classes
+- ABAP-Centric Development: Eliminates the need for additional JavaScript or dedicated frontend development
+- Simplified Deployment Model: No SPA-specific tooling or build processes; application logic and artifacts are maintained via abapGit and standard transport mechanisms
+- Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, ABAP Standard & ABAP Cloud ready 
+- Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and all typical enterprise use cases
 
 Limitations:
 - Not designed for highly interactive or collaborative real-time applications
 - Offline functionality or complex client-side interactions are not covered
 - Less effective if frontend and backend teams work independently
 
-By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rendering, abap2UI5 enables maintainable, pragmatic business applications — without the overhead of SPA architectures. For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
+By relocating UI control to the ABAP backend and using UI5 purely for HTML rendering, abap2UI5 enables pragmatic, maintainable business application development — without the complexity of SPA architectures. For common enterprise use cases like dashboards, transactional forms, or reporting apps, it offers a clean, backend-driven alternative with shorter development cycles.
 
 **References:**
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
