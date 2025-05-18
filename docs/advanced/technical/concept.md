@@ -137,17 +137,17 @@ ENDCLASS.
 The **key concept of abap2UI5** is to bring the simplicity and efficiency of the HTML Over-the-Wire pattern into the SAP ecosystem.
 
 Key Benefits:
-- **Static UI5 Frontend App:** Delivered with the first HTTP request and remains generic and stable across all applications.
-- **Backend-Driven UI Control:** All UI definitions and business logic are implemented in ABAP classes.
-- **Pure ABAP Development:** No need for custom JavaScript or separate frontend development.
-- **Simplified Architecture:** No frontend builds or complex SPA frameworks — everything is managed through backend artifacts using abapGit and transports.
-- **Seamless SAP Integration:** Fully aligned with SAP’s UI5 and ABAP technology stack, compatible with all ERP and S/4HANA releases.
-- **Efficient for Business Applications:** Particularly well-suited for CRUD-heavy apps, forms, tables, dashboards, and typical enterprise use cases.
+- Static UI5 Frontend Application: Delivered with the initial HTTP request; generic and consistent across all use cases.
+- Backend-Driven UI Control: UI definitions and business logic are implemented entirely in ABAP classes.
+- ABAP-Centric Development: Eliminates the need for additional JavaScript or dedicated frontend development.
+- Simplified Deployment Model: No SPA-specific tooling or build processes; application logic and artifacts are maintained via abapGit and standard transport mechanisms.
+- Tight SAP Integration: Fully aligned with existing UI5 and ABAP technology stacks; compatible with ERP and S/4HANA systems.
+- Efficient for Business Applications: Particularly well-suited for CRUD-heavy apps, forms, tables, dashboards, and typical enterprise use cases.
 
 Limitations:
-- Not suitable for highly interactive, real-time collaboration apps.
-- Offline functionality or complex client-side interactions are not covered.
-- Less effective if frontend and backend teams work independently.
+- Not designed for highly interactive or collaborative real-time applications
+- Offline functionality or complex client-side interactions are not covered
+- Less effective if frontend and backend teams work independently
 
 By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rendering, abap2UI5 enables maintainable, pragmatic business applications — without the overhead of SPA architectures. For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
 
