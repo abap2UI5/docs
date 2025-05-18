@@ -95,6 +95,43 @@ A typical "UI5-View Over the Wire" response looks like this:
 "UI5 Over the Wire" - Response with View & Data together
 
 
+#### Partial HTML Updates also possible?
+
+A key feature of HTML over-the-wire is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5? While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
+
+```abap
+CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA text TYPE string.
+    DATA enabled TYPE abap_bool.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+
+      client->view_display( z2ui5_cl_xml_view=>factory(
+        )->input( enabled = client->_bind( enabled ) value = client->_bind( text )
+        )->button( text  = 'partly rerender html'    press = client->_event( 'POST' )
+        )->stringify( ) ).
+
+    ELSE.
+    
+      enabled = xsdbool( enabled = abap_false ).
+      text = text && ` text`.
+      client->view_model_update( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+
+ENDCLASS.
+```
 
 #### Summary
 
@@ -278,44 +315,7 @@ Limitations:
 - Offline functionality or complex client-side interactions are not covered.
 - Less effective if frontend and backend teams work independently.
 
-#### Partial HTML Updates
 
-A key feature of HTML over-the-wire is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5? While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
-
-```abap
-CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-    DATA text TYPE string.
-    DATA enabled TYPE abap_bool.
-
-ENDCLASS.
-
-CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
-
-  METHOD z2ui5_if_app~main.
-
-    IF client->check_on_init( ).
-
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->input( enabled = client->_bind( enabled ) value = client->_bind( text )
-        )->button( text  = 'partly rerender html'    press = client->_event( 'POST' )
-        )->stringify( ) ).
-
-    ELSE.
-    
-      enabled = xsdbool( enabled = abap_false ).
-      text = text && ` text`.
-      client->view_model_update( ).
-
-    ENDIF.
-
-  ENDMETHOD.
-
-ENDCLASS.
-```
-Isn't that beautiful?
 
 #### Summary
 
