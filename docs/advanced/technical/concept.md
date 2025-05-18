@@ -3,7 +3,7 @@
 This article provides a technical dive into abap2UI5, a framework that simplifies SAP UI5 application development by moving both UI rendering and logic back to the ABAP backend. It introduces the key architectural concept — HTML Over the Wire — and explains how this idea is adapted to the SAP ecosystem.
 
 
-##### What is HTML Over-the-Wire?
+#### What is HTML Over-the-Wire?
 
 HTML Over the Wire refers to a web architecture where the server renders ready-to-use HTML and sends it directly to the browser. Instead of sending raw data (e.g., JSON) and rendering UIs with JavaScript frameworks on the client, the server handles both the application logic and HTML generation and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
 
@@ -16,6 +16,17 @@ Unlike Single Page Applications (SPAs), which shift most responsibilities to the
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
 _HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
+
+Several frameworks successfully implement the HTML Over-the-Wire approach:
+
+| Framework             | Focus                                | Tech Stack           |
+|-----------------------|--------------------------------------|----------------------|
+| [htmx](https://htmx.org)                | Progressive enhancement via HTML partials  | Any web stack        |
+| [Hotwire (Turbo)](https://hotwired.dev) | HTML-over-the-wire for Rails apps          | Ruby on Rails        |
+| [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view) | Real-time UI with server rendering         | Elixir / Phoenix     |
+| [Livewire](https://livewire.laravel.com)         | Server-driven UI components in PHP         | Laravel / PHP        |
+| [Unpoly](https://unpoly.com)            | Simplified partial page updates            | Any web stack        |
+
 
 #### Where does it come from?
 
@@ -40,16 +51,6 @@ Architectural Comparison:
 | **SSR**       | Full-page HTML responses         | Entirely on the server    | 1990s – 2010s    |
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
-
-Several frameworks successfully implement the HTML Over-the-Wire approach:
-
-| Framework             | Focus                                | Tech Stack           |
-|-----------------------|--------------------------------------|----------------------|
-| [htmx](https://htmx.org)                | Progressive enhancement via HTML partials  | Any web stack        |
-| [Hotwire (Turbo)](https://hotwired.dev) | HTML-over-the-wire for Rails apps          | Ruby on Rails        |
-| [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view) | Real-time UI with server rendering         | Elixir / Phoenix     |
-| [Livewire](https://livewire.laravel.com)         | Server-driven UI components in PHP         | Laravel / PHP        |
-| [Unpoly](https://unpoly.com)            | Simplified partial page updates            | Any web stack        |
 
 
 #### How can we adapt this to UI5?
@@ -85,7 +86,7 @@ UI5 vs. "UI5 Over the Wire" - Communication
 
 We use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but in this case, we cannot send HTML directly. Instead, we send a View combined with its Data. This results in a concept that we could refer to as "UI5-View Over the Wire".
 
-##### 7. Merging Data & Presentation
+###### Merging Data & Presentation
 
 A typical "UI5-View Over the Wire" response looks like this:
 
@@ -95,7 +96,7 @@ A typical "UI5-View Over the Wire" response looks like this:
 
 
 
-
+#### Summary
 
 
 
