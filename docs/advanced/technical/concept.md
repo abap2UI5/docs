@@ -1,23 +1,22 @@
 # Key Concept: UI5 Over-the-Wire?
 
-This article provides a technical dive into abap2UI5, a framework that simplifies SAP UI5 application development by moving both UI rendering and logic back to the ABAP backend. It introduces the key architectural concept — HTML Over the Wire — and explains how this idea is adapted to the SAP ecosystem.
-
+This article outlines the technical foundation of abap2UI5, a framework designed to streamline SAP UI5 application development by shifting both UI rendering and application logic to the ABAP backend. Central to this design is the architectural model known as HTML Over the Wire, which is adapted to SAP-specific technologies in this approach.
 
 #### What is HTML Over-the-Wire?
 
-HTML Over the Wire refers to a web architecture where the server renders ready-to-use HTML and sends it directly to the browser. Instead of sending raw data (e.g., JSON) and rendering UIs with JavaScript frameworks on the client, the server handles both the application logic and HTML generation and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
+HTML Over the Wire describes a server-centric web architecture where the user interface is rendered on the server and transmitted as ready-to-use HTML to the browser. This eliminates the need for JSON data transfers, client-side MVC frameworks, and associated build pipelines. Application logic remains fully on the server.
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-Unlike Single Page Applications (SPAs), which shift most responsibilities to the browser, HTML Over the Wire maintains control on the backend. UI updates are performed by sending partial HTML fragments over AJAX, which the browser inserts without full page reloads.
+Compared to Single Page Applications (SPAs), which shift most responsibilities to the browser, HTML Over the Wire maintains control on the backend. UI updates are performed by sending partial HTML fragments over AJAX, which the browser inserts without full page reloads.
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
 _HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
-Several frameworks successfully implement the HTML Over-the-Wire approach:
+Several frameworks implement this pattern:
 
 | Framework             | Focus                                | Tech Stack           |
 |-----------------------|--------------------------------------|----------------------|
@@ -28,7 +27,7 @@ Several frameworks successfully implement the HTML Over-the-Wire approach:
 | [Unpoly](https://unpoly.com)            | Simplified partial page updates            | Any web stack        |
 
 
-#### Where does it come from?
+#### Historical Context
 
 In early web development, **Server-Side Rendering (SSR)** was the default. Every user action triggered a full-page reload with a complete HTML response.
 
@@ -39,7 +38,7 @@ However, SPAs introduced new challenges:
 - Separate frontend-backend development workflows
 - Complex build and deployment pipelines
 
-As a reaction, the **Over-the-Wire** paradigm re-emerged:
+As an alternative, the HTML Over the Wire model reintroduced server-controlled UI:
 - Servers send UI fragments, not full pages
 - Browsers update only specific parts of the page
 - Frontends stay simple and declarative
@@ -86,7 +85,7 @@ UI5 vs. "UI5 Over the Wire" - Communication
 
 We use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but in this case, we cannot send HTML directly. Instead, we send a View combined with its Data. This results in a concept that we could refer to as "UI5-View Over the Wire".
 
-###### Merging Data & Presentation
+Merging Data & Presentation
 
 A typical "UI5-View Over the Wire" response looks like this:
 
@@ -95,7 +94,7 @@ A typical "UI5-View Over the Wire" response looks like this:
 "UI5 Over the Wire" - Response with View & Data together
 
 
-#### Partial HTML Updates also possible?
+#### Partial HTML Updates
 
 A key feature of HTML over-the-wire is that the browser does not re-render the entire HTML page, but only specific parts. Can we achieve this with UI5? While modifying the XML view would typically trigger a complete re-render, focusing solely on updating the view model and binding UI attributes to it allows the UI5 framework to automatically update only the affected parts. Try out this snippet:
 
@@ -150,15 +149,18 @@ Limitations:
 - Offline functionality or complex client-side interactions are not covered.
 - Less effective if frontend and backend teams work independently.
 
+By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rendering, abap2UI5 enables maintainable, pragmatic business applications — without the overhead of SPA architectures. For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
 
-By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rendering, abap2UI5 enables maintainable, pragmatic business applications — without the overhead of SPA architectures.
-
-For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
-
-**Further Reading:**
+**Sources::**
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
 - [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
+
+
+
+
+
+
 
 
 
