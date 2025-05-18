@@ -56,7 +56,8 @@ Architectural Comparison:
 UI5 applications typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering occur on the frontend:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
-UI5 Freetyle - ABAP delivers only Data
+
+UI5 Freestyle - ABAP delivers only Data
 
 One specific characteristic we should examine closely is how the UI5 framework creates views. Each HTML output is rendered from an XML-View, with its associated data from the server. The view is stored at the frontend as part of the app. abap2UI5 now introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards displaying views and data received from the server:
 
