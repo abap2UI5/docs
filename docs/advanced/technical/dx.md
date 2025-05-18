@@ -6,12 +6,10 @@ hello world small app
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
 
 ENDCLASS.
-
 
 CLASS zcl_app_adt IMPLEMENTATION.
 
@@ -24,12 +22,10 @@ ENDCLASS.
 
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
 ENDCLASS.
-
 
 CLASS zcl_app_ui5 IMPLEMENTATION.
 
