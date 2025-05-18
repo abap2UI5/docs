@@ -4,6 +4,40 @@
 hello world small app
 
 
+```abap
+CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+
+ENDCLASS.
+
+CLASS zcl_app_adt IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+
+    out->write( `Hello World` ).
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+```abap
+CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+ENDCLASS.
+
+CLASS zcl_app_ui5 IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    client->view_display( z2ui5_cl_xml_view=>factory( )->text( `Hello World` ) ).
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+
 ##### 9. One HTTP-Service for all Apps
 
 First, we do not define a specific HTTP-Service for transmitting the View and the Data. Instead, every app uses the same generic HTTP-Handler including two strings (one for the View and one for the Data) eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime the ABAP variables & tables are transformed into a JSON-Model and transmitted as a string to the frontend. In JavaScript it is parsed again into a JSON-Model and binded to the UI5-View:
