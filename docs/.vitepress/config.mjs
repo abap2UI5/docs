@@ -165,12 +165,11 @@ export default defineConfig({
           },
            { text: 'test',  collapsed : "true" , items: [
            { text: '___',  collapsed : "true" , items: [
-             { text: 'Key Concept', link: '/advanced/technical/concept' },
-             { text: 'Architecture', link: '/advanced/technical/architecture' },
+             { text: 'Architecture', link: '/advanced/technical/concept' },
+             { text: 'Domain Driven Design', link: '/advanced/technical/runtime' },
              { text: 'Developer Experience', link: '/advanced/technical/dx' },
              { text: 'Cloud Readiness', link: '/advanced/technical/cloud' },
              { text: 'REST, Drafts', link: '/advanced/technical/rest' },
-             { text: 'Runtime, Designtime', link: '/advanced/technical/runtime' },
              { text: 'Technology', link: '/advanced/technical/overview', items: [
                  { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
                  { text: 'RAP', link: '/advanced/technical/rap' },
