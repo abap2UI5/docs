@@ -55,34 +55,34 @@ Architectural Comparison:
 
 UI5 applications typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering occur on the frontend:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 UI5 Freetyle - ABAP delivers only Data
 
 One specific characteristic we should examine closely is how the UI5 framework creates views. Each HTML output is rendered from an XML-View, with its associated data from the server. The view is stored at the frontend as part of the app. abap2UI5 now introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards displaying views and data received from the server:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 
 "UI5 Over the Wire" - ABAP delivers Data & View
 
 Despite still relying on frontend HTML rendering, all necessary information (view & data) is now retrieved via AJAX from the backend. As a result, the UI5 app remains a SPA, but its role is now reduced to solely displaying the view and its data:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
 UI5 app downgraded - Displaying Data & View received from the server
 
 This means that the frontend app is not aware of what it is currently displaying (whether it's a table, list or input) and neither is it aware of what actions will be taken next. The app logic remains completely on the server and the frontend app is just a generic UI5 app send with the first request:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 
 The app displays the view with its data and sends back each event to the server for determination of the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
 For communication we use an AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but in this case, we cannot send HTML directly because wen need the ui5 fornten to render the html. Instead, we send a View combined with its vieww model and with that use a second characteristic of the ui5 framework that it can use html out of xml views and ists json model. This results in a concept that we could refer to as "UI5-View Over the Wire".
 
 A typical "UI5-View Over the Wire" response looks like this:
 
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 
 "UI5 Over the Wire" - Response with View & Data together
 
