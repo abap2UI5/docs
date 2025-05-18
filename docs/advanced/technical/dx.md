@@ -1,6 +1,10 @@
 # DX: ALV & Selection-Screen Style?
 
+Developer Experience (DX) refers to the overall experience developers have when interacting with tools, processes, and systems during software development. There are a lot of different frameworks lets dive into the most beautiful one and see how these idea got adapten into abap2UI5.
+
 ### As simple as possible
+
+What is the easiest way to output data in an abap stack, it has to be both abao cloud ready and abap standard? its `if_oo_adt_classrun` the best way.
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
@@ -14,6 +18,13 @@ CLASS zcl_app_adt IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+it has the following advantages:
+* single file for a whole app
+* class based
+* abap cloud ready
+* 100% abapGit compatible which macke ist
+
+this was excatly what the abap2ui app keep to mimic, an abap2ui5 app with the outout above looks as folows:
 
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
@@ -27,9 +38,16 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+additionaly it solves the following problems:
+* np need to install adt, the output comes in a browser
+* end user can use it, becaue it published
+* at the fotnend it cretaes a ui5 app following offical sap fiori user experience
+
+so this is the basic, from here we try to add more functionality.
 
 ### Tables
 
+what is the easiest way to out out tables? its the goold als cl_salv_table:
 ```abap
 REPORT zre_app_alv.
 
@@ -45,17 +63,27 @@ cl_salv_table=>factory(
     t_table        = gt_t100 ).
 go_salv->display( ).
 ```
-
+15 lines of code, a single file, and the snippet is ready to use to transport to production for the use of end users. this is strong! unfortunately it is not cloud ready and therefor not future. let mix this with the baap2ui5 approach from above. a abap2ui5 we can create somethig quite similar with the follwoing snippet:
+```abap
+"app
+"app
+"app
+```
 
 ### Inputs
+as a last prerequste we need some input. also the easiest way are selection screen, lets remember how that went:
 ```abap
 REPORT zre_app_input.
   PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
 START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| type 'I'.
 ```
-
-
+this is thew wy we can do it with abap2ui5:
+```abap
+"app
+"app
+"app
+```
 
 ### Events
 
