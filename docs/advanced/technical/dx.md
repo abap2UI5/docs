@@ -1,8 +1,6 @@
 # DX: ALV & Selection-Screen Style?
 
-
-hello world small app
-
+### As simple as possible
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
@@ -36,6 +34,8 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
 ENDCLASS.
 ```
 
+### Tables
+
 ```abap
 REPORT zre_app_alv.
 
@@ -52,6 +52,25 @@ cl_salv_table=>factory(
 
 go_salv->display( ).
 ```
+
+
+### Inputs
+```abap
+REPORT zre_app_input.
+
+PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
+
+START-OF-SELECTION.
+   MESSAGE |Input: { pa_arbgb }| type 'I'.
+```
+
+
+
+### Events
+
+
+
+
 
 ##### 9. One HTTP-Service for all Apps
 
