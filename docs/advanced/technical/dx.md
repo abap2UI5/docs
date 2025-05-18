@@ -56,13 +56,13 @@ START-OF-SELECTION.
 ```
 this is thew wy we can do it with abap2ui5:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
+CLASS zcl_app DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA pa_arbgb TYPE string.
+    DATA pa_arbgb TYPE string VALUE 'MDG_TR'.
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
@@ -98,12 +98,12 @@ go_salv->display( ).
 ```
 15 lines of code, a single file, and the snippet is ready to use to transport to production for the use of end users. this is strong! unfortunately it is not cloud ready and therefor not future. let mix this with the baap2ui5 approach from above. a abap2ui5 we can create somethig quite similar with the follwoing snippet:
 ```abap
-CLASS z2ui5_cl_app DEFINITION PUBLIC.
+CLASS zcl_app DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 ENDCLASS.
 
-CLASS z2ui5_cl_app IMPLEMENTATION.
+CLASS zcl_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     SELECT FROM t100
