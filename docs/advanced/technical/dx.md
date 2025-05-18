@@ -36,6 +36,22 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
 ENDCLASS.
 ```
 
+```abap
+REPORT zre_app_alv.
+
+SELECT FROM t100
+ FIELDS *
+ INTO TABLE @DATA(gt_t100)
+ UP TO 10 ROWS.
+
+cl_salv_table=>factory(
+  IMPORTING
+    r_salv_table   = DATA(go_salv)
+  CHANGING
+    t_table        = gt_t100 ).
+
+go_salv->display( ).
+```
 
 ##### 9. One HTTP-Service for all Apps
 
