@@ -6,15 +6,12 @@
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
-
 ENDCLASS.
 
 CLASS zcl_app_adt IMPLEMENTATION.
-
   METHOD if_oo_adt_classrun~main.
     out->write( `Hello World` ).
   ENDMETHOD.
-
 ENDCLASS.
 ```
 
@@ -22,15 +19,12 @@ ENDCLASS.
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
 ENDCLASS.
 
 CLASS zcl_app_ui5 IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory( )->text( `Hello World` ) ).
   ENDMETHOD.
-
 ENDCLASS.
 ```
 
@@ -49,7 +43,6 @@ cl_salv_table=>factory(
     r_salv_table   = DATA(go_salv)
   CHANGING
     t_table        = gt_t100 ).
-
 go_salv->display( ).
 ```
 
@@ -57,11 +50,9 @@ go_salv->display( ).
 ### Inputs
 ```abap
 REPORT zre_app_input.
-
-PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
-
+  PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
 START-OF-SELECTION.
-   MESSAGE |Input: { pa_arbgb }| type 'I'.
+  MESSAGE |Input: { pa_arbgb }| type 'I'.
 ```
 
 
