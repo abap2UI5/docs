@@ -1,4 +1,4 @@
-# Key Concept: UI5 Over-the-Wire?
+# Architecture: UI5 Over-the-Wire?
 
 This page outlines the technical foundation of abap2UI5, a framework developed to streamline SAP UI5 application development by shifting both UI rendering and application logic to the ABAP backend. At its core lies an architectural model known as HTML Over the Wire, which has been adapted to SAP-specific technologies in this context.
 
