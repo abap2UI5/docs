@@ -7,7 +7,8 @@ This article provides a technical dive into abap2UI5, a framework that simplifie
 
 HTML Over the Wire refers to a web architecture where the server renders ready-to-use HTML and sends it directly to the browser. Instead of sending raw data (e.g., JSON) and rendering UIs with JavaScript frameworks on the client, the server handles both the application logic and HTML generation and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
 
-> You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines. [...]
+> You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
+
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
 Unlike Single Page Applications (SPAs), which shift most responsibilities to the browser, HTML Over the Wire maintains control on the backend. UI updates are performed by sending partial HTML fragments over AJAX, which the browser inserts without full page reloads.
