@@ -1,4 +1,4 @@
-# DX: ALV & Selection-Screen Style?
+# DX: As simple as possible?
 
 Developer Experience (DX) refers to the overall experience developers have when interacting with tools, processes, and systems during software development. There are a lot of different frameworks lets dive into the most beautiful one and see how these idea got adapten into abap2UI5.
 
