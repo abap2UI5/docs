@@ -135,8 +135,30 @@ ENDCLASS.
 
 #### Summary
 
+The **key concept of abap2UI5** is to bring the simplicity and efficiency of the HTML Over-the-Wire pattern into the SAP ecosystem.
+
+Key Benefits:
+- **Static UI5 Frontend App:** Delivered with the first HTTP request and remains generic and stable across all applications.
+- **Backend-Driven UI Control:** All UI definitions and business logic are implemented in ABAP classes.
+- **Pure ABAP Development:** No need for custom JavaScript or separate frontend development.
+- **Simplified Architecture:** No frontend builds or complex SPA frameworks — everything is managed through backend artifacts using abapGit and transports.
+- **Seamless SAP Integration:** Fully aligned with SAP’s UI5 and ABAP technology stack, compatible with all ERP and S/4HANA releases.
+- **Efficient for Business Applications:** Particularly well-suited for CRUD-heavy apps, forms, tables, dashboards, and typical enterprise use cases.
+
+Limitations:
+- Not suitable for highly interactive, real-time collaboration apps.
+- Offline functionality or complex client-side interactions are not covered.
+- Less effective if frontend and backend teams work independently.
 
 
+By shifting UI control back to the ABAP backend and leveraging SAP UI5 for rendering, abap2UI5 enables maintainable, pragmatic business applications — without the overhead of SPA architectures.
+
+For typical enterprise apps — forms, dashboards, transactions — abap2UI5 offers a clean, backend-driven alternative with faster time-to-market and lower complexity.
+
+**Further Reading:**
+- [htmx in a nutshell](https://htmx.org/docs/#introduction)
+- [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
+- [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 
 
 
