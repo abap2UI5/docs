@@ -97,17 +97,17 @@ CLASS z2ui5_cl_test_test IMPLEMENTATION.
     DATA(tab) = z2ui5_cl_xml_view=>factory(
         )->table( client->_bind_local( gt_t100 ) ).
 
-    DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `SPRSL` ).
-    lo_columns->column( )->text( text = `ARBGB` ).
-    lo_columns->column( )->text( text = `MSGNR` ).
-    lo_columns->column( )->text( text = `TEXT` ).
+    DATA(lo_col) = tab->columns( ).
+    lo_col->column( )->text( text = `SPRSL` ).
+    lo_col->column( )->text( text = `ARBGB` ).
+    lo_col->column( )->text( text = `MSGNR` ).
+    lo_col->column( )->text( text = `TEXT` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->text( `{SPRSL}` ).
-    lo_cells->text( `{ARBGB}` ).
-    lo_cells->text( `{MSGNR}` ).
-    lo_cells->text( `{TEXT}` ).
+    DATA(lo_cell) = tab->items( )->column_list_item( ).
+    lo_cell->text( `{SPRSL}` ).
+    lo_cell->text( `{ARBGB}` ).
+    lo_cell->text( `{MSGNR}` ).
+    lo_cell->text( `{TEXT}` ).
 
     client->view_display( tab ).
 
