@@ -81,12 +81,12 @@ go_salv->display( ).
 ```
 15 lines of code, a single file, and the snippet is ready to use to transport to production for the use of end users. this is strong! unfortunately it is not cloud ready and therefor not future. let mix this with the baap2ui5 approach from above. a abap2ui5 we can create somethig quite similar with the follwoing snippet:
 ```abap
-CLASS z2ui5_cl_test_test DEFINITION PUBLIC.
+CLASS z2ui5_cl_app DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 ENDCLASS.
 
-CLASS z2ui5_cl_test_test IMPLEMENTATION.
+CLASS z2ui5_cl_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     SELECT FROM t100
