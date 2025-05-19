@@ -81,7 +81,7 @@ The app renders the provided view and data, then returns any triggered events to
 
 Communication relies on AJAX roundtrips akin to HTML Over the Wire, but pure HTML cannot be sent since UI5 still requires XML views and JSON models. abap2UI5 leverages UI5's capability to render HTML from these constructs. This results in a model referred to as UI5-View Over the Wire.
 
-Here is the second shift, abap2UI5 sends a View Model from the bachend.
+Here is the second shift, abap2UI5 sends a View Model from the bachend. you dont need odata you can also use view models at the frontend, this is used to send it from the backend.
 
 A typical response in this pattern includes both view and model data:
 
