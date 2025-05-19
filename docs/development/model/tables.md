@@ -107,37 +107,37 @@ CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC CREATE PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
-    METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
   
-      prodh_nodes = VALUE #( (
+    prodh_nodes = VALUE #( (
         text = 'Machines'
         prodh  = '00100'
         nodes  = VALUE #( (
-           text = 'Pumps'
-           prodh = '0010000100'
-           nodes = VALUE #( (
-             text  = 'Pump 001'
-             prodh = '001000010000000100' ) (
-             text  = 'Pump 002'
-             prodh = '001000010000000105' ) )
+            text = 'Pumps'
+            prodh = '0010000100'
+            nodes = VALUE #( (
+                text  = 'Pump 001'
+                prodh = '001000010000000100' ) (
+                text  = 'Pump 002'
+                prodh = '001000010000000105' ) )
         ) ) ) (
         text  = 'Paints'
         prodh = '00110'
         nodes = VALUE #( (
-          text  = 'Gloss paints'
-          prodh = '0011000105'
-          nodes = VALUE #( (
-            text  = 'Paint 001'
-            prodh = '001100010500000100' ) (
-            text  = 'Paint 002'
-            prodh = '001100010500000105' )
+            text  = 'Gloss paints'
+            prodh = '0011000105'
+            nodes = VALUE #( (
+                text  = 'Paint 001'
+                prodh = '001100010500000100' ) (
+                text  = 'Paint 002'
+                prodh = '001100010500000105' )
       ) ) ) ) ).
 
-      DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
-       )->tree( items = client->_bind_edit( prodh_nodes )
-        )->items( )->standard_tree_item(
-           selected = '{IS_SELECTED}'
-           title    = '{TEXT}' ).
+    DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
+        )->tree( items = client->_bind_edit( prodh_nodes )
+            )->items( )->standard_tree_item(
+                selected = '{IS_SELECTED}'
+                title    = '{TEXT}' ).
  
     client->view_display( tree ).
 
