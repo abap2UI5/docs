@@ -9,7 +9,7 @@ _Note that some information in the blog articles may be outdated. Always refer t
 - Calling Apps Remotely via RFC [(25.06.2024)](https://www.linkedin.com/pulse/calling-abap2ui5-apps-remotely-via-rfc-abap2ui5-btoue/)
 - Community Feedback, New Features & Outlook 2024 [(08.01.2024)](https://blogs.sap.com/2024/01/08/abap2ui5-12-update-ii-community-feedback-new-features-outlook-january-2024/)
 
-##### SAP Fiori Launchpad Integration
+##### SAP Fiori Launchpad
 1. Installation & Configuration [(03.06.2024)](https://www.linkedin.com/pulse/copy-abap2ui5-host-your-apps-sap-fiori-launchpad-abap2ui5-ocn2e/?trackingId=Eot1XiIJHbM2a2ebDSF3dg%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)
 2. Setup Title, Parameters & Navigation [(06.06.2024)](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-23-features-abap2ui5-upche/?trackingId=WdScbzEUGgKY%2FS2Ibiy5fA%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)
 3. Integration of KPIs [(07.06.2024)](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/?trackingId=RedZMaZUkHn%2Bv6oSTwtVQw%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)
@@ -19,7 +19,7 @@ _Note that some information in the blog articles may be outdated. Always refer t
 2. Setup SAP Build Workzone Websites [(16.06.2024)](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-23-setup-ujdqe/?trackingId=bIEcH1OFtZU8kU2PCwcp%2BA%3D%3D)
 3. Setup SAP Mobile Start [(17.06.2024)](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-33-setup-uzure/?trackingId=He2W8FnZZ5UxpbGKHOeLEg%3D%3D)
 
-##### Development & Technical Background
+##### Development
 1. Introduction: Developing UI5 Apps Purely in ABAP [(SCN - 22.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-development-of-ui5-apps-in-pure-abap-1-3/)
 2. Displaying Selection Screens & Tables [(SCN - 23.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-output-of-lists-and-tables-toolbar-and-editable-2-3/)
 3. Popups, F4-Help, Messages & Controller Logic [(SCN - 30.03.2023)](https://blogs.sap.com/2023/03/30/abap2ui5-3-4-flow-logic-pop-ups-f4-help/)
