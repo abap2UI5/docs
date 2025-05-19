@@ -14,7 +14,7 @@ CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
         value      TYPE string,
         descr      TYPE string,
       END OF ty_row.
-    DATA t_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    DATA mt_itab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
 ENDCLASS.
  
@@ -22,15 +22,14 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
  
     DO 100 TIMES.
-      DATA ls_row TYPE ty_row.
-      ls_row-count = sy-index.
-      ls_row-value = 'red'.
-      ls_row-descr = 'this is a description'.
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT value #(
+        count = sy-index.
+        value = 'red'.
+        descr = 'this is a description' ) INTO TABLE mt_itab.
     ENDDO.
  
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-        )->table( client->_bind( t_tab ) ).
+        )->table( client->_bind( mt_itab ) ).
     tab->columns(
         )->column( )->text( 'Counter' )->get_parent(
         )->column( )->text( 'Value' )->get_parent(
@@ -52,15 +51,14 @@ Making a table editable is a simple change. You just need to switch the binding 
   METHOD z2ui5_if_app~main.
  
     DO 100 TIMES.
-      DATA ls_row TYPE ty_row.
-      ls_row-count = sy-index.
-      ls_row-value = 'red'.
-      ls_row-descr = 'this is a description'.
-      INSERT ls_row INTO TABLE t_tab.
+      INSERT value #(
+        count = sy-index.
+        value = 'red'.
+        descr = 'this is a description' ) INTO TABLE mt_itab.
     ENDDO.
  
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-        )->table( client->_bind_edit( t_tab ) ).
+        )->table( client->_bind_edit( mt_itab ) ).
     tab->columns(
         )->column( )->text( 'Count' )->get_parent(
         )->column( )->text( 'Value' )->get_parent(
