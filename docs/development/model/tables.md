@@ -120,7 +120,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
              prodh = '001000010000000100' ) (
              text  = 'Pump 002'
              prodh = '001000010000000105' ) )
-           ) ) ) (
+        ) ) ) (
         text  = 'Paints'
         prodh = '00110'
         nodes = VALUE #( (
@@ -133,14 +133,13 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
             prodh = '001100010500000105' )
       ) ) ) ) ).
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
- 
-      page->tree( items = client->_bind_edit( prodh_nodes )
+      DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
+       )->tree( items = client->_bind_edit( prodh_nodes )
         )->items( )->standard_tree_item(
            selected = '{IS_SELECTED}'
            title    = '{TEXT}' ).
  
-    client->view_display( page->stringify( ) ).
+    client->view_display( tree ).
 
   ENDMETHOD.
 ENDCLASS.
