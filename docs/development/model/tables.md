@@ -147,7 +147,7 @@ ENDCLASS.
 ```
 
 ### Nested Structures
-It is alsp possible to bind nested structure, just use `struc/component` in the binding, as follows:
+Binding nested structures is also possible. Use `structure/component` in the binding path, as shown below:
 ```abap
 CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -168,8 +168,8 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
     DATA mt_itab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
     mt_itab = VALUE #(
-        ( product = 'table' s_details = VALUE #( create_date = `01.01.2023` create_by = `Peter` ) )
-        ( product = 'chair' s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank` ) )
+        ( product = 'table' s_details = VALUE #( create_date = `01.01.2023` create_by = `Peter`  ) )
+        ( product = 'chair' s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank`  ) )
         ( product = 'sofa'  s_details = VALUE #( create_date = `12.03.2024` create_by = `George` ) ) ).
 
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind_local( mt_itab ) ).
