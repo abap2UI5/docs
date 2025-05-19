@@ -145,3 +145,47 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
  ENDMETHOD.
 ENDCLASS.
 ```
+
+### Nested Structures
+It is alsp possible to bind nested structure, just use `struc/component` in the binding, as follows:
+```abap
+CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    TYPES:
+      BEGIN OF ty_s_tab,
+        product TYPE string,
+        BEGIN OF s_details,
+          create_date TYPE string,
+          create_by   TYPE string,
+        END OF s_details,
+      END OF ty_s_tab.
+    DATA mt_itab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
+
+    mt_itab = VALUE #(
+        ( product = 'table' s_details = VALUE #( create_date = `01.01.2023` create_by = `Peter` ) )
+        ( product = 'chair' s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank` ) )
+        ( product = 'sofa'  s_details = VALUE #( create_date = `12.03.2024` create_by = `George` ) ) ).
+
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind_local( mt_itab ) ).
+
+    DATA(lo_columns) = tab->columns( ).
+    lo_columns->column( )->text( text = `Product` ).
+    lo_columns->column( )->text( text = `Created at` ).
+    lo_columns->column( )->text( text = `By` ).
+
+    DATA(lo_cells) = tab->items( )->column_list_item( ).
+    lo_cells->text( `{PRODUCT}` ).
+    lo_cells->text( `{S_DETAILS/CREATE_DATE}` ).
+    lo_cells->text( `{S_DETAILS/CREATE_BY}` ).
+
+    client->view_display( tab ).
+
+  ENDMETHOD.
+ENDCLASS.
+```
