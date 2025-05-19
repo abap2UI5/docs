@@ -29,9 +29,8 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
  
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-        items = client->_bind( t_tab ) ).
- 
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
+        )->table( client->_bind( t_tab ) ).
     tab->columns(
         )->column( )->text( 'Counter' )->get_parent(
         )->column( )->text( 'Value' )->get_parent(
@@ -41,7 +40,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
        )->text( '{VALUE}'
        )->text( '{DESCR}' ).
  
-    client->view_display( view->stringify( ) ).
+    client->view_display( tab ).
  
   ENDMETHOD.
 ENDCLASS.
