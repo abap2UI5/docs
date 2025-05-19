@@ -60,8 +60,8 @@ Making a table editable is a simple change. You just need to switch the binding 
       INSERT ls_row INTO TABLE t_tab.
     ENDDO.
  
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-        items = client->_bind_edit( t_tab ) ).
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
+        )->table( client->_bind_edit( t_tab ) ).
     tab->columns(
         )->column( )->text( 'Count' )->get_parent(
         )->column( )->text( 'Value' )->get_parent(
@@ -71,7 +71,7 @@ Making a table editable is a simple change. You just need to switch the binding 
        )->text( '{VALUE}'
        )->text( '{DESCR}' ).
  
-    client->view_display( view->stringify( ) ).
+    client->view_display( tab ).
  
   ENDMETHOD.
 ```
