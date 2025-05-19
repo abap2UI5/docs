@@ -131,7 +131,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
                 prodh = '001100010500000100' ) (
                 text  = 'Paint 002'
                 prodh = '001100010500000105' )
-      ) ) ) ) ).
+    ) ) ) ) ).
 
     DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
         )->tree( items = client->_bind_edit( prodh_nodes )
