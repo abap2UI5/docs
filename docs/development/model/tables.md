@@ -38,7 +38,6 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
        )->text( '{COUNT}'
        )->text( '{VALUE}'
        )->text( '{DESCR}' ).
- 
     client->view_display( tab ).
  
   ENDMETHOD.
@@ -67,7 +66,6 @@ Making a table editable is a simple change. You just need to switch the binding 
        )->text( '{COUNT}'
        )->text( '{VALUE}'
        )->text( '{DESCR}' ).
- 
     client->view_display( tab ).
  
   ENDMETHOD.
