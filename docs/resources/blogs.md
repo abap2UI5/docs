@@ -1,6 +1,6 @@
 # Blogs
 
-_Note that some information in the blog articles may be outdated. Always refer to this documentation for the most up-to-date information._
+_The information in the blog articles may be outdated. Always refer to this documentation for the most up-to-date information._
 
 ##### General
 - Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development [(06.10.2024)](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
