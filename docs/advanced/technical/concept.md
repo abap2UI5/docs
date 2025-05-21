@@ -1,6 +1,6 @@
 # Key Concept: UI5 Over-the-Wire?
 
-This page outlines the technical foundation of abap2UI5. At its core is an architectural model called _HTML Over-the-Wire_, adapted to SAP-specific technologies, which helps streamline UI5 app development by moving both UI rendering and application logic to the ABAP backend.
+This page outlines the technical foundation of abap2UI5. At its core is an architectural model known as HTML Over-the-Wire, adapted to SAP-specific technologies. This approach streamlines UI5 app development by shifting both UI rendering and application logic to the ABAP backend.
 
 #### What is HTML Over-the-Wire?
 
@@ -10,7 +10,7 @@ HTML Over-the-Wire describes a server-centric web architecture in which the user
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-In contrast to client-side JavaScript frameworks, which delegate most responsibilities to the browser, HTML Over-the-Wire keeps control on the backend. The first request sends all needed JS & CSS and then only UI updates are performed by sending partial HTML fragments via AJAX, which the browser inserts without reloading the entire page.
+In contrast to client-side JavaScript frameworks, which offload most responsibilities to the browser, HTML Over-the-Wire keeps control on the backend. The initial request delivers all necessary JavaScript and CSS, and from then on, only partial HTML fragments are sent via AJAX, which the browser inserts without reloading the entire page.
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
@@ -28,16 +28,17 @@ Several frameworks adopt this pattern:
 
 #### Historical Context
 
-In the early days of web development, Server-Side Rendering (SSR) was the standard. Every user interaction triggered a full-page reload, with the server returning the complete HTML. In the SAP world, this approach was familiar from ITS Mobile or SAP GUI for HTML.
+In the early days of web development, Server-Side Rendering (SSR) was the standard. Each user interaction triggered a full-page reload, with the server delivering the complete HTML response. In the SAP ecosystem, this approach was used by technologies such as ITS Mobile and SAP GUI for HTML.
 
-With the rise of Single-Page Applications (SPAs), rendering moved to the browser. SPAs fetch raw data—often via OData in SAP systems—and build UI dynamically using JavaScript frameworks like React, Angular, or Vue. SAP introduced UI5 in 2010 as a client-side SPA framework.
+With the rise of Single-Page Applications (SPAs), rendering shifted to the browser. SPAs retrieve raw data—often via OData in SAP systems—and construct the UI dynamically using JavaScript frameworks such as React, Angular, or Vue. SAP introduced a client-side SPA framework with UI5 in 2010.
 
-However, SPAs brought new challenges, including complex API layers, separate frontend and backend development teams, and elaborate build and deployment pipelines.
+However, SPAs introduced new challenges: complex API layers, fragmented frontend and backend development teams, and intricate build and deployment pipelines.
 
-As a counter-approach, HTML Over-the-Wire reestablishes server-driven UI updates:
-- Servers send UI fragments, not full pages
-- Browsers update only specific parts of the page
-- Frontends stay simple and declarative
+As a counter-approach, HTML Over-the-Wire reintroduces a server-driven approach to UI updates:
+- The server sends only HTML fragments, not entire pages
+- The browser updates specific portions of the DOM
+- The frontend remains simple and declarative
+- All logic and artifacts reside in the backend
 
 Architectural Comparison:
 
