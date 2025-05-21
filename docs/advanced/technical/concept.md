@@ -51,7 +51,7 @@ Architectural Comparison:
 
 #### How can we adapt this to UI5?
 
-UI5 applications typically follow the SPA model. The backend supplies data through OData, while all rendering and logic execution occur in the browser. A defining feature of UI5 is its use of XML views to generate HTML. These views reside on the frontend and are populated with server JSON data. XML-Views and JSON Darta is used by the UI5 framework to generate the HTML at the frontend.
+UI5 freestyle typically follow the SPA model. The backend supplies data through OData, while all rendering and logic execution occur in the browser. A defining feature of UI5 is its use of XML views to generate HTML. These views reside on the frontend and are populated with server JSON data. XML-Views and JSON Darta is used by the UI5 framework to generate the HTML at the frontend.
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
