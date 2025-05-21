@@ -132,5 +132,56 @@ CLASS zcl_app_alv IMPLEMENTATION.
 ENDCLASS.
 ```
 
+### POPUP_TO_CONFIRM
+Logic events...
+```abap
+REPORT zre_app_alv.
 
+DATA: event TYPE string.
+CALL FUNCTION 'POPUP_TO_CONFIRM'
+  EXPORTING
+    titlebar      = 'Title'
+    text_question = 'Do you have a great day?'
+  IMPORTING
+    answer        = event.
 
+CASE  event.
+  WHEN '1'.
+    MESSAGE `the result is YES` TYPE 'I'.
+  WHEN '2'.
+    MESSAGE `the result is NO` TYPE 'I'.
+ENDCASE.
+```
+in abap2UI5
+```abap
+CLASS zcl_app_alv_event DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
+
+CLASS zcl_app_alv_event IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+      client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
+        i_question_text = `Do you have a great day?`
+        i_title         = `Title`
+        i_event_confirm = `YES`
+        i_event_cancel  = `NO` ) ).
+      RETURN.
+    ENDIF.
+
+    CASE client->get( )-event.
+      WHEN `YES`.
+        client->message_box_display( `the result is YES` ).
+      WHEN `NO`.
+        client->message_box_display( `the result is NO` ).
+    ENDCASE.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+Sound familiar? The abap2UI5 framework emulates the classic call screen and leave to screen behaviour here.
+
+### Summary
