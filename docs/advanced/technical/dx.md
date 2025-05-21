@@ -46,7 +46,7 @@ additionaly it solves the following problems:
 so this is the basic, from here we try to add more functionality.
 
 
-### Selection Screens
+### Selection Screen
 as a last prerequste we need some input. also the easiest way are selection screen, lets remember how that went:
 ```abap
 REPORT zre_app_input.
@@ -78,7 +78,7 @@ CLASS zcl_app_input IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### ALV
+### ABAP List Viewer
 
 what is the easiest way to out out tables? its the goold als cl_salv_table:
 ```abap
@@ -132,7 +132,7 @@ CLASS zcl_app_alv IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### POPUP_TO_CONFIRM
+### popup_to_confirm
 Logic events...
 ```abap
 REPORT zre_app_alv.
