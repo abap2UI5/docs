@@ -4,17 +4,17 @@ This page outlines the technical foundation of abap2UI5. At its core is an archi
 
 #### What is HTML Over-the-Wire?
 
-HTML Over the Wire describes a server-centric web architecture in which the user interface is rendered on the server and transmitted to the browser as ready-to-use HTML. This eliminates the need for JSON data transfers, client-side MVC frameworks, and complex build pipelines. All application logic remains fully on the server.
+HTML Over-the-Wire describes a server-centric web architecture in which the user interface is rendered on the server and transmitted to the browser as ready-to-use HTML. This eliminates the need for OData data transfers, client-side MVC frameworks, and complex deployments. All application logic remains fully on the server [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-In contrast to Single Page Applications (SPAs), which delegate most responsibilities to the browser, HTML Over the Wire keeps control on the backend. UI updates are performed by sending partial HTML fragments via AJAX, which the browser inserts without reloading the entire page.
+In contrast to client-side JavaScript frameworks, which delegate most responsibilities to the browser, HTML Over-the-Wire keeps control on the backend. UI updates are performed by sending partial HTML fragments via AJAX, which the browser inserts without reloading the entire page.
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
-_HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
+_HTML "Over the Wire" Lifecycle [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
 Several frameworks adopt this pattern:
 
