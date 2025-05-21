@@ -120,6 +120,10 @@ CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
 ENDCLASS.
 ```
 
+```abap
+client->view_model_update( ).
+```
+
 #### Summary
 
 The core idea behind abap2UI5 is to bring the simplicity and efficiency of the HTML Over-the-Wire paradigm into the SAP ecosystem.
