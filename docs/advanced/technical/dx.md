@@ -118,7 +118,7 @@ CLASS zcl_app_alv IMPLEMENTATION.
     lo_col->column( )->text( text = `SPRSL` ).
     lo_col->column( )->text( text = `ARBGB` ).
     lo_col->column( )->text( text = `MSGNR` ).
-    lo_col->column( )->text( text = `TEXT` ).
+    lo_col->column( )->text( text = `TEXT`  ).
 
     DATA(lo_cell) = tab->items( )->column_list_item( ).
     lo_cell->text( `{SPRSL}` ).
