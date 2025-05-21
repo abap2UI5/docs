@@ -123,10 +123,10 @@ client->view_model_update( ).
 ```
 #### What about RAP?
 
-Although RAP shifts more logic and development to the backend, it cannot be considered an “over-the-wire” approach:
+Although RAP [(3)](https://pages.community.sap.com/topics/abap/rap) shifts more logic and development to the backend, it cannot be considered an “over-the-wire” approach:
 - RAP focuses on defining data models (CDS), services, and transactional logic in ABAP, exposing them via OData endpoints consumed by the frontend
 - It remains a traditional API-driven model, not one based on server-rendered UI. RAP applications treat the frontend as a consumer of data, not as a passive renderer of server-generated views
-- The UI is delivered initially as part of an SPA; subsequent changes are limited to annotation-driven updates or small adjustments—not full UI replacements. RAP apps require deployment for its generated SPA [(3)](https://developers.sap.com/mission.sap-fiori-abap-rap100.html)
+- The UI is delivered initially as part of an SPA; subsequent changes are limited to annotation-driven updates or small adjustments—not full UI replacements. RAP apps require deployment for its generated SPA [(4)](https://developers.sap.com/mission.sap-fiori-abap-rap100.html)
 
 #### Summary
 
