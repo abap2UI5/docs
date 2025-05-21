@@ -28,16 +28,16 @@ Several frameworks adopt this pattern:
 
 #### Historical Context
 
-In early web development, **Server-Side Rendering (SSR)** was the norm. Each user interaction triggered a full-page reload, with the server returning the complete HTML content.
+In early web development, **Server-Side Rendering (SSR)** was the norm. Each user interaction triggered a full-page reload, with the server returning the complete HTML content. In SAP context this is known from ITS Mobile or SAP GUI for HTML.
 
-With the rise of Single Page Applications (SPAs), rendering responsibilities shifted to the browser. SPAs retrieve raw data—often via OData in SAP systems—and dynamically build UIs using JavaScript frameworks such as React, Angular, or Vue, or in the SAP context, UI5.
+With the rise of Single Page Applications (SPAs), rendering responsibilities shifted to the browser. SPAs retrieve raw data—often via OData in SAP systems—and dynamically build UIs using JavaScript frameworks such as React, Angular, or Vue. SAP released UI5 in 2010 as client-side SPA JavaScript framweork.
 
 However, SPAs brought along new complexities:
 - API layers and data contracts
 - Separate frontend-backend development workflows
 - Complex build and deployment pipelines
 
-As a counter-approach, HTML Over the Wire reestablishes server-driven UI updates:
+As a counter-approach, HTML Over-the-Wire reestablishes server-driven UI updates:
 - Servers send UI fragments, not full pages
 - Browsers update only specific parts of the page
 - Frontends stay simple and declarative
