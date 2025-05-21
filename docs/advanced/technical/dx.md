@@ -160,7 +160,6 @@ CLASS zcl_app_alv_event DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS zcl_app_alv_event IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
