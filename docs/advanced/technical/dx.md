@@ -137,7 +137,7 @@ Logic events...
 ```abap
 REPORT zre_app_alv.
 
-DATA: event TYPE string.
+DATA event TYPE string.
 CALL FUNCTION 'POPUP_TO_CONFIRM'
   EXPORTING
     titlebar      = 'Title'
@@ -145,7 +145,7 @@ CALL FUNCTION 'POPUP_TO_CONFIRM'
   IMPORTING
     answer        = event.
 
-CASE  event.
+CASE event.
   WHEN '1'.
     MESSAGE `the result is YES` TYPE 'I'.
   WHEN '2'.
