@@ -6,7 +6,7 @@ outline: [2, 4]
 ### Basic Example
 Every abap2UI5 app is an implementation of the `Z2UI5_IF_APP` interface. Create a new class with the following code:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -26,7 +26,7 @@ Go back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORLD`
 ### View Display
 Now, let's add our first view to display a simple text:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -48,7 +48,7 @@ ENDCLASS.
 ### Event Handler
 Next, we extend the app with a button and an event:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -78,7 +78,7 @@ ENDCLASS.
 ### Data Exchange
 Finally, we add a public attribute and can send data to the backend:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
