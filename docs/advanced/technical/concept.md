@@ -51,13 +51,15 @@ Architectural Comparison:
 
 #### How can we adapt this to UI5?
 
-UI5 freestyle typically follow the SPA model. The backend supplies data through OData, while all rendering and logic execution occur in the browser. A defining feature of UI5 is its use of XML views to generate HTML. These views reside on the frontend and are populated with server JSON data. XML-Views and JSON Darta is used by the UI5 framework to generate the HTML at the frontend.
+UI5 freestyle apps follow the SPA model. All rtifacts are stored at the frontend and the backend supplies data through OData, while all rendering and logic execution occur in the browser:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
-UI5 Freestyle - ABAP delivers only Data
+UI5 Freestyle - ABAP Stack delivers only Data
 
-abap2UI5 introduces here the first a fundamental shift: the server now also delivers the xml view. The frontend becomes a passive display layer for views and data received from the server:
+As we need UI5 for rendering the HTML and it is a client side framework we are limited here, we can not build HTML in the backend and send it from there. But there is a defining feature of UI5 and its use of XML views to generate HTML. These views reside on the frontend and are populated with server JSON data. XML-Views and JSON Darta is used by the UI5 framework to generate the HTML at the frontend.
+
+abap2UI5 introduces here the first a small shift: what if the server now also delivers the xml view? The frontend becomes a passive display layer for views and data received from the server:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 
@@ -77,8 +79,9 @@ The app renders the provided view and data, then returns any triggered events to
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
-Communication relies on AJAX roundtrips akin to HTML Over the Wire, but pure HTML cannot be sent since UI5 still requires XML views and JSON models. abap2UI5 leverages UI5's capability to render HTML from these constructs. This results in a model referred to as UI5-View Over the Wire.
+Communication relies on AJAX roundtrips akin to HTML Over the Wire, but pure HTML cannot be sent since UI5 still requires XML views and JSON models. abap2UI5 leverages UI5's capability to render HTML from these constructs. This results in a model referred to as _UI5-XML-View Over-the-Wire_
 
+_UI5-XML-View and View-Model over-the-wire_:
 Here is the second shift, abap2UI5 sends a View Model from the bachend. you dont need odata you can also use view models at the frontend, this is used to send it from the backend.
 
 A typical response in this pattern includes both view and model data:
