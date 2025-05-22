@@ -1,4 +1,4 @@
-# DX: Let's keep it simple?
+# DX with abap2UI5: Keeping It Simple
 
 Developer Experience (DX) describes how pleasant, efficient, and intuitive it is for developers to work with tools, frameworks, and systems.
 
