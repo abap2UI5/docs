@@ -52,7 +52,6 @@ Architectural Comparison:
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-In short: Over-the-Wire sends only partial HTML updates, while SSR reloads the full page on every interaction.
 
 #### How can we adapt this to UI5?
 
