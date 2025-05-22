@@ -33,17 +33,15 @@ Several modern frameworks follow this pattern:
 
 #### But isn't this just old-school server rendering?
 
-In the early days of web development, Server-Side Rendering (SSR) was the standard. Each user interaction triggered a full-page reload, with the server delivering the complete HTML response. In the SAP ecosystem, this approach was used by technologies such as ITS Mobile and SAP GUI for HTML.
+In the early days of web development, Server-Side Rendering (SSR) was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. Within the SAP ecosystem, this approach was seen in technologies like ITS Mobile and SAP GUI for HTML.
 
-With the rise of Single-Page Applications (SPAs), rendering shifted to the browser. SPAs retrieve raw data—often via OData in SAP systems—and construct the UI dynamically using JavaScript frameworks such as React, Angular, or Vue. SAP introduced a client-side SPA framework with UI5 in 2010.
+The emergence of Single-Page Applications (SPAs) shifted the rendering logic to the client. SPAs fetch raw data — through OData services in SAP systems — and dynamically construct the UI in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with the introduction of UI5 in 2010.
 
-However, SPAs introduced new challenges: complex API layers, fragmented frontend and backend development teams, and intricate build and deployment pipelines.
+However, SPAs come with their own set of challenges: complex API layers, separation of frontend and backend development teams, and intricate build and deployment pipelines.
 
 As a counter-approach, HTML Over-the-Wire reintroduces a server-driven approach to UI updates:
-- The server sends only HTML fragments, not entire pages
-- The browser updates specific portions of the DOM
-- The frontend remains simple and declarative
-- All logic and artifacts reside in the backend
+- The server sends only HTML fragments, not entire pages, the browser updates specific parts of the DOM
+- The frontend remains simple and declarative, all logic and artifacts reside in the backend
 
 Architectural Comparison:
 
@@ -53,6 +51,7 @@ Architectural Comparison:
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
+In short: Over-the-Wire sends only partial HTML updates, while SSR reloads the full page on every interaction.
 
 #### How can we adapt this to UI5?
 
