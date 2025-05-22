@@ -14,10 +14,7 @@ Instead of building and maintaining complex JavaScript frontends, managing APIs,
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-In this architecture:
-- The initial request delivers JavaScript and CSS assets
-- Subsequent interactions trigger AJAX calls to fetch HTML fragments
-- The browser inserts these fragments into the DOM without reloading the full page
+In this architecture the initial request delivers JavaScript and CSS assets, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page.
 
 This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend:
 
