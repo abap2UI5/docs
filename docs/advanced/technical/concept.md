@@ -19,9 +19,7 @@ In this architecture the initial request delivers JavaScript and CSS assets, Sub
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
     <br/>
-  <em>
       HTML "Over the Wire" Lifecycle
-  </em>
 </p>
 
 This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend.
@@ -61,7 +59,7 @@ In short: Over-the-Wire sends only partial HTML updates, while SSR reloads the f
 UI5 freestyle apps follow the SPA model. All rtifacts are stored at the frontend and the backend supplies data through OData, while all rendering and logic execution occur in the browser:
 
 <p align="center">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 </p>
 
 UI5 Freestyle - ABAP Stack delivers only Data
@@ -71,24 +69,24 @@ As we need UI5 for rendering the HTML and it is a client side framework we are l
 abap2UI5 introduces here the first a small shift: what if the server now also delivers the xml view? The frontend becomes a passive display layer for views and data received from the server:
 
 <p align="center">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 </p>
 "UI5 Over the Wire" - ABAP delivers Data & View
 
 Although the frontend still renders HTML, all relevant information (view and data) is obtained from the backend via AJAX. The UI5 application technically remains an SPA but now functions solely as a rendering layer for the server-defined UI and Data:
 <p align="center">
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 </p>
 UI5 app downgraded - Displaying Data & View received from the server
 
 The frontend is unaware of the current view (e.g., table, list, input) or the next actions. All logic is handled on the backend. The frontend app is a static UI5 application delivered with the first request:
 
 <p align="center">
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 </p>
 The app renders the provided view and data, then returns any triggered events to the backend, which decides what should happen next. This process resembles the classical PAI/PBO model from SAP GUI applications:
 
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
 Communication relies on AJAX roundtrips akin to HTML Over the Wire, but pure HTML cannot be sent since UI5 still requires XML views and JSON models. abap2UI5 leverages UI5's capability to render HTML from these constructs. This results in a model referred to as _UI5-XML-View Over-the-Wire_
 
