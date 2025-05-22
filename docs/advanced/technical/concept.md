@@ -1,23 +1,23 @@
 # Key Concept: UI5 Over-the-Wire?
 
-This page introduces the technical foundation of abap2UI5. At its core is an architectural model known as HTML Over-the-Wire, adapted to SAP-specific technologies. This approach streamlines UI5 app development by shifting both UI rendering and application logic to the ABAP backend.
+This page introduces the technical foundation of abap2UI5. At its core lies an architectural pattern known as HTML Over-the-Wire, thoughtfully adapted for the SAP technology stack. The key idea is to simplify UI5 application development by shifting both UI rendering and application logic entirely to the ABAP backend.
 
 #### What is HTML Over-the-Wire?
 
-HTML Over-the-Wire describes a server-centric web architecture in which the user interface is rendered on the server and transmitted to the browser as ready-to-use HTML. 
+HTML Over-the-Wire describes a server-centric web architecture in which the user interface is generated on the server and sent to the browser as ready-to-render HTML.
 
-Instead of building complex JavaScript frontends and dealing with APIs and JSON, the server takes care of everything: it renders the UI and sends HTML directly to the browser. No need for client-side MVC frameworks, no JSON conversions, and no complicated deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
+Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser simply receives and renders HTML fragments. This approach eliminates the need for client-side MVC frameworks, data transformation layers, and frontend deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
 In this architecture:
-- The first request loads the basic JavaScript and CSS.
-- After that, the server only sends HTML fragments when needed.
-- The browser simply inserts those into the DOM. No full reloads required.
+- The initial request delivers JavaScript and CSS assets
+- Subsequent interactions trigger AJAX calls to fetch HTML fragments
+- The browser inserts these fragments into the DOM without reloading the full page
 
-This keeps the frontend clean and simple — just a rendering layer, while all logic stays in the backend:
+This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
@@ -31,7 +31,7 @@ Several modern frameworks follow this pattern:
 * [Unpoly](https://unpoly.com), Simplified partial page updates, Any web stack
 
 
-#### Isn't this just old-school server rendering?
+#### But isn't this just old-school server rendering?
 
 In the early days of web development, Server-Side Rendering (SSR) was the standard. Each user interaction triggered a full-page reload, with the server delivering the complete HTML response. In the SAP ecosystem, this approach was used by technologies such as ITS Mobile and SAP GUI for HTML.
 
