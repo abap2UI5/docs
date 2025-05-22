@@ -1,6 +1,10 @@
 # DX: Let's keep it simple?
 
-Developer Experience (DX) refers to the overall experience developers have when interacting with tools, processes, and systems during software development. There are a lot of different frameworks lets dive into the most beautiful one and see how these idea got adapten into abap2UI5.
+Developer Experience (DX) describes how pleasant, efficient, and intuitive it is for developers to work with tools, frameworks, and systems.
+
+Good DX means writing code feels natural, testing changes is fast, and the tools stay out of your way — helping you stay in flow. What defines good DX is often a combination of minimal boilerplate, easy debugging, straightforward deployment, and code that’s simple to understand, reuse, and share.
+
+This page explores familiar ABAP technologies and code patterns that provide a smooth developer experience — and shows how they have influenced the DX of abap2UI5.
 
 ### if_oo_adt_classrun
 
