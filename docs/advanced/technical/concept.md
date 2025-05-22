@@ -17,9 +17,11 @@ Instead of building and maintaining complex JavaScript frontends, managing APIs,
 In this architecture the initial request delivers JavaScript and CSS assets, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page:
 
 <p align="center">
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
     <br/>
-  <em> _HTML "Over the Wire" Lifecycle [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_</em>
+  <em>
+      HTML "Over the Wire" Lifecycle
+  </em>
 </p>
 
 
