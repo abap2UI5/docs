@@ -2,7 +2,7 @@
 
 Developer Experience describes how efficient, and intuitive it is for developers to work with tools, frameworks, and systems.
 
-Good Developer Experience means writing code feels natural, testing changes is fast, and the tools stay out of your way. Key aspects of great Developer Experience include minimal boilerplate, easy debugging, straightforward deployment, and code that’s simple to understand, reuse, and share.
+Good Developer Experience means writing code feels natural, testing changes is fast, and the tools stay out of your way. It includes minimal boilerplate, easy debugging, straightforward deployment, and code that’s simple to understand, reuse, and share.
 
 This page takes a look at familiar ABAP technologies and coding patterns that offer a smooth developer experience — and shows how these ideas have influenced the design of abap2UI5.
 
