@@ -187,13 +187,18 @@ ENDCLASS.
 ```
 Sound familiar? The abap2UI5 framework emulates the classic call screen and leave to screen behaviour here.
 
-#### Tools, Cache, Deployment
+### Deployment
+Deployment
+### Cache
 
+### Tools
 SE80
 
-Cache
+### Debugging
 
-Deployment, abapGit
+### Sharing 
+abapGit
+
 
 
 ### Summary
