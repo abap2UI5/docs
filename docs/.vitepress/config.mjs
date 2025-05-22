@@ -147,6 +147,7 @@ export default defineConfig({
           { text: 'Renaming', link: '/advanced/renaming' },
           { text: 'Builder', link: '/advanced/builds' },
           { text: 'Local', link: '/advanced/local' },
+          { text: 'RFC Connector', link: '/advanced/rfc' },
           { text: 'Extensibility',  collapsed : "false" , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
