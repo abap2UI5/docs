@@ -1,6 +1,8 @@
 # Key Concept: UI5 Over-the-Wire?
 
-This page introduces the technical foundation of abap2UI5. At its core lies an architectural pattern known as HTML Over-the-Wire, thoughtfully adapted for the SAP technology stack. The key idea is to simplify UI5 application development by shifting both UI rendering and application logic entirely to the ABAP backend.
+This page introduces the technical foundation of abap2UI5. 
+
+At its core lies an architectural pattern known as HTML Over-the-Wire, adapted for the SAP technology stack. The key idea is to simplify UI5 application development by shifting both UI rendering and application logic entirely to the ABAP backend.
 
 #### What is HTML Over-the-Wire?
 
