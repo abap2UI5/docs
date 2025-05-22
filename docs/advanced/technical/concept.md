@@ -14,13 +14,13 @@ Instead of building and maintaining complex JavaScript frontends, managing APIs,
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-In this architecture the initial request delivers JavaScript and CSS assets, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page.
-
-This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend:
+In this architecture the initial request delivers JavaScript and CSS assets, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
 _HTML "Over the Wire" Lifecycle [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
+
+This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend.
 
 Several modern frameworks follow this pattern:
 * [htmx](https://htmx.org) Progressive enhancement via HTML partials (Any web stack)
