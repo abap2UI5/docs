@@ -1,13 +1,20 @@
 # abapGit
 
-This project uses [abapGit](https://github.com/abapGit/abapGit) to distribute its code and manage version control efficiently.  
+This project uses [abapGit](https://github.com/abapGit/abapGit) to manage version control and distribute its code efficiently.
 
-#### git Client
-All projects artefacts are developend on an ABAP System and stored via abapGit in a GitHub repository. This makes hte project easy to install on any system for customers. Updates are always distributed at sofort and can be pulled by every csutomer.
+#### Git Client
+
+All project artifacts are developed directly in an ABAP system and stored in a GitHub repository via abapGit.  
+This setup makes the project easy to install on any customer system. Updates are distributed immediately and can be pulled by any user at any time.
+
+#### Apps as abapGit Artifacts
+
+In addition to the abap2UI5 core framework, all abap2UI5 apps are also stored as ABAP classes as abapGit-managed objects.  
+This enables installation via abapGit— no manual deployment required, unlike traditional UI5 apps.
+
+You can also install multiple abap2UI5 apps with a single abapGit pull. This also works seamlessly in ABAP Cloud environments, reducing deployment overhead.
 
 #### Contribution
 
-Contributions can be easily made via Pull Requests on GitHub. Simply create a new Pull Request and update your code using abapGit.  
-
-#### Apps as abapGit Artefacts
-In addition to the abap2UI5 project, all developed abap2UI5 apps are also stored as abapGit objects. This allows you to manage them in any Git repository. As a result, abap2UI5 apps do not require manual deployment like mormal UI5 apps. You can install multiple abap2UI5 apps with a single abapGit pull. This also works seamlessly in ABAP Cloud contexts, reducing deployment effort and keeping everything centralized in the backend.  
+Contributions are welcome and easily managed through Pull Requests on GitHub.  
+Simply create a new pull request and commit your changes using abapGit.
