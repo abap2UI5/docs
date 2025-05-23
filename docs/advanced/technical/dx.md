@@ -119,9 +119,9 @@ CLASS zcl_app_alv IMPLEMENTATION.
         )->table( client->_bind_local( gt_t100 ) ).
 
     DATA(lo_col) = tab->columns( ).
-    lo_col->column( )->text( text = `ARBGB` ).
-    lo_col->column( )->text( text = `MSGNR` ).
-    lo_col->column( )->text( text = `TEXT`  ).
+    lo_col->column( )->text( `ARBGB` ).
+    lo_col->column( )->text( `MSGNR` ).
+    lo_col->column( )->text( `TEXT`  ).
 
     DATA(lo_cell) = tab->items( )->column_list_item( ).
     lo_cell->text( `{ARBGB}` ).
