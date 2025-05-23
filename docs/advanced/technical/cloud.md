@@ -8,8 +8,9 @@ Cloud Readiness means that an ABAP project:
 
 - Uses only released SAP APIs (released objects)  
 - Complies with the restricted **ABAP for Cloud Development** language scope  
-- Avoids unauthorized modifications or direct access to SAP core tables  
-- Can run on BTP ABAP Environment (standalone) or Embedded ABAP Environment systems (e.g., S/4HANA Cloud Public Edition)
+- Avoids any modifications or direct access to SAP tables
+
+Such developments can run on the standalone BTP ABAP Environment (Steampunk) or the Embedded ABAP Environment (e.g., S/4HANA Cloud Public Edition), making them future-proof and compatible with upcoming SAP upgrades.
 
 #### Why is abap2UI5 Cloud Ready?
 
@@ -17,9 +18,8 @@ abap2UI5 fully meets the requirements of a cloud-compliant ABAP project:
 
 - It is written entirely using **ABAP for Cloud Development**, with no use of restricted language features or unreleased objects
 - It only relies on internally defined classes or released APIs
-- The complete codebase is managed through **abapGit** and can be imported into Steampunk systems 
 - It requires no core modifications, making it fully **Clean Core compliant**.  
-- The UI5 frontend is a static UI5 freestyle app, while all logic and UI behavior is driven from the ABAP backend.
+- The UI5 frontend is a static UI5 freestyle app
 
 abap2UI5 is cloud-ready, clean-core compliant, and supports modern, upgrade-safe development practices.
 
@@ -36,6 +36,4 @@ While tightly integrated with ABAP Cloud, RAP is not **mandatory**. Cloud readin
 
 #### Conclusion
 
-Despite not using RAP, abap2UI5 remains fully cloud-compliant and adheres to SAP’s Clean Core principles. It is cloud-ready by design, future-proof and supports upcoming SAP upgrades.
-
-
+Even without using RAP, abap2UI5 is fully cloud-compliant and aligned with SAP’s Clean Core principles. It is cloud-ready by design, future-proof, and supports upgrade-safe development across both standalone and embedded ABAP Cloud environments.
