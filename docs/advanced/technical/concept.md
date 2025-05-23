@@ -150,7 +150,7 @@ client->view_model_update( ).
 ```
 
 ##### Controls
-
+no feature of ui5 its just shows how the ui5 frmaework is doing a beuatiful job watching it partly rerenderig the dom.
 #### What about RAP?
 
 Although RAP [(3)](https://pages.community.sap.com/topics/abap/rap) shifts more logic and development to the backend, it cannot be considered an “over-the-wire” approach:
