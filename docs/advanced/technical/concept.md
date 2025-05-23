@@ -163,11 +163,17 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
 ENDCLASS.
 ```
 you can see in comparison, partly vs not:
-![party](https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="400" />
+  <br/>
+  <em>You can see the difference: partly vs. not</em>
+</p>
 All credits go here to the beatigul ui5 framework, it checks automatically for view model updates and only rerenderd the necessary controls. always keep in min to resend the view as selten as pssible but becaue i ttriggers w whole rerender cisotn gperfomrance and a bda ux experience. always try to only use 
+
 ```abap
 client->view_model_update( ).
 ```
+
 you also see the that the fcus stays stable giving the user has a great expereince, and done with a couple of lines of abap. this is all wenn need to call it UI5 over-the-wire.
 
 #### Isnt RAo aso also a bakcend driven and similar?
