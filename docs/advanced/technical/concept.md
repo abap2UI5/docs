@@ -133,24 +133,28 @@ PICPICPICPIC
 A central feature of HTML Over the Wire is that only the affected parts of the page are updated, rather than the entire document. Can this be achieved in UI5? While altering the XML view would typically trigger a full re-render, updating only the view model and binding attributes accordingly allows UI5 to update just the relevant UI elements. Consider this example:
 
 ```abap
-CLASS z2ui5_cl_app_partly_rerender DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_025 DEFINITION PUBLIC CREATE PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA text TYPE string.
+    DATA partly TYPE abap_bool.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    text = text && ` text`.
+
+    IF client->check_on_init( ) OR partly = abap_false.
       client->view_display( z2ui5_cl_xml_view=>factory(
-        )->input( value = client->_bind( text )
-        )->button( text = 'partly rerender html' press = client->_event( 'POST' ) ).
+        )->input( client->_bind( text )
+        )->input( submit = client->_event( )
+        )->checkbox( selected = client->_bind_edit( partly ) text = `partly` ) ).
+
     ELSE.
-      text = text && ` text`.
       client->view_model_update( ).
     ENDIF.
 
@@ -158,12 +162,15 @@ CLASS z2ui5_cl_app_partly_rerender IMPLEMENTATION.
 
 ENDCLASS.
 ```
-
+you can see in comparison, partly vs not:
+![party](https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707)
+All credits go here to the beatigul ui5 framework, it checks automatically for view model updates and only rerenderd the necessary controls. always keep in min to resend the view as selten as pssible but becaue i ttriggers w whole rerender cisotn gperfomrance and a bda ux experience. always try to only use 
 ```abap
 client->view_model_update( ).
 ```
+you also see the that the fcus stays stable giving the user has a great expereince, and done with a couple of lines of abap. this is all wenn need to call it UI5 over-the-wire.
 
-#### What about RAP?
+#### Isnt RAo aso also a bakcend driven and similar?
 
 Although RAP [(3)](https://pages.community.sap.com/topics/abap/rap) shifts more logic and development to the backend, it cannot be considered an “over-the-wire” approach:
 - RAP focuses on defining data models (CDS), services, and transactional logic in ABAP, exposing them via OData endpoints consumed by the frontend
