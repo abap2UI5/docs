@@ -24,7 +24,7 @@ abap2UI5 fully meets the requirements of a cloud-compliant ABAP project:
 
 abap2UI5 is cloud-ready, clean-core compliant, and supports modern, upgrade-safe development practices.
 
-#### What is RAP – and How Does It Compare?
+#### Do I Have to Use RAP to Be Cloud Ready?
 
 The RESTful Application Programming Model (RAP) is SAP's official architecture for building cloud-ready ABAP applications. It is based on:
 
@@ -33,8 +33,8 @@ The RESTful Application Programming Model (RAP) is SAP's official architecture f
 - OData Services for standardized CRUD operations
 - Fiori Elements for automatic UI generation
 
-RAP is tightly integrated with ABAP Cloud and follows all required guidelines. However, RAP is an architectural model, not a requirement for cloud readiness. A solution can be fully cloud-compliant without using RAP, as long as it respects the technical boundaries defined by SAP.
+While tightly integrated with ABAP Cloud, RAP is not **mandatory**. Cloud readiness depends on technical compliance, not on using RAP specifically. Any solution that respects SAP’s released APIs and language scope can be considered cloud-ready—even without RAP.
 
 #### Conclusion
 
-Despite not using RAP, abap2UI5 is fully within the boundaries of ABAP Cloud and leverages only released objects and compliant techniques. abap2UI5 avoids design-time model rigidity, reduces learning curve, and remains flexible—while still being clean-core and cloud-ready.
+Despite not using RAP, abap2UI5 remains fully cloud-compliant and adheres to SAP’s Clean Core principles. It is lightweight, low-barrier, and designed for longevity—clean-core and cloud-ready by design.
