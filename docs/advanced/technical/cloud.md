@@ -2,9 +2,9 @@
 
 #### What is ABAP Cloud and Cloud Readiness?
 
-**ABAP Cloud** is SAP's strategic development model for building modern, cloud-native applications and extensions on the SAP Business Technology Platform (BTP) and in S/4HANA Cloud environments. It is based on a restricted ABAP language scope and mandates the use of **released APIs** only. This model follows the **Clean Core** principle, aiming to decouple extensions from the SAP core to ensure long-term upgrade compatibility.
+ABAP Cloud is SAP's strategic development model for building modern, cloud-native applications and extensions on the SAP Business Technology Platform (BTP) and in S/4HANA Cloud environments. It is based on a restricted ABAP language scope and mandates the use of **released APIs** only. This model follows the **Clean Core** principle, aiming to decouple extensions from the SAP core to ensure long-term upgrade compatibility.
 
-**Cloud Readiness** means that an ABAP project:
+Cloud Readiness means that an ABAP project:
 
 - Uses only released SAP APIs (released objects)  
 - Complies with the restricted **ABAP for Cloud Development** language scope  
@@ -14,7 +14,7 @@
 
 #### Why is abap2UI5 Cloud Ready?
 
-**abap2UI5** fully meets the requirements of a cloud-compliant ABAP project:
+abap2UI5 fully meets the requirements of a cloud-compliant ABAP project:
 
 - It is written entirely using **ABAP for Cloud Development**, with no use of restricted language features or unreleased objects.  
 - It only relies on internally defined classes or released APIs.  
@@ -28,13 +28,10 @@ abap2UI5 is cloud-ready, clean-core compliant, and supports modern, upgrade-safe
 
 The RESTful Application Programming Model (RAP) is SAP's official architecture for building cloud-ready ABAP applications. It is based on:
 
-CDS Views for data modeling (design-time)
-
-Behavior Definitions for logic and validations
-
-OData Services for standardized CRUD operations
-
-Fiori Elements for automatic UI generation
+- CDS Views for data modeling (design-time)
+- Behavior Definitions for logic and validations
+- OData Services for standardized CRUD operations
+- Fiori Elements for automatic UI generation
 
 RAP is tightly integrated with ABAP Cloud and follows all required guidelines. However, RAP is an architectural model, not a requirement for cloud readiness. A solution can be fully cloud-compliant without using RAP, as long as it respects the technical boundaries defined by SAP.
 
