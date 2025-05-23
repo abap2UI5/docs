@@ -150,6 +150,7 @@ client->view_model_update( ).
 ```
 
 ##### Controls
+focus stays the same
 no feature of ui5 its just shows how the ui5 frmaework is doing a beuatiful job watching it partly rerenderig the dom.
 #### What about RAP?
 
