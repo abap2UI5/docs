@@ -10,18 +10,18 @@ Cloud Readiness means that an ABAP project:
 - Complies with the restricted **ABAP for Cloud Development** language scope  
 - Avoids any modifications or direct access to SAP tables
 
-Such developments can run on the standalone BTP ABAP Environment (Steampunk) or the Embedded ABAP Environment (e.g., S/4HANA Cloud Public Edition), making them future-proof and compatible with upcoming SAP upgrades.
+Such developments can run on the standalone BTP ABAP Environment (Steampunk) or the Embedded ABAP Environment (e.g., S/4HANA Cloud Public Edition). Even if still operating on ECC, projects built this way are future-proof and ensure safe, low-effort migration to cloud environments without rework or additional costs.
 
 #### Why is abap2UI5 Cloud Ready?
 
-abap2UI5 fully meets the requirements of a cloud-compliant ABAP project:
+abap2UI5 fully meets the criteria of a cloud-compliant ABAP project:
 
 - It is written entirely using **ABAP for Cloud Development**, with no use of restricted language features or unreleased objects
 - It only relies on internally defined classes or released APIs
 - It requires no core modifications, making it fully **Clean Core compliant**.  
 - The UI5 frontend is a static UI5 freestyle app
 
-abap2UI5 is cloud-ready, clean-core compliant, and supports modern, upgrade-safe development practices.
+abap2UI5 is cloud-ready by design, Clean Core compliant, and supports modern, upgrade-safe development practices.
 
 #### Do I Have to Use RAP to Be Cloud Ready?
 
@@ -32,7 +32,7 @@ The RESTful Application Programming Model (RAP) is SAP's official model for buil
 - OData Services for standardized CRUD operations
 - Fiori Elements for automatic UI generation
 
-While tightly integrated with ABAP Cloud, RAP is not **mandatory**. Cloud readiness depends on technical compliance, not on using RAP specifically. Any solution that respects SAP’s released APIs and language scope can be considered cloud-ready—even without RAP.
+While RAP is tightly integrated with ABAP Cloud, it is not mandatory. Cloud readiness depends on technical compliance—not on the use of RAP. Any solution that adheres to SAP’s released APIs and language scope is considered cloud-ready, even without RAP.
 
 #### Conclusion
 
