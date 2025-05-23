@@ -22,5 +22,22 @@
 - It requires no core modifications, making it fully **Clean Core compliant**.  
 - UI5 apps are based on a static, generic frontend, while all logic and UI behavior is driven from the ABAP backend.
 
-> ✅ **Conclusion**: abap2UI5 is cloud-ready, clean-core compliant, and supports modern, upgrade-safe development practices.
+abap2UI5 is cloud-ready, clean-core compliant, and supports modern, upgrade-safe development practices.
 
+## What is RAP – and How Does It Compare?
+
+The RESTful Application Programming Model (RAP) is SAP's official architecture for building cloud-ready ABAP applications. It is based on:
+
+CDS Views for data modeling (design-time)
+
+Behavior Definitions for logic and validations
+
+OData Services for standardized CRUD operations
+
+Fiori Elements for automatic UI generation
+
+RAP is tightly integrated with ABAP Cloud and follows all required guidelines. However, RAP is an architectural model, not a requirement for cloud readiness. A solution can be fully cloud-compliant without using RAP, as long as it respects the technical boundaries defined by SAP.
+
+## Conclusion
+
+Despite not using RAP, abap2UI5 is fully within the boundaries of ABAP Cloud and leverages only released objects and compliant techniques. abap2UI5 avoids design-time model rigidity, reduces learning curve, and remains flexible—while still being clean-core and cloud-ready.
