@@ -115,6 +115,7 @@ A typical response in this pattern includes both view and model data:
 
 #### Partial HTML Updates
 
+##### Property
 A central feature of HTML Over the Wire is that only the affected parts of the page are updated, rather than the entire document. Can this be achieved in UI5? While altering the XML view would typically trigger a full re-render, updating only the view model and binding attributes accordingly allows UI5 to update just the relevant UI elements. Consider this example:
 
 ```abap
@@ -147,6 +148,9 @@ ENDCLASS.
 ```abap
 client->view_model_update( ).
 ```
+
+##### Controls
+
 #### What about RAP?
 
 Although RAP [(3)](https://pages.community.sap.com/topics/abap/rap) shifts more logic and development to the backend, it cannot be considered an “over-the-wire” approach:
