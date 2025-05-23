@@ -53,69 +53,83 @@ Architectural Comparison:
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
 
-#### How works UI5?
+#### How Does UI5 work?
 
-UI5 freestyle apps follow the SPA model. All rtifacts are stored at the frontend and the backend supplies data through OData, while all rendering and logic execution occur in the browser:
+UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifacts are stored on the frontend, while the backend provides data via OData. Both rendering and logic execution occur entirely in the browser.
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/afb6e1bd-b60d-4890-ba47-5edd00da26c7" />
+    
+UI5 Freestyle - ABAP Stack delivers only Data
 </p>
 
-UI5 Freestyle - ABAP Stack delivers only Data
-
-As we need UI5 for rendering the HTML and it is a client side framework we are limited here, we can not build HTML in the backend and send it from there. But there is a defining feature of UI5 and its use of XML views to generate HTML. These views reside on the frontend and are populated with server JSON data. XML-Views and JSON Darta is used by the UI5 framework to generate the HTML at the frontend.
+Because UI5 is a client-side rendering framework, the HTML cannot be generated on the backend and sent to the client. The html needs to necessarily generated at the frontend in Javascript.
 
 
-#### Can we send the View from the backend?
+#### How can we send the View from the backend?
+
+Luckily there is a defining feature of UI5 and how it generates HTML which we can use to verlangern the view generation to the backend. Usually every view relies on a xml definition the so called XML View. The ui5 framework used this xml together with the data from the backend an generates the HTML at the frontend:
+
+<p align="center">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/a9bf8f85-54e7-476d-be87-2cd028334d2d" />
+<br/>
+  <em>UI5 Freestyle – HTML is generated from XML View and data sent via OData</em>
+</p>
 
 abap2UI5 introduces here the first a small shift: what if the server now also delivers the xml view? The frontend becomes a passive display layer for views and data received from the server:
+
+<p align="center">
+    <img width="500" alt="image" src="https://github.com/user-attachments/assets/ec1ac3f8-65fb-4155-84f6-1ec61a088c40" />
+<br/>
+  <em>UI5 Freestyle – HTML is generated from XML View and data sent bot form the server</em>
+</p>
+Although the frontend still renders HTML, all relevant information (view and data) is obtained from the backend via AJAX. The UI5 application technically remains an SPA but now functions solely as a rendering layer for the server-defined UI and Data.
+
+#### How can we bring the logic to the backend?
+
+We can now easily add some interaction with putting some static code at the frontend which sends events to the backend,  This process resembles the classical PAI/PBO model from SAP GUI applications. The app renders the provided view and data, then returns any triggered events to the backend, which decides what should happen next. The frontend is unaware of the current view (e.g., table, list, input) or the next actions. All logic is handled on the backend. The frontend app is a static UI5 application delivered with the first request:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/ecd6e798-b6f6-4816-89ca-90f20647eb04" />
 </p>
 
-"UI5 Over the Wire" - ABAP delivers Data & View
+with that we get a static logoi containe at the frontend and the backend gets in abap classes the lgoc hadles. every app becomes an abap class no need for frontend apps. Before we had a lot of fronten daritfats:
 
-Although the frontend still renders HTML, all relevant information (view and data) is obtained from the backend via AJAX. The UI5 application technically remains an SPA but now functions solely as a rendering layer for the server-defined UI and Data:
-<p align="center">
-    <img width="500" alt="image" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
-    <img width="500" alt="image" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/8b5c9b5b-3014-489f-90b4-55222744ba8a" />
 
-</p>
-UI5 app downgraded - Displaying Data & View received from the server
+Now we just use a single dummy app and can store all view and logic at the backend. 
 
-The frontend is unaware of the current view (e.g., table, list, input) or the next actions. All logic is handled on the backend. The frontend app is a static UI5 application delivered with the first request:
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/79c7c6be-6424-4c33-ab3c-9c7799a74747" />
 
-#### How can we use the model?
+#### How can we exchange data, amke it editable?
+
+So far we can display data and have a backend driven approach,but how can we get teh data back when someone mackes a change at the frontend, while we still relie on odata, the request would be go into our backen dodata implementtion and not in aour newly abapo classes in the backend which also sends the view. 
+
+abap2UI5 sends a View Model from the bachend. in uui cu acan also vie model. ususally they are used to bound atribute (visible/nuvisibe) and they a reused on json models:
+
+<img width="635" alt="image" src="https://github.com/user-attachments/assets/df92711f-abd1-4bfd-b84a-268bb452503f" />
 
 
-The app renders the provided view and data, then returns any triggered events to the backend, which decides what should happen next. This process resembles the classical PAI/PBO model from SAP GUI applications:
+Here is the second shift: wha if we dont bin odata, we jus bind a josn model which we explicite budk together at the backend and send wiet 
 
-<p align="center">
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
-</p>
+<img width="1047" alt="image" src="https://github.com/user-attachments/assets/461f08c2-0f0f-424e-a7f8-008af3610258" />
 
-Communication relies on AJAX roundtrips akin to HTML Over the Wire, but pure HTML cannot be sent since UI5 still requires XML views and JSON models. abap2UI5 leverages UI5's capability to render HTML from these constructs. This results in a model referred to as _UI5-XML-View Over-the-Wire_
 
-_UI5-XML-View and View-Model over-the-wire_:
-Here is the second shift, abap2UI5 sends a View Model from the bachend. you dont need odata you can also use view models at the frontend, this is used to send it from the backend.
+we can not consume odata or cds directly in the abap layer and only send the view + view model to the frontend. furthermore we can use make tings editable and send it directly to the backend and exchange data.
+
+the abap2ui5 framework opffers binding ethods and let the attribute via classes, everyhting is handled in the backgroudn and the app developer does not need to pay attentiojto to that,
+
 
 A typical response in this pattern includes both view and model data:
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 
-"UI5 Over the Wire" - Response with View & Data together
+ac complete piucture looks liek this:
 
-#### Where is the app logic?
-
-
-
-
-
+PICPICPICPIC
 
 #### Partial HTML Updates
 
-##### Property
 A central feature of HTML Over the Wire is that only the affected parts of the page are updated, rather than the entire document. Can this be achieved in UI5? While altering the XML view would typically trigger a full re-render, updating only the view model and binding attributes accordingly allows UI5 to update just the relevant UI elements. Consider this example:
 
 ```abap
@@ -149,9 +163,6 @@ ENDCLASS.
 client->view_model_update( ).
 ```
 
-##### Controls
-focus stays the same
-no feature of ui5 its just shows how the ui5 frmaework is doing a beuatiful job watching it partly rerenderig the dom.
 #### What about RAP?
 
 Although RAP [(3)](https://pages.community.sap.com/topics/abap/rap) shifts more logic and development to the backend, it cannot be considered an “over-the-wire” approach:
