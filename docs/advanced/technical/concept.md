@@ -107,7 +107,6 @@ Now, we only need a single dummy UI5 app, and all views and logic can be central
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/79c7c6be-6424-4c33-ab3c-9c7799a74747" />
-</p>
 <br/>
   <em>subtitle</em>
 </p>
@@ -120,7 +119,6 @@ In standard UI5, view models (often JSON models) are used to bind attributes suc
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/df92711f-abd1-4bfd-b84a-268bb452503f" />
-</p>
 <br/>
   <em>subtitle</em>
 </p>
@@ -128,7 +126,6 @@ Here comes the second key shift: Instead of binding to OData, abap2UI5 binds to 
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/461f08c2-0f0f-424e-a7f8-008af3610258" />
-</p>
 <br/>
   <em>subtitle</em>
 </p>
@@ -139,7 +136,6 @@ The abap2UI5 framework provides binding helpers and handles editable states, fie
 A typical response from the backend now includes both the UI definition (view) and the data model:
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
-</p>
 <br/>
   <em>subtitle</em>
 </p>
@@ -147,7 +143,6 @@ A complete picture of the architecture looks like this:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
-</p>
 <br/>
   <em>subtitle</em>
 </p>
