@@ -186,7 +186,7 @@ The result is an efficient, responsive, and low-maintenance application architec
 
 #### Summary
 
-The core idea behind abap2UI5 is to bring the simplicity and efficiency of the HTML Over-the-Wire paradigm into the SAP ecosystem.
+abap2UI5 is to bring the simplicity and efficiency of the HTML Over-the-Wire paradigm into the SAP ecosystem.
 
 Key Benefits:
 - Static UI5 Frontend Application: Delivered with the initial HTTP request; generic and consistent across all use cases
