@@ -16,8 +16,8 @@ In this architecture the initial request delivers JavaScript and CSS assets, Sub
 
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
-    <br/>
-      HTML "Over the Wire" Lifecycle
+<br/>
+  <em> HTML "Over the Wire" Lifecycle</em>
 </p>
 
 This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend.
@@ -57,9 +57,10 @@ UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifa
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/afb6e1bd-b60d-4890-ba47-5edd00da26c7" />
-    
-UI5 Freestyle - ABAP Stack delivers only Data
+<br/>
+  <em>Freestyle - ABAP Stack delivers only Data</em>
 </p>
+
 
 Because UI5 is a client-side rendering framework, HTML cannot be generated on the backend and sent to the client. Instead, HTML must be generated in the browser using JavaScript and the UI5 framework.
 
@@ -91,15 +92,25 @@ The frontend remains unaware of the current view structure (e.g., table, list, i
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/ecd6e798-b6f6-4816-89ca-90f20647eb04" />
+<br/>
+  <em>subtitle</em>
 </p>
 
 With this approach, the static logic remains in the frontend, while the backend handles the dynamic logic through ABAP classes. Each app becomes a self-contained ABAP class—no need for dedicated frontend apps anymore. Previously, we had to maintain many frontend artifacts:
 
+<p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/8b5c9b5b-3014-489f-90b4-55222744ba8a" />
-
+<br/>
+  <em>subtitle</em>
+</p>
 Now, we only need a single dummy UI5 app, and all views and logic can be centrally maintained in the backend:
 
+<p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/79c7c6be-6424-4c33-ab3c-9c7799a74747" />
+</p>
+<br/>
+  <em>subtitle</em>
+</p>
 
 #### How Can We Exchange Data and Make It Editable?
 
@@ -107,23 +118,39 @@ So far, we’ve seen how to display data in a backend-driven approach. But how d
 
 In standard UI5, view models (often JSON models) are used to bind attributes such as visible or enabled:
 
-<img width="635" alt="image" src="https://github.com/user-attachments/assets/df92711f-abd1-4bfd-b84a-268bb452503f" />
-
+<p align="center">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/df92711f-abd1-4bfd-b84a-268bb452503f" />
+</p>
+<br/>
+  <em>subtitle</em>
+</p>
 Here comes the second key shift: Instead of binding to OData, abap2UI5 binds to a custom JSON model, explicitly assembled in the backend. This model is sent together with the view to the frontend:
 
-<img width="1047" alt="image" src="https://github.com/user-attachments/assets/461f08c2-0f0f-424e-a7f8-008af3610258" />
-
+<p align="center">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/461f08c2-0f0f-424e-a7f8-008af3610258" />
+</p>
+<br/>
+  <em>subtitle</em>
+</p>
 This means we no longer consume CDS Views or OData services directly on the frontend. Instead, we send the view and its data model together from the backend. Any changes made in the UI can then be sent directly back to the backend via simple AJAX, without OData routing.
 
 The abap2UI5 framework provides binding helpers and handles editable states, field values, and validation—all within ABAP classes. App developers do not need to deal with model configuration or UI binding logic manually.
 
 A typical response from the backend now includes both the UI definition (view) and the data model:
-
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
-
+<p align="center">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
+</p>
+<br/>
+  <em>subtitle</em>
+</p>
 A complete picture of the architecture looks like this:
 
-PICPICPICPIC
+<p align="center">
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
+</p>
+<br/>
+  <em>subtitle</em>
+</p>
 
 we can not consume odata or cds directly in the abap layer and only send the view + view model to the frontend. furthermore we can use make tings editable and send it directly to the backend and exchange data.
 
@@ -137,16 +164,13 @@ Consider this example:
 
 ```abap
 CLASS z2ui5_cl_demo_app_025 DEFINITION PUBLIC CREATE PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA text TYPE string.
     DATA partly TYPE abap_bool.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     text = text && ` text`.
@@ -156,19 +180,17 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
         )->input( client->_bind( text )
         )->input( submit = client->_event( )
         )->checkbox( selected = client->_bind_edit( partly ) text = `partly` ) ).
-
     ELSE.
       client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.
-
 ENDCLASS.
 ```
 In the comparison below, you can see the difference between a full re-render and a partial view model update:
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="400" />
+  <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="500" />
   <br/>
   <em>You can see the difference: partly vs. not</em>
 </p>
