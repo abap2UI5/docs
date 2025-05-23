@@ -1,4 +1,4 @@
-# Key Concept: UI5 Over-the-Wire?
+# Key Concept: UI5 Over-the-Wire
 
 This page explains the basic architecture behind abap2UI5.
 
