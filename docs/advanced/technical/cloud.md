@@ -2,7 +2,7 @@
 
 #### What is ABAP Cloud and Cloud Readiness?
 
-ABAP Cloud is SAP's strategic development model for building modern, cloud-native applications and extensions on the SAP Business Technology Platform (BTP) and in S/4HANA Cloud environments. It is based on a restricted ABAP language scope and mandates the use of **released APIs** only. This model follows the **Clean Core** principle, aiming to decouple extensions from the SAP core to ensure long-term upgrade compatibility.
+ABAP Cloud is SAP's strategic development model for building cloud-native applications and extensions on the SAP BTP ABAP Envoroment and in S/4HANA Cloud environments. It is based on a restricted ABAP language scope and mandates the use of **released APIs** only. This model follows the **Clean Core** principle, aiming to decouple extensions from the SAP core to ensure long-term upgrade compatibility.
 
 Cloud Readiness means that an ABAP project:
 
