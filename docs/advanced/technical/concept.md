@@ -133,11 +133,41 @@ This means we no longer consume CDS Views or OData services directly on the fron
 The abap2UI5 framework provides binding helpers and handles editable states, field values, and validation—all within ABAP classes. App developers do not need to deal with model configuration or UI binding logic manually.
 
 A typical response from the backend now includes both the UI definition (view) and the data model:
-<p align="center">
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
-<br/>
-  <em>subtitle</em>
-</p>
+```json
+{
+   "S_FRONT": {
+      "APP": "Z2UI5_CL_APP_HELLO_WORLD",
+      "ID": "AD94A1CC76F145E986F4DFCB7D183CC5",
+      "PARAMS": {
+         "S_VIEW": {
+            "XML": " <mvc:View displayBlock=\"true\" height=\"100%\" xmlns=\"sap.m\" xmlns:core=\"sap.ui.core\" ..."
+         }
+      }
+   },
+   "MODEL": {
+      "XX": {
+         "NAME": "test"
+      }
+   }
+}
+```
+With the XML View:
+```xml
+<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" height="100%">
+  <Shell>
+    <Page title="abap2UI5 - Hello World">
+      <form:SimpleForm editable="true">
+        <form:content>
+          <Title text="Make an input here and send it to the server..."/>
+          <Label text="Name"/>
+          <Input value="{/XX/NAME}"/>
+          <Button press=".eB(['BUTTON_POST'])" text="post"/>
+        </form:content>
+      </form:SimpleForm>
+    </Page>
+  </Shell>
+</mvc:View>
+```
 A complete picture of the architecture looks like this:
 
 <p align="center">
