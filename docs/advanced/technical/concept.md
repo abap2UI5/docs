@@ -96,9 +96,7 @@ When the user triggers an event (e.g., button press), the event is sent to the b
   <em>subtitle</em>
 </p>
 
-With this architecture, the frontend acts as a static UI5 container. It remains unchanged across apps and the actual logic of each app is stored in baclkend abap classes.
-
-Previously, we had to maintain many frontend artifacts:
+In UI5 Freestyle apps, each application required a dedicated set of frontend artifacts:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/8b5c9b5b-3014-489f-90b4-55222744ba8a" />
@@ -106,7 +104,7 @@ Previously, we had to maintain many frontend artifacts:
   <em>UI5 Freestyle – multiple frontend artifacts per app</em>
 </p>
 
-With abap2UI5, only one generic UI5 shell is needed. All views and application logic are defined and maintained centrally in the backend:
+With abap2UI5, the frontend becomes a static UI5 container shared across all applications. The actual logic of each app resides in backend ABAP classes. Only a single generic UI5 shell is required, while all views and logic are defined and maintained centrally in the backend:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/79c7c6be-6424-4c33-ab3c-9c7799a74747" />
@@ -114,29 +112,33 @@ With abap2UI5, only one generic UI5 shell is needed. All views and application l
   <em>abap2UI5 – One static frontend, all views and logic in ABAP</em>
 </p>
 
+This means every app is a complete ABAP backend project managed through abapGit, eliminating the need for separate frontend deployments entirely.
+
 #### Editable Data Exchange
 
-So far, we’ve seen how to display data in a backend-driven approach. But how do we handle changes made on the frontend? If we still rely on OData, any update would typically be routed into the OData implementation layer, not into the ABAP class that also defines the view in abap2UI5. To solve this, abap2UI5 uses the concept of a View Model.
+So far, we’ve focused on how to display data using a backend-driven approach. But how can user input and changes made in the frontend be processed? If we were to continue relying on OData, any updates would typically be routed into the OData service layer—bypassing the ABAP class that also defines the view in abap2UI5. 
 
-In standard UI5, view models (often JSON models) are used to bind attributes such as visible or enabled:
+Let's take a look to the UI5 Freeestyle feature and concept of view models. In UI5 Freestyle, view models (often JSON models) are used to bind attributes such as visible or enabled and binded to passgenau um control eigenschaften eines views in model attribute zu hinterlegen:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/df92711f-abd1-4bfd-b84a-268bb452503f" />
 <br/>
-  <em>subtitle</em>
+  <em>UI5 – View model bindings for visibility and state</em>
 </p>
-Here comes the second key shift: Instead of binding to OData, abap2UI5 binds to a custom JSON model, explicitly assembled in the backend. This model is sent together with the view to the frontend:
+
+Here comes the second key shift: abap2UI5 nakes heavy use of View Models, instead of binding to OData it explicitly assembled in the backend after every request a dedicated view model for the actual view. This model is sent together with the view to the frontend:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/461f08c2-0f0f-424e-a7f8-008af3610258" />
 <br/>
-  <em>subtitle</em>
+  <em>abap2UI5 – View and model are delivered together by the backend</em>
 </p>
-This means we no longer consume CDS Views or OData services directly on the frontend. Instead, we send the view and its data model together from the backend. Any changes made in the UI can then be sent directly back to the backend via simple AJAX, without OData routing.
 
-The abap2UI5 framework provides binding helpers and handles editable states, field values, and validation—all within ABAP classes. App developers do not need to deal with model configuration or UI binding logic manually.
+This means CDS Views and OData services are no longer consumed directly on the frontend. Instead, both the view and its data model are sent from the backend in a single response. Changes made in the UI can be sent back by sending the u0pdated View Model in the baclkend again — no OData routing required.
 
-A typical response from the backend now includes both the UI definition (view) and the data model:
+But App developers don’t need to manually configure UI models or bindings. abap2UI5 bietet dies komplette logik im hintergrund an und als app anwender muss man lediglich die attribute seine klasse vie binding methode für den tranfer and frontend freigeben.
+
+A typical response from the backend now includes both the XML View and its View Model:
 ```json
 {
    "S_FRONT": {
@@ -155,7 +157,7 @@ A typical response from the backend now includes both the UI definition (view) a
    }
 }
 ```
-With the XML View:
+And the associated XML View looks like this:
 ```xml
 <mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" height="100%">
   <Shell>
