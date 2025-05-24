@@ -174,15 +174,14 @@ And the associated XML View looks like this:
   </Shell>
 </mvc:View>
 ```
-A complete picture of the architecture looks like this:
 
+This architecture results in a clean and unified application model:
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 <br/>
   <em>subtitle</em>
 </p>
 
-With this model, the frontend simply renders what the backend provides and sends back any updates. No direct use of OData or CDS Views is required in the frontend. Editable fields, validations, and roundtrips are all handled seamlessly within the backend.
 
 #### Efficient Partial HTML Updates
 
@@ -217,7 +216,7 @@ CLASS z2ui5_cl_demo_app_025 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-In the comparison below, you can see the difference between a full re-render and a partial view model update:
+In the following illustration, you can see the difference between a full re-render and a targeted view model update:
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="500" />
@@ -225,17 +224,7 @@ In the comparison below, you can see the difference between a full re-render and
   <em>You can see the difference: partly vs. not</em>
 </p>
 
-In the following illustration, you can see the difference between a full re-render and a targeted view model update:
-
-Thanks to UI5's powerful data binding mechanism, only the affected DOM elements are updated. This preserves the UI state—for example, the input focus remains intact—and provides a fluid user experience.
-
-To ensure optimal performance and responsiveness, avoid unnecessary full re-renders. Instead, use:
-
-```abap
-client->view_model_update( ).
-```
-This makes UI5 a perfect team player for the HTML Over-the-Wire approach, where the ABAP backend is responsible for building both the UI structure and its dynamic state.
-The result is an efficient, responsive, and low-maintenance application architecture that brings the best of UI5 and ABAP together.
+Thanks to UI5's powerful data binding mechanism, only the affected DOM elements are updated. This preserves the UI state—for example, the input focus remains intact—and provides a fluid user experience. This makes UI5 a perfect team player for the HTML Over-the-Wire approach, where the ABAP backend is responsible for building both the UI structure and its dynamic state. The result is an efficient, responsive, and low-maintenance application architecture that brings the best of UI5 and ABAP together.
 
 #### Conclusion & Benefits
 
