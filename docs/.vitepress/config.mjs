@@ -166,7 +166,6 @@ export default defineConfig({
           },
            { text: 'test',  collapsed : "true" , items: [
            { text: '___',  collapsed : "true" , items: [
-             { text: 'Key Concept', link: '/advanced/technical/concept' },
              { text: 'Developer Experience', link: '/advanced/technical/dx' },
              { text: 'Cloud Readiness', link: '/advanced/technical/cloud' },
              { text: 'Technology', link: '/advanced/technical/overview', items: [
@@ -179,6 +178,14 @@ export default defineConfig({
           ] , },  ],
            },
          ]
+      },
+            {
+        text: 'Configuration',
+      //  link: '/technical/setup',
+        collapsed: true,
+        items: [      
+             { text: 'Key Concept', link: '/technical/concept' },
+        ]
       },
       {
         text: 'Resources',
