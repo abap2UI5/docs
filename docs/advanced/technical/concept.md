@@ -55,7 +55,7 @@ Architectural Comparison:
 UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifacts are stored on the frontend, while the backend provides data via OData—typically based on CDS Views or custom ABAP implementations. Both rendering and logic execution take place entirely in the browser:
 
 <p align="center">
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/afb6e1bd-b60d-4890-ba47-5edd00da26c7" />
+  <img width="500" alt="image" src="https://github.com/user-attachments/assets/7ba09f8b-b8ad-48e3-9693-e12feeb94aed" />
 <br/>
   <em>Freestyle - ABAP Stack delivers only Data</em>
 </p>
