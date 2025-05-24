@@ -180,7 +180,7 @@ export default defineConfig({
          ]
       },
             {
-        text: 'Configuration',
+        text: 'Technical Background',
       //  link: '/technical/setup',
         collapsed: true,
         items: [      
