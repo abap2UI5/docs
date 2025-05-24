@@ -64,7 +64,7 @@ Because UI5 is a client-side rendering framework, HTML cannot be generated on th
 
 #### How can we send the View from the backend?
 
-Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. Normally, each view is defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML, along with the data provided by the backend, to generate first the UI5 Control Tree and then renders the HTML in the browser.
+Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. Normally, each view is defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML, along with the data provided by the backend, to generate the HTML in the browser.
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/a9bf8f85-54e7-476d-be87-2cd028334d2d" />
@@ -72,7 +72,9 @@ Fortunately, UI5 has a defining characteristic that allows us to shift part of t
   <em>UI5 Freestyle – HTML is generated from XML View and data sent via OData</em>
 </p>
 
-abap2UI5 introduces now a subtle shift: what if the server also delivers the XML view? Although HTML rendering still occurs on the frontend, all relevant information — the view and the data — is provided by the backend via AJAX:
+abap2UI5 introduces now a subtle shift: what if the server also delivers the XML view? 
+
+Although HTML rendering still occurs on the frontend, all relevant information — the view and the data — is provided by the backend via AJAX:
 
 <p align="center">
     <img width="500" alt="image" src="https://github.com/user-attachments/assets/ec1ac3f8-65fb-4155-84f6-1ec61a088c40" />
@@ -80,11 +82,11 @@ abap2UI5 introduces now a subtle shift: what if the server also delivers the XML
   <em>abap2UI5 – HTML is generated from XML View and data, both sent from the server</em>
 </p>
 
-The UI5 application remains a single-page application (SPA), but its role shifts to that of a pure rendering engine for server-defined UI and data.
+The UI5 application remains a single-page application (SPA), but its role shifts to that of a pure rendering engine for server-defined UI and data unaware of the current view structure (e.g., table, list, input fields) or the subsequent application flow
 
 ####  How can we exchange events from the frontend to the backend?
 
-We now add additional interaction by placing minimal static code in the frontend that sends events to the backend. The app renders the provided view and data, and whenever an event is triggered, the event information is passed to the backend. The backend in the abap class then decides what should happen next. All business logic is handled in the backend and this interaction model closely resembles the classical PAI/PBO model from SAP GUI applications.
+We now add additional interaction by placing minimal static code in the frontend that sends events to the backend. This interaction model closely resembles the classical PAI/PBO model from SAP GUI applications. The app renders the provided view and data, and whenever an event is triggered, the event information is passed to the backend. The backend in the abap class then decides what should happen next. All business logic is handled in the backend:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/ecd6e798-b6f6-4816-89ca-90f20647eb04" />
@@ -92,7 +94,7 @@ We now add additional interaction by placing minimal static code in the frontend
   <em>subtitle</em>
 </p>
 
-The frontend application is a static UI5 shell, delivered with the first HTTP request: With this approach, the static logic remains in the frontend, while the backend handles each app as a self contained ABAP class — no need for dedicated frontend apps anymore. Previously, in UI5 freestyle we had to maintain many frontend artifacts:
+The frontend application is a static UI5 shell, delivered with the first HTTP request: With this approach, the static logic remains in the frontend, while the backend handles the dynamic logic through ABAP classes. Each app becomes a self-contained ABAP class—no need for dedicated frontend apps anymore. Previously, we had to maintain many frontend artifacts:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/8b5c9b5b-3014-489f-90b4-55222744ba8a" />
@@ -108,8 +110,6 @@ Now, we only need a single dummy UI5 app, and all views and logic can be central
   <em>subtitle</em>
 </p>
 
-Further advantages arise with no need for deloyment of frontend artifacts, we only have abaoGit compatible backend artefacts.
-
 #### How Can We Exchange Data and Make It Editable?
 
 So far, we’ve seen how to display data in a backend-driven approach. But how do we handle changes made on the frontend? If we still rely on OData, any update would typically be routed into the OData implementation layer, not into the ABAP class that also defines the view in abap2UI5. To solve this, abap2UI5 uses the concept of a View Model.
@@ -121,19 +121,18 @@ In standard UI5, view models (often JSON models) are used to bind attributes suc
 <br/>
   <em>subtitle</em>
 </p>
-
-Here comes the second key shift: Instead of binding to OData we bind the view to a custom JSON model, explicitly assembled in the backend. This model is sent together with the view to the frontend:
+Here comes the second key shift: Instead of binding to OData, abap2UI5 binds to a custom JSON model, explicitly assembled in the backend. This model is sent together with the view to the frontend:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/461f08c2-0f0f-424e-a7f8-008af3610258" />
 <br/>
   <em>subtitle</em>
 </p>
+This means we no longer consume CDS Views or OData services directly on the frontend. Instead, we send the view and its data model together from the backend. Any changes made in the UI can then be sent directly back to the backend via simple AJAX, without OData routing.
 
-This means we no longer consume CDS Views or OData services directly on the frontend. Instead, we send the view and its data model together from the backend. Any changes made in the UI can then be sent directly back to the backend via simple AJAX, without OData routing. The abap2UI5 framework has some deeicated logic to geenrate the view model outmatically out of the attributes of your abap classes via the methids `_bind` and `_bind_eit`:
+The abap2UI5 framework provides binding helpers and handles editable states, field values, and validation—all within ABAP classes. App developers do not need to deal with model configuration or UI binding logic manually.
 
-A typical response from the backend now includes both the XML UI5 View and the JSON View model:
-
+A typical response from the backend now includes both the UI definition (view) and the data model:
 ```json
 {
    "S_FRONT": {
@@ -152,6 +151,7 @@ A typical response from the backend now includes both the XML UI5 View and the J
    }
 }
 ```
+With the XML View:
 ```xml
 <mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" height="100%">
   <Shell>
@@ -168,8 +168,7 @@ A typical response from the backend now includes both the XML UI5 View and the J
   </Shell>
 </mvc:View>
 ```
-
-Now we have everything together UI, App Logic, Data exvhange for our UI5 over-the-wire framework, the complete logic looks like this:
+A complete picture of the architecture looks like this:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
@@ -177,11 +176,15 @@ Now we have everything together UI, App Logic, Data exvhange for our UI5 over-th
   <em>subtitle</em>
 </p>
 
-#### Can we do partial HTML Updates?
+With this model, the frontend simply renders what the backend provides and sends back any updates. No direct use of OData or CDS Views is required in the frontend. Editable fields, validations, and roundtrips are all handled seamlessly within the backend.
 
-A central feature of the HTML Over the Wire approach is that only the affected parts of the HTML page are updated, rather than the entire document. Can this be achieved in UI5?
+#### Partial HTML Updates
 
-While changing the entire XML View in UI5 typically results in a full re-render, abap2UI5 makes partial updates possible by updating only the view model. This allows UI5 to efficiently update only the relevant UI controls through data binding — without rebuilding the entire view. Consider this example:
+A central feature of the HTML Over the Wire approach is that only the affected parts of the page are updated, rather than the entire document. Can this be achieved in UI5?
+
+While changing the entire XML View in UI5 typically results in a full re-render, abap2UI5 makes partial updates possible by updating only the view model. This allows UI5 to efficiently update only the relevant UI controls through data binding—without rebuilding the entire view. 
+
+Consider this example:
 
 ```abap
 CLASS z2ui5_cl_demo_app_025 DEFINITION PUBLIC CREATE PUBLIC.
@@ -216,13 +219,21 @@ In the comparison below, you can see the difference between a full re-render and
   <em>You can see the difference: partly vs. not</em>
 </p>
 
-First you see the effect of the fill rerender and then when only the first input feld gets rerndert only, this results in a stable UI and smooth user experience — for example, input focus is preserved even during updates..  By relying solely on view_model_update, the UI5 framework intelligently updates only the effected parts of the DOM. It does not re-render the entire view but selectively refreshes the controls that are bound to updated data. To ensure optimal performance and UX, you should minimize full view re-renders. A complete re-render can degrade performance and interrupt the user’s workflow. Instead, use `client->view_model_update( )` as often as possible.
+In the following illustration, you can see the difference between a full re-render and a targeted view model update:
 
-All credit goes to the powerful UI5 data binding system wich make UI5 a perfect team player for the HTML Over-the-Wire approach, where the ABAP backend is responsible for building both the UI5 XML VIew and its View Model.
+Thanks to UI5's powerful data binding mechanism, only the affected DOM elements are updated. This preserves the UI state—for example, the input focus remains intact—and provides a fluid user experience.
+
+To ensure optimal performance and responsiveness, avoid unnecessary full re-renders. Instead, use:
+
+```abap
+client->view_model_update( ).
+```
+This makes UI5 a perfect team player for the HTML Over-the-Wire approach, where the ABAP backend is responsible for building both the UI structure and its dynamic state.
+The result is an efficient, responsive, and low-maintenance application architecture that brings the best of UI5 and ABAP together.
 
 #### Summary
 
-abap2UI5 is to bring the simplicity and efficiency of the HTML Over-the-Wire paradigm into the SAP ecosystem.
+abap2UI5 brings the simplicity and efficiency of HTML Over-the-Wire into the ABAP ecosystem.
 
 Key Benefits:
 - Static UI5 Frontend Application: Delivered with the initial HTTP request; generic and consistent across all use cases
@@ -237,9 +248,9 @@ Limitations:
 - Offline functionality or complex client-side interactions are not covered
 - Less effective if frontend and backend teams work independently
 
-By relocating UI control to the ABAP backend and using UI5 purely for HTML rendering, abap2UI5 enables pragmatic, maintainable business application development — without the complexity of SPA architectures. For common enterprise use cases like dashboards, transactional forms, or reporting apps, it offers a clean, backend-driven alternative with shorter development cycles. 
+By relocating UI control to the ABAP backend and using UI5 purely for HTML rendering, abap2UI5 enables pragmatic, maintainable business application development — without the complexity of SPA architectures. It offers a clean, backend-driven alternative perfect for enterprise use cases with short development cycles.
 
-Give it a try now. Happy ABAPing! 🦖
+Happy ABAPing!
 
 **References:**
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
