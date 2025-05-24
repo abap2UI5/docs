@@ -38,9 +38,7 @@ In the early days of web development, Server-Side Rendering (SSR) was the standa
 
 The emergence of Single-Page Applications (SPAs) shifted the rendering logic to the client. SPAs fetch raw data — through OData services in SAP systems — and dynamically construct the UI in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with the introduction of UI5 in 2010.
 
-However, SPAs come with their own set of challenges: complex API layers, separation of frontend and backend development teams, and intricate build and deployment pipelines.
-
-As a counter-approach, HTML Over-the-Wire reintroduces a server-driven approach to UI updates:
+However, SPAs come with their own set of challenges: complex API layers, separation of frontend and backend development teams, and intricate build and deployment pipelines. As a counter-approach, HTML Over-the-Wire reintroduces a server-driven approach to UI updates:
 - The server sends only HTML fragments, not entire pages, the browser updates specific parts of the DOM
 - The frontend remains simple and declarative, all logic and artifacts reside in the backend
 
@@ -74,9 +72,9 @@ Fortunately, UI5 has a defining characteristic that allows us to shift part of t
   <em>UI5 Freestyle – The browser renders HTML based on XML View and backend data</em>
 </p>
 
-abap2UI5 introduces a subtle but important shift: what if the server also delivers the XML view? 
+abap2UI5 now introduces a subtle but important shift: what if the backend also delivers the XML View?
 
-While HTML rendering still happens on the frontend, both the view definition and the corresponding data are now delivered from the backend via AJAX:
+While HTML rendering still happens on the frontend, both the view definition and the corresponding data are now delivered from the backend:
 
 <p align="center">
     <img width="500" alt="image" src="https://github.com/user-attachments/assets/ec1ac3f8-65fb-4155-84f6-1ec61a088c40" />
@@ -84,7 +82,7 @@ While HTML rendering still happens on the frontend, both the view definition and
   <em>abap2UI5 – The browser renders HTML based on XML View and data fully delivered by the backend</em>
 </p>
 
-The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine. It simply receives server-defined views and data, without needing awareness of the UI structure (e.g., tables, lists, input fields) or the application's flow logic.
+The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data.
 
 ####  Handling Frontend Events in the Backend
 
