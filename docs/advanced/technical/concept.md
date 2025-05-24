@@ -30,7 +30,7 @@ Several modern frameworks follow this pattern:
 * [Unpoly](https://unpoly.com) Simplified partial page updates (Any web stack)
 
 
-#### But isn't this just old-school server rendering?
+#### How is this different from classic Server Side Rendering?
 
 In the early days of web development, Server-Side Rendering (SSR) was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. Within the SAP ecosystem, this approach was seen in technologies like ITS Mobile and SAP GUI for HTML.
 
@@ -50,7 +50,7 @@ Architectural Comparison:
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-#### How Does UI5 Freestyle work?
+#### How UI5 Freestyle Works
 
 UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifacts are stored on the frontend, while the backend provides data via OData — typically based on CDS Views or custom ABAP implementations. Both rendering and logic execution take place entirely in the browser:
 
@@ -62,7 +62,7 @@ UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifa
 
 Because UI5 is a client-side rendering framework, HTML cannot be generated on the backend and sent to the client. Instead, HTML must be generated in the browser using JavaScript and the UI5 framework.
 
-#### How can we send the View from the backend?
+#### Sending Views from Backend
 
 Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. Normally, each view is defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML, along with the data provided by the backend, to generate the HTML in the browser.
 
@@ -84,7 +84,7 @@ Although HTML rendering still occurs on the frontend, all relevant information �
 
 The UI5 application remains a single-page application (SPA), but its role shifts to that of a pure rendering engine for server-defined UI and data unaware of the current view structure (e.g., table, list, input fields) or the subsequent application flow
 
-####  How can we exchange events from the frontend to the backend?
+####  Handling Frontend Events in the Backend
 
 We now add additional interaction by placing minimal static code in the frontend that sends events to the backend. This interaction model closely resembles the classical PAI/PBO model from SAP GUI applications. The app renders the provided view and data, and whenever an event is triggered, the event information is passed to the backend. The backend in the abap class then decides what should happen next. All business logic is handled in the backend:
 
@@ -110,7 +110,7 @@ Now, we only need a single dummy UI5 app, and all views and logic can be central
   <em>subtitle</em>
 </p>
 
-#### How Can We Exchange Data and Make It Editable?
+#### Editable Data Exchange
 
 So far, we’ve seen how to display data in a backend-driven approach. But how do we handle changes made on the frontend? If we still rely on OData, any update would typically be routed into the OData implementation layer, not into the ABAP class that also defines the view in abap2UI5. To solve this, abap2UI5 uses the concept of a View Model.
 
@@ -178,7 +178,7 @@ A complete picture of the architecture looks like this:
 
 With this model, the frontend simply renders what the backend provides and sends back any updates. No direct use of OData or CDS Views is required in the frontend. Editable fields, validations, and roundtrips are all handled seamlessly within the backend.
 
-#### Partial HTML Updates
+#### Efficient Partial HTML Updates
 
 A central feature of the HTML Over the Wire approach is that only the affected parts of the page are updated, rather than the entire document. Can this be achieved in UI5?
 
