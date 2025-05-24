@@ -50,9 +50,9 @@ Architectural Comparison:
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-#### How Does UI5 Freestyle work in detail?
+#### How Does UI5 Freestyle work?
 
-UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifacts are stored on the frontend, while the backend provides data via OData—typically based on CDS Views or custom ABAP implementations. Both rendering and logic execution take place entirely in the browser:
+UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifacts are stored on the frontend, while the backend provides data via OData — typically based on CDS Views or custom ABAP implementations. Both rendering and logic execution take place entirely in the browser:
 
 <p align="center">
   <img width="500" alt="image" src="https://github.com/user-attachments/assets/7ba09f8b-b8ad-48e3-9693-e12feeb94aed" />
