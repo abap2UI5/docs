@@ -231,7 +231,7 @@ client->view_model_update( ).
 This makes UI5 a perfect team player for the HTML Over-the-Wire approach, where the ABAP backend is responsible for building both the UI structure and its dynamic state.
 The result is an efficient, responsive, and low-maintenance application architecture that brings the best of UI5 and ABAP together.
 
-#### Summary
+#### Conclusion & Benefits
 
 abap2UI5 brings the simplicity and efficiency of HTML Over-the-Wire into the ABAP ecosystem.
 
