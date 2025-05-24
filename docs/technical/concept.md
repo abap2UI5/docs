@@ -82,13 +82,13 @@ While HTML rendering still happens on the frontend, both the view definition and
   <em>abap2UI5 – The browser renders HTML based on XML View and data fully delivered by the backend</em>
 </p>
 
-The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data.
+The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data. How can we establish user interaction in this new scenario?
 
 ####  Handling Frontend Events in the Backend
 
-To enable user interaction, a minimal static UI5 shell is delivered with the initial HTTP request. This shell contains just enough logic to forward frontend events to the backend. The interaction model is inspired by the classic PAI/PBO pattern from SAP GUI applications.
+To enable user interaction, a minimal static UI5 freestyle app is delivered with the initial HTTP request. This app contains just enough logic to forward frontend events to the backend. The interaction model is inspired by the classic PAI/PBO pattern from SAP GUI applications.
 
-When the user triggers an event (e.g., button press), the event is sent to the backend, where an ABAP class handles the corresponding logic and determines the next step. All business logic resides entirely in the backend:
+When the user triggers an event (e.g., button press), the event informaton is sent to the backend, where an ABAP class determines the next step. All business logic resides entirely in the backend:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/ecd6e798-b6f6-4816-89ca-90f20647eb04" />
@@ -104,7 +104,7 @@ In UI5 Freestyle apps, each application required a dedicated set of frontend art
   <em>UI5 Freestyle – multiple frontend artifacts per app</em>
 </p>
 
-With abap2UI5, the frontend becomes a static UI5 container shared across all applications. The actual logic of each app resides in backend ABAP classes. Only a single generic UI5 shell is required, while all views and logic are defined and maintained centrally in the backend:
+With abap2UI5, the frontend becomes a static UI5 app shared across all applications, while all views and logic are defined and maintained in the backend. Each app is represneted by an ABAP class where the views are generated and the events are handled:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/79c7c6be-6424-4c33-ab3c-9c7799a74747" />
@@ -112,7 +112,7 @@ With abap2UI5, the frontend becomes a static UI5 container shared across all app
   <em>abap2UI5 – One static frontend, all views and logic in ABAP</em>
 </p>
 
-This means every app is a complete ABAP backend project managed through abapGit, eliminating the need for separate frontend deployments entirely.
+Furthermore every UI5 app becomes a complete ABAP backend project managed through abapGit, eliminating the need for separate frontend deployments entirely.
 
 #### Editable Data Exchange
 
