@@ -12,7 +12,7 @@ Instead of building and maintaining complex JavaScript frontends, managing APIs,
 
 > This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-In this architecture the initial request delivers JavaScript and CSS assets, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763):
+In this architecture the initial request delivers JavaScript and CSS, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763):
 
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
@@ -50,8 +50,7 @@ Architectural Comparison:
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-
-#### How Does UI5 work?
+#### How Does UI5 Freestyle work in detail?
 
 UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifacts are stored on the frontend, while the backend provides data via OData—typically based on CDS Views or custom ABAP implementations. Both rendering and logic execution take place entirely in the browser:
 
@@ -60,7 +59,6 @@ UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifa
 <br/>
   <em>Freestyle - ABAP Stack delivers only Data</em>
 </p>
-
 
 Because UI5 is a client-side rendering framework, HTML cannot be generated on the backend and sent to the client. Instead, HTML must be generated in the browser using JavaScript and the UI5 framework.
 
@@ -74,7 +72,9 @@ Fortunately, UI5 has a defining characteristic that allows us to shift part of t
   <em>UI5 Freestyle – HTML is generated from XML View and data sent via OData</em>
 </p>
 
-abap2UI5 introduces now a subtle but powerful shift: what if the server also delivers the XML view? In this model, the frontend becomes a passive rendering layer that receives both the view definition and the data directly from the backend:
+abap2UI5 introduces now a subtle shift: what if the server also delivers the XML view? 
+
+Although HTML rendering still occurs on the frontend, all relevant information — the view and the data — is provided by the backend via AJAX:
 
 <p align="center">
     <img width="500" alt="image" src="https://github.com/user-attachments/assets/ec1ac3f8-65fb-4155-84f6-1ec61a088c40" />
@@ -82,13 +82,11 @@ abap2UI5 introduces now a subtle but powerful shift: what if the server also del
   <em>abap2UI5 – HTML is generated from XML View and data, both sent from the server</em>
 </p>
 
-Although HTML rendering still occurs on the frontend, all relevant information — the view and the data — is provided by the backend via AJAX. The UI5 application remains a single-page application (SPA), but its role shifts to that of a pure rendering engine for server-defined UI and data.
+The UI5 application remains a single-page application (SPA), but its role shifts to that of a pure rendering engine for server-defined UI and data unaware of the current view structure (e.g., table, list, input fields) or the subsequent application flow
 
-#### How can we exchange events from the frontend to the backend?
+####  How can we exchange events from the frontend to the backend?
 
-We now add additional interaction by placing minimal static code in the frontend that sends events to the backend. This interaction model closely resembles the classical PAI/PBO model from SAP GUI applications. The app renders the provided view and data, and whenever an event is triggered, the event information is passed to the backend. The backend in the abap class then decides what should happen next.
-
-The frontend remains unaware of the current view structure (e.g., table, list, input fields) or the subsequent application flow. All business logic is handled in the backend. The frontend application is a static UI5 shell, delivered with the first HTTP request:
+We now add additional interaction by placing minimal static code in the frontend that sends events to the backend. This interaction model closely resembles the classical PAI/PBO model from SAP GUI applications. The app renders the provided view and data, and whenever an event is triggered, the event information is passed to the backend. The backend in the abap class then decides what should happen next. All business logic is handled in the backend:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/ecd6e798-b6f6-4816-89ca-90f20647eb04" />
@@ -96,13 +94,14 @@ The frontend remains unaware of the current view structure (e.g., table, list, i
   <em>subtitle</em>
 </p>
 
-With this approach, the static logic remains in the frontend, while the backend handles the dynamic logic through ABAP classes. Each app becomes a self-contained ABAP class—no need for dedicated frontend apps anymore. Previously, we had to maintain many frontend artifacts:
+The frontend application is a static UI5 shell, delivered with the first HTTP request: With this approach, the static logic remains in the frontend, while the backend handles the dynamic logic through ABAP classes. Each app becomes a self-contained ABAP class—no need for dedicated frontend apps anymore. Previously, we had to maintain many frontend artifacts:
 
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/8b5c9b5b-3014-489f-90b4-55222744ba8a" />
 <br/>
   <em>subtitle</em>
 </p>
+
 Now, we only need a single dummy UI5 app, and all views and logic can be centrally maintained in the backend:
 
 <p align="center">
@@ -219,6 +218,8 @@ Limitations:
 - Less effective if frontend and backend teams work independently
 
 By relocating UI control to the ABAP backend and using UI5 purely for HTML rendering, abap2UI5 enables pragmatic, maintainable business application development — without the complexity of SPA architectures. For common enterprise use cases like dashboards, transactional forms, or reporting apps, it offers a clean, backend-driven alternative with shorter development cycles.
+
+Happy ABAPing!
 
 **References:**
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
