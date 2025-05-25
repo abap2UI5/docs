@@ -248,7 +248,7 @@ Limitations:
 - Offline functionality or complex client-side interactions are not covered
 - Less effective if frontend and backend teams work independently
 
-By relocating UI control to the ABAP backend and using UI5 purely for HTML rendering, abap2UI5 enables pragmatic, maintainable business application development — without the complexity of SPA architectures. It offers a clean, backend-driven alternative that is ideal for enterprise use cases with short development cycles.
+By relocating UI control to the ABAP backend and using UI5 purely for HTML rendering, abap2UI5 enables pragmatic, maintainable business application development — without the complexity of SPA architectures.
 
 Happy ABAPing!
 
