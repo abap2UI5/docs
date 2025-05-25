@@ -181,7 +181,7 @@ And the corresponding XML View might look like this:
 This architecture enables a clean and unified application model:
 
 <p align="center">
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
 <br/>
   <em>abap2UI5 - Architecture</em>
 </p>
