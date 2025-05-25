@@ -17,7 +17,7 @@ In this architecture the initial request delivers JavaScript and CSS, Subsequent
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
 <br/>
-  <em> HTML "Over the Wire" Lifecycle</em>
+  <em> HTML "Over the Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
 </p>
 
 This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend.
@@ -55,7 +55,7 @@ UI5 freestyle apps follow the Single Page Application (SPA) model. All UI artifa
 <p align="center">
  <img width="500" alt="image" src="https://github.com/user-attachments/assets/8043d0d9-5852-4dac-aefb-37ec8d6e66be" />
 <br/>
-  <em>Freestyle - ABAP Stack delivers only Data</em>
+  <em>UI5 Freestyle - UI is built on the client; backend delivers only Data via OData</em>
 </p>
 
 Since UI5 is a client-side rendering framework, the HTML output cannot be generated on the backend and sent to the client. Instead, HTML is produced in the browser using the UI5 framework and its built-in render.
@@ -67,7 +67,7 @@ Fortunately, UI5 has a defining characteristic that allows us to shift part of t
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/1ae233c6-96ff-4370-ac31-30705c18a0f7" />
 <br/>
-  <em>UI5 Freestyle – The browser renders HTML based on XML View and backend data</em>
+  <em>UI5 Freestyle – HTML rendered in browser based on Frontend XML View and Backend Data</em>
 </p>
 
 abap2UI5 introduces a subtle but important shift: what if the backend also delivers the XML View?
@@ -77,7 +77,7 @@ While HTML rendering still happens on the frontend, both the view definition and
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/7886d77e-acef-4e96-bc0f-ed3728e06358" />
 <br/>
-  <em>abap2UI5 – The browser renders HTML based on XML View and data fully delivered by the backend</em>
+  <em>abap2UI5 – HTML rendered in browser based on XML View and Data, both send from the Backend</em>
 </p>
 
 The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data. This raises a new question — how is user interaction handled in this architecture?
@@ -91,7 +91,7 @@ When the user triggers an event (e.g., a button press), the event information is
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/64ed863f-09bf-4634-8688-5b5382595115" />
 <br/>
-  <em>abap2UI5 - Simle Frontend App, Lofic in Backend App</em>
+  <em>abap2UI5 – Simple shell app, backend handles all logic</em>
 </p>
 
 In UI5 Freestyle apps, each application required a dedicated set of frontend artifacts:
@@ -99,7 +99,7 @@ In UI5 Freestyle apps, each application required a dedicated set of frontend art
 <p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/abfe4163-e75d-4eab-ad4c-621f693fa6c3" />
 <br/>
-  <em>UI5 Freestyle – multiple frontend artifacts per app</em>
+  <em>UI5 Freestyle – Each application requires its own set of deployed UI artifac</em>
 </p>
 
 With abap2UI5, the frontend becomes a static UI5 shell shared across all applications. Views and logic are fully defined and maintained in the backend. Each app is represented by a single ABAP class that generates the view and handles the events:
@@ -107,7 +107,7 @@ With abap2UI5, the frontend becomes a static UI5 shell shared across all applica
 <p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/646c10e3-ef82-403f-8538-9efe45836ca2" />
 <br/>
-  <em>abap2UI5 – One static frontend, all views and logic in ABAP</em>
+  <em>abap2UI5 – Shared shell app, each application is represented by backend ABAP class</em>
 </p>
 
 As a result, every UI5 app becomes a complete ABAP backend project managed through abapGit—eliminating the need for separate frontend deployments entirely.
@@ -123,7 +123,7 @@ Let’s take a closer look at a key UI5 feature: the concept of view models. In 
 <p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />
 <br/>
-  <em>UI5 – View model bindings for visibility and state</em>
+  <em>UI5 View Model Concept – UI control properties are bound to View Model attributes</em>
 </p>
 
 This leads to the second key architectural shift in abap2UI5: Instead of binding to OData, abap2UI5 assembles a custom view model entirely in the backend. This model is constructed dynamically after each request — tailored specifically to the current view — and is sent together with the view definition to the frontend:
@@ -131,7 +131,7 @@ This leads to the second key architectural shift in abap2UI5: Instead of binding
 <p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
 <br/>
-  <em>abap2UI5 – View and model are delivered together by the backend</em>
+  <em>abap2UI5 – Backend delivers an XML View and its specifically tailored View Model in a single response</em>
 </p>
 
 This means CDS Views and OData services are no longer consumed directly on the frontend. Instead, the complete UI state — both view and model — is sent from the backend in a single response. Any user changes in the UI are then returned to the backend via a lightweight AJAX call containing the updated view model — no OData routing involved.
@@ -181,7 +181,7 @@ This architecture enables a clean and unified application model:
 <p align="center">
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 <br/>
-  <em>subtitle</em>
+  <em>abap2UI5 - Architecture</em>
 </p>
 
 Frontend and backend remain tightly coupled — not through OData contracts, but through plain ABAP logic and JSON — resulting in a fully backend-driven, editable UI flow.
@@ -224,7 +224,7 @@ The illustration below shows the difference between a full re-render and a targe
 <p align="center">
   <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="500" />
   <br/>
-  <em>You can see the difference: partly vs. not</em>
+  <em>Only relevant DOM parts are updated via model binding, preserving UI state</em>
 </p>
 
 Thanks to UI5’s powerful data binding mechanism, only the modified DOM elements are updated. This preserves the current UI state — such as input focus — and ensures a smooth, uninterrupted user experience. The XML View and View Model concept make UI5 a perfect team player for the UI5 Over-the-Wire approach combining the strengths of ABAP and UI5 — without the complexity of full client-side re-renders.
