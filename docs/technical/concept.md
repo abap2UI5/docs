@@ -101,7 +101,7 @@ In UI5 Freestyle apps, each application required a dedicated set of frontend art
 <p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/abfe4163-e75d-4eab-ad4c-621f693fa6c3" />
 <br/>
-  <em>UI5 Freestyle – Each application requires its own set of deployed UI artifac</em>
+  <em>UI5 Freestyle – Each application requires its own set of deployed UI and Logic artifacts</em>
 </p>
 
 With abap2UI5, the frontend becomes a static UI5 shell shared across all applications. Views and logic are fully defined and maintained in the backend. Each app is represented by a single ABAP class that generates the view and handles the events:
@@ -109,7 +109,7 @@ With abap2UI5, the frontend becomes a static UI5 shell shared across all applica
 <p align="center">
 <img width="350" alt="image" src="https://github.com/user-attachments/assets/646c10e3-ef82-403f-8538-9efe45836ca2" />
 <br/>
-  <em>abap2UI5 – Shared shell app, each application is represented by backend ABAP class</em>
+  <em>abap2UI5 – Shared shell app, each application is represented by backend ABAP classes</em>
 </p>
 
 As a result, every UI5 app becomes a complete ABAP backend project managed through abapGit—eliminating the need for separate frontend deployments entirely.
