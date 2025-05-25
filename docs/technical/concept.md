@@ -172,7 +172,9 @@ And its corresponding View Model:
    }
 }
 ```
-The overall architecture looks like this:
+#### Application Flow
+
+The overall application flow finally looks like this:
 
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
@@ -180,7 +182,7 @@ The overall architecture looks like this:
   <em>abap2UI5 Architecture - UI5 Over-the-Wire</em>
 </p>
 
-Frontend and backend remain tightly coupled — not through OData contracts, but through plain ABAP logic and JSON — resulting in a fully backend-driven, editable UI flow.
+With the initial request, the static shell app is delivered. After each user interaction, the app calls the backend — in a PAI/PBO-like fashion — to fetch the updated view and model. Frontend and backend remain tightly coupled — not via OData service definitions, but through plain ABAP logic and JSON. The result is a fully backend-driven UI flow.
 
 #### Partial HTML Updates
 
