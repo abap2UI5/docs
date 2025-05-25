@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 
-# Getting Started
+# Installation
 
 ### 1. Installation with abapGit
 
