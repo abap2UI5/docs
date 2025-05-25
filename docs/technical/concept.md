@@ -80,7 +80,9 @@ While HTML rendering still happens on the frontend, both the view definition and
   <em>abap2UI5 – HTML rendered in browser based on XML View and Data, both send from the Backend</em>
 </p>
 
-The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data. This raises a new question — how is user interaction handled in this architecture?
+The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data. 
+
+How is user interaction handled in this architecture?
 
 #### Frontend Events on the Server
 
