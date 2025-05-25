@@ -84,7 +84,7 @@ The UI5 application remains a single-page application (SPA), but its role change
 
 #### Frontend Events on the Server
 
-To support user interaction, a minimal static UI5 Freestyle app is delivered with the initial HTTP request. This app contains just enough logic to forward frontend events to the backend. The interaction model is inspired by the classic PAI/PBO pattern from SAP GUI applications.
+To support user interaction, a minimal and static UI5 Freestyle app is delivered with the initial HTTP request. This app contains just enough logic to forward frontend events typically acts as a shell app. The interaction model is inspired by the classic PAI/PBO pattern from SAP GUI applications.
 
 When the user triggers an event (e.g., a button press), the event information is sent to the backend, where an ABAP class determines what happens next. All logic is executed entirely in the backend:
 
