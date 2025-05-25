@@ -181,7 +181,7 @@ export default defineConfig({
          ]
       },
             {
-        text: 'Technical Background',
+        text: 'Technical Insights',
         link: '/technical/concept',
         collapsed: true,
         items: [      
