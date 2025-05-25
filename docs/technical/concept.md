@@ -138,9 +138,10 @@ This leads to the second key architectural shift in abap2UI5: Instead of binding
 
 This means CDS Views and OData services are no longer consumed directly on the frontend. Instead, the complete UI state — both view and model — is sent from the backend in a single response. Any user changes in the UI are then returned to the backend via a lightweight AJAX call containing the updated view model — no OData routing involved.
 
-Developers do not need to manually configure models or bindings. abap2UI5 handles this internally. All the developer needs to do is expose attributes of their ABAP class via a simple binding method — everything else is managed automatically.
+Developers do not need to manually configure models or bindings. abap2UI5 handles this internally. All that’s required is to expose class attributes via a simple binding method — the framework takes care of the rest.
 
-A typical response from the backend includes both the XML view:
+A typical backend response includes both the XML View:
+
 ```xml
 <mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" height="100%">
   <Shell>
@@ -157,7 +158,7 @@ A typical response from the backend includes both the XML view:
   </Shell>
 </mvc:View>
 ```
-And its corresponding view model:
+And its corresponding View Model:
 ```json
 {
    "MODEL": {
@@ -167,7 +168,7 @@ And its corresponding view model:
    }
 }
 ```
-This final architecture looks like this:
+The overall architecture looks like this:
 
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
