@@ -172,7 +172,7 @@ This final architecture looks like this:
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
 <br/>
-  <em>abap2UI5 - Architecture</em>
+  <em>abap2UI5 Architecture - UI5 Over-the-Wire</em>
 </p>
 
 Frontend and backend remain tightly coupled — not through OData contracts, but through plain ABAP logic and JSON — resulting in a fully backend-driven, editable UI flow.
