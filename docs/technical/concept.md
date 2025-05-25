@@ -225,11 +225,11 @@ Thanks to UI5’s powerful data binding mechanism, only the modified DOM element
 abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern into the ABAP ecosystem — combining proven technologies with a smart UI rendering strategy.
 
 Key Benefits:
-- Static UI5 Frontend Application: Delivered with the initial HTTP request; generic and consistent across all use cases
+- Static UI5 Frontend Shell App: Delivered with the initial HTTP GET request; generic and consistent across all apps
 - Backend-Driven UI Control: UI definitions and business logic are implemented entirely in ABAP classes
 - ABAP-Centric Development: Eliminates the need for additional JavaScript or dedicated frontend development
 - Simplified Deployment Model: No SPA-specific tooling or build processes; application logic and artifacts are maintained via abapGit and standard transport mechanisms
-- Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, ABAP Standard & ABAP Cloud ready 
+- Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, ABAP Standard & ABAP Cloud 
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and all typical enterprise use cases
 
 Limitations:
