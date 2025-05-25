@@ -229,7 +229,7 @@ The illustration below shows the difference between a full re-render and a targe
 
 Thanks to UI5’s powerful data binding mechanism, only the modified DOM elements are updated. This preserves the current UI state — such as input focus — and ensures a smooth, uninterrupted user experience. The XML View and View Model concept make UI5 a perfect team player for the UI5 Over-the-Wire approach combining the strengths of ABAP and UI5 — without the complexity of full client-side re-renders.
 
-#### Conclusion & Benefits
+#### Conclusion
 
 abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern into the ABAP ecosystem — combining proven technologies with a smart UI rendering strategy.
 
