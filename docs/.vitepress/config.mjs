@@ -67,11 +67,11 @@ export default defineConfig({
     ],
     sidebar: [
       {
-        text: 'Introduction',
+        text: 'Getting Started',
         link: '/get_started/about',
         collapsed: true,
         items: [
-          { text: 'About', link: '/get_started/about' },
+          { text: 'Introduction', link: '/get_started/about' },
           { text: 'Getting Started', link: '/get_started/quickstart' },
           { text: 'Hello World', link: '/get_started/hello_world' },
           { text: 'Sample Apps', link: '/get_started/samples' },
@@ -80,7 +80,7 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Development',
+        text: 'Cookbook',
         link: '/development/general',
         collapsed: true,
         items: [
@@ -138,7 +138,7 @@ export default defineConfig({
         ]
       },
       {
-        text: 'Advanced',
+        text: 'Advanced Topics',
         link: '/advanced/advanced',
         collapsed: true,
         items: [
