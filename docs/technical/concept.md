@@ -256,3 +256,4 @@ Happy ABAPing!
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
 - [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
+- [UI5 SDK](https://sapui5.hana.ondemand.com/sdk/#/topic/ec699e0817fb46a0817b0fa276a249f8)
