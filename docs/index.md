@@ -19,7 +19,7 @@ hero:
       text: Learn More
       link: /get_started/about
     - theme: brand
-      text: Releases
+      text: What's new?
       link: /resources/changelog.md
 
 features:
