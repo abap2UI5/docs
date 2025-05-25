@@ -140,27 +140,7 @@ This means CDS Views and OData services are no longer consumed directly on the f
 
 Developers do not need to manually configure models or bindings. abap2UI5 handles this internally. All the developer needs to do is expose attributes of their ABAP class via a simple binding method — everything else is managed automatically.
 
-A typical response from the backend includes both the XML view and its corresponding view model:
-
-```json
-{
-   "S_FRONT": {
-      "APP": "Z2UI5_CL_APP_HELLO_WORLD",
-      "ID": "AD94A1CC76F145E986F4DFCB7D183CC5",
-      "PARAMS": {
-         "S_VIEW": {
-            "XML": " <mvc:View displayBlock=\"true\" height=\"100%\" xmlns=\"sap.m\" xmlns:core=\"sap.ui.core\" ..."
-         }
-      }
-   },
-   "MODEL": {
-      "XX": {
-         "NAME": "test"
-      }
-   }
-}
-```
-And the corresponding XML View might look like this:
+A typical response from the backend includes both the XML view:
 ```xml
 <mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" height="100%">
   <Shell>
@@ -177,6 +157,18 @@ And the corresponding XML View might look like this:
   </Shell>
 </mvc:View>
 ```
+And its corresponding view model:
+```json
+{
+   "MODEL": {
+      "XX": {
+         "NAME": "test"
+      }
+   }
+}
+```
+And the corresponding XML View might look like this:
+
 
 This architecture enables a clean and unified application model:
 
