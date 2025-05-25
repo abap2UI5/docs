@@ -112,7 +112,7 @@ With abap2UI5, the frontend becomes a static UI5 shell shared across all applica
 
 As a result, every UI5 app becomes a complete ABAP backend project managed through abapGit—eliminating the need for separate frontend deployments entirely.
 
-#### Editable Data Exchange
+#### Create & Update Data
 
 So far, we’ve seen how to display data and handle events using a backend-driven approach. But how can user input be processed and changes made in the frontend be transferred back to the backend?
 
