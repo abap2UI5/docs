@@ -37,9 +37,10 @@ export default defineConfig({
       {
         text: 'Guide', items: [
           { text: 'Getting Started', link: '/get_started/about' },
-          { text: 'Development', link: '/development/general' },
+          { text: 'Cookbook', link: '/development/general' },
           { text: 'Configuration', link: '/configuration/setup' },
-          { text: 'Advanced', link: '/advanced/advanced' },
+          { text: 'Advanced Topics', link: '/advanced/advanced' },
+          { text: 'Technical Background', link: '/technical/concept' },
           { text: 'Resources', link: '/resources/resources' },
         ]
       },
