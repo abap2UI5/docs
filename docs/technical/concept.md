@@ -103,7 +103,7 @@ When a user triggers an event (e.g., pressing a button), the event information i
 In standard UI5 freestyle applications, each app requires its own dedicated set of frontend artifacts:
 
 <p align="center">
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
 <br/>
   <em>UI5 freestyle – Each application requires its own set of deployed UI and App artifacts</em>
 </p>
@@ -127,7 +127,7 @@ If we continued relying on OData, updates would typically be routed into the ODa
 Let’s take a closer look at a key UI5 feature: the concept of view models. In UI5 freestyle, view models are used to bind attributes such as visible or enabled — allowing control properties in the view to be mapped precisely to model attributes:
 
 <p align="center">
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />
+<img width="340" alt="image" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />
 <br/>
   <em>UI5 View Model Concept – UI control properties are bound to View Model attributes</em>
 </p>
