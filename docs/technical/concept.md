@@ -103,7 +103,7 @@ When a user triggers an event (e.g., pressing a button), the event information i
 In standard UI5 freestyle applications, each app requires its own dedicated set of frontend artifacts:
 
 <p align="center">
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/abfe4163-e75d-4eab-ad4c-621f693fa6c3" />
+<img width="350" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
 <br/>
   <em>UI5 freestyle – Each application requires its own set of deployed UI and App artifacts</em>
 </p>
@@ -111,7 +111,7 @@ In standard UI5 freestyle applications, each app requires its own dedicated set 
 With abap2UI5, the frontend becomes a static UI5 shell shared across all applications. Views and logic are fully defined and maintained in the backend. Each application is represented by a single ABAP class that generates the view and handles events:
 
 <p align="center">
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/646c10e3-ef82-403f-8538-9efe45836ca2" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
 <br/>
   <em>abap2UI5 – Shared shell app, each application is represented by backend ABAP classes</em>
 </p>
