@@ -167,10 +167,7 @@ And its corresponding view model:
    }
 }
 ```
-And the corresponding XML View might look like this:
-
-
-This architecture enables a clean and unified application model:
+This final architecture looks like this:
 
 <p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
