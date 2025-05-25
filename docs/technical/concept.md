@@ -186,7 +186,7 @@ This architecture enables a clean and unified application model:
 
 Frontend and backend remain tightly coupled — not through OData contracts, but through plain ABAP logic and JSON — resulting in a fully backend-driven, editable UI flow.
 
-#### Efficient Partial HTML Updates
+#### Partial HTML Updates
 
 A core benefit of the HTML Over-the-Wire approach is that only the affected parts of the UI are updated — not the entire page. But can this pattern be applied in UI5?
 
