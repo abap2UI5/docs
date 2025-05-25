@@ -226,7 +226,7 @@ The illustration below shows the difference between a full re-render and a targe
 <p align="center">
   <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="500" />
   <br/>
-  <em>Only relevant DOM parts are updated via model binding, preserving UI state</em>
+  <em>Partly HTML Rerendering via View Model - Only relevant DOM parts are rerenderd, preserving UI state</em>
 </p>
 
 Thanks to UI5’s powerful data binding mechanism, only the modified DOM elements are updated. This preserves the current UI state — such as input focus — and ensures a smooth, uninterrupted user experience. The XML View and View Model concept make UI5 a perfect team player for the UI5 Over-the-Wire approach combining the strengths of ABAP and UI5 — without the complexity of full client-side re-renders.
