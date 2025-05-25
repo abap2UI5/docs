@@ -131,7 +131,7 @@ Let’s take a closer look at a key UI5 feature: the concept of view models. In 
 This leads to the second key architectural shift in abap2UI5: Instead of binding to OData, abap2UI5 assembles a custom view model entirely in the backend. This model is constructed dynamically after each request — tailored specifically to the current view — and is sent together with the view definition to the frontend:
 
 <p align="center">
-<img width="350" alt="image" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
+<img width="385" alt="image" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
 <br/>
   <em>abap2UI5 – Backend delivers an XML View and its specifically tailored View Model in a single response</em>
 </p>
