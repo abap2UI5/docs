@@ -40,7 +40,7 @@ export default defineConfig({
           { text: 'Cookbook', link: '/development/general' },
           { text: 'Configuration', link: '/configuration/setup' },
           { text: 'Advanced Topics', link: '/advanced/advanced' },
-          { text: 'Technical Background', link: '/technical/concept' },
+          { text: 'Technical Insights', link: '/technical/concept' },
           { text: 'Resources', link: '/resources/resources' },
         ]
       },
