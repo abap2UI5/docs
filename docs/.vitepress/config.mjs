@@ -182,7 +182,7 @@ export default defineConfig({
       },
             {
         text: 'Technical Background',
-      //  link: '/technical/setup',
+        link: '/technical/concept',
         collapsed: true,
         items: [      
              { text: 'Key Concept', link: '/technical/concept' },
