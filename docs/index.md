@@ -12,12 +12,13 @@ hero:
     width: 200px
     height: 200px
   actions:
-    - theme: brand
-      text: About
-      link: /get_started/about
     - theme: alt
-      text: Getting Started
+      text: Get Started
       link: /get_started/quickstart
+    - theme: brand
+      text: Learn More
+      link: /get_started/about
+
 
 features:
   - title: Guide
