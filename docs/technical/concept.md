@@ -30,7 +30,7 @@ Several modern frameworks follow this pattern:
 * [Unpoly](https://unpoly.com) Simplified partial page updates (Any web stack)
 
 
-#### How is this different from classic Server Side Rendering?
+#### Comparison to Classic Server Side Rendering?
 
 In the early days of web development, Server-Side Rendering (SSR) was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. Within the SAP ecosystem, this approach was seen in technologies like ITS Mobile and SAP GUI for HTML.
 
@@ -82,7 +82,7 @@ While HTML rendering still happens on the frontend, both the view definition and
 
 The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data. This raises a new question — how is user interaction handled in this architecture?
 
-####  Handling Frontend Events in the Backend
+#### Frontend Events in the Backend
 
 To support user interaction, a minimal static UI5 Freestyle app is delivered with the initial HTTP request. This app contains just enough logic to forward frontend events to the backend. The interaction model is inspired by the classic PAI/PBO pattern from SAP GUI applications.
 
