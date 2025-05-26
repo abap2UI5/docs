@@ -12,13 +12,13 @@ hero:
     width: 200px
     height: 200px
   actions:
-    - theme: alt
+    - theme: brand
       text: Get Started
       link: /get_started/quickstart
     - theme: alt
       text: Learn More
       link: /get_started/about
-    - theme: brand
+    - theme: alt
       text: What's new?
       link: /resources/changelog.md
 
