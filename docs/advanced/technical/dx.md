@@ -205,49 +205,48 @@ Why this improves Developer Experience:
 - UI and logic stay in sync
 - The flow mimics classic ABAP screen logic with modern UI5 behavior
 
-
 ### Deployment
 
-One overlooked aspects of Developer Experience is deployment. Even a beautifully written app is frustrating to work with if it’s hard to deploy. But in abap2UI5 all apps are just classes and can be deployed via activation, transport into production goes over the TOC system known from the rest of the abap world.
+One aspect of Developer Experience is deployment. Even a beautifully written app is frustrating if it’s hard to ship. In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard TOC system known from traditional ABAP workflows.
 
 Why this improves Developer Experience:
-- No separated Frontend deployment and build pipelines
-- Code changes are instantly deployed and can be tested by consultants
-- Every app is an abapGit fully compatible Project without separated frontend artifacts
+- No separate frontend build or deployment pipelines
+- Code changes can be instantly tested by developers or consultants
+- Every app is abapGit-compatible — no separate artifacts required
   
 ### Cache
 
-A common frustration in SAP development is the UI cache, especially when working with BSP applications or Fiori Elements apps. There are a lot of different cahe incalvidation transactions etc. You make a change — and nothing happens due to cached artifacts. abap2UI5 eliminates this problem by not caching UI definitions at all. The UI is dynamically built in each request from ABAP code. Every browser refresh always reflects the latest code.
+A common frustration in SAP frontend development is UI caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 avoids this problem entirely by not caching any UI definitions. The UI is dynamically generated on every request.
 
 Why this improves Developer Experience:
-- No need to clear browser cache or invalidate server caches
-- Fast dewvelopment iteration — edit the code, refresh, and test
+- No need to clear browser or server caches
+- Fast development iteration — edit the code, refresh the browser, see results
 
 ### Tools
 
-Great Developer Experience also means you can use the tools you like and are not forced into certain tooling. With abap2UI5, development happens entirely within **SE80**, **ADT**, or any IDE of your choice. It only based on ABAP classes giving you the freedom of choice and has a complete compatibility to all tools.
+Great Developer Experience means freedom of tooling. abap2UI5 apps are developed entirely in ABAP — whether in SE80, ADT, or your favorite ABAP IDE.
 
 Why this improves Developer Experience:
-- Works out of the box in any ABAP system — no extra setup
-- Smooth transition for teams already comfortable with ABAP
+- No additional setup required — works in any ABAP system
+- Ideal for teams already experienced with ABAP
 
 ### Debugging
 
-Debugging frontend-heavy applications often requires navigating between browser tools, JavaScript breakpoints, and network logs — not ideal for ABAP developers. In abap2UI5, the UI is comes fully out of ABAP code. There is no JavaScript to debug. If you want to see what happens when a button is pressed, set a breakpoint in the ABAP class — that’s it.
+Frontend-heavy applications often require jumping between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Set a breakpoint in the ABAP method and you’re done.
 
 Why this improves Developer Experience:
-- Backend-only debugging using the classic ABAP debugger or ADT
-- No browser dev tools needed
+- Backend-only debugging with the classic debugger or ADT
+- No need for browser debugging tools
 
 ### Sharing
 
-Sharing solutions across systems or with other developers is essential — especially in open source or multi-system landscapes. Since abap2UI5 apps are just classes, they are naturally compatible with abapGit or can be just copy & pasted. There are no special configuration files, manifests, or bundling steps.
+Sharing your apps or code is easy. Since abap2UI5 apps are ABAP classes, they can be shared via abapGit or simply copy-pasted. No configuration files, manifests, or build tools involved.
 
 Why this improves Developer Experience:
-- Easy to clone and test others’ apps
-- Ideal for team collaboration and code review
-- Encourages modular, reusable components through shared repositories
+- Easy to clone and test other apps
+- Great for collaboration and code reviews
+- Encourages modular, reusable components
 
 ### Summary
 
-abap2UI5 was a lot inspired by the classics like output via WRITE, selection screens, ALV display, and popups and for the rest it got very lucky that the ui5 framework can that easy be gesteuert with abap only leveringing a lot of additonal benefits like Deployement, cahce, debugging, tooling or sharing giving abap2UI5 a smooth Developer expereince.
+abap2UI5 draws inspiration from classic ABAP features like WRITE, selection screens, ALV tables, and popups — and combines them with the flexibility of UI5. Thanks to its purely ABAP-based approach, it also simplifies deployment, avoids caching issues, enables fast debugging, and integrates smoothly with your existing tools — creating a developer experience that is simple, efficient, and enjoyable.
