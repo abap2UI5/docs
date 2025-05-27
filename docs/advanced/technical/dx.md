@@ -1,14 +1,12 @@
-# Developer Experience: Keeping Things Simple
+# From WRITE to UI5: What Shaped abap2UI5
 
-Developer Experience (DX) describes how efficient and intuitive it is to develop with a given framework and its tools.
+abap2UI5 is a browser-based UI framework written entirely in ABAP. It is shaped by familiar ABAP patterns that emphasize simplicity, readability, and backend-driven development. In addition, it aims to address common pain points in everyday developer work — such as deployment complexity, caching issues, and tooling overhead.
 
-Good DX means writing code is fast, testing is immediate, and tooling doesn’t get in the way. It requires minimal boilerplate, supports easy debugging and enables quick deployment with code that’s easy to reuse and share.
-
-This page highlights ABAP patterns that promote strong DX and how they influenced the APIs of abap2UI5.
+This page highlights the key concepts and influences behind the design of abap2UI5.
 
 ### API I: Output via `IF_OO_ADT_CLASSRUN`
 
-One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the `if_oo_adt_classrun` interface. It offers a simple, class-based approach immediatly outputting data into ADT:
+One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the `if_oo_adt_classrun` interface. It offers a simple, class-based approach to immediately output data in ADT:
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
@@ -23,13 +21,12 @@ CLASS zcl_app_adt IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Why this improves Developer Experience:
-- The entire app lives in a single file — fast to navigate, easy to debug
-- No boilerplate: just a class and one method
-- Works identically in `ABAP Cloud` and `Standard ABAP`
-- abapGit compatible for versioning and sharing
+Why it matters:
+- Single-class design is easy to debug and version
+- Minimal boilerplate, cloud-compatible
+- Fully abapGit-ready
 
-This simple design inspired abap2UI5. Here's the equivalent functionality implemented in abap2UI5:
+This simplicity inspired the entry point for abap2UI5 apps:
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
   PUBLIC SECTION.
@@ -43,15 +40,14 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Additional Benefits in abap2UI5:
-- Runs in any browser — no ADT installation required
-- Accessible by end users
-- Output uses UI5 beeing conform to SAP Fiori Design guidelines
-
+Additional in abap2UI5:
+- Runs in the browser, no ADT needed
+- End-user ready without extra deployment
+- Conform to SAP Fiori Design guidelines
 
 ### API II: Input with Selection Screen
 
-Traditional ABAP offers a fast way to collect user input using selection screens:
+Classic ABAP supports user input through selection screens:
 
 ```abap
 REPORT zre_app_input.
@@ -59,12 +55,12 @@ REPORT zre_app_input.
 START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| type 'I'.
 ```
-Benefits:
-* Data Transfer with inputs
-* events and buttons
-* fullstack application (already deployt) with 4 lines
+Why it matters:
+- Rapid prototyping with minimal code
+- Built-in input validation and events
+- Fullstack behavior with no setup
 
-abap2UI5 brings this concept into the browser:
+abap2UI5 brings this idea into the browser using an XML view builder and data binding:
 ```abap
 CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
@@ -95,7 +91,7 @@ Why this improves Developer Experience:
 
 ### API III: Output Tables with ABAP List Viewer
 
-CL_SALV_TABLE brought major productivity gains to classic ABAP:
+ALV tools such as `CL_SALV_TABLE` helped make tabular output effortless:
 
 ```abap
 REPORT zre_app_alv.
@@ -112,12 +108,14 @@ cl_salv_table=>factory(
     t_table        = gt_t100 ).
 go_salv->display( ).
 ```
-Benefits:
-* Table output with a single method calls
-* generic table input, ui is generated out of an internal table
-* no additonal cds artifacts needed
 
-abap2UI5 brings this benefits into the browser:
+Why it matters:
+- Generates full UI from internal tables
+- No external annotations or CDS needed
+- Ideal for admin tools and quick overviews
+
+abap2UI5 brings this to the browser:
+
 ```abap
 CLASS zcl_app_alv DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -150,12 +148,11 @@ CLASS zcl_app_alv IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-
 Additional Benefits in abap2UI5:
 - Fully works in browser and on any device, no SAP GUI dependencies
 
 ### API IV: popup_to_confirm
-Classic ABAP uses `POPUP_TO_CONFIRM` for simple decisions:
+Classic ABAP offered a straightforward way to ask user decisions:
 
 ```abap
 REPORT zre_app_alv.
@@ -210,12 +207,12 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Why this improves Developer Experience:
+Why it matters:
 - Dialog logic stays class-based and readable
 - UI and logic stay in sync
 - The flow mimics classic ABAP screen logic with modern UI5 behavior
 
-### Deployment
+### Deployment Simplicity
 
 One aspect of Developer Experience is deployment. Even a beautifully written app is frustrating if it’s hard to ship. In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard TOC system known from traditional ABAP workflows.
 
@@ -224,7 +221,7 @@ Why this improves Developer Experience:
 - Code changes can be instantly tested by developers or consultants
 - Every app is abapGit-compatible — no separate artifacts required
   
-### Cache
+### No UI Cache
 
 A common frustration in SAP frontend development is UI caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 avoids this problem entirely by not caching any UI definitions. The UI is dynamically generated on every request.
 
@@ -240,7 +237,7 @@ Why this improves Developer Experience:
 - No additional setup required — works in any ABAP system
 - Ideal for teams already experienced with ABAP
 
-### Debugging
+### Debugging Made Simple
 
 Frontend-heavy applications often require jumping between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Set a breakpoint in the ABAP method and you’re done.
 
