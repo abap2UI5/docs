@@ -1,6 +1,6 @@
-# Design Principles: From WRITE to UI5
+# Key Ideas: ABAP Thinking, UI5 Results
 
-abap2UI5 is a browser-based UI framework written entirely in ABAP. It is shaped by familiar ABAP patterns that emphasize simplicity and addresses common pain points in day-to-day development — such as deployment complexity, caching issues, debugging and tooling overhead.
+abap2UI5 is a framework built by ABAP developers for ABAP developers. Written entirely in ABAP, its design is shaped by familiar ABAP patterns and aims to address common pain points in day-to-day development — such as deployment complexity, caching issues, debugging challenges, and tooling overhead.
 
 This page highlights the key ideas and influences behind abap2UI5.
 
