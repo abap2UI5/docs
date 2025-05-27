@@ -4,7 +4,7 @@ abap2UI5 is a framework built by ABAP developers for ABAP developers. Written en
 
 This page highlights the key ideas behind abap2UI5.
 
-### if_oo_adt_classrun
+### Output with if_oo_adt_classrun
 
 One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the `if_oo_adt_classrun` interface. It offers a simple, class-based approach to immediately output data in ADT:
 
@@ -45,7 +45,7 @@ Additional in abap2UI5:
 - End-user ready without extra deployment
 - Conform to SAP Fiori Design guidelines
 
-### Selection Screens
+### Inputs with Selection Screens
 
 Classic ABAP supports user input through selection screens:
 
@@ -89,7 +89,7 @@ Why this improves Developer Experience:
 - Easy to test: reload the page, enter input, press the button
 - Everything is still in a single class — no external UI tooling needed
 
-### ABAP List Viewer
+### Tables with ABAP List Viewer
 
 ALV tools such as `CL_SALV_TABLE` helped make tabular output effortless:
 
@@ -151,7 +151,7 @@ ENDCLASS.
 Additional Benefits in abap2UI5:
 - Fully works in browser and on any device, no SAP GUI dependencies
 
-### popup_to_confirm
+### Event Handling with popup_to_confirm
 Classic ABAP offered a straightforward way to ask user decisions:
 
 ```abap
