@@ -60,7 +60,7 @@ START-OF-SELECTION.
 Benefits:
 * Data Transfer with inputs
 * events and buttons
-* fullstck application (already deployt) with 4 lines
+* fullstack application (already deployt) with 4 lines
 
 abap2UI5 brings this concept into the browser:
 ```abap
@@ -109,7 +109,12 @@ cl_salv_table=>factory(
     t_table        = gt_t100 ).
 go_salv->display( ).
 ```
-While this is compact and effective, it's not cloud-ready. abap2UI5 provides a browser-based, cloud-compatible alternative:
+Benefits:
+* Table output with a single method calls
+* generic table input, ui is generated out of an internal table
+* no additonal cds artifacts needed
+
+abap2UI5 brings this benefits into the browser:
 ```abap
 CLASS zcl_app_alv DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -142,9 +147,8 @@ CLASS zcl_app_alv IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Why this improves Developer Experience:
-- Data binding is straightforward and localized
-- Table layout and content are configured inline
+
+Additional Benefits in abap2UI5:
 - Fully works in browser and on any device, no SAP GUI dependencies
 
 ### API IV: popup_to_confirm
@@ -168,8 +172,12 @@ CASE event.
     MESSAGE `the result is NO` TYPE 'I'.
 ENDCASE.
 ```
-abap2UI5 offers a matching approach using z2ui5_cl_pop_to_confirm:
+Benefits:
+* event logic at a central place
+* easy to understand program flow
+* popups are encapsulated in abap code and can be reused
 
+abap2UI5 offers a matching approach using z2ui5_cl_pop_to_confirm:
 ```abap
 CLASS zcl_app_alv_event DEFINITION PUBLIC.
   PUBLIC SECTION.
