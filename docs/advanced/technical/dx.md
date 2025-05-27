@@ -58,6 +58,11 @@ REPORT zre_app_input.
 START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| type 'I'.
 ```
+Benefits:
+* Data Transfer with inputs
+* events and buttons
+* fullstck application (already deployt) with 4 lines
+
 abap2UI5 brings this concept into the browser:
 ```abap
 CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
