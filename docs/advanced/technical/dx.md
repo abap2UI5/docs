@@ -245,7 +245,7 @@ Why this improves Developer Experience:
 - Backend-only debugging with the classic debugger or ADT
 - No need for browser debugging tools
 
-### Sharing
+### Code Sharing
 
 Sharing your apps or code is easy. Since abap2UI5 apps are ABAP classes, they can be shared via abapGit or simply copy-pasted. No configuration files, manifests, or build tools involved.
 
@@ -256,4 +256,4 @@ Why this improves Developer Experience:
 
 ### Summary
 
-abap2UI5 draws inspiration from classic ABAP features like WRITE, selection screens, ALV tables, and popups — and combines them with the flexibility of UI5. Thanks to its purely ABAP-based approach, it also simplifies deployment, avoids caching issues, enables fast debugging, and integrates smoothly with your existing tools — creating a developer experience that is simple, efficient, and enjoyable.
+abap2UI5 draws inspiration from classic ABAP features like WRITE, selection screens, ALV tables, and popups — and combines them with the flexibility of UI5. Thanks to its purely ABAP-based approach, it also simplifies deployment, avoids caching issues, enables fast debugging, and integrates smoothly with your existing tools — creating a developer experience that is efficient and fun.
