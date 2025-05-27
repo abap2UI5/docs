@@ -36,7 +36,7 @@ ENDCLASS.
 
 CLASS zcl_app_ui5 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    client->view_display( z2ui5_cl_xml_view=>factory( )->text( `Hello World` ) ).
+    client->message_toast_display( `Hello World` ) ).
   ENDMETHOD.
 ENDCLASS.
 ```
