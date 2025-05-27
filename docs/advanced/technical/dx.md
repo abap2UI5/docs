@@ -2,7 +2,7 @@
 
 Developer Experience (DX) describes how efficient and intuitive it is to develop with a given framework and its tools.
 
-Good DX means writing code is fast, testing is immediate, and tooling doesn’t get in the way. It requires minimal boilerplate, supports easy debugging and enables quick deployment all with code that’s easy to read, reuse, and share.
+Good DX means writing code is fast, testing is immediate, and tooling doesn’t get in the way. It requires minimal boilerplate, supports easy debugging and enables quick deployment with code that’s easy to reuse and share.
 
 This page highlights ABAP patterns that promote strong DX and how they influenced the APIs of abap2UI5.
 
