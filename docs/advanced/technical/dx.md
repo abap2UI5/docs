@@ -157,7 +157,7 @@ DATA event TYPE string.
 CALL FUNCTION 'POPUP_TO_CONFIRM'
   EXPORTING
     titlebar      = 'Title'
-    text_question = 'Do you have a great day?'
+    text_question = 'Do you like dinosaurs?'
   IMPORTING
     answer        = event.
 
@@ -181,7 +181,7 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
 
     IF client->check_on_init( ).
       client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_question_text = `Do you have a great day?`
+        i_question_text = 'Do you like dinosaurs?'
         i_title         = `Title`
         i_event_confirm = `YES`
         i_event_cancel  = `NO` ) ).
