@@ -256,4 +256,7 @@ Why this improves Developer Experience:
 
 ### Summary
 
-abap2UI5 draws inspiration from classic ABAP features like WRITE, selection screens, ALV tables, and popups — and combines them with the flexibility of UI5. Thanks to its purely ABAP-based approach, it also simplifies deployment, avoids caching issues, enables fast debugging, and integrates smoothly with your existing tools — creating a developer experience that is efficient and fun.
+abap2UI5 adapts classic ABAP constructs for browser-based UI development. Concepts like WRITE, selection screens, ALV tables, and modal popups are reimplemented using UI5 technologies, but fully defined and executed in ABAP classes.
+
+The framework requires no JavaScript, no OData, and no separate build tooling. Deployment consists of activating a class; the rendered UI is delivered dynamically on each request, avoiding frontend caching issues. abap2UI5 applications are abapGit-compatible, transportable via standard mechanisms, and can be developed using SE80, ADT, or any ABAP IDE. The backend-only architecture simplifies debugging,
+ 
