@@ -1,14 +1,12 @@
 # Developer Experience: Keeping Things Simple
 
-Developer Experience refers to how intuitive and productive it feels for developers to work with a framework and its tooling.
+Developer Experience describes how intuitive, efficient, or motivating it is for developers to work with a framework and its tools. Good Developer Experience means writing code feels natural, testing changes is instant, and the tooling stays out of the way. It involves minimal boilerplate, straightforward debugging, quick deployment, and code that’s easy to read, reuse, and share.
 
-Good Developer Experienc means writing code is fast, testing changes is instant, and the tooling never gets in your way. It involves minimal boilerplate, easy debugging, simple deployment, and code that’s easy to understand, reuse, and share.
+This page explores familiar ABAP patterns and examples that deliver a smooth developer experience — and shows how these ideas have influenced the APIs and usage of abap2UI5.
 
-This page explores familiar ABAP frameworks and and snippets serving a nice developer experience — and shows how these ideas have influenced APIs and its usage of abap2UI5.
+### API I: Output via `IF_OO_ADT_CLASSRUN`
 
-### API I: Output with if_oo_adt_classrun
-
-One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the IF_OO_ADT_CLASSRUN interface. It offers a simple, class-based approach immediatly outputting data into ADT:
+One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the `if_oo_adt_classrun` interface. It offers a simple, class-based approach immediatly outputting data into ADT:
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
@@ -22,6 +20,7 @@ CLASS zcl_app_adt IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+
 Why this improves Developer Experience:
 - The entire app lives in a single file — fast to navigate, easy to debug
 - No boilerplate: just a class and one method
