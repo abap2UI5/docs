@@ -2,7 +2,7 @@
 
 abap2UI5 is a browser-based UI framework written entirely in ABAP. It is shaped by familiar ABAP patterns that emphasize simplicity and addresses common pain points in day-to-day development — such as deployment complexity, caching issues, debugging and tooling overhead.
 
-This page highlights some key ideas and influences behind abap2UI5.
+This page highlights the key ideas and influences behind abap2UI5.
 
 ### API I: Output via `IF_OO_ADT_CLASSRUN`
 
