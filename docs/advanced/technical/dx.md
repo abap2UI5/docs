@@ -78,9 +78,10 @@ CLASS zcl_app_input IMPLEMENTATION.
         z2ui5_cl_xml_view=>factory(
             )->input( client->_bind_edit( pa_arbgb )
             )->button( text  = 'post' press = client->_event( 'POST' ) ) ).
-    ELSEIF client->get( )-event = 'POST'.
-      client->message_box_display( |Input: { pa_arbgb }| ).
+      RETURN.
     ENDIF.
+
+      client->message_box_display( |Input: { pa_arbgb }| ).
 
   ENDMETHOD.
 ENDCLASS.
