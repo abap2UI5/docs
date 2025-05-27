@@ -4,11 +4,11 @@ Developer Experience describes how efficient, and intuitive it is for developers
 
 Good Developer Experience means writing code feels natural, testing changes is fast, and the tools stay out of your way. It includes minimal boilerplate, easy debugging, straightforward deployment, and code that’s simple to understand, reuse, and share.
 
-This page takes a look at familiar ABAP technologies and coding patterns that offer a smooth developer experience — and shows how these ideas have influenced the design of abap2UI5.
+This page explores familiar ABAP technologies and coding patterns that offer a smooth developer experience — and shows how these ideas have influenced the design of abap2UI5.
 
-### if_oo_adt_classrun
+### Write - if_oo_adt_classrun
 
-What is the easiest way to output data in an abap stack, it has to be both abao cloud ready and abap standard? its `if_oo_adt_classrun` the best way.
+What is the easiest way to output data in an ABAP stack that is both ABAP Cloud ready and works in standard systems? The answer is IF_OO_ADT_CLASSRUN:
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
@@ -22,13 +22,13 @@ CLASS zcl_app_adt IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-it has the following advantages:
-* single file for a whole app
-* class based
-* abap cloud ready
-* 100% abapGit compatible which macke ist
+Advantages:
+- Single file for an entire app
+- Class-based structure
+- `ABAP Cloud` and `Standard ABAP`ready
+- Fully abapGit compatible
 
-this was excatly what the abap2ui app keep to mimic, an abap2ui5 app with the outout above looks as folows:
+This concept directly inspired abap2UI5. An abap2UI5 app mimicking the example above looks like this:
 
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
@@ -42,15 +42,13 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-additionaly it solves the following problems:
-* np need to install adt, the output comes in a browser
-* end user can use it, becaue it published
-* at the fotnend it cretaes a ui5 app following offical sap fiori user experience
+Additional advantages over IF_OO_ADT_CLASSRUN:
+- No need to install ADT — output is shown in the browser and end users can access the app directly
+- Frontend is rendered as a UI5 app following SAP Fiori UX guidelines
 
-so this is the basic, from here we try to add more functionality.
+This is the baseline — and abap2UI5 builds on this foundation to add more functionality.
 
-
-### Selection Screen
+### Input Data - Selection Screen
 as a last prerequste we need some input. also the easiest way are selection screen, lets remember how that went:
 ```abap
 REPORT zre_app_input.
