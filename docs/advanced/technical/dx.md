@@ -148,6 +148,8 @@ CLASS zcl_app_alv IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
+From here to make an outing output with salv is a small step  to make rtti salv like
+
 Additional Benefits in abap2UI5:
 - Fully works in browser and on any device, no SAP GUI dependencies
 
