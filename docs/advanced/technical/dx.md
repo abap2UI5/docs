@@ -1,4 +1,4 @@
-# Key Ideas: ABAP Thinking, UI5 Results
+# Classic ABAP, Modern UI: How abap2UI5 Works
 
 abap2UI5 is a framework built by ABAP developers for ABAP developers. Written entirely in the backend, its design is shaped by familiar ABAP and SAP GUI patterns and addresses common pain points in everyday development — such as deployment complexity, caching issues, debugging challenges, and tooling overhead. Let’s take a closer look at the key ideas behind it.
 
