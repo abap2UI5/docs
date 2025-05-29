@@ -2,7 +2,7 @@
 
 _abap2UI5 - A Developer-Centric Approach_
 
-This framework was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as simple and familiar as possible for ABAPers. This page takes a closer look at how it all comes together.
+This framework was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as familiar as possible for ABAPers. This page takes a closer look at how it all comes together.
 ´
 ### Simple Output with if_oo_adt_classrun
 
