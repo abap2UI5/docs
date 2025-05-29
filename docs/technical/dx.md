@@ -1,6 +1,6 @@
 # ABAP Thinking, UI5 Results
 
-_A Developer-Centric Approach_
+_Working with abap2UI5 - A Developer-Centric Approach_
 
 This article shows how abap2UI5 brings familiar ABAP patterns — Selection Screens, and ALV — into modern browser-based UIs using nothing but backend code. You'll see how abap2UI5 streamlines the developer experience by avoiding boilerplate, external tools, or JavaScript. This page is all about how abap2UI5 feels like classic ABAP development — just with UI5 results.
 
