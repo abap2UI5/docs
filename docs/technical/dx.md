@@ -84,7 +84,7 @@ ENDCLASS.
 ```
 It is easy to test: reload the page, enter input, press the button while everything is still in a single class — no external UI tooling needed.
 
-### Tabular Output like ALV
+### Table Output like ALV
 
 Table output is one of the most used features for ABAP developers, and using ALV for that is just iconic. `CL_SALV_TABLE` helped make tabular output effortless:
 
@@ -145,7 +145,6 @@ ENDCLASS.
 ```
 From here it is just a small step to make it even more dynamic and create everything with RTTI at runtime. Just how it is done with the newer (but still old now) SALV. While the ALV onbly works with sapgui, these snippets are the exttrem quick way to bring your table into your browser.
 
-
 ### Classic Popups, Modern Events
 
 How often have you been to transaction `SE37` and search with `POPUP_TO*` for a popup matching wxactly what you need. yes function modules are old but still very often used and extremely practicable, giving you some event logic with just a serveal lines of code. Lets take a look the the `POPUP_TO_CONFIRM`:
@@ -203,7 +202,9 @@ ENDCLASS.
 ```
 Browsr based roundtrip need a sligthly different program flow but the approach is still close and should feel familiar for ABAP developers.
 
-### Zero-Setup Deployment
+### More
+
+##### Zero-Setup Deployment
 
 One aspect of Developer Experience is deployment. Even a beautifully written app is frustrating if it’s hard to ship. In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard TOC system known from traditional ABAP workflows.
 
@@ -212,7 +213,7 @@ Why this improves Developer Experience:
 - Code changes can be instantly tested by developers or consultants
 - Every app is abapGit-compatible — no separate artifacts required
   
-### No Caching Issues
+##### No Caching Issues
 
 A common frustration in SAP frontend development is UI caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 avoids this problem entirely by not caching any UI definitions. The UI is dynamically generated on every request.
 
@@ -220,7 +221,7 @@ Why this improves Developer Experience:
 - No need to clear browser or server caches
 - Fast development iteration — edit the code, refresh the browser, see results
 
-### Develop in Any ABAP IDE
+##### Develop in Any ABAP IDE
 
 Great Developer Experience means freedom of tooling. abap2UI5 apps are developed entirely in ABAP — whether in SE80, ADT, or your favorite ABAP IDE.
 
@@ -228,7 +229,7 @@ Why this improves Developer Experience:
 - No additional setup required — works in any ABAP system
 - Ideal for teams already experienced with ABAP
 
-### Pure ABAP Debugging
+##### Pure ABAP Debugging
 
 Frontend-heavy applications often require jumping between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Set a breakpoint in the ABAP method and you’re done.
 
@@ -236,7 +237,7 @@ Why this improves Developer Experience:
 - Backend-only debugging with the classic debugger or ADT
 - No need for browser debugging tools
 
-### Easy Code Sharing
+##### Easy Code Sharing
 
 Sharing your apps or code is easy. Since abap2UI5 apps are ABAP classes, they can be shared via abapGit or simply copy-pasted. No configuration files, manifests, or build tools involved.
 
