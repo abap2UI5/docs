@@ -2,7 +2,7 @@
 
 _A Developer-Centric Approach_
 
-If you’re an ABAP developer wondering how abap2UI5 fits into your day-to-day work, this article is for you. It shows how the framework brings familiar ABAP patterns — like WRITE, selection screens, and ALV — into modern browser-based UIs using nothing but backend code. You'll see how abap2UI5 streamlines the developer experience by avoiding boilerplate, external tools, or JavaScript. This page is all about how abap2UI5 feels like classic ABAP development — just with UI5 results.
+This article shows how abap2UI5 brings familiar ABAP patterns — Selection Screens, and ALV — into modern browser-based UIs using nothing but backend code. You'll see how abap2UI5 streamlines the developer experience by avoiding boilerplate, external tools, or JavaScript. This page is all about how abap2UI5 feels like classic ABAP development — just with UI5 results.
 
 ### Simple Output with if_oo_adt_classrun
 
