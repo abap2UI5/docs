@@ -1,6 +1,8 @@
 #  Behind the Scenes
 
-This article provides a technical deep dive into abap2UI5. It is aimed at developers who want to understand how abap2UI5 works under the hood. It covers the core ideas behind the framework — including its architecture, codebase, and compatibility — and explains how concepts like HTML Over the Wire were adapted to the ABAP environment. This article was originally published on the [SAP Commmunity.](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)
+_Technical Deep Dive into abap2UI5_
+
+This article is aimed at developers who want to understand how abap2UI5 works “under the hood.” If you're already familiar with the basics and want to explore how the framework achieves its flexibility — runtime view generation, generic HTTP handling, and decoupling from OData — this deep dive is for you. It traces the technical evolution from traditional SAP UI architectures to modern over-the-wire rendering and explains the rationale behind key design decisions. Ideal for readers interested in architecture, extensibility, and system internals. This article was originally published on the [SAP Commmunity.](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)
 
 ##### 1. HTML Over the Wire
 
