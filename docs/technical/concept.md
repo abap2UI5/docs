@@ -1,6 +1,6 @@
-# UI5 Over-the-Wire
- 
-abap2UI5 is built on the HTML Over-the-Wire principle — adapted to the ABAP world. By keeping both UI rendering and application logic on the backend, it simplifies UI5 development and avoids common frontend complexity. This page takes a closer look at the concept and how abap2UI5 brings it to life.
+# UI5 Over-the-Wire: The Core Architecture of abap2UI5
+
+If you're new to abap2UI5 and want to understand its core architectural idea, start here. This article introduces the central pattern behind the framework: HTML Over-the-Wire — reimagined for the ABAP world. It explains how abap2UI5 eliminates traditional frontend complexity by moving both UI rendering and application logic into the ABAP backend. The result: faster development, easier deployment, and a UI5 shell that acts purely as a rendering engine. This article lays the technical foundation for everything else.
 
 #### What is HTML Over-the-Wire?
 
