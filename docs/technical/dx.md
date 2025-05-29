@@ -2,11 +2,11 @@
 
 _abap2UI5 - A Developer-Centric Approach_
 
-This framework was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as familiar as possible for ABAPers. This page takes a closer look at how it all comes together.
+This framework was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at some of the key influences of the framework.
 ´
 ### Simple Output with if_oo_adt_classrun
 
-One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the `if_oo_adt_classrun` interface. It offers a simple, class-based approach to immediately output data in ADT:
+One of the most fundamental development tasks is outputting data. In ABAP, the quickest way to do this is with the `if_oo_adt_classrun` interface. It provides a simple, class-based entry point for outputting data directly in ADT:
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
@@ -21,12 +21,12 @@ CLASS zcl_app_adt IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Why it matters:
+Why this is great for developers:
 - Single-class design is easy to debug and version
 - Minimal boilerplate, cloud-compatible
 - Fully abapGit-ready
 
-This simplicity inspired the entry point for abap2UI5 apps:
+This simplicity also inspired the entry point for abap2UI5 apps:
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
   PUBLIC SECTION.
@@ -40,7 +40,7 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Additional in abap2UI5:
+What abap2UI5 adds:
 - Runs in the browser, no ADT needed
 - End-user ready without extra deployment
 - Conform to SAP Fiori Design guidelines
