@@ -22,8 +22,8 @@ ENDCLASS.
 ```
 
 Why this is great for developers:
-- Single-class design is easy to debug and version
-- Minimal boilerplate, cloud-compatible
+- Single-class design is easy to debug and share
+- Minimal boilerplate
 - Fully abapGit-ready
 
 This simplicity also inspired the entry point for abap2UI5 apps:
@@ -55,9 +55,9 @@ REPORT zre_app_input.
 START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| type 'I'.
 ```
-Why it matters:
+Why this is great for developers:
 - Rapid prototyping with minimal code
-- Built-in input validation and events
+- Built-in input functionaity and events
 - Fullstack behavior with no setup
 
 abap2UI5 brings this idea into the browser using an XML view builder and data binding:
