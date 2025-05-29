@@ -16,11 +16,10 @@ The idea was introduced in the SAP community through examples using the JavaScri
 
 After the initial page load, only small HTML fragments are sent asynchronously via AJAX to update parts of the page — avoiding full reloads.
 
-<p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
-<br/>
-  <em> HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763) </em>
-</p>
+  
+_HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
+
 
 This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are managed independently on the frontend while the backend only delivers data.
 
@@ -30,16 +29,9 @@ This concept evolves into what is termed a Hypermedia-Driven Application (HDA). 
 
 In contrast, SPAs define all routes and actions upfront on the frontend, requiring a full rebuild for any modification. The following illustration compares MPAs, SPAs, and HDAs:
 
-<p align="center">
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/8117dc10-f0ba-4c52-9d1d-6b9d0986401d" />
-<br/>
-  <em> MPA vs. SPA vs. HDA [(Quelle)](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire) </em>
-</p>
 
-
-
-
-
+_MPA vs. SPA vs. HDA [(Quelle)](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)_
 
 ##### 3. Rethinking Separation of Concerns
 
@@ -50,7 +42,8 @@ Unlike traditional architectures, HDAs do not prioritize strict separation of CS
 Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among the first to adopt this principle. Tools like htmx, hotwire, and unpoly followed, aiming to reduce complexity while maintaining high UI fidelity. These frameworks seek a "sweet spot" between SPA and MPA architectures:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/41af4a41-829e-4289-82f5-18ee7408054b" />
-"Sweet Spot" between SPA and MPA (Quelle)
+
+_"Sweet Spot" between SPA and MPA_
 
 A recommended video offers an excellent introduction to these ideas.
 
