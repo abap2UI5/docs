@@ -204,36 +204,38 @@ Browsr based roundtrip need a sligthly different program flow but the approach i
 
 ### More
 
+Besides these Code Snippets, the Over-the-wire approach with a backend-only development gives us a few additonal advantages.
+
 ##### Zero-Setup Deployment
 
-One aspect of Developer Experience is deployment. Even a beautifully written app is frustrating if it’s hard to ship. In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard TOC system known from traditional ABAP workflows.
+In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard Transport system known from traditional ABAP developments.
 
-Why this improves Developer Experience:
+Why this is great for developers:
 - No separate frontend build or deployment pipelines
 - Code changes can be instantly tested by developers or consultants
 - Every app is abapGit-compatible — no separate artifacts required
   
 ##### No Caching Issues
 
-A common frustration in SAP frontend development is UI caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 avoids this problem entirely by not caching any UI definitions. The UI is dynamically generated on every request.
+A common frustration in frontend development is caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 can avoid this problem entirely, because the UI is dynamically generated on every request.
 
-Why this improves Developer Experience:
+Why this is great for developers:
 - No need to clear browser or server caches
 - Fast development iteration — edit the code, refresh the browser, see results
 
 ##### Develop in Any ABAP IDE
 
-Great Developer Experience means freedom of tooling. abap2UI5 apps are developed entirely in ABAP — whether in SE80, ADT, or your favorite ABAP IDE.
+There are a lof of discussion about which IDE should be used, why not say everyone should go with the tool of its choice? abap2UI5 apps are developed entirely in ABAP — whether they can be changed in ADT but you can also the bulletproof SE80 or directly switch to VS Code.
 
-Why this improves Developer Experience:
-- No additional setup required — works in any ABAP system
-- Ideal for teams already experienced with ABAP
+Why this is great for developers:
+- No additional setup required — works in any ABAP IDE
+- Ideal for teams with different preferences
 
 ##### Pure ABAP Debugging
 
-Frontend-heavy applications often require jumping between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Set a breakpoint in the ABAP method and you’re done.
+Frontend-heavy applications often require jumping between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Set a breakpoint in the ABAP method and you’re done. YOu can choose again the new ADT debugger or the classic and strong SE80 debugger.
 
-Why this improves Developer Experience:
+Why this is great for developers:
 - Backend-only debugging with the classic debugger or ADT
 - No need for browser debugging tools
 
