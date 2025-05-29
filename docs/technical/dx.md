@@ -26,7 +26,7 @@ Why this is great for developers:
 - Minimal boilerplate
 - Fully abapGit-ready
 
-This simplicity also inspired the entry point for abap2UI5 apps. For a simple output you don't need more than this:
+This simplicity also inspired the entry point for abap2UI5 apps. For simple output, you don't need more than this:
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
   PUBLIC SECTION.
@@ -39,14 +39,12 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-
-What abap2UI5 adds:
-- Runs in the browser, no ADT needed
-- With UI5 Frontend, its conform to SAP Fiori Design guidelines
+What abap2UI5 adds is the ability to run in the browser without ADT, using a UI5 frontend that fully adheres to SAP Fiori design guidelines — and is ready to be shown to your consultant colleagues right away.
 
 ### Input Handling Inspired by Selection Screens
 
-Inputting data was never a big topic for ABAP developers, just create a report and `parameters` and `select-options`give you a UI fro free. Although this term was not used at that time, you get with 4 lines of code an app which today is called `fullstack` application:
+Input handling was never a challenge in classic ABAP — just define a REPORT with PARAMETERS and SELECT-OPTIONS, and the UI is generated automatically. Although the term didn’t exist back then, this gave you a "fullstack" app in just a few lines:
+
 ```abap
 REPORT zre_app_input.
   PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
@@ -55,10 +53,11 @@ START-OF-SELECTION.
 ```
 Why this is great for developers:
 - Rapid prototyping with minimal code
-- Built-in input functionaity and events
+- Built-in input handling and event processing
 - Fullstack behavior with no setup
  
-abap2UI5 mirrors this classic selection logic but browser based. Just use the class  `z2ui5_cl_xml_view` to create simple views and exchange data with the client via `_bind_edit` methods:
+abap2UI5 mirrors this classic selection screen behavior in the browser. Use Z2UI5_CL_XML_VIEW to define simple views and exchange data with the client using _bind_edit methods:
+
 ```abap
 CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
@@ -82,11 +81,11 @@ CLASS zcl_app_input IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-It is easy to test: reload the page, enter input, press the button while everything is still in a single class — no external UI tooling needed.
+Easy to test: reload the page, enter input, and press the button — all within a single class and without any external UI tooling.
 
 ### Table Output like ALV
 
-Table output is one of the most used features for ABAP developers, and using ALV for that is just iconic. `CL_SALV_TABLE` helped make tabular output effortless:
+Table output is one of the most commonly used features by ABAP developers, and ALV is an iconic tool in this context. CL_SALV_TABLE makes generating tabular output straightforward:
 
 ```abap
 REPORT zre_app_alv.
@@ -109,7 +108,7 @@ Why this is great for developers:
 - No external annotations or CDS needed
 - Ideal for admin tools and quick overviews
 
-abap2UI5 creates outputs completely based an internal tables, no ddictionry artifacts are needed, no designtime definitions have to be made. just throw the actual table into the binding use a ui5 table control to display the data:
+abap2UI5 follows a similar pattern. Just bind the internal table to a UI5 table control — no dictionary artifacts or design-time definitions needed:
 
 ```abap
 CLASS zcl_app_alv DEFINITION PUBLIC.
@@ -143,11 +142,14 @@ CLASS zcl_app_alv IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-From here it is just a small step to make it even more dynamic and create everything with RTTI at runtime. Just how it is done with the newer (but still old now) SALV. While the ALV onbly works with sapgui, these snippets are the exttrem quick way to bring your table into your browser.
+
+From here, it's just a small step to generate everything dynamically using RTTI — similar to modern SALV techniques (but still old now). And unlike SALV, this runs in the browser.
+
 
 ### Classic Popups, Modern Events
 
-How often have you been to transaction `SE37` and search with `POPUP_TO*` for a popup matching wxactly what you need. yes function modules are old but still very often used and extremely practicable, giving you some event logic with just a serveal lines of code. Lets take a look the the `POPUP_TO_CONFIRM`:
+Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like POPUP_TO_CONFIRM are simple yet powerful:
+
 ```abap
 REPORT zre_app_alv.
 
@@ -167,11 +169,12 @@ CASE event.
 ENDCASE.
 ```
 Why this is great for developers:
-* event logic at a central place
-* easy to understand program flow
-* popups are encapsulated in abap code and can be reused
+* Centralized event logic
+* Simple and readable program flow
+* Fully encapsulated and reusable
 
-abap2UI5 offers a matching approach giving you the chance to create multiple apps, which can call each other. Encapsulate your popup funcitonality in a separated class and call it whenever you want. Check these snippet mimicing the popup to confirm:
+abap2UI5 provides a similar experience, enabling apps to call each other and encapsulate dialog logic in reusable classes:
+
 ```abap
 CLASS zcl_app_alv_event DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -200,11 +203,12 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Browsr based roundtrip need a sligthly different program flow but the approach is still close and should feel familiar for ABAP developers.
+
+While browser-based roundtrips require slightly different flow control, the overall approach remains intuitive for ABAP developers.
 
 ### More
 
-Besides these Code Snippets, the Over-the-wire approach with a backend-only development gives us a few additonal advantages.
+Besides the code snippets shown above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — offers several additional advantages.
 
 ##### Zero-Setup Deployment
 
