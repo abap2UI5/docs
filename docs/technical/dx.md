@@ -247,7 +247,7 @@ Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP class
 - Great for collaboration and code reviews
 - Encourages modular, reusable components
 
-### Summary
+### Conclusion
 
 abap2UI5 brings familiar ABAP development patterns into the browser. It reuses proven concepts like selection screens, ALV tables, and popup dialogs — but renders them as UI5-compliant apps, defined and executed entirely in ABAP.
 The result: backend-driven UI development with minimal tooling, fast iteration, and no need for JavaScript or OData. Whether it's prototyping or building full apps, abap2UI5 keeps the workflow close to what ABAP developers know best.
