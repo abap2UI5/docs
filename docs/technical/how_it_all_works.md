@@ -1,8 +1,6 @@
-#  Deep Dive: How Does It All Work?
+#  Behind the Scenes
 
-This article provides a technical deep dive into **abap2UI5**. It is aimed at developers who want to understand how abap2UI5 works "under the hood" and how it simplifies UI5 development by keeping both logic and UI generation on the backend.
-
-It covers the core ideas behind the framework — including its architecture, codebase, and compatibility — and shows how concepts like **"HTML Over the Wire"** are adapted to the ABAP environment, offering a new approach to building UI5 applications.
+This article provides a technical deep dive into abap2UI5. It is aimed at developers who want to understand how abap2UI5 works under the hood. It covers the core ideas behind the framework — including its architecture, codebase, and compatibility — and explains how concepts like HTML Over the Wire were adapted to the ABAP environment. This article was originally published on the [SAP Commmunity.](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)
 
 ##### 1. HTML Over the Wire
 
