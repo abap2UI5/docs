@@ -208,48 +208,43 @@ While browser-based roundtrips require slightly different flow control, the over
 
 ### More
 
-Besides the code snippets shown above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — offers several additional advantages.
+Beyond the code snippets shown above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — offers several additional advantages.
 
 ##### Zero-Setup Deployment
 
-In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard Transport system known from traditional ABAP developments.
+In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard transport system familiar from traditional ABAP development:
 
-Why this is great for developers:
-- No separate frontend build or deployment pipelines
-- Code changes can be instantly tested by developers or consultants
-- Every app is abapGit-compatible — no separate artifacts required
-  
+- No separate frontend build or deployment pipelines  
+- Code changes can be instantly tested by developers or consultants  
+- Every app is abapGit-compatible — no separate artifacts required  
+
 ##### No Caching Issues
 
-A common frustration in frontend development is caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 can avoid this problem entirely, because the UI is dynamically generated on every request.
+A common frustration in frontend development is caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 avoids this problem entirely, as the UI is dynamically generated on every request:
 
-Why this is great for developers:
-- No need to clear browser or server caches
-- Fast development iteration — edit the code, refresh the browser, see results
+- No need to clear browser or server caches  
+- Fast development iteration — edit the code, refresh the browser, see results  
 
 ##### Develop in Any ABAP IDE
 
-There are a lof of discussion about which IDE should be used, why not say everyone should go with the tool of its choice? abap2UI5 apps are developed entirely in ABAP — whether they can be changed in ADT but you can also the bulletproof SE80 or directly switch to VS Code.
+There's often debate about which IDE to use — but why not let everyone choose the tool they prefer? abap2UI5 apps are developed entirely in ABAP. You can work in ADT, rely on the time-tested SE80, or even explore integration with VS Code:
 
-Why this is great for developers:
-- No additional setup required — works in any ABAP IDE
-- Ideal for teams with different preferences
+- No additional setup required — works in any ABAP IDE  
+- Ideal for teams with different tooling preferences  
 
 ##### Pure ABAP Debugging
 
-Frontend-heavy applications often require jumping between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Set a breakpoint in the ABAP method and you’re done. YOu can choose again the new ADT debugger or the classic and strong SE80 debugger.
+Frontend-heavy applications often require switching between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Just set a breakpoint in your ABAP method:
 
-Why this is great for developers:
-- Backend-only debugging with the classic debugger or ADT
-- No need for browser debugging tools
+- Backend-only debugging with the classic SE80 debugger or ADT  
+- No need for browser debugging tools  
 
 ##### Easy Code Sharing
 
-Sharing your apps or code is easy. Since abap2UI5 apps are ABAP classes, they can be shared via abapGit or simply copy-pasted. No configuration files, manifests, or build tools involved.
+Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit or even copy-pasted. No configuration files, manifests, or build tools required:
 
-Why this improves Developer Experience:
-- Easy to clone and test other apps
-- Great for collaboration and code reviews
+- Easy to clone and test other apps  
+- Great for collaboration and code reviews  
 - Encourages modular, reusable components
 
 ### Summary
