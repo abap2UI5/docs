@@ -4,7 +4,7 @@ _abap2UI5 - A Developer-Centric Approach_
 
 abap2UI5 was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at some of the key influences of the framework.
 ´
-### Simple Output with if_oo_adt_classrun
+### Simple Output with IF_OO_ADT_CLASSRUN
 
 One of the most fundamental development tasks is outputting data. In ABAP, the quickest way to do this is with the `if_oo_adt_classrun` interface. It provides a simple, class-based entry point for outputting data directly in ADT:
 
@@ -41,7 +41,7 @@ ENDCLASS.
 ```
 What abap2UI5 adds is the ability to run in the browser without ADT, using a UI5 frontend that fully adheres to SAP Fiori design guidelines — and is ready to be shown to your consultant colleagues right away.
 
-### Input Handling Inspired by Selection Screens
+###  Classic Input Handling with Selection Screens
 
 Input handling was never a challenge in classic ABAP — just define a REPORT with PARAMETERS and SELECT-OPTIONS, and the UI is generated automatically. Although the term didn’t exist back then, this gave you a "fullstack" app in just a few lines:
 
@@ -83,7 +83,7 @@ ENDCLASS.
 ```
 Easy to test: reload the page, enter input, and press the button — all within a single class and without any external UI tooling.
 
-### Table Output like ALV
+### ALV-Style Table Output in the Browser
 
 Table output is one of the most commonly used features by ABAP developers, and ALV is an iconic tool in this context. CL_SALV_TABLE makes generating tabular output straightforward:
 
@@ -206,7 +206,7 @@ ENDCLASS.
 
 While browser-based roundtrips require slightly different flow control, the overall approach remains intuitive for ABAP developers.
 
-### More
+### More Developer-Friendly Advantages
 
 Beyond the code snippets shown above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — offers several additional advantages.
 
@@ -249,10 +249,7 @@ Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP class
 
 ### Summary
 
-abap2UI5 adapts classic ABAP constructs for browser-based UI development. Concepts like WRITE, selection screens, ALV tables, and modal popups are reimplemented using UI5 technologies — but fully defined and executed in ABAP classes.
-
-The framework requires no JavaScript, no OData, and no separate build tooling. Deployment consists of activating a class; the rendered UI is delivered dynamically on each request, avoiding frontend caching issues. abap2UI5 applications are abapGit-compatible, transportable via standard mechanisms, and can be developed using SE80, ADT, or any ABAP IDE.
-
-The backend-only architecture simplifies development, accelerates iteration, and brings the UI closer to the ABAP developer’s core skill set.
+abap2UI5 brings familiar ABAP development patterns into the browser. It reuses proven concepts like selection screens, ALV tables, and popup dialogs — but renders them as UI5-compliant apps, defined and executed entirely in ABAP.
+The result: backend-driven UI development with minimal tooling, fast iteration, and no need for JavaScript or OData. Whether it's prototyping or building full apps, abap2UI5 keeps the workflow close to what ABAP developers know best.
 
 Happy ABAPing! ❤️🦖🦕🦣
