@@ -1,9 +1,9 @@
 # ABAP Thinking, UI5 Results
 
-_Working with abap2UI5 - A Developer-Centric Approach_
+_abap2UI5 - A Developer-Centric Approach_
 
-This article shows how abap2UI5 brings familiar ABAP patterns — Selection Screens, and ALV — into modern browser-based UIs using nothing but backend code. You'll see how abap2UI5 streamlines the developer experience by avoiding boilerplate, external tools, or JavaScript. This page is all about how abap2UI5 feels like classic ABAP development — just with UI5 results.
-
+This framework was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as simple and familiar as possible for ABAPers. This page takes a closer look at how it all comes together.
+´
 ### Simple Output with if_oo_adt_classrun
 
 One of the most fundamental development tasks is outputting data. In ABAP, the cleanest way to do this is with the `if_oo_adt_classrun` interface. It offers a simple, class-based approach to immediately output data in ADT:
