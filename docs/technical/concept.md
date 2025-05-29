@@ -1,6 +1,6 @@
-# Key Concept: UI5 Over-the-Wire
+# UI5 Over-the-Wire
  
-The core idea of abap2UI5 is based on a pattern called _HTML Over-the-Wire_, adapted for the ABAP ecosystem. It simplifies UI5 development by moving both UI rendering and application logic entirely to the ABAP backend.
+abap2UI5 is built on the HTML Over-the-Wire principle — adapted to the ABAP world. By keeping both UI rendering and application logic on the backend, it simplifies UI5 development and avoids common frontend complexity. This page takes a closer look at the concept and how abap2UI5 brings it to life.
 
 #### What is HTML Over-the-Wire?
 
