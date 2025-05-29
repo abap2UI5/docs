@@ -185,9 +185,9 @@ export default defineConfig({
         link: '/technical/concept',
         collapsed: true,
         items: [      
-            { text: 'UI5 over-the-wire', link: '/technical/concept' },
+            { text: 'UI5 Over-the-Wire', link: '/technical/concept' },
             { text: 'ABAP Thinking, UI5 Results', link: '/technical/dx' },
-            { text: 'Under the Hood', link: '/technical/how_it_all_works' }
+            { text: 'Behind the Scenes', link: '/technical/how_it_all_works' }
         ]
       },
       {
