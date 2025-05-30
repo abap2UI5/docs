@@ -2,8 +2,8 @@
 
 _abap2UI5 - A Developer-Centric Approach_
 
-abap2UI5 was born from the everyday experience of ABAP developers. It tackles common challenges like deployment, caching, debugging, and tooling — while keeping the coding style close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal: to make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at some of the key influences of the framework.
-´
+abap2UI5 was created from the everyday experiences of ABAP developers. It addresses common challenges in the development process — including deployment, caching, debugging, and tooling — while preserving a coding style that stays close to familiar ABAP and SAP GUI patterns such as selection screens and ALV. The goal is to make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at some of the key influences behind the framework.
+
 ### Simple Output with IF_OO_ADT_CLASSRUN
 
 One of the most fundamental development tasks is outputting data. In ABAP, the quickest way to do this is with the `if_oo_adt_classrun` interface. It provides a simple, class-based entry point for outputting data directly in ADT:
@@ -20,7 +20,6 @@ CLASS zcl_app_adt IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-
 Why this is great for developers:
 - Single-class design: quick to create and easy to debug
 - Minimal boilerplate
@@ -39,7 +38,7 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-What abap2UI5 adds is the ability to run in the browser without ADT, using a UI5 frontend that fully adheres to SAP Fiori design guidelines — and is ready to be shown to your consultant colleagues right away.
+What abap2UI5 adds is the ability to run in the browser without ADT, using a UI5 frontend that fully adheres to SAP Fiori design guidelines — and is ready to be shown to your colleagues right away.
 
 ###  Classic Input Handling with Selection Screens
 
@@ -56,7 +55,7 @@ Why this is great for developers:
 - Built-in input handling and event processing
 - Fullstack behavior with no setup
  
-abap2UI5 mirrors this classic selection screen behavior in the browser. Use Z2UI5_CL_XML_VIEW to define simple views and exchange data with the client using _bind_edit methods:
+abap2UI5 mirrors this classic selection screen behavior in the browser. Use Z2UI5_CL_XML_VIEW to define simple views and exchange data with the _bind_edit method:
 
 ```abap
 CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
@@ -81,7 +80,7 @@ CLASS zcl_app_input IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Easy to test: reload the page, enter input, and press the button — all within a single class and without any external UI tooling.
+Additionally, you can test code changes instantly — just reload the page, enter input, and press the button — all within a single class and without any external UI tooling.
 
 ### ALV-Style Table Output in the Browser
 
@@ -104,11 +103,11 @@ go_salv->display( ).
 ```
 
 Why this is great for developers:
-- Generates full UI from internal tables
-- No external annotations or CDS needed
+- Generates a full UI from internal tables
+- No external annotations, CDS views, or DDIC artifacts required
 - Ideal for admin tools and quick overviews
 
-abap2UI5 follows a similar pattern. Just bind the internal table to a UI5 table control — no dictionary artifacts or design-time definitions needed:
+abap2UI5 follows a similar pattern. Just bind the internal table to a UI5 table control:
 
 ```abap
 CLASS zcl_app_alv DEFINITION PUBLIC.
@@ -143,8 +142,7 @@ CLASS zcl_app_alv IMPLEMENTATION.
 ENDCLASS.
 ```
 
-From here, it's just a small step to generate everything dynamically using RTTI — similar to modern SALV techniques (but still old now). And unlike SALV, this runs in the browser.
-
+From here, it's just a small step to generate everything dynamically using RTTI — similar to modern SALV techniques, but running directly in the browser.
 
 ### Classic Popups, Modern Events
 
@@ -213,36 +211,31 @@ Beyond the code snippets shown above, the Over-the-Wire approach of abap2UI5 —
 ##### Zero-Setup Deployment
 
 In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard transport system familiar from traditional ABAP development:
-
 - No separate frontend build or deployment pipelines  
 - Code changes can be instantly tested by developers or consultants  
-- Every app is abapGit-compatible — no separate artifacts required  
+- Every app is abapGit-compatible — no separate frontend artifacts required  
 
 ##### No Caching Issues
 
-A common frustration in frontend development is caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files. abap2UI5 avoids this problem entirely, as the UI is dynamically generated on every request:
-
+A common frustration in frontend development is caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files, unless you manually trigger several cache invalidation transactions in the SAP backend. abap2UI5 avoids this issue entirely, as the UI is dynamically generated on every request:
 - No need to clear browser or server caches  
 - Fast development iteration — edit the code, refresh the browser, see results  
 
 ##### Develop in Any ABAP IDE
 
 There's often debate about which IDE to use — but why not let everyone choose the tool they prefer? abap2UI5 apps are developed entirely in ABAP. You can work in ADT, rely on the time-tested SE80, or even explore integration with VS Code:
-
 - No additional setup required — works in any IDE  
 - Ideal for teams with different tooling preferences
 
 ##### Pure ABAP Debugging
 
 Frontend-heavy applications often require switching between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Just set a breakpoint in your ABAP method:
-
 - Backend-only debugging with the classic SE80 debugger or ADT
 - No need for browser debugging tools
 
 ##### Easy Code Sharing
 
 Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit or even copy-pasted. No configuration files, manifests, or build tools required:
-
 - Easy to clone and test other apps
 - Great for collaboration and code reviews
 - Encourages modular, reusable components
