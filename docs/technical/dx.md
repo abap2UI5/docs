@@ -34,7 +34,7 @@ ENDCLASS.
 
 CLASS zcl_app_ui5 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    client->message_toast_display( `Hello World` ) ).
+    client->message_toast_display( `Hello World` ).
   ENDMETHOD.
 ENDCLASS.
 ```
