@@ -42,7 +42,7 @@ What abap2UI5 adds is the ability to run in the browser without ADT, using a UI5
 
 ###  Classic Input Handling with Selection Screens
 
-Input handling was never a challenge in classic ABAP — just define a REPORT with PARAMETERS and SELECT-OPTIONS, and the UI is generated automatically. Although the term didn’t exist back then, this gave you a "fullstack" app in just a few lines:
+Input handling was never a challenge in classic ABAP — just define a Report with `PARAMETERS` and `SELECT-OPTIONS`, and the UI is generated automatically. Although the term didn’t exist back then, this gave you a "fullstack" app in just a few lines:
 
 ```abap
 REPORT zre_app_input.
@@ -55,7 +55,7 @@ Why this is great for developers:
 - Built-in input handling and event processing
 - Fullstack behavior with no setup
  
-abap2UI5 mirrors this classic selection screen behavior in the browser. Use Z2UI5_CL_XML_VIEW to define simple views and exchange data with the _bind_edit method:
+abap2UI5 mirrors this classic selection screen behavior in the browser. Use `Z2UI5_CL_XML_VIEW` to define simple views and exchange data with the `_bind_edit` method:
 
 ```abap
 CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
@@ -84,7 +84,7 @@ Additionally, you can test code changes instantly — just reload the page, ente
 
 ### ALV-Style Table Output in the Browser
 
-Table output is one of the most commonly used features by ABAP developers, and ALV is an iconic tool in this context. CL_SALV_TABLE makes generating tabular output straightforward:
+Table output is one of the most commonly used features by ABAP developers, and ALV is an iconic tool in this context. `CL_SALV_TABLE` makes generating tabular output straightforward:
 
 ```abap
 REPORT zre_app_alv.
@@ -142,11 +142,11 @@ CLASS zcl_app_alv IMPLEMENTATION.
 ENDCLASS.
 ```
 
-From here, it's just a small step to generate everything dynamically using RTTI — similar to modern SALV techniques, but running directly in the browser.
+From here, it's just a small step to generate everything dynamically using RTTI — similar to the SALV functionality, but running directly in the browser.
 
 ### Classic Popups, Modern Events
 
-Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like POPUP_TO_CONFIRM are simple yet powerful:
+Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like `POPUP_TO_CONFIRM` are simple yet powerful:
 
 ```abap
 REPORT zre_app_alv.
@@ -212,7 +212,7 @@ Beyond the code snippets shown above, the Over-the-Wire approach of abap2UI5 —
 
 In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard transport system familiar from traditional ABAP development:
 - No separate frontend build or deployment pipelines  
-- Code changes can be instantly tested by developers or consultants  
+- Code changes can be instantly tested by other developers or consultants
 - Every app is abapGit-compatible — no separate frontend artifacts required  
 
 ##### No Caching Issues
@@ -235,14 +235,14 @@ Frontend-heavy applications often require switching between browser dev tools, J
 
 ##### Easy Code Sharing
 
-Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit or even copy-pasted. No configuration files, manifests, or build tools required:
+Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit or even copy-pasted:
 - Easy to clone and test other apps
 - Great for collaboration and code reviews
 - Encourages modular, reusable components
 
 ### Conclusion
 
-abap2UI5 brings familiar ABAP development patterns into the browser. It reuses proven concepts like selection screens, ALV tables, and popup dialogs — but renders them as UI5-compliant apps, defined and executed entirely in ABAP.
-The result: backend-driven UI development with minimal tooling, fast iteration, and no need for JavaScript or OData. Whether it's prototyping or building full apps, abap2UI5 keeps the workflow close to what ABAP developers know best.
+abap2UI5 brings familiar ABAP development patterns into the browser. It reuses proven concepts like Selection Screens, ALV tables, and popup dialogs — but renders them as UI5 apps, defined and executed entirely in ABAP.
+The result: backend-driven UI development with minimal tooling and fast iterations. Whether it's prototyping or building full apps, abap2UI5 keeps the workflow close to what ABAP developers know best.
 
 Happy ABAPing! ❤️🦖🦕🦣
