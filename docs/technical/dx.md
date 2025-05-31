@@ -221,7 +221,7 @@ A common frustration in frontend development is caching — especially with BSP 
 - No need to clear browser or server caches  
 - Fast development iteration — edit the code, refresh the browser, see results  
 
-##### Develop in Any ABAP IDE
+##### Develop in Any IDE
 
 There's often debate about which IDE to use — but why not let everyone choose the tool they prefer? abap2UI5 apps are developed entirely in ABAP. You can work in ADT, rely on the time-tested SE80, or even explore integration with VS Code:
 - No additional setup required — works in any IDE  
@@ -242,7 +242,7 @@ Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP class
 
 ### Conclusion
 
-abap2UI5 brings familiar ABAP development patterns into the browser. It reuses proven concepts like Selection Screens, ALV tables, and popup dialogs — but renders them as UI5 apps, defined and executed entirely in ABAP.
-The result: backend-driven UI development with minimal tooling and fast iterations. Whether it's prototyping or building full apps, abap2UI5 keeps the workflow close to what ABAP developers know best.
+abap2UI5 brings back familiar ABAP development patterns. It reuses proven concepts like Selection Screens, ALV tables, and popup dialogs — but renders them as UI5 apps, defined and executed entirely in ABAP.
+The result: backend-driven UI development with minimal tooling and fast iterations. Whether it's prototyping or building full business apps, abap2UI5 keeps the development process close to what ABAP developers know best.
 
 Happy ABAPing! ❤️🦖🦕🦣
