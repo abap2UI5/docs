@@ -1,6 +1,6 @@
 # ABAP Thinking, UI5 Results
 
-_abap2UI5 - A Developer-Centric Approach_
+_A Developer-Centric Approach_
 
 abap2UI5 was created from the everyday experiences of ABAP developers. It addresses common challenges in the development process — including deployment, caching, debugging, and tooling — while preserving a coding style that stays close to familiar ABAP and SAP GUI patterns such as Selection Screens and ALV. The goal is to make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at some of the key influences behind the framework.
 
