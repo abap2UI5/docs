@@ -72,7 +72,6 @@ Fortunately, UI5 has a defining characteristic that allows us to shift part of t
 
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/ee0152e7-4f64-4b90-9cf2-3faead53044f" />
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/1ae233c6-96ff-4370-ac31-30705c18a0f7" />
 <br/>
   <em>UI5 freestyle – HTML created in browser based on frontend XML View and backend Data</em>
 </p>
@@ -83,12 +82,11 @@ While HTML creation still happens on the frontend, both the view definition and 
 
 <p align="center">
   <img width="400" alt="image" src="https://github.com/user-attachments/assets/adef16b7-e98d-476f-9bbc-738685047c5d" />
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/7886d77e-acef-4e96-bc0f-ed3728e06358" />
 <br/>
   <em>abap2UI5 – HTML created in browser based on XML View and Data, both sent from the backend</em>
 </p>
 
-The UI5 application remains a single-page application (SPA), but its role changes: it solely creates HTML for server-defined views and data. 
+The UI5 application remains a single-page application, but its role changes: it now focuses solely on creating HTML based on views and data provided by the server.
 
 #### Frontend Events on the Server
 
@@ -104,15 +102,7 @@ When a user triggers an event (e.g., pressing a button), the event information i
   <em>abap2UI5 – Simple shell app, backend handles all logic</em>
 </p>
 
-In standard UI5 freestyle applications, each app requires its own dedicated set of frontend artifacts:
-
-<p align="center">
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
-<br/>
-  <em>UI5 freestyle – Each application requires its own set of deployed UI and App artifacts</em>
-</p>
-
-With abap2UI5, the frontend becomes a static UI5 shell shared across all applications. Views and logic are fully defined and maintained in the backend. Each application is represented by a single ABAP class that generates the view and handles events:
+As a result, the frontend becomes a static UI5 shell shared across all applications. Views and logic are fully defined and maintained in the backend and each application is represented by backend ABAP class that generates the view and handles events. Every UI5 app becomes a complete ABAP backend project managed through abapGit — eliminating the need for separate frontend deployments entirely:
 
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
@@ -120,7 +110,15 @@ With abap2UI5, the frontend becomes a static UI5 shell shared across all applica
   <em>abap2UI5 – Shared shell app, with each application defined by backend artifacts only</em>
 </p>
 
-As a result, every UI5 app becomes a complete ABAP backend project managed through abapGit — eliminating the need for separate frontend deployments entirely.
+In contrast to that in conventional UI5 freestyle applications, each app requires its own dedicated set of frontend artifacts:
+
+<p align="center">
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
+<br/>
+  <em>UI5 freestyle – Each application requires its own set of deployed UI and App artifacts</em>
+</p>
+
+This leads to additional deployment effort during both development and go-live.
 
 #### Create & Update Data
 
