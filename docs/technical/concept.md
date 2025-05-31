@@ -102,7 +102,9 @@ When a user triggers an event (e.g., pressing a button), the event information i
   <em>abap2UI5 – Simple shell app, backend handles all logic</em>
 </p>
 
-As a result, the frontend becomes a static UI5 shell shared across all applications. Views and logic are fully defined and maintained in the backend and each application is represented by backend ABAP class that generates the view and handles events. Every UI5 app becomes a complete ABAP backend project managed through abapGit — eliminating the need for separate frontend deployments entirely:
+The frontend becomes a static app shared across all applications. Views and logic are fully defined and maintained in the backend and each application is represented by backend ABAP classes only. As a result, every UI5 app becomes a complete ABAP backend project — eliminating the need for separate frontend deployments entirely:
+
+The frontend becomes a static shell shared across all applications. Views and logic are fully defined and maintained in the backend, and each application is represented solely by backend ABAP classes. As a result, every UI5 development project becomes a complete backend project — eliminating the need for separate frontend deployments entirely:
 
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
@@ -110,7 +112,7 @@ As a result, the frontend becomes a static UI5 shell shared across all applicati
   <em>abap2UI5 – Shared shell app, with each application defined by backend artifacts only</em>
 </p>
 
-In contrast to that in conventional UI5 freestyle applications, each app requires its own dedicated set of frontend artifacts:
+In contrast, conventional UI5 freestyle applications require a dedicated set of frontend artifacts for each app:
 
 <p align="center">
 <img width="300" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
@@ -134,7 +136,7 @@ Let’s take a closer look at a key UI5 feature: the concept of view models. In 
   <em>UI5 View Model Concept – UI control properties are bound to View Model attributes</em>
 </p>
 
-This leads to the second subtle shift in abap2UI5: Instead of binding Views to OData, abap2UI5 uses a custom view model created entirely in the backend. This model is constructed dynamically after each request — tailored specifically to the current view — and is sent together with the view definition to the frontend:
+This leads to the second subtle shift in abap2UI5: Instead of binding OData to View, abap2UI5 uses a custom view model created entirely in the backend. This model is constructed dynamically after each request — tailored specifically to the current view — and is sent together with the view definition to the frontend:
 
 <p align="center">
 <img width="385" alt="image" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
@@ -144,7 +146,7 @@ This leads to the second subtle shift in abap2UI5: Instead of binding Views to O
 
 This means CDS Views and OData services are no longer consumed directly on the frontend. Instead, the complete UI state — both view and model — is sent from the backend in a single response. Any user changes in the UI are then returned to the backend via a lightweight AJAX call containing the updated view model — no OData routing involved.
 
-Developers do not need to manually configure models or bindings. abap2UI5 handles this internally. All that’s required is to expose class attributes using a simple bind method — abap2UI5 handles the rest.
+Developers do not need to manually configure models or bindings. abap2UI5 handles this internally. All that’s required is to expose class attributes using a simple bind method — abap2UI5 handles the rest. 
 
 A typical backend response includes both the XML View:
 
