@@ -20,10 +20,10 @@ CLASS zcl_app_adt IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Why this is great for developers:
+Benefits:
 - Single-class design: quick to create and easy to debug
-- Minimal boilerplate
-- Fully abapGit-ready
+- runs out of the box
+- Minimal boilerplate, easy to copy&paste
 
 This simplicity also inspired the entry point for abap2UI5 apps. For simple output, you don't need more than this:
 ```abap
@@ -50,7 +50,7 @@ REPORT zre_app_input.
 START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| type 'I'.
 ```
-Why this is great for developers:
+Benefits:
 - Rapid prototyping with minimal code
 - Built-in input handling and event processing
 - Fullstack behavior with no setup
@@ -102,7 +102,7 @@ cl_salv_table=>factory(
 go_salv->display( ).
 ```
 
-Why this is great for developers:
+Benefits:
 - Generates a full UI from internal tables
 - No external annotations, CDS views, or DDIC artifacts required
 - Ideal for admin tools and quick overviews
@@ -166,7 +166,7 @@ CASE event.
     MESSAGE `the result is NO` TYPE 'I'.
 ENDCASE.
 ```
-Why this is great for developers:
+Benefits:
 * Centralized event logic
 * Simple and readable program flow
 * Fully encapsulated and reusable
