@@ -1,6 +1,6 @@
 # UI5 Over-the-Wire
 
-_The Core Architecture of abap2UI5_
+_The Architecture of abap2UI5_
 
 This article introduces the central pattern behind the framework: HTML Over-the-Wire — reimagined for the ABAP world. It explains how abap2UI5 eliminates traditional frontend complexity by moving both UI rendering and application logic into the ABAP backend. The result: faster development, easier deployment, and a UI5 shell that acts purely as a rendering engine.
 
