@@ -2,13 +2,13 @@
 
 _The Architecture of abap2UI5_
 
-This article introduces the central pattern behind the framework: HTML Over-the-Wire — reimagined for the ABAP world. It explains how abap2UI5 eliminates traditional frontend complexity by moving both UI rendering and application logic into the ABAP backend. The result: faster development, easier deployment, and a UI5 shell that acts purely as a rendering engine.
+This article introduces the core pattern behind abap2UI5: HTML Over-the-Wire — reimagined for the ABAP world. It explains how this approach eliminates traditional frontend complexity by shifting both UI rendering and application logic to the backend. The result: faster development, simplified deployment, and a UI5 frontend shell that acts purely as a rendering engine.
 
 #### What is HTML Over-the-Wire?
 
 _HTML Over-the-Wire_ describes a server-centric web architecture in which the user interface is generated on the server and sent to the browser as ready-to-render HTML.
 
-Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser simply receives and renders HTML fragments. This approach eliminates the need for client-side MVC frameworks, data transformation layers, and frontend deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
+Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser simply receives HTML fragments and renders them. This approach eliminates the need for client-side MVC frameworks, data transformation layers, and frontend deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
 
@@ -38,7 +38,7 @@ But isn't this just the same as traditional Server-Side Rendering (SSR)?
 
 In the early days of web development SSR was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. Within the SAP ecosystem, this approach was seen in technologies like ITS Mobile and SAP GUI for HTML.
 
-The emergence of Single-Page Applications (SPAs) shifted the rendering logic to the client. SPAs fetch raw data — through OData services in SAP systems — and dynamically construct the UI in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with the introduction of UI5 in 2010.
+The emergence of Single-Page Applications (SPAs) shifted the UI logic to the client. SPAs fetch raw data — through OData services in SAP systems — and dynamically construct the UI in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with the introduction of UI5 in 2010.
 
 However, SPAs come with their own set of challenges: complex API layers, separation of frontend and backend development teams, and intricate build and deployment pipelines. As a counter-approach, HTML Over-the-Wire reintroduces a server-driven approach to UI updates:
 - The server sends only HTML fragments, not entire pages, the browser updates specific parts of the DOM
@@ -62,11 +62,11 @@ UI5 freestyle apps follow the Single Page Application model. All UI and app arti
   <em>UI5 freestyle - UI is built on the client; backend delivers only Data via OData</em>
 </p>
 
-Since UI5 is a client-side rendering framework, the HTML output cannot be generated as ready-to-render HTML on the backend. Instead, it must be produced in the browser using the UI5 framework and its built-in renderer.
+Since UI5 is a client-side framework, the HTML output cannot be generated as ready-to-render HTML on the backend. Instead, it must be created in the browser with JavaScript using the UI5 framework.
 
 #### Sending Views from Backend
 
-But how can we generated UI5 HTML in the backend?
+But how can we then generated UI5 HTML in the backend?
 
 Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. In UI5 freestyle apps, each view can be defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML definition, combined with data from the backend, to render HTML in the browser.
 
