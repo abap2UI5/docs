@@ -68,25 +68,27 @@ Since UI5 is a client-side framework, the HTML output cannot be generated as rea
 
 But how can we then generated UI5 HTML in the backend?
 
-Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. In UI5 freestyle apps, each view can be defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML definition, combined with data from the backend, to render HTML in the browser.
+Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. In UI5 freestyle apps, each view can be defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML definition, combined with data from the backend, to create HTML in the browser.
 
 <p align="center">
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/ee0152e7-4f64-4b90-9cf2-3faead53044f" />
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/1ae233c6-96ff-4370-ac31-30705c18a0f7" />
 <br/>
-  <em>UI5 freestyle – HTML rendered in browser based on frontend XML View and backend Data</em>
+  <em>UI5 freestyle – HTML created in browser based on frontend XML View and backend Data</em>
 </p>
 
 abap2UI5 introduces a subtle but important shift: what if the backend also delivers the XML View?
 
-While HTML rendering still happens on the frontend, both the view definition and the corresponding data are now sent from the backend:
+While HTML creation still happens on the frontend, both the view definition and the corresponding data are now sent from the backend:
 
 <p align="center">
+  <img width="400" alt="image" src="https://github.com/user-attachments/assets/adef16b7-e98d-476f-9bbc-738685047c5d" />
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/7886d77e-acef-4e96-bc0f-ed3728e06358" />
 <br/>
-  <em>abap2UI5 – HTML rendered in browser based on XML View and Data, both sent from the backend</em>
+  <em>abap2UI5 – HTML created in browser based on XML View and Data, both sent from the backend</em>
 </p>
 
-The UI5 application remains a single-page application (SPA), but its role changes: it becomes a pure rendering engine for server-defined views and data. 
+The UI5 application remains a single-page application (SPA), but its role changes: it solely creates HTML for server-defined views and data. 
 
 #### Frontend Events on the Server
 
