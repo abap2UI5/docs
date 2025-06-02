@@ -223,8 +223,8 @@ A common frustration in frontend development is caching — especially with BSP 
 
 ##### Develop in Any IDE
 
-There's often debate about which IDE to use — but why not let everyone choose the tool they prefer? abap2UI5 apps are developed entirely in ABAP. You can work in ADT, rely on the time-tested SE80, or even explore integration with VS Code:
-- No additional setup required — works in any IDE  
+There's often debate about which IDE to use — but why not let everyone choose the tool they prefer? abap2UI5 apps are developed entirely in ABAP. You can work in ADT, SE80, or even explore integration with VS Code:
+- No additional setup required — works in any IDE
 - Ideal for teams with different tooling preferences
 
 ##### Pure ABAP Debugging
@@ -235,7 +235,7 @@ Frontend-heavy applications often require switching between browser dev tools, J
 
 ##### Easy Code Sharing
 
-Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit or even copy-pasted:
+Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit, transports or even copy-pasted:
 - Easy to clone and test other apps
 - Great for collaboration and code reviews
 - Encourages modular, reusable components
