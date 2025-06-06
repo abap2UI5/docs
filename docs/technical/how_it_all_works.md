@@ -2,7 +2,9 @@
 
 _Technical Deep Dive into abap2UI5_
 
-This article was originally published on the [SAP Commmunity](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459) and is intended for developers who want to understand how abap2UI5 works under the hood. It explores how the framework achieves its flexibility — including runtime view generation, generic HTTP handling, and decoupling from OData — and provides insight into its architecture, extensibility, and system internals.
+This article was originally published on the [SAP Commmunity.](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)  
+
+It is intended for developers who want to understand how abap2UI5 works under the hood and explores how the framework achieves its flexibility — including runtime view generation, generic HTTP handling, and decoupling from OData — and provides insight into its architecture, extensibility, and system internals.
 
 ##### 1. HTML Over the Wire
 
@@ -369,3 +371,4 @@ Next, we explored various ideas on how the framework reduces its own complexity 
 
 All in all, with abap2UI5, you need to disregard some common rules: there is no separation between View and Model in the HTTP communication (12), HTML & JavaScript are stored directly in the source code (17) (22), we don't use OData or RAP (7) and there are other downsides to consider (24). However, if you accept all of this, you get a very minimalistic approach where you only need to implement a single method to develop standalone UI5 applications (15).
 
+Happy ABAPing! ❤️🦖🦕🦣
