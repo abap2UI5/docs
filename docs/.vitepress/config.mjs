@@ -168,7 +168,6 @@ export default defineConfig({
            { text: 'test',  collapsed : "true" , items: [
            { text: '___',  collapsed : "true" , items: [
              { text: 'Developer Experience', link: '/advanced/technical/dx' },
-             { text: 'Cloud Readiness', link: '/advanced/technical/cloud' },
              { text: 'Technology', link: '/advanced/technical/overview', items: [
                    { text: 'REST, Drafts', link: '/advanced/technical/rest' },
                   { text: 'Domain Driven Design', link: '/advanced/technical/runtime' },
@@ -187,6 +186,7 @@ export default defineConfig({
         items: [      
             { text: 'UI5 Over-the-Wire', link: '/technical/concept' },
             { text: 'ABAP Thinking, UI5 Results', link: '/technical/dx' },
+            { text: 'Cloud Readiness', link: '/technical/cloud' },
             { text: 'Behind the Scenes', link: '/technical/how_it_all_works' }
         ]
       },
