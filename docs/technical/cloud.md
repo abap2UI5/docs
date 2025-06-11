@@ -36,7 +36,7 @@ test
 
 ```abap
 test
-````
+```
 
 So as alway keep the coud ready principels in mind and develop every app cloud ready that they xn also be installed in te future,.
 
@@ -59,3 +59,6 @@ Every app is cloud ready and can be a perfect addiotion to RAP apps already in u
 
 HAppy ABAPing.
 
+
+References:
+* https://software-heroes.com/blog/abap-cloud-vs-abap-in-der-cloud
