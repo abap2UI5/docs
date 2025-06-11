@@ -176,9 +176,9 @@ export default defineConfig({
             { text: 'ABAP Thinking, UI5 Results', link: '/technical/dx' },
             { text: 'Cloud Readiness', link: '/technical/cloud' },
             { text: 'Behind the Scenes', link: '/technical/how_it_all_works' },
-             { text: 'Behind the Scenes', link: '/technical/technology/overview' , items: [
-            { text: 'RAP', link: '/technical/technology/rap' },
-            { text: 'UI5 Freestyle', link: '/technical/technology/ui5' },
+            { text: 'Technology', link: '/technical/technology/overview' , items: [
+              { text: 'RAP', link: '/technical/technology/rap' },
+              { text: 'UI5 Freestyle', link: '/technical/technology/ui5' },
           ] }
         ]
       },
