@@ -1,6 +1,6 @@
 # abap2UI5 Cloud Readiness
 
-### What is ABAP Cloud?
+#### What is ABAP Cloud?
 
 ABAP Cloud is a restricted ABAP language version that ensures cloud readiness and upgrade stability. Developments that follow the ABAP Cloud rules can run on:
 
