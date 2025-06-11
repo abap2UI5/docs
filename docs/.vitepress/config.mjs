@@ -164,19 +164,7 @@ export default defineConfig({
             { text: 'abapmerge', link: '/advanced/tools/abapmerge' },
             
           ]
-          },
-           { text: 'test',  collapsed : "true" , items: [
-           { text: '___',  collapsed : "true" , items: [
-             { text: 'Developer Experience', link: '/advanced/technical/dx' },
-             { text: 'Technology', link: '/advanced/technical/overview', items: [
-                   { text: 'REST, Drafts', link: '/advanced/technical/rest' },
-                  { text: 'Domain Driven Design', link: '/advanced/technical/runtime' },
-                 { text: 'UI5 Freestyle', link: '/advanced/technical/ui5' },
-                 { text: 'RAP', link: '/advanced/technical/rap' },
-                 { text: '___', link: '/advanced/technical/how_it_all_works' },
-             ] },  
-          ] , },  ],
-           },
+          }
          ]
       },
             {
@@ -187,7 +175,11 @@ export default defineConfig({
             { text: 'UI5 Over-the-Wire', link: '/technical/concept' },
             { text: 'ABAP Thinking, UI5 Results', link: '/technical/dx' },
             { text: 'Cloud Readiness', link: '/technical/cloud' },
-            { text: 'Behind the Scenes', link: '/technical/how_it_all_works' }
+            { text: 'Behind the Scenes', link: '/technical/how_it_all_works' },
+             { text: 'Behind the Scenes', link: '/technical/technology/overview' , items: [
+            { text: 'RAP', link: '/technical/technology/rap' },
+            { text: 'UI5 Freestyle', link: '/technical/technology/ui5' },
+          ] }
         ]
       },
       {
