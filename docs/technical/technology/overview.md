@@ -16,6 +16,7 @@ The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GU
 
 ### Business Server Pages
 _Embedded HTML in ABAP (2001+) (SAP)_
+
 Business Server Pages (BSP) introduced HTML-based web development within the ABAP stack.
 
 - Developers write HTML and JavaScript, with embedded ABAP for logic.
