@@ -2,8 +2,8 @@
 
 This page explains how web development in the SAP environment has evolved over the years — from classic server-side rendering approaches like ITS and Web Dynpro to client-side SPAs with UI5 Freestyle and RAP, while contextualizing the open-source framework abap2UI5 and its Over-the-Wire paradigm.
 
-### ITS Mobile (2000+) (SAP)
-_Bringing SAP GUI to the Web_
+### ITS Mobile 
+_Bringing SAP GUI to the Web (2000+) (SAP)_
 
 The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GUI screens (Dynpro) to the web. ITS Mobile converts classical Dynpro screens into basic HTML pages.
 
@@ -12,8 +12,8 @@ The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GU
 - Focus on reusing existing Dynpro logic for web & mobile use cases.
 - Still used today for specific legacy scenarios.
 
-### Web Dynpro ABAP (2003+) (SAP)
-_Structured Web Applications_
+### Web Dynpro ABAP 
+_Structured Web Applications (2003+) (SAP)_
 
 **Web Dynpro ABAP** introduced a component-based UI framework for web applications.
 
@@ -22,8 +22,8 @@ _Structured Web Applications_
 - Suitable for transactional business applications.
 - More structured and modular than ITS, but limited for modern UX expectations.
 
-### UI5 Freestyle (2010+) (SAP)
-_Full Client-Side SPAs_
+### UI5 Freestyle 
+_Full Client-Side SPAs (2010+) (SAP)_
 
 With the advent of smartphones and richer web experiences, **UI5 Freestyle** was introduced.
 
@@ -33,8 +33,8 @@ With the advent of smartphones and richer web experiences, **UI5 Freestyle** was
 - Enables highly customized, interactive applications.
 - Requires dedicated frontend development expertise.
 
-### RAP / Fiori Elements (2019+) (SAP)
-_Standardized Backend-Driven SPA_ 
+### RAP / Fiori Elements 
+_Standardized Backend-Driven SPA (2019+) (SAP)_ 
 
 The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim to standardize application development.
 
@@ -43,8 +43,8 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim t
 - Simplifies UI development by using predefined floorplans and templates.
 - Still SPA complexity (OData Metadata handling, UI5 runtime in browser).
 
-### abap2UI5 (2023+) (Open Soure)
-_UI5 Over-the-Wire_ 
+### abap2UI5 
+_UI5 Over-the-Wire (2023+) (Open Soure)_ 
 
 **abap2UI5** brings the simplicity of the **Over-the-Wire** concept to SAP UI5 development.
 
