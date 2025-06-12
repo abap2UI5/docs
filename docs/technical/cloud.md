@@ -8,9 +8,9 @@ But what exactly does that mean? And are abap2UI5 apps truly cloud ready? Let’
 
 #### What is ABAP Cloud?
 
-ABAP Cloud is a restricted ABAP language version that ensures cloud readiness and upgrade stability. Developments that follow the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — without requiring adjustments to compliant code.
+ABAP Cloud is a restricted ABAP language version that ensures cloud readiness and upgrade stability. Developments that follow the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — without requiring code adjustments or any further investments.
 
-ABAP Cloud enforces a simplified technology stack, syntax, and toolset:
+Therefore ABAP Cloud contains of a simplified technology stack, syntax, and toolset:
 
 - No classic technologies like Web Dynpro or ALV
 - Simplified syntax (e.g., no `WRITE` statements)
@@ -26,10 +26,7 @@ Yes — abap2UI5 is fully compatible with ABAP Cloud:
 - Requires no modifications to standard SAP code
 - Frontend is a normal UI5 freestyle app  (additionaly fully compatible with the Launchpad)
 
-abap2UI5 can be installed on:
-- SAP BTP ABAP Environment
-- SAP S/4HANA Public Cloud ABAP Environment
-- Any on-premise system from 7.02 onward
+abap2UI5 can be installed on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment (and besides that also on any on-premise system from 7.02 onward).
 
 #### Are abap2UI5 apps Cloud Ready?
 
