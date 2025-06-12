@@ -1,9 +1,10 @@
 # Technology Overview
 _From ITS Mobile to abap2UI5_
 
-This page explains how web development in the SAP environment has evolved over the years — from classic server-side rendering approaches like ITS and Web Dynpro to client-side SPAs with UI5 Freestyle and RAP, while contextualizing the open-source framework abap2UI5 and its Over-the-Wire paradigm.
+This page outlines the evolution of web development in the SAP ecosystem — from early server-rendered interfaces like ITS and Web Dynpro to modern client-side SPAs with UI5 Freestyle and RAP. It also introduces the open-source framework abap2UI5, which brings a fresh take on UI5 through an Over-the-Wire approach.
 
-### ITS Mobile 
+
+### ITS & ITS Mobile 
 _Bringing SAP GUI to the Web (2000+) (SAP)_
 
 The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GUI screens (Dynpro) to the web. ITS Mobile converts classical Dynpro screens into basic HTML pages.
@@ -13,10 +14,19 @@ The **Internet Transaction Server (ITS)** was SAP’s first step to bring SAP GU
 - Focus on reusing existing Dynpro logic for web & mobile use cases.
 - Still used today for specific legacy scenarios.
 
-### Web Dynpro ABAP 
+### Business Server Pages
+_Embedded HTML in ABAP (2001+) (SAP)_
+Business Server Pages (BSP) introduced HTML-based web development within the ABAP stack.
+
+- Developers write HTML and JavaScript, with embedded ABAP for logic.
+- Also server-side rendering, but with greater control over layout and styling.
+- Used extensively in early CRM and SRM web applications.
+- Technically obsolete, but still present in some legacy environments.
+
+### Web Dynpro
 _Structured Web Applications (2003+) (SAP)_
 
-**Web Dynpro ABAP** introduced a component-based UI framework for web applications.
+**Web Dynpro** introduced a component-based UI framework for web applications.
 
 - UI definitions are created in ABAP (Views, Context, Controllers).
 - Still **Server-Side Rendering**: UI is built on the server, rendered as HTML in the browser.
