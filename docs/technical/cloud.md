@@ -17,7 +17,7 @@ Therefore ABAP Cloud contains of a simplified technology stack, syntax, and tool
 - Use of only released APIs — no direct access to SAP database tables
 - Development via ADT or browser-based tools, but no SAP GUI
 
-#### Is abap2UI5 ABAP Cloud Compatible?
+#### Is abap2UI5 ABAP Cloud Ready?
 
 Yes — abap2UI5 is fully compatible with ABAP Cloud:
 
@@ -28,7 +28,7 @@ Yes — abap2UI5 is fully compatible with ABAP Cloud:
 
 abap2UI5 can be installed on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment (and besides that also on any on-premise system from 7.02 onward).
 
-#### Are abap2UI5 apps Cloud Ready?
+#### Are abap2UI5 Apps Cloud Ready?
 
 Yes and no - it depends on how the app is developed.
 
