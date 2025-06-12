@@ -2,9 +2,7 @@
 
 _Ready for the Future – or Not?_
 
-Whether it makes sense to build apps with abap2UI5 depends heavily on future-proofing. In the ABAP ecosystem, this means cloud readiness, which is closely tied to using the ABAP Cloud language version.
-
-But what exactly does that mean? And are abap2UI5 apps truly cloud ready? Let’s take a closer look.
+Whether it makes sense to build apps with abap2UI5 depends heavily on future-proofing. In the ABAP ecosystem, this means cloud readiness, which is closely tied to using the ABAP Cloud language version. But what exactly does that mean? And are abap2UI5 apps truly cloud ready? Let’s take a closer look.
 
 #### What is ABAP Cloud?
 
