@@ -33,7 +33,7 @@ abap2UI5 can be installed on:
 
 #### Are abap2UI5 apps Cloud Ready?
 
-It depends on how the app is developed.
+Yes and no - it depends on how the app is developed.
 
 While the framework is cloud ready, each individual app must follow the same development principles to be considered cloud ready.
 
@@ -48,12 +48,13 @@ Example (not cloud-ready):
 test
 ```
 
-Always follow cloud-ready development principles to ensure your apps are portable, upgrade-stable, and suitable for ABAP Cloud environments.
+So always follow cloud-ready development principles to ensure your apps are portable, upgrade-stable, and suitable for ABAP Cloud environments.
 
 #### Do I Have to Use RAP to Be Cloud Ready?
 
-No. RAP (RESTful Application Programming Model) is SAP’s recommended model for building cloud-native apps, but it’s not mandatory.
-RAP is based on:
+No - RAP is not mandantory.
+
+RAP (RESTful Application Programming Model) is SAP’s recommended model for building cloud-native applications. It is based on:
 - CDS Views for data modeling
 - Behavior Definitions for logic and validations
 - OData Services for communication
