@@ -70,4 +70,4 @@ HAppy ABAPing. ❤️🦖🦕🦣
 
 
 References:
-* [ABAP Cloud vs. ABAP in der Cloud](https://software-heroes.com/blog/abap-cloud-vs-abap-in-der-cloud)
+* [ABAP Cloud vs. ABAP in der Cloud (software-heroes)](https://software-heroes.com/blog/abap-cloud-vs-abap-in-der-cloud)
