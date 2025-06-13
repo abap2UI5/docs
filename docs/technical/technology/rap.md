@@ -1,8 +1,12 @@
+---
+outline: [2, 4]
+---
+
 # RAP vs. abap2UI5: Architecture, State & Developer Experience
 
 This page provides a structured technical comparison between **RAP (Fiori Elements)** and **abap2UI5**, focusing on architecture, state management, developer workflow, and communication models.
 
-## 1. Architectural Paradigms
+### 1. Architectural Paradigms
 
 | Aspect            | RAP (Fiori Elements)                                             | abap2UI5                                                   |
 |-------------------|------------------------------------------------------------------|------------------------------------------------------------|
@@ -14,7 +18,7 @@ This page provides a structured technical comparison between **RAP (Fiori Elemen
 | **Runtime Control**| UI logic partly on frontend, backend provides metadata          | Full control over UI and logic in backend                 |
 
 
-## 2. State Management
+### 2. State Management
 
 | Aspect                     | RAP (Fiori Elements)                                  | abap2UI5                                            |
 |----------------------------|-------------------------------------------------------|-----------------------------------------------------|
@@ -23,7 +27,7 @@ This page provides a structured technical comparison between **RAP (Fiori Elemen
 | **Persistence**            | Via RAP persistence layer                             | Reflected through ViewModel updates                |
 | **User Interaction Flow**  | Triggers OData actions, state managed across layers   | Triggers backend events, state is updated in ABAP  |
 
-## 3. Developer Workflow
+### 3. Developer Workflow
 
 | Aspect                     | RAP (Fiori Elements)                                 | abap2UI5                                               |
 |----------------------------|------------------------------------------------------|--------------------------------------------------------|
@@ -35,9 +39,9 @@ This page provides a structured technical comparison between **RAP (Fiori Elemen
 | **Complexity**             | High: multiple layers & technologies                  | Low: one language, one layer                           |
 
 
-## 4. Client–Server Communication Flow
+### 4. Client–Server Communication Flow
 
-### RAP
+#### RAP
 
 ```plaintext
 Browser (Fiori Elements SPA)
@@ -48,7 +52,7 @@ Browser (Fiori Elements SPA)
 Backend (RAP Services)
   └──> Processes requests, returns data/actions
 ```
-### abap2UI5
+#### abap2UI5
 ```plaintext
 Browser (Static UI5 Shell)
   ├──> HTTP request: Load XML View + ViewModel
@@ -58,7 +62,7 @@ Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
 
-## 5. Flexibility & Runtime Capabilities
+### 5. Flexibility & Runtime Capabilities
 
 | Aspect                    | RAP (Fiori Elements)                        | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
@@ -68,7 +72,7 @@ Backend (ABAP Class)
 | **Learning Curve**        | Steep (new concepts, multiple layers)       | Flat (ABAP-only, no metadata tooling)    |
 
 
-## 6. Cloud Readiness & Compliance
+### 6. Cloud Readiness & Compliance
 
 | Feature                    | RAP                        | abap2UI5                     |
 |----------------------------|-----------------------------|-------------------------------|
@@ -80,13 +84,13 @@ Backend (ABAP Class)
 > 🔒 **Both frameworks are cloud-ready and clean-core compliant.** abap2UI5 achieves this **without CDS or OData**, relying solely on released ABAP APIs.
 
 
-## Conclusion
+### Conclusion
 
 - **RAP (Fiori Elements)** is best suited for standardized, metadata-driven applications using CDS, OData, and annotations.
 - **abap2UI5** provides runtime flexibility, backend control, and lower complexity — ideal for dynamic UIs and fast iterations.
 
 
-## Summary Table
+### Summary Table
 
 | Category                 | RAP (Fiori Elements)           | abap2UI5                          |
 |--------------------------|-------------------------------|-----------------------------------|
