@@ -1,7 +1,7 @@
 # Technology Overview
 _From ITS to abap2UI5_
 
-This page outlines the evolution of web development in the ABAP ecosystem — from early server-rendered interfaces like ITS and Web Dynpro to modern client-side SPAs with UI5 Freestyle and RAP, and finally compares them to the open-source framework abap2UI5.
+This page outlines the evolution of web development in the ABAP ecosystem — from early server-rendered interfaces like ITS and Web Dynpro to modern client-side SPAs with UI5 Freestyle and RAP, and finally compares them to abap2UI5.
 
 ### Internet Transaction Server
 _Bringing SAP GUI to the Web (2000+) (SAP)_
