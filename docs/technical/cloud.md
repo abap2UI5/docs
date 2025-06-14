@@ -35,12 +35,68 @@ While the framework is cloud ready, each individual app must follow the same dev
 Example (cloud-ready):
 
 ```abap
-test
+CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA mt_salesorder TYPE STANDARD TABLE OF I_SalesOrder WITH EMPTY KEY.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    SELECT FROM I_SalesOrder
+     FIELDS salesorder, salesorganization
+     INTO TABLE @mt_salesorder
+     UP TO 10 ROWS.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->list(
+        headertext      = 'List Ouput'
+        items           = client->_bind_edit( mt_salesorder )
+        mode            = `SingleSelectMaster`
+        selectionchange = client->_event( 'SELCHANGE' )
+        )->standard_list_item(
+            title       = '{SALESORDER}'
+            description = '{SALESORGANIZATION}' ).
+    client->view_display( view ).
+
+  ENDMETHOD.
+
+ENDCLASS.
 ```
 
 Example (not cloud-ready):
 ```abap
-test
+CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA mt_salesorder TYPE STANDARD TABLE OF vbak WITH EMPTY KEY.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    SELECT FROM vbak
+     FIELDS vbeln, vkorg
+     INTO TABLE @mt_salesorder
+     UP TO 10 ROWS.
+
+    DATA(view) = z2ui5_cl_xml_view=>factory( )->list(
+        headertext      = 'List Ouput'
+        items           = client->_bind_edit( mt_salesorder )
+        mode            = `SingleSelectMaster`
+        selectionchange = client->_event( 'SELCHANGE' )
+        )->standard_list_item(
+            title       = '{VBELN}'
+            description = '{VKORG}' ).
+    client->view_display( view ).
+
+  ENDMETHOD.
+
+ENDCLASS.
 ```
 
 So always follow cloud-ready development principles to ensure your apps are portable, upgrade-stable, and suitable for ABAP Cloud environments.
