@@ -51,12 +51,9 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
      INTO TABLE @mt_salesorder
      UP TO 10 ROWS.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->list(
-        headertext      = 'List Ouput'
-        items           = client->_bind_edit( mt_salesorder )
-        mode            = `SingleSelectMaster`
-        selectionchange = client->_event( 'SELCHANGE' )
-        )->standard_list_item(
+    DATA(view) = z2ui5_cl_xml_view=>factory(
+        )->list( client->_bind_edit( mt_salesorder )
+          )->standard_list_item(
             title       = '{SALESORDER}'
             description = '{SALESORGANIZATION}' ).
     client->view_display( view ).
@@ -84,11 +81,8 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
      INTO TABLE @mt_salesorder
      UP TO 10 ROWS.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->list(
-        headertext      = 'List Ouput'
-        items           = client->_bind_edit( mt_salesorder )
-        mode            = `SingleSelectMaster`
-        selectionchange = client->_event( 'SELCHANGE' )
+    DATA(view) = z2ui5_cl_xml_view=>factory(
+      )->list( client->_bind_edit( mt_salesorder )
         )->standard_list_item(
             title       = '{VBELN}'
             description = '{VKORG}' ).
