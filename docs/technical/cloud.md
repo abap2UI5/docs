@@ -31,9 +31,9 @@ abap2UI5 can be installed on SAP BTP ABAP Environment and SAP S/4HANA Public Clo
 
 Yes and no - it depends on how the app is developed.
 
-While the framework is cloud ready, each individual app must follow the same development principles to be considered cloud ready.
+While the framework is cloud-ready, each individual app must also be developed following cloud-ready principles too.
 
-Example (cloud-ready):
+1. Example: Display Sales Orders (Cloud-Ready):
 
 ```abap
 CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
@@ -64,7 +64,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Example (not cloud-ready):
+2. Example: Display Sales Orders (not Cloud-Ready):
 ```abap
 CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-So always follow cloud-ready development principles to ensure your apps are portable, upgrade-stable, and suitable for ABAP Cloud environments.
+Always adhere to cloud-ready development principles to ensure that your apps remain upgrade-stable and compatible with ABAP Cloud environments.
 
 #### Do I Have to Use RAP to Be Cloud Ready?
 
@@ -106,13 +106,13 @@ RAP (RESTful Application Programming Model) is SAP’s recommended model for bui
 - OData Services for communication
 - Fiori Elements for UI generation
 
-abap2UI5 offers a valid alternative — especially for developers who prefer freestyle UI5 or need lightweight apps without the full RAP stack. As long as cloud development rules are followed, both approaches are valid.
+abap2UI5 provides a valid alternative, especially for developers who prefer lightweight apps without the full RAP stack. As long as cloud development principles are followed, both approaches are valid.
 
 #### Conclusion
 
-abap2UI5 is fully cloud ready and ready for the future. It enables modern, backend-driven UI5 development while remaining upgrade-safe and portable across SAP landscapes. Every app is cloud ready and can be a perfect addiotion to RAP apps already in use. For exmaple integrate them in the laucnhpad they can be used next to other RAP and UI5 freestyle apps.
+abap2UI5 is fully cloud-ready. It enables modern, backend-driven UI5 development while remaining upgrade-stable and compatible with SAP BTP ABAP Environment and S/4HANA Public Cloud. Each app can be developed in a cloud-ready manner, making it a perfect addition to existing RAP or UI5 freestyle apps.
 
-HAppy ABAPing. ❤️🦖🦕🦣
+Happy ABAPing! ❤️🦖🦕🦣
 
 
 References:
