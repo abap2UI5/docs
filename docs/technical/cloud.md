@@ -60,7 +60,6 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
     client->view_display( view ).
 
   ENDMETHOD.
-
 ENDCLASS.
 ```
 
@@ -90,7 +89,6 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
     client->view_display( view ).
 
   ENDMETHOD.
-
 ENDCLASS.
 ```
 
