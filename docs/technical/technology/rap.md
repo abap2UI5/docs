@@ -5,19 +5,19 @@ outline: [2, 4]
 # RAP vs. abap2UI5
 _Architecture, State & Developer Experience_
 
-This page provides a structured technical comparison between **RAP (Fiori Elements)** and **abap2UI5**, focusing on architecture, state management, developer workflow, and communication models.
+This page provides a technical comparison between **RAP** and **abap2UI5**, focusing on architecture, state management, developer workflow, and communication models.
 
 ### 1. Architectural Paradigms
 
 | Aspect            | RAP (Fiori Elements)                                             | abap2UI5                                                   |
 |-------------------|------------------------------------------------------------------|------------------------------------------------------------|
 | **Backend Stack** | CDS Views, Behavior Definitions, OData V4 services               | ABAP Classes generating XML Views and JSON ViewModels     |
-| **Frontend Stack**| UI5 Fiori Elements SPA                                           | Static UI5 Shell                                           |
-| **Rendering**     | Client interprets metadata and builds UI dynamically             | UI structure defined by backend, rendered in frontend      |
+| **Frontend Stack**| UI5 Fiori Elements SPA                                           | Static UI5 Freestyle App                            |
+| **Rendering**     | Client interprets metadata and builds UI dynamically             | XML View send by backend, rendered in frontend      |
 | **UI Definition** | Annotations in CDS & metadata                                    | XML Views created directly in ABAP                         |
 | **Communication** | OData V4 (metadata, data, actions)                               | Simple HTTP requests (Over-the-Wire)                      |
-| **Runtime Control**| UI logic partly on frontend, backend provides metadata          | Full control over UI and logic in backend                 |
-
+| **Runtime Control**| Logic partly changeable via RAP Implementation                  | Full control over UI and logic in backend                 |
+| **Model**        | Defined at designtime via CDS                                     | Designed at Designtime or Runtime via Internal Tables                |
 
 ### 2. State Management
 
