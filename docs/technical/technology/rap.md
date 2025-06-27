@@ -17,18 +17,11 @@ This page provides a technical comparison between **RAP** and **abap2UI5**, focu
 | **UI Definition** | Annotations in CDS & metadata                                    | XML Views created directly in ABAP                         |
 | **Communication** | OData V4 (metadata, data, actions)                               | Simple HTTP requests (Over-the-Wire)                      |
 | **Runtime Control**| Logic partly changeable via RAP Implementation                  | Full control over UI and logic in backend                 |
-| **Model**        | Defined at designtime via CDS                                     | Designed at Designtime or Runtime via Internal Tables                |
+| **Model**         | Defined at designtime via CDS                                    | Designed at Designtime or Runtime via Internal Tables     |
+| **Drafts**        | Managed via RAP drafts on Model Level                            | Managed via Serialization on App level     |
 
-### 2. State Management
 
-| Aspect                     | RAP (Fiori Elements)                                  | abap2UI5                                            |
-|----------------------------|-------------------------------------------------------|-----------------------------------------------------|
-| **State Definition**       | Managed via RAP drafts and transaction control        | Centralized in ABAP ViewModels                     |
-| **Frontend Involvement**   | UI5 components manage transient state                 | Frontend has no independent state management       |
-| **Persistence**            | Via RAP persistence layer                             | Reflected through ViewModel updates                |
-| **User Interaction Flow**  | Triggers OData actions, state managed across layers   | Triggers backend events, state is updated in ABAP  |
-
-### 3. Developer Workflow
+### 2. Developer Workflow
 
 | Aspect                     | RAP (Fiori Elements)                                 | abap2UI5                                               |
 |----------------------------|------------------------------------------------------|--------------------------------------------------------|
@@ -40,7 +33,7 @@ This page provides a technical comparison between **RAP** and **abap2UI5**, focu
 | **Complexity**             | High: multiple layers & technologies                  | Low: one language, one layer                           |
 
 
-### 4. Client–Server Communication Flow
+### 3. Client–Server Communication Flow
 
 #### RAP
 
@@ -63,7 +56,7 @@ Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
 
-### 5. Flexibility & Runtime Capabilities
+### 4. Flexibility & Runtime Capabilities
 
 | Aspect                    | RAP (Fiori Elements)                        | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
@@ -73,7 +66,7 @@ Backend (ABAP Class)
 | **Learning Curve**        | Steep (new concepts, multiple layers)       | Flat (ABAP-only, no metadata tooling)    |
 
 
-### 6. Cloud Readiness & Compliance
+### 5. Cloud Readiness & Compliance
 
 | Feature                    | RAP                        | abap2UI5                     |
 |----------------------------|-----------------------------|-------------------------------|
