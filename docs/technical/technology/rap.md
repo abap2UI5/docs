@@ -51,7 +51,7 @@ Backend (RAP Services)
 Browser (Static UI5 Shell)
   ├──> HTTP request: Load XML View + ViewModel
   ├──> Renders UI5 controls as defined by backend
-  ├──> Sends event requests on interaction
+  ├──> Sends event requests on interaction via HTTP
 Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
@@ -90,11 +90,10 @@ Backend (ABAP Class)
 |--------------------------|-------------------------------|-----------------------------------|
 | UI Architecture          | Metadata-based SPA            | Backend-driven Over-the-Wire     |
 | Data & Actions           | OData V4                      | Simple HTTP                      |
-| State Handling           | RAP Draft + Frontend          | Central ABAP ViewModel           |
 | UI Customization         | Limited by annotations        | Fully dynamic                     |
 | Tooling                  | ADT, Fiori Tools              | Any ABAP IDE                     |
 | Cloud Readiness          | ✅ Yes                        | ✅ Yes                            |
 | Clean Core               | ✅ Yes                        | ✅ Yes                            |
 | Use Case Fit             | Standardized CRUD Apps        | Dynamic, backend-controlled UIs  |
 | Learning Curve           | High                          | Low                              |
-| Deployment               | Split backend/frontend        | Unified backend class            |
+| Deployment               | Split backend/frontend        | Pure ABAP backend class        |
