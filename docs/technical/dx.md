@@ -113,6 +113,7 @@ abap2UI5 follows a similar pattern. Just bind the internal table to a UI5 table 
 CLASS zcl_app_alv DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+    DATA gt_t100 TYPE STANDARD TABLE OF t100 WITH EMPTY KEY.
 ENDCLASS.
 
 CLASS zcl_app_alv IMPLEMENTATION.
@@ -120,11 +121,11 @@ CLASS zcl_app_alv IMPLEMENTATION.
 
     SELECT FROM t100
      FIELDS *
-     INTO TABLE @DATA(gt_t100)
+     INTO TABLE @gt_t100
      UP TO 10 ROWS.
 
     DATA(tab) = z2ui5_cl_xml_view=>factory(
-        )->table( client->_bind_local( gt_t100 ) ).
+        )->table( client->_bind( gt_t100 ) ).
 
     DATA(lo_col) = tab->columns( ).
     lo_col->column( )->text( `ARBGB` ).

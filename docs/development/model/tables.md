@@ -146,10 +146,6 @@ Binding nested structures is also possible. Use `structure/component` in the bin
 CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
 
     TYPES:
       BEGIN OF ty_s_tab,
@@ -161,12 +157,17 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
       END OF ty_s_tab.
     DATA mt_itab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
     mt_itab = VALUE #(
         ( product = 'table' s_details = VALUE #( create_date = `01.01.2023` create_by = `Peter`  ) )
         ( product = 'chair' s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank`  ) )
         ( product = 'sofa'  s_details = VALUE #( create_date = `12.03.2024` create_by = `George` ) ) ).
 
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind_local( mt_itab ) ).
+    DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind( mt_itab ) ).
 
     DATA(lo_columns) = tab->columns( ).
     lo_columns->column( )->text( text = `Product` ).
