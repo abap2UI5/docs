@@ -31,7 +31,7 @@ abap2UI5 can be installed on SAP BTP ABAP Environment and SAP S/4HANA Public Clo
 
 #### Are abap2UI5 Apps Cloud Ready?
 
-Yes and no - it depends on how the app is developed.
+Yes and no — it depends on how you develop your app.
 
 While the framework is cloud-ready, each individual app must also be developed following cloud-ready principles too.
 
