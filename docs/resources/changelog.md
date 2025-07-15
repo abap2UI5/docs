@@ -1,6 +1,13 @@
 # Release Notes
 
 
+## v1.139.0
+2025-06-26
+- Improved documentation
+- Added multiple new control properties
+- Fixed Launchpad compatibility issues
+- Various bug fixes and performance improvements
+
 ## v1.138.0
 2025-03-31
 - Introduced a Copy to Clipboard feature for improved usability
