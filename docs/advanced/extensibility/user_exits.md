@@ -2,4 +2,4 @@ abap2UI5 contains predefined predefined user exits which can be used to modify t
 
 These are the available methods:
 - `GET_DRAFT_EXP_TIME_IN_HOURS`: You can override the default 4 hour abap2UI5 draft session timeout
-- `ADJUST_CONFIG`: You can change abap2UI5 startup parameters like the theme or UI5 version
+- `ADJUST_CONFIG`: You can change abap2UI5 startup parameters like theme or UI5 version
