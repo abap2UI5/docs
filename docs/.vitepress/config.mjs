@@ -152,7 +152,8 @@ export default defineConfig({
           { text: 'Extensibility',  collapsed : "false" , items: [
             { text: 'Custom JS', link: '/advanced/extensibility/custom_js' },
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
-            { text: 'Custom Control', link: '/advanced/extensibility/custom_control' }
+            { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
+            { text: 'User Exits', link: '/advanced/extensibility/user_exits' }
           ] },
           { text: 'Tools',  collapsed : "false" , items: [
             { text: 'abapGit', link: '/advanced/tools/abapgit' },
