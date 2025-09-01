@@ -4,37 +4,33 @@ outline: [2, 4]
 
 # General
 
-abap2UI5 can be run with various custom configurations. The default setup can be invoked using the following call.
+abap2UI5 can be run with various custom configurations. The default setup is used automatically. For custom configurations, simply implement the interface `z2ui5_if_exit`:
 
 ```abap
-METHOD if_http_extension~handle_request.
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC FINAL CREATE PUBLIC.
 
-  z2ui5_cl_http_handler=>run( server ).
+  PUBLIC SECTION.
+    INTERFACES  z2ui5_if_exit.
+
+ENDCLASS.
+```
+
+### Theme
+For example, to change the theme, the implementation would look like this:
+```abap
+METHOD z2ui5_if_exit~set_config_http_get.
+
+    cs_config-theme = `sap_belize`.
 
 ENDMETHOD.
 ```
-For custom configurations, simply populate the config structure and pass it to the run method:
-
-### Theme
-For example, to change the theme, the source code would look like this:
-```abap
-METHOD if_http_extension~handle_request.
-
-  z2ui5_cl_http_handler=>run( server = server config = VALUE #(
-    theme = `sap_belize`
-  ) ).
-
-ENDMETHOD.
-``` 
 
 ### UI5 Bootstrapping
 To specify the source for bootstrapping UI5:
 ```abap
-METHOD if_http_extension~handle_request.
+METHOD z2ui5_if_exit~set_config_http_get.
 
-  z2ui5_cl_http_handler=>run( server = server config = VALUE #(
-    src = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js`
-  ) ).
+    cs_config-src = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js`.
 
 ENDMETHOD.
 ```
@@ -42,11 +38,9 @@ ENDMETHOD.
 ### Title
 To set a custom title for the application:
 ```abap
-METHOD if_http_extension~handle_request.
+METHOD z2ui5_if_exit~set_config_http_get.
 
-  z2ui5_cl_http_handler=>run( server = server config = VALUE #(
-    title = `My Title`
-  ) ).
+    cs_config-title = `my title`.
 
 ENDMETHOD.
 ```
@@ -54,11 +48,9 @@ ENDMETHOD.
 ### Style / CSS
 To apply custom styles or CSS, use the following:
 ```abap
-METHOD if_http_extension~handle_request.
+METHOD z2ui5_if_exit~set_config_http_get.
 
-  z2ui5_cl_http_handler=>run( server = server config = VALUE #(
-    styles_css =  `<< style definiiton here>>`
-  ) ).
+    cs_config-styles_css = `<<own css>>`.
 
 ENDMETHOD.
 ```
