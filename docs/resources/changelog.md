@@ -1,6 +1,16 @@
 # Release Notes
 
 
+## v1.140.0
+2025-09-15
+- New User Exit Logic with greater customization options
+- Added Data Binding with References
+- Optimized Data Binding Logic for faster performance
+- ABAP Cloud Compatibility Adjustments
+- Bug fixes for Data Loss Protection
+- Bug fixes for Stateful Functionality
+- Various bug fixes and performance improvements
+
 ## v1.139.0
 2025-06-26
 - Improved documentation
