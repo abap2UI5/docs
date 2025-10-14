@@ -22,7 +22,7 @@ Each application is supported as an abapGit project, simplifying installation ac
 abap2UI5 employs a "thin frontend" approach, with all processing, logic, and data management handled in the backend. This design simplifies configuration, minimizes client-side actions (such as clearing caches), and ensures that business logic and sensitive data remain securely on the server. 
 
 ##### Performance 
-abap2UI5 is fast! By leveraging the power of the ABAP backend for most processes, it ensures faster execution compared to client-side operations. The frontend focuses solely on rendering UI via the UI5 framework.
+abap2UI5 is fast! By leveraging the power of the ABAP backend for most processes, it ensures faster execution compared to UI5 Freestyle applications or others client-side frameworks. The frontend focuses solely on rendering UI via the UI5 framework.
 
 ##### System Footprint
 The abap2UI5 system footprint is kept as small as possible including only essential classes and interfaces in the base version. Additional functionality can be added by installing optional addons.
@@ -35,11 +35,11 @@ abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all AB
 
 ##### Installation
 Installing abap2UI5 is easy:
-1. Import the framework via abapGit
+1. Import the project via abapGit
 2. Create a new HTTP service to establish browser communication
 3. Start developing!
 
-No additional deployment steps are needed.
+No additional deployment or configuration steps are needed.
 
 ##### ABAP Cloud
 abap2UI5 uses only released APIs, making it suitable for both on-stack and side-by-side extensions in ABAP for Cloud. You can use modern ABAP syntax features like CDS, ABAP SQL, and EML within your app.
@@ -51,13 +51,13 @@ By relying only on released APIs, abap2UI5 ensures that your applications remain
 The framework does not rely on newer ABAP syntax features, ensuring compatibility with on-premise and R/3 NetWeaver systems. A downported version is available for systems running ABAP versions earlier than 7.50.
 
 ##### Security
-With complete control over HTTP handler configuration, you maintain oversight of all external communication, ensuring security.
+With complete control over HTTP handler configuration, you maintain oversight of all external communication like in any other UI5 app. Additionally, abap2UI5 apps contain all business logic fully in the backend, ensuring highest level of security.
 
 ##### Transparency
 Transparency is a core principle of abap2UI5. The entire source code is publicly accessible, key concepts are explained in blog posts, and issues are openly discussed. Urgent changes are promptly implemented and distributed via abapGit.
 
 ##### Enterprise Ready
-This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready way to create software compatible to a wide range of SAP products. 
+This framework is specifically tailored to meet the needs of ABAP developers building business applications. By leveraging SAP’s UI5 framework for the frontend and adhering to clean core principles on the backend with SAP’s ABAP language, abap2UI5 provides an enterprise-ready way to create software compatible with a wide range of SAP products.
 
 ##### Productive Usage
 abap2UI5 can be used like any other UI5 app or ABAP program in a productive environment. Simply add the framework and your apps to a transport request to deploy them to your productive system.
