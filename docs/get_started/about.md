@@ -24,7 +24,7 @@ Each application is supported as an abapGit project, simplifying installation ac
 → *See our [Getting Started Guide](#) for step-by-step instructions*  
 → *Browse [Sample Applications](#) to see abap2UI5 in action*
 
-## Key Benefits
+### Key Benefits
 
 ##### Architecture
 abap2UI5 employs a "thin frontend" approach, with all processing, logic, and data management handled in the backend. This design simplifies configuration, minimizes client-side actions (such as clearing caches), and ensures that business logic and sensitive data remain securely on the server.
@@ -41,7 +41,7 @@ With complete control over HTTP handler configuration, you maintain oversight of
 ##### Transparency
 All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. This commitment to transparency ensures you always understand how the framework works and can verify its behavior.
 
-## Compatibility
+### Compatibility
 
 ##### ABAP Cloud
 abap2UI5 uses only released APIs, making it suitable for both on-stack and side-by-side extensions in ABAP for Cloud. You can use modern ABAP syntax features like CDS, ABAP SQL, and EML within your apps.
@@ -58,7 +58,7 @@ abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all AB
 * S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
 * R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
 
-## Operations
+### Operations
 
 ##### Installation
 Installing abap2UI5 is easy:
@@ -82,7 +82,7 @@ Apps developed with abap2UI5 can be integrated into:
 * Tiles on S/4 Public Cloud
 * Build Workzone Websites on BTP
 
-## Community
+### Community
 
 ##### Support
 Support is provided by the community. Need help? Submit an issue on GitHub or join the abap2UI5 Slack channel for assistance.
