@@ -21,8 +21,8 @@ Creating UI5 applications with abap2UI5 is straightforward:
 
 Each application is supported as an abapGit project, simplifying installation across systems without the need for extra deployment of frontend artifacts.
 
-→ *See our [Getting Started Guide](https://abap2ui5.github.io/docs/get_started/quickstart.html) for step-by-step instructions*  
-→ *Browse [Sample Applications](https://abap2ui5.github.io/docs/get_started/samples.html) to see abap2UI5 in action*
+→ *See our [Getting Started Guide](/get_started/quickstart.html) for step-by-step instructions*  
+→ *Browse [Sample Applications](/get_started/samples.html) to see abap2UI5 in action*
 
 ### Key Benefits
 
