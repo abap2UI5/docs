@@ -28,6 +28,7 @@ Each application is supported as an abapGit project, simplifying installation ac
 
 ### Key Benefits
 <br>
+
 ##### Architecture
 abap2UI5 employs a "thin frontend" approach, with all processing, logic, and data management handled in the backend. This design simplifies configuration, minimizes client-side actions (such as clearing caches), and ensures that business logic and sensitive data remain securely on the server.
 
@@ -62,6 +63,7 @@ abap2UI5 is compatible with both ABAP Cloud and Standard ABAP, supporting all AB
 
 ### Operations
 <br>
+
 ##### Installation
 Installing abap2UI5 is easy:
 1. Import the project via abapGit
@@ -86,6 +88,7 @@ Apps developed with abap2UI5 can be integrated into:
 
 ### Community
 <br>
+
 ##### Support
 Support is provided by the community. Need help? Submit an issue on GitHub or join the abap2UI5 Slack channel for assistance.
 
