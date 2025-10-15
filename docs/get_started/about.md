@@ -22,7 +22,7 @@ Creating UI5 applications with abap2UI5 is straightforward:
 Each application is supported as an abapGit project, simplifying installation across systems without the need for extra deployment of frontend artifacts.
 
 → *See our [Getting Started Guide](/docs/get_started/quickstart.md) for step-by-step instructions*  
-→ *Browse [Sample Applications](/get_started/samples.md) to see abap2UI5 in action*
+→ *Browse [Sample Applications](/docs/get_started/samples.md) to see abap2UI5 in action*
 
 ### Key Benefits
 
@@ -70,7 +70,7 @@ Installing abap2UI5 is easy:
 
 No additional deployment or configuration steps are needed.
 
-→ *See our [Installation Guide](https://abap2ui5.github.io/docs/get_started/quickstart.html) for detailed instructions*
+→ *See our [Installation Guide](/docs/get_started/quickstart.html) for detailed instructions*
 
 ##### Enterprise Ready
 This framework is tailored for enterprise SAP environments, combining SAP's UI5 framework with ABAP's robust backend capabilities. abap2UI5 provides an enterprise-ready way to create software compatible with a wide range of SAP products, from S/4HANA Public/Private Cloud to BTP ABAP Environment and NetWeaver systems.
@@ -90,14 +90,14 @@ Apps developed with abap2UI5 can be integrated into:
 ##### Support
 Support is provided by the community. Need help? Submit an issue on GitHub or join the abap2UI5 Slack channel for assistance.
 
-→ *Visit our [Support page](https://abap2ui5.github.io/docs/resources/support.html) for more options*
+→ *Visit our [Support page](/docs/resources/support.html) for more options*
 
 ##### Contribution
 Contributions are always welcome! Whether you're fixing bugs, creating new features, or improving documentation, your input helps the project grow. Check out our contribution guidelines to get started.
 
-→ *Read our [Contribution Guide](https://abap2ui5.github.io/docs/resources/contribution.html) to learn how to get involved*
+→ *Read our [Contribution Guide](/docs/resources/contribution.html) to learn how to get involved*
 
 ##### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project but cannot contribute directly, consider supporting the project in other ways.
 
-→ *Learn more about [sponsorship opportunities](https://abap2ui5.github.io/docs/resources/sponsor.html)*
+→ *Learn more about [sponsorship opportunities](/docs/resources/sponsor.html)*
