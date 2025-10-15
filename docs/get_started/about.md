@@ -8,7 +8,7 @@ abap2UI5 is an open-source project that enables ABAP developers to build modern 
 ##### About
 abap2UI5 simplifies UI5 development for both cloud and on-premise environments, bringing back the simplicity of classic ABAP development. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create modern web applications with just a few lines of ABAP. The framework handles all frontend complexity, allowing you to focus on business logic.
 
-Since launching in 2023, abap2UI5 has evolved from a personal project into a community-driven framework trusted by SAP developers worldwide, with active contributions, regular updates, and continuous improvements.
+Since launching in 2023, abap2UI5 has evolved from a personal project into a community-driven framework trusted by ABAP developers worldwide, with active contributions, regular updates, and continuous improvements.
 
 ##### Why abap2UI5?
 Traditional UI5 development requires JavaScript expertise, frontend deployment pipelines, and OData service configuration. abap2UI5 eliminates these complexities, letting ABAP developers leverage their existing skills to build modern UIs quickly. Whether you're modernizing legacy applications, building new business apps, or creating prototypes, abap2UI5 streamlines the development process without requiring additional frontend resources.
