@@ -38,8 +38,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( |abap2UI5 - Hello World|
-         )->text( |My Text|
-      )->stringify( ) ).
+         )->text( |My Text| ) ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -62,8 +61,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( |abap2UI5 - Hello World|
           )->text( |My Text|
-          )->button( text = |post| press = client->_event( |POST| )
-      )->stringify( ) ).
+          )->button( text = |post| press = client->_event( |POST| ) ) ).
 
     CASE client->get( )-event.
       WHEN 'POST'.
@@ -93,8 +91,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
       )->page( |abap2UI5 - Hello World|
           )->text( |My Text|
           )->button( text = |post| press = client->_event( |POST| )
-          )->input( client->_bind_edit( name )
-      )->stringify( ) ).
+          )->input( client->_bind_edit( name ) ) ).
 
     CASE client->get( )-event.
       WHEN 'POST'.
