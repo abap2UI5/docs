@@ -109,24 +109,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### Popup Confirm
-If interaction is required, you can use `z2ui5_cl_pop_to_confirm`:
-```abap
-METHOD z2ui5_if_app~main.
 
-  IF client->check_on_init( ).
-   client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
- ENDIF.
-
-  CASE client->get( )-event.
-    WHEN z2ui5_cl_pop_to_confirm=>cs_event-confirmed.
-      client->message_box_display( `the result is confirmed` ).
-    WHEN z2ui5_cl_pop_to_confirm=>cs_event-canceled.
-      client->message_box_display( `the result is rejected` ).
-  ENDCASE.
-
-ENDMETHOD.
-```
 #### Uncatched Errors
 What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted, and the user will need to refresh the browser. Use this only for unexpected behavior:
 ```abap
