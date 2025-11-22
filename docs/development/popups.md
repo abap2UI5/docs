@@ -58,7 +58,24 @@ ENDMETHOD.
 #### Separated App
 For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
 
-#### Call Stack
+Check out for example the popup to confirm:
+```abap
+METHOD z2ui5_if_app~main.
+
+  IF client->check_on_init( ).
+   client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
+ ENDIF.
+
+  CASE client->get( )-event.
+    WHEN z2ui5_cl_pop_to_confirm=>cs_event-confirmed.
+      client->message_box_display( `the result is confirmed` ).
+    WHEN z2ui5_cl_pop_to_confirm=>cs_event-canceled.
+      client->message_box_display( `the result is rejected` ).
+  ENDCASE.
+
+ENDMETHOD.
+```
+
 If you need to manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
 
 ### Popover
