@@ -3,7 +3,24 @@ outline: [2, 6]
 ---
 # Introduction
 
-abap2UI5 is an open-source project that enables ABAP developers to build modern SAP Fiori/UI5 applications using only ABAP code — no JavaScript, OData, or RAP required.
+**Developing UI5 Apps Purely in ABAP – no JavaScript, OData, or RAP required.**
+
+abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP.
+
+```abap
+CLASS my_app DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
+
+CLASS my_app IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+    client->message_box( |Hello World|) ).
+  ENDMETHOD.
+ENDCLASS.
+```
+
+That's it – your first UI5 app is ready!
 
 ##### About
 abap2UI5 simplifies UI5 development for both cloud and on-premise environments, bringing back the simplicity of classic ABAP development. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create modern web applications with just a few lines of ABAP. The framework handles all frontend complexity, allowing you to focus on business logic.
