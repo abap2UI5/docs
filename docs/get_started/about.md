@@ -43,6 +43,7 @@ abap2UI5 is exceptionally secure! All business logic remains exclusively in the 
 All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. This commitment to transparency ensures you always understand how the framework works and can verify its behavior.
 
 ### Compatibility
+<br>
 
 ##### ABAP Cloud
 abap2UI5 uses only released APIs, making it suitable for both on-stack and side-by-side extensions in ABAP for Cloud. You can use modern ABAP syntax features like CDS, ABAP SQL, and EML within your apps.
