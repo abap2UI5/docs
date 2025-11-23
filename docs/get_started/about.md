@@ -15,9 +15,7 @@ ENDCLASS.
 
 CLASS my_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-    client->view_display( client->_z2ui5( )->page( 
-      title = 'Hello World'
-      content = client->_z2ui5( )->button( text = 'Click Me' ) ) ).
+    client->display_message_box( |Hello World|) ).
   ENDMETHOD.
 ENDCLASS.
 ```
