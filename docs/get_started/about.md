@@ -31,14 +31,14 @@ Each application is supported as an abapGit project, simplifying installation ac
 abap2UI5 employs a "thin frontend" approach, with all processing, logic, and data management handled in the backend. This design simplifies configuration, minimizes client-side actions (such as clearing caches), and ensures that business logic and sensitive data remain securely on the server.
 
 ##### Performance
-abap2UI5 is fast! By leveraging the power of the ABAP backend for most processes, it ensures efficient execution comparable to other UI5 applications. The frontend focuses solely on rendering UI via the UI5 framework.
+abap2UI5 is impressively fast! The frontend focuses exclusively on UI rendering via the UI5 framework, while the ABAP backend handles all processing with its full power. Unlike traditional UI5 applications that require separate OData calls for each view, abap2UI5 delivers XML views with data already embedded — significantly reducing network round trips and accelerating response times.
 
 ##### System Footprint
 The abap2UI5 system footprint is kept as small as possible, including only essential classes and interfaces in the base version. Additional functionality can be added by installing optional addons.
 
 ##### Security
-With complete control over HTTP handler configuration, you maintain oversight of all external communication. Additionally, abap2UI5 apps contain all business logic fully in the backend, ensuring the highest level of security.
-
+abap2UI5 is exceptionally secure! All business logic remains exclusively in the ABAP backend, while the frontend receives only data populated directly in XML views. Unlike traditional UI5 applications that expose OData endpoints to clients, abap2UI5 delivers only the specific data users need — eliminating access to raw services or database queries through external tools.
+ 
 ##### Transparency
 All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. This commitment to transparency ensures you always understand how the framework works and can verify its behavior.
 
