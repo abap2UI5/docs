@@ -42,6 +42,7 @@ Traditional UI5 development requires JavaScript expertise, frontend deployment p
 Each application is packaged as an abapGit project, simplifying installation across systems without separate frontend deployments.
 
 ### Key Benefits
+<br>
 
 ##### Architecture
 abap2UI5 employs a "thin frontend" approach – all processing, logic, and data management stays in the backend. This design simplifies configuration, minimizes client-side complexity (no cache clearing hassles), and ensures business logic and sensitive data remain securely on the server.
@@ -59,6 +60,7 @@ The base framework includes only essential classes and interfaces. Additional fu
 All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. You always understand how the framework works and can verify its behavior.
 
 ### Compatibility
+<br>
 
 ##### ABAP Cloud
 abap2UI5 uses only released APIs, making it suitable for both on-stack and side-by-side extensions in ABAP for Cloud. Use modern ABAP syntax features like CDS, ABAP SQL, and EML within your apps.
@@ -96,6 +98,7 @@ Getting started is straightforward:
 → *See our [Installation Guide](/get_started/quickstart) for detailed instructions*
 
 ### Community
+<br>
 
 ##### Support
 Support is provided by the community. Submit an issue on GitHub or join the abap2UI5 Slack channel for assistance.
