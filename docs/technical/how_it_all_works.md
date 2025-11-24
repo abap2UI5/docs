@@ -109,7 +109,7 @@ RAP - Definition of Data Models with DDL
 
 This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: Every API is based on the OData-Protocol, Views are defined with UI Annotations, Data Models are defined in DDL, Model updates are developed in local implementations of RAP classes and everything is separated in different layers that are orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process which is effective in most use cases.
 
-However, in situations where significant Model and View changes are needed, especially at runtime, this approach can be a bit too unflexibel. Model changes with RTTI are not supported, and extending the view quickly goes beyond the functional scope of backend annotations, requiring development of Apps with Fiori Elements (with the need for extra deployment again).
+However, in situations where significant Model and View changes are needed, especially at runtime, this approach can be a bit too inflexible. Model changes with RTTI are not supported, and extending the view quickly goes beyond the functional scope of backend annotations, requiring development of Apps with Fiori Elements (with the need for extra deployment again).
 
 Overall RAP does not mix View, Model and Logic as radically as the "Over the Wire" approaches. Luckily in an open-source project we do not need to take care of any conventions and can risk a little bit more. As we have seen in (6) where the first trick was sending Views from the backend instead of storing them at the frontend app, we can now further enhance flexibility (9)(10).
 
@@ -293,7 +293,7 @@ So, we have seen in (22), apps can be made very complex, but the opposite is als
 
 if_oo_adt_classrun vs. abap2UI5
 
-To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain a a lot of flexibility and freedom in the app implementation, but we also have full responsibility for the view creation and the program flow. Furthermore we have to keep the following downsides in mind.
+To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain a lot of flexibility and freedom in the app implementation, but we also have full responsibility for the view creation and the program flow. Furthermore we have to keep the following downsides in mind.
 
 ##### 24. Downsides compared to UI5 & RAP
 
