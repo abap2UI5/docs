@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Popups, Popovers
 
-UI5 offers functionality for displaying popups and popovers that overlay only specific areas of the view. Let’s see how this can be implemented using abap2UI5.
+UI5 offers functionality for displaying popups and popovers that overlay only specific areas of the view. Let's see how you can implement this using abap2UI5.
 
 ### Popup
 
@@ -56,9 +56,9 @@ ENDMETHOD.
 ```
 
 #### Separated App
-For better source code structure, it's possible to encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
+For better source code structure, you can encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
 
-Check out for example the popup to confirm:
+Check out the popup to confirm, for example:
 ```abap
 METHOD z2ui5_if_app~main.
 

@@ -18,7 +18,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-You can use any UI5 control available in the UI5 SDK. However, working with XML can become cumbersome. A more efficient approach is to use the `Z2UI5_CL_XML_VIEW` class. Here's an improved version of the code above:
+You can use any UI5 control available in the UI5 SDK. However, working with XML can get cumbersome. A more efficient approach is to use the `Z2UI5_CL_XML_VIEW` class. Here's an improved version of the code above:
 ```abap
   METHOD z2ui5_if_app~main.
 

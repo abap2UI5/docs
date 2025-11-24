@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 
 # Troubleshooting
-Since all logic is written in ABAP, you can debug everything in the ABAP environment, just make sure to set an external breakpoint, as abap2UI5 apps are called externally via HTTP.
+Since all logic is written in ABAP, you can debug everything in the ABAP environment. Just make sure to set an external breakpoint, as abap2UI5 apps are called externally via HTTP.
 
 ### Backend
 Set a breakpoint in your abap2UI5 app to debug your code. Verify that the XML view is generated correctly and check that all events are triggered on the backend as expected.

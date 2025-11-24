@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Navigation
 
-In abap2UI5, each application is represented by a single ABAP class. While you can embed all logic within a single class, it is generally better practice to keep individual classes manageable in size. This can be achieved by creating multiple classes that interact with each other, allowing you to build reusable, generic applications and popups that can be called in various contexts.
+In abap2UI5, each application is represented by a single ABAP class. While you can embed all logic within a single class, it's generally better practice to keep individual classes manageable in size. You can achieve this by creating multiple classes that interact with each other, letting you build reusable, generic applications and popups that can be called in various contexts.
 
 ### Cross App Navigation
 
@@ -50,7 +50,7 @@ Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `l
 :::
 
 #### Launchpad
-It is recommended to use backend communication exclusively for view changes or popup calls. If you’re using a launchpad, consider navigating through the launchpad to utilize browser navigation and history. Here’s an example:
+We recommend using backend communication exclusively for view changes or popup calls. If you're using a launchpad, consider navigating through the launchpad to utilize browser navigation and history. Here's an example:
 ```abap
 client->_event_client(
     val = client->cs_event-cross_app_nav_to_ext

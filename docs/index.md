@@ -33,6 +33,6 @@ features:
     link: https://www.github.com/abap2UI5/abap2UI5/
   - title: LinkedIn
     icon: <i class="fab fa-linkedin"></i>
-    details: Follow on LinkedIn and stay informed about latest updates and changes.
+    details: Follow us on LinkedIn and stay informed about the latest updates and changes.
     link: https://www.linkedin.com/company/abap2ui5/
 ---

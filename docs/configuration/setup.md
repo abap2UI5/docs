@@ -4,7 +4,7 @@ outline: [2, 4]
 
 # General
 
-abap2UI5 can be run with various custom configurations. The default setup is used automatically. For custom configurations, simply implement the interface `z2ui5_if_exit`:
+You can run abap2UI5 with various custom configurations. The default setup is used automatically. For custom configurations, just implement the interface `z2ui5_if_exit`:
 
 ```abap
 CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC FINAL CREATE PUBLIC.
@@ -34,7 +34,7 @@ METHOD z2ui5_if_exit~set_config_http_get.
 
 ENDMETHOD.
 ```
-Keep in mind the variants and SAP limitations concerning bootstrapping, as you can find [here.](https://sapui5.hana.ondemand.com/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae)
+Keep in mind the variants and SAP limitations for bootstrapping, which you can find [here.](https://sapui5.hana.ondemand.com/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae)
 
 ### Title
 To set a custom title for the application:

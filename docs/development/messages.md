@@ -20,7 +20,7 @@ ENDMETHOD.
 
 #### Message Box
 
-If you want the user to acknowledge the message, you can display a message box that requires manual closure:
+Want the user to acknowledge the message? You can display a message box that requires manual closure:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -81,7 +81,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD. 
 ```
-Other imports are supported as well. Simply import your message structure, and the message box will display it.
+Other imports are supported as well. Just import your message structure, and the message box will display it.
 
 #### Popup Multi Message 
 The message box provides basic output. For a more detailed output, use the popup `z2ui5_cl_pop_messages`:
@@ -110,7 +110,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Uncatched Errors
+#### Uncaught Errors
 What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted, and the user will need to refresh the browser. Use this only for unexpected behavior:
 ```abap
 METHOD z2ui5_if_app~main.

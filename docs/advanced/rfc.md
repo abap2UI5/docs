@@ -1,6 +1,6 @@
 # RFC Connector
 
-The [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) allows you to trigger abap2UI5 apps remotely via RFC between two ABAP systems. This is particularly useful in distributed system landscapes or when working with legacy systems that cannot directly host UI5 frontend logic.
+The [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) lets you trigger abap2UI5 apps remotely via RFC between two ABAP systems. This is particularly useful in distributed system landscapes or when working with legacy systems that can't directly host UI5 frontend logic.
 
 #### When to use
 The RFC Connector enables several useful scenarios:
@@ -18,7 +18,7 @@ The system that calls the app (the frontend system) includes the UI5 library and
 
 #### Installation
 
-_Prerequisite: Set up a destination in SM59 that the source system can be called via RFC. abap2UI5 need to be installed in both systems._
+_Prerequisite: Set up a destination in SM59 so the source system can be called via RFC. abap2UI5 needs to be installed in both systems._
 
 Steps:
 1. Install the [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) via abapGit on both system

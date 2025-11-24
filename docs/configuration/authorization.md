@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # Authorization
 
-abap2UI5 offers flexible ways to manage authorization handling. It doesn’t include a built-in authorization mechanism, allowing developers to create their own solutions either at the service or application level.
+abap2UI5 offers flexible ways to manage authorization handling. It doesn't include a built-in authorization mechanism, so you can create your own solutions either at the service or application level.
 
-### Service-Level 
-One of the easiest ways to manage access to different apps is by implementing checks within the HTTP handler. This approach allows the developer to restrict access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
+### Service-Level
+One of the easiest ways to manage access to different apps is by implementing checks within the HTTP handler. This approach lets you restrict access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
 
 ##### Example: Restricting Access Based on URL Parameters
 In this example, we use the ICF handler class to control which apps can be accessed based on the APP_START parameter in the HTTP request. If an unauthorized app is requested, access is denied.
