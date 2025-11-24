@@ -13,12 +13,12 @@ Integrate your abap2UI5 apps into BTP Services like Build Workzone. Find all inf
 
 ##### Destination
 
-* Name: BACKEND_ABAP2UI5 
-* Type: HTTP 
-* Description: abap2UI5 Destination 
-* URL: the url above
-* Proxy Type: Internet 
-* Authentication: BasicAuthentication 
+* Name: BACKEND_ABAP2UI5
+* Type: HTTP
+* Description: abap2UI5 Destination
+* URL: the URL above
+* Proxy Type: Internet
+* Authentication: BasicAuthentication
 * User: (user)
 * Password: (password)
 

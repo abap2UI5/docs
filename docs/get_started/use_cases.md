@@ -4,14 +4,14 @@ outline: [2, 4]
 
 # Use Cases
 
-abap2UI5 can be applied to a variety of use cases, whether you’re working in a fully cloud-ready environment or using classic ABAP.
+abap2UI5 fits a wide range of use cases, whether you're working in a fully cloud-ready environment or sticking with classic ABAP.
 
 Explore all possibilities in [this article.](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/?trackingId=6iIX%2FNk%2BCT0%2B4JorQjpRSQ%3D%3D)
 
 ### On-Stack Extension
 
 #### Tier 1 Extension
-For clean-core compliance, develop applications that adhere to "keep the core clean" principles, ensuring that your apps are both cloud-ready and upgrade-stable:
+For clean-core compliance, develop applications that follow "keep the core clean" principles, ensuring your apps stay cloud-ready and upgrade-stable:
 ![alt text](image-11.png){ width=60% }
 
 #### Tier 2 Extension
@@ -19,19 +19,19 @@ If certain APIs you need are not yet released, you can still create a cloud-read
 ![alt text](image-21.png){ width=60% }
 
 #### Tier 3 Extension
-For a classic extension approach, you can utilize unreleased APIs, allowing greater freedom to customize and extend your system:
+For a classic extension approach, you can use unreleased APIs, giving you greater freedom to customize and extend your system:
 ![alt text](image-10.png){ width=60% }
 
 ### Side-by-Side Extension
 
 #### Tier 1 Extension
-Develop applications separately from your S/4 system’s lifecycle using only remote API calls. By using only released APIs, your apps will also be compatible with S/4HANA Public Cloud:
+Develop applications separately from your S/4 system's lifecycle using only remote API calls. Stick to released APIs and your apps will work with S/4HANA Public Cloud too:
 ![alt text](image-22.png){ width=60% }
 
 #### Tier 3 Extension
-For more flexibility, develop applications with an independent lifecycle from your S/4 system, while using remote API calls:
+For more flexibility, develop applications with an independent lifecycle from your S/4 system using remote API calls:
 ![alt text](image-23.png){ width=60% }
 
 ### Software as a Service
-With a Tier 1 side-by-side extension, you can connect the same abap2UI5 app to multiple S/4 systems. By using the same abap2UI5 code across different customers tenants and remote systems, you create a SaaS scenario:
+With a Tier 1 side-by-side extension, you can connect the same abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across different customer tenants and remote systems to create a true SaaS scenario:
 ![alt text](image-9.png){ width=60% }

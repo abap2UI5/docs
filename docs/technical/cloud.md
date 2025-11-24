@@ -2,7 +2,7 @@
 
 _Ready for the Future – or Not?_
 
-Whether it makes sense to build apps with abap2UI5 depends heavily on future-proofing. In the ABAP ecosystem, this means cloud readiness, which is closely tied to using the ABAP Cloud language version. But what exactly does that mean? And are abap2UI5 apps truly cloud ready? Let’s take a closer look.
+Whether it makes sense to build apps with abap2UI5 depends heavily on future-proofing. In the ABAP ecosystem, this means cloud readiness, which is closely tied to using the ABAP Cloud language version. But what exactly does that mean? And are abap2UI5 apps truly cloud-ready? Let's take a closer look.
 
 #### What is ABAP Cloud?
 
@@ -100,7 +100,7 @@ Always adhere to cloud-ready development principles to ensure that your apps rem
 
 #### Do I Have to Use RAP to Be Cloud Ready?
 
-No - RAP is not mandantory.
+No - RAP isn't mandatory.
 
 RAP (RESTful Application Programming Model) is SAP’s recommended model for building cloud-native applications. It is based on:
 - CDS Views for data modeling

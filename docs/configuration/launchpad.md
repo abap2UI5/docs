@@ -20,7 +20,7 @@ Use the following parameters for target mapping in your Launchpad configuration:
 
 
 ### Troubleshooting
-Sometimes, installation via abapGit can cause cache-related issues. Follow these steps to resolve them:
+Sometimes, installation via abapGit can cause cache-related issues. Here's how to resolve them:
 
 #### Cache Management
 
@@ -38,7 +38,7 @@ Sometimes, installation via abapGit can cause cache-related issues. Follow these
 4. Clear browser caches and hard reload
 
 #### Manual Deployment
-If cache clearing doesn’t resolve the issue, manually upload the frontend application:
+If cache clearing doesn't fix the issue, manually upload the frontend application:
 
 1. Download the webapp folder of the project.
 

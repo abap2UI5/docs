@@ -21,7 +21,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Go back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORLD`. Your app will then launch.
+Head back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
 Now, let's add our first view to display a simple text:
@@ -102,8 +102,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-And that's it! Set a breakpoint and observe the communication and data updates. Now you can easily play around and further modify the view, event and data exchange.
+And that's it! Set a breakpoint to observe the communication and data updates in action. Now you can play around and experiment with modifying the view, events, and data exchange.
 
 ::: tip **ABAP Language Versions**
-While we need to distinguish between Standard ABAP and ABAP for Cloud in the HTTP Handler, the apps themselves are independent. You can decide whether to develop your apps compatible with ABAP Cloud or not.
+While you need to distinguish between Standard ABAP and ABAP for Cloud in the HTTP Handler, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility or not.
 :::
