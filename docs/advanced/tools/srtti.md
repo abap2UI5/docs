@@ -42,7 +42,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
         ( title = 'entry 01'  value = 'red'  descr = 'this is a description' )
         ( title = 'entry 02'  value = 'blue' descr = 'this is a description' ) ).
 
-    client->message_box_display( `this works only with S-RTTI` ).
+    client->message_box_display( `this works out of the box` ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -73,10 +73,6 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
     CREATE DATA mr_tab TYPE HANDLE o_table_desc.
 
     client->message_box_display( `this works only with S-RTTI` ).
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page( 'abap2UI5 - Selection-Screen Example' ).
-    client->view_display( page->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
