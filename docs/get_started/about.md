@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # Introduction
 
-**Developing UI5 Apps Purely in ABAP– no JavaScript, OData, or RAP required.**
+**Developing UI5 Apps Purely in ABAP – no JavaScript, OData, or RAP required.**
 
 abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP.
 
@@ -46,10 +46,10 @@ Each application is packaged as an abapGit project, simplifying installation acr
 abap2UI5 employs a "thin frontend" approach – all processing, logic, and data management stays in the backend. This design simplifies configuration, minimizes client-side complexity (no cache clearing hassles), and ensures business logic and sensitive data remain securely on the server.
 
 ##### Performance
-The frontend focuses exclusively on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 applications requiring separate OData calls for each view, abap2UI5 delivers XML views with data already embedded – significantly reducing network round trips and accelerating response times.
+abap2UI5 delivers exceptional performance. The frontend focuses exclusively on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 applications requiring separate OData calls for each view, abap2UI5 embeds data directly in XML views – significantly reducing network round trips and accelerating response times.
 
 ##### Security
-All business logic remains exclusively in the ABAP backend. The frontend receives only data populated directly in XML views. Unlike traditional UI5 applications that expose OData endpoints, abap2UI5 delivers only the specific data users need – eliminating access to raw services or database queries through external tools.
+abap2UI5 is secure by design. All business logic remains exclusively in the ABAP backend. The frontend receives only data populated directly in XML views. Unlike traditional UI5 applications that expose OData endpoints, abap2UI5 delivers only the specific data users need – eliminating access to raw services or database queries through external tools.
 
 ##### Minimal System Footprint
 The base framework includes only essential classes and interfaces. Additional functionality can be added through optional addons, keeping your system lean.
