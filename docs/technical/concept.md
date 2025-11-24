@@ -2,13 +2,13 @@
 
 _The Architecture of abap2UI5_
 
-This article introduces the core pattern behind abap2UI5: HTML Over-the-Wire — reimagined for the ABAP world. It explains how this approach eliminates traditional frontend complexity by shifting both UI rendering and application logic to the backend. The result: faster development, simplified deployment, and a UI5 frontend shell that acts purely as a rendering engine.
+This article introduces the core pattern behind abap2UI5: HTML Over-the-Wire — reimagined for the ABAP world. It shows how this approach cuts through traditional frontend complexity by moving both UI rendering and application logic to the backend. The result: faster development, simpler deployment, and a UI5 frontend shell that's purely a rendering engine.
 
 #### What is HTML Over-the-Wire?
 
 _HTML Over-the-Wire_ describes a server-centric web architecture in which the user interface is generated on the server and sent to the browser as ready-to-render HTML.
 
-Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser simply receives HTML fragments and renders them. This approach eliminates the need for client-side MVC frameworks, data transformation layers, and frontend deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
+Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser just receives HTML fragments and renders them. This approach cuts out the need for client-side MVC frameworks, data transformation layers, and frontend deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
 
@@ -102,9 +102,7 @@ When a user triggers an event (e.g., pressing a button), the event information i
   <em>abap2UI5 – Simple shell app, backend handles all logic</em>
 </p>
 
-The frontend becomes a static app shared across all applications. Views and logic are fully defined and maintained in the backend and each application is represented by backend ABAP classes only. As a result, every UI5 app becomes a complete ABAP backend project — eliminating the need for separate frontend deployments entirely:
-
-The frontend becomes a static shell shared across all applications. Views and logic are fully defined and maintained in the backend, and each application is represented solely by backend ABAP classes. As a result, every UI5 development project becomes a complete backend project — eliminating the need for separate frontend deployments entirely:
+The frontend becomes a static shell shared across all applications. Views and logic are fully defined and maintained in the backend, with each application represented solely by backend ABAP classes. The result: every UI5 development project becomes a complete backend project — no separate frontend deployments needed:
 
 <p align="center">
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
@@ -146,7 +144,7 @@ This leads to the second subtle shift in abap2UI5: Instead of binding OData to V
 
 This means CDS Views and OData services are no longer consumed directly on the frontend. Instead, the complete UI state — both view and model — is sent from the backend in a single response. Any user changes in the UI are then returned to the backend via a lightweight AJAX call containing the updated view model — no OData routing involved.
 
-Developers do not need to manually configure models or bindings. abap2UI5 handles this internally. All that’s required is to expose class attributes using a simple bind method — abap2UI5 handles the rest. 
+You don't need to manually configure models or bindings. abap2UI5 handles this internally. All you need to do is expose class attributes using a simple bind method — abap2UI5 takes care of the rest. 
 
 A typical backend response includes both the XML View:
 
@@ -229,9 +227,9 @@ The illustration below shows the difference between a full re-render and a targe
   <em>Partly HTML Rerendering via View Model Updates - Only relevant DOM parts are re-rendered, preserving UI state</em>
 </p>
 
-Thanks to UI5’s powerful data binding mechanism, only the modified DOM elements are updated. This preserves the current UI state — such as input focus — and ensures a smooth, uninterrupted user experience. 
+Thanks to UI5's powerful data binding mechanism, only the modified DOM elements are updated. This keeps the current UI state intact — like input focus — and ensures a smooth, uninterrupted user experience.
 
-The XML View and View Model concept make UI5 a perfect team player for the UI5 Over-the-Wire approach elemenating the need of full client-side re-renders.
+The XML View and View Model concept make UI5 a perfect match for the UI5 Over-the-Wire approach, eliminating the need for full client-side re-renders.
 
 #### Conclusion
 
@@ -250,7 +248,7 @@ Limitations:
 - Offline functionality or complex client-side interactions are not covered
 - Less effective if frontend and backend teams work independently
 
-By relocating UI control to the ABAP backend and using UI5 solely forthe  HTML creation, abap2UI5 enables fast and efficient development of business applications — without the complexity of SPA architectures.
+By moving UI control to the ABAP backend and using UI5 solely for HTML creation, abap2UI5 enables fast and efficient development of business applications — without the complexity of SPA architectures.
 
 Happy ABAPing! ❤️🦖🦕🦣
 
