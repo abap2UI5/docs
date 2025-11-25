@@ -8,12 +8,12 @@ outline: [2, 6]
 abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP.
 
 ```abap
-CLASS my_app DEFINITION PUBLIC.
+CLASS zcl_my_app DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 ENDCLASS.
 
-CLASS my_app IMPLEMENTATION.
+CLASS zcl_my_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     client->message_box_display( |Hello World| ).
   ENDMETHOD.
