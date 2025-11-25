@@ -6,17 +6,17 @@ outline: [2, 4]
 ### Basic Example
 Every abap2UI5 app is an implementation of the `Z2UI5_IF_APP` interface. Create a new class with the following code:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->message_box_display( |Hello World!| ).
+    client->message_box_display( |Hello World| ).
     
   ENDMETHOD.
 ENDCLASS.
