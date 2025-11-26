@@ -24,16 +24,16 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
     DO 100 TIMES.
       INSERT value #(
         count = sy-index
-        value = 'red'
-        descr = 'this is a description' ) INTO TABLE mt_itab.
+        value = `red`
+        descr = `this is a description` ) INTO TABLE mt_itab.
     ENDDO.
  
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
         )->table( client->_bind( mt_itab ) ).
     tab->columns(
-        )->column( )->text( 'Counter' )->get_parent(
-        )->column( )->text( 'Value' )->get_parent(
-        )->column( )->text( 'Description' ).
+        )->column( )->text( `Counter` )->get_parent(
+        )->column( )->text( `Value` )->get_parent(
+        )->column( )->text( `Description` ).
     tab->items( )->column_list_item( )->cells(
        )->text( '{COUNT}'
        )->text( '{VALUE}'
@@ -52,16 +52,16 @@ Making a table editable is a simple change. You just need to switch the binding 
     DO 100 TIMES.
       INSERT value #(
         count = sy-index
-        value = 'red'
-        descr = 'this is a description' ) INTO TABLE mt_itab.
+        value = `red`
+        descr = `this is a description` ) INTO TABLE mt_itab.
     ENDDO.
  
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
         )->table( client->_bind_edit( mt_itab ) ).
     tab->columns(
-        )->column( )->text( 'Count' )->get_parent(
-        )->column( )->text( 'Value' )->get_parent(
-        )->column( )->text( 'Description' ).
+        )->column( )->text( `Count` )->get_parent(
+        )->column( )->text( `Value` )->get_parent(
+        )->column( )->text( `Description` ).
     tab->items( )->column_list_item( )->cells(
        )->text( '{COUNT}'
        )->text( '{VALUE}'
@@ -105,27 +105,27 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
   
     prodh_nodes = VALUE #( (
-        text = 'Machines'
-        prodh  = '00100'
+        text = `Machines`
+        prodh  = `00100`
         nodes  = VALUE #( (
-            text = 'Pumps'
-            prodh = '0010000100'
+            text = `Pumps`
+            prodh = `0010000100`
             nodes = VALUE #( (
-                text  = 'Pump 001'
-                prodh = '001000010000000100' ) (
-                text  = 'Pump 002'
-                prodh = '001000010000000105' ) )
+                text  = `Pump 001`
+                prodh = `001000010000000100` ) (
+                text  = `Pump 002`
+                prodh = `001000010000000105` ) )
         ) ) ) (
-        text  = 'Paints'
-        prodh = '00110'
+        text  = `Paints`
+        prodh = `00110`
         nodes = VALUE #( (
-            text  = 'Gloss paints'
-            prodh = '0011000105'
+            text  = `Gloss paints`
+            prodh = `0011000105`
             nodes = VALUE #( (
-                text  = 'Paint 001'
-                prodh = '001100010500000100' ) (
-                text  = 'Paint 002'
-                prodh = '001100010500000105' )
+                text  = `Paint 001`
+                prodh = `001100010500000100` ) (
+                text  = `Paint 002`
+                prodh = `001100010500000105` )
     ) ) ) ) ).
 
     DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
@@ -163,9 +163,9 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     mt_itab = VALUE #(
-        ( product = 'table' s_details = VALUE #( create_date = `01.01.2023` create_by = `Peter`  ) )
-        ( product = 'chair' s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank`  ) )
-        ( product = 'sofa'  s_details = VALUE #( create_date = `12.03.2024` create_by = `George` ) ) ).
+        ( product = `table` s_details = VALUE #( create_date = `01.01.2023` create_by = `Peter`  ) )
+        ( product = `chair` s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank`  ) )
+        ( product = `sofa`  s_details = VALUE #( create_date = `12.03.2024` create_by = `George` ) ) ).
 
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind( mt_itab ) ).
 

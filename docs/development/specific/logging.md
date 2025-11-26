@@ -11,8 +11,8 @@ In ABAP classic, you can use the classic BAL function modules and display the BA
 METHOD z2ui5_if_app~main.
 
   DATA(lt_bal) = VALUE bal_t_msgr(
-    ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = '21354' msgnumber = '01' )
-    ( msgid = 'Z001' msgno = '001' msgty = 'S' time_stmp = '21354' msgnumber = '02' ) ).
+    ( msgid = `Z001` msgno = `001` msgty = `S` time_stmp = `21354` msgnumber = `01` )
+    ( msgid = `Z001` msgno = `001` msgty = `S` time_stmp = `21354` msgnumber = `02` ) ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_bal ) ).
   
@@ -27,17 +27,17 @@ METHOD z2ui5_if_app~main.
   DATA(lo_log) = cl_bali_log=>create( ).
   DATA(lo_msg) = cl_bali_message_setter=>create(
     severity   = if_bali_constants=>c_severity_status
-    id         = 'DEMO_LOG'
-    number     = '002'
+    id         = `DEMO_LOG`
+    number     = `002`
     variable_1 = `username` ).
   lo_log->add_item( lo_msg ).
 
-  DATA(lo_bapi) = cl_bali_message_setter=>create_from_bapiret2( 
-    VALUE #( 
-      type       = 'E'
-      id         = 'DEMO_LOG'
-      number     = '002'
-      message_v1 = 'Dummy' ) ).
+  DATA(lo_bapi) = cl_bali_message_setter=>create_from_bapiret2(
+    VALUE #(
+      type       = `E`
+      id         = `DEMO_LOG`
+      number     = `002`
+      message_v1 = `Dummy` ) ).
   lo_log->add_item( lo_bapi ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
@@ -50,9 +50,9 @@ You also have the option to use the fantastic open-source project [**abap-logger
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(log) = zcl_logger_factory=>create_log( desc = 'ABAP Logger' ).
-  log->e( 'This is an error...' ).
-  log->s( 'This is a success message...' ).
+  DATA(log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
+  log->e( `This is an error...` ).
+  log->s( `This is a success message...` ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( log ) ).
 
@@ -65,8 +65,8 @@ Compared to message classes, BAL logs include more detailed information, such as
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(lo_log) = zcl_logger_factory=>create_log( desc = 'ABAP Logger' ).
-  log->e( 'This is an error...' ).
+  DATA(lo_log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
+  log->e( `This is an error...` ).
 
   client->nav_app_call( z2ui5_cl_pop_bal=>factory( lo_log ) ).
 

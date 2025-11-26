@@ -27,9 +27,9 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
     DATA(table) = view->table( client->_bind( mt_salesorder ) ).
     table->columns(
-         )->column( )->text( 'SalesOrder' )->get_parent(
-         )->column( )->text( 'SalesOrderType' )->get_parent(
-         )->column( )->text( 'SalesOrganization' ).
+         )->column( )->text( `SalesOrder` )->get_parent(
+         )->column( )->text( `SalesOrderType` )->get_parent(
+         )->column( )->text( `SalesOrganization` ).
 
     table->items( )->column_list_item( )->cells(
        )->text( '{SALESORDER}'
@@ -68,9 +68,9 @@ CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
     DATA(table) = view->table( client->_bind( mt_salesorder ) ).
     table->columns(
-         )->column( )->text( 'SalesOrder' )->get_parent(
-         )->column( )->text( 'SalesOrderType' )->get_parent(
-         )->column( )->text( 'SalesOrganization' ).
+         )->column( )->text( `SalesOrder` )->get_parent(
+         )->column( )->text( `SalesOrderType` )->get_parent(
+         )->column( )->text( `SalesOrganization` ).
 
     table->items( )->column_list_item( )->cells(
        )->text( '{SALESORDER}'
@@ -97,13 +97,13 @@ METHOD z2ui5_if_app~main.
                     distributionchannel
                     organizationdivision
                     soldtoparty )
-           WITH VALUE #( ( %cid  = '0001'
+           WITH VALUE #( ( %cid  = `0001`
                            %data = VALUE #(
-                SalesOrderType       = 'TA'
-                SalesOrganization    = '1010'
-                DistributionChannel  = '10'
-                OrganizationDivision = '00'
-                SoldToParty          = '0033500056' ) ) )
+                SalesOrderType       = `TA`
+                SalesOrganization    = `1010`
+                DistributionChannel  = `10`
+                OrganizationDivision = `00`
+                SoldToParty          = `0033500056` ) ) )
            MAPPED   DATA(ls_mapped)
            FAILED   DATA(ls_failed)
            REPORTED DATA(ls_reported_modify).

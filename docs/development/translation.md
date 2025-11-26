@@ -10,7 +10,7 @@ Messages can be translated using the ABAP text elements, making them available i
 ```abap
 METHOD z2ui5_if_app~main.
 
-  data(lv_msg_translated) = 'this is a translatable message in english'(001).
+  data(lv_msg_translated) = `this is a translatable message in english`(001).
   client->message_box_display( lv_msg_translated ).
 
 ENDMETHOD.
@@ -21,7 +21,7 @@ Messages are translated using message classes, ensuring that translations are ma
 ```abap
 METHOD z2ui5_if_app~main.
 
-  MESSAGE ID 'NET' TYPE 'I' NUMBER '001' into data(lv_msg_translated).
+  MESSAGE ID `NET` TYPE `I` NUMBER `001` into data(lv_msg_translated).
   client->message_box_display( lv_msg_translated ). 
 
 ENDMETHOD.
@@ -35,7 +35,7 @@ You can also retrieve and display the short, medium, or long descriptions of dat
 ```abap
 METHOD z2ui5_if_app~main.
 
-  DATA(ls_product_label) = lcl_help=>get_data_element_text( 'PRODUCT' ).
+  DATA(ls_product_label) = lcl_help=>get_data_element_text( `PRODUCT` ).
   client->message_box_display( |{ ls_product_label-short }: 100 | ).
 
 ENDMETHOD.
@@ -81,9 +81,9 @@ CLASS lcl_help IMPLEMENTATION.
     DATA(data_element_name) = i_data_element_name.
 
     TRY.
-        cl_abap_typedescr=>describe_by_name( 'T100' ).
+        cl_abap_typedescr=>describe_by_name( `T100` ).
 
-        DATA(struct_desrc) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_name( 'DFIES' ) ).
+        DATA(struct_desrc) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_name( `DFIES` ) ).
 
         CREATE DATA ddic_ref TYPE HANDLE struct_desrc.
         ASSIGN ddic_ref->* TO FIELD-SYMBOL(<ddic>).
@@ -98,7 +98,7 @@ CLASS lcl_help IMPLEMENTATION.
 
         DATA(data_descr) = CAST cl_abap_datadescr( lo_typedescr ).
 
-        CALL METHOD data_descr->('GET_DDIC_FIELD')
+        CALL METHOD data_descr->(`GET_DDIC_FIELD`)
           RECEIVING
             p_flddescr   = <ddic>
           EXCEPTIONS
@@ -117,14 +117,14 @@ CLASS lcl_help IMPLEMENTATION.
 
       CATCH cx_root.
         TRY.
-            DATA(xco_cp_abap_dictionary) = 'XCO_CP_ABAP_DICTIONARY'.
-            CALL METHOD (xco_cp_abap_dictionary)=>('DATA_ELEMENT')
+            DATA(xco_cp_abap_dictionary) = `XCO_CP_ABAP_DICTIONARY`.
+            CALL METHOD (xco_cp_abap_dictionary)=>(`DATA_ELEMENT`)
               EXPORTING
                 iv_name         = data_element_name
               RECEIVING
                 ro_data_element = data_element.
 
-            CALL METHOD data_element->('IF_XCO_AD_DATA_ELEMENT~EXISTS')
+            CALL METHOD data_element->(`IF_XCO_AD_DATA_ELEMENT~EXISTS`)
               RECEIVING
                 rv_exists = exists.
 
@@ -132,23 +132,23 @@ CLASS lcl_help IMPLEMENTATION.
               RETURN.
             ENDIF.
 
-            CALL METHOD data_element->('IF_XCO_AD_DATA_ELEMENT~CONTENT')
+            CALL METHOD data_element->(`IF_XCO_AD_DATA_ELEMENT~CONTENT`)
               RECEIVING
                 ro_content = content.
 
-            CALL METHOD content->('IF_XCO_DTEL_CONTENT~GET_HEADING_FIELD_LABEL')
+            CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_HEADING_FIELD_LABEL`)
               RECEIVING
                 rs_heading_field_label = result-header.
 
-            CALL METHOD content->('IF_XCO_DTEL_CONTENT~GET_SHORT_FIELD_LABEL')
+            CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_SHORT_FIELD_LABEL`)
               RECEIVING
                 rs_short_field_label = result-short.
 
-            CALL METHOD content->('IF_XCO_DTEL_CONTENT~GET_MEDIUM_FIELD_LABEL')
+            CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_MEDIUM_FIELD_LABEL`)
               RECEIVING
                 rs_medium_field_label = result-medium.
 
-            CALL METHOD content->('IF_XCO_DTEL_CONTENT~GET_LONG_FIELD_LABEL')
+            CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_LONG_FIELD_LABEL`)
               RECEIVING
                 rs_long_field_label = result-long.
 

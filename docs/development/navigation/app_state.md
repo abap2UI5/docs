@@ -23,7 +23,7 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
     IF client->check_on_navigated( ).
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display(
-        view->label( 'quantity'
+        view->label( `quantity`
             )->input( client->_bind_edit( mv_quantity )
             )->button(
                 text  = `post with state`
