@@ -185,7 +185,7 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
 
     IF client->check_on_init( ).
       client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_question_text = 'Do you like dinosaurs?'
+        i_question_text = `Do you like dinosaurs?`
         i_title         = `Title`
         i_event_confirm = `YES`
         i_event_cancel  = `NO` ) ).
