@@ -16,26 +16,24 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
         CASE abap_true.
 
-            "init app start
           WHEN client->check_on_init( ).
             "...
 
-            "callback after navigation
           WHEN client->check_on_navigated( ).
             DATA(lo_app_prev) = client->get_app_prev( ).
             "...
 
-            " user commands
           WHEN client->check_on_event( ).
             DATA(lt_arg) = client->get_event_arg( ).
 
             CASE abap_true.
               WHEN client->check_on_event( `OK` ).
                 "...
+
               WHEN client->check_on_event( `CANCEL` ).
                 "...
-            ENDCASE.
 
+            ENDCASE.
         ENDCASE.
 
       CATCH cx_root INTO DATA(lx).
