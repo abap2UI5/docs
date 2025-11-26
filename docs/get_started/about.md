@@ -5,7 +5,7 @@ outline: [2, 6]
 
 **Developing UI5 Apps Purely in ABAP – no JavaScript, OData, or RAP needed.**
 
-abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP.
+abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP:
 
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.
@@ -37,7 +37,7 @@ Traditional UI5 development requires JavaScript expertise, frontend deployment p
 - **Rapid prototyping** – quick iteration on new business applications
 - **Boosting productivity** – especially when frontend resources are tight
 
-Each application is packaged as an abapGit project, simplifying installation across systems without separate frontend deployments.
+Each application is packaged as an [abapGit](https://abapgit.org) project, simplifying installation across systems without separate frontend deployments.
 
 ### Key Benefits
 <br>
