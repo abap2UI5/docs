@@ -22,10 +22,10 @@ DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     growing = abap_true ).
 
 tab->columns(
-    )->column( )->text( 'AirportID' )->get_parent(
-    )->column( )->text( 'Name' )->get_parent(
-    )->column( )->text( 'City' )->get_parent(
-    )->column( )->text( 'CountryCode' ).
+    )->column( )->text( `AirportID` )->get_parent(
+    )->column( )->text( `Name` )->get_parent(
+    )->column( )->text( `City` )->get_parent(
+    )->column( )->text( `CountryCode` ).
  
 tab->items( )->column_list_item( )->cells(
     )->text( '{FLIGHT>AirportID}'
@@ -45,10 +45,10 @@ METHOD z2ui5_if_app~main.
         growing = abap_true ).
 
     tab->columns(
-        )->column( )->text( 'AirportID' )->get_parent(
-        )->column( )->text( 'Name' )->get_parent(
-        )->column( )->text( 'City' )->get_parent(
-        )->column( )->text( 'CountryCode' ).
+        )->column( )->text( `AirportID` )->get_parent(
+        )->column( )->text( `Name` )->get_parent(
+        )->column( )->text( `City` )->get_parent(
+        )->column( )->text( `CountryCode` ).
  
     tab->items( )->column_list_item( )->cells(
         )->text( '{FLIGHT>AirportID}'
@@ -75,10 +75,10 @@ DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     growing = abap_true ).
 
 tab->columns(
-    )->column( )->text( 'TravelID' )->get_parent(
-    )->column( )->text( 'BookingID' )->get_parent(
-    )->column( )->text( 'BookingSupplementID' )->get_parent(
-    )->column( )->text( 'SupplementID' )->get_parent( ).
+    )->column( )->text( `TravelID` )->get_parent(
+    )->column( )->text( `BookingID` )->get_parent(
+    )->column( )->text( `BookingSupplementID` )->get_parent(
+    )->column( )->text( `SupplementID` )->get_parent( ).
 
 tab->items( )->column_list_item( )->cells(
     )->text( '{TRAVEL>TravelID}'

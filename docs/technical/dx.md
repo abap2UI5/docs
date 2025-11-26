@@ -46,9 +46,9 @@ Input handling was never a challenge in classic ABAP — just define a Report wi
 
 ```abap
 REPORT zre_app_input.
-  PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
+  PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT `MDG_TR`.
 START-OF-SELECTION.
-  MESSAGE |Input: { pa_arbgb }| type 'I'.
+  MESSAGE |Input: { pa_arbgb }| type `I`.
 ```
 Benefits:
 - Rapid prototyping with minimal code
