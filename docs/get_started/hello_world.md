@@ -16,7 +16,7 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->message_box_display( |Hello World| ).
+    client->message_box_display( `Hello World` ).
     
   ENDMETHOD.
 ENDCLASS.
@@ -37,8 +37,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( |abap2UI5 - Hello World|
-         )->text( |My Text| ) ).
+      )->page( `abap2UI5 - Hello World`
+         )->text( `My Text` ) ).
 
   ENDMETHOD.
 ENDCLASS.
