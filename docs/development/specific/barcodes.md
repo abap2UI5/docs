@@ -22,15 +22,15 @@ METHOD z2ui5_if_app~main.
         )->page(
             )->barcode_scanner_button(
                 dialogtitle = `Barcode Scanner`
-                scansuccess = client->_event( 
-                    val   = 'SCAN_SUCCESS' 
-                    t_arg = VALUE #( 
+                scansuccess = client->_event(
+                    val   = `SCAN_SUCCESS`
+                    t_arg = VALUE #(
                         ( `${$parameters>/text}`   )
                         ( `${$parameters>/format}` ) ) ) ).
 
     client->view_display( lo_view->stringify( ) ).
 
-    IF client->get( )-event = 'SCAN_SUCCESS'.
+    IF client->get( )-event = `SCAN_SUCCESS`.
 
         DATA(lv_input)  = client->get_event_arg( 1 ).
         DATA(lv_format) = client->get_event_arg( 2 ).
@@ -75,12 +75,12 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
          )->input(
               id = 'id1'
               value = client->_bind_edit( one )
-              submit = client->_event( 'one_enter' )
+              submit = client->_event( |one_enter| )
          )->label( 'Two'
          )->input(
               id = 'id2'
               value = client->_bind_edit( two )
-              submit = client->_event( 'two_enter' ) ).
+              submit = client->_event( |two_enter| ) ).
 
       page->_z2ui5( )->focus( client->_bind( focus_id ) ).
       client->view_display( page->stringify( ) ).
@@ -88,10 +88,10 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'one_enter'.
+      WHEN `one_enter`.
         focus_id = 'id2'.
         client->view_model_update( ).
-      WHEN 'two_enter'.
+      WHEN `two_enter`.
         focus_id = 'id1'.
         client->view_model_update( ).
     ENDCASE.
@@ -128,17 +128,17 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
                    value       = client->_bind_edit( company_code )
                    type        = `Number`
                    placeholder = `Company Code`
-                   submit      = client->_event( 'CUSTOM_JS_FROM_EB' ) ).
+                   submit      = client->_event( `CUSTOM_JS_FROM_EB` ) ).
       vbox->button( text  = `call custom JS from EB`
-                    press = client->_event( 'CUSTOM_JS_FROM_EB' ) ).
+                    press = client->_event( `CUSTOM_JS_FROM_EB` ) ).
 
       client->view_display( view->stringify( ) ).
     ENDIF.
 
-    IF client->get( )-event = 'CUSTOM_JS_FROM_EB'.
+    IF client->get( )-event = `CUSTOM_JS_FROM_EB`.
       IF company_code IS INITIAL.
         client->follow_up_action( val = `playSound()` ).
-        client->message_box_display( type = 'error' text = 'Input is empty!' ).
+        client->message_box_display( type = `error` text = `Input is empty!` ).
       ELSE.
         CLEAR company_code.
       ENDIF.

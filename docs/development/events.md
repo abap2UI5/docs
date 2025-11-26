@@ -16,12 +16,12 @@ METHOD z2ui5_if_app~main.
  
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button(
-            text  = 'post'
-            press = client->_event( 'BUTTON_POST' )
+            text  = `post`
+            press = client->_event( `BUTTON_POST` )
         )->stringify( ) ).
 
     CASE client->get( )-event.
-        WHEN 'BUTTON_POST'.
+        WHEN `BUTTON_POST`.
             client->message_box_display( |Your name is { name }| ).
     ENDCASE.
  
@@ -41,7 +41,7 @@ METHOD z2ui5_if_app~main.
         )->stringify( ) ).
  
     CASE client->get( )-event.
-      WHEN 'BUTTON_POST'.
+      WHEN `BUTTON_POST`.
           client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
     ENDCASE.
  
@@ -60,7 +60,7 @@ METHOD z2ui5_if_app~main.
         )->stringify( ) ).
  
     CASE client->get( )-event.
-        WHEN 'BUTTON_POST'.
+        WHEN `BUTTON_POST`.
             "mainView--button_id
             client->message_box_display( |The button id is { client->get_event_arg( ) }| ).
     ENDCASE.
@@ -80,7 +80,7 @@ METHOD z2ui5_if_app~main.
         )->stringify( ) ).
  
     CASE client->get( )-event.
-        WHEN 'BUTTON_POST'.
+        WHEN `BUTTON_POST`.
             "press
             client->message_box_display( |The evend id is { client->get_event_arg( ) }| ).
     ENDCASE.
@@ -112,7 +112,7 @@ METHOD z2ui5_if_app~main.
         )->stringify( ) ).
  
     CASE client->get( )-event.
-        WHEN 'BUTTON_POST'.
+        WHEN `BUTTON_POST`.
             client->message_box_display( |The name is { client->get_event_arg( ) }| ).
     ENDCASE.
 

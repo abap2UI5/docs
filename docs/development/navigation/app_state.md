@@ -26,8 +26,8 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
         view->label( 'quantity'
             )->input( client->_bind_edit( mv_quantity )
             )->button(
-                text  = 'post with state'
-                press = client->_event( val = 'BUTTON_POST' )
+                text  = `post with state`
+                press = client->_event( val = `BUTTON_POST` )
               )->stringify( ) ).
     ENDIF.
  

@@ -29,11 +29,11 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
                 )->_z2ui5( )->file_uploader(
                     value       = client->_bind_edit( mv_value )
                     path        = client->_bind_edit( mv_path )
-                    placeholder = 'filepath here...'
-                    upload      = client->_event( 'UPLOAD' )
+                    placeholder = `filepath here...`
+                    upload      = client->_event( `UPLOAD` )
             )->stringify( ) ).
 
-        IF client->get( )-event = 'UPLOAD'.
+        IF client->get( )-event = `UPLOAD`.
 
             data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
             "further process with itab...
@@ -92,8 +92,8 @@ Convert an internal table to an XLSX file and download it to the frontend:
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->page(
             )->button(
-                text = 'Open Download Popup'
-                press = client->_event( 'DOWNLOAD' )
+                text = `Open Download Popup`
+                press = client->_event( `DOWNLOAD` )
         )->stringify( ) ).
 
     IF client->get( )-event = `DOWNLOAD`.
@@ -107,9 +107,9 @@ Convert an internal table to an XLSX file and download it to the frontend:
         TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
         DATA(lt_tab) = VALUE ty_tab(
-        ( count = '1' value = `red` descr = `this is a description` )
-        ( count = '2' value = `red` descr = `this is a description` )
-        ( count = '3' value = `red` descr = `this is a description` ) ).
+        ( count = `1` value = `red` descr = `this is a description` )
+        ( count = `2` value = `red` descr = `this is a description` )
+        ( count = `3` value = `red` descr = `this is a description` ) ).
 
         DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
         client->follow_up_action( val = client->_event_client(
@@ -188,8 +188,8 @@ METHOD z2ui5_if_app~main.
   client->view_display( z2ui5_cl_xml_view=>factory(
     )->page(
       )->button(
-        text = 'Open Download Popup'
-        press = client->_event( 'DOWNLOAD' )
+        text = `Open Download Popup`
+        press = client->_event( `DOWNLOAD` )
     )->stringify( ) ).
 
   IF client->get( )-event = `DOWNLOAD`.
@@ -203,9 +203,9 @@ METHOD z2ui5_if_app~main.
     TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
     DATA(lt_tab) = VALUE ty_tab(
-      ( count = '1' value = `red` descr = `this is a description` )
-      ( count = '2' value = `red` descr = `this is a description` )
-      ( count = '3' value = `red` descr = `this is a description` ) ).
+      ( count = `1` value = `red` descr = `this is a description` )
+      ( count = `2` value = `red` descr = `this is a description` )
+      ( count = `3` value = `red` descr = `this is a description` ) ).
 
     DATA(lv_file) = lcl_help=>get_xlsx_by_itab( lt_tab ).
       client->follow_up_action( val = client->_event_client(
