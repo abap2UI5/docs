@@ -60,7 +60,7 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
     client->view_display( lo_view->stringify( ) ).
 
-    IF client->get( )-event = 'POST'.
+    IF client->get( )-event = `POST`.
       "process device info here...
     ENDIF.
 
