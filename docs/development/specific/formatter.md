@@ -98,9 +98,9 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                                                  path = abap_true ) }', '{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
-         )->label( |event|
-         )->button( text  = |send|
-                    press = client->_event( |BUTTON| ) ).
+         )->label( `event`
+         )->button( text  = `send`
+                    press = client->_event( `BUTTON` ) ).
 
     page->simple_form( title    = 'No Zeros'
                        editable = abap_true

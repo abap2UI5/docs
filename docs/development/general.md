@@ -31,10 +31,10 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
         "handle events after frontend
         CASE client->get( )-event.
-          WHEN |OK|.
+          WHEN `OK`.
             DATA(lt_arg) = client->get_event_arg( ).
             "event handling
-          WHEN |CANCEL|.
+          WHEN `CANCEL`.
             "...
         ENDCASE.
 

@@ -59,13 +59,13 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( |abap2UI5 - Hello World|
-          )->text( |My Text|
-          )->button( text = |post| press = client->_event( |POST| ) ) ).
+      )->page( `abap2UI5 - Hello World`
+          )->text( `My Text`
+          )->button( text = `post` press = client->_event( `POST` ) ) ).
 
     CASE client->get( )-event.
-      WHEN |POST|.
-        client->message_box_display( |Hello World!| ).
+      WHEN `POST`.
+        client->message_box_display( `Hello World!` ).
         RETURN.
     ENDCASE.
 
@@ -88,13 +88,13 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( |abap2UI5 - Hello World|
-          )->text( |My Text|
-          )->button( text = |post| press = client->_event( |POST| )
+      )->page( `abap2UI5 - Hello World`
+          )->text( `My Text`
+          )->button( text = `post` press = client->_event( `POST` )
           )->input( client->_bind_edit( name ) ) ).
 
     CASE client->get( )-event.
-      WHEN |POST|.
+      WHEN `POST`.
         client->message_box_display( |Your name is { name }.| ).
         RETURN.
     ENDCASE.

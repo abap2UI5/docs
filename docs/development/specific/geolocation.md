@@ -38,7 +38,7 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
             )->stringify( ) ).
 
     CASE client->get( )-event.
-      WHEN |POST|.
+      WHEN `POST`.
         "processing...
     ENDCASE.
 

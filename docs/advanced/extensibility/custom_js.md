@@ -20,11 +20,11 @@ METHOD z2ui5_if_app~main.
         ).
       view->page(
         )->button( text  = `call custom JS`
-                   press = client->_event( |CUSTOM_JS| ) ).
+                   press = client->_event( `CUSTOM_JS` ) ).
       client->view_display( view->stringify( ) ).
   ENDIF.
 
-  IF client->get( )-event = |CUSTOM_JS|.
+  IF client->get( )-event = `CUSTOM_JS`.
       client->follow_up_action( `myFunction()` ).
   ENDIF.
 
