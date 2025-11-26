@@ -25,12 +25,12 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
             )->_z2ui5( )->file_uploader(
                 value       = client->_bind_edit( mv_value )
                 path        = client->_bind_edit( mv_path )
-                placeholder = 'filepath here...'
-                upload      = client->_event( 'UPLOAD' )
+                placeholder = |filepath here...|
+                upload      = client->_event( |UPLOAD| )
         )->stringify( ) ).
 
     CASE client->get( )-event.
-      WHEN 'UPLOAD'.
+      WHEN |UPLOAD|.
         "process with mv_value and mv_path...
         client->message_box_display( `file uploaded` ).
     ENDCASE.
@@ -47,12 +47,12 @@ METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->page(
             )->button(
-                text = 'Open Download Popup'
-                press = client->_event( 'BUTTON_DOWNLOAD' )
+                text = |Open Download Popup|
+                press = client->_event( |BUTTON_DOWNLOAD| )
         )->stringify( ) ).
 
     CASE client->get( )-event.
-      WHEN 'BUTTON_DOWNLOAD'.
+      WHEN |BUTTON_DOWNLOAD|.
         DATA(lv_name) = `Default_File_Name.jpg`.
         DATA(lv_content) = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAA` &&
         `KYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIp` &&

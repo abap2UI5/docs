@@ -64,7 +64,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
           )->button( text = |post| press = client->_event( |POST| ) ) ).
 
     CASE client->get( )-event.
-      WHEN 'POST'.
+      WHEN |POST|.
         client->message_box_display( |Hello World!| ).
         RETURN.
     ENDCASE.
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
           )->input( client->_bind_edit( name ) ) ).
 
     CASE client->get( )-event.
-      WHEN 'POST'.
+      WHEN |POST|.
         client->message_box_display( |Your name is { name }.| ).
         RETURN.
     ENDCASE.

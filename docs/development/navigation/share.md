@@ -22,8 +22,8 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
                          )->label( 'quantity'
                          )->input( client->_bind_edit( mv_quantity )
                          )->button(
-                             text  = 'share'
-                             press = client->_event( val = 'BUTTON_POST' )
+                             text  = |share|
+                             press = client->_event( val = |BUTTON_POST| )
               )->stringify( ) ).
     ENDIF.
  

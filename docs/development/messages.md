@@ -35,9 +35,9 @@ For error messages, simply change the type:
 ```abap
 METHOD z2ui5_if_app~main.
 
-  client->message_box_display( 
-    text = 'This is an error message' 
-    type = 'error' ).
+  client->message_box_display(
+    text = |This is an error message|
+    type = |error| ).
 
 ENDMETHOD.
 ```
@@ -89,8 +89,8 @@ The message box provides basic output. For a more detailed output, use the popup
 METHOD z2ui5_if_app~main.
 
   data(lt_msg) = value bapirettab(
-    ( type = 'E' id = 'MSG1' number = '001' message = 'An empty Report field causes an empty XML Message to be sent' )
-    ( type = 'I' id = 'MSG2' number = '002' message = 'Product already in use' ) ).
+    ( type = |E| id = |MSG1| number = |001| message = |An empty Report field causes an empty XML Message to be sent| )
+    ( type = |I| id = |MSG2| number = |002| message = |Product already in use| ) ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
 

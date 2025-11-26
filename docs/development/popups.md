@@ -14,8 +14,8 @@ To display a popup, use the method `client->popup_display` instead of `client->v
 METHOD z2ui5_if_app~main.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
-        )->dialog( 'Popup - Info'
-            )->text( 'this is an information shown in a popup' ).
+        )->dialog( |Popup - Info|
+            )->text( |this is an information shown in a popup| ).
     client->popup_display( lo_popup->stringify( ) ).
 
 ENDMETHOD.
@@ -28,26 +28,26 @@ METHOD Z2UI5_if_app~main.
 
     IF client->check_on_init( ).
         DATA(lo_view) = z2ui5_cl_xml_view=>factory(
-            )->page( 'abap2UI5 - Popups'
+            )->page( |abap2UI5 - Popups|
                 )->button(
-                    text  = 'popup rendering, no background rendering'
-                    press = client->_event( 'POPUP_OPEN' ) ).
+                    text  = |popup rendering, no background rendering|
+                    press = client->_event( |POPUP_OPEN| ) ).
         client->view_display( lo_view->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
-      WHEN 'POPUP_OPEN'.
-        DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup( 
-            )->dialog( 'Popup'
-                )->text( 'this is a text in a popup'
+      WHEN |POPUP_OPEN|.
+        DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup(
+            )->dialog( |Popup|
+                )->text( |this is a text in a popup|
                 )->button(
-                    text  = 'close'
-                    press = client->_event( 'POPUP_CLOSE' ) ).
+                    text  = |close|
+                    press = client->_event( |POPUP_CLOSE| ) ).
         client->popup_display( lo_popup->stringify( ) ).
 
-      WHEN 'POPUP_CLOSE'.
+      WHEN |POPUP_CLOSE|.
         client->popup_destroy( ).
         
     ENDCASE.
@@ -84,22 +84,22 @@ To display a popover, use the method `client->popover_display` and specify the I
 METHOD Z2UI5_if_app~main.
 
     IF client->check_on_init( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory( 
+      DATA(view) = z2ui5_cl_xml_view=>factory(
         )->shell(
-            )->page( 'Popover Example'
+            )->page( |Popover Example|
                 )->button(
-                    text  = 'display popover'
-                    press = client->_event( 'POPOVER_OPEN' )
-                    id    = 'TEST' ).
+                    text  = |display popover|
+                    press = client->_event( |POPOVER_OPEN| )
+                    id    = |TEST| ).
       client->view_display( view->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
-      WHEN 'POPOVER_OPEN'.
+      WHEN |POPOVER_OPEN|.
         DATA(popover) = Z2UI5_cl_xml_view=>factory_popup(
-            )->popover( placement = 'Left'
+            )->popover( placement = |Left|
                 )->text( `this is a popover`
                 )->button(
                     id    = `my_id`
@@ -109,7 +109,7 @@ METHOD Z2UI5_if_app~main.
             xml   = view->stringify( )
             by_id = `my_id` ).
 
-      WHEN 'POPOVER_CLOSE'.
+      WHEN |POPOVER_CLOSE|.
         client->popover_destroy( ).
     ENDCASE.
 

@@ -35,13 +35,13 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN 'BACK'.
+      WHEN |BACK|.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
     ENDCASE.
 
     DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
          )->page( title          = 'abap2UI5 - Currency Format'
-                  navbuttonpress = client->_event( 'BACK' )
+                  navbuttonpress = client->_event( |BACK| )
                   shownavbutton  = xsdbool( client->get( )-s_draft-id_prev_app_stack IS NOT INITIAL  ) ).
 
     page->simple_form( title    = 'Currency'
@@ -98,9 +98,9 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                                                  path = abap_true ) }', '{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }'],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
-         )->label( 'event'
-         )->button( text  = 'send'
-                    press = client->_event( 'BUTTON' ) ).
+         )->label( |event|
+         )->button( text  = |send|
+                    press = client->_event( |BUTTON| ) ).
 
     page->simple_form( title    = 'No Zeros'
                        editable = abap_true

@@ -71,7 +71,7 @@ CLASS zcl_app_input IMPLEMENTATION.
       client->view_display(
         z2ui5_cl_xml_view=>factory(
             )->input( client->_bind_edit( pa_arbgb )
-            )->button( text  = 'post' press = client->_event( 'POST' ) ) ).
+            )->button( text  = |post| press = client->_event( |POST| ) ) ).
       RETURN.
     ENDIF.
 
