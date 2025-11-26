@@ -153,18 +153,18 @@ Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popup
 REPORT zre_app_alv.
 
 DATA event TYPE string.
-CALL FUNCTION 'POPUP_TO_CONFIRM'
+CALL FUNCTION `POPUP_TO_CONFIRM`
   EXPORTING
-    titlebar      = 'Title'
-    text_question = 'Do you like dinosaurs?'
+    titlebar      = `Title`
+    text_question = `Do you like dinosaurs?`
   IMPORTING
     answer        = event.
 
 CASE event.
-  WHEN '1'.
-    MESSAGE `the result is YES` TYPE 'I'.
-  WHEN '2'.
-    MESSAGE `the result is NO` TYPE 'I'.
+  WHEN `1`.
+    MESSAGE `the result is YES` TYPE `I`.
+  WHEN `2`.
+    MESSAGE `the result is NO` TYPE `I`.
 ENDCASE.
 ```
 Benefits:

@@ -48,7 +48,7 @@ You can directly pass common message structures, objects, and variables to the f
 ```abap
 METHOD z2ui5_if_app~main.
   
-  MESSAGE ID 'NET' TYPE 'I' NUMBER '001' into data(lv_dummy).
+  MESSAGE ID `NET` TYPE `I` NUMBER `001` into data(lv_dummy).
   client->message_box_display( sy ).
 
 ENDMETHOD.
@@ -58,7 +58,7 @@ ENDMETHOD.
 METHOD z2ui5_if_app~main.
 
   DATA lt_bapiret TYPE STANDARD TABLE OF bapiret2.
-  CALL FUNCTION 'BAPI_USER_GET_DETAIL'
+  CALL FUNCTION `BAPI_USER_GET_DETAIL`
     EXPORTING
       username = sy-uname
     TABLES
