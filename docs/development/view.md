@@ -25,8 +25,8 @@ You can use any UI5 control available in the UI5 SDK. However, working with XML 
     client->view_display(
         z2ui5_cl_xml_view=>factory(
             )->shell(
-                )->page( 'My title'
-                    )->Text( 'My text' 
+                )->page( `My title`
+                    )->Text( `My text`
         )->stringify( ) ).
 
   ENDMETHOD.

@@ -46,9 +46,9 @@ Input handling was never a challenge in classic ABAP — just define a Report wi
 
 ```abap
 REPORT zre_app_input.
-  PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT 'MDG_TR'.
+  PARAMETERS pa_arbgb TYPE t100-arbgb DEFAULT `MDG_TR`.
 START-OF-SELECTION.
-  MESSAGE |Input: { pa_arbgb }| type 'I'.
+  MESSAGE |Input: { pa_arbgb }| type `I`.
 ```
 Benefits:
 - Rapid prototyping with minimal code
@@ -153,18 +153,18 @@ Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popup
 REPORT zre_app_alv.
 
 DATA event TYPE string.
-CALL FUNCTION 'POPUP_TO_CONFIRM'
+CALL FUNCTION `POPUP_TO_CONFIRM`
   EXPORTING
-    titlebar      = 'Title'
-    text_question = 'Do you like dinosaurs?'
+    titlebar      = `Title`
+    text_question = `Do you like dinosaurs?`
   IMPORTING
     answer        = event.
 
 CASE event.
-  WHEN '1'.
-    MESSAGE `the result is YES` TYPE 'I'.
-  WHEN '2'.
-    MESSAGE `the result is NO` TYPE 'I'.
+  WHEN `1`.
+    MESSAGE `the result is YES` TYPE `I`.
+  WHEN `2`.
+    MESSAGE `the result is NO` TYPE `I`.
 ENDCASE.
 ```
 Benefits:
@@ -185,7 +185,7 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
 
     IF client->check_on_init( ).
       client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_question_text = 'Do you like dinosaurs?'
+        i_question_text = `Do you like dinosaurs?`
         i_title         = `Title`
         i_event_confirm = `YES`
         i_event_cancel  = `NO` ) ).

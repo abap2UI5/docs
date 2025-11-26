@@ -19,13 +19,13 @@ CLASS z2ui5_cl_demo_app_max_val IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell( )->page(
-      )->label( 'max value of the first two inputs'
-                )->input( '{ type : "sap.ui.model.type.Integer",' &&
-                          '  path:"' && client->_bind( val  = input31
-                                                       path = abap_true ) && '" }'
-                )->input( '{ type : "sap.ui.model.type.Integer",' && |\n| &&
-                          '  path:"' && client->_bind( val  = input32
-                                                       path = abap_true ) && '" }'
+      )->label( `max value of the first two inputs`
+                )->input( `{ type : "sap.ui.model.type.Integer",` &&
+                          `  path:"` && client->_bind( val  = input31
+                                                       path = abap_true ) && `" }`
+                )->input( `{ type : "sap.ui.model.type.Integer",` && |\n| &&
+                          `  path:"` && client->_bind( val  = input32
+                                                       path = abap_true ) && `" }`
                 )->input(
                     value   = '{= Math.max($' && client->_bind( input31 ) &&', $' && client->_bind( input32 ) && ') }'
                     enabled = abap_false ).
@@ -51,13 +51,13 @@ CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell( )->page(
-      )->label( 'only enabled when the quantity equals 500'
-                )->input( '{ type : "sap.ui.model.type.Integer",' &&
-                          '  path:"' && client->_bind( val  = quantity
+      )->label( `only enabled when the quantity equals 500`
+                )->input( `{ type : "sap.ui.model.type.Integer",` &&
+                          `  path:"` && client->_bind( val  = quantity
                                                        path = abap_true ) && `"  }`
                 )->input(
                     value   = product
-                    enabled = '{= 500===$' && client->_bind( quantity ) && ' }' ).
+                    enabled = `{= 500===$` && client->_bind( quantity ) && ` }` ).
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

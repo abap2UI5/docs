@@ -244,7 +244,7 @@ CLASS lcl_help IMPLEMENTATION.
 
         " Get active sheet
         lo_worksheet = lo_excel->get_active_worksheet( ).
-        lo_worksheet->set_title( 'Internal table' ).
+        lo_worksheet->set_title( `Internal table` ).
 
         lt_field_catalog = zcl_excel_common=>get_fieldcatalog( ip_table = val ).
         ls_table_settings-table_style  = zcl_excel_table=>builtinstyle_medium5.

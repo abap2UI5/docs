@@ -66,19 +66,19 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      focus_id = 'id1'.
+      focus_id = `id1`.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
       page->simple_form(
-         )->content( ns = 'form'
-         )->label( 'One'
+         )->content( ns = `form`
+         )->label( `One`
          )->input(
-              id = 'id1'
+              id = `id1`
               value = client->_bind_edit( one )
               submit = client->_event( |one_enter| )
-         )->label( 'Two'
+         )->label( `Two`
          )->input(
-              id = 'id2'
+              id = `id2`
               value = client->_bind_edit( two )
               submit = client->_event( |two_enter| ) ).
 
@@ -89,10 +89,10 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `one_enter`.
-        focus_id = 'id2'.
+        focus_id = `id2`.
         client->view_model_update( ).
       WHEN `two_enter`.
-        focus_id = 'id1'.
+        focus_id = `id1`.
         client->view_model_update( ).
     ENDCASE.
 

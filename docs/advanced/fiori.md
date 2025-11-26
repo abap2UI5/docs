@@ -78,9 +78,9 @@ METHOD z2ui5_if_app~main.
 
     DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
     DATA(lr_page) = lr_view->page( showheader = abap_false
-                                   backgrounddesign = 'List' )->content( ). "Backgrounddesign "List" sets a white background color
+                                   backgrounddesign = `List` )->content( ). "Backgrounddesign "List" sets a white background color
 
-    lr_page->text( 'TEXT' ).
+    lr_page->text( `TEXT` ).
 
     client->view_display( lr_view->stringify( ) ).
 

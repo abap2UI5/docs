@@ -27,10 +27,10 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
 
   METHOD if_http_extension~handle_request.
     " Read the app name from the request
-    DATA(lv_app) = server->request->get_header_field( 'APP_START' ).
-    
+    DATA(lv_app) = server->request->get_header_field( `APP_START` ).
+
     " Restrict access to a specific app
-    IF lv_app <> 'MY_APP'.
+    IF lv_app <> `MY_APP`.
       RETURN.
     ENDIF.
     
@@ -54,11 +54,11 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
 
   METHOD if_http_extension~handle_request.
     " Read the app name from the request
-    DATA(lv_app) = server->request->get_header_field( 'APP_START' ).
-    
+    DATA(lv_app) = server->request->get_header_field( `APP_START` ).
+
     " Perform an authorization check
-    AUTHORITY-CHECK OBJECT 'Z_APP_AUTH'
-                    ID 'APP' FIELD lv_app.
+    AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
+                    ID `APP` FIELD lv_app.
 
     IF sy-subrc <> 0.
       " Authorization failed, deny access

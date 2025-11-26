@@ -39,8 +39,8 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
     FIELD-SYMBOLS <tab> TYPE ty_t_tab.
     ASSIGN mr_tab->* TO <tab>.
     <tab> = VALUE #(
-        ( title = 'entry 01'  value = 'red'  descr = 'this is a description' )
-        ( title = 'entry 02'  value = 'blue' descr = 'this is a description' ) ).
+        ( title = `entry 01`  value = `red`  descr = `this is a description` )
+        ( title = `entry 02`  value = `blue` descr = `this is a description` ) ).
 
     client->message_box_display( `this works out of the box` ).
 
@@ -63,7 +63,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(o_struct_desc) = cl_abap_structdescr=>describe_by_name( 'USR01' ).
+    DATA(o_struct_desc) = cl_abap_structdescr=>describe_by_name( `USR01` ).
     DATA(o_table_desc) = cl_abap_tabledescr=>create(
       p_line_type  = CAST #( o_struct_desc )           
       p_table_kind = cl_abap_tabledescr=>tablekind_std 
