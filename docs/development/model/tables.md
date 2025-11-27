@@ -35,9 +35,9 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
         )->column( )->text( `Value` )->get_parent(
         )->column( )->text( `Description` ).
     tab->items( )->column_list_item( )->cells(
-       )->text( '{COUNT}'
-       )->text( '{VALUE}'
-       )->text( '{DESCR}' ).
+       )->text( `{COUNT}`
+       )->text( `{VALUE}`
+       )->text( `{DESCR}` ).
     client->view_display( tab ).
  
   ENDMETHOD.
@@ -63,9 +63,9 @@ Making a table editable is a simple change. You just need to switch the binding 
         )->column( )->text( `Value` )->get_parent(
         )->column( )->text( `Description` ).
     tab->items( )->column_list_item( )->cells(
-       )->text( '{COUNT}'
-       )->text( '{VALUE}'
-       )->text( '{DESCR}' ).
+       )->text( `{COUNT}`
+       )->text( `{VALUE}`
+       )->text( `{DESCR}` ).
     client->view_display( tab ).
  
   ENDMETHOD.
@@ -131,8 +131,8 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
     DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
         )->tree( items = client->_bind_edit( prodh_nodes )
             )->items( )->standard_tree_item(
-                selected = '{IS_SELECTED}'
-                title    = '{TEXT}' ).
+                selected = `{IS_SELECTED}`
+                title    = `{TEXT}` ).
  
     client->view_display( tree ).
 

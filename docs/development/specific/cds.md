@@ -32,9 +32,9 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
          )->column( )->text( `SalesOrganization` ).
 
     table->items( )->column_list_item( )->cells(
-       )->text( '{SALESORDER}'
-       )->text( '{SALESORDERTYPE}'
-       )->text( '{SALESORGANIZATION}' ).
+       )->text( `{SALESORDER}`
+       )->text( `{SALESORDERTYPE}`
+       )->text( `{SALESORGANIZATION}` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -73,9 +73,9 @@ CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
          )->column( )->text( `SalesOrganization` ).
 
     table->items( )->column_list_item( )->cells(
-       )->text( '{SALESORDER}'
-       )->text( '{SALESORDERTYPE}'
-       )->text( '{SALESORGANIZATION}' ).
+       )->text( `{SALESORDER}`
+       )->text( `{SALESORDERTYPE}`
+       )->text( `{SALESORGANIZATION}` ).
 
     client->view_display( view->stringify( ) ).
 

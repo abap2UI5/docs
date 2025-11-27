@@ -28,10 +28,10 @@ tab->columns(
     )->column( )->text( `CountryCode` ).
  
 tab->items( )->column_list_item( )->cells(
-    )->text( '{FLIGHT>AirportID}'
-    )->text( '{FLIGHT>Name}'
-    )->text( '{FLIGHT>City}'
-    )->text( '{FLIGHT>CountryCode}' ).
+    )->text( `{FLIGHT>AirportID}`
+    )->text( `{FLIGHT>Name}`
+    )->text( `{FLIGHT>City}`
+    )->text( `{FLIGHT>CountryCode}` ).
 ```
 By using the growing property we can make use of the feature that not all data is loaded at once, leveraging performance.
 
@@ -51,10 +51,10 @@ METHOD z2ui5_if_app~main.
         )->column( )->text( `CountryCode` ).
  
     tab->items( )->column_list_item( )->cells(
-        )->text( '{FLIGHT>AirportID}'
-        )->text( '{FLIGHT>Name}'
-        )->text( '{FLIGHT>City}'
-        )->text( '{FLIGHT>CountryCode}' ).
+        )->text( `{FLIGHT>AirportID}`
+        )->text( `{FLIGHT>Name}`
+        )->text( `{FLIGHT>City}`
+        )->text( `{FLIGHT>CountryCode}` ).
 
     client->view_display( tab->stringify( ) ).
 
@@ -81,10 +81,10 @@ tab->columns(
     )->column( )->text( `SupplementID` )->get_parent( ).
 
 tab->items( )->column_list_item( )->cells(
-    )->text( '{TRAVEL>TravelID}'
-    )->text( '{TRAVEL>BookingID}'
-    )->text( '{TRAVEL>BookingSupplementID}'
-    )->text( '{TRAVEL>SupplementID}' ).
+    )->text( `{TRAVEL>TravelID}`
+    )->text( `{TRAVEL>BookingID}`
+    )->text( `{TRAVEL>BookingSupplementID}`
+    )->text( `{TRAVEL>SupplementID}` ).
 
 client->view_display( tab->stringify( ) ).
 
@@ -119,16 +119,16 @@ data(tab) = page->table(
     growing = abap_true ).
 
 tab->columns(
-    )->column( )->text( '{TRAVEL>/#Currency/Currency/@sap:label}' )->get_parent(
-    )->column( )->text( '{TRAVEL>/#Currency/Currency_Text/@sap:label}' )->get_parent(
-    )->column( )->text( '{TRAVEL>/#Currency/Decimals/@sap:label}' )->get_parent(
-    )->column( )->text( '{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}' ).
+    )->column( )->text( `{TRAVEL>/#Currency/Currency/@sap:label}` )->get_parent(
+    )->column( )->text( `{TRAVEL>/#Currency/Currency_Text/@sap:label}` )->get_parent(
+    )->column( )->text( `{TRAVEL>/#Currency/Decimals/@sap:label}` )->get_parent(
+    )->column( )->text( `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}` ).
 
 tab->items( )->column_list_item( )->cells(
-    )->text( '{TRAVEL>Currency}'
-    )->text( '{TRAVEL>Currency_Text}'
-    )->text( '{TRAVEL>Decimals}'
-    )->text( '{TRAVEL>CurrencyISOCode}' ).
+    )->text( `{TRAVEL>Currency}`
+    )->text( `{TRAVEL>Currency_Text}`
+    )->text( `{TRAVEL>Decimals}`
+    )->text( `{TRAVEL>CurrencyISOCode}` ).
 
 client->view_display( tab->stringify( ) ).
 

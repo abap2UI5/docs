@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_max_val IMPLEMENTATION.
                           `  path:"` && client->_bind( val  = input32
                                                        path = abap_true ) && `" }`
                 )->input(
-                    value   = '{= Math.max($' && client->_bind( input31 ) &&', $' && client->_bind( input32 ) && ') }'
+                    value   = `{= Math.max($` && client->_bind( input31 ) &&`, $` && client->_bind( input32 ) && `) }`
                     enabled = abap_false ).
     client->view_display( view->stringify( ) ).
 
