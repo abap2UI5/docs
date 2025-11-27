@@ -15,6 +15,7 @@ ENDCLASS.
  
 CLASS z2ui5_cl_sample_share IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     CASE abap_true.
 
       WHEN client->check_on_navigated( ).
