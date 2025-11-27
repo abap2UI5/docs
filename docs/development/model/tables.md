@@ -22,7 +22,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
  
     DO 100 TIMES.
-      INSERT value #(
+      INSERT VALUE #(
         count = sy-index
         value = `red`
         descr = `this is a description` ) INTO TABLE mt_itab.
@@ -50,7 +50,7 @@ Making a table editable is a simple change. You just need to switch the binding 
   METHOD z2ui5_if_app~main.
  
     DO 100 TIMES.
-      INSERT value #(
+      INSERT VALUE #(
         count = sy-index
         value = `red`
         descr = `this is a description` ) INTO TABLE mt_itab.

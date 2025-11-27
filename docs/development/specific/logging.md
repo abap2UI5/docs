@@ -8,7 +8,7 @@ Logging is essential for developing end-user business processes. In ABAP systems
 ##### BAL Variables
 In ABAP classic, you can use the classic BAL function modules and display the BAL table with the popup `z2ui5_cl_pop_messages`:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   DATA(lt_bal) = VALUE bal_t_msgr(
     ( msgid = `Z001` msgno = `001` msgty = `S` time_stmp = `21354` msgnumber = `01` )
@@ -22,7 +22,7 @@ ENDMETHOD.
 ##### ABAP Cloud
 In ABAP Cloud, you can directly pass the logging object into the popup:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   DATA(lo_log) = cl_bali_log=>create( ).
   DATA(lo_msg) = cl_bali_message_setter=>create(
@@ -48,7 +48,7 @@ ENDMETHOD.
 ##### abap-logger
 You also have the option to use the fantastic open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates seamlessly with abap2UI5. Here’s an example:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   DATA(log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
   log->e( `This is an error...` ).
@@ -63,7 +63,7 @@ ENDMETHOD.
 Compared to message classes, BAL logs include more detailed information, such as timestamps. Use the specific BAL log popup to display this information. All the examples above can be used with the `z2ui5_cl_pop_bal` popup for a more detailed output, here’s an example for the abap-logger:
 
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   DATA(lo_log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
   log->e( `This is an error...` ).

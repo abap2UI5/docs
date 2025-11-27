@@ -10,7 +10,7 @@ As an example, we will use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_
 ```abap
 client->follow_up_action( client->_event_client(
     val = z2ui5_if_client=>cs_event-set_odata_model
-    t_arg = value #(
+    t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
         ( `FLIGHT` ) ) ) ).
 ```
@@ -36,10 +36,10 @@ tab->items( )->column_list_item( )->cells(
 By using the growing property we can make use of the feature that not all data is loaded at once, leveraging performance.
 
 #### Full Example
-Here’s the complete source code:
+Here's the complete source code:
 ```abap
-METHOD z2ui5_if_app~main.
-  
+  METHOD z2ui5_if_app~main.
+
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items   = `{FLIGHT>/Airport}`
         growing = abap_true ).
@@ -60,7 +60,7 @@ METHOD z2ui5_if_app~main.
 
     client->follow_up_action( client->_event_client(
         val   = z2ui5_if_client=>cs_event-set_odata_model
-        t_arg = value #(
+        t_arg = VALUE #(
             ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
             ( `FLIGHT` ) ) ) ).
  
@@ -90,7 +90,7 @@ client->view_display( tab->stringify( ) ).
 
 client->follow_up_action( client->_event_client(
     val   = z2ui5_if_client=>cs_event-set_odata_model
-    t_arg = value #(
+    t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).  
 ```
@@ -114,7 +114,7 @@ In SAP contexts, OData services are often enriched with additional annotations. 
 We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. Here’s an example:
 ```abap
 
-data(tab) = page->table(
+DATA(tab) = page->table(
     items   = `{TRAVEL>/Currency}`
     growing = abap_true ).
 
@@ -134,7 +134,7 @@ client->view_display( tab->stringify( ) ).
 
 client->follow_up_action( client->_event_client(
     val   = z2ui5_if_client=>cs_event-set_odata_model
-    t_arg = value #(
+    t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).  
 ```

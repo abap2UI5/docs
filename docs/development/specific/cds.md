@@ -87,7 +87,7 @@ ENDCLASS.
 The following example demonstrates how to create a sales order using `MODIFY` in an abap2UI5 application:
 
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     MODIFY ENTITIES OF i_salesordertp
            ENTITY salesorder
