@@ -10,7 +10,7 @@ Messages can be translated using the ABAP text elements, making them available i
 ```abap
 METHOD z2ui5_if_app~main.
 
-  data(lv_msg_translated) = `this is a translatable message in english`(001).
+  DATA(lv_msg_translated) = `this is a translatable message in english`(001).
   client->message_box_display( lv_msg_translated ).
 
 ENDMETHOD.
@@ -21,7 +21,7 @@ Messages are translated using message classes, ensuring that translations are ma
 ```abap
 METHOD z2ui5_if_app~main.
 
-  MESSAGE ID `NET` TYPE `I` NUMBER `001` into data(lv_msg_translated).
+  MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_msg_translated).
   client->message_box_display( lv_msg_translated ). 
 
 ENDMETHOD.

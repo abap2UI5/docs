@@ -18,7 +18,7 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 ```abap
 METHOD z2ui5_if_app~main.
 
-    data(lo_view) = z2ui5_cl_xml_view=>factory(
+    DATA(lo_view) = z2ui5_cl_xml_view=>factory(
         )->page(
             )->barcode_scanner_button(
                 dialogtitle = `Barcode Scanner`

@@ -48,7 +48,7 @@ You can directly pass common message structures, objects, and variables to the f
 ```abap
 METHOD z2ui5_if_app~main.
   
-  MESSAGE ID `NET` TYPE `I` NUMBER `001` into data(lv_dummy).
+  MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_dummy).
   client->message_box_display( sy ).
 
 ENDMETHOD.
@@ -88,7 +88,7 @@ The message box provides basic output. For a more detailed output, use the popup
 ```abap
 METHOD z2ui5_if_app~main.
 
-  data(lt_msg) = value bapirettab(
+  DATA(lt_msg) = VALUE bapirettab(
     ( type = `E` id = `MSG1` number = `001` message = `An empty Report field causes an empty XML Message to be sent` )
     ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
 
