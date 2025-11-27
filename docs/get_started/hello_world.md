@@ -27,10 +27,8 @@ Head back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORL
 Now, let's add our first view to display a simple text:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
@@ -49,15 +47,13 @@ ENDCLASS.
 Next, we extend the app with a button and an event handler. To ensure that the view is only rendered at the start, we also check for the `on_init` event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA name TYPE string.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
     CASE abap_true.
 
       WHEN client->check_on_init( ).
@@ -73,6 +69,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
         client->message_box_display( `Hello World!` ).
 
     ENDCASE.
+
   ENDMETHOD.
 ENDCLASS.
 ```
@@ -81,15 +78,12 @@ ENDCLASS.
 Finally, we add a public attribute and can send data to the backend:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
-
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.
@@ -112,7 +106,6 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
-
 ENDCLASS.
 ```
 And that's it! Set a breakpoint to observe the communication and data updates in action. Now you can play around and experiment with modifying the view, events, and data exchange.
