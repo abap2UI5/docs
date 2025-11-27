@@ -18,6 +18,7 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
     CASE abap_true.
 
       WHEN client->check_on_navigated( ).
+
         DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
           )->label( `quantity`
           )->input( client->_bind_edit( mv_quantity )
@@ -25,6 +26,7 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
         client->view_display( view->stringify( ) ).
 
       WHEN client->check_on_event( `BUTTON_POST` ).
+
         client->follow_up_action( client->_event_client( z2ui5_if_client=>cs_event-CLIPBOARD_APP_STATE ) ).
         client->message_toast_display( `clipboard copied` ).
 
