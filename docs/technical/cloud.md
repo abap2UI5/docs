@@ -59,7 +59,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
           )->standard_list_item(
             title       = `{SALESORDER}`
             description = `{SALESORGANIZATION}` ).
-    client->view_display( view ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
         )->standard_list_item(
             title       = `{VBELN}`
             description = `{VKORG}` ).
-    client->view_display( view ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -137,7 +137,7 @@ CLASS zcl_app_alv IMPLEMENTATION.
     lo_cell->text( `{MSGNR}` ).
     lo_cell->text( `{TEXT}` ).
 
-    client->view_display( tab ).
+    client->view_display( tab->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

@@ -38,7 +38,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
        )->text( `{COUNT}`
        )->text( `{VALUE}`
        )->text( `{DESCR}` ).
-    client->view_display( tab ).
+    client->view_display( tab->stringify( ) ).
  
   ENDMETHOD.
 ENDCLASS.
@@ -66,7 +66,7 @@ Making a table editable is a simple change. You just need to switch the binding 
        )->text( `{COUNT}`
        )->text( `{VALUE}`
        )->text( `{DESCR}` ).
-    client->view_display( tab ).
+    client->view_display( tab->stringify( ) ).
  
   ENDMETHOD.
 ```
@@ -134,7 +134,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
                 selected = `{IS_SELECTED}`
                 title    = `{TEXT}` ).
  
-    client->view_display( tree ).
+    client->view_display( tree->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -179,7 +179,7 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
     lo_cells->text( `{S_DETAILS/CREATE_DATE}` ).
     lo_cells->text( `{S_DETAILS/CREATE_BY}` ).
 
-    client->view_display( tab ).
+    client->view_display( tab->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
