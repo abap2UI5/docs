@@ -46,7 +46,7 @@ ENDCLASS.
 ```
 
 ### Event Handler
-Next, we extend the app with a button and an event:
+Next, we extend the app with a button and an event handler. To ensure that the view is only rendered at the start, we also check for the `on_init` event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
