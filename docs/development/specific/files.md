@@ -18,7 +18,7 @@ CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
-  METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->page(

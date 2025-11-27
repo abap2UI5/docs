@@ -22,25 +22,25 @@ CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
-    METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
-        client->view_display( z2ui5_cl_xml_view=>factory(
-            )->page(
-                )->_z2ui5( )->file_uploader(
-                    value       = client->_bind_edit( mv_value )
-                    path        = client->_bind_edit( mv_path )
-                    placeholder = `filepath here...`
-                    upload      = client->_event( `UPLOAD` )
-            )->stringify( ) ).
+    client->view_display( z2ui5_cl_xml_view=>factory(
+        )->page(
+            )->_z2ui5( )->file_uploader(
+                value       = client->_bind_edit( mv_value )
+                path        = client->_bind_edit( mv_path )
+                placeholder = `filepath here...`
+                upload      = client->_event( `UPLOAD` )
+        )->stringify( ) ).
 
-        IF client->get( )-event = `UPLOAD`.
+    IF client->get( )-event = `UPLOAD`.
 
-            data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
-            "further process with itab...
-            client->message_box_display( `xlsx uploaded` ).
-        ENDIF.
+        data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
+        "further process with itab...
+        client->message_box_display( `xlsx uploaded` ).
+    ENDIF.
 
-    ENDMETHOD.
+  ENDMETHOD.
 ENDCLASS.
 ```
 
@@ -121,16 +121,16 @@ ENDMETHOD.
 ```
 
 ```abap [lcl_help]
-class lcl_help DEFINITION.
+CLASS lcl_help DEFINITION.
 
-PUBLIC SECTION.
+  PUBLIC SECTION.
     CLASS-METHODS xlsx_get_by_itab
       IMPORTING
         VALUE(val)    TYPE STANDARD TABLE
       RETURNING
         VALUE(result) TYPE string.
 
-endclass.
+ENDCLASS.
 
 CLASS lcl_help IMPLEMENTATION.
 
@@ -208,9 +208,9 @@ METHOD z2ui5_if_app~main.
       ( count = `3` value = `red` descr = `this is a description` ) ).
 
     DATA(lv_file) = lcl_help=>get_xlsx_by_itab( lt_tab ).
-      client->follow_up_action( val = client->_event_client(
-        val = client->cs_event-download_b64_file
-        t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ) ).
+    client->follow_up_action( val = client->_event_client(
+      val = client->cs_event-download_b64_file
+      t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ) ).
   ENDIF.
 
 ENDMETHOD.
@@ -232,37 +232,36 @@ CLASS lcl_help IMPLEMENTATION.
   METHOD get_xlsx_by_itab.
     TRY.
 
-        DATA: lo_excel     TYPE REF TO zcl_excel,
-              lo_writer    TYPE REF TO zif_excel_writer,
-              lo_worksheet TYPE REF TO zcl_excel_worksheet.
+      DATA: lo_excel     TYPE REF TO zcl_excel,
+            lo_writer    TYPE REF TO zif_excel_writer,
+            lo_worksheet TYPE REF TO zcl_excel_worksheet.
 
-        DATA: lt_field_catalog  TYPE zexcel_t_fieldcatalog,
-              ls_table_settings TYPE zexcel_s_table_settings.
+      DATA: lt_field_catalog  TYPE zexcel_t_fieldcatalog,
+            ls_table_settings TYPE zexcel_s_table_settings.
 
-        " Creates active sheet
-        CREATE OBJECT lo_excel.
+      " Creates active sheet
+      CREATE OBJECT lo_excel.
 
-        " Get active sheet
-        lo_worksheet = lo_excel->get_active_worksheet( ).
-        lo_worksheet->set_title( `Internal table` ).
+      " Get active sheet
+      lo_worksheet = lo_excel->get_active_worksheet( ).
+      lo_worksheet->set_title( `Internal table` ).
 
-        lt_field_catalog = zcl_excel_common=>get_fieldcatalog( ip_table = val ).
-        ls_table_settings-table_style  = zcl_excel_table=>builtinstyle_medium5.
-        lo_worksheet->bind_table( ip_table          = val
-                                  is_table_settings = ls_table_settings
-                                  it_field_catalog  = lt_field_catalog ).
+      lt_field_catalog = zcl_excel_common=>get_fieldcatalog( ip_table = val ).
+      ls_table_settings-table_style  = zcl_excel_table=>builtinstyle_medium5.
+      lo_worksheet->bind_table( ip_table          = val
+                                is_table_settings = ls_table_settings
+                                it_field_catalog  = lt_field_catalog ).
 
-        lo_worksheet->freeze_panes( ip_num_rows = 1 ).
+      lo_worksheet->freeze_panes( ip_num_rows = 1 ).
 
-        CREATE OBJECT lo_writer TYPE zcl_excel_writer_2007.
-        DATA(lv_file) = lo_writer->write_file( lo_excel ).
+      CREATE OBJECT lo_writer TYPE zcl_excel_writer_2007.
+      DATA(lv_file) = lo_writer->write_file( lo_excel ).
 
-        result = z2ui5_cl_util=>conv_encode_x_base64( lv_file ).
-        result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
+      result = z2ui5_cl_util=>conv_encode_x_base64( lv_file ).
+      result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
 
-
-      CATCH cx_root INTO DATA(x).
-        z2ui5_cL_util=>x_raise( x->get_text( ) ).
+    CATCH cx_root INTO DATA(x).
+      z2ui5_cL_util=>x_raise( x->get_text( ) ).
     ENDTRY.
   ENDMETHOD.
 ENDCLASS.
