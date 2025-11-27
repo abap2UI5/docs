@@ -36,10 +36,10 @@ ENDCLASS.
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
+    DATA(view) = z2ui5_cl_xml_view=>factory(
       )->page( `abap2UI5 - Hello World`
-         )->text( `My Text` 
-      )->stringify( ) ).
+      )->text( `My Text` ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -58,19 +58,23 @@ ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+    CASE abap_true.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
+      WHEN client->check_on_init( ).
+
+        DATA(view) = z2ui5_cl_xml_view=>factory(
+          )->page( `abap2UI5 - Hello World`
           )->text( `My Text`
-          )->button( text = `post` press = client->_event( `POST` )
-      )->stringify( ) ). 
+          )->button( text = `post` press = client->_event( `POST` ) ).
+        client->view_display( view->stringify( ) ).
 
-    CASE client->get( )-event.
-      WHEN `POST`.
+
+      WHEN client->check_on_event( `POST` ).
+
         client->message_box_display( `Hello World!` ).
-        RETURN.
-    ENDCASE.
 
+
+    ENDCASE.
   ENDMETHOD.
 ENDCLASS.
 ```
@@ -88,20 +92,24 @@ ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+    CASE abap_true.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
+      WHEN client->check_on_init( ).
+
+        DATA(view) = z2ui5_cl_xml_view=>factory(
+          )->page( `abap2UI5 - Hello World`
           )->text( `My Text`
           )->button( text = `post` press = client->_event( `POST` )
-          )->input( client->_bind_edit( name )
-      )->stringify( ) ).
+          )->input( client->_bind_edit( name ) ).
+        client->view_display( view->stringify( ) ).
 
-    CASE client->get( )-event.
-      WHEN `POST`.
+
+      WHEN client->check_on_event( `POST` ).
+
         client->message_box_display( |Your name is { name }.| ).
-        RETURN.
-    ENDCASE.
 
+
+    ENDCASE.
   ENDMETHOD.
 ENDCLASS.
 ```
