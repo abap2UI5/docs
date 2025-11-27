@@ -89,15 +89,19 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+
   METHOD z2ui5_if_app~main.
+
     CASE abap_true.
 
       WHEN client->check_on_init( ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->page( `abap2UI5 - Hello World`
-          )->text( `My Text`
-          )->button( text = `post` press = client->_event( `POST` )
+        DATA(view) = z2ui5_cl_xml_view=>factory( 
+          )->page( `abap2UI5 - Hello World` 
+          )->text( `My Text` 
+          )->button(
+            text  = `post`
+            press = client->_event( `POST` )
           )->input( client->_bind_edit( name ) ).
         client->view_display( view->stringify( ) ).
 
@@ -106,7 +110,9 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
         client->message_box_display( |Your name is { name }.| ).
 
     ENDCASE.
+
   ENDMETHOD.
+
 ENDCLASS.
 ```
 And that's it! Set a breakpoint to observe the communication and data updates in action. Now you can play around and experiment with modifying the view, events, and data exchange.
