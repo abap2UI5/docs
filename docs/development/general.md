@@ -14,31 +14,28 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     TRY.
 
-        "first app start
-        IF client->check_on_init( ).
-          "init values
-          "display view
-          RETURN.
-        ENDIF.
+        CASE abap_true.
 
-        "callback after navigation
-        IF client->check_on_navigated( ).
-          DATA(lo_app_prev) = client->get_app_prev( ).
-          "read attributes of previous app
-          "do something
-          RETURN.
-        ENDIF.
-
-        "handle events after frontend
-        CASE client->get( )-event.
-          WHEN `OK`.
-            DATA(lt_arg) = client->get_event_arg( ).
-            "event handling
-          WHEN `CANCEL`.
+          WHEN client->check_on_init( ).
             "...
+
+          WHEN client->check_on_navigated( ).
+            DATA(lo_app_prev) = client->get_app_prev( ).
+            "...
+
+          WHEN client->check_on_event( ).
+            DATA(lt_arg) = client->get_event_arg( ).
+
+            CASE abap_true.
+              WHEN client->check_on_event( `OK` ).
+                "...
+
+              WHEN client->check_on_event( `CANCEL` ).
+                "...
+
+            ENDCASE.
         ENDCASE.
 
-        "error handling
       CATCH cx_root INTO DATA(lx).
         client->message_box_display( lx ).
     ENDTRY.
