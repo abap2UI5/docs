@@ -8,7 +8,7 @@ In UI5 apps, translations are typically managed through i18n files, with transla
 ### Text Element
 Messages can be translated using the ABAP text elements, making them available in different languages without changing the code:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   DATA(lv_msg_translated) = `this is a translatable message in english`(001).
   client->message_box_display( lv_msg_translated ).
@@ -19,7 +19,7 @@ ENDMETHOD.
 ### Messages
 Messages are translated using message classes, ensuring that translations are managed centrally and can be maintained easily in different languages:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_msg_translated).
   client->message_box_display( lv_msg_translated ). 
@@ -33,7 +33,7 @@ You can also retrieve and display the short, medium, or long descriptions of dat
 ::: code-group
 
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   DATA(ls_product_label) = lcl_help=>get_data_element_text( `PRODUCT` ).
   client->message_box_display( |{ ls_product_label-short }: 100 | ).
@@ -41,7 +41,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-```abap [LCL_HELP]
+```abap [lcl_help]
 CLASS lcl_help DEFINITION
   CREATE PUBLIC.
 

@@ -36,10 +36,10 @@ tab->items( )->column_list_item( )->cells(
 By using the growing property we can make use of the feature that not all data is loaded at once, leveraging performance.
 
 #### Full Example
-Here’s the complete source code:
+Here's the complete source code:
 ```abap
-METHOD z2ui5_if_app~main.
-  
+  METHOD z2ui5_if_app~main.
+
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
         items   = `{FLIGHT>/Airport}`
         growing = abap_true ).

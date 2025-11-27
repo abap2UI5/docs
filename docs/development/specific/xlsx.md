@@ -183,7 +183,7 @@ Instead of using the above XLSX API (which may change between releases), conside
 ::: code-group
 
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   client->view_display( z2ui5_cl_xml_view=>factory(
     )->page(

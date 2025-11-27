@@ -42,7 +42,7 @@ ENDCLASS.
 #### Download
 See also `Z2UI5_CL_DEMO_APP_186`
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->page(
