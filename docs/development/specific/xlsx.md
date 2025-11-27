@@ -35,7 +35,7 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
 
     IF client->get( )-event = `UPLOAD`.
 
-        data(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
+        DATA(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
         "further process with itab...
         client->message_box_display( `xlsx uploaded` ).
     ENDIF.

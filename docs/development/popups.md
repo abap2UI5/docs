@@ -11,20 +11,20 @@ UI5 offers functionality for displaying popups and popovers that overlay only sp
 
 To display a popup, use the method `client->popup_display` instead of `client->view_display`:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( `Popup - Info`
             )->text( `this is an information shown in a popup` ).
     client->popup_display( lo_popup->stringify( ) ).
 
-ENDMETHOD.
+  ENDMETHOD.
 ```
 
 #### Flow Logic
 A common flow for using popups typically involves displaying a normal view, then showing a popup, and finally closing it. Here’s how to structure this:
 ```abap
-METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
         DATA(lo_view) = z2ui5_cl_xml_view=>factory(
@@ -39,7 +39,7 @@ METHOD Z2UI5_if_app~main.
     CASE client->get( )-event.
 
       WHEN `POPUP_OPEN`.
-        DATA(lo_popup) = Z2UI5_cl_xml_view=>factory_popup(
+        DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
             )->dialog( `Popup`
                 )->text( `this is a text in a popup`
                 )->button(
@@ -49,10 +49,10 @@ METHOD Z2UI5_if_app~main.
 
       WHEN `POPUP_CLOSE`.
         client->popup_destroy( ).
-        
+
     ENDCASE.
 
-ENDMETHOD.
+  ENDMETHOD.
 ```
 
 #### Separated App
@@ -60,20 +60,20 @@ For better source code structure, you can encapsulate popups in separate classes
 
 Check out the popup to confirm, for example:
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
-  IF client->check_on_init( ).
-   client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
- ENDIF.
+    IF client->check_on_init( ).
+      client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
+    ENDIF.
 
-  CASE client->get( )-event.
-    WHEN z2ui5_cl_pop_to_confirm=>cs_event-confirmed.
-      client->message_box_display( `the result is confirmed` ).
-    WHEN z2ui5_cl_pop_to_confirm=>cs_event-canceled.
-      client->message_box_display( `the result is rejected` ).
-  ENDCASE.
+    CASE client->get( )-event.
+      WHEN z2ui5_cl_pop_to_confirm=>cs_event-confirmed.
+        client->message_box_display( `the result is confirmed` ).
+      WHEN z2ui5_cl_pop_to_confirm=>cs_event-canceled.
+        client->message_box_display( `the result is rejected` ).
+    ENDCASE.
 
-ENDMETHOD.
+  ENDMETHOD.
 ```
 
 If you need to manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
@@ -81,7 +81,7 @@ If you need to manage a stack of multiple popups, remember that abap2UI5 display
 ### Popover
 To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
  ```abap
-METHOD Z2UI5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
       DATA(view) = z2ui5_cl_xml_view=>factory(
@@ -98,7 +98,7 @@ METHOD Z2UI5_if_app~main.
     CASE client->get( )-event.
 
       WHEN `POPOVER_OPEN`.
-        DATA(popover) = Z2UI5_cl_xml_view=>factory_popup(
+        DATA(popover) = z2ui5_cl_xml_view=>factory_popup(
             )->popover( placement = `Left`
                 )->text( `this is a popover`
                 )->button(
@@ -113,7 +113,7 @@ METHOD Z2UI5_if_app~main.
         client->popover_destroy( ).
     ENDCASE.
 
-ENDMETHOD.
+  ENDMETHOD.
  ```
 
 ### Built-in Popups

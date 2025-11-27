@@ -65,8 +65,8 @@ sap.ui.core.Component.create({
 ```
 
 5. Create ABAP2U5 app class
-```abap  
-METHOD z2ui5_if_app~main.
+```abap
+  METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
       check_initialized = abap_true.

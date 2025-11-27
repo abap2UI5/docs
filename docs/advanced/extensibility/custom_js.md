@@ -10,7 +10,7 @@ The idea is to send the custom JavaScript function along with the view to the fr
 Below is a working example that you can use as a starting point:
 
 ```abap
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
   IF client->check_on_init( ).
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
