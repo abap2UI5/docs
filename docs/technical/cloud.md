@@ -57,8 +57,8 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory(
         )->list( client->_bind_edit( mt_salesorder )
           )->standard_list_item(
-            title       = '{SALESORDER}'
-            description = '{SALESORGANIZATION}' ).
+            title       = `{SALESORDER}`
+            description = `{SALESORGANIZATION}` ).
     client->view_display( view ).
 
   ENDMETHOD.
@@ -87,8 +87,8 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory(
       )->list( client->_bind_edit( mt_salesorder )
         )->standard_list_item(
-            title       = '{VBELN}'
-            description = '{VKORG}' ).
+            title       = `{VBELN}`
+            description = `{VKORG}` ).
     client->view_display( view ).
 
   ENDMETHOD.
