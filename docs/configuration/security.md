@@ -38,9 +38,9 @@ By default, abap2UI5 uses the following CSP:
 You have the option to adjust the CSP if needed. This can be done by modifying the HTTP handler call as shown below:
 
 ```abap
-    DATA(lo_server) = z2ui5_cl_http_handler=>run( VALUE #(
-        content_security_policy = ` <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: ` && |\n|  &&
-                                  `   ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com ` && |\n|  &&
-                                  `   sdk.openui5.org *.sdk.openui5.org "/>`
-    ) ).
+METHOD z2ui5_if_exit~set_config_http_get.
+
+    cs_config-content_security_policy = `<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' ui5.sap.com *.ui5.sap.com sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net"/>`.
+
+ENDMETHOD.
 ```
