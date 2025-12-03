@@ -2,14 +2,13 @@
 
 abap2UI5 handles all frontend-backend communication through JSON. Initially, the framework used SAP's `/UI2/CL_JSON`, but this approach proved problematic: critical functionality varied across releases, documentation was sparse, and compatibility issues emerged frequently.
 
-The solution: [ajson](https://github.com/sbcgua/ajson), a robust open-source JSON library that transformed abap2UI5's architecture.
+The solution: [ajson](https://github.com/sbcgua/ajson), a robust open-source JSON library that improved abap2UI5's functionality significantly.
 
 **Why ajson?**
 * **Zero SAP API Dependencies** - Eliminates reliance on release-specific SAP classes
 * **Universal Compatibility** - Works seamlessly from NW 7.02 to ABAP Cloud
 * **Developer-Friendly** - Intuitive API with comprehensive documentation
 * **Active Maintenance** - Responsive issue resolution and continuous improvements
-* **Battle-Tested** - Proven reliability across diverse ABAP environments
 
 #### Integration
 
