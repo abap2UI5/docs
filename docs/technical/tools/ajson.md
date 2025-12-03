@@ -15,7 +15,8 @@ The solution: [ajson](https://github.com/sbcgua/ajson), a robust open-source JSO
 
 ajson integrates directly into the `z2ui5` namespace and installs automatically with abap2UI5. Access it anywhere in your code:
 ```abap
-DATA(json) = z2ui5_cl_ajson=>parse( json_string ).
+DATA(input) = z2ui5_cl_ajson=>parse( json_string ).
+
 DATA(output) = z2ui5_cl_ajson=>create_empty( )->set( 
   iv_path = '/name' 
   iv_val  = 'value' 
