@@ -172,13 +172,13 @@ export default defineConfig({
               { text: 'UI5 Freestyle', link: '/technical/technology/ui5' },
           ] },
             { text: 'Tools',  collapsed : "false" , items: [
-            { text: 'abapGit', link: '/advanced/tools/abapgit' },
-            { text: 'ajson', link: '/advanced/tools/ajson' },
-            { text: 's-rtti', link: '/advanced/tools/srtti' },
-            { text: 'abaplint', link: '/advanced/tools/abaplint' },
-            { text: 'open-abap', link: '/advanced/tools/open_abap' },
-            { text: 'abap-cleaner', link: '/advanced/tools/abap_cleaner' },
-            { text: 'abapmerge', link: '/advanced/tools/abapmerge' },
+            { text: 'abapGit', link: '/technical/tools/abapgit' },
+            { text: 'ajson', link: '/technical/tools/ajson' },
+            { text: 's-rtti', link: '/technical/tools/srtti' },
+            { text: 'abaplint', link: '/technical/tools/abaplint' },
+            { text: 'open-abap', link: '/technical/tools/open_abap' },
+            { text: 'abap-cleaner', link: '/technical/tools/abap_cleaner' },
+            { text: 'abapmerge', link: '/technical/tools/abapmerge' },
           ]
           }
         ]
