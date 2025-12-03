@@ -155,18 +155,7 @@ export default defineConfig({
             { text: 'Frontend', link: '/advanced/extensibility/frontend' },
             { text: 'Custom Control', link: '/advanced/extensibility/custom_control' },
             { text: 'User Exits', link: '/advanced/extensibility/user_exits' }
-          ] },
-          { text: 'Tools',  collapsed : "false" , items: [
-            { text: 'abapGit', link: '/advanced/tools/abapgit' },
-            { text: 'ajson', link: '/advanced/tools/ajson' },
-            { text: 's-rtti', link: '/advanced/tools/srtti' },
-            { text: 'abaplint', link: '/advanced/tools/abaplint' },
-            { text: 'open-abap', link: '/advanced/tools/open_abap' },
-            { text: 'abap-cleaner', link: '/advanced/tools/abap_cleaner' },
-            { text: 'abapmerge', link: '/advanced/tools/abapmerge' },
-            
-          ]
-          }
+          ] }
          ]
       },
             {
@@ -181,7 +170,17 @@ export default defineConfig({
             { text: 'Technology', link: '/technical/technology/overview' , items: [
               { text: 'RAP', link: '/technical/technology/rap' },
               { text: 'UI5 Freestyle', link: '/technical/technology/ui5' },
-          ] }
+          ] },
+            { text: 'Tools',  collapsed : "false" , items: [
+            { text: 'abapGit', link: '/advanced/tools/abapgit' },
+            { text: 'ajson', link: '/advanced/tools/ajson' },
+            { text: 's-rtti', link: '/advanced/tools/srtti' },
+            { text: 'abaplint', link: '/advanced/tools/abaplint' },
+            { text: 'open-abap', link: '/advanced/tools/open_abap' },
+            { text: 'abap-cleaner', link: '/advanced/tools/abap_cleaner' },
+            { text: 'abapmerge', link: '/advanced/tools/abapmerge' },
+          ]
+          }
         ]
       },
       {
