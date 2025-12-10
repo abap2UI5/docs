@@ -190,7 +190,6 @@ export default defineConfig({
         items: [
           { text: 'References', link: '/resources/references' },
           { text: 'Who Uses abap2UI5?', link: '/resources/who_uses' },
-          { text: 'Blogs', link: '/resources/blogs' },
           { text: 'Releases', link: '/resources/changelog' },
           { text: 'License', link: '/resources/license' },
           { text: 'Support', link: '/resources/support' },
