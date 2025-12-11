@@ -9,13 +9,13 @@ Follow these steps to install abap2UI5 on S/4 Public Cloud:
 
 ### 1. Install abap2UI5 with abapGit
 
-S/4 Public Cloud only supports the ADT abapGit version. Since abap2UI5 consists purely of classes, interfaces, and tables, it's fully compatible and can be pulled without issues.
+S/4 Public Cloud only supports the ADT abapGit version. abap2UI5 consists purely of classes, interfaces, and tables and can be pulled without issues.
 
 Use the standard installation process via [abapGit for Eclipse](https://eclipse.abapgit.org/).
 
 ### 2. Install the HTTP Service
 
-Use the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) repository.
+Create a new HTTP handler manually or use the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) repository.
 
 **Important:** In S/4 Public Cloud and BTP ABAP Environment, you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage. 
 
