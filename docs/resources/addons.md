@@ -23,6 +23,6 @@ Various other open-source projects use abap2UI5 - give them a try:
 | [table-content-loader](https://github.com/abap2UI5-apps/table-content-loader) | Upload & download table content  |
 | [table-maintenance](https://github.com/abap2UI5-addons/table-maintenance) | Table maintenance in your browser |
 
-#### Build Your Own
+#### Contribution
 
 Have you developed a new feature or your own open-source project with abap2UI5? Feel free to contribute to existing repositories or create your own. Add your project here and help others discover, use, and contribute to your work.
