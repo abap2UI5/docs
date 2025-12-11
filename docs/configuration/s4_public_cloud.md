@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # S/4 Public Cloud
 
-abap2UI5 can be used for on-stack extension scenarios in S/4 Public Cloud. By using exclusively released APIs, it is fully compatible with the ABAP Cloud language version, meeting all current SAP requirements for ABAP development.
+abap2UI5 can be used for on-stack extension scenarios in S/4 Public Cloud. It uses exclusively released APIs and is fully compatible with the ABAP Cloud language version, meeting all current SAP requirements for ABAP cloud extenisons.
 
 Follow these steps to install abap2UI5 on S/4 Public Cloud:
 
@@ -17,7 +17,9 @@ Use the standard installation process via [abapGit for Eclipse](https://eclipse.
 
 Use the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) repository.
 
-**Important:** In S/4 Public Cloud and BTP ABAP Environment, you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage. Therefore, we install the frontend artifacts in the next step.
+**Important:** In S/4 Public Cloud and BTP ABAP Environment, you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage. 
+
+Therefore, we install the frontend artifacts in the next step.
 
 ### 3. Deploy the UI5 App
 
