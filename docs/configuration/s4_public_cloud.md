@@ -17,7 +17,7 @@ Use the standard installation process via [abapGit for Eclipse](https://eclipse.
 
 Create a new HTTP handler manually or use the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) repository.
 
-**Important:** In S/4 Public Cloud and BTP ABAP Environment, you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage. 
+**Important:** In S/4 Public Cloud you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage. 
 
 Therefore, we install the frontend artifacts in the next step.
 
