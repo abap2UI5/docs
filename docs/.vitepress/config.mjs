@@ -159,10 +159,6 @@ export default defineConfig({
                 text: "Geolocation, Maps",
                 link: "/development/specific/geolocation",
               },
-              {
-                text: "Stateful Sessions",
-                link: "/development/specific/stateful",
-              },
               { text: "URL", link: "/development/specific/url" },
               { text: "Formatter", link: "/development/specific/formatter" },
             ],
@@ -203,6 +199,10 @@ export default defineConfig({
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Builder", link: "/advanced/builds" },
+          {
+            text: "Stateful Sessions",
+            link: "/development/specific/stateful",
+          },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "FE Integration", link: "/advanced/fiori" },
