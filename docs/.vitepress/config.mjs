@@ -200,8 +200,8 @@ export default defineConfig({
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Builder", link: "/advanced/builds" },
           {
-            text: "Stateful Sessions",
-            link: "/development/specific/stateful",
+            text: "Statefulness, Locks",
+            link: "/advanced/stateful",
           },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
