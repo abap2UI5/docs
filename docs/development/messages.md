@@ -11,7 +11,7 @@ Displaying messages and errors is an everyday requirement for ABAP developers. T
 For short-duration messages, such as success notifications, you can use the message toast:
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   client->message_toast_display( `this is a message` ).
 
@@ -23,7 +23,7 @@ ENDMETHOD.
 Want the user to acknowledge the message? You can display a message box that requires manual closure:
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   client->message_box_display( `this is a message` ).
 
@@ -33,7 +33,7 @@ ENDMETHOD.
 For error messages, simply change the type:
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   client->message_box_display(
     text = `This is an error message`
@@ -46,7 +46,7 @@ ENDMETHOD.
 You can directly pass common message structures, objects, and variables to the functions:
 ###### SY
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_dummy).
   client->message_box_display( sy ).
@@ -55,7 +55,7 @@ ENDMETHOD.
 ```
 ###### BAPIRET
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   DATA lt_bapiret TYPE STANDARD TABLE OF bapiret2.
   CALL FUNCTION `BAPI_USER_GET_DETAIL`
@@ -71,7 +71,7 @@ ENDMETHOD.
 ```
 ###### CX_ROOT
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   TRY.
     DATA(lv_val) = 1 / 0.
@@ -86,7 +86,7 @@ Other imports are supported as well. Just import your message structure, and the
 #### Popup Multi Message
 The message box provides basic output. For a more detailed output, use the popup `z2ui5_cl_pop_messages`:
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   DATA(lt_msg) = VALUE bapirettab(
     ( type = `E` id = `MSG1` number = `001` message = `An empty Report field causes an empty XML Message to be sent` )
@@ -99,7 +99,7 @@ ENDMETHOD.
 #### Popup Error
 To show a detailed view of your exception, use the following code:
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   TRY.
     DATA(lv_val) = 1 / 0.
@@ -111,15 +111,8 @@ ENDMETHOD.
 ```
 
 #### Uncaught Errors
-What happens if errors are uncaught? In this case, the default HTTP handler exception output is used. The processing is interrupted, and the user will need to refresh the browser. Use this only for unexpected behavior:
-```abap
-  METHOD z2ui5_if_app~main.
+When you don't catch exceptions in your code, the framework catches them and shows the standard error popup. Try:
 
-    ASSERT 1 = `This is an error message!`.
-
-ENDMETHOD.
-```
-Alternatively, achieve the same behavior with an uncaught exception:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -127,6 +120,18 @@ Alternatively, achieve the same behavior with an uncaught exception:
 
 ENDMETHOD.
 ```
+
+#### Uncatchable Exceptions / Short Dumps
+What happens if your code creates uncatchable exceptions? In this case, the default HTTP handler exception output is used. The processing is interrupted, and the user will need to refresh the browser. Use this only for unexpected behavior:
+
+```abap
+METHOD z2ui5_if_app~main.
+
+    ASSERT 1 = `This is an error message!`.
+
+ENDMETHOD.
+```
+
 ::: tip **Improvements**
 These message functions are continually being improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
 :::
