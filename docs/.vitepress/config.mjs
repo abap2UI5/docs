@@ -50,9 +50,9 @@ export default defineConfig({
           { text: "Introduction", link: "/get_started/about" },
           { text: "Cookbook", link: "/development/general" },
           { text: "Configuration", link: "/configuration/setup" },
-          { text: "Advanced Topics", link: "/advanced/advanced" },
+          { text: "Advanced Topics", link: "/advanced/downporting" },
           { text: "Technical Insights", link: "/technical/concept" },
-          { text: "Resources", link: "/resources/resources" },
+          { text: "Resources", link: "/resources/addons" },
         ],
       },
       {
