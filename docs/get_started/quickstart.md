@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 
-# Installation
+# Quickstart
 
 ### 1. Installation with abapGit
 
@@ -58,12 +58,29 @@ For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tut
 <img width="846" alt="image-20 BiFOuUXZ" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
 
+::: tip Security
+This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
+:::
+
 ### 4. Initial Launch
 Now open the HTTP endpoint in your web browser:
 <img width="800" alt="image" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` and launch the test app. That's it! You're ready to create your own abap2UI5 apps – just create a new class and start coding.
 
-::: tip Security
-This project communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
-:::
+
+### 5. Your First App
+Next, create a new class in your system:
+```abap
+CLASS zcl_my_app DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
+
+CLASS zcl_my_app IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+    client->message_box_display( `Hello World` ).
+  ENDMETHOD.
+ENDCLASS.
+```
+Launch your app instead of the test app, and congratulations - you've called your first own abap2UI5 app!
 
