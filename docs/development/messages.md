@@ -114,7 +114,7 @@ ENDMETHOD.
 When you don't catch exceptions in your code, the framework catches them and shows the standard error popup. Try:
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
     RAISE EXCEPTION NEW cx_sy_itab_line_not_found( ).
 
