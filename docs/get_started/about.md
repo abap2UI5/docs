@@ -30,12 +30,12 @@ Since launching in 2023, abap2UI5 has evolved from a small side project into a c
 
 ### Why abap2UI5?
 
-Traditional UI5 development requires JavaScript expertise, frontend deployment, and OData service configuration. abap2UI5 cuts through these complexities, making it perfect for:
+Traditional UI5 development requires JavaScript expertise, frontend deployment, and OData service configuration. abap2UI5 cuts through these complexities:
 
-- **Leveraging your existing ABAP skills** - do what you know best, keep it simple, keep it ABAP
-- **Extending beyond RAP** – when RAP capabilities reach their limits
-- **Rapid prototyping** – quick iteration on new business applications
-- **Modernizing legacy applications** – no need to rewrite business logic
+- **Leverage your existing ABAP skills** – do what you know best, keep it simple, keep it ABAP
+- **Extend beyond RAP** – when RAP capabilities reach their limits
+- **Prototype rapidly** – quick iteration on new business applications
+- **Modernize legacy apps** – no need to rewrite business logic
 
 Each application is packaged as an [abapGit](https://abapgit.org) project, simplifying installation across systems without separate frontend deployments.
 

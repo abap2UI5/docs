@@ -164,6 +164,7 @@ export default defineConfig({
               { text: "cl_demo_output", link: "/development/specific/demo_output" },
             ],
           },
+          { text: "Troubleshooting", link: "/development/trouble" },
         ],
       },
       {
