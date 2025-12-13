@@ -15,7 +15,7 @@ To display a popup, use the method `client->popup_display` instead of `client->v
 
     DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( `Popup - Info`
-            )->text( `this is an information shown in a popup` ).
+          )->text( `this is an information shown in a popup` ).
     client->popup_display( lo_popup->stringify( ) ).
 
   ENDMETHOD.
@@ -62,15 +62,17 @@ Check out the popup to confirm, for example:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
-      client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
-    ENDIF.
+    CASE abap_true.
 
-    CASE client->get( )-event.
-      WHEN z2ui5_cl_pop_to_confirm=>cs_event-confirmed.
+      when client->check_on_init( ).
+        client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
+
+      WHEN client->check_on_event( z2ui5_cl_pop_to_confirm=>cs_event-confirmed ).
         client->message_box_display( `the result is confirmed` ).
-      WHEN z2ui5_cl_pop_to_confirm=>cs_event-canceled.
+
+      WHEN client->check_on_event( z2ui5_cl_pop_to_confirm=>cs_event-canceled ).
         client->message_box_display( `the result is rejected` ).
+
     ENDCASE.
 
   ENDMETHOD.
