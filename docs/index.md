@@ -4,8 +4,9 @@ layout: home
 title: Home
 
 hero:
-  name: "abap2UI5"
-  tagline: "Developing UI5 Apps Purely in ABAP.\nNo JavaScript, OData, or RAP needed.\nKeep it Simple. Keep it ABAP."
+  name: abap2UI5
+  text: Developing UI5 Apps Purely in ABAP
+  tagline: No JavaScript, OData, or RAP needed.\nKeep it Simple. Keep it ABAP.
   image:
     src: /logo.png
     alt: abap2UI5 Logo
