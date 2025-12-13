@@ -65,12 +65,16 @@ Check out the popup to confirm, for example:
     CASE abap_true.
 
       when client->check_on_init( ).
-        client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory( `Can you confirm this?` ) ).
+        DATA(lo_popup) = z2ui5_cl_pop_to_confirm=>factory(
+                          i_question_text = `Can you confirm this?`
+                          i_event_confirm = `CONFIRM`
+                          i_event_cancel  = `CANCEL` ).
+        client->nav_app_call( lo_popup ).
 
-      WHEN client->check_on_event( z2ui5_cl_pop_to_confirm=>cs_event-confirmed ).
+      WHEN client->check_on_event( `CONFIRM` ).
         client->message_box_display( `the result is confirmed` ).
 
-      WHEN client->check_on_event( z2ui5_cl_pop_to_confirm=>cs_event-canceled ).
+      WHEN client->check_on_event( `CANCEL` ).
         client->message_box_display( `the result is rejected` ).
 
     ENDCASE.
