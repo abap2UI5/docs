@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # Introduction
 
-**Developing UI5 Apps Purely in ABAP – no JavaScript, OData, or RAP needed.**
+**Build UI5 Apps Purely in ABAP – no JavaScript, OData, or RAP needed.**
 
 abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP:
 
@@ -32,10 +32,10 @@ Since launching in 2023, abap2UI5 has evolved from a small side project into a c
 
 Traditional UI5 development requires JavaScript expertise, frontend deployment, and OData service configuration. abap2UI5 cuts through these complexities:
 
-- **Leverage your existing ABAP skills** – always do what you know best
-- **Cross-Version Development** – buidl apps which run on both very old R/3 systems and the latest S/4 cloud environments
-- **Extend beyond RAP** – when RAP capabilities reach their limits
-- **Prototype rapidly** – quick iteration on new business applications
+- **Leverage your existing ABAP skills** – do what you know best, no frontend expertise required
+- **Universal compatibility** – build apps that run on legacy R/3 systems and modern S/4 Cloud environments
+- **Extend beyond RAP** – when standard capabilities reach their limits
+- **Prototype rapidly** – iterate quickly on new business applications
 
 Each application is packaged as an [abapGit](https://abapgit.org) project, simplifying installation across systems without separate frontend deployments.
 
