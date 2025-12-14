@@ -5,7 +5,7 @@ title: Home
 
 hero:
   name: abap2UI5
-  text: Developing UI5 Apps Purely in ABAP
+  text: Build UI5 Apps Purely in ABAP
   tagline: "No JavaScript, OData, or RAP needed.\nKeep it simple. Keep it ABAP."
   image:
     src: /logo.png
