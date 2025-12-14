@@ -1,7 +1,7 @@
 # Release Notes
 
 ### 1.141.0
-2024-12-14
+2025-12-14
 - Added Image Editor popup for image manipulation
 - Added Camera Selector control with facing mode support
 - Added Camera Picture control with configurable height/width
