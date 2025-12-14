@@ -16,23 +16,26 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
       "first start, init your app here...
       WHEN client->check_on_init( ).
+        "...
 
       "after coming back from another app
       WHEN client->check_on_navigated( ).
         "read the previous app
         DATA(lo_app_prev) = client->get_app_prev( ).
+        "...
 
-      after user event
+      "after user event
       WHEN client->check_on_event( ).
         "read event information
         DATA(lt_arg) = client->get_event_arg( ).
+        "...
 
         "handle event
         CASE abap_true.
           WHEN client->check_on_event( `OK` ).
-
+          "...
           WHEN client->check_on_event( `CANCEL` ).
-
+          "...
         ENDCASE.
 
     ENDCASE.
