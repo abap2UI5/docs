@@ -20,7 +20,7 @@ For example, to change the theme, the implementation would look like this:
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
 
-    cs_config-theme = `sap_belize`.
+    cs_config-theme = `sap_horizon_dark`.
 
 ENDMETHOD.
 ```
