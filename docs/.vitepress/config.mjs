@@ -105,7 +105,7 @@ export default defineConfig({
         link: "/development/general",
         collapsed: true,
         items: [
-          { text: "General", link: "/development/general" },
+          { text: "Controller", link: "/development/general" },
           { text: "View", link: "/development/view" },
           {
             text: "Model",
