@@ -23,9 +23,21 @@ export default defineConfig({
         href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
       },
     ],
+    // Montserrat
+    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    ['link', { 
+      rel: 'stylesheet', 
+      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap' 
+    }],
+    // Optional: Fira Code
+    ['link', { 
+      rel: 'stylesheet', 
+      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap' 
+    }]
   ],
   title: "abap2UI5",
-  description: "Developing Purely in ABAP",
+  description: "Build UI5 Apps Purely in ABAP",
   themeConfig: {
     logo: "/logo.png",
     footer: {
