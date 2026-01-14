@@ -271,7 +271,7 @@ export default defineConfig({
       },
       {
         text: "Resources",
-        link: "/resources/resources",
+        link: "/resources/addons",
         collapsed: true,
         items: [
           { text: "Addons", link: "/resources/addons" },
