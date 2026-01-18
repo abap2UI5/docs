@@ -46,7 +46,13 @@ When installing repositories with ADT abapGit, all artifacts are initially impor
 
 <img width="1279" height="410" alt="image" src="https://github.com/user-attachments/assets/157ed036-cf6a-4d7b-b93a-2d8bd20af6cb" />
 
+When the activation process is completed, refresh the folder tree:
+
 <img width="626" height="762" alt="image" src="https://github.com/user-attachments/assets/86b26c00-e71e-4a3f-a9e9-2beaaeddf577" />
+
+Now you'll see that all artifacts are activated:
+<img width="641" height="88" alt="image" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
+
 
 ### 3. Set Up the HTTP Service
 
