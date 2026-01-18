@@ -38,9 +38,9 @@ When installing repositories with ADT abapGit, all artifacts are initially impor
 
 <img width="691" height="732" alt="image" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
-<img width="638" height="179" alt="image" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
-
 You see that all artifacts are deactivated:
+
+<img width="638" height="179" alt="image" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 
 <img width="639" height="577" alt="image" src="https://github.com/user-attachments/assets/06997014-1891-4da2-b3a5-25587a6ad587" />
 
