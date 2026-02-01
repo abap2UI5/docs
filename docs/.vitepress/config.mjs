@@ -173,7 +173,7 @@ export default defineConfig({
               },
               { text: "URL", link: "/development/specific/url" },
               { text: "Formatter", link: "/development/specific/formatter" }, 
-              { text: "cl_demo_output", link: "/development/specific/demo_output" },
+              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
           { text: "Troubleshooting", link: "/development/trouble" },
