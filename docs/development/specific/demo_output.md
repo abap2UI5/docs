@@ -1,4 +1,4 @@
-# cl_demo_output
+# CL_DEMO_OUTPUT
 
 You can also display the html output of the class cl_demo_output with abap2UI5. Take the following snippet ot see how it works:
 
