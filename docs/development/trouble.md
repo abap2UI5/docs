@@ -6,7 +6,7 @@ For UI5 input fields, the soft keyboard is automatically shown when focusing an 
 
 ```abap
 
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
     
@@ -46,5 +46,5 @@ For UI5 input fields, the soft keyboard is automatically shown when focusing an 
         client->nav_app_leave( ).
     ENDCASE.
 
-  ENDMETHOD.
+ENDMETHOD.
 ```
