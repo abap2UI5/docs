@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Navigation
 
-In abap2UI5, each application is represented by a single ABAP class. While you can embed all logic within a single class, it's generally better practice to keep individual classes manageable in size. You can achieve this by creating multiple classes that interact with each other, letting you build reusable, generic applications and popups that can be called in various contexts.
+In abap2UI5, each application is a single ABAP class. While you can put all logic into one class, it's better practice to keep classes manageable in size. By splitting functionality into multiple classes that interact with each other, you can build reusable applications and popups that work across different contexts.
 
 ### Cross App Navigation
 

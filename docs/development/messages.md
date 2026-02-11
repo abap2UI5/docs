@@ -20,7 +20,7 @@ ENDMETHOD.
 
 #### Message Box
 
-Want the user to acknowledge the message? You can display a message box that requires manual closure:
+If you need the user to acknowledge the message, display a message box that requires manual closure:
 
 ```abap
 METHOD z2ui5_if_app~main.

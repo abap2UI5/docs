@@ -3,7 +3,7 @@ outline: [2, 6]
 ---
 # XLSX
 
-With abap2UI5 you can leverage the existing XLSX APIs of your ABAP system. It allows you to implement file uploads and downloads, converting XLSX contents into internal ABAP tables and vice versa.
+abap2UI5 lets you use your ABAP system's XLSX APIs to upload and download spreadsheets, converting between XLSX files and internal tables.
 
 #### Upload
 

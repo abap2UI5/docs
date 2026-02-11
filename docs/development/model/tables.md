@@ -1,5 +1,5 @@
 # Tables, Trees
-In this section, we will explore how to display deep data models, such as tables and trees.
+This section covers how to display complex data structures like tables, trees, and nested structures in your views.
 
 ### Tables 
 The example below demonstrates how to bind a simple table to a UI5 control:

@@ -1,6 +1,8 @@
 # CL_DEMO_OUTPUT
 
-You can also display the HTML output of the class cl_demo_output with abap2UI5. Take the following snippet to see how it works:
+If you're familiar with `CL_DEMO_OUTPUT` from classic ABAP, you can display its HTML output inside an abap2UI5 app as well. This is handy for quick data visualization or when migrating existing demo code.
+
+The approach: generate the HTML with `cl_demo_output=>get( )`, inject CSS styles via `_cc_plain_xml`, and render the result with the `html` control:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -68,28 +70,19 @@ METHOD z2ui5_if_app~main.
                                       `}` && |\n|  &&
                                       `</html:style>`.
 
+    "generate HTML output, e.g. from a database query:
+    "SELECT * FROM scarr INTO TABLE @DATA(carriers).
+    "DATA(lv_html) = cl_demo_output=>get( carriers ).
 
-
-    DATA(lv_html) = `` && |\n|  &&
-                    |\n|  &&
-                    `<h2 title="I'm a header">The title Attribute</h2>` && |\n|  &&
-                    |\n|  &&
-                    `<p title="I'm a tooltip">Mouse over this paragraph, to display the title attribute as a tooltip.</p>` && |\n|  &&
-                    |\n|  &&
-                    ``.
-
-*    SELECT *from scarr
-*           INTO TABLE @DATA(carriers).
-*
-*    DATA(lv_html) = cl_demo_output=>get( carriers ).
+    DATA(lv_html) = `<h2 title="I'm a header">The title Attribute</h2>` && |\n|  &&
+                    `<p title="I'm a tooltip">Mouse over this paragraph, to display the title attribute as a tooltip.</p>`.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
            )->page(
            )->button( text = `test`
           )->_cc_plain_xml( lv_style
-          )->html( lv_html
-          ).
+          )->html( lv_html ).
 
     client->view_display( view->stringify( ) ).
 

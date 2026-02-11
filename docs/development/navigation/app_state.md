@@ -1,6 +1,6 @@
 # App State
 
-In UI5 applications, you have the ability to save the current app state and return to it later. A similar functionality is supported in the abap2UI5 framework too.
+abap2UI5 supports saving the current app state so you can return to it later -- similar to how standard UI5 applications handle state management.
 
 ### Usage
 Each state is saved as a draft with a unique ID, you can display this ID in the URL using the `client->set_app_state_active` method. This command generates a URL that you can copy and paste into another browser window. An example URL looks like this: <br>
