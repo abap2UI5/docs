@@ -7,7 +7,7 @@ outline: [2, 4]
 You can run abap2UI5 with various custom configurations. The default setup is used automatically. For custom configurations, just implement the interface `z2ui5_if_exit`:
 
 ```abap
-CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES  z2ui5_if_exit.

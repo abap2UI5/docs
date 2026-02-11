@@ -11,16 +11,11 @@ One of the easiest ways to manage access to different apps is by implementing ch
 ##### Example: Restricting Access Based on URL Parameters
 In this example, we use the ICF handler class to control which apps can be accessed based on the APP_START parameter in the HTTP request. If an unauthorized app is requested, access is denied.
 ```abap
-CLASS z2ui5_cl_launchpad_handler DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES if_http_extension.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.

@@ -74,10 +74,7 @@ ENDINTERFACE.
 ```
 (2/3) Which can be used on app level to return KPIs:
 ```abap
-CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_lp_kpi.

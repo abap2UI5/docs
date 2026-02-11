@@ -195,7 +195,7 @@ In standard UI5 behavior, updating the XML View typically triggers a full re-ren
 Consider this example:
 
 ```abap
-CLASS z2ui5_cl_app_partial_rerendering DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_partial_rerendering DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA text TYPE string.

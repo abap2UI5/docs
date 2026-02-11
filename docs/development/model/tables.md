@@ -74,7 +74,7 @@ Making a table editable is a simple change. You just need to switch the binding 
 ### Tree
 To work with trees, you need to use nested structures. Here is an example:
 ```abap
-CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
  
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -169,15 +169,15 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
 
     DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind( mt_itab ) ).
 
-    DATA(lo_columns) = tab->columns( ).
-    lo_columns->column( )->text( text = `Product` ).
-    lo_columns->column( )->text( text = `Created at` ).
-    lo_columns->column( )->text( text = `By` ).
+    DATA(columns) = tab->columns( ).
+    columns->column( )->text( text = `Product` ).
+    columns->column( )->text( text = `Created at` ).
+    columns->column( )->text( text = `By` ).
 
-    DATA(lo_cells) = tab->items( )->column_list_item( ).
-    lo_cells->text( `{PRODUCT}` ).
-    lo_cells->text( `{S_DETAILS/CREATE_DATE}` ).
-    lo_cells->text( `{S_DETAILS/CREATE_BY}` ).
+    DATA(cells) = tab->items( )->column_list_item( ).
+    cells->text( `{PRODUCT}` ).
+    cells->text( `{S_DETAILS/CREATE_DATE}` ).
+    cells->text( `{S_DETAILS/CREATE_BY}` ).
 
     client->view_display( tab->stringify( ) ).
 

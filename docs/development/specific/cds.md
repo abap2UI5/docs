@@ -8,7 +8,7 @@ All examples in this documentation work without CDS or EML. However, if you're o
 ### ABAP CDS
 ABAP Core Data Services (CDS) enable you to define powerful views and consume data directly from the database. The following example demonstrates how to fetch sales orders using the I_SalesOrder view from the Virtual Data Model (VDM) and display them in a UI5 table:
 ```abap
-CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -48,7 +48,7 @@ The Entity Manipulation Language simplifies working with RAP business objects by
 #### Read
 Here’s how to use `READ ENTITIES` to fetch sales orders and display them in a UI5 table:
 ```abap
-CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.

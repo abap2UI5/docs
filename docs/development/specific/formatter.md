@@ -8,18 +8,12 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
     DATA amount            TYPE p LENGTH 14 DECIMALS 3.
     DATA currency          TYPE string.
-    DATA numeric           TYPE n length 12.
-
+    DATA numeric           TYPE n LENGTH 12.
     DATA check_initialized TYPE abap_bool.
 
-  PROTECTED SECTION.
-
-  PRIVATE SECTION.
 ENDCLASS.
-
 
 CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
@@ -104,17 +98,15 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
     page->simple_form( title    = `No Zeros`
                        editable = abap_true
-)->content( `form`
-)->title( `Input`
-)->label( `Documentation`
-)->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-         href = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
-)->label( `Numeric`
-)->input( value = client->_bind_edit( val = numeric  )
-
-)->label( `Without leading Zeros`
-
-)->text(
+        )->content( `form`
+        )->title( `Input`
+        )->label( `Documentation`
+        )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                 href = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
+        )->label( `Numeric`
+        )->input( value = client->_bind_edit( val = numeric )
+        )->label( `Without leading Zeros`
+        )->text(
     text = |\{path : `{ client->_bind_edit(
                             val  = numeric
                             path = abap_true ) }`, type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
