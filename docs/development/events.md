@@ -82,7 +82,7 @@ Retrieve specific properties of the event:
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
             "press
-            client->message_box_display( |The evend id is { client->get_event_arg( ) }| ).
+            client->message_box_display( |The event id is { client->get_event_arg( ) }| ).
     ENDCASE.
  
 ENDMETHOD.

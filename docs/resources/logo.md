@@ -3,7 +3,7 @@
 #### Logo
 ![alt text](/public/logo.png)
 
-#### Logo without Backgound
+#### Logo without Background
 ![alt text](/public/logo_white_back.png)
 
 #### Favicon

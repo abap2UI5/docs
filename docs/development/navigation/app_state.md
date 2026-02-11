@@ -3,7 +3,7 @@
 In UI5 applications, you have the ability to save the current app state and return to it later. A similar functionality is supported in the abap2UI5 framework too.
 
 ### Usage
-Each state is saved as a draft with a unique ID, you can display this ID in the URL using the `client->set_app_state_active` method. This command generates a URL that you can copy&paste into another browser window. An example URL looks like this: <br>
+Each state is saved as a draft with a unique ID, you can display this ID in the URL using the `client->set_app_state_active` method. This command generates a URL that you can copy and paste into another browser window. An example URL looks like this: <br>
 `.../sap/bc/z2ui5?sap-client=001&app_start=z2ui5_cl_demo_app_000#/z2ui5-xapp-state=024251849E5A1EDFB1DAE2C97C8CE8C2`
 
 ### Sample Code

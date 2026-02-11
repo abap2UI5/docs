@@ -64,7 +64,7 @@ sap.ui.core.Component.create({
 }
 ```
 
-5. Create ABAP2U5 app class
+5. Create abap2UI5 app class
 ```abap
   METHOD z2ui5_if_app~main.
 

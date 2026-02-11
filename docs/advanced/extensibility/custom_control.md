@@ -11,4 +11,4 @@ https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/controller/App.control
 
 #### Backend  
 Extend the custom control view class by adding an additional method and defining the properties of your custom control here:  
-z2ui5_cl_xml_view_cc.clas.abap](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_cl_xml_view_cc.clas.abap
+[z2ui5_cl_xml_view_cc.clas.abap](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_cl_xml_view_cc.clas.abap)

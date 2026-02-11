@@ -33,7 +33,7 @@ tab->items( )->column_list_item( )->cells(
     )->text( `{FLIGHT>City}`
     )->text( `{FLIGHT>CountryCode}` ).
 ```
-By using the growing property we can make use of the feature that not all data is loaded at once, leveraging performance.
+By using the growing property we can make use of the feature that not all data is loaded at once, improving performance.
 
 #### Full Example
 Here's the complete source code:
@@ -97,7 +97,7 @@ client->follow_up_action( client->_event_client(
 For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
 
 #### Metadata Binding
-In SAP contexts, OData services are often enriched with additional annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. You find the definitions for the entity `Currency`:
+In SAP contexts, OData services are often enriched with additional annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. You can find the definitions for the entity `Currency`:
 ```xml
 <EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">
 <Key>
