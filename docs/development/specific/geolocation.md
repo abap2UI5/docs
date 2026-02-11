@@ -5,7 +5,7 @@ abap2UI5 includes a custom control for retrieving geolocation data from the user
 The control fires a `finished` event once the browser has determined the device position. All values are exchanged via two-way binding. See also `Z2UI5_CL_DEMO_APP_120`.
 
 ```abap
-CLASS z2ui5_cl_sample_geolocation DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_geolocation DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.

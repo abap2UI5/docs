@@ -18,7 +18,7 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory(
+    DATA(view) = z2ui5_cl_xml_view=>factory(
         )->page(
             )->barcode_scanner_button(
                 dialogtitle = `Barcode Scanner`
@@ -28,7 +28,7 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
                         ( `${$parameters>/text}`   )
                         ( `${$parameters>/format}` ) ) ) ).
 
-    client->view_display( lo_view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
     IF client->get( )-event = `SCAN_SUCCESS`.
 
@@ -52,7 +52,7 @@ Most scanner devices have an integrated scanning function. In such cases, you ca
 Here’s an example that demonstrates how to handle input focus and manage transitions between fields after scanning and pressing ENTER:
 
 ```abap
-CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -105,7 +105,7 @@ ENDCLASS.
 Providing audio feedback can be helpful in specific contexts. Below is an example that plays a sound if a user fails to scan a value. The sound file is a .wav file stored in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
 ```abap
-CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.

@@ -9,7 +9,7 @@ abap2UI5 was built from the everyday experiences of ABAP developers. It tackles 
 One of the most fundamental development tasks is outputting data. In ABAP, the quickest way to do this is with the `if_oo_adt_classrun` interface. It provides a simple, class-based entry point for outputting data directly in ADT:
 
 ```abap
-CLASS zcl_app_adt DEFINITION PUBLIC CREATE PUBLIC.
+CLASS zcl_app_adt DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
@@ -27,7 +27,7 @@ Benefits:
 
 This simplicity also inspired the entry point for abap2UI5 apps. For simple output, you don't need more than this:
 ```abap
-CLASS zcl_app_ui5 DEFINITION PUBLIC CREATE PUBLIC .
+CLASS zcl_app_ui5 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 ENDCLASS.
@@ -58,7 +58,7 @@ Benefits:
 abap2UI5 mirrors this classic selection screen behavior in the browser. Use `Z2UI5_CL_XML_VIEW` to define simple views and exchange data with the `_bind_edit` method:
 
 ```abap
-CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
+CLASS zcl_app_input DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA pa_arbgb TYPE string VALUE `MDG_TR`.
@@ -127,15 +127,15 @@ CLASS zcl_app_alv IMPLEMENTATION.
     DATA(tab) = z2ui5_cl_xml_view=>factory(
         )->table( client->_bind( gt_t100 ) ).
 
-    DATA(lo_col) = tab->columns( ).
-    lo_col->column( )->text( `ARBGB` ).
-    lo_col->column( )->text( `MSGNR` ).
-    lo_col->column( )->text( `TEXT`  ).
+    DATA(columns) = tab->columns( ).
+    columns->column( )->text( `ARBGB` ).
+    columns->column( )->text( `MSGNR` ).
+    columns->column( )->text( `TEXT`  ).
 
-    DATA(lo_cell) = tab->items( )->column_list_item( ).
-    lo_cell->text( `{ARBGB}` ).
-    lo_cell->text( `{MSGNR}` ).
-    lo_cell->text( `{TEXT}` ).
+    DATA(cells) = tab->items( )->column_list_item( ).
+    cells->text( `{ARBGB}` ).
+    cells->text( `{MSGNR}` ).
+    cells->text( `{TEXT}` ).
 
     client->view_display( tab->stringify( ) ).
 

@@ -13,10 +13,10 @@ To display a popup, use the method `client->popup_display` instead of `client->v
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
+    DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( `Popup - Info`
           )->text( `this is an information shown in a popup` ).
-    client->popup_display( lo_popup->stringify( ) ).
+    client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 ```
@@ -27,25 +27,25 @@ A common flow for using popups typically involves displaying a normal view, then
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-        DATA(lo_view) = z2ui5_cl_xml_view=>factory(
+        DATA(view) = z2ui5_cl_xml_view=>factory(
             )->page( `abap2UI5 - Popups`
                 )->button(
                     text  = `popup rendering, no background rendering`
                     press = client->_event( `POPUP_OPEN` ) ).
-        client->view_display( lo_view->stringify( ) ).
+        client->view_display( view->stringify( ) ).
 
     ENDIF.
 
     CASE client->get( )-event.
 
       WHEN `POPUP_OPEN`.
-        DATA(lo_popup) = z2ui5_cl_xml_view=>factory_popup(
+        DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
             )->dialog( `Popup`
                 )->text( `this is a text in a popup`
                 )->button(
                     text  = `close`
                     press = client->_event( `POPUP_CLOSE` ) ).
-        client->popup_display( lo_popup->stringify( ) ).
+        client->popup_display( popup->stringify( ) ).
 
       WHEN `POPUP_CLOSE`.
         client->popup_destroy( ).
@@ -65,11 +65,11 @@ Check out the popup to confirm, for example:
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        DATA(lo_popup) = z2ui5_cl_pop_to_confirm=>factory(
+        DATA(popup) = z2ui5_cl_pop_to_confirm=>factory(
                           i_question_text = `Can you confirm this?`
                           i_event_confirm = `CONFIRM`
                           i_event_cancel  = `CANCEL` ).
-        client->nav_app_call( lo_popup ).
+        client->nav_app_call( popup ).
 
       WHEN client->check_on_event( `CONFIRM` ).
         client->message_box_display( `the result is confirmed` ).

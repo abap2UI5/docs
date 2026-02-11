@@ -16,7 +16,7 @@ Explore all available parameters in the [UI5 Documentation.](https://sapui5.hana
 ### Backend
 You can also retrieve detailed device information on the backend using a custom info frontend control. This allows you to access UI5 version, device type, OS, browser details, and screen dimensions. Below is an example implementation, which demonstrates how to collect and use this information:
 ```abap
-CLASS z2ui5_cl_sample_device DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_device DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -41,8 +41,8 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_view) = z2ui5_cl_xml_view=>factory(
-        )->page( )->_z2ui5( 
+    DATA(view) = z2ui5_cl_xml_view=>factory(
+        )->page( )->_z2ui5(
             )->info_frontend( 
                 finished          = client->_event( `POST` )
                 device_browser    = client->_bind_edit( device_browser )
@@ -58,7 +58,7 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
                 device_height     = client->_bind_edit( device_height  )
                 device_width      = client->_bind_edit( device_width   ) ).
 
-    client->view_display( lo_view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
     IF client->get( )-event = `POST`.
       "process device info here...

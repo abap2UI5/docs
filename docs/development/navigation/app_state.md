@@ -9,7 +9,7 @@ Each state is saved as a draft with a unique ID, you can display this ID in the 
 ### Sample Code
 Below is an implementation of the app state functionality:
 ```abap
-CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC.
  
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.

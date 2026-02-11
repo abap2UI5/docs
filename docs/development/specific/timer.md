@@ -16,7 +16,7 @@ The timer is added as a view element via `_z2ui5( )->timer( ... )` and supports 
 Embed the timer in your view and control it via data binding. The following example increments a counter every 2 seconds:
 
 ```abap
-CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -59,7 +59,7 @@ With `checkrepeat = abap_true`, the timer restarts automatically after each even
 If you only need the timer to fire once (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
 
 ```abap
-CLASS z2ui5_cl_sample_timer_once DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_sample_timer_once DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.

@@ -5,7 +5,7 @@ abap2UI5 contains predefined user exits which can be used to modify the standard
 The following example changes the title, theme and the time drafts are saved in the backend:
 
 ```abap
-CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES  z2ui5_if_exit.

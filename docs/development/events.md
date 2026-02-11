@@ -94,7 +94,7 @@ You can access any object attribute, but make sure you access only public and re
 #### Model Properties
 Retrieve model properties associated with the event:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
+CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -103,8 +103,7 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC CREATE PUBLIC.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
-
-METHOD z2ui5_if_app~main.
+  METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
          )->input( client->_bind_edit( name )

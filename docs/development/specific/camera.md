@@ -7,7 +7,7 @@ abap2UI5 provides a custom control for capturing photos directly from the device
 
 Here's a basic example based on sample `z2ui5_cl_demo_app_306`:
 ```abap
-CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC FINAL CREATE PUBLIC.
+CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
