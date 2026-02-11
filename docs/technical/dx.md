@@ -61,7 +61,7 @@ abap2UI5 mirrors this classic selection screen behavior in the browser. Use `Z2U
 CLASS zcl_app_input DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA pa_arbgb TYPE string VALUE 'MDG_TR'.
+    DATA pa_arbgb TYPE string VALUE `MDG_TR`.
 ENDCLASS.
 
 CLASS zcl_app_input IMPLEMENTATION.

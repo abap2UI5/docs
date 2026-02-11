@@ -20,19 +20,19 @@ METHOD z2ui5_if_app~main.
                         ` alert("inputmode changed to" + mode); }` ).
 
     DATA(page) =   view->shell(
-             )->page( title          = 'abap2UI5 - Softkeyboard on/off'
-                      navbuttonpress = client->_event( 'BACK' )
+             )->page( title          = `abap2UI5 - Softkeyboard on/off`
+                      navbuttonpress = client->_event( `BACK` )
                       shownavbutton  = client->check_app_prev_stack( )
                       )->_z2ui5( )->focus( focusid = `ZINPUT`
       )->simple_form( editable = abap_true
-                 )->content( 'form'
-                     )->title( 'Keyboard on/off'
-                     )->label( 'Input'
+                 )->content( `form`
+                     )->title( `Keyboard on/off`
+                     )->label( `Input`
                      )->input( id               = `ZINPUT`
                                value            = client->_bind_edit( input )
                                showvaluehelp    = abap_true
-                               valuehelprequest = client->_event( 'CALL_KEYBOARD' )
-                               valuehelpiconsrc = 'sap-icon://keyboard-and-mouse' ).
+                               valuehelprequest = client->_event( `CALL_KEYBOARD` )
+                               valuehelpiconsrc = `sap-icon://keyboard-and-mouse` ).
 
     client->view_display( page->stringify( ) ).
 
@@ -40,9 +40,9 @@ METHOD z2ui5_if_app~main.
 
 
     CASE client->get( )-event.
-      WHEN 'CALL_KEYBOARD'.
+      WHEN `CALL_KEYBOARD`.
         client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
-      WHEN 'BACK'.
+      WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.
 
