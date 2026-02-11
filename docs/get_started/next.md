@@ -1,17 +1,15 @@
 # What's Next?
 
-Ready to level up? Dive deeper into abap2UI5!
+Now that you have abap2UI5 up and running, here are some paths to explore further.
 
 #### Development
-Want to sharpen your development skills? Explore advanced guides and best practices to take your abap2UI5 projects to the next level. Start learning [here.](/development/general)
+Learn how to build views, handle events, exchange data, and work with tables. The development guide covers everything you need for your day-to-day work with abap2UI5. Start [here.](/development/general)
 
 #### Configuration
-Getting ready for production? Follow the configuration guides to ensure a smooth, optimized setup for your system. Begin [here.](/configuration/setup)
+Preparing for production? The configuration guides walk you through security, performance tuning, launchpad integration, and more. Start [here.](/configuration/setup)
 
-#### Addons
-Boost your abap2UI5 applications with additional features and functionalities by installing new add-ons. Discover more [here.](/resources/addons)
+#### Add-ons
+Extend your abap2UI5 applications with community-built add-ons for layout management, charts, table maintenance, and other features. Explore them [here.](/resources/addons)
 
 #### More
-Jumpstart your projects by exploring ready-to-use apps, use cases, and companies already using abap2UI5. Find them [here.](/resources/who_uses)
-
-
+Browse ready-to-use apps, real-world use cases, and companies already using abap2UI5. Find them [here.](/resources/who_uses)

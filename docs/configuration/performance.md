@@ -4,9 +4,9 @@ outline: [2, 4]
 
 # Performance
 
-abap2UI5 is fast! Almost everything's processed in the backend, leveraging the ABAP stack, which performs much faster than client-side or browser-based processing. <br>
+abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is significantly faster than client-side or browser-based processing.
 
-Frontend logic is kept to a minimum: no business logic is executed, and everything's passed directly to the UI5 framework, focusing solely on UI rendering. <br>
+Frontend logic is kept to a minimum: no business logic runs in the browser. Everything is passed directly to the UI5 framework, which focuses solely on UI rendering.
 
 abap2UI5 has been successfully tested with tables containing large numbers of entries and columns. So, you can confidently develop your app — performance shouldn't be a concern.
 

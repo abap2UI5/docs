@@ -4,7 +4,7 @@ _Technical Deep Dive into abap2UI5_
 
 This article was originally published on the [SAP Community.](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)
 
-It's intended for developers who want to understand how abap2UI5 works under the hood. We'll explore how the framework achieves its flexibility — including runtime view generation, generic HTTP handling, and decoupling from OData — and provide insight into its architecture, extensibility, and system internals.
+This article is for developers who want to understand how abap2UI5 works under the hood. It explores how the framework achieves its flexibility -- including runtime view generation, generic HTTP handling, and decoupling from OData -- and provides insight into its architecture, extensibility, and system internals.
 
 ##### 1. HTML Over the Wire
 

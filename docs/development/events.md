@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Events
 
-UI5 Control properties can be used not only to display data but also to trigger events. Let's explore how you can leverage this functionality.
+UI5 control properties can be used not only to display data but also to trigger events. This section shows how to work with backend events, frontend events, and follow-up actions.
 
 ### Backend
 You can trigger backend processing when an event occurs using the `client->_event` method.

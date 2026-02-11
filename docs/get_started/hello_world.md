@@ -4,7 +4,7 @@ outline: [2, 4]
 # Hello World
 
 ### Basic Example
-Every abap2UI5 app is an implementation of the `Z2UI5_IF_APP` interface. Create a new class with the following code:
+Every abap2UI5 app implements the `Z2UI5_IF_APP` interface. Create a new class with the following code:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
@@ -24,7 +24,7 @@ ENDCLASS.
 Head back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
-Now, let's add our first view to display a simple text:
+Now let's add a view to display a simple text:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -108,7 +108,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-And that's it! Set a breakpoint to observe the communication and data updates in action. Now you can play around and experiment with modifying the view, events, and data exchange.
+That's all you need. Set a breakpoint to observe the communication and data updates in action, then experiment with modifying the view, events, and data exchange.
 
 ::: tip **ABAP Language Versions**
 While you need to distinguish between Standard ABAP and ABAP for Cloud in the HTTP Handler, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility or not.

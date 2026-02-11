@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # CDS, EML
 
-While all examples and snippets in our documentation are designed for compatibility without requiring CDS or EML, you can leverage these modern ABAP features in your abap2UI5 applications if you're using the latest ABAP releases.
+All examples in this documentation work without CDS or EML. However, if you're on a recent ABAP release, you can use these modern features in your abap2UI5 applications as well.
 
 ### ABAP CDS
 ABAP Core Data Services (CDS) enable you to define powerful views and consume data directly from the database. The following example demonstrates how to fetch sales orders using the I_SalesOrder view from the Virtual Data Model (VDM) and display them in a UI5 table:
