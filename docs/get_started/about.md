@@ -110,4 +110,4 @@ Contributions are always welcome -- whether you're fixing bugs, building new fea
 #### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project, consider supporting it.
 
-→ *Learn more about [sponsorship opportunities](/resources/sponsor)*
+→ *Learn more about [Sponsorship Opportunities](/resources/sponsor)*
