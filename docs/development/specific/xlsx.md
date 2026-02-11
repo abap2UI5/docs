@@ -15,7 +15,7 @@ Transform uploaded xlsx files into an internal table:
 CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
     DATA mv_path  TYPE string.
     DATA mv_value TYPE string.
 
@@ -261,7 +261,7 @@ CLASS lcl_help IMPLEMENTATION.
       result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
 
     CATCH cx_root INTO DATA(x).
-      z2ui5_cL_util=>x_raise( x->get_text( ) ).
+      z2ui5_cl_util=>x_raise( x->get_text( ) ).
     ENDTRY.
   ENDMETHOD.
 ENDCLASS.

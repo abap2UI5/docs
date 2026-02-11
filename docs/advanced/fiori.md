@@ -31,7 +31,7 @@ sap.ui.core.Component.create({
 					}
 				}
 			}).then(function (oComponent) {
-				var oCompContainter = new sap.ui.core.ComponentContainer({
+				var oCompContainer = new sap.ui.core.ComponentContainer({
 					component: oComponent,
 					async: true
 				});
@@ -39,7 +39,7 @@ sap.ui.core.Component.create({
 				// Add component container to your VBox
 				var oVBox = that.getView().byId("VBoxId")
 				oVBox.destroyItems();
-				oVBox.addItem(oCompContainter);
+				oVBox.addItem(oCompContainer);
 				
 				//Overwrite default height of object page section
 				var oSection = that.getView().byId("[This is the ID of your object page section::Section]");
@@ -58,7 +58,7 @@ sap.ui.core.Component.create({
 ```
 
 4. Add CSS (style.css):
-```json
+```css
 .customSectionHeight {
     height: auto !important;
 }
@@ -76,13 +76,13 @@ sap.ui.core.Component.create({
 
     ENDIF.
 
-    DATA(lr_view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(lr_page) = lr_view->page( showheader = abap_false
-                                   backgrounddesign = `List` )->content( ). "Backgrounddesign "List" sets a white background color
+    DATA(view) = z2ui5_cl_xml_view=>factory( ).
+    DATA(page) = view->page( showheader = abap_false
+                             backgrounddesign = `List` )->content( ). "Backgrounddesign "List" sets a white background color
 
-    lr_page->text( `TEXT` ).
+    page->text( `TEXT` ).
 
-    client->view_display( lr_view->stringify( ) ).
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ```
