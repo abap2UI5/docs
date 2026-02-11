@@ -8,7 +8,7 @@ Whether it makes sense to build apps with abap2UI5 depends heavily on future-pro
 
 ABAP Cloud is a restricted ABAP language version that ensures cloud readiness and upgrade stability. Developments that follow the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — without requiring code adjustments or any further investments.
 
-ABAP Cloud contains of a simplified technology stack, syntax, and toolset:
+ABAP Cloud consists of a simplified technology stack, syntax, and toolset:
 
 - No classic UI technologies like Web Dynpro, ALV, GUI CFW
 - Simplified syntax (e.g., no `WRITE` statements)

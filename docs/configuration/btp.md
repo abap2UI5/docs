@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# BTP Build Workzone
+# BTP Build Work Zone
 
 Integrate your abap2UI5 apps into BTP Services like Build Workzone. Find all information here:<br>
 [**Installation & Configuration of BTP**](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-13-installation-lf1re/?trackingId=YQ0y%2Fq0y6Kw5PK8chNCbrw%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3BFGBWUSIZRzeRjUNKBFD0uA%3D%3D)<br>

@@ -88,7 +88,7 @@ Technically, abap2UI5 apps are regular UI5 freestyle applications. License them 
 Integrate your apps into:
 * Fiori Launchpads on S/4 On-Premise
 * Tiles on S/4 Public Cloud
-* Build Workzone Websites on BTP
+* Build Work Zone Websites on BTP
 
 ##### Installation
 Getting started is straightforward:

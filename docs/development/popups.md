@@ -64,7 +64,7 @@ Check out the popup to confirm, for example:
 
     CASE abap_true.
 
-      when client->check_on_init( ).
+      WHEN client->check_on_init( ).
         DATA(lo_popup) = z2ui5_cl_pop_to_confirm=>factory(
                           i_question_text = `Can you confirm this?`
                           i_event_confirm = `CONFIRM`
@@ -112,7 +112,7 @@ To display a popover, use the method `client->popover_display` and specify the I
                     text  = `close`
                     press = client->_event( `POPOVER_CLOSE` ) ).
         client->popover_display(
-            xml   = view->stringify( )
+            xml   = popover->stringify( )
             by_id = `my_id` ).
 
       WHEN `POPOVER_CLOSE`.

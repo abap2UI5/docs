@@ -1,6 +1,6 @@
 # CL_DEMO_OUTPUT
 
-You can also display the html output of the class cl_demo_output with abap2UI5. Take the following snippet ot see how it works:
+You can also display the HTML output of the class cl_demo_output with abap2UI5. Take the following snippet to see how it works:
 
 ```abap
 METHOD z2ui5_if_app~main.

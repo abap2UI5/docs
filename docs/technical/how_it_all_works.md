@@ -20,7 +20,7 @@ After the initial page load, only small HTML fragments are sent asynchronously v
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
   
-_HTML "Over the Wire" Lifecycle [(Quelle)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
+_HTML "Over the Wire" Lifecycle [(Source)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
 
 This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are managed independently on the frontend while the backend only delivers data.
@@ -33,7 +33,7 @@ In contrast, SPAs define all routes and actions upfront on the frontend, requiri
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/8117dc10-f0ba-4c52-9d1d-6b9d0986401d" />
 
-_MPA vs. SPA vs. HDA [(Quelle)](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)_
+_MPA vs. SPA vs. HDA [(Source)](https://craftcms.com/events/dot-all-2022/sessions/a-practical-guide-to-html-over-the-wire)_
 
 ##### 3. Rethinking Separation of Concerns
 
@@ -156,7 +156,7 @@ In the end, the View & Model are defined independent from the HTTP-Service and w
 
 RAP vs. Model & View decoupled from the (single & generic) HTTP-Service
 
-Let's take a look to the HTTP-Handler that provides us with this flexibility.
+Let's take a look at the HTTP-Handler that provides us with this flexibility.
 
 ##### 13. HTTP-Service
 
@@ -188,7 +188,7 @@ The only non-generic part of this concept is the app of the user implementing th
 
 abap2UI5 app - one place for everything
 
-In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it was coming from and where it want to go next. All of this is concentrated in this single app layer.
+In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it was coming from and where it wants to go next. All of this is concentrated in this single app layer.
 
 However, this is not a big deal for ABAP! From an ABAP perspective, this is similar to past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performs all the necessary functions (it was just not a browser-based environment). Moreover, in this architecture, we are not limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions, such as commit sequences, anymore. We can now leverage the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward, working with generic data models, as seen in (10), is easily achievable at runtime with RTTI and extended ABAP concepts like serialization are also applicable, as we will see in the next section.
 
@@ -224,7 +224,7 @@ The first GET request sends the artifacts of the UI5 (HDA) app to the browser. T
 
 index.html stored in ABAP Source Code instead of using a BSP
 
-This provides us a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separated frontend artifacts or deployments.
+This provides us with a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separated frontend artifacts or deployments.
 
 ##### 18. Everything is maintained & developed in the Backend
 
@@ -299,7 +299,7 @@ To summarize what we have covered so far, abap2UI5 is built in a highly generic 
 
 Most notably, compared to UI5, we can't implement offline capabilities – in such scenarios we can't continuously ask the server after every event to determine what happens next.
 
-Furthermore, using HANA DB capabilities directly at the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. However, in a RAP scenario, they use a typed OData and can directly touch HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, pagination or fuzzy searchs can be easily integrated in UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
+Furthermore, using HANA DB capabilities directly at the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. However, in a RAP scenario, they use a typed OData and can directly touch HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, pagination or fuzzy searches can be easily integrated in UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
 
 Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend – we're forced to replace the entire view after every request with this approach. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of lower functionality in other areas.
 
@@ -341,17 +341,17 @@ Local Bootstrapping - UI5 version depends on the SAP release
 
 CDN Bootstrapping - UI5 version independent from the SAP release
 
-As a result, abap2UI5 apps can also be developed to be portable across various SAP systems, releases, and environments. If an app is developed once on ABAP Cloud 2305, it can also be used on lower releases. Similarly, apps developed on older Netweaver releases can run on BTP ABAP Environment or S/4 Public Cloud ABAP Environment. However, for this compatibility to be possible, abap2UI5 and its apps need to be designed to work with both language versions, 'ABAP Cloud' and 'Standard ABAP'. To avoid redundancy, abap2UI5 tries to achieve this by using a single code line.
+As a result, abap2UI5 apps can also be developed to be portable across various SAP systems, releases, and environments. If an app is developed once on ABAP Cloud 2305, it can also be used on lower releases. Similarly, apps developed on older NetWeaver releases can run on BTP ABAP Environment or S/4 Public Cloud ABAP Environment. However, for this compatibility to be possible, abap2UI5 and its apps need to be designed to work with both language versions, 'ABAP Cloud' and 'Standard ABAP'. To avoid redundancy, abap2UI5 tries to achieve this by using a single code line.
 
 ##### 27. One-Code-Line
 
-With this approach, the use of dependencies is limited to cloud-released APIs and functions available in lower Netweaver releases simultaneously. To handle this, abap2UI5 only uses SAP dependencies when it is really needed -- for instance in the GUID creation:
+With this approach, the use of dependencies is limited to cloud-released APIs and functions available in lower NetWeaver releases simultaneously. To handle this, abap2UI5 only uses SAP dependencies when it is really needed -- for instance in the GUID creation:
 
 <img width="600" alt="image" src="https://github.com/user-attachments/assets/8039f152-1f39-4428-93a3-6cf80b38da5d" />
 
 GUID creation compatible to ABAP Cloud and Standard ABAP
 
-As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abapUI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and I have no experience if this is feasable). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver v702.
+As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and I have no experience if this is feasible). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver v702.
 
 ##### 28. Compatibility & Downporting
 

@@ -80,12 +80,12 @@ CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-    INTERFACES z2ui5_if_proxy_kpi.
+    INTERFACES z2ui5_if_lp_kpi.
     INTERFACES z2ui5_if_app.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_proxy_kpi_hello_world IMPLEMENTATION.
+CLASS z2ui5_cl_lp_kpi_hello_world IMPLEMENTATION.
 
   METHOD z2ui5_if_lp_kpi~count.
     "kpi calculation....

@@ -26,12 +26,12 @@ Head back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORL
 ### View Display
 Now, let's add our first view to display a simple text:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory(
@@ -46,12 +46,12 @@ ENDCLASS.
 ### Event Handler
 Next, we extend the app with a button and an event handler. To ensure that the view is only rendered at the start, we also check for the `on_init` event:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.
@@ -77,13 +77,13 @@ ENDCLASS.
 ### Data Exchange
 Finally, we add a public attribute and can send data to the backend:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.

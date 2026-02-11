@@ -16,10 +16,10 @@ In `S/4 Private Cloud` you can make the HTTP endpoint accessible for business us
 ### S/4 On-Premise
 The setup in `S/4 On-Premise` is the same as in `S/4 Private Cloud`. Follow the guide [here.](/configuration/launchpad)
 
-### R/3 Netweaver
+### R/3 NetWeaver
 The setup is the same as in `S/4 Private Cloud`. Depending on your release level, you may be able to add the apps to Launchpads. Follow the guide [here.](/configuration/launchpad)
 
-### R/3 Netweaver (<7.50)
+### R/3 NetWeaver (<7.50)
 For older versions of R/3 NetWeaver lower v7.50, install the downported version with syntax adjustments for earlier releases. abap2UI5 runs on versions down to 7.02. See the downport section for more information [here.](/advanced/downporting)
 
 ### BTP ABAP Environment
