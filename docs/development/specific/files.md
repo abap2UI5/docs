@@ -11,7 +11,7 @@ See also `Z2UI5_CL_DEMO_APP_075`:
 CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES Z2UI5_if_app.
+    INTERFACES z2ui5_if_app.
     DATA mv_path  TYPE string.
     DATA mv_value TYPE string.
 
