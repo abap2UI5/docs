@@ -24,8 +24,8 @@ That's it -- your first UI5 app is ready.
 
 Since launching in 2023, abap2UI5 has evolved from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework takes care of all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
 
-> *See the [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*
-> *Browse [Sample Applications](/get_started/samples) to see abap2UI5 in action*
+→ *See our [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*  
+→ *Browse [Sample Applications](/get_started/samples) to see abap2UI5 in action*
 
 ### Why abap2UI5?
 
