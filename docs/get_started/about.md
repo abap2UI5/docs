@@ -93,21 +93,21 @@ Getting started takes three steps:
 2. Create an HTTP service for browser communication
 3. Start developing
 
-> *See the [Installation Guide](/get_started/quickstart) for detailed instructions*
+→ *See the [Installation Guide](/get_started/quickstart) for detailed instructions*
 
 ### Community
 
 #### Support
 Support is provided by the community. Submit an issue on GitHub or join the abap2UI5 Slack channel for help.
 
-> *Visit the [Support page](/resources/support) for more options*
+→ *Visit the [Support page](/resources/support) for more options*
 
 #### Contribution
 Contributions are always welcome -- whether you're fixing bugs, building new features, or improving documentation.
 
-> *Read the [Contribution Guide](/resources/contribution) to get involved*
+→ *Read the [Contribution Guide](/resources/contribution) to get involved*
 
 #### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project, consider supporting it.
 
-> *Learn more about [sponsorship opportunities](/resources/sponsor)*
+→ *Learn more about [sponsorship opportunities](/resources/sponsor)*
