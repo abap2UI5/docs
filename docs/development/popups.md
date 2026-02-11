@@ -112,7 +112,7 @@ To display a popover, use the method `client->popover_display` and specify the I
                     text  = `close`
                     press = client->_event( `POPOVER_CLOSE` ) ).
         client->popover_display(
-            xml   = view->stringify( )
+            xml   = popover->stringify( )
             by_id = `my_id` ).
 
       WHEN `POPOVER_CLOSE`.
