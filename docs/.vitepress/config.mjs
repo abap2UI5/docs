@@ -125,12 +125,9 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Tables, Trees", link: "/development/model/tables" },
-              { text: "OData", link: "/development/model/odata" },
               { text: "Device Model", link: "/development/model/device" },
-              {
-                text: "Expression Binding",
-                link: "/development/model/expression_binding",
-              },
+              { text: "Expression Binding", link: "/development/model/expression_binding" },
+              { text: "OData", link: "/development/model/odata" },
             ],
           },
           { text: "Events", link: "/development/events" },
