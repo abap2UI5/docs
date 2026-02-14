@@ -56,7 +56,7 @@ CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
                           `  path:"` && client->_bind( val  = quantity
                                                        path = abap_true ) && `"  }`
                 )->input(
-                    value   = product
+                    value   = client->_bind_edit( product )
                     enabled = `{= 500===$` && client->_bind( quantity ) && ` }` ).
     client->view_display( view->stringify( ) ).
 

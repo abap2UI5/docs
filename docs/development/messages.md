@@ -63,9 +63,7 @@ METHOD z2ui5_if_app~main.
       username = sy-uname
     TABLES
       return   = lt_bapiret.
-  IF sy-subrc <> 0.
-    client->message_box_display( lt_bapiret ).
-  ENDIF.
+  client->message_box_display( lt_bapiret ).
 
 ENDMETHOD.
 ```

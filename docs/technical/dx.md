@@ -75,7 +75,9 @@ CLASS zcl_app_input IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->message_box_display( |Input: { pa_arbgb }| ).
+    IF client->check_on_event( `POST` ).
+      client->message_box_display( |Input: { pa_arbgb }| ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

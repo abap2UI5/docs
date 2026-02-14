@@ -19,24 +19,28 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    SELECT FROM I_SalesOrder
-     FIELDS salesorder, salesordertype, salesorganization
-     INTO TABLE @mt_salesorder
-     UP TO 10 ROWS.
+    IF client->check_on_init( ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
-    DATA(table) = view->table( client->_bind( mt_salesorder ) ).
-    table->columns(
-         )->column( )->text( `SalesOrder` )->get_parent(
-         )->column( )->text( `SalesOrderType` )->get_parent(
-         )->column( )->text( `SalesOrganization` ).
+      SELECT FROM I_SalesOrder
+       FIELDS salesorder, salesordertype, salesorganization
+       INTO TABLE @mt_salesorder
+       UP TO 10 ROWS.
 
-    table->items( )->column_list_item( )->cells(
-       )->text( `{SALESORDER}`
-       )->text( `{SALESORDERTYPE}`
-       )->text( `{SALESORGANIZATION}` ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
+      DATA(table) = view->table( client->_bind( mt_salesorder ) ).
+      table->columns(
+           )->column( )->text( `SalesOrder` )->get_parent(
+           )->column( )->text( `SalesOrderType` )->get_parent(
+           )->column( )->text( `SalesOrganization` ).
 
-    client->view_display( view->stringify( ) ).
+      table->items( )->column_list_item( )->cells(
+         )->text( `{SALESORDER}`
+         )->text( `{SALESORDERTYPE}`
+         )->text( `{SALESORGANIZATION}` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -59,25 +63,29 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    READ ENTITIES OF I_SalesOrderTP
-      ENTITY SalesOrder
-      ALL FIELDS WITH
-      VALUE #( ( SalesOrder = `0000000001` ) )
-      RESULT mt_salesorder.
+    IF client->check_on_init( ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
-    DATA(table) = view->table( client->_bind( mt_salesorder ) ).
-    table->columns(
-         )->column( )->text( `SalesOrder` )->get_parent(
-         )->column( )->text( `SalesOrderType` )->get_parent(
-         )->column( )->text( `SalesOrganization` ).
+      READ ENTITIES OF I_SalesOrderTP
+        ENTITY SalesOrder
+        ALL FIELDS WITH
+        VALUE #( ( SalesOrder = `0000000001` ) )
+        RESULT mt_salesorder.
 
-    table->items( )->column_list_item( )->cells(
-       )->text( `{SALESORDER}`
-       )->text( `{SALESORDERTYPE}`
-       )->text( `{SALESORGANIZATION}` ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
+      DATA(table) = view->table( client->_bind( mt_salesorder ) ).
+      table->columns(
+           )->column( )->text( `SalesOrder` )->get_parent(
+           )->column( )->text( `SalesOrderType` )->get_parent(
+           )->column( )->text( `SalesOrganization` ).
 
-    client->view_display( view->stringify( ) ).
+      table->items( )->column_list_item( )->cells(
+         )->text( `{SALESORDER}`
+         )->text( `{SALESORDERTYPE}`
+         )->text( `{SALESORGANIZATION}` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

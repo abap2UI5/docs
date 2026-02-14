@@ -49,17 +49,21 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    SELECT FROM I_SalesOrder
-     FIELDS salesorder, salesorganization
-     INTO TABLE @mt_salesorder
-     UP TO 10 ROWS.
+    IF client->check_on_init( ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->list( client->_bind_edit( mt_salesorder )
-          )->standard_list_item(
-            title       = `{SALESORDER}`
-            description = `{SALESORGANIZATION}` ).
-    client->view_display( view->stringify( ) ).
+      SELECT FROM I_SalesOrder
+       FIELDS salesorder, salesorganization
+       INTO TABLE @mt_salesorder
+       UP TO 10 ROWS.
+
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+          )->list( client->_bind_edit( mt_salesorder )
+            )->standard_list_item(
+              title       = `{SALESORDER}`
+              description = `{SALESORGANIZATION}` ).
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -79,17 +83,21 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    SELECT FROM vbak
-     FIELDS vbeln, vkorg
-     INTO TABLE @mt_salesorder
-     UP TO 10 ROWS.
+    IF client->check_on_init( ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-      )->list( client->_bind_edit( mt_salesorder )
-        )->standard_list_item(
-            title       = `{VBELN}`
-            description = `{VKORG}` ).
-    client->view_display( view->stringify( ) ).
+      SELECT FROM vbak
+       FIELDS vbeln, vkorg
+       INTO TABLE @mt_salesorder
+       UP TO 10 ROWS.
+
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+        )->list( client->_bind_edit( mt_salesorder )
+          )->standard_list_item(
+              title       = `{VBELN}`
+              description = `{VKORG}` ).
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
