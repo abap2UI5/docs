@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Controller
 
 abap2UI5 offers great flexibility in how you structure your apps. Most sample applications follow a pattern similar to the one below. You can use it as a starting point, but feel free to adapt it or build a wrapper on top of abap2UI5 for more customized behavior.

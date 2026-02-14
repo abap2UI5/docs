@@ -18,7 +18,7 @@ The project will be continuously further developed, so there's no specific "stab
 
 #### Transport
 Install the project using abapGit into your development system. Then, use the normal transport process for deployment to production:
-![alt text](image-3.png){ width=80% }
+![Transport process from development to production via abapGit](image-3.png){ width=80% }
 
 #### Renaming
 If you're starting new development but already have abap2UI5 apps running in production, and you're worried about updating to the latest release, consider installing abap2UI5 multiple times in your system using the [renaming feature](/advanced/renaming). This way, you can safely continue development without affecting your existing apps in production.

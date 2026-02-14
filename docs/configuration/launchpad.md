@@ -25,15 +25,15 @@ Sometimes, installation via abapGit can cause cache-related issues. Here's how t
 #### Cache Management
 
 1. Recalculate app index of z2ui5 with report /UI5/APP_INDEX_CALCULATE
-![389816897-f18e791e-1e07-4381-a8a8-deb5af3ec02c](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
-![389816886-093d087f-4d7d-48b3-b7c4-75c16046af5b](https://github.com/user-attachments/assets/81f8feae-fcfe-4175-aa91-28ce8d681539)
+![App index calculation report selection screen](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
+![App index calculation report output](https://github.com/user-attachments/assets/81f8feae-fcfe-4175-aa91-28ce8d681539)
 
 2. Recalculate index of distribution layer with report /UI5/APP_INDEX_CALCULATE (if tab isn't visible try switching to another tab, then it usually appears)
-![389817086-2a480005-f9f9-46e8-a432-456494957665](https://github.com/user-attachments/assets/3fce0f2e-96f9-4487-9226-7940336582b1)
-![389817130-389f2be1-d75b-4dbb-aa81-e5b5e4202440](https://github.com/user-attachments/assets/dc149874-6731-496d-90bf-79cb83d8c97d)
+![Distribution layer tab in app index calculation report](https://github.com/user-attachments/assets/3fce0f2e-96f9-4487-9226-7940336582b1)
+![Distribution layer recalculation output](https://github.com/user-attachments/assets/dc149874-6731-496d-90bf-79cb83d8c97d)
 
 3. Invalidate http caches in transaction SMICM
-![389817432-f6568b5e-0588-4a98-83cc-f1bd58e0dd64](https://github.com/user-attachments/assets/497b7677-8009-472e-9b50-34719105a12e)
+![HTTP cache invalidation in transaction SMICM](https://github.com/user-attachments/assets/497b7677-8009-472e-9b50-34719105a12e)
 
 4. Clear browser caches and hard reload
 

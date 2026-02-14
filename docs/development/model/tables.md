@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Tables, Trees
 This section covers how to display complex data structures like tables, trees, and nested structures in your views.
 

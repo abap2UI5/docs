@@ -248,4 +248,4 @@ Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP class
 abap2UI5 brings back familiar ABAP development patterns. It reuses proven concepts like Selection Screens, ALV tables, and popup dialogs — but renders them as UI5 apps, all defined and executed in ABAP.
 The result: backend-driven UI development with minimal tooling and fast iterations. Whether you're prototyping or building full business apps, abap2UI5 keeps development close to what ABAP developers know best.
 
-Happy ABAPing! ❤️🦖🦕🦣
+Happy ABAPing!
