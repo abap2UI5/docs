@@ -9,7 +9,7 @@ abap2UI5 offers flexible ways to manage authorization handling. It doesn't inclu
 One of the easiest ways to manage access to different apps is by implementing checks within the HTTP handler. This approach lets you restrict access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
 
 ##### Example: Restricting Access Based on URL Parameters
-In this example, we use the ICF handler class to control which apps can be accessed based on the APP_START parameter in the HTTP request. If an unauthorized app is requested, access is denied.
+In this example, we use the ICF handler class to control which apps can be accessed based on the APP_START parameter in the HTTP request. The `get_header_field( 'APP_START' )` method reads the URL query parameter that specifies which abap2UI5 app class to launch. If an unauthorized app is requested, access is denied.
 ```abap
 CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
 ENDCLASS.
 ```
 ##### Example: Authorization Objects in Service Handlers
-You can also use the SAP authorization objects:
+You can also combine this with SAP authorization objects. The example below uses a custom authorization object `Z_APP_AUTH` with a field `APP` — you need to create this object in transaction `SU21` and assign it to the relevant roles in your system:
 ```abap
 CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 

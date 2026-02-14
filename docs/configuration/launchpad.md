@@ -59,7 +59,9 @@ Find more information in the blog article on [LinkedIn.](https://www.linkedin.co
 <br>
 
 #### Approach
-(1/3) Use a single Interface:
+The integration works in three steps: you implement a simple interface, the Launchpad calls a generic OData proxy service, and the proxy delegates to your ABAP class to calculate the KPI count.
+
+(1/3) Implement the `z2ui5_if_lp_kpi` interface. The `count` method receives an optional `filter` string (from the OData `$filter` parameter) and returns the KPI value as an integer:
 ```abap
 INTERFACE z2ui5_if_lp_kpi
   PUBLIC.
@@ -72,7 +74,7 @@ INTERFACE z2ui5_if_lp_kpi
 
 ENDINTERFACE.
 ```
-(2/3) Which can be used on app level to return KPIs:
+(2/3) Implement the interface in your app class alongside `z2ui5_if_app`. The `count` method contains your custom KPI calculation logic (e.g. counting open items from the database):
 ```abap
 CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
 
@@ -95,7 +97,7 @@ CLASS z2ui5_cl_lp_kpi_hello_world IMPLEMENTATION.
 
 ENDCLASS.
 ```
-(3/3) A generic OData service takes care of everything else (which just returns n dummy entries). Just maintain the KPI at the Launchpad with the following endpoint:
+(3/3) A generic OData proxy service (`Z2UI5_PROXY_KPI_SRV`) handles the rest. It receives the `$filter` parameter containing your class name, instantiates the class, calls `count`, and returns that many dummy OData entries. The Launchpad displays the `$count` result as the tile KPI. Configure the tile with this endpoint:
 ```
 .../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_lp_kpi_hello_world'
 ```

@@ -45,6 +45,12 @@ ENDCLASS.
 ```
 
 ```abap [lcl_help]
+"The helper class converts the uploaded file into an internal table.
+"The file uploader returns a data URI string (e.g. 'data:application/...;base64,<payload>'),
+"so we first split at ';' and ',' to extract the raw Base64 payload.
+"cl_fdt_xl_spreadsheet (from the BRFplus framework) then parses the XLSX binary
+"and returns the first worksheet as a dynamic internal table.
+
 CLASS lcl_help DEFINITION.
 
   PUBLIC SECTION.
@@ -121,6 +127,12 @@ ENDMETHOD.
 ```
 
 ```abap [lcl_help]
+"The helper class converts an internal table to a downloadable XLSX file.
+"It uses cl_salv_table to derive a field catalog from the table structure,
+"then cl_salv_bs_lex exports the data as XLSX into an xstring.
+"Finally the xstring is Base64-encoded and wrapped in a data URI
+"so the browser can trigger the file download.
+
 CLASS lcl_help DEFINITION.
 
   PUBLIC SECTION.
