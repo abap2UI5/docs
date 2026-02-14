@@ -49,17 +49,21 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    SELECT FROM I_SalesOrder
-     FIELDS salesorder, salesorganization
-     INTO TABLE @mt_salesorder
-     UP TO 10 ROWS.
+    IF client->check_on_init( ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->list( client->_bind_edit( mt_salesorder )
-          )->standard_list_item(
-            title       = `{SALESORDER}`
-            description = `{SALESORGANIZATION}` ).
-    client->view_display( view->stringify( ) ).
+      SELECT FROM I_SalesOrder
+       FIELDS salesorder, salesorganization
+       INTO TABLE @mt_salesorder
+       UP TO 10 ROWS.
+
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+          )->list( client->_bind_edit( mt_salesorder )
+            )->standard_list_item(
+              title       = `{SALESORDER}`
+              description = `{SALESORGANIZATION}` ).
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -79,17 +83,21 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    SELECT FROM vbak
-     FIELDS vbeln, vkorg
-     INTO TABLE @mt_salesorder
-     UP TO 10 ROWS.
+    IF client->check_on_init( ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-      )->list( client->_bind_edit( mt_salesorder )
-        )->standard_list_item(
-            title       = `{VBELN}`
-            description = `{VKORG}` ).
-    client->view_display( view->stringify( ) ).
+      SELECT FROM vbak
+       FIELDS vbeln, vkorg
+       INTO TABLE @mt_salesorder
+       UP TO 10 ROWS.
+
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+        )->list( client->_bind_edit( mt_salesorder )
+          )->standard_list_item(
+              title       = `{VBELN}`
+              description = `{VKORG}` ).
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -114,4 +122,4 @@ abap2UI5 provides an alternative, especially for developers who prefer lightweig
 
 abap2UI5 is fully cloud-ready. It enables modern, backend-driven UI5 development while remaining upgrade-stable and compatible with SAP BTP ABAP Environment and S/4HANA Public Cloud. Each app can be developed in a cloud-ready manner, making it a perfect addition to existing RAP or UI5 freestyle apps.
 
-Happy ABAPing! ❤️🦖🦕🦣
+Happy ABAPing!

@@ -111,7 +111,19 @@ In SAP contexts, OData services are often enriched with additional annotations. 
 <Property Name="IsPrimaryCurrencyForISOCrcy" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="primär" sap:quickinfo="primärer SAP-Währungscode zum ISO-Code"/>
 </EntityType>
 ```
-We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. Here’s an example:
+We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. The metadata binding path follows this pattern:
+
+```
+{MODEL>/#EntityType/PropertyName/@sap:annotation}
+```
+
+- **`TRAVEL>`** — the named OData model
+- **`/#Currency`** — `#` switches to the metadata document, `Currency` is the entity type name (from `<EntityType Name="CurrencyType">`)
+- **`/Currency`** — the property name within that entity type
+- **`/@sap:label`** — the SAP annotation attribute (here: the translated label text)
+
+So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währungsschlüssel"` from the metadata — displayed in the user's logon language.
+
 ```abap
 
 DATA(tab) = page->table(

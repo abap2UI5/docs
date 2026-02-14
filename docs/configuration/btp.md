@@ -24,8 +24,12 @@ Integrate your abap2UI5 apps into BTP Services like Build Workzone. Find all inf
 
 ##### Additional Properties
 
-* HTML5.DynamicDestination true 
-* product.name ABAP System 
-* sap-client (client) 
-* WebIDEEnabled true 
-* WebIDEUsage odata_abap,dev_abap
+These properties are required by SAP Build Work Zone to correctly route requests to your ABAP backend:
+
+| Property | Value | Description |
+|---|---|---|
+| HTML5.DynamicDestination | `true` | Allows HTML5 apps to resolve this destination at runtime |
+| product.name | `ABAP System` | Identifies the backend type for the Work Zone tile configuration |
+| sap-client | *(your client number)* | The SAP system client to connect to (e.g. `001`) |
+| WebIDEEnabled | `true` | Enables the destination for SAP Business Application Studio |
+| WebIDEUsage | `odata_abap,dev_abap` | Declares supported protocols for development tools |

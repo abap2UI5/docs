@@ -371,4 +371,4 @@ Next, we explored various ideas on how the framework reduces its own complexity 
 
 All in all, with abap2UI5, you need to disregard some common rules: there is no separation between View and Model in the HTTP communication (12), HTML & JavaScript are stored directly in the source code (17) (22), we don't use OData or RAP (7) and there are other downsides to consider (24). However, if you accept all of this, you get a very minimalistic approach where you only need to implement a single method to develop standalone UI5 applications (15).
 
-Happy ABAPing! ❤️🦖🦕🦣
+Happy ABAPing!

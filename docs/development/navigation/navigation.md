@@ -53,9 +53,9 @@ Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `l
 We recommend using backend communication exclusively for view changes or popup calls. If you're using a launchpad, consider navigating through the launchpad to utilize browser navigation and history. Here's an example:
 ```abap
 client->_event_client(
-    val = client->cs_event-cross_app_nav_to_ext
-        t_arg  = VALUE #( ( 
-            `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }` 
+    val   = client->cs_event-cross_app_nav_to_ext
+    t_arg = VALUE #( (
+        `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
     ) ) ).
 ```
 To learn more about launchpads and routing, refer to the documentation [here.](/configuration/launchpad)

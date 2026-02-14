@@ -7,14 +7,14 @@ If the standard UI5 framework functionalities do not fulfill all your requiremen
 
 The idea is to send the custom JavaScript function along with the view to the frontend and invoke it later when an event is triggered.
 
-Below is a working example that you can use as a starting point:
+Below is a working example that you can use as a starting point. The `_generic` method creates an arbitrary XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method injects raw content into that element, in this case the JavaScript function definition. On the backend side, `client->follow_up_action` then executes the function by name on the frontend:
 
 ```abap
   METHOD z2ui5_if_app~main.
 
   IF client->check_on_init( ).
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->_generic( name = `script` ns = `html` 
+      view->_generic( name = `script` ns = `html`
         )->_cc_plain_xml(
           |function myFunction() \{ console.log( `Hello World` ); \}| 
         ).

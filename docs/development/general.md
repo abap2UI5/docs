@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Controller
 
 abap2UI5 offers great flexibility in how you structure your apps. Most sample applications follow a pattern similar to the one below. You can use it as a starting point, but feel free to adapt it or build a wrapper on top of abap2UI5 for more customized behavior.
@@ -68,7 +71,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     DATA(lt_arg) = client->get_event_arg( ).
 
-    CASE client->get( )->event.
+    CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( |{ mv_value } - send to the server| ).
     ENDCASE.

@@ -75,7 +75,9 @@ CLASS zcl_app_input IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    client->message_box_display( |Input: { pa_arbgb }| ).
+    IF client->check_on_event( `POST` ).
+      client->message_box_display( |Input: { pa_arbgb }| ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -150,7 +152,7 @@ From here, it's just a small step to generate everything dynamically with RTTI �
 Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like `POPUP_TO_CONFIRM` are simple yet powerful:
 
 ```abap
-REPORT zre_app_alv.
+REPORT zre_app_popup.
 
 DATA event TYPE string.
 CALL FUNCTION `POPUP_TO_CONFIRM`
@@ -246,4 +248,4 @@ Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP class
 abap2UI5 brings back familiar ABAP development patterns. It reuses proven concepts like Selection Screens, ALV tables, and popup dialogs — but renders them as UI5 apps, all defined and executed in ABAP.
 The result: backend-driven UI development with minimal tooling and fast iterations. Whether you're prototyping or building full business apps, abap2UI5 keeps development close to what ABAP developers know best.
 
-Happy ABAPing! ❤️🦖🦕🦣
+Happy ABAPing!

@@ -22,69 +22,76 @@ METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
-            client->message_box_display( |Your name is { name }| ).
+            client->message_box_display( `The button was pressed` ).
     ENDCASE.
  
 ENDMETHOD.
 ```
-If the backend needs additional information about the specific event, use parameters like `$event`, `$source`, and `$params` to send further details. Use the t_arg parameter to include these details. Check out [this documentation](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) for more information, and refer to sample `Z2UI5_CL_DEMO_APP_167`.
+If the backend needs additional information about the specific event, use the `t_arg` parameter to include additional details. Three special prefixes are available:
+
+- **`$source`** — the UI5 control that triggered the event (e.g. `${$source>/text}` returns the button text)
+- **`$parameters`** — the event parameters as defined by the UI5 control (e.g. `${$parameters>/id}` returns the element ID)
+- **`$event`** — the UI5 event object itself (e.g. `$event>sId` returns the event type like `press`)
+
+Check out [this documentation](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) for more information, and refer to sample `Z2UI5_CL_DEMO_APP_167`.
 
 #### Source
-Send properties of the event source control to the backend:
+Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property from the UI5 control that fired the event — here the button itself, so the result is the button's label (`post`):
 ```abap
 METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` press = client->_event( 
-            val = `BUTTON_POST` 
-            t_arg = VALUE #( ( `${$source>/text}` ) ) ) 
+        )->button( text = `post` press = client->_event(
+            val = `BUTTON_POST`
+            "reads button text → result: "post"
+            t_arg = VALUE #( ( `${$source>/text}` ) ) )
         )->stringify( ) ).
- 
+
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
           client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
     ENDCASE.
- 
+
 ENDMETHOD.
 ```
 
 #### Parameters
-Retrieve parameters of the event:
+Retrieve parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter from the event's parameter map — UI5 generates a qualified ID like `mainView--button_id`:
 ```abap
 METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` id = `button_id` press = client->_event( 
-            val = `BUTTON_POST` 
-            t_arg = VALUE #( ( `${$parameters>/id}` ) ) ) 
+        )->button( text = `post` id = `button_id` press = client->_event(
+            val = `BUTTON_POST`
+            "reads event parameter 'id' → result: "mainView--button_id"
+            t_arg = VALUE #( ( `${$parameters>/id}` ) ) )
         )->stringify( ) ).
- 
+
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
-            "mainView--button_id
             client->message_box_display( |The button id is { client->get_event_arg( ) }| ).
     ENDCASE.
- 
+
 ENDMETHOD.
 ```
 
 #### Event
-Retrieve specific properties of the event:
+Retrieve specific properties of the event object. The syntax `$event>sId` accesses the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: no `${...}` wrapper here because `$event` directly references the event object:
 ```abap
 METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` press = client->_event( 
-            val = `BUTTON_POST` 
-            t_arg = VALUE #( ( `$event>sId` ) ) ) 
+        )->button( text = `post` press = client->_event(
+            val = `BUTTON_POST`
+            "reads event object attribute → result: "press"
+            t_arg = VALUE #( ( `$event>sId` ) ) )
         )->stringify( ) ).
- 
+
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
-            "press
             client->message_box_display( |The event id is { client->get_event_arg( ) }| ).
     ENDCASE.
- 
+
 ENDMETHOD.
 ```
 ::: warning
@@ -127,7 +134,14 @@ This is just a demonstration. In this case, it would be easier to access `name` 
 :::
 
 ### Frontend
-If you don't want to process the event in the backend, you can also directly trigger actions at the frontend. The following frontend events are available:
+If you don't want to process the event in the backend, you can directly trigger actions at the frontend using `client->_event_client`. The difference between the two methods:
+
+- **`client->_event( )`** — triggers a backend roundtrip, the event is processed in the `main` method
+- **`client->_event_client( )`** — executes an action directly in the browser, no backend call
+
+To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To execute a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
+
+The following frontend events are available:
 ```abap
   CONSTANTS:
     BEGIN OF cs_event,

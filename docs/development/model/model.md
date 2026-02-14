@@ -66,3 +66,13 @@ ENDCLASS.
 ::: tip **Data in Public Attributes**
 When using One-Way or Two-Way binding, ensure your data is stored in the public attributes of your class. This allows the framework to access it from outside. This is similar to the PBO/PAI logic, where data had to be stored in global variables.
 :::
+
+#### Path Parameter
+Both `_bind` and `_bind_edit` accept an optional parameter `path = abap_true`. By default, these methods return the full binding expression (e.g. `{/XX/NAME}`). With `path = abap_true`, only the raw model path is returned (e.g. `/XX/NAME`), which is useful when you need to embed it in complex binding expressions like UI5 types or expression binding:
+```abap
+"default - returns full binding expression: {/XX/QUANTITY}
+client->_bind( quantity )
+
+"with path - returns only the model path: /XX/QUANTITY
+client->_bind( val = quantity path = abap_true )
+```

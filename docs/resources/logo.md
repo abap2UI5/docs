@@ -1,13 +1,13 @@
 # Logo
 
 #### Logo
-![alt text](/public/logo.png)
+![abap2UI5 logo](/public/logo.png)
 
 #### Logo without Background
-![alt text](/public/logo_white_back.png)
+![abap2UI5 logo on white background](/public/logo_white_back.png)
 
 #### Favicon
-![alt text](/public/favicon.ico)
+![abap2UI5 favicon](/public/favicon.ico)
 
 #### Code Cover
-![alt text](/public/code_cover.png)
+![abap2UI5 code cover image](/public/code_cover.png)

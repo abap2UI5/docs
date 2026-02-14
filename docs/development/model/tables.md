@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Tables, Trees
 This section covers how to display complex data structures like tables, trees, and nested structures in your views.
 
@@ -20,26 +23,30 @@ ENDCLASS.
  
 CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
- 
-    DO 100 TIMES.
-      INSERT VALUE #(
-        count = sy-index
-        value = `red`
-        descr = `this is a description` ) INTO TABLE mt_itab.
-    ENDDO.
- 
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-        )->table( client->_bind( mt_itab ) ).
-    tab->columns(
-        )->column( )->text( `Counter` )->get_parent(
-        )->column( )->text( `Value` )->get_parent(
-        )->column( )->text( `Description` ).
-    tab->items( )->column_list_item( )->cells(
-       )->text( `{COUNT}`
-       )->text( `{VALUE}`
-       )->text( `{DESCR}` ).
-    client->view_display( tab->stringify( ) ).
- 
+
+    IF client->check_on_init( ).
+
+      DO 100 TIMES.
+        INSERT VALUE #(
+          count = sy-index
+          value = `red`
+          descr = `this is a description` ) INTO TABLE mt_itab.
+      ENDDO.
+
+      DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
+          )->table( client->_bind( mt_itab ) ).
+      tab->columns(
+          )->column( )->text( `Counter` )->get_parent(
+          )->column( )->text( `Value` )->get_parent(
+          )->column( )->text( `Description` ).
+      tab->items( )->column_list_item( )->cells(
+         )->text( `{COUNT}`
+         )->text( `{VALUE}`
+         )->text( `{DESCR}` ).
+      client->view_display( tab->stringify( ) ).
+
+    ENDIF.
+
   ENDMETHOD.
 ENDCLASS.
 ```
@@ -48,26 +55,30 @@ ENDCLASS.
 Making a table editable is a simple change. You just need to switch the binding mode to `bind_edit` :
 ```abap
   METHOD z2ui5_if_app~main.
- 
-    DO 100 TIMES.
-      INSERT VALUE #(
-        count = sy-index
-        value = `red`
-        descr = `this is a description` ) INTO TABLE mt_itab.
-    ENDDO.
- 
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-        )->table( client->_bind_edit( mt_itab ) ).
-    tab->columns(
-        )->column( )->text( `Count` )->get_parent(
-        )->column( )->text( `Value` )->get_parent(
-        )->column( )->text( `Description` ).
-    tab->items( )->column_list_item( )->cells(
-       )->text( `{COUNT}`
-       )->text( `{VALUE}`
-       )->text( `{DESCR}` ).
-    client->view_display( tab->stringify( ) ).
- 
+
+    IF client->check_on_init( ).
+
+      DO 100 TIMES.
+        INSERT VALUE #(
+          count = sy-index
+          value = `red`
+          descr = `this is a description` ) INTO TABLE mt_itab.
+      ENDDO.
+
+      DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
+          )->table( client->_bind_edit( mt_itab ) ).
+      tab->columns(
+          )->column( )->text( `Count` )->get_parent(
+          )->column( )->text( `Value` )->get_parent(
+          )->column( )->text( `Description` ).
+      tab->items( )->column_list_item( )->cells(
+         )->input( `{COUNT}`
+         )->input( `{VALUE}`
+         )->input( `{DESCR}` ).
+      client->view_display( tab->stringify( ) ).
+
+    ENDIF.
+
   ENDMETHOD.
 ```
 

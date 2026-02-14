@@ -20,7 +20,7 @@ In abap2UI5, the UI is rendered from a UI5 XML view that you build in your ABAP 
 
 ENDMETHOD.
 ```
-You can use any UI5 control available in the [UI5 SDK](https://sapui5.hana.ondemand.com). However, writing raw XML quickly gets cumbersome. A more practical approach is to use the `Z2UI5_CL_XML_VIEW` helper class, which provides a fluent API for building views:
+You can use any UI5 control available in the [UI5 SDK](https://sapui5.hana.ondemand.com). However, writing raw XML quickly gets cumbersome. A more practical approach is to use the `Z2UI5_CL_XML_VIEW` helper class, which provides a fluent API for building views. The `stringify( )` method at the end serializes the view tree into an XML string that the framework sends to the frontend:
 
 ```abap
   METHOD z2ui5_if_app~main.

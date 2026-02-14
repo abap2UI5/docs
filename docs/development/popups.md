@@ -113,7 +113,7 @@ To display a popover, use the method `client->popover_display` and specify the I
                     press = client->_event( `POPOVER_CLOSE` ) ).
         client->popover_display(
             xml   = popover->stringify( )
-            by_id = `my_id` ).
+            by_id = `TEST` ).
 
       WHEN `POPOVER_CLOSE`.
         client->popover_destroy( ).

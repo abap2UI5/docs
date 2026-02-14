@@ -54,7 +54,7 @@ METHOD z2ui5_if_app~main.
   lo_log->e( `This is an error...` ).
   lo_log->s( `This is a success message...` ).
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( log ) ).
+  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
 
 ENDMETHOD.
 ```

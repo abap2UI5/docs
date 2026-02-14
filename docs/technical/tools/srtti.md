@@ -69,7 +69,6 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
       p_table_kind = cl_abap_tabledescr=>tablekind_std 
       p_unique     = abap_false ).
 
-    DATA: o_table TYPE REF TO data.
     CREATE DATA mr_tab TYPE HANDLE o_table_desc.
 
     client->message_box_display( `this works only with S-RTTI` ).
