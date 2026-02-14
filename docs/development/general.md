@@ -34,11 +34,17 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
       WHEN client->check_on_init( ).
         on_init( ).
         display_view( ).
-      WHEN client->check_on_navigated( ).
-        on_navigated( ).
       WHEN client->check_on_event( ).
         on_event( ).
+      WHEN client->check_on_navigated( ).
+        on_navigated( ).
     ENDCASE.
+
+  ENDMETHOD.
+
+  METHOD on_init.
+
+    mv_value  = `value`.
 
   ENDMETHOD.
 
@@ -66,12 +72,6 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
       WHEN `BUTTON_POST`.
         client->message_toast_display( |{ mv_value } - send to the server| ).
     ENDCASE.
-
-  ENDMETHOD.
-
-  METHOD on_init.
-
-    mv_value  = `value`.
 
   ENDMETHOD.
 
