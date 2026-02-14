@@ -6,6 +6,14 @@ The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you
 
 #### Calculate the Maximum Value at the Frontend
 
+The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) to ensure integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. Here's what the ABAP string concatenation produces at runtime:
+
+| ABAP code | UI5 binding result |
+|---|---|
+| `client->_bind( val = input31 path = abap_true )` | `/XX/INPUT31` (raw path for type binding) |
+| `client->_bind( input31 )` | `{/XX/INPUT31}` (full binding for expression) |
+| `` `{= Math.max($` && client->_bind( input31 ) && `, $` && client->_bind( input32 ) && `) }` `` | `{= Math.max(${/XX/INPUT31}, ${/XX/INPUT32}) }` |
+
 ```abap
 CLASS z2ui5_cl_demo_app_max_val DEFINITION PUBLIC.
 
@@ -22,12 +30,16 @@ CLASS z2ui5_cl_demo_app_max_val IMPLEMENTATION.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell( )->page(
       )->label( `max value of the first two inputs`
+                "UI5 type binding — validates integer input
+                "resolves to: { type: "sap.ui.model.type.Integer", path: "/XX/INPUT31" }
                 )->input( `{ type : "sap.ui.model.type.Integer",` &&
                           `  path:"` && client->_bind( val  = input31
                                                        path = abap_true ) && `" }`
                 )->input( `{ type : "sap.ui.model.type.Integer",` && |\n| &&
                           `  path:"` && client->_bind( val  = input32
                                                        path = abap_true ) && `" }`
+                "Expression binding — computed in the browser
+                "resolves to: {= Math.max(${/XX/INPUT31}, ${/XX/INPUT32}) }
                 )->input(
                     value   = `{= Math.max($` && client->_bind( input31 ) &&`, $` && client->_bind( input32 ) && `) }`
                     enabled = abap_false ).
@@ -38,6 +50,9 @@ ENDCLASS.
 ```
 
 #### Conditionally Set Input Field Editability
+
+The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field is only editable when the quantity is exactly 500. Note that `===` is the JavaScript strict equality operator.
+
 ```abap
 CLASS z2ui5_cl_demo_editable DEFINITION PUBLIC.
 
@@ -57,6 +72,7 @@ CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
                 )->input( `{ type : "sap.ui.model.type.Integer",` &&
                           `  path:"` && client->_bind( val  = quantity
                                                        path = abap_true ) && `"  }`
+                "enabled resolves to: {= 500===${/XX/QUANTITY} }
                 )->input(
                     value   = client->_bind_edit( product )
                     enabled = `{= 500===$` && client->_bind( quantity ) && ` }` ).

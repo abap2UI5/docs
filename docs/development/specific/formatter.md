@@ -2,6 +2,23 @@
 
 You can format values such as currencies, numerics, or timestamps directly in the frontend using formatter functions.
 
+UI5 formatter types use a special JSON-based binding syntax. The key elements:
+- **`parts: [...]`** — lists the model paths used as input (e.g. amount + currency)
+- **`type: '...'`** — the UI5 formatter type (e.g. `sap.ui.model.type.Currency`)
+- **`formatOptions: {...}`** — optional settings that control the output format
+- **`\{ ... \}`** — in ABAP string templates (`|...|`), curly braces must be escaped with `\` because `{ }` normally denotes an ABAP expression
+
+The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g. `/XX/AMOUNT`) instead of the full binding expression (`{/XX/AMOUNT}`), so it can be embedded inside the `parts` array.
+
+For example, this ABAP code:
+```
+|\{ parts: [`{ client->_bind_edit( val = amount path = abap_true ) }`], type: 'sap.ui.model.type.Currency' \}|
+```
+produces this UI5 binding string at runtime:
+```
+{ parts: ["/XX/AMOUNT", "/XX/CURRENCY"], type: 'sap.ui.model.type.Currency' }
+```
+
 ```abap
 
 CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
