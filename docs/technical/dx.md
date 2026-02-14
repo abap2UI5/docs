@@ -150,7 +150,7 @@ From here, it's just a small step to generate everything dynamically with RTTI â
 Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like `POPUP_TO_CONFIRM` are simple yet powerful:
 
 ```abap
-REPORT zre_app_alv.
+REPORT zre_app_popup.
 
 DATA event TYPE string.
 CALL FUNCTION `POPUP_TO_CONFIRM`

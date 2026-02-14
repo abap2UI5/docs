@@ -8,12 +8,13 @@ For UI5 input fields, the soft keyboard is automatically shown when focusing an 
 
 METHOD z2ui5_if_app~main.
 
+    DATA input TYPE string.
+
     IF client->check_on_init( ).
-    
+
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->_generic( name = `script`
                     ns   = `html` )->_cc_plain_xml( `z2ui5.afterBE = (id , mode) => { ` &&
-                       `debugger;` &&
                         `var input = z2ui5.oView.byId(id).getDomRef();` &&
                         `input = input.childNodes[0].childNodes[0];` &&
                         `input.setAttribute("inputmode" , mode);` &&

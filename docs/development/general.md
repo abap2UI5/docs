@@ -62,7 +62,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     DATA(lt_arg) = client->get_event_arg( ).
 
-    CASE client->get( )->event.
+    CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( |{ mv_value } - send to the server| ).
     ENDCASE.
