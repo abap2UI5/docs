@@ -8,11 +8,11 @@ With over 250 samples, the [samples repository](https://github.com/abap2UI5/abap
 
 ### Samples
 Try out samples for tables, lists, trees, and many other UI5 controls. Copy and paste code snippets to accelerate your development:
-![alt text](image-1.png)
+![Sample apps overview showing tables, lists, trees and other UI5 controls](image-1.png)
 
 ### Jump into the Code
 Press `CTRL+F12` to open the source code, view, and model for each sample:
-![alt text](image-2.png)
+![Source code viewer opened with CTRL+F12 showing code, view and model](image-2.png)
 
 _Don't have a system available? You can also run the samples directly in your browser [here.](https://abap2ui5.github.io/web-abap2ui5-samples/)_
 

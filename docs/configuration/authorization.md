@@ -85,8 +85,8 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
     " Perform an authorization check before launching the app
-    AUTHORITY-CHECK OBJECT 'Z_APP_AUTH'
-                    ID 'APP' FIELD 'Z2UI5_APP_001'.
+    AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
+                    ID `APP` FIELD `Z2UI5_APP_001`.
 
     IF sy-subrc <> 0.
       " Authorization failed, deny access

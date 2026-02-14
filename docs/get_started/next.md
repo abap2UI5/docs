@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # What's Next?
 
 Now that you have abap2UI5 up and running, here are some paths to explore further.

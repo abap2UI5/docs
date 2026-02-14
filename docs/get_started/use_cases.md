@@ -12,26 +12,26 @@ For a comprehensive overview, see [this article.](https://www.linkedin.com/pulse
 
 #### Tier 1 Extension
 For clean-core compliance, develop applications that follow "keep the core clean" principles, ensuring your apps stay cloud-ready and upgrade-stable:
-![alt text](image-11.png){ width=60% }
+![Tier 1 on-stack extension architecture diagram](image-11.png){ width=60% }
 
 #### Tier 2 Extension
 If certain APIs you need are not yet released, you can still create a cloud-ready abap2UI5 app by accessing these APIs through a separate Tier 2 wrapper:
-![alt text](image-21.png){ width=60% }
+![Tier 2 on-stack extension with wrapper for unreleased APIs](image-21.png){ width=60% }
 
 #### Tier 3 Extension
 For a classic extension approach, you can use unreleased APIs, giving you greater freedom to customize and extend your system:
-![alt text](image-10.png){ width=60% }
+![Tier 3 on-stack extension with unreleased API access](image-10.png){ width=60% }
 
 ### Side-by-Side Extension
 
 #### Tier 1 Extension
 Develop applications separately from your S/4 system's lifecycle using only remote API calls. Stick to released APIs and your apps will work with S/4HANA Public Cloud too:
-![alt text](image-22.png){ width=60% }
+![Tier 1 side-by-side extension with remote API calls](image-22.png){ width=60% }
 
 #### Tier 3 Extension
 For more flexibility, develop applications with an independent lifecycle from your S/4 system using remote API calls:
-![alt text](image-23.png){ width=60% }
+![Tier 3 side-by-side extension with remote API calls](image-23.png){ width=60% }
 
 ### Software as a Service
 With a Tier 1 side-by-side extension, you can connect the same abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across different customer tenants and remote systems to create a true SaaS scenario:
-![alt text](image-9.png){ width=60% }
+![SaaS architecture connecting one abap2UI5 app to multiple S/4 tenants](image-9.png){ width=60% }
