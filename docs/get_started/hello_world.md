@@ -21,7 +21,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Head back to the landing page in your browser and enter `Z2UI5_CL_APP_HELLO_WORLD` to launch your app.
+Head back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
 Now let's add a view to display a simple text:

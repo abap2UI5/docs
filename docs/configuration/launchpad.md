@@ -97,5 +97,5 @@ ENDCLASS.
 ```
 (3/3) A generic OData service takes care of everything else (which just returns n dummy entries). Just maintain the KPI at the Launchpad with the following endpoint:
 ```
-.../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_proxy_kpi_hello_world'
+.../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_lp_kpi_hello_world'
 ```
