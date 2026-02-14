@@ -55,13 +55,27 @@ ENDCLASS.
 ```
 
 ### Event Handler
-The `main` method is called on every roundtrip — that is, on initialization and after every user interaction (button press, input submit, etc.). To control what happens when, use `CASE abap_true` to distinguish between lifecycle events:
+The `main` method is called on every roundtrip — that is, on initialization and after every user interaction (button press, input submit, etc.):
+
+```
+┌─────────┐       ┌──────────┐       ┌─────────┐
+│ Browser  │──────>│  main()  │──────>│ Browser  │
+│ (Start)  │  HTTP │  init    │  HTTP │ (View)   │
+└─────────┘       └──────────┘       └────┬─────┘
+                                          │ user clicks
+┌─────────┐       ┌──────────┐       ┌────┴─────┐
+│ Browser  │<──────│  main()  │<──────│ Browser  │
+│ (Update) │  HTTP │  event   │  HTTP │ (Event)  │
+└─────────┘       └──────────┘       └──────────┘
+```
+
+To control what happens when, use `CASE abap_true` to distinguish between lifecycle events:
 
 - `client->check_on_init( )` — first call when the app starts
 - `client->check_on_event( )` — user triggered an event (e.g. button press)
 - `client->check_on_navigated( )` — returned from another app via navigation
 
-This pattern works because each `check_*` method returns `abap_true` only for its specific phase, making `CASE abap_true` act as a dispatcher:
+Each `check_*` method returns `abap_true` only for its specific phase, making `CASE abap_true` act as a dispatcher:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.

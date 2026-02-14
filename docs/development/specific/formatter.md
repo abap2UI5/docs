@@ -62,12 +62,19 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          )->label( `Documentation`
          )->link( text = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
                   href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
+
+         "Currency in one field — shows amount and currency symbol together
+         "resolves to: { parts: ["/XX/AMOUNT", "/XX/CURRENCY"], type: 'sap.ui.model.type.Currency' }
          )->label( `One field`
          )->input(
              |\{ parts: [ `{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }`, `{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' \}|
+
+         "Split into two fields — first shows only the number, second only the currency
+         "showMeasure: false → hides the currency symbol
+         "showNumber: false  → hides the numeric value
          )->label( `Two field`
          )->input(
              |\{ parts: [ `{ client->_bind_edit( val  = amount
@@ -79,30 +86,40 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                                                  path = abap_true ) }`, `{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
+
+         "Read-only display variants with different formatOptions
          )->label( `Default`
          )->text(
              |\{ parts: [ `{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }`, `{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' \}|
+
+         "preserveDecimals: false → trims trailing zeros (e.g. 123,456,789.12 USD)
          )->label( `preserveDecimals:false`
          )->text( |\{ parts: [ `{ client->_bind_edit( val  = amount
                                                       path = abap_true ) }`, `| && client->_bind_edit(
                                                                                        val  = currency
                                                                                        path = abap_true ) &&
                      |`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
+
+         "currencyCode: false → hides the ISO code, shows only the number
          )->label( `currencyCode:false`
          )->text( |\{ parts: [ `{ client->_bind_edit( val  = amount
                                                       path = abap_true ) }`, `| && client->_bind_edit(
                                                                                        val  = currency
                                                                                        path = abap_true ) &&
                          |`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}|
+
+         "style: 'short' → compact notation (e.g. 123M USD)
          )->label( `style:'short'`
          )->text(
              |\{ parts: [ `{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }`, `{ client->_bind_edit(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
+
+         "style: 'long' → full text notation (e.g. 123 million US dollars)
          )->label( `style:'long'`
          )->text(
              |\{ parts: [ `{ client->_bind_edit( val  = amount
@@ -113,6 +130,9 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          )->button( text  = `send`
                     press = client->_event( `BUTTON` ) ).
 
+    "Remove leading zeros from a numeric string using OData type formatting
+    "isDigitSequence: true tells the formatter to treat the value as a digit sequence
+    "resolves to: { path: "/XX/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
     page->simple_form( title    = `No Zeros`
                        editable = abap_true
         )->content( `form`
