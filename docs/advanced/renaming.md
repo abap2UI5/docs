@@ -9,7 +9,7 @@ abap2UI5 is compatible with the abaplint renaming feature and supports namespace
 
 #### Functionality
 To learn more about renaming ABAP artifacts, check out:
-[Automagic standalone renaming of ABAP objects.](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851) 
+[Automagic standalone renaming of ABAP objects](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
 
 Additional background information is available in the blog post:
-[Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development.](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
+[Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)

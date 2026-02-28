@@ -1,5 +1,21 @@
 # Release Notes
 
+### 1.142.0
+2026-02-28
+- Added generic XML builder utility class with fluent API
+- Performance: Added in-memory buffer cache for db_load
+- Performance: Optimized table lookups in model service
+- Performance: Optimized XML generation and cached RTTI boolean checks
+- Added delta handling for `bind_edit`
+- Improved scroll position tracking and delta change detection
+- Refactored frontend for improved maintainability
+- Simplified HTTP handler and removed deprecated config method
+- Added comprehensive unit tests
+- Fixed endless loop, token range mapping, and multiple frontend bugs
+- Fixed type declarations and renderer context binding
+- Code quality improvements: strict mode, comparison operators, and error handling
+- Various bug fixes and performance improvements
+
 ### 1.141.0
 2025-12-14
 - Added Image Editor popup for image manipulation
