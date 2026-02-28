@@ -58,7 +58,7 @@ client->_event_client(
         `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
     ) ) ).
 ```
-To learn more about launchpads and routing, refer to the documentation [here.](/configuration/launchpad)
+To learn more about launchpads and routing, refer to the documentation [here](/configuration/launchpad).
 
 ### Inner App Navigation
 

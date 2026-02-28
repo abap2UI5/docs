@@ -6,7 +6,7 @@ outline: [2, 4]
 
 ### 1. Installation with abapGit
 
-Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit:](https://abapgit.org)
+Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org):
 
 ![abapGit repository installation screen for abap2UI5](image.png)
 
@@ -53,7 +53,7 @@ Next use the transaction SICF to create a new HTTP service with the handler abov
 ![HTTP handler class assignment in SICF service configuration](image-5.png)
 
 ::: details ABAP Cloud
-For ABAP Cloud environments, follow [this guide.](https://developers.sap.com/tutorials/abap-environment-create-http-service.html)
+For ABAP Cloud environments, follow [this guide](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
 
 <img width="846" alt="image-20 BiFOuUXZ" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::

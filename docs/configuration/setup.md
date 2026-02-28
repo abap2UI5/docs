@@ -34,7 +34,7 @@ METHOD z2ui5_if_exit~set_config_http_get.
 
 ENDMETHOD.
 ```
-Keep in mind the variants and SAP limitations for bootstrapping, which you can find [here.](https://sapui5.hana.ondemand.com/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae)
+Keep in mind the variants and SAP limitations for bootstrapping, which you can find [here](https://sapui5.hana.ondemand.com/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae).
 
 ### Title
 To set a custom title for the application:
@@ -57,4 +57,4 @@ ENDMETHOD.
 ```
 
 ### Logon Language
-To set the logon language, use the `sap-language` URL parameter. For more options via URL parameters, check out the documentation [here.](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true)
+To set the logon language, use the `sap-language` URL parameter. For more options via URL parameters, check out the documentation [here](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true).

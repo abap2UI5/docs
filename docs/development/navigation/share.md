@@ -37,4 +37,4 @@ ENDCLASS.
  ```
 
  ### Bookmark
- You can also use these URLs for bookmarking, but keep in mind that the app state is only saved for a certain amount of time on the server. The default configuration is 4 hours. See [here.](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/01/z2ui5_cl_core_srv_draft.clas.abap#L46)
+ You can also use these URLs for bookmarking, but keep in mind that the app state is only saved for a certain amount of time on the server. The default configuration is 4 hours. See [here](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/01/z2ui5_cl_core_srv_draft.clas.abap#L46).

@@ -16,7 +16,7 @@ Integrate your abap2UI5 apps into BTP Services like Build Workzone. Find all inf
 * Name: BACKEND_ABAP2UI5
 * Type: HTTP
 * Description: abap2UI5 Destination
-* URL: the URL above
+* URL: `https://<your-abap-system>/sap/z2ui5`
 * Proxy Type: Internet
 * Authentication: BasicAuthentication
 * User: (user)
