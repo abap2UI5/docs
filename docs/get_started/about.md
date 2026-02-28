@@ -40,7 +40,6 @@ Traditional UI5 development requires JavaScript expertise, frontend deployment, 
 Each application is packaged as an [abapGit](https://abapgit.org) project, simplifying installation across systems without separate frontend deployments.
 
 ### Overview
-<br>
 
 ##### Architecture
 abap2UI5 takes a "thin frontend" approach – all processing, logic, and data management stays in the backend. This design simplifies configuration, cuts down on client-side complexity (say goodbye to cache clearing hassles), and keeps business logic and sensitive data securely on the server.
@@ -52,13 +51,12 @@ abap2UI5 delivers exceptional performance. The frontend focuses exclusively on U
 abap2UI5 is secure by design. All business logic stays exclusively in the ABAP backend. The frontend receives only the data populated directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need – no access to raw services or database queries through external tools.
 
 ##### System Footprint
-The framework has a minimal system footprint, it includes only classes and interfaces. Additional functionality can be added through optional addons, keeping your system lean.
+The framework has a minimal system footprint. It includes only classes and interfaces. Additional functionality can be added through optional addons, keeping your system lean.
 
 ##### Transparency
 All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. You'll always understand how the framework works and can verify its behavior.
 
 ### Compatibility
-<br>
 
 ##### ABAP Cloud
 abap2UI5 uses only released APIs, making it perfect for both on-stack and side-by-side extensions in ABAP for Cloud. Take advantage of modern ABAP syntax features like CDS, ABAP SQL, and EML within your apps.
@@ -99,7 +97,6 @@ Getting started is straightforward:
 → *See our [Installation Guide](/get_started/quickstart) for detailed instructions*
 
 ### Community
-<br>
 
 ##### Support
 Support is provided by the community. Submit an issue on GitHub or join the abap2UI5 Slack channel for assistance.
