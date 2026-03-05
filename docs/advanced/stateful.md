@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Statefulness, Locks
 
 By default, abap2UI5 runs stateless like any other UI5 freestyle app, meaning only REST calls are made to the ABAP backend.

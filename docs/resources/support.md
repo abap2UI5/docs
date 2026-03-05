@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Support
 
 Support for abap2UI5 is provided by the community on a best-effort basis. 

@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Sponsor
 
 abap2UI5 is a community-driven project built by developers who invest their free time to create, maintain, and improve it. Your sponsorship helps support their efforts and ensures the continued growth and enhancement of the project.

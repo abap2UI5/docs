@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Formatter
 
 You can format values such as currencies, numerics, or timestamps directly in the frontend using formatter functions.

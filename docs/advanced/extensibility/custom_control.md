@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Custom Controls  
 
 You can develop your own UI5 custom controls and use them in your abap2UI5 apps.

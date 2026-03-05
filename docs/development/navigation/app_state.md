@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # App State
 
 abap2UI5 supports saving the current app state so you can return to it later -- similar to how standard UI5 applications handle state management.

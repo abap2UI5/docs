@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Renaming
 
 The entire abap2UI5 project is developed under the `z2ui5` namespace. In certain scenarios, it may be necessary to rename the namespace to fit customer-specific requirements, such as:

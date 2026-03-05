@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # UI5 Over-the-Wire
 
 _The Architecture of abap2UI5_

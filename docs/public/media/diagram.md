@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 ## Diagrams
 
 template: https://excalidraw.com/#json=0RTUTjZIETtW3xH1BiMzu,9qHMUMJWWWCcVvwNP1cssA

@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Share, Bookmark
 
 The app state feature opens up several useful scenarios, such as sharing and bookmarking the current state of your app.

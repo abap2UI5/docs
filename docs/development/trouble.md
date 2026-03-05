@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Troubleshooting
 
 #### Hide Soft Keyboard
