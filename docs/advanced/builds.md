@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Builder
 
 If you use abap2UI5 extensively, you may consider creating your own build by defining a custom namespace and including the specific addons you need:

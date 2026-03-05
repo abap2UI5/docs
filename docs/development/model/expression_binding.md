@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Expression Binding
 
 Expression Binding lets you compute values directly in XML views using JavaScript-like expressions. This is especially useful in abap2UI5, as it can reduce server roundtrips by moving calculations, logical conditions, and string operations to the frontend.

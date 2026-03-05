@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Contribution
 
 abap2UI5 is an open-source project developed from the ABAP community, often during free time or alongside other projects. Contributions of all kinds are warmly welcomed!

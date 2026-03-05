@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Cloud Readiness
 
 _Ready for the Future – or Not?_

@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # ABAP Thinking, UI5 Results
 
 _A Developer-Centric Approach_

@@ -43,7 +43,7 @@ If cache clearing doesn't fix the issue, manually upload the frontend applicatio
 1. Download the webapp folder of the project.
 
 2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to upload the application to the server.
-<img width="942" alt="image" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
+<img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
 
 
 ### Launchpad KPIs
@@ -55,7 +55,7 @@ Enhance your Fiori Launchpad with Key Performance Indicators (KPIs) using the ab
 Find more information in the blog article on [LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
 
 #### Functionality
-<img width="800" alt="image" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
+<img width="800" alt="Launchpad KPI tiles showing dynamic count values" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
 <br>
 
 #### Approach

@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # abapGit
 
 This project uses [abapGit](https://github.com/abapGit/abapGit) to manage version control and distribute its code efficiently.

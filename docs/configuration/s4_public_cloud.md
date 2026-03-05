@@ -13,48 +13,48 @@ S/4 Public Cloud only supports the ADT abapGit version. abap2UI5 consists purely
 
 Use the standard installation process via [abapGit for Eclipse](https://eclipse.abapgit.org/).
 
-<img width="649" height="573" alt="image" src="https://github.com/user-attachments/assets/9ea46657-5ff5-4075-af12-4b5b359c212d" />
+<img width="649" height="573" alt="abapGit repository link dialog in ADT" src="https://github.com/user-attachments/assets/9ea46657-5ff5-4075-af12-4b5b359c212d" />
 
-<img width="650" height="571" alt="image" src="https://github.com/user-attachments/assets/41558033-3802-4234-8f50-2611574c870a" />
+<img width="650" height="571" alt="abapGit pull dialog for abap2UI5 repository" src="https://github.com/user-attachments/assets/41558033-3802-4234-8f50-2611574c870a" />
 
-<img width="641" height="569" alt="image" src="https://github.com/user-attachments/assets/69eafc9b-7d83-48f8-b970-c68a6a4577ef" />
+<img width="641" height="569" alt="abapGit pull operation in progress" src="https://github.com/user-attachments/assets/69eafc9b-7d83-48f8-b970-c68a6a4577ef" />
 
-<img width="880" height="1199" alt="image" src="https://github.com/user-attachments/assets/09497311-8653-4e6f-ae0a-3138d0eac47e" />
+<img width="880" height="1199" alt="abapGit import log showing pulled artifacts" src="https://github.com/user-attachments/assets/09497311-8653-4e6f-ae0a-3138d0eac47e" />
 
 You'll see the pull operation is now running:
 
-<img width="1438" height="26" alt="image" src="https://github.com/user-attachments/assets/ee085bb9-d708-4de3-a6f0-5493adc57054" />
+<img width="1438" height="26" alt="abapGit pull operation completed status bar" src="https://github.com/user-attachments/assets/ee085bb9-d708-4de3-a6f0-5493adc57054" />
 
 After a few moments, the installation will complete:
 
-<img width="1332" height="28" alt="image" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
+<img width="1332" height="28" alt="Installation complete confirmation" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
 
 
 ### 2. Mass Activate the Imported Artifacts
 
 When installing repositories with ADT abapGit, all artifacts are initially imported in an inactive state. You'll need to manually activate them. The easiest approach is to create a dedicated inactive/active folder tree for the abap2UI5 project:
 
-<img width="481" height="182" alt="image" src="https://github.com/user-attachments/assets/a47fe1f1-5445-46da-96b9-8df3bfe9a99d" />
+<img width="481" height="182" alt="Inactive objects folder tree in ADT" src="https://github.com/user-attachments/assets/a47fe1f1-5445-46da-96b9-8df3bfe9a99d" />
 
-<img width="691" height="732" alt="image" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
+<img width="691" height="732" alt="Inactive artifacts list requiring activation" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
 You see that all artifacts are deactivated:
 
-<img width="638" height="179" alt="image" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
+<img width="638" height="179" alt="Mass activation of abap2UI5 artifacts in progress" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 
-<img width="639" height="577" alt="image" src="https://github.com/user-attachments/assets/06997014-1891-4da2-b3a5-25587a6ad587" />
+<img width="639" height="577" alt="Mass activation dialog for abap2UI5 artifacts" src="https://github.com/user-attachments/assets/06997014-1891-4da2-b3a5-25587a6ad587" />
 
-<img width="447" height="112" alt="image" src="https://github.com/user-attachments/assets/ba6614b9-d79e-41ee-9ba0-6339aaee800f" />
+<img width="447" height="112" alt="Activation completed status message" src="https://github.com/user-attachments/assets/ba6614b9-d79e-41ee-9ba0-6339aaee800f" />
 
-<img width="1279" height="410" alt="image" src="https://github.com/user-attachments/assets/157ed036-cf6a-4d7b-b93a-2d8bd20af6cb" />
+<img width="1279" height="410" alt="Activated artifacts in project explorer" src="https://github.com/user-attachments/assets/157ed036-cf6a-4d7b-b93a-2d8bd20af6cb" />
 
 When the activation process is completed, refresh the folder tree:
 
-<img width="626" height="762" alt="image" src="https://github.com/user-attachments/assets/86b26c00-e71e-4a3f-a9e9-2beaaeddf577" />
+<img width="626" height="762" alt="All artifacts activated in folder tree" src="https://github.com/user-attachments/assets/86b26c00-e71e-4a3f-a9e9-2beaaeddf577" />
 
 Now you'll see that all artifacts are activated:
 
-<img width="641" height="88" alt="image" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
+<img width="641" height="88" alt="Fully activated abap2UI5 package" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
 
 
 ### 3. Set Up the HTTP Service

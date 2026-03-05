@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Downporting
 
 abap2UI5 works out of the box with ABAP version 750. If you're using a lower release, you can install the downported version, which is compatible with R/3 NetWeaver >702.

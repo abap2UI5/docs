@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Add-ons
 
 abap2UI5 focuses on core functionality - rendering views, handling events, and exchanging data. This keeps the framework lean and maintainable. But the real power comes from the ecosystem: **ready-to-use add-ons and community projects** that extend abap2UI5 for your specific needs.

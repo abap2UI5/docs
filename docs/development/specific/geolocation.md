@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Geolocation, Maps
 
 abap2UI5 includes a custom control for retrieving geolocation data from the user's device, such as longitude, latitude, altitude, and speed. This is useful for logistics apps, field service tools, or any scenario where location matters.

@@ -254,7 +254,7 @@ export default defineConfig({
           },
           {
             text: "Tools",
-            collapsed: "false",
+            collapsed: false,
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },

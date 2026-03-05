@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Release Notes
 
 ### 1.142.0

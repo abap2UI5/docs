@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # RFC Connector
 
 The [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) lets you trigger abap2UI5 apps remotely via RFC between two ABAP systems. This is particularly useful in distributed system landscapes or when working with legacy systems that can't directly host UI5 frontend logic.

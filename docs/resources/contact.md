@@ -1,3 +1,6 @@
+---
+outline: [2, 4]
+---
 # Contact
 
 abap2UI5 is an open-source project that values transparent and publicly visible communication. Whenever possible, please use public channels so others can join the conversation and benefit from the discussion. Reach out through the following platforms:
