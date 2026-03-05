@@ -20,7 +20,7 @@ Instead of building and maintaining complex JavaScript frontends, managing APIs,
 In this architecture the initial request delivers JavaScript and CSS, Subsequent interactions trigger AJAX calls to fetch HTML fragments and the browser inserts these fragments into the DOM without reloading the full page [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763):
 
 <p align="center">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
+<img width="600" alt="HTML Over-the-Wire lifecycle - server sends HTML fragments, browser updates UI without full reload" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
 <br/>
   <em> HTML "Over the Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
 </p>
@@ -60,7 +60,7 @@ Architectural Comparison:
 UI5 freestyle apps follow the Single Page Application model. All UI and app artifacts are stored on the frontend, while the backend provides data via OData — typically based on CDS Views or custom ABAP implementations. Both rendering and logic execution take place entirely in the browser:
 
 <p align="center">
- <img width="500" alt="image" src="https://github.com/user-attachments/assets/8043d0d9-5852-4dac-aefb-37ec8d6e66be" />
+ <img width="500" alt="UI5 freestyle - UI is built on the client, backend delivers only data via OData" src="https://github.com/user-attachments/assets/8043d0d9-5852-4dac-aefb-37ec8d6e66be" />
 <br/>
   <em>UI5 freestyle - UI is built on the client; backend delivers only Data via OData</em>
 </p>
@@ -74,7 +74,7 @@ But how can we then generate UI5 HTML in the backend?
 Fortunately, UI5 has a defining characteristic that allows us to shift part of the view generation to the backend. In UI5 freestyle apps, each view can be defined in XML — the so-called UI5 XML View. The UI5 framework uses this XML definition, combined with data from the backend, to create HTML in the browser.
 
 <p align="center">
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/ee0152e7-4f64-4b90-9cf2-3faead53044f" />
+<img width="400" alt="UI5 freestyle - HTML created in browser based on frontend XML View and backend data" src="https://github.com/user-attachments/assets/ee0152e7-4f64-4b90-9cf2-3faead53044f" />
 <br/>
   <em>UI5 freestyle – HTML created in browser based on frontend XML View and backend Data</em>
 </p>
@@ -84,7 +84,7 @@ abap2UI5 introduces a subtle but important shift: what if the backend also deliv
 While HTML creation still happens on the frontend, both the view definition and the corresponding data are now sent from the backend:
 
 <p align="center">
-  <img width="400" alt="image" src="https://github.com/user-attachments/assets/adef16b7-e98d-476f-9bbc-738685047c5d" />
+  <img width="400" alt="abap2UI5 - HTML created in browser based on XML View and data, both sent from backend" src="https://github.com/user-attachments/assets/adef16b7-e98d-476f-9bbc-738685047c5d" />
 <br/>
   <em>abap2UI5 – HTML created in browser based on XML View and Data, both sent from the backend</em>
 </p>
@@ -100,7 +100,7 @@ To enable user interaction, a minimal and static UI5 freestyle app is delivered 
 When a user triggers an event (e.g., pressing a button), the event information is sent to the backend, where an ABAP class determines what happens next. All logic is executed entirely on the server:
 
 <p align="center">
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/64ed863f-09bf-4634-8688-5b5382595115" />
+<img width="500" alt="abap2UI5 - simple shell app, backend handles all logic" src="https://github.com/user-attachments/assets/64ed863f-09bf-4634-8688-5b5382595115" />
 <br/>
   <em>abap2UI5 – Simple shell app, backend handles all logic</em>
 </p>
@@ -108,7 +108,7 @@ When a user triggers an event (e.g., pressing a button), the event information i
 The frontend becomes a static shell shared across all applications. Views and logic are fully defined and maintained in the backend, with each application represented solely by backend ABAP classes. The result: every UI5 development project becomes a complete backend project — no separate frontend deployments needed:
 
 <p align="center">
-<img width="400" alt="image" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
+<img width="400" alt="abap2UI5 - shared shell app with each application defined by backend artifacts only" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
 <br/>
   <em>abap2UI5 – Shared shell app, with each application defined by backend artifacts only</em>
 </p>
@@ -116,7 +116,7 @@ The frontend becomes a static shell shared across all applications. Views and lo
 In contrast, conventional UI5 freestyle applications require a dedicated set of frontend artifacts for each app:
 
 <p align="center">
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
+<img width="300" alt="UI5 freestyle - each application requires its own set of deployed UI and app artifacts" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
 <br/>
   <em>UI5 freestyle – Each application requires its own set of deployed UI and App artifacts</em>
 </p>
@@ -132,7 +132,7 @@ If we continued relying on OData, updates would typically be routed into the ODa
 Let’s take a closer look at a key UI5 feature: the concept of view models. In UI5 freestyle, view models are used to bind attributes such as visible or enabled — allowing control properties in the view to be mapped precisely to model attributes:
 
 <p align="center">
-<img width="340" alt="image" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />
+<img width="340" alt="UI5 View Model concept - UI control properties bound to View Model attributes" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />
 <br/>
   <em>UI5 View Model Concept – UI control properties are bound to View Model attributes</em>
 </p>
@@ -140,7 +140,7 @@ Let’s take a closer look at a key UI5 feature: the concept of view models. In 
 This leads to the second subtle shift in abap2UI5: Instead of binding OData to View, abap2UI5 uses a custom view model created entirely in the backend. This model is constructed dynamically after each request — tailored specifically to the current view — and is sent together with the view definition to the frontend:
 
 <p align="center">
-<img width="385" alt="image" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
+<img width="385" alt="abap2UI5 - backend delivers XML View and tailored View Model in a single response" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
 <br/>
   <em>abap2UI5 – Backend delivers an XML View and its specifically tailored View Model in a single response</em>
 </p>
@@ -182,7 +182,7 @@ And its corresponding View Model:
 The overall application flow looks like this:
 
 <p align="center">
-<img width="600" alt="image" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
+<img width="600" alt="abap2UI5 architecture - UI5 Over-the-Wire application flow" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
 <br/>
   <em>abap2UI5 Architecture - UI5 Over-the-Wire</em>
 </p>

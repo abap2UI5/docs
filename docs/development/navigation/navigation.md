@@ -62,4 +62,19 @@ To learn more about launchpads and routing, refer to the documentation [here](/c
 
 ### Inner App Navigation
 
-Coming Soon... (PRs welcome)
+For navigating within a single application (e.g., switching between sub-views or steps in a wizard), use the view display method with different views depending on your application state:
+
+```abap
+METHOD z2ui5_if_app~main.
+
+  CASE mv_current_step.
+    WHEN 'STEP_1'.
+      client->view_display( view_step_1( ) ).
+    WHEN 'STEP_2'.
+      client->view_display( view_step_2( ) ).
+  ENDCASE.
+
+ENDMETHOD.
+```
+
+Use class attributes to track the current state and switch views accordingly. This keeps all navigation logic in a single ABAP class without needing cross-app calls.
