@@ -1,18 +1,11 @@
 :root {
     --vp-home-hero-name-color: #d03c4a;
+    --vp-c-brand-1: #d03c4a;
+    --vp-c-brand-2: #a83232;
+    --vp-c-brand-3: #d03c4a;
     --vp-button-brand-bg: #d03c4a;
     --vp-button-brand-border: #d03c4a;
     --vp-button-brand-text: #ffffff;
     --vp-button-brand-bg-hover: #a83232;
     --vp-button-brand-border-hover: #a83232;
-}
-
-.VPButton.brand:hover {
-    background-color: var(--vp-button-brand-bg-hover);
-    border-color: var(--vp-button-brand-border-hover);
-    color: var(--vp-button-brand-text);
-}
-
-button:hover {
-    background-color: darkred;
 }
