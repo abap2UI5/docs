@@ -5,13 +5,14 @@
     --vp-button-brand-text: #ffffff;
     --vp-button-brand-bg-hover: #a83232;
     --vp-button-brand-border-hover: #a83232;
-    --vp-c-brand-1: #d03c4a;
-    --vp-c-brand-2: #a83232;
-    --vp-c-brand-3: #d03c4a;
 }
 
 .VPButton.brand:hover {
-    background-color: var(--vp-button-brand-bg-hover) !important;
-    border-color: var(--vp-button-brand-border-hover) !important;
-    color: var(--vp-button-brand-text) !important;
+    background-color: var(--vp-button-brand-bg-hover);
+    border-color: var(--vp-button-brand-border-hover);
+    color: var(--vp-button-brand-text);
+}
+
+button:hover {
+    background-color: darkred;
 }
