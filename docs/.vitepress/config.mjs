@@ -205,7 +205,7 @@ export default defineConfig({
       },
       {
         text: "Advanced Topics",
-        link: "/advanced/advanced",
+        link: "/advanced/downporting",
         collapsed: true,
         items: [
           { text: "Downporting", link: "/advanced/downporting" },
