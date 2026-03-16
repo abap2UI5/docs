@@ -8,10 +8,10 @@ outline: [2, 4]
 
 Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org):
 
-![abapGit repository installation screen for abap2UI5](image.png)
+![abapGit repository installation screen for abap2UI5](/get_started/image.png)
 
 ::: details ABAP Cloud
-![abapGit installation for ABAP Cloud environments](image-4.png)
+![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
 :::
 
 
@@ -50,7 +50,7 @@ ENDCLASS.
 Next use the transaction SICF to create a new HTTP service with the handler above:
 
 ![SICF service creation dialog in transaction SICF](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
-![HTTP handler class assignment in SICF service configuration](image-5.png)
+![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
 
 ::: details ABAP Cloud
 For ABAP Cloud environments, follow [this guide](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
