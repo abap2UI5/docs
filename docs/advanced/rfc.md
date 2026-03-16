@@ -24,7 +24,7 @@ The system that calls the app (the frontend system) includes the UI5 library and
 _Prerequisite: Set up a destination in SM59 so the source system can be called via RFC. abap2UI5 needs to be installed in both systems._
 
 Steps:
-1. Install the [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) via abapGit on both system
+1. Install the [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) via abapGit on both systems
 2. Replace in the HTTP handler the destination `NONE` with your Source System Destination
 3. Call in your browser the endpoint `.../sap/bc/2ui5_rfc`
 
