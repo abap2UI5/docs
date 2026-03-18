@@ -86,7 +86,7 @@ If you need to manage a stack of multiple popups, remember that abap2UI5 display
 
 ### Popover
 To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
- ```abap
+```abap
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
