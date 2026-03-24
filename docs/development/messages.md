@@ -12,9 +12,7 @@ For short-duration messages, such as success notifications, you can use the mess
 
 ```abap
 METHOD z2ui5_if_app~main.
-
   client->message_toast_display( `this is a message` ).
-
 ENDMETHOD.
 ```
 
@@ -24,9 +22,7 @@ If you need the user to acknowledge the message, display a message box that requ
 
 ```abap
 METHOD z2ui5_if_app~main.
-
   client->message_box_display( `this is a message` ).
-
 ENDMETHOD.
 ```
 
@@ -34,11 +30,9 @@ For error messages, simply change the type:
 
 ```abap
 METHOD z2ui5_if_app~main.
-
   client->message_box_display(
     text = `This is an error message`
     type = `error` ).
-
 ENDMETHOD.
 ```
 
