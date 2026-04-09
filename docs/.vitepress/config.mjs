@@ -89,7 +89,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "1.142.0",
+        text: "1.141.0",
         items: [
           { text: "Releases", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
