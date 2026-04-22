@@ -75,8 +75,8 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
 
   ENDMETHOD.
 ENDCLASS.
-
 ```
+
 #### Functionality
 With generic types, the standard transformation throws an error. abap2UI5 resolves this issue by looping over all attributes and applying a workaround:
 - For each generic attribute, a separate serialization is performed using S-RTTI beforehand.
@@ -93,4 +93,4 @@ It is integrated into the project under the `z2ui5` namespace and automatically 
 z2ui5_cl_srt_datadescr=>
 ```
 #### Updates
-Every update and bug fix in s-rtti is automatically reflected in abap2UI5 via GitHub Actions and the [mirror-s-rtti](https://github.com/abap2UI5/mirror-srtti) repository, ensuring always using the latest version.
+Every update and bug fix in S-RTTI is automatically reflected in abap2UI5 via GitHub Actions and the [mirror-s-rtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.
