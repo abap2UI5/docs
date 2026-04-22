@@ -92,4 +92,4 @@ It is integrated into the project under the `z2ui5` namespace and automatically 
 z2ui5_cl_srt_datadescr=>
 ```
 #### Updates
-Every update and bug fix in S-RTTI is automatically reflected in abap2UI5 via GitHub Actions and the [mirror-s-rtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.
+Every update and bug fix in S-RTTI is automatically reflected in abap2UI5 via GitHub Actions and the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.

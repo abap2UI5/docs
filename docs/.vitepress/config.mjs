@@ -109,7 +109,7 @@ export default defineConfig({
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Sample Apps", link: "/get_started/samples" },
           { text: "Use Cases", link: "/get_started/use_cases" },
-          { text: `What's next?`, link: "/get_started/next" },
+          { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
       {
