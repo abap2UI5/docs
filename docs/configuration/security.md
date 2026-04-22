@@ -12,7 +12,7 @@ The abap2UI5 framework operates as an HTTP handler. You create this HTTP handler
 Authentication is handled at the ICF (Internet Communication Framework) node level. You have complete control over configuring the ICF node, including visibility settings, login procedures, and other security parameters.
 
 ### Authorization
-As an app developer, you have full flexibility in managing authorization settings. You can configure these either at the application level or service node level. For detailed guidance on setting up authentication for your endpoint, check out [this page](/configuration/authorization).
+As an app developer, you have full flexibility in managing authorization settings. You can configure these either at the application level or service node level. For detailed guidance on setting up authorization for your endpoint, check out [this page](/configuration/authorization).
 
 ### Backend Code
 abap2UI5 is delivered as custom code. Once installed, you have full ownership of the code, giving you the flexibility to modify it to suit your needs. However, to ensure compatibility with future updates, we recommend avoiding direct modifications to the core codebase.
@@ -29,9 +29,9 @@ To enhance security, abap2UI5 uses a Content Security Policy (CSP) by default. C
 #### Default CSP
 By default, abap2UI5 uses the following CSP:
 ```xml
- <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
-     ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com
-     sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
+    ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com
+    sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>
 ```
 
 #### Customizing the CSP
