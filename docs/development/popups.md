@@ -15,14 +15,14 @@ To display a popup, use the method `client->popup_display` instead of `client->v
 
     DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
         )->dialog( `Popup - Info`
-          )->text( `this is an information shown in a popup` ).
+          )->text( `this is information shown in a popup` ).
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
 ```
 
 #### Flow Logic
-A common flow for using popups typically involves displaying a normal view, then showing a popup, and finally closing it. Here's how to structure this:
+A common popup flow involves displaying a normal view, then showing a popup, and finally closing it. Here's how to structure it:
 ```abap
   METHOD z2ui5_if_app~main.
 
