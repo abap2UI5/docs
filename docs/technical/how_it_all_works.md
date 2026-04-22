@@ -152,7 +152,7 @@ Replacing the View at Runtime
 
 ##### 12. View & Model Independent from the HTTP-Service
 
-In the end, the View & Model are defined independent from the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
+In the end, the View & Model are defined independently of the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
 
 <img width="600" alt="RAP vs. Model & View decoupled from the (single & generic) HTTP-Service" src="https://github.com/user-attachments/assets/6fb61790-87bc-47fa-855e-83d5292b70f3" />
 
@@ -365,7 +365,7 @@ The functionality of automated ABAP downporting is impressive and greatly improv
 
 ##### 29. Summary
 
-Long blog post short: Inspired by "HTML Over the Wire" (1)(2)(3) we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13) independent from the View and Data Model (12). It provides us with great flexibility allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
+Long blog post short: inspired by "HTML Over the Wire" (1)(2)(3), we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13), independent of the View and Data Model (12). This gives us great flexibility, allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
 
 Next, we explored various ideas on how the framework reduces its own complexity by avoiding frontend artifacts (17), eliminating extra customizing layers (19), and separating the view from the framework (21), as well as app-specific JS or HTML (22). Finally, we got a pure source code approach with only one database table, two interfaces, one class and just 2,300 lines of code (25). It is developed in a single code line (27), making it cloud and on-premises ready and downportable to old releases (28). Its apps, in combination with abapGit, can be developed so that they run on nearly every release (29).
 
