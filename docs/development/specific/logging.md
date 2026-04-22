@@ -6,7 +6,7 @@ outline: [2, 4]
 Logging is essential for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), supported in both on-premise and ABAP Cloud environments. With abap2UI5, you can use BAL just as you would in classic development and display logs through the framework's built-in popups.
 
 #### BAL Variables
-In ABAP classic, you can use the classic BAL function modules and display the BAL table with the popup `Z2UI5_CL_POP_MESSAGES`:
+In classic ABAP, you can use the classic BAL function modules and display the BAL table with the popup `Z2UI5_CL_POP_MESSAGES`:
 ```abap
 METHOD z2ui5_if_app~main.
 
