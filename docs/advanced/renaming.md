@@ -4,9 +4,9 @@ outline: [2, 4]
 # Renaming
 
 The entire abap2UI5 project is developed under the `z2ui5` namespace. In certain scenarios, it may be necessary to rename the namespace to fit customer-specific requirements, such as:
-- Different modules, e.g., z2ui5_sd, z2ui5_mm
-- Custom namespaces, e.g., /ZZZ/, /YYY/
-- Release-specific naming, e.g., z2411, z2502
+- Different modules, e.g., `z2ui5_sd`, `z2ui5_mm`
+- Custom namespaces, e.g., `/ZZZ/`, `/YYY/`
+- Release-specific naming, e.g., `z2411`, `z2502`
 
 abap2UI5 is compatible with the abaplint renaming feature and supports namespaces of up to 9 characters, e.g., `zabap2ui5`.
 
