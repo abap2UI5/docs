@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-#  Behind the Scenes
+# Behind the Scenes
 
 _Technical Deep Dive into abap2UI5_
 

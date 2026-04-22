@@ -25,7 +25,7 @@ ENDCLASS.
 ```
 Benefits:
 - Single-class design: quick to create and easy to debug
-- runs out of the box
+- Runs out of the box
 - Minimal boilerplate, easy to copy and paste
 
 This simplicity also inspired the entry point for abap2UI5 apps. For simple output, you don't need more than this:
@@ -43,7 +43,7 @@ ENDCLASS.
 ```
 What abap2UI5 adds: the ability to run in the browser without ADT, using a UI5 frontend that fully follows SAP Fiori design guidelines — ready to show your colleagues right away.
 
-###  Classic Input Handling with Selection Screens
+### Classic Input Handling with Selection Screens
 
 Input handling was never a challenge in classic ABAP — just define a Report with `PARAMETERS` and `SELECT-OPTIONS`, and the UI gets generated automatically. The term didn't exist back then, but this gave you a "fullstack" app in just a few lines:
 
