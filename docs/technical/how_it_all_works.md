@@ -147,7 +147,7 @@ Replacing the Model (metadata) at Runtime
 
 Same for the view: In RAP, only certain predefined control attributes can be modified at runtime, while the view is defined in CDS artifacts with UI annotations previously. However, in an abap2UI5 app, it is possible to replace entire view controls. For example, in the following app, a table control is replaced with a list control and vice versa:
 
-![gif_ui_change2-1](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
+![Swapping a table control for a list control at runtime from the ABAP backend](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
 Replacing the View at Runtime
 
 ##### 12. View & Model independent from the HTTP-Service
@@ -190,7 +190,7 @@ The only non-generic part of this concept is the app of the user implementing th
 
 abap2UI5 app - one place for everything
 
-In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it was coming from and where it wants to go next. All of this is concentrated in this single app layer.
+In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it was coming from and where it wants to go next. All of this is concentrated in this single app layer.
 
 However, this is not a big deal for ABAP! From an ABAP perspective, this is similar to past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performs all the necessary functions (it was just not a browser-based environment). Moreover, in this architecture, we are not limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions, such as commit sequences, anymore. We can now leverage the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward, working with generic data models, as seen in (10), is easily achievable at runtime with RTTI and extended ABAP concepts like serialization are also applicable, as we will see in the next section.
 
@@ -273,7 +273,7 @@ Actual Approach - extra methods for the event and binding
 
 This is a difference from many other UI rendering processes, where data and UI are usually imported together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach has fewer lines of code than the first approach that only focused on selection screens, because the entire view creation process is clearly separated from the rest now and kept outside of the framework.
 
-##### 22. "Over the Wire" sending JS, HTML & CSS 
+##### 22. "Over the Wire" sending JS, HTML & CSS
 
 Furthermore, we can add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App – it has its own custom control that isn't part of the framework and is sent "Over the Wire" after calling the app:
 
@@ -355,7 +355,7 @@ As you can see, creating methods that are compatible with both 'ABAP Cloud' and 
 
 ##### 28. Compatibility & Downporting
 
-Downporting abap2UI5 code normally would result in a release that is difficult to maintain and debug. To avoid this, abap2UI5 is divided into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
+Downporting abap2UI5 code normally would result in a release that is difficult to maintain and debug. To avoid this, abap2UI5 is divided into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
 
 The low-syntax branch is automatically generated using abaplint. The separate branch enables development with all new ABAP expressions available since ABAP v750 while still ensuring that all abap2UI5 features added in the future are automatically downported and available for ABAP v702.
 
@@ -363,11 +363,11 @@ The functionality of automated ABAP downporting is impressive and greatly improv
 
 <img width="600" alt="abaplint dashboard and abapGit - tools powering abap2UI5 downporting" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
 
-##### 30. Summary
+##### 29. Summary
 
 Long blog post short: Inspired by "HTML Over the Wire" (1)(2)(3) we mixed UI and Data together (7) and created an "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13) independent from the View and Data Model (12). It provides us with great flexibility allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
 
-Next, we explored various ideas on how the framework reduces its own complexity by avoiding frontend artifacts (17), eliminating extra customizing layers (19), and separating the view from the framework (21), as well as app-specific JS or HTML (22). Finally, we got a pure source code approach with only one database table, two interfaces, one class and just 2,300 lines of code (25). It is developed in a single code line (27), making it cloud and on-premises ready and downportable to old releases (28). Its apps in combination with abapGit can be developed that they are running on nearly every release (29).
+Next, we explored various ideas on how the framework reduces its own complexity by avoiding frontend artifacts (17), eliminating extra customizing layers (19), and separating the view from the framework (21), as well as app-specific JS or HTML (22). Finally, we got a pure source code approach with only one database table, two interfaces, one class and just 2,300 lines of code (25). It is developed in a single code line (27), making it cloud and on-premises ready and downportable to old releases (28). Its apps, in combination with abapGit, can be developed so that they run on nearly every release (29).
 
 All in all, with abap2UI5, you need to disregard some common rules: there is no separation between View and Model in the HTTP communication (12), HTML & JavaScript are stored directly in the source code (17) (22), we don't use OData or RAP (7) and there are other downsides to consider (24). However, if you accept all of this, you get a very minimalistic approach where you only need to implement a single method to develop standalone UI5 applications (15).
 
