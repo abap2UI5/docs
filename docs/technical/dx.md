@@ -5,7 +5,7 @@ outline: [2, 4]
 
 _A Developer-Centric Approach_
 
-abap2UI5 was built from the everyday experiences of ABAP developers. It tackles common challenges in the development process — deployment, caching, debugging, and tooling — while keeping a coding style that's close to familiar ABAP and SAP GUI patterns like Selection Screens and ALV. The goal: make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at the key influences behind the framework.
+abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles common challenges in the development process — deployment, caching, debugging, and tooling — while keeping a coding style that's close to familiar ABAP and SAP GUI patterns like Selection Screens and ALV. The goal: make working with abap2UI5 as familiar and intuitive as possible for ABAPers. This page takes a closer look at the key influences behind the framework.
 
 ### Simple Output with IF_OO_ADT_CLASSRUN
 
@@ -56,7 +56,7 @@ START-OF-SELECTION.
 Benefits:
 - Rapid prototyping with minimal code
 - Built-in input handling and event processing
-- Fullstack behavior with no setup
+- Full-stack behavior with no setup
 
 abap2UI5 mirrors this classic selection screen behavior in the browser. Use `Z2UI5_CL_XML_VIEW` to define simple views and exchange data with the `_bind_edit` method:
 
