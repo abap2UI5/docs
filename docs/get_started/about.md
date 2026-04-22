@@ -69,9 +69,9 @@ By relying only on released APIs, abap2UI5 ensures your applications remain "clo
 
 ##### System Support
 Works with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from version 7.02 to ABAP Cloud:
-* S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
-* S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
-* R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
+- S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
+- S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
+- R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
 
 A downported version is available for systems running earlier ABAP versions (before 7.50).
 
@@ -87,9 +87,9 @@ Technically, abap2UI5 apps are regular UI5 freestyle applications. License them 
 
 ##### Launchpad Integration
 Integrate your apps into:
-* Fiori Launchpads on S/4 On-Premise
-* Tiles on S/4 Public Cloud
-* Build Workzone Websites on BTP
+- Fiori Launchpads on S/4 On-Premise
+- Tiles on S/4 Public Cloud
+- Build Workzone Websites on BTP
 
 ##### Installation
 Getting started is straightforward:
