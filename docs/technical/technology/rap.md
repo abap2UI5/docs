@@ -17,8 +17,8 @@ This page provides a technical comparison between **RAP** and **abap2UI5**, focu
 | **UI Definition** | Annotations in CDS & metadata                                    | XML Views created directly in ABAP                         |
 | **Communication** | OData V4 (metadata, data, actions)                               | Simple HTTP requests (Over-the-Wire)                      |
 | **Runtime Control**| Logic partly changeable via RAP Implementation                  | Full control over UI and logic in backend                 |
-| **Model**         | Defined at designtime via CDS                                    | Designed at Designtime or Runtime via Internal Tables     |
-| **Drafts**        | Managed via RAP drafts on Model Level                            | Managed via Serialization on App level     |
+| **Model**         | Defined at design time via CDS                                   | Designed at design time or runtime via internal tables    |
+| **Drafts**        | Managed via RAP drafts on model level                            | Managed via serialization on app level                    |
 
 ### 2. Developer Workflow
 
