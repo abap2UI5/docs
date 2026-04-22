@@ -45,6 +45,7 @@ Backend (OData/REST)
 ```
 
 #### abap2UI5
+
 ```plaintext
 Browser (Static UI5 Shell)
   ├──> HTTP request: Load XML View + ViewModel

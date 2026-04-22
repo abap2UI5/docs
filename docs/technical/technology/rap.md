@@ -44,7 +44,9 @@ Browser (Fiori Elements SPA)
 Backend (RAP Services)
   └──> Processes requests, returns data/actions
 ```
+
 #### abap2UI5
+
 ```plaintext
 Browser (Static UI5 Shell)
   ├──> HTTP request: Load XML View + ViewModel
