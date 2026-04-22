@@ -21,15 +21,15 @@ Sometimes, installation via abapGit can cause cache-related issues. Here's how t
 
 #### Cache Management
 
-1. Recalculate app index of z2ui5 with report /UI5/APP_INDEX_CALCULATE
+1. Recalculate app index of z2ui5 with report `/UI5/APP_INDEX_CALCULATE`
 ![App index calculation report selection screen](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
 ![App index calculation report output](https://github.com/user-attachments/assets/81f8feae-fcfe-4175-aa91-28ce8d681539)
 
-2. Recalculate index of distribution layer with report /UI5/APP_INDEX_CALCULATE (if tab isn't visible try switching to another tab, then it usually appears)
+2. Recalculate index of distribution layer with report `/UI5/APP_INDEX_CALCULATE` (if the tab isn't visible, switch to another tab first — it usually appears afterwards)
 ![Distribution layer tab in app index calculation report](https://github.com/user-attachments/assets/3fce0f2e-96f9-4487-9226-7940336582b1)
 ![Distribution layer recalculation output](https://github.com/user-attachments/assets/dc149874-6731-496d-90bf-79cb83d8c97d)
 
-3. Invalidate http caches in transaction SMICM
+3. Invalidate HTTP caches in transaction `SMICM`
 ![HTTP cache invalidation in transaction SMICM](https://github.com/user-attachments/assets/497b7677-8009-472e-9b50-34719105a12e)
 
 4. Clear browser caches and hard reload
