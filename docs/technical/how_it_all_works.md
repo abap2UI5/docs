@@ -99,7 +99,7 @@ But is this just the same as RAP, but in a different format?
 
 ##### 8. RAP
 
-RAP also aims to find a "sweet spot" between SPA and MPA. I'm not certain of the exact approach they use to bring their view and model to the frontend, but they enrich responses either within the JSON itself or within the metadata of the initial OData request — and the view and model are defined beforehand in CDS Views in the backend:
+RAP also aims to find a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully transparent, but it enriches responses either within the JSON itself or within the metadata of the initial OData request — and the view and model are defined beforehand in CDS Views in the backend:
 
 <img width="600" alt="RAP - Definition of Views with UI Annotations" src="https://github.com/user-attachments/assets/a79f07ff-594d-422c-b66f-8acf8058c81a" />
 
@@ -289,7 +289,7 @@ abap2UI5 app sending custom JavaScript to the client
 
 ##### 23. As Simple as Possible
 
-As we have seen in (22), apps can be made very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach is the use of `if_oo_adt_classrun`. By implementing just one method, we can generate an output with a single click (F9). This is extremely efficient and was one of the role models for abap2UI5. Here's a comparison of both approaches:
+As we have seen in (22), apps can be made very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach is the use of `if_oo_adt_classrun`. By implementing just one method, we can generate an output with a single click (F9). This is extremely efficient and was one of the inspirations for abap2UI5. Here's a comparison of both approaches:
 
 <img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
 
