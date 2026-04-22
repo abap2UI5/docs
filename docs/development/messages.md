@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 5]
 ---
 
 # Messages, Errors
@@ -38,7 +38,8 @@ ENDMETHOD.
 
 #### SY, BAPIRET, CX_ROOT
 You can directly pass common message structures, objects, and variables to the functions:
-#### SY
+
+##### SY
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -47,7 +48,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### BAPIRET
+##### BAPIRET
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -61,7 +62,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### CX_ROOT
+##### CX_ROOT
 ```abap
 METHOD z2ui5_if_app~main.
 
