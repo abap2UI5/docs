@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # References
 
-### Videos, Links and Other Media
+### Videos, Links, and Other Media
 
 #### 2025
 - Webinar on Launchpad Integration [(YouTube - 30.07.2025)](https://www.youtube.com/watch?v=t5g3F3PHsbw&list=PLLpkZ_86h4quGSfsjohDHt9CrpjXdeA1P)

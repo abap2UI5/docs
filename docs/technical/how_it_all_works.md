@@ -230,11 +230,11 @@ This provides us with a 100% abapGit project that solely uses ABAP source code, 
 
 ##### 18. Everything Is Maintained & Developed in the Backend
 
-Considering the fact that all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming or other refactoring takes only a few moments. The deployment process is reduced to just activating an ABAP class, enabling us to create many apps in a short amount of time. For example, all the apps of the sample section were created rapidly using mostly copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
+Considering the fact that all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming, or other refactoring takes only a few moments. The deployment process is reduced to just activating an ABAP class, enabling us to create many apps in a short amount of time. For example, all the apps of the sample section were created rapidly using mostly copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
 
 ##### 19. No Extra Layer
 
-Another way to reduce complexity is by avoiding the creation of extra customizing layers. As shown in (13), there is only one stack call between the user's app and the HTTP-Handler, and there are no additional layers such as OData, SADL or Gateway. This allows us to bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
+Another way to reduce complexity is by avoiding the creation of extra customizing layers. As shown in (13), there is only one stack call between the user's app and the HTTP-Handler, and there are no additional layers such as OData, SADL, or Gateway. This allows us to bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
 
 UI5 is evolving rapidly, and additional layers can quickly become outdated. With this approach, all UI5-Controls which will be released in the future will also be automatically useable in abap2UI5. However, a potential downside is that we have to deal with the complexity of the frontend UI5 API and learn the concepts of XML-Views and UI5 Controls. Ultimately, it comes down to personal preference whether you prefer to learn UI Annotations or directly learn the concepts of SAP UI5.
 
