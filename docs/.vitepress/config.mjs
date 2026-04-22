@@ -48,7 +48,7 @@ export default defineConfig({
     },
     editLink: {
       pattern:
-        "https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/:path",
+        "https://github.com/abap2UI5/docs/tree/main/docs/:path",
       text: "Edit this page on GitHub",
     },
     search: {
