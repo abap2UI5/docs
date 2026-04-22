@@ -139,7 +139,7 @@ abap2UI5 - Dynamic Data Binding & Model Creation
 
 In apps we can use RTTI now again in a way that is similar to how it was used with ALVs. This means that there is no need to create separated apps for each model. In this demo, you can see an abap2UI5 app with a view including a table output that displays a generic table and its type is created and modified at runtime (similar to SE16):
 
-![gif_se16_2](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
+![SE16-like runtime table where the data model is generated at runtime via RTTI](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
 
 Replacing the Model (metadata) at Runtime
 
@@ -174,7 +174,7 @@ Every app implementation is a REST-based HTTP-Post implementation, in which no s
 
 This makes it compatible with all mobile use cases and devices, as well as with 'RESTful' Environments such as the BTP ABAP Environment and the new language version 'ABAP Cloud'. Similar to an OData-Implementation, where data changes are reflected in the app without requiring an app restart, it is now possible to develop the entire application and modify its view without restarting the frontend app. Take a look at this demo:
 
-![gif_dev](https://github.com/user-attachments/assets/c2c1afce-7d72-46a2-b0a7-7725c70bf5f4)
+![Live editing the ABAP class with the UI updating without reloading the frontend app](https://github.com/user-attachments/assets/c2c1afce-7d72-46a2-b0a7-7725c70bf5f4)
 
 Developing the ABAP class without restarting the frontend app
 
