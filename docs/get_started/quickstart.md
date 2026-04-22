@@ -57,7 +57,7 @@ For ABAP Cloud environments, follow [this guide](https://developers.sap.com/tuto
 <img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
 
-::: tip Security
+::: tip **Security**
 abap2UI5 communicates solely with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
 :::
 
