@@ -5,7 +5,7 @@ outline: [2, 4]
 
 #### Hide Soft Keyboard
 
-For UI5 input fields, the soft keyboard is automatically shown when focusing an input field. In some use cases, e.g., in the context of warehouses with small devices, this is not always wanted. To change this behavior, we have to adjust the HTML input element and switch the input type to `none`. The following snippet demonstrates how to activate/deactivate the soft keyboard.
+For UI5 input fields, the soft keyboard is automatically shown when focusing an input field. In some use cases — e.g., in warehouses with small devices — this behavior isn't desired. To change it, we adjust the HTML input element and switch the input type to `none`. The following snippet demonstrates how to activate and deactivate the soft keyboard.
 
 This example uses the **`z2ui5.afterBE` hook** — a JavaScript callback function that the abap2UI5 frontend framework executes after every backend roundtrip. By assigning a custom function to `z2ui5.afterBE`, you can run JavaScript code in the browser after the backend has responded. This is useful for DOM manipulations that UI5 doesn't support natively.
 
