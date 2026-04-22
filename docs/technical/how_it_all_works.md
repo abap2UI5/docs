@@ -178,7 +178,7 @@ This makes it compatible with all mobile use cases and devices, as well as with 
 
 Developing the ABAP class without restarting the frontend app
 
-We get also the advantage shared by all over-the-wire approaches that there is no need for cache busting anymore, as the frontend app remains unchanged during the development process.
+We also get the advantage shared by all over-the-wire approaches: there is no need for cache busting anymore, as the frontend app remains unchanged during the development process.
 
 Up until now, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
 
@@ -351,7 +351,7 @@ With this approach, the use of dependencies is limited to cloud-released APIs an
 
 GUID creation compatible to ABAP Cloud and Standard ABAP
 
-As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and I have no experience if this is feasible). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver v702.
+As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and it remains to be seen how feasible this is in practice). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver v702.
 
 ##### 28. Compatibility & Downporting
 
