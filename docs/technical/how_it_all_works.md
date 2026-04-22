@@ -180,11 +180,11 @@ Developing the ABAP class without restarting the frontend app
 
 We get also the advantage shared by all over-the-wire approaches that there is no need for cache busting anymore, as the frontend app remains unchanged during the development process.
 
-Up until now, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which has also no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
+Up until now, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
 
 ##### 15. The abap2UI5 App
 
-The only non-generic part of this concept is the app of the user implementing the interface z2ui5_if_app:
+The only non-generic part of this concept is the app of the user implementing the `z2ui5_if_app` interface:
 
 <img width="600" alt="abap2UI5 app - one place for everything" src="https://github.com/user-attachments/assets/167b1078-14d7-4354-9561-f4e5c7345544" />
 
@@ -196,7 +196,7 @@ However, this is not a big deal for ABAP! From an ABAP perspective, this is simi
 
 ##### 16. Draft
 
-With RAP, users can save interim results in drafts, giving them the opportunity to interrupt their work and continue later. The abap2UI5 architecture works as if we send a completely new app to the frontend after every event, but we still want to preserve the inputs and state that the user has made before. To achieve this, the z2ui5_if_app interface includes the if_serializable_object interface, which enables us to serialize and persist all important information of every request (such as the current view or its status):
+With RAP, users can save interim results in drafts, giving them the opportunity to interrupt their work and continue later. The abap2UI5 architecture works as if we send a completely new app to the frontend after every event, but we still want to preserve the inputs and state that the user has made before. To achieve this, the `z2ui5_if_app` interface includes the `if_serializable_object` interface, which enables us to serialize and persist all important information of every request (such as the current view or its status):
 
 <img width="600" alt="z2ui5_t_draft - the abap2UI5 persistence for interim results" src="https://github.com/user-attachments/assets/fc13f32d-3145-4510-a2d8-a0b646fdd6c4" />
 
@@ -208,7 +208,7 @@ Furthermore, these drafts help us jump back to previous states with minimal effo
 
 RAP vs. Single (generic) Draft Table in abap2UI5
 
-With this approach, we achieve a stateful-like PAI/PBO feeling similar to SAP GUI apps, even though we are still operating within the AJAX roundtrip logic. Furthermore since every request can be made to a different application server, abap2UI5 is compatible with scalable cloud environments, ensuring compatibility for future use:
+With this approach, we achieve a stateful-like PAI/PBO feeling similar to SAP GUI apps, even though we are still operating within the AJAX roundtrip logic. Furthermore, since every request can be made to a different application server, abap2UI5 is compatible with scalable cloud environments, ensuring compatibility for future use:
 
 <img width="600" alt="SAP GUI (stateful) vs. abap2UI5 (restful)" src="https://github.com/user-attachments/assets/0c62e222-06b7-4f16-af2d-3663fd6df796" />
 

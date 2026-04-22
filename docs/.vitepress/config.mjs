@@ -217,7 +217,7 @@ export default defineConfig({
           },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
-          { text: "FE Integration", link: "/advanced/fiori" },
+          { text: "Fiori Elements Integration", link: "/advanced/fiori" },
           {
             text: "Extensibility",
             items: [
