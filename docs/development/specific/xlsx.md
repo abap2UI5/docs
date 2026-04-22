@@ -7,7 +7,7 @@ abap2UI5 lets you use your ABAP system's XLSX APIs to upload and download spread
 
 #### Upload
 
-Transform uploaded xlsx files into an internal table:
+Transform uploaded XLSX files into an internal table:
 
 ::: code-group
 
