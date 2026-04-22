@@ -62,6 +62,4 @@ To learn more about launchpads and routing, refer to the documentation [here](/c
 
 ### Inner App Navigation
 
-Work in progress...
-
 Use class attributes to track the current state and switch views accordingly. This keeps all navigation logic in a single ABAP class without needing cross-app calls.
