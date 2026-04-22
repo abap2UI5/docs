@@ -43,8 +43,8 @@ In the early days of web development SSR was the standard. Every user interactio
 The emergence of Single-Page Applications (SPAs) shifted the UI logic to the client. SPAs fetch raw data — through OData services in SAP systems — and dynamically construct the UI in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with the introduction of UI5 in 2010.
 
 However, SPAs come with their own set of challenges: complex API layers, separation of frontend and backend development teams, and intricate build and deployment pipelines. As a counter-approach, HTML Over-the-Wire reintroduces a server-driven approach to UI updates:
-- The server sends only HTML fragments, not entire pages, the browser updates specific parts of the DOM
-- The frontend remains simple and declarative, all logic and artifacts reside in the backend
+- The server sends only HTML fragments, not entire pages; the browser updates specific parts of the DOM
+- The frontend remains simple and declarative; all logic and artifacts reside in the backend
 
 Architectural Comparison:
 
