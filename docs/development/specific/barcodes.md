@@ -153,4 +153,4 @@ ENDCLASS.
 For a sample with sounds in action, check out `Z2UI5_CL_DEMO_APP_304`.
 
 #### Display Barcodes
-If you also need to display barcodes, you can use tools like bwip-js, which is available as part of the js-libraries addon. More details can be found [here](/resources/addons).
+If you also need to display barcodes, you can use tools like bwip-js, which is available as part of the js-libraries add-on. More details can be found [here](/resources/addons).
