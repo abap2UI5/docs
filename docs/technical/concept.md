@@ -13,16 +13,16 @@ _HTML Over-the-Wire_ describes a server-centric web architecture in which the us
 
 Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser just receives HTML fragments and renders them. This approach cuts out the need for client-side MVC frameworks, data transformation layers, and frontend deployment processes [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
 
-> You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines.
+> You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don't need JSON as an in-between format. You don't need client-side MVC frameworks. You don't need complicated bundling and transpiling pipelines.
 
-> This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
+> This is what HTML Over The Wire is all about. It's a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
 In this architecture the initial request delivers JavaScript and CSS. Subsequent interactions trigger AJAX calls to fetch HTML fragments, and the browser inserts these fragments into the DOM without reloading the full page [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763):
 
 <p align="center">
 <img width="600" alt="HTML Over-the-Wire lifecycle - server sends HTML fragments, browser updates UI without full reload" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
 <br/>
-  <em> HTML "Over the Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
+  <em>HTML "Over the Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
 </p>
 
 This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend.
@@ -124,11 +124,11 @@ This leads to additional deployment effort during both development and go-live.
 
 #### Create & Update Data
 
-So far, we’ve seen how to display data and handle events using a backend-driven approach. But how can user input be processed and changes made in the frontend be transferred back to the backend?
+So far, we've seen how to display data and handle events using a backend-driven approach. But how can user input be processed and changes made in the frontend be transferred back to the backend?
 
 If we continued relying on OData, updates would typically be routed into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
 
-Let’s take a closer look at a key UI5 feature: the concept of view models. In UI5 freestyle, view models are used to bind attributes such as visible or enabled — allowing control properties in the view to be mapped precisely to model attributes:
+Let's take a closer look at a key UI5 feature: the concept of view models. In UI5 freestyle, view models are used to bind attributes such as visible or enabled — allowing control properties in the view to be mapped precisely to model attributes:
 
 <p align="center">
 <img width="340" alt="UI5 View Model concept - UI control properties bound to View Model attributes" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />

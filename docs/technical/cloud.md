@@ -113,7 +113,7 @@ Always adhere to cloud-ready development principles to ensure that your apps rem
 
 No — RAP isn't mandatory.
 
-RAP (RESTful Application Programming Model) is SAP’s recommended model for building cloud-native applications. It is based on:
+RAP (RESTful Application Programming Model) is SAP's recommended model for building cloud-native applications. It is based on:
 - CDS Views for data modeling
 - Behavior Definitions for logic and validations
 - OData Services for communication

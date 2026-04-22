@@ -13,9 +13,9 @@ This article is for developers who want to understand how abap2UI5 works under t
 
 One of the core ideas behind abap2UI5 is inspired by the concept of **"HTML Over the Wire"**. This approach suggests rendering HTML directly on the server and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
 
-> You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don’t need JSON as an in-between format. You don’t need client-side MVC frameworks. You don’t need complicated bundling and transpiling pipelines. But you do need to think different. [...]
+> You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don't need JSON as an in-between format. You don't need client-side MVC frameworks. You don't need complicated bundling and transpiling pipelines. But you do need to think different. [...]
 
-> This is what HTML Over The Wire is all about. It’s a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
+> This is what HTML Over The Wire is all about. It's a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
 The idea was introduced in the SAP community through examples using the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
 
@@ -61,7 +61,7 @@ UI5 normally - ABAP delivers only Data
 
 ##### 6. abap2UI5 Architecture
 
-abap2UI5 introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards an HDA, displaying views and data received from the server:
+abap2UI5 introduces a pivotal change: the backend also sends the view. This shifts the frontend's role towards an HDA, displaying views and data received from the server:
 
 <img width="600" alt="'UI5 Over the Wire' - ABAP delivers Data & View together" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 

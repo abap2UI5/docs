@@ -46,7 +46,7 @@ ENDMETHOD.
 ```
 
 ##### abap-logger
-You also have the option to use the fantastic open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates seamlessly with abap2UI5. Here’s an example:
+You also have the option to use the fantastic open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates seamlessly with abap2UI5. Here's an example:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -60,7 +60,7 @@ ENDMETHOD.
 ```
 
 ##### BAL Popup
-Compared to message classes, BAL logs include more detailed information, such as timestamps. Use the specific BAL log popup to display this information. All the examples above can be used with the `Z2UI5_CL_POP_BAL` popup for a more detailed output, here’s an example for the abap-logger:
+Compared to message classes, BAL logs include more detailed information, such as timestamps. Use the specific BAL log popup to display this information. All the examples above can be used with the `Z2UI5_CL_POP_BAL` popup for a more detailed output, here's an example for the abap-logger:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -74,5 +74,5 @@ ENDMETHOD.
 ```
 
 ::: tip
-The BAL popup is still in its early stages and offers basic functionality only. If you’ve implemented BAL features with abap2UI5, consider contributing to extend its capabilities.
+The BAL popup is still in its early stages and offers basic functionality only. If you've implemented BAL features with abap2UI5, consider contributing to extend its capabilities.
 :::

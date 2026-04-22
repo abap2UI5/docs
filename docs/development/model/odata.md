@@ -15,7 +15,7 @@ client->follow_up_action( client->_event_client(
         ( `FLIGHT` ) ) ) ).
 ```
 #### Bind Data
-Next, bind this OData model to your view definition. Since we’re using a non-default model, we must explicitly specify the model name for each binding. Here's an example:
+Next, bind this OData model to your view definition. Since we're using a non-default model, we must explicitly specify the model name for each binding. Here's an example:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items = `{FLIGHT>/Airport}`
@@ -68,7 +68,7 @@ ENDMETHOD.
 ```
 
 #### Multiple OData Models
-You can also bind multiple OData models simultaneously. For example, here’s how to bind an additional OData model under the name `TRAVEL`:
+You can also bind multiple OData models simultaneously. For example, here's how to bind an additional OData model under the name `TRAVEL`:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items   = `{TRAVEL>/BookingSupplement}`
@@ -150,4 +150,4 @@ client->follow_up_action( client->_event_client(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).
 ```
-The column titles are now automatically set with the correct title in the user’s language.
+The column titles are now automatically set with the correct title in the user's language.
