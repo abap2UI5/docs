@@ -5,7 +5,7 @@ outline: [2, 4]
 
 **Build UI5 Apps Purely in ABAP**
 
-abap2UI5 is an open-source framework that brings back the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP:
+abap2UI5 is an open-source framework that brings the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP:
 
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.

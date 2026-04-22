@@ -6,12 +6,12 @@ outline: [2, 4]
 The abap2UI5 frontend artifacts are stored in the app folder. If you want to make adjustments, follow these steps:
 
 #### Setup
-Open VS Code or an editor of your choice, use the terminal:
+Open VS Code or an editor of your choice and run in the terminal:
 ```sh
 git clone https://github.com/abap2UI5/abap2UI5
 cd app
 ```
-Replace the backend with your ABAP system in all three files:
+Then replace the backend with your ABAP system in all three files:
 
 <img width="400" alt="Frontend config files where the backend system URL must be replaced" src="https://github.com/user-attachments/assets/155c9a3f-8a0a-494b-8fc4-a4bba2bf0e90">
 
