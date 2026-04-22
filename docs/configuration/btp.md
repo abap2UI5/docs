@@ -11,7 +11,7 @@ Integrate your abap2UI5 apps into BTP services like SAP Build Work Zone. Find al
 ### Configuration
 <br>
 
-##### Destination
+#### Destination
 
 - Name: `BACKEND_ABAP2UI5`
 - Type: `HTTP`
@@ -22,7 +22,7 @@ Integrate your abap2UI5 apps into BTP services like SAP Build Work Zone. Find al
 - User: *(user)*
 - Password: *(password)*
 
-##### Additional Properties
+#### Additional Properties
 
 These properties are required by SAP Build Work Zone to correctly route requests to your ABAP backend:
 

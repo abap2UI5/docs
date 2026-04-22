@@ -32,24 +32,24 @@ outline: [2, 4]
 
 _The information in the blog articles may be outdated. Always refer to this documentation for the most up-to-date information._
 
-##### General
+#### General
 - Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development [(06.10.2024)](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
 - Use Cases in On-Stack & Side-by-Side Extension Scenarios [(04.08.2024)](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/)
 - Compatibility for old R/3 Releases: Project Setup, Downporting & Installation [(14.07.2024)](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
 - Calling Apps Remotely via RFC [(25.06.2024)](https://www.linkedin.com/pulse/calling-abap2ui5-apps-remotely-via-rfc-abap2ui5-btoue/)
 - Community Feedback, New Features & Outlook 2024 [(08.01.2024)](https://blogs.sap.com/2024/01/08/abap2ui5-12-update-ii-community-feedback-new-features-outlook-january-2024/)
 
-##### SAP Fiori Launchpad
+#### SAP Fiori Launchpad
 1. Installation & Configuration [(03.06.2024)](https://www.linkedin.com/pulse/copy-abap2ui5-host-your-apps-sap-fiori-launchpad-abap2ui5-ocn2e/?trackingId=Eot1XiIJHbM2a2ebDSF3dg%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)
 2. Setup Title, Parameters & Navigation [(06.06.2024)](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-23-features-abap2ui5-upche/?trackingId=WdScbzEUGgKY%2FS2Ibiy5fA%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)
 3. Integration of KPIs [(07.06.2024)](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/?trackingId=RedZMaZUkHn%2Bv6oSTwtVQw%3D%3D&lipi=urn%3Ali%3Apage%3Ad_flagship3_pulse_read%3B4FqT5lkFQBioKDKsj%2F3ZTw%3D%3D)
 
-##### SAP BTP Integration
+#### SAP BTP Integration
 1. Installation & Configuration [(09.06.2024)](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-13-installation-lf1re/?trackingId=jFrPiQOaJTZn6WCiK5gS3g%3D%3D)
 2. Setup SAP Build Workzone Websites [(16.06.2024)](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-23-setup-ujdqe/?trackingId=bIEcH1OFtZU8kU2PCwcp%2BA%3D%3D)
 3. Setup SAP Mobile Start [(17.06.2024)](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-33-setup-uzure/?trackingId=He2W8FnZZ5UxpbGKHOeLEg%3D%3D)
 
-##### Development
+#### Development
 1. Introduction: Developing UI5 Apps Purely in ABAP [(SCN - 22.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-development-of-ui5-apps-in-pure-abap-1-3/)
 2. Displaying Selection Screens & Tables [(SCN - 23.02.2023)](https://blogs.sap.com/2023/02/22/abap2ui5-output-of-lists-and-tables-toolbar-and-editable-2-3/)
 3. Popups, Value-Help, Messages & Controller Logic [(SCN - 30.03.2023)](https://blogs.sap.com/2023/03/30/abap2ui5-3-4-flow-logic-pop-ups-f4-help/)
@@ -62,6 +62,6 @@ _The information in the blog articles may be outdated. Always refer to this docu
 10. Extensions I: Exploring External Libraries & Native Device Capabilities [(SCN - 04.12.2023)](https://blogs.sap.com/2023/12/04/abap2ui5-a3-extensions-i-exploring-external-libraries-native-device-capabilities/)
 11. Extensions II: Guideline for Developing New Features in JavaScript [(SCN - 11.12.2023)](https://blogs.sap.com/2023/12/11/abap2ui5-a4-extensions-ii-guideline-for-developing-new-features-in-javascript/)
 
-##### More
+#### More
 - Development of UI5 Selection Screens in Pure ABAP [(SCN - 22.01.2023)](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-development-of-ui5-selection-screens-in-pure-abap/ba-p/13553176)
 

@@ -214,32 +214,32 @@ Browser-based roundtrips need slightly different flow control, but the overall a
 
 Beyond the code snippets above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — brings several additional advantages.
 
-##### Zero-Setup Deployment
+#### Zero-Setup Deployment
 
 In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard transport system you know from traditional ABAP development:
 - No separate frontend build or deployment pipelines
 - Code changes can be instantly tested by other developers or consultants
 - Every app is abapGit-compatible — no separate frontend artifacts required
 
-##### No Caching Issues
+#### No Caching Issues
 
 A common frustration in frontend development: caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files, unless you manually trigger several cache invalidation transactions in the SAP backend. abap2UI5 sidesteps this entirely, as the UI gets dynamically generated on every request:
 - No need to clear browser or server caches
 - Fast development iteration — edit the code, refresh the browser, see results
 
-##### Develop in Any IDE
+#### Develop in Any IDE
 
 There's often debate about which IDE to use — but why not let everyone pick their favorite? abap2UI5 apps are developed entirely in ABAP. Work in ADT, SE80, or even explore VS Code integration:
 - No additional setup required — works in any IDE
 - Ideal for teams with different tooling preferences
 
-##### Pure ABAP Debugging
+#### Pure ABAP Debugging
 
 Frontend-heavy apps often need switching between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Just set a breakpoint in your ABAP method:
 - Backend-only debugging with the classic SE80 debugger or ADT
 - No need for browser debugging tools
 
-##### Easy Code Sharing
+#### Easy Code Sharing
 
 Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, they can be shared via abapGit, transports, or even copy-pasted:
 - Easy to clone and test other apps
