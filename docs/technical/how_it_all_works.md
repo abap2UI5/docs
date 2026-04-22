@@ -115,7 +115,7 @@ However, when significant Model and View changes are needed at runtime, this app
 
 Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to worry about conventions and can take a few more risks. As we saw in (6), the first trick was sending Views from the backend instead of storing them on the frontend app — now we can enhance flexibility even further (9)(10).
 
-##### 9. One HTTP-Service for all Apps
+##### 9. One HTTP-Service for All Apps
 
 First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime, ABAP variables & tables are transformed into a JSON-Model and transmitted as a string to the frontend. In JavaScript, it's parsed back into a JSON-Model and bound to the UI5-View:
 
@@ -150,7 +150,7 @@ Same for the view: In RAP, only certain predefined control attributes can be mod
 ![Swapping a table control for a list control at runtime from the ABAP backend](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
 Replacing the View at Runtime
 
-##### 12. View & Model independent from the HTTP-Service
+##### 12. View & Model Independent from the HTTP-Service
 
 In the end, the View & Model are defined independent from the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
 
@@ -228,7 +228,7 @@ index.html stored in ABAP Source Code instead of using a BSP
 
 This provides us with a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separate frontend artifacts or deployments.
 
-##### 18. Everything is maintained & developed in the Backend
+##### 18. Everything Is Maintained & Developed in the Backend
 
 Considering the fact that all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming or other refactoring takes only a few moments. The deployment process is reduced to just activating an ABAP class, enabling us to create many apps in a short amount of time. For example, all the apps of the sample section were created rapidly using mostly copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
 
@@ -273,7 +273,7 @@ Actual Approach - extra methods for the event and binding
 
 This is a difference from many other UI rendering processes, where data and UI are usually imported together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach has fewer lines of code than the first approach that only focused on selection screens, because the entire view creation process is clearly separated from the rest now and kept outside of the framework.
 
-##### 22. "Over the Wire" sending JS, HTML & CSS
+##### 22. "Over the Wire" Sending JS, HTML & CSS
 
 Furthermore, we can add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App — it has its own custom control that isn't part of the framework and is sent "Over the Wire" after calling the app:
 
@@ -287,7 +287,7 @@ With any request, there's the chance to send your own JavaScript or Custom Contr
 
 abap2UI5 app sending custom Javascript to the client
 
-##### 23. As simple as possible
+##### 23. As Simple as Possible
 
 So, we have seen in (22), apps can be made very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach is the use of if_oo_adt_classrun. By implementing just one method, we can generate an output with a single click (F9). This is extremely efficient and was one of the role models for abap2UI5. Here's a comparison of both approaches:
 
@@ -297,7 +297,7 @@ if_oo_adt_classrun vs. abap2UI5
 
 To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain a lot of flexibility and freedom in the app implementation, but we also have full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
 
-##### 24. Downsides compared to UI5 & RAP
+##### 24. Downsides Compared to UI5 & RAP
 
 Most notably, compared to UI5, we can't implement offline capabilities — in such scenarios we can't continuously ask the server after every event to determine what happens next.
 
