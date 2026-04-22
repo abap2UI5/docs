@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Formatter
 
-You can format values such as currencies, numerics, or timestamps directly in the frontend using formatter functions.
+You can format values such as currencies, numerics, or timestamps directly on the frontend using formatter functions.
 
 UI5 formatter types use a special JSON-based binding syntax. The key elements:
 - **`parts: [...]`** — lists the model paths used as input (e.g., amount + currency)
