@@ -137,7 +137,7 @@ This enables the possibility to define models not only at design time, but also 
 
 abap2UI5 - Dynamic Data Binding & Model Creation
 
-In apps we can use RTTI now again in a way that is similar to how it was used with ALVs. This means that there is no need to create separated apps for each model. In this demo, you can see an abap2UI5 app with a view including a table output that displays a generic table and its type is created and modified at runtime (similar to SE16):
+In apps we can now use RTTI again in a way similar to how it was used with ALVs. This means there is no need to create separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type is created and modified at runtime (similar to SE16):
 
 ![SE16-like runtime table where the data model is generated at runtime via RTTI](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
 
@@ -226,7 +226,7 @@ The first GET request sends the artifacts of the UI5 (HDA) app to the browser. T
 
 index.html stored in ABAP Source Code instead of using a BSP
 
-This provides us with a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separated frontend artifacts or deployments.
+This provides us with a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separate frontend artifacts or deployments.
 
 ##### 18. Everything is maintained & developed in the Backend
 
@@ -359,13 +359,13 @@ Downporting abap2UI5 code normally would result in a release that is difficult t
 
 The low-syntax branch is automatically generated using abaplint. The separate branch enables development with all new ABAP expressions available since ABAP v750 while still ensuring that all abap2UI5 features added in the future are automatically downported and available for ABAP v702.
 
-The functionality of automated ABAP downporting is impressive and greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint. Besides abaplint this framework uses abapGit and benefits from the work of the people who built it:
+The functionality of automated ABAP downporting is impressive and greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint. Besides abaplint, this framework uses abapGit and benefits from the work of the people who built it:
 
 <img width="600" alt="abaplint dashboard and abapGit - tools powering abap2UI5 downporting" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
 
 ##### 29. Summary
 
-Long blog post short: Inspired by "HTML Over the Wire" (1)(2)(3) we mixed UI and Data together (7) and created an "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13) independent from the View and Data Model (12). It provides us with great flexibility allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
+Long blog post short: Inspired by "HTML Over the Wire" (1)(2)(3) we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13) independent from the View and Data Model (12). It provides us with great flexibility allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
 
 Next, we explored various ideas on how the framework reduces its own complexity by avoiding frontend artifacts (17), eliminating extra customizing layers (19), and separating the view from the framework (21), as well as app-specific JS or HTML (22). Finally, we got a pure source code approach with only one database table, two interfaces, one class and just 2,300 lines of code (25). It is developed in a single code line (27), making it cloud and on-premises ready and downportable to old releases (28). Its apps, in combination with abapGit, can be developed so that they run on nearly every release (29).
 
