@@ -11,4 +11,4 @@ If you use abap2UI5 extensively, you may consider creating your own build by def
 #### Builder
 Generate your own abap2UI5 build using the [builder](https://github.com/abap2UI5/builder).
 
-<img width="700" alt="Screenshot 2025-03-02 at 14 44 06" src="https://github.com/user-attachments/assets/7c7f55d4-6667-4036-bc71-4cd7472f2ae9" />
+<img width="700" alt="abap2UI5 builder interface for generating custom namespaced builds" src="https://github.com/user-attachments/assets/7c7f55d4-6667-4036-bc71-4cd7472f2ae9" />

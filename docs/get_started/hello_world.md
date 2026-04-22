@@ -57,7 +57,7 @@ ENDCLASS.
 ### Event Handler
 The `main` method is called on every roundtrip — that is, on initialization and after every user interaction (button press, input submit, etc.):
 
-```
+```text
 ┌─────────┐       ┌──────────┐       ┌─────────┐
 │ Browser  │──────>│  main()  │──────>│ Browser  │
 │ (Start)  │  HTTP │  init    │  HTTP │ (View)   │

@@ -16,7 +16,7 @@ The RFC Connector enables several useful scenarios:
 
 The system that calls the app (the frontend system) includes the UI5 library and bootstraps the UI. The system where the app is implemented (the backend system) does not need to host the UI5 runtime.
 
-<img width="600" alt="1719296908473" src="https://github.com/user-attachments/assets/6f885f04-2b70-4cb3-83d0-123473b72262" />
+<img width="600" alt="abap2UI5 RFC Connector architecture across frontend and backend systems" src="https://github.com/user-attachments/assets/6f885f04-2b70-4cb3-83d0-123473b72262" />
 
 
 #### Installation
@@ -31,7 +31,7 @@ Steps:
 #### UI5 Bootstrapping
 The backend system that holds the abap2UI5 apps does not need to include the UI5 libraries. These are automatically bootstrapped from the calling system:
 
-<img width="600" alt="1719296975220" src="https://github.com/user-attachments/assets/8e7dd3dd-abd3-413f-8ec6-8a7a2be7a7ec" />
+<img width="600" alt="UI5 bootstrap loaded from calling system while backend hosts the app logic" src="https://github.com/user-attachments/assets/8e7dd3dd-abd3-413f-8ec6-8a7a2be7a7ec" />
 
 
 #### Multi-System Launchpad
@@ -39,4 +39,4 @@ You can also use this approach to build a centralized Fiori Launchpad that inclu
 - Apps installed on-stack (on the current system)
 - Apps executed remotely via RFC from other systems
 
-<img width="700" alt="1719297067700" src="https://github.com/user-attachments/assets/a010440d-bd82-46f9-b597-c3ad2273dbde" />
+<img width="700" alt="Centralized Fiori Launchpad combining on-stack and RFC-triggered remote apps" src="https://github.com/user-attachments/assets/a010440d-bd82-46f9-b597-c3ad2273dbde" />

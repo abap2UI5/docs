@@ -113,7 +113,7 @@ In SAP contexts, OData services are often enriched with additional annotations. 
 ```
 We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. The metadata binding path follows this pattern:
 
-```
+```text
 {MODEL>/#EntityType/PropertyName/@sap:annotation}
 ```
 

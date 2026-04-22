@@ -14,11 +14,11 @@ UI5 formatter types use a special JSON-based binding syntax. The key elements:
 The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g. `/XX/AMOUNT`) instead of the full binding expression (`{/XX/AMOUNT}`), so it can be embedded inside the `parts` array.
 
 For example, this ABAP code:
-```
+```abap
 |\{ parts: [`{ client->_bind_edit( val = amount path = abap_true ) }`], type: 'sap.ui.model.type.Currency' \}|
 ```
 produces this UI5 binding string at runtime:
-```
+```text
 { parts: ["/XX/AMOUNT", "/XX/CURRENCY"], type: 'sap.ui.model.type.Currency' }
 ```
 
