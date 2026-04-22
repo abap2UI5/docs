@@ -198,7 +198,7 @@ export default defineConfig({
                 link: "/configuration/s4_public_cloud",
               },
               { text: "Fiori Launchpad", link: "/configuration/launchpad" },
-              { text: "BTP Workzone", link: "/configuration/btp" },
+              { text: "BTP Work Zone", link: "/configuration/btp" },
             ],
           },
         ],

@@ -111,7 +111,7 @@ Always adhere to cloud-ready development principles to ensure that your apps rem
 
 #### Do I Have to Use RAP to Be Cloud Ready?
 
-No - RAP isn't mandatory.
+No — RAP isn't mandatory.
 
 RAP (RESTful Application Programming Model) is SAP’s recommended model for building cloud-native applications. It is based on:
 - CDS Views for data modeling

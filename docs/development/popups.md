@@ -120,7 +120,7 @@ To display a popover, use the method `client->popover_display` and specify the I
     ENDCASE.
 
   ENDMETHOD.
- ```
+```
 
 ### Built-in Popups
 Several pre-built popup classes are available for specific scenarios:
