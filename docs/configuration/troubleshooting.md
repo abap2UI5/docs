@@ -12,7 +12,7 @@ Set a breakpoint in your abap2UI5 app to debug your code. Verify that the XML vi
 On the frontend, abap2UI5 behaves like a standard UI5 app, so you can use all typical tools and debugging features.
 
 ##### Debugging Tools
-To begin, press `Ctrl+F12` to open the built-in debugger tools in abap2UI5
+To begin, press `Ctrl+F12` to open the built-in debugger tools in abap2UI5:
 ![Built-in debugger showing XML View and Data Model inspection](/configuration/debug.png)
 Here, you can inspect the XML View and check the Data Model bound to the view.
 
