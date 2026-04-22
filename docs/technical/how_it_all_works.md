@@ -25,7 +25,6 @@ After the initial page load, only small HTML fragments are sent asynchronously v
 
 _HTML "Over the Wire" Lifecycle [(Source)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
-
 This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are managed independently on the frontend while the backend only delivers data.
 
 ##### 2. Hypermedia Driven App
@@ -324,7 +323,6 @@ This is all that abap2UI5 does
 
 The functionality focuses solely on the communication between the backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). The POST request is handled by this implementation:
 
-
 <img width="600" alt="AJAX Post Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
 
 AJAX Post Handler
@@ -338,7 +336,6 @@ Essentially, abap2UI5 generates two strings – one containing an XML-View and t
 <img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 
 Local Bootstrapping - UI5 version depends on the SAP release
-
 
 <img width="600" alt="CDN Bootstrapping - UI5 version independent from the SAP release" src="https://github.com/user-attachments/assets/a8477539-45c4-4a43-a53b-c4078d5057aa" />
 

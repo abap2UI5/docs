@@ -74,4 +74,3 @@ See also `Z2UI5_CL_DEMO_APP_186`:
 ENDMETHOD.
 ```
 
-

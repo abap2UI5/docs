@@ -28,7 +28,6 @@ outline: [2, 4]
 - Featured on SAP Developer News [(YouTube - 26.01.2023)](https://www.youtube.com/watch?v=6BDK55xYttM)
 - Find abap2UI5 on ABAP Open Source Projects [(dotabap.org)](https://dotabap.org/)
 
-
 ### Blogs
 
 _The information in the blog articles may be outdated. Always refer to this documentation for the most up-to-date information._

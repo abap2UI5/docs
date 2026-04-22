@@ -34,7 +34,6 @@ Several modern frameworks adopt this pattern:
 - [Livewire](https://livewire.laravel.com) Server-driven UI components in PHP (Laravel/PHP)
 - [Unpoly](https://unpoly.com) Simplified partial page updates (Any web stack)
 
-
 #### Comparison to Classic SSR
 
 But isn't this just the same as traditional Server-Side Rendering (SSR)?

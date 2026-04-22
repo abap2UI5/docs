@@ -14,7 +14,6 @@ Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://
 ![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
 :::
 
-
 ### 2. Create HTTP Handler & Service
 Create a new package and define a new HTTP handler class:
 

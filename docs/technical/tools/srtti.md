@@ -9,7 +9,6 @@ abap2UI5 serializes app instances to ensure stateless behavior in client communi
 
 To overcome this limitation, the project [S-RTTI](https://github.com/sandraros/S-RTTI) is integrated into abap2UI5.
 
-
 #### Standard Transformation
 With fully typed data at design time, the standard SAP transformation works out of the box:
 

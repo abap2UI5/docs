@@ -29,7 +29,6 @@ After a few moments, the installation will complete:
 
 <img width="1332" height="28" alt="Installation complete confirmation" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
 
-
 ### 2. Mass Activate the Imported Artifacts
 
 When installing repositories with ADT abapGit, all artifacts are initially imported in an inactive state. You'll need to manually activate them. The easiest approach is to create a dedicated inactive/active folder tree for the abap2UI5 project:
@@ -55,7 +54,6 @@ When the activation process is completed, refresh the folder tree:
 Now you'll see that all artifacts are activated:
 
 <img width="641" height="88" alt="Fully activated abap2UI5 package" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
-
 
 ### 3. Set Up the HTTP Service
 

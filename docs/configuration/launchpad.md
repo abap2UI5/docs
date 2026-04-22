@@ -8,8 +8,6 @@ Integrate your abap2UI5 apps into SAP Fiori Launchpads. Find all information her
 [**(2) Features: Title, Parameters, Navigation**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-23-features-abap2ui5-upche/) <br>
 [**(3) Integration of KPIs**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/) <br>
 
-
-
 ### Target Mapping
 Use the following parameters for target mapping in your Launchpad configuration:
 * Semantic Object: `Z2UI5_CL_MY_APP`
@@ -17,7 +15,6 @@ Use the following parameters for target mapping in your Launchpad configuration:
 * URL: `/sap/bc/ui5_ui5/sap/z2ui5`
 * ID: `z2ui5`
 * Parameter: `app_start / Z2UI5_CL_MY_APP`
-
 
 ### Troubleshooting
 Sometimes, installation via abapGit can cause cache-related issues. Here's how to resolve them:
@@ -44,7 +41,6 @@ If cache clearing doesn't fix the issue, manually upload the frontend applicatio
 
 2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to upload the application to the server.
 <img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
-
 
 ### Launchpad KPIs
 

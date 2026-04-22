@@ -11,13 +11,11 @@ The RFC Connector enables several useful scenarios:
 - Legacy Systems (e.g. ECC): abap2UI5 can be downported and installed on older systems and then triggered from a newer system via RFC
 - Multi-System Landscapes: abap2UI5 apps distributed across multiple systems can be accessed centrally from a single entry point
 
-
 #### Architecture
 
 The system that calls the app (the frontend system) includes the UI5 library and bootstraps the UI. The system where the app is implemented (the backend system) does not need to host the UI5 runtime.
 
 <img width="600" alt="abap2UI5 RFC Connector architecture across frontend and backend systems" src="https://github.com/user-attachments/assets/6f885f04-2b70-4cb3-83d0-123473b72262" />
-
 
 #### Installation
 
@@ -32,7 +30,6 @@ Steps:
 The backend system that holds the abap2UI5 apps does not need to include the UI5 libraries. These are automatically bootstrapped from the calling system:
 
 <img width="600" alt="UI5 bootstrap loaded from calling system while backend hosts the app logic" src="https://github.com/user-attachments/assets/8e7dd3dd-abd3-413f-8ec6-8a7a2be7a7ec" />
-
 
 #### Multi-System Launchpad
 You can also use this approach to build a centralized Fiori Launchpad that includes both:

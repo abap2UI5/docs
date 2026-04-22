@@ -52,7 +52,6 @@ METHOD z2ui5_if_app~main.
 
     ENDIF.
 
-
     CASE client->get( )-event.
       WHEN `CALL_KEYBOARD`.
         "Step 2: After the backend processes the event, execute the JavaScript

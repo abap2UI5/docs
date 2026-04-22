@@ -20,7 +20,6 @@ This page provides a technical comparison between **RAP** and **abap2UI5**, focu
 | **Model**         | Defined at designtime via CDS                                    | Designed at Designtime or Runtime via Internal Tables     |
 | **Drafts**        | Managed via RAP drafts on Model Level                            | Managed via Serialization on App level     |
 
-
 ### 2. Developer Workflow
 
 | Aspect                     | RAP (Fiori Elements)                                 | abap2UI5                                               |
@@ -31,7 +30,6 @@ This page provides a technical comparison between **RAP** and **abap2UI5**, focu
 | **Transport**              | Separate transport for backend and frontend           | Single backend deployment via transport or abapGit     |
 | **Development Style**      | Declarative, metadata-driven                          | Programmatic, ABAP-centric                             |
 | **Complexity**             | High: multiple layers & technologies                  | Low: one language, one layer                           |
-
 
 ### 3. Client–Server Communication
 
@@ -65,7 +63,6 @@ Backend (ABAP Class)
 | **Use Case Fit**          | Ideal for standard CRUD applications        | Suitable for dynamic, backend-driven UIs |
 | **Learning Curve**        | Steep (new concepts, multiple layers)       | Flat (ABAP-only, no metadata tooling)    |
 
-
 ### 5. Cloud Readiness & Compliance
 
 | Feature                    | RAP                        | abap2UI5                     |
@@ -77,12 +74,10 @@ Backend (ABAP Class)
 
 > 🔒 **Both frameworks are cloud-ready and clean-core compliant.** abap2UI5 achieves this **without CDS or OData**, relying solely on released ABAP APIs.
 
-
 ### Conclusion
 
 - **RAP (Fiori Elements)** is best suited for standardized, metadata-driven applications using CDS, OData, and annotations.
 - **abap2UI5** provides runtime flexibility, backend control, and lower complexity — ideal for dynamic UIs and fast iterations.
-
 
 ### Summary Table
 
