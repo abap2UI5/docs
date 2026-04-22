@@ -35,7 +35,7 @@ By default, abap2UI5 uses the following CSP:
 ```
 
 #### Customizing the CSP
-You have the option to adjust the CSP if needed. This can be done by modifying the HTTP handler call as shown below:
+If needed, you can adjust the CSP by modifying the HTTP handler call as shown below:
 
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
