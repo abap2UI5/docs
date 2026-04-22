@@ -57,4 +57,4 @@ ENDMETHOD.
 ```
 
 ### Logon Language
-To set the logon language, use the `sap-language` URL parameter. For more options via URL parameters, check out the documentation [here](https://help.sap.com/doc/saphelp_nw75/7.5.5/de-DE/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true).
+To set the logon language, use the `sap-language` URL parameter. For more options via URL parameters, check out the documentation [here](https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true).
