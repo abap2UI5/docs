@@ -252,13 +252,13 @@ Luckily, we can significantly simplify the creation process by creating utility 
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
-This is in contrast to RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to use the +, -, and * operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available at the frontend:
+This is in contrast to RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to using the `+`, `-`, and `*` operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available at the frontend:
 
 <img width="600" alt="Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
 Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript
 
-##### 21. Separated _bind and _event method
+##### 21. Separated `_bind` and `_event` Methods
 In the first approach of this framework, the event and data binding were included in every method call:
 
 <img width="600" alt="First approach - Data binding and events are not separated from the view" src="https://github.com/user-attachments/assets/3bc268e0-e08f-40b3-b152-b3fa375c0faf" />
