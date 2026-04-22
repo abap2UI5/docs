@@ -24,7 +24,7 @@ METHOD z2ui5_if_app~main.
         WHEN `BUTTON_POST`.
             client->message_box_display( `The button was pressed` ).
     ENDCASE.
- 
+
 ENDMETHOD.
 ```
 If the backend needs additional information about the specific event, use the `t_arg` parameter to include additional details. Three special prefixes are available:
@@ -114,11 +114,11 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
          )->input( client->_bind_edit( name )
-        )->button( text = `post` press = client->_event( 
-            val   = `BUTTON_POST` 
+        )->button( text = `post` press = client->_event(
+            val   = `BUTTON_POST`
             t_arg = VALUE #( ( `$` && client->_bind_edit( name ) ) ) )
         )->stringify( ) ).
- 
+
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
             client->message_box_display( |The name is { client->get_event_arg( ) }| ).
@@ -166,11 +166,11 @@ METHOD z2ui5_if_app~main.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button(
             text = `post`
-            press = client->_event( client->_event_client( 
-                 val   = client->cs_event-open_new_tab 
-                 t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ) 
+            press = client->_event( client->_event_client(
+                 val   = client->cs_event-open_new_tab
+                 t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) )
         )->stringify( ) ).
- 
+
 ENDMETHOD.
 ```
 
@@ -179,8 +179,8 @@ Sometimes, you might want to first call a backend function and then immediately 
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->follow_up_action( client->_event_client( 
-        val   = client->cs_event-open_new_tab 
+    client->follow_up_action( client->_event_client(
+        val   = client->cs_event-open_new_tab
         t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ).
 
 ENDMETHOD.

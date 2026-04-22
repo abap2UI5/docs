@@ -21,7 +21,7 @@ hero:
       link: /get_started/quickstart
     - theme: alt
       text: What's new?
-      link: /resources/changelog.md
+      link: /resources/changelog
 
 features:
   - title: Guide
@@ -31,7 +31,7 @@ features:
   - title: GitHub
     icon: <i class="fa-brands fa-github"></i>
     details: Jump into the code! Explore the repository, report issues, and contribute to the project.
-    link: https://www.github.com/abap2UI5/abap2UI5/
+    link: https://github.com/abap2UI5/abap2UI5/
   - title: LinkedIn
     icon: <i class="fab fa-linkedin"></i>
     details: Follow us on LinkedIn and stay informed about the latest updates and changes.

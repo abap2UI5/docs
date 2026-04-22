@@ -4,11 +4,11 @@ outline: [2, 4]
 # Tables, Trees
 This section covers how to display complex data structures like tables, trees, and nested structures in your views.
 
-### Tables 
+### Tables
 The example below demonstrates how to bind a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
- 
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     TYPES:
@@ -20,7 +20,7 @@ CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
     DATA mt_itab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
 ENDCLASS.
- 
+
 CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
@@ -86,7 +86,7 @@ Making a table editable is a simple change. You just need to switch the binding 
 To work with trees, you need to use nested structures. Here is an example:
 ```abap
 CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
- 
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     TYPES:
@@ -114,7 +114,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-  
+
     prodh_nodes = VALUE #( (
         text = `Machines`
         prodh  = `00100`
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
             )->items( )->standard_tree_item(
                 selected = `{IS_SELECTED}`
                 title    = `{TEXT}` ).
- 
+
     client->view_display( tree->stringify( ) ).
 
   ENDMETHOD.

@@ -9,13 +9,13 @@ The app state feature opens up several useful scenarios, such as sharing and boo
 You can easily integrate a share button, which copies the actual state into the clipboard for sharing with your colleagues. Check out the following snippet:
  ```abap
 CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
- 
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA mv_quantity TYPE string.
- 
+
 ENDCLASS.
- 
+
 CLASS z2ui5_cl_sample_share IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 

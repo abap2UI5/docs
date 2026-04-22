@@ -16,7 +16,7 @@ Below is a working example that you can use as a starting point. The `_generic` 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       view->_generic( name = `script` ns = `html`
         )->_cc_plain_xml(
-          |function myFunction() \{ console.log( `Hello World` ); \}| 
+          |function myFunction() \{ console.log( `Hello World` ); \}|
         ).
       view->page(
         )->button( text  = `call custom JS`

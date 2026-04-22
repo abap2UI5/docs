@@ -22,7 +22,7 @@ Messages are translated using message classes, ensuring that translations are ma
   METHOD z2ui5_if_app~main.
 
   MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_msg_translated).
-  client->message_box_display( lv_msg_translated ). 
+  client->message_box_display( lv_msg_translated ).
 
 ENDMETHOD.
 ```

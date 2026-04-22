@@ -8,7 +8,7 @@ We’d love to hear how you’re using abap2UI5! Whether it’s in customer proj
 ### Customer Projects
 **Is your company using abap2UI5?** <br>
 Showcase how abap2UI5 apps are transforming real-world scenarios. Share your use case here:
- 
+
 |  Company | System | Use Case |
 | ------------------- | ------------- | ------------- |
 | [Emineo](https://emineo.ch/) | ABAP 7.57  | Applications for EWM and PP, running on desktop and mobile devices |
@@ -27,4 +27,4 @@ Inspire the community by sharing your initiatives. Let others learn and grow fro
 
 _Ready to showcase your project? Extend this list directly or reach out to us at <contact@abap2UI5.org>. We’re excited to hear what you’re working on!_
 
-Thank you for being a part of the abap2UI5 community! ❤️ 
+Thank you for being a part of the abap2UI5 community! ❤️

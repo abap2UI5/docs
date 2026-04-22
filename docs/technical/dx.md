@@ -57,7 +57,7 @@ Benefits:
 - Rapid prototyping with minimal code
 - Built-in input handling and event processing
 - Fullstack behavior with no setup
- 
+
 abap2UI5 mirrors this classic selection screen behavior in the browser. Use `Z2UI5_CL_XML_VIEW` to define simple views and exchange data with the `_bind_edit` method:
 
 ```abap
@@ -217,15 +217,15 @@ Beyond the code snippets above, the Over-the-Wire approach of abap2UI5 — based
 ##### Zero-Setup Deployment
 
 In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production happens via the standard transport system you know from traditional ABAP development:
-- No separate frontend build or deployment pipelines  
+- No separate frontend build or deployment pipelines
 - Code changes can be instantly tested by other developers or consultants
-- Every app is abapGit-compatible — no separate frontend artifacts required  
+- Every app is abapGit-compatible — no separate frontend artifacts required
 
 ##### No Caching Issues
 
 A common frustration in frontend development: caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files, unless you manually trigger several cache invalidation transactions in the SAP backend. abap2UI5 sidesteps this entirely, as the UI gets dynamically generated on every request:
-- No need to clear browser or server caches  
-- Fast development iteration — edit the code, refresh the browser, see results  
+- No need to clear browser or server caches
+- Fast development iteration — edit the code, refresh the browser, see results
 
 ##### Develop in Any IDE
 

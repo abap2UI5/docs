@@ -71,7 +71,7 @@ METHOD z2ui5_if_app~main.
     client->message_box_display( lx ).
   ENDTRY.
 
-ENDMETHOD. 
+ENDMETHOD.
 ```
 Other imports are supported as well. Just import your message structure, and the message box will display it.
 

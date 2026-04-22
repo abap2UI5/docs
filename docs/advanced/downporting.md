@@ -7,7 +7,7 @@ abap2UI5 works out of the box with ABAP version 750. If you're using a lower rel
 
 #### Branch
 To install the project on an older system, use the `702` branch:
-| Branch    | System                | 
+| Branch    | System                |
 |-----------| ----------------------------|
 | main     | S/4 Public Cloud, BTP ABAP Environment, S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver >750 |
 | 702  |  R/3 NetWeaver >702   |

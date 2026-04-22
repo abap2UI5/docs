@@ -25,7 +25,8 @@ That's it – your first UI5 app is ready!
 ##### About
 Since launching in 2023, abap2UI5 has evolved from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework takes care of all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
 
-→ *See our [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*  
+→ *See our [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*
+
 → *Browse [Sample Applications](/get_started/samples) to see abap2UI5 in action*
 
 ### Why abap2UI5?
@@ -81,7 +82,7 @@ abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, t
 ##### Production Usage
 Use abap2UI5 just like any other UI5 app or ABAP program in production. Simply add the framework and your apps to a transport request for deployment.
 
-##### Licensing 
+##### Licensing
 Technically, abap2UI5 apps are regular UI5 freestyle applications. License them the same way you handle your other UI5 apps in your organization. abap2UI5 itself is MIT licensed (free for commercial use).
 
 ##### Launchpad Integration

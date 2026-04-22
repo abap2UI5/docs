@@ -19,9 +19,9 @@ ajson integrates directly into the `z2ui5` namespace and installs automatically 
 ```abap
 DATA(input) = z2ui5_cl_ajson=>parse( json_string ).
 
-DATA(output) = z2ui5_cl_ajson=>create_empty( )->set( 
-  iv_path = '/name' 
-  iv_val  = 'value' 
+DATA(output) = z2ui5_cl_ajson=>create_empty( )->set(
+  iv_path = '/name'
+  iv_val  = 'value'
 )->stringify( ).
 ```
 

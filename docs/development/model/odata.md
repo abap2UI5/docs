@@ -26,7 +26,7 @@ tab->columns(
     )->column( )->text( `Name` )->get_parent(
     )->column( )->text( `City` )->get_parent(
     )->column( )->text( `CountryCode` ).
- 
+
 tab->items( )->column_list_item( )->cells(
     )->text( `{FLIGHT>AirportID}`
     )->text( `{FLIGHT>Name}`
@@ -49,7 +49,7 @@ Here's the complete source code:
         )->column( )->text( `Name` )->get_parent(
         )->column( )->text( `City` )->get_parent(
         )->column( )->text( `CountryCode` ).
- 
+
     tab->items( )->column_list_item( )->cells(
         )->text( `{FLIGHT>AirportID}`
         )->text( `{FLIGHT>Name}`
@@ -63,7 +63,7 @@ Here's the complete source code:
         t_arg = VALUE #(
             ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
             ( `FLIGHT` ) ) ) ).
- 
+
 ENDMETHOD.
 ```
 
@@ -92,7 +92,7 @@ client->follow_up_action( client->_event_client(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).  
+        ( `TRAVEL` ) ) ) ).
 ```
 For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
 
@@ -148,6 +148,6 @@ client->follow_up_action( client->_event_client(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).  
+        ( `TRAVEL` ) ) ) ).
 ```
 The column titles are now automatically set with the correct title in the user’s language.

@@ -15,16 +15,16 @@ An example URL looks like this: <br>
 Below is an implementation of the app state functionality:
 ```abap
 CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC.
- 
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA mv_quantity TYPE string.
- 
+
 ENDCLASS.
- 
+
 CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
- 
+
     IF client->check_on_navigated( ).
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display(
@@ -35,7 +35,7 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
                 press = client->_event( `BUTTON_POST` )
               )->stringify( ) ).
     ENDIF.
- 
+
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( `data updated and url adjusted` ).

@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Barcode Scanning 
+# Barcode Scanning
 
 Barcode scanning functionality is widely used in enterprises. With abap2UI5, you can:
 * Scan barcodes

@@ -9,8 +9,8 @@ abap2UI5 offers two ways to access device information: directly in the view via 
 
 The device model is bound to the view by default with the name `device`. You can use standard UI5 binding syntax to display device properties directly — no backend roundtrip needed. For example:
 ```abap
-page->input( 
-  description = `device model - resize - width` 
+page->input(
+  description = `device model - resize - width`
   value       = `{device>/resize/width}`  ).
 ```
 Explore all available parameters in the [UI5 Documentation](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory(
         )->page( )->_z2ui5(
-            )->info_frontend( 
+            )->info_frontend(
                 finished          = client->_event( `POST` )
                 device_browser    = client->_bind_edit( device_browser )
                 device_os         = client->_bind_edit( device_os )

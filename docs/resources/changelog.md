@@ -59,7 +59,7 @@ outline: [2, 4]
 - New UI Controls: AvatarGroup, Viz Charts, and more
 - SetMaxWidth for Launchpads
 - Multiple bug fixes and new properties added
-  
+
 ### 1.135.0
 2024-10-27
 - Stateful Session Handling
@@ -93,7 +93,7 @@ outline: [2, 4]
 - Added Properties for Multi Input, Slider, Search Field etc.
 - Added Date Range Selection Control etc.
 - Fixed Generic Tile & Avatar Control
-- Fixed Binding with Custom Mapper 
+- Fixed Binding with Custom Mapper
 - Fixed Downport Functionality
 - Fixed ABAP 750 Syntax
 - Multiple bug fixes and new properties added

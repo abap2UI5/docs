@@ -147,7 +147,7 @@ This leads to the second subtle shift in abap2UI5: Instead of binding OData to V
 
 This means CDS Views and OData services are no longer consumed directly on the frontend. Instead, the complete UI state — both view and model — is sent from the backend in a single response. Any user changes in the UI are then returned to the backend via a lightweight AJAX call containing the updated view model — no OData routing involved.
 
-You don't need to manually configure models or bindings. abap2UI5 handles this internally. All you need to do is expose class attributes using a simple bind method — abap2UI5 takes care of the rest. 
+You don't need to manually configure models or bindings. abap2UI5 handles this internally. All you need to do is expose class attributes using a simple bind method — abap2UI5 takes care of the rest.
 
 A typical backend response includes both the XML View:
 
@@ -243,7 +243,7 @@ Key Benefits:
 - Backend-Driven UI Control: UI definitions and business logic are implemented entirely in ABAP classes
 - ABAP-Centric Development: Eliminates the need for additional JavaScript or dedicated frontend development
 - Simplified Deployment Model: No SPA-specific tooling or build processes; application logic and artifacts are maintained via abapGit and standard transport mechanisms
-- Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, ABAP Standard & ABAP Cloud 
+- Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, ABAP Standard & ABAP Cloud
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and all typical enterprise use cases
 
 Limitations:

@@ -15,7 +15,7 @@ Follow the following steps:
 1. Register the FLP integration in the component.js:
 
 ```javascript
-// Register ABAP2UI5 FLP integration for component container 
+// Register ABAP2UI5 FLP integration for component container
 jQuery.sap.registerModulePath("z2ui5", "/sap/bc/ui5_ui5/sap/z2ui5");
 ```
 
@@ -38,16 +38,16 @@ sap.ui.core.Component.create({
 					component: oComponent,
 					async: true
 				});
-				
+
 				// Add component container to your VBox
 				var oVBox = that.getView().byId("VBoxId")
 				oVBox.destroyItems();
 				oVBox.addItem(oCompContainer);
-				
+
 				//Overwrite default height of object page section
 				var oSection = that.getView().byId("[This is the ID of your object page section::Section]");
 				oSection.addStyleClass("customSectionHeight");
-				
+
 			});
 ```
 

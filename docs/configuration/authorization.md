@@ -28,7 +28,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
     IF lv_app <> `MY_APP`.
       RETURN.
     ENDIF.
-    
+
     " Run the abap2UI5 handler
     z2ui5_cl_http_handler=>run( server ).
   ENDMETHOD.

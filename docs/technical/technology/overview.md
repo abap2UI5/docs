@@ -37,7 +37,7 @@ _Structured Web Applications (2003+) (SAP)_
 - Suitable for transactional business applications
 - More structured and modular than ITS, but limited for modern UX expectations
 
-### UI5 Freestyle 
+### UI5 Freestyle
 _Full Client-Side SPAs (2010+) (SAP)_
 
 With the advent of smartphones and richer web experiences, **UI5 Freestyle** was introduced.
@@ -48,8 +48,8 @@ With the advent of smartphones and richer web experiences, **UI5 Freestyle** was
 - Enables highly customized, interactive applications
 - Requires dedicated frontend development expertise
 
-### RAP / Fiori Elements 
-_Standardized Backend-Driven SPA (2019+) (SAP)_ 
+### RAP / Fiori Elements
+_Standardized Backend-Driven SPA (2019+) (SAP)_
 
 The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim to standardize application development.
 
@@ -58,8 +58,8 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim t
 - Simplifies UI development by using predefined floorplans and templates
 - Still SPA complexity (OData Metadata handling, UI5 runtime in browser)
 
-### abap2UI5 
-_UI5 Over-the-Wire (2023+) (Open Source)_ 
+### abap2UI5
+_UI5 Over-the-Wire (2023+) (Open Source)_
 
 **abap2UI5** brings the simplicity of the **Over-the-Wire** concept to SAP UI5 development.
 

@@ -22,7 +22,7 @@ The idea was introduced in the SAP community through examples using the JavaScri
 After the initial page load, only small HTML fragments are sent asynchronously via AJAX to update parts of the page — avoiding full reloads.
 
 <img width="400" alt="HTML "Over the Wire" Lifecycle" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
-  
+
 _HTML "Over the Wire" Lifecycle [(Source)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
 
@@ -233,7 +233,7 @@ This provides us with a 100% abapGit project that solely uses ABAP source code, 
 
 Considering the fact that all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming or other refactoring takes only a few moments. The deployment process is reduced to just activating an ABAP class, enabling us to create many apps in a short amount of time. For example, all the apps of the sample section were created rapidly using mostly copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
 
-##### 19. No Extra Layer 
+##### 19. No Extra Layer
 
 Another way to reduce complexity is by avoiding the creation of extra customizing layers. As shown in (13), there is only one stack call between the user's app and the HTTP-Handler, and there are no additional layers such as OData, SADL or Gateway. This allows us to bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
 

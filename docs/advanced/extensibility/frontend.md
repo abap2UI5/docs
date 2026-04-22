@@ -5,7 +5,7 @@ outline: [2, 4]
 
 The abap2UI5 frontend artifacts are stored in the app folder. If you want to make adjustments, follow these steps:
 
-#### Setup 
+#### Setup
 Open VS Code or an editor of your choice, use the terminal:
 ```
 git clone https://github.com/abap2UI5/abap2UI5
