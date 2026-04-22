@@ -67,7 +67,7 @@ abap2UI5 introduces a pivotal change: the backend also sends the view. This shif
 
 "UI5 Over the Wire" - ABAP delivers Data & View together
 
-Despite still relying on frontend HTML rendering, all the necessary info (view & data) is now retrieved via AJAX from the backend. The UI5 app remains a SPA, but its role is now reduced to that of an HDA – responsible solely for displaying the view and its data:
+Despite still relying on frontend HTML rendering, all the necessary info (view & data) is now retrieved via AJAX from the backend. The UI5 app remains a SPA, but its role is now reduced to that of an HDA — responsible solely for displaying the view and its data:
 
 <img width="600" alt="UI5 app downgraded to an HDA - Displaying Data & View received from the server" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
@@ -99,7 +99,7 @@ But is this just the same as RAP, but in a different format?
 
 ##### 8. RAP
 
-RAP also aims to find a "sweet spot" between SPA and MPA. I'm not certain of the exact approach they use to bring their view and model to the frontend, but they enrich responses either within the JSON itself or within the metadata of the initial OData request – and the view and model are defined beforehand in CDS Views in the backend:
+RAP also aims to find a "sweet spot" between SPA and MPA. I'm not certain of the exact approach they use to bring their view and model to the frontend, but they enrich responses either within the JSON itself or within the metadata of the initial OData request — and the view and model are defined beforehand in CDS Views in the backend:
 
 <img width="600" alt="RAP - Definition of Views with UI Annotations" src="https://github.com/user-attachments/assets/a79f07ff-594d-422c-b66f-8acf8058c81a" />
 
@@ -111,9 +111,9 @@ RAP - Definition of Data Models with DDL
 
 This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: Every API is based on the OData-Protocol, Views are defined with UI Annotations, Data Models are defined in DDL, Model updates are developed in local implementations of RAP classes and everything is separated in different layers that are orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process which is effective in most use cases.
 
-However, when significant Model and View changes are needed at runtime, this approach can be a bit too inflexible. Model changes with RTTI aren't supported, and extending the view quickly goes beyond the functional scope of backend annotations – requiring development of Apps with Fiori Elements (with the need for extra deployment again).
+However, when significant Model and View changes are needed at runtime, this approach can be a bit too inflexible. Model changes with RTTI aren't supported, and extending the view quickly goes beyond the functional scope of backend annotations — requiring development of Apps with Fiori Elements (with the need for extra deployment again).
 
-Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to worry about conventions and can take a few more risks. As we saw in (6), the first trick was sending Views from the backend instead of storing them on the frontend app – now we can enhance flexibility even further (9)(10).
+Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to worry about conventions and can take a few more risks. As we saw in (6), the first trick was sending Views from the backend instead of storing them on the frontend app — now we can enhance flexibility even further (9)(10).
 
 ##### 9. One HTTP-Service for all Apps
 
@@ -240,7 +240,7 @@ UI5 is evolving rapidly, and additional layers can quickly become outdated. With
 
 ##### 20. No Hiding of Complexity
 
-But not having an extra layer also means the framework doesn't necessarily abstract away complexity – unlike what other frameworks aim for. In abap2UI5, you directly send your XML-View to the frontend and you're responsible for ensuring it's valid and executable:
+But not having an extra layer also means the framework doesn't necessarily abstract away complexity — unlike what other frameworks aim for. In abap2UI5, you directly send your XML-View to the frontend and you're responsible for ensuring it's valid and executable:
 
 <img width="600" alt="XML-View created by the user and ready for the 'Wire'" src="https://github.com/user-attachments/assets/cbfdc72f-31f1-460b-afa3-d03179e9b173" />
 
@@ -275,13 +275,13 @@ This is a difference from many other UI rendering processes, where data and UI a
 
 ##### 22. "Over the Wire" sending JS, HTML & CSS
 
-Furthermore, we can add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App – it has its own custom control that isn't part of the framework and is sent "Over the Wire" after calling the app:
+Furthermore, we can add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App — it has its own custom control that isn't part of the framework and is sent "Over the Wire" after calling the app:
 
 <img width="600" alt="App delivering its own JavaScript 'Over the Wire'" src="https://github.com/user-attachments/assets/5960c1c9-1675-440f-80f9-a3e52db31c1c" />
 
 App delivering its own JavaScript "Over the Wire"
 
-With any request, there's the chance to send your own JavaScript or Custom Controls to the frontend. The abap2UI5 framework just sends it as-is to the frontend. All upcoming requests can now use this JavaScript – for example, to use Custom Controls in their UI5 Views:
+With any request, there's the chance to send your own JavaScript or Custom Controls to the frontend. The abap2UI5 framework just sends it as-is to the frontend. All upcoming requests can now use this JavaScript — for example, to use Custom Controls in their UI5 Views:
 
 <img width="600" alt="abap2UI5 app sending custom Javascript to the client" src="https://github.com/user-attachments/assets/66345bd4-6208-4dfc-9870-c82e3a45f74a" />
 
@@ -299,17 +299,17 @@ To summarize what we have covered so far, abap2UI5 is built in a highly generic 
 
 ##### 24. Downsides compared to UI5 & RAP
 
-Most notably, compared to UI5, we can't implement offline capabilities – in such scenarios we can't continuously ask the server after every event to determine what happens next.
+Most notably, compared to UI5, we can't implement offline capabilities — in such scenarios we can't continuously ask the server after every event to determine what happens next.
 
 Furthermore, using HANA DB capabilities directly at the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. However, in a RAP scenario, they use a typed OData and can directly touch HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, pagination or fuzzy searches can be easily integrated in UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
 
-Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend – we're forced to replace the entire view after every request with this approach. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of lower functionality in other areas.
+Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — we're forced to replace the entire view after every request with this approach. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of lower functionality in other areas.
 
-Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will get lots of updates in the future. In the end, the wide range of UI5 use cases makes comparing the different approaches very difficult – and can't be fully discussed here. Now, let's continue to the last part of this blog post and take a closer look at the framework's code base.
+Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will get lots of updates in the future. In the end, the wide range of UI5 use cases makes comparing the different approaches very difficult — and can't be fully discussed here. Now, let's continue to the last part of this blog post and take a closer look at the framework's code base.
 
 ##### 25. System Footprint
 
-We keep the system footprint as small as possible – abap2UI5 is based only on ABAP classes without CDS and RAP artifacts. Most of the coding is delegated to the user outside of the framework (21) (22). In total, the framework consists of around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
+We keep the system footprint as small as possible — abap2UI5 is based only on ABAP classes without CDS and RAP artifacts. Most of the coding is delegated to the user outside of the framework (21) (22). In total, the framework consists of around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
 
 <img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
@@ -331,7 +331,7 @@ In the end, we get a pure source code-based framework, which offers us the follo
 
 ##### 26. Running Everywhere Apps
 
-Essentially, abap2UI5 generates two strings – one containing an XML-View and the other containing the JSON-View-Model. These strings are transmitted to and from the frontend. As a result, you don't need a high ABAP release – this can be done even with very old releases. This approach lets us run on both the latest ABAP Cloud stack and on-premise systems, as well as very old releases, making it a release-independent solution. Additionally, we don't necessarily lose access to new UI5 features – we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on very old releases:
+Essentially, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. These strings are transmitted to and from the frontend. As a result, you don't need a high ABAP release — this can be done even with very old releases. This approach lets us run on both the latest ABAP Cloud stack and on-premise systems, as well as very old releases, making it a release-independent solution. Additionally, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on very old releases:
 
 <img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 

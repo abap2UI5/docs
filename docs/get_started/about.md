@@ -20,7 +20,7 @@ CLASS zcl_my_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-That's it – your first UI5 app is ready!
+That's it — your first UI5 app is ready!
 
 ##### About
 Since launching in 2023, abap2UI5 has evolved from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework takes care of all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
@@ -33,10 +33,10 @@ Since launching in 2023, abap2UI5 has evolved from a small side project into a c
 
 Traditional UI5 development requires JavaScript expertise, frontend deployment, and OData service configuration. abap2UI5 cuts through these complexities:
 
-- **Leverage your existing ABAP skills** – do what you know best, no frontend expertise required
-- **Universal compatibility** – build apps that run on legacy R/3 systems and modern S/4 Cloud environments
-- **Extend beyond RAP** – when standard capabilities reach their limits
-- **Prototype rapidly** – iterate quickly on new business applications
+- **Leverage your existing ABAP skills** — do what you know best, no frontend expertise required
+- **Universal compatibility** — build apps that run on legacy R/3 systems and modern S/4 Cloud environments
+- **Extend beyond RAP** — when standard capabilities reach their limits
+- **Prototype rapidly** — iterate quickly on new business applications
 
 Each application is packaged as an [abapGit](https://abapgit.org) project, simplifying installation across systems without separate frontend deployments.
 
@@ -44,13 +44,13 @@ Each application is packaged as an [abapGit](https://abapgit.org) project, simpl
 <br>
 
 ##### Architecture
-abap2UI5 takes a "thin frontend" approach – all processing, logic, and data management stays in the backend. This design simplifies configuration, cuts down on client-side complexity (say goodbye to cache clearing hassles), and keeps business logic and sensitive data securely on the server.
+abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stays in the backend. This design simplifies configuration, cuts down on client-side complexity (say goodbye to cache clearing hassles), and keeps business logic and sensitive data securely on the server.
 
 ##### Performance
-abap2UI5 delivers exceptional performance. The frontend focuses exclusively on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views – dramatically reducing network round trips and speeding up response times.
+abap2UI5 delivers exceptional performance. The frontend focuses exclusively on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — dramatically reducing network round trips and speeding up response times.
 
 ##### Security
-abap2UI5 is secure by design. All business logic stays exclusively in the ABAP backend. The frontend receives only the data populated directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need – no access to raw services or database queries through external tools.
+abap2UI5 is secure by design. All business logic stays exclusively in the ABAP backend. The frontend receives only the data populated directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries through external tools.
 
 ##### System Footprint
 The framework has a minimal system footprint — it includes only classes and interfaces. Additional functionality can be added through optional add-ons, keeping your system lean.
