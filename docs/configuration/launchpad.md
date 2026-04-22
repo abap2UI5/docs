@@ -83,7 +83,7 @@ ENDCLASS.
 CLASS z2ui5_cl_lp_kpi_hello_world IMPLEMENTATION.
 
   METHOD z2ui5_if_lp_kpi~count.
-    "kpi calculation....
+    "kpi calculation...
     result = 10.
   ENDMETHOD.
 
