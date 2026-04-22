@@ -6,7 +6,7 @@ outline: [2, 4]
 The app state feature opens up several useful scenarios, such as sharing and bookmarking the current state of your app.
 
 ### Share
-You can easily integrate a share button, which copies the actual state into the clipboard for sharing with your colleagues. Check out the following snippet:
+You can easily integrate a share button that copies the current state to the clipboard so you can share it with colleagues. Check out the following snippet:
 ```abap
 CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
 
