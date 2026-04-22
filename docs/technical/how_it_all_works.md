@@ -252,7 +252,7 @@ Luckily, we can significantly simplify the creation process by creating utility 
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
-This is in contrast to RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to using the `+`, `-`, and `*` operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available at the frontend:
+This is in contrast to RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to using the `+`, `-`, and `*` operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available on the frontend:
 
 <img width="600" alt="Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
@@ -289,7 +289,7 @@ abap2UI5 app sending custom JavaScript to the client
 
 ##### 23. As Simple as Possible
 
-So, we have seen in (22), apps can be made very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach is the use of if_oo_adt_classrun. By implementing just one method, we can generate an output with a single click (F9). This is extremely efficient and was one of the role models for abap2UI5. Here's a comparison of both approaches:
+As we have seen in (22), apps can be made very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach is the use of `if_oo_adt_classrun`. By implementing just one method, we can generate an output with a single click (F9). This is extremely efficient and was one of the role models for abap2UI5. Here's a comparison of both approaches:
 
 <img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
 
@@ -301,11 +301,11 @@ To summarize what we have covered so far, abap2UI5 is built in a highly generic 
 
 Most notably, compared to UI5, we can't implement offline capabilities — in such scenarios we can't continuously ask the server after every event to determine what happens next.
 
-Furthermore, using HANA DB capabilities directly at the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. However, in a RAP scenario, they use a typed OData and can directly touch HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, pagination or fuzzy searches can be easily integrated in UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
+Furthermore, using HANA DB capabilities directly on the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. However, in a RAP scenario, they use a typed OData and can directly touch HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, pagination or fuzzy searches can be easily integrated in UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
 
 Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — we're forced to replace the entire view after every request with this approach. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of lower functionality in other areas.
 
-Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will get lots of updates in the future. In the end, the wide range of UI5 use cases makes comparing the different approaches very difficult — and can't be fully discussed here. Now, let's continue to the last part of this blog post and take a closer look at the framework's code base.
+Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will get lots of updates in the future. In the end, the wide range of UI5 use cases makes comparing the different approaches very difficult — and can't be fully discussed here. Now, let's continue to the last part of this blog post and take a closer look at the framework's codebase.
 
 ##### 25. System Footprint
 

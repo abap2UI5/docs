@@ -134,7 +134,7 @@ This is just a demonstration. In this case, it would be easier to access `name` 
 :::
 
 ### Frontend
-If you don't want to process the event in the backend, you can directly trigger actions at the frontend using `client->_event_client`. The difference between the two methods:
+If you don't want to process the event in the backend, you can directly trigger actions on the frontend using `client->_event_client`. The difference between the two methods:
 
 - **`client->_event( )`** — triggers a backend roundtrip, the event is processed in the `main` method
 - **`client->_event_client( )`** — executes an action directly in the browser, no backend call

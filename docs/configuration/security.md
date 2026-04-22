@@ -15,7 +15,7 @@ Authentication is handled at the ICF (Internet Communication Framework) node lev
 As an app developer, you have full flexibility in managing authorization settings. You can configure these either at the application level or service node level. For detailed guidance on setting up authentication for your endpoint, check out [this page](/configuration/authorization).
 
 ### Backend Code
-abap2UI5 is delivered as custom code. Once installed, you have full ownership of the code, giving you the flexibility to modify it to suit your needs. However, to ensure compatibility with future updates, we recommend avoiding direct modifications to the core code base.
+abap2UI5 is delivered as custom code. Once installed, you have full ownership of the code, giving you the flexibility to modify it to suit your needs. However, to ensure compatibility with future updates, we recommend avoiding direct modifications to the core codebase.
 
 ### Frontend Code
 The frontend of the application is a Single Page Application (SPA) built using SAPUI5 or OpenUI5. It's delivered from the HTTP endpoint upon the first request, adhering to best practices for modern web applications.
