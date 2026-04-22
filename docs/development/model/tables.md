@@ -83,7 +83,7 @@ Making a table editable is a simple change. You just need to switch the binding 
 ```
 
 ### Tree
-To work with trees, you need to use nested structures. Here is an example:
+To work with trees, you need to use nested structures. Here's an example:
 ```abap
 CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
 
