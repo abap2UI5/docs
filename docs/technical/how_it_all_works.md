@@ -246,20 +246,20 @@ But not having an extra layer also means the framework doesn't necessarily abstr
 
 XML-View created by the user and ready for the 'Wire'
 
-Luckily, we can significantly simplify the creation process by creating utility classes. For instance, by offering with z2ui5_cl_xml_view a class-based approach to create views that provide access to the UI5 API via ADT code completion:
+Luckily, we can significantly simplify the creation process by creating utility classes. For instance, `z2ui5_cl_xml_view` offers a class-based approach to create views that provides access to the UI5 API via ADT code completion:
 
 <img width="600" alt="z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)" src="https://github.com/user-attachments/assets/b8aa5f41-d958-4181-bdc3-bc92a4a57b4b" />
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
-This is in contrast to RAP, where you benefit of well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to use the +, -, and * operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available at the frontend:
+This is in contrast to RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects for example. In RAP, you are restricted to use the +, -, and * operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available at the frontend:
 
 <img width="600" alt="Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
 Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript
 
 ##### 21. Separated _bind and _event method
-In the first approach of this framework the event and data binding were included in every method call:
+In the first approach of this framework, the event and data binding were included in every method call:
 
 <img width="600" alt="First approach - Data binding and events are not separated from the view" src="https://github.com/user-attachments/assets/3bc268e0-e08f-40b3-b152-b3fa375c0faf" />
 
@@ -277,7 +277,7 @@ This is a difference from many other UI rendering processes, where data and UI a
 
 Furthermore, we can add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App – it has its own custom control that isn't part of the framework and is sent "Over the Wire" after calling the app:
 
-<img width="600" alt="App delivering its own JavaScript "Over the Wire"" src="https://github.com/user-attachments/assets/5960c1c9-1675-440f-80f9-a3e52db31c1c" />
+<img width="600" alt="App delivering its own JavaScript 'Over the Wire'" src="https://github.com/user-attachments/assets/5960c1c9-1675-440f-80f9-a3e52db31c1c" />
 
 App delivering its own JavaScript "Over the Wire"
 
@@ -295,7 +295,7 @@ So, we have seen in (22), apps can be made very complex, but the opposite is als
 
 if_oo_adt_classrun vs. abap2UI5
 
-To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain a lot of flexibility and freedom in the app implementation, but we also have full responsibility for the view creation and the program flow. Furthermore we have to keep the following downsides in mind.
+To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain a lot of flexibility and freedom in the app implementation, but we also have full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
 
 ##### 24. Downsides compared to UI5 & RAP
 

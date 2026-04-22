@@ -224,9 +224,9 @@ ENDCLASS.
 The illustration below shows the difference between a full re-render and a targeted view model update:
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="500" />
+  <img alt="Partial HTML re-rendering via View Model updates - only the relevant DOM parts are refreshed" src="https://github.com/user-attachments/assets/79a8c531-b9a0-4bf4-bb1c-7d9019ef8707" width="500" />
   <br/>
-  <em>Partly HTML Rerendering via View Model Updates - Only relevant DOM parts are re-rendered, preserving UI state</em>
+  <em>Partial HTML Re-rendering via View Model Updates - Only relevant DOM parts are re-rendered, preserving UI state</em>
 </p>
 
 Thanks to UI5's powerful data binding mechanism, only the modified DOM elements are updated. This keeps the current UI state intact — like input focus — and ensures a smooth, uninterrupted user experience.
