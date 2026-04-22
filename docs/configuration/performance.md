@@ -40,10 +40,10 @@ ENDMETHOD.
 
 ### Suggestions
 Want to optimize your app even more? Here are a few tips:
-* Only call `client->view_display` when necessary. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have actually changed
-* Prefer `client->_bind` and use `client->_bind_edit` only when users need to make changes that are processed in the backend. Otherwise, it leads to unnecessary data transfers
-* Declare public attributes in your app class only for variables displayed in the frontend. This helps prevent the framework from accessing unused values
-* Follow standard ABAP best practices, such as reducing loops and using sorted tables, as you would in any other ABAP development project
+- Only call `client->view_display` when necessary. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have actually changed
+- Prefer `client->_bind` and use `client->_bind_edit` only when users need to make changes that are processed in the backend. Otherwise, it leads to unnecessary data transfers
+- Declare public attributes in your app class only for variables displayed in the frontend. This helps prevent the framework from accessing unused values
+- Follow standard ABAP best practices, such as reducing loops and using sorted tables, as you would in any other ABAP development project
 
 ### Performance Issues?
 If you encounter performance issues, try creating a sample and submitting a pull request to the samples repository. We'd be happy to analyze it and see if we can make abap2UI5 even faster.

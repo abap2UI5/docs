@@ -28,11 +28,11 @@ In this architecture the initial request delivers JavaScript and CSS, Subsequent
 This results in a clean and lightweight frontend — a pure rendering layer — while all logic remains under full control of the backend.
 
 Several modern frameworks adopt this pattern:
-* [htmx](https://htmx.org) Progressive enhancement via HTML partials (Any web stack)
-* [Hotwire (Turbo)](https://hotwired.dev) HTML-over-the-wire for Rails apps (Ruby on Rails)
-* [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view) Real-time UI with server rendering (Elixir/Phoenix)
-* [Livewire](https://livewire.laravel.com) Server-driven UI components in PHP  (Laravel/PHP)
-* [Unpoly](https://unpoly.com) Simplified partial page updates (Any web stack)
+- [htmx](https://htmx.org) Progressive enhancement via HTML partials (Any web stack)
+- [Hotwire (Turbo)](https://hotwired.dev) HTML-over-the-wire for Rails apps (Ruby on Rails)
+- [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view) Real-time UI with server rendering (Elixir/Phoenix)
+- [Livewire](https://livewire.laravel.com) Server-driven UI components in PHP (Laravel/PHP)
+- [Unpoly](https://unpoly.com) Simplified partial page updates (Any web stack)
 
 
 #### Comparison to Classic SSR

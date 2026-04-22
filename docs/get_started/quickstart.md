@@ -55,7 +55,7 @@ Next use the transaction SICF to create a new HTTP service with the handler abov
 ::: details ABAP Cloud
 For ABAP Cloud environments, follow [this guide](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
 
-<img width="846" alt="image-20 BiFOuUXZ" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
+<img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
 
 ::: tip Security
@@ -64,8 +64,8 @@ abap2UI5 communicates solely with the HTTP service you define, giving you comple
 
 ### 3. Initial Launch
 Now open the HTTP endpoint in your web browser:
-<img width="800" alt="Press `check` and launch the test app. That's it -- you're ready to create your own abap2UI5 apps." src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press `check` and launch the test app. That's it -- you're ready to create your own abap2UI5 apps.
+<img width="800" alt="Press `check` and launch the test app. That's it — you're ready to create your own abap2UI5 apps." src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+Press `check` and launch the test app. That's it — you're ready to create your own abap2UI5 apps.
 
 ### 4. Your First App
 Create a new class in your system:
@@ -81,4 +81,4 @@ CLASS zcl_my_app IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Launch your app instead of the test app -- congratulations, you've created your first abap2UI5 app.
+Launch your app instead of the test app — congratulations, you've created your first abap2UI5 app.

@@ -7,7 +7,7 @@ _Technical Deep Dive into abap2UI5_
 
 This article was originally published on the [SAP Community](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459).
 
-This article is for developers who want to understand how abap2UI5 works under the hood. It explores how the framework achieves its flexibility -- including runtime view generation, generic HTTP handling, and decoupling from OData -- and provides insight into its architecture, extensibility, and system internals.
+This article is for developers who want to understand how abap2UI5 works under the hood. It explores how the framework achieves its flexibility — including runtime view generation, generic HTTP handling, and decoupling from OData — and provides insight into its architecture, extensibility, and system internals.
 
 ##### 1. HTML Over the Wire
 
@@ -46,7 +46,7 @@ Unlike traditional architectures, HDAs don't prioritize strict separation of CSS
 
 Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among the first to adopt this principle. Tools like htmx, hotwire, and unpoly followed, aiming to reduce complexity while maintaining high UI fidelity. These frameworks seek a "sweet spot" between SPA and MPA architectures:
 
-<img width="600" alt=""Sweet Spot" between SPA and MPA" src="https://github.com/user-attachments/assets/41af4a41-829e-4289-82f5-18ee7408054b" />
+<img width="600" alt="'Sweet Spot' between SPA and MPA" src="https://github.com/user-attachments/assets/41af4a41-829e-4289-82f5-18ee7408054b" />
 
 _"Sweet Spot" between SPA and MPA_
 
@@ -64,7 +64,7 @@ UI5 normally - ABAP delivers only Data
 
 abap2UI5 introduces a pivotal change: the backend also sends the view. This shifts the frontend’s role towards an HDA, displaying views and data received from the server:
 
-<img width="600" alt=""UI5 Over the Wire" - ABAP delivers Data & View together" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
+<img width="600" alt="'UI5 Over the Wire' - ABAP delivers Data & View together" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 
 "UI5 Over the Wire" - ABAP delivers Data & View together
 
@@ -76,13 +76,13 @@ UI5 app downgraded to an HDA - Displaying Data & View received from the server
 
 This means the frontend app doesn't know what it's currently displaying (whether it's a table, list, or input) and it doesn't know what actions will be taken next. The app logic stays completely on the server, and the frontend app is just a small HDA transmitted with the first request:
 
-<img width="600" alt=""UI5 Over the Wire" - Server to Client Communication" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
+<img width="600" alt="'UI5 Over the Wire' - Server to Client Communication" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 
 "UI5 Over the Wire" - Server to Client Communication
 
 The HDA displays the view with its data and sends back each event to the server for determination of the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
 
-<img width="600" alt="UI5 vs. "UI5 Over the Wire" - Communication" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
+<img width="600" alt="UI5 vs. 'UI5 Over the Wire' - Communication" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
 UI5 vs. "UI5 Over the Wire" - Communication
 
@@ -92,7 +92,7 @@ We use AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but here
 
 A typical "UI5-View Over the Wire" response looks like this:
 
-<img width="600" alt=""UI5 Over the Wire" - Response with View & Data together" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
+<img width="600" alt="'UI5 Over the Wire' - Response with View & Data together" src="https://github.com/user-attachments/assets/d52112e6-b9b7-4e7f-ac7f-825c20620240" />
 
 "UI5 Over the Wire" - Response with View & Data together
 
@@ -348,7 +348,7 @@ As a result, abap2UI5 apps can also be developed to be portable across various S
 
 ##### 27. One-Code-Line
 
-With this approach, the use of dependencies is limited to cloud-released APIs and functions available in lower NetWeaver releases simultaneously. To handle this, abap2UI5 only uses SAP dependencies when it is really needed -- for instance in the GUID creation:
+With this approach, the use of dependencies is limited to cloud-released APIs and functions available in lower NetWeaver releases simultaneously. To handle this, abap2UI5 only uses SAP dependencies when it is really needed — for instance in the GUID creation:
 
 <img width="600" alt="GUID creation compatible to ABAP Cloud and Standard ABAP" src="https://github.com/user-attachments/assets/8039f152-1f39-4428-93a3-6cf80b38da5d" />
 

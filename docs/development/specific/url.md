@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # URL
 
-Working with URLs is a common requirement -- reading parameters from the current URL, opening links in new tabs, or managing browser history.
+Working with URLs is a common requirement — reading parameters from the current URL, opening links in new tabs, or managing browser history.
 
 ### Read URL Parameters
 

@@ -26,7 +26,7 @@ The business logic of the abap2UI5 app is not sent to the client. All business-r
 ### Content-Security-Policy
 To enhance security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP helps prevent attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. CSP is configured to allow only trusted sources such as ui5.sap.com, sapui5.hana.ondemand.com, and sdk.openui5.org, among others.
 
-#### Default CSP:
+#### Default CSP
 By default, abap2UI5 uses the following CSP:
 ```xml
  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
@@ -34,7 +34,7 @@ By default, abap2UI5 uses the following CSP:
      sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>
 ```
 
-#### Customizing the CSP:
+#### Customizing the CSP
 You have the option to adjust the CSP if needed. This can be done by modifying the HTTP handler call as shown below:
 
 ```abap

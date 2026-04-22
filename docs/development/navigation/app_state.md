@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # App State
 
-abap2UI5 supports saving the current app state so you can return to it later -- similar to how standard UI5 applications handle state management.
+abap2UI5 supports saving the current app state so you can return to it later — similar to how standard UI5 applications handle state management.
 
 ### Usage
 Each state is saved as a draft with a unique ID. Calling `client->set_app_state_active` appends this ID as a hash fragment to the URL. The resulting URL is shareable — you can copy it and open it in another browser window (or send it to a colleague) to restore the exact same app state. The hash value (`z2ui5-xapp-state=...`) is a server-side key that references the persisted draft. Drafts expire after a configurable time (default: 4 hours, adjustable via [User Exits](/advanced/extensibility/user_exits)).

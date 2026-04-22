@@ -173,9 +173,9 @@ CASE event.
 ENDCASE.
 ```
 Benefits:
-* Centralized event logic
-* Simple and readable program flow
-* Fully encapsulated and reusable
+- Centralized event logic
+- Simple and readable program flow
+- Fully encapsulated and reusable
 
 abap2UI5 provides a similar experience, enabling apps to call each other and encapsulate dialog logic in reusable classes:
 
