@@ -1,5 +1,5 @@
 ---
-outline: [2, 6]
+outline: [2, 4]
 ---
 # Custom JS
 
