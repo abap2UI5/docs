@@ -109,7 +109,7 @@ go_salv->display( ).
 
 Benefits:
 - Generates a full UI from internal tables
-- No external annotations, CDS views, or DDIC artifacts required
+- No external annotations, CDS Views, or DDIC artifacts required
 - Ideal for admin tools and quick overviews
 
 abap2UI5 follows a similar pattern. Just bind the internal table to a UI5 table control:
