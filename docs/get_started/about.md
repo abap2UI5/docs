@@ -1,5 +1,5 @@
 ---
-outline: [2, 6]
+outline: [2, 4]
 ---
 # Introduction
 
@@ -22,7 +22,7 @@ ENDCLASS.
 
 That's it — your first UI5 app is ready!
 
-##### About
+#### About
 Since launching in 2023, abap2UI5 has evolved from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework takes care of all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
 
 → *See our [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*
@@ -43,31 +43,31 @@ Each application is packaged as an [abapGit](https://abapgit.org) project, simpl
 ### Overview
 <br>
 
-##### Architecture
+#### Architecture
 abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stays in the backend. This design simplifies configuration, cuts down on client-side complexity (say goodbye to cache clearing hassles), and keeps business logic and sensitive data securely on the server.
 
-##### Performance
+#### Performance
 abap2UI5 delivers exceptional performance. The frontend focuses exclusively on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — dramatically reducing network roundtrips and speeding up response times.
 
-##### Security
+#### Security
 abap2UI5 is secure by design. All business logic stays exclusively in the ABAP backend. The frontend receives only the data populated directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries through external tools.
 
-##### System Footprint
+#### System Footprint
 The framework has a minimal system footprint — it includes only classes and interfaces. Additional functionality can be added through optional add-ons, keeping your system lean.
 
-##### Transparency
+#### Transparency
 All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. You'll always understand how the framework works and can verify its behavior.
 
 ### Compatibility
 <br>
 
-##### ABAP Cloud
+#### ABAP Cloud
 abap2UI5 uses only released APIs, making it perfect for both on-stack and side-by-side extensions in ABAP for Cloud. Take advantage of modern ABAP syntax features like CDS, ABAP SQL, and EML within your apps.
 
-##### Clean Core
+#### Clean Core
 By relying only on released APIs, abap2UI5 ensures your applications remain "cloud-ready" and "upgrade-stable," aligning with SAP's clean core principles. Your investment in abap2UI5 apps is protected against future SAP system upgrades.
 
-##### System Support
+#### System Support
 Works with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from version 7.02 to ABAP Cloud:
 - S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
@@ -79,19 +79,19 @@ A downported version is available for systems running earlier ABAP versions (bef
 
 abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, tailored for enterprise SAP environments. The framework works seamlessly across S/4HANA Public/Private Cloud, BTP ABAP Environment, and NetWeaver systems.
 
-##### Production Usage
+#### Production Usage
 Use abap2UI5 just like any other UI5 app or ABAP program in production. Simply add the framework and your apps to a transport request for deployment.
 
-##### Licensing
+#### Licensing
 Technically, abap2UI5 apps are regular UI5 freestyle applications. License them the same way you handle your other UI5 apps in your organization. abap2UI5 itself is MIT licensed (free for commercial use).
 
-##### Launchpad Integration
+#### Launchpad Integration
 Integrate your apps into:
 - Fiori Launchpads on S/4 On-Premise
 - Tiles on S/4 Public Cloud
 - Build Work Zone Websites on BTP
 
-##### Installation
+#### Installation
 Getting started is straightforward:
 1. Import the project via abapGit
 2. Create an HTTP service for browser communication
@@ -102,17 +102,17 @@ Getting started is straightforward:
 ### Community
 <br>
 
-##### Support
+#### Support
 Support is provided by the community. Submit an issue on GitHub or join the abap2UI5 Slack channel for assistance.
 
 → *Visit our [Support page](/resources/support) for more options*
 
-##### Contribution
+#### Contribution
 Contributions are always welcome! Whether you're fixing bugs, building new features, or improving documentation, your input helps the project grow.
 
 → *Read our [Contribution Guide](/resources/contribution) to learn how to get involved*
 
-##### Sponsor
+#### Sponsor
 abap2UI5 is maintained by volunteers. If you or your company benefit from the project, consider supporting it.
 
 → *Learn more about [sponsorship opportunities](/resources/sponsor)*
