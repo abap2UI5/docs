@@ -10,11 +10,11 @@ Integrate your abap2UI5 apps into SAP Fiori Launchpads. Find all information her
 
 ### Target Mapping
 Use the following parameters for target mapping in your Launchpad configuration:
-* Semantic Object: `Z2UI5_CL_MY_APP`
-* Action: `display`
-* URL: `/sap/bc/ui5_ui5/sap/z2ui5`
-* ID: `z2ui5`
-* Parameter: `app_start / Z2UI5_CL_MY_APP`
+- Semantic Object: `Z2UI5_CL_MY_APP`
+- Action: `display`
+- URL: `/sap/bc/ui5_ui5/sap/z2ui5`
+- ID: `z2ui5`
+- Parameter: `app_start / Z2UI5_CL_MY_APP`
 
 ### Troubleshooting
 Sometimes, installation via abapGit can cause cache-related issues. Here's how to resolve them:

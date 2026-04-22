@@ -4,10 +4,10 @@ outline: [2, 4]
 # Barcode Scanning
 
 Barcode scanning functionality is widely used in enterprises. With abap2UI5, you can:
-* Scan barcodes
-* Handle focus transitions
-* Play sounds for user feedback
-* Display barcodes
+- Scan barcodes
+- Handle focus transitions
+- Play sounds for user feedback
+- Display barcodes
 
 This section provides all the information you need to get started easily.
 

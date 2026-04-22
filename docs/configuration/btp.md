@@ -13,14 +13,14 @@ Integrate your abap2UI5 apps into BTP services like SAP Build Work Zone. Find al
 
 ##### Destination
 
-* Name: BACKEND_ABAP2UI5
-* Type: HTTP
-* Description: abap2UI5 Destination
-* URL: `https://<your-abap-system>/sap/z2ui5`
-* Proxy Type: Internet
-* Authentication: BasicAuthentication
-* User: (user)
-* Password: (password)
+- Name: BACKEND_ABAP2UI5
+- Type: HTTP
+- Description: abap2UI5 Destination
+- URL: `https://<your-abap-system>/sap/z2ui5`
+- Proxy Type: Internet
+- Authentication: BasicAuthentication
+- User: (user)
+- Password: (password)
 
 ##### Additional Properties
 
