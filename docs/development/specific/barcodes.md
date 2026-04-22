@@ -40,7 +40,7 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 
 ENDMETHOD.
 ```
-To see barcode scanning in action, refer to the `z2ui5_cl_demo_app_124` sample application.
+To see barcode scanning in action, refer to the `Z2UI5_CL_DEMO_APP_124` sample application.
 
 ::: tip **UI5 Versions**
 This feature is only available when using the UI5 framework and is not supported with OpenUI5.

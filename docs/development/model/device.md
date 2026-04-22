@@ -70,4 +70,4 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
 ENDCLASS.
 ```
-For a working example, refer to `z2ui5_cl_demo_app_122`.
+For a working example, refer to `Z2UI5_CL_DEMO_APP_122`.
