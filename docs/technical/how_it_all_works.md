@@ -11,7 +11,7 @@ This article is for developers who want to understand how abap2UI5 works under t
 
 ##### 1. HTML Over the Wire
 
-One of the core ideas behind abap2UI5 is inspired by the concept of **"HTML Over the Wire"**. This approach suggests rendering HTML directly on the server and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
+The concept of **"HTML Over the Wire"** inspired one of the core ideas behind abap2UI5. This approach suggests rendering HTML directly on the server and sending it to the browser — without relying on JSON, client-side MVC frameworks, bundling, or transpiling pipelines.
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don't need JSON as an in-between format. You don't need client-side MVC frameworks. You don't need complicated bundling and transpiling pipelines. But you do need to think different. [...]
 
