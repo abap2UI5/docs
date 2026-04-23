@@ -184,7 +184,7 @@ So far, we have observed that the abap2UI5 frontend app is unaware of the specif
 
 ##### 15. The abap2UI5 App
 
-The only non-generic part of this concept is the app of the user implementing the `z2ui5_if_app` interface:
+The only non-generic part of this concept is the user's app, which implements the `z2ui5_if_app` interface:
 
 <img width="600" alt="abap2UI5 app - one place for everything" src="https://github.com/user-attachments/assets/167b1078-14d7-4354-9561-f4e5c7345544" />
 
