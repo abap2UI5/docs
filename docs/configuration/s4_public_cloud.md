@@ -68,13 +68,13 @@ To use abap2UI5 in production environments, you'll need to complete the frontend
 Since UI5 apps (BSPs) aren't supported directly via ADT abapGit, you need to manually deploy the app:
 
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
-2. Deploy it into your system following this [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
+2. Deploy it into your system following SAP's [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
 
 ### 5. Configure Launchpad & Tiles (Optional)
 
 Set up the Fiori Launchpad, pages, sections, and tiles for your abap2UI5 apps:
 
-1. Follow this [configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
+1. Follow SAP's [Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
 2. Configure tiles for business users and manage permissions
 
 ::: tip **BTP ABAP Environment**
