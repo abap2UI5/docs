@@ -152,7 +152,7 @@ Replacing the View at Runtime
 
 ##### 12. View & Model Independent of the HTTP-Service
 
-As a result, the View & Model are defined independently of the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
+As a result, the View & Model stay independent of the HTTP-Service, and we're no longer forced to deliver a predefined static OData-Service for every app, as RAP does. This significantly reduces the number of backend artifacts:
 
 <img width="600" alt="RAP vs. Model & View decoupled from the (single & generic) HTTP-Service" src="https://github.com/user-attachments/assets/6fb61790-87bc-47fa-855e-83d5292b70f3" />
 
@@ -246,7 +246,7 @@ But not having an extra layer also means the framework doesn't necessarily abstr
 
 XML-View created by the user and ready for the 'Wire'
 
-Luckily, we can significantly simplify the creation process with utility classes. For instance, `z2ui5_cl_xml_view` offers a class-based approach to create views that provides access to the UI5 API via ADT code completion:
+Luckily, utility classes significantly simplify the creation process. For instance, `z2ui5_cl_xml_view` offers a class-based approach to create views with access to the UI5 API via ADT code completion:
 
 <img width="600" alt="z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)" src="https://github.com/user-attachments/assets/b8aa5f41-d958-4181-bdc3-bc92a4a57b4b" />
 
@@ -327,7 +327,7 @@ The functionality focuses only on the communication between backend and frontend
 
 AJAX POST Handler
 
-The result is a pure source-code-based framework, which offers us the following possibility.
+The result is a pure source-code-based framework, which opens up the following possibility.
 
 ##### 26. Running Everywhere Apps
 
