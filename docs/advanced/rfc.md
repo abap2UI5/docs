@@ -13,7 +13,7 @@ The RFC Connector enables several useful scenarios:
 
 #### Architecture
 
-The system that calls the app (the frontend system) includes the UI5 library and bootstraps the UI. The system where the app is implemented (the backend system) doesn't need to host the UI5 runtime.
+The system that calls the app (the frontend system) includes the UI5 library and bootstraps the UI. The system that hosts the app (the backend system) doesn't need to host the UI5 runtime.
 
 <img width="600" alt="abap2UI5 RFC Connector architecture across frontend and backend systems" src="https://github.com/user-attachments/assets/6f885f04-2b70-4cb3-83d0-123473b72262" />
 
