@@ -46,7 +46,7 @@ ENDMETHOD.
 ```
 
 #### abap-logger
-You also have the option to use the fantastic open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates seamlessly with abap2UI5. Here's an example:
+You can also use the open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates seamlessly with abap2UI5. Here's an example:
 ```abap
 METHOD z2ui5_if_app~main.
 
