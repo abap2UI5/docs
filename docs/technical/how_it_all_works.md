@@ -351,7 +351,7 @@ With this approach, dependencies are limited to APIs and functions that are both
 
 GUID creation compatible with ABAP Cloud and Standard ABAP
 
-As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and it remains to be seen how feasible this is in practice). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver 7.02.
+As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and it remains to be seen how feasible this is in practice). Ultimately, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver 7.02.
 
 ##### 28. Compatibility & Downporting
 
