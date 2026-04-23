@@ -33,7 +33,7 @@ If the backend needs additional information about the specific event, use the `t
 - **`$parameters`** — the event parameters as defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
 - **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`)
 
-Check out [this documentation](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) for more information, and refer to sample `Z2UI5_CL_DEMO_APP_167`.
+For more information, see the [UI5 documentation on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe), and refer to sample `Z2UI5_CL_DEMO_APP_167`.
 
 #### Source
 Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property from the UI5 control that fired the event — here the button itself, so the result is the button's label (`post`):
