@@ -31,7 +31,7 @@ After a few moments, the installation completes:
 
 ### 2. Mass Activate the Imported Artifacts
 
-When installing repositories with ADT abapGit, all artifacts arrive in an inactive state. You'll need to manually activate them. The easiest approach is to create a dedicated inactive/active folder tree for the abap2UI5 project:
+When installing repositories with ADT abapGit, all artifacts arrive in an inactive state. You'll need to activate them manually. The easiest approach: create a dedicated inactive/active folder tree for the abap2UI5 project:
 
 <img width="481" height="182" alt="Inactive objects folder tree in ADT" src="https://github.com/user-attachments/assets/a47fe1f1-5445-46da-96b9-8df3bfe9a99d" />
 
@@ -61,7 +61,7 @@ Create a new HTTP handler manually or use the cloud branch of the [frontend](htt
 
 **Important:** In S/4 Public Cloud, accessing the HTTP endpoint requires `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes this scenario unsuitable for productive usage.
 
-To use abap2UI5 in production environments, you'll need to complete the frontend deployment and tile configuration in the following steps.
+To use abap2UI5 in production environments, complete the frontend deployment and tile configuration in the following steps.
 
 ### 4. Deploy the UI5 App (Optional)
 
