@@ -19,7 +19,7 @@ The setup in `S/4 On-Premise` is the same as in `S/4 Private Cloud`. Follow the 
 The setup is the same as in `S/4 Private Cloud`. Depending on your release level, you may be able to add the apps to Launchpads. Follow the guide [here](/configuration/launchpad).
 
 ### R/3 NetWeaver (<7.50)
-For R/3 NetWeaver versions below 7.50, install the downported version with syntax adjustments for earlier releases. abap2UI5 runs on versions down to 7.02. See the downport section for more information [here](/advanced/downporting).
+For R/3 NetWeaver versions below 7.50, install the downported version with syntax adjustments for earlier releases. abap2UI5 runs on versions down to 7.02. See [Downporting](/advanced/downporting) for more information.
 
 ### BTP ABAP Environment
 The setup in `BTP ABAP Environment` is the same as in `S/4 Public Cloud`. Follow the guide [here](/configuration/s4_public_cloud).
