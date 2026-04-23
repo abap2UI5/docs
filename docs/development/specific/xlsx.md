@@ -73,7 +73,7 @@ CLASS lcl_help IMPLEMENTATION.
     DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
     DATA(lo_excel) = NEW cl_fdt_xl_spreadsheet(
         document_name = `test`
-        xdocument     = lv_xdata ) .
+        xdocument     = lv_xdata ).
 
     lo_excel->if_fdt_doc_spreadsheet~get_worksheet_names(
       IMPORTING worksheet_names = DATA(lt_worksheets) ).
@@ -229,7 +229,7 @@ ENDMETHOD.
 ```
 
 ```abap [LCL_HELP]
-CLASS lcl_help DEFINITION FINAL CREATE PUBLIC .
+CLASS lcl_help DEFINITION FINAL CREATE PUBLIC.
 
   PUBLIC SECTION.
     CLASS-METHODS get_xlsx_by_itab
