@@ -92,4 +92,4 @@ Backend (ABAP Class)
 | Clean Core               | ✅ Yes                        | ✅ Yes                            |
 | Use Case Fit             | Standardized CRUD Apps        | Dynamic, backend-controlled UIs  |
 | Learning Curve           | High                          | Low                              |
-| Deployment               | Split backend/frontend        | Pure ABAP backend class        |
+| Deployment               | Split frontend/backend        | Pure ABAP backend class        |
