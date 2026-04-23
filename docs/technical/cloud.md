@@ -116,7 +116,7 @@ No — RAP isn't mandatory.
 RAP (RESTful Application Programming Model) is SAP's recommended model for building cloud-native applications. It is based on:
 - CDS Views for data modeling
 - Behavior Definitions for logic and validations
-- OData Services for communication
+- OData services for communication
 - Fiori Elements for UI generation
 
 abap2UI5 provides an alternative, especially for developers who prefer lightweight apps and don't require the full RAP stack. As long as cloud development principles are followed, both approaches are valid.
