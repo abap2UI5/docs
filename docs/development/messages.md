@@ -7,7 +7,7 @@ Displaying messages and errors is an everyday task for ABAP developers. The func
 
 #### Message Toast
 
-For short-duration messages, such as success notifications, you can use the message toast:
+For short-duration messages, such as success notifications, use the message toast:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -17,7 +17,7 @@ ENDMETHOD.
 
 #### Message Box
 
-If you need the user to acknowledge the message, display a message box that the user must close:
+When the user must acknowledge the message, display a message box that the user must close:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -36,7 +36,7 @@ ENDMETHOD.
 ```
 
 #### SY, BAPIRET, CX_ROOT
-You can directly pass common message structures, objects, and variables to the functions:
+You can pass common message structures, objects, and variables directly to the functions:
 
 ##### SY
 ```abap

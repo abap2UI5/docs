@@ -23,7 +23,7 @@ ENDCLASS.
 That's it — your first UI5 app is ready!
 
 ### About
-Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework handles all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
+Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework handles all the frontend complexity, letting you focus purely on business logic while using your existing ABAP skills.
 
 → *See our [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*
 
