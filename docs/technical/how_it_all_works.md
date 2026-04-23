@@ -79,7 +79,7 @@ This means the frontend app doesn't know what it's currently displaying (whether
 
 "UI5 Over the Wire" - Server to Client Communication
 
-The HDA displays the view with its data and sends each event back to the server, which determines the next action and output. This process is somewhat similar to the PAI/PBO process from classic SAP GUI apps:
+The HDA displays the view with its data and sends each event back to the server, which determines the next action and output. This resembles the PAI/PBO process from classic SAP GUI apps:
 
 <img width="600" alt="UI5 vs. 'UI5 Over the Wire' - Communication" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
@@ -123,7 +123,7 @@ First, we don't define a specific HTTP-Service for transmitting the View and Dat
 
 Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model
 
-Furthermore, we don't just send the data but also the metadata (Data Model) with every request (7). This differs from classic OData communication, where the initial OData request carries the metadata to establish the model upfront, and only data is exchanged afterward. With this approach, we can send different models with every request:
+Furthermore, we don't just send the data but also the metadata (Data Model) with every request (7). This differs from classic OData communication, where the initial OData request carries the metadata to establish the model upfront, and only data moves afterward. With this approach, we can send different models with every request:
 
 <img width="600" alt="OData vs. UI5 Over the Wire - Model & Data transfer" src="https://github.com/user-attachments/assets/95fe59c3-7e8a-4e21-8690-12de1110779f" />
 
@@ -131,7 +131,7 @@ OData vs. UI5 Over the Wire - Model & Data transfer
 
 ##### 10. Define Model at Runtime
 
-This allows us to define models not only at design time, but also at runtime. The user doesn't need to do extra work because abap2UI5 handles the entire process in the background during every AJAX request:
+This lets us define models not only at design time, but also at runtime. The user doesn't need to do extra work because abap2UI5 handles the entire process in the background during every AJAX request:
 
 <img width="600" alt="abap2UI5 - Dynamic Data Binding & Model Creation" src="https://github.com/user-attachments/assets/e9f1bf8c-6d8c-44ad-ba89-c3648b638335" />
 
@@ -158,7 +158,7 @@ As a result, the View & Model are defined independently of the HTTP-Service and 
 
 RAP vs. Model & View decoupled from the (single & generic) HTTP-Service
 
-Let's take a look at the HTTP-Handler that provides us with this flexibility.
+Let's look at the HTTP-Handler that gives us this flexibility.
 
 ##### 13. HTTP-Service
 
