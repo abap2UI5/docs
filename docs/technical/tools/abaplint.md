@@ -7,7 +7,7 @@ This project uses [abaplint](https://abaplint.app/) for static code analysis and
 
 #### Static Code Analysis
 
-With every PR, **abaplint** checks the ABAP code, ensuring code quality and adherence to ABAP best practices. You can review the project-specific [abaplint configuration](https://github.com/abap2UI5/abap2UI5/blob/main/abaplint.jsonc). All statistics and analysis results are available on the [abaplint app dashboard](https://abaplint.app/stats/abap2UI5/abap2UI5).
+With every PR, **abaplint** checks the ABAP code to ensure code quality and adherence to ABAP best practices. You can review the project-specific [abaplint configuration](https://github.com/abap2UI5/abap2UI5/blob/main/abaplint.jsonc). All statistics and analysis results live on the [abaplint app dashboard](https://abaplint.app/stats/abap2UI5/abap2UI5).
 
 #### Downporting
 
@@ -18,7 +18,7 @@ abaplint --fix .github/abaplint/abap_702.jsonc
 ```
 
 #### Renaming
-All artifacts are compatible with the abaplint renaming feature, allowing you to use abap2UI5 under different custom namespaces:
+All artifacts are compatible with the abaplint renaming feature, letting you use abap2UI5 under different custom namespaces:
 
 ```sh
 abaplint .github/abaplint/rename_test.jsonc --rename

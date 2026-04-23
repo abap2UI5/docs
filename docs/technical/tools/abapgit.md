@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # abapGit
 
-This project uses [abapGit](https://github.com/abapGit/abapGit) to manage version control and distribute its code efficiently.
+This project uses [abapGit](https://github.com/abapGit/abapGit) for version control and efficient code distribution.
 
 #### Git Client
 
@@ -19,4 +19,4 @@ You can also install multiple abap2UI5 apps with a single abapGit pull. This wor
 #### Contribution
 
 Contributions are welcome and easily managed through pull requests on GitHub.
-Create a new pull request and commit your changes using abapGit.
+Create a new pull request and commit your changes via abapGit.
