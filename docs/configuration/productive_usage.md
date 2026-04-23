@@ -8,7 +8,7 @@ abap2UI5 is technically just an implementation of an HTTP handler and can be use
 #### Preparations
 You can transport abap2UI5 to production just like any other ABAP development. To ensure everything works smoothly, consider the following steps:
 1. Transport the abap2UI5 HTTP service and the framework first.
-2. Sometimes, extra activation of the HTTP service is needed, along with an adjustment of the UI5 bootstrapping.
+2. You may need to explicitly activate the HTTP service and adjust the UI5 bootstrapping.
 3. Test the "Hello World" app to ensure that abap2UI5 works correctly.
 4. Afterward, continue by transporting your custom apps.
 
