@@ -69,7 +69,7 @@ The `main` method is called on every roundtrip — that is, on initialization an
 └─────────┘       └──────────┘       └──────────┘
 ```
 
-To control what happens when, use `CASE abap_true` to distinguish between lifecycle events:
+To distinguish between lifecycle events, use `CASE abap_true`:
 
 - `client->check_on_init( )` — first call when the app starts
 - `client->check_on_event( )` — user triggered an event (e.g., button press)
