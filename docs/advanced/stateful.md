@@ -7,7 +7,7 @@ By default, abap2UI5 runs stateless like any other UI5 freestyle app, making onl
 
 #### Stateful Sessions
 
-In private and on-premise scenarios, abap2UI5 can also be used in stateful mode. Check out `Z2UI5_CL_DEMO_APP_135` and `Z2UI5_CL_DEMO_APP_137` for examples.
+In private and on-premise scenarios, you can also run abap2UI5 in stateful mode. Check out `Z2UI5_CL_DEMO_APP_135` and `Z2UI5_CL_DEMO_APP_137` for examples.
 
 #### Locks
 

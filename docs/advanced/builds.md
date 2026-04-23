@@ -9,6 +9,6 @@ If you use abap2UI5 extensively, you may consider creating your own build by def
 - Create a customized abap2UI5 build with frontend components and add-ons tailored to your specific scenario.
 
 #### Builder
-Generate your own abap2UI5 build using the [builder](https://github.com/abap2UI5/builder).
+Generate your own abap2UI5 build with the [builder](https://github.com/abap2UI5/builder).
 
 <img width="700" alt="abap2UI5 builder interface for generating custom namespaced builds" src="https://github.com/user-attachments/assets/7c7f55d4-6667-4036-bc71-4cd7472f2ae9" />
