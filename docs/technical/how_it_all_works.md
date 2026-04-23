@@ -99,7 +99,7 @@ But is this just the same as RAP, but in a different format?
 
 ##### 8. RAP
 
-RAP also aims to find a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully transparent, but it enriches responses either within the JSON itself or within the metadata of the initial OData request — and CDS Views in the backend define the view and model beforehand:
+RAP also aims to find a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully transparent, but it enriches responses either in the JSON itself or in the metadata of the initial OData request — and CDS Views in the backend define the view and model beforehand:
 
 <img width="600" alt="RAP - Definition of Views with UI Annotations" src="https://github.com/user-attachments/assets/a79f07ff-594d-422c-b66f-8acf8058c81a" />
 
@@ -117,7 +117,7 @@ Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wi
 
 ##### 9. One HTTP-Service for All Apps
 
-First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime, the framework transforms ABAP variables & tables into a JSON-Model and transmits them as a string to the frontend. JavaScript then parses it back into a JSON-Model and binds it to the UI5-View:
+First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), removing the need to develop individual OData-Services with SEGW or CDS. At runtime, the framework transforms ABAP variables & tables into a JSON-Model and transmits them as a string to the frontend. JavaScript then parses it back into a JSON-Model and binds it to the UI5-View:
 
 <img width="600" alt="Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model" src="https://github.com/user-attachments/assets/163ca12b-fe37-43e8-80b6-a5eaae703d69" />
 
@@ -145,7 +145,7 @@ Replacing the Model (metadata) at Runtime
 
 ##### 11. Define View at Runtime
 
-The same applies to the view: in RAP, only certain predefined control attributes can be modified at runtime, while the view itself is defined upfront in CDS artifacts with UI annotations. In an abap2UI5 app, however, you can replace entire view controls. For example, in the following app, we swap a table control for a list control and vice versa:
+The same applies to the view: in RAP, you can modify only certain predefined control attributes at runtime, while CDS artifacts with UI annotations define the view itself upfront. In an abap2UI5 app, however, you can replace entire view controls. For example, in the following app, we swap a table control for a list control and vice versa:
 
 ![Swapping a table control for a list control at runtime from the ABAP backend](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
 Replacing the View at Runtime
