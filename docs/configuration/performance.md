@@ -7,7 +7,7 @@ abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is si
 
 abap2UI5 keeps frontend logic to a minimum: no business logic runs in the browser. Everything is passed directly to the UI5 framework, which focuses solely on UI rendering.
 
-abap2UI5 has been tested with tables containing large numbers of entries and columns, so you can confidently develop your app — performance shouldn't be a concern.
+We've tested abap2UI5 with tables containing large numbers of entries and columns, so you can confidently develop your app — performance shouldn't be a concern.
 
 ### `view_display` vs. `view_model_update`
 
