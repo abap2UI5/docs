@@ -73,7 +73,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-Other imports are supported as well. Just import your message structure, and the message box will display it.
+Other imports are also supported. Import your message structure, and the message box will display it.
 
 #### Popup Multi Message
 The message box provides basic output. For more detailed output, use the popup `Z2UI5_CL_POP_MESSAGES`:
