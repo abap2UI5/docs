@@ -17,7 +17,7 @@ ENDMETHOD.
 ```
 
 ### Messages
-Messages are translated using message classes, ensuring that translations are managed centrally and can be maintained easily in different languages:
+Message classes translate messages and centralize translation management, making multi-language maintenance easy:
 ```abap
   METHOD z2ui5_if_app~main.
 
