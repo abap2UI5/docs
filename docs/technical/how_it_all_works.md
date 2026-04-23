@@ -341,23 +341,23 @@ Local Bootstrapping - UI5 version depends on the SAP release
 
 CDN Bootstrapping - UI5 version independent of the SAP release
 
-As a result, you can develop abap2UI5 apps to be portable across various SAP systems, releases, and environments. An app developed once on ABAP Cloud 2305 can also run on earlier releases. Similarly, apps developed on older NetWeaver releases can run on BTP ABAP Environment or S/4 Public Cloud ABAP Environment. However, to achieve this compatibility, abap2UI5 and its apps need to be designed to work with both language versions, 'ABAP Cloud' and 'Standard ABAP'. To avoid redundancy, abap2UI5 tries to achieve this by using a single code line.
+As a result, you can develop abap2UI5 apps that are portable across various SAP systems, releases, and environments. An app developed once on ABAP Cloud 2305 can also run on earlier releases. Similarly, apps developed on older NetWeaver releases can run on BTP ABAP Environment or S/4 Public Cloud ABAP Environment. However, to achieve this compatibility, abap2UI5 and its apps must work with both language versions, 'ABAP Cloud' and 'Standard ABAP'. To avoid redundancy, abap2UI5 achieves this via a single code line.
 
 ##### 27. One-Code-Line
 
-With this approach, dependencies are limited to APIs and functions that are both cloud-released and available in earlier NetWeaver releases. To handle this, abap2UI5 only uses SAP dependencies when strictly needed — for instance, in GUID creation:
+With this approach, dependencies stay limited to APIs and functions that are both cloud-released and available in earlier NetWeaver releases. To handle this, abap2UI5 only uses SAP dependencies when strictly needed — for instance, in GUID creation:
 
 <img width="600" alt="GUID creation compatible with ABAP Cloud and Standard ABAP" src="https://github.com/user-attachments/assets/8039f152-1f39-4428-93a3-6cf80b38da5d" />
 
 GUID creation compatible with ABAP Cloud and Standard ABAP
 
-As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and it remains to be seen how feasible this is in practice). Ultimately, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver 7.02.
+As you can see, creating methods compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must stay aware of this (and it remains to be seen how feasible this is in practice). Ultimately, it does have a key advantage: abap2UI5 runs on ABAP 2305 and remains portable down to NetWeaver 7.02.
 
 ##### 28. Compatibility & Downporting
 
-Downporting abap2UI5 code normally would result in a release that is difficult to maintain and debug. To avoid this, abap2UI5 is divided into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
+Downporting abap2UI5 code normally would produce a release difficult to maintain and debug. To avoid this, abap2UI5 splits into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
 
-abaplint automatically generates the low-syntax branch. The separate branch enables development with all new ABAP expressions available since ABAP 7.50 while still ensuring that all future abap2UI5 features are automatically downported and available for ABAP 7.02.
+abaplint automatically generates the low-syntax branch. The separate branch enables development with all new ABAP expressions available since ABAP 7.50 while still ensuring that all future abap2UI5 features get automatically downported and made available for ABAP 7.02.
 
 Automated ABAP downporting greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint. Besides abaplint, this framework uses abapGit and benefits from the work of the people who built it:
 
@@ -365,10 +365,10 @@ Automated ABAP downporting greatly improves efficiency. Check out the abaplint d
 
 ##### 29. Summary
 
-Long blog post short: inspired by "HTML Over the Wire" (1)(2)(3), we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13), independent of the View and Data Model (12). This gives us great flexibility, allowing us to dynamically create Data Models (10) and Views (11) at runtime, resulting in a significantly reduced number of backend artifacts.
+Long blog post short: inspired by "HTML Over the Wire" (1)(2)(3), we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). Then we used a single generic HTTP-Service for all apps (13), independent of the View and Data Model (12). This gives us great flexibility, letting us dynamically create Data Models (10) and Views (11) at runtime, which significantly reduces the number of backend artifacts.
 
 Next, we explored various ideas on how the framework reduces its own complexity by avoiding frontend artifacts (17), eliminating extra customizing layers (19), and separating the view from the framework (21), as well as app-specific JS or HTML (22). The result is a pure source-code approach with only one database table, two interfaces, one class, and just 2,300 lines of code (25). We develop it in a single code line (27), making it cloud and on-premise ready and downportable to old releases (28). Together with abapGit, you can develop its apps to run on nearly every release.
 
-Overall, with abap2UI5, you need to disregard some common rules: there is no separation between View and Model in the HTTP communication (12), HTML & JavaScript live directly in the source code (17) (22), we don't use OData or RAP (7), and there are other downsides to consider (24). However, if you accept all of this, you get a very minimalistic approach where you only need to implement a single method to develop standalone UI5 applications (15).
+Overall, with abap2UI5, you need to disregard some common rules: no separation between View and Model in the HTTP communication (12), HTML & JavaScript live directly in the source code (17) (22), we don't use OData or RAP (7), and there are other downsides to consider (24). However, if you accept all of this, you get a highly minimalistic approach where you only need to implement a single method to develop standalone UI5 applications (15).
 
 Happy ABAPing!
