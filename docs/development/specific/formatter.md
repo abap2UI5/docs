@@ -5,7 +5,7 @@ outline: [2, 4]
 
 You can format values such as currencies, numerics, or timestamps directly on the frontend using formatter functions.
 
-UI5 formatter types use a special JSON-based binding syntax. The key elements:
+UI5 formatter types use a special JSON-based binding syntax with these key elements:
 - **`parts: [...]`** — lists the model paths used as input (e.g., amount + currency)
 - **`type: '...'`** — the UI5 formatter type (e.g., `sap.ui.model.type.Currency`)
 - **`formatOptions: {...}`** — optional settings that control the output format
@@ -159,4 +159,4 @@ ENDCLASS.
 
 ```
 
-Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting using formatOptions and constraints. You can also check out the sample implementation in class `Z2UI5_CL_DEMO_APP_067`.
+Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting via formatOptions and constraints. For a full example, check out the sample implementation in class `Z2UI5_CL_DEMO_APP_067`.

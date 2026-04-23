@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # URL
 
-Working with URLs is a common requirement — reading parameters from the current URL, opening links in new tabs, or managing browser history.
+Working with URLs is common — reading parameters from the current URL, opening links in new tabs, or managing browser history.
 
 ### Read URL Parameters
 
@@ -22,4 +22,4 @@ client->follow_up_action( client->_event_client(
 ```
 
 ### Browser History
-For browser history manipulation, check out sample `Z2UI5_CL_DEMO_APP_139`.
+To manipulate browser history, check out sample `Z2UI5_CL_DEMO_APP_139`.
