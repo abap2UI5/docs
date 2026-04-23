@@ -26,14 +26,14 @@ export default defineConfig({
     // Montserrat
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', { 
-      rel: 'stylesheet', 
-      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap' 
+    ['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap'
     }],
     // Optional: Fira Code
-    ['link', { 
-      rel: 'stylesheet', 
-      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap' 
+    ['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap'
     }]
   ],
   title: "abap2UI5",
@@ -170,7 +170,7 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "URL", link: "/development/specific/url" },
-              { text: "Formatter", link: "/development/specific/formatter" }, 
+              { text: "Formatter", link: "/development/specific/formatter" },
               { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
