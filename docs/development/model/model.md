@@ -29,7 +29,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-This method works with tables, trees, and other complex data structures. For more details, refer to the samples repository and explore the table and tree samples.
+This method works with tables, trees, and other complex data structures. For more details, see the samples repository and explore the table and tree samples.
 
 #### Two-Way Binding
 If users need to modify data, enable two-way binding to update the data in the ABAP backend. Use the `client->_bind_edit` method so that after an event, the framework synchronizes the data with your ABAP class:
@@ -64,5 +64,5 @@ ENDCLASS.
 ```
 
 ::: tip **Data in Public Attributes**
-When using One-Way or Two-Way binding, ensure your data is stored in the public attributes of your class. This allows the framework to access it externally. This is similar to the PAI/PBO logic, where data had to be stored in global variables.
+When using One-Way or Two-Way binding, store your data in the public attributes of your class. This lets the framework access it externally. It's similar to the PAI/PBO logic, where data had to live in global variables.
 :::
