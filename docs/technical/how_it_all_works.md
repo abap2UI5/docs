@@ -53,7 +53,7 @@ A recommended video offers an excellent introduction to these ideas.
 
 ##### 5. UI5 Architecture
 
-UI5 apps typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering happen on the frontend. But one specific characteristic is worth a closer look: how the UI5 framework creates views. Each HTML output is rendered from an XML-View (ignoring the older HTML/JS/JSON-Views), with its associated data from the server. The view is stored on the frontend as part of the app:
+UI5 apps typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering happen on the frontend. But one specific characteristic is worth a closer look: how the UI5 framework creates views. UI5 renders each HTML output from an XML-View (ignoring the older HTML/JS/JSON-Views), with its associated data from the server. The frontend stores the view as part of the app:
 
 <img width="600" alt="UI5 normally - ABAP delivers only Data" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
@@ -131,7 +131,7 @@ OData vs. UI5 Over the Wire - Model & Data transfer
 
 ##### 10. Define Model at Runtime
 
-This allows us to define models not only at design time, but also at runtime. No extra work is required from the user because abap2UI5 handles the entire process in the background during every AJAX request:
+This allows us to define models not only at design time, but also at runtime. The user doesn't need to do extra work because abap2UI5 handles the entire process in the background during every AJAX request:
 
 <img width="600" alt="abap2UI5 - Dynamic Data Binding & Model Creation" src="https://github.com/user-attachments/assets/e9f1bf8c-6d8c-44ad-ba89-c3648b638335" />
 
