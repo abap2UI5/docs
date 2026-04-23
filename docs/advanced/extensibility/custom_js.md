@@ -7,7 +7,7 @@ If the standard UI5 framework doesn't cover all your requirements, you can defin
 
 The idea is to send the custom JavaScript function along with the view to the frontend and invoke it later when an event fires.
 
-Below is a working example that you can use as a starting point. The `_generic` method creates an arbitrary XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method injects raw content into that element, in this case the JavaScript function definition. On the backend side, `client->follow_up_action` then executes the function by name on the frontend:
+Below is a working example to use as a starting point. The `_generic` method creates an arbitrary XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method injects raw content into that element, in this case the JavaScript function definition. On the backend side, `client->follow_up_action` then executes the function by name on the frontend:
 
 ```abap
   METHOD z2ui5_if_app~main.
