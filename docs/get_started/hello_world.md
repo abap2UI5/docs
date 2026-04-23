@@ -55,7 +55,7 @@ ENDCLASS.
 ```
 
 ### Event Handler
-The `main` method is called on every roundtrip — that is, on initialization and after every user interaction (button press, input submit, etc.):
+The framework calls the `main` method on every roundtrip — that is, on initialization and after every user interaction (button press, input submit, etc.):
 
 ```text
 ┌─────────┐       ┌──────────┐       ┌─────────┐
