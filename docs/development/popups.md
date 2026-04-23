@@ -58,7 +58,7 @@ A common popup flow involves displaying a normal view, then showing a popup, and
 #### Separated App
 For better source code structure, you can encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
 
-Check out the popup to confirm, for example:
+Check out the confirmation popup, for example:
 ```abap
   METHOD z2ui5_if_app~main.
 
