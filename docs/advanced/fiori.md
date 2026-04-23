@@ -14,7 +14,7 @@ Follow these steps:
 1. Register the FLP integration in the component.js:
 
 ```javascript
-// Register ABAP2UI5 FLP integration for component container
+// Register abap2UI5 FLP integration for component container
 jQuery.sap.registerModulePath("z2ui5", "/sap/bc/ui5_ui5/sap/z2ui5");
 ```
 
