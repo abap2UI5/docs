@@ -187,11 +187,11 @@ ENDCLASS.
 :::
 
 ::: tip **ABAP Cloud**
-The code snippets above are not compatible with ABAP Cloud. To make them cloud-compatible, replace the code in the `lcl_help` class with functions from the new `XCO_CP_XLSX` APIs.
+The code snippets above aren't compatible with ABAP Cloud. To make them cloud-compatible, replace the code in the `lcl_help` class with functions from the new `XCO_CP_XLSX` APIs.
 :::
 
 #### abap2xlsx
-Instead of using the above XLSX API (which may change between releases), consider leveraging the open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack. The following example demonstrates using abap2xlsx in the `lcl_help` class:
+Instead of the XLSX API above (which may change between releases), consider the open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack. The following example demonstrates abap2xlsx in the `lcl_help` class:
 ::: code-group
 
 ```abap
