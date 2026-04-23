@@ -79,7 +79,7 @@ This means the frontend app doesn't know what it's currently displaying (whether
 
 "UI5 Over the Wire" - Server to Client Communication
 
-The HDA displays the view with its data and sends back each event to the server for determination of the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
+The HDA displays the view with its data and sends each event back to the server, which determines the next action and output. This process is somewhat similar to the PAI/PBO process used in former SAP GUI apps:
 
 <img width="600" alt="UI5 vs. 'UI5 Over the Wire' - Communication" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
