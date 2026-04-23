@@ -5,7 +5,7 @@ outline: [2, 4]
 This section covers how to display complex data structures like tables, trees, and nested structures in your views.
 
 ### Tables
-The example below demonstrates how to bind a simple table to a UI5 control:
+The example below binds a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
 
