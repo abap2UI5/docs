@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # S-RTTI
 
-In abap2UI5, you don't necessarily need to define your data model at design time. Instead, you can work with generic data references and apply typing dynamically at runtime based on your program logic. This is particularly useful for scenarios like tables, where different columns and table types may need to be displayed based on user input.
+In abap2UI5, you don't necessarily need to define your data model at design time. Instead, you can work with generic data references and apply typing dynamically at runtime based on your program logic. This is particularly useful for scenarios like tables, where different columns and table types may appear based on user input.
 
-abap2UI5 serializes app instances to ensure stateless behavior in client communication. However, SAP's standard transformation features are limited and do not support data references with local types created at runtime.
+abap2UI5 serializes app instances to ensure stateless behavior in client communication. However, SAP's standard transformation features are limited and don't support data references with local types created at runtime.
 
-To overcome this limitation, the project [S-RTTI](https://github.com/sandraros/S-RTTI) is integrated into abap2UI5.
+To overcome this limitation, abap2UI5 integrates the [S-RTTI](https://github.com/sandraros/S-RTTI) project.
 
 #### Standard Transformation
 With fully typed data at design time, the standard SAP transformation works out of the box:
@@ -48,7 +48,7 @@ ENDCLASS.
 ```
 
 #### Transformation with S-RTTI
-When working with data typed dynamically at runtime using local types, S-RTTI is required:
+When working with data typed dynamically at runtime via local types, S-RTTI is required:
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
@@ -83,7 +83,7 @@ With generic types, the standard transformation throws an error. abap2UI5 resolv
 - The variable is reset, and the standard SAP transformation runs again.
 - On the way back, abap2UI5 recreates the object and deserializes the table content back into the attributes.
 
-This approach ensures compatibility with dynamic types while maintaining a robust transformation process. This process works in the background and independently of the two app implementations above.
+This approach ensures compatibility with dynamic types while keeping the transformation process robust. The process runs in the background, independently of the two app implementations above.
 
 #### Integration
 
