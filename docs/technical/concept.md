@@ -104,7 +104,7 @@ When a user triggers an event (e.g., pressing a button), the app sends the event
   <em>abap2UI5 – Simple shell app, backend handles all logic</em>
 </p>
 
-The frontend becomes a static shell shared across all applications. Views and logic are fully defined and maintained in the backend, with each application represented solely by backend ABAP classes. The result: every UI5 development project becomes a complete backend project — no separate frontend deployments needed:
+The frontend becomes a static shell shared across all applications. The backend fully defines and maintains views and logic, with backend ABAP classes alone representing each application. The result: every UI5 development project becomes a complete backend project — no separate frontend deployments needed:
 
 <p align="center">
 <img width="400" alt="abap2UI5 - shared shell app with each application defined by backend artifacts only" src="https://github.com/user-attachments/assets/2d8b6441-84f3-464c-980f-2773d619af29" />
