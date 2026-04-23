@@ -145,7 +145,7 @@ export default defineConfig({
           },
           { text: "Messages, Errors", link: "/development/messages" },
           { text: "Translation, i18n", link: "/development/translation" },
-          { text: "Popups, Popover", link: "/development/popups" },
+          { text: "Popups, Popovers", link: "/development/popups" },
           {
             text: "Specifics",
             collapsed: true,
@@ -258,7 +258,7 @@ export default defineConfig({
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },
-              { text: "s-rtti", link: "/technical/tools/srtti" },
+              { text: "S-RTTI", link: "/technical/tools/srtti" },
               { text: "abaplint", link: "/technical/tools/abaplint" },
               { text: "open-abap", link: "/technical/tools/open_abap" },
               { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
@@ -272,7 +272,7 @@ export default defineConfig({
         link: "/resources/addons",
         collapsed: true,
         items: [
-          { text: "Addons", link: "/resources/addons" },
+          { text: "Add-ons", link: "/resources/addons" },
           { text: "References", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Releases", link: "/resources/changelog" },
