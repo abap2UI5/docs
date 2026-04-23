@@ -99,7 +99,7 @@ But is this just the same as RAP, but in a different format?
 
 ##### 8. RAP
 
-RAP also aims to find a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully transparent, but it enriches responses either within the JSON itself or within the metadata of the initial OData request — and the view and model are defined beforehand in CDS Views in the backend:
+RAP also aims to find a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully transparent, but it enriches responses either within the JSON itself or within the metadata of the initial OData request — and CDS Views in the backend define the view and model beforehand:
 
 <img width="600" alt="RAP - Definition of Views with UI Annotations" src="https://github.com/user-attachments/assets/a79f07ff-594d-422c-b66f-8acf8058c81a" />
 
@@ -190,7 +190,7 @@ The only non-generic part of this concept is the user's app, which implements th
 
 abap2UI5 app - one place for everything
 
-In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this is concentrated in this single app layer.
+In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this sits in this single app layer.
 
 However, this is not a big deal for ABAP! From an ABAP perspective, this is similar to past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performed all the necessary functions (it was just not a browser-based environment). Moreover, in this architecture, we are no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now leverage the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization are also applicable, as we will see in the next section.
 
