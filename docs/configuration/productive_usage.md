@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Productive Usage
 
 abap2UI5 is technically just an implementation of an HTTP handler and can be used like any other HTTP service in a productive scenario.

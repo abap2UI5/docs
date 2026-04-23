@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # RAP vs. abap2UI5
 _Architecture, Communication & Developer Experience_
 

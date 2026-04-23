@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Quickstart
 
 ### 1. Installation with abapGit

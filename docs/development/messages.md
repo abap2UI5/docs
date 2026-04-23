@@ -1,7 +1,6 @@
 ---
 outline: [2, 5]
 ---
-
 # Messages, Errors
 
 Displaying messages and errors is an everyday requirement for ABAP developers. The following functions handle the most common scenarios.

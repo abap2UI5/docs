@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Troubleshooting
 Since all logic is written in ABAP, you can debug everything in the ABAP environment. Just make sure to set an external breakpoint, as abap2UI5 apps are called externally via HTTP.
 

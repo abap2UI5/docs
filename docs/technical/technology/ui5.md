@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # UI5 Freestyle vs. abap2UI5
 _Architecture, State & Developer Experience_
 

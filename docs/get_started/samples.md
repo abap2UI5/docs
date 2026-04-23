@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Sample Apps
 
 With over 250 samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5 development.

@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Performance
 
 abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is significantly faster than client-side or browser-based processing.

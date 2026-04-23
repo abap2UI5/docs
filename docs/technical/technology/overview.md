@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Technology Overview
 _From ITS to abap2UI5_
 

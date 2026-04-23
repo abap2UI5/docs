@@ -1,7 +1,6 @@
 ---
 outline: [2, 4]
 ---
-
 # Use Cases
 
 abap2UI5 fits a wide range of scenarios, whether you're working in a cloud-ready environment or with classic ABAP.
