@@ -4,7 +4,7 @@ outline: [2, 4]
 # RAP vs. abap2UI5
 _Architecture, Communication & Developer Experience_
 
-This page provides a technical comparison between **RAP** and **abap2UI5**, focusing on architecture, state management, developer workflow, and communication models.
+This page compares **RAP** and **abap2UI5** technically, focusing on architecture, state management, developer workflow, and communication models.
 
 ### 1. Architectural Paradigms
 
