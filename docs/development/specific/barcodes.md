@@ -9,7 +9,7 @@ Barcode scanning functionality is widely used in enterprises. With abap2UI5, you
 - Play sounds for user feedback
 - Display barcodes
 
-This section provides all the information you need to get started easily.
+This section provides everything you need to get started.
 
 #### Scanning
 
