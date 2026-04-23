@@ -64,5 +64,5 @@ ENDCLASS.
 ```
 
 ::: tip **Data in Public Attributes**
-When using One-Way or Two-Way binding, ensure your data is stored in the public attributes of your class. This allows the framework to access it from outside. This is similar to the PBO/PAI logic, where data had to be stored in global variables.
+When using One-Way or Two-Way binding, ensure your data is stored in the public attributes of your class. This allows the framework to access it from outside. This is similar to the PAI/PBO logic, where data had to be stored in global variables.
 :::
