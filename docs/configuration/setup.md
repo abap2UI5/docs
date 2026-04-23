@@ -15,7 +15,7 @@ ENDCLASS.
 ```
 
 ### Theme
-For example, to change the theme, the implementation would look like this:
+For example, to change the theme, the implementation looks like this:
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
 
@@ -33,7 +33,7 @@ METHOD z2ui5_if_exit~set_config_http_get.
 
 ENDMETHOD.
 ```
-Keep in mind the variants and SAP limitations for bootstrapping, documented in the [SAP UI5 documentation](https://sapui5.hana.ondemand.com/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae).
+Note the variants and SAP limitations for bootstrapping, documented in the [SAP UI5 documentation](https://sapui5.hana.ondemand.com/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae).
 
 ### Title
 To set a custom title for the application:

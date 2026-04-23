@@ -20,7 +20,7 @@ ENDMETHOD.
 ```
 
 #### ABAP Cloud
-In ABAP Cloud, you can directly pass the logging object into the popup:
+In ABAP Cloud, you can pass the logging object directly into the popup:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -60,7 +60,7 @@ ENDMETHOD.
 ```
 
 #### BAL Popup
-Compared to message classes, BAL logs include more detailed information, such as timestamps. Use the dedicated BAL log popup to display this information. You can use all the examples above with the `Z2UI5_CL_POP_BAL` popup for more detailed output. Here's an example for the abap-logger:
+Compared to message classes, BAL logs carry more detailed information, such as timestamps. Use the dedicated BAL log popup to display this information. You can use all the examples above with the `Z2UI5_CL_POP_BAL` popup for more detailed output. Here's an example for the abap-logger:
 
 ```abap
 METHOD z2ui5_if_app~main.
