@@ -33,7 +33,7 @@ tab->items( )->column_list_item( )->cells(
     )->text( `{FLIGHT>City}`
     )->text( `{FLIGHT>CountryCode}` ).
 ```
-The `growing` property ensures data is loaded in batches rather than all at once, improving performance.
+The `growing` property loads data in batches rather than all at once, improving performance.
 
 #### Full Example
 Here's the complete source code:
