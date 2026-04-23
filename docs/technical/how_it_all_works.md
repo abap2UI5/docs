@@ -152,7 +152,7 @@ Replacing the View at Runtime
 
 ##### 12. View & Model Independent from the HTTP-Service
 
-In the end, the View & Model are defined independently of the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
+As a result, the View & Model are defined independently of the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
 
 <img width="600" alt="RAP vs. Model & View decoupled from the (single & generic) HTTP-Service" src="https://github.com/user-attachments/assets/6fb61790-87bc-47fa-855e-83d5292b70f3" />
 
@@ -305,7 +305,7 @@ Furthermore, using HANA DB capabilities directly on the frontend leads to proble
 
 Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — we're forced to replace the entire view after every request with this approach. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of lower functionality in other areas.
 
-Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. In the end, the wide range of UI5 use cases makes comparing the different approaches difficult — and can't be fully discussed here. Now, let's continue to the last part of this blog post and take a closer look at the framework's codebase.
+Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. Ultimately, the wide range of UI5 use cases makes comparing the different approaches difficult — and can't be fully discussed here. Now, let's continue to the last part of this blog post and take a closer look at the framework's codebase.
 
 ##### 25. System Footprint
 
