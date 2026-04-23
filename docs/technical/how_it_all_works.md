@@ -345,7 +345,7 @@ As a result, abap2UI5 apps can also be developed to be portable across various S
 
 ##### 27. One-Code-Line
 
-With this approach, dependencies are limited to APIs and functions that are both cloud-released and available in lower NetWeaver releases. To handle this, abap2UI5 only uses SAP dependencies when it is really needed — for instance in the GUID creation:
+With this approach, dependencies are limited to APIs and functions that are both cloud-released and available in lower NetWeaver releases. To handle this, abap2UI5 only uses SAP dependencies when they are really needed — for instance, in GUID creation:
 
 <img width="600" alt="GUID creation compatible to ABAP Cloud and Standard ABAP" src="https://github.com/user-attachments/assets/8039f152-1f39-4428-93a3-6cf80b38da5d" />
 
