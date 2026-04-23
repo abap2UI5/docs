@@ -4,7 +4,7 @@ outline: [2, 4]
 # UI5 Versions
 The abap2UI5 frontend uses the SAP UI5 framework, which ships in various versions. You can select the version to use for abap2UI5 during [bootstrapping](/configuration/setup#ui5-bootstrapping).
 
-We recommend bootstrapping abap2UI5 in the same way as other UI5 apps in your system.
+We recommend bootstrapping abap2UI5 like other UI5 apps in your system.
 
 ### OpenUI5
 OpenUI5 is the open-source version of UI5. It has slightly fewer controls than the full UI5 framework but suits most applications. Most samples run with this version, and incompatibilities typically arise only in specific use cases.

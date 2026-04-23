@@ -36,7 +36,7 @@ Several modern frameworks adopt this pattern:
 
 #### Comparison to Classic SSR
 
-But isn't this just the same as traditional Server-Side Rendering (SSR)?
+But isn't this the same as traditional Server-Side Rendering (SSR)?
 
 In the early days of web development, SSR was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. In the SAP ecosystem, this approach appeared in technologies like ITS Mobile and SAP GUI for HTML.
 
@@ -240,7 +240,7 @@ abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern 
 Key Benefits:
 - One Static UI5 Shell App: Delivered with the initial HTTP GET request; shared and consistent across all applications
 - Backend-Driven UI Control: ABAP classes implement UI definitions and business logic entirely
-- ABAP-Centric Development: Eliminates the need for additional JavaScript or dedicated frontend development
+- ABAP-Centric Development: Removes the need for additional JavaScript or dedicated frontend development
 - Simplified Deployment Model: No SPA-specific tooling or build processes; abapGit and standard transport mechanisms manage application logic and artifacts
 - Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, Standard ABAP & ABAP Cloud
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and all typical enterprise use cases

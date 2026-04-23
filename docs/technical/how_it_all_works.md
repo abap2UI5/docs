@@ -95,7 +95,7 @@ A typical "UI5-View Over the Wire" response looks like this:
 
 "UI5 Over the Wire" - Response with View & Data together
 
-But is this just the same as RAP, but in a different format?
+But is this the same as RAP, just in a different format?
 
 ##### 8. RAP
 
