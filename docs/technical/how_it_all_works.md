@@ -216,7 +216,7 @@ SAP GUI (stateful) vs. abap2UI5 (restful)
 
 However, this feature should only be used for interim results; be cautious when serializing other parts of your app.
 
-We have gained a lot of flexibility with (9) (10) (11) (16); now the next sections will focus more on how the framework tries to reduce its complexity. Let's begin by taking a look at the initial request.
+We have gained significant flexibility with (9) (10) (11) (16); now the next sections will focus more on how the framework tries to reduce its complexity. Let's begin by taking a look at the initial request.
 
 ##### 17. Initial Request
 
@@ -295,7 +295,7 @@ As we have seen in (22), apps can be made very complex, but the opposite is also
 
 if_oo_adt_classrun vs. abap2UI5
 
-To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain a lot of flexibility and freedom in the app implementation, but we also have full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
+To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain considerable flexibility and freedom in the app implementation, but we also take on full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
 
 ##### 24. Downsides Compared to UI5 & RAP
 
