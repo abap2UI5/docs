@@ -202,13 +202,13 @@ With RAP, users can save interim results in drafts, letting them pause and resum
 
 z2ui5_t_draft - the abap2UI5 persistence for interim results
 
-Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Similar to the HTTP-Service, these drafts are also defined generically, eliminating the need to create typed draft tables for every data model manually, as RAP requires, and further reducing the number of backend artifacts:
+Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Like the HTTP-Service, these drafts are also generic, removing the need to create typed draft tables for every data model manually, as RAP requires, and further reducing the number of backend artifacts:
 
 <img width="600" alt="RAP vs. Single (generic) Draft Table in abap2UI5" src="https://github.com/user-attachments/assets/c32335ae-6d10-4b12-9fd1-786a0da595fe" />
 
 RAP vs. Single (generic) Draft Table in abap2UI5
 
-With this approach, we achieve a stateful-like PAI/PBO feel similar to SAP GUI apps, even though we're still operating within the AJAX roundtrip logic. Furthermore, since every request can go to a different application server, abap2UI5 is compatible with scalable cloud environments, which ensures future compatibility:
+With this approach, we achieve a stateful-like PAI/PBO feel similar to SAP GUI apps, even though we're still operating within the AJAX roundtrip logic. Furthermore, since every request can go to a different application server, abap2UI5 is compatible with scalable cloud environments, ready for future compatibility:
 
 <img width="600" alt="SAP GUI (stateful) vs. abap2UI5 (restful)" src="https://github.com/user-attachments/assets/0c62e222-06b7-4f16-af2d-3663fd6df796" />
 
