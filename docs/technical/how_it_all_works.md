@@ -271,7 +271,7 @@ In the current approach, they are separated from the view and created using addi
 
 Actual Approach - extra methods for the event and binding
 
-This differs from many other UI rendering processes, where data and UI are usually imported together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because the entire view creation process is now clearly separated from the rest and kept outside of the framework.
+This differs from many other UI rendering processes, where data and UI are usually imported together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because the entire view creation process is now clearly separated from the rest and kept outside the framework.
 
 ##### 22. "Over the Wire" Sending JS, HTML & CSS
 
@@ -309,7 +309,7 @@ Additionally, Fiori Elements with all its floorplans & templates is very straigh
 
 ##### 25. System Footprint
 
-We keep the system footprint as small as possible — abap2UI5 is based only on ABAP classes without CDS and RAP artifacts. Most of the code is delegated to the user outside of the framework (21) (22). In total, the framework consists of around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
+We keep the system footprint as small as possible — abap2UI5 is based only on ABAP classes without CDS and RAP artifacts. Most of the code is delegated to the user outside the framework (21) (22). In total, the framework consists of around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
 
 <img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
