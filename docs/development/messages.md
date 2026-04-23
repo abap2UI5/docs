@@ -3,7 +3,7 @@ outline: [2, 5]
 ---
 # Messages, Errors
 
-Displaying messages and errors is an everyday requirement for ABAP developers. The following functions handle the most common scenarios.
+Displaying messages and errors is an everyday task for ABAP developers. The functions below handle the most common scenarios.
 
 #### Message Toast
 

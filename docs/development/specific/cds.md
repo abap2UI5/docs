@@ -6,7 +6,7 @@ outline: [2, 4]
 All examples in this documentation work without CDS or EML. However, on a recent ABAP release, you can use these modern features in your abap2UI5 applications too.
 
 ### ABAP CDS
-ABAP Core Data Services (CDS) let you define powerful views and consume data directly from the database. The following example fetches sales orders from the `I_SalesOrder` view of the Virtual Data Model (VDM) and displays them in a UI5 table:
+ABAP Core Data Services (CDS) let you define powerful views and consume data directly from the database. The example below fetches sales orders from the `I_SalesOrder` view of the Virtual Data Model (VDM) and displays them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC.
 
@@ -92,7 +92,7 @@ ENDCLASS.
 ```
 
 #### Modify
-The following example creates a sales order using `MODIFY` in an abap2UI5 application:
+The example below creates a sales order via `MODIFY` in an abap2UI5 application:
 
 ```abap
   METHOD z2ui5_if_app~main.

@@ -9,7 +9,7 @@ The interface provides two exit methods:
 - **`set_config_http_get`** — called during the initial HTTP GET request (page load). Use it to customize frontend settings like the page title, UI5 theme, or UI5 version.
 - **`set_config_http_post`** — called on every subsequent HTTP POST request (each roundtrip). Use it to configure backend behavior like the draft expiration time.
 
-Both methods receive a `cs_config` changing parameter whose fields you can set as needed. The following example changes the title, the theme, and how long drafts are kept in the backend:
+Both methods receive a `cs_config` changing parameter whose fields you can set as needed. The example below changes the title, the theme, and how long the backend keeps drafts:
 
 ```abap
 CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
