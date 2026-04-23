@@ -20,4 +20,4 @@ Install the project using abapGit into your development system. Then, use the no
 ![Transport process from development to production via abapGit](/configuration/image-3.png){ width=80% }
 
 #### Renaming
-If you're starting new development but already have abap2UI5 apps in production and want to avoid the risk of updates, consider installing abap2UI5 multiple times using the [renaming feature](/advanced/renaming). This lets you continue development safely without affecting your existing production apps.
+If you're starting new development but already have abap2UI5 apps in production and want to avoid the risk of updates, consider installing multiple instances of abap2UI5 using the [renaming feature](/advanced/renaming). This lets you continue development safely without affecting your existing production apps.
