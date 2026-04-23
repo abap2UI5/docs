@@ -259,19 +259,19 @@ This contrasts with RAP, where you benefit from well-documented and organized ex
 Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript
 
 ##### 21. Separated `_bind` and `_event` Methods
-In the first approach of this framework, the event and data binding were included in every method call:
+In the first approach of this framework, every method call included the event and data binding:
 
 <img width="600" alt="First approach - Data binding and events are not separated from the view" src="https://github.com/user-attachments/assets/3bc268e0-e08f-40b3-b152-b3fa375c0faf" />
 
 First approach - Data binding and events are not separated from the view
 
-In the current approach, they are separated from the view and created using additional methods. Moreover, the framework automatically handles the entire process of data binding and transfer (9):
+In the current approach, we separate them from the view and create them using additional methods. Moreover, the framework automatically handles the entire process of data binding and transfer (9):
 
 <img width="600" alt="Actual Approach - extra methods for the event and binding" src="https://github.com/user-attachments/assets/4708b4c1-a031-48d5-823c-5b8434a98c0c" />
 
 Actual Approach - extra methods for the event and binding
 
-This differs from many other UI rendering processes, where data and UI are usually handled together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because the entire view creation process is now clearly separated from the rest and kept outside the framework.
+This differs from many other UI rendering processes, which usually handle data and UI together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because the entire view creation process is now clearly separated from the rest and kept outside the framework.
 
 ##### 22. "Over the Wire" Sending JS, HTML & CSS
 
