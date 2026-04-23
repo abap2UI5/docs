@@ -9,14 +9,14 @@ abap2UI5 is technically just an implementation of an HTTP handler, so you can us
 You can transport abap2UI5 to production just like any other ABAP development. To ensure everything works smoothly, consider the following steps:
 1. Transport the abap2UI5 HTTP service and the framework first.
 2. You may need to explicitly activate the HTTP service and adjust the UI5 bootstrapping.
-3. Test the "Hello World" app to ensure that abap2UI5 works correctly.
-4. Afterward, continue by transporting your custom apps.
+3. Test the "Hello World" app to confirm that abap2UI5 works correctly.
+4. Then transport your custom apps.
 
 #### Stable Version
 The project evolves continuously, so there's no specific "stable" version. However, we keep changes to the public APIs to a minimum to avoid frequent refactoring of apps. You can use the [releases](https://github.com/abap2UI5/abap2UI5/releases/) instead of pulling the main branch and update periodically to reduce refactoring effort.
 
 #### Transport
-Install the project using abapGit into your development system. Then, use the normal transport process for deployment to production:
+Install the project via abapGit into your development system. Then use the normal transport process to deploy to production:
 ![Transport process from development to production via abapGit](/configuration/image-3.png){ width=80% }
 
 #### Renaming
