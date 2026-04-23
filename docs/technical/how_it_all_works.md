@@ -327,7 +327,7 @@ The functionality focuses solely on the communication between the backend and fr
 
 AJAX Post Handler
 
-In the end, we get a pure source code-based framework, which offers us the following possibility.
+The result is a pure source-code-based framework, which offers us the following possibility.
 
 ##### 26. Running Everywhere Apps
 
