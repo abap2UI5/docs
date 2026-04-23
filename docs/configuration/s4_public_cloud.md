@@ -37,7 +37,7 @@ When installing repositories with ADT abapGit, all artifacts are initially impor
 
 <img width="691" height="732" alt="Inactive artifacts list requiring activation" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
-You see that all artifacts are deactivated:
+You'll see that all artifacts are deactivated:
 
 <img width="638" height="179" alt="Mass activation of abap2UI5 artifacts in progress" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 
@@ -47,7 +47,7 @@ You see that all artifacts are deactivated:
 
 <img width="1279" height="410" alt="Activated artifacts in project explorer" src="https://github.com/user-attachments/assets/157ed036-cf6a-4d7b-b93a-2d8bd20af6cb" />
 
-When the activation process is completed, refresh the folder tree:
+When activation completes, refresh the folder tree:
 
 <img width="626" height="762" alt="All artifacts activated in folder tree" src="https://github.com/user-attachments/assets/86b26c00-e71e-4a3f-a9e9-2beaaeddf577" />
 
