@@ -168,7 +168,7 @@ All apps and data models use the same single generic HTTP-Handler, which can be 
 
 Call stack of an abap2UI5 app
 
-Every app implementation is a REST-based HTTP-Post implementation, in which no session is maintained between requests.
+Every app implementation is a REST-based HTTP POST implementation, in which no session is maintained between requests.
 
 ##### 14. REST
 
@@ -323,9 +323,9 @@ This is all that abap2UI5 does
 
 The functionality focuses solely on the communication between the backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). The POST request is handled by this implementation:
 
-<img width="600" alt="AJAX Post Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
+<img width="600" alt="AJAX POST Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
 
-AJAX Post Handler
+AJAX POST Handler
 
 The result is a pure source-code-based framework, which offers us the following possibility.
 
