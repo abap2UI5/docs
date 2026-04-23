@@ -14,7 +14,7 @@ abap2UI5 has been tested with tables containing large numbers of entries and col
 The most impactful optimization is choosing the right update method:
 
 - **`client->view_display( )`** — sends a new XML view and model to the frontend. UI5 destroys the current view and creates a new one from scratch. Use this only on initialization or when the view structure changes.
-- **`client->view_model_update( )`** — sends only updated model data. UI5 refreshes the existing view via data binding — only the changed controls are re-rendered. This preserves UI state (scroll position, focus, etc.) and is significantly faster.
+- **`client->view_model_update( )`** — sends only updated model data. UI5 refreshes the existing view via data binding, re-rendering only the changed controls. This preserves UI state (scroll position, focus, etc.) and is significantly faster.
 
 ```abap
 METHOD z2ui5_if_app~main.
