@@ -137,7 +137,7 @@ This lets us define models not only at design time, but also at runtime. The use
 
 abap2UI5 - Dynamic Data Binding & Model Creation
 
-In apps, we can now use RTTI again, similar to how ALVs used it. This means there is no need to create separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type we create and modify at runtime (similar to SE16):
+In apps, we can now use RTTI again, similar to how ALVs used it. This means no need to create separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type we create and modify at runtime (similar to SE16):
 
 ![SE16-like runtime table where the data model is generated at runtime via RTTI](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
 
@@ -180,7 +180,7 @@ Developing the ABAP class without restarting the frontend app
 
 We also get the advantage shared by all over-the-wire approaches: no cache busting needed anymore, since the frontend app remains unchanged during the development process.
 
-So far, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
+So far, we've observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it's transmitting. So, which layer ultimately defines what happens in this architecture?
 
 ##### 15. The abap2UI5 App
 
@@ -234,7 +234,7 @@ Since all user apps are also in pure ABAP, we can now maintain and develop every
 
 ##### 19. No Extra Layer
 
-Another way to reduce complexity is by avoiding the creation of extra customizing layers. As shown in (13), there is only one stack call between the user's app and the HTTP-Handler, and there are no additional layers such as OData, SADL, or Gateway. This allows us to bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
+Another way to reduce complexity: avoid creating extra customizing layers. As shown in (13), only one stack call sits between the user's app and the HTTP-Handler, and no additional layers such as OData, SADL, or Gateway exist. This lets us bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
 
 UI5 evolves rapidly, and additional layers can quickly become outdated. With this approach, all future UI5 controls work automatically in abap2UI5. However, a potential downside is that we have to deal with the complexity of the frontend UI5 API and learn the concepts of XML views and UI5 controls. Ultimately, it comes down to personal preference: learn UI annotations, or learn the concepts of SAP UI5 directly.
 
@@ -331,7 +331,7 @@ The result is a pure source-code-based framework, which offers us the following 
 
 ##### 26. Running Everywhere Apps
 
-Essentially, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. The framework transmits these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on very old releases. This approach lets us run on both the latest ABAP Cloud stack and on-premise systems, as well as legacy ones, making it a release-independent solution. Additionally, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
+At its core, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. The framework transmits these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on old releases. This approach lets us run on both the latest ABAP Cloud stack and on-premise systems, as well as legacy ones, making it a release-independent solution. Additionally, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
 
 <img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 
