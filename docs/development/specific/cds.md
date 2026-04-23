@@ -6,7 +6,7 @@ outline: [2, 4]
 All examples in this documentation work without CDS or EML. However, if you're on a recent ABAP release, you can use these modern features in your abap2UI5 applications as well.
 
 ### ABAP CDS
-ABAP Core Data Services (CDS) enable you to define powerful views and consume data directly from the database. The following example demonstrates how to fetch sales orders using the `I_SalesOrder` view from the Virtual Data Model (VDM) and display them in a UI5 table:
+ABAP Core Data Services (CDS) let you define powerful views and consume data directly from the database. The following example demonstrates how to fetch sales orders using the `I_SalesOrder` view from the Virtual Data Model (VDM) and display them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC.
 
@@ -47,7 +47,7 @@ ENDCLASS.
 ```
 
 ### EML
-The Entity Manipulation Language simplifies working with RAP business objects by providing a consistent way to perform operations such as reading, creating, updating, and deleting entities.
+The Entity Manipulation Language simplifies working with RAP business objects by providing a consistent way to read, create, update, and delete entities.
 
 #### Read
 Here's how to use `READ ENTITIES` to fetch sales orders and display them in a UI5 table:
@@ -92,7 +92,7 @@ ENDCLASS.
 ```
 
 #### Modify
-The following example demonstrates how to create a sales order using `MODIFY` in an abap2UI5 application:
+The following example creates a sales order using `MODIFY` in an abap2UI5 application:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -126,4 +126,4 @@ ENDMETHOD.
 ```
 Key Considerations:
 - EML calls in abap2UI5 applications run outside the RAP framework. Therefore, explicit transaction commits (COMMIT ENTITIES) are necessary.
-- Restrictions within the RAP framework, such as disallowing direct calls to posting function modules or explicit commits, do not apply to abap2UI5 EML operations. This provides greater flexibility in managing commits and other actions.
+- Restrictions within the RAP framework, such as disallowing direct calls to posting function modules or explicit commits, don't apply to abap2UI5 EML operations. This provides greater flexibility when managing commits and other actions.
