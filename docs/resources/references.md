@@ -64,4 +64,3 @@ _The information in the blog articles may be outdated. Always refer to this docu
 
 #### More
 - Development of UI5 Selection Screens in Pure ABAP [(SCN - 22.01.2023)](https://community.sap.com/t5/technology-blogs-by-members/abap2ui5-development-of-ui5-selection-screens-in-pure-abap/ba-p/13553176)
-
