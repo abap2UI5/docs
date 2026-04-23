@@ -64,7 +64,7 @@ UI5 freestyle apps follow the Single-Page Application model. All UI and app arti
   <em>UI5 freestyle - UI is built on the client; backend delivers only Data via OData</em>
 </p>
 
-Since UI5 is a client-side framework, the HTML output cannot be generated as ready-to-render HTML on the backend. Instead, it must be created in the browser with JavaScript using the UI5 framework.
+Since UI5 is a client-side framework, the backend cannot generate ready-to-render HTML. Instead, the browser must create the HTML with JavaScript using the UI5 framework.
 
 #### Sending Views from Backend
 
