@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-A direct database table read is performed on VBAK, making this app not cloud-ready.
+The app reads directly from the VBAK database table, making it not cloud-ready.
 
 Always adhere to cloud-ready development principles to ensure that your apps remain upgrade-stable and compatible with ABAP Cloud environments.
 

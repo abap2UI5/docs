@@ -78,10 +78,10 @@ ENDCLASS.
 
 #### Functionality
 With generic types, the standard transformation throws an error. abap2UI5 resolves this issue by looping over all attributes and applying a workaround:
-- For each generic attribute, a separate serialization is performed using S-RTTI beforehand.
-- The data is stored in a separate table.
-- The variable is initialized, and the standard SAP transformation is called again.
-- On the way back, the object is recreated, and the table content is deserialized back into the attributes.
+- For each generic attribute, S-RTTI performs a separate serialization beforehand.
+- The data lands in a separate table.
+- The variable is reset, and the standard SAP transformation runs again.
+- On the way back, abap2UI5 recreates the object and deserializes the table content back into the attributes.
 
 This approach ensures compatibility with dynamic types while maintaining a robust transformation process. This process works in the background and independently of the two app implementations above.
 
