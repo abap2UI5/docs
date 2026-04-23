@@ -25,7 +25,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-For error messages, simply change the type:
+For error messages, change the type:
 
 ```abap
 METHOD z2ui5_if_app~main.

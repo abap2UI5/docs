@@ -126,7 +126,7 @@ Here the timer starts inactive. When the user clicks the button, `mv_check_timer
 
 #### Stopping a Repeating Timer
 
-To stop a repeating timer, simply set the bound `checkactive` flag to `abap_false`:
+To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
 
 ```abap
   WHEN client->check_on_event( `TOGGLE_TIMER` ).
