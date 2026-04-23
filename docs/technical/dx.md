@@ -45,7 +45,7 @@ What abap2UI5 adds: the ability to run in the browser without ADT, using a UI5 f
 
 ### Classic Input Handling with Selection Screens
 
-Input handling was never a challenge in classic ABAP — just define a Report with `PARAMETERS` and `SELECT-OPTIONS`, and the UI gets generated automatically. The term didn't exist back then, but this gave you a "fullstack" app in just a few lines:
+Input handling was never a challenge in classic ABAP — just define a Report with `PARAMETERS` and `SELECT-OPTIONS`, and the UI gets generated automatically. The term didn't exist back then, but this gave you a "full-stack" app in just a few lines:
 
 ```abap
 REPORT zre_app_input.
