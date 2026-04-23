@@ -123,7 +123,7 @@ First, we don't define a specific HTTP-Service for transmitting the View and Dat
 
 Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model
 
-Furthermore, we don't just send the data but also the metadata (Data Model) with every request (7). This differs from classic OData communication, where metadata is sent with the initial OData request to establish the model upfront, and only data is exchanged afterward. With this approach, we can send different models with every request:
+Furthermore, we don't just send the data but also the metadata (Data Model) with every request (7). This differs from classic OData communication, where the initial OData request carries the metadata to establish the model upfront, and only data is exchanged afterward. With this approach, we can send different models with every request:
 
 <img width="600" alt="OData vs. UI5 Over the Wire - Model & Data transfer" src="https://github.com/user-attachments/assets/95fe59c3-7e8a-4e21-8690-12de1110779f" />
 
