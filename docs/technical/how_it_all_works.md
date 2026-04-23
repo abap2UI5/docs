@@ -168,7 +168,7 @@ All apps and data models use the same single generic HTTP-Handler, which can be 
 
 Call stack of an abap2UI5 app
 
-Every app implementation is a REST-based HTTP-Post implementation, in which no session is maintained between two requests.
+Every app implementation is a REST-based HTTP-Post implementation, in which no session is maintained between requests.
 
 ##### 14. REST
 
