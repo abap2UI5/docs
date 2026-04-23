@@ -5,7 +5,7 @@ outline: [2, 4]
 Since all logic runs in ABAP, you can debug everything in the ABAP environment. Just make sure to set an external breakpoint, since HTTP calls abap2UI5 apps externally.
 
 ### Backend
-Set a breakpoint in your abap2UI5 app to debug your code. Verify that the XML view is generated correctly and check that all events are triggered on the backend as expected.
+Set a breakpoint in your abap2UI5 app to debug your code. Verify that the XML view generates correctly and check that all events fire on the backend as expected.
 
 ### Frontend
 On the frontend, abap2UI5 behaves like a standard UI5 app, so you can use all the usual tools and debugging features.
