@@ -216,11 +216,11 @@ SAP GUI (stateful) vs. abap2UI5 (restful)
 
 However, use this feature only for interim results; be cautious when serializing other parts of your app.
 
-We have gained significant flexibility with (9) (10) (11) (16); the next sections focus on how the framework reduces its complexity, starting with the initial request.
+We've gained significant flexibility with (9) (10) (11) (16); the next sections focus on how the framework reduces its complexity, starting with the initial request.
 
 ##### 17. Initial Request
 
-The first GET request sends the artifacts of the UI5 (HDA) app to the browser. Typically, we would deploy a BSP to the ABAP stack for this, but in abap2UI5, the code lives as a string in the implementation of the initial request of the HTTP-Handler:
+The first GET request sends the artifacts of the UI5 (HDA) app to the browser. Typically, we would deploy a BSP to the ABAP stack for this, but in abap2UI5, the code lives as a string inside the HTTP-Handler's initial-request implementation:
 
 <img width="600" alt="index.html stored in ABAP Source Code instead of using a BSP" src="https://github.com/user-attachments/assets/e69d5a12-c0e3-4e17-be8a-4da3bc740c97" />
 
@@ -240,7 +240,7 @@ UI5 evolves rapidly, and additional layers can quickly become outdated. With thi
 
 ##### 20. No Hiding of Complexity
 
-But not having an extra layer also means the framework doesn't necessarily abstract away complexity — unlike what other frameworks aim for. In abap2UI5, you directly send your XML-View to the frontend and you're responsible for ensuring it's valid and executable:
+But having no extra layer also means the framework doesn't necessarily abstract away complexity — unlike what other frameworks aim for. In abap2UI5, you send your XML-View directly to the frontend, and you're responsible for making sure it's valid and executable:
 
 <img width="600" alt="XML-View created by the user and ready for the 'Wire'" src="https://github.com/user-attachments/assets/cbfdc72f-31f1-460b-afa3-d03179e9b173" />
 
@@ -305,7 +305,7 @@ Furthermore, using HANA DB capabilities directly on the frontend causes problems
 
 Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced capability in other areas.
 
-Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. Ultimately, the wide range of UI5 use cases makes comparing the different approaches difficult — and can't be fully discussed here. Let's now take a closer look at the framework's codebase in the final part of this blog post.
+Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. Ultimately, the wide range of UI5 use cases makes comparing the different approaches difficult — and we can't fully discuss them here. Let's now look at the framework's codebase in the final part of this blog post.
 
 ##### 25. System Footprint
 
