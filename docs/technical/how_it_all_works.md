@@ -73,7 +73,7 @@ Despite still relying on frontend HTML rendering, all the necessary information 
 
 UI5 app downgraded to an HDA - Displaying Data & View received from the server
 
-This means the frontend app doesn't know what it's currently displaying (whether it's a table, list, or input) and it doesn't know what actions will be taken next. The app logic stays completely on the server, and the frontend app is just a small HDA transmitted with the first request:
+This means the frontend app doesn't know what it's currently displaying (whether it's a table, list, or input) and it doesn't know which actions come next. The app logic stays completely on the server, and the frontend app is just a small HDA transmitted with the first request:
 
 <img width="600" alt="'UI5 Over the Wire' - Server to Client Communication" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 
