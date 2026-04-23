@@ -10,7 +10,7 @@ However, for productive usage, additional considerations may be required for dif
 In `S/4 Public Cloud`, the HTTP endpoint is accessible only with `S_DEVELOP` authorization, which makes it unsuitable for productive use. To make this app accessible for business users, you can install a separate frontend app and create an additional tile. Find more information [here](/configuration/s4_public_cloud).
 
 ### S/4 Private Cloud
-In `S/4 Private Cloud` you can make the HTTP endpoint accessible for business users and manage additional authorizations. However, if you want to use the SAP Fiori Launchpad as well, you can install an additional frontend app. Find all the information [here](/configuration/launchpad).
+In `S/4 Private Cloud`, you can make the HTTP endpoint accessible for business users and manage additional authorizations. However, if you want to use the SAP Fiori Launchpad as well, you can install an additional frontend app. Find all the information [here](/configuration/launchpad).
 
 ### S/4 On-Premise
 The setup in `S/4 On-Premise` is the same as in `S/4 Private Cloud`. Follow the guide [here](/configuration/launchpad).

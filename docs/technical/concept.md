@@ -17,7 +17,7 @@ Instead of building and maintaining complex JavaScript frontends, managing APIs,
 
 > This is what HTML Over The Wire is all about. It's a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-In this architecture the initial request delivers JavaScript and CSS. Subsequent interactions trigger AJAX calls to fetch HTML fragments, and the browser inserts these fragments into the DOM without reloading the full page [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763):
+In this architecture, the initial request delivers JavaScript and CSS. Subsequent interactions trigger AJAX calls to fetch HTML fragments, and the browser inserts these fragments into the DOM without reloading the full page [(2)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763):
 
 <p align="center">
 <img width="600" alt="HTML Over-the-Wire lifecycle - server sends HTML fragments, browser updates UI without full reload" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
@@ -38,7 +38,7 @@ Several modern frameworks adopt this pattern:
 
 But isn't this just the same as traditional Server-Side Rendering (SSR)?
 
-In the early days of web development SSR was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. Within the SAP ecosystem, this approach was seen in technologies like ITS Mobile and SAP GUI for HTML.
+In the early days of web development, SSR was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. Within the SAP ecosystem, this approach was seen in technologies like ITS Mobile and SAP GUI for HTML.
 
 The emergence of Single-Page Applications (SPAs) shifted the UI logic to the client. SPAs fetch raw data — through OData services in SAP systems — and dynamically construct the UI in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with the introduction of UI5 in 2010.
 
