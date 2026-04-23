@@ -185,4 +185,4 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-Refer to sample `Z2UI5_CL_DEMO_APP_180` for a working example of this functionality.
+Refer to sample `Z2UI5_CL_DEMO_APP_180` for a working example.
