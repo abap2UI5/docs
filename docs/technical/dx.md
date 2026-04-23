@@ -89,7 +89,7 @@ Plus, you can test code changes instantly — just reload the page, enter input,
 
 ### ALV-Style Table Output in the Browser
 
-Table output is one of the most commonly used features by ABAP developers, and ALV is an iconic tool in this context. `CL_SALV_TABLE` makes generating tabular output straightforward:
+Table output is one of the most common tasks for ABAP developers, and ALV is an iconic tool in this context. `CL_SALV_TABLE` makes generating tabular output straightforward:
 
 ```abap
 REPORT zre_app_alv.
