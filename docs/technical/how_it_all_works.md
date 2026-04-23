@@ -178,7 +178,7 @@ This makes it compatible with all mobile use cases and devices, as well as with 
 
 Developing the ABAP class without restarting the frontend app
 
-We also get the advantage shared by all over-the-wire approaches: there is no need for cache busting anymore, as the frontend app remains unchanged during the development process.
+We also get the advantage shared by all over-the-wire approaches: no cache busting needed anymore, since the frontend app remains unchanged during the development process.
 
 So far, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
 
@@ -190,9 +190,9 @@ The only non-generic part of this concept is the user's app, which implements th
 
 abap2UI5 app - one place for everything
 
-In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for ensuring that everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this sits in this single app layer.
+In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for making sure everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this sits in this single app layer.
 
-However, this is not a big deal for ABAP! From an ABAP perspective, this is similar to past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performed all the necessary functions (it was just not a browser-based environment). Moreover, in this architecture, we are no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now leverage the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization are also applicable, as we will see in the next section.
+However, this isn't a big deal for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performed all the necessary functions (just not in a browser-based environment). Moreover, in this architecture, we are no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now leverage the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
 
 ##### 16. Draft
 
@@ -202,13 +202,13 @@ With RAP, users can save interim results in drafts, letting them pause and resum
 
 z2ui5_t_draft - the abap2UI5 persistence for interim results
 
-Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity that we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Similar to the HTTP-Service, these drafts are also defined generically, eliminating the need to manually create typed draft tables for every data model, as required in RAP, and further reducing the number of backend artifacts:
+Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Similar to the HTTP-Service, these drafts are also defined generically, eliminating the need to create typed draft tables for every data model manually, as RAP requires, and further reducing the number of backend artifacts:
 
 <img width="600" alt="RAP vs. Single (generic) Draft Table in abap2UI5" src="https://github.com/user-attachments/assets/c32335ae-6d10-4b12-9fd1-786a0da595fe" />
 
 RAP vs. Single (generic) Draft Table in abap2UI5
 
-With this approach, we achieve a stateful-like PAI/PBO feeling similar to SAP GUI apps, even though we are still operating within the AJAX roundtrip logic. Furthermore, since every request can go to a different application server, abap2UI5 is compatible with scalable cloud environments, ensuring future compatibility:
+With this approach, we achieve a stateful-like PAI/PBO feel similar to SAP GUI apps, even though we're still operating within the AJAX roundtrip logic. Furthermore, since every request can go to a different application server, abap2UI5 is compatible with scalable cloud environments, which ensures future compatibility:
 
 <img width="600" alt="SAP GUI (stateful) vs. abap2UI5 (restful)" src="https://github.com/user-attachments/assets/0c62e222-06b7-4f16-af2d-3663fd6df796" />
 
@@ -220,17 +220,17 @@ We have gained significant flexibility with (9) (10) (11) (16); the next section
 
 ##### 17. Initial Request
 
-The first GET request sends the artifacts of the UI5 (HDA) app to the browser. Typically, we would deploy a BSP to the ABAP stack for this, but in abap2UI5, the code is copied as a string into the implementation of the initial request of the HTTP-Handler:
+The first GET request sends the artifacts of the UI5 (HDA) app to the browser. Typically, we would deploy a BSP to the ABAP stack for this, but in abap2UI5, the code lives as a string in the implementation of the initial request of the HTTP-Handler:
 
 <img width="600" alt="index.html stored in ABAP Source Code instead of using a BSP" src="https://github.com/user-attachments/assets/e69d5a12-c0e3-4e17-be8a-4da3bc740c97" />
 
 index.html stored in ABAP Source Code instead of using a BSP
 
-This provides us with a 100% abapGit project that solely uses ABAP source code, making it easily installable on every ABAP system by eliminating the need for separate frontend artifacts or deployments.
+This gives us a 100% abapGit project that uses only ABAP source code, making it easily installable on every ABAP system by eliminating separate frontend artifacts or deployments.
 
 ##### 18. Everything Is Maintained & Developed in the Backend
 
-Since all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming, or other refactoring takes only a few moments. The deployment process is reduced to just activating an ABAP class, enabling us to create many apps quickly. For example, we created all the apps of the sample section rapidly, mostly by copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
+Since all user apps are also in pure ABAP, we can now maintain and develop everything in the backend. Duplicating apps, making changes, renaming, or other refactoring takes only a few moments. The deployment process shrinks to activating an ABAP class, letting us create many apps quickly. For example, we created all the apps in the sample section rapidly, mostly by copy-pasting, which would have been unfeasible for separately developed and deployed frontend apps. This represents a significant reduction in complexity and an advantage of all 'Over the Wire' apps, as we observed in (3).
 
 ##### 19. No Extra Layer
 
