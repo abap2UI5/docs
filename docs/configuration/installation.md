@@ -4,13 +4,13 @@ outline: [2, 4]
 # Installation
 abap2UI5 apps run directly through an HTTP service, making this the fastest and most straightforward setup. It works on any release and language version.
 
-However, for productive usage, additional considerations may be required for different system environments.
+However, productive usage may require additional considerations for different system environments.
 
 ### S/4 Public Cloud
 In `S/4 Public Cloud`, the HTTP endpoint requires `S_DEVELOP` authorization, which makes it unsuitable for productive use. To make this app accessible to business users, install a separate frontend app and create an additional tile. See [S/4 Public Cloud](/configuration/s4_public_cloud) for more information.
 
 ### S/4 Private Cloud
-In `S/4 Private Cloud`, you can make the HTTP endpoint accessible for business users and manage additional authorizations. However, if you want to use the SAP Fiori Launchpad as well, you can install an additional frontend app. See [Fiori Launchpad](/configuration/launchpad) for details.
+In `S/4 Private Cloud`, you can make the HTTP endpoint accessible for business users and manage additional authorizations. However, to also use the SAP Fiori Launchpad, install an additional frontend app. See [Fiori Launchpad](/configuration/launchpad) for details.
 
 ### S/4 On-Premise
 The setup in `S/4 On-Premise` is the same as in `S/4 Private Cloud`. Follow the [Fiori Launchpad](/configuration/launchpad) guide.

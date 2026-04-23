@@ -77,7 +77,7 @@ A downported version exists for systems running earlier ABAP releases (before 7.
 
 ### Enterprise Ready
 
-abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, tailored for enterprise SAP environments. The framework runs seamlessly across S/4HANA Public/Private Cloud, BTP ABAP Environment, and NetWeaver systems.
+abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, tailored for enterprise SAP environments. The framework runs cleanly across S/4HANA Public/Private Cloud, BTP ABAP Environment, and NetWeaver systems.
 
 #### Production Usage
 Use abap2UI5 just like any other UI5 app or ABAP program in production. Add the framework and your apps to a transport request for deployment.
