@@ -202,7 +202,7 @@ With RAP, users can save interim results in drafts, letting them pause and resum
 
 z2ui5_t_draft - the abap2UI5 persistence for interim results
 
-Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity that we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Similar to the HTTP-Service, these drafts are also defined only in a generic way, eliminating the need to manually create typed draft tables for every data model, as required in RAP, and further reducing the number of backend artifacts:
+Furthermore, these drafts help us jump back to previous states with minimal effort, reducing the complexity that we would typically encounter in an HDA scenario when implementing a cancel or exit event of a view. Similar to the HTTP-Service, these drafts are also defined generically, eliminating the need to manually create typed draft tables for every data model, as required in RAP, and further reducing the number of backend artifacts:
 
 <img width="600" alt="RAP vs. Single (generic) Draft Table in abap2UI5" src="https://github.com/user-attachments/assets/c32335ae-6d10-4b12-9fd1-786a0da595fe" />
 
