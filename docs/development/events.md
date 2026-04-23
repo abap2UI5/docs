@@ -175,7 +175,7 @@ ENDMETHOD.
 ```
 
 ### Follow Up Action
-Sometimes, you might want to first call a backend function and then immediately perform an action on the frontend. This is possible with the follow-up action event:
+Sometimes, you might want to call a backend function and then immediately perform an action on the frontend. This is possible with the follow-up action event:
 ```abap
 METHOD z2ui5_if_app~main.
 
