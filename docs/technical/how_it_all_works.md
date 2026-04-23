@@ -17,7 +17,7 @@ One of the core ideas behind abap2UI5 is inspired by the concept of **"HTML Over
 
 > This is what HTML Over The Wire is all about. It's a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-The SAP community introduced this idea through examples using the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
+The SAP community introduced this idea through examples that use the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
 
 After the initial page load, the server sends only small HTML fragments asynchronously via AJAX to update parts of the page — avoiding full reloads.
 
@@ -39,7 +39,7 @@ _MPA vs. SPA vs. HDA [(Source)](https://craftcms.com/events/dot-all-2022/session
 
 ##### 3. Rethinking Separation of Concerns
 
-Unlike traditional architectures, HDAs don't prioritize strict separation of CSS, JavaScript, and HTML. The backend generates the UI and handles program flow, much like SAP GUI apps did in the past. This centralized approach simplifies customization and maintenance.
+Unlike traditional architectures, HDAs don't enforce strict separation of CSS, JavaScript, and HTML. The backend generates the UI and handles program flow, much like SAP GUI apps did in the past. This centralized approach simplifies customization and maintenance.
 
 ##### 4. Dive Deeper
 
