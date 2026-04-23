@@ -117,7 +117,7 @@ Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wi
 
 ##### 9. One HTTP-Service for All Apps
 
-First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime, ABAP variables & tables are transformed into a JSON-Model and transmitted as a string to the frontend. In JavaScript, it's parsed back into a JSON-Model and bound to the UI5-View:
+First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), eliminating the need to develop individual OData-Services with SEGW or CDS. During runtime, the framework transforms ABAP variables & tables into a JSON-Model and transmits them as a string to the frontend. In JavaScript, it's parsed back into a JSON-Model and bound to the UI5-View:
 
 <img width="600" alt="Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model" src="https://github.com/user-attachments/assets/163ca12b-fe37-43e8-80b6-a5eaae703d69" />
 
@@ -303,7 +303,7 @@ Most notably, compared to UI5, we can't implement offline capabilities — in su
 
 Furthermore, using HANA DB capabilities directly on the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can directly tap into HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, you can easily integrate pagination or fuzzy searches into UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
 
-Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — we're forced to replace the entire view after every request with this approach. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced functionality in other areas.
+Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced functionality in other areas.
 
 Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. Ultimately, the wide range of UI5 use cases makes comparing the different approaches difficult — and can't be fully discussed here. Let's now take a closer look at the framework's codebase in the final part of this blog post.
 
