@@ -39,7 +39,7 @@ _Structured Web Applications (2003+) (SAP)_
 ### UI5 Freestyle
 _Full Client-Side SPAs (2010+) (SAP)_
 
-With the advent of smartphones and richer web experiences, **UI5 Freestyle** was introduced.
+With the advent of smartphones and richer web experiences, SAP introduced **UI5 Freestyle**.
 
 - Based on **JavaScript, XML Views, and UI5 Controls**
 - Follows a **Single-Page Application (SPA)** architecture
