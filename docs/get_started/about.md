@@ -5,7 +5,7 @@ outline: [2, 4]
 
 **Build UI5 Apps Purely in ABAP**
 
-abap2UI5 is an open-source framework that brings the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with just a few lines of ABAP:
+abap2UI5 is an open-source framework that brings the simplicity of classic ABAP development to modern UI5 applications. Just as Selection Screens and ALVs could generate functional UIs with minimal code, abap2UI5 lets you create web applications with a few lines of ABAP:
 
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.
@@ -23,7 +23,7 @@ ENDCLASS.
 That's it — your first UI5 app is ready!
 
 ### About
-Since launching in 2023, abap2UI5 has evolved from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework takes care of all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
+Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework trusted by ABAP developers worldwide. The framework handles all the frontend complexity, letting you focus purely on business logic while leveraging your existing ABAP skills.
 
 → *See our [Getting Started Guide](/get_started/quickstart) for step-by-step instructions*
 
@@ -44,7 +44,7 @@ Each application ships as an [abapGit](https://abapgit.org) project, simplifying
 <br>
 
 #### Architecture
-abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stays in the backend. This design simplifies configuration, cuts down on client-side complexity (say goodbye to cache clearing hassles), and keeps business logic and sensitive data securely on the server.
+abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stays in the backend. This design simplifies configuration, cuts down on client-side complexity (say goodbye to cache-clearing hassles), and keeps business logic and sensitive data securely on the server.
 
 #### Performance
 abap2UI5 delivers exceptional performance. The frontend focuses exclusively on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — dramatically reducing network roundtrips and speeding up response times.
@@ -73,11 +73,11 @@ Works with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from 
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
 - R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
 
-A downported version is available for systems running earlier ABAP versions (before 7.50).
+A downported version exists for systems running earlier ABAP releases (before 7.50).
 
 ### Enterprise Ready
 
-abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, tailored for enterprise SAP environments. The framework works seamlessly across S/4HANA Public/Private Cloud, BTP ABAP Environment, and NetWeaver systems.
+abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, tailored for enterprise SAP environments. The framework runs seamlessly across S/4HANA Public/Private Cloud, BTP ABAP Environment, and NetWeaver systems.
 
 #### Production Usage
 Use abap2UI5 just like any other UI5 app or ABAP program in production. Add the framework and your apps to a transport request for deployment.
@@ -108,7 +108,7 @@ The community provides support. Submit an issue on GitHub or join the abap2UI5 S
 → *Visit our [Support page](/resources/support) for more options*
 
 #### Contribution
-Contributions are always welcome! Whether you're fixing bugs, building new features, or improving documentation, your input helps the project grow.
+Contributions are always welcome! Whether you fix bugs, build new features, or improve documentation, your input helps the project grow.
 
 → *Read our [Contribution Guide](/resources/contribution) to learn how to get involved*
 
