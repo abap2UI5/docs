@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # Authorization
 
-abap2UI5 offers flexible ways to manage authorization handling. It doesn't include a built-in authorization mechanism, so you can create your own solutions either at the service or application level.
+abap2UI5 offers flexible ways to manage authorization handling. It doesn't include a built-in authorization mechanism, so you can create your own solutions at either the service or the application level.
 
 ### Service-Level
-One of the easiest ways to manage access to different apps is by implementing checks within the HTTP handler. This approach lets you restrict access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
+One of the easiest ways to manage access to different apps is to implement checks in the HTTP handler. This approach lets you restrict access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
 
 #### Example: Restricting Access Based on URL Parameters
 In this example, we use the ICF handler class to control which apps users can access based on the APP_START parameter in the HTTP request. The `get_header_field( 'APP_START' )` method reads the URL query parameter that specifies which abap2UI5 app class to launch. If the user requests an unauthorized app, the handler denies access.
@@ -68,10 +68,10 @@ ENDCLASS.
 By creating multiple HTTP endpoints for different users or departments, you can further fine-tune access control.
 
 ### Application-Level
-Alternatively, you can handle authorization within individual app classes. This approach is useful if you want to delegate authorization to each app, ensuring that it checks user permissions before performing any actions.
+Alternatively, you can handle authorization within individual app classes. This approach is useful when you want to delegate authorization to each app so it checks user permissions before performing any actions.
 
 #### Example: Authorization Check in an App Class
-In this approach, each app is responsible for checking the user's permissions, as in traditional SAP ABAP applications.
+In this approach, each app checks the user's permissions, as in traditional SAP ABAP applications.
 
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
