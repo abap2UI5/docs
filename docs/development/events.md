@@ -6,10 +6,10 @@ outline: [2, 4]
 UI5 control properties can both display data and trigger events. This section shows how to work with backend events, frontend events, and follow-up actions.
 
 ### Backend
-You can trigger backend processing when an event occurs using the `client->_event` method.
+To trigger backend processing when an event occurs, use the `client->_event` method.
 
 #### Basic
-As an example, we use the `press` property of a button. To trigger events in the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the relevant UI5 control property. Once triggered, the backend can retrieve the event details with `client->get( )-event`.
+As an example, we use the `press` property of a button. To trigger events in the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the relevant UI5 control property. The backend can then retrieve the event details with `client->get( )-event`.
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -27,7 +27,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-If the backend needs additional information about the specific event, use the `t_arg` parameter to include extra details. Three special prefixes are available:
+If the backend needs additional information about the specific event, use the `t_arg` parameter to include extra details. Three special prefixes exist:
 
 - **`$source`** — the UI5 control that triggered the event (e.g., `${$source>/text}` returns the button text)
 - **`$parameters`** — the event parameters as defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
@@ -134,14 +134,14 @@ This is just a demonstration. In this case, it would be easier to access `name` 
 :::
 
 ### Frontend
-If you don't want to process the event in the backend, you can directly trigger actions on the frontend using `client->_event_client`. The difference between the two methods:
+If you don't want to process the event in the backend, you can trigger actions directly on the frontend using `client->_event_client`. The difference between the two methods:
 
 - **`client->_event( )`** — triggers a backend roundtrip; the event is processed in the `main` method
 - **`client->_event_client( )`** — executes an action directly in the browser; no backend call
 
 To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To execute a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
 
-The following frontend events are available:
+The following frontend events exist:
 ```abap
   CONSTANTS:
     BEGIN OF cs_event,
@@ -175,7 +175,7 @@ ENDMETHOD.
 ```
 
 ### Follow-up Action
-Sometimes you need to call a backend function and then immediately perform an action on the frontend. This is possible with the follow-up action event:
+Sometimes you need to call a backend function and then immediately perform an action on the frontend. The follow-up action event enables this:
 ```abap
 METHOD z2ui5_if_app~main.
 
