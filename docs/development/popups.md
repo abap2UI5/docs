@@ -22,7 +22,7 @@ To display a popup, use the method `client->popup_display` instead of `client->v
 ```
 
 #### Flow Logic
-A common popup flow involves displaying a normal view, then showing a popup, and finally closing it. Here's how to structure it:
+A common popup flow displays a normal view, then shows a popup, and finally closes it. Here's how to structure it:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -82,7 +82,7 @@ Check out the confirmation popup, for example:
   ENDMETHOD.
 ```
 
-If you need to manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
+To manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
 
 ### Popover
 To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
@@ -123,7 +123,7 @@ To display a popover, use the method `client->popover_display` and specify the I
 ```
 
 ### Built-in Popups
-Several pre-built popup classes are available for common scenarios:
+Several pre-built popup classes cover common scenarios:
 
 - `Z2UI5_CL_POP_ERROR`
 - `Z2UI5_CL_POP_FILE_DL`
