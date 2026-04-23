@@ -126,5 +126,5 @@ ENDMETHOD.
 ```
 
 ::: tip **Improvements**
-These message functions are continually being improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
+These message functions are continuously being improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
 :::
