@@ -12,7 +12,7 @@ This page provides a technical comparison between **RAP** and **abap2UI5**, focu
 |-------------------|------------------------------------------------------------------|------------------------------------------------------------|
 | **Backend Stack** | CDS Views, Behavior Definitions, OData V4 services               | ABAP Classes generating XML Views and JSON ViewModels     |
 | **Frontend Stack**| UI5 Fiori Elements SPA                                           | Static UI5 Freestyle App                            |
-| **Rendering**     | Client interprets metadata and builds UI dynamically             | XML View sent by backend, rendered in frontend      |
+| **Rendering**     | Client interprets metadata and builds UI dynamically             | Backend sends XML View, frontend renders it         |
 | **UI Definition** | Annotations in CDS & metadata                                    | XML Views created directly in ABAP                         |
 | **Communication** | OData V4 (metadata, data, actions)                               | Simple HTTP requests (Over-the-Wire)                      |
 | **Runtime Control**| Logic partly changeable via RAP Implementation                  | Full control over UI and logic in backend                 |
@@ -78,7 +78,7 @@ Backend (ABAP Class)
 ### Conclusion
 
 - **RAP (Fiori Elements)** is best suited for standardized, metadata-driven applications using CDS, OData, and annotations.
-- **abap2UI5** provides runtime flexibility, backend control, and lower complexity — ideal for dynamic UIs and fast iterations.
+- **abap2UI5** offers runtime flexibility, backend control, and lower complexity — ideal for dynamic UIs and fast iterations.
 
 ### Summary Table
 

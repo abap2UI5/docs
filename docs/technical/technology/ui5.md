@@ -12,7 +12,7 @@ This page provides a structured technical comparison between **UI5 Freestyle** a
 |-------------------|-------------------------------------------------------------|------------------------------------------------------------|
 | **Backend Stack** | ABAP services (OData/REST), loosely coupled                 | ABAP Classes generating XML Views and JSON ViewModels     |
 | **Frontend Stack**| UI5 Freestyle app (JavaScript, XML, Controller)             | Static UI5 Freestyle App                                  |
-| **Rendering**     | View rendered by frontend controller                        | UI structure defined by backend, rendered in frontend      |
+| **Rendering**     | Frontend controller renders the view                        | Backend defines UI structure, frontend renders it          |
 | **UI Definition** | XML Views maintained in frontend project                    | XML Views created directly in ABAP                         |
 | **Communication** | OData or custom AJAX calls                                  | Simple HTTP requests (Over-the-Wire)                      |
 | **Runtime Control**| Logic split between backend and UI controller              | Full control over UI and logic in backend                 |
@@ -72,11 +72,11 @@ Backend (ABAP Class)
 | **Clean Core Compliance**  | ✅ Possible                   | ✅ Yes                        |
 | **Runtime Flexibility**    | ✅ via JS logic               | ✅ Fully runtime-capable      |
 
-> 🚀 **Both approaches offer full UI flexibility.** abap2UI5 allows this using only ABAP, while UI5 Freestyle shifts control to the JavaScript layer.
+> 🚀 **Both approaches offer full UI flexibility.** abap2UI5 achieves this via ABAP alone, while UI5 Freestyle shifts control to the JavaScript layer.
 
 ### Conclusion
 
-- **UI5 Freestyle** is best suited for interactive, frontend-rich applications that require tight control over the client.
+- **UI5 Freestyle** suits interactive, frontend-rich applications that require tight control over the client.
 - **abap2UI5** is ideal for backend-driven UIs, faster iteration, and minimal frontend complexity — especially for ABAP-centric teams.
 
 ### Summary Table
