@@ -3,13 +3,13 @@ outline: [2, 4]
 ---
 # S/4 Public Cloud
 
-You can use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It exclusively uses released APIs and is fully compatible with the ABAP Cloud language version, meeting all SAP requirements for "clean core" cloud extensions.
+You can use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only released APIs and is fully compatible with the ABAP Cloud language version, meeting all SAP requirements for "clean core" cloud extensions.
 
 Follow these steps to install abap2UI5 on S/4 Public Cloud:
 
 ### 1. Install abap2UI5 with abapGit
 
-S/4 Public Cloud only supports the ADT abapGit version. abap2UI5 consists purely of classes, interfaces, and tables, so you can pull it without issues.
+S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 consists purely of classes, interfaces, and tables, so you can pull it without issues.
 
 Use the standard installation process via [abapGit for Eclipse](https://eclipse.abapgit.org/).
 
@@ -31,7 +31,7 @@ After a few moments, the installation completes:
 
 ### 2. Mass Activate the Imported Artifacts
 
-When installing repositories with ADT abapGit, all artifacts are initially imported in an inactive state. You'll need to manually activate them. The easiest approach is to create a dedicated inactive/active folder tree for the abap2UI5 project:
+When installing repositories with ADT abapGit, all artifacts arrive in an inactive state. You'll need to manually activate them. The easiest approach is to create a dedicated inactive/active folder tree for the abap2UI5 project:
 
 <img width="481" height="182" alt="Inactive objects folder tree in ADT" src="https://github.com/user-attachments/assets/a47fe1f1-5445-46da-96b9-8df3bfe9a99d" />
 
@@ -59,13 +59,13 @@ Now you'll see that all artifacts are activated:
 
 Create a new HTTP handler manually or use the cloud branch of the [frontend](https://github.com/abap2UI5/frontend) repository.
 
-**Important:** In S/4 Public Cloud, you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage.
+**Important:** In S/4 Public Cloud, accessing the HTTP endpoint requires `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes this scenario unsuitable for productive usage.
 
 To use abap2UI5 in production environments, you'll need to complete the frontend deployment and tile configuration in the following steps.
 
 ### 4. Deploy the UI5 App (Optional)
 
-Since UI5 apps (BSPs) aren't supported directly via ADT abapGit, you need to manually deploy the app:
+Since ADT abapGit doesn't support UI5 apps (BSPs) directly, you need to deploy the app manually:
 
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
 2. Deploy it into your system following SAP's [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
