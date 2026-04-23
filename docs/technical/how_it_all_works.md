@@ -351,13 +351,13 @@ With this approach, dependencies are limited to APIs and functions that are both
 
 GUID creation compatible with ABAP Cloud and Standard ABAP
 
-As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and it remains to be seen how feasible this is in practice). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver v702.
+As you can see, creating methods that are compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must be aware of this (and it remains to be seen how feasible this is in practice). But in the end, it does have a key advantage: abap2UI5 runs on ABAP 2305 and is still portable down to NetWeaver 7.02.
 
 ##### 28. Compatibility & Downporting
 
 Downporting abap2UI5 code normally would result in a release that is difficult to maintain and debug. To avoid this, abap2UI5 is divided into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
 
-The low-syntax branch is automatically generated using abaplint. The separate branch enables development with all new ABAP expressions available since ABAP v750 while still ensuring that all abap2UI5 features added in the future are automatically downported and available for ABAP v702.
+The low-syntax branch is automatically generated using abaplint. The separate branch enables development with all new ABAP expressions available since ABAP 7.50 while still ensuring that all abap2UI5 features added in the future are automatically downported and available for ABAP 7.02.
 
 The functionality of automated ABAP downporting is impressive and greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint. Besides abaplint, this framework uses abapGit and benefits from the work of the people who built it:
 

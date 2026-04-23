@@ -103,7 +103,7 @@ outline: [2, 4]
 - Added Radio Button, Radio Button Group, Date Range Selector
 - Added Popup Layout V2
 - Fixed Launchpad Title
-- Fixed Syntax for v750
+- Fixed Syntax for 7.50
 
 ### 1.130.0
 2024-06-13

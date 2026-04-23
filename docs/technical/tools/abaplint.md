@@ -11,7 +11,7 @@ With every PR, the ABAP code is checked using **abaplint**, ensuring code qualit
 
 #### Downporting
 
-An **abap2UI5** version with **compatible syntax for ABAP v702** is automatically built using the abaplint downport feature:
+An **abap2UI5** version with **compatible syntax for ABAP 7.02** is automatically built using the abaplint downport feature:
 
 ```sh
 abaplint --fix .github/abaplint/abap_702.jsonc
