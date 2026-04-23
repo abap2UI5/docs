@@ -43,7 +43,7 @@ With the advent of smartphones and richer web experiences, **UI5 Freestyle** was
 
 - Based on **JavaScript, XML Views, and UI5 Controls**
 - Follows a **Single Page Application (SPA)** architecture
-- Full control over frontend behavior and look & feel
+- Full control over frontend behavior and look and feel
 - Enables highly customized, interactive applications
 - Requires dedicated frontend development expertise
 
