@@ -112,7 +112,7 @@ Benefits:
 - No external annotations, CDS Views, or DDIC artifacts required
 - Ideal for admin tools and quick overviews
 
-abap2UI5 follows a similar pattern. Just bind the internal table to a UI5 table control:
+abap2UI5 follows a similar pattern. Bind the internal table to a UI5 table control:
 
 ```abap
 CLASS zcl_app_alv DEFINITION PUBLIC.
