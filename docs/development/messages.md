@@ -75,7 +75,7 @@ ENDMETHOD.
 ```
 Other imports are also supported. Import your message structure, and the message box will display it.
 
-#### Popup Multi Message
+#### Multi-Message Popup
 The message box provides basic output. For more detailed output, use the popup `Z2UI5_CL_POP_MESSAGES`:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -88,7 +88,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### Popup Error
+#### Error Popup
 To show a detailed view of your exception, use the following code:
 ```abap
 METHOD z2ui5_if_app~main.
