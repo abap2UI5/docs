@@ -5,7 +5,7 @@ outline: [2, 4]
 
 If the standard UI5 framework doesn't cover all your requirements, you can define and call your own custom JavaScript functions. For example, this approach is used in [Barcode Scanning](/development/specific/barcodes) to play a sound after scanning.
 
-The idea is to send the custom JavaScript function along with the view to the frontend and invoke it later when an event is triggered.
+The idea is to send the custom JavaScript function along with the view to the frontend and invoke it later when an event fires.
 
 Below is a working example that you can use as a starting point. The `_generic` method creates an arbitrary XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method injects raw content into that element, in this case the JavaScript function definition. On the backend side, `client->follow_up_action` then executes the function by name on the frontend:
 
