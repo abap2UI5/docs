@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Performance
 
-abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is significantly faster than client-side or browser-based processing.
+abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is significantly faster than processing in the browser.
 
 abap2UI5 keeps frontend logic to a minimum: no business logic runs in the browser. Everything is passed directly to the UI5 framework, which focuses solely on UI rendering.
 
