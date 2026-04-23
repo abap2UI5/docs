@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # CL_DEMO_OUTPUT
 
-If you're familiar with `CL_DEMO_OUTPUT` from classic ABAP, you can display its HTML output inside an abap2UI5 app as well. This is handy for quick data visualization or when migrating existing demo code.
+If you're familiar with `CL_DEMO_OUTPUT` from classic ABAP, you can display its HTML output inside an abap2UI5 app too. This is handy for quick data visualization or when migrating existing demo code.
 
 The approach: generate the HTML with `cl_demo_output=>get( )`, inject CSS styles via `_cc_plain_xml` (which inserts raw XML/HTML into the view), and render the result with the UI5 `html` control. The CSS block is necessary because `CL_DEMO_OUTPUT` produces HTML with specific class names (e.g., `heading1`, `header`, `body`) that require matching style definitions to display correctly.
 

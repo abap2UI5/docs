@@ -252,7 +252,7 @@ Luckily, we can significantly simplify the creation process with utility classes
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
-This contrasts with RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects, for example: in RAP, you are restricted to using the `+`, `-`, and `*` operators. In abap2UI5, you have to write JavaScript directly, which requires much more knowledge, but in exchange you get access to the full expression binding functionality available on the frontend:
+This contrasts with RAP, where you benefit from well-documented and organized extra layers, though sometimes they have limited functionality. Take side effects, for example: RAP restricts you to the `+`, `-`, and `*` operators. In abap2UI5, you write JavaScript directly, which requires much more knowledge, but in exchange you get access to the full expression binding functionality on the frontend:
 
 <img width="600" alt="Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
