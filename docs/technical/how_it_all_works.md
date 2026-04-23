@@ -271,7 +271,7 @@ In the current approach, they are separated from the view and created using addi
 
 Actual Approach - extra methods for the event and binding
 
-This differs from many other UI rendering processes, where data and UI are usually imported together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because the entire view creation process is now clearly separated from the rest and kept outside the framework.
+This differs from many other UI rendering processes, where data and UI are usually handled together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because the entire view creation process is now clearly separated from the rest and kept outside the framework.
 
 ##### 22. "Over the Wire" Sending JS, HTML & CSS
 
