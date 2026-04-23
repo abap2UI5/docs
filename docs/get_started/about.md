@@ -47,7 +47,7 @@ Each application ships as an [abapGit](https://abapgit.org) project, simplifying
 abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stays in the backend. This design simplifies configuration, reduces client-side complexity (say goodbye to cache-clearing hassles), and keeps business logic and sensitive data securely on the server.
 
 #### Performance
-abap2UI5 delivers excellent performance. The frontend focuses only on UI rendering via the UI5 framework, while the powerful ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — sharply reducing network roundtrips and speeding up response times.
+abap2UI5 delivers excellent performance. The frontend focuses only on UI rendering via the UI5 framework, while the ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — sharply reducing network roundtrips and speeding up response times.
 
 #### Security
 abap2UI5 is secure by design. All business logic stays in the ABAP backend. The frontend receives only the data the backend populates directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries through external tools.
@@ -56,7 +56,7 @@ abap2UI5 is secure by design. All business logic stays in the ABAP backend. The 
 The framework has a minimal system footprint — it includes only classes and interfaces. Add extra functionality through optional add-ons to keep your system lean.
 
 #### Transparency
-All source code is publicly available on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. You'll always understand how the framework works and can verify its behavior.
+All source code lives publicly on GitHub. We discuss features and issues openly, publish technical blog posts explaining key concepts, and rapidly deploy fixes through abapGit. You'll always understand how the framework works and can verify its behavior.
 
 ### Compatibility
 <br>
