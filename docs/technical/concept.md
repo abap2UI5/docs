@@ -96,7 +96,7 @@ How do we handle user interaction in this scenario?
 
 To enable user interaction, the initial HTTP request delivers a minimal, static UI5 freestyle app. This app contains just enough logic to forward frontend events and typically acts as a shell application. The interaction model is inspired by the classic PAI/PBO pattern known from SAP GUI applications.
 
-When a user triggers an event (e.g., pressing a button), the event information is sent to the backend, where an ABAP class determines what happens next. All logic is executed entirely on the server:
+When a user triggers an event (e.g., pressing a button), the app sends the event information to the backend, where an ABAP class determines what happens next. All logic runs entirely on the server:
 
 <p align="center">
 <img width="500" alt="abap2UI5 - simple shell app, backend handles all logic" src="https://github.com/user-attachments/assets/64ed863f-09bf-4634-8688-5b5382595115" />
