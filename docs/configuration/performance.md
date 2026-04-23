@@ -9,7 +9,7 @@ Frontend logic is kept to a minimum: no business logic runs in the browser. Ever
 
 abap2UI5 has been successfully tested with tables containing large numbers of entries and columns, so you can confidently develop your app — performance shouldn't be a concern.
 
-### `view_display` vs `view_model_update`
+### `view_display` vs. `view_model_update`
 
 The most impactful optimization is choosing the right update method:
 
