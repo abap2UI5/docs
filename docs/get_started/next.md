@@ -15,4 +15,4 @@ Preparing for production? The configuration guides walk you through security, pe
 Extend your abap2UI5 applications with community-built add-ons for layout management, charts, table maintenance, and other features. Explore the [Add-ons](/resources/addons).
 
 #### More
-Browse ready-to-use apps, real-world use cases, and companies already using abap2UI5. Browse [Who Uses abap2UI5](/resources/who_uses).
+Browse ready-to-use apps, real-world use cases, and companies already using abap2UI5. See [Who Uses abap2UI5](/resources/who_uses).
