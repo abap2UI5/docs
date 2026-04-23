@@ -137,7 +137,7 @@ This allows us to define models not only at design time, but also at runtime. No
 
 abap2UI5 - Dynamic Data Binding & Model Creation
 
-In apps, we can now use RTTI again in a way similar to how it was used with ALVs. This means there is no need to create separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type is created and modified at runtime (similar to SE16):
+In apps, we can now use RTTI again, similar to how it was used with ALVs. This means there is no need to create separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type is created and modified at runtime (similar to SE16):
 
 ![SE16-like runtime table where the data model is generated at runtime via RTTI](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
 
