@@ -192,7 +192,7 @@ abap2UI5 app - one place for everything
 
 In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for making sure everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this sits in this single app layer.
 
-However, this isn't a big deal for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performed all the necessary functions (just not in a browser-based environment). Moreover, in this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now tap the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
+However, this isn't a problem for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performed all the necessary functions (just not in a browser-based environment). Moreover, in this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now tap the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
 
 ##### 16. Draft
 
@@ -236,7 +236,7 @@ Since all user apps are also in pure ABAP, we can now maintain and develop every
 
 Another way to reduce complexity: avoid creating extra customizing layers. As shown in (13), only one stack call sits between the user's app and the HTTP-Handler, and no additional layers such as OData, SADL, or Gateway exist. This lets us bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
 
-UI5 evolves rapidly, and additional layers can quickly become outdated. With this approach, all future UI5 controls work automatically in abap2UI5. However, a potential downside is that we have to deal with the complexity of the frontend UI5 API and learn the concepts of XML views and UI5 controls. Ultimately, it comes down to personal preference: learn UI annotations, or learn the concepts of SAP UI5 directly.
+UI5 evolves rapidly, and additional layers can quickly become outdated. With this approach, all future UI5 controls work automatically in abap2UI5. However, a potential downside is that we have to handle the complexity of the frontend UI5 API and learn the concepts of XML views and UI5 controls. Ultimately, it's a matter of personal preference: learn UI annotations, or learn the concepts of SAP UI5 directly.
 
 ##### 20. No Hiding of Complexity
 
