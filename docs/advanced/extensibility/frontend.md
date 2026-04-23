@@ -25,7 +25,7 @@ npm run start-noflp
 This is the output in the terminal:
 <img width="1000" alt="npm run start-noflp output showing the local dev server running" src="https://github.com/user-attachments/assets/3e0118e8-d05f-48d1-bcc0-28073adf6e47">
 
-#### Before PR (optional)
+#### Before PR (Optional)
 Transform the UI5 app to stringified ABAP:
 ```sh
 cd ..
