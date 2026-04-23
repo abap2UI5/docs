@@ -123,7 +123,7 @@ To display a popover, use the method `client->popover_display` and specify the I
 ```
 
 ### Built-in Popups
-Several pre-built popup classes are available for specific scenarios:
+Several pre-built popup classes are available for common scenarios:
 
 - `Z2UI5_CL_POP_ERROR`
 - `Z2UI5_CL_POP_FILE_DL`
