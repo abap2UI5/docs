@@ -71,7 +71,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Only released APIs are used, e.g., the CDS View `I_SalesOrder`.
+This example uses only released APIs, such as the CDS View `I_SalesOrder`.
 
 2. Example: Display Sales Orders (not Cloud-Ready):
 ```abap
