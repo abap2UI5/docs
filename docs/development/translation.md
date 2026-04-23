@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Translation, i18n
 
-Standard UI5 apps manage translations through i18n files stored as frontend artifacts. Since abap2UI5 apps live entirely on the ABAP backend, you can use ABAP's built-in translation mechanisms instead — text elements, message classes, or data element descriptions.
+Standard UI5 apps manage translations through i18n files kept as frontend artifacts. Since abap2UI5 apps live entirely on the ABAP backend, you can use ABAP's built-in translation mechanisms instead — text elements, message classes, or data element descriptions.
 
 ### Text Element
 ABAP text elements translate messages, making them available in different languages without changing the code:
@@ -30,7 +30,7 @@ ENDMETHOD.
 ### Data Element
 You can also retrieve and display the short, medium, or long descriptions of data elements (DD04T). Here's how to access these text types programmatically:
 
-The helper class below uses two approaches for backward compatibility: it first tries classic DDIC introspection via `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all ABAP releases). If that fails (e.g., in ABAP Cloud where classic DDIC APIs are restricted), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems where XCO is not installed:
+The helper class below uses two approaches for backward compatibility: it first tries classic DDIC introspection via `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all ABAP releases). If that fails (e.g., in ABAP Cloud, which restricts classic DDIC APIs), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems without XCO installed:
 
 ::: code-group
 
