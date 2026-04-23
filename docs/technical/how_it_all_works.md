@@ -150,7 +150,7 @@ The same applies to the view: in RAP, only certain predefined control attributes
 ![Swapping a table control for a list control at runtime from the ABAP backend](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
 Replacing the View at Runtime
 
-##### 12. View & Model Independent from the HTTP-Service
+##### 12. View & Model Independent of the HTTP-Service
 
 As a result, the View & Model are defined independently of the HTTP-Service and we are no longer forced to deliver a predefined static OData-Service for every app, as is the case in RAP. The number of backend artifacts is significantly reduced:
 
