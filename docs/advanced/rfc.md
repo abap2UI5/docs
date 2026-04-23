@@ -23,8 +23,8 @@ _Prerequisite: Set up a destination in SM59 so the source system can be called v
 
 Steps:
 1. Install the [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) via abapGit on both systems
-2. Replace in the HTTP handler the destination `NONE` with your Source System Destination
-3. Call in your browser the endpoint `.../sap/bc/2ui5_rfc`
+2. In the HTTP handler, replace the destination `NONE` with your Source System Destination
+3. In your browser, call the endpoint `.../sap/bc/2ui5_rfc`
 
 #### UI5 Bootstrapping
 The backend system that holds the abap2UI5 apps does not need to include the UI5 libraries. These are automatically bootstrapped from the calling system:
