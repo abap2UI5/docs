@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Timer, Auto-Refresh
 
-abap2UI5 provides a custom control `z2ui5.Timer` that triggers events after a specified delay. This is useful for dashboards, status monitors, or any scenario that requires periodic data updates without user interaction.
+abap2UI5 provides a custom control `z2ui5.Timer` that triggers events after a specified delay. This is useful for dashboards, status monitors, or any scenario that needs periodic data updates without user interaction.
 
 Add the timer as a view element via `_z2ui5( )->timer( ... )`. It supports the following parameters:
 
@@ -16,7 +16,7 @@ Add the timer as a view element via `_z2ui5( )->timer( ... )`. It supports the f
 
 #### Basic Usage
 
-Embed the timer in your view and control it via data binding. The following example increments a counter every 2 seconds:
+Embed the timer in your view and control it via data binding. The example below increments a counter every 2 seconds:
 
 ```abap
 CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
@@ -59,7 +59,7 @@ With `checkrepeat = abap_true`, the timer restarts automatically after each even
 
 #### One-Shot Timer
 
-If you only need the timer to fire once (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
+For a single firing (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
 
 ```abap
 CLASS z2ui5_cl_sample_timer_once DEFINITION PUBLIC.
@@ -139,5 +139,5 @@ To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
 ```
 
 ::: warning
-Keep in mind that each timer event triggers a full backend roundtrip. Use reasonable intervals (e.g., 2000ms or higher) to avoid excessive server load.
+Each timer event triggers a full backend roundtrip. Use reasonable intervals (e.g., 2000ms or higher) to avoid excessive server load.
 :::
