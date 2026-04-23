@@ -80,7 +80,7 @@ A downported version is available for systems running earlier ABAP versions (bef
 abap2UI5 combines SAP's UI5 framework with ABAP's robust backend capabilities, tailored for enterprise SAP environments. The framework works seamlessly across S/4HANA Public/Private Cloud, BTP ABAP Environment, and NetWeaver systems.
 
 #### Production Usage
-Use abap2UI5 just like any other UI5 app or ABAP program in production. Simply add the framework and your apps to a transport request for deployment.
+Use abap2UI5 just like any other UI5 app or ABAP program in production. Add the framework and your apps to a transport request for deployment.
 
 #### Licensing
 Technically, abap2UI5 apps are regular UI5 freestyle applications. License them the same way you handle your other UI5 apps in your organization. abap2UI5 itself is MIT licensed (free for commercial use).
