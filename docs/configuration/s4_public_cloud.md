@@ -59,7 +59,7 @@ Now you'll see that all artifacts are activated:
 
 Create a new HTTP handler manually or use the cloud branch of the [frontend](https://github.com/abap2UI5/frontend) repository.
 
-**Important:** In S/4 Public Cloud you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage.
+**Important:** In S/4 Public Cloud, you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage.
 
 To use abap2UI5 in production environments, you'll need to complete the frontend deployment and tile configuration in the following steps.
 
