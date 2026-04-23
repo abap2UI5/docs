@@ -50,7 +50,7 @@ Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `l
 :::
 
 #### Launchpad
-We recommend using backend communication exclusively for view changes or popup calls. If you're using a launchpad, consider navigating through the launchpad to leverage browser navigation and history. Here's an example:
+We recommend using backend communication exclusively for view changes or popup calls. If you're using a Launchpad, consider navigating through the Launchpad to leverage browser navigation and history. Here's an example:
 ```abap
 client->_event_client(
     val   = client->cs_event-cross_app_nav_to_ext
@@ -58,7 +58,7 @@ client->_event_client(
         `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
     ) ) ).
 ```
-To learn more about launchpads and routing, refer to the [Fiori Launchpad](/configuration/launchpad) documentation.
+To learn more about Launchpads and routing, refer to the [Fiori Launchpad](/configuration/launchpad) documentation.
 
 ### Inner App Navigation
 
