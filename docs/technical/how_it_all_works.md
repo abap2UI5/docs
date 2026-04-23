@@ -180,7 +180,7 @@ Developing the ABAP class without restarting the frontend app
 
 We also get the advantage shared by all over-the-wire approaches: there is no need for cache busting anymore, as the frontend app remains unchanged during the development process.
 
-Up until now, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
+So far, we have observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it is transmitting. So, which layer ultimately defines what happens in this architecture?
 
 ##### 15. The abap2UI5 App
 
