@@ -104,7 +104,7 @@ ENDCLASS.
 
 #### Play Sounds
 
-Providing audio feedback can help in specific contexts. Below is an example that plays a sound if a user fails to scan a value. The sound is a .wav file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
+Audio feedback can help in specific contexts. Below is an example that plays a sound if a user fails to scan a value. The sound is a .wav file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
 ```abap
 CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.

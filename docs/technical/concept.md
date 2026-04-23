@@ -94,7 +94,7 @@ The UI5 application remains a single-page application, but its role changes: it 
 
 How do we handle user interaction in this scenario?
 
-To enable user interaction, the initial HTTP request delivers a minimal, static UI5 freestyle app. This app contains just enough logic to forward frontend events and typically acts as a shell application. The interaction model is inspired by the classic PAI/PBO pattern familiar from SAP GUI applications.
+To enable user interaction, the initial HTTP request delivers a minimal, static UI5 freestyle app. This app contains just enough logic to forward frontend events and typically acts as a shell application. The interaction model draws inspiration from the classic PAI/PBO pattern familiar from SAP GUI applications.
 
 When a user triggers an event (e.g., pressing a button), the app sends the event information to the backend, where an ABAP class determines what happens next. All logic runs entirely on the server:
 
@@ -126,7 +126,7 @@ This leads to additional deployment effort during both development and go-live.
 
 So far, we've seen how to display data and handle events using a backend-driven approach. But how can we process user input and transfer frontend changes back to the backend?
 
-If we continued relying on OData, updates would typically be routed into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
+If we continued relying on OData, updates would typically route into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
 
 Let's take a closer look at a key UI5 feature: the concept of view models. In UI5 freestyle, view models bind attributes such as visible or enabled — mapping control properties in the view precisely to model attributes:
 
@@ -192,7 +192,7 @@ The initial request delivers the static shell app. After each user interaction, 
 
 A core benefit of the HTML Over-the-Wire approach is that it updates only the affected parts of the UI — not the entire page. But can we apply this pattern in UI5?
 
-In standard UI5 behavior, updating the XML View typically triggers a full re-render. However, abap2UI5 makes partial updates possible by updating only the view model. This enables UI5 to refresh only the relevant UI controls via data binding — without recreating the entire view structure.
+In standard UI5 behavior, updating the XML View typically triggers a full re-render. However, abap2UI5 makes partial updates possible by updating only the view model. This lets UI5 refresh only the relevant UI controls via data binding — without recreating the entire view structure.
 
 Consider this example:
 
