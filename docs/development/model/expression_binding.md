@@ -7,7 +7,7 @@ Expression Binding lets you compute values directly in XML views using JavaScrip
 
 The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you can use JavaScript operators (like `===` for strict equality or `Math.max`) and reference model properties with `$` followed by a binding path. Note: `===` is the JavaScript strict equality operator (not an ABAP operator) — it is required because UI5 evaluates these expressions in the browser.
 
-#### Calculate the Maximum Value at the Frontend
+#### Calculate the Maximum Value on the Frontend
 
 The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) to ensure integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. Here's what the ABAP string concatenation produces at runtime:
 
