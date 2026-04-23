@@ -19,7 +19,7 @@ One of the core ideas behind abap2UI5 is inspired by the concept of **"HTML Over
 
 The idea was introduced in the SAP community through examples using the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
 
-After the initial page load, only small HTML fragments are sent asynchronously via AJAX to update parts of the page — avoiding full reloads.
+After the initial page load, the server sends only small HTML fragments asynchronously via AJAX to update parts of the page — avoiding full reloads.
 
 <img width="400" alt="HTML 'Over the Wire' Lifecycle" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
