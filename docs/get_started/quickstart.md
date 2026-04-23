@@ -51,7 +51,7 @@ Next, use transaction `SICF` to create a new HTTP service with the handler above
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
 
 ::: details ABAP Cloud
-For ABAP Cloud environments, follow [this guide](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
+For ABAP Cloud environments, follow [SAP's HTTP service tutorial](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
 
 <img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
