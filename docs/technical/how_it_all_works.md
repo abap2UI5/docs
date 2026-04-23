@@ -53,7 +53,7 @@ A recommended video offers an excellent introduction to these ideas.
 
 ##### 5. UI5 Architecture
 
-UI5 apps typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering happen on the frontend. But there's one specific characteristic we should look at closely: how the UI5 framework creates views. Each HTML output is rendered from an XML-View (ignoring the older HTML/JS/JSON-Views), with its associated data from the server. The view is stored on the frontend as part of the app:
+UI5 apps typically follow an SPA architecture. The backend delivers data via OData, while all logic and UI rendering happen on the frontend. But one specific characteristic is worth a closer look: how the UI5 framework creates views. Each HTML output is rendered from an XML-View (ignoring the older HTML/JS/JSON-Views), with its associated data from the server. The view is stored on the frontend as part of the app:
 
 <img width="600" alt="UI5 normally - ABAP delivers only Data" src="https://github.com/user-attachments/assets/3b2a884e-e899-4b60-8a95-79b418f33657" />
 
