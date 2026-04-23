@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Productive Usage
 
-abap2UI5 is technically just an implementation of an HTTP handler and can be used like any other HTTP service in a productive scenario.
+abap2UI5 is technically just an implementation of an HTTP handler, so you can use it like any other HTTP service in a productive scenario.
 
 #### Preparations
 You can transport abap2UI5 to production just like any other ABAP development. To ensure everything works smoothly, consider the following steps:
