@@ -228,7 +228,7 @@ Instead of using the above XLSX API (which may change between releases), conside
 ENDMETHOD.
 ```
 
-```abap [LCL_HELP]
+```abap [lcl_help]
 CLASS lcl_help DEFINITION FINAL CREATE PUBLIC.
 
   PUBLIC SECTION.
