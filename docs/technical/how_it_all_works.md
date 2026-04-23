@@ -289,7 +289,7 @@ abap2UI5 app sending custom JavaScript to the client
 
 ##### 23. As Simple as Possible
 
-As we saw in (22), we can make apps very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach uses `if_oo_adt_classrun`. By implementing a single method, we can generate output with one click (`F9`). This is extremely efficient and inspired abap2UI5. Here's a comparison of both approaches:
+As we saw in (22), we can make apps very complex, but the opposite is also possible — we can make them very simple. One beautifully minimalistic approach uses `if_oo_adt_classrun`. By implementing a single method, we can generate output with one click (`F9`). This is highly efficient and inspired abap2UI5. Here's a comparison of both approaches:
 
 <img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
 
@@ -301,7 +301,7 @@ To summarize what we've covered so far, abap2UI5 is built in a highly generic ma
 
 Most notably, compared to UI5, we can't implement offline capabilities — in such scenarios, we can't continually ask the server after every event to determine what happens next.
 
-Furthermore, using HANA DB capabilities directly on the frontend causes problems. Since every app uses the same generic HTTP-Service, we've decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can directly tap into HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, you can easily integrate pagination or fuzzy searches into UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
+Furthermore, using HANA DB capabilities directly on the frontend causes problems. Since every app uses the same generic HTTP-Service, we've decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can directly tap into HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, you can easily integrate pagination or fuzzy searches into UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is highly effective here.
 
 Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced capability in other areas.
 
