@@ -83,7 +83,7 @@ To make a table editable, switch the binding mode to `bind_edit`:
 ```
 
 ### Tree
-To work with trees, you need to use nested structures. Here's an example:
+To work with trees, use nested structures. Here's an example:
 ```abap
 CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
 
@@ -152,7 +152,7 @@ ENDCLASS.
 ```
 
 ### Nested Structures
-Binding nested structures is also possible. Use `structure/component` in the binding path, as shown below:
+You can also bind nested structures. Use `structure/component` in the binding path, as shown below:
 ```abap
 CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
   PUBLIC SECTION.
