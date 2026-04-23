@@ -196,7 +196,7 @@ However, this isn't a big deal for ABAP! From an ABAP perspective, it resembles 
 
 ##### 16. Draft
 
-With RAP, users can save interim results in drafts, letting them pause and resume their work later. The abap2UI5 architecture works as if we send a completely new app to the frontend after every event, but we still want to preserve the user's previous inputs and state. To achieve this, the `z2ui5_if_app` interface includes the `if_serializable_object` interface, which enables us to serialize and persist all important information of every request (such as the current view or its status):
+With RAP, users can save interim results in drafts, letting them pause and resume their work later. The abap2UI5 architecture works as if we send a completely new app to the frontend after every event, but we still want to preserve the user's previous inputs and state. To achieve this, the `z2ui5_if_app` interface includes the `if_serializable_object` interface, which lets us serialize and persist all important information from every request (such as the current view or its status):
 
 <img width="600" alt="z2ui5_t_draft - the abap2UI5 persistence for interim results" src="https://github.com/user-attachments/assets/fc13f32d-3145-4510-a2d8-a0b646fdd6c4" />
 

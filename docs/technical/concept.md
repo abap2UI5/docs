@@ -80,7 +80,7 @@ Fortunately, UI5 has a defining characteristic that lets us shift part of the vi
 
 abap2UI5 introduces a subtle but important shift: what if the backend also delivers the XML View?
 
-While HTML creation still happens on the frontend, both the view definition and the corresponding data are now sent from the backend:
+While HTML creation still happens on the frontend, the backend now sends both the view definition and the corresponding data:
 
 <p align="center">
   <img width="400" alt="abap2UI5 - HTML created in browser based on XML View and data, both sent from backend" src="https://github.com/user-attachments/assets/adef16b7-e98d-476f-9bbc-738685047c5d" />
@@ -124,7 +124,7 @@ This leads to additional deployment effort during both development and go-live.
 
 #### Create & Update Data
 
-So far, we've seen how to display data and handle events using a backend-driven approach. But how can we process user input and transfer frontend changes back to the backend?
+So far, we've seen how to display data and handle events via a backend-driven approach. But how can we process user input and transfer frontend changes back to the backend?
 
 If we continued relying on OData, updates would typically route into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
 
@@ -144,7 +144,7 @@ This leads to the second subtle shift in abap2UI5: instead of binding OData to t
   <em>abap2UI5 – Backend delivers an XML View and its specifically tailored View Model in a single response</em>
 </p>
 
-This means the frontend no longer consumes CDS Views and OData services directly. Instead, the backend sends the complete UI state — both view and model — in a single response. Any user changes in the UI then return to the backend via a lightweight AJAX call containing the updated view model — no OData routing involved.
+This means the frontend no longer consumes CDS Views and OData services directly. Instead, the backend sends the complete UI state — both view and model — in a single response. Any user changes in the UI then return to the backend via a lightweight AJAX call containing the updated view model — no OData routing required.
 
 You don't need to configure models or bindings manually. abap2UI5 handles this internally. All you need to do is expose class attributes via a simple bind method — abap2UI5 handles the rest.
 
