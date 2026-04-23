@@ -271,7 +271,7 @@ In the current approach, we separate them from the view and create them using ad
 
 Actual Approach - extra methods for the event and binding
 
-This differs from many other UI rendering processes, which usually handle data and UI together. Separating them here simplifies the view creation process, avoids data redundancies, and prevents the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because it now cleanly separates the entire view creation process from the rest and keeps it outside the framework.
+This differs from many other UI rendering processes, which usually handle data and UI together. Separating them here simplifies the view creation process, avoids data redundancies, and keeps the framework from becoming messy. The current approach uses fewer lines of code than the first approach (which only focused on selection screens), because it now cleanly separates the entire view creation process from the rest and keeps it outside the framework.
 
 ##### 22. "Over the Wire" Sending JS, HTML & CSS
 
@@ -289,39 +289,39 @@ abap2UI5 app sending custom JavaScript to the client
 
 ##### 23. As Simple as Possible
 
-As we have seen in (22), we can make apps very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach is the use of `if_oo_adt_classrun`. By implementing just one method, we can generate an output with a single click (`F9`). This is extremely efficient and was one of the inspirations for abap2UI5. Here's a comparison of both approaches:
+As we saw in (22), we can make apps very complex, but the opposite is also possible — we can make them extremely simple. One beautifully minimalistic approach uses `if_oo_adt_classrun`. By implementing a single method, we can generate output with one click (`F9`). This is extremely efficient and inspired abap2UI5. Here's a comparison of both approaches:
 
 <img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
 
 if_oo_adt_classrun vs. abap2UI5
 
-To summarize what we have covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain considerable flexibility and freedom in the app implementation, but we also take on full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
+To summarize what we've covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain considerable flexibility and freedom in the app implementation, but we also take on full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
 
 ##### 24. Downsides Compared to UI5 & RAP
 
-Most notably, compared to UI5, we can't implement offline capabilities — in such scenarios, we can't continuously ask the server after every event to determine what happens next.
+Most notably, compared to UI5, we can't implement offline capabilities — in such scenarios, we can't continually ask the server after every event to determine what happens next.
 
-Furthermore, using HANA DB capabilities directly on the frontend leads to problems. By using the same generic HTTP-Service for every app, we have decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can directly tap into HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, you can easily integrate pagination or fuzzy searches into UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
+Furthermore, using HANA DB capabilities directly on the frontend causes problems. Since every app uses the same generic HTTP-Service, we've decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can directly tap into HANA capabilities via a CDS View (and skip the ABAP layer). With this approach, you can easily integrate pagination or fuzzy searches into UI5 freestyle or RAP apps. The combination of OData-Service directly calling a CDS View of HANA is extremely effective here.
 
-Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced functionality in other areas.
+Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced capability in other areas.
 
 Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. Ultimately, the wide range of UI5 use cases makes comparing the different approaches difficult — and can't be fully discussed here. Let's now take a closer look at the framework's codebase in the final part of this blog post.
 
 ##### 25. System Footprint
 
-We keep the system footprint as small as possible — abap2UI5 relies only on ABAP classes without CDS and RAP artifacts. We delegate most of the code to the user outside the framework (21) (22). In total, the framework consists of around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
+We keep the system footprint as small as possible — abap2UI5 relies only on ABAP classes, with no CDS or RAP artifacts. We delegate most of the code to the user outside the framework (21) (22). In total, the framework comes to around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
 
 <img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
 System footprint of abap2UI5
 
-The entire framework logic is implemented in the HTTP-Handler class:
+The HTTP-Handler class implements the entire framework logic:
 
 <img width="600" alt="This is all that abap2UI5 does" src="https://github.com/user-attachments/assets/9c54e6b9-18a0-4582-a8cf-345d41d61a00" />
 
 This is all that abap2UI5 does
 
-The functionality focuses solely on the communication between the backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). This implementation handles the POST request:
+The functionality focuses only on the communication between backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). This implementation handles the POST request:
 
 <img width="600" alt="AJAX POST Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
 
