@@ -31,7 +31,7 @@ _Structured Web Applications (2003+) (SAP)_
 
 **Web Dynpro** introduced a component-based UI framework for web applications.
 
-- UI definitions are created in ABAP (Views, Context, Controllers)
+- Developers create UI definitions in ABAP (Views, Context, Controllers)
 - Still **Server-Side Rendering**: UI is built on the server, rendered as HTML in the browser
 - Suitable for transactional business applications
 - More structured and modular than ITS, but limited for modern UX expectations

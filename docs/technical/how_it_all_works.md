@@ -67,7 +67,7 @@ abap2UI5 introduces a pivotal change: the backend also sends the view. This shif
 
 "UI5 Over the Wire" - ABAP delivers Data & View together
 
-Despite still relying on frontend HTML rendering, all the necessary information (view & data) is now retrieved via AJAX from the backend. The UI5 app remains a SPA, but its role is now reduced to that of an HDA — responsible solely for displaying the view and its data:
+Despite still relying on frontend HTML rendering, the app now retrieves all the necessary information (view & data) via AJAX from the backend. The UI5 app remains a SPA, but its role is now reduced to that of an HDA — responsible solely for displaying the view and its data:
 
 <img width="600" alt="UI5 app downgraded to an HDA - Displaying Data & View received from the server" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
