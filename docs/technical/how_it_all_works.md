@@ -109,7 +109,7 @@ RAP - Definition of Views with UI Annotations
 
 RAP - Definition of Data Models with DDL
 
-This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: Every API is based on the OData-Protocol, Views are defined with UI Annotations, Data Models are defined in DDL, Model updates are developed in local implementations of RAP classes and everything is separated in different layers that are orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process which is effective in most use cases.
+This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: Every API is based on the OData-Protocol, Views are defined with UI Annotations, Data Models are defined in DDL, Model updates are developed in local implementations of RAP classes and everything is separated in different layers that are orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process that is effective in most use cases.
 
 However, when significant Model and View changes are needed at runtime, this approach can be too inflexible. Model changes with RTTI aren't supported, and extending the view quickly goes beyond the functional scope of backend annotations — requiring development of apps with Fiori Elements (which again requires extra deployment).
 
@@ -252,7 +252,7 @@ Luckily, we can significantly simplify the creation process by creating utility 
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
-This contrasts with RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects, for example: in RAP, you are restricted to using the `+`, `-`, and `*` operators. In abap2UI5 you have to write JavaScript directly, which requires a lot more knowledge, but it provides the benefit of accessing the full expression binding functionality available on the frontend:
+This contrasts with RAP, where you benefit from well-documented and organized extra layers, but sometimes they have limited functionality. Take side effects, for example: in RAP, you are restricted to using the `+`, `-`, and `*` operators. In abap2UI5, you have to write JavaScript directly, which requires much more knowledge, but it provides the benefit of accessing the full expression binding functionality available on the frontend:
 
 <img width="600" alt="Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
