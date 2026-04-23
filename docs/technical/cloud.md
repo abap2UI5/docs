@@ -16,7 +16,7 @@ ABAP Cloud consists of a simplified technology stack, syntax, and toolset:
 - No classic UI technologies like Web Dynpro, ALV, GUI CFW
 - Simplified syntax (e.g., no `WRITE` statements)
 - Use of only released APIs
-- No direct access to SAP database tables, use the VDM instead
+- No direct access to SAP database tables; use the VDM instead
 - Development via ADT or browser-based tools, but no SE80
 
 SAP recommends developing all new applications in ABAP Cloud.
