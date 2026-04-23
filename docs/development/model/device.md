@@ -7,7 +7,7 @@ abap2UI5 offers two ways to access device information: directly in the view via 
 
 ### Frontend
 
-The device model is bound to the view by default with the name `device`. You can use standard UI5 binding syntax to display device properties directly — no backend roundtrip needed. For example:
+By default, the device model is bound to the view under the name `device`. You can use standard UI5 binding syntax to display device properties directly — no backend roundtrip needed. For example:
 ```abap
 page->input(
   description = `device model - resize - width`
