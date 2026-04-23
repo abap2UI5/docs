@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Custom JS
 
-If the standard UI5 framework doesn't cover all your requirements, you can define and call your own custom JavaScript functions. For example, this approach is used in [Barcode Scanning](/development/specific/barcodes) to play a sound after scanning.
+If the standard UI5 framework doesn't cover all your requirements, you can define and call your own custom JavaScript functions. For example, [Barcode Scanning](/development/specific/barcodes) uses this approach to play a sound after scanning.
 
 The idea is to send the custom JavaScript function along with the view to the frontend and invoke it later when an event fires.
 
