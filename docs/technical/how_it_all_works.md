@@ -73,13 +73,13 @@ Despite still relying on frontend HTML rendering, the app now retrieves all the 
 
 UI5 app downgraded to an HDA - Displaying Data & View received from the server
 
-This means the frontend app doesn't know what it's currently displaying (whether it's a table, list, or input) and it doesn't know which actions come next. The app logic stays completely on the server, and the frontend app is just a small HDA transmitted with the first request:
+This means the frontend app doesn't know what it's currently displaying (whether it's a table, list, or input) and it doesn't know which actions come next. The app logic stays entirely on the server, and the first request delivers the frontend app as just a small HDA:
 
 <img width="600" alt="'UI5 Over the Wire' - Server to Client Communication" src="https://github.com/user-attachments/assets/2c9f8dc1-c6d8-4e93-80a2-b50bfc1d5ec1" />
 
 "UI5 Over the Wire" - Server to Client Communication
 
-The HDA displays the view with its data and sends each event back to the server, which determines the next action and output. This process is somewhat similar to the PAI/PBO process used in classic SAP GUI apps:
+The HDA displays the view with its data and sends each event back to the server, which determines the next action and output. This process is somewhat similar to the PAI/PBO process from classic SAP GUI apps:
 
 <img width="600" alt="UI5 vs. 'UI5 Over the Wire' - Communication" src="https://github.com/user-attachments/assets/3b464d0b-19fd-400c-a7e4-3eec893f7724" />
 
