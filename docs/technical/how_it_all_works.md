@@ -49,7 +49,7 @@ Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among t
 
 _"Sweet Spot" between SPA and MPA_
 
-A recommended video offers an excellent introduction to these ideas.
+A recommended video gives an excellent introduction to these ideas.
 
 ##### 5. UI5 Architecture
 
@@ -67,7 +67,7 @@ abap2UI5 introduces a pivotal change: the backend also sends the view. This shif
 
 "UI5 Over the Wire" - ABAP delivers Data & View together
 
-Despite still relying on frontend HTML rendering, the app now retrieves all the necessary information (view & data) via AJAX from the backend. The UI5 app remains a SPA, but its role is now reduced to that of an HDA — responsible solely for displaying the view and its data:
+Despite still relying on frontend HTML rendering, the app now retrieves all the necessary information (view & data) via AJAX from the backend. The UI5 app remains a SPA, but its role shrinks to that of an HDA — responsible only for displaying the view and its data:
 
 <img width="600" alt="UI5 app downgraded to an HDA - Displaying Data & View received from the server" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
@@ -85,7 +85,7 @@ The HDA displays the view with its data and sends each event back to the server,
 
 UI5 vs. "UI5 Over the Wire" - Communication
 
-We use AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but here we can't send HTML directly. Instead, we send a View combined with its Data. This results in a concept we could call "UI5-View Over the Wire".
+We use AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but here we can't send HTML directly. Instead, we send a View combined with its Data. This produces a concept we could call "UI5-View Over the Wire".
 
 ##### 7. Merging Data & Presentation
 
@@ -111,9 +111,9 @@ RAP - Definition of Data Models with DDL
 
 This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: every API is based on the OData protocol, views are defined with UI annotations, data models are defined in DDL, model updates are developed in local implementations of RAP classes, and everything is separated into different layers orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process that is effective in most use cases.
 
-However, when significant Model and View changes are needed at runtime, this approach can be too inflexible. Model changes with RTTI aren't supported, and extending the view quickly goes beyond the functional scope of backend annotations — requiring development of apps with Fiori Elements (which again requires extra deployment).
+However, when significant Model and View changes are needed at runtime, this approach can prove too inflexible. Model changes with RTTI aren't supported, and extending the view quickly exceeds the functional scope of backend annotations — requiring development of apps with Fiori Elements (which again requires extra deployment).
 
-Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to worry about conventions and can take a few more risks. As we saw in (6), the first trick was sending Views from the backend instead of storing them on the frontend app — now we can enhance flexibility even further (9)(10).
+Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to worry about conventions and can take a few more risks. As we saw in (6), the first trick was sending Views from the backend instead of storing them on the frontend app — now we can push flexibility even further (9)(10).
 
 ##### 9. One HTTP-Service for All Apps
 
