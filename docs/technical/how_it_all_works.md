@@ -265,7 +265,7 @@ In the first approach of this framework, the event and data binding were include
 
 First approach - Data binding and events are not separated from the view
 
-In the current approach, they are separated from the view and created using additional methods. Moreover, the entire process of data binding and transfer is automatically handled by the framework (9):
+In the current approach, they are separated from the view and created using additional methods. Moreover, the framework automatically handles the entire process of data binding and transfer (9):
 
 <img width="600" alt="Actual Approach - extra methods for the event and binding" src="https://github.com/user-attachments/assets/4708b4c1-a031-48d5-823c-5b8434a98c0c" />
 
