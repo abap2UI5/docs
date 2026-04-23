@@ -43,7 +43,7 @@ ENDMETHOD.
 To see barcode scanning in action, refer to the `Z2UI5_CL_DEMO_APP_124` sample application.
 
 ::: tip **UI5 Versions**
-This feature is only available when using the UI5 framework and is not supported with OpenUI5.
+This feature works only with the UI5 framework, not with OpenUI5.
 :::
 
 #### Focus Handling
