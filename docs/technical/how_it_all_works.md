@@ -321,7 +321,7 @@ The entire framework logic is implemented in the HTTP-Handler class:
 
 This is all that abap2UI5 does
 
-The functionality focuses solely on the communication between the backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). The POST request is handled by this implementation:
+The functionality focuses solely on the communication between the backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). This implementation handles the POST request:
 
 <img width="600" alt="AJAX POST Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
 
