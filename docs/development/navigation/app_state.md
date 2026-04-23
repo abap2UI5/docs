@@ -46,4 +46,4 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
 ENDCLASS.
 ```
 
-A working implementation of this code can be found in sample `Z2UI5_CL_DEMO_APP_321`.
+For a working implementation, see sample `Z2UI5_CL_DEMO_APP_321`.
