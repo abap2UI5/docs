@@ -42,7 +42,7 @@ _Full Client-Side SPAs (2010+) (SAP)_
 With the advent of smartphones and richer web experiences, **UI5 Freestyle** was introduced.
 
 - Based on **JavaScript, XML Views, and UI5 Controls**
-- Follows a **Single Page Application (SPA)** architecture
+- Follows a **Single-Page Application (SPA)** architecture
 - Full control over frontend behavior and look and feel
 - Enables highly customized, interactive applications
 - Requires dedicated frontend development expertise
