@@ -10,11 +10,11 @@ For a comprehensive overview, see the [Use Cases blog article](https://www.linke
 ### On-Stack Extension
 
 #### Tier 1 Extension
-For clean-core compliance, develop applications that follow "keep the core clean" principles, ensuring your apps stay cloud-ready and upgrade-stable:
+For clean-core compliance, develop applications that follow "keep the core clean" principles to keep your apps cloud-ready and upgrade-stable:
 ![Tier 1 on-stack extension architecture diagram](/get_started/image-11.png){ width=60% }
 
 #### Tier 2 Extension
-If certain APIs you need are not yet released, you can still create a cloud-ready abap2UI5 app by accessing these APIs through a separate Tier 2 wrapper:
+If certain APIs you need aren't yet released, you can still create a cloud-ready abap2UI5 app by accessing these APIs through a separate Tier 2 wrapper:
 ![Tier 2 on-stack extension with wrapper for unreleased APIs](/get_started/image-21.png){ width=60% }
 
 #### Tier 3 Extension
@@ -24,11 +24,11 @@ For a classic extension approach, you can use unreleased APIs, giving you greate
 ### Side-by-Side Extension
 
 #### Tier 1 Extension
-Develop applications separately from your S/4 system's lifecycle using only remote API calls. Stick to released APIs, and your apps will work with S/4HANA Public Cloud too:
+Develop applications separately from your S/4 system's lifecycle via remote API calls only. Stick to released APIs, and your apps will work with S/4HANA Public Cloud too:
 ![Tier 1 side-by-side extension with remote API calls](/get_started/image-22.png){ width=60% }
 
 #### Tier 3 Extension
-For more flexibility, develop applications with a lifecycle independent of your S/4 system using remote API calls:
+For more flexibility, develop applications whose lifecycle is independent of your S/4 system using remote API calls:
 ![Tier 3 side-by-side extension with remote API calls](/get_started/image-23.png){ width=60% }
 
 ### Software as a Service (SaaS)
