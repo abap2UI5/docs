@@ -27,7 +27,7 @@ _HTML "Over the Wire" Lifecycle [(Source)](https://community.sap.com/t5/technolo
 
 This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are managed independently on the frontend while the backend only delivers data.
 
-##### 2. Hypermedia Driven App
+##### 2. Hypermedia-Driven App
 
 This concept evolves into a Hypermedia-Driven Application (HDA). In HDAs, the browser focuses solely on rendering HTML, CSS, and JavaScript without knowledge of the application's state. All logic is maintained on the server.
 
