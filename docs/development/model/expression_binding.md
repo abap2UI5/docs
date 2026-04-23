@@ -85,4 +85,4 @@ CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Explore all the possibilities in the sample class `Z2UI5_CL_DEMO_APP_027` or refer to the [UI5 documentation on expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0).
+Explore all the possibilities in the sample class `Z2UI5_CL_DEMO_APP_027` or see the [UI5 documentation on expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0).
