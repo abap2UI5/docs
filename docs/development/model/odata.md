@@ -97,7 +97,7 @@ client->follow_up_action( client->_event_client(
 For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
 
 #### Metadata Binding
-In SAP contexts, OData services are often enriched with additional annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. You can find the definitions for the entity `Currency`:
+In SAP contexts, OData services often carry additional annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. You can find the definitions for the entity `Currency`:
 ```xml
 <EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">
 <Key>
@@ -150,4 +150,4 @@ client->follow_up_action( client->_event_client(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).
 ```
-The column titles are now automatically set with the correct title in the user's language.
+UI5 now automatically sets each column title in the user's language.
