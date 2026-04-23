@@ -142,4 +142,4 @@ Several pre-built popup classes are available for common scenarios:
 - `Z2UI5_CL_POP_TO_INFORM`
 - `Z2UI5_CL_POP_TO_SELECT`
 
-This collection can be further expanded to cover additional common use cases. Contributions are always welcome!
+This collection can be further expanded to cover more use cases. Contributions are always welcome!
