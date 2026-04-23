@@ -5,13 +5,13 @@ outline: [2, 4]
 
 _Ready for the Future — or Not?_
 
-Whether it makes sense to build apps with abap2UI5 depends heavily on future-proofing. In the ABAP ecosystem, this means cloud readiness, which is closely tied to using the ABAP Cloud language version. But what exactly does that mean? And are abap2UI5 apps truly cloud-ready?
+Whether it makes sense to build apps with abap2UI5 depends heavily on future-proofing. In the ABAP ecosystem, this means cloud readiness, which is closely tied to the ABAP Cloud language version. But what exactly does that mean? And are abap2UI5 apps truly cloud-ready?
 
 #### What is ABAP Cloud?
 
 ABAP Cloud is a restricted ABAP language version that ensures cloud readiness and upgrade stability. Code that follows the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — without code adjustments or further investments.
 
-ABAP Cloud consists of a simplified technology stack, syntax, and toolset:
+ABAP Cloud includes a simplified technology stack, syntax, and toolset:
 
 - No classic UI technologies like Web Dynpro, ALV, GUI CFW
 - Simplified syntax (e.g., no `WRITE` statements)

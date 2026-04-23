@@ -109,7 +109,7 @@ RAP - Definition of Views with UI Annotations
 
 RAP - Definition of Data Models with DDL
 
-This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: every API is based on the OData protocol, views are defined with UI annotations, data models are defined in DDL, model updates are developed in local implementations of RAP classes, and everything is separated into different layers orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process that is effective in most use cases.
+This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: every API relies on the OData protocol, UI annotations define the views, DDL defines the data models, local implementations of RAP classes handle model updates, and everything splits into different layers orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process that works effectively in most use cases.
 
 However, when significant Model and View changes are needed at runtime, this approach can prove too inflexible. Model changes with RTTI aren't supported, and extending the view quickly exceeds the functional scope of backend annotations — requiring development of apps with Fiori Elements (which again requires extra deployment).
 

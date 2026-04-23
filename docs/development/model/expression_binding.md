@@ -9,7 +9,7 @@ The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you
 
 #### Calculate the Maximum Value on the Frontend
 
-The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) to ensure integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. Here's what the ABAP string concatenation produces at runtime:
+The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) for integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. Here's what the ABAP string concatenation produces at runtime:
 
 | ABAP code | UI5 binding result |
 |---|---|
@@ -54,7 +54,7 @@ ENDCLASS.
 
 #### Conditionally Set Input Field Editability
 
-The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field is only editable when the quantity is exactly 500. Note that `===` is the JavaScript strict equality operator.
+The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field becomes editable only when the quantity is exactly 500. Note that `===` is the JavaScript strict equality operator.
 
 ```abap
 CLASS z2ui5_cl_demo_editable DEFINITION PUBLIC.
