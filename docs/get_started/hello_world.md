@@ -4,7 +4,7 @@ outline: [2, 4]
 # Hello World
 
 ### The Interface
-Every abap2UI5 app implements the `Z2UI5_IF_APP` interface. It has a single method `main` with one parameter — `client` of type `Z2UI5_IF_CLIENT`:
+Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method `main` with one parameter — `client` of type `z2ui5_if_client`:
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
   METHODS main
