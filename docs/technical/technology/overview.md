@@ -52,7 +52,7 @@ _Standardized Backend-Driven SPA (2019+) (SAP)_
 
 The **RESTful Application Programming Model (RAP)** and **Fiori Elements** aim to standardize application development.
 
-- Developers define **CDS Annotations** in ABAP to describe UI behavior
+- Developers define **CDS annotations** in ABAP to describe UI behavior
 - The UI5 Fiori Elements runtime in the browser renders the app as a **SPA**
 - Simplifies UI development by using predefined floorplans and templates
 - Still SPA complexity (OData metadata handling, UI5 runtime in browser)
