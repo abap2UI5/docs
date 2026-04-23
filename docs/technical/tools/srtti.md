@@ -87,7 +87,7 @@ This approach ensures compatibility with dynamic types while maintaining a robus
 
 #### Integration
 
-S-RTTI integrates directly into the `z2ui5` namespace and installs automatically with abap2UI5. You can access it directly using:
+S-RTTI integrates directly into the `z2ui5` namespace and installs automatically with abap2UI5. Access it anywhere in your code:
 ```abap
 z2ui5_cl_srt_datadescr=>
 ```
