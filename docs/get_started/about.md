@@ -92,7 +92,7 @@ Integrate your apps into:
 - Build Work Zone Websites on BTP
 
 #### Installation
-Getting started is straightforward:
+Getting started is simple:
 1. Import the project via abapGit
 2. Create an HTTP service for browser communication
 3. Start developing!
