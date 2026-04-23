@@ -4,7 +4,7 @@ outline: [2, 4]
 # Hello World
 
 ### The Interface
-Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method `main` with one parameter — `client` of type `z2ui5_if_client`:
+Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter — `client` of type `z2ui5_if_client`:
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
   METHODS main
@@ -35,7 +35,7 @@ ENDCLASS.
 Head back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
-Now let's add a view to display some text:
+Let's add a view to display some text:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -75,7 +75,7 @@ To distinguish between lifecycle events, use `CASE abap_true`:
 - `client->check_on_event( )` — user triggered an event (e.g., button press)
 - `client->check_on_navigated( )` — returned from another app via navigation
 
-Each `check_*` method returns `abap_true` only for its specific phase, making `CASE abap_true` act as a dispatcher:
+Each `check_*` method returns `abap_true` only for its specific phase, so `CASE abap_true` acts as a dispatcher:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -142,5 +142,5 @@ ENDCLASS.
 That's all you need. Set a breakpoint to observe the communication and data updates in action, then experiment with modifying the view, events, and data exchange.
 
 ::: tip **ABAP Language Versions**
-While you need to distinguish between Standard ABAP and ABAP for Cloud in the HTTP handler, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility.
+While the HTTP handler must distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility.
 :::
