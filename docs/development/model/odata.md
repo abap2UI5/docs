@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # OData
 
-By default, you bind public attributes of your class to UI5 properties via `_bind` and `_bind_edit`. For scenarios that require access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance when handling large amounts of data.
+By default, you bind public attributes of your class to UI5 properties via `_bind` and `_bind_edit`. For scenarios requiring access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance when handling large amounts of data.
 
 #### Define Additional Model
 As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, which exists in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `FLIGHT`:
