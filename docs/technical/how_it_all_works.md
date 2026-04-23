@@ -29,7 +29,7 @@ This approach contrasts with the common separation of concerns, where HTML, CSS,
 
 ##### 2. Hypermedia-Driven App
 
-This concept evolves into a Hypermedia-Driven Application (HDA). In HDAs, the browser focuses solely on rendering HTML, CSS, and JavaScript without knowledge of the application's state. All logic is maintained on the server.
+This concept evolves into a Hypermedia-Driven Application (HDA). In HDAs, the browser focuses solely on rendering HTML, CSS, and JavaScript without knowledge of the application's state. All logic lives on the server.
 
 In contrast, SPAs define all routes and actions upfront on the frontend, requiring a full rebuild for any modification. The following illustration compares MPAs, SPAs, and HDAs:
 
@@ -168,7 +168,7 @@ All apps and data models use the same single generic HTTP-Handler — you can ob
 
 Call stack of an abap2UI5 app
 
-Every app implementation is a REST-based HTTP POST implementation, in which no session is maintained between requests.
+Every app implementation is a REST-based HTTP POST implementation that keeps no session between requests.
 
 ##### 14. REST
 

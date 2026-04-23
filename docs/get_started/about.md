@@ -113,6 +113,6 @@ Contributions are always welcome! Whether you're fixing bugs, building new featu
 → *Read our [Contribution Guide](/resources/contribution) to learn how to get involved*
 
 #### Sponsor
-abap2UI5 is maintained by volunteers. If you or your company benefits from the project, consider supporting it.
+Volunteers maintain abap2UI5. If you or your company benefits from the project, consider supporting it.
 
 → *Learn more about [sponsorship opportunities](/resources/sponsor)*
