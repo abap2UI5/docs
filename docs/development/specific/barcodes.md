@@ -47,7 +47,7 @@ This feature is only available when using the UI5 framework and is not supported
 :::
 
 #### Focus Handling
-Most scanner devices have an integrated scanning function. In such cases, you can create an input field and ensure that focus is properly set. The scanned data will populate the input field as if it were typed via a keyboard.
+Most scanner devices emulate a keyboard. In such cases, you can create an input field and ensure that focus is properly set. The scanned data will populate the input field as if typed on a keyboard.
 
 The key mechanism is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (triggering the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then automatically moves focus to the corresponding field on the frontend:
 
