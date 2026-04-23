@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Navigation
 
-In abap2UI5, each application is a single ABAP class. While you can put all logic into one class, it's better practice to keep classes at a manageable size. By splitting functionality into multiple classes that interact with each other, you can build reusable applications and popups that work across different contexts.
+In abap2UI5, each application is a single ABAP class. While you can put all logic into one class, keeping classes at a manageable size is better practice. Splitting functionality into multiple classes that interact with each other lets you build reusable applications and popups that work across different contexts.
 
 ### Cross App Navigation
 
@@ -62,4 +62,4 @@ To learn more about Launchpads and routing, see the [Fiori Launchpad](/configura
 
 ### Inner App Navigation
 
-Use class attributes to track the current state and switch views accordingly. This keeps all navigation logic in a single ABAP class without needing cross-app calls.
+Use class attributes to track the current state and switch views accordingly. This keeps all navigation logic in a single ABAP class without cross-app calls.
