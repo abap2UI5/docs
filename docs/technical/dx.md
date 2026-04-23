@@ -9,7 +9,7 @@ abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles com
 
 ### Simple Output with IF_OO_ADT_CLASSRUN
 
-One of the most fundamental development tasks is outputting data. In ABAP, the quickest way to do this is with the `if_oo_adt_classrun` interface. It provides a simple, class-based entry point for outputting data directly in ADT:
+One of the most fundamental development tasks is outputting data. In ABAP, the quickest way is the `if_oo_adt_classrun` interface. It provides a simple, class-based entry point for outputting data directly in ADT:
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC.
@@ -41,11 +41,11 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-What abap2UI5 adds: the ability to run in the browser without ADT, using a UI5 frontend that fully follows SAP Fiori design guidelines — ready to show your colleagues right away.
+What abap2UI5 adds: the ability to run in the browser without ADT, via a UI5 frontend that fully follows SAP Fiori design guidelines — ready to show your colleagues right away.
 
 ### Classic Input Handling with Selection Screens
 
-Input handling was never a challenge in classic ABAP — just define a Report with `PARAMETERS` and `SELECT-OPTIONS`, and the UI gets generated automatically. The term didn't exist back then, but this gave you a "full-stack" app in just a few lines:
+Input handling was never a challenge in classic ABAP — just define a Report with `PARAMETERS` and `SELECT-OPTIONS`, and the UI generates automatically. The term didn't exist back then, but this gave you a "full-stack" app in a few lines:
 
 ```abap
 REPORT zre_app_input.
@@ -85,7 +85,7 @@ CLASS zcl_app_input IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Plus, you can test code changes instantly — just reload the page, enter input, and press the button — all within a single class, no external UI tooling needed.
+Plus, you can test code changes instantly — reload the page, enter input, and press the button — all within a single class, no external UI tooling needed.
 
 ### ALV-Style Table Output in the Browser
 
@@ -112,7 +112,7 @@ Benefits:
 - No external annotations, CDS Views, or DDIC artifacts required
 - Ideal for admin tools and quick overviews
 
-abap2UI5 follows a similar pattern. Bind the internal table to a UI5 table control:
+abap2UI5 follows a similar pattern — bind the internal table to a UI5 table control:
 
 ```abap
 CLASS zcl_app_alv DEFINITION PUBLIC.
@@ -148,7 +148,7 @@ CLASS zcl_app_alv IMPLEMENTATION.
 ENDCLASS.
 ```
 
-From here, it's just a small step to generate everything dynamically with RTTI — similar to SALV functionality, but running directly in the browser.
+From here, it's a small step to generate everything dynamically with RTTI — similar to SALV functionality, but running directly in the browser.
 
 ### Classic Popups, Modern Events
 
@@ -177,7 +177,7 @@ Benefits:
 - Simple and readable program flow
 - Fully encapsulated and reusable
 
-abap2UI5 provides a similar experience, enabling apps to call each other and encapsulate dialog logic in reusable classes:
+abap2UI5 provides a similar experience, letting apps call each other and encapsulate dialog logic in reusable classes:
 
 ```abap
 CLASS zcl_app_alv_event DEFINITION PUBLIC.
@@ -223,19 +223,19 @@ In abap2UI5, apps are just ABAP classes — deployment is as simple as activatin
 
 #### No Caching Issues
 
-A common frustration in frontend development: caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files, unless you manually trigger several cache invalidation transactions in the SAP backend. abap2UI5 sidesteps this entirely, as it generates the UI dynamically on every request:
+A common frustration in frontend development: caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens due to cached files, unless you manually trigger several cache-invalidation transactions in the SAP backend. abap2UI5 sidesteps this entirely, since it generates the UI dynamically on every request:
 - No need to clear browser or server caches
 - Fast development iteration — edit the code, refresh the browser, see results
 
 #### Develop in Any IDE
 
-There's often debate about which IDE to use — but why not let everyone pick their favorite? You develop abap2UI5 apps entirely in ABAP. Work in ADT, SE80, or even explore VS Code integration:
+There's often debate about which IDE to use — but why not let everyone pick their favorite? You develop abap2UI5 apps entirely in ABAP. Work in ADT, SE80, or explore VS Code integration:
 - No additional setup required — works in any IDE
 - Ideal for teams with different tooling preferences
 
 #### Pure ABAP Debugging
 
-Frontend-heavy apps often need switching between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Just set a breakpoint in your ABAP method:
+Frontend-heavy apps often require switching between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no additional layers. Just set a breakpoint in your ABAP method:
 - Backend-only debugging with the classic SE80 debugger or ADT
 - No need for browser debugging tools
 
