@@ -7,7 +7,7 @@ abap2UI5 focuses on core functionality — rendering views, handling events, and
 
 #### Add-ons
 
-Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to find the functionality you need. Available features include:
+Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to find the functionality you need. Features include:
 - Layout variant management, similar to classic SAP GUI selection screens or ALV development
 - Table maintenance tools
 - Integration with third-party libraries like Chart.js for enhanced visualization
@@ -28,4 +28,4 @@ Various other open-source projects use abap2UI5 — give them a try:
 
 #### Contribution
 
-Have you developed a new feature or your own open-source project with abap2UI5? Feel free to contribute to existing repositories or create your own. Add your project here and help others discover, use, and contribute to your work.
+Built a new feature or your own open-source project with abap2UI5? Feel free to contribute to existing repositories or create your own. Add your project here and help others discover, use, and contribute to your work.
