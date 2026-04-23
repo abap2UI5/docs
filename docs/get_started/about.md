@@ -65,7 +65,7 @@ All source code is publicly available on GitHub. We discuss features and issues 
 abap2UI5 uses only released APIs, making it perfect for both on-stack and side-by-side extensions in ABAP for Cloud. Take advantage of modern ABAP syntax features like CDS, ABAP SQL, and EML within your apps.
 
 #### Clean Core
-By relying only on released APIs, abap2UI5 ensures your applications remain "cloud-ready" and "upgrade-stable," aligning with SAP's clean core principles. Your investment in abap2UI5 apps is protected against future SAP system upgrades.
+By relying only on released APIs, abap2UI5 ensures your applications remain "cloud-ready" and "upgrade-stable," aligning with SAP's clean-core principles. Your investment in abap2UI5 apps is protected against future SAP system upgrades.
 
 #### System Support
 Works with both ABAP Cloud and Standard ABAP, supporting all ABAP releases from version 7.02 to ABAP Cloud:
