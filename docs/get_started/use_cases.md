@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Use Cases
 
-abap2UI5 fits many scenarios, whether you work in a cloud-ready environment or with classic ABAP.
+abap2UI5 fits many contexts, whether you work in a cloud-ready environment or with classic ABAP.
 
 For a full overview, see the [Use Cases blog article](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/?trackingId=6iIX%2FNk%2BCT0%2B4JorQjpRSQ%3D%3D).
 
