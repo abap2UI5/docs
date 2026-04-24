@@ -73,7 +73,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-The framework accepts other inputs too. Pass your message structure, and the message box displays it.
+The framework accepts other inputs too — pass your message structure, and the message box displays it.
 
 #### Multi-Message Popup
 The message box gives you basic output. For more detail, use the popup `Z2UI5_CL_POP_MESSAGES`:
