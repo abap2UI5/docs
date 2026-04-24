@@ -219,7 +219,7 @@ Beyond the code snippets above, the Over-the-Wire approach of abap2UI5 — based
 In abap2UI5, apps are just ABAP classes — deployment is as simple as activating the class. Transport to production goes through the standard transport system from traditional ABAP development:
 - No separate frontend build or deployment pipeline
 - Other developers or consultants can test code changes instantly
-- Every app is abapGit-compatible — no separate frontend artifacts required
+- Every app is abapGit-compatible — no separate frontend artifacts needed
 
 #### No Caching Issues
 
