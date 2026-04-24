@@ -39,7 +39,7 @@ _MPA vs. SPA vs. HDA [(Source)](https://craftcms.com/events/dot-all-2022/session
 
 ##### 3. Rethinking Separation of Concerns
 
-Unlike traditional architectures, HDAs don't enforce strict separation of CSS, JavaScript, and HTML. The backend generates the UI and handles program flow, much like SAP GUI apps did in the past. This centralized approach simplifies customization and maintenance.
+Unlike traditional architectures, HDAs don't enforce strict separation of CSS, JavaScript, and HTML. The backend generates the UI and handles program flow — much like SAP GUI apps did in the past. This centralized approach simplifies customization and maintenance.
 
 ##### 4. Dive Deeper
 
