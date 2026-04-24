@@ -281,4 +281,4 @@ ENDCLASS.
 :::
 
 #### UI5 Control
-To export data directly on the frontend, SAP offers the sap.ui.export.Spreadsheet control for exporting table content. With some additional logic, you can also use this control with abap2UI5. See the [Add-ons](/resources/addons) page for a running sample with the Custom Control. The programming effort may exceed that of the file-based approach shown above.
+To export data directly on the frontend, SAP provides the sap.ui.export.Spreadsheet control for exporting table content. With a little extra logic, you can use this control with abap2UI5 too. See the [Add-ons](/resources/addons) page for a running sample with the Custom Control. The programming effort may exceed that of the file-based approach shown above.
