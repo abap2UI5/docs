@@ -172,7 +172,7 @@ Every app implementation is a REST-based HTTP POST implementation that keeps no 
 
 ##### 14. REST
 
-This makes it compatible with all mobile use cases and devices, as well as with 'RESTful' environments such as the BTP ABAP Environment and the new 'ABAP Cloud' language version. Similar to an OData implementation, where the app reflects data changes without a restart, you can now develop the entire application and modify its view without restarting the frontend app. See this demo:
+This makes it compatible with all mobile use cases and devices, along with 'RESTful' environments such as the BTP ABAP Environment and the new 'ABAP Cloud' language version. Similar to an OData implementation, where the app reflects data changes without a restart, you can now develop the entire application and modify its view without restarting the frontend app. See this demo:
 
 ![Live editing the ABAP class with the UI updating without reloading the frontend app](https://github.com/user-attachments/assets/c2c1afce-7d72-46a2-b0a7-7725c70bf5f4)
 
@@ -331,7 +331,7 @@ The result is a pure source-code-based framework, which opens up the following p
 
 ##### 26. Running Everywhere Apps
 
-At its core, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. The framework transmits these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on old releases. This approach runs on both the latest ABAP Cloud stack and on-premise systems, as well as legacy ones, making it a release-independent solution. Also, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
+At its core, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. The framework transmits these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on old releases. This approach runs on the latest ABAP Cloud stack, on-premise systems, and legacy ones alike, making it a release-independent solution. Also, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
 
 <img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 
