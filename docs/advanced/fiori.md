@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Integration into Fiori Elements Apps
 
-Extend the object page of Fiori list report apps with an abap2UI5 app. See the [ABAP2UI5_COMP_CONT repository](https://github.com/axelmohnen/ABAP2UI5_COMP_CONT) for a working example.
+Extend the object page of a Fiori list report app with an abap2UI5 app. See the [ABAP2UI5_COMP_CONT repository](https://github.com/axelmohnen/ABAP2UI5_COMP_CONT) for a working example.
 
 <img width="747" height="387" alt="abap2UI5 app embedded in Fiori Elements object page" src="https://github.com/user-attachments/assets/c14d5732-3b8c-4fa5-83ab-6d188a4d87db" />
 
