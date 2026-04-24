@@ -21,7 +21,7 @@ Sometimes installation through abapGit triggers cache-related issues. Here's how
 
 #### Cache Management
 
-1. Recalculate app index of z2ui5 with report `/UI5/APP_INDEX_CALCULATE`
+1. Recalculate the app index of z2ui5 with report `/UI5/APP_INDEX_CALCULATE`
 ![App index calculation report selection screen](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
 ![App index calculation report output](https://github.com/user-attachments/assets/81f8feae-fcfe-4175-aa91-28ce8d681539)
 
