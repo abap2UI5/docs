@@ -144,7 +144,7 @@ This leads to the second subtle shift in abap2UI5: instead of binding OData to t
   <em>abap2UI5 – Backend delivers an XML View and its specifically tailored View Model in a single response</em>
 </p>
 
-This means the frontend no longer consumes CDS Views and OData services directly. Instead, the backend sends the complete UI state — both view and model — in a single response. Any user changes in the UI then return to the backend via a lightweight AJAX call containing the updated view model — no OData routing required.
+This means the frontend no longer consumes CDS Views and OData services directly. Instead, the backend sends the entire UI state — both view and model — in a single response. Any user changes in the UI then return to the backend via a lightweight AJAX call carrying the updated view model — no OData routing required.
 
 You don't need to configure models or bindings manually. abap2UI5 handles this internally. Just expose class attributes via a simple bind method — abap2UI5 handles the rest.
 
@@ -178,7 +178,7 @@ And its corresponding View Model:
 ```
 #### Application Flow
 
-The overall application flow looks like this:
+The application flow looks like this:
 
 <p align="center">
 <img width="600" alt="abap2UI5 architecture - UI5 Over-the-Wire application flow" src="https://github.com/user-attachments/assets/f4df9291-c067-495f-bb52-a68e165e15c1" />
@@ -186,7 +186,7 @@ The overall application flow looks like this:
   <em>abap2UI5 Architecture - UI5 Over-the-Wire</em>
 </p>
 
-The initial request delivers the static shell app. After each user interaction, the app calls the backend — in a PAI/PBO-like fashion — to fetch the updated view and model. Frontend and backend remain tightly coupled — not via OData service definitions, but through plain ABAP logic and JSON. The result is a fully backend-driven UI flow.
+The initial request delivers the static shell app. After each user interaction, the app calls the backend — in PAI/PBO fashion — to fetch the updated view and model. Frontend and backend stay tightly coupled — not via OData service definitions, but through plain ABAP logic and JSON. The result: a fully backend-driven UI flow.
 
 #### Partial HTML Updates
 
