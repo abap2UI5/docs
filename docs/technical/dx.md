@@ -230,7 +230,7 @@ A common frustration in frontend development: caching — especially with BSP or
 #### Develop in Any IDE
 
 There's often debate about which IDE to use — but why not let everyone pick their favorite? You build abap2UI5 apps entirely in ABAP. Work in ADT, SE80, or explore VS Code integration:
-- No additional setup required — works in any IDE
+- No extra setup required — works in any IDE
 - Ideal for teams with different tooling preferences
 
 #### Pure ABAP Debugging
