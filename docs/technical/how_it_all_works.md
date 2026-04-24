@@ -67,7 +67,7 @@ abap2UI5 introduces a key change: the backend also sends the view. This shifts t
 
 "UI5 Over the Wire" - ABAP delivers Data & View together
 
-Despite still relying on frontend HTML rendering, the app now retrieves all the necessary information (view & data) via AJAX from the backend. The UI5 app remains a SPA, but its role shrinks to that of an HDA — responsible only for displaying the view and its data:
+Despite still relying on frontend HTML rendering, the app now retrieves all the needed information (view & data) via AJAX from the backend. The UI5 app stays a SPA, but its role shrinks to that of an HDA — responsible only for displaying the view and its data:
 
 <img width="600" alt="UI5 app downgraded to an HDA - Displaying Data & View received from the server" src="https://github.com/user-attachments/assets/17a3a301-b698-4704-9cbc-43798c5bd600" />
 
@@ -137,7 +137,7 @@ This lets us define models not only at design time, but also at runtime. The use
 
 abap2UI5 - Dynamic Data Binding & Model Creation
 
-In apps, we can now use RTTI again, similar to how ALVs used it. This means no need to create separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type we create and modify at runtime (similar to SE16):
+In apps, we can now use RTTI again, similar to how ALVs used it. We no longer need separate apps for each model. In this demo, you can see an abap2UI5 app with a view that contains a table output whose type we create and modify at runtime (similar to SE16):
 
 ![SE16-like runtime table where the data model is generated at runtime via RTTI](https://github.com/user-attachments/assets/20b4a140-7954-45b0-8d0e-8aa1e8a6f1f5)
 
@@ -178,7 +178,7 @@ This makes it compatible with all mobile use cases and devices, as well as with 
 
 Developing the ABAP class without restarting the frontend app
 
-We also get the advantage shared by all over-the-wire approaches: no cache busting needed anymore, since the frontend app remains unchanged during the development process.
+We also get the advantage shared by all over-the-wire approaches: no more cache busting, since the frontend app stays unchanged during the development process.
 
 So far, we've observed that the abap2UI5 frontend app is unaware of the specific application, just like the generic HTTP-Service on the server, which also has no knowledge of the particular model and view it's transmitting. So, which layer ultimately defines what happens in this architecture?
 
@@ -192,7 +192,7 @@ abap2UI5 app - one place for everything
 
 In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for making sure everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this sits in this single app layer.
 
-However, this isn't a problem for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was essentially an HDA where ABAP performed all the necessary functions (just not in a browser-based environment). Moreover, in this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now tap the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), comes easily at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
+However, this isn't a problem for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was essentially an HDA where ABAP performed all the needed functions (just not in a browser-based environment). In this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now tap the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), comes easily at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
 
 ##### 16. Draft
 
@@ -281,7 +281,7 @@ We can also add extra functionality (JS, HTML, CSS) without extending the framew
 
 App delivering its own JavaScript "Over the Wire"
 
-With any request, you can send your own JavaScript or Custom Controls to the frontend. The abap2UI5 framework forwards it as-is. All subsequent requests can now use this JavaScript — for example, to use Custom Controls in their UI5 Views:
+With any request, you can send your own JavaScript or Custom Controls to the frontend. The abap2UI5 framework forwards it as-is. All subsequent requests can then use this JavaScript — for example, to use Custom Controls in their UI5 Views:
 
 <img width="600" alt="abap2UI5 app sending custom JavaScript to the client" src="https://github.com/user-attachments/assets/66345bd4-6208-4dfc-9870-c82e3a45f74a" />
 
