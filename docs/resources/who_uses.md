@@ -7,7 +7,7 @@ We'd love to hear how you use abap2UI5. Whether in customer projects, integratio
 
 ### Customer Projects
 **Does your company use abap2UI5?** <br>
-Showcase how abap2UI5 apps transform real-world workflows. Add your use case here:
+Showcase how abap2UI5 apps reshape real-world workflows. Add your use case here:
 
 |  Company | System | Use Case |
 | ------------------- | ------------- | ------------- |
