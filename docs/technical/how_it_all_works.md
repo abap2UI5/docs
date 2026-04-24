@@ -309,7 +309,7 @@ Also, Fiori Elements with all its floorplans & templates is very straightforward
 
 ##### 25. System Footprint
 
-We keep the system footprint as small as possible — abap2UI5 relies only on ABAP classes, with no CDS or RAP artifacts. We delegate most of the code to the user outside the framework (21) (22). In total, the framework comes to around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
+We keep the system footprint minimal — abap2UI5 relies only on ABAP classes, with no CDS or RAP artifacts. We delegate most of the code to the user outside the framework (21) (22). Overall, the framework comes to around 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
 
 <img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
@@ -321,7 +321,7 @@ The HTTP-Handler class implements the entire framework logic:
 
 This is all that abap2UI5 does
 
-The functionality focuses only on the communication between backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). This implementation handles the POST request:
+The framework focuses only on communication between backend and frontend, controlling the application flow, and creating the view model. We saw the initial GET request in (17). This implementation handles the POST request:
 
 <img width="600" alt="AJAX POST Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
 
