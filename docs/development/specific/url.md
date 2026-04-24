@@ -22,4 +22,4 @@ client->follow_up_action( client->_event_client(
 ```
 
 ### Browser History
-To manipulate browser history, see sample `Z2UI5_CL_DEMO_APP_139`.
+To control browser history, see sample `Z2UI5_CL_DEMO_APP_139`.
