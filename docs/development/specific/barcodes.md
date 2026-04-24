@@ -9,7 +9,7 @@ Barcode scanning is common in enterprise apps. With abap2UI5, you can:
 - Play sounds for user feedback
 - Display barcodes
 
-This section covers everything needed to get started.
+This section covers what you need to get started.
 
 #### Scanning
 
