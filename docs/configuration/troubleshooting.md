@@ -16,7 +16,7 @@ Press `Ctrl+F12` to open the built-in debugging tools in abap2UI5:
 Here you can inspect the XML View and check the Data Model bound to the view.
 
 #### UI5 Inspector
-Another option is SAP's default debugging tool, the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo).
+Another option: SAP's default debugging tool, the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo).
 
 ### Issues
 If your code looks correct but you suspect a bug in the abap2UI5 framework, create a small sample that reproduces the bug and open an issue in the abap2UI5 repository so we can investigate and fix it.
