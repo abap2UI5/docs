@@ -13,7 +13,7 @@ You can transport abap2UI5 to production like any other ABAP development. For sm
 4. Then transport your custom apps.
 
 #### Stable Version
-The project evolves continuously, so no specific "stable" version exists. However, we keep changes to the public APIs to a minimum to avoid frequent refactoring of apps. Use the [releases](https://github.com/abap2UI5/abap2UI5/releases/) instead of pulling the main branch and update periodically to reduce refactoring effort.
+The project evolves continuously, so no specific "stable" version exists. However, we keep changes to the public APIs to a minimum to avoid frequent app refactoring. Use the [releases](https://github.com/abap2UI5/abap2UI5/releases/) instead of pulling the main branch and update periodically to reduce refactoring effort.
 
 #### Transport
 Install the project via abapGit into your development system. Then use the normal transport process to deploy to production:
