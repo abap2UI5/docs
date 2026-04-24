@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Who Uses abap2UI5?
 
-We'd love to hear how you use abap2UI5! Whether in customer projects, integrations, workshops, open-source contributions, or any other initiatives, sharing your use case can inspire others to adopt this project and help the abap2UI5 community grow.
+We'd love to hear how you use abap2UI5! Whether in customer projects, integrations, workshops, open-source contributions, or any other initiative, sharing your use case can inspire others to adopt this project and help the abap2UI5 community grow.
 
 ### Customer Projects
 **Does your company use abap2UI5?** <br>
