@@ -152,7 +152,7 @@ Replacing the View at Runtime
 
 ##### 12. View & Model Independent of the HTTP-Service
 
-As a result, the View & Model remain independent of the HTTP-Service, and we're no longer forced to deliver a predefined static OData-Service for every app, as RAP does. This markedly reduces the number of backend artifacts:
+As a result, the View & Model remain independent of the HTTP-Service, and we're no longer forced to deliver a predefined static OData-Service for every app, as RAP does. This greatly reduces the number of backend artifacts:
 
 <img width="600" alt="RAP vs. Model & View decoupled from the (single & generic) HTTP-Service" src="https://github.com/user-attachments/assets/6fb61790-87bc-47fa-855e-83d5292b70f3" />
 
