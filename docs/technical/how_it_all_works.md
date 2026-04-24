@@ -145,7 +145,7 @@ Replacing the Model (metadata) at Runtime
 
 ##### 11. Define View at Runtime
 
-The same applies to the view: in RAP, you can modify only certain predefined control attributes at runtime, while CDS artifacts with UI annotations define the view itself upfront. In an abap2UI5 app, however, you can replace entire view controls. For example, in the following app, we swap a table control for a list control and vice versa:
+The same applies to the view: in RAP, you can modify only certain predefined control attributes at runtime, while CDS artifacts with UI annotations define the view itself up front. In an abap2UI5 app, by contrast, you can replace entire view controls. For example, in the app below we swap a table control for a list control and vice versa:
 
 ![Swapping a table control for a list control at runtime from the ABAP backend](https://github.com/user-attachments/assets/b6e081e4-2eae-4175-aca8-fc761b145762)
 Replacing the View at Runtime
