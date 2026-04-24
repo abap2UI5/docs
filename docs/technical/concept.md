@@ -194,7 +194,7 @@ A core benefit of the HTML Over-the-Wire approach: it updates only the affected 
 
 In standard UI5, updating the XML View usually triggers a full re-render. But abap2UI5 makes partial updates possible by updating only the view model. This lets UI5 refresh only the relevant UI controls through data binding — without recreating the entire view structure.
 
-Consider this example:
+An example:
 
 ```abap
 CLASS z2ui5_cl_app_partial_rerendering DEFINITION PUBLIC.
