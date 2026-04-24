@@ -106,7 +106,7 @@ ENDCLASS.
 ```
 
 ### Data Exchange
-Finally, add a public attribute so you can send data to the backend:
+Finally, add a public attribute to send data to the backend:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
