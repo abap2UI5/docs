@@ -123,7 +123,7 @@ First, we don't define a specific HTTP-Service for transmitting the View and Dat
 
 Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model
 
-Furthermore, we don't just send the data but also the metadata (Data Model) with every request (7). This differs from classic OData communication, where the initial OData request carries the metadata to establish the model upfront, and only data moves afterward. With this approach, we can send different models with every request:
+Also, we don't just send the data but also the metadata (Data Model) with every request (7). This differs from classic OData communication, where the initial OData request carries the metadata to establish the model upfront, and only data moves afterward. With this approach, we can send different models with every request:
 
 <img width="600" alt="OData vs. UI5 Over the Wire - Model & Data transfer" src="https://github.com/user-attachments/assets/95fe59c3-7e8a-4e21-8690-12de1110779f" />
 
@@ -275,13 +275,13 @@ This differs from many other UI rendering processes, which usually handle data a
 
 ##### 22. "Over the Wire" Sending JS, HTML & CSS
 
-Furthermore, we can add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App — it has its own custom control that isn't part of the framework and is sent "Over the Wire" after calling the app:
+We can also add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App — it has its own custom control that isn't part of the framework and ships "Over the Wire" after calling the app:
 
 <img width="600" alt="App delivering its own JavaScript 'Over the Wire'" src="https://github.com/user-attachments/assets/5960c1c9-1675-440f-80f9-a3e52db31c1c" />
 
 App delivering its own JavaScript "Over the Wire"
 
-With any request, you can send your own JavaScript or Custom Controls to the frontend. The abap2UI5 framework forwards it as-is. All upcoming requests can now use this JavaScript — for example, to use Custom Controls in their UI5 Views:
+With any request, you can send your own JavaScript or Custom Controls to the frontend. The abap2UI5 framework forwards it as-is. All subsequent requests can now use this JavaScript — for example, to use Custom Controls in their UI5 Views:
 
 <img width="600" alt="abap2UI5 app sending custom JavaScript to the client" src="https://github.com/user-attachments/assets/66345bd4-6208-4dfc-9870-c82e3a45f74a" />
 
@@ -295,7 +295,7 @@ As we saw in (22), we can make apps very complex, but the opposite is also possi
 
 if_oo_adt_classrun vs. abap2UI5
 
-To summarize what we've covered so far, abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain considerable flexibility and freedom in the app implementation, but we also take on full responsibility for the view creation and the program flow. Furthermore, we have to keep the following downsides in mind.
+To summarize what we've covered so far: abap2UI5 is built in a highly generic manner, placing most of the responsibility on the user's apps. As a result, we gain considerable flexibility and freedom in the app implementation, but we also take on full responsibility for the view creation and the program flow. We also have to keep the following downsides in mind.
 
 ##### 24. Downsides Compared to UI5 & RAP
 

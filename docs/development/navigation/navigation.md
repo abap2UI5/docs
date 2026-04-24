@@ -17,7 +17,7 @@ To call an ABAP class, use this code:
 
 ENDMETHOD.
 ```
-The framework maintains a call stack. In the newly called class, you can return to the previous application using:
+The framework maintains a call stack. In the newly called class, return to the previous application with:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -36,7 +36,7 @@ To access data from the previous application, use casting as follows:
 
 ENDMETHOD.
 ```
-To navigate to an application without adding it to the call stack, use:
+To navigate to an application without pushing it onto the call stack, use:
 ```abap
   METHOD z2ui5_if_app~main.
 
