@@ -32,7 +32,7 @@ ENDCLASS.
 This method works with tables, trees, and other complex data structures. For more details, browse the table and tree samples in the samples repository.
 
 #### Two-Way Binding
-When users need to edit data, enable two-way binding to update it in the ABAP backend. Use the `client->_bind_edit` method so that, after an event, the framework syncs the data with your ABAP class:
+When users need to edit data, enable two-way binding to update it in the ABAP backend. Use the `client->_bind_edit` method — after an event, the framework syncs the data with your ABAP class:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
