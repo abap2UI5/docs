@@ -11,7 +11,7 @@ The abap2UI5 framework runs as an HTTP handler. You create this HTTP handler and
 The ICF (Internet Communication Framework) node level handles authentication. You have full control over configuring the ICF node, including visibility settings, login procedures, and other security parameters.
 
 ### Authorization
-As an app developer, you have full flexibility over authorization settings. Configure these at either the application level or the service node level. For detailed guidance on setting up authorization for your endpoint, see [Authorization](/configuration/authorization).
+As an app developer, you have full flexibility over authorization settings. Configure these at either the application level or the service node level. For details on setting up authorization for your endpoint, see [Authorization](/configuration/authorization).
 
 ### Backend Code
 abap2UI5 ships as custom code. Once installed, you have full ownership of the code, free to modify it to suit your needs. However, to preserve compatibility with future updates, avoid direct modifications to the core codebase.

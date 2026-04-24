@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # Frontend
 
-The abap2UI5 frontend artifacts live in the app folder. To make adjustments, follow these steps:
+The abap2UI5 frontend artifacts live in the app folder. To adjust them, follow these steps:
 
 #### Setup
-Open VS Code or an editor of your choice and run in the terminal:
+Open VS Code or your preferred editor and run in the terminal:
 ```sh
 git clone https://github.com/abap2UI5/abap2UI5
 cd app
