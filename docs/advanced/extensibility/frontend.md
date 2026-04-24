@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Frontend
 
-The abap2UI5 frontend artifacts live in the `app` folder. To adjust them, follow these steps:
+The abap2UI5 frontend artifacts live in the `app` folder. To adjust them:
 
 #### Setup
 Open VS Code (or your preferred editor), then run in the terminal:
