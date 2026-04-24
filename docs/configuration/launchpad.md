@@ -35,11 +35,11 @@ Sometimes installation via abapGit causes cache-related issues. Here's how to re
 4. Clear browser caches and hard reload
 
 #### Manual Deployment
-If cache clearing doesn't fix the issue, manually upload the frontend application:
+If cache clearing doesn't fix the issue, upload the frontend application manually:
 
 1. Download the webapp folder of the project.
 
-2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to upload the application to the server.
+2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to upload the app to the server.
 <img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
 
 ### Launchpad KPIs
