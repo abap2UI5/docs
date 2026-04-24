@@ -111,7 +111,7 @@ RAP - Definition of Data Models with DDL
 
 This also leads to an architecture with a thin frontend and a strong backend, similar to an HDA. But RAP aims for this in a well-organized, controlled way: every API relies on the OData protocol, UI annotations define the views, DDL defines the data models, local implementations of RAP classes handle model updates, and everything splits into layers orchestrated in a Virtual Data Model. This approach ensures a well-organized development process that works for most use cases.
 
-But when major Model and View changes are needed at runtime, this approach can be too inflexible. Model changes with RTTI aren't supported, and extending the view quickly exceeds the functional scope of backend annotations — requiring Fiori Elements apps (which again require extra deployment).
+But when major Model and View changes are needed at runtime, this approach can be too rigid. Model changes with RTTI aren't supported, and extending the view quickly exceeds the functional scope of backend annotations — requiring Fiori Elements apps (which again require extra deployment).
 
 Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to worry about conventions and can take a few more risks. As we saw in (6), the first trick was sending Views from the backend instead of storing them in the frontend app — now we can push flexibility even further (9)(10).
 
