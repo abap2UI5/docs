@@ -11,7 +11,7 @@ In private and on-premise cases, you can also run abap2UI5 in stateful mode. See
 
 #### Locks
 
-In some cases, you may need to lock business objects. Stateful sessions (described above) are one way.
+You may need to lock business objects. Stateful sessions (described above) are one way.
 
 #### Infinite Transactions
 
