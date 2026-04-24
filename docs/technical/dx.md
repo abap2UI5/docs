@@ -223,7 +223,7 @@ In abap2UI5, apps are just ABAP classes — deployment is as simple as activatin
 
 #### No Caching Issues
 
-A common frustration in frontend development: caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens because of cached files, unless you manually trigger several cache-invalidation transactions in the SAP backend. abap2UI5 sidesteps this entirely, generating the UI dynamically on every request:
+A common frustration in frontend development: caching — especially with BSP or Fiori Elements apps. You make a change, but nothing happens because of cached files, unless you manually trigger several cache-invalidation transactions in the SAP backend. abap2UI5 avoids this entirely, generating the UI dynamically on every request:
 - No need to clear browser or server caches
 - Fast development iteration — edit the code, refresh the browser, see results
 
