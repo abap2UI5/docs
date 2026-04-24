@@ -49,7 +49,7 @@ This feature works only with the UI5 framework, not with OpenUI5.
 #### Focus Handling
 Most scanner devices emulate a keyboard. In those cases, create an input field and set focus correctly — the scanned data fills the input as if typed on a keyboard.
 
-The key mechanism is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then moves focus to the matching field on the frontend automatically:
+The key piece is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then moves focus to the matching field on the frontend automatically:
 
 An example that handles input focus and manages transitions between fields after scanning and pressing Enter:
 
