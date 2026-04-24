@@ -57,7 +57,7 @@ For ABAP Cloud environments, follow [SAP's HTTP service tutorial](https://develo
 :::
 
 ::: tip **Security**
-abap2UI5 communicates only with the HTTP service you define, giving you complete control over accessibility, authentication, and other security aspects.
+abap2UI5 communicates only with the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
 :::
 
 ### 3. Initial Launch
