@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Share, Bookmark
 
-The app state feature unlocks several useful options — for example, sharing and bookmarking the current state of your app.
+The app state feature unlocks several useful options — like sharing and bookmarking the current state of your app.
 
 ### Share
 Integrate a share button that copies the current state to the clipboard to share with colleagues:
