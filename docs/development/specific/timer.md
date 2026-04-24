@@ -5,7 +5,7 @@ outline: [2, 4]
 
 abap2UI5 provides a custom control `z2ui5.Timer` that fires events after a specified delay. This helps with dashboards, status monitors, or any case that needs periodic data updates without user interaction.
 
-Add the timer as a view element via `_z2ui5( )->timer( ... )`. These parameters apply:
+Add the timer as a view element through `_z2ui5( )->timer( ... )`. These parameters apply:
 
 | Parameter     | Description                                      |
 |---------------|--------------------------------------------------|
