@@ -17,7 +17,7 @@ ABAP Cloud includes a simplified technology stack, syntax, and toolset:
 - Simplified syntax (e.g., no `WRITE` statements)
 - Only released APIs allowed
 - No direct access to SAP database tables — use the VDM instead
-- Development via ADT or browser-based tools, but no SE80
+- Development via ADT or browser-based tools — no SE80
 
 SAP recommends developing all new applications in ABAP Cloud.
 
