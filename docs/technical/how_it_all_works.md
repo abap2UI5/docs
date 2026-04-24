@@ -226,7 +226,7 @@ The first GET request sends the artifacts of the UI5 (HDA) app to the browser. T
 
 index.html stored in ABAP Source Code instead of using a BSP
 
-This gives us a 100% abapGit project that uses only ABAP source code, making it easy to install on every ABAP system by removing separate frontend artifacts or deployments.
+This gives us a 100% abapGit project that uses only ABAP source code, making it easy to install on any ABAP system by removing separate frontend artifacts or deployments.
 
 ##### 18. Everything Is Maintained & Developed in the Backend
 
