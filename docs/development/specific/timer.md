@@ -59,7 +59,7 @@ With `checkrepeat = abap_true`, the timer restarts after each event automaticall
 
 #### One-Shot Timer
 
-For a single firing (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
+For a single firing (e.g., to open a new browser tab), omit `checkrepeat` and control activation through `checkactive`:
 
 ```abap
 CLASS z2ui5_cl_sample_timer_once DEFINITION PUBLIC.
