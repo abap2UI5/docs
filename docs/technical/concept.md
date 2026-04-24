@@ -166,7 +166,7 @@ A typical backend response includes both the XML View:
   </Shell>
 </mvc:View>
 ```
-And its corresponding View Model:
+And its View Model:
 ```json
 {
    "MODEL": {
