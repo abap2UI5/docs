@@ -78,7 +78,7 @@ Backend (ABAP Class)
 ### Conclusion
 
 - **RAP (Fiori Elements)** is best suited for standardized, metadata-driven applications using CDS, OData, and annotations.
-- **abap2UI5** offers runtime flexibility, backend control, and lower complexity — ideal for dynamic UIs and fast iterations.
+- **abap2UI5** offers runtime flexibility, backend control, and lower complexity — ideal for dynamic UIs and fast iteration.
 
 ### Summary Table
 
