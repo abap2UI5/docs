@@ -60,7 +60,7 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** stand
 ### abap2UI5
 _UI5 Over-the-Wire (2023+) (Open Source)_
 
-**abap2UI5** brings the simplicity of the **Over-the-Wire** concept to SAP UI5 development.
+**abap2UI5** brings the simplicity of **Over-the-Wire** to SAP UI5 development.
 
 - The ABAP backend defines **UI5 XML Views** and **JSON ViewModels**
 - A static UI5 frontend dynamically renders these definitions
