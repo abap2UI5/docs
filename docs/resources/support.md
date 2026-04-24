@@ -10,5 +10,5 @@ If you hit a bug or unexpected behavior, please open an [issue](https://github.c
 Join the abap2UI5 channel on [Slack](https://communityinviter.com/apps/abapgit/abap) to ask questions, share insights, or get help from fellow developers.
 
 ::: tip
-If you need a specific feature that doesn't exist yet, opening an issue is a great way to discuss potential extensions to the project.
+If you need a specific feature that doesn't exist yet, open an issue — it's a great way to discuss potential extensions to the project.
 :::
