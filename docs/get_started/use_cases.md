@@ -32,5 +32,5 @@ For more flexibility, build applications whose lifecycle is independent of your 
 ![Tier 3 side-by-side extension with remote API calls](/get_started/image-23.png){ width=60% }
 
 ### Software as a Service (SaaS)
-With a Tier 1 side-by-side extension, you can connect a single abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across different customer tenants and remote systems to create a true SaaS scenario:
+With a Tier 1 side-by-side extension, you can connect a single abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across customer tenants and remote systems for a true SaaS scenario:
 ![SaaS architecture connecting one abap2UI5 app to multiple S/4 tenants](/get_started/image-9.png){ width=60% }
