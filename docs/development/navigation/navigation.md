@@ -25,7 +25,7 @@ The framework maintains a call stack. From the newly called class, return to the
 
 ENDMETHOD.
 ```
-To access data from the previous application, cast as follows:
+To access data from the previous application, cast it like this:
 ```abap
   METHOD z2ui5_if_app~main.
 
