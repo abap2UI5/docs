@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # Add-ons
 
-abap2UI5 focuses on core functionality — rendering views, handling events, and exchanging data. This keeps the framework lean and maintainable. But the real power comes from the ecosystem: **ready-to-use add-ons and community projects** that extend abap2UI5 for your specific needs.
+abap2UI5 focuses on core capabilities — rendering views, handling events, and exchanging data. This keeps the framework lean and maintainable. The real power comes from the ecosystem: **ready-to-use add-ons and community projects** that extend abap2UI5 for your specific needs.
 
 #### Add-ons
 
-Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to find the functionality you need. Features include:
+Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to find what you need. Features include:
 - Layout variant management, similar to classic SAP GUI selection screens or ALV development
 - Table maintenance tools
 - Integration with third-party libraries like Chart.js for enhanced visualization

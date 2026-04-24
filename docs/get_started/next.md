@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # What's Next?
 
-Now that you have abap2UI5 up and running, here are some paths to explore.
+With abap2UI5 up and running, here are some paths to explore.
 
 #### Development
 Learn how to build views, handle events, exchange data, and work with tables. The development guide covers everything you need for day-to-day work with abap2UI5. Start with the [Development guide](/development/general).
