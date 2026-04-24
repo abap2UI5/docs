@@ -120,7 +120,7 @@ By contrast, conventional UI5 freestyle applications require a dedicated set of 
   <em>UI5 freestyle – Each application requires its own set of deployed UI and App artifacts</em>
 </p>
 
-This leads to additional deployment effort during both development and go-live.
+This leads to extra deployment effort during both development and go-live.
 
 #### Create & Update Data
 
