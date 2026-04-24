@@ -51,7 +51,7 @@ When activation completes, refresh the folder tree:
 
 <img width="626" height="762" alt="All artifacts activated in folder tree" src="https://github.com/user-attachments/assets/86b26c00-e71e-4a3f-a9e9-2beaaeddf577" />
 
-Now you'll see that all artifacts are activated:
+Now you'll see that all artifacts are active:
 
 <img width="641" height="88" alt="Fully activated abap2UI5 package" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
 
