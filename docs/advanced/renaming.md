@@ -8,7 +8,7 @@ The entire abap2UI5 project lives under the `z2ui5` namespace. In certain scenar
 - Custom namespaces, e.g., `/ZZZ/`, `/YYY/`
 - Release-specific naming, e.g., `z2411`, `z2502`
 
-abap2UI5 is compatible with the abaplint renaming feature and supports namespaces of up to 9 characters, e.g., `zabap2ui5`.
+abap2UI5 works with the abaplint renaming feature and supports namespaces up to 9 characters, e.g., `zabap2ui5`.
 
 #### Functionality
 For more on renaming ABAP artifacts, check out:
