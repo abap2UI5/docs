@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # User Exits
 
-abap2UI5 offers predefined user exits for modifying the standard behavior. The interface [`Z2UI5_IF_EXIT`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_if_exit.intf.abap) exposes the user exits. To use them in your system, create a new class that implements the interface and its methods. The abap2UI5 class [`Z2UI5_CL_EXIT`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_cl_exit.clas.abap) calls them dynamically. Place your class in a custom package — **not** in the abap2UI5 packages.
+abap2UI5 provides predefined user exits for modifying the standard behavior. The interface [`Z2UI5_IF_EXIT`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_if_exit.intf.abap) exposes the user exits. To use them in your system, create a class that implements the interface and its methods. The abap2UI5 class [`Z2UI5_CL_EXIT`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_cl_exit.clas.abap) calls them dynamically. Place your class in a custom package — **not** in the abap2UI5 packages.
 
 The interface offers two exit methods:
 - **`set_config_http_get`** — called during the initial HTTP GET request (page load). Use it to customize frontend settings like the page title, UI5 theme, or UI5 version.
