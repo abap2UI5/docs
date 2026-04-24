@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Downporting
 
-abap2UI5 works out of the box on ABAP 7.50 and later. On an earlier release, install the downported version, which supports R/3 NetWeaver 7.02 and later.
+abap2UI5 works right away on ABAP 7.50 and later. On an earlier release, install the downported version, which supports R/3 NetWeaver 7.02 and later.
 
 #### Branch
 To install on an older system, use the `702` branch:
