@@ -11,7 +11,7 @@ This article introduces the core pattern behind abap2UI5: HTML Over-the-Wire —
 
 _HTML Over-the-Wire_ describes a server-centric web architecture in which the server generates the user interface and sends it to the browser as ready-to-render HTML.
 
-Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser just receives HTML fragments and renders them. This approach removes the need for client-side MVC frameworks, data transformation layers, and frontend deployment pipelines [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
+Instead of building and maintaining complex JavaScript frontends, managing APIs, and exchanging JSON, the server handles everything — from business logic to UI generation. The browser only receives HTML fragments and renders them. This approach removes the need for client-side MVC frameworks, data transformation layers, and frontend deployment pipelines [(1)](https://signalvnoise.com/svn3/html-over-the-wire/):
 
 > You can write fast, modern, responsive web applications by generating your HTML on the server, and delivering that directly to the browser. You don't need JSON as an in-between format. You don't need client-side MVC frameworks. You don't need complicated bundling and transpiling pipelines.
 
