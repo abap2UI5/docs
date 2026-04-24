@@ -315,7 +315,7 @@ We keep the system footprint minimal — abap2UI5 uses only ABAP classes, with n
 
 System footprint of abap2UI5
 
-The HTTP-Handler class implements the entire framework logic:
+The HTTP-Handler class holds all the framework logic:
 
 <img width="600" alt="This is all that abap2UI5 does" src="https://github.com/user-attachments/assets/9c54e6b9-18a0-4582-a8cf-345d41d61a00" />
 
