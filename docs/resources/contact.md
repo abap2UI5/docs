@@ -9,4 +9,4 @@ abap2UI5 is an open-source project that values transparent, publicly visible com
 - Slack: Join the abap2UI5 channel on [abapGit Slack](https://communityinviter.com/apps/abapgit/abap)
 - Social Media: Share your thoughts on [LinkedIn](https://www.linkedin.com/company/abap2ui5)
 
-For private inquiries, email <contact@abap2UI5.org>. Since this is a spare-time project, responses may take a bit longer.
+For private inquiries, email <contact@abap2UI5.org>. Since this is a spare-time project, responses may take a while.
