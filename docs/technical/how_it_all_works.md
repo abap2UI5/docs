@@ -99,7 +99,7 @@ But is this the same as RAP, just in a different format?
 
 ##### 8. RAP
 
-RAP also aims for a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully transparent, but it enriches responses either in the JSON itself or in the metadata of the initial OData request — and CDS Views in the backend define the view and model up front:
+RAP also aims for a "sweet spot" between SPA and MPA. The exact mechanism RAP uses to bring its view and model to the frontend isn't fully documented, but it enriches responses either in the JSON itself or in the metadata of the initial OData request — and CDS Views in the backend define the view and model up front:
 
 <img width="600" alt="RAP - Definition of Views with UI Annotations" src="https://github.com/user-attachments/assets/a79f07ff-594d-422c-b66f-8acf8058c81a" />
 
