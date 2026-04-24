@@ -214,7 +214,7 @@ This gives us a stateful-like PAI/PBO feel similar to SAP GUI apps, even though 
 
 SAP GUI (stateful) vs. abap2UI5 (restful)
 
-But use this feature only for interim results; be careful when serializing other parts of your app.
+But use this feature only for interim results; take care when serializing other parts of your app.
 
 We've gained real flexibility with (9) (10) (11) (16); the next sections focus on how the framework reduces its complexity, starting with the initial request.
 
