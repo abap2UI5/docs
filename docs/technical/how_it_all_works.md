@@ -196,7 +196,7 @@ However, this isn't a problem for ABAP! From an ABAP perspective, it resembles p
 
 ##### 16. Draft
 
-With RAP, users can save interim results in drafts, letting them pause and resume their work later. The abap2UI5 architecture works as if we send a completely new app to the frontend after every event, but we still want to preserve the user's previous inputs and state. To achieve this, the `z2ui5_if_app` interface includes the `if_serializable_object` interface, which lets us serialize and persist all important information from every request (such as the current view or its status):
+With RAP, users can save interim results in drafts, letting them pause and resume work later. The abap2UI5 architecture acts as if we send a completely new app to the frontend after every event, but we still want to preserve the user's previous inputs and state. To achieve this, the `z2ui5_if_app` interface includes the `if_serializable_object` interface, which lets us serialize and persist all important information from every request (such as the current view or its status):
 
 <img width="600" alt="z2ui5_t_draft - the abap2UI5 persistence for interim results" src="https://github.com/user-attachments/assets/fc13f32d-3145-4510-a2d8-a0b646fdd6c4" />
 
@@ -214,7 +214,7 @@ With this approach, we achieve a stateful-like PAI/PBO feel similar to SAP GUI a
 
 SAP GUI (stateful) vs. abap2UI5 (restful)
 
-However, use this feature only for interim results; be cautious when serializing other parts of your app.
+However, use this feature only for interim results; be careful when serializing other parts of your app.
 
 We've gained significant flexibility with (9) (10) (11) (16); the next sections focus on how the framework reduces its complexity, starting with the initial request.
 
