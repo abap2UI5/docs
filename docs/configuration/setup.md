@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # General
 
-You can run abap2UI5 with various custom configurations. The default setup runs automatically. For custom configurations, implement the interface `z2ui5_if_exit`:
+You can run abap2UI5 with various custom configurations. The default setup runs automatically. To customize, implement the interface `z2ui5_if_exit`:
 
 ```abap
 CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
@@ -46,7 +46,7 @@ ENDMETHOD.
 ```
 
 ### Style / CSS
-To apply custom styles or CSS, use the following:
+To apply custom styles or CSS:
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
 
@@ -56,4 +56,4 @@ ENDMETHOD.
 ```
 
 ### Logon Language
-To set the logon language, use the `sap-language` URL parameter. For more URL parameter options, check out [SAP's documentation](https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true).
+To set the logon language, use the `sap-language` URL parameter. For more URL parameters, see [SAP's documentation](https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/8b/46468c433b40c3b87b2e07f34dea1b/content.htm?no_cache=true).
