@@ -19,7 +19,7 @@ The concept of **"HTML Over the Wire"** inspired one of the core ideas behind ab
 
 The SAP community introduced this idea through examples that use the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
 
-After the initial page load, the server sends small HTML fragments asynchronously via AJAX to update parts of the page — avoiding full reloads.
+After the initial page load, the server sends small HTML fragments asynchronously over AJAX to update parts of the page — avoiding full reloads.
 
 <img width="400" alt="HTML 'Over the Wire' Lifecycle" src="https://github.com/user-attachments/assets/a9fde24a-c572-4e5c-b203-59a0667b9931" />
 
