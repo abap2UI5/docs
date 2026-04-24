@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Logging, BAL
 
-Logging is essential for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available in both on-premise and ABAP Cloud environments. With abap2UI5, you can use BAL just as you would in classic development and display logs through the framework's built-in popups.
+Logging is essential for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available in both on-premise and ABAP Cloud environments. With abap2UI5, use BAL just as you would in classic development and display logs through the framework's built-in popups.
 
 #### BAL Variables
 In classic ABAP, use the classic BAL function modules and display the BAL table with the popup `Z2UI5_CL_POP_MESSAGES`:
@@ -20,7 +20,7 @@ ENDMETHOD.
 ```
 
 #### ABAP Cloud
-In ABAP Cloud, you can pass the logging object directly into the popup:
+In ABAP Cloud, pass the logging object directly into the popup:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -46,7 +46,7 @@ ENDMETHOD.
 ```
 
 #### abap-logger
-You can also use the open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates cleanly with abap2UI5. Here's an example:
+You can also use the open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies work with BAL logs and integrates cleanly with abap2UI5. Here's an example:
 ```abap
 METHOD z2ui5_if_app~main.
 
