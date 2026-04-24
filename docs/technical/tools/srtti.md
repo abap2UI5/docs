@@ -92,4 +92,4 @@ S-RTTI integrates directly into the `z2ui5` namespace and installs with abap2UI5
 z2ui5_cl_srt_datadescr=>
 ```
 #### Updates
-Every S-RTTI update and bug fix flows automatically into abap2UI5 through GitHub Actions and the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.
+Every S-RTTI update and bug fix flows into abap2UI5 automatically through GitHub Actions and the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.
