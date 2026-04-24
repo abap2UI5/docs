@@ -22,7 +22,7 @@ _Embedded HTML in ABAP (2001+) (SAP)_
 Business Server Pages (BSP) introduced HTML-based web development within the ABAP stack.
 
 - Developers write HTML and JavaScript, with embedded ABAP for logic
-- Also server-side rendering, but with greater control over layout and styling
+- Also server-side rendering, but with more control over layout and styling
 - Used extensively in early CRM and SRM web applications
 - Technically obsolete, yet still present in some legacy environments
 
