@@ -78,7 +78,7 @@ Luckily, UI5 has a key trait that lets us shift part of the view generation to t
   <em>UI5 freestyle – HTML created in browser based on frontend XML View and backend Data</em>
 </p>
 
-abap2UI5 introduces a subtle but important shift: what if the backend also delivers the XML View?
+abap2UI5 introduces a small but important shift: what if the backend also delivers the XML View?
 
 While HTML creation still happens on the frontend, the backend now sends both the view definition and its data:
 
