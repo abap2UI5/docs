@@ -275,7 +275,7 @@ This differs from many other UI rendering processes, which usually handle data a
 
 ##### 22. "Over the Wire" Sending JS, HTML & CSS
 
-We can also add extra functionality (JS, HTML, CSS) without extending the framework itself or changing the abap2UI5 frontend app. For instance, take the Upload Files App — it has its own custom control that isn't part of the framework and ships "Over the Wire" when the app is called:
+We can add extra functionality (JS, HTML, CSS) without extending the framework or changing the abap2UI5 frontend app. For instance, take the Upload Files App — it has its own custom control that isn't part of the framework and ships "Over the Wire" when the app is called:
 
 <img width="600" alt="App delivering its own JavaScript 'Over the Wire'" src="https://github.com/user-attachments/assets/5960c1c9-1675-440f-80f9-a3e52db31c1c" />
 
