@@ -70,7 +70,7 @@ INTERFACE z2ui5_if_lp_kpi
 
 ENDINTERFACE.
 ```
-(2/3) Implement the interface in your app class alongside `z2ui5_if_app`. The `count` method contains your custom KPI calculation logic (e.g., counting open items from the database):
+(2/3) Implement the interface in your app class alongside `z2ui5_if_app`. The `count` method holds your custom KPI calculation logic (e.g., counting open items from the database):
 ```abap
 CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
 
@@ -93,7 +93,7 @@ CLASS z2ui5_cl_lp_kpi_hello_world IMPLEMENTATION.
 
 ENDCLASS.
 ```
-(3/3) A generic OData proxy service (`Z2UI5_PROXY_KPI_SRV`) handles the rest. It receives the `$filter` parameter containing your class name, instantiates the class, calls `count`, and returns that many dummy OData entries. The Launchpad then displays the `$count` result as the tile KPI. Configure the tile with this endpoint:
+(3/3) A generic OData proxy service (`Z2UI5_PROXY_KPI_SRV`) handles the rest. It receives the `$filter` parameter containing your class name, instantiates the class, calls `count`, and returns that many dummy OData entries. The Launchpad then shows the `$count` result as the tile KPI. Configure the tile with this endpoint:
 ```text
 .../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_lp_kpi_hello_world'
 ```
