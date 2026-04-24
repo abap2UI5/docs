@@ -49,7 +49,7 @@ This feature works only with the UI5 framework, not with OpenUI5.
 #### Focus Handling
 Most scanner devices emulate a keyboard. In those cases, create an input field and set focus correctly. The scanned data populates the input field as if typed on a keyboard.
 
-The key mechanism is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (triggering the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then automatically moves focus to the corresponding field on the frontend:
+The key mechanism is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then automatically moves focus to the matching field on the frontend:
 
 Here's an example that handles input focus and manages transitions between fields after scanning and pressing Enter:
 
@@ -104,7 +104,7 @@ ENDCLASS.
 
 #### Play Sounds
 
-Audio feedback can help in specific contexts. Below is an example that plays a sound if a user fails to scan a value. The sound is a .wav file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
+Audio feedback can help in specific contexts. The example below plays a sound when a user fails to scan a value. The sound is a .wav file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
 ```abap
 CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
