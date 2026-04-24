@@ -25,7 +25,7 @@ The framework maintains a call stack. In the newly called class, return to the p
 
 ENDMETHOD.
 ```
-To access data from the previous application, use casting as follows:
+To access data from the previous application, cast as follows:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -46,11 +46,11 @@ To navigate to an application without pushing it onto the call stack, use:
 ENDMETHOD.
 ```
 ::: tip
-Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `leave to screen` behavior here.
+Sounds familiar? The abap2UI5 framework emulates the classic `call screen` and `leave to screen` behavior here.
 :::
 
 #### Launchpad
-We recommend using backend communication exclusively for view changes or popup calls. With a Launchpad, consider navigating through the Launchpad to use browser navigation and history. Here's an example:
+We recommend using backend communication only for view changes or popup calls. With a Launchpad, consider navigating through the Launchpad to use browser navigation and history. Here's an example:
 ```abap
 client->_event_client(
     val   = client->cs_event-cross_app_nav_to_ext
