@@ -9,8 +9,6 @@ Extend the object page of a Fiori list report app with an abap2UI5 app. See the 
 
 ### Guide
 
-Follow these steps:
-
 1. Register the FLP integration in the component.js:
 
 ```javascript
