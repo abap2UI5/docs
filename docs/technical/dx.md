@@ -208,7 +208,7 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Browser-based roundtrips need slightly different flow control, but the overall approach stays intuitive for ABAP developers.
+Browser-based roundtrips need slightly different flow control, but the overall approach remains intuitive for ABAP developers.
 
 ### More Developer-Friendly Advantages
 
