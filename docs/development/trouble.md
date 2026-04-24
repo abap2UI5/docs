@@ -22,7 +22,7 @@ METHOD z2ui5_if_app~main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    "Step 1: Define a JavaScript function via an inline <script> tag.
+    "Step 1: Define a JavaScript function inside an inline <script> tag.
     "z2ui5.afterBE is a hook that runs after the backend responds.
     "This function takes a UI5 control ID and an inputmode value,
     "then modifies the HTML input element's inputmode attribute.
