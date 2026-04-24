@@ -7,7 +7,7 @@ Displaying messages and errors is an everyday task for ABAP developers. The func
 
 #### Message Toast
 
-For short-lived messages, such as success notifications, use the message toast:
+For short-lived messages like success notifications, use the message toast:
 
 ```abap
 METHOD z2ui5_if_app~main.
