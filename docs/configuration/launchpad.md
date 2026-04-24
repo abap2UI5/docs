@@ -9,7 +9,7 @@ Integrate your abap2UI5 apps into SAP Fiori Launchpads. Full details here: <br>
 [**(3) Integration of KPIs**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/) <br>
 
 ### Target Mapping
-Use the following parameters for target mapping in your Launchpad configuration:
+Use these parameters for target mapping in your Launchpad configuration:
 - Semantic Object: `Z2UI5_CL_MY_APP`
 - Action: `display`
 - URL: `/sap/bc/ui5_ui5/sap/z2ui5`
@@ -44,18 +44,18 @@ If cache clearing doesn't fix the issue, upload the frontend application manuall
 
 ### Launchpad KPIs
 
-Enhance your Fiori Launchpad with Key Performance Indicators (KPIs) via the abap2UI5 Launchpad KPI add-on.
+Extend your Fiori Launchpad with Key Performance Indicators (KPIs) via the abap2UI5 Launchpad KPI add-on.
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
-Find more information in the blog article on [LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
+For more details, see the blog article on [LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
 
 #### Functionality
 <img width="800" alt="Launchpad KPI tiles showing dynamic count values" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
 <br>
 
 #### Approach
-The integration works in three steps: you implement a simple interface, the Launchpad calls a generic OData proxy service, and the proxy delegates to your ABAP class to calculate the KPI count.
+The integration has three steps: you implement a simple interface, the Launchpad calls a generic OData proxy service, and the proxy delegates to your ABAP class to calculate the KPI count.
 
 (1/3) Implement the `z2ui5_if_lp_kpi` interface. The `count` method receives an optional `filter` string (from the OData `$filter` parameter) and returns the KPI value as an integer:
 ```abap
