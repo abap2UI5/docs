@@ -7,7 +7,7 @@ Working with URLs is common — reading parameters from the current URL, opening
 
 ### Read URL Parameters
 
-Read query parameters from the current URL via the config object:
+Read query parameters from the current URL through the config object:
 ```abap
 DATA(lv_search) = client->get( )-s_config-search.
 ```
