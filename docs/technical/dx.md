@@ -41,7 +41,7 @@ CLASS zcl_app_ui5 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-What abap2UI5 adds: the ability to run in the browser without ADT, through a UI5 frontend that fully follows SAP Fiori design guidelines — ready to share with your colleagues.
+What abap2UI5 adds: the ability to run in the browser without ADT, through a UI5 frontend that follows SAP Fiori design guidelines — ready to share with your colleagues.
 
 ### Classic Input Handling with Selection Screens
 
