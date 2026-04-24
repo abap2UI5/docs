@@ -72,7 +72,7 @@ Backend (ABAP Class)
 | **Clean Core Compliance**  | ✅ Possible                   | ✅ Yes                        |
 | **Runtime Flexibility**    | ✅ through JS logic           | ✅ Fully runtime-capable      |
 
-> 🚀 **Both approaches offer full UI flexibility.** abap2UI5 achieves this via ABAP alone, while UI5 Freestyle shifts control to the JavaScript layer.
+> 🚀 **Both approaches offer full UI flexibility.** abap2UI5 achieves this through ABAP alone, while UI5 Freestyle shifts control to the JavaScript layer.
 
 ### Conclusion
 
