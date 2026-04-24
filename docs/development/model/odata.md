@@ -97,7 +97,7 @@ client->follow_up_action( client->_event_client(
 For a working code snippet, see the sample `Z2UI5_CL_DEMO_APP_315`.
 
 #### Metadata Binding
-In SAP contexts, OData services often carry extra annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. Here are the definitions for the entity `Currency`:
+In SAP contexts, OData services often carry extra annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. The definitions for the entity `Currency`:
 ```xml
 <EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">
 <Key>
