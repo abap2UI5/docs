@@ -159,4 +159,4 @@ ENDCLASS.
 
 ```
 
-Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting via formatOptions and constraints. For a full example, see the sample implementation in class `Z2UI5_CL_DEMO_APP_067`.
+Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting through formatOptions and constraints. For a full example, see the sample implementation in class `Z2UI5_CL_DEMO_APP_067`.
