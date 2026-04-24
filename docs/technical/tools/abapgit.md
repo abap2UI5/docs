@@ -19,4 +19,4 @@ You can also install multiple abap2UI5 apps with a single abapGit pull. This wor
 #### Contribution
 
 Contributions are welcome and easy to manage through pull requests on GitHub.
-Open a pull request and commit your changes via abapGit.
+Open a pull request and commit your changes through abapGit.
