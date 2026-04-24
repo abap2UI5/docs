@@ -48,7 +48,7 @@ ENDCLASS.
 ```
 
 #### Transformation with S-RTTI
-When working with data typed dynamically at runtime via local types, S-RTTI is required:
+When working with data typed dynamically at runtime through local types, S-RTTI is required:
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
