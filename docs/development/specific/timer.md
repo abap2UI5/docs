@@ -55,7 +55,7 @@ CLASS z2ui5_cl_sample_timer IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-With `checkrepeat = abap_true`, the timer restarts automatically after each event — no need to re-trigger it manually.
+With `checkrepeat = abap_true`, the timer restarts after each event automatically — no manual re-trigger needed.
 
 #### One-Shot Timer
 
