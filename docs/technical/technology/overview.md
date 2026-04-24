@@ -54,7 +54,7 @@ The **RESTful Application Programming Model (RAP)** and **Fiori Elements** stand
 
 - Developers define **CDS annotations** in ABAP to describe UI behavior
 - The UI5 Fiori Elements runtime in the browser renders the app as a **SPA**
-- Simplifies UI development via predefined floorplans and templates
+- Simplifies UI development through predefined floorplans and templates
 - Still SPA complexity (OData metadata handling, UI5 runtime in browser)
 
 ### abap2UI5
