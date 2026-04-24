@@ -252,7 +252,7 @@ Luckily, utility classes significantly simplify the creation process. For instan
 
 z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
 
-This contrasts with RAP, where you benefit from well-documented and organized extra layers, though sometimes they have limited functionality. Take side effects, for example: RAP restricts you to the `+`, `-`, and `*` operators. In abap2UI5, you write JavaScript directly, which requires much more knowledge, but in exchange you get access to the full expression binding functionality on the frontend:
+This contrasts with RAP, where you benefit from well-documented and organized extra layers, though sometimes they have limited functionality. Take side effects, for example: RAP restricts you to the `+`, `-`, and `*` operators. In abap2UI5, you write JavaScript directly, which takes much more knowledge, but in return you get access to the full expression binding functionality on the frontend:
 
 <img width="600" alt="Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript" src="https://github.com/user-attachments/assets/c8be7e94-c4e1-445e-b1f4-f79d81d421ac" />
 
@@ -359,7 +359,7 @@ Downporting abap2UI5 code normally would produce a release difficult to maintain
 
 abaplint automatically generates the low-syntax branch. The separate branch enables development with all new ABAP expressions available since ABAP 7.50 while still guaranteeing that all future abap2UI5 features get automatically downported and made available for ABAP 7.02.
 
-Automated ABAP downporting greatly improves efficiency. Check out the abaplint dashboard of this project and the tool abaplint. Besides abaplint, this framework uses abapGit and benefits from the work of the people who built it:
+Automated ABAP downporting greatly improves efficiency. Check out the abaplint dashboard of this project and the abaplint tool. Beyond abaplint, this framework uses abapGit and benefits from the work of the people who built it:
 
 <img width="600" alt="abaplint dashboard and abapGit - tools powering abap2UI5 downporting" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
 
