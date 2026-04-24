@@ -71,7 +71,7 @@ Create multiple HTTP endpoints for different users or departments to fine-tune a
 Alternatively, handle authorization within individual app classes. This approach works well when you want each app to check user permissions before taking action.
 
 #### Example: Authorization Check in an App Class
-In this approach, each app checks the user's permissions, as in traditional SAP ABAP applications.
+In this approach, each app checks the user's permissions, as in traditional ABAP applications.
 
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
