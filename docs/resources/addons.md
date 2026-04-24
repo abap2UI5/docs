@@ -28,4 +28,4 @@ Other open-source projects use abap2UI5 — try them out:
 
 #### Contribution
 
-Built a new feature or your own open-source project with abap2UI5? Contribute to existing repositories or start your own. Add your project here and help others discover, use, and contribute to your work.
+Built a feature or your own open-source project with abap2UI5? Contribute to existing repositories or start your own. Add your project here and help others discover, use, and contribute to your work.
