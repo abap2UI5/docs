@@ -208,7 +208,7 @@ Drafts also let us jump back to previous states with little effort, reducing the
 
 RAP vs. Single (generic) Draft Table in abap2UI5
 
-This gives us a stateful-like PAI/PBO feel similar to SAP GUI apps, even though we still work within the AJAX roundtrip logic. And since every request can land on a different application server, abap2UI5 fits scalable cloud environments, ready for future compatibility:
+This gives us a stateful-like PAI/PBO feel similar to SAP GUI apps, even though we still work within the AJAX roundtrip logic. And since every request can land on any application server, abap2UI5 fits scalable cloud environments, ready for future compatibility:
 
 <img width="600" alt="SAP GUI (stateful) vs. abap2UI5 (restful)" src="https://github.com/user-attachments/assets/0c62e222-06b7-4f16-af2d-3663fd6df796" />
 
