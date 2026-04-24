@@ -61,7 +61,7 @@ UI5 normally - ABAP delivers only Data
 
 ##### 6. abap2UI5 Architecture
 
-abap2UI5 introduces a pivotal change: the backend also sends the view. This shifts the frontend's role toward an HDA, displaying views and data received from the server:
+abap2UI5 introduces a key change: the backend also sends the view. This shifts the frontend's role toward an HDA, displaying views and data received from the server:
 
 <img width="600" alt="'UI5 Over the Wire' - ABAP delivers Data & View together" src="https://github.com/user-attachments/assets/9717f500-c0de-4428-a996-11fc131c073c" />
 

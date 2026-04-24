@@ -136,7 +136,7 @@ Let's look closely at a key UI5 feature: the concept of view models. In UI5 free
   <em>UI5 View Model Concept – UI control properties are bound to View Model attributes</em>
 </p>
 
-This leads to the second subtle shift in abap2UI5: instead of binding OData to the view, abap2UI5 uses a custom view model created entirely in the backend. The backend constructs this model dynamically after each request — tailored to the current view — and sends it together with the view definition to the frontend:
+This leads to the second subtle shift in abap2UI5: instead of binding OData to the view, abap2UI5 uses a custom view model built entirely in the backend. The backend builds this model dynamically after each request — tailored to the current view — and sends it together with the view definition to the frontend:
 
 <p align="center">
 <img width="385" alt="abap2UI5 - backend delivers XML View and tailored View Model in a single response" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
