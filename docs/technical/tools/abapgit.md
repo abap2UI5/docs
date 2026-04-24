@@ -7,7 +7,7 @@ This project uses [abapGit](https://github.com/abapGit/abapGit) for version cont
 
 #### Git Client
 
-We develop all project artifacts directly in an ABAP system and store them in a GitHub repository via abapGit.
+We build all project artifacts directly in an ABAP system and store them in a GitHub repository via abapGit.
 This setup makes the project easy to install on any customer system. We publish updates immediately, and any user can pull them at any time.
 
 #### Apps as abapGit Artifacts
