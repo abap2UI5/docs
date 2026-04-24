@@ -355,7 +355,7 @@ As you can see, creating methods compatible with both 'ABAP Cloud' and 'Standard
 
 ##### 28. Compatibility & Downporting
 
-Downporting abap2UI5 code normally would produce a release difficult to maintain and debug. To avoid this, abap2UI5 splits into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
+Downporting abap2UI5 code by hand would produce a release difficult to maintain and debug. To avoid this, abap2UI5 splits into two repositories: a main repository (compatible from NW 7.50 to ABAP 2305) and a downport repository (compatible down to NW 7.02).
 
 abaplint automatically generates the low-syntax branch. The separate branch enables development with all new ABAP expressions available since ABAP 7.50 while still guaranteeing that all future abap2UI5 features get automatically downported and made available for ABAP 7.02.
 
