@@ -100,7 +100,7 @@ You can access any object attribute, but only use public and released attributes
 :::
 
 #### Model Properties
-Retrieve model properties associated with the event:
+Retrieve model properties tied to the event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
