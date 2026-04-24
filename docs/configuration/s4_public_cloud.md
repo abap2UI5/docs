@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # S/4 Public Cloud
 
-You can use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only released APIs and is fully compatible with the ABAP Cloud language version, meeting SAP's "clean core" cloud extension requirements.
+You can use abap2UI5 for on-stack extension cases in S/4 Public Cloud. It uses only released APIs and is fully compatible with the ABAP Cloud language version, meeting SAP's "clean core" cloud extension requirements.
 
 Follow these steps to install abap2UI5 on S/4 Public Cloud:
 
