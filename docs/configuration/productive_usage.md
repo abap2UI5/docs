@@ -16,8 +16,8 @@ Transport abap2UI5 to production like any other ABAP development. For smooth ope
 The project evolves continuously, so no specific "stable" version exists. However, we keep changes to the public APIs minimal to avoid frequent app refactoring. Use the [releases](https://github.com/abap2UI5/abap2UI5/releases/) instead of pulling the main branch, and update periodically to reduce refactoring effort.
 
 #### Transport
-Install the project via abapGit into your development system. Then use the normal transport process to deploy to production:
+Install the project via abapGit in your development system. Then use the normal transport process to deploy to production:
 ![Transport process from development to production via abapGit](/configuration/image-3.png){ width=80% }
 
 #### Renaming
-If you're starting new development but already have abap2UI5 apps in production and want to avoid the risk of updates, consider installing multiple instances of abap2UI5 via the [renaming feature](/advanced/renaming). This lets you continue development safely without affecting your existing production apps.
+If you're starting new development but already have abap2UI5 apps in production and want to avoid update risk, consider installing multiple instances of abap2UI5 via the [renaming feature](/advanced/renaming). This lets you continue development safely without affecting your existing production apps.
