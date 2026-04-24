@@ -31,7 +31,7 @@ This approach contrasts with the common separation of concerns, where HTML, CSS,
 
 This concept evolves into a Hypermedia-Driven Application (HDA). In HDAs, the browser focuses only on rendering HTML, CSS, and JavaScript without knowledge of the application's state. All logic lives on the server.
 
-By contrast, SPAs define all routes and actions upfront on the frontend, requiring a full rebuild for any modification. The illustration below compares MPAs, SPAs, and HDAs:
+By contrast, SPAs define all routes and actions up front on the frontend, requiring a full rebuild for any modification. The illustration below compares MPAs, SPAs, and HDAs:
 
 <img width="600" alt="MPA vs. SPA vs. HDA" src="https://github.com/user-attachments/assets/8117dc10-f0ba-4c52-9d1d-6b9d0986401d" />
 
