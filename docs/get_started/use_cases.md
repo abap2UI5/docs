@@ -10,7 +10,7 @@ For a comprehensive overview, see the [Use Cases blog article](https://www.linke
 ### On-Stack Extension
 
 #### Tier 1 Extension
-For clean-core compliance, develop applications that follow "keep the core clean" principles to keep your apps cloud-ready and upgrade-stable:
+For clean-core compliance, build applications that follow "keep the core clean" principles to keep your apps cloud-ready and upgrade-stable:
 ![Tier 1 on-stack extension architecture diagram](/get_started/image-11.png){ width=60% }
 
 #### Tier 2 Extension
