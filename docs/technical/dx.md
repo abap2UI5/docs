@@ -28,7 +28,7 @@ Benefits:
 - Runs right away
 - Minimal boilerplate, easy to copy and paste
 
-This simplicity also inspired the entry point for abap2UI5 apps. For simple output, you don't need more than this:
+This simplicity also inspired the entry point for abap2UI5 apps. For simple output, this is all you need:
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC.
   PUBLIC SECTION.
