@@ -14,7 +14,7 @@ For clean-core compliance, build applications that follow "keep the core clean" 
 ![Tier 1 on-stack extension architecture diagram](/get_started/image-11.png){ width=60% }
 
 #### Tier 2 Extension
-If certain APIs you need aren't yet released, you can still create a cloud-ready abap2UI5 app by accessing these APIs through a separate Tier 2 wrapper:
+If certain APIs you need aren't yet released, you can still build a cloud-ready abap2UI5 app by accessing them through a separate Tier 2 wrapper:
 ![Tier 2 on-stack extension with wrapper for unreleased APIs](/get_started/image-21.png){ width=60% }
 
 #### Tier 3 Extension
