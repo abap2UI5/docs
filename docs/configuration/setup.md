@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # General
 
-You can run abap2UI5 with a range of custom configurations. The default setup runs automatically. To customize it, implement the interface `z2ui5_if_exit`:
+You can run abap2UI5 with a range of custom configurations. The default setup runs automatically. To customize it, implement the `z2ui5_if_exit` interface:
 
 ```abap
 CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
