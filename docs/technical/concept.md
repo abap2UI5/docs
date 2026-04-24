@@ -38,7 +38,7 @@ Several modern frameworks adopt this pattern:
 
 But isn't this the same as traditional Server-Side Rendering (SSR)?
 
-In the early days of web development, SSR was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. In the SAP ecosystem, this approach showed up in technologies like ITS Mobile and SAP GUI for HTML.
+In the early days of web development, SSR was the standard. Every user interaction triggered a full-page reload, and the server responded with a complete HTML document. In the SAP ecosystem, this approach surfaced in technologies like ITS Mobile and SAP GUI for HTML.
 
 The emergence of Single-Page Applications (SPAs) shifted UI logic to the client. SPAs fetch raw data — through OData services in SAP systems — and build the UI dynamically in the browser using JavaScript frameworks such as React, Angular, or Vue. SAP adopted this paradigm with UI5 in 2010.
 
