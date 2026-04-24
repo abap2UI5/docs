@@ -96,7 +96,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 ::: warning
-You can access any object attribute, but only use public and released attributes to avoid compatibility issues with future UI5 versions.
+You can access any object attribute, but use only public and released attributes to avoid compatibility issues with future UI5 versions.
 :::
 
 #### Model Properties
