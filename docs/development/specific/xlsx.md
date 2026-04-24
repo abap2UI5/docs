@@ -191,7 +191,7 @@ The code snippets above aren't compatible with ABAP Cloud. To make them cloud-co
 :::
 
 #### abap2xlsx
-Instead of the XLSX API above (which may change between releases), consider the open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It offers reusable APIs for common XLSX operations and works entirely within the ABAP stack. The example below demonstrates abap2xlsx in the `lcl_help` class:
+Instead of the XLSX API above (which may change between releases), consider the open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack. The example below uses abap2xlsx in the `lcl_help` class:
 ::: code-group
 
 ```abap
