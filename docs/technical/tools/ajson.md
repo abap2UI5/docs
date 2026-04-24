@@ -9,7 +9,7 @@ The solution: [ajson](https://github.com/sbcgua/ajson), a robust open-source JSO
 
 **Why ajson?**
 - **Zero SAP API Dependencies** — Removes reliance on release-specific SAP classes
-- **Universal Compatibility** — Works seamlessly from NW 7.02 to ABAP Cloud
+- **Universal Compatibility** — Works cleanly from NW 7.02 to ABAP Cloud
 - **Developer-Friendly** — Intuitive API with comprehensive documentation
 - **Active Maintenance** — Responsive issue resolution and continuous improvements
 
@@ -27,4 +27,4 @@ DATA(output) = z2ui5_cl_ajson=>create_empty( )->set(
 
 #### Automatic Updates
 
-Every ajson update and bug fix flows automatically into abap2UI5 via GitHub Actions and the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository. You're always running the latest stable version without manual intervention.
+Every ajson update and bug fix flows automatically into abap2UI5 via GitHub Actions and the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository. You always run the latest stable version, no manual intervention needed.
