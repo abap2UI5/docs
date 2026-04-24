@@ -309,7 +309,7 @@ And Fiori Elements, with all its floorplans & templates, is straightforward and 
 
 ##### 25. System Footprint
 
-We keep the system footprint minimal — abap2UI5 uses only ABAP classes, with no CDS or RAP artifacts. Most of the code lives in user apps outside the framework (21) (22). Overall, the framework comes to about 2,300 lines of code spread over one HTTP-Handler, two interfaces, and one database table:
+We keep the system footprint minimal — abap2UI5 uses only ABAP classes, with no CDS or RAP artifacts. Most of the code lives in user apps outside the framework (21) (22). Overall, the framework comes to about 2,300 lines of code spread across one HTTP-Handler, two interfaces, and one database table:
 
 <img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
