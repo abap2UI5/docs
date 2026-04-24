@@ -40,7 +40,7 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 
 ENDMETHOD.
 ```
-To see barcode scanning in action, check out the `Z2UI5_CL_DEMO_APP_124` sample application.
+To see barcode scanning in action, see the `Z2UI5_CL_DEMO_APP_124` sample application.
 
 ::: tip **UI5 Versions**
 This feature works only with the UI5 framework, not with OpenUI5.
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-For a sample with sounds in action, check out `Z2UI5_CL_DEMO_APP_304`.
+For a sample with sounds in action, see `Z2UI5_CL_DEMO_APP_304`.
 
 #### Display Barcodes
 To also display barcodes, use bwip-js, which ships as part of the js-libraries add-on. See [Add-ons](/resources/addons) for details.
