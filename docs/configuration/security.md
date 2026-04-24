@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 # Security
-abap2UI5 is a backend-centric framework. All logic and business data remain on the server; the frontend receives only the data it needs to render the view.
+abap2UI5 is a backend-centric framework. All logic and business data stay on the server; the frontend receives only the data it needs to render the view.
 
 ### HTTP Endpoint
 The abap2UI5 framework runs as an HTTP handler. You create the HTTP handler and call the abap2UI5 API inside it. Users access abap2UI5 by calling the endpoint externally, with security managed as in any other UI5 application.
