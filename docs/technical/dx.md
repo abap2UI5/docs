@@ -177,7 +177,7 @@ Benefits:
 - Simple and readable program flow
 - Encapsulated and reusable
 
-abap2UI5 delivers a similar experience: apps can call each other and encapsulate dialog logic in reusable classes:
+abap2UI5 offers a similar experience: apps can call each other and encapsulate dialog logic in reusable classes:
 
 ```abap
 CLASS zcl_app_alv_event DEFINITION PUBLIC.
