@@ -57,7 +57,7 @@ ENDMETHOD.
 ```
 
 #### Parameters
-Retrieve parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter from the event's parameter map — UI5 generates a qualified ID like `mainView--button_id`:
+Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter from the event's parameter map — UI5 generates a qualified ID like `mainView--button_id`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -77,7 +77,7 @@ ENDMETHOD.
 ```
 
 #### Event
-Retrieve specific properties of the event object. The syntax `$event>sId` accesses the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: no `${...}` wrapper here because `$event` directly references the event object:
+Read specific properties of the event object. The syntax `$event>sId` accesses the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: no `${...}` wrapper here because `$event` directly references the event object:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -100,7 +100,7 @@ You can access any object attribute, but only use public and released attributes
 :::
 
 #### Model Properties
-Retrieve model properties tied to the event:
+Read model properties tied to the event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
