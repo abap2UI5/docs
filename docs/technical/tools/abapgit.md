@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # abapGit
 
-This project uses [abapGit](https://github.com/abapGit/abapGit) for version control and efficient code distribution.
+This project uses [abapGit](https://github.com/abapGit/abapGit) for version control and easy code distribution.
 
 #### Git Client
 
