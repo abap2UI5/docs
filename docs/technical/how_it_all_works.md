@@ -162,7 +162,7 @@ Let's examine the HTTP-Handler that gives us this flexibility.
 
 ##### 13. HTTP-Service
 
-All apps and data models use the same single generic HTTP-Handler — you can see this by setting a breakpoint in your app and examining the call stack.
+All apps and data models use the same single generic HTTP-Handler — you can see this by setting a breakpoint in your app and inspecting the call stack.
 
 <img width="600" alt="Call stack of an abap2UI5 app" src="https://github.com/user-attachments/assets/1ce80652-4105-4ee5-84e8-35a87eb47556" />
 
