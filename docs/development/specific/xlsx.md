@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # XLSX
 
-abap2UI5 lets you use your ABAP system's XLSX APIs to upload and download spreadsheets, converting between XLSX files and internal tables.
+abap2UI5 lets you use your ABAP system's XLSX APIs to upload and download spreadsheets, converting between XLSX files and internal tables as needed.
 
 #### Upload
 
-Transform uploaded XLSX files into an internal table:
+Convert uploaded XLSX files into an internal table:
 
 ::: code-group
 
@@ -281,4 +281,4 @@ ENDCLASS.
 :::
 
 #### UI5 Control
-To export the data directly on the frontend, SAP offers the sap.ui.export.Spreadsheet control to export table content. With some additional logic, you can also use this control with abap2UI5. See the [Add-ons](/resources/addons) page for a running sample with the Custom Control. However, the programming effort may exceed that of the file-based approach shown above.
+To export data directly on the frontend, SAP offers the sap.ui.export.Spreadsheet control for exporting table content. With some additional logic, you can also use this control with abap2UI5. See the [Add-ons](/resources/addons) page for a running sample with the Custom Control. The programming effort may exceed that of the file-based approach shown above.
