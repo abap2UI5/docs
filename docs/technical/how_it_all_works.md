@@ -267,9 +267,9 @@ First approach - Data binding and events are not separated from the view
 
 In the current approach, we separate them from the view and create them through extra methods. The framework then handles the entire process of data binding and transfer automatically (9):
 
-<img width="600" alt="Actual Approach - extra methods for the event and binding" src="https://github.com/user-attachments/assets/4708b4c1-a031-48d5-823c-5b8434a98c0c" />
+<img width="600" alt="Current Approach - extra methods for the event and binding" src="https://github.com/user-attachments/assets/4708b4c1-a031-48d5-823c-5b8434a98c0c" />
 
-Actual Approach - extra methods for the event and binding
+Current Approach - extra methods for the event and binding
 
 This differs from many other UI rendering processes, which usually handle data and UI together. Separating them here simplifies view creation, avoids data redundancy, and keeps the framework from becoming messy. The current approach uses fewer lines of code than the first (which only focused on selection screens), because it now cleanly separates the entire view creation process from the rest and keeps it outside the framework.
 
