@@ -80,7 +80,7 @@ Luckily, UI5 has a key trait that lets us shift part of the view generation to t
 
 abap2UI5 introduces a subtle but important shift: what if the backend also delivers the XML View?
 
-While HTML creation still happens on the frontend, the backend now sends both the view definition and the corresponding data:
+While HTML creation still happens on the frontend, the backend now sends both the view definition and its data:
 
 <p align="center">
   <img width="400" alt="abap2UI5 - HTML created in browser based on XML View and data, both sent from backend" src="https://github.com/user-attachments/assets/adef16b7-e98d-476f-9bbc-738685047c5d" />
