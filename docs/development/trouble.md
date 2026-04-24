@@ -54,7 +54,7 @@ METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
       WHEN `CALL_KEYBOARD`.
-        "Step 2: After the backend processes the event, execute the JavaScript
+        "Step 2: After the backend processes the event, run the JavaScript
         "function as a follow-up action. This sets inputmode="none" on the
         "HTML element, which hides the soft keyboard on mobile devices.
         client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).
