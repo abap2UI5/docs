@@ -365,7 +365,7 @@ Automated ABAP downporting markedly improves efficiency. See the abaplint dashbo
 
 ##### 29. Summary
 
-Long article short: inspired by "HTML Over the Wire" (1)(2)(3), we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). We then used a single generic HTTP-Service for all apps (13), independent of the View and Data Model (12). This gives us great flexibility, so we can create Data Models (10) and Views (11) dynamically at runtime, which markedly reduces the number of backend artifacts.
+Long article short: inspired by "HTML Over the Wire" (1)(2)(3), we mixed UI and Data together (7) and created a "UI5 Over the Wire" approach by sending the XML-View from the server (6). We then used a single generic HTTP-Service for all apps (13), independent of the View and Data Model (12). This gives us great flexibility, so we can create Data Models (10) and Views (11) dynamically at runtime, which greatly reduces the number of backend artifacts.
 
 Next, we explored several ideas for how the framework reduces its own complexity by avoiding frontend artifacts (17), removing extra customizing layers (19), and separating the view from the framework (21), as well as app-specific JS or HTML (22). The result is a pure source-code approach with only one database table, two interfaces, one class, and just 2,300 lines of code (25). We build it in a single code line (27), making it cloud- and on-premise-ready and downportable to old releases (28). Together with abapGit, you can build apps that run on nearly every release.
 
