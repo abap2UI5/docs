@@ -10,7 +10,7 @@ We recommend bootstrapping abap2UI5 like other UI5 apps in your system.
 OpenUI5 is the open-source version of UI5. It has slightly fewer controls than the full UI5 framework but suits most applications. Most samples run with this version, and incompatibilities typically arise only in specific use cases.
 
 ### UI5
-UI5 (SAPUI5) is the default version and has been part of every ABAP system since a specific release. This is likely the version your system already uses.
+UI5 (SAPUI5) is the default version and ships with every ABAP system since a specific release. This is likely the version your system already uses.
 
 ### UI5 2.x
 UI5 2.x is the newest version of UI5, with deprecated APIs removed. We continuously test abap2UI5 with this release to maintain compatibility with upcoming releases.
