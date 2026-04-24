@@ -242,7 +242,7 @@ Key Benefits:
 - Backend-Driven UI Control: ABAP classes implement UI definitions and business logic entirely
 - ABAP-Centric Development: Removes the need for additional JavaScript or dedicated frontend development
 - Simplified Deployment Model: No SPA-specific tooling or build processes; abapGit and standard transport mechanisms manage application logic and artifacts
-- Seamless SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, Standard ABAP & ABAP Cloud
+- Clean SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, Standard ABAP & ABAP Cloud
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and all typical enterprise use cases
 
 Limitations:
