@@ -20,7 +20,7 @@ Several open-source projects extend abap2UI5. Please consider sponsoring their m
 - ABAP Cloud & Standard compatibility with [Steampunkification](https://github.com/heliconialabs/steampunkification) [(contributors)](https://github.com/heliconialabs/steampunkification/graphs/contributors)
 - Syntax downporting through the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Namespace renaming through the [mirror repository](https://github.com/abap2UI5/abap2UI5-mirror-renamed) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
-- Browser testing with [Playwright](https://playwright.dev/) & [abap2UI5-web](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
+- Browser testing with [Playwright](https://playwright.dev/) and [abap2UI5-web](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
 - Live demos through [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
 - Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner) [(contributors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
 - Documentation built with [VitePress](https://vitepress.dev/) [(contributors)](https://github.com/vuejs/vitepress/graphs/contributors)
