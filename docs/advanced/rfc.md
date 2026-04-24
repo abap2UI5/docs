@@ -6,7 +6,7 @@ outline: [2, 4]
 The [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) triggers abap2UI5 apps remotely over RFC between two ABAP systems. This helps in distributed system landscapes or with legacy systems that can't directly host UI5 frontend logic.
 
 #### When to use
-The RFC Connector unlocks several useful cases:
+The RFC Connector enables several useful cases:
 - Frontend/Backend Split: abap2UI5 apps live in the backend, but users have access only to the frontend server
 - Legacy Systems (e.g., ECC): downport abap2UI5 onto older systems and trigger it from a newer system over RFC
 - Multi-System Landscapes: one entry point centrally accesses abap2UI5 apps spread across multiple systems
