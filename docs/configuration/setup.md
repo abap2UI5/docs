@@ -15,7 +15,7 @@ ENDCLASS.
 ```
 
 ### Theme
-For example, to change the theme, the implementation looks like this:
+For example, to change the theme:
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
 
