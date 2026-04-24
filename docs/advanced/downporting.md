@@ -15,4 +15,4 @@ To install on an older system, use the `702` branch:
 Some sample projects and other repositories also ship a downported version. Check whether a `702` branch exists.
 
 #### Functionality
-For more on the downport feature, check out the blog post [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).
+For more on the downport feature, see the blog post [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).
