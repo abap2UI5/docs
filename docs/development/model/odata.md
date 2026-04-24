@@ -68,7 +68,7 @@ ENDMETHOD.
 ```
 
 #### Multiple OData Models
-You can also bind multiple OData models at once. For example, here's how to bind an additional OData model under the name `TRAVEL`:
+You can also bind multiple OData models at once. For example, to bind an extra OData model under the name `TRAVEL`:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items   = `{TRAVEL>/BookingSupplement}`
