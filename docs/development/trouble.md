@@ -7,9 +7,9 @@ outline: [2, 4]
 
 For UI5 input fields, the soft keyboard appears automatically when focusing an input field. For some use cases — e.g., in warehouses with small devices — you don't want this behavior. To change it, adjust the HTML input element and switch the input type to `none`. The snippet below activates and deactivates the soft keyboard.
 
-This example uses the **`z2ui5.afterBE` hook** — a JavaScript callback that the abap2UI5 frontend framework executes after every backend roundtrip. By assigning a custom function to `z2ui5.afterBE`, you can run JavaScript code in the browser after the backend responds. This is useful for DOM manipulations that UI5 doesn't support natively.
+This example uses the **`z2ui5.afterBE` hook** — a JavaScript callback that the abap2UI5 frontend framework executes after every backend roundtrip. Assign a custom function to `z2ui5.afterBE` to run JavaScript code in the browser after the backend responds. This helps with DOM manipulations that UI5 doesn't support natively.
 
-The pattern works in two steps:
+The pattern has two steps:
 1. **Define** the JavaScript function in a `<html:script>` tag (rendered once on init)
 2. **Execute** it after a backend event using `client->follow_up_action( )` with a raw JavaScript string
 
