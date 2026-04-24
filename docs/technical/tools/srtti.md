@@ -87,7 +87,7 @@ This approach delivers compatibility with dynamic types while keeping the transf
 
 #### Integration
 
-S-RTTI integrates directly into the `z2ui5` namespace and installs with abap2UI5 automatically. Access it anywhere in your code:
+S-RTTI integrates directly into the `z2ui5` namespace and installs with abap2UI5 automatically. Use it anywhere in your code:
 ```abap
 z2ui5_cl_srt_datadescr=>
 ```
