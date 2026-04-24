@@ -12,7 +12,7 @@ This makes the project easy to install on any customer system. We publish update
 
 #### Apps as abapGit Artifacts
 
-Beyond the abap2UI5 core framework, all abap2UI5 apps live as ABAP classes — abapGit-managed objects — so you can install them through abapGit with no manual deployment, unlike traditional UI5 apps.
+Beyond the abap2UI5 core framework, all abap2UI5 apps live as ABAP classes — abapGit-managed objects — so you can install them through abapGit without any manual deployment, unlike traditional UI5 apps.
 
 You can also install multiple abap2UI5 apps with a single abapGit pull. This works smoothly in ABAP Cloud environments and reduces deployment overhead.
 
