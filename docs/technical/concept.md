@@ -148,7 +148,7 @@ This means the frontend no longer consumes CDS Views and OData services directly
 
 You don't need to configure models or bindings manually — abap2UI5 handles this internally. Just expose class attributes via a simple bind method, and abap2UI5 handles the rest.
 
-A typical backend response includes both the XML View:
+A typical backend response contains the XML View:
 
 ```xml
 <mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" height="100%">
