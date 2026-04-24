@@ -123,6 +123,6 @@ abap2UI5 offers an alternative, especially for developers who want lightweight a
 
 #### Conclusion
 
-abap2UI5 is fully cloud-ready. It supports modern, backend-driven UI5 development while staying upgrade-stable and compatible with SAP BTP ABAP Environment and S/4HANA Public Cloud. You can develop each app to be cloud-ready, making abap2UI5 a strong addition to existing RAP or UI5 freestyle apps.
+abap2UI5 is fully cloud-ready. It supports modern, backend-driven UI5 development while remaining upgrade-stable and compatible with SAP BTP ABAP Environment and S/4HANA Public Cloud. You can develop each app to be cloud-ready, making abap2UI5 a strong addition to existing RAP or UI5 freestyle apps.
 
 Happy ABAPing!
