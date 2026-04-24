@@ -19,7 +19,7 @@ The system that calls the app (the frontend system) includes the UI5 library and
 
 #### Installation
 
-_Prerequisite: Set up a destination in SM59 so you can call the source system via RFC. Install abap2UI5 on both systems._
+_Prerequisite: Set up an SM59 destination to call the source system via RFC. Install abap2UI5 on both systems._
 
 Steps:
 1. Install the [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) via abapGit on both systems
