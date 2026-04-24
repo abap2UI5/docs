@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # XLSX
 
-abap2UI5 lets you use your ABAP system's XLSX APIs to upload and download spreadsheets, converting between XLSX files and internal tables as needed.
+abap2UI5 works with your ABAP system's XLSX APIs to upload and download spreadsheets, converting between XLSX files and internal tables as needed.
 
 #### Upload
 
