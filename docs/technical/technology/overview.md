@@ -9,7 +9,7 @@ This page outlines the evolution of web development in the ABAP ecosystem — fr
 ### Internet Transaction Server
 _Bringing SAP GUI to the Web (2000+) (SAP)_
 
-The **Internet Transaction Server (ITS)** was SAP's first step to bring SAP GUI screens (Dynpro) to the web. ITS Mobile converts classic Dynpro screens into basic HTML pages.
+The **Internet Transaction Server (ITS)** was SAP's first step toward bringing SAP GUI screens (Dynpro) to the web. ITS Mobile converts classic Dynpro screens into basic HTML pages.
 
 - Pure **Server-Side Rendering (SSR)**: the server generates HTML for every interaction
 - Optimized for simple mobile devices (e.g., warehouse scanners)
