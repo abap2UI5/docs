@@ -85,7 +85,7 @@ The HDA displays the view with its data and sends each event back to the server,
 
 UI5 vs. "UI5 Over the Wire" - Communication
 
-We use AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but here we can't send HTML directly. Instead, we send a View combined with its Data. This produces a concept we could call "UI5-View Over the Wire".
+We use AJAX roundtrip logic similar to "HTML Over the Wire" approaches, but here we can't send HTML directly. Instead, we send a View combined with its Data. This produces a pattern we could call "UI5-View Over the Wire".
 
 ##### 7. Merging Data & Presentation
 
