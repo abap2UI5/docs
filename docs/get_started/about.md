@@ -38,7 +38,7 @@ Traditional UI5 development requires JavaScript expertise, frontend deployment, 
 - **Extend beyond RAP** — when standard capabilities reach their limits
 - **Prototype rapidly** — iterate quickly on new business applications
 
-Each application ships as an [abapGit](https://abapgit.org) project, simplifying installation across systems without separate frontend deployments.
+Each application ships as an [abapGit](https://abapgit.org) project, so installation across systems needs no separate frontend deployments.
 
 ### Overview
 <br>
