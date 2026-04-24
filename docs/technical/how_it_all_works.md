@@ -162,7 +162,7 @@ Let's look at the HTTP-Handler that gives us this flexibility.
 
 ##### 13. HTTP-Service
 
-All apps and data models use the same single generic HTTP-Handler — you can observe this by setting a breakpoint in your app and examining the call stack.
+All apps and data models use the same single generic HTTP-Handler — you can see this by setting a breakpoint in your app and examining the call stack.
 
 <img width="600" alt="Call stack of an abap2UI5 app" src="https://github.com/user-attachments/assets/1ce80652-4105-4ee5-84e8-35a87eb47556" />
 
@@ -192,7 +192,7 @@ abap2UI5 app - one place for everything
 
 In this architecture, the app has complete freedom in creating the view and the model, but it also bears full responsibility for making sure everything else functions correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this sits in this single app layer.
 
-However, this isn't a problem for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was, in a way, an HDA where ABAP performed all the necessary functions (just not in a browser-based environment). Moreover, in this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now tap the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
+However, this isn't a problem for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was essentially an HDA where ABAP performed all the necessary functions (just not in a browser-based environment). Moreover, in this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now tap the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easily achievable at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
 
 ##### 16. Draft
 
@@ -265,7 +265,7 @@ In the first approach of this framework, every method call included the event an
 
 First approach - Data binding and events are not separated from the view
 
-In the current approach, we separate them from the view and create them via additional methods. Moreover, the framework automatically handles the entire process of data binding and transfer (9):
+In the current approach, we separate them from the view and create them via additional methods. The framework then handles the entire process of data binding and transfer automatically (9):
 
 <img width="600" alt="Actual Approach - extra methods for the event and binding" src="https://github.com/user-attachments/assets/4708b4c1-a031-48d5-823c-5b8434a98c0c" />
 

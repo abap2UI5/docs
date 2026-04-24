@@ -106,7 +106,7 @@ ENDCLASS.
 ```
 
 ### Data Exchange
-Finally, we add a public attribute so we can send data to the backend:
+Finally, add a public attribute so you can send data to the backend:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -139,7 +139,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-That's all you need. Set a breakpoint to observe the communication and data updates in action, then experiment with modifying the view, events, and data exchange.
+That's all you need. Set a breakpoint to watch the communication and data updates in action, then experiment with modifying the view, events, and data exchange.
 
 ::: tip **ABAP Language Versions**
 While the HTTP handler must distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility.
