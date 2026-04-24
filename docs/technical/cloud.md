@@ -119,7 +119,7 @@ RAP (RESTful Application Programming Model) is SAP's recommended model for build
 - OData services for communication
 - Fiori Elements for UI generation
 
-abap2UI5 offers an alternative, especially for developers who prefer lightweight apps and don't require the full RAP stack. As long as you follow cloud development principles, both approaches are valid.
+abap2UI5 offers an alternative, especially for developers who prefer lightweight apps and don't need the full RAP stack. As long as you follow cloud development principles, both approaches are valid.
 
 #### Conclusion
 

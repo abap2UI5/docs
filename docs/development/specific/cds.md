@@ -50,7 +50,7 @@ ENDCLASS.
 The Entity Manipulation Language simplifies working with RAP business objects by providing a consistent way to read, create, update, and delete entities.
 
 #### Read
-Here's how to use `READ ENTITIES` to fetch sales orders and display them in a UI5 table:
+Use `READ ENTITIES` to fetch sales orders and display them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
 
