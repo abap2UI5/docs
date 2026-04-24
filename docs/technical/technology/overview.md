@@ -13,7 +13,7 @@ The **Internet Transaction Server (ITS)** was SAP's first step toward bringing S
 
 - Pure **Server-Side Rendering (SSR)**: the server generates HTML for every interaction
 - Optimized for simple mobile devices (e.g., warehouse scanners)
-- Focus on reusing existing Dynpro logic for web and mobile use cases
+- Reuses existing Dynpro logic for web and mobile use cases
 - Still used today for specific legacy use cases
 
 ### Business Server Pages
