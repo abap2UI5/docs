@@ -8,7 +8,7 @@ In abap2UI5, each application is a single ABAP class. You can put all logic into
 ### Cross App Navigation
 
 #### Backend
-To call an ABAP class, use this code:
+To call an ABAP class:
 ```abap
   METHOD z2ui5_if_app~main.
 
