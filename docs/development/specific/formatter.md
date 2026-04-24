@@ -9,7 +9,7 @@ UI5 formatter types use a special JSON-based binding syntax with these key eleme
 - **`parts: [...]`** — lists the model paths used as input (e.g., amount + currency)
 - **`type: '...'`** — the UI5 formatter type (e.g., `sap.ui.model.type.Currency`)
 - **`formatOptions: {...}`** — optional settings that control the output format
-- **`\{ ... \}`** — in ABAP string templates (`|...|`), you must escape curly braces with `\` because `{ }` normally denotes an ABAP expression
+- **`\{ ... \}`** — in ABAP string templates (`|...|`), escape curly braces with `\` because `{ }` normally denotes an ABAP expression
 
 The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g., `/XX/AMOUNT`) instead of the full binding expression (`{/XX/AMOUNT}`), so you can embed it inside the `parts` array.
 
