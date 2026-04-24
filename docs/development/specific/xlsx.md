@@ -187,7 +187,7 @@ ENDCLASS.
 :::
 
 ::: tip **ABAP Cloud**
-The code snippets above aren't compatible with ABAP Cloud. To make them cloud-compatible, replace the code in the `lcl_help` class with functions from the new `XCO_CP_XLSX` APIs.
+The code snippets above aren't compatible with ABAP Cloud. To make them cloud-compatible, replace the code in the `lcl_help` class with functions from the `XCO_CP_XLSX` APIs.
 :::
 
 #### abap2xlsx
