@@ -6,7 +6,7 @@ outline: [2, 4]
 Standard UI5 apps manage translations through i18n files kept as frontend artifacts. Since abap2UI5 apps live entirely on the ABAP backend, use ABAP's built-in translation mechanisms instead — text elements, message classes, or data element descriptions.
 
 ### Text Element
-ABAP text elements translate messages, making them show up in different languages without code changes:
+ABAP text elements translate messages, so they show up in different languages without code changes:
 ```abap
   METHOD z2ui5_if_app~main.
 
