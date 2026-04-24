@@ -32,7 +32,7 @@ The backend system that holds the abap2UI5 apps needs no UI5 libraries. The call
 <img width="600" alt="UI5 bootstrap loaded from calling system while backend hosts the app logic" src="https://github.com/user-attachments/assets/8e7dd3dd-abd3-413f-8ec6-8a7a2be7a7ec" />
 
 #### Multi-System Launchpad
-You can also use this approach to build a centralized Fiori Launchpad that combines both:
+You can also use this approach to build a centralized Fiori Launchpad that combines:
 - Apps installed on-stack (on the current system)
 - Apps executed remotely via RFC from other systems
 
