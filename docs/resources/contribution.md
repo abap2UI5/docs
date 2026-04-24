@@ -11,7 +11,7 @@ There are many ways to get involved and make a difference:
 - Create a control to enhance existing functionality
 - Build custom controls for specific use cases
 - Share your demos and apps to show what's possible with abap2UI5
-- Improve the documentation and refine code snippets to make learning abap2UI5 easier
+- Improve the documentation and refine code snippets to make abap2UI5 easier to learn
 - Propose something entirely new — every contribution is appreciated, whatever the size!
 
 #### Need Help?
