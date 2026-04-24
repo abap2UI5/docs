@@ -48,7 +48,7 @@ Backend (OData/REST)
 ```plaintext
 Browser (Static UI5 Shell)
   ├──> HTTP request: Load XML View + ViewModel
-  ├──> Renders UI5 controls as defined by backend
+  ├──> Renders UI5 controls defined by the backend
   ├──> Sends event requests on interaction
 Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
