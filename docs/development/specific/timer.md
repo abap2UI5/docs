@@ -3,13 +3,13 @@ outline: [2, 4]
 ---
 # Timer, Auto-Refresh
 
-abap2UI5 offers a custom control `z2ui5.Timer` that triggers events after a specified delay. This helps with dashboards, status monitors, or any scenario that needs periodic data updates without user interaction.
+abap2UI5 offers a custom control `z2ui5.Timer` that fires events after a specified delay. This helps with dashboards, status monitors, or any scenario that needs periodic data updates without user interaction.
 
 Add the timer as a view element via `_z2ui5( )->timer( ... )`. The following parameters apply:
 
 | Parameter     | Description                                      |
 |---------------|--------------------------------------------------|
-| `finished`    | Event raised when the timer fires                |
+| `finished`    | Event fired when the timer elapses               |
 | `delayms`     | Delay in milliseconds before firing              |
 | `checkactive` | Bind to an `abap_bool` to activate/deactivate    |
 | `checkrepeat` | If `abap_true`, the timer repeats automatically  |
@@ -139,5 +139,5 @@ To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
 ```
 
 ::: warning
-Each timer event triggers a full backend roundtrip. Use reasonable intervals (e.g., 2000ms or higher) to avoid excessive server load.
+Each timer event triggers a full backend roundtrip. Use sensible intervals (e.g., 2000ms or higher) to avoid excessive server load.
 :::
