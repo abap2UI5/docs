@@ -28,7 +28,7 @@ Build applications separately from your S/4 system's lifecycle via remote API ca
 ![Tier 1 side-by-side extension with remote API calls](/get_started/image-22.png){ width=60% }
 
 #### Tier 3 Extension
-For more flexibility, develop applications whose lifecycle is independent of your S/4 system using remote API calls:
+For more flexibility, build applications whose lifecycle is independent of your S/4 system using remote API calls:
 ![Tier 3 side-by-side extension with remote API calls](/get_started/image-23.png){ width=60% }
 
 ### Software as a Service (SaaS)
