@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Controller
 
-abap2UI5 offers great flexibility in how you structure your apps. Most sample applications follow a pattern like the one below. Use it as a starting point, and adapt it or build a wrapper around abap2UI5 for more customized behavior.
+abap2UI5 offers great flexibility in how you structure apps. Most sample applications follow the pattern below. Use it as a starting point, and adapt it or build a wrapper around abap2UI5 for more customized behavior.
 
 The idea: every request enters the `main` method, and you use `CASE` to distinguish between initialization, navigation returns, and user events:
 
