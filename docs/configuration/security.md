@@ -20,7 +20,7 @@ abap2UI5 ships as custom code. Once installed, you own the code in full and can 
 The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. The HTTP endpoint delivers it on the first request, in line with standard practices for modern web applications.
 
 ### Business Logic
-abap2UI5 never sends the app's business logic to the client. All business processes remain securely on the server, and sensitive data never reaches the frontend.
+abap2UI5 never sends the app's business logic to the client. All business processes stay securely on the server, and sensitive data never reaches the frontend.
 
 ### Content-Security-Policy
 To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP blocks attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. By default, CSP allows only trusted sources such as ui5.sap.com, sapui5.hana.ondemand.com, and sdk.openui5.org, among others.
