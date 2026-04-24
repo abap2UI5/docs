@@ -16,7 +16,7 @@ This page offers a structured technical comparison of **UI5 Freestyle** and **ab
 | **UI Definition** | XML Views maintained in frontend project                    | XML Views created directly in ABAP                         |
 | **Communication** | OData or custom AJAX calls                                  | Simple HTTP requests (Over-the-Wire)                      |
 | **Runtime Control**| Logic split between backend and UI controller              | Full control over UI and logic in backend                 |
-| **Model**         | Defined at design time via CDS                              | Defined at design time or runtime via internal tables     |
+| **Model**         | Defined at design time through CDS                          | Defined at design time or runtime through internal tables |
 
 ### 2. Developer Workflow
 
