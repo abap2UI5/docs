@@ -125,5 +125,5 @@ The example below creates a sales order via `MODIFY` inside an abap2UI5 applicat
 ENDMETHOD.
 ```
 Key Considerations:
-- EML calls in abap2UI5 applications run outside the RAP framework, so explicit transaction commits (COMMIT ENTITIES) are necessary.
+- EML calls in abap2UI5 applications run outside the RAP framework, so explicit transaction commits (COMMIT ENTITIES) are required.
 - Restrictions within the RAP framework, such as disallowing direct calls to posting function modules or explicit commits, don't apply to abap2UI5 EML operations. This gives you more flexibility when managing commits and other actions.
