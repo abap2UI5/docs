@@ -11,7 +11,7 @@ The entire abap2UI5 project lives under the `z2ui5` namespace. In certain scenar
 abap2UI5 is compatible with the abaplint renaming feature and supports namespaces of up to 9 characters, e.g., `zabap2ui5`.
 
 #### Functionality
-To learn more about renaming ABAP artifacts, check out:
+For more on renaming ABAP artifacts, check out:
 [Automagic standalone renaming of ABAP objects](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
 
 For more background, see the blog post:

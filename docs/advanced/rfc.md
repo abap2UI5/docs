@@ -27,7 +27,7 @@ Steps:
 3. In your browser, call the endpoint `.../sap/bc/2ui5_rfc`
 
 #### UI5 Bootstrapping
-The backend system that holds the abap2UI5 apps doesn't need to include the UI5 libraries. The calling system bootstraps them automatically:
+The backend system that holds the abap2UI5 apps needs no UI5 libraries. The calling system bootstraps them automatically:
 
 <img width="600" alt="UI5 bootstrap loaded from calling system while backend hosts the app logic" src="https://github.com/user-attachments/assets/8e7dd3dd-abd3-413f-8ec6-8a7a2be7a7ec" />
 
