@@ -105,7 +105,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-The app reads directly from the VBAK database table, which makes it not cloud-ready.
+The app reads directly from the VBAK database table, which makes it cloud-incompatible.
 
 Always follow cloud-ready development principles so your apps remain upgrade-stable and compatible with ABAP Cloud environments.
 
