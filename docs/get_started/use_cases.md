@@ -18,7 +18,7 @@ If certain APIs you need aren't yet released, you can still create a cloud-ready
 ![Tier 2 on-stack extension with wrapper for unreleased APIs](/get_started/image-21.png){ width=60% }
 
 #### Tier 3 Extension
-For a classic extension approach, you can use unreleased APIs, giving you greater freedom to customize and extend your system:
+For a classic extension approach, use unreleased APIs for greater freedom to customize and extend your system:
 ![Tier 3 on-stack extension with unreleased API access](/get_started/image-10.png){ width=60% }
 
 ### Side-by-Side Extension
@@ -32,5 +32,5 @@ For more flexibility, develop applications whose lifecycle is independent of you
 ![Tier 3 side-by-side extension with remote API calls](/get_started/image-23.png){ width=60% }
 
 ### Software as a Service (SaaS)
-With a Tier 1 side-by-side extension, you can connect the same abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across different customer tenants and remote systems to create a true SaaS scenario:
+With a Tier 1 side-by-side extension, you can connect a single abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across different customer tenants and remote systems to create a true SaaS scenario:
 ![SaaS architecture connecting one abap2UI5 app to multiple S/4 tenants](/get_started/image-9.png){ width=60% }

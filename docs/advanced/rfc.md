@@ -13,7 +13,7 @@ The RFC Connector unlocks several useful scenarios:
 
 #### Architecture
 
-The system that calls the app (the frontend system) includes the UI5 library and bootstraps the UI. The system that runs the app (the backend system) doesn't need to host the UI5 runtime.
+The system that calls the app (the frontend system) includes the UI5 library and bootstraps the UI. The system that runs the app (the backend system) doesn't have to host the UI5 runtime.
 
 <img width="600" alt="abap2UI5 RFC Connector architecture across frontend and backend systems" src="https://github.com/user-attachments/assets/6f885f04-2b70-4cb3-83d0-123473b72262" />
 
@@ -32,7 +32,7 @@ The backend system that holds the abap2UI5 apps needs no UI5 libraries. The call
 <img width="600" alt="UI5 bootstrap loaded from calling system while backend hosts the app logic" src="https://github.com/user-attachments/assets/8e7dd3dd-abd3-413f-8ec6-8a7a2be7a7ec" />
 
 #### Multi-System Launchpad
-You can also use this approach to build a centralized Fiori Launchpad that includes both:
+You can also use this approach to build a centralized Fiori Launchpad that combines both:
 - Apps installed on-stack (on the current system)
 - Apps executed remotely via RFC from other systems
 
