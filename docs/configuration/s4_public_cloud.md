@@ -11,7 +11,7 @@ Follow these steps to install abap2UI5 on S/4 Public Cloud:
 
 S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 consists only of classes, interfaces, and tables, so you can pull it without issues.
 
-Use the standard installation process via [abapGit for Eclipse](https://eclipse.abapgit.org/).
+Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/).
 
 <img width="649" height="573" alt="abapGit repository link dialog in ADT" src="https://github.com/user-attachments/assets/9ea46657-5ff5-4075-af12-4b5b359c212d" />
 
