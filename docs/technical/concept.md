@@ -146,7 +146,7 @@ This leads to the second subtle shift in abap2UI5: rather than binding OData to 
 
 This means the frontend no longer reads CDS Views and OData services directly. Instead, the backend sends the entire UI state — view and model — in a single response. Any user changes in the UI then return to the backend through a lightweight AJAX call carrying the updated view model — no OData routing required.
 
-You don't need to configure models or bindings manually — abap2UI5 handles this internally. Just expose class attributes via a simple bind method, and abap2UI5 handles the rest.
+You don't need to configure models or bindings manually — abap2UI5 handles this internally. Just expose class attributes through a simple bind method, and abap2UI5 handles the rest.
 
 A typical backend response contains the XML View:
 
