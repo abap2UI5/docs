@@ -61,11 +61,11 @@ Create a new HTTP handler manually or use the cloud branch of the [frontend](htt
 
 **Important:** In S/4 Public Cloud, accessing the HTTP endpoint requires `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes this scenario unsuitable for productive usage.
 
-To use abap2UI5 in production environments, complete the frontend deployment and tile configuration in the following steps.
+For production use, complete the frontend deployment and tile configuration in the following steps.
 
 ### 4. Deploy the UI5 App (Optional)
 
-Since ADT abapGit doesn't support UI5 apps (BSPs) directly, you need to deploy the app manually:
+Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manually:
 
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
 2. Deploy it into your system following SAP's [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
