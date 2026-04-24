@@ -12,7 +12,7 @@ An example URL looks like this: <br>
 `.../sap/bc/z2ui5?sap-client=001&app_start=z2ui5_cl_demo_app_000#/z2ui5-xapp-state=024251849E5A1EDFB1DAE2C97C8CE8C2`
 
 ### Sample Code
-Here's an implementation of the app state feature:
+An implementation of the app state feature:
 ```abap
 CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC.
 
