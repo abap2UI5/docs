@@ -93,7 +93,7 @@ CLASS z2ui5_cl_lp_kpi_hello_world IMPLEMENTATION.
 
 ENDCLASS.
 ```
-(3/3) A generic OData proxy service (`Z2UI5_PROXY_KPI_SRV`) handles the rest. It receives the `$filter` parameter carrying your class name, instantiates the class, calls `count`, and returns that many dummy OData entries. The Launchpad then shows the `$count` result as the tile KPI. Configure the tile with this endpoint:
+(3/3) A generic OData proxy service (`Z2UI5_PROXY_KPI_SRV`) handles the rest. It receives the `$filter` parameter carrying your class name, creates an instance of the class, calls `count`, and returns that many dummy OData entries. The Launchpad then shows the `$count` result as the tile KPI. Configure the tile with this endpoint:
 ```text
 .../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_lp_kpi_hello_world'
 ```
