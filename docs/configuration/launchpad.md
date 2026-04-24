@@ -17,7 +17,7 @@ Use these parameters for target mapping in your Launchpad configuration:
 - Parameter: `app_start / Z2UI5_CL_MY_APP`
 
 ### Troubleshooting
-Sometimes installation via abapGit causes cache-related issues. Here's how to resolve them:
+Sometimes installation via abapGit triggers cache-related issues. Here's how to resolve them:
 
 #### Cache Management
 
