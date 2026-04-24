@@ -303,7 +303,7 @@ Most notably, compared to UI5, we can't implement offline capabilities — in su
 
 Furthermore, using HANA DB capabilities directly on the frontend causes problems. Since every app uses the same generic HTTP-Service, we've decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can directly tap into HANA capabilities via a CDS View (and skip the ABAP layer). This approach lets you easily add pagination or fuzzy searches to UI5 freestyle or RAP apps. The combination of an OData-Service directly calling a CDS View of HANA is highly effective here.
 
-Of course, we can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But implementing this manually requires more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced capability in other areas.
+We can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But doing this manually takes more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view after every request. As always, every advantage we gain with abap2UI5 (like flexibility in creating models) comes with a trade-off of reduced capability elsewhere.
 
 Additionally, Fiori Elements with all its floorplans & templates is very straightforward and will receive many updates in the future. Ultimately, the wide range of UI5 use cases makes comparing the different approaches difficult — and we can't fully discuss them here. Let's now look at the framework's codebase in the final part of this blog post.
 
@@ -331,7 +331,7 @@ The result is a pure source-code-based framework, which opens up the following p
 
 ##### 26. Running Everywhere Apps
 
-At its core, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. The framework transmits these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on old releases. This approach lets us run on both the latest ABAP Cloud stack and on-premise systems, as well as legacy ones, making it a release-independent solution. Additionally, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
+At its core, abap2UI5 generates two strings — one containing an XML-View and the other containing the JSON-View-Model. The framework transmits these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on old releases. This approach runs on both the latest ABAP Cloud stack and on-premise systems, as well as legacy ones, making it a release-independent solution. Additionally, we don't necessarily lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
 
 <img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 
