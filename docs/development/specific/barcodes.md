@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Barcode Scanning
 
-Barcode scanning is common in enterprise apps. abap2UI5 supports:
+Barcode scanning is common in enterprise apps. With abap2UI5, you can:
 - Scan barcodes
 - Handle focus transitions
 - Play sounds for user feedback
