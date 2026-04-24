@@ -137,8 +137,8 @@ This is a demonstration. In this case, accessing `name` directly would be easier
 ### Frontend
 If you don't want to process the event in the backend, trigger actions directly on the frontend using `client->_event_client`. The difference between the two methods:
 
-- **`client->_event( )`** — triggers a backend roundtrip; the event is processed in the `main` method
-- **`client->_event_client( )`** — executes an action directly in the browser; no backend call
+- **`client->_event( )`** — triggers a backend roundtrip; the event runs in the `main` method
+- **`client->_event_client( )`** — runs an action directly in the browser; no backend call
 
 To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To execute a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
 
