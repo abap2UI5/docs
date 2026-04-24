@@ -190,7 +190,7 @@ The only non-generic part of this concept is the user's app, which implements th
 
 abap2UI5 app - one place for everything
 
-In this architecture, the app has full freedom to create the view and the model, but also bears full responsibility for ensuring everything else works correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this lives in this single app layer.
+In this architecture, the app has full freedom to create the view and the model, but also carries full responsibility for ensuring everything else works correctly. The app must handle the program logic, application states, and remember where it came from and where it wants to go next. All of this lives in this single app layer.
 
 But this isn't a problem for ABAP! From an ABAP perspective, it resembles past practices of using selection screens or working with ALVs. Every SAP GUI app was effectively an HDA where ABAP handled all the needed functions (just not in a browser-based environment). In this architecture, we're no longer limited to implementing an OData-Service or confined to a local implementation of a global RAP class with restrictions such as commit sequences. We can now use the full capabilities of the ABAP stack again. Creating data models based on internal tables is straightforward; working with generic data models, as seen in (10), is easy at runtime with RTTI; and extended ABAP concepts like serialization also apply, as we'll see in the next section.
 
