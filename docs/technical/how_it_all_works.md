@@ -117,7 +117,7 @@ Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wi
 
 ##### 9. One HTTP-Service for All Apps
 
-First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), removing the need to develop individual OData-Services with SEGW or CDS. At runtime, the framework transforms ABAP variables & tables into a JSON-Model and transmits them as a string to the frontend. JavaScript then parses it back into a JSON-Model and binds it to the UI5-View:
+First, we don't define a specific HTTP-Service for transmitting the View and Data. Instead, every app uses the same generic HTTP-Handler with two strings (one for the View and one for the Data), removing the need to build individual OData-Services with SEGW or CDS. At runtime, the framework transforms ABAP variables & tables into a JSON-Model and sends them as a string to the frontend. JavaScript then parses it back into a JSON-Model and binds it to the UI5-View:
 
 <img width="600" alt="Data Transfer in abap2UI5 - ABAP variables & tables are automatically synchronized with the UI5-Model" src="https://github.com/user-attachments/assets/163ca12b-fe37-43e8-80b6-a5eaae703d69" />
 
