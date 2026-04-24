@@ -33,7 +33,7 @@ Since launching in 2023, abap2UI5 has grown from a small side project into a com
 
 Traditional UI5 development requires JavaScript expertise, frontend deployment, and OData service configuration. abap2UI5 removes these complexities:
 
-- **Use your existing ABAP skills** — do what you know best, no frontend expertise required
+- **Use your existing ABAP skills** — do what you know best; no frontend expertise required
 - **Universal compatibility** — build apps that run on legacy R/3 systems and modern S/4 Cloud environments
 - **Extend beyond RAP** — when standard capabilities reach their limits
 - **Prototype rapidly** — iterate quickly on new business applications
