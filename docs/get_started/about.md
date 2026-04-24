@@ -50,7 +50,7 @@ abap2UI5 takes a "thin frontend" approach — all processing, logic, and data ma
 abap2UI5 is fast. The frontend focuses only on UI rendering through the UI5 framework, while the ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — cutting network roundtrips and speeding up responses.
 
 #### Security
-abap2UI5 is secure by design. All business logic stays in the ABAP backend. The frontend receives only the data the backend embeds directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries through external tools.
+abap2UI5 is secure by design. All business logic remains in the ABAP backend. The frontend receives only the data the backend embeds directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries through external tools.
 
 #### System Footprint
 The framework has a minimal system footprint — only classes and interfaces. Add functionality through optional add-ons to keep your system lean.
