@@ -40,4 +40,4 @@ ENDCLASS.
 ```
 
 ### Bookmark
-You can also use these URLs for bookmarking, but remember that the server only stores the app state for a limited time. The default configuration is 4 hours. See the [draft service](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/01/z2ui5_cl_core_srv_draft.clas.abap#L46) source.
+You can also use these URLs for bookmarking, but remember that the server stores the app state only for a limited time. The default is 4 hours. See the [draft service](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/01/z2ui5_cl_core_srv_draft.clas.abap#L46) source.
