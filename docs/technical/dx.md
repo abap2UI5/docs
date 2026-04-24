@@ -25,7 +25,7 @@ ENDCLASS.
 ```
 Benefits:
 - Single-class design — quick to create and easy to debug
-- Runs out of the box
+- Runs right away
 - Minimal boilerplate, easy to copy and paste
 
 This simplicity also inspired the entry point for abap2UI5 apps. For simple output, you don't need more than this:
