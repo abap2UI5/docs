@@ -111,7 +111,7 @@ In SAP contexts, OData services often carry extra annotations. Check the metadat
 <Property Name="IsPrimaryCurrencyForISOCrcy" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="primär" sap:quickinfo="primärer SAP-Währungscode zum ISO-Code"/>
 </EntityType>
 ```
-Use these SAP annotations in the UI5 view to reuse backend translations via the property `label`. The metadata binding path follows this pattern:
+Use these SAP annotations in the UI5 view to reuse backend translations via the `label` property. The metadata binding path follows this pattern:
 
 ```text
 {MODEL>/#EntityType/PropertyName/@sap:annotation}
