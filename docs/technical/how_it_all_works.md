@@ -240,7 +240,7 @@ UI5 evolves quickly, and extra layers can become outdated fast. With this approa
 
 ##### 20. No Hiding of Complexity
 
-But having no extra layer also means the framework doesn't necessarily abstract complexity away — unlike what other frameworks target. In abap2UI5, you send your XML-View directly to the frontend, and you're responsible for ensuring it's valid and executable:
+But having no extra layer also means the framework doesn't always abstract complexity away — unlike what other frameworks target. In abap2UI5, you send your XML-View directly to the frontend, and you're responsible for ensuring it's valid and executable:
 
 <img width="600" alt="XML-View created by the user and ready for the 'Wire'" src="https://github.com/user-attachments/assets/cbfdc72f-31f1-460b-afa3-d03179e9b173" />
 
