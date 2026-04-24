@@ -25,7 +25,7 @@ ENDMETHOD.
 ```
 
 ### UI5 Bootstrapping
-To specify the source for bootstrapping UI5:
+To set the source for bootstrapping UI5:
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
 
