@@ -88,7 +88,7 @@ While HTML creation still happens on the frontend, the backend now sends both th
   <em>abap2UI5 – HTML created in browser based on XML View and Data, both sent from the backend</em>
 </p>
 
-The UI5 application stays a single-page application, but its role changes: it now focuses only on creating HTML from views and data that the server provides.
+The UI5 application remains a single-page application, but its role changes: it now focuses only on creating HTML from views and data that the server provides.
 
 #### Frontend Events on the Server
 
