@@ -70,7 +70,7 @@ Since UI5 is a client-side framework, the backend can't generate ready-to-render
 
 So how can we generate UI5 HTML in the backend?
 
-Fortunately, UI5 has a defining characteristic that lets us shift part of the view generation to the backend. In UI5 freestyle apps, you define each view in XML — the so-called UI5 XML View. The UI5 framework uses this XML definition, combined with data from the backend, to create HTML in the browser.
+Luckily, UI5 has a defining characteristic that lets us shift part of the view generation to the backend. In UI5 freestyle apps, you define each view in XML — the so-called UI5 XML View. The UI5 framework uses this XML definition, combined with data from the backend, to create HTML in the browser.
 
 <p align="center">
 <img width="400" alt="UI5 freestyle - HTML created in browser based on frontend XML View and backend data" src="https://github.com/user-attachments/assets/ee0152e7-4f64-4b90-9cf2-3faead53044f" />
