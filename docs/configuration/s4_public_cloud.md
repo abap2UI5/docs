@@ -37,7 +37,7 @@ When installing repositories with ADT abapGit, all artifacts arrive inactive. Yo
 
 <img width="691" height="732" alt="Inactive artifacts list requiring activation" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
-You'll see that all artifacts are deactivated:
+You'll see that all artifacts are inactive:
 
 <img width="638" height="179" alt="Mass activation of abap2UI5 artifacts in progress" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 
