@@ -305,7 +305,7 @@ Also, using HANA DB capabilities directly on the frontend causes problems. Since
 
 We can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But doing it manually takes more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view on every request. As always, every advantage abap2UI5 brings (like flexibility in creating models) comes with a tradeoff elsewhere.
 
-And Fiori Elements, with all its floorplans & templates, is straightforward and will keep receiving updates. Ultimately, the wide range of UI5 use cases makes comparing the approaches difficult — and we can't fully discuss them here. Let's turn to the framework's codebase in the final part of this article.
+And Fiori Elements, with all its floorplans and templates, is straightforward and will keep receiving updates. Ultimately, the wide range of UI5 use cases makes comparing the approaches difficult — and we can't fully discuss them here. Let's turn to the framework's codebase in the final part of this article.
 
 ##### 25. System Footprint
 
