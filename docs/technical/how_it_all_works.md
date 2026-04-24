@@ -131,7 +131,7 @@ OData vs. UI5 Over the Wire - Model & Data transfer
 
 ##### 10. Define Model at Runtime
 
-This lets us define models not only at design time, but also at runtime. The user needs no extra work — abap2UI5 handles the entire process in the background on every AJAX request:
+This lets us define models not just at design time, but also at runtime. The user needs no extra work — abap2UI5 handles the entire process in the background on every AJAX request:
 
 <img width="600" alt="abap2UI5 - Dynamic Data Binding & Model Creation" src="https://github.com/user-attachments/assets/e9f1bf8c-6d8c-44ad-ba89-c3648b638335" />
 
