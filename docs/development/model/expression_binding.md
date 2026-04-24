@@ -9,7 +9,7 @@ The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you
 
 #### Calculate the Maximum Value on the Frontend
 
-The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) for integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. Here's what the ABAP string concatenation produces at runtime:
+The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) for integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. What the ABAP string concatenation produces at runtime:
 
 | ABAP code | UI5 binding result |
 |---|---|
