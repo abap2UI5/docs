@@ -30,7 +30,7 @@ outline: [2, 4]
 
 ### Blogs
 
-_Blog articles may contain outdated information. Always check this documentation for the latest details._
+_Blog posts may contain outdated information. Always check this documentation for the latest details._
 
 #### General
 - Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development [(06.10.2024)](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
