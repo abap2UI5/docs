@@ -12,7 +12,7 @@ abap2UI5 thrives on contributions from its passionate developers. Every contribu
 abap2UI5 wouldn't be possible without abapGit, the backbone of ABAP open-source development, and the always supportive people behind it. If you find abap2UI5 useful, you also benefit from abapGit. Explore its contributors and consider [sponsoring them](https://abapgit.org/sponsor.html).
 
 #### Tools That Make It Possible
-Several open-source projects extend abap2UI5's functionality. Consider sponsoring their maintainers:
+Several open-source projects extend abap2UI5. Consider sponsoring their maintainers:
 - Static code analysis via [abaplint](https://abaplint.org/) [(contributors)](https://github.com/abaplint/abaplint/graphs/contributors)
 - Unit testing via [open-abap](https://github.com/open-abap) [(contributors)](https://github.com/open-abap/open-abap-core/graphs/contributors)
 - JSON handling through [ajson](https://github.com/sbcgua/ajson) [(sbcgua)](https://github.com/sbcgua)
@@ -21,8 +21,8 @@ Several open-source projects extend abap2UI5's functionality. Consider sponsorin
 - Syntax downporting via the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Namespace renaming via the [mirror repository](https://github.com/abap2UI5/abap2UI5-mirror-renamed) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Browser testing with [Playwright](https://playwright.dev/) & [abap2UI5-web](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
-- Live demos running via [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
+- Live demos via [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
 - Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner) [(contributors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
-- Documentation created with [VitePress](https://vitepress.dev/) [(contributors)](https://github.com/vuejs/vitepress/graphs/contributors)
+- Documentation built with [VitePress](https://vitepress.dev/) [(contributors)](https://github.com/vuejs/vitepress/graphs/contributors)
 
 _Your support keeps abap2UI5 and the entire ABAP open-source community thriving!_
