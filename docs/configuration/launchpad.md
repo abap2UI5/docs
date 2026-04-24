@@ -70,7 +70,7 @@ INTERFACE z2ui5_if_lp_kpi
 
 ENDINTERFACE.
 ```
-(2/3) Implement the interface in your app class alongside `z2ui5_if_app`. The `count` method holds your custom KPI calculation logic (e.g., counting open items from the database):
+(2/3) Implement the interface in your app class alongside `z2ui5_if_app`. The `count` method holds your KPI calculation logic (e.g., counting open items from the database):
 ```abap
 CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
 
