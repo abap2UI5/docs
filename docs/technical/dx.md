@@ -54,7 +54,7 @@ START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| TYPE `I`.
 ```
 Benefits:
-- Rapid prototyping with minimal code
+- Fast prototyping with minimal code
 - Built-in input handling and event processing
 - Full-stack behavior with no setup
 
