@@ -89,7 +89,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 #### Error Popup
-To show a detailed view of your exception, use this code:
+To show a detailed view of your exception, use:
 ```abap
 METHOD z2ui5_if_app~main.
 
