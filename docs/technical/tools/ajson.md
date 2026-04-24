@@ -27,4 +27,4 @@ DATA(output) = z2ui5_cl_ajson=>create_empty( )->set(
 
 #### Automatic Updates
 
-Every ajson update and bug fix flows automatically into abap2UI5 via GitHub Actions and the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository. You always run the latest stable version — no manual intervention needed.
+Every ajson update and bug fix flows automatically into abap2UI5 through GitHub Actions and the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository. You always run the latest stable version — no manual intervention needed.
