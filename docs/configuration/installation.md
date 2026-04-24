@@ -4,7 +4,7 @@ outline: [2, 4]
 # Installation
 abap2UI5 apps run directly through an HTTP service, making this the fastest and simplest setup. It runs on any release and language version.
 
-However, productive usage may require additional considerations for different system environments.
+However, production use may require extra considerations across different system environments.
 
 ### S/4 Public Cloud
 In `S/4 Public Cloud`, the HTTP endpoint requires `S_DEVELOP` authorization, which makes it unsuitable for productive use. To make this app accessible to business users, install a separate frontend app and create an additional tile. See [S/4 Public Cloud](/configuration/s4_public_cloud) for details.
