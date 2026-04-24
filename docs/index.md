@@ -26,7 +26,7 @@ hero:
 features:
   - title: Guide
     icon: <i class="fa-solid fa-book"></i>
-    details: Learn how to develop, configure, and run apps with abap2UI5.
+    details: Learn how to build, configure, and run apps with abap2UI5.
     link: /get_started/about
   - title: GitHub
     icon: <i class="fa-brands fa-github"></i>
