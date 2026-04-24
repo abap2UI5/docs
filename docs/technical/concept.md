@@ -229,7 +229,7 @@ The illustration below shows the difference between a full re-render and a targe
   <em>Partial HTML Re-rendering via View Model Updates - Only relevant DOM parts are re-rendered, preserving UI state</em>
 </p>
 
-Thanks to UI5's powerful data binding mechanism, UI5 updates only the modified DOM elements. This keeps the current UI state intact — like input focus — and delivers a smooth, uninterrupted user experience.
+Thanks to UI5's data binding mechanism, UI5 updates only the modified DOM elements. This keeps the current UI state intact — like input focus — and delivers a smooth, uninterrupted user experience.
 
 The XML View and View Model concepts make UI5 a perfect match for the UI5 Over-the-Wire approach, removing the need for full client-side re-renders.
 
