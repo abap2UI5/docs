@@ -25,4 +25,4 @@ Several open-source projects extend abap2UI5. Please consider sponsoring their m
 - Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner) [(contributors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
 - Documentation built with [VitePress](https://vitepress.dev/) [(contributors)](https://github.com/vuejs/vitepress/graphs/contributors)
 
-_Your support keeps abap2UI5 and the entire ABAP open-source community thriving!_
+_Your support keeps abap2UI5 and the wider ABAP open-source community thriving!_
