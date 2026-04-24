@@ -13,7 +13,7 @@ page->input(
   description = `device model - resize - width`
   value       = `{device>/resize/width}`  ).
 ```
-Explore all parameters in the [UI5 documentation](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
+For all parameters, see the [UI5 documentation](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
 
 ### Backend
 When you need device information in your ABAP logic (e.g., to adapt behavior based on the browser or screen size), use the `info_frontend` custom control. It collects the values on the frontend and sends them back via two-way binding (`_bind_edit`). Once the `finished` event fires, all bound attributes become populated and available to ABAP:
