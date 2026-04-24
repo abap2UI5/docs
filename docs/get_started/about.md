@@ -108,7 +108,7 @@ The community provides support. Open an issue on GitHub or join the abap2UI5 Sla
 → *Visit our [Support page](/resources/support) for more options*
 
 #### Contribution
-Contributions are always welcome! Whether you fix bugs, build new features, or improve documentation, your input helps the project thrive.
+Contributions are always welcome! Whether you fix bugs, build features, or improve documentation, your input helps the project thrive.
 
 → *Read our [Contribution Guide](/resources/contribution) to learn how to get involved*
 
