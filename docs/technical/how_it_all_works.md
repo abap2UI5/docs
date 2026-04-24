@@ -109,7 +109,7 @@ RAP - Definition of Views with UI Annotations
 
 RAP - Definition of Data Models with DDL
 
-This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized and controlled manner: every API relies on the OData protocol, UI annotations define the views, DDL defines the data models, local implementations of RAP classes handle model updates, and everything splits into different layers orchestrated in a Virtual Data Model. Finally, this approach ensures a highly organized development process that works effectively in most use cases.
+This approach also leads to an architecture with a thin frontend and a strong backend similar to an HDA. But RAP aims to achieve this in a well-organized, controlled manner: every API relies on the OData protocol, UI annotations define the views, DDL defines the data models, local implementations of RAP classes handle model updates, and everything splits into different layers orchestrated in a Virtual Data Model. This approach ensures a highly organized development process that works effectively in most use cases.
 
 However, when significant Model and View changes are needed at runtime, this approach can prove too inflexible. Model changes with RTTI aren't supported, and extending the view quickly exceeds the functional scope of backend annotations — requiring development of apps with Fiori Elements (which again requires extra deployment).
 
@@ -351,7 +351,7 @@ With this approach, dependencies stay limited to APIs and functions that are bot
 
 GUID creation compatible with ABAP Cloud and Standard ABAP
 
-As you can see, creating methods compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must stay aware of this (and it remains to be seen how feasible this is in practice). Ultimately, it does have a key advantage: abap2UI5 runs on ABAP 2305 and remains portable down to NetWeaver 7.02.
+As you can see, creating methods compatible with both 'ABAP Cloud' and 'Standard ABAP' is considerably more complex. Fortunately, abap2UI5 only requires GUIDs as a dependency. However, when developing apps, you must stay aware of this (and practical feasibility remains to be seen). Ultimately, it does have a key advantage: abap2UI5 runs on ABAP 2305 and remains portable down to NetWeaver 7.02.
 
 ##### 28. Compatibility & Downporting
 
