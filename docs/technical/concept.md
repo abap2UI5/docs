@@ -56,7 +56,7 @@ Architectural Comparison:
 
 #### How UI5 Freestyle Works
 
-UI5 freestyle apps follow the Single-Page Application model. The frontend holds all UI and app artifacts, while the backend provides data through OData — typically via CDS Views or custom ABAP implementations. The browser handles rendering and logic execution entirely:
+UI5 freestyle apps follow the Single-Page Application model. The frontend holds all UI and app artifacts, while the backend provides data through OData — typically backed by CDS Views or custom ABAP implementations. The browser handles rendering and logic execution entirely:
 
 <p align="center">
  <img width="500" alt="UI5 freestyle - UI is built on the client, backend delivers only data via OData" src="https://github.com/user-attachments/assets/8043d0d9-5852-4dac-aefb-37ec8d6e66be" />
