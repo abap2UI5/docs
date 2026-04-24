@@ -25,7 +25,7 @@ You'll see the pull operation running:
 
 <img width="1438" height="26" alt="abapGit pull operation completed status bar" src="https://github.com/user-attachments/assets/ee085bb9-d708-4de3-a6f0-5493adc57054" />
 
-After a few moments, the installation completes:
+After a moment, the installation completes:
 
 <img width="1332" height="28" alt="Installation complete confirmation" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
 
