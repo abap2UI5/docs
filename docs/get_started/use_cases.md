@@ -24,7 +24,7 @@ For a classic extension approach, use unreleased APIs for more freedom to custom
 ### Side-by-Side Extension
 
 #### Tier 1 Extension
-Develop applications separately from your S/4 system's lifecycle via remote API calls only. Stick to released APIs, and your apps will work with S/4HANA Public Cloud too:
+Build applications separately from your S/4 system's lifecycle via remote API calls only. Stick to released APIs, and your apps will work with S/4HANA Public Cloud too:
 ![Tier 1 side-by-side extension with remote API calls](/get_started/image-22.png){ width=60% }
 
 #### Tier 3 Extension
