@@ -36,7 +36,7 @@ ENDMETHOD.
 ```
 
 #### SY, BAPIRET, CX_ROOT
-You can pass common message structures, objects, and variables directly to the functions:
+You can pass common message structures, objects, and variables directly to these functions:
 
 ##### SY
 ```abap
