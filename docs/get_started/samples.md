@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Sample Apps
 
-With over 250 samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5.
+With 250+ samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5.
 
 ### Samples
 Try samples for tables, lists, trees, and other UI5 controls. Copy and paste code snippets to speed up development:
