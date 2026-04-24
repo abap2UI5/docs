@@ -122,7 +122,7 @@ We can use these SAP annotations in the UI5 view to reuse backend translations v
 - **`/Currency`** — the property name within that entity type
 - **`/@sap:label`** — the SAP annotation attribute (here: the translated label text)
 
-So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währungsschlüssel"` from the metadata — displayed in the user's logon language.
+So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währungsschlüssel"` from the metadata — shown in the user's logon language.
 
 ```abap
 
