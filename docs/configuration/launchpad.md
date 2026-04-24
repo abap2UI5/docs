@@ -48,7 +48,7 @@ Extend your Fiori Launchpad with Key Performance Indicators (KPIs) using the aba
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
-For more details, see the [blog article on LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
+For more details, see the [blog post on LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
 
 #### Functionality
 <img width="800" alt="Launchpad KPI tiles showing dynamic count values" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
