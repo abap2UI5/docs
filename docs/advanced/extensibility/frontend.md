@@ -16,7 +16,7 @@ Then point all three files at your ABAP backend system:
 <img width="400" alt="Frontend config files where the backend system URL must be replaced" src="https://github.com/user-attachments/assets/155c9a3f-8a0a-494b-8fc4-a4bba2bf0e90">
 
 #### Develop & Test
-Set the correct backend system in the YAML files.<br>
+Set the backend system in the YAML files.<br>
 Replace `/sap/bc/z2ui5` with your endpoint in the manifest, then run:
 ```sh
 npm i
