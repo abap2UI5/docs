@@ -11,7 +11,7 @@ UI5 formatter types use a special JSON-based binding syntax with these key eleme
 - **`formatOptions: {...}`** — optional settings that control the output format
 - **`\{ ... \}`** — in ABAP string templates (`|...|`), escape curly braces with `\` because `{ }` normally denotes an ABAP expression
 
-The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g., `/XX/AMOUNT`) instead of the full binding expression (`{/XX/AMOUNT}`), so you can embed it inside the `parts` array.
+The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g., `/XX/AMOUNT`) rather than the full binding expression (`{/XX/AMOUNT}`), so you can embed it inside the `parts` array.
 
 For example, this ABAP code:
 ```abap
