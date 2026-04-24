@@ -64,6 +64,6 @@ _UI5 Over-the-Wire (2023+) (Open Source)_
 
 - The ABAP backend defines **UI5 XML Views** and **JSON ViewModels**
 - A static UI5 frontend dynamically renders these definitions
-- No custom JavaScript development required
+- No custom JavaScript required
 - Combines backend-driven development with UI5 flexibility
 - Aligns with SAP's cloud strategy
