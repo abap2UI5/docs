@@ -16,4 +16,4 @@ UI5 (SAPUI5) is the default version and ships with every ABAP system from a spec
 UI5 2.x is the newest version of UI5, with deprecated APIs removed. We continuously test abap2UI5 against this release to maintain compatibility with upcoming releases.
 
 ### Release-Specific
-Certain controls and properties are only available in specific UI5 releases. The abap2UI5 framework and its samples support many UI5 versions, minimizing compatibility issues. However, when developing your own applications, verify compatibility with the UI5 version your system uses.
+Certain controls and properties are only available in specific UI5 releases. The abap2UI5 framework and its samples support many UI5 versions, minimizing compatibility issues. But when building your own applications, verify compatibility with the UI5 version your system uses.
