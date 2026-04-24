@@ -9,7 +9,7 @@ Whether it makes sense to build apps with abap2UI5 depends heavily on future-pro
 
 #### What is ABAP Cloud?
 
-ABAP Cloud is a restricted ABAP language version that ensures cloud readiness and upgrade stability. Code that follows the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — without code adjustments or further investments.
+ABAP Cloud is a restricted ABAP language version that delivers cloud readiness and upgrade stability. Code that follows the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — without code adjustments or further investments.
 
 ABAP Cloud includes a simplified technology stack, syntax, and toolset:
 
@@ -119,7 +119,7 @@ RAP (RESTful Application Programming Model) is SAP's recommended model for build
 - OData services for communication
 - Fiori Elements for UI generation
 
-abap2UI5 offers an alternative, especially for developers who prefer lightweight apps and don't need the full RAP stack. As long as you follow cloud development principles, both approaches are valid.
+abap2UI5 offers an alternative, especially for developers who prefer lightweight apps and don't need the full RAP stack. Both approaches are valid as long as you follow cloud development principles.
 
 #### Conclusion
 
