@@ -142,5 +142,5 @@ ENDCLASS.
 That's all you need. Set a breakpoint to watch the communication and data updates in action, then experiment by modifying the view, events, and data exchange.
 
 ::: tip **ABAP Language Versions**
-While the HTTP handler must distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility.
+While the HTTP handler must distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to decide whether to build your apps with ABAP Cloud compatibility.
 :::
