@@ -31,7 +31,7 @@ After a moment, the installation completes:
 
 ### 2. Mass Activate the Imported Artifacts
 
-When installing repositories with ADT abapGit, all artifacts arrive inactive. You'll need to activate them manually. The easiest approach: create a dedicated inactive/active folder tree for the abap2UI5 project:
+When installing repositories with ADT abapGit, all artifacts arrive inactive. Activate them manually. The easiest approach: create a dedicated inactive/active folder tree for the abap2UI5 project:
 
 <img width="481" height="182" alt="Inactive objects folder tree in ADT" src="https://github.com/user-attachments/assets/a47fe1f1-5445-46da-96b9-8df3bfe9a99d" />
 
