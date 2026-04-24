@@ -61,7 +61,7 @@ Create an HTTP handler manually or use the cloud branch of the [frontend](https:
 
 **Important:** In S/4 Public Cloud, accessing the HTTP endpoint requires `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes the scenario unsuitable for production use.
 
-For production use, complete the frontend deployment and tile configuration in the following steps.
+For production use, complete the frontend deployment and tile configuration in the steps below.
 
 ### 4. Deploy the UI5 App (Optional)
 
