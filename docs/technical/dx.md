@@ -212,7 +212,7 @@ Browser-based roundtrips need slightly different flow control, but the overall a
 
 ### More Developer-Friendly Advantages
 
-Beyond the code snippets above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — brings several more benefits.
+Beyond the code snippets above, the Over-the-Wire approach of abap2UI5 — based entirely on backend development — brings several other benefits.
 
 #### Zero-Setup Deployment
 
