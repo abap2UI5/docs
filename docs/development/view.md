@@ -36,8 +36,8 @@ You can use any UI5 control from the [UI5 SDK](https://sapui5.hana.ondemand.com)
 ```
 
 Tips for working with views:
-- Use code completion on `Z2UI5_CL_XML_VIEW` to discover available controls and properties
-- Check the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
+- Use code completion on `Z2UI5_CL_XML_VIEW` to discover controls and properties
+- Browse the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
 #### What's Next?
 This setup produces a static view. The next section covers how to bind and exchange data between the view and the application logic.
