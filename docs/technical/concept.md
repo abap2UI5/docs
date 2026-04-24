@@ -141,7 +141,7 @@ This leads to the second subtle shift in abap2UI5: instead of binding OData to t
 <p align="center">
 <img width="385" alt="abap2UI5 - backend delivers XML View and tailored View Model in a single response" src="https://github.com/user-attachments/assets/5bb4d351-4f5e-4ba0-a09a-f17883bd25e6" />
 <br/>
-  <em>abap2UI5 – Backend delivers an XML View and its specifically tailored View Model in a single response</em>
+  <em>abap2UI5 – Backend delivers an XML View and its tailored View Model in a single response</em>
 </p>
 
 This means the frontend no longer consumes CDS Views and OData services directly. Instead, the backend sends the entire UI state — view and model — in a single response. Any user changes in the UI then return to the backend via a lightweight AJAX call carrying the updated view model — no OData routing required.
