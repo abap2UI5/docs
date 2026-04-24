@@ -26,7 +26,7 @@ This page offers a structured technical comparison of **RAP** and **abap2UI5**, 
 | **Languages/Artifacts**    | CDS, BDEF, UI annotations, UI5 app                    | ABAP class for both View and logic                     |
 | **Frontend Deployment**    | UI5 Fiori Elements runtime app deployed separately    | Shared static UI5 Shell (no app-specific deployment)   |
 | **Tooling Requirements**   | ADT, Fiori Tools, metadata layers                     | Any ABAP IDE (including SE80), no additional tools     |
-| **Transport**              | Separate transport for frontend and backend           | Single backend deployment via transport or abapGit     |
+| **Transport**              | Separate transport for frontend and backend           | Single backend deployment through transport or abapGit |
 | **Development Style**      | Declarative, metadata-driven                          | Programmatic, ABAP-centric                             |
 | **Complexity**             | High: multiple layers & technologies                  | Low: one language, one layer                           |
 
