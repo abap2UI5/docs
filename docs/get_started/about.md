@@ -71,7 +71,7 @@ By relying only on released APIs, abap2UI5 keeps your applications "cloud-ready"
 Works with both ABAP Cloud and Standard ABAP, covering ABAP releases from 7.02 to ABAP Cloud:
 - S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
-- R/3 NetWeaver AS ABAP 7.02 or higher (Standard ABAP)
+- R/3 NetWeaver AS ABAP 7.02 or later (Standard ABAP)
 
 A downported version is available for systems running earlier ABAP releases (before 7.50).
 
