@@ -246,8 +246,8 @@ Key Benefits:
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and typical enterprise use cases
 
 Limitations:
-- Not designed for highly interactive or collaborative real-time applications
-- Offline functionality or complex client-side interactions aren't covered
+- Not designed for highly interactive or real-time collaborative applications
+- Offline functionality and complex client-side interactions aren't covered
 - Less effective if frontend and backend teams work independently
 
 By moving UI control to the ABAP backend and using UI5 only for HTML creation, abap2UI5 enables fast and efficient development of business applications — without the complexity of SPA architectures.
