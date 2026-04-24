@@ -23,10 +23,10 @@ The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. Th
 abap2UI5 never sends the app's business logic to the client. All business processes stay securely on the server, so sensitive data never reaches the frontend.
 
 ### Content-Security-Policy
-To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP helps prevent attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. By default, CSP allows only trusted sources such as ui5.sap.com, sapui5.hana.ondemand.com, and sdk.openui5.org, among others.
+To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP helps block attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. By default, CSP allows only trusted sources such as ui5.sap.com, sapui5.hana.ondemand.com, and sdk.openui5.org, among others.
 
 #### Default CSP
-By default, abap2UI5 uses the following CSP:
+By default, abap2UI5 uses the CSP below:
 ```xml
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
     ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com
@@ -34,7 +34,7 @@ By default, abap2UI5 uses the following CSP:
 ```
 
 #### Customizing the CSP
-If needed, adjust the CSP by modifying the HTTP handler call as shown below:
+If needed, adjust the CSP by modifying the HTTP handler call as shown:
 
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
