@@ -128,7 +128,7 @@ So far, we've seen how to display data and handle events through a backend-drive
 
 If we continued relying on OData, updates would usually route into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
 
-Let's take a closer look at a key UI5 feature: view models. In UI5 freestyle, view models bind attributes such as visible or enabled — mapping control properties in the view precisely to model attributes:
+Let's take a closer look at a key UI5 feature: view models. In UI5 freestyle, view models bind attributes like visible or enabled — mapping control properties in the view directly to model attributes:
 
 <p align="center">
 <img width="340" alt="UI5 View Model concept - UI control properties bound to View Model attributes" src="https://github.com/user-attachments/assets/7eaa09d3-e3f7-4ebb-997d-fc68cc68421f" />
