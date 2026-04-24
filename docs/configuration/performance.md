@@ -3,15 +3,15 @@ outline: [2, 4]
 ---
 # Performance
 
-abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is significantly faster than processing in the browser.
+abap2UI5 is fast. Almost all processing happens on the ABAP backend, which is much faster than processing in the browser.
 
 abap2UI5 keeps frontend logic to a minimum: no business logic runs in the browser. Everything goes directly to the UI5 framework, which focuses only on UI rendering.
 
-We've tested abap2UI5 with tables containing large numbers of entries and columns, so you can confidently develop your app — performance shouldn't be a concern.
+We've tested abap2UI5 with tables containing large numbers of entries and columns, so you can develop your app with confidence — performance shouldn't be a concern.
 
 ### `view_display` vs. `view_model_update`
 
-The most impactful optimization is choosing the right update method:
+The biggest optimization is choosing the right update method:
 
 - **`client->view_display( )`** — sends a new XML view and model to the frontend. UI5 destroys the current view and creates a new one from scratch. Use this only on initialization or when the view structure changes.
 - **`client->view_model_update( )`** — sends only updated model data. UI5 refreshes the existing view via data binding, re-rendering only the changed controls. This preserves UI state (scroll position, focus, etc.) and is significantly faster.
@@ -38,11 +38,11 @@ ENDMETHOD.
 ```
 
 ### Suggestions
-Want to optimize your app even more? Here are a few tips:
+Want to tune your app further? Here are a few tips:
 - Only call `client->view_display` when necessary. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have changed.
 - Prefer `client->_bind` and use `client->_bind_edit` only when users need to make changes that the backend processes. Otherwise, you'll trigger unnecessary data transfers.
 - Declare public attributes in your app class only for variables displayed on the frontend. This prevents the framework from accessing unused values.
 - Follow standard ABAP best practices, such as reducing loops and using sorted tables, as you would in any other ABAP development project.
 
 ### Performance Issues?
-If you encounter performance issues, try creating a sample and submitting a pull request to the samples repository. We'd be happy to analyze it and see if we can make abap2UI5 even faster.
+If you hit performance issues, create a sample and submit a pull request to the samples repository. We'd be happy to analyze it and see whether we can make abap2UI5 even faster.
