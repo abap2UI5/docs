@@ -44,7 +44,7 @@ With the rise of smartphones and richer web experiences, SAP introduced **UI5 Fr
 - Based on **JavaScript, XML Views, and UI5 Controls**
 - Follows a **Single-Page Application (SPA)** architecture
 - Full control over frontend behavior and look and feel
-- Enables highly customized, interactive applications
+- Enables deeply customized, interactive applications
 - Requires dedicated frontend expertise
 
 ### RAP / Fiori Elements
