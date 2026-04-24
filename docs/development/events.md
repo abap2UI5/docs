@@ -27,7 +27,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-If the backend needs additional information about the specific event, use the `t_arg` parameter to include extra details. Three special prefixes are available:
+If the backend needs more information about the event, use the `t_arg` parameter to include extra details. Three special prefixes are available:
 
 - **`$source`** — the UI5 control that triggered the event (e.g., `${$source>/text}` returns the button text)
 - **`$parameters`** — the event parameters as defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
