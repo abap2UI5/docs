@@ -40,4 +40,4 @@ Tips for working with views:
 - Check the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
 #### What's Next?
-This setup produces a static view. The next section covers how to bind and exchange data between the view and your application logic.
+This setup produces a static view. The next section covers how to bind and exchange data between the view and the application logic.
