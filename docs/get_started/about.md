@@ -95,7 +95,7 @@ Integrate your apps into:
 Getting started is simple:
 1. Import the project via abapGit
 2. Create an HTTP service for browser communication
-3. Start developing!
+3. Start building!
 
 → *See our [Installation Guide](/get_started/quickstart) for detailed instructions*
 
