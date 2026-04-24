@@ -101,5 +101,5 @@ ENDCLASS.
 ```
 
 ::: warning
-If you don't implement authorization checks at the app level, make sure end users can't bypass service-level authorization checks by navigating between apps.
+If you don't implement authorization checks at the app level, make sure users can't bypass service-level authorization checks by navigating between apps.
 :::
