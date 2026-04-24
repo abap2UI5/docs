@@ -21,7 +21,7 @@ Use the standard installation process via [abapGit for Eclipse](https://eclipse.
 
 <img width="880" height="1199" alt="abapGit import log showing pulled artifacts" src="https://github.com/user-attachments/assets/09497311-8653-4e6f-ae0a-3138d0eac47e" />
 
-You'll see the pull operation is now running:
+You'll see the pull operation running:
 
 <img width="1438" height="26" alt="abapGit pull operation completed status bar" src="https://github.com/user-attachments/assets/ee085bb9-d708-4de3-a6f0-5493adc57054" />
 
