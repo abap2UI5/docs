@@ -28,7 +28,7 @@ In this architecture, the initial request delivers JavaScript and CSS. Subsequen
 The result is a clean, lightweight frontend — a pure rendering layer — while all logic remains under the backend's full control.
 
 Several modern frameworks adopt this pattern:
-- [htmx](https://htmx.org) Progressive enhancement via HTML partials (Any web stack)
+- [htmx](https://htmx.org) Progressive enhancement through HTML partials (Any web stack)
 - [Hotwire (Turbo)](https://hotwired.dev) HTML-over-the-wire for Rails apps (Ruby on Rails)
 - [Phoenix LiveView](https://hexdocs.pm/phoenix_live_view) Real-time UI with server rendering (Elixir/Phoenix)
 - [Livewire](https://livewire.laravel.com) Server-driven UI components in PHP (Laravel/PHP)
