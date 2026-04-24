@@ -18,7 +18,7 @@ abaplint --fix .github/abaplint/abap_702.jsonc
 ```
 
 #### Renaming
-All artifacts are compatible with the abaplint renaming feature, letting you use abap2UI5 under different custom namespaces:
+All artifacts are compatible with the abaplint renaming feature, so you can use abap2UI5 under different custom namespaces:
 
 ```sh
 abaplint .github/abaplint/rename_test.jsonc --rename
