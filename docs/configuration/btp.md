@@ -22,7 +22,7 @@ Integrate your abap2UI5 apps into BTP services like SAP Build Work Zone. Full de
 - User: *(user)*
 - Password: *(password)*
 
-#### Additional Properties
+#### Extra Properties
 
 SAP Build Work Zone requires these properties to route requests correctly to your ABAP backend:
 
