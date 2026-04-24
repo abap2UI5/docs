@@ -122,7 +122,7 @@ CLASS z2ui5_cl_sample_timer_once IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-The timer starts inactive. When the user clicks the button, the handler sets `mv_check_timer_active` to `abap_true` and the timer fires once, opening a new browser tab via `_event_client`.
+The timer starts inactive. When the user clicks the button, the handler sets `mv_check_timer_active` to `abap_true` and the timer fires once, opening a new browser tab through `_event_client`.
 
 #### Stopping a Repeating Timer
 
