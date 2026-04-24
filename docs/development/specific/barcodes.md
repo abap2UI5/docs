@@ -13,7 +13,7 @@ This section covers everything you need to get started.
 
 #### Scanning
 
-Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple. Use the barcode scanner control like any other UI5 control with abap2UI5. Below is an example showing basic behavior. You can customize the handling after the scanning event fires:
+Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple. Use the barcode scanner control like any other UI5 control with abap2UI5. The example below shows basic behavior. Customize the handling after the scanning event fires:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -47,7 +47,7 @@ This feature works only with the UI5 framework, not with OpenUI5.
 :::
 
 #### Focus Handling
-Most scanner devices emulate a keyboard. In those cases, create an input field and set focus correctly. The scanned data populates the input field as if typed on a keyboard.
+Most scanner devices emulate a keyboard. In those cases, create an input field and set focus correctly. The scanned data fills the input field as if typed on a keyboard.
 
 The key mechanism is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then automatically moves focus to the matching field on the frontend:
 
