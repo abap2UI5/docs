@@ -32,7 +32,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Head back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
+Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
 Let's add a view to display some text:

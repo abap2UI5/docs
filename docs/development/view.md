@@ -36,7 +36,7 @@ You can use any UI5 control from the [UI5 SDK](https://sapui5.hana.ondemand.com)
 ```
 
 Tips for working with views:
-- Use code completion on `Z2UI5_CL_XML_VIEW` to explore available controls and properties
+- Use code completion on `Z2UI5_CL_XML_VIEW` to discover available controls and properties
 - Check the [samples repository](/get_started/samples) for ready-made XML examples you can copy and adjust
 
 #### What's Next?

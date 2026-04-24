@@ -103,7 +103,7 @@ ENDMETHOD.
 ```
 
 #### Uncaught Errors
-When you don't catch exceptions in your code, the framework catches them and shows the standard error popup. Try:
+When you don't catch exceptions in your code, the framework catches them and displays the standard error popup. Try:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -114,7 +114,7 @@ ENDMETHOD.
 ```
 
 #### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? In this case, the default HTTP handler exception output appears. Processing stops, and the user needs to refresh the browser. Use this only for unexpected behavior:
+What happens if your code raises uncatchable exceptions? In this case, the default HTTP handler exception output appears. Processing stops, and the user must refresh the browser. Use this only for unexpected behavior:
 
 ```abap
 METHOD z2ui5_if_app~main.
