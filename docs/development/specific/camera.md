@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Camera
 
-abap2UI5 provides a custom control for capturing photos directly from the device camera. The control returns the image as a base64-encoded string that you can process on the backend.
+abap2UI5 provides a custom control for capturing photos directly from the device camera. The control returns the image as a base64-encoded string, ready for backend processing.
 
 A basic example, based on sample `Z2UI5_CL_DEMO_APP_306`:
 ```abap
