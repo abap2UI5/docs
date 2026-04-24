@@ -9,7 +9,7 @@ UI5 offers popups and popovers that overlay specific areas of the view. This sec
 
 #### General
 
-To display a popup, use the method `client->popup_display` instead of `client->view_display`:
+To display a popup, call `client->popup_display` instead of `client->view_display`:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -85,7 +85,7 @@ Check out the confirmation popup, for example:
 To manage a stack of multiple popups, remember that abap2UI5 displays only one popup at a time on the frontend. However, you can maintain a popup stack in your backend logic and re-display the previous popup as needed. Check out `Z2UI5_CL_DEMO_APP_161`.
 
 ### Popover
-To display a popover, use the method `client->popover_display` and specify the ID of the control where you want the popover to appear:
+To display a popover, call `client->popover_display` and specify the ID of the control where you want the popover to appear:
 ```abap
   METHOD z2ui5_if_app~main.
 

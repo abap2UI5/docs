@@ -7,7 +7,7 @@ _Technical Deep Dive into abap2UI5_
 
 This article was originally published on the [SAP Community](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459).
 
-This article is for developers who want to understand how abap2UI5 works under the hood. It explores how the framework achieves its flexibility — including runtime view generation, generic HTTP handling, and decoupling from OData — and provides insight into its architecture, extensibility, and system internals.
+This article is for developers who want to understand how abap2UI5 works under the hood. It explores how the framework achieves its flexibility — including runtime view generation, generic HTTP handling, and decoupling from OData — and offers insight into its architecture, extensibility, and system internals.
 
 ##### 1. HTML Over the Wire
 
@@ -131,7 +131,7 @@ OData vs. UI5 Over the Wire - Model & Data transfer
 
 ##### 10. Define Model at Runtime
 
-This lets us define models not only at design time, but also at runtime. The user doesn't need to do extra work because abap2UI5 handles the entire process in the background during every AJAX request:
+This lets us define models not only at design time, but also at runtime. The user needs no extra work because abap2UI5 handles the entire process in the background during every AJAX request:
 
 <img width="600" alt="abap2UI5 - Dynamic Data Binding & Model Creation" src="https://github.com/user-attachments/assets/e9f1bf8c-6d8c-44ad-ba89-c3648b638335" />
 
