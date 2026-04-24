@@ -103,7 +103,7 @@ Getting started is simple:
 <br>
 
 #### Support
-The community provides support. Submit an issue on GitHub or join the abap2UI5 Slack channel for help.
+The community provides support. Open an issue on GitHub or join the abap2UI5 Slack channel for help.
 
 → *Visit our [Support page](/resources/support) for more options*
 
