@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 # Installation
-abap2UI5 apps run directly through an HTTP service, making this the fastest and simplest setup. It runs on any release and language version.
+abap2UI5 apps run directly through an HTTP service — the fastest and simplest setup. It runs on any release and language version.
 
 However, production use may require extra considerations across different system environments.
 
