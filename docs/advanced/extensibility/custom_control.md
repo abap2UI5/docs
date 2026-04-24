@@ -5,7 +5,7 @@ outline: [2, 4]
 
 You can build your own UI5 custom controls and use them in abap2UI5 apps.
 
-First, set up your VS Code environment with the abap2UI5 frontend artifacts, as described on the [Frontend](/advanced/extensibility/frontend) page.
+First, set up your VS Code environment with the abap2UI5 frontend artifacts, following the [Frontend](/advanced/extensibility/frontend) page.
 
 #### Frontend
 
