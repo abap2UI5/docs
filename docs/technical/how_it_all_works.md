@@ -234,7 +234,7 @@ Since all user apps are also in pure ABAP, we can now maintain and develop every
 
 ##### 19. No Extra Layer
 
-Another way to reduce complexity: avoid creating extra customizing layers. As shown in (13), only one stack call sits between the user's app and the HTTP-Handler, and no additional layers such as OData, SADL, or Gateway exist. This lets us bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
+Another way to reduce complexity: avoid creating extra customizing layers. As shown in (13), only one stack call sits between the user's app and the HTTP-Handler, and no extra layers such as OData, SADL, or Gateway exist. This lets us bring the UI5 frontend framework and its functionality as pure as possible to the abap2UI5 apps in the backend.
 
 UI5 evolves rapidly, and additional layers can quickly become outdated. With this approach, all future UI5 controls work automatically in abap2UI5. However, a potential downside is that we have to handle the complexity of the frontend UI5 API and learn the concepts of XML views and UI5 controls. Ultimately, it's a matter of personal preference: learn UI annotations, or learn the concepts of SAP UI5 directly.
 
