@@ -50,7 +50,7 @@ Backend (RAP Services)
 Browser (Static UI5 Shell)
   ├──> HTTP request: Load XML View + ViewModel
   ├──> Renders UI5 controls as defined by backend
-  ├──> Sends event requests on interaction via HTTP
+  ├──> Sends event requests on interaction over HTTP
 Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
