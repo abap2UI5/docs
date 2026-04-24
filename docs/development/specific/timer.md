@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Timer, Auto-Refresh
 
-abap2UI5 offers a custom control `z2ui5.Timer` that fires events after a specified delay. This helps with dashboards, status monitors, or any scenario that needs periodic data updates without user interaction.
+abap2UI5 provides a custom control `z2ui5.Timer` that fires events after a specified delay. This helps with dashboards, status monitors, or any case that needs periodic data updates without user interaction.
 
 Add the timer as a view element via `_z2ui5( )->timer( ... )`. The following parameters apply:
 
