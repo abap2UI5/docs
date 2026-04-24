@@ -246,7 +246,7 @@ But having no extra layer also means the framework doesn't necessarily abstract 
 
 XML-View created by the user and ready for the 'Wire'
 
-Luckily, utility classes markedly simplify the creation process. For instance, `z2ui5_cl_xml_view` provides a class-based approach to create views with access to the UI5 API via ADT code completion:
+Luckily, utility classes markedly simplify the creation process. For instance, `z2ui5_cl_xml_view` provides a class-based approach to create views with access to the UI5 API through ADT code completion:
 
 <img width="600" alt="z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)" src="https://github.com/user-attachments/assets/b8aa5f41-d958-4181-bdc3-bc92a4a57b4b" />
 
