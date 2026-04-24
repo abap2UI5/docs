@@ -14,7 +14,7 @@ We've tested abap2UI5 with tables containing large numbers of entries and column
 The biggest optimization is choosing the right update method:
 
 - **`client->view_display( )`** — sends a new XML view and model to the frontend. UI5 destroys the current view and creates a new one from scratch. Use this only on initialization or when the view structure changes.
-- **`client->view_model_update( )`** — sends only updated model data. UI5 refreshes the existing view via data binding, re-rendering only the changed controls. This preserves UI state (scroll position, focus, etc.) and is significantly faster.
+- **`client->view_model_update( )`** — sends only updated model data. UI5 refreshes the existing view via data binding, re-rendering only the changed controls. This preserves UI state (scroll position, focus, etc.) and is much faster.
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -39,10 +39,10 @@ ENDMETHOD.
 
 ### Suggestions
 Want to tune your app further? Here are a few tips:
-- Only call `client->view_display` when necessary. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have changed.
+- Call `client->view_display` only when necessary. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have changed.
 - Prefer `client->_bind` and use `client->_bind_edit` only when users need to make changes that the backend processes. Otherwise, you'll trigger unnecessary data transfers.
 - Declare public attributes in your app class only for variables displayed on the frontend. This prevents the framework from accessing unused values.
-- Follow standard ABAP best practices, such as reducing loops and using sorted tables, as you would in any other ABAP development project.
+- Follow standard ABAP best practices, like reducing loops and using sorted tables, as you would in any other ABAP development project.
 
 ### Performance Issues?
 If you hit performance issues, create a sample and submit a pull request to the samples repository. We'd be happy to analyze it and see whether we can make abap2UI5 even faster.
