@@ -86,4 +86,4 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
 ENDCLASS.
 ```
-See the dedicated sections of this development guide for more details on views, events, data binding, and navigation.
+See the dedicated sections of this development guide for details on views, events, data binding, and navigation.
