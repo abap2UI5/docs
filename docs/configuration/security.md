@@ -2,16 +2,16 @@
 outline: [2, 4]
 ---
 # Security
-abap2UI5 is a backend-centric framework. All logic and business data stay on the server, and the frontend only receives the data it needs to render the view.
+abap2UI5 is a backend-centric framework. All logic and business data stay on the server; the frontend only receives the data it needs to render the view.
 
 ### HTTP Endpoint
 The abap2UI5 framework runs as an HTTP handler. You create this HTTP handler and call the abap2UI5 API within it. End users access abap2UI5 by calling the endpoint externally, with security managed as in any other UI5 application.
 
 ### Authentication
-The ICF (Internet Communication Framework) node level handles authentication. You have complete control over configuring the ICF node, including visibility settings, login procedures, and other security parameters.
+The ICF (Internet Communication Framework) node level handles authentication. You have full control over configuring the ICF node, including visibility settings, login procedures, and other security parameters.
 
 ### Authorization
-As an app developer, you have full flexibility in managing authorization settings. Configure these at either the application level or the service node level. For detailed guidance on setting up authorization for your endpoint, see [Authorization](/configuration/authorization).
+As an app developer, you have full flexibility over authorization settings. Configure these at either the application level or the service node level. For detailed guidance on setting up authorization for your endpoint, see [Authorization](/configuration/authorization).
 
 ### Backend Code
 abap2UI5 ships as custom code. Once installed, you have full ownership of the code, free to modify it to suit your needs. However, to preserve compatibility with future updates, avoid direct modifications to the core codebase.
@@ -20,7 +20,7 @@ abap2UI5 ships as custom code. Once installed, you have full ownership of the co
 The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. The HTTP endpoint delivers it on the first request, following best practices for modern web applications.
 
 ### Business Logic
-abap2UI5 never sends the app's business logic to the client. All business processes remain securely on the server so sensitive data never reaches the frontend.
+abap2UI5 never sends the app's business logic to the client. All business processes stay securely on the server, so sensitive data never reaches the frontend.
 
 ### Content-Security-Policy
 To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP helps prevent attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. By default, CSP allows only trusted sources such as ui5.sap.com, sapui5.hana.ondemand.com, and sdk.openui5.org, among others.
