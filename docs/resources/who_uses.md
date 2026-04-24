@@ -16,7 +16,7 @@ Showcase how abap2UI5 apps transform real-world workflows. Add your use case her
 
 ### Integrations & Workshops
 **Do you host workshops, build integrations, or use abap2UI5 in innovative ways?** <br>
-Inspire the community by sharing your initiatives so others can learn and grow from your contributions:
+Inspire the community by sharing your initiatives so others can learn from your contributions:
 
 |  Company | Description |
 | ------------- | ------------- |
