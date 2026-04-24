@@ -45,7 +45,7 @@ ENDCLASS.
 ```
 :::
 
-Next, use transaction `SICF` to create a new HTTP service with the handler above:
+Next, use transaction `SICF` to create an HTTP service with the handler above:
 
 ![SICF service creation dialog in transaction SICF](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
