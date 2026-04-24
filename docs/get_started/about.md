@@ -33,7 +33,7 @@ Since launching in 2023, abap2UI5 has grown from a small side project into a com
 
 Traditional UI5 development requires JavaScript expertise, frontend deployment, and OData service configuration. abap2UI5 removes these complexities:
 
-- **Leverage your existing ABAP skills** — do what you know best, no frontend expertise required
+- **Use your existing ABAP skills** — do what you know best, no frontend expertise required
 - **Universal compatibility** — build apps that run on legacy R/3 systems and modern S/4 Cloud environments
 - **Extend beyond RAP** — when standard capabilities reach their limits
 - **Prototype rapidly** — iterate quickly on new business applications
@@ -47,7 +47,7 @@ Each application ships as an [abapGit](https://abapgit.org) project, simplifying
 abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stays in the backend. This design simplifies configuration, reduces client-side complexity (say goodbye to cache-clearing hassles), and keeps business logic and sensitive data securely on the server.
 
 #### Performance
-abap2UI5 is fast. The frontend focuses only on UI rendering via the UI5 framework, while the ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — sharply reducing network roundtrips and speeding up response times.
+abap2UI5 is fast. The frontend focuses only on UI rendering via the UI5 framework, while the ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — cutting network roundtrips and speeding up response times.
 
 #### Security
 abap2UI5 is secure by design. All business logic stays in the ABAP backend. The frontend receives only the data the backend populates directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries via external tools.
