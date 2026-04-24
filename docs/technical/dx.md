@@ -85,7 +85,7 @@ CLASS zcl_app_input IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Plus, you can test code changes instantly — reload the page, enter input, and press the button — all within a single class, no external UI tooling needed.
+Plus, you can test code changes instantly — reload the page, enter input, and press the button — all within a single class, with no external UI tooling.
 
 ### ALV-Style Table Output in the Browser
 
