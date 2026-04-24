@@ -18,7 +18,7 @@ If certain APIs you need aren't yet released, you can still build a cloud-ready 
 ![Tier 2 on-stack extension with wrapper for unreleased APIs](/get_started/image-21.png){ width=60% }
 
 #### Tier 3 Extension
-For a classic extension approach, use unreleased APIs for greater freedom to customize and extend your system:
+For a classic extension approach, use unreleased APIs for more freedom to customize and extend your system:
 ![Tier 3 on-stack extension with unreleased API access](/get_started/image-10.png){ width=60% }
 
 ### Side-by-Side Extension
