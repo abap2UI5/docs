@@ -15,7 +15,7 @@ Showcase how abap2UI5 apps reshape real-world workflows. Add your use case here:
 | [Swiss Krono](https://www.swisskrono.com/) | ABAP 7.55  | Applications for EWM, running on mobile devices |
 
 ### Integrations and Workshops
-**Do you host workshops, build integrations, or use abap2UI5 in innovative ways?** <br>
+**Do you host workshops, build integrations, or use abap2UI5 in creative ways?** <br>
 Inspire the community by sharing your initiatives so others can learn from your contributions:
 
 |  Company | Description |
