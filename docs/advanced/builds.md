@@ -6,7 +6,7 @@ outline: [2, 4]
 For heavy abap2UI5 usage, consider building your own version by defining a custom namespace and including the add-ons you need:
 - Use abap2UI5 in the `z2ui5` namespace for improvements and pull requests, and keep a separate namespace for your production version.
 - Install multiple instances of abap2UI5 and upgrade each version at its own pace.
-- Create a custom abap2UI5 build with frontend components and add-ons tailored to your specific scenario.
+- Create a custom abap2UI5 build with frontend components and add-ons tailored to your scenario.
 
 #### Builder
 Generate your own abap2UI5 build with the [builder](https://github.com/abap2UI5/builder).
