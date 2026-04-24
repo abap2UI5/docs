@@ -126,7 +126,7 @@ This leads to extra deployment effort during both development and go-live.
 
 So far, we've seen how to display data and handle events through a backend-driven approach. But how do we process user input and send frontend changes back to the server?
 
-If we continued relying on OData, updates would typically route into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
+If we continued relying on OData, updates would usually route into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
 
 Let's take a closer look at a key UI5 feature: view models. In UI5 freestyle, view models bind attributes such as visible or enabled — mapping control properties in the view precisely to model attributes:
 
