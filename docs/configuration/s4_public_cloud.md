@@ -78,5 +78,5 @@ Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
 2. Configure tiles for business users and manage permissions
 
 ::: tip **BTP ABAP Environment**
-BTP ABAP Environment shares the same technical foundation as S/4 Public Cloud. The instructions above apply to both systems.
+BTP ABAP Environment shares the same technical base as S/4 Public Cloud. The instructions above apply to both systems.
 :::
