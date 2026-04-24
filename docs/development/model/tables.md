@@ -152,7 +152,7 @@ ENDCLASS.
 ```
 
 ### Nested Structures
-You can also bind nested structures. Use `structure/component` in the binding path:
+You can also bind nested structures — use `structure/component` in the binding path:
 ```abap
 CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
   PUBLIC SECTION.
