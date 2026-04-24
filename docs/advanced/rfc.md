@@ -9,7 +9,7 @@ The [abap2UI5 RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) t
 The RFC Connector unlocks several useful scenarios:
 - Frontend/Backend Split: abap2UI5 apps live in the backend, but users have access only to the frontend server
 - Legacy Systems (e.g., ECC): downport abap2UI5 onto older systems and trigger it from a newer system via RFC
-- Multi-System Landscapes: a single entry point can centrally access abap2UI5 apps distributed across multiple systems
+- Multi-System Landscapes: one entry point centrally accesses abap2UI5 apps spread across multiple systems
 
 #### Architecture
 
