@@ -241,7 +241,7 @@ Frontend-heavy apps often require switching between browser dev tools, JavaScrip
 
 #### Easy Code Sharing
 
-Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, share them through abapGit, transports, or even copy-paste:
+Sharing your apps or code is simple. Since abap2UI5 apps are standard ABAP classes, share them through abapGit, transports, or even copy and paste:
 - Easy to clone and test other apps
 - Great for collaboration and code reviews
 - Encourages modular, reusable code
