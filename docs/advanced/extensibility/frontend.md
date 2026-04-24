@@ -22,7 +22,7 @@ Replace `/sap/bc/z2ui5` with your endpoint in the manifest, then run:
 npm i
 npm run start-noflp
 ```
-The terminal shows this output:
+You should see output like this:
 <img width="1000" alt="npm run start-noflp output showing the local dev server running" src="https://github.com/user-attachments/assets/3e0118e8-d05f-48d1-bcc0-28073adf6e47">
 
 #### Before PR (Optional)
