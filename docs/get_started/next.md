@@ -6,7 +6,7 @@ outline: [2, 4]
 With abap2UI5 up and running, here are a few paths to explore.
 
 #### Development
-Learn how to build views, handle events, exchange data, and work with tables. The development guide covers everything needed for day-to-day work. Start with the [Development guide](/development/general).
+Learn how to build views, handle events, exchange data, and work with tables. The development guide covers what you need for day-to-day work. Start with the [Development guide](/development/general).
 
 #### Configuration
 Preparing for production? The configuration guides cover security, performance tuning, Launchpad integration, and more. Start with the [Configuration guide](/configuration/setup).
