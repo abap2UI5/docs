@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Renaming
 
-The entire abap2UI5 project lives under the `z2ui5` namespace. In some cases, you may need to rename the namespace to fit customer-specific requirements, such as:
+The entire abap2UI5 project lives under the `z2ui5` namespace. You may need to rename it to fit customer-specific requirements, such as:
 - Different modules, e.g., `z2ui5_sd`, `z2ui5_mm`
 - Custom namespaces, e.g., `/ZZZ/`, `/YYY/`
 - Release-specific naming, e.g., `z2411`, `z2502`
