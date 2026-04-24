@@ -38,10 +38,10 @@ ENDMETHOD.
 ```
 
 ### Suggestions
-Want to tune your app further? Here are a few tips:
+Want to tune your app further? A few tips:
 - Call `client->view_display` only when necessary. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have changed.
 - Prefer `client->_bind`; use `client->_bind_edit` only when users need to make changes the backend processes. Otherwise, you'll trigger unnecessary data transfers.
-- Declare public attributes in your app class only for variables displayed on the frontend. This prevents the framework from accessing unused values.
+- Declare public attributes in your app class only for variables displayed on the frontend. This keeps the framework from accessing unused values.
 - Follow standard ABAP best practices, like reducing loops and using sorted tables, as you would in any other ABAP project.
 
 ### Performance Issues?
