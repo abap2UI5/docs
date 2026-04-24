@@ -142,7 +142,7 @@ If you don't want to process the event in the backend, trigger actions directly 
 
 To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To run a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
 
-The following frontend events are available:
+These frontend events are available:
 ```abap
   CONSTANTS:
     BEGIN OF cs_event,
