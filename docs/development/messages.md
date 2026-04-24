@@ -103,7 +103,7 @@ ENDMETHOD.
 ```
 
 #### Uncaught Errors
-When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try this:
+When your code doesn't catch exceptions, the framework catches them for you and shows the standard error popup. Try this:
 
 ```abap
 METHOD z2ui5_if_app~main.
