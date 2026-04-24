@@ -15,7 +15,7 @@ Explore the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization t
 
 #### Open Source Projects
 
-Various other open-source projects use abap2UI5 — give them a try:
+Other open-source projects use abap2UI5 — try them out:
 
 |  Repository | Description |
 | ------------- | ------------- |
@@ -28,4 +28,4 @@ Various other open-source projects use abap2UI5 — give them a try:
 
 #### Contribution
 
-Built a new feature or your own open-source project with abap2UI5? Feel free to contribute to existing repositories or create your own. Add your project here and help others discover, use, and contribute to your work.
+Built a new feature or your own open-source project with abap2UI5? Contribute to existing repositories or create your own. Add your project here and help others discover, use, and contribute to your work.
