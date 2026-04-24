@@ -73,10 +73,10 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-The framework supports other imports too. Import your message structure, and the message box displays it.
+The framework accepts other imports too. Pass your message structure, and the message box displays it.
 
 #### Multi-Message Popup
-The message box provides basic output. For more detailed output, use the popup `Z2UI5_CL_POP_MESSAGES`:
+The message box gives you basic output. For more detailed output, use the popup `Z2UI5_CL_POP_MESSAGES`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -103,7 +103,7 @@ ENDMETHOD.
 ```
 
 #### Uncaught Errors
-When you don't catch exceptions in your code, the framework catches them and displays the standard error popup. Try:
+When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -114,7 +114,7 @@ ENDMETHOD.
 ```
 
 #### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? In this case, the default HTTP handler exception output appears. Processing stops, and the user must refresh the browser. Use this only for unexpected behavior:
+What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing stops, and the user must refresh the browser. Use this only for unexpected behavior:
 
 ```abap
 METHOD z2ui5_if_app~main.
