@@ -6,7 +6,7 @@ outline: [2, 4]
 In abap2UI5, two ways exist to exchange data between your ABAP code and the UI5 frontend.
 
 #### One-Way Binding
-Use one-way binding to display data on the frontend without allowing changes. The `client->_bind` method sends data to the frontend and connects it to the view:
+Use one-way binding to display data on the frontend without allowing changes. The `client->_bind` method sends data to the frontend and binds it to the view:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -32,7 +32,7 @@ ENDCLASS.
 This method works with tables, trees, and other complex data structures. For more details, see the samples repository and explore the table and tree samples.
 
 #### Two-Way Binding
-When users need to modify data, enable two-way binding to update it in the ABAP backend. Use the `client->_bind_edit` method so that after an event, the framework synchronizes the data with your ABAP class:
+When users need to modify data, enable two-way binding to update it in the ABAP backend. Use the `client->_bind_edit` method so that, after an event, the framework synchronizes the data with your ABAP class:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
