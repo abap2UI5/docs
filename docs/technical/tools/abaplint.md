@@ -7,7 +7,7 @@ This project uses [abaplint](https://abaplint.app/) for static code analysis and
 
 #### Static Code Analysis
 
-With every PR, **abaplint** checks the ABAP code to ensure code quality and adherence to ABAP best practices. Review the project-specific [abaplint configuration](https://github.com/abap2UI5/abap2UI5/blob/main/abaplint.jsonc). All statistics and analysis results live on the [abaplint app dashboard](https://abaplint.app/stats/abap2UI5/abap2UI5).
+With every PR, **abaplint** checks the ABAP code to ensure quality and adherence to ABAP best practices. Review the project-specific [abaplint configuration](https://github.com/abap2UI5/abap2UI5/blob/main/abaplint.jsonc). All statistics and analysis results live on the [abaplint app dashboard](https://abaplint.app/stats/abap2UI5/abap2UI5).
 
 #### Downporting
 
