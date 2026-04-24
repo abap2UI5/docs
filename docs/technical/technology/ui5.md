@@ -85,7 +85,7 @@ Backend (ABAP Class)
 |--------------------------|-------------------------------|-----------------------------------|
 | UI Architecture          | JavaScript MVC                | Backend-driven Over-the-Wire     |
 | Data & Actions           | OData / custom AJAX           | Simple HTTP                      |
-| UI Customization         | Fully flexible via JS         | Fully dynamic via ABAP           |
+| UI Customization         | Fully flexible through JS     | Fully dynamic through ABAP       |
 | Tooling                  | BAS / Web IDE                 | Any ABAP IDE                     |
 | Cloud Readiness          | ✅ Yes                        | ✅ Yes                            |
 | Clean Core               | ✅ Yes                        | ✅ Yes                            |
