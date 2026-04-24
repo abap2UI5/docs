@@ -79,4 +79,4 @@ CLASS zcl_my_app IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Launch your app instead of the test app — congratulations, you've created your first abap2UI5 app.
+Launch your app instead of the test app — congratulations, you've built your first abap2UI5 app.
