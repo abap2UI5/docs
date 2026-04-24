@@ -15,7 +15,7 @@ The solution: [ajson](https://github.com/sbcgua/ajson), a robust open-source JSO
 
 #### Integration
 
-ajson integrates directly into the `z2ui5` namespace and installs with abap2UI5 automatically. Access it anywhere in your code:
+ajson integrates directly into the `z2ui5` namespace and installs with abap2UI5 automatically. Use it anywhere in your code:
 ```abap
 DATA(input) = z2ui5_cl_ajson=>parse( json_string ).
 
