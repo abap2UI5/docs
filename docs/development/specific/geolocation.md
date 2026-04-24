@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Geolocation, Maps
 
-abap2UI5 provides a custom control for reading geolocation data from the user's device — longitude, latitude, altitude, and speed. This helps with logistics apps, field service tools, or any case where location matters.
+abap2UI5 provides a custom control for reading geolocation data from the user's device — longitude, latitude, altitude, and speed. This is useful for logistics apps, field service tools, or any case where location matters.
 
 The control fires a `finished` event once the browser determines the device position. Two-way binding exchanges all values. See also `Z2UI5_CL_DEMO_APP_120`.
 
