@@ -56,7 +56,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
                     ID `APP` FIELD lv_app.
 
     IF sy-subrc <> 0.
-      " Authorization failed, deny access
+      " Authorization failed, refuse access
       RETURN.
     ENDIF.
 
@@ -89,7 +89,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
                     ID `APP` FIELD `Z2UI5_APP_001`.
 
     IF sy-subrc <> 0.
-      " Authorization failed, deny access
+      " Authorization failed, refuse access
       RETURN.
     ENDIF.
 
