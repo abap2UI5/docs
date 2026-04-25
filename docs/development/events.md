@@ -57,7 +57,7 @@ ENDMETHOD.
 ```
 
 #### Parameters
-Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter from the event's parameter map — UI5 generates a qualified ID like `mainView--button_id`:
+Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter from the event's parameter map — UI5 builds a qualified ID like `mainView--button_id`:
 ```abap
 METHOD z2ui5_if_app~main.
 
