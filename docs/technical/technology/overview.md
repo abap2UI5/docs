@@ -66,4 +66,4 @@ _UI5 Over-the-Wire (2023+) (Open Source)_
 - A static UI5 frontend dynamically renders these definitions
 - No custom JavaScript needed
 - Combines backend-driven development with UI5 flexibility
-- Aligns with SAP's cloud strategy
+- Lines up with SAP's cloud strategy
