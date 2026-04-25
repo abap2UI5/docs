@@ -54,7 +54,7 @@ ENDCLASS.
 
 #### Conditionally Set Input Field Editability
 
-The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field becomes editable only when the quantity is exactly 500. Note that `===` is the JavaScript strict equality operator.
+The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field becomes editable only when the quantity equals 500 exactly. Note that `===` is the JavaScript strict equality operator.
 
 ```abap
 CLASS z2ui5_cl_demo_editable DEFINITION PUBLIC.
