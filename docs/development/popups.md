@@ -56,7 +56,7 @@ A common popup flow displays a normal view, shows a popup, and finally closes it
 ```
 
 #### Separated App
-For cleaner source structure, encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
+For a cleaner source structure, encapsulate popups in separate classes and call them through [navigation](/development/navigation/navigation).
 
 An example with the confirmation popup:
 ```abap
