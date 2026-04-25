@@ -246,7 +246,7 @@ Key Benefits:
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and common enterprise use cases
 
 Limitations:
-- Not built for heavily interactive or real-time collaborative applications
+- Not built for heavily interactive or real-time collaborative apps
 - Offline functionality and complex client-side interactions aren't covered
 - Less effective when frontend and backend teams work independently
 
