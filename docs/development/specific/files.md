@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # File Handling
 
-abap2UI5 handles file uploads and downloads by passing base64-encoded data through two-way binding.
+abap2UI5 handles file uploads and downloads by passing base64-encoded data via two-way binding.
 
 #### Upload
 See also `Z2UI5_CL_DEMO_APP_075`:
