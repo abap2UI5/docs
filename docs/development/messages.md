@@ -125,5 +125,5 @@ ENDMETHOD.
 ```
 
 ::: tip **Improvements**
-These message functions evolve continuously. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.
+These message functions evolve all the time. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.
 :::
