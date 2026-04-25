@@ -231,7 +231,7 @@ The illustration below shows the difference between a full re-render and a targe
 
 Thanks to UI5's data binding mechanism, UI5 refreshes only the changed DOM elements. This keeps the current UI state intact — like input focus — and delivers a smooth, uninterrupted user experience.
 
-The XML View and View Model concepts make UI5 a perfect match for the UI5 Over-the-Wire approach, removing the need for full client-side re-renders.
+The XML View and View Model concepts make UI5 a strong match for the UI5 Over-the-Wire approach, dropping the need for full client-side re-renders.
 
 #### Conclusion
 
