@@ -220,7 +220,7 @@ We've earned significant flexibility with (9) (10) (11) (16); the next sections 
 
 ##### 17. Initial Request
 
-The first GET request delivers the artifacts of the UI5 (HDA) app to the browser. Normally we would deploy a BSP to the ABAP stack for this, but in abap2UI5, the code lives as a string inside the HTTP-Handler's initial-request implementation:
+The first GET request delivers the artifacts of the UI5 (HDA) app to the browser. Normally we would deploy a BSP to the ABAP stack for this, but in abap2UI5 the code lives as a string inside the HTTP-Handler's initial-request implementation:
 
 <img width="600" alt="index.html stored in ABAP Source Code instead of using a BSP" src="https://github.com/user-attachments/assets/e69d5a12-c0e3-4e17-be8a-4da3bc740c97" />
 
