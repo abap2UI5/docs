@@ -5,7 +5,7 @@ outline: [2, 4]
 This section shows how to display nested data structures — tables, trees, and nested records — in views.
 
 ### Tables
-The example below binds a basic table to a UI5 control:
+The example below binds a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
 
