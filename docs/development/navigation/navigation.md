@@ -46,7 +46,7 @@ To navigate to an app without pushing it onto the call stack:
 ENDMETHOD.
 ```
 ::: tip
-Sounds familiar? The abap2UI5 framework mirrors classic `call screen` and `leave to screen` behavior.
+Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
 :::
 
 #### Launchpad
