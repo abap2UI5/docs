@@ -60,7 +60,7 @@ ENDMETHOD.
 ```
 
 #### BAL Popup
-Compared to message classes, BAL logs carry more detail — like timestamps. Use the dedicated BAL log popup to show them. All examples above also work with the `Z2UI5_CL_POP_BAL` popup for richer output. An example with abap-logger:
+Unlike message classes, BAL logs carry more detail — like timestamps. Use the dedicated BAL log popup to show them. All examples above also work with the `Z2UI5_CL_POP_BAL` popup for richer output. An example with abap-logger:
 
 ```abap
 METHOD z2ui5_if_app~main.
