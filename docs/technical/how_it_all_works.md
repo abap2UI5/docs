@@ -327,7 +327,7 @@ The framework focuses only on communication between backend and frontend, contro
 
 AJAX POST Handler
 
-The result is a pure source-code-based framework, which enables the approach below.
+The result is a pure source-code-based framework, which makes the approach below possible.
 
 ##### 26. Running Everywhere Apps
 
