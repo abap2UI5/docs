@@ -238,7 +238,7 @@ The XML View and View Model concepts make UI5 a perfect match for the UI5 Over-t
 abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern into the ABAP ecosystem:
 
 Key Benefits:
-- One Static UI5 Shell App: Delivered with the initial HTTP GET request; shared and consistent across all applications
+- One Static UI5 Shell App: Delivered with the initial HTTP GET request; shared across all applications
 - Backend-Driven UI Control: ABAP classes implement UI definitions and business logic entirely
 - ABAP-Centric Development: Removes the need for extra JavaScript or separate frontend development
 - Simplified Deployment Model: No SPA-specific tooling or build pipelines; abapGit and standard transport mechanisms handle application logic and artifacts
