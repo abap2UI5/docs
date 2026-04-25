@@ -235,7 +235,7 @@ The XML View and View Model concepts make UI5 a strong match for the UI5 Over-th
 
 #### Conclusion
 
-abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern into the ABAP ecosystem:
+abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern to the ABAP ecosystem:
 
 Key Benefits:
 - One Static UI5 Shell App: Delivered with the initial HTTP GET request; shared across all apps
