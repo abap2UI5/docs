@@ -59,8 +59,8 @@ Backend (ABAP Class)
 
 | Aspect                    | RAP (Fiori Elements)                        | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
-| **UI Customization**      | Limited to what annotations support         | Fully flexible through ABAP logic        |
-| **Runtime Model Dynamics**| Static, metadata-bound                      | Dynamic through RTTI and runtime logic   |
+| **UI Customization**      | Limited to what annotations support         | Fully flexible via ABAP logic            |
+| **Runtime Model Dynamics**| Static, metadata-bound                      | Dynamic via RTTI and runtime logic       |
 | **Use Case Fit**          | Best for standard CRUD applications         | Best for dynamic, backend-driven UIs     |
 | **Learning Curve**        | Steep (new concepts, multiple layers)       | Flat (ABAP-only, no metadata tooling)    |
 
