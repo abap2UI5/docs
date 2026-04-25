@@ -9,7 +9,7 @@ UI5 offers popups and popovers that overlay specific parts of the view. This sec
 
 #### General
 
-To display a popup, call `client->popup_display` instead of `client->view_display`:
+To show a popup, call `client->popup_display` instead of `client->view_display`:
 ```abap
   METHOD z2ui5_if_app~main.
 
