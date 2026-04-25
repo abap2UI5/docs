@@ -303,7 +303,7 @@ Most notably, compared to UI5, we can't implement offline capabilities — in th
 
 Also, using HANA DB capabilities directly on the frontend causes issues. Since every app uses the same generic HTTP-Service, we've decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can reach HANA capabilities through a CDS View directly (and skip the ABAP layer). This makes it easy to add pagination or fuzzy searches to UI5 freestyle or RAP apps. An OData-Service calling a CDS View of HANA directly works very well here.
 
-We can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But doing it manually takes more effort, and we can't render a fuzzy search help on the frontend — this approach forces us to replace the entire view on every request. As always, every advantage abap2UI5 brings (like flexibility in creating models) comes with a tradeoff elsewhere.
+We can also select from CDS Views in an abap2UI5 app and send the result to the frontend. But doing it manually takes more effort, and we can't render a fuzzy search help on the frontend — this approach makes us replace the entire view on every request. As always, every advantage abap2UI5 brings (like flexibility in creating models) comes with a tradeoff elsewhere.
 
 And Fiori Elements, with all its floorplans and templates, is straightforward and will keep getting updates. Ultimately, the wide range of UI5 use cases makes comparing the approaches difficult — and we can't fully discuss them here. Let's turn to the framework's codebase in the final part of this article.
 
