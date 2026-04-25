@@ -24,7 +24,7 @@ Embed your abap2UI5 apps into BTP services like SAP Build Work Zone. Full detail
 
 #### Extra Properties
 
-SAP Build Work Zone requires these properties to route requests correctly to your ABAP backend:
+SAP Build Work Zone needs these properties to route requests correctly to your ABAP backend:
 
 | Property | Value | Description |
 |---|---|---|
