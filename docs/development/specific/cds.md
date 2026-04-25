@@ -47,7 +47,7 @@ ENDCLASS.
 ```
 
 ### EML
-The Entity Manipulation Language simplifies work with RAP business objects by offering a consistent way to read, create, update, and delete entities.
+The Entity Manipulation Language simplifies work with RAP business objects by giving a consistent way to read, create, update, and delete entities.
 
 #### Read
 Use `READ ENTITIES` to fetch sales orders and display them in a UI5 table:
