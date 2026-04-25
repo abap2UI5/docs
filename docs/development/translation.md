@@ -17,7 +17,7 @@ ENDMETHOD.
 ```
 
 ### Messages
-Message classes translate messages and unify translation management, making multi-language maintenance simpler:
+Message classes translate messages and unify translation handling, making multi-language maintenance simpler:
 ```abap
   METHOD z2ui5_if_app~main.
 
