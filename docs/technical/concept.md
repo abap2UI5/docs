@@ -124,7 +124,7 @@ This leads to extra deployment effort during both development and go-live.
 
 #### Create and Update Data
 
-So far, we've seen how to display data and handle events through a backend-driven approach. But how do we process user input and send frontend changes back to the server?
+So far, we've seen how to display data and handle events with a backend-driven approach. But how do we process user input and send frontend changes back to the server?
 
 If we kept relying on OData, updates would usually route into the OData service layer — bypassing the ABAP class that also defines the view and handles events in abap2UI5.
 
