@@ -9,7 +9,7 @@ abap2UI5 gives you flexibility in managing authorization. It includes no built-i
 An easy way to manage access to different apps: implement checks in the HTTP handler. This approach restricts access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
 
 #### Example: Restricting Access Based on URL Parameters
-In this example, we use the ICF handler class to control which apps users can access based on the APP_START parameter in the HTTP request. The `get_header_field( 'APP_START' )` method reads the URL query parameter that names the abap2UI5 app class to launch. If the user requests an unauthorized app, the handler denies access.
+In this example, we use the ICF handler class to control which apps users can access, based on the APP_START parameter in the HTTP request. The `get_header_field( 'APP_START' )` method reads the URL query parameter that names the abap2UI5 app class to launch. If the user requests an unauthorized app, the handler denies access.
 ```abap
 CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
