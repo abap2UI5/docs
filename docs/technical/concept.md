@@ -44,7 +44,7 @@ The rise of Single-Page Applications (SPAs) shifted UI logic to the client. SPAs
 
 But SPAs come with their own challenges: complex API layers, separation of frontend and backend teams, and elaborate build and deployment pipelines. As a counterpoint, HTML Over-the-Wire reintroduces a server-driven model for UI updates:
 - The server sends only HTML fragments, not entire pages; the browser updates specific parts of the DOM
-- The frontend remains simple and declarative; all logic and artifacts live in the backend
+- The frontend stays simple and declarative; all logic and artifacts live in the backend
 
 Architectural Comparison:
 
