@@ -237,7 +237,7 @@ Debates about which IDE to use come up often — but why not let everyone pick t
 
 Frontend-heavy apps often have you switching between browser dev tools, JavaScript logs, and network inspectors. With abap2UI5, the UI is pure ABAP — no JavaScript, no extra layers. Set a breakpoint in your ABAP method:
 - Backend-only debugging with the classic SE80 debugger or ADT
-- No browser debugging tools needed
+- No browser debug tools needed
 
 #### Easy Code Sharing
 
