@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # S-RTTI
 
-In abap2UI5, you don't always need to define your data model at design time. Instead, you can work with generic data references and apply typing dynamically at runtime based on your program logic. This is especially useful for cases like tables, where different columns and table types may appear based on user input.
+In abap2UI5, you don't always have to define your data model at design time. Instead, you can work with generic data references and apply typing dynamically at runtime based on your program logic. This is especially useful for cases like tables, where different columns and table types may appear based on user input.
 
 abap2UI5 serializes app instances so client communication remains stateless. But SAP's standard transformation features are limited and don't support data references with local types created at runtime.
 
