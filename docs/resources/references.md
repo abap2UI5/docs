@@ -35,7 +35,7 @@ _Blog posts may contain outdated information. Always check this documentation fo
 #### General
 - Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development [(06.10.2024)](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
 - Use Cases in On-Stack and Side-by-Side Extension Scenarios [(04.08.2024)](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/)
-- Compatibility with old R/3 Releases: Project Setup, Downporting & Installation [(14.07.2024)](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
+- Compatibility with old R/3 Releases: Project Setup, Downporting, and Installation [(14.07.2024)](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle/)
 - Calling Apps Remotely via RFC [(25.06.2024)](https://www.linkedin.com/pulse/calling-abap2ui5-apps-remotely-via-rfc-abap2ui5-btoue/)
 - Community Feedback, New Features & Outlook 2024 [(08.01.2024)](https://blogs.sap.com/2024/01/08/abap2ui5-12-update-ii-community-feedback-new-features-outlook-january-2024/)
 
