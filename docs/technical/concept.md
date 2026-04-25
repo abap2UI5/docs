@@ -241,7 +241,7 @@ Key Benefits:
 - One Static UI5 Shell App: Delivered with the initial HTTP GET request; shared across all applications
 - Backend-Driven UI Control: ABAP classes hold UI definitions and business logic in full
 - ABAP-Centric Development: No need for extra JavaScript or separate frontend development
-- Simpler Deployment Model: No SPA-specific tooling or build pipelines; abapGit and standard transport mechanisms handle application logic and artifacts
+- Simpler Deployment Model: No SPA-specific tooling or build pipelines; abapGit and standard transport tooling handle application logic and artifacts
 - Clean SAP Integration: Fully compatible with UI5 and ABAP, supports ERP and S/4, Standard ABAP and ABAP Cloud
 - Efficient for Business Applications: Ideal for CRUD operations, forms, dashboards, and common enterprise use cases
 
