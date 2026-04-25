@@ -60,7 +60,7 @@ Backend (ABAP Class)
 |---------------------------|---------------------------------------------|------------------------------------------|
 | **UI Customization**      | Fully flexible (custom JS/UI)               | Fully flexible through ABAP logic        |
 | **Runtime Model Dynamics**| Mostly static, runtime needs JS coding      | Dynamic through RTTI and runtime logic   |
-| **Use Case Fit**          | Highly interactive or frontend-heavy apps   | Backend-driven UIs with clean backend control |
+| **Use Case Fit**          | Strongly interactive or frontend-heavy apps | Backend-driven UIs with clean backend control |
 | **Learning Curve**        | Steep (JS, XML, binding, tooling)           | Flat (ABAP-only, no JS or metadata)      |
 
 ### 5. Cloud Readiness and Compliance
