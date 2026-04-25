@@ -66,7 +66,7 @@ Open the HTTP endpoint in your browser:
 Press `check` and launch the test app. That's it — you're ready to build your own abap2UI5 apps.
 
 ### 4. Your First App
-Create a class in your system:
+Create a class on your system:
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.
   PUBLIC SECTION.
