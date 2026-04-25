@@ -51,7 +51,7 @@ Most scanner devices emulate a keyboard. In those cases, create an input field a
 
 The key piece is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then moves focus to the matching field on the frontend automatically:
 
-An example that handles input focus and manages transitions between fields after scanning and pressing Enter:
+An example that handles input focus and moves between fields after scanning and pressing Enter:
 
 ```abap
 CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
