@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 # UI5 Freestyle vs. abap2UI5
-_Architecture, State & Developer Experience_
+_Architecture, State, and Developer Experience_
 
 This page offers a structured technical comparison of **UI5 Freestyle** and **abap2UI5**, focusing on architecture, state handling, developer workflow, and communication models.
 
