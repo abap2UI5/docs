@@ -21,7 +21,7 @@ Other open-source projects use abap2UI5 — try them out:
 | ------------- | ------------- |
 | [The Quest](https://github.com/nomssi/axage)  | A wizard's adventure game built on the AXAGE game engine |
 | [Advent of Code](https://github.com/joltdx/abap-advent-2023-template) | Template for the Advent of Code 2023 in ABAP  |
-| [Generic DDIC Searchhelp](https://github.com/axelmohnen/a2UI5-generic_search_hlp) | Generic DDIC searchhelp generator  |
+| [Generic DDIC Searchhelp](https://github.com/axelmohnen/a2UI5-generic_search_hlp) | Generic DDIC searchhelp builder  |
 | [sql-console](https://github.com/abap2UI5-apps/sql-console) | Run SQL commands in your browser  |
 | [table-content-loader](https://github.com/abap2UI5-apps/table-content-loader) | Upload & download table content  |
 | [table-maintenance](https://github.com/abap2UI5-addons/table-maintenance) | Table maintenance in your browser |
