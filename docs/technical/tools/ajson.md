@@ -11,7 +11,7 @@ The solution: [ajson](https://github.com/sbcgua/ajson), a solid open-source JSON
 - **Zero SAP API Dependencies** — No reliance on release-specific SAP classes
 - **Broad Compatibility** — Works smoothly from NW 7.02 to ABAP Cloud
 - **Developer-Friendly** — Clear API with thorough documentation
-- **Active Maintenance** — Responsive issue resolution and continuous improvement
+- **Active Maintenance** — Responsive issue resolution and ongoing improvement
 
 #### Integration
 
