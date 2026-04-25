@@ -82,7 +82,7 @@ For example, see the confirmation popup:
   ENDMETHOD.
 ```
 
-To manage a stack of multiple popups, note that abap2UI5 displays only one popup at a time on the frontend. But you can maintain a popup stack in your backend logic and re-display the previous popup as needed. See `Z2UI5_CL_DEMO_APP_161`.
+To manage multiple stacked popups, note that abap2UI5 displays only one popup at a time on the frontend. But you can maintain a popup stack in your backend logic and re-display the previous popup as needed. See `Z2UI5_CL_DEMO_APP_161`.
 
 ### Popover
 To display a popover, call `client->popover_display` and provide the ID of the control where the popover should appear:
