@@ -160,7 +160,7 @@ These frontend events are available:
       set_size_limit            TYPE string VALUE `SET_SIZE_LIMIT`,
     END OF cs_event.
 ```
-For example, to open a new tab with the corresponding event:
+For example, to open a new tab with the matching event:
 ```abap
 METHOD z2ui5_if_app~main.
 
