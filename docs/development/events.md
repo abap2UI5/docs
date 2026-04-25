@@ -6,7 +6,7 @@ outline: [2, 4]
 UI5 control properties can both display data and fire events. This section covers backend events, frontend events, and follow-up actions.
 
 ### Backend
-To trigger backend processing when an event fires, use the `client->_event` method.
+To run backend processing when an event fires, use the `client->_event` method.
 
 #### Basic
 As an example, we use the `press` property of a button. To trigger events in the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the relevant UI5 control property. The backend can then read the event details with `client->get( )-event`.
