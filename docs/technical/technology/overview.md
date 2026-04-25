@@ -23,7 +23,7 @@ Business Server Pages (BSP) introduced HTML-based web development inside the ABA
 
 - Developers write HTML and JavaScript, with embedded ABAP for logic
 - Also server-side rendering, but with more control over layout and styling
-- Used extensively in early CRM and SRM web applications
+- Used widely in early CRM and SRM web applications
 - Technically obsolete, but still present in some legacy environments
 
 ### Web Dynpro
