@@ -25,7 +25,7 @@ After the initial page load, the server sends small HTML fragments asynchronousl
 
 _HTML "Over the Wire" Lifecycle [(Source)](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)_
 
-This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are handled independently on the frontend while the backend only delivers data.
+This approach contrasts with the common separation of concerns, where HTML, CSS, and JavaScript are handled separately on the frontend while the backend only delivers data.
 
 ##### 2. Hypermedia-Driven App
 
