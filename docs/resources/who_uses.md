@@ -25,6 +25,6 @@ Inspire the community by sharing your initiatives so others can learn from your 
 
 <br>
 
-_Ready to showcase your project? Add to this list directly or get in touch at <contact@abap2UI5.org>. We'd love to hear what you're building._
+_Ready to showcase your project? Add to this list directly or reach out at <contact@abap2UI5.org>. We'd love to hear what you're building._
 
 Thank you for being part of the abap2UI5 community! ❤️
