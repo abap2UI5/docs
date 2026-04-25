@@ -17,7 +17,7 @@ To call an ABAP class:
 
 ENDMETHOD.
 ```
-The framework maintains a call stack. From the newly called class, return to the previous app with:
+The framework keeps a call stack. From the newly called class, return to the previous app with:
 ```abap
   METHOD z2ui5_if_app~main.
 
