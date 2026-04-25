@@ -29,7 +29,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    " Run the abap2UI5 handler
+    " Call the abap2UI5 handler
     z2ui5_cl_http_handler=>run( server ).
   ENDMETHOD.
 
@@ -60,7 +60,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
       RETURN.
     ENDIF.
 
-    " Run the abap2UI5 handler if authorized
+    " Call the abap2UI5 handler if authorized
     z2ui5_cl_http_handler=>run( server ).
   ENDMETHOD.
 ENDCLASS.
