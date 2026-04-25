@@ -341,7 +341,7 @@ Local Bootstrapping - UI5 version depends on the SAP release
 
 CDN Bootstrapping - UI5 version independent of the SAP release
 
-As a result, you can build abap2UI5 apps that are portable across SAP systems, releases, and environments. An app built once on ABAP Cloud 2305 can also run on earlier releases. Likewise, apps built on older NetWeaver releases can run on BTP ABAP Environment or S/4 Public Cloud ABAP Environment. For this compatibility, abap2UI5 and its apps must work with both language versions — 'ABAP Cloud' and 'Standard ABAP'. To avoid duplication, abap2UI5 does this via a single code line.
+As a result, you can build abap2UI5 apps that are portable across SAP systems, releases, and environments. An app built once on ABAP Cloud 2305 can also run on earlier releases. Likewise, apps built on older NetWeaver releases can run on BTP ABAP Environment or S/4 Public Cloud ABAP Environment. For this compatibility, abap2UI5 and its apps have to work with both language versions — 'ABAP Cloud' and 'Standard ABAP'. To avoid duplication, abap2UI5 does this via a single code line.
 
 ##### 27. One-Code-Line
 
