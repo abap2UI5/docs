@@ -369,6 +369,6 @@ In short: inspired by "HTML Over the Wire" (1)(2)(3), we combined UI and Data (7
 
 Next, we explored several ideas for how the framework cuts its complexity by avoiding frontend artifacts (17), removing extra customizing layers (19), and separating the view from the framework (21), along with app-specific JS or HTML (22). The result is a pure source-code approach with only one database table, two interfaces, one class, and about 2,300 lines of code (25). We build it in a single code line (27), making it cloud- and on-premise-ready and downportable to older releases (28). Paired with abapGit, you can build apps that run on nearly every release.
 
-Overall, with abap2UI5 you need to set aside some common rules: no separation between View and Model in the HTTP communication (12), HTML and JavaScript live directly in the source code (17) (22), we don't use OData or RAP (7), and there are other tradeoffs to consider (24). But if you accept all of this, you get a very minimal approach where you only need to write a single method to build standalone UI5 apps (15).
+Overall, with abap2UI5 you need to set aside some common rules: no separation between View and Model in the HTTP communication (12), HTML and JavaScript live directly in the source code (17) (22), we don't use OData or RAP (7), and there are other tradeoffs to weigh (24). But if you accept all of this, you get a very minimal approach where you only need to write a single method to build standalone UI5 apps (15).
 
 Happy ABAPing!
