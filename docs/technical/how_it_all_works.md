@@ -178,7 +178,7 @@ This makes it compatible with all mobile use cases and devices, and with 'RESTfu
 
 Developing the ABAP class without restarting the frontend app
 
-We also get the advantage shared by all over-the-wire approaches: no more cache busting, since the frontend app stays unchanged throughout development.
+We also get the advantage shared by all over-the-wire approaches: no more cache busting, since the frontend app stays unchanged throughout the development cycle.
 
 So far, we've seen that the abap2UI5 frontend app doesn't know the specific app, just like the generic HTTP-Service on the server, which also doesn't know the specific model and view it's sending. So, which layer in the end defines what happens in this architecture?
 
