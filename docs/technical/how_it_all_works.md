@@ -259,7 +259,7 @@ This contrasts with RAP, where you benefit from well-documented and organized ex
 Expression Binding (Side Effects) in abap2UI5 - Mixture of ABAP and JavaScript
 
 ##### 21. Separated `_bind` and `_event` Methods
-In the earliest version of the framework, every method call included the event and data binding:
+In the earliest version of the framework, every method call carried the event and data binding:
 
 <img width="600" alt="First approach - Data binding and events are not separated from the view" src="https://github.com/user-attachments/assets/3bc268e0-e08f-40b3-b152-b3fa375c0faf" />
 
