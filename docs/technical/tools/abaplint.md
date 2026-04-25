@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # abaplint
 
-This project uses [abaplint](https://abaplint.app/) for static code analysis and other tasks.
+This project uses [abaplint](https://abaplint.app/) for static code analysis and several other tasks.
 
 #### Static Code Analysis
 
