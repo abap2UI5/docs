@@ -9,7 +9,7 @@ First, set up your VS Code environment with the abap2UI5 frontend artifacts, fol
 
 #### Frontend
 
-Create the JS code for your new custom control. Copy an existing one from [App.controller.js](https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/controller/App.controller.js) and adapt it.
+Create the JS code for your new custom control. Copy an existing control from [App.controller.js](https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/controller/App.controller.js) and adapt it.
 
 #### Backend
 Extend the custom control view class by adding a method and defining the new control's properties:
