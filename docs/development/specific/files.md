@@ -31,7 +31,7 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `UPLOAD`.
-        "process with mv_value and mv_path...
+        "process mv_value and mv_path here...
         client->message_box_display( `file uploaded` ).
     ENDCASE.
 
