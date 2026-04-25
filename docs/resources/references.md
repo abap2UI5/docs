@@ -57,7 +57,7 @@ _Blog posts may contain outdated information. Always check this documentation fo
 5. Creating UIs with XML Views, HTML, CSS & JavaScript [(SCN - 12.04.2023)](https://blogs.sap.com/2023/04/12/abap2ui5-5-6-extensions-with-xml-views-html-js-custom-controls/)
 6. Installation, Configuration & Troubleshooting [(SCN - 14.04.2023)](https://blogs.sap.com/2023/04/14/abap2ui5-6-7-installation-configuration-debugging/)
 7. Technical Background: Under the Hood of abap2UI5 [(SCN - 26.04.2023)](https://blogs.sap.com/2023/04/26/abap2ui5-7-7-technical-background-under-the-hood-of-abap2ui5/)
-8. Repository Organization: Working with abapGit, abaplint & open-abap [(SCN - 21.08.2023)](https://blogs.sap.com/2023/08/21/abap2ui5-a1-repository-setup-with-abapgit-abaplint-open-abap/)
+8. Repository Organization: Working with abapGit, abaplint, and open-abap [(SCN - 21.08.2023)](https://blogs.sap.com/2023/08/21/abap2ui5-a1-repository-setup-with-abapgit-abaplint-open-abap/)
 9. Update I: Community Feedback & New Features [(SCN - 11.09.2023)](https://blogs.sap.com/2023/09/11/abap2ui5-a2-community-feedback-new-features/)
 10. Extensions I: Exploring External Libraries & Native Device Capabilities [(SCN - 04.12.2023)](https://blogs.sap.com/2023/12/04/abap2ui5-a3-extensions-i-exploring-external-libraries-native-device-capabilities/)
 11. Extensions II: Guideline for Developing New Features in JavaScript [(SCN - 11.12.2023)](https://blogs.sap.com/2023/12/11/abap2ui5-a4-extensions-ii-guideline-for-developing-new-features-in-javascript/)
