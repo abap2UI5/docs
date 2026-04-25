@@ -60,7 +60,7 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 abap2UI5 talks only to the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
 :::
 
-### 3. Initial Launch
+### 3. First Launch
 Open the HTTP endpoint in your browser:
 <img width="800" alt="Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps." src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps.
