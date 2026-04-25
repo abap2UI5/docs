@@ -51,7 +51,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
     " Read the app name from the request
     DATA(lv_app) = server->request->get_header_field( `APP_START` ).
 
-    " Perform an authorization check
+    " Run an authorization check
     AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
                     ID `APP` FIELD lv_app.
 
