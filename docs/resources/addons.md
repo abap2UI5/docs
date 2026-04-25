@@ -10,7 +10,7 @@ abap2UI5 focuses on core capabilities — rendering views, handling events, and 
 Browse the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to find what you need. Features include:
 - Layout variant handling, similar to classic SAP GUI selection screens or ALV reports
 - Table maintenance tools
-- Integration with third-party libraries like Chart.js for richer visualizations
+- Integration with third-party libraries like Chart.js for richer charts
 - And many more
 
 #### Open Source Projects
