@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # CDS, EML
 
-All examples in these docs work without CDS or EML. But on a recent ABAP release, you can use these features in abap2UI5 apps too.
+All examples in these docs work without CDS or EML. But on a recent ABAP release, you can also use these features in abap2UI5 apps.
 
 ### ABAP CDS
 ABAP Core Data Services (CDS) let you define structured views and read data directly from the database. The example below fetches sales orders from the `I_SalesOrder` view of the Virtual Data Model (VDM) and shows them in a UI5 table:
