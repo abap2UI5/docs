@@ -35,7 +35,7 @@ Sometimes installation via abapGit causes cache-related issues. Here's how to re
 4. Clear browser caches and hard reload
 
 #### Manual Deployment
-If clearing caches doesn't fix the issue, upload the frontend app manually:
+If clearing caches doesn't fix it, upload the frontend app manually:
 
 1. Download the webapp folder of the project.
 
