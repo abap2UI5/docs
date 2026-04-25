@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Device Model
 
-abap2UI5 provides two ways to access device information: directly in the view through the UI5 device model (frontend), or by collecting it into ABAP attributes through a custom control (backend).
+abap2UI5 offers two ways to access device information: directly in the view through the UI5 device model (frontend), or by collecting it into ABAP attributes through a custom control (backend).
 
 ### Frontend
 
