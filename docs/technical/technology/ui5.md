@@ -77,7 +77,7 @@ Backend (ABAP Class)
 ### Conclusion
 
 - **UI5 Freestyle** suits interactive, frontend-rich applications that need tight control over the client.
-- **abap2UI5** is ideal for backend-driven UIs, faster iteration, and minimal frontend complexity — especially in ABAP-centric teams.
+- **abap2UI5** fits best for backend-driven UIs, faster iteration, and minimal frontend complexity — especially in ABAP-centric teams.
 
 ### Summary Table
 
