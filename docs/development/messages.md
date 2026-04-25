@@ -17,7 +17,7 @@ ENDMETHOD.
 
 #### Message Box
 
-When the user needs to acknowledge the message, display a message box they have to close:
+When the user needs to acknowledge the message, show a message box they have to close:
 
 ```abap
 METHOD z2ui5_if_app~main.
