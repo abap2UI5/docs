@@ -68,7 +68,7 @@ ENDCLASS.
 Create multiple HTTP endpoints for different users or departments to fine-tune access control.
 
 ### Application-Level
-Alternatively, handle authorization within individual app classes. This approach works well when you want each app to check user permissions before taking action.
+Alternatively, handle authorization within individual app classes. This approach works well when you want each app to check user permissions before acting.
 
 #### Example: Authorization Check in an App Class
 In this approach, each app checks the user's permissions, like traditional ABAP apps.
