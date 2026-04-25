@@ -52,7 +52,7 @@ ENDCLASS.
 ```
 
 ### Editable
-To make a table editable, switch the binding mode to `bind_edit`:
+To make a table editable, switch the binding to `bind_edit`:
 ```abap
   METHOD z2ui5_if_app~main.
 
