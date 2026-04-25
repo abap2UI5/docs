@@ -68,7 +68,7 @@ For production, complete the frontend deployment and tile configuration in the s
 Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manually:
 
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
-2. Deploy it to your system using SAP's [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
+2. Deploy it to your system using the [SAP deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
 
 ### 5. Configure Launchpad and Tiles (Optional)
 
