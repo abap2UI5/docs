@@ -35,5 +35,5 @@ ENDCLASS.
 ```
 
 ::: tip **Browser Restrictions**
-Camera access relies on browser permissions and security settings. Most browsers need HTTPS and show a permission prompt. Watch for browser warnings while testing.
+Camera access relies on browser permissions and security settings. Most browsers need HTTPS and display a permission prompt. Watch for browser warnings while testing.
 :::
