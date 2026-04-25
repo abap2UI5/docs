@@ -28,7 +28,7 @@ This page offers a structured technical comparison of **RAP** and **abap2UI5**, 
 | **Tooling Requirements**   | ADT, Fiori Tools, metadata layers                     | Any ABAP IDE (including SE80), no additional tools     |
 | **Transport**              | Separate transport for frontend and backend           | Single backend deployment through transport or abapGit |
 | **Development Style**      | Declarative, metadata-driven                          | Programmatic, ABAP-centric                             |
-| **Complexity**             | High: multiple layers & technologies                  | Low: one language, one layer                           |
+| **Complexity**             | High: multiple layers and technologies                | Low: one language, one layer                           |
 
 ### 3. Client–Server Communication
 
