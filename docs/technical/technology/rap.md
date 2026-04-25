@@ -10,7 +10,7 @@ This page offers a structured technical comparison of **RAP** and **abap2UI5**, 
 
 | Aspect            | RAP (Fiori Elements)                                             | abap2UI5                                                   |
 |-------------------|------------------------------------------------------------------|------------------------------------------------------------|
-| **Backend Stack** | CDS Views, Behavior Definitions, OData V4 services               | ABAP Classes generating XML Views and JSON ViewModels     |
+| **Backend Stack** | CDS Views, Behavior Definitions, OData V4 services               | ABAP Classes producing XML Views and JSON ViewModels      |
 | **Frontend Stack**| UI5 Fiori Elements SPA                                           | Static UI5 Freestyle App                            |
 | **Rendering**     | Client interprets metadata and builds the UI dynamically         | Backend sends XML View, frontend renders it         |
 | **UI Definition** | Annotations in CDS and metadata                                  | XML Views created directly in ABAP                         |
