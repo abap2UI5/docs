@@ -92,7 +92,7 @@ ENDCLASS.
 ```
 
 #### Modify
-The example below creates a sales order through `MODIFY` inside an abap2UI5 application:
+The example below creates a sales order with `MODIFY` inside an abap2UI5 app:
 
 ```abap
   METHOD z2ui5_if_app~main.
