@@ -289,7 +289,7 @@ abap2UI5 app sending custom JavaScript to the client
 
 ##### 23. As Simple as Possible
 
-As we saw in (22), we can build apps very complex, but the opposite also works — we can build them very simple. One minimal yet elegant approach uses `if_oo_adt_classrun`. By implementing a single method, we produce output with one click (`F9`). This is highly efficient and inspired abap2UI5. A comparison of both approaches:
+As we saw in (22), we can build apps very complex, but the opposite also works — we can build them very simple. One minimal yet elegant approach uses `if_oo_adt_classrun`. By implementing a single method, we produce output with one click (`F9`). This is very efficient and inspired abap2UI5. A comparison of both approaches:
 
 <img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
 
