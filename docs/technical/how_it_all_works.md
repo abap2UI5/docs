@@ -113,7 +113,7 @@ This also leads to an architecture with a thin frontend and a strong backend, si
 
 But when major Model and View changes are needed at runtime, this approach can be too rigid. Model changes with RTTI aren't supported, and extending the view quickly exceeds the scope of backend annotations — needing Fiori Elements apps (which again require extra deployment).
 
-Overall, RAP doesn't mix View, Model, and Logic as radically as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to follow conventions and can take a few more risks. As we saw in (6), the first step was sending Views from the backend instead of storing them in the frontend app — now we can extend flexibility even further (9)(10).
+Overall, RAP doesn't mix View, Model, and Logic as boldly as the "Over the Wire" approaches. Luckily, in an open-source project we don't need to follow conventions and can take a few more risks. As we saw in (6), the first step was sending Views from the backend instead of storing them in the frontend app — now we can extend flexibility even further (9)(10).
 
 ##### 9. One HTTP-Service for All Apps
 
