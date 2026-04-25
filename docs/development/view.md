@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # View
 
-In abap2UI5, UI5 renders the UI from an XML view that you build in ABAP code. A basic example with raw XML:
+In abap2UI5, UI5 renders the UI from an XML view that you build in ABAP code. A simple example with raw XML:
 
 ```abap
   METHOD z2ui5_if_app~main.
