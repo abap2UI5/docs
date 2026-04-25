@@ -152,7 +152,7 @@ From here, it's a small step to build everything dynamically with RTTI — simil
 
 ### Classic Popups, Modern Events
 
-Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like `POPUP_TO_CONFIRM` feel simple yet capable:
+Anyone who has browsed SE37 for POPUP_TO_* knows the charm of classic ABAP popups. Function modules like `POPUP_TO_CONFIRM` feel small yet capable:
 
 ```abap
 REPORT zre_app_popup.
