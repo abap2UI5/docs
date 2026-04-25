@@ -49,7 +49,7 @@ Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among t
 
 _"Sweet Spot" between SPA and MPA_
 
-A recommended video gives a good introduction to these ideas.
+A recommended video offers a good introduction to these ideas.
 
 ##### 5. UI5 Architecture
 
