@@ -295,7 +295,7 @@ As we saw in (22), we can build apps very complex, but the opposite also works â
 
 if_oo_adt_classrun vs. abap2UI5
 
-To recap what we've covered so far: abap2UI5 is built in a very generic way, placing most of the responsibility on the user's apps. As a result, we get plenty of flexibility and freedom in the app implementation, but we also take on full responsibility for view creation and program flow. We also have to keep these tradeoffs in mind.
+To recap what we've covered so far: abap2UI5 is built in a very generic way, placing most of the responsibility on the user's apps. As a result, we get plenty of flexibility and freedom in the app implementation, but we also take on full responsibility for view building and program flow. We also have to keep these tradeoffs in mind.
 
 ##### 24. Downsides Compared to UI5 & RAP
 
