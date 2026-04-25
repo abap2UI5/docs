@@ -359,7 +359,7 @@ Downporting abap2UI5 code by hand would produce a release that's hard to maintai
 
 abaplint produces the low-syntax branch automatically. This separate branch supports development with all new ABAP expressions available since ABAP 7.50 while still ensuring that all future abap2UI5 features get downported and made available for ABAP 7.02 automatically.
 
-Automated ABAP downporting greatly improves efficiency. See the abaplint dashboard of this project and the abaplint tool. Beyond abaplint, this framework uses abapGit and benefits from the work of those who built it:
+Automated ABAP downporting greatly boosts efficiency. See the abaplint dashboard of this project and the abaplint tool. Beyond abaplint, this framework uses abapGit and benefits from the work of those who built it:
 
 <img width="600" alt="abaplint dashboard and abapGit - tools powering abap2UI5 downporting" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
 
