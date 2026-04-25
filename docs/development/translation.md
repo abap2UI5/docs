@@ -30,7 +30,7 @@ ENDMETHOD.
 ### Data Element
 You can also read and display the short, medium, or long descriptions of data elements (DD04T). How to access them programmatically:
 
-The helper class below uses two approaches for backward compatibility: it first tries classic DDIC introspection through `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all ABAP releases). If that fails (e.g., in ABAP Cloud, which restricts classic DDIC APIs), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems that don't have XCO installed:
+The helper class below uses two approaches for backward compatibility: it first tries classic DDIC introspection through `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all ABAP releases). If that fails (e.g., in ABAP Cloud, which restricts classic DDIC APIs), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems without XCO installed:
 
 ::: code-group
 
