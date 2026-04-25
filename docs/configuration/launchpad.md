@@ -39,7 +39,7 @@ If clearing caches doesn't fix it, upload the frontend app manually:
 
 1. Download the webapp folder of the project.
 
-2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to upload the app to the server.
+2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to push the app to the server.
 <img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
 
 ### Launchpad KPIs
