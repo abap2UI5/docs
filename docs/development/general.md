@@ -5,7 +5,7 @@ outline: [2, 4]
 
 abap2UI5 gives you great flexibility in how you structure apps. Most sample apps follow the pattern below. Use it as a starting point, and tweak it or build a wrapper around abap2UI5 for more specific behavior.
 
-The idea: every request enters the `main` method, and you use `CASE` to distinguish between initialization, navigation returns, and user events.
+The idea: every request enters the `main` method, and you use `CASE` to dispatch between initialization, navigation returns, and user events.
 
 ```abap
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
