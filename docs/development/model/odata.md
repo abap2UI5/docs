@@ -150,4 +150,4 @@ client->follow_up_action( client->_event_client(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ) ).
 ```
-UI5 now sets each column title in the user's language automatically.
+UI5 now picks each column title in the user's language automatically.
