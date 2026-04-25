@@ -7,7 +7,7 @@ In abap2UI5, you don't always have to define your data model at design time. Ins
 
 abap2UI5 serializes app instances so client communication stays stateless. But SAP's standard transformation features are limited and don't support data references with local types created at runtime.
 
-To work around this limitation, abap2UI5 integrates the [S-RTTI](https://github.com/sandraros/S-RTTI) project.
+To work around this limitation, abap2UI5 ships the [S-RTTI](https://github.com/sandraros/S-RTTI) project.
 
 #### Standard Transformation
 With fully typed data at design time, the standard SAP transformation works right away:
