@@ -105,7 +105,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Data Exchange
+### Data Flow
 Finally, add a public attribute to send data to the backend:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
