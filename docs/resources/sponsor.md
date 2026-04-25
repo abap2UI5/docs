@@ -12,7 +12,7 @@ abap2UI5 thrives on contributions from its dedicated developers. Every contribut
 abap2UI5 wouldn't exist without abapGit — the backbone of ABAP open-source development — and the supportive people behind it. If you find abap2UI5 useful, you also benefit from abapGit. Browse its contributors and please consider [sponsoring them](https://abapgit.org/sponsor.html).
 
 #### Tools That Make It Possible
-Several open-source projects extend abap2UI5. Please consider sponsoring their maintainers:
+Other open-source projects extend abap2UI5. Please consider sponsoring their maintainers:
 - Static code analysis with [abaplint](https://abaplint.org/) [(contributors)](https://github.com/abaplint/abaplint/graphs/contributors)
 - Unit testing with [open-abap](https://github.com/open-abap) [(contributors)](https://github.com/open-abap/open-abap-core/graphs/contributors)
 - JSON handling with [ajson](https://github.com/sbcgua/ajson) [(sbcgua)](https://github.com/sbcgua)
