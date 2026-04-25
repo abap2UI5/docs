@@ -281,7 +281,7 @@ We can add extra functionality (JS, HTML, CSS) without extending the framework o
 
 App delivering its own JavaScript "Over the Wire"
 
-With any request, you can send your own JavaScript or custom controls to the frontend. The abap2UI5 framework forwards it as-is. All subsequent requests can then use this JavaScript — for example, to render custom controls in their UI5 views:
+With any request, you can send your own JavaScript or custom controls to the frontend. The abap2UI5 framework forwards it as-is. All later requests can then use this JavaScript — for example, to render custom controls in their UI5 views:
 
 <img width="600" alt="abap2UI5 app sending custom JavaScript to the client" src="https://github.com/user-attachments/assets/66345bd4-6208-4dfc-9870-c82e3a45f74a" />
 
