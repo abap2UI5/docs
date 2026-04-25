@@ -29,7 +29,7 @@ ENDMETHOD.
 ```
 If the backend needs more information about the event, use the `t_arg` parameter to add extra details. Three prefixes are available:
 
-- **`$source`** — the UI5 control that triggered the event (e.g., `${$source>/text}` returns the button text)
+- **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}` returns the button text)
 - **`$parameters`** — the event parameters as defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
 - **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`)
 
