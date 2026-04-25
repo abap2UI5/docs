@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Expression Binding
 
-Expression Binding lets you compute values directly in XML views with JavaScript-like expressions. This is especially useful in abap2UI5, since it cuts server roundtrips by moving calculations, logical conditions, and string operations to the frontend.
+Expression Binding lets you compute values directly in XML views with JavaScript-like expressions. This is especially handy in abap2UI5, since it cuts server roundtrips by moving calculations, logical conditions, and string operations to the frontend.
 
 The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you can use JavaScript operators (like `===` for strict equality or `Math.max`) and reference model properties with `$` followed by a binding path. Note: `===` is the JavaScript strict equality operator (not an ABAP operator) — UI5 requires it because these expressions evaluate in the browser.
 
