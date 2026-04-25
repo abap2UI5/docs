@@ -83,7 +83,7 @@ With generic types, the standard transformation raises an error. abap2UI5 works 
 - The variable resets, and the standard SAP transformation runs again.
 - On deserialization, abap2UI5 recreates the object and restores the table content back into the attributes.
 
-This approach ensures compatibility with dynamic types while keeping the transformation process reliable. It runs in the background, independent of the two sample app implementations above.
+This approach gives compatibility with dynamic types while keeping the transformation process reliable. It runs in the background, independent of the two sample app implementations above.
 
 #### Integration
 
