@@ -8,7 +8,7 @@ abap2UI5 is a backend-centric framework. All logic and business data stay on the
 The abap2UI5 framework runs as an HTTP handler. You create the HTTP handler and call the abap2UI5 API inside it. Users access abap2UI5 by calling the endpoint externally, with security managed like any other UI5 application.
 
 ### Authentication
-The ICF (Internet Communication Framework) node level handles authentication. You have full control over the ICF node configuration, including visibility settings, login procedures, and other security parameters.
+The ICF (Internet Communication Framework) node level handles authentication. You get full control over the ICF node configuration, including visibility settings, login procedures, and other security parameters.
 
 ### Authorization
 As an app developer, you have full flexibility over authorization. Configure it at either the application level or the service node level. For details on setting up authorization for your endpoint, see the [Authorization](/configuration/authorization) page.
