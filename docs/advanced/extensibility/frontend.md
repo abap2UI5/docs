@@ -11,7 +11,7 @@ Open VS Code (or your editor of choice), then run in the terminal:
 git clone https://github.com/abap2UI5/abap2UI5
 cd app
 ```
-Point all three files at your ABAP backend system:
+Point all three files to your ABAP backend system:
 
 <img width="400" alt="Frontend config files where the backend system URL must be replaced" src="https://github.com/user-attachments/assets/155c9a3f-8a0a-494b-8fc4-a4bba2bf0e90">
 
