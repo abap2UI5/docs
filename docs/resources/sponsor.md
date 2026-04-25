@@ -13,9 +13,9 @@ abap2UI5 wouldn't be possible without abapGit — the backbone of ABAP open-sour
 
 #### Tools That Make It Possible
 Several open-source projects extend abap2UI5. Please consider sponsoring their maintainers:
-- Static code analysis through [abaplint](https://abaplint.org/) [(contributors)](https://github.com/abaplint/abaplint/graphs/contributors)
-- Unit testing through [open-abap](https://github.com/open-abap) [(contributors)](https://github.com/open-abap/open-abap-core/graphs/contributors)
-- JSON handling through [ajson](https://github.com/sbcgua/ajson) [(sbcgua)](https://github.com/sbcgua)
+- Static code analysis with [abaplint](https://abaplint.org/) [(contributors)](https://github.com/abaplint/abaplint/graphs/contributors)
+- Unit testing with [open-abap](https://github.com/open-abap) [(contributors)](https://github.com/open-abap/open-abap-core/graphs/contributors)
+- JSON handling with [ajson](https://github.com/sbcgua/ajson) [(sbcgua)](https://github.com/sbcgua)
 - Runtime serialization using [S-RTTI](https://github.com/sandraros/S-RTTI) [(sandrarossi)](https://github.com/sandraros)
 - ABAP Cloud and Standard compatibility with [Steampunkification](https://github.com/heliconialabs/steampunkification) [(contributors)](https://github.com/heliconialabs/steampunkification/graphs/contributors)
 - Syntax downporting through the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
