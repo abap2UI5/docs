@@ -92,7 +92,7 @@ The UI5 application stays a single-page application, but its role changes: it no
 
 #### Frontend Events on the Server
 
-How do we handle user interaction in this setup?
+How do we deal with user interaction in this setup?
 
 To support user interaction, the initial HTTP request delivers a small, static UI5 freestyle app. This app contains just enough logic to forward frontend events and usually acts as a shell app. The interaction model takes inspiration from the classic PAI/PBO pattern familiar from SAP GUI apps.
 
