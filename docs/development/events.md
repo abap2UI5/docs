@@ -77,7 +77,7 @@ ENDMETHOD.
 ```
 
 #### Event
-Read specific properties of the event object. The syntax `$event>sId` accesses the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: there's no `${...}` wrapper because `$event` directly references the event object:
+Read specific properties of the event object. The syntax `$event>sId` reads the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: there's no `${...}` wrapper because `$event` directly references the event object:
 ```abap
 METHOD z2ui5_if_app~main.
 
