@@ -73,7 +73,7 @@ To distinguish between lifecycle events, use `CASE abap_true`:
 
 - `client->check_on_init( )` — first call when the app starts
 - `client->check_on_event( )` — user triggered an event (e.g., button press)
-- `client->check_on_navigated( )` — returned from another app through navigation
+- `client->check_on_navigated( )` — returned from another app via navigation
 
 Each `check_*` method returns `abap_true` only for its specific phase, so `CASE abap_true` acts as a dispatcher:
 ```abap
