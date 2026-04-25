@@ -36,7 +36,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
 ENDCLASS.
 ```
 #### Example: Authorization Objects in Service Handlers
-You can also combine this with SAP authorization objects. The example below uses a custom authorization object `Z_APP_AUTH` with an `APP` field — create the object in transaction `SU21` and assign it to the relevant roles in your system:
+You can also combine this with SAP authorization objects. The example below uses a custom authorization object `Z_APP_AUTH` with an `APP` field — create the object in transaction `SU21` and assign it to the relevant roles on your system:
 ```abap
 CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
