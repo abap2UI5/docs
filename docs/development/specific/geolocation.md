@@ -48,5 +48,5 @@ ENDCLASS.
 ```
 
 ::: tip **Browser Permissions**
-Geolocation needs the user to grant permission in the browser. Serve your HTTP endpoint over HTTPS, since most browsers block geolocation on insecure origins.
+Geolocation needs the user to grant permission in the browser. Serve your HTTP endpoint over HTTPS, since most browsers block geolocation on non-secure origins.
 :::
