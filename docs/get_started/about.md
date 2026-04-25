@@ -36,7 +36,7 @@ Traditional UI5 development needs JavaScript expertise, frontend deployment, and
 - **Use your existing ABAP skills** — do what you know best; no frontend expertise needed
 - **Broad compatibility** — build apps that run on legacy R/3 systems and modern S/4 Cloud environments
 - **Extend beyond RAP** — when standard capabilities reach their limits
-- **Prototype fast** — iterate quickly on business apps
+- **Prototype fast** — iterate rapidly on business apps
 
 Each app ships as an [abapGit](https://abapgit.org) project, so installation across systems needs no separate frontend deployment.
 
