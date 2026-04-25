@@ -37,7 +37,7 @@ This page offers a structured technical comparison of **UI5 Freestyle** and **ab
 Browser (UI5 App)
   ├──> Load HTML/CSS/JS resources
   ├──> Initialize models and views
-  ├──> Bind data through OData
+  ├──> Bind data via OData
   ├──> Handle logic in JS controller
 Backend (OData/REST)
   └──> Responds to requests, no control over UI
