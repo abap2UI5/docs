@@ -70,7 +70,7 @@ Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manua
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
 2. Deploy it to your system using SAP's [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
 
-### 5. Configure Launchpad & Tiles (Optional)
+### 5. Configure Launchpad and Tiles (Optional)
 
 Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
 
