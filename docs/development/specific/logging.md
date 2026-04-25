@@ -20,7 +20,7 @@ ENDMETHOD.
 ```
 
 #### ABAP Cloud
-In ABAP Cloud, pass the logging object directly into the popup:
+In ABAP Cloud, pass the logging object straight into the popup:
 ```abap
 METHOD z2ui5_if_app~main.
 
