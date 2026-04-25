@@ -135,7 +135,7 @@ This is just a demo. Reading `name` directly would be easier — the framework u
 :::
 
 ### Frontend
-If you don't want to process the event in the backend, fire actions directly on the frontend with `client->_event_client`. The difference between the two methods:
+If you don't want to handle the event in the backend, fire actions directly on the frontend with `client->_event_client`. The difference between the two methods:
 
 - **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
 - **`client->_event_client( )`** — runs an action directly in the browser; no backend call
