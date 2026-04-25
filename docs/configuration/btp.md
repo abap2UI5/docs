@@ -29,7 +29,7 @@ SAP Build Work Zone needs these properties to route requests correctly to your A
 | Property | Value | Description |
 |---|---|---|
 | HTML5.DynamicDestination | `true` | Lets HTML5 apps resolve this destination at runtime |
-| product.name | `ABAP System` | Identifies the backend type for the Work Zone tile configuration |
+| product.name | `ABAP System` | Names the backend type for the Work Zone tile configuration |
 | sap-client | *(your client number)* | The SAP system client to connect to (e.g., `001`) |
 | WebIDEEnabled | `true` | Enables the destination for SAP Business Application Studio |
 | WebIDEUsage | `odata_abap,dev_abap` | Declares supported protocols for development tools |
