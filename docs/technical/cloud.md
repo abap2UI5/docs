@@ -107,7 +107,7 @@ ENDCLASS.
 ```
 The app reads directly from the VBAK database table, which makes it cloud-incompatible.
 
-Always follow cloud-ready development principles so your apps remain upgrade-stable and compatible with ABAP Cloud environments.
+Always follow cloud-ready development principles so your apps stay upgrade-stable and compatible with ABAP Cloud environments.
 
 #### Do I Have to Use RAP to Be Cloud Ready?
 
