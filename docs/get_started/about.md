@@ -73,7 +73,7 @@ Works with both ABAP Cloud and Standard ABAP, covering ABAP releases from 7.02 t
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
 - R/3 NetWeaver AS ABAP 7.02 or later (Standard ABAP)
 
-A downported version is available for systems running earlier ABAP releases (before 7.50).
+A downported version is available for systems on earlier ABAP releases (before 7.50).
 
 ### Enterprise Ready
 
