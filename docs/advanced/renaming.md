@@ -15,4 +15,4 @@ For more on renaming ABAP artifacts, see:
 [Automagic standalone renaming of ABAP objects](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
 
 For more background, see the blog post:
-[Renaming of ABAP Artifacts - The Power of abaplint & abapGit in ABAP Development](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
+[Renaming of ABAP Artifacts - The Power of abaplint and abapGit in ABAP Development](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
