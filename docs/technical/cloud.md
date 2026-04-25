@@ -25,9 +25,9 @@ SAP recommends building all new applications with ABAP Cloud.
 
 Yes — abap2UI5 is fully compatible with ABAP Cloud:
 
-- Implemented entirely in the ABAP for Cloud language version
+- Built entirely in the ABAP for Cloud language version
 - Uses only released SAP APIs or its own internal classes
-- Requires no changes to standard SAP code
+- Needs no changes to standard SAP code
 - The frontend is a normal UI5 freestyle app
 
 You can install abap2UI5 on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud.
