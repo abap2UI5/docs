@@ -115,4 +115,4 @@ Contributions are always welcome. Whether you fix bugs, build features, or impro
 #### Sponsor
 Volunteers maintain abap2UI5. If you or your company benefits from the project, please consider sponsoring it.
 
-→ *Learn more about [sponsorship opportunities](/resources/sponsor)*
+→ *Read more about [sponsorship opportunities](/resources/sponsor)*
