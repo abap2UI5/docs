@@ -230,7 +230,7 @@ This gives us a fully abapGit-based project that uses only ABAP source code, eas
 
 ##### 18. Everything Is Maintained & Built in the Backend
 
-Since all user apps are also in pure ABAP, we can now maintain and build everything in the backend. Duplicating, editing, renaming, or other refactoring takes just moments. Deployment shrinks to activating an ABAP class, so we can create many apps quickly. For example, we built all the apps in the samples section fast, mostly by copy and paste — which would have been unrealistic for separately built and deployed frontend apps. This is a big drop in complexity and an advantage of all 'Over the Wire' apps, as we noted in (3).
+Since all user apps are also in pure ABAP, we can now maintain and build everything in the backend. Duplicating, editing, renaming, or any other refactoring takes just moments. Deployment shrinks to activating an ABAP class, so we can create many apps quickly. For example, we built all the apps in the samples section fast, mostly by copy and paste — which would have been unrealistic for separately built and deployed frontend apps. This is a big drop in complexity and an advantage of all 'Over the Wire' apps, as we noted in (3).
 
 ##### 19. No Extra Layer
 
