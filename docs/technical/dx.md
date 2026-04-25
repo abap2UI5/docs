@@ -24,7 +24,7 @@ CLASS zcl_app_adt IMPLEMENTATION.
 ENDCLASS.
 ```
 Benefits:
-- Single-class design — quick to create and easy to debug
+- Single-class design — quick to build and easy to debug
 - Runs right away
 - Minimal boilerplate, easy to copy and paste
 
