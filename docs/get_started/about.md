@@ -56,7 +56,7 @@ abap2UI5 is secure by design. All business logic stays in the ABAP backend. The 
 The framework has a small system footprint — only classes and interfaces. Add functionality with optional add-ons to keep your system lean.
 
 #### Transparency
-All source code lives publicly on GitHub. We discuss features and issues openly, publish technical blog posts that explain key concepts, and ship fixes quickly through abapGit. You'll always understand how the framework works and can confirm its behavior.
+All source code lives publicly on GitHub. We discuss features and issues openly, publish technical blog posts that explain key concepts, and ship fixes quickly via abapGit. You'll always understand how the framework works and can confirm its behavior.
 
 ### Compatibility
 <br>
