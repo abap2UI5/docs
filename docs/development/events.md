@@ -140,7 +140,7 @@ If you don't want to process the event in the backend, fire actions directly on 
 - **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
 - **`client->_event_client( )`** — runs an action directly in the browser; no backend call
 
-To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To run a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
+To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To fire a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
 
 The following frontend events are available:
 ```abap
