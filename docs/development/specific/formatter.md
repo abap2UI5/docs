@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          )->button( text  = `send`
                     press = client->_event( `BUTTON` ) ).
 
-    "Remove leading zeros from a numeric string using OData type formatting
+    "Remove leading zeros from a numeric string with OData type formatting
     "isDigitSequence: true tells the formatter to treat the value as a digit sequence
     "resolves to: { path: "/XX/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
     page->simple_form( title    = `No Zeros`
