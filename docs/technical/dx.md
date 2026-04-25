@@ -108,7 +108,7 @@ go_salv->display( ).
 ```
 
 Benefits:
-- Generates a full UI from internal tables
+- Builds a full UI from internal tables
 - No external annotations, CDS Views, or DDIC artifacts needed
 - Ideal for admin tools and quick overviews
 
