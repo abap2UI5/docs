@@ -27,7 +27,7 @@ Since launching in 2023, abap2UI5 has grown from a small side project into a com
 
 → *See the [Getting Started Guide](/get_started/quickstart) for step-by-step setup*
 
-→ *Browse [Sample Apps](/get_started/samples) to see abap2UI5 in action*
+→ *See [Sample Apps](/get_started/samples) to watch abap2UI5 in action*
 
 ### Why abap2UI5?
 
