@@ -62,4 +62,4 @@ For more on Launchpads and routing, see the [Fiori Launchpad](/configuration/lau
 
 ### Inner App Navigation
 
-Use class attributes to track the current state and switch views as needed. This keeps navigation logic in a single ABAP class without cross-app calls.
+Use class attributes to track the current state and switch views as needed. This keeps navigation logic in a single ABAP class with no cross-app calls.
