@@ -12,7 +12,7 @@ INTERFACE z2ui5_if_app PUBLIC.
       client TYPE REF TO z2ui5_if_client.
 ENDINTERFACE.
 ```
-The `client` object is your only entry point into the framework. Use it to display views, handle events, exchange data, and navigate between apps.
+The `client` object is your only entry point into the framework. Use it to show views, handle events, exchange data, and navigate between apps.
 
 ### Basic Example
 Create a class:
