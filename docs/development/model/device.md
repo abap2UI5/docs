@@ -16,7 +16,7 @@ page->input(
 For all parameters, see the [UI5 documentation](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
 
 ### Backend
-When you need device information in your ABAP logic (e.g., to adapt behavior based on the browser or screen size), use the `info_frontend` custom control. It collects the values on the frontend and returns them through two-way binding (`_bind_edit`). Once the `finished` event fires, all bound attributes are filled and available to ABAP:
+When you need device information in your ABAP logic (e.g., to adapt behavior based on the browser or screen size), use the `info_frontend` custom control. It collects the values on the frontend and returns them via two-way binding (`_bind_edit`). Once the `finished` event fires, all bound attributes are filled and available to ABAP:
 ```abap
 CLASS z2ui5_cl_sample_device DEFINITION PUBLIC.
 
