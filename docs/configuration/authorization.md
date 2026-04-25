@@ -65,7 +65,7 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Create multiple HTTP endpoints for different users or departments to fine-tune access control.
+Create multiple HTTP endpoints for different users or departments to fine-tune access.
 
 ### Application-Level
 Alternatively, handle authorization within individual app classes. This approach works well when you want each app to check user permissions before acting.
