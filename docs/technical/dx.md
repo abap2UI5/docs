@@ -173,7 +173,7 @@ CASE event.
 ENDCASE.
 ```
 Benefits:
-- Centralized event logic
+- Unified event logic
 - Simple and readable program flow
 - Encapsulated and reusable
 
