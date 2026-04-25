@@ -53,7 +53,7 @@ abap2UI5 is fast. The frontend focuses only on UI rendering via the UI5 framewor
 abap2UI5 is secure by design. All business logic stays in the ABAP backend. The frontend receives only the data the backend embeds directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries from external tools.
 
 #### System Footprint
-The framework has a small system footprint — only classes and interfaces. Add functionality through optional add-ons to keep your system lean.
+The framework has a small system footprint — only classes and interfaces. Add functionality with optional add-ons to keep your system lean.
 
 #### Transparency
 All source code lives publicly on GitHub. We discuss features and issues openly, publish technical blog posts that explain key concepts, and ship fixes quickly through abapGit. You'll always understand how the framework works and can confirm its behavior.
