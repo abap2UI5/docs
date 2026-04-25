@@ -139,5 +139,5 @@ To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
 ```
 
 ::: warning
-Each timer event causes a full backend roundtrip. Use reasonable intervals (e.g., 2000ms or more) to avoid heavy server load.
+Each timer event causes a full backend roundtrip. Use sensible intervals (e.g., 2000ms or more) to avoid heavy server load.
 :::
