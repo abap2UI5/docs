@@ -15,7 +15,7 @@ client->follow_up_action( client->_event_client(
         ( `FLIGHT` ) ) ) ).
 ```
 #### Bind Data
-Next, bind the OData model to your view definition. Since we use a non-default model, specify the model name explicitly for each binding:
+Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items = `{FLIGHT>/Airport}`
