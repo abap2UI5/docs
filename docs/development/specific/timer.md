@@ -16,7 +16,7 @@ Add the timer as a view element with `_z2ui5( )->timer( ... )`. These parameters
 
 #### Basic Usage
 
-Embed the timer in your view and control it through data binding. The example below increments a counter every 2 seconds:
+Embed the timer in your view and control it via data binding. The example below increments a counter every 2 seconds:
 
 ```abap
 CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
