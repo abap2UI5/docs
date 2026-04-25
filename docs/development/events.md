@@ -36,7 +36,7 @@ If the backend needs more details about the event, use the `t_arg` parameter to 
 For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_DEMO_APP_167`.
 
 #### Source
-Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property from the UI5 control that fired the event — here, the button itself, yielding the button's label (`post`):
+Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property from the UI5 control that fired the event — here, the button itself, returning the button's label (`post`):
 
 ```abap
 METHOD z2ui5_if_app~main.
