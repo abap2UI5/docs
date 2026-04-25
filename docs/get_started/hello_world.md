@@ -35,7 +35,7 @@ ENDCLASS.
 Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
-Let's add a view to display some text:
+Let's add a view to show some text:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
