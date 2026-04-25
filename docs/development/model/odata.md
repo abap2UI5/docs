@@ -36,7 +36,7 @@ tab->items( )->column_list_item( )->cells(
 The `growing` property loads data in batches instead of all at once, boosting performance.
 
 #### Full Example
-The complete source code:
+The full source code:
 ```abap
   METHOD z2ui5_if_app~main.
 
