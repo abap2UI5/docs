@@ -83,7 +83,7 @@ abap2UI5 combines SAP's UI5 framework with ABAP's backend capabilities, tailored
 Use abap2UI5 like any other UI5 app or ABAP program in production. Add the framework and your apps to a transport request to deploy them.
 
 #### Licensing
-Technically, abap2UI5 apps are standard UI5 freestyle applications. License them the same way you license other UI5 apps in your organization. abap2UI5 itself is MIT licensed (free for commercial use).
+Technically, abap2UI5 apps are standard UI5 freestyle apps. License them the same way you license other UI5 apps in your organization. abap2UI5 itself is MIT licensed (free for commercial use).
 
 #### Launchpad Integration
 Integrate your apps into:
