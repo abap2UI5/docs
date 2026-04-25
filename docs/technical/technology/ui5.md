@@ -10,7 +10,7 @@ This page offers a structured technical comparison of **UI5 Freestyle** and **ab
 
 | Aspect            | UI5 Freestyle (MVC)                                        | abap2UI5                                                   |
 |-------------------|-------------------------------------------------------------|------------------------------------------------------------|
-| **Backend Stack** | ABAP services (OData/REST), loosely coupled                 | ABAP Classes generating XML Views and JSON ViewModels     |
+| **Backend Stack** | ABAP services (OData/REST), loosely coupled                 | ABAP Classes producing XML Views and JSON ViewModels      |
 | **Frontend Stack**| UI5 Freestyle app (JavaScript, XML, Controller)             | Static UI5 Freestyle App                                  |
 | **Rendering**     | Frontend controller renders the view                        | Backend defines UI structure, frontend renders it          |
 | **UI Definition** | XML Views maintained in frontend project                    | XML Views created directly in ABAP                         |
