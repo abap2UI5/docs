@@ -29,7 +29,7 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-This method works with tables, trees, and other nested data structures. For details, browse the table and tree samples in the samples repository.
+This method works with tables, trees, and other nested data structures. For details, see the table and tree samples in the samples repository.
 
 #### Two-Way Binding
 When users need to edit data, use two-way binding to keep it in sync with the ABAP backend. Call the `client->_bind_edit` method — after an event, the framework syncs the data back to your ABAP class:
