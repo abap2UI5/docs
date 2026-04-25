@@ -29,7 +29,7 @@ Sometimes installation via abapGit causes cache-related issues. Here's how to re
 ![Distribution layer tab in app index calculation report](https://github.com/user-attachments/assets/3fce0f2e-96f9-4487-9226-7940336582b1)
 ![Distribution layer recalculation output](https://github.com/user-attachments/assets/dc149874-6731-496d-90bf-79cb83d8c97d)
 
-3. Invalidate HTTP caches in transaction `SMICM`
+3. Clear HTTP caches in transaction `SMICM`
 ![HTTP cache invalidation in transaction SMICM](https://github.com/user-attachments/assets/497b7677-8009-472e-9b50-34719105a12e)
 
 4. Clear browser caches and hard reload
