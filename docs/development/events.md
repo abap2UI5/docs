@@ -30,7 +30,7 @@ ENDMETHOD.
 If the backend needs more details about the event, use the `t_arg` parameter to add extra info. Three prefixes are available:
 
 - **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}` returns the button text)
-- **`$parameters`** — the event parameters as defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
+- **`$parameters`** — the event parameters defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
 - **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`)
 
 For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_DEMO_APP_167`.
