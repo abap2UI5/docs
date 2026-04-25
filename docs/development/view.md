@@ -39,5 +39,5 @@ Tips for working with views:
 - Use code completion on `Z2UI5_CL_XML_VIEW` to find controls and properties
 - See the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
-#### What's Next?
+#### Next Steps
 This produces a static view. The next section shows how to bind and share data between the view and the app logic.
