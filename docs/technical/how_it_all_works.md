@@ -17,7 +17,7 @@ The concept of **"HTML Over the Wire"** inspired one of the core ideas behind ab
 
 > This is what HTML Over The Wire is all about. It's a celebration of the simplicity in HTML as the format for carrying data and presentation together, whether this is delivered on the first load or with subsequent dynamic updates.
 
-The SAP community introduced this idea through examples that use the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
+The SAP community introduced this idea with examples that use the JavaScript library **htmx** to build Fiori-like apps. Unlike typical SPAs where state and logic live on the frontend, the **HTML Over the Wire** principle keeps all application logic and state on the server.
 
 After the initial page load, the server sends small HTML fragments asynchronously over AJAX to update parts of the page — avoiding full reloads.
 
