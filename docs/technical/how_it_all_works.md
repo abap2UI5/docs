@@ -43,7 +43,7 @@ Unlike traditional architectures, HDAs don't enforce strict separation of CSS, J
 
 ##### 4. Dive Deeper
 
-Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among the first to adopt this principle. Tools like htmx, hotwire, and unpoly followed, aiming to reduce complexity while keeping high UI fidelity. These frameworks aim for a "sweet spot" between SPA and MPA architectures:
+Frameworks like Phoenix LiveView (2018) and Laravel Livewire (2019) were among the first to adopt this principle. Tools like htmx, hotwire, and unpoly followed, aiming to cut complexity while keeping high UI fidelity. These frameworks aim for a "sweet spot" between SPA and MPA architectures:
 
 <img width="600" alt="'Sweet Spot' between SPA and MPA" src="https://github.com/user-attachments/assets/41af4a41-829e-4289-82f5-18ee7408054b" />
 
