@@ -50,7 +50,7 @@ Sounds familiar? The abap2UI5 framework mirrors classic `call screen` and `leave
 :::
 
 #### Launchpad
-We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating through the Launchpad to use browser navigation and history:
+We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
 ```abap
 client->_event_client(
     val   = client->cs_event-cross_app_nav_to_ext
