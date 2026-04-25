@@ -34,7 +34,7 @@ _Structured Web Applications (2003+) (SAP)_
 - Developers create UI definitions in ABAP (Views, Context, Controllers)
 - Still **Server-Side Rendering**: UI is built on the server, rendered as HTML in the browser
 - Suitable for transactional business applications
-- More structured and modular than ITS, but limited for modern UX needs
+- More structured and modular than ITS, but limited for modern UX
 
 ### UI5 Freestyle
 _Full Client-Side SPAs (2010+) (SAP)_
