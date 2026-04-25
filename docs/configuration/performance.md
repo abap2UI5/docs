@@ -45,4 +45,4 @@ Want to tune your app further? A few tips:
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 
 ### Performance Issues?
-If you hit performance issues, create a sample and submit a pull request to the samples repository. We're glad to analyze it and see whether abap2UI5 can be made even faster.
+If you hit performance issues, build a sample and submit a pull request to the samples repository. We're glad to analyze it and see whether abap2UI5 can be made even faster.
