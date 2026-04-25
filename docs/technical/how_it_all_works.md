@@ -331,7 +331,7 @@ The result is a pure source-code-based framework, which enables the approach bel
 
 ##### 26. Running Everywhere Apps
 
-At its core, abap2UI5 generates two strings — one holding an XML-View and the other the JSON-View-Model. The framework sends these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on older releases. This approach runs on the latest ABAP Cloud stack, on-premise systems, and legacy systems alike, making it release-independent. And we don't lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
+At its core, abap2UI5 produces two strings — one holding an XML-View and the other the JSON-View-Model. The framework sends these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on older releases. This approach runs on the latest ABAP Cloud stack, on-premise systems, and legacy systems alike, making it release-independent. And we don't lose access to new UI5 features — we can bootstrap the UI5 framework on the frontend from a Content Delivery Network (CDN) and use the latest UI5 version even on older releases:
 
 <img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
 
