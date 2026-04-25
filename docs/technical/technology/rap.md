@@ -15,9 +15,9 @@ This page offers a structured technical comparison of **RAP** and **abap2UI5**, 
 | **Rendering**     | Client interprets metadata and builds the UI dynamically         | Backend sends XML View, frontend renders it         |
 | **UI Definition** | Annotations in CDS and metadata                                  | XML Views created directly in ABAP                         |
 | **Communication** | OData V4 (metadata, data, actions)                               | Simple HTTP requests (Over-the-Wire)                      |
-| **Runtime Control**| Logic partly changeable through RAP Implementation              | Full control over UI and logic in backend                 |
-| **Model**         | Defined at design time through CDS                               | Defined at design time or runtime through internal tables |
-| **Drafts**        | Managed through RAP drafts on model level                        | Managed through serialization on app level                |
+| **Runtime Control**| Logic partly changeable via RAP Implementation                  | Full control over UI and logic in backend                 |
+| **Model**         | Defined at design time via CDS                                   | Defined at design time or runtime via internal tables     |
+| **Drafts**        | Managed via RAP drafts on model level                            | Managed via serialization on app level                    |
 
 ### 2. Developer Workflow
 
