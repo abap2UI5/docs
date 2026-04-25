@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # ajson
 
-abap2UI5 handles all frontend-backend communication through JSON. Initially, the framework used SAP's `/UI2/CL_JSON`, but that approach turned out to be problematic: key behavior varied across releases, documentation was sparse, and compatibility issues came up often.
+abap2UI5 handles all frontend-backend communication with JSON. Initially, the framework used SAP's `/UI2/CL_JSON`, but that approach turned out to be problematic: key behavior varied across releases, documentation was sparse, and compatibility issues came up often.
 
 The solution: [ajson](https://github.com/sbcgua/ajson), a solid open-source JSON library that greatly improved abap2UI5's functionality.
 
