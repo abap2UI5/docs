@@ -114,7 +114,7 @@ ENDMETHOD.
 ```
 
 #### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing stops, and the user has to reload the browser. Reserve this for unexpected cases:
+What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
 
 ```abap
 METHOD z2ui5_if_app~main.
