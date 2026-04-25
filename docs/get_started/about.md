@@ -86,7 +86,7 @@ Use abap2UI5 like any other UI5 app or ABAP program in production. Add the frame
 Technically, abap2UI5 apps are standard UI5 freestyle apps. License them the same way you license other UI5 apps at your organization. abap2UI5 itself is MIT licensed (free for commercial use).
 
 #### Launchpad Integration
-Integrate your apps into:
+Embed your apps into:
 - Fiori Launchpads on S/4 On-Premise
 - Tiles on S/4 Public Cloud
 - Build Work Zone Websites on BTP
