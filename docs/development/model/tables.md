@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 # Tables, Trees
-This section covers how to display complex data structures — tables, trees, and nested structures — in views.
+This section shows how to display nested data structures — tables, trees, and nested records — in views.
 
 ### Tables
 The example below binds a basic table to a UI5 control:
