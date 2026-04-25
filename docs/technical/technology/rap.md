@@ -55,7 +55,7 @@ Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
 
-### 4. Flexibility & Runtime Capabilities
+### 4. Flexibility and Runtime Capabilities
 
 | Aspect                    | RAP (Fiori Elements)                        | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
@@ -64,7 +64,7 @@ Backend (ABAP Class)
 | **Use Case Fit**          | Ideal for standard CRUD applications        | Suitable for dynamic, backend-driven UIs |
 | **Learning Curve**        | Steep (new concepts, multiple layers)       | Flat (ABAP-only, no metadata tooling)    |
 
-### 5. Cloud Readiness & Compliance
+### 5. Cloud Readiness and Compliance
 
 | Feature                    | RAP                        | abap2UI5                     |
 |----------------------------|-----------------------------|-------------------------------|
