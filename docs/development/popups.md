@@ -22,7 +22,7 @@ To show a popup, call `client->popup_display` instead of `client->view_display`:
 ```
 
 #### Flow Logic
-A common popup flow shows a normal view, opens a popup, and finally closes it. Structure it like this:
+A typical popup flow shows a normal view, opens a popup, and finally closes it. Structure it like this:
 ```abap
   METHOD z2ui5_if_app~main.
 
