@@ -44,7 +44,7 @@ Each app ships as an [abapGit](https://abapgit.org) project, so installation acr
 <br>
 
 #### Architecture
-abap2UI5 takes a "thin frontend" approach — all processing, logic, and data management stay in the backend. This design simplifies configuration, cuts client-side complexity (no more cache-clearing headaches), and keeps business logic and sensitive data securely on the server.
+abap2UI5 takes a "thin frontend" approach — all processing, logic, and data handling stay in the backend. This design simplifies configuration, cuts client-side complexity (no more cache-clearing headaches), and keeps business logic and sensitive data safely on the server.
 
 #### Performance
 abap2UI5 is fast. The frontend focuses only on UI rendering via the UI5 framework, while the ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — cutting network roundtrips and speeding up responses.
