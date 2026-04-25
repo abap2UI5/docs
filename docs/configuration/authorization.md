@@ -84,7 +84,7 @@ ENDCLASS.
 CLASS z2ui5_cl_app IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
-    " Perform an authorization check before launching the app
+    " Run an authorization check before launching the app
     AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
                     ID `APP` FIELD `Z2UI5_APP_001`.
 
