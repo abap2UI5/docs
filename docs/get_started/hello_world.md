@@ -15,7 +15,7 @@ ENDINTERFACE.
 The `client` object is your only entry point into the framework. Use it to show views, handle events, share data, and navigate between apps.
 
 ### Basic Example
-Create a class:
+Build a class:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
