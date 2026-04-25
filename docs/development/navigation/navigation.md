@@ -58,7 +58,7 @@ client->_event_client(
         `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
     ) ) ).
 ```
-For more on Launchpads and routing, see the [Fiori Launchpad](/configuration/launchpad) documentation.
+For more on Launchpads and routing, see the [Fiori Launchpad](/configuration/launchpad) page.
 
 ### Inner App Navigation
 
