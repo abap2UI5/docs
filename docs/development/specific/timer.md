@@ -11,7 +11,7 @@ Add the timer as a view element with `_z2ui5( )->timer( ... )`. These parameters
 |---------------|--------------------------------------------------|
 | `finished`    | Event fired when the timer elapses               |
 | `delayms`     | Delay in milliseconds before firing              |
-| `checkactive` | Bind to an `abap_bool` to activate/deactivate    |
+| `checkactive` | Bind to an `abap_bool` to turn the timer on/off  |
 | `checkrepeat` | If `abap_true`, the timer repeats automatically  |
 
 #### Basic Usage
