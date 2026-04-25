@@ -148,7 +148,7 @@ CLASS zcl_app_alv IMPLEMENTATION.
 ENDCLASS.
 ```
 
-From here, it's a small step to build everything dynamically with RTTI — similar to SALV, but running directly in the browser.
+From here, it's a short step to build everything dynamically with RTTI — similar to SALV, but running directly in the browser.
 
 ### Classic Popups, Modern Events
 
