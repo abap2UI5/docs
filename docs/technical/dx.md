@@ -9,7 +9,7 @@ abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles com
 
 ### Simple Output with IF_OO_ADT_CLASSRUN
 
-One of the most basic development tasks is outputting data. In ABAP, the quickest way is the `if_oo_adt_classrun` interface — a simple, class-based entry point for outputting data directly in ADT:
+One of the most basic development tasks is outputting data. In ABAP, the quickest way is the `if_oo_adt_classrun` interface — a simple, class-based entry point that outputs data directly in ADT:
 
 ```abap
 CLASS zcl_app_adt DEFINITION PUBLIC.
