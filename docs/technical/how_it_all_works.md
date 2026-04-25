@@ -158,7 +158,7 @@ As a result, the View and Model stay independent of the HTTP-Service, and we're 
 
 RAP vs. Model & View decoupled from the (single & generic) HTTP-Service
 
-Let's examine the HTTP-Handler that gives us this flexibility.
+Let's look at the HTTP-Handler that gives us this flexibility.
 
 ##### 13. HTTP-Service
 
