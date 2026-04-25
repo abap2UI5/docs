@@ -44,7 +44,7 @@ If clearing caches doesn't fix it, upload the frontend app manually:
 
 ### Launchpad KPIs
 
-Extend your Fiori Launchpad with Key Performance Indicators (KPIs) using the abap2UI5 Launchpad KPI add-on.
+Extend your Fiori Launchpad with Key Performance Indicators (KPIs) via the abap2UI5 Launchpad KPI add-on.
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
 
