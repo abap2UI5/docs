@@ -57,7 +57,7 @@ For more details, see the [blog post on LinkedIn](https://www.linkedin.com/pulse
 #### Approach
 The integration has three steps: implement a simple interface, the Launchpad calls a generic OData proxy service, and the proxy delegates to your ABAP class to calculate the KPI count.
 
-(1/3) Implement the `z2ui5_if_lp_kpi` interface. The `count` method receives an optional `filter` string (from the OData `$filter` parameter) and returns the KPI value as an integer:
+(1/3) Implement the `z2ui5_if_lp_kpi` interface. The `count` method takes an optional `filter` string (from the OData `$filter` parameter) and returns the KPI value as an integer:
 ```abap
 INTERFACE z2ui5_if_lp_kpi
   PUBLIC.
