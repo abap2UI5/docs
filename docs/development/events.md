@@ -100,7 +100,7 @@ You can read any object attribute, but use only public and released attributes t
 :::
 
 #### Model Properties
-Read model properties tied to the event:
+Read model properties bound to the event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
