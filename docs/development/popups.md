@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Popups, Popovers
 
-UI5 offers popups and popovers that overlay specific areas of the view. This section shows how to build them in abap2UI5.
+UI5 offers popups and popovers that overlay specific parts of the view. This section shows how to build them in abap2UI5.
 
 ### Popup
 
