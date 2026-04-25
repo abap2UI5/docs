@@ -97,7 +97,7 @@ Getting started is simple:
 2. Create an HTTP service for browser communication
 3. Start building!
 
-→ *See the [Installation Guide](/get_started/quickstart) for detailed instructions*
+→ *See the [Installation Guide](/get_started/quickstart) for full instructions*
 
 ### Community
 <br>
