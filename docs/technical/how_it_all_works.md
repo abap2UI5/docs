@@ -299,7 +299,7 @@ To recap what we've covered so far: abap2UI5 is built in a very generic way, pla
 
 ##### 24. Downsides Compared to UI5 & RAP
 
-Most notably, compared to UI5, we can't implement offline capabilities — in those cases, we can't keep asking the server after every event to decide what happens next.
+Most notably, compared to UI5, we can't build offline capabilities — in those cases, we can't keep asking the server after every event to decide what happens next.
 
 Also, using HANA DB capabilities directly on the frontend causes issues. Since every app uses the same generic HTTP-Service, we've decoupled the UI from the rest. RAP, by contrast, uses a typed OData and can reach HANA capabilities via a CDS View directly (and skip the ABAP layer). This makes it easy to add pagination or fuzzy searches to UI5 freestyle or RAP apps. An OData-Service calling a CDS View of HANA directly works very well here.
 
