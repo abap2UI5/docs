@@ -77,7 +77,7 @@ ENDCLASS.
 ```
 
 #### Functionality
-With generic types, the standard transformation throws an error. abap2UI5 works around this by looping over all attributes:
+With generic types, the standard transformation raises an error. abap2UI5 works around this by looping over all attributes:
 - For each generic attribute, S-RTTI runs a separate serialization beforehand.
 - The data goes into a separate table.
 - The variable is reset, and the standard SAP transformation runs again.
