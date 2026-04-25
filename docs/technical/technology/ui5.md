@@ -54,7 +54,7 @@ Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
 
-### 4. Flexibility & Runtime Capabilities
+### 4. Flexibility and Runtime Capabilities
 
 | Aspect                    | UI5 Freestyle                              | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
@@ -63,7 +63,7 @@ Backend (ABAP Class)
 | **Use Case Fit**          | Highly interactive or frontend-heavy apps   | Backend-driven UIs with clean backend control |
 | **Learning Curve**        | Steep (JS, XML, binding, tooling)           | Flat (ABAP-only, no JS or metadata)      |
 
-### 5. Cloud Readiness & Compliance
+### 5. Cloud Readiness and Compliance
 
 | Feature                    | UI5 Freestyle                | abap2UI5                     |
 |----------------------------|-------------------------------|-------------------------------|
