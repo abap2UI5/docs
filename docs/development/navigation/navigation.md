@@ -3,12 +3,12 @@ outline: [2, 4]
 ---
 # Navigation
 
-In abap2UI5, each application is a single ABAP class. While you can put all logic into one class, it's better practice to keep classes manageable in size. By splitting functionality into multiple classes that interact with each other, you can build reusable applications and popups that work across different contexts.
+In abap2UI5, each app is a single ABAP class. You can pack all logic into one class, but keeping classes at a reasonable size is better practice. Splitting functionality into multiple interacting classes lets you build reusable apps and popups that work in different contexts.
 
 ### Cross App Navigation
 
 #### Backend
-To call an ABAP class, use the following code:
+To call an ABAP class:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -17,7 +17,7 @@ To call an ABAP class, use the following code:
 
 ENDMETHOD.
 ```
-The framework maintains a call stack. In the newly called class, you can return to the previous application using:
+The framework keeps a call stack. From the newly called class, return to the previous app with:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -25,7 +25,7 @@ The framework maintains a call stack. In the newly called class, you can return 
 
 ENDMETHOD.
 ```
-If you need to access data from the previous application, use casting as follows:
+To read data from the previous app, cast it like this:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -36,7 +36,7 @@ If you need to access data from the previous application, use casting as follows
 
 ENDMETHOD.
 ```
-To navigate to an application without adding it to the call stack, use:
+To navigate to an app without pushing it onto the call stack:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -46,11 +46,11 @@ To navigate to an application without adding it to the call stack, use:
 ENDMETHOD.
 ```
 ::: tip
-Sound familiar? The abap2UI5 framework emulates the classic `call screen` and `leave to screen` behavior here.
+Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
 :::
 
 #### Launchpad
-We recommend using backend communication exclusively for view changes or popup calls. If you're using a launchpad, consider navigating through the launchpad to utilize browser navigation and history. Here's an example:
+We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
 ```abap
 client->_event_client(
     val   = client->cs_event-cross_app_nav_to_ext
@@ -58,10 +58,8 @@ client->_event_client(
         `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
     ) ) ).
 ```
-To learn more about launchpads and routing, refer to the documentation [here](/configuration/launchpad).
+For more on Launchpads and routing, see the [Fiori Launchpad](/configuration/launchpad) page.
 
 ### Inner App Navigation
 
-Work in progress...
-
-Use class attributes to track the current state and switch views accordingly. This keeps all navigation logic in a single ABAP class without needing cross-app calls.
+Use class attributes to track the current state and switch views as needed. This keeps navigation logic in a single ABAP class with no cross-app calls.

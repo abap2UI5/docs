@@ -3,13 +3,13 @@ outline: [2, 4]
 ---
 # Events
 
-UI5 control properties can be used not only to display data but also to trigger events. This section shows how to work with backend events, frontend events, and follow-up actions.
+UI5 control properties can both display data and fire events. This section walks through backend events, frontend events, and follow-up actions.
 
 ### Backend
-You can trigger backend processing when an event occurs using the `client->_event` method.
+To run backend logic when an event fires, use the `client->_event` method.
 
 #### Basic
-As an example, we will use the `press` property of a button. To trigger events in the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the relevant UI5 control property. Once triggered, the backend can retrieve the event details with `client->get( )-event`.
+As an example, we use the `press` property of a button. To fire events to the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the matching UI5 control property. The backend can then read the event details with `client->get( )-event`.
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -24,19 +24,20 @@ METHOD z2ui5_if_app~main.
         WHEN `BUTTON_POST`.
             client->message_box_display( `The button was pressed` ).
     ENDCASE.
- 
+
 ENDMETHOD.
 ```
-If the backend needs additional information about the specific event, use the `t_arg` parameter to include additional details. Three special prefixes are available:
+If the backend needs more details about the event, use the `t_arg` parameter to add extra info. Three prefixes are available:
 
-- **`$source`** — the UI5 control that triggered the event (e.g. `${$source>/text}` returns the button text)
-- **`$parameters`** — the event parameters as defined by the UI5 control (e.g. `${$parameters>/id}` returns the element ID)
-- **`$event`** — the UI5 event object itself (e.g. `$event>sId` returns the event type like `press`)
+- **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}` returns the button text)
+- **`$parameters`** — the event parameters defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
+- **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`)
 
-Check out [this documentation](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) for more information, and refer to sample `Z2UI5_CL_DEMO_APP_167`.
+For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_DEMO_APP_167`.
 
 #### Source
-Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property from the UI5 control that fired the event — here the button itself, so the result is the button's label (`post`):
+Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property of the UI5 control that fired the event — here, the button itself, returning the button's label (`post`):
+
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -56,7 +57,7 @@ ENDMETHOD.
 ```
 
 #### Parameters
-Retrieve parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter from the event's parameter map — UI5 generates a qualified ID like `mainView--button_id`:
+Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter out of the event's parameter map — UI5 builds a qualified ID like `mainView--button_id`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -76,7 +77,7 @@ ENDMETHOD.
 ```
 
 #### Event
-Retrieve specific properties of the event object. The syntax `$event>sId` accesses the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: no `${...}` wrapper here because `$event` directly references the event object:
+Read specific properties of the event object. The syntax `$event>sId` reads the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: there's no `${...}` wrapper because `$event` directly references the event object:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -95,11 +96,11 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 ::: warning
-You can access any object attribute, but make sure you access only public and released attributes to avoid compatibility issues with future UI5 versions.
+You can read any object attribute, but use only public and released attributes to avoid compatibility issues with future UI5 versions.
 :::
 
 #### Model Properties
-Retrieve model properties associated with the event:
+Read model properties bound to the event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
@@ -114,11 +115,11 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
          )->input( client->_bind_edit( name )
-        )->button( text = `post` press = client->_event( 
-            val   = `BUTTON_POST` 
+        )->button( text = `post` press = client->_event(
+            val   = `BUTTON_POST`
             t_arg = VALUE #( ( `$` && client->_bind_edit( name ) ) ) )
         )->stringify( ) ).
- 
+
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
             client->message_box_display( |The name is { client->get_event_arg( ) }| ).
@@ -130,16 +131,16 @@ ENDCLASS.
 ```
 
 ::: tip
-This is just a demonstration. In this case, it would be easier to access `name` directly since it’s automatically updated by the framework.
+This is just a demo. Reading `name` directly would be easier — the framework updates it automatically.
 :::
 
 ### Frontend
-If you don't want to process the event in the backend, you can directly trigger actions at the frontend using `client->_event_client`. The difference between the two methods:
+If you don't want to handle the event in the backend, fire actions directly on the frontend with `client->_event_client`. The difference between the two methods:
 
-- **`client->_event( )`** — triggers a backend roundtrip, the event is processed in the `main` method
-- **`client->_event_client( )`** — executes an action directly in the browser, no backend call
+- **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
+- **`client->_event_client( )`** — runs an action directly in the browser; no backend call
 
-To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To execute a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
+To use a frontend event on a UI5 control property (like `press`), wrap `_event_client` inside `_event`. To fire a frontend event after backend processing, pass `_event_client` to `client->follow_up_action`.
 
 The following frontend events are available:
 ```abap
@@ -159,30 +160,30 @@ The following frontend events are available:
       set_size_limit            TYPE string VALUE `SET_SIZE_LIMIT`,
     END OF cs_event.
 ```
-For example, to open a new tab with the corresponding event:
+For example, to open a new tab with the matching event:
 ```abap
 METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button(
             text = `post`
-            press = client->_event( client->_event_client( 
-                 val   = client->cs_event-open_new_tab 
-                 t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ) 
+            press = client->_event( client->_event_client(
+                 val   = client->cs_event-open_new_tab
+                 t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) )
         )->stringify( ) ).
- 
+
 ENDMETHOD.
 ```
 
-### Follow Up Action
-Sometimes, you might want to first call a backend function and then immediately perform an action in the frontend. This is possible with the follow-up action event:
+### Follow-up Action
+Sometimes you need to call a backend function and then act on the frontend right afterward. The follow-up action event covers this:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->follow_up_action( client->_event_client( 
-        val   = client->cs_event-open_new_tab 
+    client->follow_up_action( client->_event_client(
+        val   = client->cs_event-open_new_tab
         t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ).
 
 ENDMETHOD.
 ```
-Refer to sample `Z2UI5_CL_DEMO_APP_180` for a working example of this functionality.
+See sample `Z2UI5_CL_DEMO_APP_180` for a complete example.

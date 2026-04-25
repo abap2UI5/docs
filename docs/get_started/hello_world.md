@@ -4,7 +4,7 @@ outline: [2, 4]
 # Hello World
 
 ### The Interface
-Every abap2UI5 app implements the `Z2UI5_IF_APP` interface. It has a single method `main` with one parameter — `client` of type `Z2UI5_IF_CLIENT`:
+Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
   METHODS main
@@ -12,10 +12,10 @@ INTERFACE z2ui5_if_app PUBLIC.
       client TYPE REF TO z2ui5_if_client.
 ENDINTERFACE.
 ```
-The `client` object is your only access point to the framework. Use it to display views, handle events, exchange data, and navigate between apps.
+The `client` object is your only entry point into the framework. Use it to show views, handle events, share data, and navigate between apps.
 
 ### Basic Example
-Create a new class with the following code:
+Build a class:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
@@ -28,14 +28,14 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->message_box_display( `Hello World` ).
-    
+
   ENDMETHOD.
 ENDCLASS.
 ```
-Head back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
+Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
 
 ### View Display
-Now let's add a view to display a simple text:
+Let's add a view to show some text:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -55,9 +55,9 @@ ENDCLASS.
 ```
 
 ### Event Handler
-The `main` method is called on every roundtrip — that is, on initialization and after every user interaction (button press, input submit, etc.):
+The framework calls the `main` method on every roundtrip — on initialization and after every user interaction (button press, input submit, etc.):
 
-```
+```text
 ┌─────────┐       ┌──────────┐       ┌─────────┐
 │ Browser  │──────>│  main()  │──────>│ Browser  │
 │ (Start)  │  HTTP │  init    │  HTTP │ (View)   │
@@ -69,13 +69,13 @@ The `main` method is called on every roundtrip — that is, on initialization an
 └─────────┘       └──────────┘       └──────────┘
 ```
 
-To control what happens when, use `CASE abap_true` to distinguish between lifecycle events:
+To distinguish between lifecycle events, use `CASE abap_true`:
 
 - `client->check_on_init( )` — first call when the app starts
-- `client->check_on_event( )` — user triggered an event (e.g. button press)
+- `client->check_on_event( )` — user triggered an event (e.g., button press)
 - `client->check_on_navigated( )` — returned from another app via navigation
 
-Each `check_*` method returns `abap_true` only for its specific phase, making `CASE abap_true` act as a dispatcher:
+Each `check_*` method returns `abap_true` only for its specific phase, so `CASE abap_true` acts as a dispatcher:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -105,8 +105,8 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Data Exchange
-Finally, we add a public attribute and can send data to the backend:
+### Data Flow
+Finally, add a public attribute to send data to the backend:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -121,9 +121,9 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 
       WHEN client->check_on_init( ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory( 
-          )->page( `abap2UI5 - Hello World` 
-          )->text( `My Text` 
+        DATA(view) = z2ui5_cl_xml_view=>factory(
+          )->page( `abap2UI5 - Hello World`
+          )->text( `My Text`
           )->button(
             text  = `post`
             press = client->_event( `POST` )
@@ -139,8 +139,8 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-That's all you need. Set a breakpoint to observe the communication and data updates in action, then experiment with modifying the view, events, and data exchange.
+That's all you need. Set a breakpoint to watch the communication and data updates in action, then try changing the view, events, and data flow.
 
 ::: tip **ABAP Language Versions**
-While you need to distinguish between Standard ABAP and ABAP for Cloud in the HTTP Handler, the apps themselves are independent. You're free to decide whether to develop your apps with ABAP Cloud compatibility or not.
+While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
 :::

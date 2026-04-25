@@ -3,20 +3,20 @@ outline: [2, 4]
 ---
 # Device Model
 
-abap2UI5 offers two ways to access device information: directly in the view via the UI5 device model (frontend), or by collecting it in ABAP attributes via a custom control (backend).
+abap2UI5 offers two ways to access device information: directly in the view via the UI5 device model (frontend), or by collecting it into ABAP attributes via a custom control (backend).
 
 ### Frontend
 
-The device model is bound to the view by default with the name `device`. You can use standard UI5 binding syntax to display device properties directly — no backend roundtrip needed. For example:
+By default, the device model binds to the view under the name `device`. Use standard UI5 binding syntax to show device properties directly — no backend roundtrip needed:
 ```abap
-page->input( 
-  description = `device model - resize - width` 
+page->input(
+  description = `device model - resize - width`
   value       = `{device>/resize/width}`  ).
 ```
-Explore all available parameters in the [UI5 Documentation](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
+For all parameters, see the [UI5 docs](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
 
 ### Backend
-If you need device information in your ABAP logic (e.g. to adapt behavior based on the browser or screen size), use the `info_frontend` custom control. It collects the values on the frontend and sends them back to the backend via two-way binding (`_bind_edit`). Once the `finished` event fires, all bound attributes are populated and available in ABAP:
+When you need device information in your ABAP logic (e.g., to adapt behavior based on the browser or screen size), use the `info_frontend` custom control. It collects the values on the frontend and returns them via two-way binding (`_bind_edit`). Once the `finished` event fires, all bound attributes are filled and available to ABAP:
 ```abap
 CLASS z2ui5_cl_sample_device DEFINITION PUBLIC.
 
@@ -45,7 +45,7 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_xml_view=>factory(
         )->page( )->_z2ui5(
-            )->info_frontend( 
+            )->info_frontend(
                 finished          = client->_event( `POST` )
                 device_browser    = client->_bind_edit( device_browser )
                 device_os         = client->_bind_edit( device_os )
@@ -70,4 +70,4 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
 
 ENDCLASS.
 ```
-For a working example, refer to `z2ui5_cl_demo_app_122`.
+For a complete example, see `Z2UI5_CL_DEMO_APP_122`.

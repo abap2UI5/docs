@@ -1,12 +1,12 @@
 ---
-outline: [2, 6]
+outline: [2, 4]
 ---
 # Logging, BAL
 
-Logging is essential for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), supported in both on-premise and ABAP Cloud environments. With abap2UI5, you can use BAL just as you would in classic development and display logs through the framework's built-in popups.
+Logging is critical for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available on-premise and in ABAP Cloud environments alike. With abap2UI5, use BAL like you would in classic ABAP and display logs with the framework's built-in popups.
 
-##### BAL Variables
-In ABAP classic, you can use the classic BAL function modules and display the BAL table with the popup `z2ui5_cl_pop_messages`:
+#### BAL Tables
+In classic ABAP, use the BAL function modules and show the BAL table with the popup `Z2UI5_CL_POP_MESSAGES`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -15,12 +15,12 @@ METHOD z2ui5_if_app~main.
     ( msgid = `Z001` msgno = `001` msgty = `S` time_stmp = `21354` msgnumber = `02` ) ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_bal ) ).
-  
+
 ENDMETHOD.
 ```
 
-##### ABAP Cloud
-In ABAP Cloud, you can directly pass the logging object into the popup:
+#### ABAP Cloud
+In ABAP Cloud, hand the logging object straight to the popup:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -45,8 +45,8 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-##### abap-logger
-You also have the option to use the fantastic open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). This tool simplifies working with BAL logs and integrates seamlessly with abap2UI5. Here’s an example:
+#### abap-logger
+You can also use the open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). It simplifies work with BAL logs and pairs well with abap2UI5:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -59,8 +59,8 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-##### BAL Popup
-Compared to message classes, BAL logs include more detailed information, such as timestamps. Use the specific BAL log popup to display this information. All the examples above can be used with the `z2ui5_cl_pop_bal` popup for a more detailed output, here’s an example for the abap-logger:
+#### BAL Popup
+Unlike message classes, BAL logs carry more detail — like timestamps. Use the dedicated BAL log popup to show them. All examples above also work with the `Z2UI5_CL_POP_BAL` popup for richer output. An example with abap-logger:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -74,5 +74,5 @@ ENDMETHOD.
 ```
 
 ::: tip
-The BAL popup is still in its early stages and offers basic functionality only. If you’ve implemented BAL features with abap2UI5, consider contributing to extend its capabilities.
+The BAL popup is still in its early stages and offers only basic features. If you've built BAL features with abap2UI5, please consider contributing to grow it.
 :::

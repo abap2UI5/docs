@@ -26,14 +26,14 @@ export default defineConfig({
     // Montserrat
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', { 
-      rel: 'stylesheet', 
-      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap' 
+    ['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap'
     }],
     // Optional: Fira Code
-    ['link', { 
-      rel: 'stylesheet', 
-      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap' 
+    ['link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap'
     }]
   ],
   title: "abap2UI5",
@@ -48,7 +48,7 @@ export default defineConfig({
     },
     editLink: {
       pattern:
-        "https://github.com/abap2UI5/abap2UI5-documentation/tree/main/docs/:path",
+        "https://github.com/abap2UI5/docs/tree/main/docs/:path",
       text: "Edit this page on GitHub",
     },
     search: {
@@ -109,7 +109,7 @@ export default defineConfig({
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Sample Apps", link: "/get_started/samples" },
           { text: "Use Cases", link: "/get_started/use_cases" },
-          { text: `What's next?`, link: "/get_started/next" },
+          { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
       {
@@ -145,7 +145,7 @@ export default defineConfig({
           },
           { text: "Messages, Errors", link: "/development/messages" },
           { text: "Translation, i18n", link: "/development/translation" },
-          { text: "Popups, Popover", link: "/development/popups" },
+          { text: "Popups, Popovers", link: "/development/popups" },
           {
             text: "Specifics",
             collapsed: true,
@@ -170,7 +170,7 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "URL", link: "/development/specific/url" },
-              { text: "Formatter", link: "/development/specific/formatter" }, 
+              { text: "Formatter", link: "/development/specific/formatter" },
               { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
@@ -198,7 +198,7 @@ export default defineConfig({
                 link: "/configuration/s4_public_cloud",
               },
               { text: "Fiori Launchpad", link: "/configuration/launchpad" },
-              { text: "BTP Workzone", link: "/configuration/btp" },
+              { text: "BTP Work Zone", link: "/configuration/btp" },
             ],
           },
         ],
@@ -217,7 +217,7 @@ export default defineConfig({
           },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
-          { text: "FE Integration", link: "/advanced/fiori" },
+          { text: "Fiori Elements Integration", link: "/advanced/fiori" },
           {
             text: "Extensibility",
             items: [
@@ -258,7 +258,7 @@ export default defineConfig({
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },
-              { text: "s-rtti", link: "/technical/tools/srtti" },
+              { text: "S-RTTI", link: "/technical/tools/srtti" },
               { text: "abaplint", link: "/technical/tools/abaplint" },
               { text: "open-abap", link: "/technical/tools/open_abap" },
               { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
@@ -272,7 +272,7 @@ export default defineConfig({
         link: "/resources/addons",
         collapsed: true,
         items: [
-          { text: "Addons", link: "/resources/addons" },
+          { text: "Add-ons", link: "/resources/addons" },
           { text: "References", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Releases", link: "/resources/changelog" },
@@ -287,7 +287,7 @@ export default defineConfig({
     outline: [2, 6],
     socialLinks: [
       { icon: "linkedin", link: "https://www.linkedin.com/company/abap2ui5/" },
-      { icon: "github", link: "https://www.github.com/abap2UI5/abap2UI5" },
+      { icon: "github", link: "https://github.com/abap2UI5/abap2UI5" },
     ],
   },
 });

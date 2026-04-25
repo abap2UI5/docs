@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # OData
 
-By default, you bind public attributes of your class to UI5 properties using `_bind` and `_bind_edit`. For scenarios that require access to large datasets, you can also use existing OData services. OData provides features like pagination and growing that improve performance when handling large amounts of data.
+By default, you bind public attributes of your class to UI5 properties with `_bind` and `_bind_edit`. For cases where you need access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance with large amounts of data.
 
 #### Define Additional Model
-As an example, we will use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, which is available in most ABAP systems. Ensure the service is publicly accessible. Use the following method to define the model and make it available under the name `FLIGHT`:
+As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. Make sure the service is publicly reachable. The method below defines the model and exposes it under the name `FLIGHT`:
 ```abap
 client->follow_up_action( client->_event_client(
     val = z2ui5_if_client=>cs_event-set_odata_model
@@ -15,7 +15,7 @@ client->follow_up_action( client->_event_client(
         ( `FLIGHT` ) ) ) ).
 ```
 #### Bind Data
-Next, bind this OData model to your view definition. Since we’re using a non-default model, we must explicitly specify the model name for each binding. Here's an example:
+Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items = `{FLIGHT>/Airport}`
@@ -26,17 +26,17 @@ tab->columns(
     )->column( )->text( `Name` )->get_parent(
     )->column( )->text( `City` )->get_parent(
     )->column( )->text( `CountryCode` ).
- 
+
 tab->items( )->column_list_item( )->cells(
     )->text( `{FLIGHT>AirportID}`
     )->text( `{FLIGHT>Name}`
     )->text( `{FLIGHT>City}`
     )->text( `{FLIGHT>CountryCode}` ).
 ```
-By using the growing property we can make use of the feature that not all data is loaded at once, improving performance.
+The `growing` property loads data in batches instead of all at once, boosting performance.
 
 #### Full Example
-Here's the complete source code:
+The full source code:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -49,7 +49,7 @@ Here's the complete source code:
         )->column( )->text( `Name` )->get_parent(
         )->column( )->text( `City` )->get_parent(
         )->column( )->text( `CountryCode` ).
- 
+
     tab->items( )->column_list_item( )->cells(
         )->text( `{FLIGHT>AirportID}`
         )->text( `{FLIGHT>Name}`
@@ -63,12 +63,12 @@ Here's the complete source code:
         t_arg = VALUE #(
             ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
             ( `FLIGHT` ) ) ) ).
- 
+
 ENDMETHOD.
 ```
 
 #### Multiple OData Models
-You can also bind multiple OData models simultaneously. For example, here’s how to bind an additional OData model under the name `TRAVEL`:
+You can also bind multiple OData models at once. For example, to bind an extra OData model under the name `TRAVEL`:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
     items   = `{TRAVEL>/BookingSupplement}`
@@ -92,12 +92,12 @@ client->follow_up_action( client->_event_client(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).  
+        ( `TRAVEL` ) ) ) ).
 ```
-For a fully functional code snippet, check out the sample `Z2UI5_CL_DEMO_APP_315`.
+For a complete code snippet, see the sample `Z2UI5_CL_DEMO_APP_315`.
 
 #### Metadata Binding
-In SAP contexts, OData services are often enriched with additional annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. You can find the definitions for the entity `Currency`:
+In SAP contexts, OData services often carry extra annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. The definitions for the entity `Currency`:
 ```xml
 <EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">
 <Key>
@@ -111,9 +111,9 @@ In SAP contexts, OData services are often enriched with additional annotations. 
 <Property Name="IsPrimaryCurrencyForISOCrcy" Type="Edm.Boolean" sap:display-format="UpperCase" sap:label="primär" sap:quickinfo="primärer SAP-Währungscode zum ISO-Code"/>
 </EntityType>
 ```
-We can use these SAP annotations in our UI5 view to utilize backend translations via the property `label`. The metadata binding path follows this pattern:
+Use these SAP annotations in the UI5 view to reuse backend translations via the `label` property. The metadata binding path follows this pattern:
 
-```
+```text
 {MODEL>/#EntityType/PropertyName/@sap:annotation}
 ```
 
@@ -122,7 +122,7 @@ We can use these SAP annotations in our UI5 view to utilize backend translations
 - **`/Currency`** — the property name within that entity type
 - **`/@sap:label`** — the SAP annotation attribute (here: the translated label text)
 
-So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währungsschlüssel"` from the metadata — displayed in the user's logon language.
+So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währungsschlüssel"` from the metadata — shown in the user's logon language.
 
 ```abap
 
@@ -148,6 +148,6 @@ client->follow_up_action( client->_event_client(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).  
+        ( `TRAVEL` ) ) ) ).
 ```
-The column titles are now automatically set with the correct title in the user’s language.
+UI5 now picks each column title in the user's language automatically.

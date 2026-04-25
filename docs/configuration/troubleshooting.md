@@ -1,23 +1,22 @@
 ---
-outline: [2, 6]
+outline: [2, 4]
 ---
-
 # Troubleshooting
-Since all logic is written in ABAP, you can debug everything in the ABAP environment. Just make sure to set an external breakpoint, as abap2UI5 apps are called externally via HTTP.
+Since all logic runs in ABAP, you can debug everything in the ABAP environment. Set an external breakpoint, because HTTP calls abap2UI5 apps externally.
 
 ### Backend
-Set a breakpoint in your abap2UI5 app to debug your code. Verify that the XML view is generated correctly and check that all events are triggered on the backend as expected.
+Set a breakpoint in your abap2UI5 app to debug the code. Check that the XML view builds correctly and that all events fire on the backend as expected.
 
 ### Frontend
-On the frontend, abap2UI5 behaves like a standard UI5 app, so you can use all typical tools and debugging features.
+On the frontend, abap2UI5 behaves like a standard UI5 app, so the usual tools and debugging features work.
 
-##### Debugging Tools
-To begin, press `Ctrl+F12` to open the built-in debugger tools in abap2UI5
+#### Debugging Tools
+Press `Ctrl+F12` to open the built-in debugging tools of abap2UI5:
 ![Built-in debugger showing XML View and Data Model inspection](/configuration/debug.png)
-Here, you can inspect the XML View and check the Data Model bound to the view.
+From here you can review the XML View and check the Data Model bound to the view.
 
-##### UI5 Inspector
-Another useful option is SAP’s default debugging tool, the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo?hl=es).
+#### UI5 Inspector
+Another option: the SAP default debugging tool, the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo).
 
 ### Issues
-If your code looks correct, but you suspect a bug in the abap2UI5 framework, try to create a small sample that reproduces the issue. Open an issue in the abap2UI5 repository so we can investigate and fix the bug.
+If your code looks correct but you suspect a bug in the abap2UI5 framework, build a minimal sample that reproduces the bug and open an issue on the abap2UI5 repository — we'll investigate and fix it.

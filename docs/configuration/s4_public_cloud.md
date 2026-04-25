@@ -3,15 +3,15 @@ outline: [2, 4]
 ---
 # S/4 Public Cloud
 
-abap2UI5 can be used for on-stack extension scenarios in S/4 Public Cloud. It exclusively uses released APIs and is fully compatible with the ABAP Cloud language version, meeting all SAP requirements for "clean core" cloud extensions.
+Use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only released APIs and is fully compatible with the ABAP Cloud language version, satisfying SAP's "clean core" cloud extension requirements.
 
-Follow these steps to install abap2UI5 on S/4 Public Cloud:
+To install abap2UI5 on S/4 Public Cloud, follow these steps:
 
 ### 1. Install abap2UI5 with abapGit
 
-S/4 Public Cloud only supports the ADT abapGit version. abap2UI5 consists purely of classes, interfaces, and tables and can be pulled without issues.
+S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only classes, interfaces, and tables, so you can pull it without issues.
 
-Use the standard installation process via [abapGit for Eclipse](https://eclipse.abapgit.org/).
+Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/).
 
 <img width="649" height="573" alt="abapGit repository link dialog in ADT" src="https://github.com/user-attachments/assets/9ea46657-5ff5-4075-af12-4b5b359c212d" />
 
@@ -21,24 +21,23 @@ Use the standard installation process via [abapGit for Eclipse](https://eclipse.
 
 <img width="880" height="1199" alt="abapGit import log showing pulled artifacts" src="https://github.com/user-attachments/assets/09497311-8653-4e6f-ae0a-3138d0eac47e" />
 
-You'll see the pull operation is now running:
+You'll see the pull operation running:
 
 <img width="1438" height="26" alt="abapGit pull operation completed status bar" src="https://github.com/user-attachments/assets/ee085bb9-d708-4de3-a6f0-5493adc57054" />
 
-After a few moments, the installation will complete:
+After a moment, the installation completes:
 
 <img width="1332" height="28" alt="Installation complete confirmation" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
 
-
 ### 2. Mass Activate the Imported Artifacts
 
-When installing repositories with ADT abapGit, all artifacts are initially imported in an inactive state. You'll need to manually activate them. The easiest approach is to create a dedicated inactive/active folder tree for the abap2UI5 project:
+When installing repositories with ADT abapGit, all artifacts arrive inactive. Activate them manually. The simplest approach: create a dedicated inactive/active folder tree for the abap2UI5 project:
 
 <img width="481" height="182" alt="Inactive objects folder tree in ADT" src="https://github.com/user-attachments/assets/a47fe1f1-5445-46da-96b9-8df3bfe9a99d" />
 
 <img width="691" height="732" alt="Inactive artifacts list requiring activation" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
-You see that all artifacts are deactivated:
+You'll see that all artifacts are inactive:
 
 <img width="638" height="179" alt="Mass activation of abap2UI5 artifacts in progress" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 
@@ -48,37 +47,36 @@ You see that all artifacts are deactivated:
 
 <img width="1279" height="410" alt="Activated artifacts in project explorer" src="https://github.com/user-attachments/assets/157ed036-cf6a-4d7b-b93a-2d8bd20af6cb" />
 
-When the activation process is completed, refresh the folder tree:
+When activation completes, refresh the folder tree:
 
 <img width="626" height="762" alt="All artifacts activated in folder tree" src="https://github.com/user-attachments/assets/86b26c00-e71e-4a3f-a9e9-2beaaeddf577" />
 
-Now you'll see that all artifacts are activated:
+Now you'll see that all artifacts are active:
 
 <img width="641" height="88" alt="Fully activated abap2UI5 package" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
 
-
 ### 3. Set Up the HTTP Service
 
-Create a new HTTP handler manually or use the cloud branch of the [abap2UI5-frontend](https://github.com/abap2UI5/frontend) repository.
+Build an HTTP handler manually or use the cloud branch of the [frontend](https://github.com/abap2UI5/frontend) repository.
 
-**Important:** In S/4 Public Cloud you can only access the HTTP endpoint with `S_DEVELOP` authorization. This is the quickest way for testing in development environments, but makes this scenario unsuitable for productive usage. 
+**Important:** In S/4 Public Cloud, accessing the HTTP endpoint needs `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes the scenario unfit for production.
 
-To use abap2UI5 in production environments, you'll need to complete the frontend deployment and tile configuration in the following steps.
+For production, finish the frontend deployment and tile configuration in the steps below.
 
 ### 4. Deploy the UI5 App (Optional)
 
-Since UI5 apps (BSPs) aren't supported directly via ADT abapGit, you need to manually deploy the app:
+Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manually:
 
-1. Download the app folder from [abap2UI5-frontend](https://github.com/abap2UI5/frontend)
-2. Deploy it into your system following this [deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
+1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
+2. Deploy it to your system with the [SAP deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
 
-### 5. Configure Launchpad & Tiles (Optional)
+### 5. Configure Launchpad and Tiles (Optional)
 
-Set up the Fiori Launchpad, pages, sections, and tiles for your abap2UI5 apps:
+Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
 
-1. Follow this [configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
+1. Follow the [SAP Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
 2. Configure tiles for business users and manage permissions
 
 ::: tip **BTP ABAP Environment**
-The BTP ABAP Environment shares the same technical foundation as S/4 Public Cloud. All instructions above apply to both systems.
+BTP ABAP Environment shares the same technical base as S/4 Public Cloud. The instructions above work for both systems.
 :::

@@ -3,22 +3,22 @@ outline: [2, 4]
 ---
 # Formatter
 
-You can format values such as currencies, numerics, or timestamps directly in the frontend using formatter functions.
+You can format values like currencies, numerics, or timestamps directly on the frontend with formatter functions.
 
-UI5 formatter types use a special JSON-based binding syntax. The key elements:
-- **`parts: [...]`** — lists the model paths used as input (e.g. amount + currency)
-- **`type: '...'`** — the UI5 formatter type (e.g. `sap.ui.model.type.Currency`)
+UI5 formatter types use a special JSON-based binding syntax with these key elements:
+- **`parts: [...]`** — lists the model paths used as input (e.g., amount + currency)
+- **`type: '...'`** — the UI5 formatter type (e.g., `sap.ui.model.type.Currency`)
 - **`formatOptions: {...}`** — optional settings that control the output format
-- **`\{ ... \}`** — in ABAP string templates (`|...|`), curly braces must be escaped with `\` because `{ }` normally denotes an ABAP expression
+- **`\{ ... \}`** — in ABAP string templates (`|...|`), escape curly braces with `\` because `{ }` normally denotes an ABAP expression
 
-The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g. `/XX/AMOUNT`) instead of the full binding expression (`{/XX/AMOUNT}`), so it can be embedded inside the `parts` array.
+The `path = abap_true` parameter on `_bind_edit` returns only the raw model path (e.g., `/XX/AMOUNT`) rather than the full binding expression (`{/XX/AMOUNT}`), so you can embed it inside the `parts` array.
 
 For example, this ABAP code:
-```
+```abap
 |\{ parts: [`{ client->_bind_edit( val = amount path = abap_true ) }`], type: 'sap.ui.model.type.Currency' \}|
 ```
 produces this UI5 binding string at runtime:
-```
+```text
 { parts: ["/XX/AMOUNT", "/XX/CURRENCY"], type: 'sap.ui.model.type.Currency' }
 ```
 
@@ -133,7 +133,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          )->button( text  = `send`
                     press = client->_event( `BUTTON` ) ).
 
-    "Remove leading zeros from a numeric string using OData type formatting
+    "Remove leading zeros from a numeric string with OData type formatting
     "isDigitSequence: true tells the formatter to treat the value as a digit sequence
     "resolves to: { path: "/XX/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
     page->simple_form( title    = `No Zeros`
@@ -159,4 +159,4 @@ ENDCLASS.
 
 ```
 
-Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting using formatOptions and constraints. You can also check out the sample implementation in class `z2ui5_cl_demo_app_067`.
+Formatter types like `sap.ui.model.type.Currency` and `sap.ui.model.odata.type.String` allow flexible formatting through formatOptions and constraints. For a full example, see the sample implementation in class `Z2UI5_CL_DEMO_APP_067`.

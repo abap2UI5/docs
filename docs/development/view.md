@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # View
 
-In abap2UI5, the UI is rendered from a UI5 XML view that you build in your ABAP code. Here's a basic example using raw XML:
+In abap2UI5, UI5 renders the UI from an XML view that you build in ABAP. A simple example with raw XML:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -20,7 +20,7 @@ In abap2UI5, the UI is rendered from a UI5 XML view that you build in your ABAP 
 
 ENDMETHOD.
 ```
-You can use any UI5 control available in the [UI5 SDK](https://sapui5.hana.ondemand.com). However, writing raw XML quickly gets cumbersome. A more practical approach is to use the `Z2UI5_CL_XML_VIEW` helper class, which provides a fluent API for building views. The `stringify( )` method at the end serializes the view tree into an XML string that the framework sends to the frontend:
+You can use any UI5 control from the [UI5 SDK](https://sapui5.hana.ondemand.com). But writing raw XML quickly turns cumbersome. A handier approach is the `Z2UI5_CL_XML_VIEW` helper class, with a fluent API for building views. The `stringify( )` method at the end converts the view tree into an XML string that the framework sends to the frontend:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -36,8 +36,8 @@ You can use any UI5 control available in the [UI5 SDK](https://sapui5.hana.ondem
 ```
 
 Tips for working with views:
-* Use code completion on `Z2UI5_CL_XML_VIEW` to explore available controls and properties
-* Check the [sample repository](/get_started/samples) for ready-made XML examples you can copy and adjust
+- Use code completion on `Z2UI5_CL_XML_VIEW` to find controls and properties
+- See the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
-#### What's Next?
-This setup produces a static view. In the next section, you'll learn how to bind and exchange data between the view and your application logic.
+#### Next Steps
+This produces a static view. The next section walks through binding and sharing data between the view and the app logic.

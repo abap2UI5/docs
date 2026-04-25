@@ -59,7 +59,7 @@ outline: [2, 4]
 - New UI Controls: AvatarGroup, Viz Charts, and more
 - SetMaxWidth for Launchpads
 - Multiple bug fixes and new properties added
-  
+
 ### 1.135.0
 2024-10-27
 - Stateful Session Handling
@@ -80,7 +80,7 @@ outline: [2, 4]
 
 ### 1.133.0
 2024-08-24
-- Added Controls & Properties for Splitter, Grid, Generic Tag, Content Areas, Step Input, News Content, Numeric Content etc.
+- Added Controls & Properties for Splitter, Grid, Generic Tag, Content Areas, Step Input, News Content, Numeric Content, etc.
 - Added Shell Bar Properties & Events
 - Added Side Navigation Properties & Events
 - Added Color Picker Properties
@@ -90,10 +90,10 @@ outline: [2, 4]
 
 ### 1.132.0
 2024-07-28
-- Added Properties for Multi Input, Slider, Search Field etc.
-- Added Date Range Selection Control etc.
+- Added Properties for Multi Input, Slider, Search Field, etc.
+- Added Date Range Selection Control, etc.
 - Fixed Generic Tile & Avatar Control
-- Fixed Binding with Custom Mapper 
+- Fixed Binding with Custom Mapper
 - Fixed Downport Functionality
 - Fixed ABAP 750 Syntax
 - Multiple bug fixes and new properties added
@@ -103,7 +103,7 @@ outline: [2, 4]
 - Added Radio Button, Radio Button Group, Date Range Selector
 - Added Popup Layout V2
 - Fixed Launchpad Title
-- Fixed Syntax for v750
+- Fixed Syntax for 7.50
 
 ### 1.130.0
 2024-06-13

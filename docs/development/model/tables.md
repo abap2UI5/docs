@@ -2,13 +2,13 @@
 outline: [2, 4]
 ---
 # Tables, Trees
-This section covers how to display complex data structures like tables, trees, and nested structures in your views.
+This section walks through rendering nested data structures — tables, trees, and nested records — in views.
 
-### Tables 
-The example below demonstrates how to bind a simple table to a UI5 control:
+### Tables
+The example below binds a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
- 
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     TYPES:
@@ -20,7 +20,7 @@ CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
     DATA mt_itab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
 ENDCLASS.
- 
+
 CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
@@ -52,7 +52,7 @@ ENDCLASS.
 ```
 
 ### Editable
-Making a table editable is a simple change. You just need to switch the binding mode to `bind_edit` :
+To make a table editable, switch the binding to `bind_edit`:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -83,10 +83,10 @@ Making a table editable is a simple change. You just need to switch the binding 
 ```
 
 ### Tree
-To work with trees, you need to use nested structures. Here is an example:
+For trees, use nested structures:
 ```abap
 CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
- 
+
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     TYPES:
@@ -114,7 +114,7 @@ ENDCLASS.
 
 CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
-  
+
     prodh_nodes = VALUE #( (
         text = `Machines`
         prodh  = `00100`
@@ -144,7 +144,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
             )->items( )->standard_tree_item(
                 selected = `{IS_SELECTED}`
                 title    = `{TEXT}` ).
- 
+
     client->view_display( tree->stringify( ) ).
 
   ENDMETHOD.
@@ -152,7 +152,7 @@ ENDCLASS.
 ```
 
 ### Nested Structures
-Binding nested structures is also possible. Use `structure/component` in the binding path, as shown below:
+You can also bind nested structures — use `structure/component` as the binding path:
 ```abap
 CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
   PUBLIC SECTION.

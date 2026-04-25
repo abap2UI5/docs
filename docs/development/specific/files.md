@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # File Handling
 
-abap2UI5 supports file uploads and downloads by exchanging base64-encoded data through two-way binding.
+abap2UI5 handles file uploads and downloads by sending base64-encoded data over two-way binding.
 
 #### Upload
 See also `Z2UI5_CL_DEMO_APP_075`:
@@ -31,7 +31,7 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `UPLOAD`.
-        "process with mv_value and mv_path...
+        "process mv_value and mv_path here...
         client->message_box_display( `file uploaded` ).
     ENDCASE.
 
@@ -40,7 +40,7 @@ ENDCLASS.
 ```
 
 #### Download
-See also `Z2UI5_CL_DEMO_APP_186`
+See also `Z2UI5_CL_DEMO_APP_186`:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -73,5 +73,3 @@ See also `Z2UI5_CL_DEMO_APP_186`
 
 ENDMETHOD.
 ```
-
-

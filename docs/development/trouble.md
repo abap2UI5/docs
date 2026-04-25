@@ -5,13 +5,13 @@ outline: [2, 4]
 
 #### Hide Soft Keyboard
 
-For UI5 input fields, the soft keyboard is automatically shown when focusing an input field. In some use cases, e.g. in the context of warehouses with small devices, this is not always wanted. To change this behavior, we have to adjust the HTML input element and switch the input type to `none`. The following snippet demonstrates how to activate/deactivate the soft keyboard.
+For UI5 input fields, the soft keyboard pops up automatically when you focus an input. Sometimes — for example, in warehouses with small devices — you don't want this behavior. To change it, adjust the HTML input element and switch the input type to `none`. The snippet below toggles the soft keyboard.
 
-This example uses the **`z2ui5.afterBE` hook** — a JavaScript callback function that the abap2UI5 frontend framework executes after every backend roundtrip. By assigning a custom function to `z2ui5.afterBE`, you can run JavaScript code in the browser after the backend has responded. This is useful for DOM manipulations that UI5 doesn't support natively.
+This example uses the **`z2ui5.afterBE` hook** — a JavaScript callback that the abap2UI5 frontend framework calls after every backend roundtrip. Assign a custom function to `z2ui5.afterBE` to run JavaScript in the browser after the backend responds. This is handy for DOM manipulations that UI5 doesn't support natively.
 
-The pattern works in two steps:
+The pattern has two steps:
 1. **Define** the JavaScript function in a `<html:script>` tag (rendered once on init)
-2. **Execute** it after a backend event using `client->follow_up_action( )` with a raw JavaScript string
+2. **Run** it after a backend event via `client->follow_up_action( )` with a raw JavaScript string
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -22,7 +22,7 @@ METHOD z2ui5_if_app~main.
 
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
 
-    "Step 1: Define a JavaScript function via an inline <script> tag.
+    "Step 1: Define a JavaScript function inside an inline <script> tag.
     "z2ui5.afterBE is a hook that runs after the backend responds.
     "This function takes a UI5 control ID and an inputmode value,
     "then modifies the HTML input element's inputmode attribute.
@@ -52,10 +52,9 @@ METHOD z2ui5_if_app~main.
 
     ENDIF.
 
-
     CASE client->get( )-event.
       WHEN `CALL_KEYBOARD`.
-        "Step 2: After the backend processes the event, execute the JavaScript
+        "Step 2: After the backend processes the event, run the JavaScript
         "function as a follow-up action. This sets inputmode="none" on the
         "HTML element, which hides the soft keyboard on mobile devices.
         client->follow_up_action( `z2ui5.afterBE("ZINPUT", "none");` ).

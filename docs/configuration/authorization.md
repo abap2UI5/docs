@@ -3,13 +3,13 @@ outline: [2, 4]
 ---
 # Authorization
 
-abap2UI5 offers flexible ways to manage authorization handling. It doesn't include a built-in authorization mechanism, so you can create your own solutions either at the service or application level.
+abap2UI5 gives you flexibility in managing authorization. It has no built-in authorization mechanism, so you can build your own solution at either the service or the app level.
 
 ### Service-Level
-One of the easiest ways to manage access to different apps is by implementing checks within the HTTP handler. This approach lets you restrict access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
+An easy way to manage access to different apps: add checks in the HTTP handler. This approach restricts access to individual apps based on the APP_START parameter, directly in the ICF service handler class.
 
-##### Example: Restricting Access Based on URL Parameters
-In this example, we use the ICF handler class to control which apps can be accessed based on the APP_START parameter in the HTTP request. The `get_header_field( 'APP_START' )` method reads the URL query parameter that specifies which abap2UI5 app class to launch. If an unauthorized app is requested, access is denied.
+#### Example: Restricting Access Based on URL Parameters
+In this example, we use the ICF handler class to control which apps users can access, based on the APP_START parameter in the HTTP request. The `get_header_field( 'APP_START' )` method reads the URL query parameter that names the abap2UI5 app class to launch. If the user requests an unauthorized app, the handler refuses access.
 ```abap
 CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
@@ -28,15 +28,15 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
     IF lv_app <> `MY_APP`.
       RETURN.
     ENDIF.
-    
-    " Run the abap2UI5 handler
+
+    " Call the abap2UI5 handler
     z2ui5_cl_http_handler=>run( server ).
   ENDMETHOD.
 
 ENDCLASS.
 ```
-##### Example: Authorization Objects in Service Handlers
-You can also combine this with SAP authorization objects. The example below uses a custom authorization object `Z_APP_AUTH` with a field `APP` — you need to create this object in transaction `SU21` and assign it to the relevant roles in your system:
+#### Example: Authorization Objects in Service Handlers
+You can also pair this with SAP authorization objects. The example below uses a custom authorization object `Z_APP_AUTH` with an `APP` field — define the object in transaction `SU21` and assign it to the matching roles on your system:
 ```abap
 CLASS z2ui5_cl_launchpad_handler DEFINITION PUBLIC.
 
@@ -51,27 +51,27 @@ CLASS z2ui5_cl_launchpad_handler IMPLEMENTATION.
     " Read the app name from the request
     DATA(lv_app) = server->request->get_header_field( `APP_START` ).
 
-    " Perform an authorization check
+    " Run an authorization check
     AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
                     ID `APP` FIELD lv_app.
 
     IF sy-subrc <> 0.
-      " Authorization failed, deny access
+      " Authorization failed, refuse access
       RETURN.
     ENDIF.
 
-    " Run the abap2UI5 handler if authorized
+    " Call the abap2UI5 handler if authorized
     z2ui5_cl_http_handler=>run( server ).
   ENDMETHOD.
 ENDCLASS.
 ```
-By creating multiple HTTP endpoints for different users or departments, you can further fine-tune access control.
+Create multiple HTTP endpoints for different users or departments to fine-tune access.
 
-### Application-Level
-Alternatively, you can handle authorization within individual app classes. This approach is useful if you want to delegate authorization to each app, ensuring that it checks user permissions before performing any actions.
+### App-Level
+Alternatively, handle authorization within individual app classes. This approach works well when you want each app to check user permissions before acting.
 
-##### Example: Authorization Check in an App Class
-In this method, each app is responsible for checking the user’s permissions, similar to how it's done in traditional SAP ABAP applications.
+#### Example: Authorization Check in an App Class
+In this approach, each app checks the user's permissions, like traditional ABAP apps.
 
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
@@ -84,12 +84,12 @@ ENDCLASS.
 CLASS z2ui5_cl_app IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
-    " Perform an authorization check before launching the app
+    " Run an authorization check before launching the app
     AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
                     ID `APP` FIELD `Z2UI5_APP_001`.
 
     IF sy-subrc <> 0.
-      " Authorization failed, deny access
+      " Authorization failed, refuse access
       RETURN.
     ENDIF.
 
@@ -101,5 +101,5 @@ ENDCLASS.
 ```
 
 ::: warning
- If you don't implement authorization checks at the app level, make sure that end users cannot bypass service-level authorization checks by navigating between apps.
+If you don't add authorization checks at the app level, make sure users can't bypass service-level checks by navigating between apps.
 :::

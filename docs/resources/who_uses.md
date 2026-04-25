@@ -3,28 +3,28 @@ outline: [2, 4]
 ---
 # Who Uses abap2UI5?
 
-We’d love to hear how you’re using abap2UI5! Whether it’s in customer projects, integrations, workshops, open-source contributions, or any other initiatives, sharing your use case can inspire others to adopt this project and help the abap2UI5 community grow.
+We'd love to hear how you use abap2UI5. Whether in customer projects, integrations, workshops, open-source contributions, or any other initiative, sharing your scenario can inspire others to try the project and help the abap2UI5 community grow.
 
 ### Customer Projects
-**Is your company using abap2UI5?** <br>
-Showcase how abap2UI5 apps are transforming real-world scenarios. Share your use case here:
- 
+**Does your company use abap2UI5?** <br>
+Showcase how abap2UI5 apps reshape real-world workflows. Add your scenario here:
+
 |  Company | System | Use Case |
 | ------------------- | ------------- | ------------- |
-| [Emineo](https://emineo.ch/) | ABAP 7.57  | Applications for EWM and PP, running on desktop and mobile devices |
-| [Swiss Krono](https://www.swisskrono.com/) | ABAP 7.55  | Applications for EWM, running on mobile devices |
+| [Emineo](https://emineo.ch/) | ABAP 7.57  | Apps for EWM and PP, running on desktop and mobile devices |
+| [Swiss Krono](https://www.swisskrono.com/) | ABAP 7.55  | Apps for EWM, running on mobile devices |
 
-### Integrations & Workshops
-**Are you hosting workshops, building integrations, or using abap2UI5 in innovative ways?** <br>
-Inspire the community by sharing your initiatives. Let others learn and grow from your contributions:
+### Integrations and Workshops
+**Do you host workshops, build integrations, or use abap2UI5 in creative ways?** <br>
+Inspire the community by sharing your initiatives so others can learn from your contributions:
 
 |  Company | Description |
 | ------------- | ------------- |
-| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP systems with automated abap2UI5 installations |
+| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP systems with automated abap2UI5 setups |
 | [Logali Group](https://logaligroup.com) | Webinars and certifications for abap2UI5 |
 
 <br>
 
-_Ready to showcase your project? Extend this list directly or reach out to us at <contact@abap2UI5.org>. We’re excited to hear what you’re working on!_
+_Ready to showcase your project? Add to this list directly or reach out at <contact@abap2UI5.org>. We'd love to hear what you're building._
 
-Thank you for being a part of the abap2UI5 community! ❤️ 
+Thank you for being part of the abap2UI5 community! ❤️

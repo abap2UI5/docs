@@ -1,21 +1,18 @@
 ---
 outline: [2, 4]
 ---
-# Integration to Fiori Element Apps
+# Integration into Fiori Elements Apps
 
-You can extend the object page of Fiori list report apps with an abap2UI5 app. A repository to showcase the use case can be found [here](https://github.com/axelmohnen/ABAP2UI5_COMP_CONT).
+Extend the object page of a Fiori list report app with an abap2UI5 app. See the [ABAP2UI5_COMP_CONT repository](https://github.com/axelmohnen/ABAP2UI5_COMP_CONT) for a complete example.
 
 <img width="747" height="387" alt="abap2UI5 app embedded in Fiori Elements object page" src="https://github.com/user-attachments/assets/c14d5732-3b8c-4fa5-83ab-6d188a4d87db" />
 
-
 ### Guide
-
-Follow the following steps:
 
 1. Register the FLP integration in the component.js:
 
 ```javascript
-// Register ABAP2UI5 FLP integration for component container 
+// Register abap2UI5 FLP integration for component container
 jQuery.sap.registerModulePath("z2ui5", "/sap/bc/ui5_ui5/sap/z2ui5");
 ```
 
@@ -38,16 +35,16 @@ sap.ui.core.Component.create({
 					component: oComponent,
 					async: true
 				});
-				
+
 				// Add component container to your VBox
 				var oVBox = that.getView().byId("VBoxId")
 				oVBox.destroyItems();
 				oVBox.addItem(oCompContainer);
-				
+
 				//Overwrite default height of object page section
 				var oSection = that.getView().byId("[This is the ID of your object page section::Section]");
 				oSection.addStyleClass("customSectionHeight");
-				
+
 			});
 ```
 
@@ -69,7 +66,7 @@ sap.ui.core.Component.create({
 
 5. Create abap2UI5 app class
 
-On the ABAP side, the app receives the Fiori startup parameters (such as the app class name and any custom key-value pairs) via `client->get( )-t_comp_params`. The `check_initialized` flag ensures the parameters are only read once on the first roundtrip. Setting `backgrounddesign = 'List'` gives the page a white background that blends in with the Fiori object page:
+On the ABAP side, the app receives the Fiori startup parameters (like the app class name and any custom key-value pairs) via `client->get( )-t_comp_params`. The `check_initialized` flag ensures the parameters are read only once, on the first roundtrip. Setting `backgrounddesign = 'List'` gives the page a white background matching the Fiori object page:
 ```abap
   METHOD z2ui5_if_app~main.
 

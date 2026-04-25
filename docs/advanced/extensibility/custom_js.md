@@ -1,13 +1,13 @@
 ---
-outline: [2, 6]
+outline: [2, 4]
 ---
 # Custom JS
 
-If the standard UI5 framework functionalities do not fulfill all your requirements, you can define and call your own custom JavaScript functions. For example, this approach is used in the scanner section to play a sound after scanning.
+If the standard UI5 framework doesn't cover all your needs, define and call your own JavaScript functions. [Barcode Scanning](/development/specific/barcodes), for example, uses this approach to play a sound after a scan.
 
-The idea is to send the custom JavaScript function along with the view to the frontend and invoke it later when an event is triggered.
+The idea: send the JavaScript function with the view to the frontend, then call it later when an event fires.
 
-Below is a working example that you can use as a starting point. The `_generic` method creates an arbitrary XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method injects raw content into that element, in this case the JavaScript function definition. On the backend side, `client->follow_up_action` then executes the function by name on the frontend:
+Below is a starting point that works. The `_generic` method creates a custom XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method inserts raw content into that element — in this case, the JavaScript function definition. On the backend, `client->follow_up_action` then runs the function by name on the frontend:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -16,7 +16,7 @@ Below is a working example that you can use as a starting point. The `_generic` 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       view->_generic( name = `script` ns = `html`
         )->_cc_plain_xml(
-          |function myFunction() \{ console.log( `Hello World` ); \}| 
+          |function myFunction() \{ console.log( `Hello World` ); \}|
         ).
       view->page(
         )->button( text  = `call custom JS`

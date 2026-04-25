@@ -1,19 +1,19 @@
 ---
 outline: [2, 4]
 ---
-# Barcode Scanning 
+# Barcode Scanning
 
-Barcode scanning functionality is widely used in enterprises. With abap2UI5, you can:
-* Scan barcodes
-* Handle focus transitions
-* Play sounds for user feedback
-* Display barcodes
+Barcode scanning is common in enterprise apps. With abap2UI5, you can:
+- Scan barcodes
+- Handle focus transitions
+- Play sounds for user feedback
+- Display barcodes
 
-This section provides all the information you need to get started easily.
+This section walks through what you need to get started.
 
 #### Scanning
 
-Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning simple and straightforward. You can use the barcode scanner control like any other UI5 control with abap2UI5. Below is an example demonstrating basic functionality. You can customize the handling after the scanning event is triggered:
+Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning easy. Use it like any other UI5 control with abap2UI5. The example below shows the basic behavior — customize the handling once the scanning event fires:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -40,18 +40,18 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 
 ENDMETHOD.
 ```
-To see barcode scanning in action, refer to the `z2ui5_cl_demo_app_124` sample application.
+To see barcode scanning in action, check the `Z2UI5_CL_DEMO_APP_124` sample app.
 
 ::: tip **UI5 Versions**
-This feature is only available when using the UI5 framework and is not supported with OpenUI5.
+This feature works only with the UI5 framework, not with OpenUI5.
 :::
 
 #### Focus Handling
-Most scanner devices have an integrated scanning function. In such cases, you can create an input field and ensure that focus is properly set. The scanned data will populate the input field as if it were typed via a keyboard.
+Most scanner devices emulate a keyboard. In that case, add an input field and set focus correctly — the scanned data flows into the input as if typed.
 
-The key mechanism is the `_z2ui5()->focus()` custom control, which accepts a bound `focus_id` attribute. When the user presses ENTER (triggering the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then automatically moves focus to the corresponding field on the frontend:
+The core piece is the `_z2ui5()->focus()` custom control, which takes a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then moves focus to the matching field on the frontend automatically:
 
-Here's an example that demonstrates how to handle input focus and manage transitions between fields after scanning and pressing ENTER:
+An example that manages input focus and moves between fields after scanning and pressing Enter:
 
 ```abap
 CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
@@ -104,7 +104,7 @@ ENDCLASS.
 
 #### Play Sounds
 
-Providing audio feedback can be helpful in specific contexts. Below is an example that plays a sound if a user fails to scan a value. The sound file is a .wav file stored in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
+Audio feedback is handy in some scenarios. The example below plays a sound when a scan fails. The sound is a `.wav` file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
 ```abap
 CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
@@ -150,7 +150,7 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-For a sample with sounds in action, check out `z2ui5_cl_demo_app_304.clas`.
+For a complete sound sample, see `Z2UI5_CL_DEMO_APP_304`.
 
-#### Display Barcodes
-If you also need to display barcodes, you can use tools like bwip-js, which is available as part of the js-libraries addon. More details can be found [here](/resources/addons).
+#### Render Barcodes
+To also render barcodes, use bwip-js, which ships with the js-libraries add-on. See [Add-ons](/resources/addons) for details.

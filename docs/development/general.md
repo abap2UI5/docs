@@ -3,9 +3,9 @@ outline: [2, 4]
 ---
 # Controller
 
-abap2UI5 offers great flexibility in how you structure your apps. Most sample applications follow a pattern similar to the one below. You can use it as a starting point, but feel free to adapt it or build a wrapper on top of abap2UI5 for more customized behavior.
+abap2UI5 gives you great flexibility in how you structure apps. Most sample apps follow the pattern below. Use it as a starting point, and tweak it or build a wrapper around abap2UI5 for more specific behavior.
 
-The basic idea: every request enters the `main` method, and you use `CASE` to distinguish between initialization, navigation returns, and user events:
+The idea: every request enters the `main` method, and you use `CASE` to dispatch between initialization, navigation returns, and user events.
 
 ```abap
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
@@ -86,4 +86,4 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
 ENDCLASS.
 ```
-Refer to the specific sections of this development guide for more details on views, events, data binding, and navigation.
+See the dedicated sections of this development guide for full details on views, events, data binding, and navigation.

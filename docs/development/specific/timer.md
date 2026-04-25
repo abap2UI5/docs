@@ -3,20 +3,20 @@ outline: [2, 4]
 ---
 # Timer, Auto-Refresh
 
-abap2UI5 provides a custom control `z2ui5.Timer` that triggers events after a specified delay. This is useful for dashboards, status monitors, or any scenario that requires periodic data updates without manual user interaction.
+abap2UI5 offers a custom control `z2ui5.Timer` that fires events after a set delay. This is handy for dashboards, status monitors, or any case that needs periodic data updates without user interaction.
 
-The timer is added as a view element via `_z2ui5( )->timer( ... )` and supports the following parameters:
+Add the timer as a view element with `_z2ui5( )->timer( ... )`. These parameters apply:
 
 | Parameter     | Description                                      |
 |---------------|--------------------------------------------------|
-| `finished`    | Event raised when the timer fires                |
+| `finished`    | Event fired when the timer expires               |
 | `delayms`     | Delay in milliseconds before firing              |
-| `checkactive` | Bind to an `abap_bool` to activate/deactivate    |
+| `checkactive` | Bind to an `abap_bool` to turn the timer on/off  |
 | `checkrepeat` | If `abap_true`, the timer repeats automatically  |
 
 #### Basic Usage
 
-Embed the timer in your view and control it via data binding. The following example increments a counter every 2 seconds:
+Embed the timer in your view and control it via data binding. The example below increments a counter every 2 seconds:
 
 ```abap
 CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
@@ -55,11 +55,11 @@ CLASS z2ui5_cl_sample_timer IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-With `checkrepeat = abap_true`, the timer restarts automatically after each event — no need to re-trigger it manually.
+With `checkrepeat = abap_true`, the timer restarts after each event automatically — no manual restart needed.
 
 #### One-Shot Timer
 
-If you only need the timer to fire once (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
+For a one-shot fire (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
 
 ```abap
 CLASS z2ui5_cl_sample_timer_once DEFINITION PUBLIC.
@@ -122,11 +122,11 @@ CLASS z2ui5_cl_sample_timer_once IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Here the timer starts inactive. When the user clicks the button, `mv_check_timer_active` is set to `abap_true` and the timer fires once, opening a new browser tab via `_event_client`.
+The timer starts inactive. When the user clicks the button, the handler sets `mv_check_timer_active` to `abap_true` and the timer fires once, opening a new browser tab via `_event_client`.
 
 #### Stopping a Repeating Timer
 
-To stop a repeating timer, simply set the bound `checkactive` flag to `abap_false`:
+To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
 
 ```abap
   WHEN client->check_on_event( `TOGGLE_TIMER` ).
@@ -139,5 +139,5 @@ To stop a repeating timer, simply set the bound `checkactive` flag to `abap_fals
 ```
 
 ::: warning
-Keep in mind that each timer event triggers a full backend roundtrip. Use reasonable intervals (e.g., 2000ms or higher) to avoid excessive server load.
+Each timer event causes a full backend roundtrip. Use sensible intervals (e.g., 2000ms or more) to avoid heavy server load.
 :::

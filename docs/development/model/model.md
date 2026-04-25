@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # Model
 
-In abap2UI5, there are two ways to exchange data between your ABAP code and the UI5 frontend.
+In abap2UI5, there are two ways to share data between your ABAP code and the UI5 frontend.
 
 #### One-Way Binding
-Use one-way binding when you need to display data on the frontend without allowing changes. The `client->_bind` method sends data to the frontend and connects it to the view:
+Use one-way binding to show data on the frontend without allowing edits. The `client->_bind` method sends data to the frontend and binds it to the view:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -29,10 +29,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-This method works with tables, trees, and other complex data structures. For more details, refer to the samples repository and explore the table or tree samples.
+This method works with tables, trees, and other nested data structures. For details, see the table and tree samples in the samples repository.
 
 #### Two-Way Binding
-If the user should be able to modify data, enable two-way binding to update the data in the ABAP backend. Use the `client->_bind_edit` method so that after an event, the framework will synchronize the data with your ABAP class:
+When users need to edit data, use two-way binding to keep it in sync with the ABAP backend. Call the `client->_bind_edit` method — after an event, the framework syncs the data back to your ABAP class:
 
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -64,5 +64,5 @@ ENDCLASS.
 ```
 
 ::: tip **Data in Public Attributes**
-When using One-Way or Two-Way binding, ensure your data is stored in the public attributes of your class. This allows the framework to access it from outside. This is similar to the PBO/PAI logic, where data had to be stored in global variables.
+With one-way or two-way binding, store your data in the public attributes of your class so the framework can read it externally. This resembles the PAI/PBO logic, where data lived in global variables.
 :::

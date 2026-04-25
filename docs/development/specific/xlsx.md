@@ -1,13 +1,13 @@
 ---
-outline: [2, 6]
+outline: [2, 4]
 ---
 # XLSX
 
-abap2UI5 lets you use your ABAP system's XLSX APIs to upload and download spreadsheets, converting between XLSX files and internal tables.
+abap2UI5 works with the XLSX APIs on your ABAP system to upload and download spreadsheets, converting between XLSX files and internal tables as needed.
 
 #### Upload
 
-Transform uploaded xlsx files into an internal table:
+Convert uploaded XLSX files into an internal table:
 
 ::: code-group
 
@@ -73,7 +73,7 @@ CLASS lcl_help IMPLEMENTATION.
     DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
     DATA(lo_excel) = NEW cl_fdt_xl_spreadsheet(
         document_name = `test`
-        xdocument     = lv_xdata ) .
+        xdocument     = lv_xdata ).
 
     lo_excel->if_fdt_doc_spreadsheet~get_worksheet_names(
       IMPORTING worksheet_names = DATA(lt_worksheets) ).
@@ -187,11 +187,11 @@ ENDCLASS.
 :::
 
 ::: tip **ABAP Cloud**
-The code snippets above are not compatible with ABAP Cloud, modify the lcl_help class by replacing its code with functions from the new XCO_CP_XLSX APIs to ensure compatibility.
+The code snippets above aren't ABAP Cloud compatible. To make them cloud-compatible, replace the code in the `lcl_help` class with functions from the `XCO_CP_XLSX` APIs.
 :::
 
 #### abap2xlsx
-Instead of using the above XLSX API (which may change between releases), consider leveraging the excellent open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It provides reusable APIs for common XLSX operations and works entirely within the ABAP stack. The following example demonstrates using abap2xlsx in the `LCL_HELP` class:
+Instead of the XLSX API above (which can change between releases), consider the open-source project [abap2xlsx](https://github.com/abap2xlsx/abap2xlsx). It offers reusable APIs for common XLSX operations and runs entirely within the ABAP stack. The example below uses abap2xlsx in the `lcl_help` class:
 ::: code-group
 
 ```abap
@@ -228,8 +228,8 @@ Instead of using the above XLSX API (which may change between releases), conside
 ENDMETHOD.
 ```
 
-```abap [LCL_HELP]
-CLASS lcl_help DEFINITION FINAL CREATE PUBLIC .
+```abap [lcl_help]
+CLASS lcl_help DEFINITION FINAL CREATE PUBLIC.
 
   PUBLIC SECTION.
     CLASS-METHODS get_xlsx_by_itab
@@ -281,4 +281,4 @@ ENDCLASS.
 :::
 
 #### UI5 Control
-If you want to export the data directly at the frontend, SAP offers the sap.ui.export.Spreadsheet control to export table content. With some additional logic, this control is also usable with abap2UI5. Check out the Custom Control add-on for a running sample [here](/resources/addons). However, the programming effort might be higher compared to the file-based approach shown above.
+To export data directly on the frontend, SAP offers the sap.ui.export.Spreadsheet control for exporting table content. With some extra logic, you can use this control with abap2UI5 too. See the [Add-ons](/resources/addons) page for a complete sample with the custom control. The coding effort may be higher than the file-based approach shown above.

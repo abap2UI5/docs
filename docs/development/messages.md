@@ -1,14 +1,13 @@
 ---
-outline: [2, 4]
+outline: [2, 5]
 ---
-
 # Messages, Errors
 
-Displaying messages and errors is an everyday requirement for ABAP developers. The following functions handle the most common scenarios.
+Showing messages and errors is an everyday task for ABAP developers. The functions below cover the most common cases.
 
 #### Message Toast
 
-For short-duration messages, such as success notifications, you can use the message toast:
+For brief notifications like success confirmations, use the message toast:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -18,7 +17,7 @@ ENDMETHOD.
 
 #### Message Box
 
-If you need the user to acknowledge the message, display a message box that requires manual closure:
+When the user needs to acknowledge the message, show a message box they must close:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -26,7 +25,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-For error messages, simply change the type:
+For error messages, change the type:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -37,8 +36,9 @@ ENDMETHOD.
 ```
 
 #### SY, BAPIRET, CX_ROOT
-You can directly pass common message structures, objects, and variables to the functions:
-#### SY
+You can pass common message structures, objects, and variables straight to these functions:
+
+##### SY
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -47,7 +47,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### BAPIRET
+##### BAPIRET
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -61,7 +61,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### CX_ROOT
+##### CX_ROOT
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -71,12 +71,12 @@ METHOD z2ui5_if_app~main.
     client->message_box_display( lx ).
   ENDTRY.
 
-ENDMETHOD. 
+ENDMETHOD.
 ```
-Other imports are supported as well. Just import your message structure, and the message box will display it.
+The framework accepts other inputs too — pass your message structure and the message box shows it.
 
-#### Popup Multi Message
-The message box provides basic output. For a more detailed output, use the popup `z2ui5_cl_pop_messages`:
+#### Multi-Message Popup
+The message box gives you basic output. For richer detail, use the popup `Z2UI5_CL_POP_MESSAGES`:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -88,8 +88,8 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### Popup Error
-To show a detailed view of your exception, use the following code:
+#### Error Popup
+To display full details of your exception:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -103,7 +103,7 @@ ENDMETHOD.
 ```
 
 #### Uncaught Errors
-When you don't catch exceptions in your code, the framework catches them and shows the standard error popup. Try:
+When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try this:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -114,7 +114,7 @@ ENDMETHOD.
 ```
 
 #### Uncatchable Exceptions / Short Dumps
-What happens if your code creates uncatchable exceptions? In this case, the default HTTP handler exception output is used. The processing is interrupted, and the user will need to refresh the browser. Use this only for unexpected behavior:
+What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -125,5 +125,5 @@ ENDMETHOD.
 ```
 
 ::: tip **Improvements**
-These message functions are continually being improved. Feel free to open an issue if you encounter errors or incompatibilities, or submit a PR to extend the functionality.
+These message functions evolve all the time. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.
 :::

@@ -3,13 +3,13 @@ outline: [2, 4]
 ---
 # Expression Binding
 
-Expression Binding lets you compute values directly in XML views using JavaScript-like expressions. This is especially useful in abap2UI5, as it can reduce server roundtrips by moving calculations, logical conditions, and string operations to the frontend.
+Expression Binding lets you compute values directly in XML views with JavaScript-like expressions. This is especially handy in abap2UI5, since it cuts server roundtrips by moving calculations, logical conditions, and string operations to the frontend.
 
-The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you can use JavaScript operators (like `===` for strict equality or `Math.max`) and reference model properties with `$` followed by a binding path. Note: `===` is the JavaScript strict equality operator (not an ABAP operator) — it is required because UI5 evaluates these expressions in the browser.
+The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you can use JavaScript operators (like `===` for strict equality or `Math.max`) and reference model properties with `$` followed by a binding path. Note: `===` is the JavaScript strict equality operator (not an ABAP operator) — UI5 needs it because these expressions evaluate in the browser.
 
-#### Calculate the Maximum Value at the Frontend
+#### Calculate the Maximum Value on the Frontend
 
-The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) to ensure integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. Here's what the ABAP string concatenation produces at runtime:
+The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) for integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. What the ABAP string concatenation produces at runtime:
 
 | ABAP code | UI5 binding result |
 |---|---|
@@ -54,7 +54,7 @@ ENDCLASS.
 
 #### Conditionally Set Input Field Editability
 
-The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field is only editable when the quantity is exactly 500. Note that `===` is the JavaScript strict equality operator.
+The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field becomes editable only when the quantity equals 500 exactly. Note that `===` is the JavaScript strict equality operator.
 
 ```abap
 CLASS z2ui5_cl_demo_editable DEFINITION PUBLIC.
@@ -85,4 +85,4 @@ CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Explore all the possibilities in the sample class `Z2UI5_CL_DEMO_APP_027` or refer to the UI5 documentation [here](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0).
+For all options, see the sample class `Z2UI5_CL_DEMO_APP_027` or the [UI5 docs on expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0).
