@@ -117,7 +117,7 @@ RAP (RESTful Application Programming Model) is SAP's recommended approach for bu
 - CDS Views for data modeling
 - Behavior Definitions for logic and validations
 - OData services for communication
-- Fiori Elements for UI generation
+- Fiori Elements for UI rendering
 
 abap2UI5 offers an alternative, especially for developers who want lightweight apps and don't need the full RAP stack. Both approaches are valid as long as you follow cloud development principles.
 
