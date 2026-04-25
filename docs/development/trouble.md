@@ -11,7 +11,7 @@ This example uses the **`z2ui5.afterBE` hook** — a JavaScript callback that th
 
 The pattern has two steps:
 1. **Define** the JavaScript function in a `<html:script>` tag (rendered once on init)
-2. **Run** it after a backend event through `client->follow_up_action( )` with a raw JavaScript string
+2. **Run** it after a backend event via `client->follow_up_action( )` with a raw JavaScript string
 
 ```abap
 METHOD z2ui5_if_app~main.
