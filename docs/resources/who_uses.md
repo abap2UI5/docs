@@ -20,7 +20,7 @@ Inspire the community by sharing your initiatives so others can learn from your 
 
 |  Company | Description |
 | ------------- | ------------- |
-| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP systems with automated abap2UI5 installations |
+| [Nuve Platform](https://www.nuveplatform.com) | On-demand SAP systems with automated abap2UI5 setups |
 | [Logali Group](https://logaligroup.com) | Webinars and certifications for abap2UI5 |
 
 <br>
