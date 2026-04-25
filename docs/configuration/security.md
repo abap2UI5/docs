@@ -17,7 +17,7 @@ As an app developer, you have full flexibility over authorization. Configure it 
 abap2UI5 ships as custom code. Once installed, you fully own the code and can change it as needed. To keep compatibility with future updates, avoid direct changes to the core codebase.
 
 ### Frontend Code
-The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. The HTTP endpoint delivers it on the first request, in line with standard practices for modern web applications.
+The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. The HTTP endpoint delivers it on the first request, in line with standard practices for modern web apps.
 
 ### Business Logic
 abap2UI5 never sends the app's business logic to the client. All business processes stay securely on the server, and sensitive data never reaches the frontend.
