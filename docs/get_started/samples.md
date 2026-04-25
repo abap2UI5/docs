@@ -16,5 +16,5 @@ Press `Ctrl+F12` to open the source code, view, and model for each sample:
 _No system at hand? Run the samples directly [in your browser](https://abap2ui5.github.io/web-abap2ui5-samples/)._
 
 ::: tip **Contribution**
-The samples evolve continuously. Have a sample to share? Open a PR so others can learn from it.
+The samples evolve all the time. Have a sample to share? Open a PR so others can learn from it.
 :::
