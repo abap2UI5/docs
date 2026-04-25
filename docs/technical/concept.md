@@ -186,7 +186,7 @@ The application flow looks like this:
   <em>abap2UI5 Architecture - UI5 Over-the-Wire</em>
 </p>
 
-The initial request delivers the static shell app. After each user interaction, the app calls the backend — in PAI/PBO fashion — to fetch the updated view and model. Frontend and backend stay tightly coupled — not through OData service definitions, but through plain ABAP logic and JSON. The result: a fully backend-driven UI flow.
+The initial request delivers the static shell app. After each user interaction, the app calls the backend — in PAI/PBO fashion — to fetch the updated view and model. Frontend and backend stay tightly coupled — not via OData service definitions, but via plain ABAP logic and JSON. The result: a fully backend-driven UI flow.
 
 #### Partial HTML Updates
 
