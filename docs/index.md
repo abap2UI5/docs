@@ -30,7 +30,7 @@ features:
     link: /get_started/about
   - title: GitHub
     icon: <i class="fa-brands fa-github"></i>
-    details: Jump into the code — explore the repository, report issues, and contribute to the project.
+    details: Jump into the code — browse the repository, report issues, and contribute to the project.
     link: https://github.com/abap2UI5/abap2UI5/
   - title: LinkedIn
     icon: <i class="fa-brands fa-linkedin"></i>
