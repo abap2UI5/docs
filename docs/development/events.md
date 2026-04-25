@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Events
 
-UI5 control properties can both display data and fire events. This section covers backend events, frontend events, and follow-up actions.
+UI5 control properties can both display data and fire events. This section walks through backend events, frontend events, and follow-up actions.
 
 ### Backend
 To run backend processing when an event fires, use the `client->_event` method.
