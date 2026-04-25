@@ -172,7 +172,7 @@ Every app implementation is a REST-based HTTP POST implementation that holds no 
 
 ##### 14. REST
 
-This makes it compatible with all mobile use cases and devices, as well as 'RESTful' environments like the BTP ABAP Environment and the 'ABAP Cloud' language version. Like an OData implementation, where the app reflects data changes without a restart, you can now build the entire application and modify its view without restarting the frontend app. See this demo:
+This makes it compatible with all mobile use cases and devices, and with 'RESTful' environments like the BTP ABAP Environment and the 'ABAP Cloud' language version. Like an OData implementation, where the app reflects data changes without a restart, you can now build the entire application and modify its view without restarting the frontend app. See this demo:
 
 ![Live editing the ABAP class with the UI updating without reloading the frontend app](https://github.com/user-attachments/assets/c2c1afce-7d72-46a2-b0a7-7725c70bf5f4)
 
