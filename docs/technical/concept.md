@@ -112,7 +112,7 @@ The frontend becomes a static shell shared across all applications. The backend 
   <em>abap2UI5 – Shared shell app, with each application defined by backend artifacts only</em>
 </p>
 
-By contrast, traditional UI5 freestyle applications need a dedicated set of frontend artifacts for each app:
+By contrast, traditional UI5 freestyle apps need a dedicated set of frontend artifacts for each app:
 
 <p align="center">
 <img width="300" alt="UI5 freestyle - each application requires its own set of deployed UI and app artifacts" src="https://github.com/user-attachments/assets/9aa09a7f-5931-496d-bf88-d9b34653784c" />
