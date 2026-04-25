@@ -190,7 +190,7 @@ The initial request delivers the static shell app. On each user interaction, the
 
 #### Partial HTML Updates
 
-A core benefit of the HTML Over-the-Wire approach: it updates only the changed parts of the UI — not the entire page. But can we apply this pattern in UI5?
+A core benefit of the HTML Over-the-Wire approach: it refreshes only the changed parts of the UI — not the entire page. But can we apply this pattern in UI5?
 
 In standard UI5, updating the XML View usually causes a full re-render. But abap2UI5 enables partial updates by updating only the view model. This lets UI5 refresh only the relevant UI controls via data binding — without recreating the entire view structure.
 
