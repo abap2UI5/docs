@@ -7,7 +7,7 @@ abap2UI5 offers predefined user exits for adjusting the standard behavior. The i
 
 The interface exposes two exit methods:
 - **`set_config_http_get`** — called on the initial HTTP GET request (page load). Use it to customize frontend settings like the page title, UI5 theme, or UI5 version.
-- **`set_config_http_post`** — called on every later HTTP POST request (each roundtrip). Use it to configure backend behavior like the draft expiration time.
+- **`set_config_http_post`** — called on every later HTTP POST request (each roundtrip). Use it to set backend behavior like the draft expiration time.
 
 Both methods receive a `cs_config` changing parameter whose fields you can set as needed. The example below changes the title, the theme, and how long the backend keeps drafts:
 
