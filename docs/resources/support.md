@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Support
 
-The community provides support for abap2UI5 on a best-effort basis.
+The community offers support for abap2UI5 on a best-effort basis.
 
 If you hit a bug or unexpected behavior, please open an [issue](https://github.com/abap2UI5/abap2UI5/issues). A code snippet that reproduces the bug helps a lot — it lets others quickly test and pinpoint the problem.
 
