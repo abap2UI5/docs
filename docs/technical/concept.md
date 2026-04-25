@@ -25,7 +25,7 @@ In this architecture, the initial request delivers JavaScript and CSS. Later int
   <em>HTML "Over the Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
 </p>
 
-The result is a clean, lightweight frontend — a pure rendering layer — while all logic remains under the backend's full control.
+The result is a clean, lightweight frontend — a pure rendering layer — while all logic stays under the backend's full control.
 
 Several frameworks adopt this pattern:
 - [htmx](https://htmx.org) Progressive enhancement with HTML partials (Any web stack)
