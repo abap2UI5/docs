@@ -2,7 +2,7 @@
 outline: [2, 4]
 ---
 # Tables, Trees
-This section shows how to render nested data structures — tables, trees, and nested records — in views.
+This section walks through rendering nested data structures — tables, trees, and nested records — in views.
 
 ### Tables
 The example below binds a simple table to a UI5 control:
