@@ -36,7 +36,7 @@ To access data from the previous app, cast it like this:
 
 ENDMETHOD.
 ```
-To navigate to an application without pushing it onto the call stack:
+To navigate to an app without pushing it onto the call stack:
 ```abap
   METHOD z2ui5_if_app~main.
 
