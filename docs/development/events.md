@@ -131,7 +131,7 @@ ENDCLASS.
 ```
 
 ::: tip
-This is a demonstration. In this case, accessing `name` directly would be easier — the framework updates it automatically.
+This is a demonstration. Accessing `name` directly would be easier — the framework updates it automatically.
 :::
 
 ### Frontend
