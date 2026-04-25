@@ -9,7 +9,7 @@ abap2UI5 is a community-driven project built by developers who give their free t
 abap2UI5 thrives on contributions from its dedicated developers. Every contributor makes a unique difference. Please consider sponsoring them to help keep their work going. Find a [full list of contributors](https://github.com/abap2UI5/abap2UI5/graphs/contributors) on GitHub.
 
 #### abapGit — The Foundation of ABAP Open Source
-abap2UI5 wouldn't be possible without abapGit — the backbone of ABAP open-source development — and the supportive people behind it. If you find abap2UI5 useful, you also benefit from abapGit. Explore its contributors and please consider [sponsoring them](https://abapgit.org/sponsor.html).
+abap2UI5 wouldn't exist without abapGit — the backbone of ABAP open-source development — and the supportive people behind it. If you find abap2UI5 useful, you also benefit from abapGit. Browse its contributors and please consider [sponsoring them](https://abapgit.org/sponsor.html).
 
 #### Tools That Make It Possible
 Several open-source projects extend abap2UI5. Please consider sponsoring their maintainers:
