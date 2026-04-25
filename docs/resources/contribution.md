@@ -15,4 +15,4 @@ There are many ways to get involved and help:
 - Propose something new — every contribution is appreciated, no matter the size
 
 #### Need Help?
-If you hit any problems or have questions, open an [issue](https://github.com/abap2UI5/abap2UI5/issues).
+If you hit any issues or have questions, open an [issue](https://github.com/abap2UI5/abap2UI5/issues).
