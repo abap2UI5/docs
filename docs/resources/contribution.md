@@ -10,7 +10,7 @@ There are many ways to get involved and help:
 - Extend the view by adding a new property
 - Build a control to extend existing features
 - Build custom controls for specific scenarios
-- Share your demos and apps to show what's possible with abap2UI5
+- Share your demos and apps to showcase what's possible with abap2UI5
 - Improve the documentation and polish code snippets to make abap2UI5 easier to learn
 - Propose something new — every contribution is appreciated, no matter the size
 
