@@ -46,7 +46,7 @@ ENDMETHOD.
 ```
 
 ### Style / CSS
-To apply custom styles or CSS:
+To set custom styles or CSS:
 ```abap
 METHOD z2ui5_if_exit~set_config_http_get.
 
