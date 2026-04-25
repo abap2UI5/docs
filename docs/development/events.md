@@ -9,7 +9,7 @@ UI5 control properties can both display data and fire events. This section walks
 To run backend logic when an event fires, use the `client->_event` method.
 
 #### Basic
-As an example, we use the `press` property of a button. To fire events to the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the relevant UI5 control property. The backend can then read the event details with `client->get( )-event`.
+As an example, we use the `press` property of a button. To fire events to the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the matching UI5 control property. The backend can then read the event details with `client->get( )-event`.
 
 ```abap
 METHOD z2ui5_if_app~main.
