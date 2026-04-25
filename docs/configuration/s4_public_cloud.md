@@ -74,7 +74,7 @@ Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manua
 
 Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
 
-1. Follow SAP's [Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
+1. Follow the [SAP Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
 2. Configure tiles for business users and manage permissions
 
 ::: tip **BTP ABAP Environment**
