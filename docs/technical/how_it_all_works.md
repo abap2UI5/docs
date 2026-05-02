@@ -5,9 +5,17 @@ outline: [2, 3]
 
 _Technical Deep Dive into abap2UI5_
 
-This article was originally published on the [SAP Community](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459).
+This page is for developers who want to understand how abap2UI5 works under the hood: runtime view rendering, generic HTTP handling, decoupling from OData, and how the architecture stays small.
 
-This article is for developers who want to understand how abap2UI5 works under the hood. It explores how the framework gets its flexibility — including runtime view rendering, generic HTTP handling, and decoupling from OData — and offers insight into its architecture, extensibility, and internals.
+It is a long read. The sections are independent — feel free to jump to the part you care about:
+
+- **Foundations (1–5)** — HTML Over the Wire, hypermedia, UI5 architecture.
+- **abap2UI5 architecture (6–14)** — runtime model/view, single HTTP service, REST contract.
+- **Inside an app (15–22)** — draft handling, lifecycle, `_bind` and `_event`.
+- **Trade-offs (23–28)** — downsides vs. UI5 and RAP, footprint, downporting.
+- **Summary (29).**
+
+Originally published on the [SAP Community](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459).
 
 ## 1. HTML Over the Wire
 

@@ -40,4 +40,8 @@ Tips for working with views:
 - See the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
 ## Next Steps
-This produces a static view. The next section walks through binding and sharing data between the view and the app logic.
+
+This produces a static view. To make it interactive:
+
+- **[Model](/development/model/model)** — bind ABAP data to controls so the view reflects state.
+- **[Events](/development/events)** — react to button presses, input changes, and other user actions.

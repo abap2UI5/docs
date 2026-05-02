@@ -66,3 +66,10 @@ ENDCLASS.
 ::: tip Data in Public Attributes
 With one-way or two-way binding, store your data in the public attributes of your class so the framework can read it externally. This resembles the PAI/PBO logic, where data lived in global variables.
 :::
+
+## Next Steps
+
+- **[Tables, Trees](/development/model/tables)** — bind structured data into table-like controls.
+- **[Device Model](/development/model/device)** — query device characteristics (form factor, OS).
+- **[Expression Binding](/development/model/expression_binding)** — small in-view formulas without a formatter.
+- **[OData](/development/model/odata)** — when you need a real OData model behind a control.

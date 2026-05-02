@@ -87,3 +87,10 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 ENDCLASS.
 ```
 See the dedicated sections of this development guide for full details on views, events, data binding, and navigation.
+
+## Next Steps
+
+- **[View](/development/view)** — define the XML view via the abap2UI5 builder DSL.
+- **[Model](/development/model/model)** — bind ABAP data to the view.
+- **[Events](/development/events)** — react to button presses, input changes, and other user actions.
+- **[Navigation](/development/navigation/navigation)** — chain apps and pass data between them.

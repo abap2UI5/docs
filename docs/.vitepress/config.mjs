@@ -274,6 +274,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Add-ons", link: "/resources/addons" },
+          { text: "Samples Index", link: "/resources/samples_index" },
           { text: "References", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Releases", link: "/resources/changelog" },

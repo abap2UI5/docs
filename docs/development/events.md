@@ -186,4 +186,10 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-See sample `Z2UI5_CL_DEMO_APP_180` for a complete example.
+See sample [`Z2UI5_CL_DEMO_APP_180`](/resources/samples_index) for a complete example.
+
+## Next Steps
+
+- **[Messages, Errors](/development/messages)** — show toasts, message boxes, and error dialogs in response to events.
+- **[Popups, Popovers](/development/popups)** — prompt the user from inside an event handler.
+- **[Navigation](/development/navigation/navigation)** — open another app as the result of an event.
