@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # User Exits
 
@@ -36,3 +36,9 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
 
 ENDCLASS.
 ```
+
+## See Also
+
+- **[Inside an App → The Initial Request](/technical/deep_dive/lifecycle#the-initial-request)** — what `set_config_http_get` actually customizes.
+- **[Inside an App → Drafts](/technical/deep_dive/lifecycle#drafts-stateful-feel-stateless-backend)** — what `draft_exp_time_in_hours` controls under the hood.
+- **[General Setup](/configuration/setup)** — common things to configure via the user exit.

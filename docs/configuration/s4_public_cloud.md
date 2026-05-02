@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # S/4 Public Cloud
 
@@ -7,7 +7,7 @@ Use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only 
 
 To install abap2UI5 on S/4 Public Cloud, follow these steps:
 
-### 1. Install abap2UI5 with abapGit
+## 1. Install abap2UI5 with abapGit
 
 S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only classes, interfaces, and tables, so you can pull it without issues.
 
@@ -29,7 +29,7 @@ After a moment, the installation completes:
 
 <img width="1332" height="28" alt="Installation complete confirmation" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
 
-### 2. Mass Activate the Imported Artifacts
+## 2. Mass Activate the Imported Artifacts
 
 When installing repositories with ADT abapGit, all artifacts arrive inactive. Activate them manually. The simplest approach: create a dedicated inactive/active folder tree for the abap2UI5 project:
 
@@ -55,7 +55,7 @@ Now you'll see that all artifacts are active:
 
 <img width="641" height="88" alt="Fully activated abap2UI5 package" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
 
-### 3. Set Up the HTTP Service
+## 3. Set Up the HTTP Service
 
 Build an HTTP handler manually or use the cloud branch of the [frontend](https://github.com/abap2UI5/frontend) repository.
 
@@ -63,20 +63,20 @@ Build an HTTP handler manually or use the cloud branch of the [frontend](https:/
 
 For production, finish the frontend deployment and tile configuration in the steps below.
 
-### 4. Deploy the UI5 App (Optional)
+## 4. Deploy the UI5 App (Optional)
 
 Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manually:
 
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
 2. Deploy it to your system with the [SAP deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
 
-### 5. Configure Launchpad and Tiles (Optional)
+## 5. Configure Launchpad and Tiles (Optional)
 
 Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
 
 1. Follow the [SAP Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
 2. Configure tiles for business users and manage permissions
 
-::: tip **BTP ABAP Environment**
+::: tip BTP ABAP Environment
 BTP ABAP Environment shares the same technical base as S/4 Public Cloud. The instructions above work for both systems.
 :::

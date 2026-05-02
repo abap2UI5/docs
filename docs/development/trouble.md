@@ -1,9 +1,9 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Troubleshooting
 
-#### Hide Soft Keyboard
+## Hide Soft Keyboard
 
 For UI5 input fields, the soft keyboard pops up automatically when you focus an input. Sometimes — for example, in warehouses with small devices — you don't want this behavior. To change it, adjust the HTML input element and switch the input type to `none`. The snippet below toggles the soft keyboard.
 

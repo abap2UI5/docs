@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Geolocation, Maps
 
@@ -47,6 +47,6 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
 ENDCLASS.
 ```
 
-::: tip **Browser Permissions**
+::: tip Browser Permissions
 Geolocation needs the user to grant permission in the browser. Serve your HTTP endpoint over HTTPS, since most browsers block geolocation on non-secure origins.
 :::

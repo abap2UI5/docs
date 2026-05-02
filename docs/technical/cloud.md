@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Cloud Readiness
 
@@ -7,7 +7,9 @@ _Ready for the Future — or Not?_
 
 Whether it's worth building apps with abap2UI5 comes down to future-proofing. In the ABAP ecosystem, this means cloud readiness, closely tied to the ABAP Cloud language version. So what does that mean? And are abap2UI5 apps truly cloud-ready?
 
-#### What is ABAP Cloud?
+This page answers two separate questions: **is the framework cloud-ready** (yes), and **are the apps you build with it cloud-ready** (depends — and this page shows how to make sure they are).
+
+## What is ABAP Cloud?
 
 ABAP Cloud is a restricted ABAP language version that delivers cloud readiness and upgrade stability. Code that follows the ABAP Cloud rules can run on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud ABAP Environment. SAP guarantees long-term compatibility with future platform updates — with no code changes or extra investment.
 
@@ -21,7 +23,7 @@ ABAP Cloud includes a simplified technology stack, syntax, and toolset:
 
 SAP recommends building all new applications with ABAP Cloud.
 
-#### Is abap2UI5 Cloud Ready?
+## Is abap2UI5 Cloud Ready?
 
 Yes — abap2UI5 is fully compatible with ABAP Cloud:
 
@@ -32,7 +34,7 @@ Yes — abap2UI5 is fully compatible with ABAP Cloud:
 
 You can install abap2UI5 on SAP BTP ABAP Environment and SAP S/4HANA Public Cloud.
 
-#### Are abap2UI5 Apps Cloud Ready?
+## Are abap2UI5 Apps Cloud Ready?
 
 Yes and no — that depends on how you build the app.
 
@@ -109,7 +111,7 @@ The app reads directly from the VBAK database table, which makes it cloud-incomp
 
 Always follow cloud-ready development principles so your apps stay upgrade-stable and compatible with ABAP Cloud environments.
 
-#### Do I Have to Use RAP to Be Cloud Ready?
+## Do I Have to Use RAP to Be Cloud Ready?
 
 No — RAP isn't mandatory.
 
@@ -121,8 +123,14 @@ RAP (RESTful Application Programming Model) is SAP's recommended approach for bu
 
 abap2UI5 offers an alternative, especially for developers who want lightweight apps without the full RAP stack. Both approaches are valid as long as you follow cloud development principles.
 
-#### Conclusion
+## Conclusion
 
 abap2UI5 is fully cloud-ready. It supports modern, backend-driven UI5 development while staying upgrade-stable and compatible with SAP BTP ABAP Environment and S/4HANA Public Cloud. Each app can be built cloud-ready, making abap2UI5 a strong complement to existing RAP or UI5 freestyle apps.
 
 Happy ABAPing!
+
+## Next Steps
+
+- **[RAP vs. abap2UI5](/technical/technology/rap)** — when to pick one over the other.
+- **[Compatibility & Downporting](/technical/deep_dive/tradeoffs#compatibility-and-downporting)** — how a single codebase covers everything from NW 7.02 up to ABAP Cloud.
+- **[Use Cases](/get_started/use_cases)** — concrete extension scenarios on cloud and on-stack systems.

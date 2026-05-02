@@ -1,9 +1,18 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Quickstart
 
-### 1. Installation via abapGit
+This guide walks you through a minimal abap2UI5 installation. At the end, you'll have an HTTP endpoint that loads abap2UI5 in the browser and your first app running on it.
+
+**You'll need:**
+- An ABAP system (S/4HANA, BTP ABAP Environment, or NetWeaver AS ABAP 7.02+)
+- [abapGit](https://abapgit.org) installed on the system
+- Authorization to create development objects (classes, packages) and HTTP services (`SICF`)
+
+The whole setup takes about 10 minutes.
+
+## 1. Installation via abapGit
 
 Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org):
 
@@ -13,7 +22,8 @@ Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://
 ![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
 :::
 
-### 2. Set Up HTTP Handler and Service
+## 2. Set Up HTTP Handler and Service
+
 Create a package and define an HTTP handler class:
 
 ::: code-group
@@ -56,16 +66,19 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 <img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
 
-::: tip **Security**
+::: tip Security
 abap2UI5 talks only to the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
 :::
 
-### 3. First Launch
+## 3. First Launch
+
 Open the HTTP endpoint in your browser:
 <img width="800" alt="Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps." src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+
 Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps.
 
-### 4. Your First App
+## 4. Your First App
+
 Build a class on your system:
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.
@@ -80,3 +93,11 @@ CLASS zcl_my_app IMPLEMENTATION.
 ENDCLASS.
 ```
 Launch your app in place of the test app — and that's it: you've built your first abap2UI5 app.
+
+## Next Steps
+
+- **[Hello World](/get_started/hello_world)** — break down what each line does and add a view, an event, and data.
+- **[Sample Apps](/get_started/samples)** — browse 250+ ready-made examples to copy from.
+- **[Cookbook](/development/general)** — start building real apps: views, events, models, navigation.
+
+Stuck? See [Troubleshooting](/configuration/troubleshooting) or open an [issue on GitHub](https://github.com/abap2UI5/abap2UI5/issues).

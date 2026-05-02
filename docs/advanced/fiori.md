@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Integration into Fiori Elements Apps
 
@@ -7,7 +7,7 @@ Extend the object page of a Fiori list report app with an abap2UI5 app. See the 
 
 <img width="747" height="387" alt="abap2UI5 app embedded in Fiori Elements object page" src="https://github.com/user-attachments/assets/c14d5732-3b8c-4fa5-83ab-6d188a4d87db" />
 
-### Guide
+## Guide
 
 1. Register the FLP integration in the component.js:
 
@@ -88,3 +88,8 @@ On the ABAP side, the app receives the Fiori startup parameters (like the app cl
 
   ENDMETHOD.
 ```
+
+## See Also
+
+- **[RAP vs. abap2UI5](/technical/technology/rap)** — how the two approaches differ, and where they complement each other.
+- **[Fiori Launchpad](/configuration/launchpad)** — embedding standalone abap2UI5 apps in the launchpad (as opposed to inside an FE object page).

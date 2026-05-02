@@ -1,11 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Translation, i18n
 
 Standard UI5 apps handle translations with i18n files stored as frontend artifacts. Since abap2UI5 apps live entirely on the ABAP backend, use ABAP's built-in translation tools instead — text elements, message classes, or data element descriptions.
 
-### Text Element
+## Text Element
 ABAP text elements translate messages, so they show up in different languages without code changes:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -16,7 +16,7 @@ ABAP text elements translate messages, so they show up in different languages wi
 ENDMETHOD.
 ```
 
-### Messages
+## Messages
 Message classes translate messages and unify translation handling, making multi-language maintenance simpler:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -27,7 +27,7 @@ Message classes translate messages and unify translation handling, making multi-
 ENDMETHOD.
 ```
 
-### Data Element
+## Data Element
 You can also read and show the short, medium, or long descriptions of data elements (DD04T). To access them programmatically:
 
 The helper class below uses two approaches for backward compatibility: it first tries classic DDIC introspection via `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all ABAP releases). If that fails (e.g., in ABAP Cloud, which restricts classic DDIC APIs), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems without XCO installed:

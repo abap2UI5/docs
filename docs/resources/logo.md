@@ -1,16 +1,16 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Logo
 
-#### Logo
+## Logo
 ![abap2UI5 logo](/logo.png)
 
-#### Logo without Background
+## Logo without Background
 ![abap2UI5 logo on white background](/logo_white_back.png)
 
-#### Favicon
+## Favicon
 ![abap2UI5 favicon](/favicon.ico)
 
-#### Code Cover
+## Code Cover
 ![abap2UI5 code cover image](/code_cover.png)

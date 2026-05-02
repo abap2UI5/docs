@@ -1,11 +1,11 @@
 ---
-outline: [2, 5]
+outline: [2, 3]
 ---
 # Messages, Errors
 
 Showing messages and errors is an everyday task for ABAP developers. The functions below cover the most common cases.
 
-#### Message Toast
+## Message Toast
 
 For brief notifications like success confirmations, use the message toast:
 
@@ -15,7 +15,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Message Box
+## Message Box
 
 When the user needs to acknowledge the message, show a message box they must close:
 
@@ -35,10 +35,10 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### SY, BAPIRET, CX_ROOT
+## SY, BAPIRET, CX_ROOT
 You can pass common message structures, objects, and variables straight to these functions:
 
-##### SY
+### SY
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -47,7 +47,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-##### BAPIRET
+### BAPIRET
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -61,7 +61,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-##### CX_ROOT
+### CX_ROOT
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -75,7 +75,7 @@ ENDMETHOD.
 ```
 The framework accepts other inputs too — pass your message structure and the message box shows it.
 
-#### Multi-Message Popup
+## Multi-Message Popup
 The message box gives you basic output. For richer detail, use the popup `Z2UI5_CL_POP_MESSAGES`:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -88,7 +88,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### Error Popup
+## Error Popup
 To display full details of your exception:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -102,7 +102,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Uncaught Errors
+## Uncaught Errors
 When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try this:
 
 ```abap
@@ -113,7 +113,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Uncatchable Exceptions / Short Dumps
+## Uncatchable Exceptions / Short Dumps
 What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
 
 ```abap
@@ -124,6 +124,6 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-::: tip **Improvements**
+::: tip Improvements
 These message functions evolve all the time. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.
 :::

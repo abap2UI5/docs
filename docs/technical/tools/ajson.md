@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # ajson
 
@@ -13,7 +13,7 @@ The solution: [ajson](https://github.com/sbcgua/ajson), a solid open-source JSON
 - **Developer-Friendly** — Clear API with thorough documentation
 - **Active Maintenance** — Responsive issue resolution and ongoing improvement
 
-#### Integration
+## Integration
 
 ajson plugs directly into the `z2ui5` namespace and installs with abap2UI5 automatically. Use it anywhere in your code:
 ```abap
@@ -25,6 +25,10 @@ DATA(output) = z2ui5_cl_ajson=>create_empty( )->set(
 )->stringify( ).
 ```
 
-#### Automatic Updates
+## Automatic Updates
 
 Every ajson update and bug fix flows into abap2UI5 automatically via GitHub Actions and the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository. You always run the latest stable version — no manual steps needed.
+
+## See Also
+
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture#one-http-service-for-all-apps)** — why JSON serialization is on the hot path of every roundtrip.

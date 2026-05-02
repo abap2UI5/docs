@@ -1,10 +1,10 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Tables, Trees
 This section walks through rendering nested data structures — tables, trees, and nested records — in views.
 
-### Tables
+## Tables
 The example below binds a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
@@ -51,7 +51,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Editable
+## Editable
 To make a table editable, switch the binding to `bind_edit`:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -82,7 +82,7 @@ To make a table editable, switch the binding to `bind_edit`:
   ENDMETHOD.
 ```
 
-### Tree
+## Tree
 For trees, use nested structures:
 ```abap
 CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
@@ -151,7 +151,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Nested Structures
+## Nested Structures
 You can also bind nested structures — use `structure/component` as the binding path:
 ```abap
 CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.

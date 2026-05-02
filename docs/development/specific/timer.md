@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Timer, Auto-Refresh
 
@@ -14,7 +14,7 @@ Add the timer as a view element with `_z2ui5( )->timer( ... )`. These parameters
 | `checkactive` | Bind to an `abap_bool` to turn the timer on/off  |
 | `checkrepeat` | If `abap_true`, the timer repeats automatically  |
 
-#### Basic Usage
+## Basic Usage
 
 Embed the timer in your view and control it via data binding. The example below increments a counter every 2 seconds:
 
@@ -57,7 +57,7 @@ ENDCLASS.
 ```
 With `checkrepeat = abap_true`, the timer restarts after each event automatically — no manual restart needed.
 
-#### One-Shot Timer
+## One-Shot Timer
 
 For a one-shot fire (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
 
@@ -124,7 +124,7 @@ ENDCLASS.
 ```
 The timer starts inactive. When the user clicks the button, the handler sets `mv_check_timer_active` to `abap_true` and the timer fires once, opening a new browser tab via `_event_client`.
 
-#### Stopping a Repeating Timer
+## Stopping a Repeating Timer
 
 To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
 

@@ -1,13 +1,24 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # UI5 Over-the-Wire
 
 _The Architecture of abap2UI5_
 
-This article introduces the core pattern behind abap2UI5: HTML Over-the-Wire — adapted for the ABAP ecosystem. It shows how this approach cuts traditional frontend complexity by moving UI rendering and app logic to the backend. The result: faster development, simpler deployment, and a UI5 frontend shell that's purely a rendering engine.
+This page explains the architectural pattern behind abap2UI5 — HTML Over-the-Wire, applied to UI5 — and why moving UI rendering and app logic to the ABAP backend simplifies development and deployment.
 
-#### What is HTML Over-the-Wire?
+::: tip How to Read the Technical Section
+
+Three reading paths through Technical Insights, depending on what you're after:
+
+- **Just the architecture** — read this page. ~10 min.
+- **The full picture** — this page → [ABAP Thinking, UI5 Results](/technical/dx) → [Cloud Readiness](/technical/cloud) → [Comparisons](/technical/technology/overview). ~30 min.
+- **Implementation deep dive** — start at [Behind the Scenes](/technical/how_it_all_works) and work through the four parts. ~60 min.
+
+New to a term? See the [Glossary](/technical/glossary).
+:::
+
+## What is HTML Over-the-Wire?
 
 _HTML Over-the-Wire_ describes a server-centric web architecture where the server builds the user interface and sends it to the browser as ready-to-render HTML.
 
@@ -34,7 +45,7 @@ Several frameworks adopt this pattern:
 - [Livewire](https://livewire.laravel.com) Server-driven UI components in PHP (Laravel/PHP)
 - [Unpoly](https://unpoly.com) Simplified partial page updates (Any web stack)
 
-#### Comparison to Classic SSR
+## Comparison to Classic SSR
 
 But isn't this the same as traditional Server-Side Rendering (SSR)?
 
@@ -54,7 +65,7 @@ Architectural Comparison:
 | **SPA**       | Raw data (JSON), client builds UI| Client-side (JavaScript)  | 2010s – today    |
 | **Over-the-Wire** | HTML fragments for partial updates | Server renders, browser inserts | 2020s (re-emerging) |
 
-#### How UI5 Freestyle Works
+## How UI5 Freestyle Works
 
 UI5 freestyle apps follow the Single-Page Application model. The frontend holds all UI and app artifacts, while the backend provides data via OData — usually backed by CDS Views or custom ABAP implementations. The browser handles rendering and logic execution entirely:
 
@@ -66,7 +77,7 @@ UI5 freestyle apps follow the Single-Page Application model. The frontend holds 
 
 Since UI5 is a client-side framework, the backend can't build ready-to-render HTML. Instead, the browser creates the HTML with JavaScript via the UI5 framework.
 
-#### Sending Views from Backend
+## Sending Views from Backend
 
 So how can we produce UI5 HTML in the backend?
 
@@ -90,7 +101,7 @@ While HTML creation still happens on the frontend, the backend now sends both th
 
 The UI5 application stays a single-page application, but its role changes: it now focuses only on creating HTML from views and data that the server provides.
 
-#### Frontend Events on the Server
+## Frontend Events on the Server
 
 How do we deal with user interaction in this setup?
 
@@ -122,7 +133,7 @@ By contrast, traditional UI5 freestyle apps need a dedicated set of frontend art
 
 This leads to extra deployment effort during both development and go-live.
 
-#### Create and Update Data
+## Create and Update Data
 
 So far, we've covered how to show data and handle events with a backend-driven approach. But how do we handle user input and send frontend changes back to the server?
 
@@ -176,7 +187,7 @@ And its View Model:
    }
 }
 ```
-#### Application Flow
+## Application Flow
 
 The application flow looks like this:
 
@@ -188,7 +199,7 @@ The application flow looks like this:
 
 The initial request delivers the static shell app. On each user interaction, the app calls the backend — in PAI/PBO fashion — to fetch the updated view and model. Frontend and backend stay tightly coupled — not via OData service definitions, but via plain ABAP logic and JSON. The result: a fully backend-driven UI flow.
 
-#### Partial HTML Updates
+## Partial HTML Updates
 
 A core benefit of the HTML Over-the-Wire approach: it refreshes only the changed parts of the UI — not the entire page. But can we apply this pattern in UI5?
 
@@ -233,7 +244,7 @@ Thanks to UI5's data binding mechanism, UI5 refreshes only the changed DOM eleme
 
 The XML View and View Model concepts make UI5 a strong match for the UI5 Over-the-Wire approach, dropping the need for full client-side re-renders.
 
-#### Conclusion
+## Conclusion
 
 abap2UI5 brings the simplicity and efficiency of the HTML Over-the-Wire pattern to the ABAP ecosystem:
 
@@ -254,7 +265,20 @@ By moving UI control to the ABAP backend and keeping UI5 only for HTML rendering
 
 Happy ABAPing!
 
-**References:**
+## Want to Go Deeper?
+
+This page introduces the architecture. The full deep dive walks through the implementation:
+
+- **[Behind the Scenes](/technical/how_it_all_works)** — guided tour through the four parts of the deep dive.
+- **[Foundations](/technical/deep_dive/foundations)** — HTML Over the Wire, HDAs, and how UI5 fits in.
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture)** — generic HTTP service, runtime View and Model.
+- **[Inside an App](/technical/deep_dive/lifecycle)** — drafts, lifecycle, `_bind` / `_event`.
+- **[Trade-offs and Compatibility](/technical/deep_dive/tradeoffs)** — downsides, footprint, downporting.
+
+For comparisons against other approaches: **[RAP vs. abap2UI5](/technical/technology/rap)** and **[UI5 Freestyle vs. abap2UI5](/technical/technology/ui5)**.
+
+## References
+
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
 - [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)

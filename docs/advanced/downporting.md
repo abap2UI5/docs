@@ -1,11 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Downporting
 
 abap2UI5 works right away on ABAP 7.50 and later. On an earlier release, install the downported version, which supports R/3 NetWeaver 7.02 and later.
 
-#### Branch
+## Branch
 To install on an older system, use the `702` branch:
 | Branch    | System                |
 |-----------| ----------------------------|
@@ -14,5 +14,10 @@ To install on an older system, use the `702` branch:
 
 Some sample projects and other repositories also ship a downported version. Check whether a `702` branch is available.
 
-#### Functionality
+## Functionality
 For more on the downport feature, see the blog post [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).
+
+## See Also
+
+- **[Trade-offs and Compatibility](/technical/deep_dive/tradeoffs#compatibility-and-downporting)** — why abap2UI5 keeps a single codebase compatible with both Standard ABAP and ABAP Cloud.
+- **[abaplint](/technical/tools/abaplint)** — the tool that produces the `702` branch automatically.

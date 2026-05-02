@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Fiori Launchpad
 
@@ -8,7 +8,7 @@ Embed your abap2UI5 apps into SAP Fiori Launchpads. Full details: <br>
 [**(2) Features: Title, Parameters, Navigation**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-23-features-abap2ui5-upche/) <br>
 [**(3) Integration of KPIs**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/) <br>
 
-### Target Mapping
+## Target Mapping
 Use these parameters for target mapping in your Launchpad configuration:
 - Semantic Object: `Z2UI5_CL_MY_APP`
 - Action: `display`
@@ -16,10 +16,10 @@ Use these parameters for target mapping in your Launchpad configuration:
 - ID: `z2ui5`
 - Parameter: `app_start / Z2UI5_CL_MY_APP`
 
-### Troubleshooting
+## Troubleshooting
 Sometimes installation via abapGit causes cache-related issues. Here's how to clear them:
 
-#### Cache Management
+### Cache Management
 
 1. Recalculate the app index of z2ui5 with report `/UI5/APP_INDEX_CALCULATE`
 ![App index calculation report selection screen](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
@@ -34,7 +34,7 @@ Sometimes installation via abapGit causes cache-related issues. Here's how to cl
 
 4. Clear browser caches and hard reload
 
-#### Manual Deployment
+### Manual Deployment
 If clearing caches doesn't fix it, push the frontend app manually:
 
 1. Download the webapp folder of the project.
@@ -42,7 +42,7 @@ If clearing caches doesn't fix it, push the frontend app manually:
 2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to push the app to the server.
 <img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
 
-### Launchpad KPIs
+## Launchpad KPIs
 
 Extend your Fiori Launchpad with Key Performance Indicators (KPIs) via the abap2UI5 Launchpad KPI add-on.
 
@@ -50,11 +50,11 @@ Extend your Fiori Launchpad with Key Performance Indicators (KPIs) via the abap2
 
 For more details, see the [blog post on LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
 
-#### Functionality
+### Functionality
 <img width="800" alt="Launchpad KPI tiles showing dynamic count values" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
 <br>
 
-#### Approach
+### Approach
 The integration has three steps: implement a simple interface, the Launchpad calls a generic OData proxy service, and the proxy delegates to your ABAP class to compute the KPI count.
 
 (1/3) Implement the `z2ui5_if_lp_kpi` interface. The `count` method takes an optional `filter` string (from the OData `$filter` parameter) and returns the KPI as an integer:

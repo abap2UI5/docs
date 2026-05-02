@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Custom Controls
 
@@ -7,10 +7,16 @@ You can build your own UI5 custom controls and use them in abap2UI5 apps.
 
 First, set up your VS Code environment with the abap2UI5 frontend artifacts, following the [Frontend](/advanced/extensibility/frontend) page.
 
-#### Frontend
+## Frontend
 
 Write the JS code for your new custom control. Copy an existing control from [App.controller.js](https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/controller/App.controller.js) and adapt it.
 
-#### Backend
+## Backend
 Extend the custom control view class by adding a method and defining the new control's properties:
 [z2ui5_cl_xml_view_cc.clas.abap](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_cl_xml_view_cc.clas.abap)
+
+## See Also
+
+- **[Inside an App → Sending JavaScript Over the Wire](/technical/deep_dive/lifecycle#sending-javascript-over-the-wire)** — the underlying mechanism that lets you ship JS to the frontend.
+- **[Custom JS](/advanced/extensibility/custom_js)** — for one-off JavaScript without building a full control.
+- **[Frontend](/advanced/extensibility/frontend)** — local setup for building and testing controls.

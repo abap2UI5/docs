@@ -1,11 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Share, Bookmark
 
 The app state feature opens up several useful options — like sharing and bookmarking the current state of your app.
 
-### Share
+## Share
 Add a share button that copies the current state to the clipboard to share with colleagues:
 ```abap
 CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
@@ -39,5 +39,5 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Bookmark
+## Bookmark
 You can also use these URLs for bookmarking, but note that the server keeps the app state only for a limited time. The default is 4 hours. See the [draft service](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/01/z2ui5_cl_core_srv_draft.clas.abap#L46) source.

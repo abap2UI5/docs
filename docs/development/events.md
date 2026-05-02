@@ -1,14 +1,14 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Events
 
 UI5 control properties can both display data and fire events. This section walks through backend events, frontend events, and follow-up actions.
 
-### Backend
+## Backend
 To run backend logic when an event fires, use the `client->_event` method.
 
-#### Basic
+### Basic
 As an example, we use the `press` property of a button. To fire events to the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the matching UI5 control property. The backend can then read the event details with `client->get( )-event`.
 
 ```abap
@@ -35,7 +35,7 @@ If the backend needs more details about the event, use the `t_arg` parameter to 
 
 For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_DEMO_APP_167`.
 
-#### Source
+### Source
 Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property of the UI5 control that fired the event — here, the button itself, returning the button's label (`post`):
 
 ```abap
@@ -56,7 +56,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Parameters
+### Parameters
 Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter out of the event's parameter map — UI5 builds a qualified ID like `mainView--button_id`:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -76,7 +76,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Event
+### Event
 Read specific properties of the event object. The syntax `$event>sId` reads the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: there's no `${...}` wrapper because `$event` directly references the event object:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -99,7 +99,7 @@ ENDMETHOD.
 You can read any object attribute, but use only public and released attributes to avoid compatibility issues with future UI5 versions.
 :::
 
-#### Model Properties
+### Model Properties
 Read model properties bound to the event:
 ```abap
 CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
@@ -134,7 +134,7 @@ ENDCLASS.
 This is just a demo. Reading `name` directly would be easier — the framework updates it automatically.
 :::
 
-### Frontend
+## Frontend
 If you don't want to handle the event in the backend, fire actions directly on the frontend with `client->_event_client`. The difference between the two methods:
 
 - **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
@@ -175,7 +175,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### Follow-up Action
+## Follow-up Action
 Sometimes you need to call a backend function and then act on the frontend right afterward. The follow-up action event covers this:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -186,4 +186,10 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-See sample `Z2UI5_CL_DEMO_APP_180` for a complete example.
+See sample [`Z2UI5_CL_DEMO_APP_180`](/resources/samples_index) for a complete example.
+
+## Next Steps
+
+- **[Messages, Errors](/development/messages)** — show toasts, message boxes, and error dialogs in response to events.
+- **[Popups, Popovers](/development/popups)** — prompt the user from inside an event handler.
+- **[Navigation](/development/navigation/navigation)** — open another app as the result of an event.

@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Expression Binding
 
@@ -7,7 +7,7 @@ Expression Binding lets you compute values directly in XML views with JavaScript
 
 The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you can use JavaScript operators (like `===` for strict equality or `Math.max`) and reference model properties with `$` followed by a binding path. Note: `===` is the JavaScript strict equality operator (not an ABAP operator) — UI5 needs it because these expressions evaluate in the browser.
 
-#### Calculate the Maximum Value on the Frontend
+## Calculate the Maximum Value on the Frontend
 
 The inputs use a UI5 type binding (`{ type: ..., path: "..." }`) for integer validation. The third input uses an expression binding (`{= ... }`) to compute the maximum of both values directly in the browser. What the ABAP string concatenation produces at runtime:
 
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_max_val IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Conditionally Set Input Field Editability
+## Conditionally Set Input Field Editability
 
 The `enabled` property uses an expression binding that resolves to `{= 500===${/XX/QUANTITY} }` — the product field becomes editable only when the quantity equals 500 exactly. Note that `===` is the JavaScript strict equality operator.
 

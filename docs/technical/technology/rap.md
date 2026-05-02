@@ -1,12 +1,12 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # RAP vs. abap2UI5
 _Architecture, Communication, and Developer Experience_
 
 This page offers a structured technical comparison of **RAP** and **abap2UI5**, focusing on architecture, state management, developer workflow, and communication models.
 
-### 1. Architectural Paradigms
+## 1. Architectural Paradigms
 
 | Aspect            | RAP (Fiori Elements)                                             | abap2UI5                                                   |
 |-------------------|------------------------------------------------------------------|------------------------------------------------------------|
@@ -19,7 +19,7 @@ This page offers a structured technical comparison of **RAP** and **abap2UI5**, 
 | **Model**         | Defined at design time via CDS                                   | Defined at design time or runtime via internal tables     |
 | **Drafts**        | Managed via RAP drafts on model level                            | Managed via serialization on app level                    |
 
-### 2. Developer Workflow
+## 2. Developer Workflow
 
 | Aspect                     | RAP (Fiori Elements)                                 | abap2UI5                                               |
 |----------------------------|------------------------------------------------------|--------------------------------------------------------|
@@ -30,9 +30,9 @@ This page offers a structured technical comparison of **RAP** and **abap2UI5**, 
 | **Development Style**      | Declarative, metadata-driven                          | Programmatic, ABAP-centric                             |
 | **Complexity**             | High: multiple layers and technologies                | Low: one language, one layer                           |
 
-### 3. Client–Server Communication
+## 3. Client–Server Communication
 
-#### RAP
+### RAP
 
 ```plaintext
 Browser (Fiori Elements SPA)
@@ -44,7 +44,7 @@ Backend (RAP Services)
   └──> Processes requests, returns data/actions
 ```
 
-#### abap2UI5
+### abap2UI5
 
 ```plaintext
 Browser (Static UI5 Shell)
@@ -55,7 +55,7 @@ Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
 
-### 4. Flexibility and Runtime Capabilities
+## 4. Flexibility and Runtime Capabilities
 
 | Aspect                    | RAP (Fiori Elements)                        | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
@@ -64,7 +64,7 @@ Backend (ABAP Class)
 | **Use Case Fit**          | Best for standard CRUD applications         | Best for dynamic, backend-driven UIs     |
 | **Learning Curve**        | Steep (new concepts, multiple layers)       | Flat (ABAP-only, no metadata tooling)    |
 
-### 5. Cloud Readiness and Compliance
+## 5. Cloud Readiness and Compliance
 
 | Feature                    | RAP                        | abap2UI5                     |
 |----------------------------|-----------------------------|-------------------------------|
@@ -75,12 +75,12 @@ Backend (ABAP Class)
 
 > 🔒 **Both frameworks are cloud-ready and clean-core compliant.** abap2UI5 does this **without CDS or OData**, relying only on released ABAP APIs.
 
-### Conclusion
+## Conclusion
 
 - **RAP (Fiori Elements)** fits best for standardized, metadata-driven applications with CDS, OData, and annotations.
 - **abap2UI5** offers runtime flexibility, backend control, and lower complexity — fitting well for dynamic UIs and fast iteration.
 
-### Summary Table
+## Summary Table
 
 | Category                 | RAP (Fiori Elements)           | abap2UI5                          |
 |--------------------------|-------------------------------|-----------------------------------|
@@ -93,3 +93,9 @@ Backend (ABAP Class)
 | Use Case Fit             | Standardized CRUD Apps        | Dynamic, backend-controlled UIs  |
 | Learning Curve           | High                          | Low                              |
 | Deployment               | Split frontend/backend        | Pure ABAP backend class        |
+
+## See Also
+
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture)** — for context on how abap2UI5 sends View and Model in one response.
+- **[Inside an App](/technical/deep_dive/lifecycle)** — for the draft mechanism that replaces RAP's typed draft tables.
+- **[Cloud Readiness](/technical/cloud)** — both frameworks are cloud-ready; this page explains what that means in practice.
