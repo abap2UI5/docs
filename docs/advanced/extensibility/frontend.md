@@ -13,7 +13,7 @@ cd app
 ```
 Point all three files to your ABAP backend system:
 
-<img width="400" alt="Frontend config files where the backend system URL must be replaced" src="https://github.com/user-attachments/assets/155c9a3f-8a0a-494b-8fc4-a4bba2bf0e90">
+<img width="400" alt="Frontend config files where the backend system URL must be replaced" src="/img/155c9a3f-8a0a-494b-8fc4-a4bba2bf0e90.png">
 
 ## Build & Test
 Set the backend system in the YAML files.<br>
@@ -23,7 +23,7 @@ npm i
 npm run start-noflp
 ```
 You'll see output like this:
-<img width="1000" alt="npm run start-noflp output showing the local dev server running" src="https://github.com/user-attachments/assets/3e0118e8-d05f-48d1-bcc0-28073adf6e47">
+<img width="1000" alt="npm run start-noflp output showing the local dev server running" src="/img/3e0118e8-d05f-48d1-bcc0-28073adf6e47.png">
 
 ## Before PR (Optional)
 Convert the UI5 app to stringified ABAP:

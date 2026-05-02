@@ -57,13 +57,13 @@ ENDCLASS.
 
 Next, use transaction `SICF` to set up an HTTP service that uses the handler above:
 
-![SICF service creation dialog in transaction SICF](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
+![SICF service creation dialog in transaction SICF](/img/b76d9459-79be-40e1-a00e-b4e8cbbab9d4.png) <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
 
 ::: details ABAP Cloud
 For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
 
-<img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
+<img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="/img/ecbd1505-1412-47e4-9427-504fa91c8162.png">
 :::
 
 ::: tip Security
@@ -73,7 +73,7 @@ abap2UI5 talks only to the HTTP service you define, giving you full control over
 ## 3. First Launch
 
 Open the HTTP endpoint in your browser:
-<img width="800" alt="Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps." src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+<img width="800" alt="Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps." src="/img/c8962298-068d-4efb-a853-c44a9b9cda56.png">
 
 Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps.
 

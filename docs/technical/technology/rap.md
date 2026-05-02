@@ -73,7 +73,7 @@ Backend (ABAP Class)
 | **Clean Core Compliance**  | ✅ Yes                      | ✅ Yes                        |
 | **Runtime Flexibility**    | ❌ Rigid, design-time focus | ✅ Fully runtime-capable      |
 
-> 🔒 **Both frameworks are cloud-ready and clean-core compliant.** abap2UI5 does this **without CDS or OData**, relying only on released ABAP APIs.
+> **Both frameworks are cloud-ready and clean-core compliant.** abap2UI5 does this **without CDS or OData**, relying only on released ABAP APIs.
 
 ## Conclusion
 

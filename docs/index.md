@@ -24,16 +24,28 @@ hero:
       link: /resources/changelog
 
 features:
-  - title: Guide
+  - title: Quickstart
+    icon: <i class="fa-solid fa-rocket"></i>
+    details: Install abap2UI5 with abapGit, set up an HTTP service, and run your first app in about 10 minutes.
+    link: /get_started/quickstart
+  - title: Cookbook
+    icon: <i class="fa-solid fa-utensils"></i>
+    details: Practical patterns for views, events, navigation, models, and the most common everyday tasks.
+    link: /development/
+  - title: Behind the Scenes
+    icon: <i class="fa-solid fa-microscope"></i>
+    details: Four-part deep dive into how abap2UI5 actually works under the hood.
+    link: /technical/how_it_all_works
+  - title: Glossary
     icon: <i class="fa-solid fa-book"></i>
-    details: Learn how to build, configure, and run apps with abap2UI5.
-    link: /get_started/about
+    details: Quick reference for terms used across the technical pages — HDA, OData, RAP, RTTI, drafts, and more.
+    link: /technical/glossary
   - title: GitHub
     icon: <i class="fa-brands fa-github"></i>
-    details: Jump into the code — browse the repository, report issues, and contribute to the project.
+    details: Browse the code, report issues, and contribute to the project.
     link: https://github.com/abap2UI5/abap2UI5/
   - title: LinkedIn
     icon: <i class="fa-brands fa-linkedin"></i>
-    details: Follow us on LinkedIn to stay up to date with the latest updates and changes.
+    details: Follow the project on LinkedIn for release updates.
     link: https://www.linkedin.com/company/abap2ui5/
 ---

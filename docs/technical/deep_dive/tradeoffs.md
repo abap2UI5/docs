@@ -11,7 +11,7 @@ The previous parts covered what abap2UI5 enables: backend-defined Views, runtime
 
 Apps can be built very complex, but the opposite also works — apps can be very simple. One minimal yet elegant approach uses `if_oo_adt_classrun`. By implementing a single method, you get output with one click (`F9`). This is very efficient and inspired abap2UI5. A comparison of both approaches:
 
-<img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="https://github.com/user-attachments/assets/28a09830-ba3a-4608-aab9-5f4af8028a18" />
+<img width="600" alt="if_oo_adt_classrun vs. abap2UI5" src="/img/28a09830-ba3a-4608-aab9-5f4af8028a18.png" />
 
 _`if_oo_adt_classrun` vs. abap2UI5._
 
@@ -35,19 +35,19 @@ Use RAP and Fiori Elements when your app fits a standard floorplan and the data 
 
 The system footprint stays deliberately small — abap2UI5 ships only ABAP classes, with no CDS or RAP artifacts. Most of the code lives in user apps outside the framework. Overall, the framework comes to about **2,300 lines of code** spread across one HTTP handler, two interfaces, and one database table:
 
-<img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
+<img width="600" alt="System footprint of abap2UI5" src="/img/981ab684-d2cf-4f56-b25c-c333db3c6dcc.png" />
 
 _System footprint of abap2UI5._
 
 The HTTP handler class holds all the framework logic:
 
-<img width="600" alt="This is all that abap2UI5 does" src="https://github.com/user-attachments/assets/9c54e6b9-18a0-4582-a8cf-345d41d61a00" />
+<img width="600" alt="This is all that abap2UI5 does" src="/img/9c54e6b9-18a0-4582-a8cf-345d41d61a00.png" />
 
 _This is all that abap2UI5 does._
 
 The framework focuses only on communication between backend and frontend, controlling the app flow, and building the view model. The initial GET request was covered earlier in the deep dive. This implementation handles the POST request:
 
-<img width="600" alt="AJAX POST Handler" src="https://github.com/user-attachments/assets/d8276aed-f339-4084-97aa-b769a55d73c8" />
+<img width="600" alt="AJAX POST Handler" src="/img/d8276aed-f339-4084-97aa-b769a55d73c8.png" />
 
 _AJAX POST Handler._
 
@@ -57,11 +57,11 @@ The result is a pure source-code-based framework, which makes the next part poss
 
 At its core, abap2UI5 produces two strings — one holding an XML view and the other the JSON view model. The framework sends these strings to and from the frontend. As a result, you don't need a recent ABAP release — this works even on older releases. This approach runs on the latest ABAP Cloud stack, on-premise systems, and legacy systems alike, making it release-independent. And UI5 features aren't lost — the UI5 framework can be bootstrapped on the frontend from a Content Delivery Network (CDN), so the latest UI5 version is available even on older releases:
 
-<img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="https://github.com/user-attachments/assets/ff4e308f-4b34-4981-9d8a-ecda39039720" />
+<img width="600" alt="Local Bootstrapping - UI5 version depends on the SAP release" src="/img/ff4e308f-4b34-4981-9d8a-ecda39039720.png" />
 
 _Local Bootstrapping — UI5 version depends on the SAP release._
 
-<img width="600" alt="CDN Bootstrapping - UI5 version independent of the SAP release" src="https://github.com/user-attachments/assets/a8477539-45c4-4a43-a53b-c4078d5057aa" />
+<img width="600" alt="CDN Bootstrapping - UI5 version independent of the SAP release" src="/img/a8477539-45c4-4a43-a53b-c4078d5057aa.png" />
 
 _CDN Bootstrapping — UI5 version independent of the SAP release._
 
@@ -71,7 +71,7 @@ As a result, you can build abap2UI5 apps that are portable across SAP systems, r
 
 With this approach, dependencies stay limited to APIs and functions that are both cloud-released and available on earlier NetWeaver releases. abap2UI5 uses SAP dependencies only when truly needed — for example, for GUID creation:
 
-<img width="600" alt="GUID creation compatible with ABAP Cloud and Standard ABAP" src="https://github.com/user-attachments/assets/8039f152-1f39-4428-93a3-6cf80b38da5d" />
+<img width="600" alt="GUID creation compatible with ABAP Cloud and Standard ABAP" src="/img/8039f152-1f39-4428-93a3-6cf80b38da5d.png" />
 
 _GUID creation compatible with ABAP Cloud and Standard ABAP._
 
@@ -85,7 +85,7 @@ Downporting abap2UI5 code by hand would produce a release that's hard to maintai
 
 Automated ABAP downporting greatly boosts efficiency. Beyond abaplint, the framework uses [abapGit](/technical/tools/abapgit) and benefits from the work of those who built it:
 
-<img width="600" alt="abaplint dashboard and abapGit - tools powering abap2UI5 downporting" src="https://github.com/user-attachments/assets/b0ae2acd-9446-48ca-9459-13d4bffa8f72" />
+<img width="600" alt="abaplint dashboard and abapGit - tools powering abap2UI5 downporting" src="/img/b0ae2acd-9446-48ca-9459-13d4bffa8f72.png" />
 
 ## Summary
 

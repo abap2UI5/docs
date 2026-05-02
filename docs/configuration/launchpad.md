@@ -22,15 +22,15 @@ Sometimes installation via abapGit causes cache-related issues. Here's how to cl
 ### Cache Management
 
 1. Recalculate the app index of z2ui5 with report `/UI5/APP_INDEX_CALCULATE`
-![App index calculation report selection screen](https://github.com/user-attachments/assets/50c505ab-c58e-46a6-999e-67c4e4cdb929)
-![App index calculation report output](https://github.com/user-attachments/assets/81f8feae-fcfe-4175-aa91-28ce8d681539)
+![App index calculation report selection screen](/img/50c505ab-c58e-46a6-999e-67c4e4cdb929.png)
+![App index calculation report output](/img/81f8feae-fcfe-4175-aa91-28ce8d681539.png)
 
 2. Recalculate the index of the distribution layer with report `/UI5/APP_INDEX_CALCULATE` (if the tab isn't visible, switch to another tab first — it usually shows up after that)
-![Distribution layer tab in app index calculation report](https://github.com/user-attachments/assets/3fce0f2e-96f9-4487-9226-7940336582b1)
-![Distribution layer recalculation output](https://github.com/user-attachments/assets/dc149874-6731-496d-90bf-79cb83d8c97d)
+![Distribution layer tab in app index calculation report](/img/3fce0f2e-96f9-4487-9226-7940336582b1.png)
+![Distribution layer recalculation output](/img/dc149874-6731-496d-90bf-79cb83d8c97d.png)
 
 3. Clear HTTP caches in transaction `SMICM`
-![HTTP cache invalidation in transaction SMICM](https://github.com/user-attachments/assets/497b7677-8009-472e-9b50-34719105a12e)
+![HTTP cache invalidation in transaction SMICM](/img/497b7677-8009-472e-9b50-34719105a12e.png)
 
 4. Clear browser caches and hard reload
 
@@ -40,7 +40,7 @@ If clearing caches doesn't fix it, push the frontend app manually:
 1. Download the webapp folder of the project.
 
 2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to push the app to the server.
-<img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">
+<img width="942" alt="UI5 Repository Load program for manual frontend deployment" src="/img/2eac29f4-596e-4bab-8a17-7a8f86630b95.png">
 
 ## Launchpad KPIs
 

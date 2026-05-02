@@ -3,9 +3,12 @@ outline: [2, 3]
 ---
 # Use Cases
 
-abap2UI5 fits many contexts, whether you work in a cloud-ready environment or with classic ABAP.
+abap2UI5 fits many contexts, whether you work in a cloud-ready environment or with classic ABAP. The sections below walk through the main extension scenarios — on-stack and side-by-side — and end with a SaaS pattern that uses abap2UI5 as a single multi-tenant frontend over multiple S/4 systems.
 
-For a complete overview, see the [Use Cases blog post](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/?trackingId=6iIX%2FNk%2BCT0%2B4JorQjpRSQ%3D%3D).
+The framing follows SAP's tier model:
+- **Tier 1** — only released APIs, fully cloud-ready and upgrade-stable
+- **Tier 2** — released APIs plus a wrapper for unreleased ones; still cloud-ready
+- **Tier 3** — unreleased APIs directly; classic extension, not cloud-ready
 
 ## On-Stack Extension
 

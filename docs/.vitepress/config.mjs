@@ -60,7 +60,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Cookbook", link: "/development/general" },
+          { text: "Cookbook", link: "/development/" },
           { text: "Configuration", link: "/configuration/checklist" },
           { text: "Advanced Topics", link: "/advanced/downporting" },
           { text: "Technical Insights", link: "/technical/concept" },
@@ -114,9 +114,10 @@ export default defineConfig({
       },
       {
         text: "Cookbook",
-        link: "/development/general",
+        link: "/development/",
         collapsed: true,
         items: [
+          { text: "Overview", link: "/development/" },
           { text: "Controller", link: "/development/general" },
           { text: "View", link: "/development/view" },
           {
@@ -289,6 +290,7 @@ export default defineConfig({
         items: [
           { text: "Add-ons", link: "/resources/addons" },
           { text: "Samples Index", link: "/resources/samples_index" },
+          { text: "FAQ", link: "/resources/faq" },
           { text: "References", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Releases", link: "/resources/changelog" },
