@@ -5,7 +5,9 @@ outline: [2, 3]
 
 _A Developer-Centric Approach_
 
-abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles common challenges in development — deployment, caching, debugging, and tooling — while keeping a coding style close to familiar ABAP and SAP GUI patterns like Selection Screens and ALV. The goal: make working with abap2UI5 feel natural to ABAPers. This page looks closely at the main influences behind the framework.
+abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles common challenges in development — deployment, caching, debugging, and tooling — while keeping a coding style close to familiar ABAP and SAP GUI patterns like Selection Screens and ALV. The goal: make working with abap2UI5 feel natural to ABAPers.
+
+This page is the practical counterpart to **[UI5 Over-the-Wire](/technical/concept)**: where that page covers _why_ the architecture is shaped the way it is, this one shows _what daily development feels like_ — comparing classic ABAP patterns to their abap2UI5 counterparts. If you've ever written a `cl_salv_table=>factory(...)` or a `POPUP_TO_CONFIRM`, the parallels here will feel familiar.
 
 ## Simple Output with IF_OO_ADT_CLASSRUN
 

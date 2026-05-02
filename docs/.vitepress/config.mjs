@@ -279,6 +279,7 @@ export default defineConfig({
               { text: "abapmerge", link: "/technical/tools/abapmerge" },
             ],
           },
+          { text: "Glossary", link: "/technical/glossary" },
         ],
       },
       {

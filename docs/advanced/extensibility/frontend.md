@@ -31,3 +31,8 @@ Convert the UI5 app to stringified ABAP:
 cd ..
 npm run auto_app2abap
 ```
+
+## See Also
+
+- **[Inside an App → The Initial Request](/technical/deep_dive/lifecycle#the-initial-request)** — why the static frontend shell lives as a string inside the HTTP handler.
+- **[Custom Control](/advanced/extensibility/custom_control)** — extend the shell with new UI5 controls.

@@ -16,3 +16,8 @@ Some sample projects and other repositories also ship a downported version. Chec
 
 ## Functionality
 For more on the downport feature, see the blog post [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).
+
+## See Also
+
+- **[Trade-offs and Compatibility](/technical/deep_dive/tradeoffs#compatibility-and-downporting)** — why abap2UI5 keeps a single codebase compatible with both Standard ABAP and ABAP Cloud.
+- **[abaplint](/technical/tools/abaplint)** — the tool that produces the `702` branch automatically.

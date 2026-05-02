@@ -30,3 +30,8 @@ Below is a starting point that works. The `_generic` method creates a custom XML
 
 ENDMETHOD.
 ```
+
+## See Also
+
+- **[Inside an App → Sending JavaScript Over the Wire](/technical/deep_dive/lifecycle#sending-javascript-over-the-wire)** — why this works and how the framework forwards JavaScript to the frontend.
+- **[Custom Control](/advanced/extensibility/custom_control)** — wrap reusable JS into proper UI5 controls.

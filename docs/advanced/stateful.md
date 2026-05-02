@@ -41,3 +41,8 @@ For lighter-weight cases, consider:
 Another option, mostly relevant for legacy stacks: create an infinite session in the backend that holds locks while the UI5 app still communicates statelessly. The session lives in a separate work process and the abap2UI5 frontend talks to it via RFC.
 
 See the [SAP documentation on infinite sessions](https://help.sap.com/docs/ABAP_PLATFORM_NEW/6568469cf5a1460a8d85c58b83d21ec2/47db6c68e4282972e10000000a42189b.html?locale=en-US) and the discussions in [issue #2003](https://github.com/abap2UI5/abap2UI5/issues/2003) and [issue #1971](https://github.com/abap2UI5/abap2UI5/issues/1971) for context.
+
+## See Also
+
+- **[Inside an App → Drafts](/technical/deep_dive/lifecycle#drafts-stateful-feel-stateless-backend)** — how abap2UI5 normally simulates a stateful feel without a stateful backend.
+- **[Glossary → Stateful Session](/technical/glossary#stateful-session)** — quick reference.

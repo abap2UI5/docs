@@ -88,3 +88,8 @@ On the ABAP side, the app receives the Fiori startup parameters (like the app cl
 
   ENDMETHOD.
 ```
+
+## See Also
+
+- **[RAP vs. abap2UI5](/technical/technology/rap)** — how the two approaches differ, and where they complement each other.
+- **[Fiori Launchpad](/configuration/launchpad)** — embedding standalone abap2UI5 apps in the launchpad (as opposed to inside an FE object page).

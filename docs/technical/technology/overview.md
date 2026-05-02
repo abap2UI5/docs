@@ -6,6 +6,10 @@ _From ITS to abap2UI5_
 
 This page traces the evolution of web development in the ABAP ecosystem — from early server-rendered interfaces like ITS and Web Dynpro to modern client-side SPAs with UI5 Freestyle and RAP — and ends by comparing them to abap2UI5.
 
+The pattern is cyclical: server-rendered (ITS, BSP, Web Dynpro) → client-side SPA (UI5 freestyle, RAP/Fiori Elements) → server-driven again (abap2UI5, "Over the Wire"). Each shift solves real problems with the previous generation. Understanding the cycle makes it easier to decide which tool fits which use case today.
+
+For head-to-head comparisons, see **[RAP vs. abap2UI5](/technical/technology/rap)** and **[UI5 Freestyle vs. abap2UI5](/technical/technology/ui5)**.
+
 ## Internet Transaction Server
 _Bringing SAP GUI to the Web (2000+) (SAP)_
 

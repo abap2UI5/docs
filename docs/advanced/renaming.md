@@ -16,3 +16,8 @@ For more on renaming ABAP artifacts, see:
 
 For more background, see the blog post:
 [Renaming of ABAP Artifacts - The Power of abaplint and abapGit in ABAP Development](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/).
+
+## See Also
+
+- **[abaplint](/technical/tools/abaplint)** — the tool that performs the rename.
+- **[Builder](/advanced/builds)** — for shipping a custom-namespaced abap2UI5 build.

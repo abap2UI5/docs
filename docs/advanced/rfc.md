@@ -37,3 +37,8 @@ You can also use this approach to build a unified Fiori Launchpad that combines:
 - Apps called remotely over RFC from other systems
 
 <img width="700" alt="Centralized Fiori Launchpad combining on-stack and RFC-triggered remote apps" src="https://github.com/user-attachments/assets/a010440d-bd82-46f9-b597-c3ad2273dbde" />
+
+## See Also
+
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture)** — for context on the generic HTTP service that the RFC connector wraps.
+- **[Use Cases](/get_started/use_cases)** — distributed-system extension scenarios.

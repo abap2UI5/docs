@@ -7,6 +7,17 @@ _The Architecture of abap2UI5_
 
 This page explains the architectural pattern behind abap2UI5 — HTML Over-the-Wire, applied to UI5 — and why moving UI rendering and app logic to the ABAP backend simplifies development and deployment.
 
+::: tip How to Read the Technical Section
+
+Three reading paths through Technical Insights, depending on what you're after:
+
+- **Just the architecture** — read this page. ~10 min.
+- **The full picture** — this page → [ABAP Thinking, UI5 Results](/technical/dx) → [Cloud Readiness](/technical/cloud) → [Comparisons](/technical/technology/overview). ~30 min.
+- **Implementation deep dive** — start at [Behind the Scenes](/technical/how_it_all_works) and work through the four parts. ~60 min.
+
+New to a term? See the [Glossary](/technical/glossary).
+:::
+
 ## What is HTML Over-the-Wire?
 
 _HTML Over-the-Wire_ describes a server-centric web architecture where the server builds the user interface and sends it to the browser as ready-to-render HTML.
