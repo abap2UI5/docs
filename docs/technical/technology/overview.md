@@ -67,3 +67,13 @@ _UI5 Over-the-Wire (2023+) (Open Source)_
 - No custom JavaScript needed
 - Combines backend-driven development with UI5 flexibility
 - Lines up with SAP's cloud strategy
+
+## Direct Comparisons
+
+- **[RAP vs. abap2UI5](/technical/technology/rap)** — architecture, communication, developer workflow.
+- **[UI5 Freestyle vs. abap2UI5](/technical/technology/ui5)** — architecture, state, developer experience.
+
+## See Also
+
+- **[UI5 Over-the-Wire](/technical/concept)** — the architectural pattern that makes abap2UI5 possible.
+- **[Behind the Scenes](/technical/how_it_all_works)** — full deep dive into the implementation.

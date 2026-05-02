@@ -23,3 +23,9 @@ All artifacts are compatible with the abaplint renaming feature, so you can use 
 ```sh
 abaplint .github/abaplint/rename_test.jsonc --rename
 ```
+
+## See Also
+
+- **[Trade-offs and Compatibility](/technical/deep_dive/tradeoffs#compatibility-and-downporting)** — how abaplint produces the downport branch automatically.
+- **[Downporting](/advanced/downporting)** — practical guidance for using the downported version.
+- **[Renaming](/advanced/renaming)** — how to ship abap2UI5 under a custom namespace.

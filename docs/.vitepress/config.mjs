@@ -244,18 +244,31 @@ export default defineConfig({
           { text: "UI5 Over-the-Wire", link: "/technical/concept" },
           { text: "ABAP Thinking, UI5 Results", link: "/technical/dx" },
           { text: "Cloud Readiness", link: "/technical/cloud" },
-          { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
           {
-            text: "Technology",
-            link: "/technical/technology/overview",
+            text: "Deep Dive",
+            link: "/technical/how_it_all_works",
+            collapsed: false,
             items: [
-              { text: "RAP", link: "/technical/technology/rap" },
-              { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
+              { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
+              { text: "1. Foundations", link: "/technical/deep_dive/foundations" },
+              { text: "2. The abap2UI5 Architecture", link: "/technical/deep_dive/architecture" },
+              { text: "3. Inside an App", link: "/technical/deep_dive/lifecycle" },
+              { text: "4. Trade-offs and Compatibility", link: "/technical/deep_dive/tradeoffs" },
+            ],
+          },
+          {
+            text: "Comparisons",
+            link: "/technical/technology/overview",
+            collapsed: true,
+            items: [
+              { text: "Technology Overview", link: "/technical/technology/overview" },
+              { text: "RAP vs. abap2UI5", link: "/technical/technology/rap" },
+              { text: "UI5 Freestyle vs. abap2UI5", link: "/technical/technology/ui5" },
             ],
           },
           {
             text: "Tools",
-            collapsed: false,
+            collapsed: true,
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },

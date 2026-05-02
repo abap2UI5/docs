@@ -20,3 +20,8 @@ You can also install multiple abap2UI5 apps with a single abapGit pull. This wor
 
 Contributions are welcome and easy to manage with pull requests on GitHub.
 Open a pull request and commit your changes through abapGit.
+
+## See Also
+
+- **[Inside an App](/technical/deep_dive/lifecycle#the-initial-request)** — why a pure source-code framework + abapGit lets abap2UI5 skip BSP deployment entirely.
+- **[Contribution](/resources/contribution)** — how to contribute to the project itself.

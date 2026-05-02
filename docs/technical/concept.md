@@ -254,7 +254,20 @@ By moving UI control to the ABAP backend and keeping UI5 only for HTML rendering
 
 Happy ABAPing!
 
-**References:**
+## Want to Go Deeper?
+
+This page introduces the architecture. The full deep dive walks through the implementation:
+
+- **[Behind the Scenes](/technical/how_it_all_works)** — guided tour through the four parts of the deep dive.
+- **[Foundations](/technical/deep_dive/foundations)** — HTML Over the Wire, HDAs, and how UI5 fits in.
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture)** — generic HTTP service, runtime View and Model.
+- **[Inside an App](/technical/deep_dive/lifecycle)** — drafts, lifecycle, `_bind` / `_event`.
+- **[Trade-offs and Compatibility](/technical/deep_dive/tradeoffs)** — downsides, footprint, downporting.
+
+For comparisons against other approaches: **[RAP vs. abap2UI5](/technical/technology/rap)** and **[UI5 Freestyle vs. abap2UI5](/technical/technology/ui5)**.
+
+## References
+
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
 - [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)

@@ -252,3 +252,9 @@ abap2UI5 brings back familiar ABAP development patterns. It reuses proven concep
 The result: backend-driven UI development with minimal tooling and rapid iteration. Whether prototyping or building full business apps, abap2UI5 keeps development close to what ABAP developers already know best.
 
 Happy ABAPing!
+
+## Next Steps
+
+- **[Cookbook](/development/general)** — apply the patterns above to your own apps.
+- **[UI5 Over-the-Wire](/technical/concept)** — the architectural pattern that makes this developer experience possible.
+- **[Behind the Scenes](/technical/how_it_all_works)** — the architectural deep dive, four parts.

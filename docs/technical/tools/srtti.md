@@ -93,3 +93,8 @@ z2ui5_cl_srt_datadescr=>
 ```
 ## Updates
 Every S-RTTI update and bug fix flows into abap2UI5 automatically via GitHub Actions and the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.
+
+## See Also
+
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture#defining-the-model-at-runtime)** — why dynamic typing matters for the runtime Model.
+- **[Inside an App](/technical/deep_dive/lifecycle#drafts-stateful-feel-stateless-backend)** — the draft mechanism that needs S-RTTI for serialization.

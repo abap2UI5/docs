@@ -92,3 +92,9 @@ Backend (ABAP Class)
 | Use Case Fit             | Interactive web apps          | Backend-driven UIs               |
 | Learning Curve           | High                          | Low                              |
 | Deployment               | Split frontend/backend        | Pure ABAP backend class        |
+
+## See Also
+
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture)** — how the backend ships View and Model together.
+- **[ABAP Thinking, UI5 Results](/technical/dx)** — how abap2UI5's developer experience differs from UI5 freestyle.
+- **[Custom JS](/advanced/extensibility/custom_js)** — when you do need JavaScript on top of abap2UI5.

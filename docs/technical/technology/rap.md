@@ -93,3 +93,9 @@ Backend (ABAP Class)
 | Use Case Fit             | Standardized CRUD Apps        | Dynamic, backend-controlled UIs  |
 | Learning Curve           | High                          | Low                              |
 | Deployment               | Split frontend/backend        | Pure ABAP backend class        |
+
+## See Also
+
+- **[The abap2UI5 Architecture](/technical/deep_dive/architecture)** — for context on how abap2UI5 sends View and Model in one response.
+- **[Inside an App](/technical/deep_dive/lifecycle)** — for the draft mechanism that replaces RAP's typed draft tables.
+- **[Cloud Readiness](/technical/cloud)** — both frameworks are cloud-ready; this page explains what that means in practice.
