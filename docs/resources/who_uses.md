@@ -1,11 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Who Uses abap2UI5?
 
 We'd love to hear how you use abap2UI5. Whether in customer projects, integrations, workshops, open-source contributions, or any other initiative, sharing your scenario can inspire others to try the project and help the abap2UI5 community grow.
 
-### Customer Projects
+## Customer Projects
 **Does your company use abap2UI5?** <br>
 Showcase how abap2UI5 apps reshape real-world workflows. Add your scenario here:
 
@@ -14,7 +14,7 @@ Showcase how abap2UI5 apps reshape real-world workflows. Add your scenario here:
 | [Emineo](https://emineo.ch/) | ABAP 7.57  | Apps for EWM and PP, running on desktop and mobile devices |
 | [Swiss Krono](https://www.swisskrono.com/) | ABAP 7.55  | Apps for EWM, running on mobile devices |
 
-### Integrations and Workshops
+## Integrations and Workshops
 **Do you host workshops, build integrations, or use abap2UI5 in creative ways?** <br>
 Inspire the community by sharing your initiatives so others can learn from your contributions:
 

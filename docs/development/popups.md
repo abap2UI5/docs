@@ -1,13 +1,13 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Popups, Popovers
 
 UI5 offers popups and popovers that overlay specific parts of the view. This section walks through building them in abap2UI5.
 
-### Popup
+## Popup
 
-#### General
+### General
 
 To show a popup, call `client->popup_display` instead of `client->view_display`:
 ```abap
@@ -21,7 +21,7 @@ To show a popup, call `client->popup_display` instead of `client->view_display`:
   ENDMETHOD.
 ```
 
-#### Flow Logic
+### Flow Logic
 A typical popup flow shows a normal view, opens a popup, and finally closes it. Structure it like this:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -55,7 +55,7 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
   ENDMETHOD.
 ```
 
-#### Separated App
+### Separated App
 For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/development/navigation/navigation).
 
 An example with the confirmation popup:
@@ -84,7 +84,7 @@ An example with the confirmation popup:
 
 To handle multiple stacked popups, note that abap2UI5 shows only one popup at a time on the frontend. But you can keep a popup stack in your backend logic and re-display the previous popup as needed. See `Z2UI5_CL_DEMO_APP_161`.
 
-### Popover
+## Popover
 To show a popover, call `client->popover_display` and pass the ID of the control the popover should attach to:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -122,7 +122,7 @@ To show a popover, call `client->popover_display` and pass the ID of the control
   ENDMETHOD.
 ```
 
-### Built-in Popups
+## Built-in Popups
 A few pre-built popup classes cover the most common cases:
 
 - `Z2UI5_CL_POP_ERROR`

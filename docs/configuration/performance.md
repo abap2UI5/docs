@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Performance
 
@@ -9,7 +9,7 @@ abap2UI5 keeps frontend logic minimal: no business logic runs in the browser. Ev
 
 We've tested abap2UI5 with tables holding large numbers of entries and columns, so you can build your app with confidence — performance shouldn't be a concern.
 
-### `view_display` vs. `view_model_update`
+## `view_display` vs. `view_model_update`
 
 The biggest optimization is choosing the right update method:
 
@@ -37,12 +37,12 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### Suggestions
+## Suggestions
 Want to tune your app further? A few tips:
 - Call `client->view_display` only when needed. Prefer `client->view_model_update` so the UI5 framework only re-renders controls that have changed.
 - Prefer `client->_bind`; use `client->_bind_edit` only when users need to make changes the backend processes. Otherwise, you'll cause needless data transfers.
 - Declare public attributes in your app class only for variables shown on the frontend. This keeps the framework from reading unused values.
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 
-### Performance Issues?
+## Performance Issues?
 If you hit performance issues, build a sample and submit a pull request to the samples repository. We're glad to analyze it and see whether abap2UI5 can be made even faster.

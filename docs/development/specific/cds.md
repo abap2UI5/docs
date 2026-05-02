@@ -1,11 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # CDS, EML
 
 All examples in these docs work without CDS or EML. But on a recent ABAP release, you can also use these features in abap2UI5 apps.
 
-### ABAP CDS
+## ABAP CDS
 ABAP Core Data Services (CDS) let you define structured views and read data straight from the database. The example below fetches sales orders from the `I_SalesOrder` view of the Virtual Data Model (VDM) and shows them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC.
@@ -46,10 +46,10 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### EML
+## EML
 The Entity Manipulation Language simplifies work with RAP business objects by giving a consistent way to read, create, update, and delete entities.
 
-#### Read
+### Read
 Use `READ ENTITIES` to fetch sales orders and show them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
@@ -91,7 +91,7 @@ CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Modify
+### Modify
 The example below creates a sales order with `MODIFY` inside an abap2UI5 app:
 
 ```abap

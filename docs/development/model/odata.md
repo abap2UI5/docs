@@ -1,11 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # OData
 
 By default, you bind public attributes of your class to UI5 properties with `_bind` and `_bind_edit`. For cases where you need access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance with large amounts of data.
 
-#### Define Additional Model
+## Define Additional Model
 As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. Make sure the service is publicly reachable. The method below defines the model and exposes it under the name `FLIGHT`:
 ```abap
 client->follow_up_action( client->_event_client(
@@ -14,7 +14,7 @@ client->follow_up_action( client->_event_client(
         ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
         ( `FLIGHT` ) ) ) ).
 ```
-#### Bind Data
+## Bind Data
 Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
@@ -35,7 +35,7 @@ tab->items( )->column_list_item( )->cells(
 ```
 The `growing` property loads data in batches instead of all at once, boosting performance.
 
-#### Full Example
+## Full Example
 The full source code:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -67,7 +67,7 @@ The full source code:
 ENDMETHOD.
 ```
 
-#### Multiple OData Models
+## Multiple OData Models
 You can also bind multiple OData models at once. For example, to bind an extra OData model under the name `TRAVEL`:
 ```abap
 DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
@@ -96,7 +96,7 @@ client->follow_up_action( client->_event_client(
 ```
 For a complete code snippet, see the sample `Z2UI5_CL_DEMO_APP_315`.
 
-#### Metadata Binding
+## Metadata Binding
 In SAP contexts, OData services often carry extra annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. The definitions for the entity `Currency`:
 ```xml
 <EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">

@@ -61,7 +61,7 @@ export default defineConfig({
         items: [
           { text: "Introduction", link: "/get_started/about" },
           { text: "Cookbook", link: "/development/general" },
-          { text: "Configuration", link: "/configuration/setup" },
+          { text: "Configuration", link: "/configuration/checklist" },
           { text: "Advanced Topics", link: "/advanced/downporting" },
           { text: "Technical Insights", link: "/technical/concept" },
           { text: "Resources", link: "/resources/addons" },
@@ -179,9 +179,10 @@ export default defineConfig({
       },
       {
         text: "Configuration",
-        link: "/configuration/setup",
+        link: "/configuration/checklist",
         collapsed: true,
         items: [
+          { text: "Production Checklist", link: "/configuration/checklist" },
           { text: "General", link: "/configuration/setup" },
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },

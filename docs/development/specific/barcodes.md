@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Barcode Scanning
 
@@ -11,7 +11,7 @@ Barcode scanning is common in enterprise apps. With abap2UI5, you can:
 
 This section walks through what you need to get started.
 
-#### Scanning
+## Scanning
 
 Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning easy. Use it like any other UI5 control with abap2UI5. The example below shows the basic behavior — customize the handling once the scanning event fires:
 
@@ -42,11 +42,11 @@ ENDMETHOD.
 ```
 To see barcode scanning in action, check the `Z2UI5_CL_DEMO_APP_124` sample app.
 
-::: tip **UI5 Versions**
+::: tip UI5 Versions
 This feature works only with the UI5 framework, not with OpenUI5.
 :::
 
-#### Focus Handling
+## Focus Handling
 Most scanner devices emulate a keyboard. In that case, add an input field and set focus correctly — the scanned data flows into the input as if typed.
 
 The core piece is the `_z2ui5()->focus()` custom control, which takes a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then moves focus to the matching field on the frontend automatically:
@@ -102,7 +102,7 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Play Sounds
+## Play Sounds
 
 Audio feedback is handy in some scenarios. The example below plays a sound when a scan fails. The sound is a `.wav` file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
@@ -152,5 +152,5 @@ ENDCLASS.
 ```
 For a complete sound sample, see `Z2UI5_CL_DEMO_APP_304`.
 
-#### Render Barcodes
+## Render Barcodes
 To also render barcodes, use bwip-js, which ships with the js-libraries add-on. See [Add-ons](/resources/addons) for details.

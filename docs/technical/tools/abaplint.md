@@ -1,15 +1,15 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # abaplint
 
 This project uses [abaplint](https://abaplint.app/) for static code analysis and several other tasks.
 
-#### Static Code Analysis
+## Static Code Analysis
 
 On every PR, **abaplint** checks the ABAP code to enforce quality and ABAP best practices. Review the project-specific [abaplint configuration](https://github.com/abap2UI5/abap2UI5/blob/main/abaplint.jsonc). All statistics and analysis results live on the [abaplint app dashboard](https://abaplint.app/stats/abap2UI5/abap2UI5).
 
-#### Downporting
+## Downporting
 
 The abaplint downport feature builds an **abap2UI5** version with **syntax compatible with ABAP 7.02** automatically:
 
@@ -17,7 +17,7 @@ The abaplint downport feature builds an **abap2UI5** version with **syntax compa
 abaplint --fix .github/abaplint/abap_702.jsonc
 ```
 
-#### Renaming
+## Renaming
 All artifacts are compatible with the abaplint renaming feature, so you can use abap2UI5 under different custom namespaces:
 
 ```sh

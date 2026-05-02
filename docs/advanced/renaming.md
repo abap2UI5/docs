@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Renaming
 
@@ -10,7 +10,7 @@ The entire abap2UI5 project lives under the `z2ui5` namespace. You may need to r
 
 abap2UI5 works with the abaplint renaming feature and supports namespaces up to 9 characters, e.g., `zabap2ui5`.
 
-#### Functionality
+## Functionality
 For more on renaming ABAP artifacts, see:
 [Automagic standalone renaming of ABAP objects](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
 

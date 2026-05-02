@@ -1,12 +1,12 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # UI5 Freestyle vs. abap2UI5
 _Architecture, State, and Developer Experience_
 
 This page offers a structured technical comparison of **UI5 Freestyle** and **abap2UI5**, focusing on architecture, state handling, developer workflow, and communication models.
 
-### 1. Architectural Paradigms
+## 1. Architectural Paradigms
 
 | Aspect            | UI5 Freestyle (MVC)                                        | abap2UI5                                                   |
 |-------------------|-------------------------------------------------------------|------------------------------------------------------------|
@@ -18,7 +18,7 @@ This page offers a structured technical comparison of **UI5 Freestyle** and **ab
 | **Runtime Control**| Logic split between backend and UI controller              | Full control over UI and logic in backend                 |
 | **Model**         | Defined at design time via CDS                              | Defined at design time or runtime via internal tables     |
 
-### 2. Developer Workflow
+## 2. Developer Workflow
 
 | Aspect                     | UI5 Freestyle                                       | abap2UI5                                               |
 |----------------------------|-----------------------------------------------------|--------------------------------------------------------|
@@ -29,9 +29,9 @@ This page offers a structured technical comparison of **UI5 Freestyle** and **ab
 | **Development Style**      | Imperative, frontend-driven                         | Declarative, ABAP-centric                             |
 | **Complexity**             | High: frontend/backend split                        | Low: unified backend logic and layout                 |
 
-### 3. Client–Server Communication Flow
+## 3. Client–Server Communication Flow
 
-#### UI5 Freestyle
+### UI5 Freestyle
 
 ```plaintext
 Browser (UI5 App)
@@ -43,7 +43,7 @@ Backend (OData/REST)
   └──> Responds to requests, no control over UI
 ```
 
-#### abap2UI5
+### abap2UI5
 
 ```plaintext
 Browser (Static UI5 Shell)
@@ -54,7 +54,7 @@ Backend (ABAP Class)
   └──> Processes event, updates ViewModel, returns changes
 ```
 
-### 4. Flexibility and Runtime Capabilities
+## 4. Flexibility and Runtime Capabilities
 
 | Aspect                    | UI5 Freestyle                              | abap2UI5                                 |
 |---------------------------|---------------------------------------------|------------------------------------------|
@@ -63,7 +63,7 @@ Backend (ABAP Class)
 | **Use Case Fit**          | Strongly interactive or frontend-heavy apps | Backend-driven UIs with clean backend control |
 | **Learning Curve**        | Steep (JS, XML, binding, tooling)           | Flat (ABAP-only, no JS or metadata)      |
 
-### 5. Cloud Readiness and Compliance
+## 5. Cloud Readiness and Compliance
 
 | Feature                    | UI5 Freestyle                | abap2UI5                     |
 |----------------------------|-------------------------------|-------------------------------|
@@ -74,12 +74,12 @@ Backend (ABAP Class)
 
 > 🚀 **Both approaches offer full UI flexibility.** abap2UI5 does this through ABAP alone, while UI5 Freestyle shifts control to the JavaScript layer.
 
-### Conclusion
+## Conclusion
 
 - **UI5 Freestyle** fits interactive, frontend-rich apps that need tight control over the client.
 - **abap2UI5** fits best for backend-driven UIs, faster iteration, and minimal frontend complexity — especially in ABAP-centric teams.
 
-### Summary Table
+## Summary Table
 
 | Category                 | UI5 Freestyle                 | abap2UI5                          |
 |--------------------------|-------------------------------|-----------------------------------|

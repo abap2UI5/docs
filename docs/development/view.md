@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # View
 
@@ -39,5 +39,5 @@ Tips for working with views:
 - Use code completion on `Z2UI5_CL_XML_VIEW` to find controls and properties
 - See the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
-#### Next Steps
+## Next Steps
 This produces a static view. The next section walks through binding and sharing data between the view and the app logic.

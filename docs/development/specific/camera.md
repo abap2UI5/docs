@@ -1,5 +1,5 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Camera
 
@@ -34,6 +34,6 @@ CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-::: tip **Browser Restrictions**
+::: tip Browser Restrictions
 Camera access relies on browser permissions and security settings. Most browsers need HTTPS and display a permission prompt. Watch for browser warnings while testing.
 :::

@@ -1,13 +1,13 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Navigation
 
 In abap2UI5, each app is a single ABAP class. You can pack all logic into one class, but keeping classes at a reasonable size is better practice. Splitting functionality into multiple interacting classes lets you build reusable apps and popups that work in different contexts.
 
-### Cross App Navigation
+## Cross App Navigation
 
-#### Backend
+### Backend
 To call an ABAP class:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -49,7 +49,7 @@ ENDMETHOD.
 Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
 :::
 
-#### Launchpad
+### Launchpad
 We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
 ```abap
 client->_event_client(
@@ -60,6 +60,6 @@ client->_event_client(
 ```
 For more on Launchpads and routing, see the [Fiori Launchpad](/configuration/launchpad) page.
 
-### Inner App Navigation
+## Inner App Navigation
 
 Use class attributes to track the current state and switch views as needed. This keeps navigation logic in a single ABAP class with no cross-app calls.

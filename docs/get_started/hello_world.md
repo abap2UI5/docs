@@ -1,9 +1,11 @@
 ---
-outline: [2, 4]
+outline: [2, 3]
 ---
 # Hello World
 
-### The Interface
+This page walks through a minimal abap2UI5 app step by step — the interface, a view, an event, and data flow. By the end, you have all the pieces you need to start building.
+
+## The Interface
 Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -14,7 +16,7 @@ ENDINTERFACE.
 ```
 The `client` object is your only entry point into the framework. Use it to show views, handle events, share data, and navigate between apps.
 
-### Basic Example
+## Basic Example
 Build a class:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
@@ -34,7 +36,7 @@ ENDCLASS.
 ```
 Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
 
-### View Display
+## View Display
 Let's add a view to show some text:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
@@ -54,7 +56,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Event Handler
+## Event Handler
 The framework calls the `main` method on every roundtrip — on initialization and after every user interaction (button press, input submit, etc.):
 
 ```text
@@ -105,7 +107,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Data Flow
+## Data Flow
 Finally, add a public attribute to send data to the backend:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
@@ -141,6 +143,12 @@ ENDCLASS.
 ```
 That's all you need. Set a breakpoint to watch the communication and data updates in action, then try changing the view, events, and data flow.
 
-::: tip **ABAP Language Versions**
+::: tip ABAP Language Versions
 While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
 :::
+
+## Next Steps
+
+- **[Sample Apps](/get_started/samples)** — 250+ ready-made examples covering tables, forms, popups, navigation, and more.
+- **[Cookbook](/development/general)** — go deeper into the controller pattern, views, models, events, and navigation.
+- **[What's Next?](/get_started/next)** — pointers for production-ready apps, configuration, and add-ons.
