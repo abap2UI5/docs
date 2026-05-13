@@ -215,6 +215,7 @@ export default defineConfig({
             text: "Statefulness, Locks",
             link: "/advanced/stateful",
           },
+          { text: "Logout", link: "/advanced/logout" },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
