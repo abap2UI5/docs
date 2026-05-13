@@ -8,7 +8,7 @@ A logout button isn't a single action. Depending on how an abap2UI5 app was star
 ### The Logout Event
 Fire the event from any controller method to log the user off:
 ```abap
-client->_event_client( val = client->cs_event-system_logout ).
+client->_event_client( client->cs_event-system_logout ).
 ```
 
 Optionally pass a same-origin URL as the first argument to control where the user lands afterwards. The default is `/sap/public/bc/icf/logoff`:
