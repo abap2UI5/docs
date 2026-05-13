@@ -47,10 +47,11 @@ The event terminates whichever layers the current startup context owns:
 | BSP URL | — | redirect to `/sap/public/bc/icf/logoff` | hidden iframe to `?sap-sessioncmd=logoff` first |
 
 ### Customization
-There are four ways to influence what happens on logout. Pick the one that matches your goal.
+There are three ways to influence what happens on logout. Pick the one that matches your goal.
 
 #### Custom Post-Logoff URL
 Pass any same-origin URL as `t_arg`. The browser navigates there once the SAP sessions are ended (see the second example in [The Logout Event](#the-logout-event)). Useful when you want a specific landing page — for instance, the standard BSP logoff confirmation page — without changing any system settings.
+
 
 ::: warning
 The URL must be same-origin. Cross-origin redirects are rejected.
@@ -70,9 +71,6 @@ This is a Basis task. If "I logged out and came right back into the launchpad" i
 
 #### Run Inside the Fiori Launchpad
 If the goal is the cleanest user experience — going through `Container.logout()` and the FLP's own logoff flow — launch the app as an FLP tile, not from a BSP or handler URL. There is no shell to log out from on a non-FLP URL.
-
-#### Custom JavaScript
-For anything the four levers above don't cover (extra `fetch` calls, an Identity Provider single-logout call, post-logoff messaging), override the JavaScript handler in [Custom JS](/advanced/extensibility/custom_js).
 
 ### Single Sign-On
 On any system with SSO (SAML, Kerberos, X.509, OIDC, …), the logout event ends the SAP sessions in the browser, but the Identity Provider session stays untouched. The next request to a protected SAP URL silently re-authenticates, and the user perceives "the logout didn't work."
