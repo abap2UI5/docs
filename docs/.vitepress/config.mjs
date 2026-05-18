@@ -161,6 +161,7 @@ export default defineConfig({
               { text: "CDS, EML", link: "/development/specific/cds" },
               { text: "Draft Handling", link: "/development/specific/draft" },
               { text: "Locks", link: "/development/specific/locks" },
+              { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Drag & Drop", link: "/development/specific/drag" },
               {
@@ -214,10 +215,6 @@ export default defineConfig({
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Builder", link: "/advanced/builds" },
-          {
-            text: "Statefulness, Locks",
-            link: "/advanced/stateful",
-          },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },

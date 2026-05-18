@@ -157,4 +157,4 @@ Does the app edit data at all?
         └── Combined (Lock at Save + Optimistic Check)
 ```
 
-For the underlying concepts and trade-offs of statefulness, see [Statefulness, Locks](../../advanced/stateful.md).
+For the underlying concepts and trade-offs of statefulness, see [Statefulness](./statefulness.md).
