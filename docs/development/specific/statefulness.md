@@ -52,7 +52,3 @@ A few rules of thumb:
 - **Always release on exit.** Wire `set_session_stateful( abap_false )` into your back / cancel / save handlers, not just the happy path.
 - **Keep sessions short.** A stateful session is a held resource, not a place to park work indefinitely.
 - **Public cloud is stateless only.** S/4 Public Cloud and BTP-hosted scenarios do not support stateful sessions — design for the stateless model from day one if cloud-readiness matters.
-
-#### Related
-- [Locks](./locks.md) — strategies for locking business objects, including stateless and stateful patterns
-- [Performance](../../configuration/performance.md) — sizing considerations for productive deployments
