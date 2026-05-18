@@ -55,5 +55,4 @@ A few rules of thumb:
 
 #### Related
 - [Locks](./locks.md) — strategies for locking business objects, including stateless and stateful patterns
-- [Statefulness, Locks (Advanced)](../../advanced/stateful.md) — deeper background on the underlying concept
 - [Performance](../../configuration/performance.md) — sizing considerations for productive deployments

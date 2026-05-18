@@ -215,10 +215,6 @@ export default defineConfig({
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Builder", link: "/advanced/builds" },
-          {
-            text: "Statefulness, Locks",
-            link: "/advanced/stateful",
-          },
           { text: "Local", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
