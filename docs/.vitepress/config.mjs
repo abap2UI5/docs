@@ -161,6 +161,7 @@ export default defineConfig({
               { text: "CDS, EML", link: "/development/specific/cds" },
               { text: "Draft Handling", link: "/development/specific/draft" },
               { text: "Locks", link: "/development/specific/locks" },
+              { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Drag & Drop", link: "/development/specific/drag" },
               {
