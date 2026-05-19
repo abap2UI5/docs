@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Draft Handling
 
-Draft handling lets users save unfinished work — for example a half-filled form — without writing through to the active database state. In abap2UI5 apps you drive RAP draft-enabled business objects directly through EML, just like any other entity (see also [CDS, EML](./cds.md)).
+Draft handling lets users save unfinished work — for example a half-filled form — without writing through to the active database state. In abap2UI5 apps you drive RAP draft-enabled business objects directly through EML, just like any other entity (see also [EML](./eml.md)).
 
 #### Create a Draft
 Use `MODIFY ENTITIES` with `%is_draft = if_abap_behv=>mk-on` to create a new draft instance:

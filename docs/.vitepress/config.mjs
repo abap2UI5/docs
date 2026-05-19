@@ -118,7 +118,15 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Controller", link: "/development/general" },
-          { text: "View", link: "/development/view" },
+          {
+            text: "View",
+            link: "/development/view",
+            collapsed: true,
+            items: [
+              { text: "Expression Binding", link: "/development/model/expression_binding" },
+              { text: "Formatter", link: "/development/specific/formatter" },
+            ],
+          },
           {
             text: "Model",
             link: "/development/model/model",
@@ -126,7 +134,6 @@ export default defineConfig({
             items: [
               { text: "Tables, Trees", link: "/development/model/tables" },
               { text: "Device Model", link: "/development/model/device" },
-              { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "OData", link: "/development/model/odata" },
             ],
           },
@@ -147,6 +154,15 @@ export default defineConfig({
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
           {
+            text: "RAP, EML",
+            collapsed: true,
+            items: [
+              { text: "CDS", link: "/development/specific/cds" },
+              { text: "EML", link: "/development/specific/eml" },
+              { text: "Draft Handling", link: "/development/specific/draft" },
+            ],
+          },
+          {
             text: "Specifics",
             collapsed: true,
             items: [
@@ -158,8 +174,6 @@ export default defineConfig({
               { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Logging", link: "/development/specific/logging" },
               { text: "Camera", link: "/development/specific/camera" },
-              { text: "CDS, EML", link: "/development/specific/cds" },
-              { text: "Draft Handling", link: "/development/specific/draft" },
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Timer", link: "/development/specific/timer" },
@@ -173,7 +187,6 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "URL", link: "/development/specific/url" },
-              { text: "Formatter", link: "/development/specific/formatter" },
               { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
@@ -185,6 +198,7 @@ export default defineConfig({
         link: "/configuration/setup",
         collapsed: true,
         items: [
+          { text: "Installation", link: "/configuration/installation" },
           { text: "General", link: "/configuration/setup" },
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
@@ -193,16 +207,17 @@ export default defineConfig({
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
+          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
-            text: "Installation",
-            link: "/configuration/installation",
+            text: "ABAP Cloud, BTP",
             items: [
               {
                 text: "S/4 Public Cloud",
                 link: "/configuration/s4_public_cloud",
               },
-              { text: "Fiori Launchpad", link: "/configuration/launchpad" },
-              { text: "BTP Work Zone", link: "/configuration/btp" },
+              { text: "BTP ABAP Env", link: "/configuration/btp_abap_env" },
+              { text: "Build Work Zone", link: "/configuration/btp" },
+              { text: "Mobile Start", link: "/configuration/mobile_start" },
             ],
           },
         ],
