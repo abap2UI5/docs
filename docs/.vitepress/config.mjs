@@ -251,18 +251,8 @@ export default defineConfig({
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
           { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
           {
-            text: "Experimental Features",
-            collapsed: true,
-            items: [
-              { text: "Drag & Drop", link: "/development/specific/drag" },
-              {
-                text: "Smart Controls",
-                link: "/development/specific/smart_controls",
-              },
-            ],
-          },
-          {
             text: "Extensibility",
+            collapsed: true,
             items: [
               {
                 text: "User Exits",
@@ -273,6 +263,17 @@ export default defineConfig({
               {
                 text: "Custom Control",
                 link: "/advanced/extensibility/custom_control",
+              },
+            ],
+          },
+          {
+            text: "Experimental",
+            collapsed: true,
+            items: [
+              { text: "Drag & Drop", link: "/development/specific/drag" },
+              {
+                text: "Smart Controls",
+                link: "/development/specific/smart_controls",
               },
             ],
           },
