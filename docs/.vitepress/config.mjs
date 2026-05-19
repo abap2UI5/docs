@@ -163,31 +163,43 @@ export default defineConfig({
             ],
           },
           {
-            text: "Specifics",
+            text: "Browser Features",
             collapsed: true,
             items: [
               {
                 text: "Barcode Scanning",
                 link: "/development/specific/barcodes",
               },
-              { text: "File Handling", link: "/development/specific/files" },
-              { text: "XLSX", link: "/development/specific/xlsx" },
-              { text: "Logging", link: "/development/specific/logging" },
               { text: "Camera", link: "/development/specific/camera" },
-              { text: "Locks", link: "/development/specific/locks" },
-              { text: "Statefulness", link: "/development/specific/statefulness" },
+              {
+                text: "Geolocation, Maps",
+                link: "/development/specific/geolocation",
+              },
+              { text: "File Handling", link: "/development/specific/files" },
+              { text: "URL", link: "/development/specific/url" },
               { text: "Timer", link: "/development/specific/timer" },
+            ],
+          },
+          {
+            text: "Advanced Controls",
+            collapsed: true,
+            items: [
               { text: "Drag & Drop", link: "/development/specific/drag" },
               {
                 text: "Smart Controls",
                 link: "/development/specific/smart_controls",
               },
-              {
-                text: "Geolocation, Maps",
-                link: "/development/specific/geolocation",
-              },
-              { text: "URL", link: "/development/specific/url" },
               { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
+            ],
+          },
+          {
+            text: "Misc Topics",
+            collapsed: true,
+            items: [
+              { text: "Logging", link: "/development/specific/logging" },
+              { text: "XLSX", link: "/development/specific/xlsx" },
+              { text: "Locks", link: "/development/specific/locks" },
+              { text: "Statefulness", link: "/development/specific/statefulness" },
             ],
           },
           { text: "Troubleshooting", link: "/development/trouble" },
