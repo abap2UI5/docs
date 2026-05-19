@@ -147,6 +147,14 @@ export default defineConfig({
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
           {
+            text: "RAP, EML",
+            collapsed: true,
+            items: [
+              { text: "CDS, EML", link: "/development/specific/cds" },
+              { text: "Draft Handling", link: "/development/specific/draft" },
+            ],
+          },
+          {
             text: "Specifics",
             collapsed: true,
             items: [
@@ -158,8 +166,6 @@ export default defineConfig({
               { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Logging", link: "/development/specific/logging" },
               { text: "Camera", link: "/development/specific/camera" },
-              { text: "CDS, EML", link: "/development/specific/cds" },
-              { text: "Draft Handling", link: "/development/specific/draft" },
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Timer", link: "/development/specific/timer" },
