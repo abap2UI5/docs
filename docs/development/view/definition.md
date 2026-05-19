@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# View
+# Definition
 
 In abap2UI5, UI5 renders the UI from an XML view that you build in ABAP. A simple example with raw XML:
 

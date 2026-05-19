@@ -120,18 +120,18 @@ export default defineConfig({
           { text: "Controller", link: "/development/general" },
           {
             text: "View",
-            link: "/development/view",
             collapsed: true,
             items: [
+              { text: "Definition", link: "/development/view/definition" },
               { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "Formatter", link: "/development/specific/formatter" },
             ],
           },
           {
             text: "Model",
-            link: "/development/model/model",
             collapsed: true,
             items: [
+              { text: "Binding", link: "/development/model/binding" },
               { text: "Tables, Trees", link: "/development/model/tables" },
               { text: "Device Model", link: "/development/model/device" },
               { text: "OData", link: "/development/model/odata" },
@@ -150,7 +150,15 @@ export default defineConfig({
               },
             ],
           },
-          { text: "Messages, Errors", link: "/development/messages" },
+          {
+            text: "Messages, Errors",
+            collapsed: true,
+            items: [
+              { text: "Messages", link: "/development/messages/messages" },
+              { text: "Errors", link: "/development/messages/errors" },
+              { text: "Logging", link: "/development/messages/logging" },
+            ],
+          },
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
           {
@@ -175,9 +183,17 @@ export default defineConfig({
                 text: "Geolocation, Maps",
                 link: "/development/specific/geolocation",
               },
-              { text: "File Handling", link: "/development/specific/files" },
+              {
+                text: "File Handling",
+                link: "/development/specific/files",
+                collapsed: true,
+                items: [
+                  { text: "XLSX", link: "/development/specific/xlsx" },
+                ],
+              },
               { text: "URL", link: "/development/specific/url" },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
             ],
           },
           {
@@ -196,13 +212,10 @@ export default defineConfig({
             text: "Misc Topics",
             collapsed: true,
             items: [
-              { text: "Logging", link: "/development/specific/logging" },
-              { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
             ],
           },
-          { text: "Troubleshooting", link: "/development/trouble" },
         ],
       },
       {
