@@ -183,7 +183,14 @@ export default defineConfig({
                 text: "Geolocation, Maps",
                 link: "/development/specific/geolocation",
               },
-              { text: "File Handling", link: "/development/specific/files" },
+              {
+                text: "File Handling",
+                link: "/development/specific/files",
+                collapsed: true,
+                items: [
+                  { text: "XLSX", link: "/development/specific/xlsx" },
+                ],
+              },
               { text: "URL", link: "/development/specific/url" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
@@ -205,7 +212,6 @@ export default defineConfig({
             text: "Misc Topics",
             collapsed: true,
             items: [
-              { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
             ],
