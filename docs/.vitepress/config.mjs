@@ -148,7 +148,7 @@ export default defineConfig({
                 text: "Share, Bookmark",
                 link: "/development/navigation/share",
               },
-              { text: "URL", link: "/development/specific/url" },
+              { text: "URL Handling", link: "/development/specific/url" },
             ],
           },
           {
