@@ -150,7 +150,15 @@ export default defineConfig({
               },
             ],
           },
-          { text: "Messages, Errors", link: "/development/messages" },
+          {
+            text: "Messages, Errors",
+            collapsed: true,
+            items: [
+              { text: "Messages", link: "/development/messages/messages" },
+              { text: "Errors", link: "/development/messages/errors" },
+              { text: "Logging", link: "/development/messages/logging" },
+            ],
+          },
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
           {
@@ -197,7 +205,6 @@ export default defineConfig({
             text: "Misc Topics",
             collapsed: true,
             items: [
-              { text: "Logging", link: "/development/specific/logging" },
               { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },

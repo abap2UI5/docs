@@ -1,9 +1,9 @@
 ---
 outline: [2, 5]
 ---
-# Messages, Errors
+# Messages
 
-Showing messages and errors is an everyday task for ABAP developers. The functions below cover the most common cases.
+Showing messages is an everyday task for ABAP developers. The functions below cover the most common cases.
 
 #### Message Toast
 
@@ -85,41 +85,6 @@ METHOD z2ui5_if_app~main.
     ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
-
-ENDMETHOD.
-```
-#### Error Popup
-To display full details of your exception:
-```abap
-METHOD z2ui5_if_app~main.
-
-  TRY.
-    DATA(lv_val) = 1 / 0.
-  CATCH cx_root INTO DATA(lx).
-    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
-  ENDTRY.
-
-ENDMETHOD.
-```
-
-#### Uncaught Errors
-When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try this:
-
-```abap
-METHOD z2ui5_if_app~main.
-
-    RAISE EXCEPTION NEW cx_sy_itab_line_not_found( ).
-
-ENDMETHOD.
-```
-
-#### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
-
-```abap
-METHOD z2ui5_if_app~main.
-
-    ASSERT 1 = `This is an error message!`.
 
 ENDMETHOD.
 ```
