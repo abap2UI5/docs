@@ -259,7 +259,7 @@ export default defineConfig({
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "HTTP Connector", link: "/advanced/http" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
-          { text: "Legacy-Free Frontend", link: "/advanced/legacy_free" },
+          { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
           {
             text: "Extensibility",
             items: [
