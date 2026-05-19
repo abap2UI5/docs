@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Troubleshooting
+# Debugging
 Since all logic runs in ABAP, you can debug everything in the ABAP environment. Set an external breakpoint, because HTTP calls abap2UI5 apps externally.
 
 ### Backend

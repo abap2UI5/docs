@@ -192,7 +192,7 @@ export default defineConfig({
           { text: "Logout", link: "/configuration/logout" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
-          { text: "Troubleshooting", link: "/configuration/troubleshooting" },
+          { text: "Debugging", link: "/configuration/troubleshooting" },
           {
             text: "Installation",
             link: "/configuration/installation",
