@@ -158,6 +158,7 @@ export default defineConfig({
               { text: "Messages", link: "/development/messages/messages" },
               { text: "Errors", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
+              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
           { text: "Translation, i18n", link: "/development/translation" },
@@ -188,18 +189,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "Advanced Controls",
-            collapsed: true,
-            items: [
-              { text: "Drag & Drop", link: "/development/specific/drag" },
-              {
-                text: "Smart Controls",
-                link: "/development/specific/smart_controls",
-              },
-              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
-            ],
-          },
-          {
             text: "RAP, EML",
             collapsed: true,
             items: [
@@ -209,7 +198,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Misc Topics",
+            text: "Expert Topics",
             collapsed: true,
             items: [
               { text: "Locks", link: "/development/specific/locks" },
@@ -235,6 +224,7 @@ export default defineConfig({
           { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
+            collapsed: true,
             items: [
               {
                 text: "S/4 Public Cloud",
@@ -260,6 +250,17 @@ export default defineConfig({
           { text: "HTTP Connector", link: "/advanced/http" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
           { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
+          {
+            text: "Experimental Features",
+            collapsed: true,
+            items: [
+              { text: "Drag & Drop", link: "/development/specific/drag" },
+              {
+                text: "Smart Controls",
+                link: "/development/specific/smart_controls",
+              },
+            ],
+          },
           {
             text: "Extensibility",
             items: [
