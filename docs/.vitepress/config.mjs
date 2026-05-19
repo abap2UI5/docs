@@ -118,7 +118,15 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Controller", link: "/development/general" },
-          { text: "View", link: "/development/view" },
+          {
+            text: "View",
+            link: "/development/view",
+            collapsed: true,
+            items: [
+              { text: "Expression Binding", link: "/development/model/expression_binding" },
+              { text: "Formatter", link: "/development/specific/formatter" },
+            ],
+          },
           {
             text: "Model",
             link: "/development/model/model",
@@ -126,7 +134,6 @@ export default defineConfig({
             items: [
               { text: "Tables, Trees", link: "/development/model/tables" },
               { text: "Device Model", link: "/development/model/device" },
-              { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "OData", link: "/development/model/odata" },
             ],
           },
@@ -180,7 +187,6 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "URL", link: "/development/specific/url" },
-              { text: "Formatter", link: "/development/specific/formatter" },
               { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
