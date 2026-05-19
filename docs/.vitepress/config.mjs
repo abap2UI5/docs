@@ -209,7 +209,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Misc Topics",
+            text: "Locks, Statefulness",
             collapsed: true,
             items: [
               { text: "Locks", link: "/development/specific/locks" },
