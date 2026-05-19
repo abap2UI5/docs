@@ -148,6 +148,7 @@ export default defineConfig({
                 text: "Share, Bookmark",
                 link: "/development/navigation/share",
               },
+              { text: "URL Handling", link: "/development/specific/url" },
             ],
           },
           {
@@ -161,15 +162,6 @@ export default defineConfig({
           },
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
-          {
-            text: "RAP, EML",
-            collapsed: true,
-            items: [
-              { text: "CDS", link: "/development/specific/cds" },
-              { text: "EML", link: "/development/specific/eml" },
-              { text: "Draft Handling", link: "/development/specific/draft" },
-            ],
-          },
           {
             text: "Browser Features",
             collapsed: true,
@@ -191,7 +183,6 @@ export default defineConfig({
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
-              { text: "URL", link: "/development/specific/url" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
             ],
@@ -209,11 +200,21 @@ export default defineConfig({
             ],
           },
           {
+            text: "RAP, EML",
+            collapsed: true,
+            items: [
+              { text: "CDS", link: "/development/specific/cds" },
+              { text: "EML", link: "/development/specific/eml" },
+              { text: "Draft Handling", link: "/development/specific/draft" },
+            ],
+          },
+          {
             text: "Misc Topics",
             collapsed: true,
             items: [
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
+              { text: "Logout", link: "/configuration/logout" },
             ],
           },
         ],
@@ -228,7 +229,6 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
-          { text: "Logout", link: "/configuration/logout" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
@@ -256,14 +256,8 @@ export default defineConfig({
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Builder", link: "/advanced/builds" },
           { text: "Local", link: "/advanced/local" },
-          {
-            text: "RFC Connector",
-            link: "/advanced/rfc",
-            collapsed: true,
-            items: [
-              { text: "HTTP Connector", link: "/advanced/http" },
-            ],
-          },
+          { text: "RFC Connector", link: "/advanced/rfc" },
+          { text: "HTTP Connector", link: "/advanced/http" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
           {
             text: "Extensibility",

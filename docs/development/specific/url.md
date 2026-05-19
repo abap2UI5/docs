@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# URL
+# URL Handling
 
 Working with URLs is common — reading parameters from the current URL, opening links in new tabs, or managing browser history.
 
