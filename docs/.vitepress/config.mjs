@@ -163,7 +163,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Device",
+            text: "Browser Features",
             collapsed: true,
             items: [
               {
@@ -175,31 +175,31 @@ export default defineConfig({
                 text: "Geolocation, Maps",
                 link: "/development/specific/geolocation",
               },
+              { text: "File Handling", link: "/development/specific/files" },
+              { text: "URL", link: "/development/specific/url" },
+              { text: "Timer", link: "/development/specific/timer" },
             ],
           },
           {
-            text: "Browser Features",
+            text: "Advanced Controls",
             collapsed: true,
             items: [
               { text: "Drag & Drop", link: "/development/specific/drag" },
-              { text: "File Handling", link: "/development/specific/files" },
-              { text: "URL", link: "/development/specific/url" },
+              {
+                text: "Smart Controls",
+                link: "/development/specific/smart_controls",
+              },
+              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
           {
             text: "Misc Topics",
             collapsed: true,
             items: [
-              { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Logging", link: "/development/specific/logging" },
+              { text: "XLSX", link: "/development/specific/xlsx" },
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
-              { text: "Timer", link: "/development/specific/timer" },
-              {
-                text: "Smart Controls",
-                link: "/development/specific/smart_controls",
-              },
-              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
           { text: "Troubleshooting", link: "/development/trouble" },
