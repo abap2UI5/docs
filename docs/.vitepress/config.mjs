@@ -150,7 +150,8 @@ export default defineConfig({
             text: "RAP, EML",
             collapsed: true,
             items: [
-              { text: "CDS, EML", link: "/development/specific/cds" },
+              { text: "CDS", link: "/development/specific/cds" },
+              { text: "EML", link: "/development/specific/eml" },
               { text: "Draft Handling", link: "/development/specific/draft" },
             ],
           },
