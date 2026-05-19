@@ -163,14 +163,6 @@ export default defineConfig({
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
           {
-            text: "Locks, Statefulness",
-            collapsed: true,
-            items: [
-              { text: "Locks", link: "/development/specific/locks" },
-              { text: "Statefulness", link: "/development/specific/statefulness" },
-            ],
-          },
-          {
             text: "Browser Features",
             collapsed: true,
             items: [
@@ -214,6 +206,14 @@ export default defineConfig({
               { text: "CDS", link: "/development/specific/cds" },
               { text: "EML", link: "/development/specific/eml" },
               { text: "Draft Handling", link: "/development/specific/draft" },
+            ],
+          },
+          {
+            text: "Misc Topics",
+            collapsed: true,
+            items: [
+              { text: "Locks", link: "/development/specific/locks" },
+              { text: "Statefulness", link: "/development/specific/statefulness" },
             ],
           },
         ],
