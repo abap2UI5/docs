@@ -256,7 +256,14 @@ export default defineConfig({
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Builder", link: "/advanced/builds" },
           { text: "Local", link: "/advanced/local" },
-          { text: "RFC Connector", link: "/advanced/rfc" },
+          {
+            text: "RFC Connector",
+            link: "/advanced/rfc",
+            collapsed: true,
+            items: [
+              { text: "HTTP Connector", link: "/advanced/http" },
+            ],
+          },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
           {
             text: "Extensibility",
