@@ -141,20 +141,23 @@ On modern releases, RAP draft-enabled business objects manage locking for you: t
 #### 8. Lock-Manager Add-on
 The community add-on [**lock-manager**](https://github.com/abap2UI5-addons/lock-manager) wraps the lock logic in a reusable class — including stale-lock cleanup and a "locked by X since…" message for the user. Install it like any other [add-on](../../resources/addons.md) and call it instead of writing the boilerplate yourself.
 
-#### Choosing a Strategy
-```
-Does the app edit data at all?
-├── No → render as read-only
-└── Yes
-    ├── A released, draft-enabled SAP BO already covers this object?
-    │   └── RAP Drafts
-    ├── Need "locked by X" feedback at open?
-    │   ├── Few users, GUI-like feel → Stateful Session
-    │   └── Many users               → Soft Lock + save guard
-    ├── A lock-manager add-on available for your platform?
-    │   └── Lock-Manager Add-on
-    └── Default high-scale stateless editing
-        └── Combined (Lock at Save + Optimistic Check)
-```
+#### Overview
+
+| # | Strategy | "Locked by X" while editing | Catches external writes | Stateless | Best fit |
+|---|---|---|---|---|---|
+| 1 | No Locking | no | no | yes | Demos, sandboxes |
+| 2 | Lock at Save | no | partial (race window) | yes | Single-app writers, low contention |
+| 3 | Optimistic Check | no | yes (timestamp) | yes | Many concurrent users |
+| 4 | Combined | no | yes | yes | **Production default** |
+| 5 | Stateful Session | yes (enqueue) | yes | no (pins work process) | GUI-like feel, few users |
+| 6 | Soft Lock | yes (Z table) | only via underlying guard | yes | "Locked by Alice" UX |
+| 7 | RAP Drafts | yes (RAP-managed) | yes | yes | A released draft-enabled BO exists |
+| 8 | Lock-Manager Add-on | yes | yes | yes | Skip the boilerplate |
+
+Start with **(4) Combined** unless one of these tips the balance:
+- The app is read-only → no lock needed
+- A released, draft-enabled SAP BO already covers your object → **(7) RAP Drafts**
+- You need a "locked by X since…" message at open → add **(6) Soft Lock** on top of (4), or use **(5) Stateful Session** for few users with a GUI-like feel
+- A lock-manager add-on exists for your platform → **(8) Lock-Manager Add-on**
 
 For the underlying concepts and trade-offs of statefulness, see [Statefulness](./statefulness.md).
