@@ -214,6 +214,7 @@ export default defineConfig({
             items: [
               { text: "Locks", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
+              { text: "Logout", link: "/configuration/logout" },
             ],
           },
         ],
@@ -228,7 +229,6 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
-          { text: "Logout", link: "/configuration/logout" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
