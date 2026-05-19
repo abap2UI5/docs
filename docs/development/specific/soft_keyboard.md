@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Troubleshooting
+# Soft Keyboard
 
 #### Hide Soft Keyboard
 

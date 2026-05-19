@@ -178,6 +178,7 @@ export default defineConfig({
               { text: "File Handling", link: "/development/specific/files" },
               { text: "URL", link: "/development/specific/url" },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
             ],
           },
           {
@@ -202,7 +203,6 @@ export default defineConfig({
               { text: "Statefulness", link: "/development/specific/statefulness" },
             ],
           },
-          { text: "Troubleshooting", link: "/development/trouble" },
         ],
       },
       {
