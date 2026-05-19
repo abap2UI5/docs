@@ -162,12 +162,11 @@ export default defineConfig({
           { text: "Translation, i18n", link: "/development/translation" },
           { text: "Popups, Popovers", link: "/development/popups" },
           {
-            text: "RAP, EML",
+            text: "Locks, Statefulness",
             collapsed: true,
             items: [
-              { text: "CDS", link: "/development/specific/cds" },
-              { text: "EML", link: "/development/specific/eml" },
-              { text: "Draft Handling", link: "/development/specific/draft" },
+              { text: "Locks", link: "/development/specific/locks" },
+              { text: "Statefulness", link: "/development/specific/statefulness" },
             ],
           },
           {
@@ -209,11 +208,12 @@ export default defineConfig({
             ],
           },
           {
-            text: "Locks, Statefulness",
+            text: "RAP, EML",
             collapsed: true,
             items: [
-              { text: "Locks", link: "/development/specific/locks" },
-              { text: "Statefulness", link: "/development/specific/statefulness" },
+              { text: "CDS", link: "/development/specific/cds" },
+              { text: "EML", link: "/development/specific/eml" },
+              { text: "Draft Handling", link: "/development/specific/draft" },
             ],
           },
         ],
