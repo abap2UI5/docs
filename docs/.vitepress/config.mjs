@@ -252,6 +252,7 @@ export default defineConfig({
           { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
           {
             text: "Extensibility",
+            collapsed: true,
             items: [
               {
                 text: "User Exits",
