@@ -185,6 +185,7 @@ export default defineConfig({
         link: "/configuration/setup",
         collapsed: true,
         items: [
+          { text: "Installation", link: "/configuration/installation" },
           { text: "General", link: "/configuration/setup" },
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
@@ -195,14 +196,15 @@ export default defineConfig({
           { text: "Debugging", link: "/configuration/troubleshooting" },
           { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
-            text: "Installation",
-            link: "/configuration/installation",
+            text: "ABAP Cloud, BTP",
             items: [
               {
                 text: "S/4 Public Cloud",
                 link: "/configuration/s4_public_cloud",
               },
-              { text: "BTP Work Zone", link: "/configuration/btp" },
+              { text: "BTP ABAP Env", link: "/configuration/btp_abap_env" },
+              { text: "Build Work Zone", link: "/configuration/btp" },
+              { text: "Mobile Start", link: "/configuration/mobile_start" },
             ],
           },
         ],
