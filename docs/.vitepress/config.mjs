@@ -193,6 +193,7 @@ export default defineConfig({
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
+          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
             text: "Installation",
             link: "/configuration/installation",
@@ -201,7 +202,6 @@ export default defineConfig({
                 text: "S/4 Public Cloud",
                 link: "/configuration/s4_public_cloud",
               },
-              { text: "Fiori Launchpad", link: "/configuration/launchpad" },
               { text: "BTP Work Zone", link: "/configuration/btp" },
             ],
           },
