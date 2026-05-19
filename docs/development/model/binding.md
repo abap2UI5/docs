@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Model
+# Binding
 
 In abap2UI5, there are two ways to share data between your ABAP code and the UI5 frontend.
 
