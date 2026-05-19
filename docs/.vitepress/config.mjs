@@ -148,6 +148,7 @@ export default defineConfig({
                 text: "Share, Bookmark",
                 link: "/development/navigation/share",
               },
+              { text: "URL", link: "/development/specific/url" },
             ],
           },
           {
@@ -190,7 +191,6 @@ export default defineConfig({
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
-              { text: "URL", link: "/development/specific/url" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
             ],
