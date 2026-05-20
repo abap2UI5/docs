@@ -208,16 +208,15 @@ export default defineConfig({
                 text: "Geolocation, Map",
                 link: "/development/specific/geolocation",
               },
+              { text: "Timer", link: "/development/specific/timer" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               {
                 text: "File Handling",
                 link: "/development/specific/files",
-                collapsed: true,
                 items: [
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
-              { text: "Timer", link: "/development/specific/timer" },
-              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
             ],
           },
           {
