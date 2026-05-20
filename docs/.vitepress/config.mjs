@@ -244,7 +244,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Expert Topic",
+            text: "Expert, More",
             link: "/development/specific/locks",
             collapsed: true,
             items: [
@@ -252,13 +252,6 @@ export default defineConfig({
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
-            ],
-          },
-          {
-            text: "More",
-            link: "/development/specific/email",
-            collapsed: true,
-            items: [
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Value Help", link: "/development/specific/value_help" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
