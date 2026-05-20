@@ -60,7 +60,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Cookbook", link: "/development/general" },
+          { text: "Cookbook", link: "/development/controller/controller" },
           { text: "Configuration", link: "/configuration/setup" },
           { text: "Advanced Topic", link: "/advanced/downporting" },
           { text: "Technical Insight", link: "/technical/concept" },
@@ -114,10 +114,20 @@ export default defineConfig({
       },
       {
         text: "Cookbook",
-        link: "/development/general",
+        link: "/development/controller/controller",
         collapsed: true,
         items: [
-          { text: "Controller", link: "/development/general" },
+          {
+            text: "Controller",
+            link: "/development/controller/controller",
+            collapsed: true,
+            items: [
+              { text: "Life Cycle", link: "/development/controller/life_cycle" },
+              { text: "Init", link: "/development/controller/init" },
+              { text: "Event", link: "/development/controller/event" },
+              { text: "Navigated", link: "/development/controller/navigated" },
+            ],
+          },
           {
             text: "View",
             collapsed: true,
