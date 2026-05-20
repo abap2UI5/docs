@@ -134,7 +134,6 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Definition", link: "/development/view/definition" },
-              { text: "Nested", link: "/development/view/nested" },
               { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "Formatter", link: "/development/specific/formatter" },
             ],
@@ -267,6 +266,7 @@ export default defineConfig({
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
               { text: "XML Templating", link: "/development/specific/xml_templating" },
+              { text: "Nested Views", link: "/development/view/nested" },
             ],
           },
         ],
