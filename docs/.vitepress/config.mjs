@@ -243,7 +243,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "HANA, CDS, SQL",
+            text: "CDS, SQL",
             link: "/development/specific/cds",
             collapsed: true,
             items: [
