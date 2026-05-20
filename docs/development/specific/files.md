@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# File Handling
+# Upload, Download
 
 abap2UI5 handles file uploads and downloads by sending base64-encoded data over two-way binding.
 

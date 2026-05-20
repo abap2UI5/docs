@@ -221,10 +221,13 @@ export default defineConfig({
               },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Clipboard", link: "/development/specific/clipboard" },
+              { text: "Title", link: "/development/specific/title" },
               {
-                text: "File Handling",
+                text: "Upload, Download",
                 link: "/development/specific/files",
                 items: [
+                  { text: "PDF", link: "/development/specific/pdf" },
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
@@ -253,11 +256,9 @@ export default defineConfig({
           },
           {
             text: "More",
-            link: "/development/specific/pdf",
+            link: "/development/specific/email",
             collapsed: true,
             items: [
-              { text: "PDF", link: "/development/specific/pdf" },
-              { text: "Clipboard", link: "/development/specific/clipboard" },
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Value Help", link: "/development/specific/value_help" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
