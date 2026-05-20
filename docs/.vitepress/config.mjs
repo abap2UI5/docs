@@ -134,6 +134,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Definition", link: "/development/view/definition" },
+              { text: "Nested", link: "/development/view/nested" },
               { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "Formatter", link: "/development/specific/formatter" },
             ],
