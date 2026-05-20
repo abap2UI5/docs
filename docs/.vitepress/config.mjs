@@ -167,9 +167,9 @@ export default defineConfig({
               { text: "Message", link: "/development/messages/messages" },
               { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
+              { text: "Translation, i18n", link: "/development/translation" },
             ],
           },
-          { text: "Translation, i18n", link: "/development/translation" },
           {
             text: "Popup, Popover",
             link: "/development/popups/popup",
