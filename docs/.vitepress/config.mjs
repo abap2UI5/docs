@@ -265,6 +265,7 @@ export default defineConfig({
               { text: "Value Help", link: "/development/specific/value_help" },
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
+              { text: "XML Templating", link: "/development/specific/xml_templating" },
             ],
           },
         ],
