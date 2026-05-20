@@ -195,17 +195,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "Common Patterns",
-            link: "/development/patterns/form",
-            collapsed: true,
-            items: [
-              { text: "Form", link: "/development/patterns/form" },
-              { text: "Master-Detail", link: "/development/patterns/master_detail" },
-              { text: "Filter, Search, Table", link: "/development/patterns/filter_table" },
-              { text: "IconTabBar", link: "/development/patterns/icon_tab_bar" },
-            ],
-          },
-          {
             text: "Browser Features",
             link: "/development/specific/barcodes",
             collapsed: true,
@@ -231,6 +220,17 @@ export default defineConfig({
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
+            ],
+          },
+          {
+            text: "Common Patterns",
+            link: "/development/patterns/form",
+            collapsed: true,
+            items: [
+              { text: "Form", link: "/development/patterns/form" },
+              { text: "Master-Detail", link: "/development/patterns/master_detail" },
+              { text: "Filter, Search, Table", link: "/development/patterns/filter_table" },
+              { text: "IconTabBar", link: "/development/patterns/icon_tab_bar" },
             ],
           },
           {
@@ -261,8 +261,8 @@ export default defineConfig({
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
-              { text: "E-Mail", link: "/development/specific/email" },
               { text: "Value Help", link: "/development/specific/value_help" },
+              { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
             ],
           },
@@ -281,7 +281,7 @@ export default defineConfig({
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
-          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
+          { text: "Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
             collapsed: true,
