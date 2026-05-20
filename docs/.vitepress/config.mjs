@@ -234,13 +234,21 @@ export default defineConfig({
             ],
           },
           {
-            text: "RAP, EML, HANA",
+            text: "RAP, EML",
+            link: "/development/specific/eml",
+            collapsed: true,
+            items: [
+              { text: "EML", link: "/development/specific/eml" },
+              { text: "Draft Handling", link: "/development/specific/draft" },
+            ],
+          },
+          {
+            text: "HANA, CDS, SQL",
             link: "/development/specific/cds",
             collapsed: true,
             items: [
               { text: "CDS", link: "/development/specific/cds" },
-              { text: "EML", link: "/development/specific/eml" },
-              { text: "Draft Handling", link: "/development/specific/draft" },
+              { text: "ABAP SQL", link: "/development/specific/abap_sql" },
               { text: "Fuzzy Search", link: "/development/specific/fuzzy_search" },
             ],
           },
