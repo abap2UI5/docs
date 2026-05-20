@@ -162,7 +162,16 @@ export default defineConfig({
             ],
           },
           { text: "Translation, i18n", link: "/development/translation" },
-          { text: "Popups, Popovers", link: "/development/popups" },
+          {
+            text: "Popups, Popovers",
+            link: "/development/popups/popups",
+            collapsed: true,
+            items: [
+              { text: "Popups", link: "/development/popups/popups" },
+              { text: "Popover", link: "/development/popups/popover" },
+              { text: "Built-In", link: "/development/popups/built_in" },
+            ],
+          },
           {
             text: "Browser Features",
             collapsed: true,
