@@ -281,7 +281,7 @@ export default defineConfig({
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
-          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
+          { text: "Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
             collapsed: true,
