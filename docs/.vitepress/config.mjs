@@ -146,7 +146,6 @@ export default defineConfig({
               { text: "Binding", link: "/development/model/binding" },
               { text: "Table, Tree", link: "/development/model/tables" },
               { text: "Device Model", link: "/development/model/device" },
-              { text: "OData", link: "/development/model/odata" },
             ],
           },
           {
@@ -267,6 +266,7 @@ export default defineConfig({
               { text: "Demo Output", link: "/development/specific/demo_output" },
               { text: "XML Templating", link: "/development/specific/xml_templating" },
               { text: "Nested Views", link: "/development/view/nested" },
+              { text: "OData", link: "/development/model/odata" },
             ],
           },
         ],
