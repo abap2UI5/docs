@@ -144,7 +144,8 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Binding", link: "/development/model/binding" },
-              { text: "Table, Tree", link: "/development/model/tables" },
+              { text: "Tables", link: "/development/model/tables" },
+              { text: "Trees", link: "/development/model/trees" },
               { text: "Device Model", link: "/development/model/device" },
             ],
           },

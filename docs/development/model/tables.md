@@ -1,8 +1,8 @@
 ---
 outline: [2, 4]
 ---
-# Tables, Trees
-This section walks through rendering nested data structures — tables, trees, and nested records — in views.
+# Tables
+This section walks through rendering tabular and nested data in views.
 
 ### Tables
 The example below binds a simple table to a UI5 control:
@@ -80,75 +80,6 @@ To make a table editable, switch the binding to `bind_edit`:
     ENDIF.
 
   ENDMETHOD.
-```
-
-### Tree
-For trees, use nested structures:
-```abap
-CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-    TYPES:
-      BEGIN OF ty_prodh_node_level3,
-        is_selected TYPE abap_bool,
-        text        TYPE string,
-        prodh       TYPE string,
-      END OF ty_prodh_node_level3,
-      BEGIN OF ty_prodh_node_level2,
-        is_selected TYPE abap_bool,
-        text        TYPE string,
-        prodh       TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level2,
-      BEGIN OF ty_prodh_node_level1,
-        is_selected TYPE abap_bool,
-        text        TYPE string,
-        prodh       TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
-      END OF ty_prodh_node_level1,
-      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
-    DATA prodh_nodes    TYPE ty_prodh_nodes.
-
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-
-    prodh_nodes = VALUE #( (
-        text = `Machines`
-        prodh  = `00100`
-        nodes  = VALUE #( (
-            text = `Pumps`
-            prodh = `0010000100`
-            nodes = VALUE #( (
-                text  = `Pump 001`
-                prodh = `001000010000000100` ) (
-                text  = `Pump 002`
-                prodh = `001000010000000105` ) )
-        ) ) ) (
-        text  = `Paints`
-        prodh = `00110`
-        nodes = VALUE #( (
-            text  = `Gloss paints`
-            prodh = `0011000105`
-            nodes = VALUE #( (
-                text  = `Paint 001`
-                prodh = `001100010500000100` ) (
-                text  = `Paint 002`
-                prodh = `001100010500000105` )
-    ) ) ) ) ).
-
-    DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
-        )->tree( items = client->_bind_edit( prodh_nodes )
-            )->items( )->standard_tree_item(
-                selected = `{IS_SELECTED}`
-                title    = `{TEXT}` ).
-
-    client->view_display( tree->stringify( ) ).
-
-  ENDMETHOD.
-ENDCLASS.
 ```
 
 ### Nested Structures
