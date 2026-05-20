@@ -237,13 +237,14 @@ export default defineConfig({
               { text: "Lock", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Logout", link: "/configuration/logout" },
-              {
-                text: "More",
-                collapsed: true,
-                items: [
-                  { text: "Demo Output", link: "/development/specific/demo_output" },
-                ],
-              },
+            ],
+          },
+          {
+            text: "More",
+            link: "/development/specific/demo_output",
+            collapsed: true,
+            items: [
+              { text: "Demo Output", link: "/development/specific/demo_output" },
             ],
           },
         ],
