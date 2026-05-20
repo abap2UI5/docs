@@ -195,7 +195,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "UI Patterns",
+            text: "Common Patterns",
             link: "/development/patterns/form",
             collapsed: true,
             items: [
@@ -206,7 +206,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Browser Feature",
+            text: "Browser Features",
             link: "/development/specific/barcodes",
             collapsed: true,
             items: [
@@ -243,7 +243,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "HANA, CDS, SQL",
+            text: "CDS, SQL",
             link: "/development/specific/cds",
             collapsed: true,
             items: [
