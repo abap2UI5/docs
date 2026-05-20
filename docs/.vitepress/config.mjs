@@ -144,9 +144,9 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Binding", link: "/development/model/binding" },
-              { text: "Table, Tree", link: "/development/model/tables" },
+              { text: "Tables", link: "/development/model/tables" },
+              { text: "Trees", link: "/development/model/trees" },
               { text: "Device Model", link: "/development/model/device" },
-              { text: "OData", link: "/development/model/odata" },
             ],
           },
           {
@@ -265,6 +265,9 @@ export default defineConfig({
               { text: "Value Help", link: "/development/specific/value_help" },
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
+              { text: "XML Templating", link: "/development/specific/xml_templating" },
+              { text: "Nested Views", link: "/development/view/nested" },
+              { text: "OData", link: "/development/model/odata" },
             ],
           },
         ],
