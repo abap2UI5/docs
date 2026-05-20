@@ -236,14 +236,19 @@ export default defineConfig({
             items: [
               { text: "Lock", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
+              { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
             ],
           },
           {
             text: "More",
-            link: "/development/specific/demo_output",
+            link: "/development/specific/pdf",
             collapsed: true,
             items: [
+              { text: "PDF", link: "/development/specific/pdf" },
+              { text: "Clipboard", link: "/development/specific/clipboard" },
+              { text: "E-Mail", link: "/development/specific/email" },
+              { text: "Value Help", link: "/development/specific/value_help" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
             ],
           },
