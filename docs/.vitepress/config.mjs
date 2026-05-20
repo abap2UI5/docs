@@ -221,27 +221,31 @@ export default defineConfig({
               },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Clipboard", link: "/development/specific/clipboard" },
+              { text: "Title", link: "/development/specific/title" },
               {
-                text: "File Handling",
+                text: "Upload, Download",
                 link: "/development/specific/files",
                 items: [
+                  { text: "PDF", link: "/development/specific/pdf" },
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
             ],
           },
           {
-            text: "RAP, EML",
+            text: "RAP, EML, HANA",
             link: "/development/specific/cds",
             collapsed: true,
             items: [
               { text: "CDS", link: "/development/specific/cds" },
               { text: "EML", link: "/development/specific/eml" },
               { text: "Draft Handling", link: "/development/specific/draft" },
+              { text: "Fuzzy Search", link: "/development/specific/fuzzy_search" },
             ],
           },
           {
-            text: "Expert Topic",
+            text: "Expert, More",
             link: "/development/specific/locks",
             collapsed: true,
             items: [
@@ -249,15 +253,6 @@ export default defineConfig({
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
-            ],
-          },
-          {
-            text: "More",
-            link: "/development/specific/pdf",
-            collapsed: true,
-            items: [
-              { text: "PDF", link: "/development/specific/pdf" },
-              { text: "Clipboard", link: "/development/specific/clipboard" },
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Value Help", link: "/development/specific/value_help" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
