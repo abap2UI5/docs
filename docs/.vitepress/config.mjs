@@ -60,7 +60,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Cookbook", link: "/development/general" },
+          { text: "Cookbook", link: "/development/controller/life_cycle" },
           { text: "Configuration", link: "/configuration/setup" },
           { text: "Advanced Topic", link: "/advanced/downporting" },
           { text: "Technical Insight", link: "/technical/concept" },
@@ -114,10 +114,20 @@ export default defineConfig({
       },
       {
         text: "Cookbook",
-        link: "/development/general",
+        link: "/development/controller/life_cycle",
         collapsed: true,
         items: [
-          { text: "Controller", link: "/development/general" },
+          {
+            text: "Controller",
+            link: "/development/controller/life_cycle",
+            collapsed: true,
+            items: [
+              { text: "Life Cycle", link: "/development/controller/life_cycle" },
+              { text: "Init", link: "/development/controller/init" },
+              { text: "Event", link: "/development/controller/event" },
+              { text: "Navigated", link: "/development/controller/navigated" },
+            ],
+          },
           {
             text: "View",
             collapsed: true,
@@ -137,12 +147,22 @@ export default defineConfig({
               { text: "OData", link: "/development/model/odata" },
             ],
           },
-          { text: "Event", link: "/development/events" },
           {
-            text: "Navigation",
-            link: "/development/navigation/navigation",
+            text: "Event",
+            link: "/development/events/backend",
             collapsed: true,
             items: [
+              { text: "Backend", link: "/development/events/backend" },
+              { text: "Frontend", link: "/development/events/frontend" },
+              { text: "Follow-up", link: "/development/events/follow_up" },
+            ],
+          },
+          {
+            text: "Navigation",
+            link: "/development/navigation/inner_cross_app",
+            collapsed: true,
+            items: [
+              { text: "Inner, Cross App", link: "/development/navigation/inner_cross_app" },
               { text: "App State", link: "/development/navigation/app_state" },
               {
                 text: "Share, Bookmark",
@@ -158,10 +178,9 @@ export default defineConfig({
               { text: "Message", link: "/development/messages/messages" },
               { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
-              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
+              { text: "Translation, i18n", link: "/development/translation" },
             ],
           },
-          { text: "Translation, i18n", link: "/development/translation" },
           {
             text: "Popup, Popover",
             link: "/development/popups/popup",
@@ -213,6 +232,13 @@ export default defineConfig({
               { text: "Lock", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Logout", link: "/configuration/logout" },
+              {
+                text: "More",
+                collapsed: true,
+                items: [
+                  { text: "Demo Output", link: "/development/specific/demo_output" },
+                ],
+              },
             ],
           },
         ],
@@ -228,7 +254,7 @@ export default defineConfig({
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
-          { text: "Productive Usage", link: "/configuration/productive_usage" },
+          { text: "Production Use", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
           { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
@@ -239,7 +265,7 @@ export default defineConfig({
                 text: "S/4 Public Cloud",
                 link: "/configuration/s4_public_cloud",
               },
-              { text: "BTP ABAP Env", link: "/configuration/btp_abap_env" },
+              { text: "BTP ABAP Environment", link: "/configuration/btp_abap_env" },
               { text: "Build Work Zone", link: "/configuration/btp" },
               { text: "Mobile Start", link: "/configuration/mobile_start" },
             ],
@@ -253,8 +279,8 @@ export default defineConfig({
         items: [
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
-          { text: "Builder", link: "/advanced/builds" },
-          { text: "Local", link: "/advanced/local" },
+          { text: "Build Process", link: "/advanced/builds" },
+          { text: "Local Setup", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "HTTP Connector", link: "/advanced/http" },
           { text: "Fiori Elements Integration", link: "/advanced/fiori" },
@@ -267,7 +293,7 @@ export default defineConfig({
                 text: "User Exit",
                 link: "/advanced/extensibility/user_exits",
               },
-              { text: "Custom JS", link: "/advanced/extensibility/custom_js" },
+              { text: "Custom JavaScript", link: "/advanced/extensibility/custom_js" },
               { text: "Frontend", link: "/advanced/extensibility/frontend" },
               {
                 text: "Custom Control",
@@ -300,6 +326,7 @@ export default defineConfig({
           {
             text: "Technology",
             link: "/technical/technology/overview",
+            collapsed: true,
             items: [
               { text: "RAP", link: "/technical/technology/rap" },
               { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
@@ -307,7 +334,7 @@ export default defineConfig({
           },
           {
             text: "Tool",
-            collapsed: false,
+            collapsed: true,
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },

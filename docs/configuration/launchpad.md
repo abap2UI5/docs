@@ -16,6 +16,16 @@ Use these parameters for target mapping in your Launchpad configuration:
 - ID: `z2ui5`
 - Parameter: `app_start / Z2UI5_CL_MY_APP`
 
+### Cross App Navigation
+We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
+```abap
+client->_event_client(
+    val   = client->cs_event-cross_app_nav_to_ext
+    t_arg = VALUE #( (
+        `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
+    ) ) ).
+```
+
 ### Troubleshooting
 Sometimes installation via abapGit causes cache-related issues. Here's how to clear them:
 
