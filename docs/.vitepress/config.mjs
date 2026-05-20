@@ -167,7 +167,6 @@ export default defineConfig({
               { text: "Message", link: "/development/messages/messages" },
               { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
-              { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
           { text: "Translation, i18n", link: "/development/translation" },
@@ -222,6 +221,13 @@ export default defineConfig({
               { text: "Lock", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Logout", link: "/configuration/logout" },
+              {
+                text: "More",
+                collapsed: true,
+                items: [
+                  { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
+                ],
+              },
             ],
           },
         ],
