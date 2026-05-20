@@ -49,16 +49,7 @@ ENDMETHOD.
 Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
 :::
 
-### Launchpad
-We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
-```abap
-client->_event_client(
-    val   = client->cs_event-cross_app_nav_to_ext
-    t_arg = VALUE #( (
-        `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
-    ) ) ).
-```
-For more on Launchpads and routing, see the [Fiori Launchpad](/configuration/launchpad) page.
+For Launchpad-based cross app navigation, see the [Fiori Launchpad](/configuration/launchpad) page.
 
 ## Inner App Navigation
 
