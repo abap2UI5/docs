@@ -162,6 +162,7 @@ export default defineConfig({
             link: "/development/navigation/navigation",
             collapsed: true,
             items: [
+              { text: "Inner/Cross App", link: "/development/navigation/inner_cross_app" },
               { text: "App State", link: "/development/navigation/app_state" },
               {
                 text: "Share, Bookmark",
