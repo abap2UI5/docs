@@ -235,19 +235,12 @@ export default defineConfig({
             ],
           },
           {
-            text: "RAP, EML",
+            text: "EML, CDS, SQL",
             link: "/development/specific/eml",
             collapsed: true,
             items: [
               { text: "EML", link: "/development/specific/eml" },
               { text: "Draft Handling", link: "/development/specific/draft" },
-            ],
-          },
-          {
-            text: "CDS, SQL",
-            link: "/development/specific/cds",
-            collapsed: true,
-            items: [
               { text: "CDS", link: "/development/specific/cds" },
               { text: "ABAP SQL", link: "/development/specific/abap_sql" },
               { text: "Fuzzy Search", link: "/development/specific/fuzzy_search" },
