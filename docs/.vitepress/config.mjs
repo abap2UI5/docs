@@ -130,6 +130,7 @@ export default defineConfig({
           },
           {
             text: "View",
+            link: "/development/view/definition",
             collapsed: true,
             items: [
               { text: "Definition", link: "/development/view/definition" },
@@ -139,6 +140,7 @@ export default defineConfig({
           },
           {
             text: "Model",
+            link: "/development/model/binding",
             collapsed: true,
             items: [
               { text: "Binding", link: "/development/model/binding" },
@@ -173,6 +175,7 @@ export default defineConfig({
           },
           {
             text: "Message, Error",
+            link: "/development/messages/messages",
             collapsed: true,
             items: [
               { text: "Message", link: "/development/messages/messages" },
@@ -193,6 +196,7 @@ export default defineConfig({
           },
           {
             text: "Browser Feature",
+            link: "/development/specific/barcodes",
             collapsed: true,
             items: [
               {
@@ -204,20 +208,20 @@ export default defineConfig({
                 text: "Geolocation, Map",
                 link: "/development/specific/geolocation",
               },
+              { text: "Timer", link: "/development/specific/timer" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               {
                 text: "File Handling",
                 link: "/development/specific/files",
-                collapsed: true,
                 items: [
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
-              { text: "Timer", link: "/development/specific/timer" },
-              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
             ],
           },
           {
             text: "RAP, EML",
+            link: "/development/specific/cds",
             collapsed: true,
             items: [
               { text: "CDS", link: "/development/specific/cds" },
@@ -227,18 +231,20 @@ export default defineConfig({
           },
           {
             text: "Expert Topic",
+            link: "/development/specific/locks",
             collapsed: true,
             items: [
               { text: "Lock", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Logout", link: "/configuration/logout" },
-              {
-                text: "More",
-                collapsed: true,
-                items: [
-                  { text: "Demo Output", link: "/development/specific/demo_output" },
-                ],
-              },
+            ],
+          },
+          {
+            text: "More",
+            link: "/development/specific/demo_output",
+            collapsed: true,
+            items: [
+              { text: "Demo Output", link: "/development/specific/demo_output" },
             ],
           },
         ],
