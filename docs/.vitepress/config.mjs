@@ -195,17 +195,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "Common Patterns",
-            link: "/development/patterns/form",
-            collapsed: true,
-            items: [
-              { text: "Form", link: "/development/patterns/form" },
-              { text: "Master-Detail", link: "/development/patterns/master_detail" },
-              { text: "Filter, Search, Table", link: "/development/patterns/filter_table" },
-              { text: "IconTabBar", link: "/development/patterns/icon_tab_bar" },
-            ],
-          },
-          {
             text: "Browser Features",
             link: "/development/specific/barcodes",
             collapsed: true,
@@ -231,6 +220,17 @@ export default defineConfig({
                   { text: "XLSX", link: "/development/specific/xlsx" },
                 ],
               },
+            ],
+          },
+          {
+            text: "Common Patterns",
+            link: "/development/patterns/form",
+            collapsed: true,
+            items: [
+              { text: "Form", link: "/development/patterns/form" },
+              { text: "Master-Detail", link: "/development/patterns/master_detail" },
+              { text: "Filter, Search, Table", link: "/development/patterns/filter_table" },
+              { text: "IconTabBar", link: "/development/patterns/icon_tab_bar" },
             ],
           },
           {
