@@ -62,9 +62,9 @@ export default defineConfig({
           { text: "Introduction", link: "/get_started/about" },
           { text: "Cookbook", link: "/development/general" },
           { text: "Configuration", link: "/configuration/setup" },
-          { text: "Advanced Topics", link: "/advanced/downporting" },
-          { text: "Technical Insights", link: "/technical/concept" },
-          { text: "Resources", link: "/resources/addons" },
+          { text: "Advanced Topic", link: "/advanced/downporting" },
+          { text: "Technical Insight", link: "/technical/concept" },
+          { text: "Resource", link: "/resources/addons" },
         ],
       },
       {
@@ -91,7 +91,7 @@ export default defineConfig({
       {
         text: "1.141.0",
         items: [
-          { text: "Releases", link: "/resources/changelog" },
+          { text: "Release", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
           { text: "Contribution", link: "/resources/contribution" },
           { text: "Sponsor", link: "/resources/sponsor" },
@@ -107,8 +107,8 @@ export default defineConfig({
           { text: "Introduction", link: "/get_started/about" },
           { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Hello World", link: "/get_started/hello_world" },
-          { text: "Sample Apps", link: "/get_started/samples" },
-          { text: "Use Cases", link: "/get_started/use_cases" },
+          { text: "Sample App", link: "/get_started/samples" },
+          { text: "Use Case", link: "/get_started/use_cases" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
@@ -132,12 +132,12 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Binding", link: "/development/model/binding" },
-              { text: "Tables, Trees", link: "/development/model/tables" },
+              { text: "Table, Tree", link: "/development/model/tables" },
               { text: "Device Model", link: "/development/model/device" },
               { text: "OData", link: "/development/model/odata" },
             ],
           },
-          { text: "Events", link: "/development/events" },
+          { text: "Event", link: "/development/events" },
           {
             text: "Navigation",
             link: "/development/navigation/navigation",
@@ -152,28 +152,28 @@ export default defineConfig({
             ],
           },
           {
-            text: "Messages, Errors",
+            text: "Message, Error",
             collapsed: true,
             items: [
-              { text: "Messages", link: "/development/messages/messages" },
-              { text: "Errors", link: "/development/messages/errors" },
+              { text: "Message", link: "/development/messages/messages" },
+              { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
               { text: "CL_DEMO_OUTPUT", link: "/development/specific/demo_output" },
             ],
           },
           { text: "Translation, i18n", link: "/development/translation" },
           {
-            text: "Popups, Popovers",
-            link: "/development/popups/popups",
+            text: "Popup, Popover",
+            link: "/development/popups/popup",
             collapsed: true,
             items: [
-              { text: "Popups", link: "/development/popups/popups" },
+              { text: "Popup", link: "/development/popups/popup" },
               { text: "Popover", link: "/development/popups/popover" },
               { text: "Built-In", link: "/development/popups/built_in" },
             ],
           },
           {
-            text: "Browser Features",
+            text: "Browser Feature",
             collapsed: true,
             items: [
               {
@@ -182,7 +182,7 @@ export default defineConfig({
               },
               { text: "Camera", link: "/development/specific/camera" },
               {
-                text: "Geolocation, Maps",
+                text: "Geolocation, Map",
                 link: "/development/specific/geolocation",
               },
               {
@@ -207,10 +207,10 @@ export default defineConfig({
             ],
           },
           {
-            text: "Expert Topics",
+            text: "Expert Topic",
             collapsed: true,
             items: [
-              { text: "Locks", link: "/development/specific/locks" },
+              { text: "Lock", link: "/development/specific/locks" },
               { text: "Statefulness", link: "/development/specific/statefulness" },
               { text: "Logout", link: "/configuration/logout" },
             ],
@@ -227,7 +227,7 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
-          { text: "UI5 Versions", link: "/configuration/ui5_versions" },
+          { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Debugging", link: "/configuration/troubleshooting" },
           { text: "Fiori Launchpad", link: "/configuration/launchpad" },
@@ -247,7 +247,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "Advanced Topics",
+        text: "Advanced Topic",
         link: "/advanced/downporting",
         collapsed: true,
         items: [
@@ -264,7 +264,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
-                text: "User Exits",
+                text: "User Exit",
                 link: "/advanced/extensibility/user_exits",
               },
               { text: "Custom JS", link: "/advanced/extensibility/custom_js" },
@@ -281,7 +281,7 @@ export default defineConfig({
             items: [
               { text: "Drag & Drop", link: "/development/specific/drag" },
               {
-                text: "Smart Controls",
+                text: "Smart Control",
                 link: "/development/specific/smart_controls",
               },
             ],
@@ -289,12 +289,12 @@ export default defineConfig({
         ],
       },
       {
-        text: "Technical Insights",
+        text: "Technical Insight",
         link: "/technical/concept",
         collapsed: true,
         items: [
           { text: "UI5 Over-the-Wire", link: "/technical/concept" },
-          { text: "ABAP Thinking, UI5 Results", link: "/technical/dx" },
+          { text: "ABAP Thinking, UI5 Result", link: "/technical/dx" },
           { text: "Cloud Readiness", link: "/technical/cloud" },
           { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
           {
@@ -306,7 +306,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Tools",
+            text: "Tool",
             collapsed: false,
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
@@ -321,14 +321,14 @@ export default defineConfig({
         ],
       },
       {
-        text: "Resources",
+        text: "Resource",
         link: "/resources/addons",
         collapsed: true,
         items: [
-          { text: "Add-ons", link: "/resources/addons" },
-          { text: "References", link: "/resources/references" },
+          { text: "Add-on", link: "/resources/addons" },
+          { text: "Reference", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
-          { text: "Releases", link: "/resources/changelog" },
+          { text: "Release", link: "/resources/changelog" },
           { text: "License", link: "/resources/license" },
           { text: "Support", link: "/resources/support" },
           { text: "Contact", link: "/resources/contact" },

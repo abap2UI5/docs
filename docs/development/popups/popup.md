@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Popups
+# Popup
 
 UI5 offers popups that overlay specific parts of the view. This section walks through building them in abap2UI5.
 
