@@ -137,7 +137,16 @@ export default defineConfig({
               { text: "OData", link: "/development/model/odata" },
             ],
           },
-          { text: "Event", link: "/development/events" },
+          {
+            text: "Event",
+            link: "/development/events/backend",
+            collapsed: true,
+            items: [
+              { text: "Backend", link: "/development/events/backend" },
+              { text: "Frontend", link: "/development/events/frontend" },
+              { text: "Follow-up", link: "/development/events/follow_up" },
+            ],
+          },
           {
             text: "Navigation",
             link: "/development/navigation/navigation",
