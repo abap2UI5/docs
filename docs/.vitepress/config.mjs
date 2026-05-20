@@ -209,6 +209,7 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "Focus", link: "/development/specific/focus" },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               { text: "Clipboard", link: "/development/specific/clipboard" },
               { text: "Title", link: "/development/specific/title" },
