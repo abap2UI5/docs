@@ -31,9 +31,9 @@ CLASS z2ui5_cl_sample_clipboard IMPLEMENTATION.
             )->stringify( ) ).
 
       WHEN client->check_on_event( `COPY` ).
-        client->follow_up_action( client->_event_client(
+        client->action(
             val   = client->cs_event-clipboard_copy
-            t_arg = VALUE #( ( mv_text ) ) ) ).
+            t_arg = VALUE #( ( mv_text ) ) ).
         client->message_toast_display( `copied` ).
 
     ENDCASE.

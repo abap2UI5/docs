@@ -8,11 +8,11 @@ By default, you bind public attributes of your class to UI5 properties with `_bi
 #### Define Additional Model
 As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. Make sure the service is publicly reachable. The method below defines the model and exposes it under the name `FLIGHT`:
 ```abap
-client->follow_up_action( client->_event_client(
-    val = z2ui5_if_client=>cs_event-set_odata_model
+client->action(
+    val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
-        ( `FLIGHT` ) ) ) ).
+        ( `FLIGHT` ) ) ).
 ```
 #### Bind Data
 Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
@@ -58,11 +58,11 @@ The full source code:
 
     client->view_display( tab->stringify( ) ).
 
-    client->follow_up_action( client->_event_client(
+    client->action(
         val   = z2ui5_if_client=>cs_event-set_odata_model
         t_arg = VALUE #(
             ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
-            ( `FLIGHT` ) ) ) ).
+            ( `FLIGHT` ) ) ).
 
 ENDMETHOD.
 ```
@@ -88,11 +88,11 @@ tab->items( )->column_list_item( )->cells(
 
 client->view_display( tab->stringify( ) ).
 
-client->follow_up_action( client->_event_client(
+client->action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).
+        ( `TRAVEL` ) ) ).
 ```
 For a complete code snippet, see the sample `Z2UI5_CL_DEMO_APP_315`.
 
@@ -144,10 +144,10 @@ tab->items( )->column_list_item( )->cells(
 
 client->view_display( tab->stringify( ) ).
 
-client->follow_up_action( client->_event_client(
+client->action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
-        ( `TRAVEL` ) ) ) ).
+        ( `TRAVEL` ) ) ).
 ```
 UI5 now picks each column title in the user's language automatically.

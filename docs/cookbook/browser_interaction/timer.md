@@ -3,20 +3,21 @@ outline: [2, 4]
 ---
 # Timer
 
-abap2UI5 offers a custom control `z2ui5.Timer` that fires events after a set delay. This is handy for dashboards, status monitors, or any case that needs periodic data updates without user interaction.
+Fire a backend event after a delay with the `start_timer` frontend event. Handy for dashboards, status monitors, or any case that needs a delayed or periodic update without user interaction.
 
-Add the timer as a view element with `_z2ui5( )->timer( ... )`. These parameters apply:
+Pass the event name to fire and the delay in milliseconds:
 
-| Parameter     | Description                                      |
-|---------------|--------------------------------------------------|
-| `finished`    | Event fired when the timer expires               |
-| `delayms`     | Delay in milliseconds before firing              |
-| `checkactive` | Bind to an `abap_bool` to turn the timer on/off  |
-| `checkrepeat` | If `abap_true`, the timer repeats automatically  |
+```abap
+client->action(
+    val   = client->cs_event-start_timer
+    t_arg = VALUE #( ( `REFRESH` ) ( `2000` ) ) ).
+```
 
-#### Basic Usage
+After 2 seconds the browser triggers a backend roundtrip with the event name `REFRESH`, which you handle via `check_on_event` like any other event.
 
-Embed the timer in your view and control it via data binding. The example below increments a counter every 2 seconds:
+#### Periodic Refresh
+
+To get a repeating timer, simply re-arm it at the end of each handler:
 
 ```abap
 CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
@@ -24,7 +25,6 @@ CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA counter TYPE i.
-    DATA check_timer_active TYPE abap_bool.
 
 ENDCLASS.
 
@@ -34,110 +34,45 @@ CLASS z2ui5_cl_sample_timer IMPLEMENTATION.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        check_timer_active = abap_true.
-
         client->view_display( z2ui5_cl_xml_view=>factory(
             )->page( `abap2UI5 - Timer`
                 )->text( client->_bind( counter )
-                )->_z2ui5( )->timer(
-                    checkactive = client->_bind( check_timer_active )
-                    delayms     = `2000`
-                    finished    = client->_event( `TIMER_FINISHED` )
-                    checkrepeat = abap_true
             )->stringify( ) ).
+        client->action( val   = client->cs_event-start_timer
+                        t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
 
-      WHEN client->check_on_event( `TIMER_FINISHED` ).
+      WHEN client->check_on_event( `TICK` ).
         counter = counter + 1.
         client->view_model_update( ).
+        client->action( val   = client->cs_event-start_timer
+                        t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
 
     ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.
 ```
-With `checkrepeat = abap_true`, the timer restarts after each event automatically — no manual restart needed.
+
+The counter increments every 2 seconds. To stop the loop, simply don't re-arm the timer in the handler.
 
 #### One-Shot Timer
 
-For a one-shot fire (e.g., to open a new browser tab), omit `checkrepeat` and control activation via `checkactive`:
+A single `start_timer` call fires once — perfect for a deferred action like opening a new tab after a short delay:
 
 ```abap
-CLASS z2ui5_cl_sample_timer_once DEFINITION PUBLIC.
+WHEN client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
+  client->action( val   = client->cs_event-start_timer
+                  t_arg = VALUE #( ( `FIRE_OPEN_TAB` ) ( `500` ) ) ).
 
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-    DATA mv_url TYPE string.
-    DATA mv_check_timer_active TYPE abap_bool.
-    DATA client TYPE REF TO z2ui5_if_client.
-    METHODS display_view.
-
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_timer_once IMPLEMENTATION.
-
-  METHOD display_view.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
-    client->view_display( view->shell(
-          )->page( title          = `abap2UI5 - Timer One-Shot`
-                   navbuttonpress = client->_event( `BACK` )
-                   shownavbutton  = client->check_app_prev_stack( )
-             )->_z2ui5( )->timer(
-                  checkactive = client->_bind( mv_check_timer_active )
-                  finished    = client->_event_client(
-                      val   = client->cs_event-open_new_tab
-                      t_arg = VALUE #( ( `$` && client->_bind( mv_url ) ) ) )
-              )->simple_form( title    = `Form Title`
-                              editable = abap_true
-                  )->content( `form`
-                      )->button(
-                          text  = `open new tab`
-                          press = client->_event( `BUTTON_OPEN_NEW_TAB` )
-           )->stringify( ) ).
-
-  ENDMETHOD.
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-
-    IF client->check_on_init( ).
-      mv_check_timer_active = abap_false.
-      display_view( ).
-    ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN `BUTTON_OPEN_NEW_TAB`.
-        mv_check_timer_active = abap_true.
-        mv_url = `https://www.google.com/search?q=abap2ui5`.
-        client->view_model_update( ).
-
-      WHEN `BACK`.
-        client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-ENDCLASS.
+WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
+  client->action( val   = client->cs_event-open_new_tab
+                  t_arg = VALUE #( ( `https://www.google.com/search?q=abap2ui5` ) ) ).
 ```
-The timer starts inactive. When the user clicks the button, the handler sets `mv_check_timer_active` to `abap_true` and the timer fires once, opening a new browser tab via `_event_client`.
 
-#### Stopping a Repeating Timer
+#### Replacing a Pending Timer
 
-To stop a repeating timer, set the bound `checkactive` flag to `abap_false`:
-
-```abap
-  WHEN client->check_on_event( `TOGGLE_TIMER` ).
-    IF check_timer_active = abap_true.
-      check_timer_active = abap_false.
-    ELSE.
-      check_timer_active = abap_true.
-    ENDIF.
-    client->view_model_update( ).
-```
+There is one timer at a time. Calling `start_timer` again before the previous one fires replaces it — useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke.
 
 ::: warning
-Each timer event causes a full backend roundtrip. Use sensible intervals (e.g., 2000ms or more) to avoid heavy server load.
+Each timer tick causes a full backend roundtrip. Use sensible intervals (e.g. 2000 ms or more) to avoid heavy server load.
 :::

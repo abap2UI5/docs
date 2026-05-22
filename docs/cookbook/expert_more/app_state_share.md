@@ -74,7 +74,7 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
 
       WHEN client->check_on_event( `BUTTON_POST` ).
 
-        client->follow_up_action( client->_event_client( z2ui5_if_client=>cs_event-CLIPBOARD_APP_STATE ) ).
+        client->action( z2ui5_if_client=>cs_event-clipboard_app_state ).
         client->message_toast_display( `clipboard copied` ).
 
     ENDCASE.

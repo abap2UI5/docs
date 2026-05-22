@@ -47,20 +47,17 @@ This feature works only with the UI5 framework, not with OpenUI5.
 :::
 
 #### Focus Handling
-Most scanner devices emulate a keyboard. In that case, add an input field and set focus correctly — the scanned data flows into the input as if typed.
+Most scanner devices emulate a keyboard. In that case, add an input field and move the focus from the backend — the scanned data flows into the input as if typed.
 
-The core piece is the `_z2ui5()->focus()` custom control, which takes a bound `focus_id` attribute. When the user presses Enter (firing the `submit` event), the backend updates `focus_id` to the next input field's ID and calls `view_model_update` — the framework then moves focus to the matching field on the frontend automatically:
-
-An example that manages input focus and moves between fields after scanning and pressing Enter:
+The example below moves focus from one field to the next after each Enter key press by firing the `set_focus` frontend event:
 
 ```abap
 CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA one      TYPE string.
-    DATA two      TYPE string.
-    DATA focus_id TYPE string.
+    DATA one TYPE string.
+    DATA two TYPE string.
 
 ENDCLASS.
 
@@ -68,34 +65,32 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      focus_id = `id1`.
 
       DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
       page->simple_form(
          )->content( ns = `form`
          )->label( `One`
          )->input(
-              id = `id1`
-              value = client->_bind_edit( one )
-              submit = client->_event( |one_enter| )
+              id     = `id1`
+              value  = client->_bind_edit( one )
+              submit = client->_event( `ONE_ENTER` )
          )->label( `Two`
          )->input(
-              id = `id2`
-              value = client->_bind_edit( two )
-              submit = client->_event( |two_enter| ) ).
+              id     = `id2`
+              value  = client->_bind_edit( two )
+              submit = client->_event( `TWO_ENTER` ) ).
 
-      page->_z2ui5( )->focus( client->_bind( focus_id ) ).
       client->view_display( page->stringify( ) ).
-
+      RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN `one_enter`.
-        focus_id = `id2`.
-        client->view_model_update( ).
-      WHEN `two_enter`.
-        focus_id = `id1`.
-        client->view_model_update( ).
+      WHEN `ONE_ENTER`.
+        client->action( val   = client->cs_event-set_focus
+                        t_arg = VALUE #( ( `id2` ) ) ).
+      WHEN `TWO_ENTER`.
+        client->action( val   = client->cs_event-set_focus
+                        t_arg = VALUE #( ( `id1` ) ) ).
     ENDCASE.
 
   ENDMETHOD.
@@ -104,7 +99,7 @@ ENDCLASS.
 
 #### Play Sounds
 
-Audio feedback is handy in some scenarios. The example below plays a sound when a scan fails. The sound is a `.wav` file in the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
+Audio feedback is handy in some scenarios. Fire the `play_audio` frontend event with the URL of a sound file — for example a `.wav` from the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
 
 ```abap
 CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
@@ -121,25 +116,23 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
     IF client->check_on_init( ).
 
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->_generic( name = `script`
-                      ns   = `html` )->_cc_plain_xml(
-                          |function playSound() \{ new Audio("/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav").play(); \}| ).
-
       DATA(vbox) = view->page( )->vbox( ).
       vbox->input( id          = `inputApp`
                    value       = client->_bind_edit( company_code )
                    type        = `Number`
                    placeholder = `Company Code`
-                   submit      = client->_event( `CUSTOM_JS_FROM_EB` ) ).
-      vbox->button( text  = `call custom JS from EB`
-                    press = client->_event( `CUSTOM_JS_FROM_EB` ) ).
+                   submit      = client->_event( `CHECK_INPUT` ) ).
+      vbox->button( text  = `check`
+                    press = client->_event( `CHECK_INPUT` ) ).
 
       client->view_display( view->stringify( ) ).
+      RETURN.
     ENDIF.
 
-    IF client->get( )-event = `CUSTOM_JS_FROM_EB`.
+    IF client->get( )-event = `CHECK_INPUT`.
       IF company_code IS INITIAL.
-        client->follow_up_action( val = `playSound()` ).
+        client->action( val   = client->cs_event-play_audio
+                        t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav` ) ) ).
         client->message_box_display( type = `error` text = `Input is empty!` ).
       ELSE.
         CLEAR company_code.

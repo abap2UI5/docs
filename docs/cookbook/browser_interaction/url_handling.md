@@ -16,9 +16,9 @@ DATA(lv_search) = client->get( )-s_config-search.
 Open a URL in a new browser tab via a frontend event:
 ```abap
 DATA(lv_url) = `https://www.abap2UI5.org`.
-client->follow_up_action( client->_event_client(
-    val = client->cs_event-open_new_tab
-    t_arg = VALUE #( ( lv_url ) ) ) ).
+client->action(
+    val   = client->cs_event-open_new_tab
+    t_arg = VALUE #( ( lv_url ) ) ).
 ```
 
 ### Browser History
