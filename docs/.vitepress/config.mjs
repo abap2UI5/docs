@@ -177,32 +177,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "Device Capabilities",
-            link: "/cookbook/device_capabilities/info",
-            collapsed: true,
-            items: [
-              { text: "Info", link: "/cookbook/device_capabilities/info" },
-              { text: "Camera", link: "/cookbook/device_capabilities/camera" },
-              {
-                text: "Geolocation",
-                link: "/cookbook/device_capabilities/geolocation",
-              },
-              { text: "Soft Keyboard", link: "/cookbook/device_capabilities/soft_keyboard" },
-              {
-                text: "Barcode Scanning",
-                link: "/cookbook/device_capabilities/barcode_scanning",
-              },
-              {
-                text: "Upload, Download",
-                link: "/cookbook/device_capabilities/upload_download",
-                items: [
-                  { text: "PDF", link: "/cookbook/device_capabilities/pdf" },
-                  { text: "Spreadsheet", link: "/cookbook/device_capabilities/spreadsheet" },
-                ],
-              },
-            ],
-          },
-          {
             text: "Browser Interaction",
             link: "/cookbook/browser_interaction/title",
             collapsed: true,
@@ -236,6 +210,32 @@ export default defineConfig({
               { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
               { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
               { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
+            ],
+          },
+          {
+            text: "Device Capabilities",
+            link: "/cookbook/device_capabilities/info",
+            collapsed: true,
+            items: [
+              { text: "Info", link: "/cookbook/device_capabilities/info" },
+              { text: "Camera", link: "/cookbook/device_capabilities/camera" },
+              {
+                text: "Geolocation",
+                link: "/cookbook/device_capabilities/geolocation",
+              },
+              { text: "Soft Keyboard", link: "/cookbook/device_capabilities/soft_keyboard" },
+              {
+                text: "Barcode Scanning",
+                link: "/cookbook/device_capabilities/barcode_scanning",
+              },
+              {
+                text: "Upload, Download",
+                link: "/cookbook/device_capabilities/upload_download",
+                items: [
+                  { text: "PDF", link: "/cookbook/device_capabilities/pdf" },
+                  { text: "Spreadsheet", link: "/cookbook/device_capabilities/spreadsheet" },
+                ],
+              },
             ],
           },
           {
