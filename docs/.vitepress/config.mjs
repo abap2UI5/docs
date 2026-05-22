@@ -135,8 +135,8 @@ export default defineConfig({
             items: [
               { text: "Overview", link: "/development/view/overview" },
               { text: "Definition", link: "/development/view/definition" },
-              { text: "Expression Binding", link: "/development/model/expression_binding" },
-              { text: "Formatter", link: "/development/specific/formatter" },
+              { text: "Nested Views", link: "/development/view/nested" },
+              { text: "XML Templating", link: "/development/specific/xml_templating" },
             ],
           },
           {
@@ -144,7 +144,14 @@ export default defineConfig({
             link: "/development/model/binding",
             collapsed: true,
             items: [
-              { text: "Binding", link: "/development/model/binding" },
+              {
+                text: "Binding",
+                link: "/development/model/binding",
+                items: [
+                  { text: "Expression Binding", link: "/development/model/expression_binding" },
+                  { text: "Formatter", link: "/development/specific/formatter" },
+                ],
+              },
               { text: "Tables", link: "/development/model/tables" },
               { text: "Trees", link: "/development/model/trees" },
               { text: "Device Model", link: "/development/model/device" },
@@ -258,8 +265,6 @@ export default defineConfig({
               { text: "Value Help", link: "/development/specific/value_help" },
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
-              { text: "XML Templating", link: "/development/specific/xml_templating" },
-              { text: "Nested Views", link: "/development/view/nested" },
               { text: "OData", link: "/development/model/odata" },
             ],
           },
