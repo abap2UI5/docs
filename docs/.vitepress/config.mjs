@@ -184,6 +184,7 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Frontend Info", link: "/development/specific/frontend_info" },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
