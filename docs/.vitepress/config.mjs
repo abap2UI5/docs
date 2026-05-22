@@ -147,6 +147,7 @@ export default defineConfig({
               { text: "Tables", link: "/development/model/tables" },
               { text: "Trees", link: "/development/model/trees" },
               { text: "Device Model", link: "/development/model/device" },
+              { text: "Size Limit", link: "/development/model/size_limit" },
             ],
           },
           {
