@@ -170,17 +170,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "Message, Error",
-            link: "/development/messages/messages",
-            collapsed: true,
-            items: [
-              { text: "Message", link: "/development/messages/messages" },
-              { text: "Error", link: "/development/messages/errors" },
-              { text: "Logging", link: "/development/messages/logging" },
-              { text: "Translation, i18n", link: "/development/translation" },
-            ],
-          },
-          {
             text: "Popup, Popover",
             link: "/development/popups/popup",
             collapsed: true,
@@ -226,6 +215,10 @@ export default defineConfig({
               { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "URL Handling", link: "/development/specific/url" },
+              { text: "Message", link: "/development/messages/messages" },
+              { text: "Error", link: "/development/messages/errors" },
+              { text: "Logging", link: "/development/messages/logging" },
+              { text: "Translation, i18n", link: "/development/translation" },
             ],
           },
           {
