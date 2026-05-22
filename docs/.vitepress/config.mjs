@@ -159,7 +159,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Event",
+            text: "Event, Navigation",
             link: "/development/events/backend",
             collapsed: true,
             items: [
