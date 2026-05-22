@@ -153,10 +153,17 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Life Cycle", link: "/development/controller/life_cycle" },
-              { text: "Backend", link: "/development/events/backend" },
-              { text: "Frontend", link: "/development/events/frontend" },
-              { text: "Follow-up", link: "/development/events/follow_up" },
-              { text: "Navigation", link: "/development/navigation/inner_cross_app" },
+              {
+                text: "Event",
+                link: "/development/events/backend",
+                items: [
+                  { text: "Backend", link: "/development/events/backend" },
+                  { text: "Frontend", link: "/development/events/frontend" },
+                ],
+              },
+              { text: "Action", link: "/development/events/follow_up" },
+              { text: "App Navigation", link: "/development/navigation/inner_cross_app" },
+              { text: "Error", link: "/development/messages/errors" },
             ],
           },
           {
@@ -171,20 +178,20 @@ export default defineConfig({
           },
           {
             text: "Device Capabilities",
-            link: "/development/specific/barcodes",
+            link: "/development/specific/info",
             collapsed: true,
             items: [
-              {
-                text: "Barcode Scanning",
-                link: "/development/specific/barcodes",
-              },
+              { text: "Info", link: "/development/specific/info" },
               { text: "Camera", link: "/development/specific/camera" },
               {
                 text: "Geolocation",
                 link: "/development/specific/geolocation",
               },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
-              { text: "Frontend Info", link: "/development/specific/frontend_info" },
+              {
+                text: "Barcode Scanning",
+                link: "/development/specific/barcodes",
+              },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
@@ -197,24 +204,23 @@ export default defineConfig({
           },
           {
             text: "Browser Interaction",
-            link: "/development/specific/focus",
+            link: "/development/specific/title",
             collapsed: true,
             items: [
+              { text: "Title", link: "/development/specific/title" },
               { text: "Focus", link: "/development/specific/focus" },
               { text: "Scrolling", link: "/development/specific/scrolling" },
-              { text: "Clipboard", link: "/development/specific/clipboard" },
-              { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "Clipboard", link: "/development/specific/clipboard" },
               { text: "URL Handling", link: "/development/specific/url" },
             ],
           },
           {
-            text: "Message, Error",
+            text: "Translation, Messages",
             link: "/development/messages/messages",
             collapsed: true,
             items: [
               { text: "Message", link: "/development/messages/messages" },
-              { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
               { text: "Translation, i18n", link: "/development/translation" },
             ],
@@ -242,7 +248,7 @@ export default defineConfig({
               { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/development/model/odata" },
-              { text: "App State, Share, Bookmark", link: "/development/navigation/app_state" },
+              { text: "App State, Share", link: "/development/navigation/app_state" },
               {
                 text: "Utilities",
                 collapsed: false,
