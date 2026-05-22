@@ -196,7 +196,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Browser Features",
+            text: "Device Capabilities",
             link: "/development/specific/barcodes",
             collapsed: true,
             items: [
@@ -206,14 +206,10 @@ export default defineConfig({
               },
               { text: "Camera", link: "/development/specific/camera" },
               {
-                text: "Geolocation, Map",
+                text: "Geolocation",
                 link: "/development/specific/geolocation",
               },
-              { text: "Timer", link: "/development/specific/timer" },
-              { text: "Focus", link: "/development/specific/focus" },
-              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               { text: "Clipboard", link: "/development/specific/clipboard" },
-              { text: "Title", link: "/development/specific/title" },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
@@ -222,6 +218,18 @@ export default defineConfig({
                   { text: "Spreadsheet", link: "/development/specific/xlsx" },
                 ],
               },
+            ],
+          },
+          {
+            text: "UI Interaction",
+            link: "/development/specific/focus",
+            collapsed: true,
+            items: [
+              { text: "Focus", link: "/development/specific/focus" },
+              { text: "Scrolling", link: "/development/specific/scrolling" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Title", link: "/development/specific/title" },
+              { text: "Timer", link: "/development/specific/timer" },
             ],
           },
           {
