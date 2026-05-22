@@ -177,6 +177,29 @@ export default defineConfig({
             ],
           },
           {
+            text: "Translation, Messages",
+            link: "/cookbook/translation_messages/message",
+            collapsed: true,
+            items: [
+              { text: "Message", link: "/cookbook/translation_messages/message" },
+              { text: "Logging", link: "/cookbook/translation_messages/logging" },
+              { text: "Translation, i18n", link: "/cookbook/translation_messages/translation_i18n" },
+            ],
+          },
+          {
+            text: "Browser Interaction",
+            link: "/cookbook/browser_interaction/title",
+            collapsed: true,
+            items: [
+              { text: "Title", link: "/cookbook/browser_interaction/title" },
+              { text: "Focus", link: "/cookbook/browser_interaction/focus" },
+              { text: "Scrolling", link: "/cookbook/browser_interaction/scrolling" },
+              { text: "Timer", link: "/cookbook/browser_interaction/timer" },
+              { text: "Clipboard", link: "/cookbook/browser_interaction/clipboard" },
+              { text: "URL Handling", link: "/cookbook/browser_interaction/url_handling" },
+            ],
+          },
+          {
             text: "Device Capabilities",
             link: "/cookbook/device_capabilities/info",
             collapsed: true,
@@ -203,42 +226,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "Browser Interaction",
-            link: "/cookbook/browser_interaction/title",
-            collapsed: true,
-            items: [
-              { text: "Title", link: "/cookbook/browser_interaction/title" },
-              { text: "Focus", link: "/cookbook/browser_interaction/focus" },
-              { text: "Scrolling", link: "/cookbook/browser_interaction/scrolling" },
-              { text: "Timer", link: "/cookbook/browser_interaction/timer" },
-              { text: "Clipboard", link: "/cookbook/browser_interaction/clipboard" },
-              { text: "URL Handling", link: "/cookbook/browser_interaction/url_handling" },
-            ],
-          },
-          {
-            text: "Translation, Messages",
-            link: "/cookbook/translation_messages/message",
-            collapsed: true,
-            items: [
-              { text: "Message", link: "/cookbook/translation_messages/message" },
-              { text: "Logging", link: "/cookbook/translation_messages/logging" },
-              { text: "Translation, i18n", link: "/cookbook/translation_messages/translation_i18n" },
-            ],
-          },
-          {
-            text: "EML, CDS, SQL",
-            link: "/cookbook/eml_cds_sql/rap",
-            collapsed: true,
-            items: [
-              { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
-              { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
-              { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
-              { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
-              { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
-              { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
-            ],
-          },
-          {
             text: "Expert, More",
             link: "/cookbook/expert_more/lock",
             collapsed: true,
@@ -250,12 +237,23 @@ export default defineConfig({
               { text: "OData", link: "/cookbook/expert_more/odata" },
               { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
               {
+                text: "EML, CDS, SQL",
+                link: "/cookbook/eml_cds_sql/rap",
+                items: [
+                  { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
+                  { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
+                  { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
+                  { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
+                  { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
+                ],
+              },
+              {
                 text: "Utilities",
-                collapsed: false,
                 items: [
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
                   { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
                   { text: "E-Mail", link: "/cookbook/expert_more/email" },
+                  { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
                 ],
               },
             ],
