@@ -156,7 +156,7 @@ export default defineConfig({
               { text: "Backend", link: "/development/events/backend" },
               { text: "Frontend", link: "/development/events/frontend" },
               { text: "Action", link: "/development/events/follow_up" },
-              { text: "Navigation", link: "/development/navigation/inner_cross_app" },
+              { text: "App Navigation", link: "/development/navigation/inner_cross_app" },
               { text: "Error", link: "/development/messages/errors" },
             ],
           },
