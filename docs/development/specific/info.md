@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Frontend Info
+# Info
 
 abap2UI5 offers a custom control for reading all frontend information from the user's device — UI5 version and theme, browser, operating system, system type, screen dimensions, and device class (phone, tablet, desktop). This is handy whenever your ABAP logic needs to adapt to the runtime environment.
 

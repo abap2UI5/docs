@@ -171,9 +171,10 @@ export default defineConfig({
           },
           {
             text: "Device Capabilities",
-            link: "/development/specific/barcodes",
+            link: "/development/specific/info",
             collapsed: true,
             items: [
+              { text: "Info", link: "/development/specific/info" },
               {
                 text: "Barcode Scanning",
                 link: "/development/specific/barcodes",
@@ -184,7 +185,6 @@ export default defineConfig({
                 link: "/development/specific/geolocation",
               },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
-              { text: "Frontend Info", link: "/development/specific/frontend_info" },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
