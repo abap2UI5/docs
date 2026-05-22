@@ -254,7 +254,7 @@ export default defineConfig({
               { text: "App State, Share, Bookmark", link: "/development/navigation/app_state" },
               {
                 text: "Utilities",
-                collapsed: true,
+                collapsed: false,
                 items: [
                   { text: "Value Help", link: "/development/specific/value_help" },
                   { text: "Demo Output", link: "/development/specific/demo_output" },
