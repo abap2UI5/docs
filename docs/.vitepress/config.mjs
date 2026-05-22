@@ -153,8 +153,14 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Life Cycle", link: "/development/controller/life_cycle" },
-              { text: "Backend", link: "/development/events/backend" },
-              { text: "Frontend", link: "/development/events/frontend" },
+              {
+                text: "Event",
+                link: "/development/events/backend",
+                items: [
+                  { text: "Backend", link: "/development/events/backend" },
+                  { text: "Frontend", link: "/development/events/frontend" },
+                ],
+              },
               { text: "Action", link: "/development/events/follow_up" },
               { text: "App Navigation", link: "/development/navigation/inner_cross_app" },
               { text: "Error", link: "/development/messages/errors" },
