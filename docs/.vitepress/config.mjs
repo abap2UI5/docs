@@ -197,14 +197,14 @@ export default defineConfig({
           },
           {
             text: "Browser Interaction",
-            link: "/development/specific/focus",
+            link: "/development/specific/title",
             collapsed: true,
             items: [
+              { text: "Title", link: "/development/specific/title" },
               { text: "Focus", link: "/development/specific/focus" },
               { text: "Scrolling", link: "/development/specific/scrolling" },
-              { text: "Clipboard", link: "/development/specific/clipboard" },
-              { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "Clipboard", link: "/development/specific/clipboard" },
               { text: "URL Handling", link: "/development/specific/url" },
             ],
           },
