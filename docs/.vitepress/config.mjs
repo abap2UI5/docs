@@ -209,7 +209,6 @@ export default defineConfig({
               { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
               { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
               { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
-              { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
             ],
           },
           {
@@ -255,6 +254,7 @@ export default defineConfig({
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
                   { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
                   { text: "E-Mail", link: "/cookbook/expert_more/email" },
+                  { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
                 ],
               },
             ],
