@@ -179,7 +179,6 @@ export default defineConfig({
                 text: "Share, Bookmark",
                 link: "/development/navigation/share",
               },
-              { text: "URL Handling", link: "/development/specific/url" },
             ],
           },
           {
@@ -238,6 +237,7 @@ export default defineConfig({
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "URL Handling", link: "/development/specific/url" },
             ],
           },
           {
