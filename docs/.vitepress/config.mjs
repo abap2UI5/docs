@@ -130,9 +130,10 @@ export default defineConfig({
           },
           {
             text: "View",
-            link: "/development/view/definition",
+            link: "/development/view/overview",
             collapsed: true,
             items: [
+              { text: "Overview", link: "/development/view/overview" },
               { text: "Definition", link: "/development/view/definition" },
               { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "Formatter", link: "/development/specific/formatter" },
@@ -230,17 +231,6 @@ export default defineConfig({
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
-            ],
-          },
-          {
-            text: "Common Patterns",
-            link: "/development/patterns/form",
-            collapsed: true,
-            items: [
-              { text: "Form", link: "/development/patterns/form" },
-              { text: "Master-Detail", link: "/development/patterns/master_detail" },
-              { text: "Filter, Search, Table", link: "/development/patterns/filter_table" },
-              { text: "IconTabBar", link: "/development/patterns/icon_tab_bar" },
             ],
           },
           {
