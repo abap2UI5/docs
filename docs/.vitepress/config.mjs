@@ -118,16 +118,6 @@ export default defineConfig({
         collapsed: true,
         items: [
           {
-            text: "Controller",
-            link: "/development/controller/init",
-            collapsed: true,
-            items: [
-              { text: "Init", link: "/development/controller/init" },
-              { text: "Event", link: "/development/controller/event" },
-              { text: "Navigated", link: "/development/controller/navigated" },
-            ],
-          },
-          {
             text: "View",
             link: "/development/view/overview",
             collapsed: true,
