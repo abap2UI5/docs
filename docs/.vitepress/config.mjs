@@ -162,8 +162,8 @@ export default defineConfig({
                 ],
               },
               { text: "Action", link: "/development/events/follow_up" },
-              { text: "App Navigation", link: "/development/navigation/inner_cross_app" },
-              { text: "Error", link: "/development/messages/errors" },
+              { text: "Navigation", link: "/development/navigation/inner_cross_app" },
+              { text: "Exception", link: "/development/messages/errors" },
             ],
           },
           {
