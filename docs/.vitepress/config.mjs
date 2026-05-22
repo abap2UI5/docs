@@ -159,38 +159,14 @@ export default defineConfig({
             ],
           },
           {
-            text: "Event",
+            text: "Event, Navigation",
             link: "/development/events/backend",
             collapsed: true,
             items: [
               { text: "Backend", link: "/development/events/backend" },
               { text: "Frontend", link: "/development/events/frontend" },
               { text: "Follow-up", link: "/development/events/follow_up" },
-            ],
-          },
-          {
-            text: "Navigation",
-            link: "/development/navigation/inner_cross_app",
-            collapsed: true,
-            items: [
-              { text: "Inner, Cross App", link: "/development/navigation/inner_cross_app" },
-              { text: "App State", link: "/development/navigation/app_state" },
-              {
-                text: "Share, Bookmark",
-                link: "/development/navigation/share",
-              },
-              { text: "URL Handling", link: "/development/specific/url" },
-            ],
-          },
-          {
-            text: "Message, Error",
-            link: "/development/messages/messages",
-            collapsed: true,
-            items: [
-              { text: "Message", link: "/development/messages/messages" },
-              { text: "Error", link: "/development/messages/errors" },
-              { text: "Logging", link: "/development/messages/logging" },
-              { text: "Translation, i18n", link: "/development/translation" },
+              { text: "Navigation", link: "/development/navigation/inner_cross_app" },
             ],
           },
           {
@@ -238,6 +214,11 @@ export default defineConfig({
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
+              { text: "URL Handling", link: "/development/specific/url" },
+              { text: "Message", link: "/development/messages/messages" },
+              { text: "Error", link: "/development/messages/errors" },
+              { text: "Logging", link: "/development/messages/logging" },
+              { text: "Translation, i18n", link: "/development/translation" },
             ],
           },
           {
@@ -266,6 +247,8 @@ export default defineConfig({
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
               { text: "OData", link: "/development/model/odata" },
+              { text: "App State", link: "/development/navigation/app_state" },
+              { text: "Share, Bookmark", link: "/development/navigation/share" },
             ],
           },
         ],
