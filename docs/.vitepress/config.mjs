@@ -251,7 +251,6 @@ export default defineConfig({
               { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
               {
                 text: "Utilities",
-                collapsed: false,
                 items: [
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
                   { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
