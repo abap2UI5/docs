@@ -1,0 +1,73 @@
+---
+outline: [2, 4]
+---
+# Focus
+
+Set the input focus from the backend with the `set_focus` frontend event. Pass the target control's `id` as the first argument — the framework moves the cursor to that field after the next roundtrip.
+
+This is useful for guided data entry, barcode scanning, or any flow where the next field to focus depends on backend logic.
+
+#### Basic Usage
+
+After processing an event, call `client->action( )` with `cs_event-set_focus` and the id of the input to focus next:
+
+```abap
+CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA one TYPE string.
+    DATA two TYPE string.
+
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_init( ).
+
+      DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
+      page->simple_form(
+         )->content( ns = `form`
+         )->label( `One`
+         )->input(
+              id     = `id1`
+              value  = client->_bind_edit( one )
+              submit = client->_event( `ONE_ENTER` )
+         )->label( `Two`
+         )->input(
+              id     = `id2`
+              value  = client->_bind_edit( two )
+              submit = client->_event( `TWO_ENTER` ) ).
+
+      client->view_display( page->stringify( ) ).
+      RETURN.
+    ENDIF.
+
+    CASE client->get( )-event.
+      WHEN `ONE_ENTER`.
+        client->action( val   = client->cs_event-set_focus
+                        t_arg = VALUE #( ( `id2` ) ) ).
+      WHEN `TWO_ENTER`.
+        client->action( val   = client->cs_event-set_focus
+                        t_arg = VALUE #( ( `id1` ) ) ).
+    ENDCASE.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+After the user presses Enter in `id1`, the backend fires `set_focus` for `id2` and the cursor moves to the second input. The same pattern works for any chain of fields.
+
+#### Selection Range
+
+To position the caret inside the field or pre-select a range, pass the start and end offsets as additional arguments:
+
+```abap
+client->action( val   = client->cs_event-set_focus
+                t_arg = VALUE #( ( `id1` ) ( `0` ) ( `5` ) ) ).
+```
+
+#### Barcode Scanning
+
+Most barcode scanner devices emulate a keyboard. Combine `set_focus` with input fields to capture scans into the right field automatically — see [Barcode Scanning](../device_capabilities/barcode_scanning.md) for a full walkthrough.
