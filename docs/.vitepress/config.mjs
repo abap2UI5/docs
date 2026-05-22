@@ -166,19 +166,7 @@ export default defineConfig({
               { text: "Backend", link: "/development/events/backend" },
               { text: "Frontend", link: "/development/events/frontend" },
               { text: "Follow-up", link: "/development/events/follow_up" },
-            ],
-          },
-          {
-            text: "Navigation",
-            link: "/development/navigation/inner_cross_app",
-            collapsed: true,
-            items: [
-              { text: "Inner, Cross App", link: "/development/navigation/inner_cross_app" },
-              { text: "App State", link: "/development/navigation/app_state" },
-              {
-                text: "Share, Bookmark",
-                link: "/development/navigation/share",
-              },
+              { text: "Navigation", link: "/development/navigation/inner_cross_app" },
             ],
           },
           {
@@ -266,6 +254,8 @@ export default defineConfig({
               { text: "E-Mail", link: "/development/specific/email" },
               { text: "Demo Output", link: "/development/specific/demo_output" },
               { text: "OData", link: "/development/model/odata" },
+              { text: "App State", link: "/development/navigation/app_state" },
+              { text: "Share, Bookmark", link: "/development/navigation/share" },
             ],
           },
         ],
