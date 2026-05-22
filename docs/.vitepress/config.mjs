@@ -216,7 +216,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Message",
+            text: "Translation, Messages",
             link: "/development/messages/messages",
             collapsed: true,
             items: [
