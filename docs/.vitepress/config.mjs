@@ -183,7 +183,8 @@ export default defineConfig({
                 text: "Geolocation",
                 link: "/development/specific/geolocation",
               },
-              { text: "Clipboard", link: "/development/specific/clipboard" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Frontend Info", link: "/development/specific/frontend_info" },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
@@ -195,13 +196,13 @@ export default defineConfig({
             ],
           },
           {
-            text: "UI Interaction",
+            text: "Browser Interaction",
             link: "/development/specific/focus",
             collapsed: true,
             items: [
               { text: "Focus", link: "/development/specific/focus" },
               { text: "Scrolling", link: "/development/specific/scrolling" },
-              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Clipboard", link: "/development/specific/clipboard" },
               { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "URL Handling", link: "/development/specific/url" },
