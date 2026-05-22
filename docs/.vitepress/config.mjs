@@ -175,16 +175,16 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Info", link: "/development/specific/info" },
-              {
-                text: "Barcode Scanning",
-                link: "/development/specific/barcodes",
-              },
               { text: "Camera", link: "/development/specific/camera" },
               {
                 text: "Geolocation",
                 link: "/development/specific/geolocation",
               },
               { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              {
+                text: "Barcode Scanning",
+                link: "/development/specific/barcodes",
+              },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
