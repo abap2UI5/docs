@@ -200,18 +200,6 @@ export default defineConfig({
             ],
           },
           {
-            text: "EML, CDS, SQL",
-            link: "/cookbook/eml_cds_sql/rap",
-            collapsed: true,
-            items: [
-              { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
-              { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
-              { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
-              { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
-              { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
-            ],
-          },
-          {
             text: "Device Capabilities",
             link: "/cookbook/device_capabilities/info",
             collapsed: true,
@@ -248,6 +236,17 @@ export default defineConfig({
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
               { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
+              {
+                text: "EML, CDS, SQL",
+                link: "/cookbook/eml_cds_sql/rap",
+                items: [
+                  { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
+                  { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
+                  { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
+                  { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
+                  { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
+                ],
+              },
               {
                 text: "Utilities",
                 items: [
