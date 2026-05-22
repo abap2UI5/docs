@@ -196,7 +196,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "UI Interaction",
+            text: "Browser Interaction",
             link: "/development/specific/focus",
             collapsed: true,
             items: [
