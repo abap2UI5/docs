@@ -64,4 +64,4 @@ After the user presses Enter in `id1`, the backend sets `focus_id = id2` and the
 
 #### Barcode Scanning
 
-Most barcode scanner devices emulate a keyboard. Combine the focus control with input fields to capture scans into the right field automatically — see [Barcode Scanning](./barcodes.md) for a full walkthrough.
+Most barcode scanner devices emulate a keyboard. Combine the focus control with input fields to capture scans into the right field automatically — see [Barcode Scanning](../device_capabilities/barcode_scanning.md) for a full walkthrough.

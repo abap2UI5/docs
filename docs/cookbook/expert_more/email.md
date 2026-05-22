@@ -57,7 +57,7 @@ ENDCLASS.
 
 #### Attachment
 
-Reuse the [file upload](./files.md) flow to capture an attachment as base64, then hand it to `cl_bcs_message`:
+Reuse the [file upload](../device_capabilities/upload_download.md) flow to capture an attachment as base64, then hand it to `cl_bcs_message`:
 
 ```abap
 DATA(lv_xstring) = cl_web_http_utility=>decode_x_base64( mv_attachment_base64 ).

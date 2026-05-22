@@ -38,7 +38,7 @@ ENDMETHOD.
 
 #### Download Instead of Display
 
-To let the user save the PDF rather than view it inline, use the [file download](./files.md) pattern:
+To let the user save the PDF rather than view it inline, use the [file download](./upload_download.md) pattern:
 
 ```abap
 client->follow_up_action( client->_event_client(

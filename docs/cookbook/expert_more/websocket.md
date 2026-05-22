@@ -47,7 +47,7 @@ WebSockets cost a permanent connection per user — comparable to a stateful ses
 - multi-user collaboration (chat, shared editing)
 - long-running background jobs reporting status
 
-For *"refresh every few seconds"* the [Timer](./timer.md) is cheaper and simpler.
+For *"refresh every few seconds"* the [Timer](../browser_interaction/timer.md) is cheaper and simpler.
 
 ::: warning
 APC/AMC are not available on every ABAP platform — check release notes for your system (ABAP Cloud, S/4 Public Cloud, BTP ABAP Environment) before designing around them.

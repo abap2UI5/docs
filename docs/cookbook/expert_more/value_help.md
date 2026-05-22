@@ -89,4 +89,4 @@ For value helps that exist as DDIC search help objects (`SE11` → search help),
 
 #### Custom Dialog
 
-When neither popup fits — e.g. a filter bar with multiple columns, ranges, fuzzy search — build the F4 as a separate app with its own view and call it via `nav_app_call`. See [Popup → Separated App](../popups/popup.md#separated-app) for the pattern.
+When neither popup fits — e.g. a filter bar with multiple columns, ranges, fuzzy search — build the F4 as a separate app with its own view and call it via `nav_app_call`. See [Popup → Separated App](../popup_popover/popup.md#separated-app) for the pattern.

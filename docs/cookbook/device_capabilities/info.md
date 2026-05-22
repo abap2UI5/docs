@@ -61,5 +61,5 @@ ENDCLASS.
 ```
 
 ::: tip **Bind Directly in the View**
-If you only need device information in the view (not in ABAP logic), bind to the built-in UI5 device model via `{device>/...}` instead — no backend roundtrip required. See [Device Model](../model/device.md).
+If you only need device information in the view (not in ABAP logic), bind to the built-in UI5 device model via `{device>/...}` instead — no backend roundtrip required. See [Device Model](../model/device_model.md).
 :::

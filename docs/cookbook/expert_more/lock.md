@@ -136,7 +136,7 @@ A soft lock is a row in a custom Z table marking *"user X is editing object Y"*.
 A user closing the browser without pressing *Release* leaves the row behind, so add a cleanup job that deletes entries older than, say, 30 minutes. See sample `Z2UI5_CL_DEMO_APP_S_12` (with the matching `Z2UI5_SAMPLE_01` table).
 
 #### 7. RAP Drafts
-On modern releases, RAP draft-enabled business objects manage locking for you: the draft holds an exclusive lock for its owner while the user keeps editing — no stateful session, no `ENQUEUE_*` call. If a released SAP BO already covers your object, this is usually the simplest path. See [Draft Handling](./draft.md).
+On modern releases, RAP draft-enabled business objects manage locking for you: the draft holds an exclusive lock for its owner while the user keeps editing — no stateful session, no `ENQUEUE_*` call. If a released SAP BO already covers your object, this is usually the simplest path. See [Draft Handling](../eml_cds_sql/draft_handling.md).
 
 #### 8. Lock-Manager Add-on
 The community add-on [**lock-manager**](https://github.com/abap2UI5-addons/lock-manager) wraps the lock logic in a reusable class — including stale-lock cleanup and a "locked by X since…" message for the user. Install it like any other [add-on](../../resources/addons.md) and call it instead of writing the boilerplate yourself.

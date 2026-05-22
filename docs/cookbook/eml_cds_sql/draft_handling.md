@@ -259,5 +259,5 @@ ENDCLASS.
 ```
 
 ::: tip
-The field names (`SalesOrder`, `SalesOrderType`) match the released `I_SalesOrderTP` on current S/4HANA — on older releases the BO name or fields may differ. If no standard BO covers your object, define your own draft-enabled RAP BO (with its own `draft table z…_d`, `lock master`, etc.) and consume it the same way; see the [SAP RAP draft documentation](https://help.sap.com/docs/abap-cloud/abap-rap/draft). If you need locks for non-draft objects, see [Locks](./locks.md).
+The field names (`SalesOrder`, `SalesOrderType`) match the released `I_SalesOrderTP` on current S/4HANA — on older releases the BO name or fields may differ. If no standard BO covers your object, define your own draft-enabled RAP BO (with its own `draft table z…_d`, `lock master`, etc.) and consume it the same way; see the [SAP RAP draft documentation](https://help.sap.com/docs/abap-cloud/abap-rap/draft). If you need locks for non-draft objects, see [Locks](../expert_more/lock.md).
 :::
