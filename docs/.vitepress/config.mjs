@@ -157,6 +157,7 @@ export default defineConfig({
               { text: "Frontend", link: "/development/events/frontend" },
               { text: "Follow-up", link: "/development/events/follow_up" },
               { text: "Navigation", link: "/development/navigation/inner_cross_app" },
+              { text: "Error", link: "/development/messages/errors" },
             ],
           },
           {
@@ -209,12 +210,11 @@ export default defineConfig({
             ],
           },
           {
-            text: "Message, Error",
+            text: "Message",
             link: "/development/messages/messages",
             collapsed: true,
             items: [
               { text: "Message", link: "/development/messages/messages" },
-              { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
               { text: "Translation, i18n", link: "/development/translation" },
             ],
