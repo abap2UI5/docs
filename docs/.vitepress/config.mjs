@@ -119,10 +119,9 @@ export default defineConfig({
         items: [
           {
             text: "Controller",
-            link: "/development/controller/life_cycle",
+            link: "/development/controller/init",
             collapsed: true,
             items: [
-              { text: "Life Cycle", link: "/development/controller/life_cycle" },
               { text: "Init", link: "/development/controller/init" },
               { text: "Event", link: "/development/controller/event" },
               { text: "Navigated", link: "/development/controller/navigated" },
@@ -160,9 +159,10 @@ export default defineConfig({
           },
           {
             text: "Event, Navigation",
-            link: "/development/events/backend",
+            link: "/development/controller/life_cycle",
             collapsed: true,
             items: [
+              { text: "Life Cycle", link: "/development/controller/life_cycle" },
               { text: "Backend", link: "/development/events/backend" },
               { text: "Frontend", link: "/development/events/frontend" },
               { text: "Follow-up", link: "/development/events/follow_up" },
