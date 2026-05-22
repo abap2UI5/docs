@@ -177,6 +177,16 @@ export default defineConfig({
             ],
           },
           {
+            text: "Translation, Messages",
+            link: "/cookbook/translation_messages/message",
+            collapsed: true,
+            items: [
+              { text: "Message", link: "/cookbook/translation_messages/message" },
+              { text: "Logging", link: "/cookbook/translation_messages/logging" },
+              { text: "Translation, i18n", link: "/cookbook/translation_messages/translation_i18n" },
+            ],
+          },
+          {
             text: "Browser Interaction",
             link: "/cookbook/browser_interaction/title",
             collapsed: true,
@@ -187,16 +197,6 @@ export default defineConfig({
               { text: "Timer", link: "/cookbook/browser_interaction/timer" },
               { text: "Clipboard", link: "/cookbook/browser_interaction/clipboard" },
               { text: "URL Handling", link: "/cookbook/browser_interaction/url_handling" },
-            ],
-          },
-          {
-            text: "Translation, Messages",
-            link: "/cookbook/translation_messages/message",
-            collapsed: true,
-            items: [
-              { text: "Message", link: "/cookbook/translation_messages/message" },
-              { text: "Logging", link: "/cookbook/translation_messages/logging" },
-              { text: "Translation, i18n", link: "/cookbook/translation_messages/translation_i18n" },
             ],
           },
           {
