@@ -251,8 +251,7 @@ export default defineConfig({
               { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/development/model/odata" },
-              { text: "App State", link: "/development/navigation/app_state" },
-              { text: "Share, Bookmark", link: "/development/navigation/share" },
+              { text: "App State, Share, Bookmark", link: "/development/navigation/app_state" },
               {
                 text: "Utilities",
                 collapsed: true,
