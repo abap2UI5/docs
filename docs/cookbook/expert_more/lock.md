@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Locks
+# Lock
 
 In classic SAP GUI, a transaction like `VA02` calls `ENQUEUE_EVVBAK` and the lock lives as long as the dialog session. Web apps are different: each roundtrip is a fresh ABAP session by default, so a lock set in one roundtrip is gone by the next. Locking in abap2UI5 means picking a deliberate strategy for two questions:
 

@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Inner/Cross App
+# Navigation
 
 In abap2UI5, each app is a single ABAP class. You can pack all logic into one class, but keeping classes at a reasonable size is better practice. Splitting functionality into multiple interacting classes lets you build reusable apps and popups that work in different contexts.
 

@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# App State, Share, Bookmark
+# App State, Share
 
 abap2UI5 saves the current app state so you can return to it later — like how standard UI5 apps manage state. This opens up several useful options, like sharing and bookmarking the current state of your app.
 

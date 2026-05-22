@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Errors
+# Exception
 
 Beyond plain messages, abap2UI5 ships dedicated popups and fallbacks for handling exceptions and unexpected failures.
 

@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Follow-up
+# Action
 
 Sometimes you need to call a backend function and then act on the frontend right afterward. The follow-up action event covers this:
 ```abap

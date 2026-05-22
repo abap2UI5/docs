@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Built-In Popups
+# Built-In
 
 A few pre-built popup classes cover the most common cases:
 

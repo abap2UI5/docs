@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# CL_DEMO_OUTPUT
+# Demo Output
 
 Familiar with `CL_DEMO_OUTPUT` from classic ABAP? You can show its HTML output inside an abap2UI5 app too. This is handy for quick data visualization or when porting existing demos.
 

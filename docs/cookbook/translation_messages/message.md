@@ -1,7 +1,7 @@
 ---
 outline: [2, 5]
 ---
-# Messages
+# Message
 
 Showing messages is an everyday task for ABAP developers. The functions below cover the most common cases.
 

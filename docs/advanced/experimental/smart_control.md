@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Smart Controls
+# Smart Control
 
 Smart Controls are metadata-driven UI5 controls that build the UI automatically from OData annotations. abap2UI5 supports them on an experimental basis.
 

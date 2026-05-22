@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Timer, Auto-Refresh
+# Timer
 
 abap2UI5 offers a custom control `z2ui5.Timer` that fires events after a set delay. This is handy for dashboards, status monitors, or any case that needs periodic data updates without user interaction.
 
