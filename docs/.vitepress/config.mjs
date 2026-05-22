@@ -130,9 +130,10 @@ export default defineConfig({
           },
           {
             text: "View",
-            link: "/development/view/definition",
+            link: "/development/view/overview",
             collapsed: true,
             items: [
+              { text: "Overview", link: "/development/view/overview" },
               { text: "Definition", link: "/development/view/definition" },
               { text: "Expression Binding", link: "/development/model/expression_binding" },
               { text: "Formatter", link: "/development/specific/formatter" },
@@ -196,7 +197,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Browser Features",
+            text: "Device Capabilities",
             link: "/development/specific/barcodes",
             collapsed: true,
             items: [
@@ -206,14 +207,10 @@ export default defineConfig({
               },
               { text: "Camera", link: "/development/specific/camera" },
               {
-                text: "Geolocation, Map",
+                text: "Geolocation",
                 link: "/development/specific/geolocation",
               },
-              { text: "Timer", link: "/development/specific/timer" },
-              { text: "Focus", link: "/development/specific/focus" },
-              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
               { text: "Clipboard", link: "/development/specific/clipboard" },
-              { text: "Title", link: "/development/specific/title" },
               {
                 text: "Upload, Download",
                 link: "/development/specific/files",
@@ -225,14 +222,15 @@ export default defineConfig({
             ],
           },
           {
-            text: "Common Patterns",
-            link: "/development/patterns/form",
+            text: "UI Interaction",
+            link: "/development/specific/focus",
             collapsed: true,
             items: [
-              { text: "Form", link: "/development/patterns/form" },
-              { text: "Master-Detail", link: "/development/patterns/master_detail" },
-              { text: "Filter, Search, Table", link: "/development/patterns/filter_table" },
-              { text: "IconTabBar", link: "/development/patterns/icon_tab_bar" },
+              { text: "Focus", link: "/development/specific/focus" },
+              { text: "Scrolling", link: "/development/specific/scrolling" },
+              { text: "Soft Keyboard", link: "/development/specific/soft_keyboard" },
+              { text: "Title", link: "/development/specific/title" },
+              { text: "Timer", link: "/development/specific/timer" },
             ],
           },
           {
