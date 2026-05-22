@@ -118,17 +118,6 @@ export default defineConfig({
         collapsed: true,
         items: [
           {
-            text: "Controller",
-            link: "/development/controller/life_cycle",
-            collapsed: true,
-            items: [
-              { text: "Life Cycle", link: "/development/controller/life_cycle" },
-              { text: "Init", link: "/development/controller/init" },
-              { text: "Event", link: "/development/controller/event" },
-              { text: "Navigated", link: "/development/controller/navigated" },
-            ],
-          },
-          {
             text: "View",
             link: "/development/view/overview",
             collapsed: true,
@@ -160,9 +149,10 @@ export default defineConfig({
           },
           {
             text: "Event, Navigation",
-            link: "/development/events/backend",
+            link: "/development/controller/life_cycle",
             collapsed: true,
             items: [
+              { text: "Life Cycle", link: "/development/controller/life_cycle" },
               { text: "Backend", link: "/development/events/backend" },
               { text: "Frontend", link: "/development/events/frontend" },
               { text: "Follow-up", link: "/development/events/follow_up" },
@@ -215,6 +205,13 @@ export default defineConfig({
               { text: "Title", link: "/development/specific/title" },
               { text: "Timer", link: "/development/specific/timer" },
               { text: "URL Handling", link: "/development/specific/url" },
+            ],
+          },
+          {
+            text: "Message, Error",
+            link: "/development/messages/messages",
+            collapsed: true,
+            items: [
               { text: "Message", link: "/development/messages/messages" },
               { text: "Error", link: "/development/messages/errors" },
               { text: "Logging", link: "/development/messages/logging" },
@@ -244,11 +241,10 @@ export default defineConfig({
               { text: "WebSocket", link: "/development/specific/websocket" },
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/development/model/odata" },
-              { text: "App State", link: "/development/navigation/app_state" },
-              { text: "Share, Bookmark", link: "/development/navigation/share" },
+              { text: "App State, Share, Bookmark", link: "/development/navigation/app_state" },
               {
                 text: "Utilities",
-                collapsed: true,
+                collapsed: false,
                 items: [
                   { text: "Value Help", link: "/development/specific/value_help" },
                   { text: "Demo Output", link: "/development/specific/demo_output" },
