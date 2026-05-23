@@ -249,7 +249,7 @@ export default defineConfig({
                 ],
               },
               {
-                text: "Utilities",
+                text: "Patterns, Helpers",
                 collapsed: true,
                 items: [
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
