@@ -71,7 +71,7 @@ The UI5 SDK is large. The table below covers the choices that come up in almost 
 | Tabs                              | `sap.m.IconTabBar`                                    | Use `IconTabFilter` for each tab.                                                  |
 | Single-select dropdown            | `sap.m.Select` (≤ 20 items) / `sap.m.ComboBox`        | `ComboBox` allows typing and filtering.                                            |
 | Multi-select dropdown             | `sap.m.MultiComboBox`                                 | Pills appear inside the field.                                                     |
-| Date / time input                 | `sap.m.DatePicker` / `sap.m.TimePicker` / `sap.m.DateTimePicker` | Needs a formatter — see [Binding → Data-Type Mapping](/cookbook/model/binding#known-limitations). |
+| Date / time input                 | `sap.m.DatePicker` / `sap.m.TimePicker` / `sap.m.DateTimePicker` | Needs a formatter — see [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping). |
 | Status indicator                  | `sap.m.ObjectStatus`                                  | Colored text + icon for state.                                                     |
 | Modal dialog                      | `sap.m.Dialog` (built with `factory_popup`)           | See [Popover](/cookbook/popup_popover/popover).                                    |
 

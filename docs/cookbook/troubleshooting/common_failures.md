@@ -34,7 +34,7 @@ Where to look:
 - **Symptom**: a `DatePicker` shows `Invalid Date` or refuses input; a `CheckBox` is always unchecked even when the attribute is `abap_true`; numeric inputs lose decimals or render with the wrong separator.
 - **Fix**: attach a `sap.ui.model.type.Date` / `Float` / `Currency` to the binding, or write a formatter.
 
-See [Binding → Known Limitations](/cookbook/model/binding#known-limitations) for the type-mapping table and [Formatter](/cookbook/model/formatter) for the patterns.
+See [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping) for the type-mapping table and [Formatter](/cookbook/model/formatter) for the patterns.
 
 ## Two-Way Binding Through a Typed Formatter
 
