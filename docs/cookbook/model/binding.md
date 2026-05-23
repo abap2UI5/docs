@@ -91,23 +91,24 @@ DATA edit_row TYPE ts_order.
 
 Nested structures follow the same rule recursively (`edit_row-address-city` → `/XX/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per item — see [Tables](/cookbook/model/tables).
 
-#### Known Limitations
+#### Data-Type Mapping
 
-::: warning No Documented Data-Type Mapping
-ABAP and UI5 do not share a type system. When ABAP values cross to the frontend they are serialized to JSON and then read by UI5 controls — and the exact coercion rules into the inputs UI5 expects (`string`, `number`, `Date`, …) are **not formally documented**. The table below summarizes the behavior most apps rely on; treat it as a starting point and verify in the browser.
+ABAP and UI5 do not share a type system. When ABAP values cross to the frontend they are serialized to JSON and then read by UI5 controls. The table below is the reference for how each ABAP type travels on the wire and which UI5 binding it pairs with. For the controls that need an explicit `type:` or formatter, the linked sections in [Formatter](/cookbook/model/formatter) show the full binding-string pattern.
 
 | ABAP type            | On the wire        | Typical UI5 use                                        | Notes                                                                |
 | -------------------- | ------------------ | ------------------------------------------------------ | -------------------------------------------------------------------- |
 | `string`, `c LENGTH n` | JSON string        | `Input`, `Text`                                        | Works without a formatter.                                           |
-| `i`                  | JSON number        | `Input type="Number"`, `Text`                          | Returned as string from inputs; cast back if you need an integer.    |
-| `p LENGTH n DECIMALS m` | JSON string       | `Input`, `Text` + `sap.ui.model.type.Float`/`Currency` | Locale formatting needs an explicit type — see [Currency](/cookbook/model/formatter#currency). |
+| `i`, `int8`, `b`, `s` | JSON number       | `Input type="Number"`, `Text`                          | Returned as string from inputs; cast back if you need an integer.    |
+| `p LENGTH n DECIMALS m`, `decfloat16`, `decfloat34` | JSON string | `Input`, `Text` + `sap.ui.model.type.Float`/`Currency` | Sent as a string to preserve precision. Locale formatting needs an explicit type — see [Currency](/cookbook/model/formatter#currency). |
+| `f` (binary float)   | JSON number        | `Input`, `Text` + `sap.ui.model.type.Float`            | Binary float — prefer `p` or `decfloat34` for monetary values to avoid rounding drift. |
 | `n LENGTH n`         | JSON string of digits | `Input` + `sap.ui.model.odata.type.String` with `isDigitSequence: true` | Without the constraint, leading zeros render literally — see [Digit Sequence](/cookbook/model/formatter#digit-sequence). |
 | `d`                  | 8-char string `YYYYMMDD` | `DatePicker` + `sap.ui.model.type.Date`             | Not an ISO date — a formatter is required for explicit locale or pattern control. See [Date](/cookbook/model/formatter#date). |
 | `t`                  | 6-char string `HHMMSS` | `TimePicker` + `sap.ui.model.type.Time`                | Same pattern as `d` — see [Time](/cookbook/model/formatter#time).    |
 | `abap_bool` (`X`/` `) | JSON string `"X"` / `""` | `CheckBox` with expression binding or ABAP-side conversion | UI5's `CheckBox` expects `true`/`false`, not `"X"` — see [Boolean](/cookbook/model/formatter#boolean). |
+| `timestamp`, `timestampl`, `utclong` | JSON string (packed digits for `timestamp`/`timestampl`; ISO-like for `utclong`) | `DateTimePicker` + ABAP-side conversion or custom formatter | No built-in UI5 type reads them directly. Split into `d` + `t` or convert to a `yyyyMMddHHmmss` string — see [Timestamp](/cookbook/model/formatter#timestamp). |
+| `xstring`            | binary — must be base64-encoded in ABAP before binding | `Image`, `FileUploader`, `pdf_viewer`                  | The framework does not auto-encode. Convert with `cl_web_http_utility=>encode_x_base64( )` (or `cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases) — see [PDF](/cookbook/device_capabilities/pdf) and [Upload / Download](/cookbook/device_capabilities/upload_download). |
 | structure            | JSON object         | Bind individual fields with `struct-field`             | One model path per field — see [Binding to Structures](#binding-to-structures). |
 | internal table       | JSON array          | `Table`, `List`, `Tree`                                | One row context per item — see [Tables](/cookbook/model/tables) and [Trees](/cookbook/model/trees). |
-| `timestamp`, `timestampl` | JSON number (packed) | `DateTimePicker` + ABAP-side conversion or custom formatter | No built-in UI5 type matches — see [Timestamp](/cookbook/model/formatter#timestamp). |
 
 When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). The shape is always the same — build a JSON binding string with `parts` and `type`, using `path = abap_true` on `_bind_edit` to inject the raw model path:
 
@@ -118,5 +119,4 @@ When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.
         type: 'sap.ui.model.type.Currency' \}| )
 ```
 
-See [Formatter](/cookbook/model/formatter) for the full example with `formatOptions`, `constraints`, and read-only display variants. Verify behavior in the browser with the actual control rather than assuming the default coercion is correct.
-:::
+See [Formatter](/cookbook/model/formatter) for the full example with `formatOptions`, `constraints`, and read-only display variants.
