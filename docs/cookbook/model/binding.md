@@ -72,12 +72,18 @@ Always declare bound data in `PUBLIC SECTION`. This resembles the PAI/PBO logic,
 #### Known Limitations
 
 ::: warning No Documented Data-Type Mapping
-ABAP and UI5 do not share a type system. When ABAP values cross to the frontend they are serialized to JSON and then read by UI5 controls — and the exact coercion rules for `i`, `n`, `d`, `p`, `t`, packed numbers with decimals, etc. into the inputs UI5 expects (`string`, `number`, `Date`, …) are **not formally documented**.
+ABAP and UI5 do not share a type system. When ABAP values cross to the frontend they are serialized to JSON and then read by UI5 controls — and the exact coercion rules into the inputs UI5 expects (`string`, `number`, `Date`, …) are **not formally documented**. The table below summarizes the behavior most apps rely on; treat it as a starting point and verify in the browser.
 
-In practice this means:
-- A `p` field with `DECIMALS 2` may arrive at an `Input` as a plain string, with locale formatting handled (or not) depending on the control.
-- A `d` field is sent as an 8-character string, not as an ISO date — a `DatePicker` typically needs a [Formatter](/cookbook/model/formatter) to display and parse it correctly.
-- Numeric (`i`, `n`) values round-trip as strings; whether an `Input` returns them as text or as a number depends on the control's `type` attribute.
+| ABAP type            | On the wire        | Typical UI5 use                                        | Notes                                                                |
+| -------------------- | ------------------ | ------------------------------------------------------ | -------------------------------------------------------------------- |
+| `string`, `c LENGTH n` | JSON string        | `Input`, `Text`                                        | Works without a formatter.                                           |
+| `i`                  | JSON number        | `Input type="Number"`, `Text`                          | Returned as string from inputs; cast back if you need an integer.    |
+| `p LENGTH n DECIMALS m` | JSON string       | `Input`, `Text` + `sap.ui.model.type.Float`/`Currency` | Locale formatting needs an explicit type — see [Formatter](/cookbook/model/formatter). |
+| `n LENGTH n`         | JSON string of digits | `Input` + `sap.ui.model.odata.type.String` with `isDigitSequence: true` | Without the constraint, leading zeros render literally.              |
+| `d`                  | 8-char string `YYYYMMDD` | `DatePicker` + `sap.ui.model.type.Date` with `pattern: 'yyyyMMdd', source: { pattern: 'yyyyMMdd' }` | Not an ISO date — a formatter is required for parsing and display.   |
+| `t`                  | 6-char string `HHMMSS` | `TimePicker` + `sap.ui.model.type.Time`                | Same pattern as `d`.                                                 |
+| `abap_bool` (`X`/` `) | JSON string `"X"` / `""` | Compare with `"X"` in expression binding, or convert to `abap_true`/`abap_false` in a formatter | UI5's `CheckBox` expects `true`/`false`, not `"X"` — adapt explicitly. |
+| `timestamp`, `timestampl` | JSON number (packed) | `DateTimePicker` + custom formatter                   | No built-in UI5 type matches; convert in ABAP or write a JS formatter. |
 
-When the displayed or returned value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). Verify behavior in the browser with the actual control rather than assuming the default coercion is correct.
+When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). Verify behavior in the browser with the actual control rather than assuming the default coercion is correct.
 :::
