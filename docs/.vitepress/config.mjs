@@ -271,6 +271,13 @@ export default defineConfig({
                 ],
               },
               {
+                text: "Troubleshooting",
+                collapsed: true,
+                items: [
+                  { text: "Debugging", link: "/configuration/troubleshooting" },
+                ],
+              },
+              {
                 text: "Obsolete",
                 collapsed: true,
                 items: [
@@ -295,7 +302,6 @@ export default defineConfig({
           { text: "Performance", link: "/configuration/performance" },
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
-          { text: "Debugging", link: "/configuration/troubleshooting" },
           { text: "Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
