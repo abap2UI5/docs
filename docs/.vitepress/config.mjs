@@ -252,6 +252,7 @@ export default defineConfig({
                 text: "Patterns, Helpers",
                 collapsed: true,
                 items: [
+                  { text: "Snippets", link: "/cookbook/expert_more/snippets" },
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
                   { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
                   { text: "E-Mail", link: "/cookbook/expert_more/email" },
