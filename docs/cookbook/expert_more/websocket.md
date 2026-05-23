@@ -30,7 +30,7 @@ A full reference implementation lives in the samples repo — `Z2UI5_CL_DEMO_APP
 
 #### Client Side
 
-The browser opens the socket via [Custom JavaScript](../../advanced/extensibility/custom_js.md) embedded in the view. The connection stays open across normal abap2UI5 roundtrips — incoming messages can update a model, trigger a toast, or fire an abap2UI5 event to pull fresh data from the backend:
+The browser opens the socket via [Custom JavaScript](./custom_js.md) embedded in the view. The connection stays open across normal abap2UI5 roundtrips — incoming messages can update a model, trigger a toast, or fire an abap2UI5 event to pull fresh data from the backend:
 
 ```js
 const ws = new WebSocket("wss://" + window.location.host + "/sap/bc/apc/sap/z2ui5_sample");

@@ -270,7 +270,7 @@ export default defineConfig({
                 text: "Obsolete",
                 items: [
                   { text: "Custom Controls", link: "/advanced/extensibility/custom_control" },
-                  { text: "Custom JS", link: "/advanced/extensibility/custom_js" },
+                  { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },
                 ],
               },
             ],
@@ -327,7 +327,6 @@ export default defineConfig({
                 text: "User Exit",
                 link: "/advanced/extensibility/user_exits",
               },
-              { text: "Custom JavaScript", link: "/advanced/extensibility/custom_js" },
               { text: "Frontend", link: "/advanced/extensibility/frontend" },
               {
                 text: "Custom Control",
