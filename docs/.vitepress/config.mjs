@@ -239,6 +239,7 @@ export default defineConfig({
               {
                 text: "EML, CDS, SQL",
                 link: "/cookbook/eml_cds_sql/rap",
+                collapsed: true,
                 items: [
                   { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
                   { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
@@ -249,6 +250,7 @@ export default defineConfig({
               },
               {
                 text: "Utilities",
+                collapsed: true,
                 items: [
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
                   { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
