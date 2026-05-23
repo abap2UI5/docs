@@ -273,6 +273,7 @@ export default defineConfig({
                 items: [
                   { text: "Custom Controls", link: "/cookbook/expert_more/custom_controls" },
                   { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },
+                  { text: "follow_up_action", link: "/cookbook/expert_more/follow_up_action" },
                 ],
               },
             ],
