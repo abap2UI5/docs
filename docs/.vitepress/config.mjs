@@ -226,7 +226,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Expert, More",
+            text: "Beyond Basics",
             link: "/cookbook/expert_more/lock",
             collapsed: true,
             items: [
