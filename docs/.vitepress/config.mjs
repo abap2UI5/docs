@@ -106,9 +106,9 @@ export default defineConfig({
         items: [
           { text: "Introduction", link: "/get_started/about" },
           { text: "Quickstart", link: "/get_started/quickstart" },
+          { text: "Use Cases", link: "/get_started/use_cases" },
           { text: "Hello World", link: "/get_started/hello_world" },
-          { text: "Sample App", link: "/get_started/samples" },
-          { text: "Use Case", link: "/get_started/use_cases" },
+          { text: "Full Example", link: "/get_started/full_example" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
@@ -226,16 +226,22 @@ export default defineConfig({
             ],
           },
           {
-            text: "Expert, More",
+            text: "Beyond Basics",
             link: "/cookbook/expert_more/lock",
             collapsed: true,
             items: [
-              { text: "Lock", link: "/cookbook/expert_more/lock" },
-              { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
-              { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
-              { text: "Logout", link: "/configuration/logout" },
-              { text: "OData", link: "/cookbook/expert_more/odata" },
-              { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
+              {
+                text: "Advanced Features",
+                collapsed: true,
+                items: [
+                  { text: "Lock", link: "/cookbook/expert_more/lock" },
+                  { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
+                  { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
+                  { text: "Logout", link: "/configuration/logout" },
+                  { text: "OData", link: "/cookbook/expert_more/odata" },
+                  { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
+                ],
+              },
               {
                 text: "EML, CDS, SQL",
                 link: "/cookbook/eml_cds_sql/rap",
@@ -260,17 +266,8 @@ export default defineConfig({
                 ],
               },
               {
-                text: "Experimental",
-                items: [
-                  { text: "Drag & Drop", link: "/advanced/experimental/drag_drop" },
-                  {
-                    text: "Smart Control",
-                    link: "/advanced/experimental/smart_control",
-                  },
-                ],
-              },
-              {
                 text: "Obsolete",
+                collapsed: true,
                 items: [
                   { text: "Custom Controls", link: "/cookbook/expert_more/custom_controls" },
                   { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },

@@ -49,3 +49,24 @@ ENDCLASS.
 ```
 
 See the dedicated sections of this development guide for full details on views, events, data binding, and navigation.
+
+## Lifecycle Pitfalls
+
+A few details of the request lifecycle are easy to miss and produce bugs that look like framework issues but are actually pattern mistakes. These are not enforced by the compiler and not reported at runtime.
+
+### Bound Attributes Must Be Public
+`client->_bind( )` and `client->_bind_edit( )` access controller attributes from outside the class via dynamic ASSIGN. Attributes in `PROTECTED` or `PRIVATE SECTION` are invisible to the framework and silently fail to bind — the view shows nothing for one-way binding, and edits never sync back for two-way binding. There is no error.
+
+Declare all attributes that participate in binding in `PUBLIC SECTION`. Helper variables that never appear in a `_bind( )` call can stay private. See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding#bound-attributes-must-be-public).
+
+### The View Is Only Sent When You Call `view_display`
+abap2UI5 does not re-render the view automatically. After an event, if you do **not** call `client->view_display( ... )` again, the frontend keeps the previous view tree and only the model data is updated from the serialized state. This is the common case — most event handlers should mutate state and return, leaving the view alone.
+
+Call `view_display( )` again only when the **structure** of the view needs to change: different controls, different bindings, a new dialog, navigation to a different screen. Rebuilding and re-sending the view on every event is wasteful and can cause visible flicker, lost scroll position, and lost focus.
+
+### `check_on_event` Fires Once Per Roundtrip
+Every HTTP request carries at most one event. `check_on_event( )` returns `abap_true` exactly once per call to `main`, for that single event. If the user clicks two buttons in quick succession, the framework dispatches them as two independent `main` invocations — they are never batched into one request.
+
+Two consequences follow:
+- **Do not assume event ordering inside one `main`.** You cannot look at "the previous event" from within an event handler; the previous event ran in a separate request and the work process has been released since.
+- **State across events lives in public class attributes.** Between two events, abap2UI5 serializes the controller to the client and deserializes it on the next request. Anything stored in public attributes (and in serializable types) survives; local variables, open cursors, and acquired locks do not. For sessions that need surviving server-side resources, see [Statefulness](/cookbook/expert_more/statefulness).

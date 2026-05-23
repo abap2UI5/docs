@@ -141,6 +141,10 @@ ENDCLASS.
 ```
 That's all you need. Set a breakpoint to watch the communication and data updates in action, then try changing the view, events, and data flow.
 
+### Jump into the Code
+Press `Ctrl+F12` in any running app to open the source code, view, and model side by side:
+![Source code viewer opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
+
 ::: tip **ABAP Language Versions**
 While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
 :::

@@ -63,8 +63,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-::: tip **Data in Public Attributes**
-With one-way or two-way binding, store your data in the public attributes of your class so the framework can read it externally. This resembles the PAI/PBO logic, where data lived in global variables.
+::: warning **Bound Attributes Must Be Public**
+`_bind( )` and `_bind_edit( )` access your class attributes from outside the controller via dynamic ASSIGN. This only works for attributes in the `PUBLIC SECTION` — `PROTECTED` and `PRIVATE` attributes are not visible to the framework and silently fail to bind: the view renders empty for one-way binding, and edits never sync back for two-way binding. There is no compile-time or runtime error.
+
+Always declare bound data in `PUBLIC SECTION`. This resembles the PAI/PBO logic, where data lived in global variables. See also [Life Cycle → Lifecycle Pitfalls](/cookbook/event_navigation/life_cycle#lifecycle-pitfalls).
 :::
 
 #### Known Limitations
