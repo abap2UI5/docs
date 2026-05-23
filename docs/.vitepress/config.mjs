@@ -108,6 +108,7 @@ export default defineConfig({
           { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Use Cases", link: "/get_started/use_cases" },
           { text: "Hello World", link: "/get_started/hello_world" },
+          { text: "Full Example", link: "/get_started/full_example" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
