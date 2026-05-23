@@ -18,10 +18,8 @@ The `client` object is your only entry point into the framework. Use it to show 
 Build a class:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-
 ENDCLASS.
 
 CLASS zcl_app_hello_world IMPLEMENTATION.
