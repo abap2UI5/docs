@@ -266,17 +266,6 @@ export default defineConfig({
                 ],
               },
               {
-                text: "Experimental",
-                collapsed: true,
-                items: [
-                  { text: "Drag & Drop", link: "/advanced/experimental/drag_drop" },
-                  {
-                    text: "Smart Control",
-                    link: "/advanced/experimental/smart_control",
-                  },
-                ],
-              },
-              {
                 text: "Obsolete",
                 collapsed: true,
                 items: [
