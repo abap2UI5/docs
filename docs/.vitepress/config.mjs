@@ -239,6 +239,7 @@ export default defineConfig({
               {
                 text: "EML, CDS, SQL",
                 link: "/cookbook/eml_cds_sql/rap",
+                collapsed: true,
                 items: [
                   { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
                   { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
@@ -248,12 +249,32 @@ export default defineConfig({
                 ],
               },
               {
-                text: "Utilities",
+                text: "Patterns, Helpers",
+                collapsed: true,
                 items: [
+                  { text: "Snippets", link: "/cookbook/expert_more/snippets" },
                   { text: "Value Help", link: "/cookbook/expert_more/value_help" },
                   { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
                   { text: "E-Mail", link: "/cookbook/expert_more/email" },
                   { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
+                ],
+              },
+              {
+                text: "Experimental",
+                items: [
+                  { text: "Drag & Drop", link: "/advanced/experimental/drag_drop" },
+                  {
+                    text: "Smart Control",
+                    link: "/advanced/experimental/smart_control",
+                  },
+                ],
+              },
+              {
+                text: "Obsolete",
+                items: [
+                  { text: "Custom Controls", link: "/cookbook/expert_more/custom_controls" },
+                  { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },
+                  { text: "follow_up_action", link: "/cookbook/expert_more/follow_up_action" },
                 ],
               },
             ],
@@ -310,22 +331,10 @@ export default defineConfig({
                 text: "User Exit",
                 link: "/advanced/extensibility/user_exits",
               },
-              { text: "Custom JavaScript", link: "/advanced/extensibility/custom_js" },
               { text: "Frontend", link: "/advanced/extensibility/frontend" },
               {
                 text: "Custom Control",
                 link: "/advanced/extensibility/custom_control",
-              },
-            ],
-          },
-          {
-            text: "Experimental",
-            collapsed: true,
-            items: [
-              { text: "Drag & Drop", link: "/advanced/experimental/drag_drop" },
-              {
-                text: "Smart Control",
-                link: "/advanced/experimental/smart_control",
               },
             ],
           },
