@@ -105,10 +105,15 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Use Cases", link: "/get_started/use_cases" },
-          { text: "Hello World", link: "/get_started/hello_world" },
-          { text: "Full Example", link: "/get_started/full_example" },
+          {
+            text: "Quickstart",
+            items: [
+              { text: "Installation", link: "/get_started/quickstart" },
+              { text: "Hello World", link: "/get_started/hello_world" },
+              { text: "Full Example", link: "/get_started/full_example" },
+            ],
+          },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
@@ -231,7 +236,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
-                text: "Advanced Features",
+                text: "Advanced",
                 collapsed: true,
                 items: [
                   { text: "Lock", link: "/cookbook/expert_more/lock" },
@@ -266,6 +271,14 @@ export default defineConfig({
                 ],
               },
               {
+                text: "Troubleshooting",
+                collapsed: true,
+                items: [
+                  { text: "Debugging", link: "/configuration/troubleshooting" },
+                  { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
+                ],
+              },
+              {
                 text: "Obsolete",
                 collapsed: true,
                 items: [
@@ -290,7 +303,6 @@ export default defineConfig({
           { text: "Performance", link: "/configuration/performance" },
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
-          { text: "Debugging", link: "/configuration/troubleshooting" },
           { text: "Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
