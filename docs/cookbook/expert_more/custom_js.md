@@ -57,3 +57,29 @@ ENDMETHOD.
 ::: danger Never Inject Untrusted Input
 If you must use this, ensure the JavaScript content is **entirely static and hardcoded**. Never concatenate user input, database values, translatable texts, or any other dynamic data into the script string — doing so turns the feature into a direct XSS vulnerability.
 :::
+
+## Embedding JavaScript Directly in an XML View
+
+::: warning Also Not Recommended
+The same security considerations apply: any `<script>` element embedded in an XML view runs with full app privileges and bypasses UI5's output encoding. Prefer a [Custom Control](/advanced/extensibility/custom_control) or one of the built-in actions instead.
+:::
+
+If you want to look at — or hand-craft — the raw XML view that abap2UI5 produces, a `<script>` tag is placed in the `html` namespace alongside the regular UI5 controls. The view stringified by `z2ui5_cl_xml_view=>factory( )` ends up looking like this:
+
+```xml
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+  <html:script>
+    function myFunction() { console.log("Hello World"); }
+  </html:script>
+  <Page>
+    <Button text="call custom JS" press="..." />
+  </Page>
+</mvc:View>
+```
+
+The browser parses the `html:script` element and executes its content as JavaScript at view render time. The function becomes available globally and can then be triggered from the backend via the obsolete [`follow_up_action`](/cookbook/expert_more/follow_up_action) — or, ideally, replaced entirely with a built-in `client->action( )` call.
+
+This is exactly what the `_generic` + `_cc_plain_xml` helpers shown above produce; the two approaches are equivalent. Both ship raw JavaScript from the backend to the browser, and both carry the security risks described above. Use neither unless there is genuinely no alternative.
