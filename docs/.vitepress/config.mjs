@@ -105,8 +105,8 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Use Cases", link: "/get_started/use_cases" },
+          { text: "Installation", link: "/get_started/quickstart" },
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Full Example", link: "/get_started/full_example" },
           { text: `What's Next?`, link: "/get_started/next" },
