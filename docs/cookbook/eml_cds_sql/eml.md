@@ -86,3 +86,46 @@ ENDMETHOD.
 Key Points:
 - EML calls in abap2UI5 apps run outside the RAP framework, so explicit transaction commits (COMMIT ENTITIES) are needed.
 - Restrictions inside the RAP framework, like disallowing direct calls to posting function modules or explicit commits, don't apply to abap2UI5 EML operations. You get more flexibility when handling commits and other actions.
+
+### Failure Handling
+
+EML statements (`MODIFY ENTITIES`, `READ ENTITIES`, `COMMIT ENTITIES`) report problems through the `FAILED` and `REPORTED` structures rather than by raising exceptions. They can also raise classic ABAP exceptions for infrastructure-level failures.
+
+What to handle:
+- **Business / validation failures** — inspect `FAILED` (which entities failed) and `REPORTED` (the messages explaining why) after each EML call. These are *not* exceptions; an unchecked `FAILED` will look like success in your code while the data was never written.
+- **Transactional behavior** — EML modifications stay in the transactional buffer until `COMMIT ENTITIES`. If you skip the commit, nothing is persisted. If `COMMIT ENTITIES` itself reports failures, you must decide whether to retry, roll back, or surface the error to the user.
+- **Infrastructure exceptions** — wrap EML calls in `TRY … CATCH` for the cases that *do* raise:
+  - `cx_root` / `cx_dynamic_check` — catch-all safety net.
+  - `cx_abap_invalid_value`, `cx_sy_conversion_no_number` — data conversion problems before the EML statement runs.
+  - `cx_abap_behv` and its subclasses — RAP behavior framework errors (e.g. unknown action, locking issues).
+  - `cx_abap_lock_failure` — when `COMMIT ENTITIES` cannot acquire locks.
+
+A typical defensive pattern:
+
+```abap
+TRY.
+    MODIFY ENTITIES OF z_i_invoice
+      ENTITY invoice
+      UPDATE FIELDS ( amount ) WITH VALUE #( ( %tky = ls_key amount = lv_amount ) )
+      FAILED   DATA(failed)
+      REPORTED DATA(reported).
+
+    IF failed IS NOT INITIAL.
+      " surface reported messages, do NOT commit
+      RAISE EXCEPTION NEW cx_abap_behv( ).
+    ENDIF.
+
+    COMMIT ENTITIES RESPONSE OF z_i_invoice
+      FAILED   DATA(commit_failed)
+      REPORTED DATA(commit_reported).
+
+    IF commit_failed IS NOT INITIAL.
+      RAISE EXCEPTION NEW cx_abap_behv( ).
+    ENDIF.
+
+  CATCH cx_root INTO DATA(lx).
+    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
+ENDTRY.
+```
+
+For general exception handling and the framework's error popup, see the [Exception](/cookbook/event_navigation/exception) page.

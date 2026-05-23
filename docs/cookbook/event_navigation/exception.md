@@ -68,45 +68,4 @@ Where the error surfaces depends on what went wrong:
 
 When something looks wrong on screen, **always check the browser console first** before re-reading the ABAP code.
 
-#### EML Failures
-
-EML statements (`MODIFY ENTITIES`, `READ ENTITIES`, `COMMIT ENTITIES`) report problems through the `FAILED` and `REPORTED` structures rather than by raising exceptions. They can also raise classic ABAP exceptions for infrastructure-level failures.
-
-What to handle:
-- **Business / validation failures** — inspect `FAILED` (which entities failed) and `REPORTED` (the messages explaining why) after each EML call. These are *not* exceptions; an unchecked `FAILED` will look like success in your code while the data was never written.
-- **Transactional behavior** — EML modifications stay in the transactional buffer until `COMMIT ENTITIES`. If you skip the commit, nothing is persisted. If `COMMIT ENTITIES` itself reports failures, you must decide whether to retry, roll back, or surface the error to the user.
-- **Infrastructure exceptions** — wrap EML calls in `TRY … CATCH` for the cases that *do* raise:
-  - `cx_root` / `cx_dynamic_check` — catch-all safety net.
-  - `cx_abap_invalid_value`, `cx_sy_conversion_no_number` — data conversion problems before the EML statement runs.
-  - `cx_abap_behv` and its subclasses — RAP behavior framework errors (e.g. unknown action, locking issues).
-  - `cx_abap_lock_failure` — when `COMMIT ENTITIES` cannot acquire locks.
-
-A typical defensive pattern:
-
-```abap
-TRY.
-    MODIFY ENTITIES OF z_i_invoice
-      ENTITY invoice
-      UPDATE FIELDS ( amount ) WITH VALUE #( ( %tky = ls_key amount = lv_amount ) )
-      FAILED   DATA(failed)
-      REPORTED DATA(reported).
-
-    IF failed IS NOT INITIAL.
-      " surface reported messages, do NOT commit
-      RAISE EXCEPTION NEW cx_abap_behv( ).
-    ENDIF.
-
-    COMMIT ENTITIES RESPONSE OF z_i_invoice
-      FAILED   DATA(commit_failed)
-      REPORTED DATA(commit_reported).
-
-    IF commit_failed IS NOT INITIAL.
-      RAISE EXCEPTION NEW cx_abap_behv( ).
-    ENDIF.
-
-  CATCH cx_root INTO DATA(lx).
-    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
-ENDTRY.
-```
-
-See the [EML](/cookbook/eml_cds_sql/eml) and [RAP](/cookbook/eml_cds_sql/rap) pages for full examples of the happy path.
+For EML-specific failure handling (`FAILED` / `REPORTED`, transactional behavior, `cx_abap_behv`, `cx_abap_lock_failure`, defensive `TRY/CATCH` patterns), see the [EML](/cookbook/eml_cds_sql/eml) page.
