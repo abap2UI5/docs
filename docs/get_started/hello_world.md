@@ -3,16 +3,12 @@ outline: [2, 4]
 ---
 # Hello World
 
-### How abap2UI5 Works
 abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, while all logic, state, and data handling stay in ABAP on the server. Three ideas to keep in mind before writing code:
 
 - **One method, many calls.** The framework calls your app's `main` method on every roundtrip — on the initial start *and* after every user interaction (button press, input change, navigation).
 - **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
 - **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
 
-→ *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
-
-### The Interface
 Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -22,6 +18,8 @@ INTERFACE z2ui5_if_app PUBLIC.
 ENDINTERFACE.
 ```
 The `client` object is your only entry point into the framework. Use it to show views, handle events, share data, and navigate between apps.
+
+→ *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
 
 ### Basic Example
 Build a class:
@@ -40,6 +38,10 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
+
+::: tip **ABAP Language Versions**
+While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
+:::
 
 ### View Display
 Let's add a view to show some text:
@@ -152,6 +154,4 @@ That's all you need. Set a breakpoint to watch the communication and data update
 Press `Ctrl+F12` in any running app to open the source code, view, and model side by side:
 ![Source code viewer opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
 
-::: tip **ABAP Language Versions**
-While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
-:::
+
