@@ -85,5 +85,14 @@ ABAP and UI5 do not share a type system. When ABAP values cross to the frontend 
 | `abap_bool` (`X`/` `) | JSON string `"X"` / `""` | Compare with `"X"` in expression binding, or convert to `abap_true`/`abap_false` in a formatter | UI5's `CheckBox` expects `true`/`false`, not `"X"` — adapt explicitly. |
 | `timestamp`, `timestampl` | JSON number (packed) | `DateTimePicker` + custom formatter                   | No built-in UI5 type matches; convert in ABAP or write a JS formatter. |
 
-When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). Verify behavior in the browser with the actual control rather than assuming the default coercion is correct.
+When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). The shape is always the same — build a JSON binding string with `parts` and `type`, using `path = abap_true` on `_bind_edit` to inject the raw model path:
+
+```abap
+)->input(
+    |\{ parts: [ `{ client->_bind_edit( val = amount   path = abap_true ) }`,
+                 `{ client->_bind_edit( val = currency path = abap_true ) }` ],
+        type: 'sap.ui.model.type.Currency' \}| )
+```
+
+See [Formatter](/cookbook/model/formatter) for the full example with `formatOptions`, `constraints`, and read-only display variants. Verify behavior in the browser with the actual control rather than assuming the default coercion is correct.
 :::
