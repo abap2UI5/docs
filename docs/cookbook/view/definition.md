@@ -37,7 +37,7 @@ You can use any UI5 control from the [UI5 SDK](https://sapui5.hana.ondemand.com)
 
 Tips for working with views:
 - Use code completion on `Z2UI5_CL_XML_VIEW` to find controls and properties
-- See the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
+- See the [samples repository](/get_started/next#sample-apps) for ready-made XML examples to copy and adapt
 
 ::: warning Respect the UI5 Control Aggregation Rules
 `Z2UI5_CL_XML_VIEW` is intentionally permissive — its fluent API lets you nest **any** control inside **any** other control. UI5 itself is not. Every UI5 control defines specific aggregations (e.g. `sap.m.Page` has `content`, `headerContent`, `footer`) and each aggregation accepts only certain child control types (often a particular interface or base class).
