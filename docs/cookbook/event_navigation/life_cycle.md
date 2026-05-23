@@ -3,29 +3,23 @@ outline: [2, 4]
 ---
 # Life Cycle
 
-abap2UI5 gives you great flexibility in how you structure apps. Most sample apps follow the pattern below. Use it as a starting point, and tweak it or build a wrapper around abap2UI5 for more specific behavior.
-
-The idea: every request enters the `main` method, and you use `CASE` to dispatch between initialization, navigation returns, and user events. The recommended pattern uses `CASE abap_true` together with `client->check_on_init`, `client->check_on_event`, and `client->check_on_navigated` to dispatch to the matching handler method.
+Every request enters the `main` method. `CASE abap_true` dispatches between initialization, navigation returns, and user events using `client->check_on_init( )`, `client->check_on_event( 'EVENT_NAME' )`, and `client->check_on_navigated( )`. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
 
 ```abap
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-
     INTERFACES z2ui5_if_app.
 
-    DATA mv_value  TYPE string.
+    " State — public so binding works (see Lifecycle Pitfalls below)
+    DATA value TYPE string.
 
   PROTECTED SECTION.
-
     DATA client TYPE REF TO z2ui5_if_client.
 
-    METHODS on_init.
-    METHODS display_view.
-    METHODS on_event.
-    METHODS on_navigated.
+    METHODS render_main.
+    METHODS on_post.
 
-  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
@@ -33,14 +27,14 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
+
     CASE abap_true.
       WHEN client->check_on_init( ).
-        on_init( ).
-        display_view( ).
-      WHEN client->check_on_event( ).
-        on_event( ).
+        render_main( ).
+      WHEN client->check_on_event( `POST` ).
+        on_post( ).
       WHEN client->check_on_navigated( ).
-        on_navigated( ).
+        " optional: refresh state when returning from another app
     ENDCASE.
 
   ENDMETHOD.
@@ -48,16 +42,20 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-See the dedicated sections of this development guide for full details on views, events, data binding, and navigation.
+Three things make this the recommended shape, used by every tutorial in this guide:
+
+1. **Store `client` on `me->client`** so handler methods can use it without passing it around.
+2. **Dispatch by event name** — `check_on_event( 'POST' )` rather than a generic `check_on_event( )` followed by a second `CASE`. Each event gets its own `WHEN`.
+3. **One render method per view** — call it from any `WHEN` that should rebuild the screen (`check_on_init`, after a search, after a navigation return). Event handlers that only mutate state and reuse the existing view (a button press inside a popup, a toast) skip it — see [The View Is Only Sent When You Call `view_display`](#the-view-is-only-sent-when-you-call-view-display) below.
+
+For a tiny app with one or two events, inline the view and the handler directly in the `WHEN` branches and skip the handler methods entirely. [Hello World](/get_started/hello_world) shows this variant; [Full Example](/get_started/full_example) shows the full version with multiple handler methods, a popup, and persistence. Both follow the same pattern — only the amount of code inside each branch differs.
 
 ## Lifecycle Pitfalls
 
 A few details of the request lifecycle are easy to miss and produce bugs that look like framework issues but are actually pattern mistakes. These are not enforced by the compiler and not reported at runtime.
 
 ### Bound Attributes Must Be Public
-`client->_bind( )` and `client->_bind_edit( )` access controller attributes from outside the class via dynamic ASSIGN. Attributes in `PROTECTED` or `PRIVATE SECTION` are invisible to the framework and silently fail to bind — the view shows nothing for one-way binding, and edits never sync back for two-way binding. There is no error.
-
-Declare all attributes that participate in binding in `PUBLIC SECTION`. Helper variables that never appear in a `_bind( )` call can stay private. See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding#bound-attributes-must-be-public).
+Anything passed to `client->_bind( )` or `client->_bind_edit( )` must live in `PUBLIC SECTION` — the framework binds via dynamic ASSIGN and silently ignores `PROTECTED`/`PRIVATE` attributes. Helper variables that never appear in a `_bind( )` call can stay private. Details and rationale on [Binding → Bound Attributes Must Be Public](/cookbook/model/binding#bound-attributes-must-be-public).
 
 ### The View Is Only Sent When You Call `view_display`
 abap2UI5 does not re-render the view automatically. After an event, if you do **not** call `client->view_display( ... )` again, the frontend keeps the previous view tree and only the model data is updated from the serialized state. This is the common case — most event handlers should mutate state and return, leaving the view alone.
