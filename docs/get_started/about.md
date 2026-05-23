@@ -22,6 +22,10 @@ ENDCLASS.
 
 That's it — your first UI5 app is ready.
 
+### What This Site Covers
+
+This documentation explains the mental model, lifecycle, and recurring patterns of abap2UI5 — the *how* and *why* behind the framework. For the API surface (interfaces like `z2ui5_if_client`, helpers like `z2ui5_cl_xml_view`), read the source directly in the [main repository](https://github.com/abap2UI5/abap2UI5). For ready-to-copy code, browse the 250+ apps in the [samples repository](https://github.com/abap2UI5/samples). Treat this site as the index, not the catalog.
+
 ### About
 Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework used by ABAP developers worldwide. The framework absorbs frontend complexity, so you can focus on business logic with your existing ABAP skills.
 
