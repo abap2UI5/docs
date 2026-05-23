@@ -50,6 +50,15 @@ ENDCLASS.
 
 See the dedicated sections of this development guide for full details on views, events, data binding, and navigation.
 
+## Choosing a Dispatch Style
+
+`CASE abap_true` is the recommended dispatcher in every app — only how much code lives inside each `WHEN` differs:
+
+- **Inline `CASE` inside `main`** — for tiny apps with one or two events, put the view construction and event reactions directly in the `WHEN` branches. The [Hello World](/get_started/hello_world) example uses this style.
+- **Dispatch to dedicated methods** — once `main` grows past a screen, move each branch into a named method (`on_init`, `render_main`, `open_edit_popup`, `save_changes`) and call it from the `WHEN`. The [Full Example](/get_started/full_example) follows this style.
+
+The two are equivalent — pick by app size. Mixing both in one class is also fine: keep simple branches inline, factor complex ones out.
+
 ## Lifecycle Pitfalls
 
 A few details of the request lifecycle are easy to miss and produce bugs that look like framework issues but are actually pattern mistakes. These are not enforced by the compiler and not reported at runtime.
