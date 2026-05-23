@@ -3,6 +3,15 @@ outline: [2, 4]
 ---
 # Hello World
 
+### How abap2UI5 Works
+abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, while all logic, state, and data handling stay in ABAP on the server. Three ideas to keep in mind before writing code:
+
+- **One method, many calls.** The framework calls your app's `main` method on every roundtrip — on the initial start *and* after every user interaction (button press, input change, navigation).
+- **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
+- **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
+
+→ *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
+
 ### The Interface
 Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
 ```abap
