@@ -266,6 +266,13 @@ export default defineConfig({
                   },
                 ],
               },
+              {
+                text: "Obsolete",
+                items: [
+                  { text: "Custom Controls", link: "/advanced/extensibility/custom_control" },
+                  { text: "Custom JS", link: "/advanced/extensibility/custom_js" },
+                ],
+              },
             ],
           },
         ],
