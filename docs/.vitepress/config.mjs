@@ -256,6 +256,16 @@ export default defineConfig({
                   { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
                 ],
               },
+              {
+                text: "Experimental",
+                items: [
+                  { text: "Drag & Drop", link: "/advanced/experimental/drag_drop" },
+                  {
+                    text: "Smart Control",
+                    link: "/advanced/experimental/smart_control",
+                  },
+                ],
+              },
             ],
           },
         ],
@@ -315,17 +325,6 @@ export default defineConfig({
               {
                 text: "Custom Control",
                 link: "/advanced/extensibility/custom_control",
-              },
-            ],
-          },
-          {
-            text: "Experimental",
-            collapsed: true,
-            items: [
-              { text: "Drag & Drop", link: "/advanced/experimental/drag_drop" },
-              {
-                text: "Smart Control",
-                link: "/advanced/experimental/smart_control",
               },
             ],
           },
