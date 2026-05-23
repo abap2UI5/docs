@@ -39,5 +39,18 @@ Tips for working with views:
 - Use code completion on `Z2UI5_CL_XML_VIEW` to find controls and properties
 - See the [samples repository](/get_started/samples) for ready-made XML examples to copy and adapt
 
+::: warning Respect the UI5 Control Aggregation Rules
+`Z2UI5_CL_XML_VIEW` is intentionally permissive — its fluent API lets you nest **any** control inside **any** other control. UI5 itself is not. Every UI5 control defines specific aggregations (e.g. `sap.m.Page` has `content`, `headerContent`, `footer`) and each aggregation accepts only certain child control types (often a particular interface or base class).
+
+Combining controls in a way that violates these rules can lead to broken rendering, missing controls, layout glitches, runtime errors in the browser console, or subtle bugs that only show up on certain devices or themes.
+
+**Always check the [UI5 SDK](https://sapui5.hana.ondemand.com) for each control** to confirm:
+- which aggregations it exposes,
+- which child types those aggregations accept, and
+- which parent controls are valid for the control you want to use.
+
+The ABAP compiler cannot catch these mistakes — they are pure UI5 concerns and must be verified against the SDK documentation.
+:::
+
 #### Next Steps
 This produces a static view. The next section walks through binding and sharing data between the view and the app logic.
