@@ -202,6 +202,7 @@ export default defineConfig({
               { text: "Timer", link: "/cookbook/browser_interaction/timer" },
               { text: "Clipboard", link: "/cookbook/browser_interaction/clipboard" },
               { text: "URL Handling", link: "/cookbook/browser_interaction/url_handling" },
+              { text: "Soft Keyboard", link: "/cookbook/browser_interaction/soft_keyboard" },
             ],
           },
           {
@@ -215,11 +216,11 @@ export default defineConfig({
                 text: "Geolocation",
                 link: "/cookbook/device_capabilities/geolocation",
               },
-              { text: "Soft Keyboard", link: "/cookbook/device_capabilities/soft_keyboard" },
               {
                 text: "Barcode Scanning",
                 link: "/cookbook/device_capabilities/barcode_scanning",
               },
+              { text: "Audio", link: "/cookbook/device_capabilities/audio" },
               {
                 text: "Upload, Download",
                 link: "/cookbook/device_capabilities/upload_download",
