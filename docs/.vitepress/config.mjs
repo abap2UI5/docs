@@ -303,6 +303,7 @@ export default defineConfig({
           { text: "Performance", link: "/configuration/performance" },
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
+          { text: "Transport", link: "/configuration/transport" },
           { text: "Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
