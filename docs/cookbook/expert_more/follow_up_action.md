@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# follow_up_action (Obsolete)
+# Follow-up Action (Obsolete)
 
 ::: warning Do Not Use Anymore
 `client->follow_up_action( )` is obsolete. Use `client->action( )` instead. It works the same way, but **does not allow sending arbitrary JavaScript to the frontend** — which is exactly why `follow_up_action` was deprecated. See [Custom JS](/cookbook/expert_more/custom_js) for the full reasoning behind removing direct JS execution.

@@ -141,7 +141,7 @@ export default defineConfig({
                 text: "Binding",
                 link: "/cookbook/model/binding",
                 items: [
-                  { text: "Expression Binding", link: "/cookbook/model/expression_binding" },
+                  { text: "Expressions", link: "/cookbook/model/expression_binding" },
                   { text: "Formatter", link: "/cookbook/model/formatter" },
                 ],
               },
@@ -187,7 +187,7 @@ export default defineConfig({
             items: [
               { text: "Message", link: "/cookbook/translation_messages/message" },
               { text: "Logging", link: "/cookbook/translation_messages/logging" },
-              { text: "Translation, i18n", link: "/cookbook/translation_messages/translation_i18n" },
+              { text: "Translation", link: "/cookbook/translation_messages/translation_i18n" },
             ],
           },
           {
@@ -284,7 +284,7 @@ export default defineConfig({
                 items: [
                   { text: "Custom Controls", link: "/cookbook/expert_more/custom_controls" },
                   { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },
-                  { text: "follow_up_action", link: "/cookbook/expert_more/follow_up_action" },
+                  { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
                 ],
               },
             ],

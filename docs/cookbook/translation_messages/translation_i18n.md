@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Translation, i18n
+# Translation
 
 Standard UI5 apps handle translations with i18n files stored as frontend artifacts. Since abap2UI5 apps live entirely on the ABAP backend, use ABAP's built-in translation tools instead — text elements, message classes, or data element descriptions.
 
