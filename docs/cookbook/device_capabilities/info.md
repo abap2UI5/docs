@@ -3,63 +3,75 @@ outline: [2, 4]
 ---
 # Info
 
-abap2UI5 offers a custom control for reading all frontend information from the user's device — UI5 version and theme, browser, operating system, system type, screen dimensions, and device class (phone, tablet, desktop). This is handy whenever your ABAP logic needs to adapt to the runtime environment.
+abap2UI5 ships the current frontend state with every roundtrip. Read it from `client->get( )` — no custom control, no extra event needed. The relevant sub-structures are `s_device`, `s_ui5`, `s_focus`, and `s_scroll`.
 
-The control collects the values on the frontend and returns them via two-way binding. Once the `finished` event fires, all bound attributes are filled and available to ABAP. See also `Z2UI5_CL_DEMO_APP_122`.
+#### Device
+
+`client->get( )-s_device` describes the user's device and browser: operating system, browser name and version, screen orientation, current viewport size, and capability flags (touch, pointer, retina).
 
 ```abap
-CLASS z2ui5_cl_sample_frontend_info DEFINITION PUBLIC.
+DATA(device) = client->get( )-s_device.
 
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+DATA(system)      = device-system.            " e.g. `desktop`, `phone`, `tablet`
+DATA(orientation) = device-orientation.       " `landscape` | `portrait`
 
-    DATA ui5_version       TYPE string.
-    DATA ui5_theme         TYPE string.
-    DATA ui5_gav           TYPE string.
-    DATA device_systemtype TYPE string.
-    DATA device_os         TYPE string.
-    DATA device_browser    TYPE string.
-    DATA device_phone      TYPE abap_bool.
-    DATA device_desktop    TYPE abap_bool.
-    DATA device_tablet     TYPE abap_bool.
-    DATA device_combi      TYPE abap_bool.
-    DATA device_height     TYPE string.
-    DATA device_width      TYPE string.
+DATA(browser)     = device-browser-name.      " e.g. `chrome`
+DATA(brw_version) = device-browser-version.
 
-ENDCLASS.
+DATA(os)          = device-os-name.           " e.g. `win`, `mac`, `ios`, `android`
+DATA(os_version)  = device-os-version.
 
-CLASS z2ui5_cl_sample_frontend_info IMPLEMENTATION.
+DATA(width)       = device-resize-width.      " current viewport, in px
+DATA(height)      = device-resize-height.
 
-  METHOD z2ui5_if_app~main.
-
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( view->shell(
-        )->page( )->_z2ui5(
-            )->info_frontend(
-                finished          = client->_event( `POST` )
-                device_browser    = client->_bind_edit( device_browser )
-                device_os         = client->_bind_edit( device_os )
-                device_systemtype = client->_bind_edit( device_systemtype )
-                ui5_gav           = client->_bind_edit( ui5_gav )
-                ui5_theme         = client->_bind_edit( ui5_theme )
-                ui5_version       = client->_bind_edit( ui5_version )
-                device_phone      = client->_bind_edit( device_phone )
-                device_desktop    = client->_bind_edit( device_desktop )
-                device_tablet     = client->_bind_edit( device_tablet )
-                device_combi      = client->_bind_edit( device_combi )
-                device_height     = client->_bind_edit( device_height )
-                device_width      = client->_bind_edit( device_width )
-        )->stringify( ) ).
-
-    CASE client->get( )-event.
-      WHEN `POST`.
-        "process frontend info here...
-    ENDCASE.
-
-  ENDMETHOD.
-ENDCLASS.
+DATA(touch)       = device-support-touch.
+DATA(pointer)     = device-support-pointer.
+DATA(retina)      = device-support-retina.
 ```
 
 ::: tip **Bind Directly in the View**
 If you only need device information in the view (not in ABAP logic), bind to the built-in UI5 device model via `{device>/...}` instead — no backend roundtrip required. See [Device Model](../model/device_model.md).
 :::
+
+#### UI5
+
+`client->get( )-s_ui5` returns the runtime UI5 framework details — handy for version-dependent branching or for logging which build a user runs on.
+
+```abap
+DATA(ui5) = client->get( )-s_ui5.
+
+DATA(version)         = ui5-version.           " e.g. `1.141.0`
+DATA(build_timestamp) = ui5-build_timestamp.
+DATA(gav)             = ui5-gav.               " group, artifact, version
+DATA(theme)           = ui5-theme.             " e.g. `sap_horizon`
+```
+
+#### Focus
+
+`client->get( )-s_focus` tells you which control currently holds the focus and where the caret sits inside it. Useful when an action depends on the field the user was just editing.
+
+```abap
+DATA(focus) = client->get( )-s_focus.
+
+DATA(id)              = focus-id.                " id of the focused control
+DATA(selection_start) = focus-selection_start.   " caret start, in chars
+DATA(selection_end)   = focus-selection_end.     " caret end, in chars
+```
+
+To move the focus from the backend instead of reading it, see [Focus](../browser_interaction/focus.md).
+
+#### Scroll
+
+`client->get( )-s_scroll` reports the scroll positions of the page and any open dialogs at the moment the event was fired. Each container exposes the id of the scrollable element and its `x` / `y` offsets in pixels.
+
+```abap
+DATA(scroll) = client->get( )-s_scroll.
+
+DATA(main_y)    = scroll-main-y.       " main page
+DATA(nest_y)    = scroll-nest-y.       " first nested view
+DATA(nest2_y)   = scroll-nest2-y.      " second nested view
+DATA(popup_y)   = scroll-popup-y.      " open popup
+DATA(popover_y) = scroll-popover-y.    " open popover
+```
+
+To scroll from the backend, see [Scrolling](../browser_interaction/scrolling.md).
