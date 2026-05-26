@@ -124,10 +124,9 @@ export default defineConfig({
         items: [
           {
             text: "View",
-            link: "/cookbook/view/overview",
+            link: "/cookbook/view/definition",
             collapsed: true,
             items: [
-              { text: "Overview", link: "/cookbook/view/overview" },
               { text: "Definition", link: "/cookbook/view/definition" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
