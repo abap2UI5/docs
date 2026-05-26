@@ -20,6 +20,7 @@ The table below lists custom controls that are no longer necessary and the built
 | Scroll an element into view| `cs_event-scroll_into_view`  | [Scrolling](/cookbook/browser_interaction/scrolling)                       |
 | Start a timer              | `cs_event-start_timer`       | [Timer](/cookbook/browser_interaction/timer)                               |
 | Toggle the soft keyboard   | `cs_event-keyboard_set_mode` | [Soft Keyboard](/cookbook/browser_interaction/soft_keyboard)               |
+| Read frontend info         | `client->get( )-s_device`, `-s_ui5`, `-s_focus`, `-s_scroll` | [Info](/cookbook/device_capabilities/info) |
 
 ## Typical Pattern
 
