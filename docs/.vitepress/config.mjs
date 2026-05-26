@@ -237,7 +237,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
-                text: "Advanced",
+                text: "Sessions, Communication",
                 collapsed: true,
                 items: [
                   { text: "Lock", link: "/cookbook/expert_more/lock" },
