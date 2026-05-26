@@ -124,10 +124,9 @@ export default defineConfig({
         items: [
           {
             text: "View",
-            link: "/cookbook/view/overview",
+            link: "/cookbook/view/definition",
             collapsed: true,
             items: [
-              { text: "Overview", link: "/cookbook/view/overview" },
               { text: "Definition", link: "/cookbook/view/definition" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
@@ -142,7 +141,7 @@ export default defineConfig({
                 text: "Binding",
                 link: "/cookbook/model/binding",
                 items: [
-                  { text: "Expression Binding", link: "/cookbook/model/expression_binding" },
+                  { text: "Expressions", link: "/cookbook/model/expression_binding" },
                   { text: "Formatter", link: "/cookbook/model/formatter" },
                 ],
               },
@@ -188,7 +187,7 @@ export default defineConfig({
             items: [
               { text: "Message", link: "/cookbook/translation_messages/message" },
               { text: "Logging", link: "/cookbook/translation_messages/logging" },
-              { text: "Translation, i18n", link: "/cookbook/translation_messages/translation_i18n" },
+              { text: "Translation", link: "/cookbook/translation_messages/translation_i18n" },
             ],
           },
           {
@@ -202,6 +201,7 @@ export default defineConfig({
               { text: "Timer", link: "/cookbook/browser_interaction/timer" },
               { text: "Clipboard", link: "/cookbook/browser_interaction/clipboard" },
               { text: "URL Handling", link: "/cookbook/browser_interaction/url_handling" },
+              { text: "Soft Keyboard", link: "/cookbook/browser_interaction/soft_keyboard" },
             ],
           },
           {
@@ -215,11 +215,11 @@ export default defineConfig({
                 text: "Geolocation",
                 link: "/cookbook/device_capabilities/geolocation",
               },
-              { text: "Soft Keyboard", link: "/cookbook/device_capabilities/soft_keyboard" },
               {
                 text: "Barcode Scanning",
                 link: "/cookbook/device_capabilities/barcode_scanning",
               },
+              { text: "Audio", link: "/cookbook/device_capabilities/audio" },
               {
                 text: "Upload, Download",
                 link: "/cookbook/device_capabilities/upload_download",
@@ -236,7 +236,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
-                text: "Advanced",
+                text: "Sessions, Communication",
                 collapsed: true,
                 items: [
                   { text: "Lock", link: "/cookbook/expert_more/lock" },
@@ -284,7 +284,7 @@ export default defineConfig({
                 items: [
                   { text: "Custom Controls", link: "/cookbook/expert_more/custom_controls" },
                   { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },
-                  { text: "follow_up_action", link: "/cookbook/expert_more/follow_up_action" },
+                  { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
                 ],
               },
             ],
