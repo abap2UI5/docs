@@ -6,7 +6,6 @@ outline: [2, 4]
 ::: warning Mostly Not Needed Anymore
 Earlier versions of abap2UI5 required custom UI5 controls to cover common browser interactions — setting the page title, moving focus, scrolling, copying to the clipboard, opening new tabs, and so on. These are now built into the framework as **frontend events**, callable from ABAP via `client->action( client->cs_event-... )`. The custom controls that used to wrap these behaviors are obsolete.
 
-You can still build your own [Custom Controls](/advanced/extensibility/custom_control) when you need something the framework does not provide, but for everything listed below, use the dedicated built-in action instead.
 :::
 
 ## Replaced Custom Controls
