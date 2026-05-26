@@ -141,7 +141,7 @@ export default defineConfig({
                 text: "Binding",
                 link: "/cookbook/model/binding",
                 items: [
-                  { text: "Expressions", link: "/cookbook/model/expression_binding" },
+                  { text: "Expression", link: "/cookbook/model/expression_binding" },
                   { text: "Formatter", link: "/cookbook/model/formatter" },
                 ],
               },
@@ -297,12 +297,24 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Installation", link: "/configuration/installation" },
-          { text: "General", link: "/configuration/setup" },
+          {
+            text: "Setup",
+            link: "/configuration/setup",
+            collapsed: true,
+            items: [
+              { text: "Theme", link: "/configuration/setup/theme" },
+              { text: "UI5 Bootstrapping", link: "/configuration/setup/ui5_bootstrapping" },
+              { text: "Title", link: "/configuration/setup/title" },
+              { text: "Style / CSS", link: "/configuration/setup/style_css" },
+              { text: "Logon Language", link: "/configuration/setup/logon_language" },
+            ],
+          },
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
           { text: "UI5 Version", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
+          { text: "Transport", link: "/configuration/transport" },
           { text: "Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
