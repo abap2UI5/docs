@@ -60,7 +60,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Cookbook", link: "/cookbook/event_navigation/life_cycle" },
+          { text: "Cookbook", link: "/cookbook/overview" },
           { text: "Configuration", link: "/configuration/setup" },
           { text: "Advanced Topic", link: "/advanced/downporting" },
           { text: "Technical Insight", link: "/technical/concept" },
@@ -119,9 +119,10 @@ export default defineConfig({
       },
       {
         text: "Cookbook",
-        link: "/cookbook/event_navigation/life_cycle",
+        link: "/cookbook/overview",
         collapsed: true,
         items: [
+          { text: "Overview", link: "/cookbook/overview" },
           {
             text: "View",
             link: "/cookbook/view/definition",
