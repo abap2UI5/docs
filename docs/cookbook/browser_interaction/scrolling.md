@@ -3,12 +3,26 @@ outline: [2, 4]
 ---
 # Scrolling
 
-Scroll a control programmatically from the backend with two frontend events:
+Read the current scroll positions from the backend, or scroll a control programmatically from the backend with two frontend events:
 
 - **`cs_event-scroll_to`** — scroll a container to a specific pixel position.
 - **`cs_event-scroll_into_view`** — bring a control into the viewport, wherever the surrounding scroll container currently sits.
 
 Useful for jump-to-top buttons, restoring positions after navigation, or revealing a row after a backend search.
+
+#### Read the Scroll Position
+
+`client->get( )-s_scroll` reports the scroll positions of the page and any open dialogs at the moment the event was fired. Each container exposes the id of the scrollable element and its `x` / `y` offsets in pixels.
+
+```abap
+DATA(scroll) = client->get( )-s_scroll.
+
+DATA(main_y)    = scroll-main-y.       " main page
+DATA(nest_y)    = scroll-nest-y.       " first nested view
+DATA(nest2_y)   = scroll-nest2-y.      " second nested view
+DATA(popup_y)   = scroll-popup-y.      " open popup
+DATA(popover_y) = scroll-popover-y.    " open popover
+```
 
 #### Scroll to a Position
 

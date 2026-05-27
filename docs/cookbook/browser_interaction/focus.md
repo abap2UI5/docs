@@ -3,6 +3,22 @@ outline: [2, 4]
 ---
 # Focus
 
+Read which control currently holds the focus from the backend, or move the focus from the backend to a specific field — both work without any custom control.
+
+#### Read the Current Focus
+
+`client->get( )-s_focus` tells you which control currently holds the focus and where the caret sits inside it. Useful when an action depends on the field the user was just editing.
+
+```abap
+DATA(focus) = client->get( )-s_focus.
+
+DATA(id)              = focus-id.                " id of the focused control
+DATA(selection_start) = focus-selection_start.   " caret start, in chars
+DATA(selection_end)   = focus-selection_end.     " caret end, in chars
+```
+
+#### Set the Focus
+
 Set the input focus from the backend with the `set_focus` frontend event. Pass the target control's `id` as the first argument — the framework moves the cursor to that field after the next roundtrip.
 
 This is useful for guided data entry, barcode scanning, or any flow where the next field to focus depends on backend logic.
