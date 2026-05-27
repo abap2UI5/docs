@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# UI5 Bootstrapping
+# Bootstrapping
 
 To pick the source for bootstrapping UI5:
 ```abap
