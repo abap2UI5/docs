@@ -220,7 +220,7 @@ export default defineConfig({
                 text: "Barcode Scanning",
                 link: "/cookbook/device_capabilities/barcode_scanning",
               },
-              { text: "Audio", link: "/cookbook/device_capabilities/audio" },
+              { text: "Audio, Video", link: "/cookbook/device_capabilities/audio" },
               {
                 text: "Upload, Download",
                 link: "/cookbook/device_capabilities/upload_download",
