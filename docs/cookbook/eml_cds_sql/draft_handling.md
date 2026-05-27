@@ -5,61 +5,80 @@ outline: [2, 4]
 
 Draft handling lets users save unfinished work — for example a half-filled form — without writing through to the active database state. In abap2UI5 apps you drive RAP draft-enabled business objects directly through EML, just like any other entity (see also [EML](./eml.md)).
 
+All examples on this page use `I_BankTP`, a draft-enabled BO that ships with S/4HANA.
+
+### The EML Primitives
+
 #### Create a Draft
 Use `MODIFY ENTITIES` with `%is_draft = if_abap_behv=>mk-on` to create a new draft instance:
 ```abap
-METHOD z2ui5_if_app~main.
-
-  MODIFY ENTITIES OF i_salesordertp
-         ENTITY salesorder
-         CREATE
-         FIELDS ( salesordertype salesorganization )
-         WITH VALUE #( ( %cid      = `0001`
-                         %is_draft = if_abap_behv=>mk-on
-                         %data     = VALUE #(
-                             SalesOrderType    = `TA`
-                             SalesOrganization = `1010` ) ) )
-         MAPPED   DATA(ls_mapped)
-         FAILED   DATA(ls_failed)
-         REPORTED DATA(ls_reported).
-
-  COMMIT ENTITIES.
-
-ENDMETHOD.
-```
-
-#### Read a Draft
-Set `%is_draft = if_abap_behv=>mk-on` to read the draft instead of the active record:
-```abap
-READ ENTITIES OF i_salesordertp
-  ENTITY SalesOrder
-  FIELDS ( SalesOrderType )
-  WITH VALUE #( ( %key-SalesOrder = `0000004711`
-                  %is_draft       = if_abap_behv=>mk-on ) )
-  RESULT DATA(lt_drafts).
-```
-
-#### Activate or Discard
-Promote the draft to the active state with the `Activate` action, or throw it away with `Discard`:
-```abap
-MODIFY ENTITIES OF i_salesordertp
-       ENTITY SalesOrder
-       EXECUTE Activate
-       FROM VALUE #( ( %key-SalesOrder     = `0000004711`
-                       %key-IsActiveEntity = abap_false ) )
+MODIFY ENTITIES OF i_banktp
+       ENTITY Bank
+       CREATE
+       FIELDS ( BankCountry BankInternalID LongBankName SWIFTCode )
+       WITH VALUE #( ( %cid      = `NEW_BANK`
+                       %is_draft = if_abap_behv=>mk-on
+                       %data     = VALUE #(
+                           BankCountry    = `DE`
+                           BankInternalID = `99999999`
+                           LongBankName   = `My Bank`
+                           SWIFTCode      = `DEUTDEFF` ) ) )
+       MAPPED   DATA(ls_mapped)
        FAILED   DATA(ls_failed)
        REPORTED DATA(ls_reported).
 
 COMMIT ENTITIES.
 ```
 
-### Editing a Standard SAP Draft BO
+#### Read a Draft
+Set `%is_draft = if_abap_behv=>mk-on` to read the draft instead of the active record:
+```abap
+READ ENTITIES OF i_banktp
+  ENTITY Bank
+  FIELDS ( SWIFTCode LongBankName )
+  WITH VALUE #( ( %key-BankCountry    = `DE`
+                  %key-BankInternalID = `50070010`
+                  %is_draft           = if_abap_behv=>mk-on ) )
+  RESULT DATA(lt_drafts).
+```
+
+#### Activate a Draft
+Promote the draft to the active state with the `Activate` action:
+```abap
+MODIFY ENTITIES OF i_banktp
+       ENTITY Bank
+       EXECUTE Activate
+       FROM VALUE #( ( %key-BankCountry    = `DE`
+                       %key-BankInternalID = `50070010` ) )
+       FAILED   DATA(ls_failed)
+       REPORTED DATA(ls_reported).
+
+COMMIT ENTITIES.
+```
+
+#### Discard a Draft
+Throw the draft away with the `Discard` action, releasing the lock:
+```abap
+MODIFY ENTITIES OF i_banktp
+       ENTITY Bank
+       EXECUTE Discard
+       FROM VALUE #( ( %key-BankCountry    = `DE`
+                       %key-BankInternalID = `50070010` ) )
+       FAILED   DATA(ls_failed)
+       REPORTED DATA(ls_reported).
+
+COMMIT ENTITIES.
+```
+
+### Tutorial — Building a Bank Edit App
+
+With the primitives in hand, the rest of this page walks step by step through a full abap2UI5 app that edits a bank record through its standard BO draft.
 
 On S/4HANA or BTP ABAP Environment (Steampunk), many business objects already ship as draft-enabled BOs (e.g. `I_BankTP`, `I_SalesOrderTP`). You don't build a BO and you don't create a draft table — SAP provides both. Your abap2UI5 app just calls the standard BO via EML, which sidesteps the whole lock-during-think-time problem.
 
 The session can stay **stateless**: the draft survives between roundtrips in SAP's draft-shadow table, and the lock is held by the BO framework as long as the draft exists. Closing the browser without activating or discarding leaves the draft for the same user to resume later — no `set_session_stateful( )`, no `ENQUEUE_*`, no custom Z table.
 
-The walkthrough below uses `I_BankTP` to edit a bank record. The flow is split into two modes:
+The app uses two modes:
 - **VIEW mode** — read-only display of the active database record. No lock, no draft.
 - **EDIT mode** — a draft is open; inputs are editable. The BO framework holds the lock.
 
