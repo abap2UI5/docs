@@ -31,8 +31,8 @@ Read device info and use native hardware: camera, geolocation, barcode scanning,
 #### [State, Connectivity](/cookbook/expert_more/lock)
 Manage session and app state across requests and talk to the outside — locking, statefulness, WebSocket, logout, OData, and sharing app state via URL.
 
-#### [Beyond Basics](/cookbook/eml_cds_sql/rap)
-Advanced topics for production apps — EML/CDS/SQL integration with RAP, recurring patterns and helpers, troubleshooting, and a list of obsolete features kept for reference.
+#### [More Topics](/cookbook/eml_cds_sql/rap)
+EML/CDS/SQL integration with RAP, recurring patterns and helpers, troubleshooting, and a list of obsolete features kept for reference.
 
 ### How to Use This Cookbook
 

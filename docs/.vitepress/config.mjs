@@ -245,7 +245,7 @@ export default defineConfig({
             ],
           },
           {
-            text: "Beyond Basics",
+            text: "More Topics",
             link: "/cookbook/eml_cds_sql/rap",
             collapsed: true,
             items: [
