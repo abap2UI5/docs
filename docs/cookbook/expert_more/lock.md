@@ -10,10 +10,10 @@ In classic SAP GUI, a transaction like `VA02` calls `ENQUEUE_EVVBAK` and the loc
 | **Edit** | What happens while the user is thinking and typing? |
 | **Save** | What happens the moment they hit save? |
 
-The patterns below combine in different ways. The examples use the sales order header table `VBAK` and its standard enqueue object `EVVBAK`, but the same shapes apply to any table. All snippets have a complete, copy-paste-ready demo class — sample numbers are linked next to each section.
+The patterns below combine in different ways. The examples use the sales order header table `VBAK` and its standard enqueue object `EVVBAK`, but the same shapes apply to any table. The full source of each pattern is included as a collapsible block at the end of every section.
 
 #### 1. No Locking
-The minimal starting point — the user edits and saves, no lock and no conflict check. Last save wins, silently. Fine for personal sandboxes and throwaway demos, but rarely what you want in production. See sample `Z2UI5_CL_DEMO_APP_S_07`.
+The minimal starting point — the user edits and saves, no lock and no conflict check. Last save wins, silently. Fine for personal sandboxes and throwaway demos, but rarely what you want in production.
 
 <details>
 <summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_07</code></summary>
@@ -163,7 +163,7 @@ METHOD on_event_save.
 ENDMETHOD.
 ```
 
-The lock exists for milliseconds, so this scales — but two parallel saves can still race if the timestamps line up, and the second one silently overwrites the first. See sample `Z2UI5_CL_DEMO_APP_S_08`.
+The lock exists for milliseconds, so this scales — but two parallel saves can still race if the timestamps line up, and the second one silently overwrites the first.
 
 <details>
 <summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_08</code></summary>
@@ -317,7 +317,7 @@ METHOD on_event_save.
 ENDMETHOD.
 ```
 
-No lock is held during the edit phase, so this scales to many concurrent users and catches conflicts even from outside your app (SE16, batch jobs, RFC). See sample `Z2UI5_CL_DEMO_APP_S_09`.
+No lock is held during the edit phase, so this scales to many concurrent users and catches conflicts even from outside your app (SE16, batch jobs, RFC).
 
 Pick a column that *always* updates on writes. If anyone writes the table bypassing `AEDAT` / `UPD_TMSTMP`, the check silently misses real conflicts.
 
@@ -453,7 +453,7 @@ ENDCLASS.
 </details>
 
 #### 4. Combined (recommended default)
-**Lock at Save** plus the **Optimistic Check** is the safest stateless pattern and the sensible production default — the enqueue serializes parallel saves of *this* app, the timestamp check catches everyone else. See sample `Z2UI5_CL_DEMO_APP_S_10`.
+**Lock at Save** plus the **Optimistic Check** is the safest stateless pattern and the sensible production default — the enqueue serializes parallel saves of *this* app, the timestamp check catches everyone else.
 
 <details>
 <summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_10</code></summary>
@@ -651,8 +651,6 @@ CALL FUNCTION `DEQUEUE_EVVBAK`
 client->set_session_stateful( abap_false ).
 ```
 
-See samples `Z2UI5_CL_DEMO_APP_S_11` and `Z2UI5_CL_DEMO_APP_350` for complete examples.
-
 ::: warning
 Each active user pins a work process. Use stateful sessions only for low-traffic, internal apps. Always pair `set_session_stateful( )` with an explicit `set_session_stateful( abap_false )` on every exit path — otherwise a leaked enqueue blocks future users until the session times out.
 :::
@@ -839,7 +837,7 @@ A soft lock is a row in a custom Z table marking *"user X is editing object Y"*.
 | USERNAME   | SYUNAME     | Editing user          |
 | LOCKED_AT  | TIMESTAMPL  | When the lock started |
 
-A user closing the browser without pressing *Release* leaves the row behind, so add a cleanup job that deletes entries older than, say, 30 minutes. See sample `Z2UI5_CL_DEMO_APP_S_12` (with the matching `Z2UI5_SAMPLE_01` table).
+A user closing the browser without pressing *Release* leaves the row behind, so add a cleanup job that deletes entries older than, say, 30 minutes. The example below uses a matching `Z2UI5_SAMPLE_01` table.
 
 <details>
 <summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_12</code></summary>
