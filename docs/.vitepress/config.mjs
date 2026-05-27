@@ -232,22 +232,23 @@ export default defineConfig({
             ],
           },
           {
-            text: "Beyond Basics",
+            text: "State, Connectivity",
             link: "/cookbook/expert_more/lock",
             collapsed: true,
             items: [
-              {
-                text: "State, Connectivity",
-                collapsed: true,
-                items: [
-                  { text: "Lock", link: "/cookbook/expert_more/lock" },
-                  { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
-                  { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
-                  { text: "Logout", link: "/configuration/logout" },
-                  { text: "OData", link: "/cookbook/expert_more/odata" },
-                  { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
-                ],
-              },
+              { text: "Lock", link: "/cookbook/expert_more/lock" },
+              { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
+              { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
+              { text: "Logout", link: "/configuration/logout" },
+              { text: "OData", link: "/cookbook/expert_more/odata" },
+              { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
+            ],
+          },
+          {
+            text: "Beyond Basics",
+            link: "/cookbook/eml_cds_sql/rap",
+            collapsed: true,
+            items: [
               {
                 text: "EML, CDS, SQL",
                 link: "/cookbook/eml_cds_sql/rap",
