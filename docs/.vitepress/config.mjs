@@ -220,7 +220,7 @@ export default defineConfig({
                 text: "Barcode Scanning",
                 link: "/cookbook/device_capabilities/barcode_scanning",
               },
-              { text: "Audio", link: "/cookbook/device_capabilities/audio" },
+              { text: "Audio, Video", link: "/cookbook/device_capabilities/audio" },
               {
                 text: "Upload, Download",
                 link: "/cookbook/device_capabilities/upload_download",
@@ -232,22 +232,23 @@ export default defineConfig({
             ],
           },
           {
-            text: "Beyond Basics",
+            text: "State, Connectivity",
             link: "/cookbook/expert_more/lock",
             collapsed: true,
             items: [
-              {
-                text: "Sessions, Communication",
-                collapsed: true,
-                items: [
-                  { text: "Lock", link: "/cookbook/expert_more/lock" },
-                  { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
-                  { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
-                  { text: "Logout", link: "/configuration/logout" },
-                  { text: "OData", link: "/cookbook/expert_more/odata" },
-                  { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
-                ],
-              },
+              { text: "Lock", link: "/cookbook/expert_more/lock" },
+              { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
+              { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
+              { text: "Logout", link: "/configuration/logout" },
+              { text: "OData", link: "/cookbook/expert_more/odata" },
+              { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
+            ],
+          },
+          {
+            text: "More Topics",
+            link: "/cookbook/eml_cds_sql/rap",
+            collapsed: true,
+            items: [
               {
                 text: "EML, CDS, SQL",
                 link: "/cookbook/eml_cds_sql/rap",
