@@ -74,7 +74,7 @@ COMMIT ENTITIES.
 
 With the primitives in hand, the rest of this page walks step by step through a full abap2UI5 app that edits a bank record through its standard BO draft.
 
-On S/4HANA or BTP ABAP Environment (Steampunk), many business objects already ship as draft-enabled BOs (e.g. `I_BankTP`, `I_SalesOrderTP`). You don't build a BO and you don't create a draft table — SAP provides both. Your abap2UI5 app just calls the standard BO via EML, which sidesteps the whole lock-during-think-time problem.
+On S/4HANA or BTP ABAP Environment (Steampunk), many business objects already ship as draft-enabled BOs — `I_BankTP` is one of them. You don't build a BO and you don't create a draft table — SAP provides both. Your abap2UI5 app just calls the standard BO via EML, which sidesteps the whole lock-during-think-time problem.
 
 The session can stay **stateless**: the draft survives between roundtrips in SAP's draft-shadow table, and the lock is held by the BO framework as long as the draft exists. Closing the browser without activating or discarding leaves the draft for the same user to resume later — no `set_session_stateful( )`, no `ENQUEUE_*`, no custom Z table.
 
