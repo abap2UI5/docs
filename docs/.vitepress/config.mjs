@@ -305,8 +305,8 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Theme", link: "/configuration/setup/theme" },
-              { text: "UI5 Bootstrapping", link: "/configuration/setup/ui5_bootstrapping" },
-              { text: "Title", link: "/configuration/setup/title" },
+              { text: "Bootstrapping", link: "/configuration/setup/ui5_bootstrapping" },
+              { text: "Bootstrap Attributes", link: "/configuration/setup/bootstrap_attributes" },
               { text: "Style / CSS", link: "/configuration/setup/style_css" },
               { text: "Logon Language", link: "/configuration/setup/logon_language" },
             ],
