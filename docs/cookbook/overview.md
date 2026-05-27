@@ -29,7 +29,7 @@ Reach into the browser from ABAP — set the tab title, control focus and scroll
 Read device info and use native hardware: camera, geolocation, barcode scanning, audio, and file upload/download including PDF and spreadsheet generation.
 
 #### [Beyond Basics](/cookbook/expert_more/lock)
-Advanced topics for production apps — sessions and communication (locking, statefulness, WebSocket, OData, app state), EML/CDS/SQL integration with RAP, recurring patterns and helpers, troubleshooting, and a list of obsolete features kept for reference.
+Advanced topics for production apps — state and connectivity (locking, statefulness, WebSocket, OData, app state), EML/CDS/SQL integration with RAP, recurring patterns and helpers, troubleshooting, and a list of obsolete features kept for reference.
 
 ### How to Use This Cookbook
 
