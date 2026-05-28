@@ -17,25 +17,14 @@ abap2UI5 lives in three repositories. Each carries information an AI assistant s
 | **[abap2UI5/samples](https://github.com/abap2UI5/samples)** | 250+ working demo apps + app-development guide | Canonical patterns and a copy-pastable example for almost every UI5 control and feature |
 | **[abap2UI5/docs](https://github.com/abap2UI5/docs)** | This documentation site | Conceptual background, lifecycle, cookbook recipes |
 
-## Primary AI Briefings — The `CLAUDE.md` Files
+## Source-Repo Briefings (for Framework / Sample Contributors)
 
-Two `CLAUDE.md` files in the source repositories are written specifically as briefings for AI assistants. They are the **first** thing to read:
+The two source repositories carry `CLAUDE.md` briefings aimed at AI tools that work **inside those repos** — they are not needed for building apps:
 
-- **[abap2UI5/CLAUDE.md](https://github.com/abap2UI5/abap2UI5/blob/main/CLAUDE.md)** — framework-level briefing
-  - Project overview, architecture, the request/response roundtrip
-  - Repository layout (`src/00` utilities, `src/01` engine, `src/02` public API)
-  - Coding rules, naming, style guide (Clean ABAP exceptions)
-  - **Deprecated UI5 controls** to avoid
-  - Important rules for AI assistants (do/don't list)
+- **[abap2UI5/CLAUDE.md](https://github.com/abap2UI5/abap2UI5/blob/main/CLAUDE.md)** — for AI assistants **modifying the framework itself**: layered architecture (`src/00` utilities, `src/01` engine, `src/02` public API), coding rules, naming, abaplint setup, Clean-ABAP exceptions, public-API stability contract.
+- **[samples/CLAUDE.md](https://github.com/abap2UI5/samples/blob/main/CLAUDE.md)** — for AI assistants **contributing sample apps**: formatting rules (blank lines, indentation), file/class conventions, abaplint setup.
 
-- **[samples/CLAUDE.md](https://github.com/abap2UI5/samples/blob/main/CLAUDE.md)** — app-development briefing
-  - Canonical app structure (`on_init`, `on_event`, `view_display`, `data_read`, `data_update`)
-  - Formatting rules (blank lines, indentation, parameter alignment)
-  - When to use inline vs. handler methods
-  - Navigation patterns and event dispatching
-  - `z2ui5_cl_xml_view` vs. `z2ui5_cl_util_xml` style rules
-
-If an AI assistant only reads two files in this project, these are the two.
+If you only want to **build an abap2UI5 app**, this page is the single source — you do not need to read those files.
 
 ## Quick Briefing — The Mental Model
 
@@ -129,7 +118,7 @@ Builder methods:
 Always pass `'true'` or `'false'` as **string literals** — never `abap_true` / `abap_false`. `abap_false` (space) is silently dropped; `abap_true` (`'X'`) produces an invalid XML attribute value.
 :::
 
-Complete worked example: see [Quickstart](/get_started/quickstart), [Hello World](/get_started/hello_world), [Full Example](/get_started/full_example), and the `CLAUDE.md` in [abap2UI5](https://github.com/abap2UI5/abap2UI5/blob/main/CLAUDE.md#building-views--two-supported-apis).
+Complete worked example: see [Quickstart](/get_started/quickstart), [Hello World](/get_started/hello_world), and [Full Example](/get_started/full_example).
 
 ## Canonical App Template
 
@@ -195,11 +184,49 @@ Before building a custom dialog, check whether one of the built-in popup classes
 
 ## Deprecated UI5 Controls — Do Not Generate
 
-Whole libraries to **never** use: `sap.ui.commons.*`, legacy `sap.viz.ui5.*` charts.
+The authoritative list is at <https://ui5.sap.com/#/api/deprecated>. The most common pitfalls for generated code:
 
-Individual deprecated items: `sap.m.MultiEditField`, `sap.f.Avatar` (use `sap.m.Avatar`), `sap.ui.core.XMLComposite`, `HTMLView`, `JSONView`, `JSView`, `TemplateView`, `sap.ui.table.ColumnHeader`, `sap.f.routing.*`, deprecated `Avatar*` enums, Belize / Blue Crystal themes, …
+**Whole libraries — never use any control from these:**
 
-The authoritative list is at <https://ui5.sap.com/#/api/deprecated>. A condensed, AI-friendly version is in the [abap2UI5 CLAUDE.md → Deprecated UI5 Controls](https://github.com/abap2UI5/abap2UI5/blob/main/CLAUDE.md#deprecated-ui5-controls--do-not-use) section.
+| Library | Deprecated since | Use instead |
+|---|---|---|
+| `sap.ui.commons.*` (Accordion, Button, CheckBox, ComboBox, DatePicker, Dialog, FileUploader, Label, Link, Menu, Panel, RadioButton, SearchField, Slider, TextArea, TextField, TextView, ToggleButton, Toolbar, Tree, Form, SimpleForm, AbsoluteLayout, BorderLayout, MatrixLayout, HorizontalLayout, VerticalLayout, … — entire library) | 1.38 | `sap.m` + `sap.ui.layout` |
+| `sap.viz.ui5.*` legacy charts (Bar, Bubble, Bullet, Column, Combination, Donut, Heatmap, Line, Pie, Scatter, StackedColumn, Treemap, Waterfall, …) | 1.32 | `sap.viz.ui5.controls.VizFrame` |
+
+**Individual deprecated controls:**
+
+| Control | Deprecated since | Use instead |
+|---|---|---|
+| `sap.m.MultiEditField` | 1.120 | — |
+| `sap.f.Avatar` | 1.73 | `sap.m.Avatar` |
+| `sap.ui.core.XMLComposite` | 1.88 | Custom controls |
+| `sap.ui.core.mvc.HTMLView` | 1.108 | `XMLView` |
+| `sap.ui.core.mvc.JSONView` | 1.120 | `XMLView` |
+| `sap.ui.core.mvc.JSView` | 1.90 | Typed views |
+| `sap.ui.core.mvc.TemplateView` | 1.56 | `XMLView` |
+| `sap.ui.core.tmpl.TemplateControl` | 1.56 | — |
+| `sap.ui.table.ColumnHeader` | 1.120 | `sap.ui.table.Column` |
+| `sap.ui.table.TableHelper` | 1.118 | — |
+| `sap.f.routing.Router` / `Target` / `TargetHandler` / `Targets` | 1.56 | `sap.m.routing.*` (async) |
+| `sap.tnt.IToolHeader` (interface) | 1.135 | Any control as `ToolPage` header |
+
+**Deprecated enums/types to avoid:**
+
+- `sap.m.ValueCSSColor`, `DateTimeInputType` (use `DatePicker` / `TimePicker`), `ListHeaderDesign`, `ListMode.SingleSelect` (1.143 → `SingleSelectLeft`), `FrameType.TwoThirds` / `Auto`, mis-spelled `PlacementType.*Prefered*` variants
+- `sap.f.AvatarShape` / `AvatarSize` / `AvatarType` / `AvatarColor` / `AvatarImageFitType` / `IllustratedMessageType` / `IllustratedMessageSize` / `DynamicPageTitleArea` (use the `sap.m.*` equivalents)
+- `sap.ui.layout.BlockBackgroundType.Mixed`, `form.GridElementCells`, `SimpleFormLayout.ResponsiveLayout`, `SimpleFormLayout.GridLayout`, `cssgrid.CSSGridGapShortHand`, `GridHelper`
+- `sap.ui.table.NavigationMode`, `SortOrder` (use `sap.ui.core.SortOrder`), `VisibleRowCountMode` (use `rowMode` aggregation), `TreeAutoExpandMode`, `ResetAllMode`
+- `sap.ui.core.MessageType` (use `module:sap/ui/core/message/MessageType`)
+- `sap.ui.unified.ContentSwitcherAnimation` (1.147 — concept discarded)
+
+**Other deprecated framework items:**
+
+- Analysis Path Framework (APF) — deprecated 1.140
+- `sap.m.PDFViewer.sourceValidationFailed()` — deprecated 1.141
+- Declarative `data-sap-ui-type` attribute — deprecated 1.120 (use XML views)
+- Belize, Blue Crystal, and Blue Crystal HCB themes — removed in 1.136 (use Horizon)
+
+**Namespace caveat for `Avatar`:** when using `z2ui5_cl_xml_view->avatar( )`, leave `ns` empty so the element resolves to `sap.m.Avatar` via the View's default xmlns. **Never pass `ns = 'f'`** — that produces `<f:Avatar>`, which is the deprecated `sap.f.Avatar`. (`avatar_group` and `avatar_group_item` correctly use `ns = 'f'` because those controls still live in `sap.f`.)
 
 ## Documentation Map — What to Read When
 
@@ -225,12 +252,7 @@ When an AI needs deeper information than this page provides:
 
 A prompt that gives an AI assistant enough context to produce a working app:
 
-> You are building an abap2UI5 app. Before writing any code, read these two briefings:
->
-> 1. <https://github.com/abap2UI5/abap2UI5/blob/main/CLAUDE.md> — framework, API, rules
-> 2. <https://github.com/abap2UI5/samples/blob/main/CLAUDE.md> — app structure, formatting
->
-> Then consult <https://abap2ui5.github.io/docs/get_started/ai.html> for the documentation map and <https://github.com/abap2UI5/samples/tree/main/src> for 250+ working examples. Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Avoid any control listed in the "Deprecated UI5 Controls" section of the framework `CLAUDE.md`.
+> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/get_started/ai.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (250+ apps, one feature per app). Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Do not use any control listed in this page's "Deprecated UI5 Controls" section.
 
 ## Hard Rules (Cheat Sheet)
 
