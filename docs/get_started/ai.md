@@ -104,7 +104,7 @@ Views are UI5 XML strings passed to `client->view_display( ... )`. The framework
 - **`z2ui5_cl_util_xml`** — generic XML builder. Element name + attributes as strings → maps **1:1** to the UI5 SDK. **Recommended for AI-generated code.**
 - **`z2ui5_cl_xml_view`** — fluent builder with one ABAP method per UI5 control (~446 methods). Convenient for humans, but has naming inconsistencies and incomplete coverage → harder for an AI to use correctly.
 
-→ [View Definition + AI Tip](/cookbook/view/definition#recommended-for-ai-assisted-development)
+→ [View Definition](/cookbook/view/definition)
 
 ## Recommended Builder for AI: `z2ui5_cl_util_xml`
 

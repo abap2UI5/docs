@@ -132,10 +132,6 @@ Every fluent helper ultimately produces an XML element. The lowest-level method 
 
 This maps **1:1** to the UI5 XML/SDK API — control names, property names, and aggregation names are written exactly as they appear in the [UI5 SDK](https://sapui5.hana.ondemand.com), in their original camelCase. There is no abstraction layer guessing what to call things.
 
-::: tip Recommended for AI-assisted Development
-For AI-assisted coding, prefer the generic builder. It removes the need for the model to know the abap2UI5 naming conventions or guess which controls and properties are wrapped — the SDK documentation can be used directly. The fluent API in `Z2UI5_CL_XML_VIEW` is convenient for humans but its inconsistencies and incomplete coverage make it a poor target for code generation.
-:::
-
 The rest of this documentation uses the higher-level fluent API (`->page( )`, `->button( )`, `->multi_combo_box( )`) because it reads better in examples. Both styles can be mixed freely in the same view.
 
 #### Next Steps
