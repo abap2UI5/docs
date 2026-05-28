@@ -114,6 +114,7 @@ export default defineConfig({
               { text: "Full Example", link: "/get_started/full_example" },
             ],
           },
+          { text: "AI-Assisted Development", link: "/get_started/ai" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
