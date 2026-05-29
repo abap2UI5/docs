@@ -3,6 +3,8 @@ outline: [2, 4]
 ---
 # RAP
 
+abap2UI5 is OData/RAP-agnostic — it doesn't care where data lives. You get all RAP goodies (validations, determinations, actions, draft tables) for free; you only re-implement the view.
+
 ### RAP is a Programming Model — abap2UI5 is Not
 
 **RAP (RESTful Application Programming Model)** is a full-stack programming model. It prescribes how you design, expose, and consume business objects: you define entities with CDS views, declare their behavior in Behavior Definitions (BDEFs), implement handlers in Behavior Implementation classes, and expose everything as an OData V4 service consumed by a Fiori Elements frontend. Every layer is part of the model.
