@@ -34,4 +34,12 @@ METHOD z2ui5_if_app~main.
 
 #### Launchpad
 
-Inside an SAP Fiori Launchpad shell the title is forwarded to the `ShellUIService`; standalone the framework falls back to `document.title`.
+When the app runs inside an SAP Fiori Launchpad shell, use the dedicated `set_title_launchpad` event instead. It forwards the title to the shell's `ShellUIService` rather than setting `document.title`:
+
+```abap
+client->action(
+    val   = client->cs_event-set_title_launchpad
+    t_arg = VALUE #( ( `Invoice 4711` ) ) ).
+```
+
+Use `set_title` for the browser tab/window title (standalone) and `set_title_launchpad` for the launchpad shell title.
