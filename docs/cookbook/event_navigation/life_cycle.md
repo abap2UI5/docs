@@ -62,6 +62,35 @@ abap2UI5 does not re-render the view automatically. After an event, if you do **
 
 Call `view_display( )` again only when the **structure** of the view needs to change: different controls, different bindings, a new dialog, navigation to a different screen. Rebuilding and re-sending the view on every event is wasteful and can cause visible flicker, lost scroll position, and lost focus.
 
+### Returning From a Sub-App Hits `check_on_navigated`, Not `check_on_init`
+`check_on_init( )` is `abap_true` **exactly once** — on the very first call of an app instance. It does *not* fire again when control comes back to the app after a `nav_app_call( )` (a popup or a fullscreen sub-app) is closed with `nav_app_leave( )`. That return is signalled by `check_on_navigated( )`.
+
+This trips up apps that build their view only under `check_on_init`:
+
+```abap
+" WRONG — screen is blank after returning from the sub-app
+CASE abap_true.
+  WHEN client->check_on_init( ).
+    render_main( ).                 " runs only the first time
+  WHEN client->check_on_event( `OPEN_POPUP` ).
+    client->nav_app_call( ... ).
+ENDCASE.
+```
+
+When the sub-app is left, `main` runs again, but neither `check_on_init` nor any event matches, so `view_display( )` is never called and the user is left looking at a stale or empty screen. Render from the navigation-return branch as well — `check_on_navigated( )` fires both on the first display *and* on every return, so reacting to it alone is usually enough:
+
+```abap
+" CORRECT — the view is rebuilt on first display and on every return
+CASE abap_true.
+  WHEN client->check_on_navigated( ).
+    render_main( ).
+  WHEN client->check_on_event( `OPEN_POPUP` ).
+    client->nav_app_call( ... ).
+ENDCASE.
+```
+
+Reserve `check_on_init` for one-time setup that must *not* repeat on return (loading initial data, setting defaults). As a rule of thumb: anything needed to **show the screen** belongs in a branch that also fires on navigation return.
+
 ### `check_on_event` Fires Once Per Roundtrip
 Every HTTP request carries at most one event. `check_on_event( )` returns `abap_true` exactly once per call to `main`, for that single event. If the user clicks two buttons in quick succession, the framework dispatches them as two independent `main` invocations — they are never batched into one request.
 
