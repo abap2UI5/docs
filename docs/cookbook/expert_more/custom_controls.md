@@ -15,6 +15,7 @@ The table below lists custom controls that are no longer necessary and the built
 | Old Custom Control Purpose | New Built-in Action          | Documentation                                                              |
 | -------------------------- | ---------------------------- | -------------------------------------------------------------------------- |
 | Set the browser tab title  | `cs_event-set_title`         | [Title](/cookbook/browser_interaction/title)                               |
+| Set the launchpad title    | `cs_event-set_title_launchpad` | [Title](/cookbook/browser_interaction/title)                             |
 | Move input focus           | `cs_event-set_focus`         | [Focus](/cookbook/browser_interaction/focus)                               |
 | Scroll to a position       | `cs_event-scroll_to`         | [Scrolling](/cookbook/browser_interaction/scrolling)                       |
 | Scroll an element into view| `cs_event-scroll_into_view`  | [Scrolling](/cookbook/browser_interaction/scrolling)                       |

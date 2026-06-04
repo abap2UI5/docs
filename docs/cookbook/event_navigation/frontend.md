@@ -27,6 +27,7 @@ The following frontend events are available:
       download_b64_file         TYPE string VALUE `DOWNLOAD_B64_FILE`,
       set_size_limit            TYPE string VALUE `SET_SIZE_LIMIT`,
       set_title                 TYPE string VALUE `SET_TITLE`,
+      set_title_launchpad       TYPE string VALUE `SET_TITLE_LAUNCHPAD`,
       set_focus                 TYPE string VALUE `SET_FOCUS`,
       scroll_to                 TYPE string VALUE `SCROLL_TO`,
       scroll_into_view          TYPE string VALUE `SCROLL_INTO_VIEW`,
