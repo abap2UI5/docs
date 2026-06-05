@@ -47,19 +47,18 @@ CLASS zcl_my_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### 2. Dispatch with `CASE abap_true`
+#### 2. Dispatch with `IF` / `ELSEIF`
 
-`main` is a dispatcher. Three lifecycle checks decide what to do:
+`main` is a dispatcher. Three lifecycle checks decide what to do — always chain them with `IF` / `ELSEIF`, never separate `IF` blocks:
 
 ```abap
-CASE abap_true.
-  WHEN client->check_on_init( ).        " first call
-    " load data + render view
-  WHEN client->check_on_event( `POST` ). " user fired event 'POST'
-    " handle it
-  WHEN client->check_on_navigated( ).   " returned from sub-app / popup
-    " refresh state
-ENDCASE.
+IF client->check_on_init( ).            " first call
+  " load data + render view
+ELSEIF client->check_on_event( `POST` ). " user fired event 'POST'
+  " handle it
+ELSEIF client->check_on_navigated( ).   " returned from sub-app / popup
+  " refresh state
+ENDIF.
 ```
 
 → [Life Cycle](/cookbook/event_navigation/life_cycle)
@@ -235,7 +234,7 @@ When an AI needs deeper information than this page provides:
 | Topic | Best reference |
 |---|---|
 | Architecture, request roundtrip | [Concept](/technical/concept), [How It All Works](/technical/how_it_all_works) |
-| Lifecycle and `CASE abap_true` pattern | [Cookbook → Life Cycle](/cookbook/event_navigation/life_cycle) |
+| Lifecycle and `IF` / `ELSEIF` dispatcher pattern | [Cookbook → Life Cycle](/cookbook/event_navigation/life_cycle) |
 | Building views, control choice | [Cookbook → View Definition](/cookbook/view/definition) |
 | Data binding (`_bind`, `_bind_edit`) | [Cookbook → Binding](/cookbook/model/binding) |
 | Tables and trees | [Cookbook → Tables](/cookbook/model/tables), [Trees](/cookbook/model/trees) |
@@ -260,7 +259,7 @@ A prompt that gives an AI assistant enough context to produce a working app:
 |---|---|
 | Implement `z2ui5_if_app` with a single `main` method | The only entry point the framework calls |
 | Bound attributes must be `PUBLIC` | The framework binds via dynamic ASSIGN; `PROTECTED`/`PRIVATE` are silently ignored |
-| Use `CASE abap_true` with `check_on_init` / `check_on_event( 'NAME' )` / `check_on_navigated` | Canonical dispatcher pattern |
+| Use `IF` / `ELSEIF` with `check_on_init` / `check_on_event( 'NAME' )` / `check_on_navigated` | Canonical dispatcher pattern |
 | Use `z2ui5_cl_util_xml` for AI-generated views | Maps 1:1 to UI5 SDK; no wrapper to learn |
 | Pass XML boolean attributes as string literals `'true'` / `'false'` | `abap_true` / `abap_false` produce invalid or empty attributes |
 | Use backtick string literals (`` ` ``), not single quotes | Project-wide convention enforced by abaplint |
