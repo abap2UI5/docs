@@ -25,7 +25,7 @@ This is useful for guided data entry, barcode scanning, or any flow where the ne
 
 #### Basic Usage
 
-After processing an event, call `client->action( )` with `cs_event-set_focus` and the id of the input to focus next:
+After processing an event, call `client->action->gen( )` with `cs_event-set_focus` and the id of the input to focus next:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -45,11 +45,11 @@ METHOD z2ui5_if_app~main.
       client->view_display( page->stringify( ) ).
 
     ELSEIF client->check_on_event( `ONE_ENTER` ).
-        client->action( val   = client->cs_event-set_focus
+        client->action->gen( val   = client->cs_event-set_focus
                         t_arg = VALUE #( ( `id2` ) ) ).
 
     ELSEIF client->check_on_event( `TWO_ENTER` ).
-        client->action( val   = client->cs_event-set_focus
+        client->action->gen( val   = client->cs_event-set_focus
                         t_arg = VALUE #( ( `id1` ) ) ).
 
     ENDIF.
@@ -64,7 +64,7 @@ After the user presses Enter in `id1`, the backend fires `set_focus` for `id2` a
 To position the caret inside the field or pre-select a range, pass the start and end offsets as additional arguments:
 
 ```abap
-client->action( val   = client->cs_event-set_focus
+client->action->gen( val   = client->cs_event-set_focus
                 t_arg = VALUE #( ( `id1` ) ( `0` ) ( `5` ) ) ).
 ```
 

@@ -3,11 +3,11 @@ outline: [2, 4]
 ---
 # Action
 
-Sometimes you need to call a backend function and then act on the frontend right afterward. The `action` method covers this:
+Sometimes you need to call a backend function and then act on the frontend right afterward. The `action->gen` method covers this:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->action(
+    client->action->gen(
         val   = client->cs_event-open_new_tab
         t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ).
 
