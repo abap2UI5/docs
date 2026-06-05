@@ -114,7 +114,6 @@ export default defineConfig({
               { text: "Full Example", link: "/get_started/full_example" },
             ],
           },
-          { text: "AI-Assisted Development", link: "/get_started/agent" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
@@ -339,6 +338,7 @@ export default defineConfig({
         link: "/advanced/downporting",
         collapsed: true,
         items: [
+          { text: "AI-Assisted Development", link: "/advanced/agent" },
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Build Process", link: "/advanced/builds" },

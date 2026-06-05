@@ -29,6 +29,8 @@ Since launching in 2023, abap2UI5 has grown from a small side project into a com
 
 → *See [Sample Apps](/get_started/next#sample-apps) to watch abap2UI5 in action*
 
+→ *Building with an AI assistant? See [AI-Assisted Development](/advanced/agent)*
+
 ### Why abap2UI5?
 
 Traditional UI5 development needs JavaScript expertise, frontend deployment, and OData service setup. abap2UI5 cuts out those complexities:
