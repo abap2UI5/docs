@@ -23,7 +23,7 @@ Build views, handle events, share data, and work with tables. The [Cookbook](/co
 Before going live, set up security, performance tuning, Launchpad integration, and more. Start with the [Configuration guide](/configuration/setup).
 
 #### Add-ons
-Extend your apps with community-built add-ons for layout handling, charts, table maintenance, and more. See the [Add-ons page](/resources/addons).
+Extend your apps with community-built add-ons for layout handling, charts, table maintenance, and more. See the [Add-ons page](/advanced/addons).
 
 #### Real-World Use
 See ready-to-use apps, real-world scenarios, and companies already running on abap2UI5 on the [Who Uses abap2UI5](/resources/who_uses) page.

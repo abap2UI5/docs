@@ -64,7 +64,7 @@ export default defineConfig({
           { text: "Configuration", link: "/configuration/setup" },
           { text: "Advanced Topic", link: "/advanced/downporting" },
           { text: "Technical Insight", link: "/technical/concept" },
-          { text: "Resource", link: "/resources/addons" },
+          { text: "Resource", link: "/resources/references" },
         ],
       },
       {
@@ -339,6 +339,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "AI-Assisted Development", link: "/advanced/agent" },
+          { text: "Add-ons", link: "/advanced/addons" },
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
           { text: "Build Process", link: "/advanced/builds" },
@@ -399,10 +400,9 @@ export default defineConfig({
       },
       {
         text: "Resource",
-        link: "/resources/addons",
+        link: "/resources/references",
         collapsed: true,
         items: [
-          { text: "Add-on", link: "/resources/addons" },
           { text: "Reference", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release", link: "/resources/changelog" },
