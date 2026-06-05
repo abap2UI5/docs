@@ -23,8 +23,26 @@ Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to l
 While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
 :::
 
+### How Apps Work
+abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, while all logic, state, and data handling stay in ABAP on the server. Three ideas to keep in mind before writing code:
+
+- **One method, many calls.** The framework calls your app's `main` method on every roundtrip — on the initial start *and* after every user interaction (button press, input change, navigation).
+- **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
+- **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
+
+Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
+```abap
+INTERFACE z2ui5_if_app PUBLIC.
+  METHODS main
+    IMPORTING
+      client TYPE REF TO z2ui5_if_client.
+ENDINTERFACE.
+```
+
+→ *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
+
 ### View Display
-Let's add a view to show some text:
+Instead of a message box, let's render a view with some text:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -43,28 +61,8 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Info
-abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, while all logic, state, and data handling stay in ABAP on the server. Three ideas to keep in mind before writing code:
-
-- **One method, many calls.** The framework calls your app's `main` method on every roundtrip — on the initial start *and* after every user interaction (button press, input change, navigation).
-- **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
-- **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
-
-Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
-```abap
-INTERFACE z2ui5_if_app PUBLIC.
-  METHODS main
-    IMPORTING
-      client TYPE REF TO z2ui5_if_client.
-ENDINTERFACE.
-```
-The `client` object is your only entry point into the framework. Use it to show views, handle events, share data, and navigate between apps.
-
-→ *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
-
 ### Events
-
-Let's extend the code with some event handling:
+Now add a button and react to its press event:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -76,15 +74,17 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->page( `abap2UI5 - Hello World`
-          )->text( `My Text`
-          )->button( text = `post` press = client->_event( `POST` ) ).
-        client->view_display( view->stringify( ) ).
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+        )->page( `abap2UI5 - Hello World`
+        )->text( `My Text`
+        )->button(
+          text  = `post`
+          press = client->_event( `POST` ) ).
+      client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `POST` ).
 
-        client->message_box_display( `Hello World!` ).
+      client->message_box_display( `Hello World!` ).
 
     ENDIF.
 
@@ -92,8 +92,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Info
-The framework calls the `main` method on every roundtrip — on initialization and after every user interaction (button press, input submit, etc.):
+The framework calls `main` on every roundtrip — on initialization and after every user interaction (button press, input submit, etc.):
 
 ```text
 ┌─────────┐       ┌──────────┐       ┌─────────┐
@@ -107,15 +106,15 @@ The framework calls the `main` method on every roundtrip — on initialization a
 └─────────┘       └──────────┘       └──────────┘
 ```
 
-To distinguish between lifecycle events, check for the following events:
+Use the lifecycle checks to tell these phases apart:
 
 - `client->check_on_init( )` — first call when the app starts
-- `client->check_on_event( )` — user triggered an event (e.g., button press)
+- `client->check_on_event( )` — user triggered an event (e.g. a button press)
 
-Each `check_*` method returns `abap_true` only for its specific phase, so is acts as a dispatcher:
+Each `check_*` method returns `abap_true` only for its own phase, so the `IF`/`ELSEIF` chain acts as a dispatcher.
 
 ### Data Flow
-Finally, add a public attribute to send data to the backend:
+Finally, add a public attribute and bind it to an input field to send data back to the server:
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -126,24 +125,22 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_init( ).
 
-      WHEN client->check_on_init( ).
+      DATA(view) = z2ui5_cl_xml_view=>factory(
+        )->page( `abap2UI5 - Hello World`
+        )->text( `My Text`
+        )->button(
+          text  = `post`
+          press = client->_event( `POST` )
+        )->input( client->_bind_edit( name ) ).
+      client->view_display( view->stringify( ) ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->page( `abap2UI5 - Hello World`
-          )->text( `My Text`
-          )->button(
-            text  = `post`
-            press = client->_event( `POST` )
-          )->input( client->_bind_edit( name ) ).
-        client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `POST` ).
 
-      WHEN client->check_on_event( `POST` ).
+      client->message_box_display( |Your name is { name }.| ).
 
-        client->message_box_display( |Your name is { name }.| ).
-
-    ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -153,5 +150,3 @@ That's all you need. Set a breakpoint to watch the communication and data update
 ### Jump into the Code
 Press `Ctrl+F12` in any running app to open the source code, view, and model side by side:
 ![Source code viewer opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
-
-
