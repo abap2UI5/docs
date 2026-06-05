@@ -252,7 +252,7 @@ When an AI needs deeper information than this page provides:
 
 A prompt that gives an AI assistant enough context to produce a working app:
 
-> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/get_started/ai.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (250+ apps, one feature per app). Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Do not use any control listed in this page's "Deprecated UI5 Controls" section.
+> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/advanced/agent.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (250+ apps, one feature per app). Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Do not use any control listed in this page's "Deprecated UI5 Controls" section.
 
 ## Hard Rules (Cheat Sheet)
 

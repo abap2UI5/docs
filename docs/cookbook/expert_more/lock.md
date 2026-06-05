@@ -1080,7 +1080,7 @@ ENDCLASS.
 On modern releases, RAP draft-enabled business objects manage locking for you: the draft holds an exclusive lock for its owner while the user keeps editing — no stateful session, no `ENQUEUE_*` call. If a released SAP BO already covers your object, this is usually the simplest path. See [Draft Handling](../eml_cds_sql/draft_handling.md).
 
 #### 8. Lock-Manager Add-on
-The community add-on [**lock-manager**](https://github.com/abap2UI5-addons/lock-manager) wraps the lock logic in a reusable class — including stale-lock cleanup and a "locked by X since…" message for the user. Install it like any other [add-on](../../resources/addons.md) and call it instead of writing the boilerplate yourself.
+The community add-on [**lock-manager**](https://github.com/abap2UI5-addons/lock-manager) wraps the lock logic in a reusable class — including stale-lock cleanup and a "locked by X since…" message for the user. Install it like any other [add-on](../../advanced/addons.md) and call it instead of writing the boilerplate yourself.
 
 #### Overview
 
