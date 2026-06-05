@@ -3,6 +3,28 @@ outline: [2, 4]
 ---
 # Hello World
 
+Just copy the following class into your system:
+
+Build a class:
+```abap
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+ENDCLASS.
+
+CLASS zcl_app_hello_world IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+    client->message_box_display( `Hello World` ).
+  ENDMETHOD.
+ENDCLASS.
+```
+Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
+
+::: tip **ABAP Language Versions**
+While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
+:::
+
+### Idea
 abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, while all logic, state, and data handling stay in ABAP on the server. Three ideas to keep in mind before writing code:
 
 - **One method, many calls.** The framework calls your app's `main` method on every roundtrip — on the initial start *and* after every user interaction (button press, input change, navigation).
@@ -20,28 +42,6 @@ ENDINTERFACE.
 The `client` object is your only entry point into the framework. Use it to show views, handle events, share data, and navigate between apps.
 
 → *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
-
-### Basic Example
-Build a class:
-```abap
-CLASS zcl_app_hello_world DEFINITION PUBLIC.
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-ENDCLASS.
-
-CLASS zcl_app_hello_world IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-
-    client->message_box_display( `Hello World` ).
-
-  ENDMETHOD.
-ENDCLASS.
-```
-Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
-
-::: tip **ABAP Language Versions**
-While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
-:::
 
 ### View Display
 Let's add a view to show some text:
