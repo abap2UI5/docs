@@ -4,7 +4,7 @@ outline: [2, 4]
 # Follow-up Action (Obsolete)
 
 ::: warning Do Not Use Anymore
-`client->follow_up_action( )` is obsolete. Use `client->action( )` instead. It works the same way, but **does not allow sending arbitrary JavaScript to the frontend** — which is exactly why `follow_up_action` was deprecated. See [Custom JS](/cookbook/expert_more/custom_js) for the full reasoning behind removing direct JS execution.
+`client->follow_up_action( )` is obsolete. Use `client->action->gen( )` instead. It works the same way, but **does not allow sending arbitrary JavaScript to the frontend** — which is exactly why `follow_up_action` was deprecated. See [Custom JS](/cookbook/expert_more/custom_js) for the full reasoning behind removing direct JS execution.
 :::
 
 ## What Changed
@@ -18,11 +18,11 @@ client->follow_up_action( `myFunction()` ).
 
 This pattern made it possible to inject arbitrary JavaScript from the backend, with all the security risks described on the [Custom JS](/cookbook/expert_more/custom_js) page (XSS, bypassed output encoding, CSP breakage, no sandboxing).
 
-The replacement, `client->action( )`, calls a **predefined frontend event** by name and passes typed arguments — no raw JavaScript travels from ABAP to the browser:
+The replacement, `client->action->gen( )`, calls a **predefined frontend event** by name and passes typed arguments — no raw JavaScript travels from ABAP to the browser:
 
 ```abap
 " recommended
-client->action( val   = client->cs_event-set_title
+client->action->gen( val   = client->cs_event-set_title
                 t_arg = VALUE #( ( `Invoice 4711` ) ) ).
 ```
 
@@ -37,7 +37,7 @@ Replace each `follow_up_action` call with the equivalent `action` call:
 client->follow_up_action( `myFunction()` ).
 
 " after
-client->action( val   = client->cs_event-<event_name>
+client->action->gen( val   = client->cs_event-<event_name>
                 t_arg = VALUE #( ( `arg1` ) ( `arg2` ) ) ).
 ```
 

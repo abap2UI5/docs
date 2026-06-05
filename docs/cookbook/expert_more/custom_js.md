@@ -80,6 +80,6 @@ If you want to look at — or hand-craft — the raw XML view that abap2UI5 prod
 </mvc:View>
 ```
 
-The browser parses the `html:script` element and executes its content as JavaScript at view render time. The function becomes available globally and can then be triggered from the backend via the obsolete [`follow_up_action`](/cookbook/expert_more/follow_up_action) — or, ideally, replaced entirely with a built-in `client->action( )` call.
+The browser parses the `html:script` element and executes its content as JavaScript at view render time. The function becomes available globally and can then be triggered from the backend via the obsolete [`follow_up_action`](/cookbook/expert_more/follow_up_action) — or, ideally, replaced entirely with a built-in `client->action->gen( )` call.
 
 This is exactly what the `_generic` + `_cc_plain_xml` helpers shown above produce; the two approaches are equivalent. Both ship raw JavaScript from the backend to the browser, and both carry the security risks described above. Use neither unless there is genuinely no alternative.
