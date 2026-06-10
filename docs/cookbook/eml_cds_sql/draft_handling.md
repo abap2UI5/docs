@@ -3,13 +3,22 @@ outline: [2, 4]
 ---
 # Draft Handling
 
-Draft handling is one of the flagship features of SAP's **RAP** (RESTful Application Programming Model): the user starts editing a record, and the framework automatically keeps a work-in-progress copy — including persistence, locking, and the ability to resume later. Because drafts are almost always demonstrated together with a Fiori Elements UI, many developers assume the feature is *only* available in that stack. It is not. Drafts live entirely in the RAP **backend** — the behavior definition, the draft table, the lock handling — and the UI on top is interchangeable. An abap2UI5 app drives draft-enabled RAP business objects directly through **EML** (Entity Manipulation Language) and gets the complete draft lifecycle, with full control over every step.
+## Drafts Are a RAP Feature — and You Can Use Them with abap2UI5
 
-This page first recaps what a draft is (in case RAP is new to you), then maps the draft actions you may know from RAP and Fiori Elements to their abap2UI5 counterparts, and finally walks through complete, working code examples.
+Draft handling is one of the headline features of the **ABAP RESTful Application Programming Model (RAP)**. If you have built RAP business objects before, you know the drill: add `with draft` to the behavior definition, define a draft table, and the RAP framework takes care of the rest — the shadow table, the pessimistic lock, and the standard draft actions `Edit`, `Resume`, `Activate`, and `Discard`.
+
+What is less well known: **none of this is tied to Fiori Elements or OData.** Because drafts are implemented inside the business object — not inside the UI — *any* consumer that speaks **EML** (Entity Manipulation Language) gets the full draft lifecycle for free. An abap2UI5 app is exactly such a consumer. You call the same draft actions you know from RAP, and SAP's framework handles locking and persistence — your abap2UI5 app just provides the UI on top.
+
+So this page serves two audiences:
+
+- **You know drafts from RAP?** Then the EML on this page is exactly what you already use — the only new part is wiring it to an abap2UI5 view instead of a Fiori Elements UI. Feel free to skim ahead to [The Four Building Blocks](#the-four-building-blocks).
+- **You have never heard of drafts?** Read on — the next section explains the concept from scratch. Just keep in mind that drafts are not an abap2UI5 invention: they are a standard part of RAP, and abap2UI5 simply consumes them.
 
 ## What Is a Draft?
 
 Imagine a user opens a form, fills in half of it, and then gets pulled into a meeting. With a normal save, they'd have to either commit half-finished (and possibly invalid) data, or lose everything. A **draft** is the third option: a private, work-in-progress copy that is parked safely on the server until the user is ready to finalize it.
+
+Drafts solve a real problem of modern, **stateless** web UIs. Classic Dynpro applications could hold a lock for as long as the user kept the transaction open — a web app cannot, because between two clicks there is no session holding anything. RAP's answer is to persist the intermediate state server-side in a draft table and let the framework manage the lock. In SAP's standard Fiori applications this is what powers the familiar *"keep draft"* behavior — and through EML, your abap2UI5 apps get the very same behavior.
 
 A helpful mental model:
 
@@ -22,25 +31,11 @@ A helpful mental model:
 
 While a draft is open, the underlying record is **locked** so nobody else can edit it at the same time — but the lock is held by SAP's RAP framework, not by your app. That means your abap2UI5 app can stay **stateless**: the user can close the browser, come back tomorrow, and resume exactly where they left off.
 
-Technically, drafts are a service of the RAP framework: when a business object is declared `with draft` in its behavior definition, RAP generates and manages a **draft table** (a shadow copy of the entity), takes care of locking, and exposes the whole lifecycle as standard actions — `Edit`, `Resume`, `Activate`, `Discard`. Any consumer that can execute these actions gets draft handling for free. Fiori Elements is one such consumer — an abap2UI5 app calling **EML** is another (see also [EML](./eml.md) and [RAP](./rap.md)).
+In abap2UI5 you drive draft-enabled RAP business objects directly through **EML** (Entity Manipulation Language), exactly like any other entity — see also [EML](./eml.md). There is no abap2UI5-specific draft API and nothing to configure: the EML statements in the examples below would work identically in any ABAP program. What the rest of this page adds is the abap2UI5 part — binding the draft values to input fields, reacting to button events, and walking the user through the draft lifecycle. Time for code.
 
 ::: tip You don't have to build anything
 On S/4HANA and the BTP ABAP Environment (Steampunk), many business objects already ship as draft-enabled BOs. All examples on this page use **`I_BankTP`**, a draft-enabled BO that ships with S/4HANA. You don't create a BO, and you don't create a draft table — SAP provides both. Your app just calls the standard BO via EML.
 :::
-
-## Coming from RAP? Same Actions, Called Explicitly
-
-If you know drafts from RAP with Fiori Elements, you already know everything that happens on this page — the only difference is *who* triggers the draft actions. In Fiori Elements the framework calls them implicitly behind the standard buttons; in abap2UI5 your app calls the very same RAP actions explicitly via EML:
-
-| User interaction | RAP + Fiori Elements (implicit) | abap2UI5 (explicit EML) |
-|---|---|---|
-| Clicks *Edit* | OData `$edit` request → `Edit` action | `MODIFY ENTITIES … EXECUTE Edit` |
-| Types into a field | Auto-PATCH into the draft | `MODIFY ENTITIES … UPDATE FIELDS` with `%is_draft = on` |
-| Clicks *Save* | `Activate` action | `MODIFY ENTITIES … EXECUTE Activate` |
-| Clicks *Cancel* | `Discard` action | `MODIFY ENTITIES … EXECUTE Discard` |
-| Returns to an open draft | Automatic "resume draft" popup | `MODIFY ENTITIES … EXECUTE Resume` (popup built by you) |
-
-Same framework, same draft table, same locks — only the UI layer differs. What Fiori Elements hides behind generic buttons, your abap2UI5 app spells out in a handful of EML statements. That costs a few lines of code and buys you full freedom over the UI. The rest of this page is exactly those lines.
 
 ## The Draft Lifecycle
 
@@ -65,7 +60,7 @@ record       │  (user edits) │
 
 ## The Four Building Blocks
 
-Everything on this page is built from just four EML operations. Read these once — the full app below is simply these four, wired to buttons.
+Everything on this page is built from just four EML operations. If you come from RAP, you will recognize them immediately — they are the standard draft actions every draft-enabled BO ships with. Read these once — the full app below is simply these four, wired to buttons.
 
 #### 1. Open a Draft — `Edit`
 Open (acquire) a draft for an existing active record. This takes the lock:
