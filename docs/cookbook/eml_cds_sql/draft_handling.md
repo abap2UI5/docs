@@ -3,6 +3,10 @@ outline: [2, 4]
 ---
 # Draft Handling
 
+Draft handling is one of the flagship features of SAP's **RAP** (RESTful Application Programming Model): the user starts editing a record, and the framework automatically keeps a work-in-progress copy — including persistence, locking, and the ability to resume later. Because drafts are almost always demonstrated together with a Fiori Elements UI, many developers assume the feature is *only* available in that stack. It is not. Drafts live entirely in the RAP **backend** — the behavior definition, the draft table, the lock handling — and the UI on top is interchangeable. An abap2UI5 app drives draft-enabled RAP business objects directly through **EML** (Entity Manipulation Language) and gets the complete draft lifecycle, with full control over every step.
+
+This page first recaps what a draft is (in case RAP is new to you), then maps the draft actions you may know from RAP and Fiori Elements to their abap2UI5 counterparts, and finally walks through complete, working code examples.
+
 ## What Is a Draft?
 
 Imagine a user opens a form, fills in half of it, and then gets pulled into a meeting. With a normal save, they'd have to either commit half-finished (and possibly invalid) data, or lose everything. A **draft** is the third option: a private, work-in-progress copy that is parked safely on the server until the user is ready to finalize it.
@@ -18,11 +22,25 @@ A helpful mental model:
 
 While a draft is open, the underlying record is **locked** so nobody else can edit it at the same time — but the lock is held by SAP's RAP framework, not by your app. That means your abap2UI5 app can stay **stateless**: the user can close the browser, come back tomorrow, and resume exactly where they left off.
 
-In abap2UI5 you drive draft-enabled RAP business objects directly through **EML** (Entity Manipulation Language), exactly like any other entity — see also [EML](./eml.md).
+Technically, drafts are a service of the RAP framework: when a business object is declared `with draft` in its behavior definition, RAP generates and manages a **draft table** (a shadow copy of the entity), takes care of locking, and exposes the whole lifecycle as standard actions — `Edit`, `Resume`, `Activate`, `Discard`. Any consumer that can execute these actions gets draft handling for free. Fiori Elements is one such consumer — an abap2UI5 app calling **EML** is another (see also [EML](./eml.md) and [RAP](./rap.md)).
 
 ::: tip You don't have to build anything
 On S/4HANA and the BTP ABAP Environment (Steampunk), many business objects already ship as draft-enabled BOs. All examples on this page use **`I_BankTP`**, a draft-enabled BO that ships with S/4HANA. You don't create a BO, and you don't create a draft table — SAP provides both. Your app just calls the standard BO via EML.
 :::
+
+## Coming from RAP? Same Actions, Called Explicitly
+
+If you know drafts from RAP with Fiori Elements, you already know everything that happens on this page — the only difference is *who* triggers the draft actions. In Fiori Elements the framework calls them implicitly behind the standard buttons; in abap2UI5 your app calls the very same RAP actions explicitly via EML:
+
+| User interaction | RAP + Fiori Elements (implicit) | abap2UI5 (explicit EML) |
+|---|---|---|
+| Clicks *Edit* | OData `$edit` request → `Edit` action | `MODIFY ENTITIES … EXECUTE Edit` |
+| Types into a field | Auto-PATCH into the draft | `MODIFY ENTITIES … UPDATE FIELDS` with `%is_draft = on` |
+| Clicks *Save* | `Activate` action | `MODIFY ENTITIES … EXECUTE Activate` |
+| Clicks *Cancel* | `Discard` action | `MODIFY ENTITIES … EXECUTE Discard` |
+| Returns to an open draft | Automatic "resume draft" popup | `MODIFY ENTITIES … EXECUTE Resume` (popup built by you) |
+
+Same framework, same draft table, same locks — only the UI layer differs. What Fiori Elements hides behind generic buttons, your abap2UI5 app spells out in a handful of EML statements. That costs a few lines of code and buys you full freedom over the UI. The rest of this page is exactly those lines.
 
 ## The Draft Lifecycle
 
