@@ -27,6 +27,7 @@ Without an override, abap2UI5 uses the OpenUI5 cache-buster URL — i.e. the lat
 | `https://ui5.sap.com/1.120.0/resources/sap-ui-core.js`                    | SAPUI5, pinned version |
 | `https://sapui5.hana.ondemand.com/1.120.0/resources/sap-ui-core.js`       | SAPUI5 legacy host name (still works, but `ui5.sap.com` is the preferred alias) |
 | `/sap/public/bc/ui5_ui5/resources/sap-ui-core.js`                         | Locally hosted UI5 on the same SAP system |
+| `https://ui5.sap.com/1.71/resources/sap-ui-core.js`                         | Oldest supported version |
 
 ### OpenUI5 vs SAPUI5
 
