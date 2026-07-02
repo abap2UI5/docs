@@ -16,7 +16,7 @@ UI5 (SAPUI5) is the default version and ships with every ABAP system from a cert
 UI5 2.x is the newest version of UI5, with deprecated APIs removed. We test abap2UI5 against this release on every change to stay compatible with upcoming releases.
 
 ### Legacy-Free
-A dedicated frontend variant based on OpenUI5's legacy-free distribution removes deprecated features such as jQuery dependencies and synchronous APIs, providing a preview of the UI5 2.x API surface. For details, see [UI5 Legacy-Free](../advanced/legacy_free.md).
+A dedicated frontend variant based on OpenUI5's legacy-free distribution removes deprecated features such as jQuery dependencies and synchronous APIs, providing a preview of the UI5 2.x API surface. For details, see [UI5 Legacy-Free](/advanced/legacy_free).
 
 ### Release-Specific
 Some controls and properties are only available on specific UI5 releases. The abap2UI5 framework and its samples support many UI5 versions, reducing compatibility issues. But when building your own apps, check compatibility with the UI5 version your system uses.

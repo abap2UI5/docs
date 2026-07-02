@@ -143,7 +143,7 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-For a complete sound sample, see `Z2UI5_CL_DEMO_APP_304`.
+For a complete sound sample, see `Z2UI5_CL_DEMO_APP_S_03`.
 
 #### Render Barcodes
 To also render barcodes, use bwip-js, which ships with the js-libraries add-on. See [Add-ons](/advanced/addons) for details.

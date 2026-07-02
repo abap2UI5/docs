@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Language
 
-abap2UI5 picks the user's logon language automatically from the SAP session — every translated text retrieved via `z2ui5_cl_util=>trans_get_text( )`, every OData/CDS label, every message class is returned in that language. For most applications no extra configuration is required.
+abap2UI5 picks the user's logon language automatically from the SAP session — every translated text retrieved via `z2ui5_cl_util=>text_get( )`, every OData/CDS label, every message class is returned in that language. For most applications no extra configuration is required.
 
 ## Override the Backend Language
 
