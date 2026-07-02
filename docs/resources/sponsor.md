@@ -19,7 +19,7 @@ Other open-source projects extend abap2UI5. Please consider sponsoring their mai
 - Runtime serialization with [S-RTTI](https://github.com/sandraros/S-RTTI) [(sandrarossi)](https://github.com/sandraros)
 - ABAP Cloud and Standard compatibility with [Steampunkification](https://github.com/heliconialabs/steampunkification) [(contributors)](https://github.com/heliconialabs/steampunkification/graphs/contributors)
 - Syntax downporting via the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
-- Namespace renaming via the [mirror repository](https://github.com/abap2UI5/abap2UI5-mirror-renamed) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
+- Namespace renaming with [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Browser testing with [Playwright](https://playwright.dev/) and [abap2UI5-web](https://github.com/abap2UI5/abap2UI5-web) [(larshp)](https://github.com/larshp)
 - Live demos via [web-abap2ui5-samples](https://github.com/abap2UI5/web-abap2ui5-samples) [(larshp)](https://github.com/larshp)
 - Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner) [(contributors)](https://github.com/SAP/abap-cleaner/graphs/contributors)

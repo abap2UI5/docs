@@ -22,4 +22,16 @@ client->action->gen(
 ```
 
 ### Browser History
-To control browser history, see sample `Z2UI5_CL_DEMO_APP_139`.
+Two client methods control the browser history from the backend:
+
+Push a new history entry — the value is appended to the URL hash, so app state becomes bookmarkable and the browser back button steps through your pushed states:
+```abap
+client->set_push_state( `&my-app-state=detail` ).
+```
+
+Trigger a browser back navigation (`history.back()`) with the next response:
+```abap
+client->set_nav_back( ).
+```
+
+For a complete example, see sample `Z2UI5_CL_DEMO_APP_139`.

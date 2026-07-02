@@ -39,3 +39,5 @@ To show a popover, call `client->popover_display` and pass the ID of the control
 
   ENDMETHOD.
 ```
+
+Like popups, popovers support a data-only refresh: `popover_model_update( )` pushes changed ABAP values into the open popover without re-rendering its XML.
