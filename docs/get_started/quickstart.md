@@ -62,7 +62,7 @@ abap2UI5 talks only to the HTTP service you define, giving you full control over
 
 ### 3. First Launch
 Open the HTTP endpoint in your browser:
-<img width="800" alt="Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps." src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+<img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` and launch the test app. That's it — you can now build your own abap2UI5 apps.
 
 ### 4. Your First App

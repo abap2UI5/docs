@@ -30,7 +30,7 @@ abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, whil
 - **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
 - **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
 
-Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`:
+Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client` (simplified — the interface also carries a few framework-managed attributes you normally never touch):
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
   METHODS main
@@ -95,15 +95,15 @@ ENDCLASS.
 The framework calls `main` on every roundtrip — on initialization and after every user interaction (button press, input submit, etc.):
 
 ```text
-┌─────────┐       ┌──────────┐       ┌─────────┐
+┌──────────┐       ┌──────────┐       ┌──────────┐
 │ Browser  │──────>│  main()  │──────>│ Browser  │
 │ (Start)  │  HTTP │  init    │  HTTP │ (View)   │
-└─────────┘       └──────────┘       └────┬─────┘
-                                          │ user clicks
-┌─────────┐       ┌──────────┐       ┌────┴─────┐
+└──────────┘       └──────────┘       └────┬─────┘
+                                           │ user clicks
+┌──────────┐       ┌──────────┐       ┌────┴─────┐
 │ Browser  │<──────│  main()  │<──────│ Browser  │
 │ (Update) │  HTTP │  event   │  HTTP │ (Event)  │
-└─────────┘       └──────────┘       └──────────┘
+└──────────┘       └──────────┘       └──────────┘
 ```
 
 Use the lifecycle checks to tell these phases apart:

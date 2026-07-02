@@ -53,6 +53,8 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
   ENDMETHOD.
 ```
 
+The popup has the same lifecycle trio as the main view: `popup_display( )` renders the XML, `popup_model_update( )` pushes changed ABAP data into the **already-rendered** popup without re-rendering it, and `popup_destroy( )` closes it.
+
 ## Separated App
 For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/cookbook/event_navigation/navigation).
 

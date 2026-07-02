@@ -78,8 +78,9 @@ The whole point of nested views is to re-render only what changed. Three calls c
 | `client->view_display( ... )`     | Replaces the main view's XML. The anchor is recreated, so any nested content is lost too.    |
 | `client->nest_view_display( ... )`| Replaces only the nested view. The main view stays on screen.                                |
 | `client->nest_view_model_update( )` | Pushes current ABAP data values into the **already-rendered** nested view. No re-render.   |
+| `client->nest_view_destroy( )`    | Removes the nested view from the frontend without touching the main view.                    |
 
-The matching call for the main view is `client->view_model_update( )` — push data changes into the rendered main view without re-rendering it.
+The matching calls for the main view are `client->view_model_update( )` — push data changes into the rendered main view without re-rendering it — and `client->view_destroy( )`. The second nested slot has the same trio: `nest2_view_display( )`, `nest2_view_model_update( )` and `nest2_view_destroy( )`.
 
 A rule of thumb:
 
