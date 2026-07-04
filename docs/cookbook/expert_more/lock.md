@@ -297,15 +297,15 @@ On read, remember the record's change timestamp. On save, re-read and reject if 
 ```abap
 METHOD data_read.
   SELECT SINGLE aedat, UPD_TMSTMP FROM vbak
-    INTO ( @token_aedat, @token_aezet )
-    WHERE vbeln = @vbeln.
+    WHERE vbeln = @vbeln
+    INTO ( @token_aedat, @token_aezet ).
 ENDMETHOD.
 
 METHOD on_event_save.
 
   SELECT SINGLE aedat, UPD_TMSTMP FROM vbak
-    INTO ( @DATA(now_aedat), @DATA(now_aezet) )
-    WHERE vbeln = @vbeln.
+    WHERE vbeln = @vbeln
+    INTO ( @DATA(now_aedat), @DATA(now_aezet) ).
 
   IF now_aedat <> token_aedat OR now_aezet <> token_aezet.
     client->message_box_display( `Record changed — please reload.` ).

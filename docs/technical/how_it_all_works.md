@@ -214,7 +214,7 @@ SAP GUI (stateful) vs. abap2UI5 (restful)
 
 But use this feature only for interim results; take care when serializing other parts of your app.
 
-We've earned significant flexibility with (9) (10) (11) (16); the next sections focus on how the framework cuts its complexity, starting with the initial request.
+We've earned significant flexibility with (9) (10) (11) and the drafts from this section; the next sections focus on how the framework cuts its complexity, starting with the initial request.
 
 #### 17. Initial Request
 
@@ -307,7 +307,7 @@ And Fiori Elements, with all its floorplans and templates, is simple and will ke
 
 #### 25. System Footprint
 
-We keep the system footprint small — abap2UI5 ships only ABAP classes, with no CDS or RAP artifacts. Most of the code lives in user apps outside the framework (21) (22). Overall, the framework comes to about 2,300 lines of code spread across one HTTP-Handler, two interfaces, and one database table:
+We keep the system footprint small — abap2UI5 ships only ABAP classes, with no CDS or RAP artifacts. Most of the code lives in user apps outside the framework (21) (22). Overall, the core communication layer originally came to about 2,300 lines of code spread across one HTTP handler, two interfaces, and one database table (the framework has grown since — most notably the optional fluent view builder — but the core stays this small):
 
 <img width="600" alt="System footprint of abap2UI5" src="https://github.com/user-attachments/assets/981ab684-d2cf-4f56-b25c-c333db3c6dcc" />
 
@@ -365,7 +365,7 @@ Automated ABAP downporting greatly boosts efficiency. See the abaplint dashboard
 
 In short: inspired by "HTML Over-the-Wire" (1)(2)(3), we combined UI and Data (7) and created a "UI5 Over-the-Wire" approach by sending the XML-View from the server (6). We then used a single generic HTTP-Service for all apps (13), independent of the View and Data Model (12). This gives us great flexibility, so we can create Data Models (10) and Views (11) dynamically at runtime, which greatly cuts the number of backend artifacts.
 
-Next, we explored several ideas for how the framework cuts its complexity by avoiding frontend artifacts (17), removing extra customizing layers (19), and separating the view from the framework (21), along with app-specific JS or HTML (22). The result is a pure source-code approach with only one database table, two interfaces, one class, and about 2,300 lines of code (25). We build it in a single code line (27), making it cloud- and on-premise-ready and downportable to older releases (28). Paired with abapGit, you can build apps that run on nearly every release.
+Next, we explored several ideas for how the framework cuts its complexity by avoiding frontend artifacts (17), removing extra customizing layers (19), and separating the view from the framework (21), along with app-specific JS or HTML (22). The result is a pure source-code approach whose core needs only one database table, two interfaces, one handler class, and roughly 2,300 lines of code (25). We build it in a single code line (27), making it cloud- and on-premise-ready and downportable to older releases (28). Paired with abapGit, you can build apps that run on nearly every release.
 
 Overall, with abap2UI5 you need to set aside some common rules: no separation between View and Model in the HTTP communication (12), HTML and JavaScript live directly in the source code (17) (22), we don't use OData or RAP (7), and there are other tradeoffs to weigh (24). But if you accept all of this, you get a very minimal approach where you only need to write a single method to build standalone UI5 apps (15).
 
