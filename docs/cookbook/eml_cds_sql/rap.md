@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # RAP
 
-abap2UI5 is OData/RAP-agnostic — it doesn't care where data lives. You get all RAP goodies (validations, determinations, actions, draft tables) for free; you only re-implement the view.
+abap2UI5 is OData/RAP-agnostic — it doesn't care where data lives. You keep all your RAP logic (validations, determinations, actions, draft tables); only the UI layer is different — instead of a Fiori Elements frontend, you build the view in ABAP.
 
 ### RAP is a Programming Model — abap2UI5 is Not
 

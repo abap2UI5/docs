@@ -9,15 +9,14 @@ The abap2UI5 frontend artifacts live in the `app` folder. To adjust them:
 Open VS Code (or your editor of choice), then run in the terminal:
 ```sh
 git clone https://github.com/abap2UI5/abap2UI5
-cd app
+cd abap2UI5/app
 ```
-Next replace `<<system>>` and let all three files point to your ABAP backend system:
+Next replace `<<system>>` in the three config files — `ui5.yaml`, `ui5-local.yaml` and `ui5-mock.yaml` — so they all point to your ABAP backend system:
 
 <img width="400" alt="Frontend config files where the backend system URL must be replaced" src="https://github.com/user-attachments/assets/155c9a3f-8a0a-494b-8fc4-a4bba2bf0e90">
 
 #### Build & Test
-Set the backend system in the YAML files.<br>
-Replace `/sap/bc/z2ui5` with your endpoint in the manifest, then run:
+If your HTTP service uses a different path, also replace `/sap/bc/z2ui5` with your endpoint in the manifest. Then run:
 ```sh
 npm i
 npm run start-noflp

@@ -20,8 +20,8 @@ ajson plugs directly into the `z2ui5` namespace and installs with abap2UI5 autom
 DATA(input) = z2ui5_cl_ajson=>parse( json_string ).
 
 DATA(output) = z2ui5_cl_ajson=>create_empty( )->set(
-  iv_path = '/name'
-  iv_val  = 'value'
+  iv_path = `/name`
+  iv_val  = `value`
 )->stringify( ).
 ```
 

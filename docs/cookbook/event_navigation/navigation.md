@@ -36,7 +36,7 @@ To read data from the previous app, cast it like this:
 
 ENDMETHOD.
 ```
-To navigate to an app without pushing it onto the call stack:
+Called **with** an app instance, `nav_app_leave` works differently: it leaves the current app and starts the given one *without* pushing the current app onto the call stack — so there is nothing to return to. Use this to navigate forward while discarding the current app:
 ```abap
   METHOD z2ui5_if_app~main.
 

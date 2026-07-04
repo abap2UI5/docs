@@ -87,7 +87,6 @@ METHOD z2ui5_if_app~main.
     DATA(view) = z2ui5_cl_xml_view=>factory( ).
     view->shell(
            )->page(
-           )->button( text = `test`
           )->_cc_plain_xml( lv_style
           )->html( lv_html ).
 

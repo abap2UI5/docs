@@ -134,6 +134,7 @@ Two details worth a second look:
 
 - **Cell bindings** like `{ORDER_ID}` are plain UI5 binding paths relative to the table row — the framework maps the ABAP field names for you.
 - **The edit button** sends the row's key along with the event: ``t_arg = VALUE #( ( `${ORDER_ID}` ) )``. The `${...}` syntax is resolved *per row* in the browser, so the backend later knows exactly which order was clicked.
+- **The fifth column** has no header text and a fixed `10%` width — it only holds the edit button defined in the row cells.
 
 ### Step 3 — Reading Data
 
@@ -162,6 +163,7 @@ When the user presses **Read Orders**, the `READ` event arrives in `on_event`. R
     ENDIF.
 
     IF s_search-customer IS NOT INITIAL.
+      " NS = `contains no string` — remove rows whose customer does not contain the filter text
       DELETE t_orders WHERE customer NS s_search-customer.
     ENDIF.
 
@@ -419,6 +421,7 @@ CLASS zcl_app_full_example IMPLEMENTATION.
     ENDIF.
 
     IF s_search-customer IS NOT INITIAL.
+      " NS = `contains no string` — remove rows whose customer does not contain the filter text
       DELETE t_orders WHERE customer NS s_search-customer.
     ENDIF.
 

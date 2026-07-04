@@ -71,7 +71,7 @@ Always pass `method_destroy` when the nested view is going to be replaced over t
 
 #### Independent Re-rendering
 
-The whole point of nested views is to re-render only what changed. Three calls cover the common needs:
+The whole point of nested views is to re-render only what changed. Four calls cover the common needs:
 
 | Call                              | What it does                                                                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------------- |

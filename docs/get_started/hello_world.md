@@ -17,7 +17,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Go back to the landing page in your browser and enter `ZCL_APP_HELLO_WORLD` to launch your app.
+Open the abap2UI5 startup page in your browser (the same page as in the [Quickstart](/get_started/quickstart)), enter the class name `ZCL_APP_HELLO_WORLD` in the input field, and launch your app.
 
 ::: tip **ABAP Language Versions**
 While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
@@ -30,7 +30,7 @@ abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, whil
 - **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
 - **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
 
-Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client` (simplified — the interface also carries a few framework-managed attributes you normally never touch):
+Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`. (The real interface also declares a few attributes that the framework manages for you — you can ignore them.)
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
   METHODS main
@@ -92,7 +92,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-The framework calls `main` on every roundtrip — on initialization and after every user interaction (button press, input submit, etc.):
+As introduced above, the framework calls `main` on every roundtrip. The diagram shows both phases — the initial load and a later user event:
 
 ```text
 ┌──────────┐       ┌──────────┐       ┌──────────┐

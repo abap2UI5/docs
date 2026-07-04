@@ -828,7 +828,7 @@ ENDCLASS.
 </details>
 
 #### 6. Soft Lock
-A soft lock is a row in a custom Z table marking *"user X is editing object Y"*. It is **not** enforced by the SAP kernel — only your app code respects it — so use it for UX feedback ("locked by Alice since 09:32") and always layer it on top of a real save-time guard. A minimal schema:
+A soft lock is a row in a custom Z table marking *"user X is editing object Y"*. It is **not** enforced by the SAP kernel — only your app code respects it — so use it for UX feedback ("locked by Alice since 09:32") and always layer it on top of a real save-time guard. A minimal schema (table `Z2UI5_SAMPLE_01` in the example below):
 
 | Field      | Type        | Description           |
 |------------|-------------|-----------------------|
@@ -851,7 +851,7 @@ A user closing the browser without pressing *Release* leaves the row behind, so 
 * ("locked by Alice since 09:32"), always layered on top of a real
 * save-time guard.
 *
-* Required Z table ZS_SO_LOCK (create via SE11):
+* Required Z table Z2UI5_SAMPLE_01 (create via SE11):
 *   MANDT      MANDT       Client (key)
 *   VBELN      VBELN_VA    Sales order (key)
 *   USERNAME   SYUNAME     Editing user
@@ -903,14 +903,9 @@ CLASS z2ui5_cl_demo_app_s_12 IMPLEMENTATION.
 
   METHOD on_init.
 
-    IF soft_lock_acquire( ) = abap_false.
-
-      data_read( ).
-      view_display( ).
-      RETURN.
-
-    ENDIF.
-
+    " soft_lock_acquire fills locked_by when someone else holds the lock;
+    " the view renders read-only in that case
+    soft_lock_acquire( ).
     data_read( ).
     view_display( ).
 

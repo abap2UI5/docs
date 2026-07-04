@@ -26,7 +26,7 @@ This page offers a structured technical comparison of **UI5 Freestyle** and **ab
 | **Frontend Deployment**    | UI5 app built and deployed to BSP/MTA               | Shared static UI5 Shell (no app-specific deployment)   |
 | **Tooling Requirements**   | SAP Business Application Studio / Web IDE           | Any ABAP IDE (including SE80), no extra tools          |
 | **Transport**              | Separate transport for frontend and backend         | Single backend deployment via transport or abapGit     |
-| **Development Style**      | Imperative, frontend-driven                         | Declarative, ABAP-centric                             |
+| **Development Style**      | Imperative, frontend-driven                         | Programmatic, ABAP-centric                            |
 | **Complexity**             | High: frontend/backend split                        | Low: unified backend logic and layout                 |
 
 ### 3. Client–Server Communication Flow

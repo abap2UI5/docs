@@ -87,9 +87,6 @@ This approach gives compatibility with dynamic types while keeping the transform
 
 #### Integration
 
-S-RTTI plugs directly into the `z2ui5` namespace and installs with abap2UI5 automatically. Use it anywhere in your code:
-```abap
-z2ui5_cl_srt_datadescr=>
-```
+S-RTTI plugs directly into the `z2ui5` namespace and installs with abap2UI5 automatically. The classes are available under the `z2ui5_cl_srt_*` prefix (for example `z2ui5_cl_srt_datadescr`) and can be used anywhere in your code.
 #### Updates
 Every S-RTTI update and bug fix flows into abap2UI5 automatically via GitHub Actions and the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.

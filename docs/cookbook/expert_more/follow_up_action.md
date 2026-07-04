@@ -26,7 +26,7 @@ client->action->gen( val   = client->cs_event-set_title
                 t_arg = VALUE #( ( `Invoice 4711` ) ) ).
 ```
 
-The available events are exposed via `client->cs_event-...` — for example `set_title`, `set_focus`, `scroll_to`, `clipboard_copy`, `open_new_tab`, `start_timer`, `download_b`, `play_audio`. See the [Custom Controls (Obsolete)](/cookbook/expert_more/custom_controls) page for the full mapping.
+The available events are exposed via `client->cs_event-...` — for example `set_title`, `set_focus`, `scroll_to`, `clipboard_copy`, `open_new_tab`, `start_timer`, `download_b64_file`, `play_audio`. See the [Custom Controls (Obsolete)](/cookbook/expert_more/custom_controls) page for the full mapping.
 
 ## Migration
 

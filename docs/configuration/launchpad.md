@@ -9,7 +9,7 @@ Embed your abap2UI5 apps into SAP Fiori Launchpads. Full details: <br>
 [**(3) Integration of KPIs**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/) <br>
 
 ### Target Mapping
-Use these parameters for target mapping in your Launchpad configuration:
+Use these parameters for target mapping in your Launchpad configuration. abap2UI5 uses the app's class name as the Semantic Object so each app gets its own navigation target — replace `Z2UI5_CL_MY_APP` with your app class:
 - Semantic Object: `Z2UI5_CL_MY_APP`
 - Action: `display`
 - URL: `/sap/bc/ui5_ui5/sap/z2ui5`
@@ -17,7 +17,7 @@ Use these parameters for target mapping in your Launchpad configuration:
 - Parameter: `app_start / Z2UI5_CL_MY_APP`
 
 ### Cross App Navigation
-We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
+Handle view changes and popups through the abap2UI5 backend as usual. But for navigation *between* apps in a Launchpad, use the Launchpad's own cross-app navigation instead of a backend roundtrip — this keeps browser navigation and history working:
 ```abap
 client->_event_client(
     val   = client->cs_event-cross_app_nav_to_ext

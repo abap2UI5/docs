@@ -42,7 +42,7 @@ sap.ui.core.Component.create({
 				oVBox.addItem(oCompContainer);
 
 				//Overwrite default height of object page section
-				var oSection = that.getView().byId("[This is the ID of your object page section::Section]");
+				var oSection = that.getView().byId("<your-object-page-section-id>"); // replace with the ID of your object page section
 				oSection.addStyleClass("customSectionHeight");
 
 			});
@@ -66,8 +66,13 @@ sap.ui.core.Component.create({
 
 5. Create abap2UI5 app class
 
-On the ABAP side, the app receives the Fiori startup parameters (like the app class name and any custom key-value pairs) via `client->get( )-t_comp_params`. The `check_initialized` flag ensures the parameters are read only once, on the first roundtrip. Setting `backgrounddesign = 'List'` gives the page a white background matching the Fiori object page:
+On the ABAP side, the app receives the Fiori startup parameters (like the app class name and any custom key-value pairs) via `client->get( )-t_comp_params`. The `check_initialized` flag — a public `abap_bool` attribute of the app class — ensures the parameters are read only once, on the first roundtrip. Setting `backgrounddesign = 'List'` gives the page a white background matching the Fiori object page:
 ```abap
+  " class definition:
+  " PUBLIC SECTION.
+  "   INTERFACES z2ui5_if_app.
+  "   DATA check_initialized TYPE abap_bool.
+
   METHOD z2ui5_if_app~main.
 
     IF check_initialized = abap_false.
@@ -75,6 +80,7 @@ On the ABAP side, the app receives the Fiori startup parameters (like the app cl
 
 * ---------- Get startup parameters ---------------------------------------------------------------
       DATA(lt_startup_params) = client->get( )-t_comp_params.
+      " ... evaluate the startup parameters here
 
     ENDIF.
 

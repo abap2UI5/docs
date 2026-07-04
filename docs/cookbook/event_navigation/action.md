@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Action
 
-Sometimes you need to call a backend function and then act on the frontend right afterward. The `action->gen` method covers this:
+Sometimes, once your backend event handler has finished, you want to trigger an action that runs on the frontend. The `action->gen` method schedules such a frontend event — it is executed in the browser after the response arrives:
 ```abap
 METHOD z2ui5_if_app~main.
 

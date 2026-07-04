@@ -15,7 +15,7 @@ METHOD z2ui5_if_exit~set_config_http_get.
 ENDMETHOD.
 ```
 
-Without an override, abap2UI5 uses the OpenUI5 cache-buster URL — i.e. the latest stable OpenUI5 build.
+Without an override, abap2UI5 uses the OpenUI5 cache-buster URL — i.e. the current latest OpenUI5 build (see [Pinning a Version](#pinning-a-version) below before relying on this in production).
 
 ## Common Sources
 

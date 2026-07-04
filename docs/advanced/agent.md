@@ -54,10 +54,10 @@ ENDCLASS.
 ```abap
 IF client->check_on_init( ).            " first call
   " load data + render view
-ELSEIF client->check_on_event( `POST` ). " user fired event 'POST'
-  " handle it
 ELSEIF client->check_on_navigated( ).   " returned from sub-app / popup
   " refresh state
+ELSEIF client->check_on_event( `POST` ). " user fired event 'POST'
+  " handle it
 ENDIF.
 ```
 
@@ -101,8 +101,8 @@ Translate any UI5 XML example from the [UI5 SDK](https://sapui5.hana.ondemand.co
 | UI5 XML | ABAP with `z2ui5_cl_util_xml` |
 |---|---|
 | `<Button text="Send" />` | `->__( n = `Button` a = `text` v = `Send` )` |
-| `press="onPress"` | `v = client->_event( `BUTTON_POST` )` |
-| `value="{/name}"` | `v = client->_bind_edit( name )` |
+| `press="onPress"` | `a = `press` v = client->_event( `BUTTON_POST` )` |
+| `value="{/name}"` | `a = `value` v = client->_bind_edit( name )` |
 | `<FeedInput><actions>…</actions></FeedInput>` | `->_( `FeedInput` )->_( `actions` )->__( … )` |
 
 Builder methods:
