@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Life Cycle
 
-Every request enters the `main` method. `CASE abap_true` dispatches between initialization, navigation returns, and user events using `client->check_on_init( )`, `client->check_on_event( 'EVENT_NAME' )`, and `client->check_on_navigated( )`. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
+Every request enters the `main` method. `CASE abap_true` dispatches between initialization, navigation returns, and user events using `` client->check_on_init( ) ``, `` client->check_on_event( `EVENT_NAME` ) ``, and `` client->check_on_navigated( ) ``. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
 
 ```abap
 CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
@@ -42,10 +42,10 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Three things make this the recommended shape, used by every tutorial in this guide:
+Whether you dispatch with `CASE abap_true` (as above) or with an equivalent `IF` / `ELSEIF` chain (as the [Hello World](/get_started/hello_world) and [Full Example](/get_started/full_example) tutorials do) is a matter of taste — the structure is what counts. Three things make this the recommended shape:
 
 1. **Store `client` on `me->client`** so handler methods can use it without passing it around.
-2. **Dispatch by event name** — `check_on_event( 'POST' )` rather than a generic `check_on_event( )` followed by a second `CASE`. Each event gets its own `WHEN`.
+2. **Dispatch by event name** — `` check_on_event( `POST` ) `` rather than a generic `` CASE client->get( )-event `` with a second dispatch level. Each event gets its own `WHEN`. (With many events or extracted handler methods, the `CASE client->get( )-event` form is a fine alternative — the [Full Example](/get_started/full_example) uses it.)
 3. **One render method per view** — call it from any `WHEN` that should rebuild the screen (`check_on_init`, after a search, after a navigation return). Event handlers that only mutate state and reuse the existing view (a button press inside a popup, a toast) skip it — see [The View Is Only Sent When You Call `view_display`](#the-view-is-only-sent-when-you-call-view-display) below.
 
 For a tiny app with one or two events, inline the view and the handler directly in the `WHEN` branches and skip the handler methods entirely. [Hello World](/get_started/hello_world) shows this variant; [Full Example](/get_started/full_example) shows the full version with multiple handler methods, a popup, and persistence. Both follow the same pattern — only the amount of code inside each branch differs.

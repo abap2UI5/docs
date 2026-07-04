@@ -114,7 +114,7 @@ Use the lifecycle checks to tell these phases apart:
 Each `check_*` method returns `abap_true` only for its own phase, so the `IF`/`ELSEIF` chain acts as a dispatcher.
 
 ### Data Flow
-Finally, add a public attribute and bind it to an input field to send data back to the server:
+Finally, add a public attribute and bind it to an input field to send data back to the server. The attribute must be in the `PUBLIC SECTION` — the framework accesses it dynamically and silently ignores private or protected attributes (full rules on the [Binding](/cookbook/model/binding) page):
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.

@@ -111,7 +111,7 @@ DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
 lo_view_nested->shell( )->page( `Nested View`
   )->table( client->_bind( mt_data )
   )->columns(
-    )->template_repeat( list = `{template>/MT_LAYOUT}` var = `LO`
+    )->template_repeat( list = `{template>/MT_LAYOUT}` var = `L0`
       )->column( ... ) " ...
 
 client->nest_view_display( val           = lo_view_nested->stringify( )

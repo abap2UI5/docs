@@ -17,7 +17,7 @@ The samples evolve all the time. Have one to share? Open a PR so others can lear
 :::
 
 #### Development
-Build views, handle events, share data, and work with tables. The [Cookbook](/cookbook/event_navigation/life_cycle) walks through the patterns you need for everyday work — start with the Life Cycle page.
+Build views, handle events, share data, and work with tables. The [Cookbook](/cookbook/overview) walks through the patterns you need for everyday work — start with the [Life Cycle](/cookbook/event_navigation/life_cycle) page.
 
 #### Configuration
 Before going live, set up security, performance tuning, Launchpad integration, and more. Start with the [Configuration guide](/configuration/setup).

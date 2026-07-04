@@ -20,7 +20,7 @@ CLASS zcl_my_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-That's it — your first UI5 app is ready.
+That's it — your first UI5 app is ready. (`client` is the single parameter of `main`, passed in by the framework — explained on the [Hello World](/get_started/hello_world) page.)
 
 ### Background
 Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework used by ABAP developers worldwide. The framework absorbs frontend complexity, so you can focus on business logic with your existing ABAP skills.

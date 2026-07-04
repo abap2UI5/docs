@@ -5,7 +5,7 @@ outline: [2, 4]
 
 abap2UI5 uses [SAP UI5](https://sapui5.hana.ondemand.com) on the frontend without modification. Whatever your ABAP code sends to the browser is a **standard UI5 XML view** — the same XML you would write in any UI5 freestyle project.
 
-The consequence: **everything in the UI5 SDK works in abap2UI5 1:1**. Any control, any property, any namespace from the [UI5 Demo Kit](https://sapui5.hana.ondemand.com/sdk) is available. Copy the XML, paste it into your ABAP class, and it renders.
+The consequence: **everything in the UI5 SDK works in abap2UI5 1:1 when you write the XML directly**. Any control, any property, any namespace from the [UI5 Demo Kit](https://sapui5.hana.ondemand.com/sdk) is available. Copy the XML, paste it into your ABAP class, and it renders.
 
 #### Sending a View
 
@@ -94,7 +94,7 @@ The UI5 SDK is large. The table below covers the choices that come up in almost 
 | Multi-select dropdown             | `sap.m.MultiComboBox`                                 | Pills appear inside the field.                                                     |
 | Date / time input                 | `sap.m.DatePicker` / `sap.m.TimePicker` / `sap.m.DateTimePicker` | Needs a formatter — see [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping). |
 | Status indicator                  | `sap.m.ObjectStatus`                                  | Colored text + icon for state.                                                     |
-| Modal dialog                      | `sap.m.Dialog` (built with `factory_popup`)           | See [Popover](/cookbook/popup_popover/popover).                                    |
+| Modal dialog                      | `sap.m.Dialog` (built with `factory_popup`)           | See [Popup](/cookbook/popup_popover/popup).                                        |
 
 When two controls fit, prefer the simpler one: `Table` over `TreeTable`, `SimpleForm` over `Form`, `Select` over `ComboBox`. Switch to the richer variant only when a concrete requirement justifies it.
 
@@ -103,7 +103,7 @@ When two controls fit, prefer the simpler one: `Table` over `TreeTable`, `Simple
 `Z2UI5_CL_XML_VIEW` is a hand-curated wrapper around UI5 controls. It does not cover every UI5 control, and the naming is not always a strict 1:1 mapping of the UI5 SDK:
 
 - Control names follow snake_case of the UI5 control class — `sap.m.MultiComboBox` becomes `->multi_combo_box( )`, `sap.m.Text` becomes `->text( )`.
-- Properties are passed as named parameters in snake_case (`enabled`, `placeholder`, `selected_key`).
+- Properties are passed as named parameters, lowercased without underscores (`enabled`, `placeholder`, `selectedkey`, `growingthreshold`). Only the *method* names use snake_case (e.g. `multi_combo_box`).
 - Aggregations are exposed as methods named after the aggregation itself (`->items( )`, `->content( )`, `->custom_data( )`) — not as `add_item( )` / `add_content( )`. Calling the aggregation method returns the parent builder so you can chain children inside it.
 - Coverage is incomplete and occasionally inconsistent: some controls or properties are missing, some method signatures don't match the SDK exactly. When in doubt, check the source of `Z2UI5_CL_XML_VIEW` or fall back to the generic builder below.
 

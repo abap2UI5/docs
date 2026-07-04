@@ -5,7 +5,7 @@ outline: [2, 4]
 
 ### 1. Installation via abapGit
 
-Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org):
+Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org). (New to abapGit? Install it first — see [abapGit](/technical/tools/abapgit); it's the one-time tool used to pull abap2UI5 into your system.)
 
 ![abapGit repository installation screen for abap2UI5](/get_started/image.png)
 
@@ -14,7 +14,7 @@ Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://
 :::
 
 ### 2. Set Up HTTP Handler and Service
-Create a package and define an HTTP handler class:
+Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
 
 ::: code-group
 
@@ -45,7 +45,7 @@ ENDCLASS.
 ```
 :::
 
-Next, use transaction `SICF` to set up an HTTP service that uses the handler above:
+Next, use transaction `SICF` to create an HTTP service and enter your handler class in the service's **Handler List** tab, then activate the node:
 
 ![SICF service creation dialog in transaction SICF](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
@@ -61,7 +61,7 @@ abap2UI5 talks only to the HTTP service you define, giving you full control over
 :::
 
 ### 3. First Launch
-Open the HTTP endpoint in your browser:
+Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
 <img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` to verify your installation, then launch the bundled test app to confirm everything works. That's it — you can now build your own abap2UI5 apps.
 
@@ -79,4 +79,8 @@ CLASS zcl_my_app IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Launch your app in place of the test app — and that's it: you've built your first abap2UI5 app.
+Back on the startup page, enter your class name `ZCL_MY_APP` in the input field and launch it — that's it: you've built your first abap2UI5 app.
+
+::: tip **Naming**
+Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
+:::

@@ -44,7 +44,7 @@ METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->button(
-            text  = `post`
+            text  = `open new tab`
             press = client->_event_client(
                 val   = client->cs_event-open_new_tab
                 t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) )
