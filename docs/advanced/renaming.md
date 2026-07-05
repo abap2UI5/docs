@@ -41,8 +41,6 @@ The [abap2UI5-renamed](https://github.com/abap2UI5/abap2UI5-renamed) repository 
 
 That's it — abap2UI5 now runs under your custom namespace, side by side with any other installation. Consider extending the GitHub Action to automate the process even further, e.g., pulling a fresh release on a regular schedule.
 
-For a ready-made pipeline that builds a renamed release with your chosen add-ons included, see the [Builder](/advanced/builds).
-
 #### Renaming in Practice: ajson
 abap2UI5 itself relies on this feature: its JSON handling comes from the open-source project [ajson](https://github.com/sbcgua/ajson), which is integrated under the `z2ui5` namespace via renaming — so there are no collisions if you pull both abap2UI5 and ajson separately into the same system. A GitHub Action in the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository checks weekly for upstream changes and automatically creates a pull request with the latest ajson version renamed to `z2ui5`. abapGit bundles ajson under its own namespace the same way — renaming with abaplint also makes it possible to integrate open-source projects into each other.
 

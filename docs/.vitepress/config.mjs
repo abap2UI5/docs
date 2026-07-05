@@ -342,7 +342,6 @@ export default defineConfig({
           { text: "Add-ons", link: "/advanced/addons" },
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
-          { text: "Build Process", link: "/advanced/builds" },
           { text: "Local Setup", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "HTTP Connector", link: "/advanced/http" },
