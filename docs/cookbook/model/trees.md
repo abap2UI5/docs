@@ -74,3 +74,5 @@ ENDCLASS.
 ```
 
 The child table field (`nodes` in the example above) is the key: UI5 follows that field name to locate sub-items at each level. The name must match across all levels but can be anything you choose.
+
+Note that the example binds with `_bind_edit` so that the user's selection (`IS_SELECTED`) is synced back to ABAP. For a purely read-only tree, `_bind` is enough.

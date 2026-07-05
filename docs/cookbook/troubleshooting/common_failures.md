@@ -96,7 +96,7 @@ See [Popup](/cookbook/popup_popover/popup) and the worked example in [Full Examp
 
 Where to look:
 - **Browser network tab**: the request payload contains the event name as the browser sent it. Compare it character-for-character against your `WHEN` literal.
-- **Prefer the `client->cs_event-*` constants** where the framework provides them (`set_size_limit`, `open_new_tab`, …) over raw strings. For custom events, declare a constant in the class and reference both ends from the same source — typos then fail to compile instead of failing silently at runtime.
+- **Prefer the `client->cs_event-*` constants** where the framework provides them (`open_new_tab`, `set_title`, `scroll_to`, …) over raw strings. For custom events, declare a constant in the class and reference both ends from the same source — typos then fail to compile instead of failing silently at runtime.
 
 ## State Lost Between Events
 

@@ -12,7 +12,7 @@ Useful for jump-to-top buttons, restoring positions after navigation, or reveali
 
 #### Read the Scroll Position
 
-`client->get( )-s_scroll` reports the scroll positions of the page and any open dialogs at the moment the event was fired. Each container exposes the id of the scrollable element and its `x` / `y` offsets in pixels.
+`client->get( )-s_scroll` reports the scroll positions of the page and any open dialogs at the moment the event was fired. Each container exposes the id of the scrollable element and its `x` / `y` offsets in pixels. `main` is the page's own scroll container, `nest` / `nest2` are the first and second [nested views](/cookbook/view/nested_views), and `popup` / `popover` are open dialogs.
 
 ```abap
 DATA(scroll) = client->get( )-s_scroll.

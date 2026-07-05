@@ -81,7 +81,7 @@ The message box gives you basic output. For richer detail, use the popup `Z2UI5_
 METHOD z2ui5_if_app~main.
 
   DATA(lt_msg) = VALUE bapirettab(
-    ( type = `E` id = `MSG1` number = `001` message = `An empty Report field causes an empty XML Message to be sent` )
+    ( type = `E` id = `MSG1` number = `001` message = `This is an error message` )
     ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
 
   client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).

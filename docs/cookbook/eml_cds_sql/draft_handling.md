@@ -269,7 +269,7 @@ ENDMETHOD.
 `%is_draft = if_abap_behv=>mk-off` makes the read return the **active** row, not any open draft.
 
 #### 2. Entering Edit Mode — Check for an Existing Draft
-When the user clicks **Switch to Edit Mode**, the app first looks in the BO's draft-shadow table (here `cabnk_bank_d`) joined with `sdraft_admin` to find out whether a draft already exists for this key — and who owns it.
+When the user clicks **Switch to Edit Mode**, the app first looks in the BO's draft-shadow table (here `cabnk_bank_d`) joined with `sdraft_admin` to find out whether a draft already exists for this key — and who owns it. (Simplified here; the full snippet at the end of the page additionally reads the draft's timestamp.)
 ```abap
 METHOD check_existing_draft.
   SELECT SINGLE a~created_by, a~last_changed_at

@@ -21,7 +21,7 @@ Use the standard installation process with [abapGit for Eclipse](https://eclipse
 
 <img width="880" height="1199" alt="abapGit import log showing pulled artifacts" src="https://github.com/user-attachments/assets/09497311-8653-4e6f-ae0a-3138d0eac47e" />
 
-You'll see the pull operation running:
+A status bar shows the progress of the pull operation:
 
 <img width="1438" height="26" alt="abapGit pull operation completed status bar" src="https://github.com/user-attachments/assets/ee085bb9-d708-4de3-a6f0-5493adc57054" />
 
@@ -37,7 +37,7 @@ When installing repositories with ADT abapGit, all artifacts arrive inactive. Ac
 
 <img width="691" height="732" alt="Inactive artifacts list requiring activation" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
-You'll see that all artifacts are inactive:
+Trigger the mass activation for all inactive artifacts:
 
 <img width="638" height="179" alt="Mass activation of abap2UI5 artifacts in progress" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 

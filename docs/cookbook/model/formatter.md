@@ -10,9 +10,10 @@ UI5 formatter types use a special JSON-based binding syntax with these key eleme
 - **`type: '...'`** — the UI5 formatter type (e.g., `sap.ui.model.type.Currency`)
 - **`formatOptions: {...}`** — optional settings that control the output format
 - **`constraints: {...}`** — optional input constraints for two-way binding
-- **`\{ ... \}`** — in ABAP string templates (`|...|`), escape curly braces with `\` because `{ }` normally denotes an ABAP expression
 
-The `path = abap_true` parameter on `_bind` / `_bind_edit` returns only the raw model path (e.g., `/XX/AMOUNT`) rather than the full binding expression (`{/XX/AMOUNT}`), so you can embed it inside the `parts` array or a single-path `path:` entry.
+Note on ABAP syntax: inside string templates (`|...|`), escape the curly braces as `\{` and `\}`, because `{ }` normally denotes an embedded ABAP expression.
+
+The `path = abap_true` parameter on `_bind` / `_bind_edit` returns only the raw model path rather than the full binding expression, so you can embed it inside the `parts` array or a single-path `path:` entry. For `_bind_edit` the path is e.g. `/XX/AMOUNT`; read-only `_bind` paths have no `/XX/` segment (`/AMOUNT`).
 
 For example, this ABAP code:
 ```abap
@@ -27,7 +28,7 @@ The sections below show the binding-string pattern for each ABAP type that needs
 
 ## Currency
 
-ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code → UI5 `Currency` formatter. Two `parts` entries; the type combines them into a locale-aware amount string:
+ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code (a plain `string` also works, as in the worked example below) → UI5 `Currency` formatter. Two `parts` entries; the type combines them into a locale-aware amount string:
 
 ```abap
 )->input(
@@ -92,7 +93,7 @@ ABAP `abap_bool` is `"X"` or `""`. UI5's `CheckBox` expects `true` / `false`. Tw
 ```abap
 )->checkbox( selected = `{= $` && client->_bind( mv_flag ) && ` === 'X' }` )
 ```
-This resolves to `{= ${/XX/MV_FLAG} === 'X' }`. Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
+This resolves to `{= ${/MV_FLAG} === 'X' }` — read-only `_bind` paths have no `/XX/` prefix (that segment marks two-way `_bind_edit` bindings). Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
 
 **ABAP-side conversion** — keep a parallel `string`-typed attribute (`'true'` / `'false'`) for two-way binding, and translate before/after each event:
 ```abap
@@ -187,7 +188,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          "Split into two fields — first shows only the number, second only the currency
          "showMeasure: false → hides the currency symbol
          "showNumber: false  → hides the numeric value
-         )->label( `Two field`
+         )->label( `Two fields`
          )->input(
              |\{ parts: [ `{ client->_bind_edit( val  = amount
                                                  path = abap_true ) }`, `{ client->_bind_edit(

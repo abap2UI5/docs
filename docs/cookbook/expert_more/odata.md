@@ -99,7 +99,7 @@ For a complete code snippet, see the sample `Z2UI5_CL_DEMO_APP_315`.
 #### Metadata Binding
 In SAP contexts, OData services often carry extra annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. The definitions for the entity `Currency`:
 ```xml
-<EntityType Name="CurrencyType" sap:label="Währung" sap:content-version="1">
+<EntityType Name="Currency" sap:label="Währung" sap:content-version="1">
 <Key>
 <PropertyRef Name="Currency"/>
 </Key>
@@ -118,11 +118,11 @@ Use these SAP annotations in the UI5 view to reuse backend translations via the 
 ```
 
 - **`TRAVEL>`** — the named OData model
-- **`/#Currency`** — `#` switches to the metadata document, `Currency` is the entity type name (from `<EntityType Name="CurrencyType">`)
+- **`/#Currency`** — `#` switches to the metadata document, `Currency` is the entity type name (it must exactly match `<EntityType Name="Currency">`)
 - **`/Currency`** — the property name within that entity type
 - **`/@sap:label`** — the SAP annotation attribute (here: the translated label text)
 
-So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währungsschlüssel"` from the metadata — shown in the user's logon language.
+So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label="Währung"` from the metadata — shown in the user's logon language.
 
 ```abap
 

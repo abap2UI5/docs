@@ -5,7 +5,7 @@ outline: [2, 4]
 
 **Build UI5 Apps Purely in ABAP**
 
-abap2UI5 is an open-source framework that brings the simplicity of classic ABAP development to modern UI5 apps. Just as Selection Screens and ALVs once produced working UIs with minimal code, abap2UI5 lets you build web apps with a few lines of ABAP:
+abap2UI5 is an open-source framework that brings the simplicity of classic ABAP development to modern UI5 apps. Just as Selection Screens and ALV grids let you build working UIs with only a few lines of ABAP, abap2UI5 brings that same simplicity to modern web apps:
 
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.
@@ -20,9 +20,9 @@ CLASS zcl_my_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-That's it — your first UI5 app is ready.
+That's it — your first UI5 app is ready. (`client` is the single parameter of `main`, passed in by the framework — explained on the [Hello World](/get_started/hello_world) page.)
 
-### About
+### Background
 Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework used by ABAP developers worldwide. The framework absorbs frontend complexity, so you can focus on business logic with your existing ABAP skills.
 
 → *See the [Getting Started Guide](/get_started/quickstart) for step-by-step setup*
@@ -37,7 +37,7 @@ Traditional UI5 development needs JavaScript expertise, frontend deployment, and
 
 - **Use your existing ABAP skills** — do what you do best; no frontend expertise needed
 - **Broad compatibility** — build apps that run on legacy R/3 systems and modern S/4 Cloud environments
-- **Extend beyond RAP** — when standard capabilities reach their limits
+- **Extend beyond RAP** — build UIs for cases RAP does not cover, such as free-style screens, custom flows, or non-CDS data
 - **Prototype fast** — iterate rapidly on business apps
 
 Each app ships as an [abapGit](https://abapgit.org) project, so installation across systems needs no separate frontend deployment.
@@ -55,7 +55,7 @@ abap2UI5 is fast. The frontend focuses only on UI rendering via the UI5 framewor
 abap2UI5 is secure by design. All business logic stays in the ABAP backend. The frontend receives only the data the backend embeds directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries from external tools.
 
 #### System Footprint
-The framework has a small system footprint — only classes and interfaces. Add functionality with optional add-ons to keep your system lean.
+The framework has a small system footprint — essentially classes, interfaces, and a single draft table. The core stays minimal; optional add-ons provide extra functionality only when you need it.
 
 #### Transparency
 All source code lives publicly on GitHub. We discuss features and issues openly, publish technical blog posts that explain key concepts, and ship fixes quickly via abapGit. You'll always understand how the framework works and can confirm its behavior.
@@ -70,12 +70,12 @@ abap2UI5 uses only released APIs, making it a strong fit for on-stack and side-b
 By relying only on released APIs, abap2UI5 keeps your apps "cloud-ready" and "upgrade-stable," in line with SAP's clean-core principles. Your investment in abap2UI5 apps stays safe through future SAP system upgrades.
 
 #### System Support
-Works with both ABAP Cloud and Standard ABAP, covering ABAP releases from 7.02 to ABAP Cloud:
+Works with both ABAP Cloud and Standard ABAP:
 - S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
-- R/3 NetWeaver AS ABAP 7.02 or later (Standard ABAP)
+- R/3 NetWeaver AS ABAP 7.50 or later (Standard ABAP)
 
-A downported version is available for systems on earlier ABAP releases (before 7.50).
+For systems on releases before 7.50 (down to 7.02), a separate downported version is available.
 
 ### Enterprise Ready
 

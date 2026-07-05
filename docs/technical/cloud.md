@@ -75,14 +75,14 @@ This example uses only released APIs, like the CDS View `I_SalesOrder`.
 
 2. Example: Display Sales Orders (not Cloud-Ready):
 ```abap
-CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
+CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA mt_salesorder TYPE STANDARD TABLE OF vbak WITH EMPTY KEY.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
+CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 

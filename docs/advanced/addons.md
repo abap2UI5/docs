@@ -5,7 +5,7 @@ outline: [2, 4]
 
 abap2UI5 focuses on core capabilities — rendering views, handling events, and exchanging data. This keeps the framework lean and easy to maintain. The real strength lies in the ecosystem: **ready-to-use add-ons and community projects** that extend abap2UI5 for specific needs.
 
-#### Add-ons
+#### Available Add-ons
 
 Browse the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to find what you need. Features include:
 - Layout variant handling, similar to classic SAP GUI selection screens or ALV reports

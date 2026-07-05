@@ -30,7 +30,7 @@ Before reaching for Custom JS, consider:
 
 If you accept the risks and decide to use it anyway, the idea is: send the JavaScript function with the view to the frontend, then call it later when an event fires.
 
-The `_generic` method creates a custom XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method inserts raw content into that element — in this case, the JavaScript function definition. On the backend, `client->follow_up_action` then runs the function by name on the frontend:
+The `_generic` method creates a custom XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method inserts raw content into that element — in this case, the JavaScript function definition. On the backend, `client->follow_up_action` then runs the function by name on the frontend. (Note: `follow_up_action` is [obsolete](/cookbook/expert_more/follow_up_action) — custom JS is the one case its replacement `action->gen` deliberately does not cover, which is another reason to avoid this feature.)
 
 ```abap
   METHOD z2ui5_if_app~main.

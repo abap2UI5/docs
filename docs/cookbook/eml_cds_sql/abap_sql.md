@@ -28,7 +28,7 @@ CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
         INTO TABLE @mt_flights
         UP TO 50 ROWS.
 
-      DATA(view)  = z2ui5_cl_xml_view=>factory( )->page( ).
+      DATA(view)  = z2ui5_cl_xml_view=>factory( )->shell( )->page( ).
       DATA(table) = view->table( client->_bind( mt_flights ) ).
 
       table->columns(
@@ -55,17 +55,17 @@ ENDCLASS.
 
 Bind the search term with `_bind_edit( )` and re-run the `SELECT` on every `SEARCH` event:
 ```abap
-CASE abap_true.
+IF client->check_on_init( ).
 
-  WHEN client->check_on_init( ).
-    load_data( ).
-    render( ).
+  load_data( ).
+  render( ).
 
-  WHEN client->check_on_event( `SEARCH` ).
-    load_data( ).
-    client->view_model_update( ).
+ELSEIF client->check_on_event( `SEARCH` ).
 
-ENDCASE.
+  load_data( ).
+  client->view_model_update( ).
+
+ENDIF.
 ```
 
 ```abap

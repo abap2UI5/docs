@@ -3,27 +3,69 @@ outline: [2, 4]
 ---
 # Fiori Launchpad
 
-Embed your abap2UI5 apps into SAP Fiori Launchpads. Full details: <br>
-[**(1) Installation & Configuration**](https://www.linkedin.com/pulse/copy-abap2ui5-host-your-apps-sap-fiori-launchpad-abap2ui5-ocn2e/) <br>
-[**(2) Features: Title, Parameters, Navigation**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-23-features-abap2ui5-upche/) <br>
-[**(3) Integration of KPIs**](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/) <br>
+Embed your abap2UI5 apps into the SAP Fiori Launchpad (FLP) on S/4 On-Premise or Private Cloud. Each app appears as a regular tile; inside the Launchpad shell, abap2UI5 apps can set their title, read startup parameters, and participate in cross-app navigation like any other Fiori app.
+
+### Installation
+
+The Launchpad loads the abap2UI5 frontend from the UI5 ABAP repository of your system (as app `z2ui5`). Install the Launchpad connector from the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization via abapGit — it ships the frontend app for the UI5 repository. After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
 
 ### Target Mapping
-Use these parameters for target mapping in your Launchpad configuration:
+Use these parameters for target mapping in your Launchpad configuration. abap2UI5 uses the app's class name as the Semantic Object so each app gets its own navigation target — replace `Z2UI5_CL_MY_APP` with your app class:
 - Semantic Object: `Z2UI5_CL_MY_APP`
 - Action: `display`
 - URL: `/sap/bc/ui5_ui5/sap/z2ui5`
 - ID: `z2ui5`
 - Parameter: `app_start / Z2UI5_CL_MY_APP`
 
-### Cross App Navigation
-We recommend backend communication only for view changes or popup calls. With a Launchpad, consider navigating via the Launchpad to use browser navigation and history:
+### Launchpad Features
+
+Inside your app, the client API gives you access to the Launchpad context. Runnable samples: `Z2UI5_CL_DEMO_APP_LP_01` to `Z2UI5_CL_DEMO_APP_LP_04` in the [samples repository](https://github.com/abap2UI5/samples).
+
+#### Detect the Launchpad Context
+`client->get( )-check_launchpad_active` tells you whether the app currently runs inside a Launchpad — useful to hide your own page header or to guard Launchpad-only features:
+
 ```abap
-client->_event_client(
-    val   = client->cs_event-cross_app_nav_to_ext
-    t_arg = VALUE #( (
-        `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04",  action: "display" }`
-    ) ) ).
+IF client->get( )-check_launchpad_active = abap_false.
+  client->message_box_display( `This feature needs the Launchpad.` ).
+ENDIF.
+```
+
+#### Set the Tile Title Dynamically
+Change the Launchpad shell title from ABAP at any time with the `set_title_launchpad` frontend event:
+
+```abap
+client->action->gen(
+    val   = z2ui5_if_client=>cs_event-set_title_launchpad
+    t_arg = VALUE #( ( `My Dynamic Title` ) ) ).
+```
+
+#### Read Startup Parameters
+Parameters from the target mapping (or the start URL) arrive as name/value pairs in `client->get( )-t_comp_params`:
+
+```abap
+DATA(lt_params) = client->get( )-t_comp_params.
+DATA(lv_product) = VALUE #( lt_params[ n = `PRODUCT` ]-v OPTIONAL ).
+```
+
+#### Cross App Navigation
+Handle view changes and popups through the abap2UI5 backend as usual. But for navigation *between* apps in a Launchpad, use the Launchpad's own cross-app navigation instead of a backend roundtrip — this keeps browser navigation and history working. Fire the `cross_app_nav_to_ext` event with the target intent (and optional parameters, here taken from a bound structure):
+
+```abap
+)->button(
+    text  = `go to app 128`
+    press = client->_event_client(
+        val   = client->cs_event-cross_app_nav_to_ext
+        t_arg = VALUE #(
+            ( `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04", action: "display" }` )
+            ( `$` && client->_bind_edit( nav_params ) ) ) ) )
+```
+
+To navigate back to the previous Launchpad app, use `cross_app_nav_to_prev_app`:
+
+```abap
+)->button(
+    text  = `BACK`
+    press = client->_event_client( client->cs_event-cross_app_nav_to_prev_app ) )
 ```
 
 ### Troubleshooting
@@ -57,8 +99,6 @@ If clearing caches doesn't fix it, push the frontend app manually:
 Extend your Fiori Launchpad with Key Performance Indicators (KPIs) via the abap2UI5 Launchpad KPI add-on.
 
 <i class="fa-brands fa-github"></i> [Repository](https://github.com/abap2UI5-addons/launchpad-kpi)
-
-For more details, see the [blog post on LinkedIn](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/).
 
 #### Functionality
 <img width="800" alt="Launchpad KPI tiles showing dynamic count values" src="https://github.com/abap2UI5/abap2UI5-connector_launchpad_kpi/assets/102328295/c7db9e46-6876-40d8-a632-be79e2fbcb91">
@@ -107,3 +147,9 @@ ENDCLASS.
 ```text
 .../sap/opu/odata/sap/Z2UI5_PROXY_KPI_SRV/ENTITYCollection/$count?$filter=CLASS eq 'z2ui5_cl_lp_kpi_hello_world'
 ```
+
+### Further Reading
+The original article series with additional screenshots:
+- [Installation & Configuration](https://www.linkedin.com/pulse/copy-abap2ui5-host-your-apps-sap-fiori-launchpad-abap2ui5-ocn2e/)
+- [Features: Title, Parameters, Navigation](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-23-features-abap2ui5-upche/)
+- [Integration of KPIs](https://www.linkedin.com/pulse/abap2ui5-host-your-apps-sap-fiori-launchpad-33-kpis-abap2ui5-uuxxe/)

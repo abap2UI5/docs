@@ -9,7 +9,7 @@ outline: [2, 4]
 - Added Camera Selector control with facing mode support
 - Added Camera Picture control with configurable height/width
 - Implemented security headers in HTTP response handling
-- Added experimental `check_on_event` method for improved event handling
+- Added experimental `check_on_event` method for improved event handling *(since adopted as the standard dispatch API used throughout these docs)*
 - Added experimental `_event_nav_app_leave` method for navigation
 - Improved error handling with enhanced error popup
 - Updated ajson library to latest version

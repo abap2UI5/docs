@@ -28,7 +28,7 @@ If the backend needs more details about the event, use the `t_arg` parameter to 
 
 - **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}` returns the button text)
 - **`$parameters`** — the event parameters defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
-- **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`)
+- **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`). Note: unlike the other two prefixes, `$event` is written without the `${...}` wrapper and without a leading `/` — see the [Event](#event) section below.
 
 For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_DEMO_APP_167`.
 

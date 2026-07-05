@@ -46,6 +46,6 @@ This is convenient for trying out a theme without redeploying.
 
 ## Custom Themes
 
-For brand-specific colours, fonts or logos use the SAP [UI Theme Designer](https://sapui5.hana.ondemand.com/#/topic/be8f7c61bb2444299b3f3429b986e8be) to generate a self-contained theme. Host it on your SAP system or any web server and point `cs_config-theme` to its theme ID (the bootstrap source must reach it via the standard UI5 theme loader).
+For brand-specific colours, fonts or logos use the SAP [UI Theme Designer](https://sapui5.hana.ondemand.com/#/topic/be8f7c61bb2444299b3f3429b986e8be) to generate a self-contained theme. Host it on your SAP system or any web server, then set `cs_config-theme` to its theme ID. UI5 loads custom themes relative to the bootstrap `src` location — if your theme lives elsewhere, register its path with the `data-sap-ui-theme-roots` bootstrap attribute.
 
 See the official [theming documentation](https://sapui5.hana.ondemand.com/#/topic/91f2cebe7c8e4d289fd80a4f0c0bd2ca) for the bigger picture.

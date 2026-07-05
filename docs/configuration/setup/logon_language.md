@@ -14,7 +14,7 @@ To force a specific SAP logon language at startup, append the `sap-language` URL
 …/z2ui5/sample?sap-language=DE
 ```
 
-The value is a one- or two-character SAP language key (typically ISO 639-1, e.g. `EN`, `DE`, `FR`, `JA`). The server sets the user's session language for this request, so backend reads, OData calls and translated texts all use that locale.
+The value is a two-character ISO 639-1 language code, e.g. `EN`, `DE`, `FR`, `JA` (SAP's internal one-character language keys also work). The server sets the user's session language for this request, so backend reads, OData calls and translated texts all use that locale.
 
 ## Override the UI5 Frontend Locale
 

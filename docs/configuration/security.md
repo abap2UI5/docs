@@ -23,14 +23,18 @@ The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. Th
 abap2UI5 never sends the app's business logic to the client. All business processes stay safely on the server, and sensitive data never reaches the frontend.
 
 ### Content-Security-Policy
-To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP blocks attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. By default, CSP allows only trusted sources like ui5.sap.com, sapui5.hana.ondemand.com, and sdk.openui5.org, among others.
+To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP blocks attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. The default policy allows a fixed set of trusted sources — the SAP and OpenUI5 CDNs plus jsDelivr and cdnjs; the complete policy is shown below.
 
 #### Default CSP
-By default, abap2UI5 uses the CSP below:
+By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_exit`):
 ```xml
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data:
     ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com
-    sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas"/>
+    sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas;
+    connect-src 'self' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
+    openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org
+    cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com;
+    worker-src 'self' blob:;"/>
 ```
 
 #### Customizing the CSP

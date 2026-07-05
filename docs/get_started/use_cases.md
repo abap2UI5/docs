@@ -5,12 +5,12 @@ outline: [2, 4]
 
 abap2UI5 fits many contexts, whether you work in a cloud-ready environment or with classic ABAP.
 
-For a complete overview, see the [Use Cases blog post](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/?trackingId=6iIX%2FNk%2BCT0%2B4JorQjpRSQ%3D%3D).
+The sections below follow SAP's standard extensibility model. **On-stack** means the app runs inside your SAP system; **side-by-side** means it runs on a separate system (for example the BTP ABAP Environment) and calls your SAP system remotely. Within each approach, SAP defines three tiers by how "clean core" the extension is: **Tier 1** uses only released, upgrade-stable APIs; **Tier 2** wraps not-yet-released APIs behind your own released interface; **Tier 3** uses classic, unreleased APIs — maximum freedom, but less upgrade stability.
 
 ### On-Stack Extension
 
 #### Tier 1 Extension
-For clean-core compliance, build apps that follow "keep the core clean" principles to keep them cloud-ready and upgrade-stable:
+Build apps using only released APIs. They stay clean-core compliant, cloud-ready, and upgrade-stable:
 ![Tier 1 on-stack extension architecture diagram](/get_started/image-11.png){ width=60% }
 
 #### Tier 2 Extension
@@ -34,3 +34,6 @@ For more flexibility, build apps whose lifecycle is independent of your S/4 syst
 ### Software as a Service (SaaS)
 With a Tier 1 side-by-side extension, you can connect a single abap2UI5 app to multiple S/4 systems. Use the same abap2UI5 code across customer tenants and remote systems for a real SaaS setup:
 ![SaaS architecture connecting one abap2UI5 app to multiple S/4 tenants](/get_started/image-9.png){ width=60% }
+
+### Further Reading
+Background article with additional scenarios: [Use Cases of abap2UI5 — an Overview](https://www.linkedin.com/pulse/use-cases-abap2ui5-overview-abap2ui5-udbde/).

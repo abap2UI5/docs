@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Value Help
 
-A field that asks *"which one?"* is the F4 moment of ABAP. abap2UI5 covers the basics with two built-in popups and lets you build anything custom on top.
+Value help (the classic ABAP **F4** input help) lets users pick a value from a list instead of typing it. abap2UI5 covers the basics with two built-in popups and lets you build anything custom on top.
 
 #### Suggestions on the Input
 

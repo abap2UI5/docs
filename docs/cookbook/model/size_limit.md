@@ -8,7 +8,7 @@ Every UI5 JSON model has a built-in upper limit on the number of items it will e
 abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
 
 ### Set the Limit
-Trigger the event from your controller with `client->action->gen`. The first argument is the new limit, the second is the view key (`MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`) — use the constants in `client->cs_view` to stay type-safe:
+Trigger the event from your controller with `client->action->gen`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
 client->action->gen(
     val   = z2ui5_if_client=>cs_event-set_size_limit
@@ -16,7 +16,7 @@ client->action->gen(
         ( `1000` )
         ( client->cs_view-main ) ) ).
 ```
-After this call, the model bound to the main view accepts up to 1.000 entries per binding. The setting is remembered across roundtrips — once raised, it stays in effect until you reset it or leave the app.
+After this call, the model bound to the main view accepts up to 1000 entries per binding. The setting is remembered across roundtrips — once raised, it stays in effect until you reset it or leave the app.
 
 ### Reset the Limit
 To restore the default of `100`, omit the limit argument and pass only the view key:

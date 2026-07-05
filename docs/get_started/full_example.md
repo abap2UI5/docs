@@ -58,7 +58,7 @@ CLASS zcl_app_full_example DEFINITION PUBLIC.
 ENDCLASS.
 ```
 
-The `main` method is a pure dispatcher — the same pattern as in [Hello World](/get_started/hello_world), just with the branches extracted into methods:
+The `main` method is a pure dispatcher — the same pattern as in [Hello World](/get_started/hello_world), just with the branches extracted into methods. We stash `client` in a protected attribute first, so the handler methods below can use it without passing it around:
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -76,6 +76,8 @@ The `main` method is a pure dispatcher — the same pattern as in [Hello World](
 ### Step 2 — The View: Selection Screen and Table
 
 `view_display` builds the entire screen: a form with the selection criteria on top and the result table below. It is called exactly once, on the first roundtrip — every later interaction only updates data on this view.
+
+Two things are new compared to Hello World: `shell( )` wraps the page in the standard UI5 app frame, and the `navbuttonpress` / `shownavbutton` parameters add a back button when the app was called from another app (details under [Navigation](/cookbook/event_navigation/navigation)). Further down, `get_parent( )` moves one level back up in the builder tree, so the next `column( )` becomes a sibling instead of a child — see [View → Definition](/cookbook/view/definition).
 
 The two date pickers and the customer input use `_bind_edit`, so whatever the user types travels back to the ABAP attributes automatically. The table uses read-only `_bind` since the rows are only displayed:
 
@@ -134,6 +136,7 @@ Two details worth a second look:
 
 - **Cell bindings** like `{ORDER_ID}` are plain UI5 binding paths relative to the table row — the framework maps the ABAP field names for you.
 - **The edit button** sends the row's key along with the event: ``t_arg = VALUE #( ( `${ORDER_ID}` ) )``. The `${...}` syntax is resolved *per row* in the browser, so the backend later knows exactly which order was clicked.
+- **The fifth column** has no header text and a fixed `10%` width — it only holds the edit button defined in the row cells.
 
 ### Step 3 — Reading Data
 
@@ -162,6 +165,7 @@ When the user presses **Read Orders**, the `READ` event arrives in `on_event`. R
     ENDIF.
 
     IF s_search-customer IS NOT INITIAL.
+      " NS = `contains no string` — remove rows whose customer does not contain the filter text
       DELETE t_orders WHERE customer NS s_search-customer.
     ENDIF.
 
@@ -302,6 +306,8 @@ CLASS zcl_app_full_example IMPLEMENTATION.
 
   METHOD on_event.
 
+    " client->get( )-event holds the name passed to _event( );
+    " get_event_arg( ) returns the extra argument attached via t_arg
     CASE client->get( )-event.
       WHEN `READ`.
         data_read( ).
@@ -419,6 +425,7 @@ CLASS zcl_app_full_example IMPLEMENTATION.
     ENDIF.
 
     IF s_search-customer IS NOT INITIAL.
+      " NS = `contains no string` — remove rows whose customer does not contain the filter text
       DELETE t_orders WHERE customer NS s_search-customer.
     ENDIF.
 

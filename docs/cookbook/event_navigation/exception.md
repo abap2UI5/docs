@@ -31,12 +31,12 @@ ENDMETHOD.
 ```
 
 #### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? The default HTTP handler exception output appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
+What happens if your code raises uncatchable exceptions? Instead of an abap2UI5 popup, the raw ABAP runtime error (short dump) from the HTTP handler appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
 
 ```abap
 METHOD z2ui5_if_app~main.
 
-    ASSERT 1 = `This is an error message!`.
+    ASSERT 1 = 2. " always fails → short dump
 
 ENDMETHOD.
 ```

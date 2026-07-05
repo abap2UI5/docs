@@ -219,7 +219,7 @@ Instead of the XLSX API above (which can change between releases), consider the 
       ( count = `2` value = `red` descr = `this is a description` )
       ( count = `3` value = `red` descr = `this is a description` ) ).
 
-    DATA(lv_file) = lcl_help=>get_xlsx_by_itab( lt_tab ).
+    DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
     client->action->gen(
       val   = client->cs_event-download_b64_file
       t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
@@ -232,7 +232,7 @@ ENDMETHOD.
 CLASS lcl_help DEFINITION FINAL CREATE PUBLIC.
 
   PUBLIC SECTION.
-    CLASS-METHODS get_xlsx_by_itab
+    CLASS-METHODS xlsx_get_by_itab
       IMPORTING
         val           TYPE any
       RETURNING
@@ -241,7 +241,7 @@ CLASS lcl_help DEFINITION FINAL CREATE PUBLIC.
 ENDCLASS.
 
 CLASS lcl_help IMPLEMENTATION.
-  METHOD get_xlsx_by_itab.
+  METHOD xlsx_get_by_itab.
     TRY.
 
       DATA: lo_excel     TYPE REF TO zcl_excel,

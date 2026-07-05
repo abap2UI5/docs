@@ -54,10 +54,10 @@ ENDCLASS.
 ```abap
 IF client->check_on_init( ).            " first call
   " load data + render view
+ELSEIF client->check_on_navigated( ).   " returned from a called sub-app (nav_app_call), incl. built-in popup apps
+  " refresh state
 ELSEIF client->check_on_event( `POST` ). " user fired event 'POST'
   " handle it
-ELSEIF client->check_on_navigated( ).   " returned from sub-app / popup
-  " refresh state
 ENDIF.
 ```
 
@@ -101,8 +101,8 @@ Translate any UI5 XML example from the [UI5 SDK](https://sapui5.hana.ondemand.co
 | UI5 XML | ABAP with `z2ui5_cl_util_xml` |
 |---|---|
 | `<Button text="Send" />` | `->__( n = `Button` a = `text` v = `Send` )` |
-| `press="onPress"` | `v = client->_event( `BUTTON_POST` )` |
-| `value="{/name}"` | `v = client->_bind_edit( name )` |
+| `press="onPress"` | `a = `press` v = client->_event( `BUTTON_POST` )` |
+| `value="{/name}"` | `a = `value` v = client->_bind_edit( name )` |
 | `<FeedInput><actions>…</actions></FeedInput>` | `->_( `FeedInput` )->_( `actions` )->__( … )` |
 
 Builder methods:
@@ -135,7 +135,7 @@ CLASS zcl_app_xxx DEFINITION PUBLIC.
 
     METHODS on_init.        " first call: load data, render view
     METHODS on_event.       " user triggered an event
-    METHODS on_navigation.  " returned from sub-app or popup
+    METHODS on_navigation.  " returned from a sub-app called via nav_app_call
     METHODS view_display.   " build and render the view
     METHODS data_read.      " SELECT
     METHODS data_update.    " INSERT / UPDATE / DELETE

@@ -18,12 +18,12 @@ The system that calls the app (the frontend system) ships with the UI5 library a
 
 #### Installation
 
-_Prerequisite: Set up an SM59 HTTP destination pointing to the source system. Install abap2UI5 on both systems._
+_Prerequisite: Set up an SM59 HTTP destination pointing to the backend system (the system that runs the apps). Install abap2UI5 on both systems._
 
 Steps:
 1. Install the [abap2UI5 HTTP Connector](https://github.com/abap2UI5-addons/http-connector) via abapGit on both systems
-2. In the HTTP handler, configure the destination to point to your source system
-3. In your browser, call the endpoint of the HTTP Connector
+2. In the HTTP handler, configure the destination to point to the backend system
+3. In your browser, call the HTTP Connector's endpoint on the frontend system (the ICF service installed with the connector — analogous to `.../sap/bc/2ui5_rfc` for the RFC Connector)
 
 #### Further Information
 For the latest details, source code, and updates, see the [HTTP Connector repository on GitHub](https://github.com/abap2UI5-addons/http-connector).

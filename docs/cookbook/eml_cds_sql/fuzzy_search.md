@@ -61,7 +61,7 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
     DATA(tab)  = view->table( client->_bind( mt_customers ) growing = abap_true ).
 
     tab->header_toolbar( )->overflow_toolbar(
-        )->title( `Customers`
+        )->title( `Customer List`
         )->toolbar_spacer( )
         )->search_field(
             value       = client->_bind_edit( mv_search )

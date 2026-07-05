@@ -174,12 +174,12 @@ CLASS z2ui5_cl_app_table_basic IMPLEMENTATION.
 ENDCLASS.
 ```
 
-## Table with Filtering, Sorting
+## Table with Sorting
 
-Enable UI5's built-in column sorting and filtering by setting `sortProperty` and `filterProperty` on each column header. The `p13n` settings expose the personalization icon.
+`sap.m.Table` has no built-in column sorting — in abap2UI5, sorting (and filtering) is backend work: react to an event, `SORT` the internal table in ABAP, and push the new order to the rendered view with `view_model_update`. No re-render needed:
 
 ```abap
-CLASS z2ui5_cl_app_table_p13n DEFINITION PUBLIC.
+CLASS z2ui5_cl_app_table_sort DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -193,7 +193,7 @@ CLASS z2ui5_cl_app_table_p13n DEFINITION PUBLIC.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_app_table_p13n IMPLEMENTATION.
+CLASS z2ui5_cl_app_table_sort IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
@@ -206,22 +206,28 @@ CLASS z2ui5_cl_app_table_p13n IMPLEMENTATION.
           ) INTO TABLE rows.
       ENDDO.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( `Sortable / Filterable Table` ).
+      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( `Sortable Table` ).
 
       DATA(tab) = view->table(
-          items                = client->_bind( rows )
-          growing              = abap_true
-          growing_threshold    = `10`
-          mode                 = `MultiSelect`
-          sticky               = `ColumnHeaders` ).
+          items            = client->_bind( rows )
+          growing          = abap_true
+          growingthreshold = `10`
+          sticky           = `ColumnHeaders` ).
+
+      tab->header_toolbar( )->toolbar(
+          )->title( `Orders`
+          )->toolbar_spacer(
+          )->button(
+              text  = `Sort by Name`
+              press = client->_event( `SORT_NAME` )
+          )->button(
+              text  = `Sort by Status`
+              press = client->_event( `SORT_STATUS` ) ).
 
       tab->columns(
-          )->column( sort_property = `ID`     filter_property = `ID`
-              )->text( `ID` )->get_parent(
-          )->column( sort_property = `NAME`   filter_property = `NAME`
-              )->text( `Name` )->get_parent(
-          )->column( sort_property = `STATUS` filter_property = `STATUS`
-              )->text( `Status` ).
+          )->column( )->text( `ID` )->get_parent(
+          )->column( )->text( `Name` )->get_parent(
+          )->column( )->text( `Status` ).
 
       tab->items( )->column_list_item( )->cells(
           )->text( `{ID}`
@@ -229,6 +235,16 @@ CLASS z2ui5_cl_app_table_p13n IMPLEMENTATION.
           )->text( `{STATUS}` ).
 
       client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `SORT_NAME` ).
+
+      SORT rows BY name.
+      client->view_model_update( ).
+
+    ELSEIF client->check_on_event( `SORT_STATUS` ).
+
+      SORT rows BY status.
+      client->view_model_update( ).
 
     ENDIF.
 

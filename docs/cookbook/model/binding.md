@@ -9,7 +9,7 @@ In abap2UI5, there are two ways to share data between your ABAP code and the UI5
 Use one-way binding to show data on the frontend without allowing edits. The `client->_bind` method sends data to the frontend and binds it to the view:
 
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -17,7 +17,7 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
@@ -29,13 +29,13 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-This method works with tables, trees, and other nested data structures. For details, see the table and tree samples in the samples repository.
+This method works with tables, trees, and other nested data structures — see [Tables](/cookbook/model/tables) and [Trees](/cookbook/model/trees).
 
 #### Two-Way Binding
 When users need to edit data, use two-way binding to keep it in sync with the ABAP backend. Call the `client->_bind_edit` method — after an event, the framework syncs the data back to your ABAP class:
 
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -43,7 +43,7 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(

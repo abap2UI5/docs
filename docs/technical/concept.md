@@ -22,7 +22,7 @@ In this architecture, the initial request delivers JavaScript and CSS. Later int
 <p align="center">
 <img width="600" alt="HTML Over-the-Wire lifecycle - server sends HTML fragments, browser updates UI without full reload" src="https://github.com/user-attachments/assets/db393f3a-940d-4bd3-aec0-5523e8d58fa0" />
 <br/>
-  <em>HTML "Over the Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
+  <em>HTML "Over-the-Wire" Lifecycle - Server sends HTML fragments, browser updates UI without full reload</em>
 </p>
 
 The result is a clean, lightweight frontend — a pure rendering layer — while all logic stays under the backend's full control.
@@ -186,7 +186,7 @@ The application flow looks like this:
   <em>abap2UI5 Architecture - UI5 Over-the-Wire</em>
 </p>
 
-The initial request delivers the static shell app. On each user interaction, the app calls the backend — in PAI/PBO fashion — to fetch the updated view and model. Frontend and backend stay tightly coupled — not via OData service definitions, but via plain ABAP logic and JSON. The result: a fully backend-driven UI flow.
+The initial request delivers the static shell app. On each user interaction, the app calls the backend — in PAI/PBO fashion — to fetch the updated view and model. Frontend and backend communicate directly through plain ABAP logic and JSON — no OData service definitions in between. The result: a fully backend-driven UI flow.
 
 #### Partial HTML Updates
 
@@ -256,6 +256,6 @@ Happy ABAPing!
 
 **References:**
 - [htmx in a nutshell](https://htmx.org/docs/#introduction)
-- [HTML Over the Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
+- [HTML Over-the-Wire](https://signalvnoise.com/svn3/html-over-the-wire/)
 - [Fiori-like web app development in pure ABAP with htmx and Fundamental](https://community.sap.com/t5/technology-blog-posts-by-members/fiori-like-web-app-development-in-pure-abap-with-htmx-and-fundamental/ba-p/13500763)
 - [UI5 SDK](https://sapui5.hana.ondemand.com/sdk/#/topic/ec699e0817fb46a0817b0fa276a249f8)

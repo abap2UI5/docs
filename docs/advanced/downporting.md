@@ -14,5 +14,17 @@ To install on an older system, use the `702` branch:
 
 Some sample projects and other repositories also ship a downported version. Check whether a `702` branch is available.
 
-#### Functionality
-For more on the downport feature, see the blog post [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).
+#### How It Works
+The `702` branch is not maintained by hand — it is **generated** from `main` by an automated GitHub Actions workflow on every change. The pipeline runs [abaplint](https://abaplint.org)'s downport rule (`abaplint --fix` with a 7.02 target configuration), which rewrites modern syntax into 7.02-compatible equivalents, for example:
+
+- inline declarations `DATA(x) = ...` → separate `DATA` statements
+- constructor expressions (`VALUE #( )`, `NEW #( )`, `CONV #( )`) → classic statements
+- `xsdbool( )` → `boolc( )`
+- string templates → concatenation where needed
+
+A few small compatibility fix-ups follow (e.g. replacing exception types that don't exist on old releases), and the result is committed to the `702` branch. Because the transformation is fully automatic, the downported version stays feature-identical with `main` — you never wait for a manual backport.
+
+The same mechanism runs in this project's CI (`npm run auto_downport`) to guarantee every change on `main` stays downportable.
+
+#### Further Reading
+Background article: [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).

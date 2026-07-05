@@ -4,7 +4,7 @@ outline: [2, 4]
 # Tables
 This section walks through rendering tabular and nested data in views.
 
-### Tables
+### Basic Table
 The example below binds a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
@@ -36,7 +36,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
       DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
           )->table( client->_bind( mt_itab ) ).
       tab->columns(
-          )->column( )->text( `Counter` )->get_parent(
+          )->column( )->text( `Count` )->get_parent(
           )->column( )->text( `Value` )->get_parent(
           )->column( )->text( `Description` ).
       tab->items( )->column_list_item( )->cells(
@@ -52,7 +52,7 @@ ENDCLASS.
 ```
 
 ### Editable
-To make a table editable, switch the binding to `bind_edit`:
+To make a table editable, switch the binding to `_bind_edit`:
 ```abap
   METHOD z2ui5_if_app~main.
 
