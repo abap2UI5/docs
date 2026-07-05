@@ -55,7 +55,7 @@ ENDCLASS.
 IF client->check_on_init( ).            " first call
   " load data + render view
 ELSEIF client->check_on_navigated( ).   " returned from a called sub-app (nav_app_call), incl. built-in popup apps
-  " refresh state
+  " re-display the view - the sub-app's view is still on screen; state survived serialization, no data re-read needed
 ELSEIF client->check_on_event( `POST` ). " user fired event 'POST'
   " handle it
 ENDIF.
@@ -121,7 +121,7 @@ Complete worked example: see [Quickstart](/get_started/quickstart), [Hello World
 
 ## Canonical App Template
 
-For anything beyond ~50 lines in `main`, extract `on_init` and `on_event` first, then add helpers (`view_display`, `data_read`, `data_update`) only when needed. Class names lowercase, no `FINAL`, definition order `TYPES` → `DATA` → `METHODS`.
+For anything beyond ~50 lines in `main`, extract `on_init` and `on_event` first, then add helpers (`view_display`, `data_read`, `data_update`) only when needed. Class names lowercase, no `FINAL`, definition order `TYPES` → `DATA` → `METHODS`. In the `check_on_navigated( )` branch call `view_display( )` directly — the state survived serialization, only the view is gone from the browser.
 
 ```abap
 CLASS zcl_app_xxx DEFINITION PUBLIC.
@@ -135,7 +135,6 @@ CLASS zcl_app_xxx DEFINITION PUBLIC.
 
     METHODS on_init.        " first call: load data, render view
     METHODS on_event.       " user triggered an event
-    METHODS on_navigation.  " returned from a sub-app called via nav_app_call
     METHODS view_display.   " build and render the view
     METHODS data_read.      " SELECT
     METHODS data_update.    " INSERT / UPDATE / DELETE
@@ -153,7 +152,7 @@ CLASS zcl_app_xxx IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
     ELSEIF client->check_on_navigated( ).
-      on_navigation( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.

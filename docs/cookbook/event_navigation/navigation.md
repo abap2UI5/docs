@@ -32,10 +32,14 @@ To read data from the previous app, cast it like this:
     IF client->check_on_navigated( ).
         DATA(lo_called_app) = CAST z2ui5_cl_new_app( client->get_app_prev( ) ).
         client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
+        view_display( ).
     ENDIF.
 
 ENDMETHOD.
 ```
+::: warning Re-display your view on return
+When the called app took over the screen with its own `view_display( )`, the browser still shows that view after `nav_app_leave( )` — the framework does not restore the previous view automatically. Call `view_display( )` again in the `check_on_navigated( )` branch. Your class attributes survived the roundtrip serialization, so no data re-read is needed — only the view must be rendered again. See [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check_on_navigated-not-check_on_init).
+:::
 Called **with** an app instance, `nav_app_leave` works differently: it leaves the current app and starts the given one *without* pushing the current app onto the call stack — so there is nothing to return to. Use this to navigate forward while discarding the current app:
 ```abap
   METHOD z2ui5_if_app~main.
