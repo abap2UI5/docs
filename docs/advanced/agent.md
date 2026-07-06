@@ -55,13 +55,17 @@ ENDCLASS.
 IF client->check_on_init( ).            " first call
   " load data + render view
 ELSEIF client->check_on_navigated( ).   " returned from a called sub-app (nav_app_call), incl. built-in popup apps
-  " refresh state
+  " re-display the view - the sub-app's view is still on screen; state survived serialization, no data re-read needed
 ELSEIF client->check_on_event( `POST` ). " user fired event 'POST'
   " handle it
 ENDIF.
 ```
 
 → [Life Cycle](/cookbook/event_navigation/life_cycle)
+
+::: warning The #1 lifecycle bug: blank screen after navigation
+Always call `view_display( )` in the `check_on_navigated( )` branch. When a called sub-app took over the screen and returns via `nav_app_leave( )`, the browser still shows the sub-app's view — the framework does not restore the previous view automatically. All class attributes survived the roundtrip serialization, so no data re-read is needed — just render the view again. Skipping this leaves the user on a blank or stale screen after navigating back.
+:::
 
 #### 3. State lives in **public** class attributes
 
@@ -121,7 +125,7 @@ Complete worked example: see [Quickstart](/get_started/quickstart), [Hello World
 
 ## Canonical App Template
 
-For anything beyond ~50 lines in `main`, extract `on_init` and `on_event` first, then add helpers (`view_display`, `data_read`, `data_update`) only when needed. Class names lowercase, no `FINAL`, definition order `TYPES` → `DATA` → `METHODS`.
+For anything beyond ~50 lines in `main`, extract `on_init` and `on_event` first, then add helpers (`view_display`, `data_read`, `data_update`) only when needed. Class names lowercase, no `FINAL`, definition order `TYPES` → `DATA` → `METHODS`. In the `check_on_navigated( )` branch call `view_display( )` directly — the state survived serialization, only the view is gone from the browser.
 
 ```abap
 CLASS zcl_app_xxx DEFINITION PUBLIC.
@@ -135,7 +139,6 @@ CLASS zcl_app_xxx DEFINITION PUBLIC.
 
     METHODS on_init.        " first call: load data, render view
     METHODS on_event.       " user triggered an event
-    METHODS on_navigation.  " returned from a sub-app called via nav_app_call
     METHODS view_display.   " build and render the view
     METHODS data_read.      " SELECT
     METHODS data_update.    " INSERT / UPDATE / DELETE
@@ -153,7 +156,7 @@ CLASS zcl_app_xxx IMPLEMENTATION.
     IF client->check_on_init( ).
       on_init( ).
     ELSEIF client->check_on_navigated( ).
-      on_navigation( ).
+      view_display( ).
     ELSEIF client->check_on_event( ).
       on_event( ).
     ENDIF.
@@ -251,7 +254,7 @@ When an AI needs deeper information than this page provides:
 
 A prompt that gives an AI assistant enough context to produce a working app:
 
-> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/advanced/agent.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (250+ apps, one feature per app). Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Do not use any control listed in this page's "Deprecated UI5 Controls" section.
+> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/advanced/agent.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (250+ apps, one feature per app). Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Do not use any control listed in this page's "Deprecated UI5 Controls" section. Always call `view_display( )` in the `check_on_navigated( )` branch — otherwise the screen is blank after returning from a called sub-app.
 
 ## Hard Rules (Cheat Sheet)
 
@@ -260,6 +263,7 @@ A prompt that gives an AI assistant enough context to produce a working app:
 | Implement `z2ui5_if_app` with a single `main` method | The only entry point the framework calls |
 | Bound attributes must be `PUBLIC` | The framework binds via dynamic ASSIGN; `PROTECTED`/`PRIVATE` are silently ignored |
 | Use `IF` / `ELSEIF` with `check_on_init` / `check_on_event( 'NAME' )` / `check_on_navigated` | Canonical dispatcher pattern |
+| Always call `view_display( )` in the `check_on_navigated` branch | The browser still shows the called sub-app's view after `nav_app_leave( )` — without a re-display the screen stays blank |
 | Use `z2ui5_cl_util_xml` for AI-generated views | Maps 1:1 to UI5 SDK; no wrapper to learn |
 | Pass XML boolean attributes as string literals `'true'` / `'false'` | `abap_true` / `abap_false` produce invalid or empty attributes |
 | Use backtick string literals (`` ` ``), not single quotes | Project-wide convention enforced by abaplint |
