@@ -1,0 +1,23 @@
+# abap2UI5
+
+> abap2UI5 is an open-source framework for building SAP UI5 apps purely in ABAP — no JavaScript, OData or RAP required. An app implements the interface `z2ui5_if_app` with a single `main( )` method; the framework calls it on every HTTP roundtrip.
+
+Key facts for AI assistants generating abap2UI5 apps:
+
+- The canonical AI briefing is https://abap2ui5.github.io/docs/advanced/agent.html — read it before generating any app code.
+- Dispatch inside `main( )` with `IF` / `ELSEIF` over `client->check_on_init( )`, `client->check_on_navigated( )` and `client->check_on_event( 'NAME' )`.
+- CRITICAL — most common bug: always call `view_display( )` in the `check_on_navigated( )` branch. After returning from a sub-app called via `nav_app_call( )`, the browser still shows the sub-app's view — the framework does not restore the previous view automatically. App state survives the roundtrip serialization, so no data re-read is needed; only the view must be rendered again. Skipping this leaves a blank screen after navigating back.
+- Build views as UI5 XML strings with `z2ui5_cl_util_xml` (1:1 translation of UI5 SDK XML, recommended for AI) or `z2ui5_cl_xml_view` (fluent API).
+- Attributes bound with `_bind` / `_bind_edit` must be PUBLIC; use backtick string literals.
+
+## Docs
+
+- [AI Agent Briefing](https://abap2ui5.github.io/docs/advanced/agent.html): single source of truth for app-building (template, client API, lifecycle, view builders, deprecated controls)
+- [Life Cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle.html): lifecycle checks and pitfalls, including the blank-screen-after-navigation bug
+- [Navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation.html): cross-app navigation and re-displaying the view on return
+- [Quickstart](https://abap2ui5.github.io/docs/get_started/quickstart.html): installation and first app
+
+## Examples
+
+- [Samples repository](https://github.com/abap2UI5/samples): 250+ working demo apps, one feature per app
+- [Framework repository](https://github.com/abap2UI5/abap2UI5): core framework, architecture documented in AGENTS.md
