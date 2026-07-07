@@ -29,6 +29,10 @@ Without an override, abap2UI5 uses the OpenUI5 cache-buster URL — i.e. the cur
 | `/sap/public/bc/ui5_ui5/resources/sap-ui-core.js`                         | Locally hosted UI5 on the same SAP system |
 | `https://ui5.sap.com/1.71/resources/sap-ui-core.js`                         | Oldest supported version |
 
+::: warning Older releases need a CSP adjustment
+The default Content Security Policy does not allow `eval()`, but the module loader of older UI5 releases (such as `1.71`) still relies on it. Bootstrapping such a release with the default CSP fails with an `EvalError` in the browser console ("Failed to load component for container container"). Re-add `'unsafe-eval'` to the CSP in the same exit where you set the bootstrap source — see [Bootstrapping Older UI5 Releases](/configuration/security#bootstrapping-older-ui5-releases).
+:::
+
 ### OpenUI5 vs SAPUI5
 
 - **OpenUI5** (`sdk.openui5.org`) is the Apache-licensed open-source subset of UI5. It contains all libraries a typical abap2UI5 app uses: `sap.m`, `sap.ui.core`, `sap.ui.layout`, `sap.ui.table`, `sap.ui.unified`, `sap.uxap`, `sap.f`, `sap.tnt`, `sap.viz`.
