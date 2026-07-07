@@ -31,15 +31,14 @@ Renaming closes this gap. It is not a true package management system, but it let
 The renamed copy is a complete, installable abapGit project under your own namespace — install it side by side with the original, pin it to a release, or ship it inside your product. The abap2UI5 CI runs this transformation on every change (`npm run rename`, workflow `test_rename.yaml`) to guarantee the codebase stays renameable.
 
 #### Step-by-Step Guide
-The [abap2UI5-renamed](https://github.com/abap2UI5/abap2UI5-renamed) repository shows the full setup: a GitHub Action runs `abaplint abaplint_rename.json --rename` and commits the renamed artifacts back via pull request. Use it as a template for your own renaming repository:
+Everything is already set up in the main repository: the on-demand GitHub Action `build_rename` renames all artifacts to a namespace of your choice and pushes the result as a ready-to-install branch. Renaming abap2UI5 takes just two steps:
 
-1. **Fork** the [renaming repository](https://github.com/abap2UI5/abap2UI5-renamed)
-2. **Configure your namespace** in `abaplint_rename.json` — set the old and new names in the rename patterns
-3. **Run the GitHub Action** — open the Actions tab, enable workflows, and start the renaming job
-4. **Merge the pull request** the job creates; your repository now contains all abap2UI5 artifacts under the new namespace
-5. **Install with abapGit** — pull the renamed repository into your ABAP system
+1. **Fork** the [abap2UI5 repository](https://github.com/abap2UI5/abap2UI5)
+2. **Run the Action** — in your fork, open the *Actions* tab (enable workflows when asked), select the **build_rename** workflow, and start it with your new namespace (max. 9 characters, e.g., `ZMYUI5`)
 
-That's it — abap2UI5 now runs under your custom namespace, side by side with any other installation. Consider extending the GitHub Action to automate the process even further, e.g., pulling a fresh release on a regular schedule.
+The workflow runs `abaplint --rename` with the checked-in configuration `.github/abaplint/rename.jsonc` and pushes the renamed sources to the branch `rename_<name>` (e.g., `rename_zmyui5`). The branch contains the complete renamed `src` tree together with a matching `.abapgit.xml` — **pull it with abapGit** into your ABAP system for a parallel installation next to the original.
+
+To upgrade an installation later, sync your fork with upstream and re-run the workflow with the same name: the branch is updated to the current state (nothing is pushed when there are no content changes), and you simply pull again with abapGit.
 
 #### Renaming in Practice: ajson
 abap2UI5 itself relies on this feature: its JSON handling comes from the open-source project [ajson](https://github.com/sbcgua/ajson), which is integrated under the `z2ui5` namespace via renaming — so there are no collisions if you pull both abap2UI5 and ajson separately into the same system. A GitHub Action in the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository checks weekly for upstream changes and automatically creates a pull request with the latest ajson version renamed to `z2ui5`. abapGit bundles ajson under its own namespace the same way — renaming with abaplint also makes it possible to integrate open-source projects into each other.
