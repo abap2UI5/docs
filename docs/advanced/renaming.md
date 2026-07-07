@@ -30,6 +30,9 @@ Renaming closes this gap. It is not a true package management system, but it let
 
 The renamed copy is a complete, installable abapGit project under your own namespace — install it side by side with the original, pin it to a release, or ship it inside your product. The abap2UI5 CI runs this transformation on every change (`npm run rename`, workflow `test_rename.yaml`) to guarantee the codebase stays renameable.
 
+#### Renamed Branches via the `build_rename` Workflow (recommended)
+The easiest way to get a renamed install is the **`build_rename`** GitHub workflow in the [abap2UI5 repository](https://github.com/abap2UI5/abap2UI5) (Actions → build_rename → Run workflow). Enter the new namespace (e.g. `ZMYUI5`, max. 9 characters) and the workflow renames all artifacts and pushes the result as branch **`rename_<name>`** (name lowercased, e.g. `rename_zmyui5`) — a fully self-contained abapGit project, ready to pull into your system. Re-running the workflow with the same name updates the branch to the current `main` state. Details in [`.github/rename/README.md`](https://github.com/abap2UI5/abap2UI5/blob/main/.github/rename/README.md).
+
 #### Step-by-Step Guide
 The [abap2UI5-renamed](https://github.com/abap2UI5/abap2UI5-renamed) repository shows the full setup: a GitHub Action runs `abaplint abaplint_rename.json --rename` and commits the renamed artifacts back via pull request. Use it as a template for your own renaming repository:
 
