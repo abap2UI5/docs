@@ -8,7 +8,7 @@ If you don't want to handle the event in the backend, fire actions directly on t
 - **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
 - **`client->_event_client( )`** — runs an action directly in the browser; no backend call
 
-Use `_event_client` on a UI5 control property (like `press`) when the response should happen entirely in the browser. To fire a frontend event **after** backend processing has finished, use [`client->follow_up_action`](/cookbook/expert_more/follow_up_action) instead — it schedules the same frontend event but is called from the backend.
+Use `_event_client` on a UI5 control property (like `press`) when the response should happen entirely in the browser. To fire a frontend event **after** backend processing has finished, use [`client->action`](./action.md) instead — it schedules the same frontend event but is called from the backend.
 
 The following frontend events are available:
 ```abap

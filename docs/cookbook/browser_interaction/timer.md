@@ -8,7 +8,7 @@ Fire a backend event after a delay with the `start_timer` frontend event. Handy 
 Pass the event name to fire and the delay in milliseconds:
 
 ```abap
-client->follow_up_action(
+client->action(
     val   = client->cs_event-start_timer
     t_arg = VALUE #( ( `REFRESH` ) ( `2000` ) ) ).
 ```
@@ -38,13 +38,13 @@ CLASS z2ui5_cl_sample_timer IMPLEMENTATION.
             )->page( `abap2UI5 - Timer`
                 )->text( client->_bind( counter )
             )->stringify( ) ).
-        client->follow_up_action( val   = client->cs_event-start_timer
+        client->action( val   = client->cs_event-start_timer
                         t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
 
       WHEN client->check_on_event( `TICK` ).
         counter = counter + 1.
         client->view_model_update( ).
-        client->follow_up_action( val   = client->cs_event-start_timer
+        client->action( val   = client->cs_event-start_timer
                         t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
 
     ENDCASE.
@@ -61,11 +61,11 @@ A single `start_timer` call fires once — perfect for a deferred action like op
 
 ```abap
 WHEN client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
-  client->follow_up_action( val   = client->cs_event-start_timer
+  client->action( val   = client->cs_event-start_timer
                   t_arg = VALUE #( ( `FIRE_OPEN_TAB` ) ( `500` ) ) ).
 
 WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
-  client->follow_up_action( val   = client->cs_event-open_new_tab
+  client->action( val   = client->cs_event-open_new_tab
                   t_arg = VALUE #( ( `https://www.google.com/search?q=abap2ui5` ) ) ).
 ```
 
