@@ -8,22 +8,16 @@ Every UI5 JSON model has a built-in upper limit on the number of items it will e
 abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
 
 ### Set the Limit
-Trigger the event from your controller with `client->action->gen`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
+Trigger the event from your controller with `client->follow_up_action`, calling the `SET_SIZE_LIMIT` frontend event. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
-client->action->gen(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
-    t_arg = VALUE #(
-        ( `1000` )
-        ( client->cs_view-main ) ) ).
+client->follow_up_action( |.eF('SET_SIZE_LIMIT', '1000', '{ client->cs_view-main }')| ).
 ```
 After this call, the model bound to the main view accepts up to 1000 entries per binding. The setting is remembered across roundtrips — once raised, it stays in effect until you reset it or leave the app.
 
 ### Reset the Limit
 To restore the default of `100`, omit the limit argument and pass only the view key:
 ```abap
-client->action->gen(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
-    t_arg = VALUE #( ( client->cs_view-main ) ) ).
+client->follow_up_action( |.eF('SET_SIZE_LIMIT', '{ client->cs_view-main }')| ).
 ```
 
 ### Complete Example
@@ -52,9 +46,7 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `UPDATE_LIMIT`.
-        client->action->gen(
-            val   = z2ui5_if_client=>cs_event-set_size_limit
-            t_arg = VALUE #( ( CONV #( mv_size_limit ) ) ( client->cs_view-main ) ) ).
+        client->follow_up_action( |.eF('SET_SIZE_LIMIT', '{ CONV #( mv_size_limit ) }', '{ client->cs_view-main }')| ).
         client->message_toast_display( `Size limit updated` ).
         RETURN.
 
@@ -98,19 +90,13 @@ ENDCLASS.
 The same call applies to nested views, popups and popovers — just swap the view key:
 ```abap
 " Popup
-client->action->gen(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
-    t_arg = VALUE #( ( `500` ) ( client->cs_view-popup ) ) ).
+client->follow_up_action( |.eF('SET_SIZE_LIMIT', '500', '{ client->cs_view-popup }')| ).
 
 " Popover
-client->action->gen(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
-    t_arg = VALUE #( ( `500` ) ( client->cs_view-popover ) ) ).
+client->follow_up_action( |.eF('SET_SIZE_LIMIT', '500', '{ client->cs_view-popover }')| ).
 
 " Nested view
-client->action->gen(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
-    t_arg = VALUE #( ( `500` ) ( client->cs_view-nested ) ) ).
+client->follow_up_action( |.eF('SET_SIZE_LIMIT', '500', '{ client->cs_view-nested }')| ).
 ```
 
 ::: tip **When to raise it**

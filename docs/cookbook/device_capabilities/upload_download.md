@@ -66,9 +66,7 @@ See also `Z2UI5_CL_DEMO_APP_186`:
         `/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQj` &&
         `LYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=`.
 
-        client->action->gen(
-            val   = client->cs_event-download_b64_file
-            t_arg = VALUE #( ( lv_content ) ( lv_name ) ) ).
+        client->follow_up_action( |.eF('DOWNLOAD_B64_FILE', '{ lv_content }', '{ lv_name }')| ).
     ENDCASE.
 
 ENDMETHOD.

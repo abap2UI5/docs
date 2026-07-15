@@ -52,11 +52,9 @@ CLASS z2ui5_cl_sample_scrolling IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `SCROLL_TOP`.
-        client->action->gen( val   = client->cs_event-scroll_to
-                        t_arg = VALUE #( ( `id_page` ) ( `0` ) ) ).
+        client->follow_up_action( |.eF('SCROLL_TO', 'id_page', '0')| ).
       WHEN `SCROLL_BOTTOM`.
-        client->action->gen( val   = client->cs_event-scroll_to
-                        t_arg = VALUE #( ( `id_page` ) ( `99999` ) ) ).
+        client->follow_up_action( |.eF('SCROLL_TO', 'id_page', '99999')| ).
     ENDCASE.
 
   ENDMETHOD.
@@ -66,8 +64,7 @@ ENDCLASS.
 The arguments for `scroll_to` are `id`, `scrollTop` (y, px), `scrollLeft` (x, px, optional), and `behavior` (optional):
 
 ```abap
-client->action->gen( val   = client->cs_event-scroll_to
-                t_arg = VALUE #( ( `id_page` ) ( `500` ) ( `0` ) ( `smooth` ) ) ).
+client->follow_up_action( |.eF('SCROLL_TO', 'id_page', '500', '0', 'smooth')| ).
 ```
 
 #### Scroll an Element into View
@@ -75,13 +72,11 @@ client->action->gen( val   = client->cs_event-scroll_to
 To reveal a specific control — e.g. a row after a search — use `scroll_into_view` with the target control's id:
 
 ```abap
-client->action->gen( val   = client->cs_event-scroll_into_view
-                t_arg = VALUE #( ( `id_row_42` ) ) ).
+client->follow_up_action( |.eF('SCROLL_INTO_VIEW', 'id_row_42')| ).
 ```
 
 Additional optional arguments mirror the browser's `scrollIntoView` options: `behavior` (`smooth` | `auto` | `instant`), `block` (`start` | `center` | `end` | `nearest`), `inline` (`nearest` | `start` | `center` | `end`):
 
 ```abap
-client->action->gen( val   = client->cs_event-scroll_into_view
-                t_arg = VALUE #( ( `id_row_42` ) ( `smooth` ) ( `center` ) ) ).
+client->follow_up_action( |.eF('SCROLL_INTO_VIEW', 'id_row_42', 'smooth', 'center')| ).
 ```

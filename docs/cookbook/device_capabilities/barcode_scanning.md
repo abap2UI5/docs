@@ -86,11 +86,9 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `ONE_ENTER`.
-        client->action->gen( val   = client->cs_event-set_focus
-                        t_arg = VALUE #( ( `id2` ) ) ).
+        client->follow_up_action( |.eF('SET_FOCUS', 'id2')| ).
       WHEN `TWO_ENTER`.
-        client->action->gen( val   = client->cs_event-set_focus
-                        t_arg = VALUE #( ( `id1` ) ) ).
+        client->follow_up_action( |.eF('SET_FOCUS', 'id1')| ).
     ENDCASE.
 
   ENDMETHOD.
@@ -131,8 +129,7 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
 
     IF client->get( )-event = `CHECK_INPUT`.
       IF company_code IS INITIAL.
-        client->action->gen( val   = client->cs_event-play_audio
-                        t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav` ) ) ).
+        client->follow_up_action( |.eF('PLAY_AUDIO', '/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav')| ).
         client->message_box_display( type = `error` text = `Input is empty!` ).
       ELSE.
         CLEAR company_code.

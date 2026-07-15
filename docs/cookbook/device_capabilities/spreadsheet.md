@@ -118,9 +118,7 @@ Convert an internal table to an XLSX file and download it to the frontend:
         ( count = `3` value = `red` descr = `this is a description` ) ).
 
         DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
-        client->action->gen(
-            val   = client->cs_event-download_b64_file
-            t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+        client->follow_up_action( |.eF('DOWNLOAD_B64_FILE', '{ lv_file }', 'test.xlsx')| ).
     ENDIF.
 
 ENDMETHOD.
@@ -220,9 +218,7 @@ Instead of the XLSX API above (which can change between releases), consider the 
       ( count = `3` value = `red` descr = `this is a description` ) ).
 
     DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
-    client->action->gen(
-      val   = client->cs_event-download_b64_file
-      t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+    client->follow_up_action( |.eF('DOWNLOAD_B64_FILE', '{ lv_file }', 'test.xlsx')| ).
   ENDIF.
 
 ENDMETHOD.

@@ -23,9 +23,7 @@ METHOD z2ui5_if_app~main.
             )->stringify( ) ).
 
       WHEN client->check_on_event( `RENAME` ).
-        client->action->gen(
-            val   = client->cs_event-set_title
-            t_arg = VALUE #( ( `Invoice 4711` ) ) ).
+        client->follow_up_action( |.eF('SET_TITLE', 'Invoice 4711')| ).
 
     ENDCASE.
 
@@ -37,9 +35,7 @@ METHOD z2ui5_if_app~main.
 When the app runs inside an SAP Fiori Launchpad shell, use the dedicated `set_title_launchpad` event instead. It forwards the title to the shell's `ShellUIService` rather than setting `document.title`:
 
 ```abap
-client->action->gen(
-    val   = client->cs_event-set_title_launchpad
-    t_arg = VALUE #( ( `Invoice 4711` ) ) ).
+client->follow_up_action( |.eF('SET_TITLE_LAUNCHPAD', 'Invoice 4711')| ).
 ```
 
 Use `set_title` for the browser tab/window title (standalone) and `set_title_launchpad` for the launchpad shell title.
