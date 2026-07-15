@@ -39,7 +39,8 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
 
     IF client->get( )-event = `CHECK_INPUT`.
       IF company_code IS INITIAL.
-        client->follow_up_action( |.eF('PLAY_AUDIO', '/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav')| ).
+        client->follow_up_action( val   = client->cs_event-play_audio
+                        t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav` ) ) ).
         client->message_box_display( type = `error` text = `Input is empty!` ).
       ELSE.
         CLEAR company_code.

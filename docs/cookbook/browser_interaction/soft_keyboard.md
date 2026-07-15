@@ -36,7 +36,8 @@ METHOD z2ui5_if_app~main.
 
     CASE client->get( )-event.
       WHEN `CALL_KEYBOARD`.
-        client->follow_up_action( |.eF('KEYBOARD_SET_MODE', 'ZINPUT', 'none')| ).
+        client->follow_up_action( val   = client->cs_event-keyboard_set_mode
+                        t_arg = VALUE #( ( `ZINPUT` ) ( `none` ) ) ).
       WHEN `BACK`.
         client->nav_app_leave( ).
     ENDCASE.

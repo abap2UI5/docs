@@ -31,7 +31,9 @@ CLASS z2ui5_cl_sample_clipboard IMPLEMENTATION.
             )->stringify( ) ).
 
       WHEN client->check_on_event( `COPY` ).
-        client->follow_up_action( |.eF('CLIPBOARD_COPY', '{ mv_text }')| ).
+        client->follow_up_action(
+            val   = client->cs_event-clipboard_copy
+            t_arg = VALUE #( ( mv_text ) ) ).
         client->message_toast_display( `copied` ).
 
     ENDCASE.

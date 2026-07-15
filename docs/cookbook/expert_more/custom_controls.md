@@ -4,7 +4,7 @@ outline: [2, 4]
 # Custom Controls (Obsolete)
 
 ::: warning Mostly Not Needed Anymore
-Earlier versions of abap2UI5 required custom UI5 controls to cover common browser interactions — setting the page title, moving focus, scrolling, copying to the clipboard, opening new tabs, and so on. These are now built into the framework as **frontend events**, callable from ABAP via `client->follow_up_action( )`. The custom controls that used to wrap these behaviors are obsolete.
+Earlier versions of abap2UI5 required custom UI5 controls to cover common browser interactions — setting the page title, moving focus, scrolling, copying to the clipboard, opening new tabs, and so on. These are now built into the framework as **frontend events**, callable from ABAP via `client->follow_up_action( client->cs_event-... )`. The custom controls that used to wrap these behaviors are obsolete.
 
 :::
 
@@ -28,7 +28,8 @@ The table below lists custom controls that are no longer necessary and the built
 Instead of writing a custom control, call the matching action after an event:
 
 ```abap
-client->follow_up_action( |.eF('SET_TITLE', 'Invoice 4711')| ).
+client->follow_up_action( val   = client->cs_event-set_title
+                t_arg = VALUE #( ( `Invoice 4711` ) ) ).
 ```
 
 See the linked cookbook pages above for the full argument list of each action.

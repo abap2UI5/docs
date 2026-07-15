@@ -41,7 +41,10 @@ ENDMETHOD.
 To let the user save the PDF rather than view it inline, use the [file download](./upload_download.md) pattern:
 
 ```abap
-client->follow_up_action( |.eF('DOWNLOAD_B64_FILE', 'data:application/pdf;base64,{ lv_base64 }', 'invoice_4711.pdf')| ).
+client->follow_up_action(
+    val   = client->cs_event-download_b64_file
+    t_arg = VALUE #( ( `data:application/pdf;base64,` && lv_base64 )
+                     ( `invoice_4711.pdf` ) ) ).
 ```
 
 ::: tip
