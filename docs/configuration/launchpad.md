@@ -34,7 +34,7 @@ ENDIF.
 Change the Launchpad shell title from ABAP at any time with the `set_title_launchpad` frontend event:
 
 ```abap
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_title_launchpad
     t_arg = VALUE #( ( `My Dynamic Title` ) ) ).
 ```

@@ -8,9 +8,9 @@ Every UI5 JSON model has a built-in upper limit on the number of items it will e
 abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
 
 ### Set the Limit
-Trigger the event from your controller with `client->action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
+Trigger the event from your controller with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_size_limit
     t_arg = VALUE #(
         ( `1000` )
@@ -21,7 +21,7 @@ After this call, the model bound to the main view accepts up to 1000 entries per
 ### Reset the Limit
 To restore the default of `100`, omit the limit argument and pass only the view key:
 ```abap
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_size_limit
     t_arg = VALUE #( ( client->cs_view-main ) ) ).
 ```
@@ -52,7 +52,7 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
 
     CASE client->get( )-event.
       WHEN `UPDATE_LIMIT`.
-        client->action(
+        client->follow_up_action(
             val   = z2ui5_if_client=>cs_event-set_size_limit
             t_arg = VALUE #( ( CONV #( mv_size_limit ) ) ( client->cs_view-main ) ) ).
         client->message_toast_display( `Size limit updated` ).
@@ -98,17 +98,17 @@ ENDCLASS.
 The same call applies to nested views, popups and popovers — just swap the view key:
 ```abap
 " Popup
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_size_limit
     t_arg = VALUE #( ( `500` ) ( client->cs_view-popup ) ) ).
 
 " Popover
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_size_limit
     t_arg = VALUE #( ( `500` ) ( client->cs_view-popover ) ) ).
 
 " Nested view
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_size_limit
     t_arg = VALUE #( ( `500` ) ( client->cs_view-nested ) ) ).
 ```

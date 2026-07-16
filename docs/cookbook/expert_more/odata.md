@@ -8,7 +8,7 @@ By default, you bind public attributes of your class to UI5 properties with `_bi
 #### Define Additional Model
 As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. Make sure the service is publicly reachable. The method below defines the model and exposes it under the name `FLIGHT`:
 ```abap
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
@@ -58,7 +58,7 @@ The full source code:
 
     client->view_display( tab->stringify( ) ).
 
-    client->action(
+    client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_odata_model
         t_arg = VALUE #(
             ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
@@ -88,7 +88,7 @@ tab->items( )->column_list_item( )->cells(
 
 client->view_display( tab->stringify( ) ).
 
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
@@ -144,7 +144,7 @@ tab->items( )->column_list_item( )->cells(
 
 client->view_display( tab->stringify( ) ).
 
-client->action(
+client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
     t_arg = VALUE #(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )

@@ -23,7 +23,7 @@ METHOD z2ui5_if_app~main.
             )->stringify( ) ).
 
       WHEN client->check_on_event( `RENAME` ).
-        client->action(
+        client->follow_up_action(
             val   = client->cs_event-set_title
             t_arg = VALUE #( ( `Invoice 4711` ) ) ).
 
@@ -37,7 +37,7 @@ METHOD z2ui5_if_app~main.
 When the app runs inside an SAP Fiori Launchpad shell, use the dedicated `set_title_launchpad` event instead. It forwards the title to the shell's `ShellUIService` rather than setting `document.title`:
 
 ```abap
-client->action(
+client->follow_up_action(
     val   = client->cs_event-set_title_launchpad
     t_arg = VALUE #( ( `Invoice 4711` ) ) ).
 ```

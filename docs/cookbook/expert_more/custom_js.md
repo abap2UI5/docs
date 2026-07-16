@@ -30,7 +30,7 @@ Before reaching for Custom JS, consider:
 
 If you accept the risks and decide to use it anyway, the idea is: send the JavaScript function with the view to the frontend, then call it later when an event fires.
 
-The `_generic` method creates a custom XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method inserts raw content into that element — in this case, the JavaScript function definition. On the backend, `client->follow_up_action` then runs the function by name on the frontend. (Note: `follow_up_action` is [obsolete](/cookbook/expert_more/follow_up_action) for events — custom JS is the one case its replacement `action( )` deliberately does not cover, which is another reason to avoid this feature.)
+The `_generic` method creates a custom XML/HTML element — here an HTML `<script>` tag (namespace `html`). The `_cc_plain_xml` method inserts raw content into that element — in this case, the JavaScript function definition. On the backend, [`client->follow_up_action`](/cookbook/expert_more/follow_up_action) then runs the function by name on the frontend. Running arbitrary hand-written JavaScript like this is exactly the pattern this page warns against — for built-in browser interactions, call a named frontend event instead of injecting your own script.
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -80,6 +80,6 @@ If you want to look at — or hand-craft — the raw XML view that abap2UI5 prod
 </mvc:View>
 ```
 
-The browser parses the `html:script` element and executes its content as JavaScript at view render time. The function becomes available globally and can then be triggered from the backend via the obsolete [`follow_up_action`](/cookbook/expert_more/follow_up_action) — or, ideally, replaced entirely with a built-in `client->action( )` call.
+The browser parses the `html:script` element and executes its content as JavaScript at view render time. The function becomes available globally and can then be triggered from the backend via [`follow_up_action`](/cookbook/expert_more/follow_up_action) — or, ideally, replaced entirely with a built-in frontend event (e.g. `SET_TITLE`, `SCROLL_TO`) instead of hand-written JavaScript.
 
 This is exactly what the `_generic` + `_cc_plain_xml` helpers shown above produce; the two approaches are equivalent. Both ship raw JavaScript from the backend to the browser, and both carry the security risks described above. Use neither unless there is genuinely no alternative.
