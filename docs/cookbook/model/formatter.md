@@ -21,7 +21,7 @@ For example, this ABAP code:
 ```
 produces this UI5 binding string at runtime:
 ```text
-{ parts: ["/XX/AMOUNT"], type: 'sap.ui.model.type.Currency' }
+{ parts: ["/AMOUNT"], type: 'sap.ui.model.type.Currency' }
 ```
 
 The sections below show the binding-string pattern for each ABAP type that needs a formatter. Each pattern is the minimum that makes the value display and parse correctly — for runnable apps with full `formatOptions`, `constraints`, and read-only variants, see the [samples repository](https://github.com/abap2UI5/samples).
@@ -177,7 +177,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                   href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
 
          "Currency in one field — shows amount and currency symbol together
-         "resolves to: { parts: ["/XX/AMOUNT", "/XX/CURRENCY"], type: 'sap.ui.model.type.Currency' }
+         "resolves to: { parts: ["/AMOUNT", "/CURRENCY"], type: 'sap.ui.model.type.Currency' }
          )->label( `One field`
          )->input(
              |\{ parts: [ `{ client->_bind( val  = amount
@@ -245,7 +245,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
     "Remove leading zeros from a numeric string with OData type formatting
     "isDigitSequence: true tells the formatter to treat the value as a digit sequence
-    "resolves to: { path: "/XX/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
+    "resolves to: { path: "/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
     page->simple_form( title    = `No Zeros`
                        editable = abap_true
         )->content( `form`

@@ -24,7 +24,7 @@ abap2UI5 wires up the templating model for you. Every variable you bind with `cl
 | ABAP binding                       | Path inside templates       |
 | ---------------------------------- | --------------------------- |
 | `client->_bind( mt_layout )`       | `{template>/MT_LAYOUT}`     |
-| `client->_bind( mv_flag )`    | `{template>/XX/MV_FLAG}`    |
+| `client->_bind( mv_flag )`    | `{template>/MV_FLAG}`    |
 
 The `template>` model is the templating engine's view of the data — distinct from the default model used by runtime bindings like `{MT_DATA}`.
 
@@ -70,7 +70,7 @@ The full sample is `Z2UI5_CL_DEMO_APP_173`.
 ```abap
 client->_bind( mv_flag ).
 
-view->template_if( `{template>/XX/MV_FLAG}`
+view->template_if( `{template>/MV_FLAG}`
   )->template_then(
     )->icon( src   = `sap-icon://accept`
              color = `green` )->get_parent(
@@ -79,7 +79,7 @@ view->template_if( `{template>/XX/MV_FLAG}`
              color = `red` ).
 ```
 
-The test argument follows the same rules as in UI5: any binding expression is fine, and the string `"false"` is treated as boolean `false` (a UI5 convenience). For richer conditions use expression binding, e.g. `` `{= ${template>/XX/MV_COUNT} > 0 }` ``.
+The test argument follows the same rules as in UI5: any binding expression is fine, and the string `"false"` is treated as boolean `false` (a UI5 convenience). For richer conditions use expression binding, e.g. `` `{= ${template>/MV_COUNT} > 0 }` ``.
 
 `template:elseif` is also supported by UI5; check `Z2UI5_CL_XML_VIEW` for the corresponding fluent method or fall back to the generic builder (see [Definition](/cookbook/view/definition#the-fully-generic-builder)).
 

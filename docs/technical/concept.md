@@ -158,7 +158,7 @@ A typical backend response holds the XML View:
         <form:content>
           <Title text="Make an input here and send it to the server..."/>
           <Label text="Name"/>
-          <Input value="{/XX/NAME}"/>
+          <Input value="{/NAME}"/>
           <Button press=".eB(['BUTTON_POST'])" text="post"/>
         </form:content>
       </form:SimpleForm>
