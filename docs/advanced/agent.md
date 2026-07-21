@@ -132,7 +132,7 @@ CLASS zcl_app_xxx DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    " bound data (public DATA attributes used by _bind / _bind_edit)
+    " bound data (public DATA attributes used by _bind)
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -239,7 +239,7 @@ When an AI needs deeper information than this page provides:
 | Architecture, request roundtrip | [Concept](/technical/concept), [How It All Works](/technical/how_it_all_works) |
 | Lifecycle and `IF` / `ELSEIF` dispatcher pattern | [Cookbook → Life Cycle](/cookbook/event_navigation/life_cycle) |
 | Building views, control choice | [Cookbook → View Definition](/cookbook/view/definition) |
-| Data binding (`_bind`, `_bind_edit`) | [Cookbook → Binding](/cookbook/model/binding) |
+| Data binding (`_bind`) | [Cookbook → Binding](/cookbook/model/binding) |
 | Tables and trees | [Cookbook → Tables](/cookbook/model/tables), [Trees](/cookbook/model/trees) |
 | Events, actions, exceptions | [Cookbook → Event, Navigation](/cookbook/event_navigation/life_cycle) |
 | Popups and popovers | [Cookbook → Popup, Popover](/cookbook/popup_popover/popup) |

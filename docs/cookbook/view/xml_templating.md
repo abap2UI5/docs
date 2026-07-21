@@ -136,7 +136,7 @@ Plain ABAP control flow covers most cases and is easier to debug. Reach for `tem
 
 #### Tips
 
-- Always bind the data that drives a template (`client->_bind` / `client->_bind_edit`) **before** the builder call that references it. The binding registers the path that `{template>/...}` resolves against.
+- Always bind the data that drives a template (`client->_bind`) **before** the builder call that references it. The binding registers the path that `{template>/...}` resolves against.
 - Inside `template:repeat`, prefer `{var>FIELD}` over deeper paths — it keeps the body readable and lets you nest repeats with distinct `var` names (`L0`, `L1`, ...) without collisions.
 - Use expression binding (`{= ... }`) when the value you need is a binding string itself. Templating-time expressions can read `${var>...}` and concatenate strings, which is how dynamic cell bindings are assembled.
 - If a templated control does not update after a data change, you forgot to rebuild — call `view_display` or `nest_view_display` again.

@@ -7,14 +7,14 @@ Not every problem raises an ABAP exception. Many failures surface only in the br
 
 ## Binding-Path Mismatch
 
-When a `_bind` / `_bind_edit` path does not resolve against the JSON model on the frontend — typically because the public attribute was renamed, the data was never sent, or the path is mistyped — UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
+When a `_bind` path does not resolve against the JSON model on the frontend — typically because the public attribute was renamed, the data was never sent, or the path is mistyped — UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
 
 Where to look:
 - **Browser console.** UI5 logs a warning like `Binding "/path/to/field" was not found in model` from `sap.ui.model.json.JSONModel`. Open the browser DevTools console and filter by `sap.ui.model`.
 - **Network tab.** Inspect the abap2UI5 response payload — the JSON model is included verbatim. If the field is absent or named differently than your binding path, you have your answer.
 - **ABAP side.** Nothing. The backend never learns the binding failed. Asserting "no console warnings" is the only way to catch this in tests.
 
-Two-way binding (`_bind_edit`) silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
+Two-way binding silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
 
 ## Bound Attribute Not Public
 

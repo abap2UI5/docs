@@ -52,7 +52,7 @@ ENDCLASS.
 ```
 
 ### Editable
-To make a table editable, switch the binding to `_bind_edit`:
+To make a table editable, use editable cell controls (e.g. `input`) — the binding is the same `_bind`:
 ```abap
   METHOD z2ui5_if_app~main.
 

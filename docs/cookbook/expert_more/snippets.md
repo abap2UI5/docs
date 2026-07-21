@@ -41,7 +41,7 @@ ENDCLASS.
 
 ## Selection Screen
 
-A classic input form: a few fields bound with `_bind_edit`, a button that triggers backend logic, results shown after submission.
+A classic input form: a few fields bound with `_bind`, a button that triggers backend logic, results shown after submission.
 
 ```abap
 CLASS z2ui5_cl_app_selection DEFINITION PUBLIC.
