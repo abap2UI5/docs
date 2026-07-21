@@ -19,12 +19,12 @@ This timing has two consequences:
 - **Expansion is build-time.** A `template:repeat` over an internal table produces a fixed number of controls; the expanded XML is what UI5 renders.
 - **Data changes do not re-template.** If the data driving the template changes, the existing expansion stays as is. To pick up the change you must rebuild the view (`view_display`) or the templated fragment (`nest_view_display`) — see [Re-rendering](#re-rendering) below.
 
-abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` or `client->_bind_edit( ... )` is reachable inside templates via the `template>` model prefix:
+abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` or `client->_bind( ... )` is reachable inside templates via the `template>` model prefix:
 
 | ABAP binding                       | Path inside templates       |
 | ---------------------------------- | --------------------------- |
 | `client->_bind( mt_layout )`       | `{template>/MT_LAYOUT}`     |
-| `client->_bind_edit( mv_flag )`    | `{template>/XX/MV_FLAG}`    |
+| `client->_bind( mv_flag )`    | `{template>/XX/MV_FLAG}`    |
 
 The `template>` model is the templating engine's view of the data — distinct from the default model used by runtime bindings like `{MT_DATA}`.
 
@@ -68,7 +68,7 @@ The full sample is `Z2UI5_CL_DEMO_APP_173`.
 `template:if` evaluates an expression against the templating model and keeps or drops its children accordingly. With a `template:then` / `template:else` pair you get a two-branch switch:
 
 ```abap
-client->_bind_edit( mv_flag ).
+client->_bind( mv_flag ).
 
 view->template_if( `{template>/XX/MV_FLAG}`
   )->template_then(

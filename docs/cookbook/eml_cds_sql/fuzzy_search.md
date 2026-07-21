@@ -64,7 +64,7 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
         )->title( `Customer List`
         )->toolbar_spacer( )
         )->search_field(
-            value       = client->_bind_edit( mv_search )
+            value       = client->_bind( mv_search )
             width       = `20rem`
             placeholder = `try a misspelled name…`
             search      = client->_event( `SEARCH` ) ).

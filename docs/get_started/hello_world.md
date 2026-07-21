@@ -133,7 +133,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
         )->button(
           text  = `post`
           press = client->_event( `POST` )
-        )->input( client->_bind_edit( name ) ).
+        )->input( client->_bind( name ) ).
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `POST` ).

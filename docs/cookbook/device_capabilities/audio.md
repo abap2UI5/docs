@@ -26,7 +26,7 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(vbox) = view->page( )->vbox( ).
       vbox->input( id          = `inputApp`
-                   value       = client->_bind_edit( company_code )
+                   value       = client->_bind( company_code )
                    type        = `Number`
                    placeholder = `Company Code`
                    submit      = client->_event( `CHECK_INPUT` ) ).

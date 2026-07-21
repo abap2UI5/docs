@@ -81,7 +81,7 @@ Views, events, binding, navigation, messages — everything goes through the `cl
 |---|---|
 | Views | `view_display`, `view_destroy`, `view_model_update` |
 | Popups / popovers | `popup_display`, `popup_destroy`, `popover_display`, `popover_destroy` |
-| Binding | `_bind( var )` (read-only), `_bind_edit( var )` (two-way) |
+| Binding | `_bind( var )` (read-only), `_bind( var )` (two-way) |
 | Events | `_event( 'NAME' )`, `check_on_event( 'NAME' )`, `get_event_arg( i )` |
 | Navigation | `nav_app_call( app )`, `nav_app_leave( )`, `get_app_prev( )` |
 | Messages | `message_box_display`, `message_toast_display` |
@@ -106,7 +106,7 @@ Translate any UI5 XML example from the [UI5 SDK](https://sapui5.hana.ondemand.co
 |---|---|
 | `<Button text="Send" />` | `->__( n = `Button` a = `text` v = `Send` )` |
 | `press="onPress"` | `a = `press` v = client->_event( `BUTTON_POST` )` |
-| `value="{/name}"` | `a = `value` v = client->_bind_edit( name )` |
+| `value="{/name}"` | `a = `value` v = client->_bind( name )` |
 | `<FeedInput><actions>…</actions></FeedInput>` | `->_( `FeedInput` )->_( `actions` )->__( … )` |
 
 Builder methods:

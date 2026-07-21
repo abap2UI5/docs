@@ -57,7 +57,7 @@ Handle view changes and popups through the abap2UI5 backend as usual. But for na
         val   = client->cs_event-cross_app_nav_to_ext
         t_arg = VALUE #(
             ( `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04", action: "display" }` )
-            ( `$` && client->_bind_edit( nav_params ) ) ) ) )
+            ( `$` && client->_bind( nav_params ) ) ) ) )
 ```
 
 To navigate back to the previous Launchpad app, use `cross_app_nav_to_prev_app`:

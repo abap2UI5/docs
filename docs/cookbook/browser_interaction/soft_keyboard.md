@@ -25,7 +25,7 @@ METHOD z2ui5_if_app~main.
                      )->title( `Keyboard on/off`
                      )->label( `Input`
                      )->input( id               = `ZINPUT`
-                               value            = client->_bind_edit( input )
+                               value            = client->_bind( input )
                                showvaluehelp    = abap_true
                                valuehelprequest = client->_event( `CALL_KEYBOARD` )
                                valuehelpiconsrc = `sap-icon://keyboard-and-mouse` ).

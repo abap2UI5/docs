@@ -77,7 +77,7 @@ CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
                                                        path = abap_true ) && `"  }`
                 "enabled resolves to: {= 500===${/XX/QUANTITY} }
                 )->input(
-                    value   = client->_bind_edit( product )
+                    value   = client->_bind( product )
                     enabled = `{= 500===$` && client->_bind( quantity ) && ` }` ).
     client->view_display( view->stringify( ) ).
 

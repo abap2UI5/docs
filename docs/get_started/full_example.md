@@ -96,14 +96,14 @@ The two date pickers and the customer input use `_bind_edit`, so whatever the us
         )->content( `form`
         )->label( `Order Date From`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_from )
+            value       = client->_bind( s_search-date_from )
             valueformat = `yyyy-MM-dd`
         )->label( `Order Date To`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_to )
+            value       = client->_bind( s_search-date_to )
             valueformat = `yyyy-MM-dd`
         )->label( `Customer`
-        )->input( client->_bind_edit( s_search-customer )
+        )->input( client->_bind( s_search-customer )
         )->button(
             text  = `Read Orders`
             press = client->_event( `READ` ) ).
@@ -202,7 +202,7 @@ A popup is built exactly like the main view — same fluent builder, just create
         )->content( `form`
         )->label( `Delivery Date`
         )->date_picker(
-            value       = client->_bind_edit( s_edit-delivery_date )
+            value       = client->_bind( s_edit-delivery_date )
             valueformat = `yyyy-MM-dd` ).
 
     dialog->buttons(
@@ -341,14 +341,14 @@ CLASS zcl_app_full_example IMPLEMENTATION.
         )->content( `form`
         )->label( `Order Date From`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_from )
+            value       = client->_bind( s_search-date_from )
             valueformat = `yyyy-MM-dd`
         )->label( `Order Date To`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_to )
+            value       = client->_bind( s_search-date_to )
             valueformat = `yyyy-MM-dd`
         )->label( `Customer`
-        )->input( client->_bind_edit( s_search-customer )
+        )->input( client->_bind( s_search-customer )
         )->button(
             text  = `Read Orders`
             press = client->_event( `READ` ) ).
@@ -386,7 +386,7 @@ CLASS zcl_app_full_example IMPLEMENTATION.
         )->content( `form`
         )->label( `Delivery Date`
         )->date_picker(
-            value       = client->_bind_edit( s_edit-delivery_date )
+            value       = client->_bind( s_edit-delivery_date )
             valueformat = `yyyy-MM-dd` ).
 
     dialog->buttons(

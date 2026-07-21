@@ -62,7 +62,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
     ) ) ) ) ).
 
     DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
-        )->tree( items = client->_bind_edit( prodh_nodes )
+        )->tree( items = client->_bind( prodh_nodes )
             )->items( )->standard_tree_item(
                 selected = `{IS_SELECTED}`
                 title    = `{TEXT}` ).

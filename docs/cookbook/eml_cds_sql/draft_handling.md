@@ -207,9 +207,9 @@ CLASS z2ui5_cl_sample_draft_min IMPLEMENTATION.
             )->simple_form( editable = abap_true
                 )->content( `form`
                 )->label( `Bank Name`
-                )->input( client->_bind_edit( long_bank_name )
+                )->input( client->_bind( long_bank_name )
                 )->label( `SWIFT Code`
-                )->input( client->_bind_edit( swift_code )
+                )->input( client->_bind( swift_code )
                 )->button(
                     text  = `Save`
                     type  = `Emphasized`
@@ -381,7 +381,7 @@ ENDMETHOD.
 ```
 
 #### 6. Saving Typed Values Back to the Draft
-The fields are two-way bound (`client->_bind_edit( … )`), so user input lives in ABAP variables on the next roundtrip. To persist them in the draft, push them back with `UPDATE FIELDS`.
+The fields are two-way bound (`client->_bind( … )`), so user input lives in ABAP variables on the next roundtrip. To persist them in the draft, push them back with `UPDATE FIELDS`.
 ```abap
 METHOD save_current_to_draft.
   MODIFY ENTITIES OF i_banktp
@@ -934,11 +934,11 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
                     enabled = abap_false
                 )->label( `Bank Name`
                 )->input(
-                    value   = client->_bind_edit( long_bank_name )
+                    value   = client->_bind( long_bank_name )
                     enabled = draft_open
                 )->label( `SWIFT Code`
                 )->input(
-                    value   = client->_bind_edit( swift_code )
+                    value   = client->_bind( swift_code )
                     enabled = draft_open
                 )->label( `Status`
                 )->input(
