@@ -111,10 +111,10 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display( z2ui5_cl_xml_view=>factory(
-         )->input( client->_bind_edit( name )
+         )->input( client->_bind( name )
         )->button( text = `post` press = client->_event(
             val   = `BUTTON_POST`
-            t_arg = VALUE #( ( `$` && client->_bind_edit( name ) ) ) )
+            t_arg = VALUE #( ( `$` && client->_bind( name ) ) ) )
         )->stringify( ) ).
 
     CASE client->get( )-event.

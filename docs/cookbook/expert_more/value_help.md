@@ -24,7 +24,7 @@ mt_countries = VALUE #( ( code = `DE` name = `Germany` )
 client->view_display( z2ui5_cl_xml_view=>factory(
     )->page(
         )->input(
-            value             = client->_bind_edit( mv_country )
+            value             = client->_bind( mv_country )
             showsuggestion    = abap_true
             suggestionitems   = client->_bind( mt_countries )
             )->suggestion_items(
@@ -54,7 +54,7 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
         client->view_display( z2ui5_cl_xml_view=>factory(
             )->page(
                 )->input(
-                    value            = client->_bind_edit( mv_carrid )
+                    value            = client->_bind( mv_carrid )
                     showvaluehelp    = abap_true
                     valuehelprequest = client->_event( `F4` )
             )->stringify( ) ).

@@ -62,7 +62,7 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
     ) ) ) ) ).
 
     DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
-        )->tree( items = client->_bind_edit( prodh_nodes )
+        )->tree( items = client->_bind( prodh_nodes )
             )->items( )->standard_tree_item(
                 selected = `{IS_SELECTED}`
                 title    = `{TEXT}` ).
@@ -75,4 +75,4 @@ ENDCLASS.
 
 The child table field (`nodes` in the example above) is the key: UI5 follows that field name to locate sub-items at each level. The name must match across all levels but can be anything you choose.
 
-Note that the example binds with `_bind_edit` so that the user's selection (`IS_SELECTED`) is synced back to ABAP. For a purely read-only tree, `_bind` is enough.
+Note that the example binds `IS_SELECTED` to an editable control so the user's selection is synced back to ABAP. A display-only tree needs no editable cells.

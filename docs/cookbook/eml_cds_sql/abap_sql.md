@@ -53,7 +53,7 @@ ENDCLASS.
 
 ### Filter with a Search Field
 
-Bind the search term with `_bind_edit( )` and re-run the `SELECT` on every `SEARCH` event:
+Bind the search term with `_bind( )` and re-run the `SELECT` on every `SEARCH` event:
 ```abap
 IF client->check_on_init( ).
 

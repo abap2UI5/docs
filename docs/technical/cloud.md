@@ -60,7 +60,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
        UP TO 10 ROWS.
 
       DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->list( client->_bind_edit( mt_salesorder )
+          )->list( client->_bind( mt_salesorder )
             )->standard_list_item(
               title       = `{SALESORDER}`
               description = `{SALESORGANIZATION}` ).
@@ -94,7 +94,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
        UP TO 10 ROWS.
 
       DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->list( client->_bind_edit( mt_salesorder )
+        )->list( client->_bind( mt_salesorder )
           )->standard_list_item(
               title       = `{VBELN}`
               description = `{VKORG}` ).

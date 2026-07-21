@@ -19,12 +19,12 @@ This timing has two consequences:
 - **Expansion is build-time.** A `template:repeat` over an internal table produces a fixed number of controls; the expanded XML is what UI5 renders.
 - **Data changes do not re-template.** If the data driving the template changes, the existing expansion stays as is. To pick up the change you must rebuild the view (`view_display`) or the templated fragment (`nest_view_display`) — see [Re-rendering](#re-rendering) below.
 
-abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` or `client->_bind_edit( ... )` is reachable inside templates via the `template>` model prefix:
+abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` or `client->_bind( ... )` is reachable inside templates via the `template>` model prefix:
 
 | ABAP binding                       | Path inside templates       |
 | ---------------------------------- | --------------------------- |
 | `client->_bind( mt_layout )`       | `{template>/MT_LAYOUT}`     |
-| `client->_bind_edit( mv_flag )`    | `{template>/XX/MV_FLAG}`    |
+| `client->_bind( mv_flag )`    | `{template>/MV_FLAG}`    |
 
 The `template>` model is the templating engine's view of the data — distinct from the default model used by runtime bindings like `{MT_DATA}`.
 
@@ -68,9 +68,9 @@ The full sample is `Z2UI5_CL_DEMO_APP_173`.
 `template:if` evaluates an expression against the templating model and keeps or drops its children accordingly. With a `template:then` / `template:else` pair you get a two-branch switch:
 
 ```abap
-client->_bind_edit( mv_flag ).
+client->_bind( mv_flag ).
 
-view->template_if( `{template>/XX/MV_FLAG}`
+view->template_if( `{template>/MV_FLAG}`
   )->template_then(
     )->icon( src   = `sap-icon://accept`
              color = `green` )->get_parent(
@@ -79,7 +79,7 @@ view->template_if( `{template>/XX/MV_FLAG}`
              color = `red` ).
 ```
 
-The test argument follows the same rules as in UI5: any binding expression is fine, and the string `"false"` is treated as boolean `false` (a UI5 convenience). For richer conditions use expression binding, e.g. `` `{= ${template>/XX/MV_COUNT} > 0 }` ``.
+The test argument follows the same rules as in UI5: any binding expression is fine, and the string `"false"` is treated as boolean `false` (a UI5 convenience). For richer conditions use expression binding, e.g. `` `{= ${template>/MV_COUNT} > 0 }` ``.
 
 `template:elseif` is also supported by UI5; check `Z2UI5_CL_XML_VIEW` for the corresponding fluent method or fall back to the generic builder (see [Definition](/cookbook/view/definition#the-fully-generic-builder)).
 
@@ -136,7 +136,7 @@ Plain ABAP control flow covers most cases and is easier to debug. Reach for `tem
 
 #### Tips
 
-- Always bind the data that drives a template (`client->_bind` / `client->_bind_edit`) **before** the builder call that references it. The binding registers the path that `{template>/...}` resolves against.
+- Always bind the data that drives a template (`client->_bind`) **before** the builder call that references it. The binding registers the path that `{template>/...}` resolves against.
 - Inside `template:repeat`, prefer `{var>FIELD}` over deeper paths — it keeps the body readable and lets you nest repeats with distinct `var` names (`L0`, `L1`, ...) without collisions.
 - Use expression binding (`{= ... }`) when the value you need is a binding string itself. Templating-time expressions can read `${var>...}` and concatenate strings, which is how dynamic cell bindings are assembled.
 - If a templated control does not update after a data change, you forgot to rebuild — call `view_display` or `nest_view_display` again.

@@ -28,7 +28,7 @@ page->content(
 " 2) Nested view, built like any other view
 DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory(
   )->page( `Nested View`
-    )->input( client->_bind_edit( mv_input_nest )
+    )->input( client->_bind( mv_input_nest )
     )->button( text  = `event`
                press = client->_event( `TEST` ) ).
 
@@ -99,11 +99,11 @@ DATA(page) = z2ui5_cl_xml_view=>factory(
   )->page( title = `abap2UI5 - Master Detail` ).
 
 DATA(lr_master) = page->flexible_column_layout(
-                       layout = client->_bind_edit( mv_layout )
+                       layout = client->_bind( mv_layout )
                        id     = `test`                            " anchor
                      )->begin_column_pages( ).
 
-lr_master->list( items = client->_bind_edit( val  = t_tab
+lr_master->list( items = client->_bind( val  = t_tab
                                              view = client->cs_view-main )
                  selectionchange = client->_event( `SELCHANGE` )
   )->standard_list_item( title    = `{TITLE}`
@@ -119,7 +119,7 @@ METHOD view_display_detail.
   DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
   DATA(page) = lo_view_nested->page( `Nested View` ).
 
-  page->ui_table( rows = client->_bind_edit( val  = t_tab2
+  page->ui_table( rows = client->_bind( val  = t_tab2
                                              view = client->cs_view-nested ) ).
   " ...columns, toolbar, row actions...
 
@@ -145,10 +145,10 @@ Each view (main, nested) has its own client-side model. When you build a binding
 
 ```abap
 " In the main view
-items = client->_bind_edit( val = t_tab  view = client->cs_view-main )
+items = client->_bind( val = t_tab  view = client->cs_view-main )
 
 " In the nested view
-rows  = client->_bind_edit( val = t_tab2 view = client->cs_view-nested )
+rows  = client->_bind( val = t_tab2 view = client->cs_view-nested )
 ```
 
 The constants `client->cs_view-main` and `client->cs_view-nested` are abap2UI5's view identifiers. Declaring them lets `nest_view_model_update( )` know which model to refresh:

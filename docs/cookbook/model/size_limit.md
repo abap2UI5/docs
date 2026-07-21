@@ -76,12 +76,12 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
         )->simple_form( title = `Settings` editable = abap_true
             )->content( `form`
                 )->label( `setSizeLimit`
-                )->input( value = client->_bind_edit( mv_size_limit )
+                )->input( value = client->_bind( mv_size_limit )
                 )->button(
                     text  = `update size limit`
                     press = client->_event( `UPDATE_LIMIT` )
                 )->label( `Number of Entries`
-                )->input( value = client->_bind_edit( mv_combo_number )
+                )->input( value = client->_bind( mv_combo_number )
                 )->button(
                     text  = `update number of entries`
                     press = client->_event( `UPDATE_MODEL` )

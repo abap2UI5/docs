@@ -23,8 +23,8 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory(
         )->page(
             )->_z2ui5( )->file_uploader(
-                value       = client->_bind_edit( mv_value )
-                path        = client->_bind_edit( mv_path )
+                value       = client->_bind( mv_value )
+                path        = client->_bind( mv_path )
                 placeholder = `filepath here...`
                 upload      = client->_event( `UPLOAD` )
         )->stringify( ) ).

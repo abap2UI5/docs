@@ -7,18 +7,18 @@ Not every problem raises an ABAP exception. Many failures surface only in the br
 
 ## Binding-Path Mismatch
 
-When a `_bind` / `_bind_edit` path does not resolve against the JSON model on the frontend — typically because the public attribute was renamed, the data was never sent, or the path is mistyped — UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
+When a `_bind` path does not resolve against the JSON model on the frontend — typically because the public attribute was renamed, the data was never sent, or the path is mistyped — UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
 
 Where to look:
 - **Browser console.** UI5 logs a warning like `Binding "/path/to/field" was not found in model` from `sap.ui.model.json.JSONModel`. Open the browser DevTools console and filter by `sap.ui.model`.
 - **Network tab.** Inspect the abap2UI5 response payload — the JSON model is included verbatim. If the field is absent or named differently than your binding path, you have your answer.
 - **ABAP side.** Nothing. The backend never learns the binding failed. Asserting "no console warnings" is the only way to catch this in tests.
 
-Two-way binding (`_bind_edit`) silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
+Two-way binding silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
 
 ## Bound Attribute Not Public
 
-`_bind( )` and `_bind_edit( )` resolve attributes via dynamic `ASSIGN` and only see the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` is silently ignored — the binding path is generated, but no data is ever serialized for it. There is no compile-time or runtime error.
+`_bind( )` and `_bind( )` resolve attributes via dynamic `ASSIGN` and only see the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` is silently ignored — the binding path is generated, but no data is ever serialized for it. There is no compile-time or runtime error.
 
 Where to look:
 - **Symptom is identical to a binding-path mismatch.** The browser console shows the same `Binding "/path/..." was not found in model` warning, because the path was never populated on the wire.
@@ -38,7 +38,7 @@ See [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping) f
 
 ## Two-Way Binding Through a Typed Formatter
 
-When `_bind_edit( )` is wrapped in a `parts: [ … ], type: 'sap.ui.model.type.…'` binding, the type owns both directions — display and parse. If the value the user types does not match the formatter's expectations (locale, pattern, decimals, currency code), UI5 raises a parse exception and drops the write-back on the frontend. The ABAP attribute keeps its old value, and the next event arrives with stale data.
+When `_bind( )` is wrapped in a `parts: [ … ], type: 'sap.ui.model.type.…'` binding, the type owns both directions — display and parse. If the value the user types does not match the formatter's expectations (locale, pattern, decimals, currency code), UI5 raises a parse exception and drops the write-back on the frontend. The ABAP attribute keeps its old value, and the next event arrives with stale data.
 
 Where to look:
 - **Browser console.** Warnings from `sap.ui.model.type` like `ParseException: Enter a valid value` or `Enter a valid date in the format …`.

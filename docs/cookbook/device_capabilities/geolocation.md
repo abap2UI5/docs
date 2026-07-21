@@ -30,12 +30,12 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
         )->page( )->_z2ui5(
             )->geolocation(
                 finished         = client->_event( `POST` )
-                longitude        = client->_bind_edit( longitude )
-                latitude         = client->_bind_edit( latitude )
-                altitude         = client->_bind_edit( altitude )
-                altitudeaccuracy = client->_bind_edit( altitudeaccuracy )
-                accuracy         = client->_bind_edit( accuracy )
-                speed            = client->_bind_edit( speed )
+                longitude        = client->_bind( longitude )
+                latitude         = client->_bind( latitude )
+                altitude         = client->_bind( altitude )
+                altitudeaccuracy = client->_bind( altitudeaccuracy )
+                accuracy         = client->_bind( accuracy )
+                speed            = client->_bind( speed )
         )->stringify( ) ).
 
     CASE client->get( )-event.

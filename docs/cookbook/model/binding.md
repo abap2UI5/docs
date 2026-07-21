@@ -3,10 +3,10 @@ outline: [2, 4]
 ---
 # Binding
 
-In abap2UI5, there are two ways to share data between your ABAP code and the UI5 frontend.
+In abap2UI5 you share data between your ABAP code and the UI5 frontend with `client->_bind( )`. Binding is **two-way**: when the value is changed in an editable control, the framework writes it back to your ABAP attribute before the next event handler runs. Only the paths the user actually edited are transported back (a delta), so read-only data costs nothing on the way back.
 
-#### One-Way Binding
-Use one-way binding to show data on the frontend without allowing edits. The `client->_bind` method sends data to the frontend and binds it to the view:
+#### Displaying Data
+Bind an attribute to a display-only control (e.g. `text`) — nothing is editable there, so nothing syncs back:
 
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
@@ -31,8 +31,8 @@ ENDCLASS.
 ```
 This method works with tables, trees, and other nested data structures — see [Tables](/cookbook/model/tables) and [Trees](/cookbook/model/trees).
 
-#### Two-Way Binding
-When users need to edit data, use two-way binding to keep it in sync with the ABAP backend. Call the `client->_bind_edit` method — after an event, the framework syncs the data back to your ABAP class:
+#### Editing Data
+Bind an attribute to an editable control (e.g. `input`). After an event, the framework has already synced the user's changes back to your ABAP attribute:
 
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
@@ -49,7 +49,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
     client->view_display( z2ui5_cl_xml_view=>factory(
       )->page( `abap2UI5 - Hello World`
           )->text( `Enter your name`
-          )->input( client->_bind_edit( name )
+          )->input( client->_bind( name )
           )->button( text = `post` press = client->_event( `POST` )
       )->stringify( ) ).
 
@@ -63,8 +63,12 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip `_bind_edit` is obsolete
+Earlier releases split binding into `_bind` (one-way) and `_bind_edit` (two-way). Both now bind two-way and write to the same model, so `_bind_edit` is only an obsolete alias of `_bind` — prefer `_bind( )`. You will still find `_bind_edit` in older examples.
+:::
+
 ::: warning **Bound Attributes Must Be Public**
-`_bind( )` and `_bind_edit( )` access your class attributes from outside the controller via dynamic ASSIGN. This only works for attributes in the `PUBLIC SECTION` — `PROTECTED` and `PRIVATE` attributes are not visible to the framework and silently fail to bind: the view renders empty for one-way binding, and edits never sync back for two-way binding. There is no compile-time or runtime error.
+`_bind( )` accesses your class attributes from outside the controller via dynamic ASSIGN. This only works for attributes in the `PUBLIC SECTION` — `PROTECTED` and `PRIVATE` attributes are not visible to the framework and silently fail to bind: the value never reaches the frontend and edits never sync back. There is no compile-time or runtime error.
 
 Always declare bound data in `PUBLIC SECTION`. This resembles the PAI/PBO logic, where data lived in global variables. See also [Life Cycle → Lifecycle Pitfalls](/cookbook/event_navigation/life_cycle#lifecycle-pitfalls).
 :::
@@ -84,12 +88,12 @@ DATA edit_row TYPE ts_order.
 
 ...
 
-)->input( client->_bind_edit( edit_row-customer ) )  " resolves to {/XX/EDIT_ROW/CUSTOMER}
-)->input( client->_bind_edit( edit_row-material ) )
-)->input( client->_bind_edit( edit_row-quantity ) )
+)->input( client->_bind( edit_row-customer ) )  " resolves to {/EDIT_ROW/CUSTOMER}
+)->input( client->_bind( edit_row-material ) )
+)->input( client->_bind( edit_row-quantity ) )
 ```
 
-Nested structures follow the same rule recursively (`edit_row-address-city` → `/XX/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per item — see [Tables](/cookbook/model/tables).
+Nested structures follow the same rule recursively (`edit_row-address-city` → `/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per item — see [Tables](/cookbook/model/tables).
 
 #### Data-Type Mapping
 
@@ -110,12 +114,12 @@ ABAP and UI5 do not share a type system. When ABAP values cross to the frontend 
 | structure            | JSON object         | Bind individual fields with `struct-field`             | One model path per field — see [Binding to Structures](#binding-to-structures). |
 | internal table       | JSON array          | `Table`, `List`, `Tree`                                | One row context per item — see [Tables](/cookbook/model/tables) and [Trees](/cookbook/model/trees). |
 
-When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). The shape is always the same — build a JSON binding string with `parts` and `type`, using `path = abap_true` on `_bind_edit` to inject the raw model path:
+When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). The shape is always the same — build a JSON binding string with `parts` and `type`, using `path = abap_true` on `_bind` to inject the raw model path:
 
 ```abap
 )->input(
-    |\{ parts: [ `{ client->_bind_edit( val = amount   path = abap_true ) }`,
-                 `{ client->_bind_edit( val = currency path = abap_true ) }` ],
+    |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
+                 `{ client->_bind( val = currency path = abap_true ) }` ],
         type: 'sap.ui.model.type.Currency' \}| )
 ```
 

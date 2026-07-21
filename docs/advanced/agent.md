@@ -81,7 +81,7 @@ Views, events, binding, navigation, messages — everything goes through the `cl
 |---|---|
 | Views | `view_display`, `view_destroy`, `view_model_update` |
 | Popups / popovers | `popup_display`, `popup_destroy`, `popover_display`, `popover_destroy` |
-| Binding | `_bind( var )` (read-only), `_bind_edit( var )` (two-way) |
+| Binding | `_bind( var )` (read-only), `_bind( var )` (two-way) |
 | Events | `_event( 'NAME' )`, `check_on_event( 'NAME' )`, `get_event_arg( i )` |
 | Navigation | `nav_app_call( app )`, `nav_app_leave( )`, `get_app_prev( )` |
 | Messages | `message_box_display`, `message_toast_display` |
@@ -106,7 +106,7 @@ Translate any UI5 XML example from the [UI5 SDK](https://sapui5.hana.ondemand.co
 |---|---|
 | `<Button text="Send" />` | `->__( n = `Button` a = `text` v = `Send` )` |
 | `press="onPress"` | `a = `press` v = client->_event( `BUTTON_POST` )` |
-| `value="{/name}"` | `a = `value` v = client->_bind_edit( name )` |
+| `value="{/name}"` | `a = `value` v = client->_bind( name )` |
 | `<FeedInput><actions>…</actions></FeedInput>` | `->_( `FeedInput` )->_( `actions` )->__( … )` |
 
 Builder methods:
@@ -132,7 +132,7 @@ CLASS zcl_app_xxx DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    " bound data (public DATA attributes used by _bind / _bind_edit)
+    " bound data (public DATA attributes used by _bind)
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -239,7 +239,7 @@ When an AI needs deeper information than this page provides:
 | Architecture, request roundtrip | [Concept](/technical/concept), [How It All Works](/technical/how_it_all_works) |
 | Lifecycle and `IF` / `ELSEIF` dispatcher pattern | [Cookbook → Life Cycle](/cookbook/event_navigation/life_cycle) |
 | Building views, control choice | [Cookbook → View Definition](/cookbook/view/definition) |
-| Data binding (`_bind`, `_bind_edit`) | [Cookbook → Binding](/cookbook/model/binding) |
+| Data binding (`_bind`) | [Cookbook → Binding](/cookbook/model/binding) |
 | Tables and trees | [Cookbook → Tables](/cookbook/model/tables), [Trees](/cookbook/model/trees) |
 | Events, actions, exceptions | [Cookbook → Event, Navigation](/cookbook/event_navigation/life_cycle) |
 | Popups and popovers | [Cookbook → Popup, Popover](/cookbook/popup_popover/popup) |

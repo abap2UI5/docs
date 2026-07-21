@@ -52,7 +52,7 @@ ENDCLASS.
 ```
 
 ### Editable
-To make a table editable, switch the binding to `_bind_edit`:
+To make a table editable, use editable cell controls (e.g. `input`) — the binding is the same `_bind`:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -66,7 +66,7 @@ To make a table editable, switch the binding to `_bind_edit`:
       ENDDO.
 
       DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-          )->table( client->_bind_edit( mt_itab ) ).
+          )->table( client->_bind( mt_itab ) ).
       tab->columns(
           )->column( )->text( `Count` )->get_parent(
           )->column( )->text( `Value` )->get_parent(

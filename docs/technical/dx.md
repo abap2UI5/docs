@@ -58,7 +58,7 @@ Benefits:
 - Built-in input handling and event processing
 - Full-stack behavior with no setup
 
-abap2UI5 echoes this classic selection screen behavior in the browser. Use `Z2UI5_CL_XML_VIEW` to define simple views and share data with the `_bind_edit` method:
+abap2UI5 echoes this classic selection screen behavior in the browser. Use `Z2UI5_CL_XML_VIEW` to define simple views and share data with the `_bind` method:
 
 ```abap
 CLASS zcl_app_input DEFINITION PUBLIC.
@@ -73,7 +73,7 @@ CLASS zcl_app_input IMPLEMENTATION.
     IF client->check_on_init( ).
       client->view_display(
         z2ui5_cl_xml_view=>factory(
-            )->input( client->_bind_edit( pa_arbgb )
+            )->input( client->_bind( pa_arbgb )
             )->button( text  = `post` press = client->_event( `POST` ) ) ).
       RETURN.
     ENDIF.

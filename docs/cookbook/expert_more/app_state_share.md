@@ -29,7 +29,7 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       client->view_display(
         view->label( `quantity`
-            )->input( client->_bind_edit( mv_quantity )
+            )->input( client->_bind( mv_quantity )
             )->button(
                 text  = `post with state`
                 press = client->_event( `BUTTON_POST` )
@@ -68,7 +68,7 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
 
         DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
           )->label( `quantity`
-          )->input( client->_bind_edit( mv_quantity )
+          )->input( client->_bind( mv_quantity )
           )->button( text  = `share` press = client->_event( `BUTTON_POST` ) ).
         client->view_display( view->stringify( ) ).
 

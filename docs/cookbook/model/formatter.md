@@ -13,15 +13,15 @@ UI5 formatter types use a special JSON-based binding syntax with these key eleme
 
 Note on ABAP syntax: inside string templates (`|...|`), escape the curly braces as `\{` and `\}`, because `{ }` normally denotes an embedded ABAP expression.
 
-The `path = abap_true` parameter on `_bind` / `_bind_edit` returns only the raw model path rather than the full binding expression, so you can embed it inside the `parts` array or a single-path `path:` entry. For `_bind_edit` the path is e.g. `/XX/AMOUNT`; read-only `_bind` paths have no `/XX/` segment (`/AMOUNT`).
+The `path = abap_true` parameter on `_bind` returns only the raw model path rather than the full binding expression, so you can embed it inside the `parts` array or a single-path `path:` entry. The path is e.g. `/AMOUNT`.
 
 For example, this ABAP code:
 ```abap
-|\{ parts: [`{ client->_bind_edit( val = amount path = abap_true ) }`], type: 'sap.ui.model.type.Currency' \}|
+|\{ parts: [`{ client->_bind( val = amount path = abap_true ) }`], type: 'sap.ui.model.type.Currency' \}|
 ```
 produces this UI5 binding string at runtime:
 ```text
-{ parts: ["/XX/AMOUNT"], type: 'sap.ui.model.type.Currency' }
+{ parts: ["/AMOUNT"], type: 'sap.ui.model.type.Currency' }
 ```
 
 The sections below show the binding-string pattern for each ABAP type that needs a formatter. Each pattern is the minimum that makes the value display and parse correctly — for runnable apps with full `formatOptions`, `constraints`, and read-only variants, see the [samples repository](https://github.com/abap2UI5/samples).
@@ -32,8 +32,8 @@ ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code (a plain `string` al
 
 ```abap
 )->input(
-    |\{ parts: [ `{ client->_bind_edit( val = amount   path = abap_true ) }`,
-                 `{ client->_bind_edit( val = currency path = abap_true ) }` ],
+    |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
+                 `{ client->_bind( val = currency path = abap_true ) }` ],
         type: 'sap.ui.model.type.Currency' \}| )
 ```
 
@@ -52,7 +52,7 @@ ABAP `n LENGTH n` is sent as a digit string, leading zeros included. Without a t
 
 ```abap
 )->text(
-    |\{ path: `{ client->_bind_edit( val = numeric path = abap_true ) }`,
+    |\{ path: `{ client->_bind( val = numeric path = abap_true ) }`,
         type: 'sap.ui.model.odata.type.String',
         constraints: \{ isDigitSequence: true \} \}| )
 ```
@@ -61,11 +61,11 @@ This strips the leading zeros for display and re-pads them on write-back.
 
 ## Date
 
-ABAP `d` is an 8-character string `YYYYMMDD`. `date_picker` accepts it directly via `client->_bind_edit( mv_date )` for the default case. For explicit locale or pattern control, use `sap.ui.model.type.Date` with a `source` pattern that matches the wire format:
+ABAP `d` is an 8-character string `YYYYMMDD`. `date_picker` accepts it directly via `client->_bind( mv_date )` for the default case. For explicit locale or pattern control, use `sap.ui.model.type.Date` with a `source` pattern that matches the wire format:
 
 ```abap
 )->date_picker(
-    value = |\{ path: `{ client->_bind_edit( val = mv_date path = abap_true ) }`,
+    value = |\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
                 type: 'sap.ui.model.type.Date',
                 formatOptions: \{ pattern: 'yyyy-MM-dd',
                                   source: \{ pattern: 'yyyyMMdd' \} \} \}| )
@@ -79,7 +79,7 @@ ABAP `t` is a 6-character string `HHMMSS`. Same pattern as Date, with `sap.ui.mo
 
 ```abap
 )->time_picker(
-    value = |\{ path: `{ client->_bind_edit( val = mv_time path = abap_true ) }`,
+    value = |\{ path: `{ client->_bind( val = mv_time path = abap_true ) }`,
                 type: 'sap.ui.model.type.Time',
                 formatOptions: \{ pattern: 'HH:mm:ss',
                                   source: \{ pattern: 'HHmmss' \} \} \}| )
@@ -93,7 +93,7 @@ ABAP `abap_bool` is `"X"` or `""`. UI5's `CheckBox` expects `true` / `false`. Tw
 ```abap
 )->checkbox( selected = `{= $` && client->_bind( mv_flag ) && ` === 'X' }` )
 ```
-This resolves to `{= ${/MV_FLAG} === 'X' }` — read-only `_bind` paths have no `/XX/` prefix (that segment marks two-way `_bind_edit` bindings). Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
+This resolves to `{= ${/MV_FLAG} === 'X' }`. Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
 
 **ABAP-side conversion** — keep a parallel `string`-typed attribute (`'true'` / `'false'`) for two-way binding, and translate before/after each event:
 ```abap
@@ -106,7 +106,7 @@ flag_str = COND #( WHEN flag_bool = abap_true THEN 'true' ELSE 'false' ).
 " after the event:
 flag_bool = COND #( WHEN flag_str = 'true' THEN abap_true ELSE abap_false ).
 ```
-Then `)->checkbox( selected = client->_bind_edit( flag_str ) )` works both directions. More boilerplate in the controller, simpler view.
+Then `)->checkbox( selected = client->_bind( flag_str ) )` works both directions. More boilerplate in the controller, simpler view.
 
 A custom JS formatter wired through `sap.ui.model.SimpleType` is the third option — see the [samples repository](https://github.com/abap2UI5/samples).
 
@@ -119,7 +119,7 @@ A custom JS formatter wired through `sap.ui.model.SimpleType` is the third optio
 **Send as string with a source pattern** — convert to a string in `yyyyMMddHHmmss` format on the ABAP side, then bind with `sap.ui.model.type.DateTime`:
 ```abap
 )->date_time_picker(
-    value = |\{ path: `{ client->_bind_edit( val = mv_ts_string path = abap_true ) }`,
+    value = |\{ path: `{ client->_bind( val = mv_ts_string path = abap_true ) }`,
                 type: 'sap.ui.model.type.DateTime',
                 formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',
                                   source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}| )
@@ -177,11 +177,11 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
                   href = `https://sapui5.hana.ondemand.com/#/entity/sap.ui.model.type.Currency`
 
          "Currency in one field — shows amount and currency symbol together
-         "resolves to: { parts: ["/XX/AMOUNT", "/XX/CURRENCY"], type: 'sap.ui.model.type.Currency' }
+         "resolves to: { parts: ["/AMOUNT", "/CURRENCY"], type: 'sap.ui.model.type.Currency' }
          )->label( `One field`
          )->input(
-             |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }`, `{ client->_bind_edit(
+             |\{ parts: [ `{ client->_bind( val  = amount
+                                                 path = abap_true ) }`, `{ client->_bind(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' \}|
 
@@ -190,36 +190,36 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          "showNumber: false  → hides the numeric value
          )->label( `Two fields`
          )->input(
-             |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }`, `{ client->_bind_edit(
+             |\{ parts: [ `{ client->_bind( val  = amount
+                                                 path = abap_true ) }`, `{ client->_bind(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showMeasure: false\}  \}|
          )->input(
-             |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }`, `{ client->_bind_edit(
+             |\{ parts: [ `{ client->_bind( val  = amount
+                                                 path = abap_true ) }`, `{ client->_bind(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{showNumber: false\} \}|
 
          "Read-only display variants with different formatOptions
          )->label( `Default`
          )->text(
-             |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }`, `{ client->_bind_edit(
+             |\{ parts: [ `{ client->_bind( val  = amount
+                                                 path = abap_true ) }`, `{ client->_bind(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' \}|
 
          "preserveDecimals: false → trims trailing zeros (e.g. 123,456,789.12 USD)
          )->label( `preserveDecimals:false`
-         )->text( |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                      path = abap_true ) }`, `| && client->_bind_edit(
+         )->text( |\{ parts: [ `{ client->_bind( val  = amount
+                                                      path = abap_true ) }`, `| && client->_bind(
                                                                                        val  = currency
                                                                                        path = abap_true ) &&
                      |`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ preserveDecimals : false \} \}|
 
          "currencyCode: false → hides the ISO code, shows only the number
          )->label( `currencyCode:false`
-         )->text( |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                      path = abap_true ) }`, `| && client->_bind_edit(
+         )->text( |\{ parts: [ `{ client->_bind( val  = amount
+                                                      path = abap_true ) }`, `| && client->_bind(
                                                                                        val  = currency
                                                                                        path = abap_true ) &&
                          |`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ currencyCode : false \} \}|
@@ -227,16 +227,16 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
          "style: 'short' → compact notation (e.g. 123M USD)
          )->label( `style:'short'`
          )->text(
-             |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }`, `{ client->_bind_edit(
+             |\{ parts: [ `{ client->_bind( val  = amount
+                                                 path = abap_true ) }`, `{ client->_bind(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{ style : 'short' \} \}|
 
          "style: 'long' → full text notation (e.g. 123 million US dollars)
          )->label( `style:'long'`
          )->text(
-             |\{ parts: [ `{ client->_bind_edit( val  = amount
-                                                 path = abap_true ) }`, `{ client->_bind_edit(
+             |\{ parts: [ `{ client->_bind( val  = amount
+                                                 path = abap_true ) }`, `{ client->_bind(
                                                                                val  = currency
                                                                                path = abap_true ) }`],  type: 'sap.ui.model.type.Currency' , formatOptions: \{   style : 'long' \} \}|
          )->label( `event`
@@ -245,7 +245,7 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
 
     "Remove leading zeros from a numeric string with OData type formatting
     "isDigitSequence: true tells the formatter to treat the value as a digit sequence
-    "resolves to: { path: "/XX/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
+    "resolves to: { path: "/NUMERIC", type: 'sap.ui.model.odata.type.String', constraints: { isDigitSequence: true } }
     page->simple_form( title    = `No Zeros`
                        editable = abap_true
         )->content( `form`
@@ -254,10 +254,10 @@ CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
         )->link( text = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
                  href = `https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.odata.type.String%23methods/formatValue`
         )->label( `Numeric`
-        )->input( value = client->_bind_edit( val = numeric )
+        )->input( value = client->_bind( val = numeric )
         )->label( `Without leading Zeros`
         )->text(
-    text = |\{path : `{ client->_bind_edit(
+    text = |\{path : `{ client->_bind(
                             val  = numeric
                             path = abap_true ) }`, type : 'sap.ui.model.odata.type.String', constraints : \{  isDigitSequence : true \} \}| ).
 

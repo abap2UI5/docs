@@ -24,7 +24,7 @@ CLASS z2ui5_cl_sample_clipboard IMPLEMENTATION.
 
         client->view_display( z2ui5_cl_xml_view=>factory(
             )->page(
-                )->input( client->_bind_edit( mv_text )
+                )->input( client->_bind( mv_text )
                 )->button(
                     text  = `copy to clipboard`
                     press = client->_event( `COPY` )

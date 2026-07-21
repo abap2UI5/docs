@@ -110,7 +110,7 @@ CLASS z2ui5_cl_demo_app_s_07 IMPLEMENTATION.
                     value   = vbeln
                     enabled = abap_false
                 )->label( `Type`
-                )->input( client->_bind_edit( auart )
+                )->input( client->_bind( auart )
                 )->label( `Created by`
                 )->input(
                     value   = ernam
@@ -279,7 +279,7 @@ CLASS z2ui5_cl_demo_app_s_08 IMPLEMENTATION.
                     value   = vbeln
                     enabled = abap_false
                 )->label( `Type`
-                )->input( client->_bind_edit( auart )
+                )->input( client->_bind( auart )
                 )->button(
                     text  = `Save`
                     press = client->_event( `SAVE` ) ).
@@ -439,7 +439,7 @@ CLASS z2ui5_cl_demo_app_s_09 IMPLEMENTATION.
                     value   = vbeln
                     enabled = abap_false
                 )->label( `Type`
-                )->input( client->_bind_edit( auart )
+                )->input( client->_bind( auart )
                 )->button(
                     text  = `Save`
                     press = client->_event( `SAVE` ) ).
@@ -602,7 +602,7 @@ CLASS z2ui5_cl_demo_app_s_10 IMPLEMENTATION.
                     value   = vbeln
                     enabled = abap_false
                 )->label( `Type`
-                )->input( client->_bind_edit( auart )
+                )->input( client->_bind( auart )
                 )->button(
                     text  = `Save`
                     press = client->_event( `SAVE` ) ).
@@ -811,7 +811,7 @@ CLASS z2ui5_cl_demo_app_s_11 IMPLEMENTATION.
                     value   = vbeln
                     enabled = abap_false
                 )->label( `Type`
-                )->input( client->_bind_edit( auart )
+                )->input( client->_bind( auart )
                 )->button(
                     text  = `Save`
                     press = client->_event( `SAVE` )
@@ -1050,7 +1050,7 @@ CLASS z2ui5_cl_demo_app_s_12 IMPLEMENTATION.
                     value   = vbeln
                     enabled = abap_false
                 )->label( `Type`
-                )->input( client->_bind_edit( auart )
+                )->input( client->_bind( auart )
                 )->label( `Status`
                 )->input(
                     value   = locked_by

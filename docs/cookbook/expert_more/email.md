@@ -28,9 +28,9 @@ CLASS z2ui5_cl_sample_email IMPLEMENTATION.
             )->page( `Send E-Mail`
                 )->simple_form( editable = abap_true
                     )->content( `form`
-                        )->label( `To`      )->input( client->_bind_edit( mv_to )
-                        )->label( `Subject` )->input( client->_bind_edit( mv_subject )
-                        )->label( `Body`    )->text_area( client->_bind_edit( mv_body )
+                        )->label( `To`      )->input( client->_bind( mv_to )
+                        )->label( `Subject` )->input( client->_bind( mv_subject )
+                        )->label( `Body`    )->text_area( client->_bind( mv_body )
                         )->button(
                             text  = `send`
                             press = client->_event( `SEND` )

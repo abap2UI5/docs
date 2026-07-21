@@ -158,7 +158,7 @@ A typical backend response holds the XML View:
         <form:content>
           <Title text="Make an input here and send it to the server..."/>
           <Label text="Name"/>
-          <Input value="{/XX/NAME}"/>
+          <Input value="{/NAME}"/>
           <Button press=".eB(['BUTTON_POST'])" text="post"/>
         </form:content>
       </form:SimpleForm>
@@ -213,7 +213,7 @@ CLASS z2ui5_cl_app_partial_rerendering IMPLEMENTATION.
       client->view_display( z2ui5_cl_xml_view=>factory(
         )->input( client->_bind( text )
         )->input( submit = client->_event( )
-        )->checkbox( selected = client->_bind_edit( partly ) text = `partly` ) ).
+        )->checkbox( selected = client->_bind( partly ) text = `partly` ) ).
     ELSE.
       client->view_model_update( ).
     ENDIF.

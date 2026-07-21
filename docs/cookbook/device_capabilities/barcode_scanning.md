@@ -72,12 +72,12 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
          )->label( `One`
          )->input(
               id     = `id1`
-              value  = client->_bind_edit( one )
+              value  = client->_bind( one )
               submit = client->_event( `ONE_ENTER` )
          )->label( `Two`
          )->input(
               id     = `id2`
-              value  = client->_bind_edit( two )
+              value  = client->_bind( two )
               submit = client->_event( `TWO_ENTER` ) ).
 
       client->view_display( page->stringify( ) ).
@@ -118,7 +118,7 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
       DATA(view) = z2ui5_cl_xml_view=>factory( ).
       DATA(vbox) = view->page( )->vbox( ).
       vbox->input( id          = `inputApp`
-                   value       = client->_bind_edit( company_code )
+                   value       = client->_bind( company_code )
                    type        = `Number`
                    placeholder = `Company Code`
                    submit      = client->_event( `CHECK_INPUT` ) ).

@@ -79,7 +79,7 @@ The `main` method is a pure dispatcher — the same pattern as in [Hello World](
 
 Two things are new compared to Hello World: `shell( )` wraps the page in the standard UI5 app frame, and the `navbuttonpress` / `shownavbutton` parameters add a back button when the app was called from another app (details under [Navigation](/cookbook/event_navigation/navigation)). Further down, `get_parent( )` moves one level back up in the builder tree, so the next `column( )` becomes a sibling instead of a child — see [View → Definition](/cookbook/view/definition).
 
-The two date pickers and the customer input use `_bind_edit`, so whatever the user types travels back to the ABAP attributes automatically. The table uses read-only `_bind` since the rows are only displayed:
+The two date pickers and the customer input are bound with `_bind`, so whatever the user types travels back to the ABAP attributes automatically. The table is bound with `_bind` too; since its cells are display-only, nothing syncs back:
 
 ```abap
   METHOD view_display.
@@ -96,14 +96,14 @@ The two date pickers and the customer input use `_bind_edit`, so whatever the us
         )->content( `form`
         )->label( `Order Date From`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_from )
+            value       = client->_bind( s_search-date_from )
             valueformat = `yyyy-MM-dd`
         )->label( `Order Date To`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_to )
+            value       = client->_bind( s_search-date_to )
             valueformat = `yyyy-MM-dd`
         )->label( `Customer`
-        )->input( client->_bind_edit( s_search-customer )
+        )->input( client->_bind( s_search-customer )
         )->button(
             text  = `Read Orders`
             press = client->_event( `READ` ) ).
@@ -202,7 +202,7 @@ A popup is built exactly like the main view — same fluent builder, just create
         )->content( `form`
         )->label( `Delivery Date`
         )->date_picker(
-            value       = client->_bind_edit( s_edit-delivery_date )
+            value       = client->_bind( s_edit-delivery_date )
             valueformat = `yyyy-MM-dd` ).
 
     dialog->buttons(
@@ -219,7 +219,7 @@ A popup is built exactly like the main view — same fluent builder, just create
   ENDMETHOD.
 ```
 
-The date picker in the dialog binds to `s_edit-delivery_date` with `_bind_edit` — when the user picks a new date, the attribute is already updated by the time the next event reaches your ABAP code.
+The date picker in the dialog binds to `s_edit-delivery_date` with `_bind` — when the user picks a new date, the attribute is already updated by the time the next event reaches your ABAP code.
 
 ### Step 5 — Posting the Change
 
@@ -341,14 +341,14 @@ CLASS zcl_app_full_example IMPLEMENTATION.
         )->content( `form`
         )->label( `Order Date From`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_from )
+            value       = client->_bind( s_search-date_from )
             valueformat = `yyyy-MM-dd`
         )->label( `Order Date To`
         )->date_picker(
-            value       = client->_bind_edit( s_search-date_to )
+            value       = client->_bind( s_search-date_to )
             valueformat = `yyyy-MM-dd`
         )->label( `Customer`
-        )->input( client->_bind_edit( s_search-customer )
+        )->input( client->_bind( s_search-customer )
         )->button(
             text  = `Read Orders`
             press = client->_event( `READ` ) ).
@@ -386,7 +386,7 @@ CLASS zcl_app_full_example IMPLEMENTATION.
         )->content( `form`
         )->label( `Delivery Date`
         )->date_picker(
-            value       = client->_bind_edit( s_edit-delivery_date )
+            value       = client->_bind( s_edit-delivery_date )
             valueformat = `yyyy-MM-dd` ).
 
     dialog->buttons(

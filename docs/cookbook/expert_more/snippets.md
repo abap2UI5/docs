@@ -41,7 +41,7 @@ ENDCLASS.
 
 ## Selection Screen
 
-A classic input form: a few fields bound with `_bind_edit`, a button that triggers backend logic, results shown after submission.
+A classic input form: a few fields bound with `_bind`, a button that triggers backend logic, results shown after submission.
 
 ```abap
 CLASS z2ui5_cl_app_selection DEFINITION PUBLIC.
@@ -65,11 +65,11 @@ CLASS z2ui5_cl_app_selection IMPLEMENTATION.
         page->simple_form( title = `Selection Criteria` editable = abap_true
             )->content( ns = `form`
                 )->label( `Carrier ID`
-                )->input( client->_bind_edit( carrid )
+                )->input( client->_bind( carrid )
                 )->label( `Connection ID`
-                )->input( client->_bind_edit( connid )
+                )->input( client->_bind( connid )
                 )->label( `Flight Date`
-                )->date_picker( client->_bind_edit( fldate ) ).
+                )->date_picker( client->_bind( fldate ) ).
 
         page->footer( )->overflow_toolbar(
             )->toolbar_spacer(
