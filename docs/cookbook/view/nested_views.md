@@ -103,8 +103,7 @@ DATA(lr_master) = page->flexible_column_layout(
                        id     = `test`                            " anchor
                      )->begin_column_pages( ).
 
-lr_master->list( items = client->_bind( val  = t_tab
-                                             view = client->cs_view-main )
+lr_master->list( items = client->_bind( t_tab )
                  selectionchange = client->_event( `SELCHANGE` )
   )->standard_list_item( title    = `{TITLE}`
                          selected = `{SELECTED}` ).
@@ -119,8 +118,7 @@ METHOD view_display_detail.
   DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
   DATA(page) = lo_view_nested->page( `Nested View` ).
 
-  page->ui_table( rows = client->_bind( val  = t_tab2
-                                             view = client->cs_view-nested ) ).
+  page->ui_table( rows = client->_bind( t_tab2 ) ).
   " ...columns, toolbar, row actions...
 
   client->nest_view_display(
@@ -139,26 +137,24 @@ End-to-end samples:
 - `Z2UI5_CL_DEMO_APP_097` — list master, `sap.ui.table.Table` in the detail with sort/filter/row actions.
 - `Z2UI5_CL_DEMO_APP_085` — full master-detail with an `ObjectPageLayout` as the nested detail, including search, sort, and the FCL fullscreen toggle.
 
-#### Routing Bindings to the Right View
+#### Refreshing the Right View
 
-Each view (main, nested) has its own client-side model. When you build a binding with `client->_bind( ... )` you can declare which view's model the binding belongs to via the `view` parameter:
-
-```abap
-" In the main view
-items = client->_bind( val = t_tab  view = client->cs_view-main )
-
-" In the nested view
-rows  = client->_bind( val = t_tab2 view = client->cs_view-nested )
-```
-
-The constants `client->cs_view-main` and `client->cs_view-nested` are abap2UI5's view identifiers. Declaring them lets `nest_view_model_update( )` know which model to refresh:
+All bound data lives in a **single client-side model**, regardless of which view a binding was built in — `client->_bind( ... )` always writes to that one root model. What differs is *which rendered view you refresh* after the ABAP data changes: call the update method that matches the view.
 
 ```abap
 DELETE t_tab2 WHERE title = ls_arg-title.
-client->nest_view_model_update( ).   " only the nested view's data is pushed
+client->nest_view_model_update( ).   " push the new data into the nested view
 ```
 
-If you omit `view`, the binding defaults to the main view, which still works for many cases but is less explicit. Get into the habit of passing the right `cs_view-...` value whenever a fragment is built — it makes the data flow obvious to anyone reading the code.
+| Rendered view | Refresh call                          |
+| ------------- | ------------------------------------- |
+| main          | `client->view_model_update( )`        |
+| nested        | `client->nest_view_model_update( )`   |
+| nested (2nd)  | `client->nest2_view_model_update( )`  |
+
+::: tip `_bind`'s `view` parameter is obsolete
+Earlier releases kept a separate model per view and asked you to tag each binding with `view = client->cs_view-...` so the framework knew which model to refresh. That separation is gone — there is now one root model — and the `view` parameter of `_bind` / `_bind_edit` is an inert no-op kept only for backward compatibility. Omit it, and pick the target view through the matching `..._view_model_update( )` call instead.
+:::
 
 #### Two Levels of Nesting
 

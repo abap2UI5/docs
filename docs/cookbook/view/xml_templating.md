@@ -19,7 +19,7 @@ This timing has two consequences:
 - **Expansion is build-time.** A `template:repeat` over an internal table produces a fixed number of controls; the expanded XML is what UI5 renders.
 - **Data changes do not re-template.** If the data driving the template changes, the existing expansion stays as is. To pick up the change you must rebuild the view (`view_display`) or the templated fragment (`nest_view_display`) — see [Re-rendering](#re-rendering) below.
 
-abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` or `client->_bind( ... )` is reachable inside templates via the `template>` model prefix:
+abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` is reachable inside templates via the `template>` model prefix:
 
 | ABAP binding                       | Path inside templates       |
 | ---------------------------------- | --------------------------- |
