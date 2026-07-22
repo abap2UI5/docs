@@ -53,4 +53,30 @@ client->follow_up_action( `myFunction()` ).
 plain event name (only `A-Z`, `a-z`, `0-9`, `_`) becomes a frontend event call,
 anything containing JavaScript syntax runs verbatim.
 
+## Calling a control method
+
+The whitelisted control calls — `cs_event-control_by_id`, `control_global` and
+`binding_call` — are frontend events too, so `follow_up_action( )` can invoke a
+method on a control once the backend response arrives. Their `t_arg` is
+positional (see [Frontend → Calling control methods](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend)):
+
+```abap
+" after backend processing, advance a wizard step
+client->follow_up_action(
+    val   = client->cs_event-control_by_id
+    t_arg = VALUE #( ( `wiz` ) ( `setNextStep` ) ( `STEP2` ) ) ).
+```
+
+For `control_by_id`, the control is resolved by id. A separate `view` parameter
+(default `cs_view-main`, which resolves the id across all open views) scopes the
+lookup to a single view — pass `cs_view-popup` / `cs_view-popover` / … for a
+control hosted in a popup or popover:
+
+```abap
+client->follow_up_action(
+    val   = client->cs_event-control_by_id
+    view  = client->cs_view-popup
+    t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `detail` ) ) ).
+```
+
 See sample `Z2UI5_CL_DEMO_APP_180` for a complete example.
