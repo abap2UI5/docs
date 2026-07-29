@@ -31,7 +31,7 @@ ENDMETHOD.
 ```
 
 #### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? Instead of an abap2UI5 popup, the raw ABAP runtime error (short dump) from the HTTP handler appears. Processing halts, and the user has to reload the browser. Reserve this for unexpected cases:
+What happens if your code raises uncatchable exceptions? The backend dumps, and the frontend shows its unified **fatal-error overlay**: a dialog that extracts and displays the server's error details, with a **Details** view, a **Copy** button for the error text and **Refresh / Logout** actions to restart. Processing halts until the user restarts the app from that dialog. Reserve this for unexpected cases:
 
 ```abap
 METHOD z2ui5_if_app~main.

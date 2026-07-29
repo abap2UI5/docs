@@ -55,9 +55,11 @@ anything containing JavaScript syntax runs verbatim.
 
 ## Calling a control method
 
-The whitelisted control calls — `cs_event-control_by_id`, `control_global` and
-`binding_call` — are frontend events too, so `follow_up_action( )` can invoke a
-method on a control once the backend response arrives. Their `t_arg` is
+The control calls — `cs_event-control_by_id`, `control_global`, `binding_call`
+and `bind_element` — are frontend events too, so `follow_up_action( )` can invoke a
+method on a control once the backend response arrives. For `control_by_id`, any
+public control method works unless it is on the framework's denylist;
+`control_global` and `binding_call` are strict whitelists. Their `t_arg` is
 positional (see [Frontend → Calling control methods](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend)):
 
 ```abap
@@ -79,4 +81,4 @@ client->follow_up_action(
     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `detail` ) ) ).
 ```
 
-See sample `Z2UI5_CL_DEMO_APP_180` for a complete example.
+See demo apps 470 (element binding) and 471 (keyboard shortcuts) in the [samples repository](https://github.com/abap2UI5/samples) for complete `follow_up_action` examples.

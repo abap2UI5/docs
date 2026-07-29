@@ -6,7 +6,6 @@ outline: [2, 4]
 abap2UI5 handles file uploads and downloads by sending base64-encoded data over two-way binding.
 
 #### Upload
-See also `Z2UI5_CL_DEMO_APP_075`:
 ```abap
 CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 

@@ -11,7 +11,7 @@ The Cookbook collects task-oriented recipes for everyday abap2UI5 development. E
 Build the XML view your app sends to the browser. Covers the basic view definition, nesting views inside other views, and XML templating for repeating structures.
 
 #### [Model](/cookbook/model/binding)
-Share data between ABAP and the frontend. Explains one-way and two-way binding, expressions and formatters, tables and trees, the device model, and how to deal with the model size limit.
+Share data between ABAP and the frontend. Explains two-way data binding, expressions and formatters, tables and trees, the device model, and how to deal with the model size limit.
 
 #### [Event, Navigation](/cookbook/event_navigation/life_cycle)
 Understand how a request flows through your app. Covers the lifecycle, backend and frontend events, actions, navigation between apps, and exception handling.
@@ -38,7 +38,7 @@ EML/CDS/SQL integration with RAP, recurring patterns and helpers, troubleshootin
 
 - Each recipe stands on its own — read only the section you need.
 - Code snippets are copy-paste ready. Drop them into a class that implements `z2ui5_if_app`.
-- For full sample apps, browse the 250+ examples in the [samples repository](https://github.com/abap2UI5/samples).
+- For full sample apps, browse the hundreds of examples in the [samples repository](https://github.com/abap2UI5/samples).
 - For the API surface (`z2ui5_if_client`, `z2ui5_cl_xml_view`, …), read the source in the [main repository](https://github.com/abap2UI5/abap2UI5).
 
 → New to abap2UI5? Start with the [Getting Started Guide](/get_started/quickstart).

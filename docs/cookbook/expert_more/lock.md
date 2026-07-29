@@ -16,7 +16,7 @@ The patterns below combine in different ways. The examples use the sales order h
 The minimal starting point — the user edits and saves, no lock and no conflict check. Last save wins, silently. Fine for personal sandboxes and throwaway demos, but rarely what you want in production.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_07</code></summary>
+<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_1</code></summary>
 
 ```abap
 * Scenario 1 — Naive editing (no locking)
@@ -29,7 +29,7 @@ The minimal starting point — the user edits and saves, no lock and no conflict
 *   - Personal sandboxes, throwaway demos, internal tools where only
 *     one user ever touches a record.
 
-CLASS z2ui5_cl_demo_app_s_07 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_lock_1 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -50,7 +50,7 @@ CLASS z2ui5_cl_demo_app_s_07 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_07 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -166,7 +166,7 @@ ENDMETHOD.
 The lock exists for milliseconds, so this scales — but two parallel saves can still race if the timestamps line up, and the second one silently overwrites the first.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_08</code></summary>
+<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_2</code></summary>
 
 ```abap
 * Scenario 2 — Edit + Enqueue at save
@@ -179,7 +179,7 @@ The lock exists for milliseconds, so this scales — but two parallel saves can 
 *   - Quick edits with low chance of two users hitting the same record
 *   - Default starting point for most stateless editing apps
 
-CLASS z2ui5_cl_demo_app_s_08 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_lock_2 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -198,7 +198,7 @@ CLASS z2ui5_cl_demo_app_s_08 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_08 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_lock_2 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -322,7 +322,7 @@ No lock is held during the edit phase, so this scales to many concurrent users a
 Pick a column that *always* updates on writes. If anyone writes the table bypassing `AEDAT` / `UPD_TMSTMP`, the check silently misses real conflicts.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_09</code></summary>
+<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_3</code></summary>
 
 ```abap
 * Scenario 3 — Optimistic locking (timestamp check)
@@ -336,7 +336,7 @@ Pick a column that *always* updates on writes. If anyone writes the table bypass
 *   - Combine with Scenario 2 — it costs almost nothing and catches
 *     real bugs
 
-CLASS z2ui5_cl_demo_app_s_09 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_lock_3 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -358,7 +358,7 @@ CLASS z2ui5_cl_demo_app_s_09 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_09 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -456,7 +456,7 @@ ENDCLASS.
 **Lock at Save** plus the **Optimistic Check** is the safest stateless pattern and the sensible production default — the enqueue serializes parallel saves of *this* app, the timestamp check catches everyone else.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_10</code></summary>
+<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_4</code></summary>
 
 ```abap
 * Scenario 4 — Combined (the recommended default)
@@ -470,7 +470,7 @@ ENDCLASS.
 *   - The timestamp check catches anyone who slipped in via another
 *     path (SE16, batch job, classic SAP GUI) between read and write.
 
-CLASS z2ui5_cl_demo_app_s_10 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_lock_4 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -492,7 +492,7 @@ CLASS z2ui5_cl_demo_app_s_10 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_10 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -656,7 +656,7 @@ Each active user pins a work process. Use stateful sessions only for low-traffic
 :::
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_11</code></summary>
+<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_5</code></summary>
 
 ```abap
 * Scenario 5 — Stateful session with a persistent enqueue
@@ -673,7 +673,7 @@ Each active user pins a work process. Use stateful sessions only for low-traffic
 * Cost: each active user pins a work process. Do NOT use this for
 * high-traffic apps.
 
-CLASS z2ui5_cl_demo_app_s_11 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_lock_5 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -695,7 +695,7 @@ CLASS z2ui5_cl_demo_app_s_11 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_11 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -840,7 +840,7 @@ A soft lock is a row in a custom Z table marking *"user X is editing object Y"*.
 A user closing the browser without pressing *Release* leaves the row behind, so add a cleanup job that deletes entries older than, say, 30 minutes. The example below uses a matching `Z2UI5_SAMPLE_01` table.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_DEMO_APP_S_12</code></summary>
+<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_6</code></summary>
 
 ```abap
 * Scenario 6 — Soft lock (advisory only)
@@ -858,7 +858,7 @@ A user closing the browser without pressing *Release* leaves the row behind, so 
 *   LOCKED_AT  TIMESTAMPL  When the lock started
 * Delivery class A.
 
-CLASS z2ui5_cl_demo_app_s_12 DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_lock_6 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -885,7 +885,7 @@ CLASS z2ui5_cl_demo_app_s_12 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_demo_app_s_12 IMPLEMENTATION.
+CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 

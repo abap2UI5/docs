@@ -10,10 +10,12 @@ Set a breakpoint in your abap2UI5 app to debug the code. Check that the XML view
 ### Frontend
 On the frontend, abap2UI5 behaves like a standard UI5 app, so the usual tools and debugging features work.
 
-#### Debugging Tools
-Press `Ctrl+F12` to open the built-in debugging tools of abap2UI5:
-![Built-in debugger showing XML View and Data Model inspection](/configuration/debug.png)
-From here you can review the XML View and check the Data Model bound to the view.
+#### Developer Tools
+Press `Ctrl+F12` to open the built-in **Developer Tools** of abap2UI5:
+![Developer Tools showing XML View and Data Model inspection](/configuration/debug.png)
+Tabs cover the whole roundtrip: **Error** and **Log**, the **System** info, the **Previous Request** and **Response**, the app's **Source Code**, and for every view slot (main, popup, popover, nested) the rendered **View** XML and its **Model** data.
+
+The footer offers **Logout**, **Restart**, a jump to **ADT**, and an **Export** that bundles everything — including the running app's ABAP class source — into one blob you can attach to a bug report. Error popups also carry a copy-to-clipboard button for the same purpose.
 
 #### UI5 Inspector
 Another option: the SAP default debugging tool, the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo).

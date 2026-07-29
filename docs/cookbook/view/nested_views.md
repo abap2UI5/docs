@@ -133,7 +133,6 @@ The layout is bound editable (`mv_layout`), so events like *full-screen mode* or
 
 End-to-end samples:
 
-- `Z2UI5_CL_DEMO_APP_069` — tree master, two interchangeable detail apps (`addMidColumnPage`).
 - `Z2UI5_CL_DEMO_APP_097` — list master, `sap.ui.table.Table` in the detail with sort/filter/row actions.
 - `Z2UI5_CL_DEMO_APP_085` — full master-detail with an `ObjectPageLayout` as the nested detail, including search, sort, and the FCL fullscreen toggle.
 
@@ -190,4 +189,4 @@ Plain composition is the right starting point: keep helper methods that take a p
 - If a nested view does not pick up a data change, you probably need `view_model_update( )`; if a control simply isn't there, you need `nest_view_display( )` again.
 - For very large apps, look at `Z2UI5_CL_DEMO_APP_104`, which loads each detail screen from a separate `z2ui5_if_app` class and renders it into the nested slot. It is an advanced pattern — start with the simpler form first.
 
-See `Z2UI5_CL_DEMO_APP_065`, `Z2UI5_CL_DEMO_APP_069`, `Z2UI5_CL_DEMO_APP_085`, `Z2UI5_CL_DEMO_APP_097`, `Z2UI5_CL_DEMO_APP_098`, and `Z2UI5_CL_DEMO_APP_104` for runnable examples covering every variation above.
+See `Z2UI5_CL_DEMO_APP_065`, `Z2UI5_CL_DEMO_APP_085`, `Z2UI5_CL_DEMO_APP_097`, `Z2UI5_CL_DEMO_APP_098`, and `Z2UI5_CL_DEMO_APP_104` for runnable examples covering every variation above.

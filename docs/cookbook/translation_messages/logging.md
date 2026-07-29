@@ -59,8 +59,8 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### BAL Popup
-Unlike message classes, BAL logs carry more detail — like timestamps. Use the dedicated BAL log popup to show them. All examples above also work with the `Z2UI5_CL_POP_BAL` popup for richer output. An example with abap-logger:
+#### BAL Logs
+Unlike message classes, BAL logs carry more detail — like timestamps. `Z2UI5_CL_POP_MESSAGES` accepts them like any other message source, so the examples above work for BAL logs too:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -68,7 +68,7 @@ METHOD z2ui5_if_app~main.
   DATA(lo_log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
   lo_log->e( `This is an error...` ).
 
-  client->nav_app_call( z2ui5_cl_pop_bal=>factory( lo_log ) ).
+  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
 
 ENDMETHOD.
 ```
