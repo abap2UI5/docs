@@ -5,7 +5,7 @@ outline: [2, 4]
 
 This page is the entry point for any AI assistant (Claude, Copilot, Cursor, …) that should build abap2UI5 apps. It collects, in one place, every source of information the model needs and points to the canonical references in the three project repositories.
 
-If you are pasting context into an AI tool, **start here**, then follow the links — the linked files (especially the `CLAUDE.md` files in the source repositories) are kept up to date with every release and are the source of truth.
+If you are pasting context into an AI tool, **start here**, then follow the links — the linked files (especially the `AGENTS.md` files in the source repositories) are kept up to date with every release and are the source of truth.
 
 ## The Three Repositories
 
@@ -13,16 +13,16 @@ abap2UI5 lives in three repositories. Each carries information an AI assistant s
 
 | Repository | What's in it | Why an AI needs it |
 |---|---|---|
-| **[abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5)** | Core framework — interfaces, view builder, runtime | The public API (`z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_xml_view`, `z2ui5_cl_util_xml`) the app interacts with |
-| **[abap2UI5/samples](https://github.com/abap2UI5/samples)** | 250+ working demo apps + app-development guide | Canonical patterns and a copy-pastable example for almost every UI5 control and feature |
+| **[abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5)** | Core framework — interfaces, view builder, runtime | The public API (`z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_xml_view`) the app interacts with |
+| **[abap2UI5/samples](https://github.com/abap2UI5/samples)** | Hundreds of working demo apps + app-development guide | Canonical patterns and a copy-pastable example for almost every UI5 control and feature |
 | **[abap2UI5/docs](https://github.com/abap2UI5/docs)** | This documentation site | Conceptual background, lifecycle, cookbook recipes |
 
 ## Source-Repo Briefings (for Framework / Sample Contributors)
 
-The two source repositories carry `CLAUDE.md` briefings aimed at AI tools that work **inside those repos** — they are not needed for building apps:
+The two source repositories carry `AGENTS.md` briefings aimed at AI tools that work **inside those repos** — they are not needed for building apps:
 
-- **[abap2UI5/CLAUDE.md](https://github.com/abap2UI5/abap2UI5/blob/main/CLAUDE.md)** — for AI assistants **modifying the framework itself**: layered architecture (`src/00` utilities, `src/01` engine, `src/02` public API), coding rules, naming, abaplint setup, Clean-ABAP exceptions, public-API stability contract.
-- **[samples/CLAUDE.md](https://github.com/abap2UI5/samples/blob/main/CLAUDE.md)** — for AI assistants **contributing sample apps**: formatting rules (blank lines, indentation), file/class conventions, abaplint setup.
+- **[abap2UI5/AGENTS.md](https://github.com/abap2UI5/abap2UI5/blob/main/AGENTS.md)** — for AI assistants **modifying the framework itself**: layered architecture, coding rules, naming, abaplint setup, Clean-ABAP exceptions, public-API stability contract.
+- **[samples/AGENTS.md](https://github.com/abap2UI5/samples/blob/main/AGENTS.md)** — for AI assistants **contributing sample apps**: folder scheme, formatting rules (blank lines, indentation), file/class conventions, abaplint setup.
 
 If you only want to **build an abap2UI5 app**, this page is the single source — you do not need to read those files.
 
@@ -81,41 +81,42 @@ Views, events, binding, navigation, messages — everything goes through the `cl
 |---|---|
 | Views | `view_display`, `view_destroy`, `view_model_update` |
 | Popups / popovers | `popup_display`, `popup_destroy`, `popover_display`, `popover_destroy` |
-| Binding | `_bind( var )` (read-only), `_bind( var )` (two-way) |
-| Events | `_event( 'NAME' )`, `check_on_event( 'NAME' )`, `get_event_arg( i )` |
-| Navigation | `nav_app_call( app )`, `nav_app_leave( )`, `get_app_prev( )` |
+| Binding | `_bind( var )` (two-way; `_bind_edit` is an obsolete alias of it) |
+| Events | `_event( 'NAME' )`, `check_on_event( 'NAME' )`, `get_event_arg( )` |
+| Navigation | `nav_app_call( app )`, `nav_app_leave( )`, `get_app_prev( )`, `set_nav_routing( )` |
 | Messages | `message_box_display`, `message_toast_display` |
 | Lifecycle | `check_on_init`, `check_on_event`, `check_on_navigated` |
 
 Read the full interface at [`z2ui5_if_client.intf.abap`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_if_client.intf.abap).
 
-#### 5. Views are XML — built with one of two builders
+#### 5. Views are XML — built with the fluent builder
 
-Views are UI5 XML strings passed to `client->view_display( ... )`. The framework ships two builders, both fully supported:
+Views are UI5 XML strings passed to `client->view_display( ... )`. Build them with **`z2ui5_cl_xml_view`** — the fluent builder with one ABAP method per UI5 control. Every sample app uses it; it is the only supported builder.
 
-- **`z2ui5_cl_util_xml`** — generic XML builder. Element name + attributes as strings → maps **1:1** to the UI5 SDK. **Recommended for AI-generated code.**
-- **`z2ui5_cl_xml_view`** — fluent builder with one ABAP method per UI5 control (~446 methods). Convenient for humans, but has naming inconsistencies and incomplete coverage → harder for an AI to use correctly.
+For any control or property the fluent API does not cover, drop down to its generic method `_generic( name = ... ns = ... t_prop = ... )`, which emits any XML element with any attributes — a 1:1 translation of the UI5 SDK. Both styles mix freely in the same view.
 
 → [View Definition](/cookbook/view/definition)
 
-## Recommended Builder for AI: `z2ui5_cl_util_xml`
+::: warning Do not use `z2ui5_cl_util_xml`
+The former standalone XML builder `z2ui5_cl_util_xml` is **retired** (it lives in the framework's obsolete package and is scheduled for removal). No sample uses it anymore — do not generate new code with it. Use `z2ui5_cl_xml_view`, with `_generic( )` for anything it doesn't wrap.
+:::
 
-Translate any UI5 XML example from the [UI5 SDK](https://sapui5.hana.ondemand.com/sdk) **1:1** into ABAP — no wrapper, no abstraction:
+## Using the Builder: `z2ui5_cl_xml_view`
 
-| UI5 XML | ABAP with `z2ui5_cl_util_xml` |
-|---|---|
-| `<Button text="Send" />` | `->__( n = `Button` a = `text` v = `Send` )` |
-| `press="onPress"` | `a = `press` v = client->_event( `BUTTON_POST` )` |
-| `value="{/name}"` | `a = `value` v = client->_bind( name )` |
-| `<FeedInput><actions>…</actions></FeedInput>` | `->_( `FeedInput` )->_( `actions` )->__( … )` |
+The fluent API follows a small set of conventions (details in [View Definition](/cookbook/view/definition#mapping-ui5-xml-abap-fluent-api)):
 
-Builder methods:
+- Control methods are snake_case of the UI5 control class — `sap.m.MultiComboBox` → `->multi_combo_box( )`, `sap.m.Text` → `->text( )`.
+- Properties are named parameters, lowercased without underscores (`enabled`, `placeholder`, `selectedkey`).
+- Aggregations are methods named after the aggregation (`->items( )`, `->content( )`); calling one returns the builder so children chain inside it.
+- `->stringify( )` serializes the view for `client->view_display( )`.
 
-- `_( n, ns, p )` — add child, **go into** it (next call adds a grandchild)
-- `__( n, ns, a, v, p )` — add child, **stay** at current level (leaf / sibling)
-- `p( n, v )` — add a single attribute to the current node
-- `n( 'Name' )` / `n( )` — navigate to named ancestor / parent
-- `stringify( indent = abap_true )` — serialize to XML
+When a control, property or aggregation is missing from the fluent API, translate the UI5 SDK XML 1:1 with `_generic( )`:
+
+```abap
+view->_generic( name = `MultiComboBox` ns = `sap.m`
+    t_prop = VALUE #( ( n = `selectedKeys` v = `{/keys}` )
+                      ( n = `placeholder`  v = `Pick one` ) ) ).
+```
 
 ::: warning Boolean attribute values
 Always pass `'true'` or `'false'` as **string literals** — never `abap_true` / `abap_false`. `abap_false` (space) is silently dropped; `abap_true` (`'X'`) produces an invalid XML attribute value.
@@ -168,9 +169,9 @@ CLASS zcl_app_xxx IMPLEMENTATION.
 ENDCLASS.
 ```
 
-The full template (with formatting and blank-line rules) lives in [samples/CLAUDE.md](https://github.com/abap2UI5/samples/blob/main/CLAUDE.md#app-structure).
+The full template (with formatting and blank-line rules) lives in [samples/AGENTS.md](https://github.com/abap2UI5/samples/blob/main/AGENTS.md).
 
-## Sample Apps — 250+ Working Examples
+## Sample Apps — Hundreds of Working Examples
 
 The fastest way for an AI to ground a generation in working code is to look up a similar app in the [samples repository](https://github.com/abap2UI5/samples/tree/main/src). Each `z2ui5_cl_demo_app_*` class is a self-contained, abapGit-installable app demonstrating a single feature or control.
 
@@ -180,7 +181,7 @@ Browse them online (no system needed): <https://abap2ui5.github.io/web-abap2ui5-
 
 Before building a custom dialog, check whether one of the built-in popup classes already covers the case:
 
-`Z2UI5_CL_POP_TO_CONFIRM`, `Z2UI5_CL_POP_TO_INFORM`, `Z2UI5_CL_POP_TO_SELECT`, `Z2UI5_CL_POP_FILE_UL`, `Z2UI5_CL_POP_FILE_DL`, `Z2UI5_CL_POP_TABLE`, `Z2UI5_CL_POP_DATA`, `Z2UI5_CL_POP_TEXTEDIT`, `Z2UI5_CL_POP_PDF`, `Z2UI5_CL_POP_HTML`, `Z2UI5_CL_POP_IMAGE_EDITOR`, `Z2UI5_CL_POP_MESSAGES`, `Z2UI5_CL_POP_BAL`, `Z2UI5_CL_POP_ERROR`, `Z2UI5_CL_POP_GET_RANGE`, `Z2UI5_CL_POP_GET_RANGE_M`, `Z2UI5_CL_POP_INPUT_VAL`, `Z2UI5_CL_POP_JS_LOADER`, `Z2UI5_CL_POP_DEMO_OUTPUT`
+`Z2UI5_CL_POP_TO_CONFIRM`, `Z2UI5_CL_POP_TO_INFORM`, `Z2UI5_CL_POP_TO_SELECT`, `Z2UI5_CL_POP_FILE_UL`, `Z2UI5_CL_POP_FILE_DL`, `Z2UI5_CL_POP_TABLE`, `Z2UI5_CL_POP_DATA`, `Z2UI5_CL_POP_TEXTEDIT`, `Z2UI5_CL_POP_PDF`, `Z2UI5_CL_POP_HTML`, `Z2UI5_CL_POP_IMAGE_EDITOR`, `Z2UI5_CL_POP_MESSAGES`, `Z2UI5_CL_POP_ERROR`, `Z2UI5_CL_POP_GET_RANGE`, `Z2UI5_CL_POP_GET_RANGE_M`, `Z2UI5_CL_POP_INPUT_VAL`, `Z2UI5_CL_POP_JS_LOADER`, `Z2UI5_CL_POP_DEMO_OUTPUT`
 
 → [Built-in popups](/cookbook/popup_popover/built_in)
 
@@ -242,6 +243,7 @@ When an AI needs deeper information than this page provides:
 | Data binding (`_bind`) | [Cookbook → Binding](/cookbook/model/binding) |
 | Tables and trees | [Cookbook → Tables](/cookbook/model/tables), [Trees](/cookbook/model/trees) |
 | Events, actions, exceptions | [Cookbook → Event, Navigation](/cookbook/event_navigation/life_cycle) |
+| Hash routing, browser Back/Forward | [Cookbook → Routing](/cookbook/event_navigation/routing) |
 | Popups and popovers | [Cookbook → Popup, Popover](/cookbook/popup_popover/popup) |
 | Messages, toasts, i18n | [Cookbook → Translation, Messages](/cookbook/translation_messages/message) |
 | Browser interaction (focus, scroll, URL) | [Cookbook → Browser Interaction](/cookbook/browser_interaction/title) |
@@ -254,7 +256,7 @@ When an AI needs deeper information than this page provides:
 
 A prompt that gives an AI assistant enough context to produce a working app:
 
-> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/advanced/agent.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (250+ apps, one feature per app). Use `z2ui5_cl_util_xml` as the view builder. Look up any UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 to ABAP. Do not use any control listed in this page's "Deprecated UI5 Controls" section. Always call `view_display( )` in the `check_on_navigated( )` branch — otherwise the screen is blank after returning from a called sub-app.
+> You are building an abap2UI5 app. Read <https://abap2ui5.github.io/docs/advanced/agent.html> first — it is the single source of truth for app-building (template, client API, lifecycle, view builder, deprecated controls, documentation map). For working examples, browse <https://github.com/abap2UI5/samples/tree/main/src> (hundreds of apps, one feature per app). Use `z2ui5_cl_xml_view` as the view builder; for controls it does not wrap, look up the UI5 control at <https://ui5.sap.com/#/api> and translate the XML 1:1 with `_generic( )`. Do not use any control listed in this page's "Deprecated UI5 Controls" section. Always call `view_display( )` in the `check_on_navigated( )` branch — otherwise the screen is blank after returning from a called sub-app.
 
 ## Hard Rules (Cheat Sheet)
 
@@ -264,11 +266,11 @@ A prompt that gives an AI assistant enough context to produce a working app:
 | Bound attributes must be `PUBLIC` | The framework binds via dynamic ASSIGN; `PROTECTED`/`PRIVATE` are silently ignored |
 | Use `IF` / `ELSEIF` with `check_on_init` / `check_on_event( 'NAME' )` / `check_on_navigated` | Canonical dispatcher pattern |
 | Always call `view_display( )` in the `check_on_navigated` branch | The browser still shows the called sub-app's view after `nav_app_leave( )` — without a re-display the screen stays blank |
-| Use `z2ui5_cl_util_xml` for AI-generated views | Maps 1:1 to UI5 SDK; no wrapper to learn |
+| Use `z2ui5_cl_xml_view` for views (`_generic( )` for uncovered controls) | The only supported builder; `z2ui5_cl_util_xml` is retired |
 | Pass XML boolean attributes as string literals `'true'` / `'false'` | `abap_true` / `abap_false` produce invalid or empty attributes |
 | Use backtick string literals (`` ` ``), not single quotes | Project-wide convention enforced by abaplint |
-| Never use a deprecated control | See list in framework `CLAUDE.md` |
+| Never use a deprecated control | See the list on this page |
 | Use built-in popups (`z2ui5_cl_pop_*`) before building custom ones | Tested, consistent, less code |
 | Run `npx abaplint` on every change in the framework / samples repos | Primary quality gate; must report 0 issues |
 
-That's the briefing. Hand the link to this page (or the two `CLAUDE.md` files it points to) to any AI tool and it has everything it needs to build a working abap2UI5 app.
+That's the briefing. Hand the link to this page (or the two `AGENTS.md` files it points to) to any AI tool and it has everything it needs to build a working abap2UI5 app.

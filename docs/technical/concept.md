@@ -170,9 +170,7 @@ And its View Model:
 ```json
 {
    "MODEL": {
-      "XX": {
-         "NAME": "test"
-      }
+      "NAME": "test"
    }
 }
 ```

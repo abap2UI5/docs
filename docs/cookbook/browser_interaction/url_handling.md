@@ -35,3 +35,7 @@ client->set_nav_back( ).
 ```
 
 For a complete example, see sample `Z2UI5_CL_DEMO_APP_139`.
+
+::: tip Hash-based app routing
+For app-to-app navigation, the framework can own the URL hash itself: with [Routing](/cookbook/event_navigation/routing) enabled, each app gets a bookmarkable route and the browser Back/Forward buttons navigate the app stack — no manual push states needed.
+:::

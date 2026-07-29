@@ -3,13 +3,24 @@ outline: [2, 4]
 ---
 # Release Notes
 
+### 1.142.0
+2026-07-20
+- Added frontend action functions: `control_by_id`, `binding_call`
+- Added new frontend events, e.g. `SYSTEM_LOGOUT` and `KEYBOARD_SET_MODE`
+- Extended the Debug Tool with error/log tabs and export (renamed to Developer Tools)
+- Performance: introduced delta data transfer — only changed fields/rows are sent to the backend
+- Compatibility: UI5 1.71 / UI5 2.x fixes (lazy module loading, lifecycle, aggregation escaping)
+- Security: error message sanitization, security response headers, fatal-error overlay
+- Samples repository fully reworked
+- Various small improvements and bug fixes
+
 ### 1.141.0
 2025-12-14
 - Added Image Editor popup for image manipulation
 - Added Camera Selector control with facing mode support
 - Added Camera Picture control with configurable height/width
 - Implemented security headers in HTTP response handling
-- Added experimental `check_on_event` method for improved event handling *(since adopted as the standard dispatch API used throughout these docs)*
+- Added experimental `check_on_event` method for improved event handling *(since adopted as a fully supported dispatch API alongside `CASE client->get( )-event`)*
 - Added experimental `_event_nav_app_leave` method for navigation
 - Improved error handling with enhanced error popup
 - Updated ajson library to latest version

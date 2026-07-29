@@ -252,4 +252,4 @@ CLASS z2ui5_cl_app_table_sort IMPLEMENTATION.
 ENDCLASS.
 ```
 
-For an interactive personalization dialog (column visibility, multi-sort, grouped filters), pair the table with `sap.m.p13n.Engine` or wrap it in a `SmartTable` — see the [UI5 SDK](https://sapui5.hana.ondemand.com) for the full feature set.
+For an interactive personalization dialog (column visibility, multi-sort, grouped filters), pair the table with `sap.m.p13n.Engine` or use a `SmartTable` with variant management — supported natively, see [Smart Controls](/cookbook/expert_more/smart_controls).

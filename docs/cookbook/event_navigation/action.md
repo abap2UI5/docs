@@ -32,5 +32,4 @@ client->follow_up_action(
 
 `val` is one of the frontend events from `z2ui5_if_client=>cs_event` (see
 [Frontend](./frontend.md)); `t_arg` carries the arguments the event expects. See
-[Follow-up Action](/cookbook/expert_more/follow_up_action) for the full details
-and sample `Z2UI5_CL_DEMO_APP_180` for a complete example.
+[Follow-up Action](/cookbook/expert_more/follow_up_action) for the full details.

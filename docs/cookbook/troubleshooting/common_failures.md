@@ -5,6 +5,10 @@ outline: [2, 4]
 
 Not every problem raises an ABAP exception. Many failures surface only in the browser, fail silently, or look like framework bugs when they are actually pattern mistakes. The sections below cover the ten most common ones — what the symptom looks like and where to find the real cause.
 
+::: tip Developer Tools first
+Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/troubleshooting) — the **Error**, **Log**, **Previous Request** and **Response** tabs show most of what the browser-DevTools steps below dig for, without leaving the app.
+:::
+
 ## Binding-Path Mismatch
 
 When a `_bind` path does not resolve against the JSON model on the frontend — typically because the public attribute was renamed, the data was never sent, or the path is mistyped — UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
@@ -18,7 +22,7 @@ Two-way binding silently drops the write-back when the path is invalid — your 
 
 ## Bound Attribute Not Public
 
-`_bind( )` and `_bind( )` resolve attributes via dynamic `ASSIGN` and only see the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` is silently ignored — the binding path is generated, but no data is ever serialized for it. There is no compile-time or runtime error.
+`_bind( )` resolves attributes via dynamic `ASSIGN` and only sees the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` is silently ignored — the binding path is generated, but no data is ever serialized for it. There is no compile-time or runtime error.
 
 Where to look:
 - **Symptom is identical to a binding-path mismatch.** The browser console shows the same `Binding "/path/..." was not found in model` warning, because the path was never populated on the wire.

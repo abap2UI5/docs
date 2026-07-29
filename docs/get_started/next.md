@@ -6,7 +6,7 @@ outline: [2, 4]
 You've installed abap2UI5 and built your first app. From here, pick the direction that fits your goals.
 
 #### Sample Apps
-With 250+ samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5. Browse tables, lists, trees, and other UI5 controls — copy and paste snippets to speed up your own work:
+With hundreds of samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5. Browse tables, lists, trees, and other UI5 controls — copy and paste snippets to speed up your own work:
 
 ![Sample apps overview showing tables, lists, trees, and other UI5 controls](/get_started/image-1.png)
 

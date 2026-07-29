@@ -22,7 +22,6 @@ Pre-built popup classes cover the most common cases. Call them via [navigation](
 | `Z2UI5_CL_POP_HTML` | Display HTML content |
 | `Z2UI5_CL_POP_IMAGE_EDITOR` | Edit an image (crop, resize, filter) |
 | `Z2UI5_CL_POP_MESSAGES` | Display a message table |
-| `Z2UI5_CL_POP_BAL` | Display a Business Application Log (BAL) |
 | `Z2UI5_CL_POP_ERROR` | Error display |
 | `Z2UI5_CL_POP_JS_LOADER` | Load custom JavaScript libraries |
 | `Z2UI5_CL_POP_DEMO_OUTPUT` | Quick demo-style output of arbitrary data |
