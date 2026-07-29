@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Release Notes
 
+### 1.142.0
+2026-07-20
+- Added frontend action functions: `control_by_id`, `binding_call`
+- Added new frontend events, e.g. `SYSTEM_LOGOUT` and `KEYBOARD_SET_MODE`
+- Extended the Debug Tool with error/log tabs and export (renamed to Developer Tools)
+- Performance: introduced delta data transfer — only changed fields/rows are sent to the backend
+- Compatibility: UI5 1.71 / UI5 2.x fixes (lazy module loading, lifecycle, aggregation escaping)
+- Security: error message sanitization, security response headers, fatal-error overlay
+- Samples repository fully reworked
+- Various small improvements and bug fixes
+
 ### 1.141.0
 2025-12-14
 - Added Image Editor popup for image manipulation

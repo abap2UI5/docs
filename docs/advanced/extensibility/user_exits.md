@@ -32,6 +32,10 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
 
     cs_config-draft_exp_time_in_hours = 8.
 
+    " CSRF protection is on by default; disable it only if your endpoint
+    " must accept cross-origin POSTs (see the Security page)
+    " cs_config-check_csrf_active = abap_false.
+
   ENDMETHOD.
 
 ENDCLASS.

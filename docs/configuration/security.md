@@ -92,3 +92,17 @@ ENDMETHOD.
 ::: warning
 `'unsafe-eval'` weakens the protection CSP provides against cross-site scripting. Only add it when you must run a UI5 release that needs it, and remove it again once you upgrade to a newer release.
 :::
+
+### Cross-Site Request Forgery (CSRF)
+Every state-changing request in abap2UI5 is a POST, so the framework ships its own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or may not be there. The check compares the host authority of the request's `Origin` (or `Referer`) header against the `Host` header — a cross-origin POST is rejected with an error response before any app logic runs.
+
+**CSRF protection is active by default.** A fresh install rejects cross-origin POSTs without any configuration. If your endpoint must accept cross-origin POSTs (for example, behind a proxy setup where the origin legitimately differs), opt out in the [user exit](/advanced/extensibility/user_exits):
+
+```abap
+METHOD z2ui5_if_exit~set_config_http_post.
+
+    " escape hatch - only disable this if your endpoint must accept cross-origin POSTs
+    cs_config-check_csrf_active = abap_false.
+
+ENDMETHOD.
+```

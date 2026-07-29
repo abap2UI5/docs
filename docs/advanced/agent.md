@@ -83,7 +83,7 @@ Views, events, binding, navigation, messages — everything goes through the `cl
 | Popups / popovers | `popup_display`, `popup_destroy`, `popover_display`, `popover_destroy` |
 | Binding | `_bind( var )` (read-only), `_bind( var )` (two-way) |
 | Events | `_event( 'NAME' )`, `check_on_event( 'NAME' )`, `get_event_arg( i )` |
-| Navigation | `nav_app_call( app )`, `nav_app_leave( )`, `get_app_prev( )` |
+| Navigation | `nav_app_call( app )`, `nav_app_leave( )`, `get_app_prev( )`, `set_nav_routing( )` |
 | Messages | `message_box_display`, `message_toast_display` |
 | Lifecycle | `check_on_init`, `check_on_event`, `check_on_navigated` |
 
@@ -242,6 +242,7 @@ When an AI needs deeper information than this page provides:
 | Data binding (`_bind`) | [Cookbook → Binding](/cookbook/model/binding) |
 | Tables and trees | [Cookbook → Tables](/cookbook/model/tables), [Trees](/cookbook/model/trees) |
 | Events, actions, exceptions | [Cookbook → Event, Navigation](/cookbook/event_navigation/life_cycle) |
+| Hash routing, browser Back/Forward | [Cookbook → Routing](/cookbook/event_navigation/routing) |
 | Popups and popovers | [Cookbook → Popup, Popover](/cookbook/popup_popover/popup) |
 | Messages, toasts, i18n | [Cookbook → Translation, Messages](/cookbook/translation_messages/message) |
 | Browser interaction (focus, scroll, URL) | [Cookbook → Browser Interaction](/cookbook/browser_interaction/title) |

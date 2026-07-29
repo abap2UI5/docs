@@ -168,6 +168,7 @@ export default defineConfig({
               },
               { text: "Action", link: "/cookbook/event_navigation/action" },
               { text: "Navigation", link: "/cookbook/event_navigation/navigation" },
+              { text: "Routing", link: "/cookbook/event_navigation/routing" },
               { text: "Exception", link: "/cookbook/event_navigation/exception" },
             ],
           },
@@ -203,6 +204,7 @@ export default defineConfig({
               { text: "Clipboard", link: "/cookbook/browser_interaction/clipboard" },
               { text: "URL Handling", link: "/cookbook/browser_interaction/url_handling" },
               { text: "Soft Keyboard", link: "/cookbook/browser_interaction/soft_keyboard" },
+              { text: "Keyboard Shortcuts", link: "/cookbook/browser_interaction/keyboard_shortcuts" },
             ],
           },
           {
@@ -241,6 +243,7 @@ export default defineConfig({
               { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
+              { text: "Smart Controls", link: "/cookbook/expert_more/smart_controls" },
               { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
             ],
           },
