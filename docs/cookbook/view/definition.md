@@ -74,6 +74,8 @@ Because UI5 XML is used 1:1, **the UI5 documentation is your reference** for any
 
 Find a control you like in the UI5 docs, copy its XML, paste it into `view_display( )` — done. abap2UI5 has no separate control catalog to learn.
 
+One thing the SDK will not warn you about while you copy: the control may be deprecated. Because the XML is passed through 1:1, a deprecated control renders exactly like any other — until UI5 removes it. See [Deprecated Controls](/cookbook/view/deprecated_controls) for the cases that come up most often.
+
 #### Choosing a Control
 
 The UI5 SDK is large. The table below covers the choices that come up in almost every abap2UI5 app — use it as a starting point before diving into the SDK.
