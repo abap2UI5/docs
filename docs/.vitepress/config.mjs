@@ -341,7 +341,6 @@ export default defineConfig({
         link: "/advanced/downporting",
         collapsed: true,
         items: [
-          { text: "AI-Assisted Development", link: "/advanced/agent" },
           { text: "Add-ons", link: "/advanced/addons" },
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Renaming", link: "/advanced/renaming" },
