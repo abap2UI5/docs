@@ -7,8 +7,11 @@ The Cookbook collects task-oriented recipes for everyday abap2UI5 development. E
 
 ### Sections
 
+#### [Cheat Sheet](/cookbook/cheat_sheet)
+The rules that decide whether an app works or fails in a hard-to-debug way, condensed to one page with links to the full recipes.
+
 #### [View](/cookbook/view/definition)
-Build the XML view your app sends to the browser. Covers the basic view definition, nesting views inside other views, and XML templating for repeating structures.
+Build the XML view your app sends to the browser. Covers the basic view definition, deprecated controls to stay away from, nesting views inside other views, and XML templating for repeating structures.
 
 #### [Model](/cookbook/model/binding)
 Share data between ABAP and the frontend. Explains two-way data binding, expressions and formatters, tables and trees, the device model, and how to deal with the model size limit.

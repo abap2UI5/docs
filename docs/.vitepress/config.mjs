@@ -123,12 +123,14 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Overview", link: "/cookbook/overview" },
+          { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
           {
             text: "View",
             link: "/cookbook/view/definition",
             collapsed: true,
             items: [
               { text: "Definition", link: "/cookbook/view/definition" },
+              { text: "Deprecated Controls", link: "/cookbook/view/deprecated_controls" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
             ],
