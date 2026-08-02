@@ -1,7 +1,59 @@
 import { defineConfig } from "vitepress";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const docsRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const SITE_URL = "https://abap2ui5.github.io/docs";
+
+// Derived from the top entry of the release notes so the nav badge cannot drift.
+const version =
+  fs
+    .readFileSync(path.join(docsRoot, "resources/changelog.md"), "utf8")
+    .match(/^### (\d+\.\d+\.\d+)/m)?.[1] ?? "";
+
+// Assembles llms-full.txt: the guide pages as one plain-markdown file, in
+// sidebar order. Delivery format for machine readers only — it does not add
+// or change any content of the human-facing site.
+function writeLlmsFullTxt(sidebar, outDir) {
+  const flatten = (items, acc = []) => {
+    for (const item of items ?? []) {
+      if (item.link && !/^https?:/.test(item.link)) acc.push(item.link);
+      flatten(item.items, acc);
+    }
+    return acc;
+  };
+  const ASSET_RE = /\.(png|jpe?g|gif|svg|webp|ico|pdf|txt|zip)$/i;
+  const links = [...new Set(flatten(sidebar.filter((s) => s.text !== "Resource")))];
+  const parts = [
+    `# abap2UI5 — full documentation\n\n> Concatenation of the abap2UI5 documentation (${SITE_URL}/) as plain markdown, in navigation order. Generated at build time.\n`,
+  ];
+  for (const link of links) {
+    const file = path.join(docsRoot, link.replace(/^\//, "") + ".md");
+    if (!fs.existsSync(file)) continue;
+    const page = fs
+      .readFileSync(file, "utf8")
+      .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, "")
+      .replace(/\]\(\/([^)#\s]+?)(\.md)?(#[^)\s]*)?\)/g, (m, p, md, hash) =>
+        ASSET_RE.test(p) ? `](${SITE_URL}/${p})` : `](${SITE_URL}/${p}.html${hash ?? ""})`
+      );
+    parts.push(`\n\n---\nsource: ${SITE_URL}${link}.html\n---\n\n${page.trim()}\n`);
+  }
+  fs.writeFileSync(path.join(outDir, "llms-full.txt"), parts.join(""));
+}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  // The sitemap lib resolves root-relative page links against the hostname's
+  // origin, which would drop the /docs/ base — re-add it via transformItems.
+  sitemap: {
+    hostname: "https://abap2ui5.github.io/",
+    transformItems: (items) =>
+      items.map((item) => ({ ...item, url: "docs/" + item.url.replace(/^\//, "") })),
+  },
+  buildEnd(siteConfig) {
+    writeLlmsFullTxt(siteConfig.site.themeConfig.sidebar, siteConfig.outDir);
+  },
   lastUpdated: {
     text: "Updated at",
     formatOptions: {
@@ -89,7 +141,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "1.141.0",
+        text: version,
         items: [
           { text: "Release", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },

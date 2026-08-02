@@ -34,7 +34,8 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
       WHEN client->check_on_event( `POST` ).
         on_post( ).
       WHEN client->check_on_navigated( ).
-        " optional: refresh state when returning from another app
+        " always re-display the view here — see Lifecycle Pitfalls below
+        render_main( ).
     ENDCASE.
 
   ENDMETHOD.

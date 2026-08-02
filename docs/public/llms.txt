@@ -1,0 +1,36 @@
+# abap2UI5
+
+> abap2UI5 is an open-source framework for building SAP UI5 apps purely in ABAP — no JavaScript, OData or RAP required. An app implements the interface `z2ui5_if_app` with a single `main( )` method; the framework calls it on every HTTP roundtrip.
+
+Key facts for AI assistants generating abap2UI5 apps:
+
+- Dispatch inside `main( )` over `client->check_on_init( )`, `client->check_on_navigated( )` and `client->check_on_event( 'NAME' )` — with `CASE abap_true` or an equivalent `IF` / `ELSEIF` chain. With many events, dispatching on `CASE client->get( )-event` is a fully supported alternative.
+- CRITICAL — most common bug: always render the view in the `check_on_navigated( )` branch. It fires on the first display and on every return from a sub-app called via `nav_app_call( )`; the framework does not restore the previous view automatically. App state survives the roundtrip serialization, so no data re-read is needed — only the view must be rendered again. Skipping this leaves a blank screen after navigating back.
+- Views are standard UI5 XML — everything in the UI5 SDK works 1:1. Build the XML string directly, or use the fluent helper class `z2ui5_cl_xml_view` and finish with `stringify( )`. Respect each control's aggregation rules from the UI5 SDK.
+- Attributes bound with `client->_bind( )` must be in the PUBLIC SECTION (binding uses dynamic ASSIGN and fails silently otherwise). Binding is two-way; `_bind_edit` is an obsolete alias — use `_bind`. Use backtick string literals in ABAP code.
+- Optional hash-based routing: `client->set_nav_routing( )` (once, e.g. in the launcher app's `check_on_init`) makes apps bookmarkable and couples browser Back/Forward to `nav_app_call` / `nav_app_leave`.
+- The complete guide and cookbook are available as one plain-markdown file: https://abap2ui5.github.io/docs/llms-full.txt
+
+## Docs
+
+- [Quickstart](https://abap2ui5.github.io/docs/get_started/quickstart.html): installation and first app
+- [Hello World](https://abap2ui5.github.io/docs/get_started/hello_world.html): smallest complete app plus the core concepts (one `main` method, state in public attributes, the `client` API)
+- [Full Example](https://abap2ui5.github.io/docs/get_started/full_example.html): complete end-to-end app — selection screen, table, popup, persistence
+- [Cheat Sheet](https://abap2ui5.github.io/docs/cookbook/cheat_sheet.html): the recurring rules with rationale, in one table
+- [Cookbook Overview](https://abap2ui5.github.io/docs/cookbook/overview.html): topic map of all how-to pages
+- [Life Cycle](https://abap2ui5.github.io/docs/cookbook/event_navigation/life_cycle.html): lifecycle checks and pitfalls, including the blank-screen-after-navigation bug
+- [View Definition](https://abap2ui5.github.io/docs/cookbook/view/definition.html): raw XML views and the fluent helper class
+- [Binding](https://abap2ui5.github.io/docs/cookbook/model/binding.html): two-way binding, public-attribute rule, table and structure paths
+- [Navigation](https://abap2ui5.github.io/docs/cookbook/event_navigation/navigation.html): cross-app navigation and re-displaying the view on return
+- [Routing](https://abap2ui5.github.io/docs/cookbook/event_navigation/routing.html): hash-based app routing, browser Back/Forward, bookmarkable apps
+
+## Examples
+
+- [Samples repository](https://github.com/abap2UI5/samples): 250+ working demo apps, one feature per app
+- [Framework repository](https://github.com/abap2UI5/abap2UI5): core framework — `llms.txt`, `AGENTS.md` and `docs/agents/building-apps.md` there are the in-repo entry points for AI agents
+
+## Optional
+
+- [Deprecated Controls](https://abap2ui5.github.io/docs/cookbook/view/deprecated_controls.html): UI5 controls to avoid and their replacements
+- [Configuration](https://abap2ui5.github.io/docs/configuration/setup.html): HTTP handler setup, theming, UI5 version, security
+- [Release Notes](https://abap2ui5.github.io/docs/resources/changelog.html): version history

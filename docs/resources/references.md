@@ -3,6 +3,16 @@ outline: [2, 4]
 ---
 # References
 
+### Tooling
+
+Tools from the abap2UI5 organization that support app development — in the editor, in CI, and together with AI assistants:
+
+- [Linter](https://github.com/abap2UI5/linter) — checks abap2UI5 view code (unknown controls and properties, deprecated controls, UI5 version compatibility); runs as a CLI or GitHub Action
+- [VS Code Extension](https://github.com/abap2UI5/vscode-extension) — run apps straight from the editor, live view diagnostics, snippets
+- [App Template](https://github.com/abap2UI5/app-template) — starter repository with linting and CI preconfigured
+- [MCP Server](https://github.com/abap2UI5/ai-mcp) — lets AI assistants validate, deploy and run abap2UI5 apps locally, no SAP system required
+- [AI Demokit](https://github.com/abap2UI5/ai-demokit) — official UI5 demo kit samples rebuilt as abap2UI5 apps, with a live browser demo
+
 ### Videos, Links, and Other Media
 
 #### 2025
