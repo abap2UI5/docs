@@ -409,6 +409,7 @@ export default defineConfig({
           { text: "Reference", link: "/resources/references" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release", link: "/resources/changelog" },
+          { text: "Deprecations", link: "/resources/deprecations" },
           { text: "License", link: "/resources/license" },
           { text: "Support", link: "/resources/support" },
           { text: "Contact", link: "/resources/contact" },

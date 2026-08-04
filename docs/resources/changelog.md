@@ -3,6 +3,9 @@ outline: [2, 4]
 ---
 # Release Notes
 
+See [Deprecations](/resources/deprecations) for what is superseded but still
+shipping, and for the full removal list with migration notes.
+
 ### 1.142.0
 2026-07-20
 - Added frontend action functions: `control_by_id`, `binding_call`
@@ -13,6 +16,10 @@ outline: [2, 4]
 - Security: error message sanitization, security response headers, fatal-error overlay
 - Samples repository fully reworked
 - Various small improvements and bug fixes
+
+**Removed**
+- `z2ui5_cl_util_api` and its environment-specific variants `z2ui5_cl_util_api_c` / `z2ui5_cl_util_api_s`. The methods were kept: `bal_*`, `tr_*`, `conv_get_itab_by_xlsx` / `conv_get_xlsx_by_itab` and `source_get_method` are now on `z2ui5_cl_util_ext`, the remaining ones on `z2ui5_cl_util`. Replace the `z2ui5_cl_util_api=>` prefix with the class that now holds the method
+- `z2ui5_cl_pop_bal` (BAL message popup) — removed without a replacement. The other built-in popups were not removed; they moved into the frozen package and keep working unchanged
 
 ### 1.141.0
 2025-12-14
