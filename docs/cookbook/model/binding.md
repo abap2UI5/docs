@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Binding
 
-In abap2UI5 you share data between your ABAP code and the UI5 frontend with `client->_bind( )`. Binding is **two-way**: when the value is changed in an editable control, the framework writes it back to your ABAP attribute before the next event handler runs. Only the paths the user actually edited are transported back (a delta), so read-only data costs nothing on the way back.
+In abap2UI5 you share data between your ABAP code and the UI5 frontend with `client->_bind( )`. There is only one binding, and it works **in both directions**: when the value is changed in an editable control, the framework writes it back to your ABAP attribute before the next event handler runs. Only the paths the user actually edited are transported back (a delta), so read-only data costs nothing on the way back.
 
 #### Displaying Data
 Bind an attribute to a display-only control (e.g. `text`) — nothing is editable there, so nothing syncs back:
@@ -64,7 +64,7 @@ ENDCLASS.
 ```
 
 ::: tip `_bind_edit` is obsolete
-Earlier releases split binding into `_bind` (one-way) and `_bind_edit` (two-way). Both now bind two-way and write to the same model, so `_bind_edit` is only an obsolete alias of `_bind` — prefer `_bind( )`. You will still find `_bind_edit` in older examples.
+Earlier releases split binding into a display-only `_bind` and a writable `_bind_edit`. Both now write to the same model and behave identically, so `_bind_edit` is only an obsolete alias of `_bind` — prefer `_bind( )`. You will still find `_bind_edit` in older examples.
 :::
 
 ::: warning **Bound Attributes Must Be Public**

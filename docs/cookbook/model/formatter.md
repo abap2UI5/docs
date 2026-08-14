@@ -9,7 +9,7 @@ UI5 formatter types use a special JSON-based binding syntax with these key eleme
 - **`parts: [...]`** — lists the model paths used as input (e.g., amount + currency)
 - **`type: '...'`** — the UI5 formatter type (e.g., `sap.ui.model.type.Currency`)
 - **`formatOptions: {...}`** — optional settings that control the output format
-- **`constraints: {...}`** — optional input constraints for two-way binding
+- **`constraints: {...}`** — optional constraints applied when user input is parsed back
 
 Note on ABAP syntax: inside string templates (`|...|`), escape the curly braces as `\{` and `\}`, because `{ }` normally denotes an embedded ABAP expression.
 
@@ -95,7 +95,7 @@ ABAP `abap_bool` is `"X"` or `""`. UI5's `CheckBox` expects `true` / `false`. Tw
 ```
 This resolves to `{= ${/MV_FLAG} === 'X' }`. Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
 
-**ABAP-side conversion** — keep a parallel `string`-typed attribute (`'true'` / `'false'`) for two-way binding, and translate before/after each event:
+**ABAP-side conversion** — keep a parallel `string`-typed attribute (`'true'` / `'false'`) to bind against, and translate before/after each event:
 ```abap
 DATA flag_bool TYPE abap_bool.
 DATA flag_str  TYPE string.   " 'true' / 'false' for the checkbox

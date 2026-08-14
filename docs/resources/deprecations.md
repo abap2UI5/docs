@@ -18,9 +18,10 @@ UI5 itself (`sap.ui.commons`, the legacy charts, the Belize themes …) see
 
 ### `_bind_edit( )` → `_bind( )`
 
-Earlier releases split binding into `_bind` (one-way) and `_bind_edit`
-(two-way). That split is gone: both bind **two-way** and write to the same root
-model, so `_bind_edit` is only an alias.
+Earlier releases split binding into a display-only `_bind` and a writable
+`_bind_edit`. That split is gone: there is only **one** binding left — both
+write to the same root model and behave identically, so `_bind_edit` is only an
+alias.
 
 ```abap
 " old

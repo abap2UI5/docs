@@ -222,7 +222,7 @@ ENDCLASS.
 That's a complete, working draft app. The three numbered comments map one-to-one onto the lifecycle diagram: **open → edit → activate**.
 
 ::: warning Why two steps to save?
-Notice that *Save* does two things: `UPDATE FIELDS` (copy the user's typed values into the draft) **then** `Activate` (promote the draft to active). The fields are two-way bound with `_bind`, so on each roundtrip the user's input lives in your ABAP variables — but it is **not** in the draft yet until you push it back with `UPDATE FIELDS`. Forgetting this step is the most common beginner mistake: the activate succeeds but saves the *old* values.
+Notice that *Save* does two things: `UPDATE FIELDS` (copy the user's typed values into the draft) **then** `Activate` (promote the draft to active). The fields are bound with `_bind`, so on each roundtrip the user's input lives in your ABAP variables — but it is **not** in the draft yet until you push it back with `UPDATE FIELDS`. Forgetting this step is the most common beginner mistake: the activate succeeds but saves the *old* values.
 :::
 
 ## The Full App — A Real-World Edit Screen
@@ -381,7 +381,7 @@ ENDMETHOD.
 ```
 
 #### 6. Saving Typed Values Back to the Draft
-The fields are two-way bound (`client->_bind( … )`), so user input lives in ABAP variables on the next roundtrip. To persist them in the draft, push them back with `UPDATE FIELDS`.
+The fields are bound (`client->_bind( … )`), so user input lives in ABAP variables on the next roundtrip. To persist them in the draft, push them back with `UPDATE FIELDS`.
 ```abap
 METHOD save_current_to_draft.
   MODIFY ENTITIES OF i_banktp

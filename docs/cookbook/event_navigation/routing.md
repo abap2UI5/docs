@@ -38,7 +38,7 @@ client->set_nav_routing( client->cs_nav_mode-fresh ).
 ```
 
 ::: tip Back restores the calling app as the user left it
-In `keep` mode, the calling app's route entry is advanced to the draft saved for it during the `nav_app_call`. Pressing Back therefore restores the calling app **as the user left it** — including everything two-way bound that changed on the client since the last render and traveled to the backend with the triggering event.
+In `keep` mode, the calling app's route entry is advanced to the draft saved for it during the `nav_app_call`. Pressing Back therefore restores the calling app **as the user left it** — including every bound value that changed on the client since the last render and traveled to the backend with the triggering event.
 :::
 
 ::: warning Draft expiry
