@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Upload, Download
 
-abap2UI5 handles file uploads and downloads by sending base64-encoded data over two-way binding.
+abap2UI5 handles file uploads and downloads by sending base64-encoded data over the binding.
 
 #### Upload
 ```abap

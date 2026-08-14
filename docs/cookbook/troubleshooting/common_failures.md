@@ -18,7 +18,7 @@ Where to look:
 - **Network tab.** Inspect the abap2UI5 response payload — the JSON model is included verbatim. If the field is absent or named differently than your binding path, you have your answer.
 - **ABAP side.** Nothing. The backend never learns the binding failed. Asserting "no console warnings" is the only way to catch this in tests.
 
-Two-way binding silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
+Binding silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
 
 ## Bound Attribute Not Public
 
@@ -40,7 +40,7 @@ Where to look:
 
 See [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping) for the type-mapping table and [Formatter](/cookbook/model/formatter) for the patterns.
 
-## Two-Way Binding Through a Typed Formatter
+## Write-Back Through a Typed Formatter
 
 When `_bind( )` is wrapped in a `parts: [ … ], type: 'sap.ui.model.type.…'` binding, the type owns both directions — display and parse. If the value the user types does not match the formatter's expectations (locale, pattern, decimals, currency code), UI5 raises a parse exception and drops the write-back on the frontend. The ABAP attribute keeps its old value, and the next event arrives with stale data.
 

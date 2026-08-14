@@ -14,7 +14,7 @@ The rules that decide whether an app works or fails in a hard-to-debug way, cond
 Build the XML view your app sends to the browser. Covers the basic view definition, deprecated controls to stay away from, nesting views inside other views, and XML templating for repeating structures.
 
 #### [Model](/cookbook/model/binding)
-Share data between ABAP and the frontend. Explains two-way data binding, expressions and formatters, tables and trees, the device model, and how to deal with the model size limit.
+Share data between ABAP and the frontend. Explains data binding, expressions and formatters, tables and trees, the device model, and how to deal with the model size limit.
 
 #### [Event, Navigation](/cookbook/event_navigation/life_cycle)
 Understand how a request flows through your app. Covers the lifecycle, backend and frontend events, actions, navigation between apps, and exception handling.
