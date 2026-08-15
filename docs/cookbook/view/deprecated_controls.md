@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Deprecated Controls
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 abap2UI5 sends plain UI5 XML to the browser, so **every** control the UI5 runtime knows will render — including the ones SAP has deprecated. Nothing in the framework stops you from using them.
 
 That makes deprecation a question you have to answer yourself while building the view. A deprecated control still works today, but it receives no new features, may behave inconsistently with newer themes, and disappears without replacement once SAP removes it — which has already happened (the Belize themes were removed in 1.136).

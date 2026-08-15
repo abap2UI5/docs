@@ -29,40 +29,106 @@ ENDMETHOD.
 
 Swap `<Text>` for any other control from the SDK; the framework doesn't care.
 
-#### Helper Class
+#### The View Builder
 
-Writing raw XML by hand quickly turns cumbersome. abap2UI5 ships the helper class `z2ui5_cl_xml_view` with a fluent API that mirrors the XML structure and gives you code completion. The `stringify( )` method at the end converts the view tree into an XML string that the framework sends to the frontend:
+Writing raw XML by hand quickly turns cumbersome. abap2UI5 ships
+`z2ui5_cl_ui5_view_builder`, which produces the same XML by method chaining —
+one call per control, so the shape of the chain is the shape of the view.
+`stringify( )` renders the tree into the XML string the framework sends to the
+frontend:
 
 ```abap
   METHOD z2ui5_if_app~main.
 
-    client->view_display(
-        z2ui5_cl_xml_view=>factory(
-            )->shell(
-                )->page( `My title`
-                    )->text( `My text`
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title` v = `My title`
+
+                    )->tag( `Text`
+                        )->a( n = `text` v = `My text` ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ```
 
-Both snippets produce the exact same view. Use whichever you prefer — raw strings are fine for a handful of lines, the fluent API scales better for real apps.
+Both snippets produce the exact same view. Use whichever you prefer — raw
+strings are fine for a handful of lines, the builder scales better for real
+apps.
+
+Four verbs, and no catalogue of controls behind them:
+
+| | |
+| --- | --- |
+| `ele( )` | add a control and **descend** into it — for a container |
+| `tag( )` | add a control and **stay** — for a leaf |
+| `a( )` | set **one** attribute on the control the chain is pointing at |
+| `end( )` | ascend to the parent |
+
+There is exactly one rule: `a( )` applies to the control the chain is
+**pointing at** — the child just added by `ele( )` or `tag( )` — so an
+attribute always follows its own control, and a control has to receive its
+attributes *before* its first child. `ele( )` descends and is closed by an
+`end( )`; `tag( )` stays, so a run of leaves needs none. The final `end( )`s
+may be left out entirely: `stringify( )` always renders from the root, no
+matter where the chain stopped.
+
+The root `mvc:View` and its `xmlns` declarations are written by hand, exactly
+as in a real UI5 view — the builder does not invent them for you.
+
+Because the builder knows no control names, **it can express every control,
+property and aggregation UI5 has**, including those released after this page
+was written. Whatever name and namespace you pass is written into the XML
+verbatim, in the SDK's own camelCase. An aggregation is an element like any
+other and carries its parent's namespace — `<m:content>` under a Page is
+``ele( n = `content` ns = `m` )``, a default-namespace `<columns>` inside an
+`sap.ui.table.Table` is ``ele( `columns` )``.
+
+For an ABAP boolean pass `b` instead of `v`; it renders `true`/`false`, so a
+flag reaches the view without a conversion of its own:
+
+```abap
+    )->a( n = `editable` b = mv_edit_mode
+    )->a( n = `visible`  b = xsdbool( lines( mt_item ) > 0 ) )
+```
 
 Tips for working with views:
-- Use code completion on `Z2UI5_CL_XML_VIEW` to find controls and properties
-- See the [samples repository](/get_started/next#sample-apps) for ready-made XML examples to copy and adapt
+- The [VS Code extension](https://github.com/abap2UI5/vscode-extension) gives
+  the chain completion and hover for the whole UI5 API, and checks the view
+  while you type.
+- The [abap2UI5-linter](https://github.com/abap2UI5/linter) rebuilds the view
+  from your chain and reports unknown controls, properties, enum values and
+  `@since` violations — no SAP system involved.
+- See the [samples repository](/get_started/next#sample-apps) for ready-made
+  examples to copy and adapt.
 
 ::: warning Respect the UI5 Control Aggregation Rules
-`Z2UI5_CL_XML_VIEW` is intentionally permissive — its fluent API lets you nest **any** control inside **any** other control. UI5 itself is not. Every UI5 control defines specific aggregations (e.g. `sap.m.Page` has `content`, `headerContent`, `footer`) and each aggregation accepts only certain child control types (often a particular interface or base class).
+The builder is intentionally permissive — it lets you nest **any** control
+inside **any** other control, because it never knew what either of them is.
+UI5 itself is not permissive. Every UI5 control defines specific aggregations
+(e.g. `sap.m.Page` has `content`, `headerContent`, `footer`) and each
+aggregation accepts only certain child control types (often a particular
+interface or base class).
 
-Combining controls in a way that violates these rules can lead to broken rendering, missing controls, layout glitches, runtime errors in the browser console, or subtle bugs that only show up on certain devices or themes.
+Combining controls in a way that violates these rules can lead to broken
+rendering, missing controls, layout glitches, runtime errors in the browser
+console, or subtle bugs that only show up on certain devices or themes.
 
-**Always check the [UI5 SDK](https://sapui5.hana.ondemand.com) for each control** to confirm:
+**Always check the [UI5 SDK](https://sapui5.hana.ondemand.com) for each
+control** to confirm:
 - which aggregations it exposes,
 - which child types those aggregations accept, and
 - which parent controls are valid for the control you want to use.
 
-The ABAP compiler cannot catch these mistakes — they are pure UI5 concerns and must be verified against the SDK documentation.
+The ABAP compiler cannot catch these mistakes — they are pure UI5 concerns.
+The [abap2UI5-linter](https://github.com/abap2UI5/linter) catches a large part
+of them before you deploy, and the rest have to be verified against the SDK.
 :::
 
 #### Where to Look for Controls
@@ -96,45 +162,9 @@ The UI5 SDK is large. The table below covers the choices that come up in almost 
 | Multi-select dropdown             | `sap.m.MultiComboBox`                                 | Pills appear inside the field.                                                     |
 | Date / time input                 | `sap.m.DatePicker` / `sap.m.TimePicker` / `sap.m.DateTimePicker` | Needs a formatter — see [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping). |
 | Status indicator                  | `sap.m.ObjectStatus`                                  | Colored text + icon for state.                                                     |
-| Modal dialog                      | `sap.m.Dialog` (built with `factory_popup`)           | See [Popup](/cookbook/popup_popover/popup).                                        |
+| Modal dialog                      | `sap.m.Dialog` (inside a `core:FragmentDefinition`)           | See [Popup](/cookbook/popup_popover/popup).                                        |
 
 When two controls fit, prefer the simpler one: `Table` over `TreeTable`, `SimpleForm` over `Form`, `Select` over `ComboBox`. Switch to the richer variant only when a concrete requirement justifies it.
-
-## Mapping UI5 XML ↔ ABAP Fluent API
-
-`Z2UI5_CL_XML_VIEW` is a hand-curated wrapper around UI5 controls. It does not cover every UI5 control, and the naming is not always a strict 1:1 mapping of the UI5 SDK:
-
-- Control names follow snake_case of the UI5 control class — `sap.m.MultiComboBox` becomes `->multi_combo_box( )`, `sap.m.Text` becomes `->text( )`.
-- Properties are passed as named parameters, lowercased without underscores (`enabled`, `placeholder`, `selectedkey`, `growingthreshold`). Only the *method* names use snake_case (e.g. `multi_combo_box`).
-- Aggregations are exposed as methods named after the aggregation itself (`->items( )`, `->content( )`, `->custom_data( )`) — not as `add_item( )` / `add_content( )`. Calling the aggregation method returns the parent builder so you can chain children inside it.
-- Coverage is incomplete and occasionally inconsistent: some controls or properties are missing, some method signatures don't match the SDK exactly. When in doubt, check the source of `Z2UI5_CL_XML_VIEW` or fall back to the generic builder below.
-
-### The Fully Generic Builder
-
-Every fluent helper ultimately produces an XML element. The lowest-level method `_generic( name = ... ns = ... )` lets you emit **any** XML element with **any** attributes, regardless of whether `Z2UI5_CL_XML_VIEW` knows the control:
-
-```abap
-  DATA(view) = z2ui5_cl_xml_view=>factory( ).
-
-  view->_generic( name = `Page` ns = `sap.m`
-    )->_generic( name = `MultiComboBox` ns = `sap.m`
-        t_prop = VALUE #(
-          ( n = `selectedKeys` v = `{/keys}` )
-          ( n = `placeholder`  v = `Pick one` )
-        )
-      )->_generic( name = `items` ns = `sap.m`
-        )->_generic( name = `core:Item` ns = `sap.ui.core`
-            t_prop = VALUE #(
-              ( n = `key`  v = `{key}` )
-              ( n = `text` v = `{text}` )
-            ) ).
-
-  client->view_display( view->stringify( ) ).
-```
-
-This maps **1:1** to the UI5 XML/SDK API — control names, property names, and aggregation names are written exactly as they appear in the [UI5 SDK](https://sapui5.hana.ondemand.com), in their original camelCase. There is no abstraction layer guessing what to call things.
-
-The rest of this documentation uses the higher-level fluent API (`->page( )`, `->button( )`, `->multi_combo_box( )`) because it reads better in examples. Both styles can be mixed freely in the same view.
 
 #### Next Steps
 This produces a static view. The next section walks through binding and sharing data between the view and the app logic.

@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Geolocation
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 abap2UI5 offers a custom control for reading geolocation data from the user's device — longitude, latitude, altitude, speed, and accuracy values. This is handy for logistics apps, field service tools, or any scenario where location matters.
 
 The control fires a `finished` event once the browser resolves the device position, and the binding writes every value back into your ABAP attributes. See also `Z2UI5_CL_SMP_APP_120`.

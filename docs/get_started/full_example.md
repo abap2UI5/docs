@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Full Example
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 This tutorial walks through a complete app that follows a typical ABAP flow: a small selection screen, reading data from the database, showing the result in a table, opening a popup to edit a row, and posting the changes back. It ties together everything from the [Hello World](/get_started/hello_world) page and shows how the pieces fit into a real screen.
 
 The example uses sales-order-like data but keeps the SELECTs and updates as plain ABAP so you can adapt them to your own tables. Drop the class into your system and launch it the same way as the Hello World app.

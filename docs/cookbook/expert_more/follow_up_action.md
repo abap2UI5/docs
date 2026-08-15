@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Follow-up Action
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 Sometimes, once your backend event handler has finished, you want to trigger an
 action that runs on the frontend — set the browser title, move focus, scroll,
 copy to the clipboard, and so on. `client->follow_up_action( )` schedules such a
@@ -101,7 +112,7 @@ alternative.
 
 ::: tip `cs_event-z2ui5` is the older form of the same thing
 The constant calls a function you registered as a `z2ui5.*` global
-(`follow_up_action( val = cs_event-z2ui5 t_arg = VALUE #( ( `myFunction` ) ) )`).
+(``follow_up_action( val = cs_event-z2ui5 t_arg = VALUE #( ( `myFunction` ) ) )``).
 It still works and is still dispatched, but it sits with the obsolete constants
 in `z2ui5_if_client`: passing the expression directly, as above, is the same
 call without the indirection. If the global is missing the frontend logs

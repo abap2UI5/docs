@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Draft Handling
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 ## Drafts Are a RAP Feature — and You Can Use Them with abap2UI5
 
 Draft handling is one of the headline features of the **ABAP RESTful Application Programming Model (RAP)**. If you have built RAP business objects before, you know the drill: add `with draft` to the behavior definition, define a draft table, and the RAP framework takes care of the rest — the shadow table, the pessimistic lock, and the standard draft actions `Edit`, `Resume`, `Activate`, and `Discard`.

@@ -52,14 +52,41 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
-      )->text( `My Text` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                    )->tag( `Text`
+                        )->a( n = `text` v = `My Text` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
 ```
+
+You are writing a UI5 XML view, one control per call. `z2ui5_cl_ui5_view_builder`
+has four verbs and no list of controls to look up — every UI5 control,
+property and aggregation is available because the builder never knew any of
+them by name:
+
+| | |
+| --- | --- |
+| `ele( )` | add a control and **descend** into it — for a container |
+| `tag( )` | add a control and **stay** — for a leaf |
+| `a( )` | set **one** attribute on the control the chain is pointing at |
+| `end( )` | ascend to the parent |
+
+The single rule: `a( )` applies to the control the chain currently points at,
+so attributes follow their control — and a control gets them *before* its
+first child. The root `mvc:View` and its `xmlns` declarations are written by
+hand, exactly as in a real UI5 view. A trailing `end( )` can be left out:
+`stringify( )` renders from the root wherever the chain stopped.
 
 ### Events
 Now add a button and react to its press event:
@@ -74,12 +101,21 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page( `abap2UI5 - Hello World`
-        )->text( `My Text`
-        )->button(
-          text  = `post`
-          press = client->_event( `POST` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                      )->tag( `Text`
+                          )->a( n = `text` v = `My Text`
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `post`
+                          )->a( n = `press` v = client->_event( `POST` ) ) ).
+
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `POST` ).
@@ -127,13 +163,23 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page( `abap2UI5 - Hello World`
-        )->text( `My Text`
-        )->button(
-          text  = `post`
-          press = client->_event( `POST` )
-        )->input( client->_bind( name ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                      )->tag( `Text`
+                          )->a( n = `text` v = `My Text`
+                      )->tag( `Input`
+                          )->a( n = `value` v = client->_bind( name )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `post`
+                          )->a( n = `press` v = client->_event( `POST` ) ) ).
+
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `POST` ).

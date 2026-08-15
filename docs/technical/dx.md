@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # ABAP Thinking, UI5 Results
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 _A Developer-Centric Approach_
 
 abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles common development challenges such as deployment, caching, debugging, and tooling. At the same time, it keeps a coding style close to familiar ABAP and SAP GUI patterns like Selection Screens and ALV. The goal: make working with abap2UI5 feel natural to ABAPers. This page looks closely at the main influences behind the framework.

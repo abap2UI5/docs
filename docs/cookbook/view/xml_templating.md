@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # XML Templating
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace — `template:repeat`, `template:if`, `template:then`, `template:else`, `template:with` — and expands them into plain XML *before* the control tree is created. abap2UI5 exposes these instructions through the fluent builder so you can drive the expansion from ABAP data.
 
 See the official UI5 references for the underlying mechanics:

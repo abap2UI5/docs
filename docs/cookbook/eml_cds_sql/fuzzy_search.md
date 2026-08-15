@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Fuzzy Search
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 On SAP HANA you can match strings tolerantly — typos, missing letters, transposed characters — with the `CONTAINS` SQL function in fuzzy mode. The score is a value between `0.0` (no match) and `1.0` (exact match); pass a threshold to `FUZZY( )` and HANA filters out rows below it.
 
 Wire it to a UI5 `search_field` in the table toolbar and you get an ALV-style search that forgives the user's typing.

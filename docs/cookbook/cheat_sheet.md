@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Cheat Sheet
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 A one-page recap of the rules that decide whether an abap2UI5 app works or misbehaves in a way that is hard to debug. Each row links to the recipe that explains it in full — read this page as a checklist, not as an introduction.
 
 | Rule | Why it matters |

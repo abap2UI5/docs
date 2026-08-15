@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Lock
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 In classic SAP GUI, a transaction like `VA02` calls `ENQUEUE_EVVBAK` and the lock lives as long as the dialog session. Web apps are different: each roundtrip is a fresh ABAP session by default, so a lock set in one roundtrip is gone by the next. Locking in abap2UI5 means picking a deliberate strategy for two questions:
 
 | Phase | Question |

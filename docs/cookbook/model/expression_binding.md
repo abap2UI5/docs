@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Expression Binding
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 Expression Binding lets you compute values directly in XML views with JavaScript-like expressions. This is especially handy in abap2UI5, since it cuts server roundtrips by moving calculations, logical conditions, and string operations to the frontend.
 
 The syntax `{= ... }` marks a UI5 expression binding. Inside the expression, you can use JavaScript operators (like `===` for strict equality or `Math.max`) and reference model properties with `$` followed by a binding path. Note: `===` is the JavaScript strict equality operator (not an ABAP operator) — UI5 needs it because these expressions evaluate in the browser.

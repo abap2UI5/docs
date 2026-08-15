@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Snippets
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 Copy-paste starting points for the most common app shapes. Each snippet is a complete, self-contained class — drop it in, activate it, and launch it by its name from the abap2UI5 landing page.
 
 ## Basic App Structure

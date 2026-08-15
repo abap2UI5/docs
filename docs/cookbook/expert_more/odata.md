@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # OData
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 By default, you bind public attributes of your class to UI5 properties with `_bind`. For cases where you need access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance with large amounts of data.
 
 #### Define Additional Model

@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Size Limit
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 Every UI5 JSON model has a built-in upper limit on the number of items it will expose to a list binding. By default this limit is `100`. If you bind a `ComboBox`, `Table` or any other aggregation to a table that contains more than 100 entries, only the first 100 are rendered — the rest are silently dropped. This is a UI5 design decision, documented under [`sap.ui.model.Model#setSizeLimit`](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.Model%23methods/setSizeLimit).
 
 abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.

@@ -3,6 +3,17 @@ outline: [2, 4]
 ---
 # Nested Views
 
+::: warning This page still shows the previous view builder
+The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
+it still runs, and your existing apps keep working — but it is no longer the
+one to write new code against. The current builder is
+`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
+method, which makes every UI5 control available rather than the curated set.
+
+See [View → Definition](/cookbook/view/definition) for what the chain looks
+like, and [Deprecations](/resources/deprecations) for the translation.
+:::
+
 A **nested view** in abap2UI5 is a separate XML view fragment that you inject into a *placeholder* inside another view. The main view stays on screen; only the nested fragment is rendered (and later re-rendered or refreshed) independently. This is the standard pattern for master-detail screens, side panels, tab content, and anywhere you want one part of the UI to update without rebuilding the whole page.
 
 If you know SAPUI5's [nested views](https://sapui5.hana.ondemand.com/sdk/#/topic/df8c9c3d6f2a4d728ba7d6f4cb6c6d35) (`<mvc:XMLView viewName="..."/>`), the goal is the same — split the UI into independently managed pieces. In abap2UI5 the wiring is done from ABAP at runtime: instead of referencing a static view file, you build the nested view's XML in ABAP and tell the client to plug it into a named slot.
