@@ -169,6 +169,7 @@ export default defineConfig({
                 ],
               },
               { text: "Action", link: "/cookbook/event_navigation/action" },
+              { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
               { text: "Navigation", link: "/cookbook/event_navigation/navigation" },
               { text: "Routing", link: "/cookbook/event_navigation/routing" },
               { text: "Exception", link: "/cookbook/event_navigation/exception" },
@@ -289,9 +290,7 @@ export default defineConfig({
                 text: "Obsolete",
                 collapsed: true,
                 items: [
-                  { text: "Custom Controls", link: "/cookbook/expert_more/custom_controls" },
-                  { text: "Custom JS", link: "/cookbook/expert_more/custom_js" },
-                  { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
+                  { text: "Deprecations", link: "/resources/deprecations" },
                 ],
               },
             ],
@@ -345,7 +344,7 @@ export default defineConfig({
         items: [
           { text: "Add-ons", link: "/advanced/addons" },
           { text: "Downporting", link: "/advanced/downporting" },
-          { text: "Renaming", link: "/advanced/renaming" },
+          { text: "Namespaces, Renaming", link: "/advanced/renaming" },
           { text: "Local Setup", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "HTTP Connector", link: "/advanced/http" },
