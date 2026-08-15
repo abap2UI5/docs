@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # XML Templating
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace — `template:repeat`, `template:if`, `template:then`, `template:else`, `template:with` — and expands them into plain XML *before* the control tree is created. abap2UI5 exposes these instructions through the fluent builder so you can drive the expansion from ABAP data.
 
 See the official UI5 references for the underlying mechanics:
@@ -113,21 +102,44 @@ This is the pattern used in `Z2UI5_CL_SMP_APP_173`: the switch fires `CHANGE_FLA
 
 ```abap
 " Main view: built once, stays on screen
-DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
-lo_view->shell( )->page( title = `Main View` id = `test` ... ).
-client->view_display( lo_view->stringify( ) ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-" Nested templated view: inserted into the main view by id
-DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-lo_view_nested->shell( )->page( `Nested View`
-  )->table( client->_bind( mt_data )
-  )->columns(
-    )->template_repeat( list = `{template>/MT_LAYOUT}` var = `L0`
-      )->column( ... ) " ...
+        )->ele( `Shell`
+            )->ele( `Page`
+                )->a( n = `title` v = `Main View`
+                )->a( n = `id`    v = `test` ).   " ...
 
-client->nest_view_display( val           = lo_view_nested->stringify( )
+client->view_display( view->stringify( ) ).
+
+" Nested templated view: inserted into the main view by id.
+" The template namespace has to be declared on the nested view's root.
+DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`          v = `sap.m`
+        )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1`
+
+        )->ele( `Shell`
+            )->ele( `Page`
+                )->a( n = `title` v = `Nested View`
+
+                )->ele( `Table`
+                    )->a( n = `items` v = client->_bind( mt_data )
+
+                    )->ele( `columns`
+                        )->ele( n = `repeat` ns = `template`
+                            )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                            )->a( n = `var`  v = `L0`
+
+                            )->ele( `Column` ).   " ...
+
+client->nest_view_display( val           = nested->stringify( )
                            id            = `test`
                            method_insert = `addContent` ).
+
 ```
 
 `nest_view_display` targets a control in the existing view by id (`test`) and appends/replaces the nested view there. To refresh the templated piece on a data change, call `nest_view_display` again from the event handler — the main view is left untouched.
