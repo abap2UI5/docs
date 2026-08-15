@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Barcode Scanning
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Barcode scanning is common in enterprise apps. With abap2UI5, you can:
 - Scan barcodes
 - Handle focus transitions
@@ -29,15 +18,20 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->barcode_scanner_button(
-                dialogtitle = `Barcode Scanner`
-                scansuccess = client->_event(
-                    val   = `SCAN_SUCCESS`
-                    t_arg = VALUE #(
-                        ( `${$parameters>/text}`   )
-                        ( `${$parameters>/format}` ) ) ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:ndc` v = `sap.ndc`
+
+            )->ele( `Page`
+                )->tag( n = `BarcodeScannerButton` ns = `ndc`
+                    )->a( n = `dialogTitle` v = `Barcode Scanner`
+                    )->a( n = `scanSuccess` v = client->_event(
+                                                   val   = `SCAN_SUCCESS`
+                                                   t_arg = VALUE #(
+                                                       ( `${$parameters>/text}`   )
+                                                       ( `${$parameters>/format}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -77,21 +71,29 @@ CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
-      page->simple_form(
-         )->content( ns = `form`
-         )->label( `One`
-         )->input(
-              id     = `id1`
-              value  = client->_bind( one )
-              submit = client->_event( `ONE_ENTER` )
-         )->label( `Two`
-         )->input(
-              id     = `id2`
-              value  = client->_bind( two )
-              submit = client->_event( `TWO_ENTER` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
 
-      client->view_display( page->stringify( ) ).
+              )->ele( `Page`
+                  )->ele( n = `SimpleForm` ns = `form`
+                      )->ele( n = `content` ns = `form`
+                          )->tag( `Label`
+                              )->a( n = `text` v = `One`
+                          )->tag( `Input`
+                              )->a( n = `id`     v = `id1`
+                              )->a( n = `value`  v = client->_bind( one )
+                              )->a( n = `submit` v = client->_event( `ONE_ENTER` )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Two`
+                          )->tag( `Input`
+                              )->a( n = `id`     v = `id2`
+                              )->a( n = `value`  v = client->_bind( two )
+                              )->a( n = `submit` v = client->_event( `TWO_ENTER` ) ).
+
+      client->view_display( view->stringify( ) ).
       RETURN.
     ENDIF.
 
@@ -126,17 +128,25 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(vbox) = view->page( )->vbox( ).
-      vbox->input( id          = `inputApp`
-                   value       = client->_bind( company_code )
-                   type        = `Number`
-                   placeholder = `Company Code`
-                   submit      = client->_event( `CHECK_INPUT` ) ).
-      vbox->button( text  = `check`
-                    press = client->_event( `CHECK_INPUT` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `VBox`
+                      )->tag( `Input`
+                          )->a( n = `id`          v = `inputApp`
+                          )->a( n = `value`       v = client->_bind( company_code )
+                          )->a( n = `type`        v = `Number`
+                          )->a( n = `placeholder` v = `Company Code`
+                          )->a( n = `submit`      v = client->_event( `CHECK_INPUT` )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `check`
+                          )->a( n = `press` v = client->_event( `CHECK_INPUT` ) ).
 
       client->view_display( view->stringify( ) ).
+
       RETURN.
     ENDIF.
 
@@ -148,7 +158,6 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
       ELSE.
         CLEAR company_code.
       ENDIF.
-      client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.
