@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Follow-up Action
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Sometimes, once your backend event handler has finished, you want to trigger an
 action that runs on the frontend — set the browser title, move focus, scroll,
 copy to the clipboard, and so on. `client->follow_up_action( )` schedules such a
@@ -149,15 +138,25 @@ The `_generic` method creates a custom XML/HTML element — here an HTML `<scrip
   METHOD z2ui5_if_app~main.
 
   IF client->check_on_init( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->_generic( name = `script` ns = `html`
-        )->_cc_plain_xml(
-          |function myFunction() \{ console.log( `Hello World` ); \}|
-        ).
-      view->page(
-        )->button( text  = `call custom JS`
-                   press = client->_event( `CUSTOM_JS` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+
+              " the script travels as the CONTENT of a core:HTML control - the
+              " builder re-escapes it on stringify, so the literal markup is
+              " written here
+              )->tag( n = `HTML` ns = `core`
+                  )->a( n = `content` v = |<script>function myFunction() \{ console.log( `Hello World` ); \}</script>|
+
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `call custom JS`
+                      )->a( n = `press` v = client->_event( `CUSTOM_JS` ) ).
+
       client->view_display( view->stringify( ) ).
+
   ENDIF.
 
   IF client->get( )-event = `CUSTOM_JS`.

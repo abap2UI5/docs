@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Value Help
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Value help (the classic ABAP **F4** input help) lets users pick a value from a list instead of typing it. abap2UI5 covers the basics with two built-in popups and lets you build anything custom on top.
 
 #### Suggestions on the Input
@@ -32,20 +21,40 @@ mt_countries = VALUE #( ( code = `DE` name = `Germany` )
                         ( code = `FR` name = `France`  )
                         ( code = `IT` name = `Italy`   ) ).
 
-client->view_display( z2ui5_cl_xml_view=>factory(
-    )->page(
-        )->input(
-            value             = client->_bind( mv_country )
-            showsuggestion    = abap_true
-            suggestionitems   = client->_bind( mt_countries )
-            )->suggestion_items(
-                )->list_item( text = `{CODE}` additionaltext = `{NAME}`
-    )->stringify( ) ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`      v = `sap.m`
+        )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:core` v = `sap.ui.core`
+
+        )->ele( `Page`
+            )->ele( `Input`
+                )->a( n = `value`           v = client->_bind( mv_country )
+                )->a( n = `suggestionItems` v = client->_bind( mt_countries )
+                )->a( n = `showSuggestion`  b = abap_true
+
+                )->ele( `suggestionItems`
+                    )->tag( n = `ListItem` ns = `core`
+                        )->a( n = `text`           v = `{CODE}`
+                        )->a( n = `additionalText` v = `{NAME}` ).
+
+client->view_display( view->stringify( ) ).
 ```
 
 #### Selection Popup
 
-For a *"pick from this list"* dialog use the built-in `Z2UI5_CL_POP_TO_SELECT`. Pass any internal table, navigate to it as a sub-app, and read the result on return:
+For a *"pick from this list"* dialog, navigate to a picker as a sub-app, pass
+any internal table, and read the result on return.
+
+::: warning The built-in popups are frozen
+`Z2UI5_CL_POP_TO_SELECT` and its siblings live in the framework's frozen
+`src/99/02` package: they still run, so existing apps keep working, but they
+are not maintained and are on the removal list. Their successor is the separate
+[popups addon](https://github.com/abap2UI5-addons/popups), which is where new
+code should get its picker from. The example below is written with the built-in
+one because that is what existing code contains.
+:::
+
 
 ```abap
 CLASS z2ui5_cl_sample_f4 DEFINITION PUBLIC.
@@ -62,21 +71,29 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        client->view_display( z2ui5_cl_xml_view=>factory(
-            )->page(
-                )->input(
-                    value            = client->_bind( mv_carrid )
-                    showvaluehelp    = abap_true
-                    valuehelprequest = client->_event( `F4` )
-            )->stringify( ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->tag( `Input`
+                        )->a( n = `value`            v = client->_bind( mv_carrid )
+                        )->a( n = `valueHelpRequest` v = client->_event( `F4` )
+                        )->a( n = `showValueHelp`    b = abap_true ).
+
+        client->view_display( view->stringify( ) ).
+
 
       WHEN client->check_on_event( `F4` ).
         SELECT carrid, carrname, url FROM scarr INTO TABLE @DATA(lt_carriers).
+        " abap2ui5lint-disable-next-line non-released-api -- frozen built-in picker, see the note above
         client->nav_app_call( z2ui5_cl_pop_to_select=>factory(
             i_tab   = lt_carriers
             i_title = `Choose airline` ) ).
 
       WHEN client->check_on_navigated( ).
+        " abap2ui5lint-disable-next-line non-released-api -- frozen built-in picker, see the note above
         DATA(lo_prev) = CAST z2ui5_cl_pop_to_select( client->get_app_prev( ) ).
         DATA(ls_res)  = lo_prev->result( ).
         IF ls_res-check_confirmed = abap_true.
