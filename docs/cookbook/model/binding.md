@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Binding
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 In abap2UI5 you share data between your ABAP code and the UI5 frontend with `client->_bind( )`. There is only one binding, and it works **in both directions**: when the value is changed in an editable control, the framework writes it back to your ABAP attribute before the next event handler runs. Only the paths the user actually edited are transported back (a delta), so read-only data costs nothing on the way back.
 
 #### Displaying Data
@@ -31,11 +20,20 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
-          )->text( `My Text`
-          )->text( client->_bind( name )
-      )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `My Text`
+                )->tag( `Text`
+                    )->a( n = `text` v = client->_bind( name ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -57,12 +55,24 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
-          )->text( `Enter your name`
-          )->input( client->_bind( name )
-          )->button( text = `post` press = client->_event( `POST` )
-      )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `Enter your name`
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( name )
+                )->tag( `Button`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event( `POST` ) ).
+
+    client->view_display( view->stringify( ) ).
+
 
     CASE client->get( )-event.
       WHEN `POST`.
