@@ -17,8 +17,8 @@ npm modules hide behind `node_modules`. The only thing that keeps objects apart
 is the name itself, which is why the whole framework — classes, interfaces,
 exception classes and DDIC tables — carries the same prefix.
 
-`Z2UI5_` is reserved for the framework and the objects it ships. Name your own
-apps in your own customer namespace (`Z…` / `Y…`), and never add an object to
+`Z2UI5_` is reserved for abap2UI5 and the projects of its ecosystem. Name your
+own apps in your own customer namespace (`Z…` / `Y…`), and never add an object to
 `Z2UI5_` yourself: the next upgrade may ship an object of that name, and abapGit
 will overwrite yours.
 
@@ -29,36 +29,65 @@ will overwrite yours.
 | Exception class | `z2ui5_cx_*` | `z2ui5_cx_ui5_util_error` |
 | DDIC table | `z2ui5_t_*` | `z2ui5_t_01` |
 
-#### Segments Inside the Namespace
-The part after `z2ui5_cl_` / `z2ui5_if_` says which layer an object belongs to.
-It is worth reading, because it tells you whether you are looking at something
-you may call, something internal, or something that only still ships for
-compatibility:
+#### The Second Segment
+A name has one more part than the prefix suggests:
+
+```
+z2ui5 _ cl _ ui5 _ http_handler
+  │      │     │       │
+  │      │     │       └── what it is
+  │      │     └────────── which project and layer it comes from
+  │      └──────────────── object type: cl, if, cx, t
+  └─────────────────────── the namespace
+```
+
+That middle segment is what does the real work. `Z2UI5_` is shared by the
+framework *and* every ecosystem project — samples, add-ons, control libraries all
+install under it, into the same system, from separate repositories. The prefix
+alone would let them collide; the segment is what keeps them apart.
+
+**Inside the framework installation:**
 
 | Segment | Meaning |
 |---|---|
-| `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_if_types`, `z2ui5_if_exit`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder` | **The public API.** Six objects, the stable contract for app developers |
-| `z2ui5_cl_ui5_*` | The framework engine and the shipped apps — internal, e.g. `z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start` |
-| `z2ui5_cl_ui5f_*` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
-| `z2ui5_cl_ajson*`, `z2ui5_if_ajson*` | [ajson](/technical/tools/ajson), mirrored from the upstream project under this namespace |
-| `z2ui5_cl_srt_*` | [S-RTTI](/technical/tools/srtti), mirrored the same way |
-| `z2ui5_cl_util*`, `z2ui5_cl_pop_*`, `z2ui5_cl_xml_view*`, `z2ui5_cl_http_handler` | Frozen legacy code — still ships, still works, no longer developed. See [Deprecations](/resources/deprecations) |
+| *(none)* — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_if_types`, `z2ui5_if_exit` | **The public API.** The four interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
+| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the two public classes `z2ui5_cl_ui5_http_handler` and `z2ui5_cl_ui5_view_builder` |
+| `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
+| `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
+| `util`, `pop`, `xml_view` | Frozen legacy code — still ships, still works, no longer developed. See [Deprecations](/resources/deprecations) |
 
-Only the first row is a contract. Everything else may be renamed or restructured
-in any release — the engine classes carried a `z2ui5_cl_core_*` segment not long
-ago, and the generated frontend artifacts a `z2ui5_cl_app_*` one.
+**Everything else that installs under `Z2UI5_`:**
+
+| Segment | Project |
+|---|---|
+| `smp` | [samples](https://github.com/abap2UI5/samples) — the sample catalog, `z2ui5_cl_smp_app_*` |
+| `smps` | [samples-stack](https://github.com/abap2UI5/samples-stack) — full-stack samples |
+| `smpc` | [samples-controls](https://github.com/abap2UI5/samples-controls) — control samples |
+| `popup` | [popups](https://github.com/abap2UI5-addons/popups) — the popups [add-on](/advanced/addons) |
+| `cci` | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) — the custom control library |
+
+The two tables share one rule and one exception. The rule: an object's segment
+tells you which repository it was pulled from. The exception: frozen code keeps
+the segment it was born with, so a repository's `src/99` can hold a segment that
+is no longer issued — the popups add-on ships as `z2ui5_cl_popup_*` today, and
+its `src/99` still carries the `pop` and `demo` names it started with, just as
+the framework's own `src/99` does.
+
+Only the public API is a contract. Every other segment may be restructured in any
+release — the engine classes carried a `z2ui5_cl_core_*` segment not long ago,
+and the generated frontend artifacts a `z2ui5_cl_app_*` one.
 
 ::: tip Enforced, not just documented
-A CI gate (`check_object_naming`) fails the build when an object outside the
-public API and the frozen package is added without the `ui5` / `ui5f` segment.
-abaplint's own naming rule only checks the `Z2UI5_` prefix, so without that gate
-a new segment would drift in unnoticed.
+A CI gate (`check_object_naming`) fails the framework build when an object
+outside the public API and the frozen package is added without the `ui5` / `ui5f`
+segment. abaplint's own naming rule only checks the `Z2UI5_` prefix, so without
+that gate a new segment would drift in unnoticed.
 :::
 
 #### Package Layout
 The prefix is flat, the packages are not. abapGit is configured with
-`FOLDER_LOGIC=PREFIX`, so the folders in the repository become the package
-hierarchy in your system:
+`FOLDER_LOGIC=PREFIX`, so the folders of a repository become the package
+hierarchy in your system. For the framework repository that is:
 
 | Package | Contents |
 |---|---|
