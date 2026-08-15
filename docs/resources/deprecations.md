@@ -227,8 +227,23 @@ client->follow_up_action( val   = client->cs_event-control_by_id
                           t_arg = VALUE #( ( `navcon` ) ( `to` ) ( `page2` ) ) ).
 ```
 
-`cs_event-z2ui5` is **not** deprecated — it is the supported way to call your own
-JavaScript functions, see [Custom JS](/cookbook/expert_more/custom_js).
+`cs_event-z2ui5` sits in the same obsolete group. It calls a function you
+registered as a `z2ui5.*` global; passing the expression straight to
+`follow_up_action( )` is the same call without the indirection:
+
+```abap
+" old
+client->follow_up_action( val   = client->cs_event-z2ui5
+                          t_arg = VALUE #( ( `myFunction` ) ) ).
+
+" new
+client->follow_up_action( `myFunction()` ).
+```
+
+It still works and is still dispatched. Note that both forms ship hand-written
+JavaScript from the backend to the browser — read
+[Raw JavaScript](/cookbook/expert_more/follow_up_action#raw-javascript) before
+using either.
 
 ### `z2ui5_cl_xml_view` → `z2ui5_cl_ui5_view_builder`
 
@@ -310,10 +325,11 @@ away from today. Several pages of this documentation still use them
 [Spreadsheet](/cookbook/device_capabilities/spreadsheet)).
 :::
 
-### Invisible custom controls → frontend events
+### Invisible custom controls
 
-Eight invisible helper controls were replaced by frontend events that need no
-control in the view at all:
+Earlier versions of abap2UI5 needed an invisible helper control in the view for
+every common browser interaction. Each one is a frontend event now, called from
+ABAP with no control in the view at all:
 
 | Control | Replacement |
 |---|---|
@@ -321,12 +337,27 @@ control in the view at all:
 | `Focus` | `cs_event-set_focus` — [Focus](/cookbook/browser_interaction/focus) |
 | `Scrolling` | `cs_event-scroll_to` / `scroll_into_view` — [Scrolling](/cookbook/browser_interaction/scrolling) |
 | `Title` | `cs_event-set_title` — [Title](/cookbook/browser_interaction/title) |
+| `LPTitle` | `cs_event-set_title_launchpad` — [Title](/cookbook/browser_interaction/title) |
 | `Favicon` | `cs_event-set_favicon` |
-| `LPTitle` | `cs_event-set_title_launchpad` |
-| `Info` | `client->get( )-s_device` / `-s_ui5` — [Device Info](/cookbook/device_capabilities/info) |
+| `SoftKeyboard` | `cs_event-keyboard_set_mode` — [Soft Keyboard](/cookbook/browser_interaction/soft_keyboard) |
+| `Info` | `client->get( )-s_device` / `-s_ui5` / `-s_focus` / `-s_scroll` — [Device Info](/cookbook/device_capabilities/info) |
 | `History` | `client->set_push_state( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
 
-The controls still ship and views that use them keep rendering.
+The pattern is the same for all of them — drop the control from the view and
+call the event after your event handler:
+
+```abap
+" old - an invisible control in the view carried the title
+view->_generic( name = `Title` ns = `z2ui5` )->_cc_plain_xml( `Invoice 4711` ).
+
+" new - no control, one call
+client->follow_up_action( val   = client->cs_event-set_title
+                          t_arg = VALUE #( ( `Invoice 4711` ) ) ).
+```
+
+The controls still ship and views that use them keep rendering. See
+[Follow-up Action](/cookbook/expert_more/follow_up_action) for the full argument
+list of each event.
 
 ### `z2ui5.Util` → `z2ui5.Formatter`
 

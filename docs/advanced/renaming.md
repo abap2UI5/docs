@@ -132,7 +132,7 @@ object at all:
 | Module IDs | `z2ui5/core/Server`, `z2ui5/model/formatter` |
 | Globals | `z2ui5.Formatter`, `z2ui5.Util` |
 | Custom control XML namespace | `xmlns:z2ui5="z2ui5.cc"` → `z2ui5/cc/<Name>` |
-| The event constant | `cs_event-z2ui5` for [Custom JS](/cookbook/expert_more/custom_js) |
+| The event constant | `cs_event-z2ui5`, which calls a `z2ui5.*` global — see [Raw JavaScript](/cookbook/expert_more/follow_up_action#raw-javascript) |
 | Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
 
 Renaming the ABAP side does not touch any of these — they stay `z2ui5` in every
