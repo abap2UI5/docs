@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Logout
 
-A logout button isn't a single action. Depending on how an abap2UI5 app was started, the user may have one, two, or three SAP sessions open at the same time, and each lives in a different place. abap2UI5 ships a built-in client event, `system_logout`, that terminates whichever sessions exist for the current app. See sample `Z2UI5_CL_DEMO_APP_361` for a working example.
+A logout button isn't a single action. Depending on how an abap2UI5 app was started, the user may have one, two, or three SAP sessions open at the same time, and each lives in a different place. abap2UI5 ships a built-in client event, `system_logout`, that terminates whichever sessions exist for the current app. See sample `Z2UI5_CL_SMP_APP_361` for a working example.
 
 ### The Logout Event
 Fire the event from any controller method to log the user off:

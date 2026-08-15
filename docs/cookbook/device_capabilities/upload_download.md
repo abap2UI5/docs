@@ -39,7 +39,7 @@ ENDCLASS.
 ```
 
 #### Download
-See also `Z2UI5_CL_DEMO_APP_186`:
+See also `Z2UI5_CL_SMP_APP_186`:
 ```abap
   METHOD z2ui5_if_app~main.
 

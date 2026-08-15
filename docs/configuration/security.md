@@ -28,7 +28,7 @@ To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default
 The default **does** contain `'unsafe-eval'`: the ui5loader of OpenUI5 `1.71` — the oldest supported release — still evaluates module source as a string, and without `'unsafe-eval'` a `1.71` bootstrap fails with a CSP `EvalError`. Modern UI5 releases load all modules without `eval()`, so if you pin a modern release you can tighten the policy — see [Hardening: Dropping `'unsafe-eval'`](#hardening-dropping-unsafe-eval) below.
 
 #### Default CSP
-By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_exit`):
+By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`):
 ```xml
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
     ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com

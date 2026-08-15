@@ -134,7 +134,7 @@ The class below combines the Currency and Digit Sequence patterns in one app and
 
 ```abap
 
-CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -145,7 +145,7 @@ CLASS z2ui5_cl_demo_app_067 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_067 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -269,4 +269,4 @@ ENDCLASS.
 
 ```
 
-For a full runnable copy, see the sample implementation in class `Z2UI5_CL_DEMO_APP_067` in the [samples repository](https://github.com/abap2UI5/samples).
+For a full runnable copy, see the sample implementation in class `Z2UI5_CL_SMP_APP_067` in the [samples repository](https://github.com/abap2UI5/samples).

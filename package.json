@@ -1,4 +1,16 @@
 {
+  "name": "abap2ui5-docs",
+  "private": true,
+  "description": "Documentation site for abap2UI5 (VitePress).",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abap2UI5/docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abap2UI5/docs/issues"
+  },
+  "homepage": "https://github.com/abap2UI5/docs#readme",
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",

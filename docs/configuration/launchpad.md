@@ -19,7 +19,7 @@ Use these parameters for target mapping in your Launchpad configuration. abap2UI
 
 ### Launchpad Features
 
-Inside your app, the client API gives you access to the Launchpad context. Runnable samples: `Z2UI5_CL_DEMO_APP_LP_01` to `Z2UI5_CL_DEMO_APP_LP_04` in the [samples repository](https://github.com/abap2UI5/samples).
+Inside your app, the client API gives you access to the Launchpad context. Runnable samples: `Z2UI5_CL_SMPS_APP_481` to `Z2UI5_CL_SMPS_APP_484` in the [samples-stack repository](https://github.com/abap2UI5/samples-stack) (package `src/09`).
 
 #### Detect the Launchpad Context
 `client->get( )-check_launchpad_active` tells you whether the app currently runs inside a Launchpad — useful to hide your own page header or to guard Launchpad-only features:

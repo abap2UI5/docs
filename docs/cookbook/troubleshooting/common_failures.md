@@ -28,7 +28,7 @@ Where to look:
 - **Symptom is identical to a binding-path mismatch.** The browser console shows the same `Binding "/path/..." was not found in model` warning, because the path was never populated on the wire.
 - **Check the visibility of the attribute** in the class definition before re-reading the XML. Helper variables that never appear in a `_bind( )` call can stay private; anything you bind must move to `PUBLIC SECTION`.
 
-See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding#bound-attributes-must-be-public).
+See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
 
 ## Type Coercion Without an Explicit UI5 Type
 
