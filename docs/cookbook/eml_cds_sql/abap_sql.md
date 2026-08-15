@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # ABAP SQL
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 ABAP SQL is the standard way to read and change data in the database directly from ABAP. In an abap2UI5 controller you can issue `SELECT`, `INSERT`, `UPDATE`, `DELETE`, and `MODIFY` statements the same way as in any ABAP program, and bind the result straight to a UI5 view.
 
 ### Read Data
@@ -39,20 +28,47 @@ CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
         INTO TABLE @mt_flights
         UP TO 50 ROWS.
 
-      DATA(view)  = z2ui5_cl_xml_view=>factory( )->shell( )->page( ).
-      DATA(table) = view->table( client->_bind( mt_flights ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      table->columns(
-           )->column( )->text( `Carrier` )->get_parent(
-           )->column( )->text( `Connection` )->get_parent(
-           )->column( )->text( `Date` )->get_parent(
-           )->column( )->text( `Price` ).
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->ele( `Table`
+                          )->a( n = `items` v = client->_bind( mt_flights )
 
-      table->items( )->column_list_item( )->cells(
-         )->text( `{CARRID}`
-         )->text( `{CONNID}`
-         )->text( `{FLDATE}`
-         )->text( `{PRICE} {CURRENCY}` ).
+                          )->ele( `columns`
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Carrier`
+                              )->end(
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Connection`
+                              )->end(
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Date`
+                              )->end(
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Price`
+                              )->end(
+
+                          )->end(
+
+                          )->ele( `items`
+                              )->ele( `ColumnListItem`
+                                  )->ele( `cells`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{CARRID}`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{CONNID}`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{FLDATE}`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{PRICE} {CURRENCY}` ).
 
       client->view_display( view->stringify( ) ).
 

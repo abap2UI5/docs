@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Fuzzy Search
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 On SAP HANA you can match strings tolerantly — typos, missing letters, transposed characters — with the `CONTAINS` SQL function in fuzzy mode. The score is a value between `0.0` (no match) and `1.0` (exact match); pass a threshold to `FUZZY( )` and HANA filters out rows below it.
 
 Wire it to a UI5 `search_field` in the table toolbar and you get an ALV-style search that forgives the user's typing.
@@ -68,23 +57,58 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
 
   METHOD render.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( `Customers` ).
-    DATA(tab)  = view->table( client->_bind( mt_customers ) growing = abap_true ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    tab->header_toolbar( )->overflow_toolbar(
-        )->title( `Customer List`
-        )->toolbar_spacer( )
-        )->search_field(
-            value       = client->_bind( mv_search )
-            width       = `20rem`
-            placeholder = `try a misspelled name…`
-            search      = client->_event( `SEARCH` ) ).
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title` v = `Customers`
 
-    tab->columns( )->column( )->text( `Customer` )->get_parent(
-                  )->column( )->text( `Name` )->get_parent(
-                  )->column( )->text( `City` ).
-    tab->items( )->column_list_item( )->cells(
-       )->text( `{KUNNR}` )->text( `{NAME1}` )->text( `{ORT01}` ).
+                    )->ele( `Table`
+                        )->a( n = `items`   v = client->_bind( mt_customers )
+                        )->a( n = `growing` b = abap_true
+
+                        )->ele( `headerToolbar`
+                            )->ele( `OverflowToolbar`
+                                )->tag( `Title`
+                                    )->a( n = `text` v = `Customer List`
+                                )->tag( `ToolbarSpacer`
+                                )->tag( `SearchField`
+                                    )->a( n = `value`       v = client->_bind( mv_search )
+                                    )->a( n = `width`       v = `20rem`
+                                    )->a( n = `placeholder` v = `try a misspelled name…`
+                                    )->a( n = `search`      v = client->_event( `SEARCH` )
+
+                        )->end(
+                        )->end(
+
+                        )->ele( `columns`
+                            )->ele( `Column`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `Customer`
+                            )->end(
+                            )->ele( `Column`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `Name`
+                            )->end(
+                            )->ele( `Column`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `City`
+                            )->end(
+
+                        )->end(
+
+                        )->ele( `items`
+                            )->ele( `ColumnListItem`
+                                )->ele( `cells`
+                                    )->tag( `Text`
+                                        )->a( n = `text` v = `{KUNNR}`
+                                    )->tag( `Text`
+                                        )->a( n = `text` v = `{NAME1}`
+                                    )->tag( `Text`
+                                        )->a( n = `text` v = `{ORT01}` ).
 
     client->view_display( view->stringify( ) ).
 
