@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Backend
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 UI5 control properties can both display data and fire events. To run backend logic when an event fires, use the `client->_event` method.
 
 ## Basic
@@ -22,11 +11,17 @@ As an example, we use the `press` property of a button. To fire events to the ba
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button(
-            text  = `post`
-            press = client->_event( `BUTTON_POST` )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event( `BUTTON_POST` ) ).
+
+    client->view_display( view->stringify( ) ).
 
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
@@ -49,12 +44,20 @@ Send properties of the event source control to the backend. The syntax `${$sourc
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` press = client->_event(
-            val = `BUTTON_POST`
-            "reads button text → result: "post"
-            t_arg = VALUE #( ( `${$source>/text}` ) ) )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event(
+                                          val   = `BUTTON_POST`
+                                          " reads the button text → result: "post"
+                                          t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+
+    client->view_display( view->stringify( ) ).
 
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
@@ -69,12 +72,21 @@ Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` par
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` id = `button_id` press = client->_event(
-            val = `BUTTON_POST`
-            "reads event parameter 'id' → result: "mainView--button_id"
-            t_arg = VALUE #( ( `${$parameters>/id}` ) ) )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `id`    v = `button_id`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event(
+                                          val   = `BUTTON_POST`
+                                          " reads the event parameter 'id' → result: "mainView--button_id"
+                                          t_arg = VALUE #( ( `${$parameters>/id}` ) ) ) ).
+
+    client->view_display( view->stringify( ) ).
 
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
@@ -89,12 +101,20 @@ Read specific properties of the event object. The syntax `$event>sId` reads the 
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button( text = `post` press = client->_event(
-            val = `BUTTON_POST`
-            "reads event object attribute → result: "press"
-            t_arg = VALUE #( ( `$event>sId` ) ) )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event(
+                                          val   = `BUTTON_POST`
+                                          " reads an event-object attribute → result: "press"
+                                          t_arg = VALUE #( ( `$event>sId` ) ) ) ).
+
+    client->view_display( view->stringify( ) ).
 
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
@@ -121,12 +141,21 @@ ENDCLASS.
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-         )->input( client->_bind( name )
-        )->button( text = `post` press = client->_event(
-            val   = `BUTTON_POST`
-            t_arg = VALUE #( ( `$` && client->_bind( name ) ) ) )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( name )
+                )->tag( `Button`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event(
+                                          val   = `BUTTON_POST`
+                                          t_arg = VALUE #( ( `$` && client->_bind( name ) ) ) ) ).
+
+    client->view_display( view->stringify( ) ).
 
     CASE client->get( )-event.
         WHEN `BUTTON_POST`.
