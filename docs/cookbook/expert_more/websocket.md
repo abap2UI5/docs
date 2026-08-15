@@ -26,7 +26,7 @@ DATA(lo_producer) = cl_amc_channel_manager=>create_message_producer(
 lo_producer->send( i_message = `New order arrived` ).
 ```
 
-A full reference implementation lives in the samples repo — `Z2UI5_CL_DEMO_APP_S_05_WS` for the APC handler and `Z2UI5_CL_DEMO_APP_S_05` for the consuming app.
+A full reference implementation lives in the [samples-stack repository](https://github.com/abap2UI5/samples-stack) — `Z2UI5_CL_SMPS_APP_489_WS` for the APC handler and `Z2UI5_CL_SMPS_APP_489` for the consuming app.
 
 #### Client Side
 

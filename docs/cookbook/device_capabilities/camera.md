@@ -5,9 +5,9 @@ outline: [2, 4]
 
 abap2UI5 offers a custom control for taking photos directly from the device's camera. The control returns the image as a base64-encoded string, ready for backend processing.
 
-A minimal example based on sample `Z2UI5_CL_DEMO_APP_306`:
+A minimal example based on sample `Z2UI5_CL_SMP_APP_306`:
 ```abap
-CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
+CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -15,7 +15,7 @@ CLASS z2ui5_cl_demo_app_306 DEFINITION PUBLIC.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_306 IMPLEMENTATION.
+CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).

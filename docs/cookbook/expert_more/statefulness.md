@@ -31,7 +31,7 @@ Release it explicitly on exit:
 client->set_session_stateful( abap_false ).
 ```
 
-See `Z2UI5_CL_DEMO_APP_S_01` (sticky session with locks) and `Z2UI5_CL_DEMO_APP_S_02` (sticky session) for complete examples.
+See `Z2UI5_CL_SMPS_APP_485` (sticky session with locks) and `Z2UI5_CL_SMPS_APP_486` (sticky session) in the [samples-stack repository](https://github.com/abap2UI5/samples-stack) for complete examples.
 
 #### When to Use It
 Stateful sessions are useful when:

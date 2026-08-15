@@ -61,7 +61,7 @@ Notes on the snippet:
 - `{= '{' + ${L1>FNAME} + '}' }` is an [expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0) that **constructs another binding string at templating time**. With `L1>FNAME = NAME` it expands to `text="{NAME}"`, which becomes a normal runtime binding against the row of `mt_data`. This is the standard pattern for templated tables: outer loop builds the columns, inner loop builds the cells, expression binding wires each cell to the right field of the row.
 - `template_repeat` accepts the same optional attributes as the UI5 instruction (`startIndex`, `length`) plus list-binding extras like sorters and filters.
 
-The full sample is `Z2UI5_CL_DEMO_APP_173`.
+The full sample is `Z2UI5_CL_SMP_APP_173`.
 
 #### `template:if` / `template:then` / `template:else` — Conditionals
 
@@ -96,9 +96,9 @@ CASE client->get( )-event.
 ENDCASE.
 ```
 
-This is the pattern used in `Z2UI5_CL_DEMO_APP_173`: the switch fires `CHANGE_FLAG`, `view_display` runs, the new value of `mv_flag` flows through `template:if`, and the icon swaps.
+This is the pattern used in `Z2UI5_CL_SMP_APP_173`: the switch fires `CHANGE_FLAG`, `view_display` runs, the new value of `mv_flag` flows through `template:if`, and the icon swaps.
 
-**Rebuild only the templated fragment** — keeps a stable shell on screen and replaces a nested piece. `Z2UI5_CL_DEMO_APP_176` separates the main view from the templated table:
+**Rebuild only the templated fragment** — keeps a stable shell on screen and replaces a nested piece. `Z2UI5_CL_SMP_APP_176` separates the main view from the templated table:
 
 ```abap
 " Main view: built once, stays on screen
@@ -141,4 +141,4 @@ Plain ABAP control flow covers most cases and is easier to debug. Reach for `tem
 - Use expression binding (`{= ... }`) when the value you need is a binding string itself. Templating-time expressions can read `${var>...}` and concatenate strings, which is how dynamic cell bindings are assembled.
 - If a templated control does not update after a data change, you forgot to rebuild — call `view_display` or `nest_view_display` again.
 
-See `Z2UI5_CL_DEMO_APP_173` for `template:repeat` + `template:if` in a single view and `Z2UI5_CL_DEMO_APP_176` for the stable-shell / templated-nested-view pattern.
+See `Z2UI5_CL_SMP_APP_173` for `template:repeat` + `template:if` in a single view and `Z2UI5_CL_SMP_APP_176` for the stable-shell / templated-nested-view pattern.

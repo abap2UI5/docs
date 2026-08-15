@@ -117,4 +117,4 @@ client->follow_up_action(
 Raise the limit only as high as you actually need. Large bindings increase memory consumption on the frontend and slow down rendering. For very large datasets, prefer a server-side pattern (OData with `growing`, paging, filtering) instead of pushing everything into the model.
 :::
 
-For a runnable sample, see `Z2UI5_CL_DEMO_APP_071` in the [samples repository](https://github.com/abap2UI5/samples).
+For a runnable sample, see `Z2UI5_CL_SMP_APP_071` in the [samples repository](https://github.com/abap2UI5/samples).

@@ -47,7 +47,7 @@ ENDCASE.
 
 What happens at runtime: `view_display` paints the main view; the page with `id="test"` sits on screen. When the user clicks the button, `nest_view_display` ships the nested XML to the client, which calls `addContent( ... )` on the control with that id. The nested fragment appears inside the page — without re-rendering the page itself.
 
-The full pattern (re-render everything vs. main only vs. nested only) is in `Z2UI5_CL_DEMO_APP_065`.
+The full pattern (re-render everything vs. main only vs. nested only) is in `Z2UI5_CL_SMP_APP_065`.
 
 #### `nest_view_display` Parameters
 
@@ -87,7 +87,7 @@ A rule of thumb:
 - **Layout changed** (different controls, new columns, new sections) → `view_display` / `nest_view_display`.
 - **Only the data changed** (a flag flipped, a row added to a bound table) → `view_model_update`.
 
-`Z2UI5_CL_DEMO_APP_065` shows the difference between the three options in a single screen with one button per call.
+`Z2UI5_CL_SMP_APP_065` shows the difference between the three options in a single screen with one button per call.
 
 #### Master-Detail with `FlexibleColumnLayout`
 
@@ -133,7 +133,7 @@ The layout is bound editable (`mv_layout`), so events like *full-screen mode* or
 
 End-to-end samples:
 
-- `Z2UI5_CL_DEMO_APP_097` — list master, `sap.ui.table.Table` in the detail with sort/filter/row actions.
+- `Z2UI5_CL_SMP_APP_097` — list master, `sap.ui.table.Table` in the detail with sort/filter/row actions.
 - `Z2UI5_CL_DEMO_APP_085` — full master-detail with an `ObjectPageLayout` as the nested detail, including search, sort, and the FCL fullscreen toggle.
 
 #### Refreshing After Data Changes
@@ -167,7 +167,7 @@ METHOD view_display_detail_detail.
 ENDMETHOD.
 ```
 
-`nest2_view_display` works exactly like `nest_view_display` but targets the second level — typically the FCL's *end* column. `Z2UI5_CL_DEMO_APP_098` walks through all three columns: a list selects a row, a row-action navigates to the end column, the layout switches to `ThreeColumnsEndExpanded`.
+`nest2_view_display` works exactly like `nest_view_display` but targets the second level — typically the FCL's *end* column. `Z2UI5_CL_SMP_APP_098` walks through all three columns: a list selects a row, a row-action navigates to the end column, the layout switches to `ThreeColumnsEndExpanded`.
 
 #### When to Use Nested Views (and When Not To)
 
@@ -187,6 +187,6 @@ Plain composition is the right starting point: keep helper methods that take a p
 - Always provide `method_destroy` when a nested slot will be replaced more than once. Forgetting it causes nested fragments to accumulate.
 - Build the nested view in its own method (e.g. `view_display_detail`) and call it both from the initial render and from event handlers. Two call sites, one definition.
 - If a nested view does not pick up a data change, you probably need `view_model_update( )`; if a control simply isn't there, you need `nest_view_display( )` again.
-- For very large apps, look at `Z2UI5_CL_DEMO_APP_104`, which loads each detail screen from a separate `z2ui5_if_app` class and renders it into the nested slot. It is an advanced pattern — start with the simpler form first.
+- For very large apps, look at `Z2UI5_CL_SMP_APP_104`, which loads each detail screen from a separate `z2ui5_if_app` class and renders it into the nested slot. It is an advanced pattern — start with the simpler form first.
 
-See `Z2UI5_CL_DEMO_APP_065`, `Z2UI5_CL_DEMO_APP_085`, `Z2UI5_CL_DEMO_APP_097`, `Z2UI5_CL_DEMO_APP_098`, and `Z2UI5_CL_DEMO_APP_104` for runnable examples covering every variation above.
+See `Z2UI5_CL_SMP_APP_065`, `Z2UI5_CL_DEMO_APP_085`, `Z2UI5_CL_SMP_APP_097`, `Z2UI5_CL_SMP_APP_098`, and `Z2UI5_CL_SMP_APP_104` for runnable examples covering every variation above.
