@@ -190,10 +190,10 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
                             )->tag( `Text`
                                 )->a( n = `text` v = `{PRODUCT}`
                             )->tag( `Text`
-                                " abap2ui5lint-disable-next-line unknown-binding-path -- the linter does not resolve a nested BEGIN OF inside a row type; the path is correct
+                                " abap2ui5lint-disable-next-line unknown-binding-path -- linter defect, fixed in @abap2ui5/linter 0.2.0: a nested BEGIN OF inside a row type was dropped. Delete this line with the pin bump; the path is correct
                                 )->a( n = `text` v = `{S_DETAILS/CREATE_DATE}`
                             )->tag( `Text`
-                                " abap2ui5lint-disable-next-line unknown-binding-path -- same
+                                " abap2ui5lint-disable-next-line unknown-binding-path -- same, and it goes with the same pin bump
                                 )->a( n = `text` v = `{S_DETAILS/CREATE_BY}` ).
 
     client->view_display( view->stringify( ) ).
