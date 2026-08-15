@@ -57,6 +57,7 @@ const walk = (dir) =>
 const NEEDS_A_SYSTEM = /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENTITIES\b|TABLE\s+FOR\s+(READ|CREATE|UPDATE)\b|\bFUZZY\b|CONTAINS\s*\(/i;
 
 const skipped = [];
+const unmigrated = [];
 
 /** Every fenced abap block that is a whole class. */
 function examples() {
@@ -68,6 +69,17 @@ function examples() {
       const code = m[1];
       if (!/CLASS\s+\S+\s+DEFINITION/i.test(code)) continue;
       if (!/CLASS\s+\S+\s+IMPLEMENTATION/i.test(code)) continue;
+      /* An example built on the FROZEN builder. Scope alone would let it
+       * through - this check only picks up classes naming the current builder,
+       * so a page that was never migrated is invisible to it rather than
+       * failing it. That is how app_state_share.md kept a `z2ui5_cl_xml_view`
+       * chain through a migration that touched every other page. A page
+       * carrying the banner is declaring itself unmigrated and is exempt; a
+       * page without one is claiming to be done. */
+      if (/z2ui5_cl_xml_view\s*=>/i.test(code) && !pending) {
+        unmigrated.push(file.slice(ROOT.length + 1));
+        continue;
+      }
       if (!/z2ui5_cl_ui5_view_builder/i.test(code)) continue;
       /* A class whose ABAP needs artefacts this check cannot clone. abaplint
        * parses against the framework and the released API mirror, and neither
@@ -100,10 +112,100 @@ const sidecar = (name) => `<?xml version="1.0" encoding="utf-8"?>
  </asx:abap>
 </abapGit>`;
 
+/* DDIC fixtures. An example may read and write a Z table that the READER
+ * creates: lock.md's soft lock is a row in a custom table, and the page prints
+ * its schema field by field for exactly that reason. abaplint cannot clone a
+ * table that exists only in the reader's system, and the alternative - putting
+ * the whole example out of scope - would leave its view chain unchecked for
+ * the sake of four DDIC fields. So the schema the PAGE documents is
+ * materialized here and the example is compiled in full.
+ *
+ * A fixture is therefore a claim about a page, and `matchesItsPage` holds it
+ * to one: every field and type below has to appear on the page, on one line,
+ * the way the page prints its schema. Change the table on the page and this
+ * fails until the fixture follows. */
+const DDIC = [
+  {
+    name: 'z2ui5_sample_01',
+    text: 'soft lock (documentation example)',
+    page: 'docs/cookbook/expert_more/lock.md',
+    fields: [
+      ['MANDT', 'MANDT', true],
+      ['VBELN', 'VBELN_VA', true],
+      ['USERNAME', 'SYUNAME', false],
+      ['LOCKED_AT', 'TIMESTAMPL', false],
+    ],
+  },
+];
+
+const tabl = ({ name, text, fields }) => `<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>${name.toUpperCase()}</TABNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <TABCLASS>TRANSP</TABCLASS>
+    <CLIDEP>X</CLIDEP>
+    <DDTEXT>${text}</DDTEXT>
+    <MASTERLANG>E</MASTERLANG>
+    <CONTFLAG>A</CONTFLAG>
+    <EXCLASS>1</EXCLASS>
+   </DD02V>
+   <DD09L>
+    <TABNAME>${name.toUpperCase()}</TABNAME>
+    <AS4LOCAL>A</AS4LOCAL>
+    <TABKAT>0</TABKAT>
+    <TABART>APPL0</TABART>
+    <BUFALLOW>N</BUFALLOW>
+   </DD09L>
+   <DD03P_TABLE>
+${fields.map(([field, type, key]) => `    <DD03P>
+     <FIELDNAME>${field}</FIELDNAME>${key ? '\n     <KEYFLAG>X</KEYFLAG>' : ''}
+     <ROLLNAME>${type}</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <NOTNULL>X</NOTNULL>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>`).join('\n')}
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>`;
+
+/** The page has to still print the schema this fixture supplies. */
+function matchesItsPage({ name, page, fields }) {
+  const md = readFileSync(join(ROOT, page), 'utf8');
+  if (!md.toLowerCase().includes(name)) return `${page} no longer mentions ${name}`;
+  const missing = fields
+    .filter(([field, type]) => !md.split('\n').some((l) => l.includes(field) && l.includes(type)))
+    .map(([field, type]) => `${field} ${type}`);
+  return missing.length ? `${page} no longer documents ${name}: ${missing.join(', ')}` : null;
+}
+
+const drifted = DDIC.map(matchesItsPage).filter(Boolean);
+if (drifted.length) {
+  console.error('check-examples: a DDIC fixture no longer matches the page it stands in for:\n');
+  for (const d of drifted) console.error(`  - ${d}`);
+  console.error('\nThe fixture exists so the example compiles against the schema the page');
+  console.error('prints. Update the fixture in this script, or the schema on the page.');
+  process.exit(1);
+}
+
 const all = examples();
 const pending = all.filter((e) => e.pending);
 const found = all.filter((e) => !e.pending);
 const pendingPages = new Set(pending.map((e) => e.file));
+if (unmigrated.length) {
+  const pages = [...new Set(unmigrated)];
+  console.error(
+    `check-examples: ${unmigrated.length} example(s) on ${pages.length} page(s) still build their view with`,
+  );
+  console.error('z2ui5_cl_xml_view, which is frozen, while the page carries no banner saying so:\n');
+  for (const page of pages) console.error(`  - ${page}`);
+  console.error('\nMigrate the example to z2ui5_cl_ui5_view_builder — that is what puts it under');
+  console.error('this gate. A page that cannot be migrated yet says so with the banner.');
+  process.exit(1);
+}
 if (found.length === 0) {
   console.error('check-examples: no view-building class example found — has the fence language or the builder name changed?');
   process.exit(1);
@@ -112,6 +214,8 @@ if (found.length === 0) {
 const dir = mkdtempSync(join(os.tmpdir(), 'a2ui5-docs-'));
 mkdirSync(join(dir, 'src'));
 const origin = new Map();
+
+for (const fixture of DDIC) writeFileSync(join(dir, 'src', `${fixture.name}.tabl.xml`), tabl(fixture));
 
 found.forEach((ex, i) => {
   const name = `zcl_docs_example_${String(i + 1).padStart(2, '0')}`;

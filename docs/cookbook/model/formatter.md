@@ -161,6 +161,11 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN |BACK|.
         client->nav_app_leave( client->get_app( client->get( )-s_draft-id_prev_app_stack ) ).
+      WHEN |BUTTON|.
+        " the roundtrip is the point of this button: the edited values travel
+        " to the server and come back, and every formatter above renders them
+        " again from the model
+        client->message_toast_display( |Amount { amount }, currency { currency }| ).
     ENDCASE.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(

@@ -176,7 +176,7 @@ If you must use this, ensure the JavaScript content is **entirely static and har
 The same security considerations apply: any `<script>` element embedded in an XML view runs with full app privileges and bypasses UI5's output encoding. Prefer a [Custom Control](/advanced/extensibility/custom_control) or one of the built-in events instead.
 :::
 
-If you want to look at — or hand-craft — the raw XML view that abap2UI5 produces, a `<script>` tag is placed in the `html` namespace alongside the regular UI5 controls. The view stringified by `z2ui5_cl_xml_view=>factory( )` ends up looking like this:
+If you want to look at — or hand-craft — the raw XML view that abap2UI5 produces, a `<script>` tag is placed in the `html` namespace alongside the regular UI5 controls. The view stringified by `z2ui5_cl_ui5_view_builder=>factory( )` ends up looking like this:
 
 ```xml
 <mvc:View

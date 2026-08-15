@@ -280,24 +280,24 @@ CLASS z2ui5_cl_app_table_sort IMPLEMENTATION.
                   )->a( n = `title` v = `Sortable Table`
                   )->ele( `Table`
                       )->a( n = `items` v = client->_bind( rows )
-                    )->a( n = `growingThreshold` v = `10`
-                    )->a( n = `sticky`           v = `ColumnHeaders`
-                    )->a( n = `growing`          b = abap_true
+                      )->a( n = `growingThreshold` v = `10`
+                      )->a( n = `sticky`           v = `ColumnHeaders`
+                      )->a( n = `growing`          b = abap_true
 
-                    )->ele( `headerToolbar`
-                        )->ele( `Toolbar`
-                            )->tag( `Title`
-                                )->a( n = `text` v = `Orders`
-                            )->tag( `ToolbarSpacer`
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `Sort by Name`
-                                )->a( n = `press` v = client->_event( `SORT_NAME` )
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `Sort by Status`
-                                )->a( n = `press` v = client->_event( `SORT_STATUS` )
+                      )->ele( `headerToolbar`
+                          )->ele( `Toolbar`
+                              )->tag( `Title`
+                                  )->a( n = `text` v = `Orders`
+                              )->tag( `ToolbarSpacer`
+                              )->tag( `Button`
+                                  )->a( n = `text`  v = `Sort by Name`
+                                  )->a( n = `press` v = client->_event( `SORT_NAME` )
+                              )->tag( `Button`
+                                  )->a( n = `text`  v = `Sort by Status`
+                                  )->a( n = `press` v = client->_event( `SORT_STATUS` )
 
-                    )->end(
-                    )->end(
+                          )->end(
+                      )->end(
 
                       )->ele( `columns`
                           )->ele( `Column`
