@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Title
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Set the text the browser shows in the tab and window title bar.
 
 #### Standalone
@@ -26,12 +15,18 @@ METHOD z2ui5_if_app~main.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        client->view_display( z2ui5_cl_xml_view=>factory(
-            )->page(
-                )->button(
-                    text  = `change title`
-                    press = client->_event( `RENAME` )
-            )->stringify( ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `change title`
+                        )->a( n = `press` v = client->_event( `RENAME` ) ).
+
+        client->view_display( view->stringify( ) ).
+
 
       WHEN client->check_on_event( `RENAME` ).
         client->follow_up_action(

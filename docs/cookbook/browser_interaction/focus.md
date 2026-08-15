@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Focus
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Read which control currently holds the focus from the backend, or move the focus from the backend to a specific field — both work without any custom control.
 
 #### Read the Current Focus
@@ -42,18 +31,28 @@ After processing an event, call `client->follow_up_action( )` with `cs_event-set
 METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->page( ).
-      page->simple_form(
-         )->content( ns = `form`
-         )->label( `One`
-         )->input(
-              id     = `id1`
-              submit = client->_event( `ONE_ENTER` )
-         )->label( `Two`
-         )->input(
-              id     = `id2`
-              submit = client->_event( `TWO_ENTER` ) ).
-      client->view_display( page->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+              )->ele( `Page`
+                  )->ele( n = `SimpleForm` ns = `form`
+                      )->ele( n = `content` ns = `form`
+                          )->tag( `Label`
+                              )->a( n = `text` v = `One`
+                          )->tag( `Input`
+                              )->a( n = `id`     v = `id1`
+                              )->a( n = `submit` v = client->_event( `ONE_ENTER` )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Two`
+                          )->tag( `Input`
+                              )->a( n = `id`     v = `id2`
+                              )->a( n = `submit` v = client->_event( `TWO_ENTER` ) ).
+
+      client->view_display( view->stringify( ) ).
+
 
     ELSEIF client->check_on_event( `ONE_ENTER` ).
         client->follow_up_action( val   = client->cs_event-set_focus

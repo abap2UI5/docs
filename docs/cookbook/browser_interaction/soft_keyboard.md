@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Soft Keyboard
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 #### Hide Soft Keyboard
 
 For UI5 input fields, the soft keyboard pops up automatically when an input receives focus. Sometimes — for example, in warehouses with small devices used mainly for barcode scanning — you don't want this behavior.
@@ -27,21 +16,35 @@ METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
 
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell(
-             )->page( title          = `abap2UI5 - Softkeyboard on/off`
-                      navbuttonpress = client->_event( `BACK` )
-                      shownavbutton  = client->check_app_prev_stack( )
-             )->simple_form( editable = abap_true
-                 )->content( `form`
-                     )->title( `Keyboard on/off`
-                     )->label( `Input`
-                     )->input( id               = `ZINPUT`
-                               value            = client->_bind( input )
-                               showvaluehelp    = abap_true
-                               valuehelprequest = client->_event( `CALL_KEYBOARD` )
-                               valuehelpiconsrc = `sap-icon://keyboard-and-mouse` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
 
-      client->view_display( page->stringify( ) ).
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title`          v = `abap2UI5 - Softkeyboard on/off`
+                      )->a( n = `navButtonPress` v = client->_event( `BACK` )
+                      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                      )->ele( n = `SimpleForm` ns = `form`
+                          )->a( n = `editable` b = abap_true
+
+                          )->ele( n = `content` ns = `form`
+                              )->tag( `Title`
+                                  )->a( n = `text` v = `Keyboard on/off`
+                              )->tag( `Label`
+                                  )->a( n = `text` v = `Input`
+                              )->tag( `Input`
+                                  )->a( n = `id`               v = `ZINPUT`
+                                  )->a( n = `value`            v = client->_bind( input )
+                                  )->a( n = `valueHelpRequest` v = client->_event( `CALL_KEYBOARD` )
+                                  )->a( n = `valueHelpIconSrc` v = `sap-icon://keyboard-and-mouse`
+                                  )->a( n = `showValueHelp`    b = abap_true ).
+
+      client->view_display( view->stringify( ) ).
+
       RETURN.
     ENDIF.
 
