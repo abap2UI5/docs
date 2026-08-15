@@ -30,7 +30,9 @@ will overwrite yours.
 | DDIC table | `z2ui5_t_*` | `z2ui5_t_01` |
 
 #### The Second Segment
-A name has one more part than the prefix suggests:
+The scheme the abap2UI5 repositories share is
+`z2ui5_<type>_<segment>_<object>` — a name has one more part than the prefix
+suggests:
 
 ```
 z2ui5 _ cl _ ui5 _ http_handler
@@ -64,7 +66,8 @@ alone would let them collide; the segment is what keeps them apart.
 | `smps` | [samples-stack](https://github.com/abap2UI5/samples-stack) — full-stack samples |
 | `smpc` | [samples-controls](https://github.com/abap2UI5/samples-controls) — control samples |
 | `popup` | [popups](https://github.com/abap2UI5-addons/popups) — the popups [add-on](/advanced/addons) |
-| `cci` | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) — the custom control library |
+| `cci` | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) — custom controls shared with the community |
+| `ccc` | [custom-controls-customer](https://github.com/abap2UI5/custom-controls-customer) — the template for **your own** frontend artefacts |
 
 The two tables share one rule and one exception. The rule: an object's segment
 tells you which repository it was pulled from. The exception: frozen code keeps
@@ -72,6 +75,16 @@ the segment it was born with, so a repository's `src/99` can hold a segment that
 is no longer issued — the popups add-on ships as `z2ui5_cl_popup_*` today, and
 its `src/99` still carries the `pop` and `demo` names it started with, just as
 the framework's own `src/99` does.
+
+::: tip The segment can reach the frontend too
+For the two custom-control repositories the segment also names the BSP and the
+resourceRoot it is served under: `cci` ships the BSP `Z2UI5_CCI` under the root
+`z2ui5_cci`, `ccc` ships `Z2UI5_CCC` under `z2ui5_ccc`. abap2UI5 reserves both
+roots in its `manifest.json`, which is what makes those BSPs loadable without
+patching any framework file. The two differ in the last letter only, and a typo
+in a view's `xmlns:` surfaces only as a failed module request in the browser
+console — so when a custom control does not render, check that letter first.
+:::
 
 Only the public API is a contract. Every other segment may be restructured in any
 release — the engine classes carried a `z2ui5_cl_core_*` segment not long ago,
@@ -120,6 +133,7 @@ object at all:
 | Globals | `z2ui5.Formatter`, `z2ui5.Util` |
 | Custom control XML namespace | `xmlns:z2ui5="z2ui5.cc"` → `z2ui5/cc/<Name>` |
 | The event constant | `cs_event-z2ui5` for [Custom JS](/cookbook/expert_more/custom_js) |
+| Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
 
 Renaming the ABAP side does not touch any of these — they stay `z2ui5` in every
 installation, renamed or not. That is deliberate: the frontend namespace lives
