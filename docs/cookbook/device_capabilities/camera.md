@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Camera
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 abap2UI5 offers a custom control for taking photos directly from the device's camera. The control returns the image as a base64-encoded string, ready for backend processing.
 
 A minimal example based on sample `Z2UI5_CL_SMP_APP_306`:
@@ -30,11 +19,22 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->shell( )->page( `abap2UI5 - Device Camera Picture`
-                )->_z2ui5( )->camera_picture(
-                    value    = client->_bind( mv_picture_base )
-                    onphoto  = client->_event( `CAPTURE` ) ).
-      client->view_display( page->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`       v = `sap.m`
+              )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `abap2UI5 - Device Camera Picture`
+
+                      )->tag( n = `CameraPicture` ns = `z2ui5`
+                          )->a( n = `value`   v = client->_bind( mv_picture_base )
+                          )->a( n = `OnPhoto` v = client->_event( `CAPTURE` ) ).
+
+      client->view_display( view->stringify( ) ).
+
     ENDIF.
 
     IF client->get( )-event = `CAPTURE`.
