@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Draft Handling
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 ## Drafts Are a RAP Feature — and You Can Use Them with abap2UI5
 
 Draft handling is one of the headline features of the **ABAP RESTful Application Programming Model (RAP)**. If you have built RAP business objects before, you know the drill: add `with draft` to the behavior definition, define a draft table, and the RAP framework takes care of the rest — the shadow table, the pessimistic lock, and the standard draft actions `Edit`, `Resume`, `Activate`, and `Discard`.
@@ -212,19 +201,33 @@ CLASS z2ui5_cl_sample_draft_min IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD view_display.
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page( `Edit Bank (minimal draft)`
-            )->simple_form( editable = abap_true
-                )->content( `form`
-                )->label( `Bank Name`
-                )->input( client->_bind( long_bank_name )
-                )->label( `SWIFT Code`
-                )->input( client->_bind( swift_code )
-                )->button(
-                    text  = `Save`
-                    type  = `Emphasized`
-                    press = client->_event( `SAVE` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title` v = `Edit Bank (minimal draft)`
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Bank Name`
+                            )->tag( `Input`
+                                )->a( n = `value` v = client->_bind( long_bank_name )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `SWIFT Code`
+                            )->tag( `Input`
+                                )->a( n = `value` v = client->_bind( swift_code )
+                            )->tag( `Button`
+                                )->a( n = `text`  v = `Save`
+                                )->a( n = `type`  v = `Emphasized`
+                                )->a( n = `press` v = client->_event( `SAVE` ) ).
+
     client->view_display( view->stringify( ) ).
   ENDMETHOD.
 ENDCLASS.
@@ -925,51 +928,66 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
         WHEN mode = `EDIT` THEN `Bank header (draft)`
         ELSE `Bank header (view)` ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Bank — Standard BO Draft via EML`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event( `LEAVE_APP` )
-            )->simple_form(
-                title    = lv_form_title
-                editable = draft_open
-                )->content( `form`
-                )->label( `Bank Country`
-                )->input(
-                    value   = bank_country
-                    enabled = abap_false
-                )->label( `Bank Key`
-                )->input(
-                    value   = bank_internal_id
-                    enabled = abap_false
-                )->label( `Bank Name`
-                )->input(
-                    value   = client->_bind( long_bank_name )
-                    enabled = draft_open
-                )->label( `SWIFT Code`
-                )->input(
-                    value   = client->_bind( swift_code )
-                    enabled = draft_open
-                )->label( `Status`
-                )->input(
-                    value   = status_text
-                    enabled = abap_false
-                )->label( `Messages`
-                )->text_area(
-                    value    = messages
-                    rows     = `6`
-                    editable = abap_false
-                )->button(
-                    text  = lv_edit_button_text
-                    type  = lv_edit_button_type
-                    press = client->_event( `EDIT_TOGGLE` )
-                )->button(
-                    text    = `Activate`
-                    type    = `Emphasized`
-                    press   = client->_event( `ACTIVATE` )
-                    enabled = draft_open ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Bank — Standard BO Draft via EML`
+                    )->a( n = `navButtonPress` v = client->_event( `LEAVE_APP` )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = lv_form_title
+                        )->a( n = `editable` b = draft_open
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Bank Country`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = bank_country
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Bank Key`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = bank_internal_id
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Bank Name`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( long_bank_name )
+                                )->a( n = `enabled` b = draft_open
+                            )->tag( `Label`
+                                )->a( n = `text` v = `SWIFT Code`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( swift_code )
+                                )->a( n = `enabled` b = draft_open
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Status`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = status_text
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Messages`
+                            )->tag( `TextArea`
+                                )->a( n = `value`    v = messages
+                                )->a( n = `rows`     v = `6`
+                                )->a( n = `editable` b = abap_false
+                            )->tag( `Button`
+                                )->a( n = `text`  v = lv_edit_button_text
+                                )->a( n = `type`  v = lv_edit_button_type
+                                )->a( n = `press` v = client->_event( `EDIT_TOGGLE` )
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Activate`
+                                )->a( n = `type`    v = `Emphasized`
+                                )->a( n = `press`   v = client->_event( `ACTIVATE` )
+                                )->a( n = `enabled` b = draft_open ).
+
     client->view_display( view->stringify( ) ).
+
   ENDMETHOD.
 ENDCLASS.
 ```
