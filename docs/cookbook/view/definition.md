@@ -51,7 +51,7 @@ frontend:
                     )->a( n = `title` v = `My title`
 
                     )->tag( `Text`
-                        )->a( n = `text` v = `My text` ) ).
+                        )->a( n = `text` v = `My text` ).
 
     client->view_display( view->stringify( ) ).
 

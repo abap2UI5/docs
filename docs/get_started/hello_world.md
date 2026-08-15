@@ -62,7 +62,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
                     )->a( n = `title` v = `abap2UI5 - Hello World`
 
                     )->tag( `Text`
-                        )->a( n = `text` v = `My Text` ) ).
+                        )->a( n = `text` v = `My Text` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -114,7 +114,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
                           )->a( n = `text` v = `My Text`
                       )->tag( `Button`
                           )->a( n = `text`  v = `post`
-                          )->a( n = `press` v = client->_event( `POST` ) ) ).
+                          )->a( n = `press` v = client->_event( `POST` ) ).
 
       client->view_display( view->stringify( ) ).
 
@@ -178,7 +178,7 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
                           )->a( n = `value` v = client->_bind( name )
                       )->tag( `Button`
                           )->a( n = `text`  v = `post`
-                          )->a( n = `press` v = client->_event( `POST` ) ) ).
+                          )->a( n = `press` v = client->_event( `POST` ) ).
 
       client->view_display( view->stringify( ) ).
 

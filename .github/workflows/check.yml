@@ -1,0 +1,42 @@
+# What a pull request against this documentation gets checked for.
+#
+# There was nothing before this: deploy.yml runs on push to main, so a broken
+# build or a broken example reached the site and was found there. A docs
+# repository has no compiler for its prose - but the fenced ABAP is code, and
+# the site build is a build, so both can be decided before a merge.
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      # a page that does not build is a page nobody can read
+      - name: vitepress build
+        run: npm run docs:build
+
+      # the ABAP in the fenced blocks, against the real framework: does it
+      # compile, and does the view it builds name controls and properties that
+      # exist on the UI5 floor this documentation targets
+      - name: ABAP examples
+        if: ${{ !cancelled() }}
+        run: npm run check:examples
