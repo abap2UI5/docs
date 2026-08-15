@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Integration into Fiori Elements Apps
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Extend the object page of a Fiori list report app with an abap2UI5 app. See the [ABAP2UI5_COMP_CONT repository](https://github.com/axelmohnen/ABAP2UI5_COMP_CONT) for a complete example.
 
 <img width="747" height="387" alt="abap2UI5 app embedded in Fiori Elements object page" src="https://github.com/user-attachments/assets/c14d5732-3b8c-4fa5-83ab-6d188a4d87db" />
@@ -95,13 +84,22 @@ On the ABAP side, the app receives the Fiori startup parameters (like the app cl
 
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page( showheader = abap_false
-                             backgrounddesign = `List` )->content( ). "Backgrounddesign "List" sets a white background color
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    page->text( `TEXT` ).
+            )->ele( `Page`
+                )->a( n = `showHeader` b = abap_false
+                " backgroundDesign "List" sets a white background color
+                )->a( n = `backgroundDesign` v = `List`
+
+                )->ele( `content`
+                    )->tag( `Text`
+                        )->a( n = `text` v = `TEXT` ).
 
     client->view_display( view->stringify( ) ).
+
 
   ENDMETHOD.
 ```

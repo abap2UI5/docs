@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Demo Output
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Familiar with `CL_DEMO_OUTPUT` from classic ABAP? You can show its HTML output inside an abap2UI5 app too. This is handy for quick data visualization or when porting existing demos.
 
 The approach: build the HTML with `cl_demo_output=>get( )`, inject CSS styles via `_cc_plain_xml` (which inserts raw XML/HTML into the view), and render the result with the UI5 `html` control. The CSS block is needed because `CL_DEMO_OUTPUT` produces HTML with specific class names (e.g., `heading1`, `header`, `body`) that need matching style definitions to render correctly.
@@ -95,13 +84,19 @@ METHOD z2ui5_if_app~main.
     DATA(lv_html) = `<h2 title="I'm a header">The title Attribute</h2>` && |\n|  &&
                     `<p title="I'm a tooltip">Mouse over this paragraph, to display the title attribute as a tooltip.</p>`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-           )->page(
-          )->_cc_plain_xml( lv_style
-          )->html( lv_html ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->tag( n = `HTML` ns = `core`
+                        )->a( n = `content` v = lv_style && lv_html ).
 
     client->view_display( view->stringify( ) ).
+
 
 ENDMETHOD.
 ```
