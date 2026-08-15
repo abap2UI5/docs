@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Cloud Readiness
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 _Ready for the Future — or Not?_
 
 Whether it's worth building apps with abap2UI5 comes down to future-proofing. In the ABAP ecosystem, this means cloud readiness, closely tied to the ABAP Cloud language version. So what does that mean? And are abap2UI5 apps truly cloud-ready?
@@ -70,11 +59,20 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
        INTO TABLE @mt_salesorder
        UP TO 10 ROWS.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->list( client->_bind( mt_salesorder )
-            )->standard_list_item(
-              title       = `{SALESORDER}`
-              description = `{SALESORGANIZATION}` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `List`
+                      )->a( n = `items` v = client->_bind( mt_salesorder )
+
+                      )->ele( `items`
+                          )->tag( `StandardListItem`
+                              )->a( n = `title`       v = `{SALESORDER}`
+                              )->a( n = `description` v = `{SALESORGANIZATION}` ).
+
       client->view_display( view->stringify( ) ).
 
     ENDIF.
@@ -104,12 +102,22 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
        INTO TABLE @mt_salesorder
        UP TO 10 ROWS.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->list( client->_bind( mt_salesorder )
-          )->standard_list_item(
-              title       = `{VBELN}`
-              description = `{VKORG}` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `List`
+                      )->a( n = `items` v = client->_bind( mt_salesorder )
+
+                      )->ele( `items`
+                          )->tag( `StandardListItem`
+                              )->a( n = `title`       v = `{VBELN}`
+                              )->a( n = `description` v = `{VKORG}` ).
+
       client->view_display( view->stringify( ) ).
+
 
     ENDIF.
 

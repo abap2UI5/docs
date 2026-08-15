@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # App State, Share
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 abap2UI5 saves the current app state so you can return to it later — like how standard UI5 apps manage state. This opens up several useful options, like sharing and bookmarking the current state of your app.
 
 ### Usage
@@ -37,14 +26,22 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display(
-        view->label( `quantity`
-            )->input( client->_bind( mv_quantity )
-            )->button(
-                text  = `post with state`
-                press = client->_event( `BUTTON_POST` )
-              )->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->tag( `Label`
+                      )->a( n = `text` v = `quantity`
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( mv_quantity )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `post with state`
+                      )->a( n = `press` v = client->_event( `BUTTON_POST` ) ).
+
+      client->view_display( view->stringify( ) ).
+
     ENDIF.
 
     CASE client->get( )-event.

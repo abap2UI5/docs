@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # ABAP Thinking, UI5 Results
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 _A Developer-Centric Approach_
 
 abap2UI5 grew out of the everyday experiences of ABAP developers. It tackles common development challenges such as deployment, caching, debugging, and tooling. At the same time, it keeps a coding style close to familiar ABAP and SAP GUI patterns like Selection Screens and ALV. The goal: make working with abap2UI5 feel natural to ABAPers. This page looks closely at the main influences behind the framework.
@@ -83,9 +72,18 @@ CLASS zcl_app_input IMPLEMENTATION.
 
     IF client->check_on_init( ).
       client->view_display(
-        z2ui5_cl_xml_view=>factory(
-            )->input( client->_bind( pa_arbgb )
-            )->button( text  = `post` press = client->_event( `POST` ) ) ).
+        z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->tag( `Input`
+                        )->a( n = `value` v = client->_bind( pa_arbgb )
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `post`
+                        )->a( n = `press` v = client->_event( `POST` )
+            )->stringify( ) ).
       RETURN.
     ENDIF.
 
@@ -140,20 +138,43 @@ CLASS zcl_app_alv IMPLEMENTATION.
      INTO TABLE @gt_t100
      UP TO 10 ROWS.
 
-    DATA(tab) = z2ui5_cl_xml_view=>factory(
-        )->table( client->_bind( gt_t100 ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    DATA(columns) = tab->columns( ).
-    columns->column( )->text( `ARBGB` ).
-    columns->column( )->text( `MSGNR` ).
-    columns->column( )->text( `TEXT`  ).
+            )->ele( `Page`
+                )->ele( `Table`
+                    )->a( n = `items` v = client->_bind( gt_t100 )
 
-    DATA(cells) = tab->items( )->column_list_item( ).
-    cells->text( `{ARBGB}` ).
-    cells->text( `{MSGNR}` ).
-    cells->text( `{TEXT}` ).
+                    )->ele( `columns`
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `ARBGB`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `MSGNR`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `TEXT`
+                        )->end(
 
-    client->view_display( tab->stringify( ) ).
+                    )->end(
+
+                    )->ele( `items`
+                        )->ele( `ColumnListItem`
+                            )->ele( `cells`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{ARBGB}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{MSGNR}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{TEXT}` ).
+
+    client->view_display( view->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.
