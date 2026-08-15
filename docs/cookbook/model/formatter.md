@@ -31,10 +31,10 @@ The sections below show the binding-string pattern for each ABAP type that needs
 ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code (a plain `string` also works, as in the worked example below) → UI5 `Currency` formatter. Two `parts` entries; the type combines them into a locale-aware amount string:
 
 ```abap
-)->input(
-    |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
-                 `{ client->_bind( val = currency path = abap_true ) }` ],
-        type: 'sap.ui.model.type.Currency' \}| )
+)->tag( `Input`
+    )->a( n = `value` v = |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
+                                       `{ client->_bind( val = currency path = abap_true ) }` ],
+                              type: 'sap.ui.model.type.Currency' \}|
 ```
 
 Common `formatOptions`:
@@ -51,24 +51,24 @@ The [Full Worked Example](#full-worked-example) below demonstrates each of these
 ABAP `n LENGTH n` is sent as a digit string, leading zeros included. Without a type the zeros render literally. Use the OData `String` type with `isDigitSequence: true`:
 
 ```abap
-)->text(
-    |\{ path: `{ client->_bind( val = numeric path = abap_true ) }`,
-        type: 'sap.ui.model.odata.type.String',
-        constraints: \{ isDigitSequence: true \} \}| )
+)->tag( `Text`
+    )->a( n = `text` v = |\{ path: `{ client->_bind( val = numeric path = abap_true ) }`,
+                             type: 'sap.ui.model.odata.type.String',
+                             constraints: \{ isDigitSequence: true \} \}|
 ```
 
 This strips the leading zeros for display and re-pads them on write-back.
 
 ## Date
 
-ABAP `d` is an 8-character string `YYYYMMDD`. `date_picker` accepts it directly via `client->_bind( mv_date )` for the default case. For explicit locale or pattern control, use `sap.ui.model.type.Date` with a `source` pattern that matches the wire format:
+ABAP `d` is an 8-character string `YYYYMMDD`. `DatePicker` accepts it directly via `client->_bind( mv_date )` for the default case. For explicit locale or pattern control, use `sap.ui.model.type.Date` with a `source` pattern that matches the wire format:
 
 ```abap
-)->date_picker(
-    value = |\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-                type: 'sap.ui.model.type.Date',
-                formatOptions: \{ pattern: 'yyyy-MM-dd',
-                                  source: \{ pattern: 'yyyyMMdd' \} \} \}| )
+)->tag( `DatePicker`
+    )->a( n = `value` v = |\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
+                              type: 'sap.ui.model.type.Date',
+                              formatOptions: \{ pattern: 'yyyy-MM-dd',
+                                                source: \{ pattern: 'yyyyMMdd' \} \} \}|
 ```
 
 `source.pattern` is the wire format (ABAP side); the outer `pattern` is what the user sees.
@@ -78,11 +78,11 @@ ABAP `d` is an 8-character string `YYYYMMDD`. `date_picker` accepts it directly 
 ABAP `t` is a 6-character string `HHMMSS`. Same pattern as Date, with `sap.ui.model.type.Time`:
 
 ```abap
-)->time_picker(
-    value = |\{ path: `{ client->_bind( val = mv_time path = abap_true ) }`,
-                type: 'sap.ui.model.type.Time',
-                formatOptions: \{ pattern: 'HH:mm:ss',
-                                  source: \{ pattern: 'HHmmss' \} \} \}| )
+)->tag( `TimePicker`
+    )->a( n = `value` v = |\{ path: `{ client->_bind( val = mv_time path = abap_true ) }`,
+                              type: 'sap.ui.model.type.Time',
+                              formatOptions: \{ pattern: 'HH:mm:ss',
+                                                source: \{ pattern: 'HHmmss' \} \} \}|
 ```
 
 ## Boolean
@@ -91,7 +91,8 @@ ABAP `abap_bool` is `"X"` or `""`. UI5's `CheckBox` expects `true` / `false`. Tw
 
 **Expression binding** — compare the bound value to `'X'` inline. Read-only:
 ```abap
-)->checkbox( selected = `{= $` && client->_bind( mv_flag ) && ` === 'X' }` )
+)->tag( `CheckBox`
+    )->a( n = `selected` v = `{= $` && client->_bind( mv_flag ) && ` === 'X' }`
 ```
 This resolves to `{= ${/MV_FLAG} === 'X' }`. Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
 
@@ -106,7 +107,7 @@ flag_str = COND #( WHEN flag_bool = abap_true THEN 'true' ELSE 'false' ).
 " after the event:
 flag_bool = COND #( WHEN flag_str = 'true' THEN abap_true ELSE abap_false ).
 ```
-Then `)->checkbox( selected = client->_bind( flag_str ) )` works both directions. More boilerplate in the controller, simpler view.
+Then a `CheckBox` whose `selected` attribute is `client->_bind( flag_str )` works both directions. More boilerplate in the controller, simpler view.
 
 A custom JS formatter wired through `sap.ui.model.SimpleType` is the third option — see the [samples repository](https://github.com/abap2UI5/samples).
 
@@ -118,11 +119,11 @@ A custom JS formatter wired through `sap.ui.model.SimpleType` is the third optio
 
 **Send as string with a source pattern** — convert to a string in `yyyyMMddHHmmss` format on the ABAP side, then bind with `sap.ui.model.type.DateTime`:
 ```abap
-)->date_time_picker(
-    value = |\{ path: `{ client->_bind( val = mv_ts_string path = abap_true ) }`,
-                type: 'sap.ui.model.type.DateTime',
-                formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',
-                                  source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}| )
+)->tag( `DateTimePicker`
+    )->a( n = `value` v = |\{ path: `{ client->_bind( val = mv_ts_string path = abap_true ) }`,
+                              type: 'sap.ui.model.type.DateTime',
+                              formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',
+                                                source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}|
 ```
 Conversion happens in ABAP (`WRITE timestamp TO ts_string …` or a helper); the framework moves the string verbatim.
 

@@ -109,9 +109,12 @@ DATA edit_row TYPE ts_order.
 
 ...
 
-)->input( client->_bind( edit_row-customer ) )  " resolves to {/EDIT_ROW/CUSTOMER}
-)->input( client->_bind( edit_row-material ) )
-)->input( client->_bind( edit_row-quantity ) )
+)->tag( `Input`
+    )->a( n = `value` v = client->_bind( edit_row-customer )   " resolves to {/EDIT_ROW/CUSTOMER}
+)->tag( `Input`
+    )->a( n = `value` v = client->_bind( edit_row-material )
+)->tag( `Input`
+    )->a( n = `value` v = client->_bind( edit_row-quantity )
 ```
 
 Nested structures follow the same rule recursively (`edit_row-address-city` → `/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per item — see [Tables](/cookbook/model/tables).
@@ -138,10 +141,10 @@ ABAP and UI5 do not share a type system. When ABAP values cross to the frontend 
 When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). The shape is always the same — build a JSON binding string with `parts` and `type`, using `path = abap_true` on `_bind` to inject the raw model path:
 
 ```abap
-)->input(
-    |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
-                 `{ client->_bind( val = currency path = abap_true ) }` ],
-        type: 'sap.ui.model.type.Currency' \}| )
+)->tag( `Input`
+    )->a( n = `value` v = |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
+                                       `{ client->_bind( val = currency path = abap_true ) }` ],
+                              type: 'sap.ui.model.type.Currency' \}|
 ```
 
 See [Formatter](/cookbook/model/formatter) for the full example with `formatOptions`, `constraints`, and read-only display variants.

@@ -59,6 +59,58 @@ const NEEDS_A_SYSTEM = /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENT
 const skipped = [];
 const unmigrated = [];
 
+/* The FRAGMENT gate. Everything above needs a whole class, and most of the
+ * view code in this documentation is not one - it is four lines showing how a
+ * binding string is written. Those fragments are the majority of what a reader
+ * copies, and nothing looked at them: thirty of them were still calling
+ * `)->input( )`, `)->column( )`, `)->checkbox( )` on pages whose complete
+ * examples had long been migrated.
+ *
+ * They cannot be compiled, so this is the one thing that can be checked
+ * without a system: the CURRENT builder has five verbs, and a chain calling
+ * anything else is calling a method of the frozen one. */
+const VERBS = new Set(['ele', 'tag', 'a', 'end', 'stringify']);
+
+/* Pages that show the previous builder ON PURPOSE. The deprecation record is
+ * a before/after table - "this is what you had, this is what you write now" -
+ * so the old call is the content, not a leftover. */
+const SHOWS_THE_OLD_API = new Set(['docs/resources/deprecations.md']);
+
+function legacyFragments() {
+  const out = [];
+  for (const file of walk(DOCS).filter((f) => f.endsWith('.md')).sort()) {
+    const page = file.slice(ROOT.length + 1);
+    if (SHOWS_THE_OLD_API.has(page)) continue;
+    const md = readFileSync(file, 'utf8');
+    if (md.includes('This page still shows the previous view builder')) continue;
+    for (const m of md.matchAll(/```abap\n([\s\S]*?)```/g)) {
+      /* The other fluent API in this documentation. `z2ui5_cl_ajson` chains
+       * the same way and its verbs are its own, so a fence building JSON is
+       * not a view chain. Listed rather than guessed at from the receiver
+       * name: most view fragments here start mid-chain, with no receiver to
+       * read, and a heuristic that needs one would skip exactly the fragments
+       * this gate exists for. */
+      if (/z2ui5_cl_ajson/i.test(m[1])) continue;
+      for (const call of m[1].matchAll(/\)->([a-z_][a-z0-9_]*)\(/gi)) {
+        if (!VERBS.has(call[1].toLowerCase())) out.push({ page, call: `)->${call[1]}(` });
+      }
+    }
+  }
+  return out;
+}
+
+const legacy = legacyFragments();
+if (legacy.length) {
+  const byPage = new Map();
+  for (const { page, call } of legacy) byPage.set(page, [...new Set([...(byPage.get(page) || []), call])]);
+  console.error(`check-examples: ${legacy.length} view chain step(s) on ${byPage.size} page(s) call a method of the`);
+  console.error('frozen builder. The current one has five verbs: ele, tag, a, end, stringify.\n');
+  for (const [page, calls] of byPage) console.error(`  - ${page}: ${calls.join(' ')}`);
+  console.error('\nA fragment cannot be compiled, so this is the only check it gets — and it is');
+  console.error('the code a reader copies most. Rewrite it with the current builder.');
+  process.exit(1);
+}
+
 /** Every fenced abap block that is a whole class. */
 function examples() {
   const out = [];

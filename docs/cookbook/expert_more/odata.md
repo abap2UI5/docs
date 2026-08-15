@@ -204,23 +204,48 @@ So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label
 
 ```abap
 
-DATA(tab) = page->table(
-    items   = `{TRAVEL>/Currency}`
-    growing = abap_true ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-tab->columns(
-    )->column( )->text( `{TRAVEL>/#Currency/Currency/@sap:label}` )->get_parent(
-    )->column( )->text( `{TRAVEL>/#Currency/Currency_Text/@sap:label}` )->get_parent(
-    )->column( )->text( `{TRAVEL>/#Currency/Decimals/@sap:label}` )->get_parent(
-    )->column( )->text( `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}` ).
+        )->ele( `Page`
+            )->ele( `Table`
+                )->a( n = `items`   v = `{TRAVEL>/Currency}`
+                )->a( n = `growing` b = abap_true
 
-tab->items( )->column_list_item( )->cells(
-    )->text( `{TRAVEL>Currency}`
-    )->text( `{TRAVEL>Currency_Text}`
-    )->text( `{TRAVEL>Decimals}`
-    )->text( `{TRAVEL>CurrencyISOCode}` ).
+                )->ele( `columns`
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/Currency/@sap:label}`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/Currency_Text/@sap:label}`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/Decimals/@sap:label}`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}`
+                    )->end(
+                )->end(
 
-client->view_display( tab->stringify( ) ).
+                )->ele( `items`
+                    )->ele( `ColumnListItem`
+                        )->ele( `cells`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>Currency}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>Currency_Text}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>Decimals}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>CurrencyISOCode}` ).
+
+client->view_display( view->stringify( ) ).
 
 client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
