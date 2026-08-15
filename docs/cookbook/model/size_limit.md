@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Size Limit
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 Every UI5 JSON model has a built-in upper limit on the number of items it will expose to a list binding. By default this limit is `100`. If you bind a `ComboBox`, `Table` or any other aggregation to a table that contains more than 100 entries, only the first 100 are rendered — the rest are silently dropped. This is a UI5 design decision, documented under [`sap.ui.model.Model#setSizeLimit`](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.Model%23methods/setSizeLimit).
 
 abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
@@ -74,7 +63,6 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
         DO mv_combo_number TIMES.
           INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
         ENDDO.
-        client->view_model_update( ).
         RETURN.
     ENDCASE.
 
@@ -82,23 +70,44 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
       INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
     ENDDO.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->page( `Size Limit Demo`
-        )->simple_form( title = `Settings` editable = abap_true
-            )->content( `form`
-                )->label( `setSizeLimit`
-                )->input( value = client->_bind( mv_size_limit )
-                )->button(
-                    text  = `update size limit`
-                    press = client->_event( `UPDATE_LIMIT` )
-                )->label( `Number of Entries`
-                )->input( value = client->_bind( mv_combo_number )
-                )->button(
-                    text  = `update number of entries`
-                    press = client->_event( `UPDATE_MODEL` )
-                )->label( `ComboBox`
-                )->combobox( items = client->_bind( t_combo )
-                    )->item( key = `{KEY}` text = `{TEXT}` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `Size Limit Demo`
+
+                )->ele( n = `SimpleForm` ns = `form`
+                    )->a( n = `title`    v = `Settings`
+                    )->a( n = `editable` b = abap_true
+
+                    )->ele( n = `content` ns = `form`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `setSizeLimit`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( mv_size_limit )
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `update size limit`
+                            )->a( n = `press` v = client->_event( `UPDATE_LIMIT` )
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Number of Entries`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( mv_combo_number )
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `update number of entries`
+                            )->a( n = `press` v = client->_event( `UPDATE_MODEL` )
+                        )->tag( `Label`
+                            )->a( n = `text` v = `ComboBox`
+                        )->ele( `ComboBox`
+                            )->a( n = `items` v = client->_bind( t_combo )
+
+                            )->tag( n = `Item` ns = `core`
+                                )->a( n = `key`  v = `{KEY}`
+                                )->a( n = `text` v = `{TEXT}` ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
