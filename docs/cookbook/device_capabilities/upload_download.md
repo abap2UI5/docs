@@ -3,17 +3,6 @@ outline: [2, 4]
 ---
 # Upload, Download
 
-::: warning This page still shows the previous view builder
-The examples below build views with `z2ui5_cl_xml_view`. That class is frozen:
-it still runs, and your existing apps keep working — but it is no longer the
-one to write new code against. The current builder is
-`z2ui5_cl_ui5_view_builder`, and it has four verbs instead of a control per
-method, which makes every UI5 control available rather than the curated set.
-
-See [View → Definition](/cookbook/view/definition) for what the chain looks
-like, and [Deprecations](/resources/deprecations) for the translation.
-:::
-
 abap2UI5 handles file uploads and downloads by sending base64-encoded data over the binding.
 
 #### Upload
@@ -30,14 +19,20 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->_z2ui5( )->file_uploader(
-                value       = client->_bind( mv_value )
-                path        = client->_bind( mv_path )
-                placeholder = `filepath here...`
-                upload      = client->_event( `UPLOAD` )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`       v = `sap.m`
+            )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+
+            )->ele( `Page`
+                )->tag( n = `FileUploader` ns = `z2ui5`
+                    )->a( n = `value`       v = client->_bind( mv_value )
+                    )->a( n = `path`        v = client->_bind( mv_path )
+                    )->a( n = `placeholder` v = `filepath here...`
+                    )->a( n = `upload`      v = client->_event( `UPLOAD` ) ).
+
+    client->view_display( view->stringify( ) ).
 
     CASE client->get( )-event.
       WHEN `UPLOAD`.
@@ -54,12 +49,18 @@ See also `Z2UI5_CL_SMP_APP_186`:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->button(
-                text = `Open Download Popup`
-                press = client->_event( `BUTTON_DOWNLOAD` )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `Open Download Popup`
+                    )->a( n = `press` v = client->_event( `BUTTON_DOWNLOAD` ) ).
+
+    client->view_display( view->stringify( ) ).
+
 
     CASE client->get( )-event.
       WHEN `BUTTON_DOWNLOAD`.
