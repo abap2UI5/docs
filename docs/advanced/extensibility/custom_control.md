@@ -13,4 +13,4 @@ Write the JavaScript for your new custom control. Each custom control lives in i
 
 #### Backend
 Extend the custom control view class by adding a method and defining the new control's properties:
-[z2ui5_cl_xml_view_cc.clas.abap](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_cl_xml_view_cc.clas.abap)
+[z2ui5_cl_xml_view_cc.clas.abap](https://github.com/abap2UI5/abap2UI5/blob/main/src/99/z2ui5_cl_xml_view_cc.clas.abap)

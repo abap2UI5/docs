@@ -68,12 +68,18 @@ own JavaScript functions, see [Custom JS](/cookbook/expert_more/custom_js).
 
 ## View builder
 
-### `z2ui5_cl_xml_view` → `z2ui5_cl_ai_xml`
+### `z2ui5_cl_xml_view` → `z2ui5_cl_ui5_view_builder`
 
-`z2ui5_cl_ai_xml` is the generic XML view builder that replaces the typed
-wrapper methods of `z2ui5_cl_xml_view`: instead of one method per control it
-builds any UI5 XML 1:1 from `open` / `leaf` / `a` / `shut` / `stringify`, so a
+`z2ui5_cl_ui5_view_builder` is the generic XML view builder that replaces the
+typed wrapper methods of `z2ui5_cl_xml_view`: instead of one method per control
+it builds any UI5 XML 1:1 from `ele` / `tag` / `a` / `end` / `stringify`, so a
 control that has no wrapper is no longer a dead end.
+
+`ele` adds a child and descends into it (close it with `end`), `tag` adds a
+child and stays put — the form for a leaf. It shipped for a while as
+`z2ui5_cl_ai_xml`, with the verbs named `open` / `leaf` / `shut`; both the
+class and those verb names are gone, so code written against them has to be
+renamed to activate.
 
 `z2ui5_cl_xml_view` and `z2ui5_cl_xml_view_cc` are frozen but ship unchanged —
 existing apps keep working and there is no need to rewrite a working view.
