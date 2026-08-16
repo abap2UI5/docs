@@ -184,9 +184,39 @@
 /* An outline entry that is too long now wraps rather than being cut. The
  * default is `white-space: nowrap` + `text-overflow: ellipsis`, which keeps
  * every entry one line tall at the price of not saying what it points at.
- * Line height comes down a little so a wrapped entry reads as one item. */
+ *
+ * The spacing needs care, and the obvious version was wrong. The default is
+ * `line-height: 32px` on a 14px font - generous, because it doubles as the gap
+ * BETWEEN entries. The first attempt here dropped it to 20px so the two lines
+ * of a wrapped entry would read as one item, which they did - and every
+ * single-line entry lost a third of its breathing room, so the list read as a
+ * cramped block.
+ *
+ * Splitting the two jobs fixes both: 24px carries the line, 4px of padding
+ * above and below carries the gap. A single-line entry still occupies 32px,
+ * exactly as before; a wrapped one keeps its two lines close together and
+ * still stands apart from its neighbours. Padding is set per side rather than
+ * as a shorthand - `.outline-link.nested` sets `padding-left: 13px` for the
+ * indent, and a shorthand would quietly flatten it. */
 .VPDocOutlineItem a.outline-link {
   white-space: normal;
   text-overflow: clip;
-  line-height: 20px;
+  line-height: 24px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+/* ------------------------------------------------- the callout boxes ---
+ *
+ * The tip/warning/info blocks keep the width the reading column had BEFORE it
+ * was widened. A callout is an aside - a paragraph or two, set apart - and the
+ * wider it gets the less it reads as one: at 830px a three-line note becomes a
+ * two-line slab that competes with the prose it interrupts. Prose and code got
+ * the extra width because they use it; a callout does not.
+ *
+ * 688px is not a round number picked to look tidy: it is exactly what the
+ * reading column was, so these boxes are unchanged from what they were rather
+ * than newly narrowed. */
+.vp-doc .custom-block {
+  max-width: 688px;
 }
