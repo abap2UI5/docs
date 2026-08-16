@@ -120,3 +120,73 @@
 .vp-doc ol {
   margin: 12px 0;
 }
+
+/* ====================================================== a wider page ===
+ *
+ * The default gives the reading column 688px and the outline beside it 224px,
+ * inside a 1440px layout. On a wide screen that leaves the middle third of the
+ * window carrying the text and the rest empty.
+ *
+ * The outline is the clearer defect of the two, and it is measurable: this
+ * documentation has 627 entries in it, and at 224px about 12% of them are cut
+ * off with an ellipsis - "Step 1 - State: Types a...", "Step 2 - The View:
+ * Sel...". An outline entry that does not say what the section is fails at its
+ * one job. At 308px the share drops to about 4%, and the rest is handled by
+ * letting a long entry WRAP instead of truncating: two short lines say the
+ * whole thing, an ellipsis says most of it and hides which part is missing.
+ *
+ * Only from 1440px up, and that breakpoint was measured rather than picked:
+ * at 1280px the window is the binding constraint, so a wider outline does not
+ * come out of the empty margin - it comes out of the text. Applying this from
+ * 1280 took the reading column from 624px DOWN to 576px, which is the opposite
+ * of the point.
+ */
+@media (min-width: 1440px) {
+  :root {
+    --vp-layout-max-width: 1600px;
+  }
+
+  /* `!important`, and not for want of trying. The theme rule is a Vue SCOPED
+   * style, so it compiles to
+   *
+   *     .VPDoc.has-aside .content-container[data-v-39a288b8] { max-width: 688px }
+   *
+   * - four selector units against this rule's three, so it wins on specificity
+   * no matter where the file is loaded. Matching it would mean writing that
+   * hash into this file, and the hash changes whenever the component does:
+   * the rule would stop applying at some future `npm update` and nobody would
+   * see anything except a page that quietly went narrow again. Adding an
+   * ancestor class instead only ties, which the next refactor breaks just as
+   * silently. So: stated loudly, once, with the reason.
+   *
+   * The `.aside` rules below need none of this - their scoped counterpart is
+   * `.aside-container[data-v-…]`, two units against three, so they win
+   * normally. The difference is not obvious from reading the theme source,
+   * which is why it is written down here. */
+  .VPDoc.has-aside .content-container {
+    max-width: 830px !important;
+  }
+
+  /* All three move together: `.aside` is the column, `.aside-container` the
+   * scrolling box inside it and `.aside-curtain` the fade at its bottom edge.
+   * Widening one and not the others is how the curtain ends up floating in
+   * the middle of the outline. */
+  .VPDoc.has-aside .aside {
+    max-width: 340px;
+  }
+
+  .VPDoc.has-aside .aside-container,
+  .VPDoc.has-aside .aside-curtain {
+    width: 308px;
+  }
+}
+
+/* An outline entry that is too long now wraps rather than being cut. The
+ * default is `white-space: nowrap` + `text-overflow: ellipsis`, which keeps
+ * every entry one line tall at the price of not saying what it points at.
+ * Line height comes down a little so a wrapped entry reads as one item. */
+.VPDocOutlineItem a.outline-link {
+  white-space: normal;
+  text-overflow: clip;
+  line-height: 20px;
+}
