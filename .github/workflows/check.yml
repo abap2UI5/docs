@@ -41,8 +41,17 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
+      # the release number in the nav bar, the deprecations page and the
+      # changelog, against the newest release tag of the framework. This one
+      # goes stale WITHOUT anybody touching this repository - a release happens
+      # over there - which is why it runs first: it is the check most likely to
+      # be true yesterday and false today.
+      - name: release version
+        run: npm run check:version
+
       # a page that does not build is a page nobody can read
       - name: vitepress build
+        if: ${{ !cancelled() }}
         run: npm run docs:build
 
       # the ABAP in the fenced blocks, against the real framework: does it

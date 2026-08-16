@@ -6,6 +6,37 @@ outline: [2, 4]
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+### 1.143.0
+2026-08-16
+- Added `z2ui5_cl_ui5_view_builder`, the view builder this documentation is written against: `factory( )` / `ele( )` / `tag( )` / `a( )` / `end( )` / `stringify( )`, with every UI5 control and property reachable because the builder knows none of them by name. `z2ui5_cl_xml_view` is frozen, not removed — it ships unchanged and keeps working
+- The model is pushed **automatically** when an event roundtrip changed it. The framework compares the model before and after `main( )` and sends it to every open view slot when it differs, so a handler can no longer render stale by forgetting a call. An unchanged model sends no payload at all
+- Error output: a 500 now carries the full diagnostic — the message chain, one block per exception (class, text, source position, kernel error id, public attributes) and the app / event / draft / url / system context. The error popup shows the messages only, with the detail one click away behind *Details* and in *Copy*
+- The HTTP handler asks ICF to gzip its responses where the client accepts it — 70–85% less transfer on installations whose ICM profile does not compress already
+- Added `_bind( json = abap_true )`: a bound string that already contains JSON is spliced into the model as a JSON node, for control properties that must receive an object (a `sap.ui.integration` Card manifest, whose keys are not valid ABAP field names)
+- Control-valued event arguments now reach the backend as data — `ViewSettingsDialog.confirm`, `SinglePlanningCalendar.selectedDatesChange` and the like used to break serialization entirely
+- Added `setP13nData` to `CONTROL_METHODS`, so seeding a `sap.m.p13n` panel no longer needs hand-written JavaScript
+- `message_toast_display( )` / `message_box_display( )` queue follow-up actions: several calls in one roundtrip all show, in call order, after the view rendered
+- The startup page was rebuilt — the five quickstart steps top to bottom, then one row per sample repository with its install status, and the system information as a popup
+- Developer Tools: the POPUP/POPOVER tabs now follow a dialog closed without a roundtrip; empty tabs grey out instead of opening blank; the NEST/NEST2 and System tabs are gone
+- The wire got leaner throughout (internal): action lists travel as real JSON arrays, session-constant browser data travels once per page load, a display action implies the slot teardown, and the routing mode is only re-sent when the frontend may not hold it
+- Fixes: a pending backend timer no longer fires into a destroyed controller; an app switch clears the previous app's keyboard shortcuts; a nested view re-displayed without its MAIN view gets the model too; `cc/Storage` compares by value, so a structure can be stored and read back; the `MessageToast` `Popup.Dock` warning is gone; the default CSP no longer names `frame-ancestors` in the `<meta>` tag
+- `src/99` test classes are back in CI: all 27 restored, the two disabled `xml_view` suites re-enabled, and the freeze now covers production code only
+
+**Obsolete — still compiles, still works**
+- `view_model_update( )`, `popup_model_update( )`, `popover_model_update( )` and the two nested variants now do **nothing**. The push is automatic; delete the calls when you next touch the app
+- `_event_client( )` → `follow_up_action( )`, which is the same call in the same position
+- `_bind( custom_mapper = … custom_filter = … )` → `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP
+- `cs_event-wizard_set_next_step` → two `control_by_id` calls, which additionally reach `goToStep`
+
+**Removed**
+- `set_nav_back( )` and `set_nav_routing( )` from `z2ui5_if_client`. Routing is `follow_up_action( val = cs_event-set_nav_routing t_arg = ( mode ) )` now; `set_push_state( )` and `set_app_state_active( )` stay and delegate to the events
+- `cs_event-nav_to_route` → `nav_app_call( )`, which is the real navigation and pushes the same route history entry when routing is on
+- `cs_event-history_back` → `follow_up_action( |history.back()| )`, or `nav_app_leave( )` to return through the app stack
+- `VIEWNAME` from `z2ui5_if_types=>ty_s_get`. The framework never filled it — an app reading `client->get( )-viewname` has to drop the read
+- `z2ui5_if_app~check_sticky` / `check_initialized` moved to the framework's own app wrapper. Both attributes stay and are kept in sync, so a **read** still sees the truth; a direct **write** is no longer honored — use `set_session_stateful( )` and `check_on_init( )`
+- Curated formatter: `round2DP`, `dimensions`, `stockStatusState`, `stockStatusIcon`, `deliveryStatusState`. Rounding, joining and status-to-`ValueState` mapping are things ABAP finishes — bind the result. The date helpers and `expandInlineIcons` remain
+- `render_documentation( )`, `render_system_popup( )` and `render_contribution( )` from `z2ui5_cl_ui5_app_start`, with `cs_event-open_info`, `cs_event-close` and `cs_event-open_debug` — internals of the framework's own start page
+
 ### 1.142.0
 2026-07-20
 - Added frontend action functions: `control_by_id`, `binding_call`

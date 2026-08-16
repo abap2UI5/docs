@@ -35,26 +35,26 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.142.0**. Entries marked *next release* are already
+The released version is **1.143.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
 | What you have | What to write | Status |
 |---|---|---|
-| `view_model_update( )` and its four variants | delete the call | next release |
-| `_event_client( )` | `follow_up_action( )` | next release |
+| `view_model_update( )` and its four variants | delete the call | 1.143.0 |
+| `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
-| `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | next release |
+| `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
 | `_bind( view = … )` | omit the parameter | 1.142.0 |
-| `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, next release |
-| `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, next release |
-| `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, next release |
-| `cs_event-history_back` | `nav_app_leave( )` or a raw expression | **removed**, next release |
-| `client->get( )-viewname` | delete the read | **removed**, next release |
-| `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, next release |
+| `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
+| `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
+| `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
+| `cs_event-history_back` | `nav_app_leave( )` or a raw expression | **removed**, 1.143.0 |
+| `client->get( )-viewname` | delete the read | **removed**, 1.143.0 |
+| `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, 1.143.0 |
 | `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` | **removed**, 1.142.0 |
-| `cs_event-wizard_set_next_step` | two `control_by_id` calls | next release |
-| `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | next release |
+| `cs_event-wizard_set_next_step` | two `control_by_id` calls | 1.143.0 |
+| `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
 
@@ -268,11 +268,16 @@ attribute on the element it follows, `end( )` ascends. One rule carries the
 whole builder — `a( )` applies to the element the chain is **pointing at** — so
 give an element its attributes before its first child.
 
-::: warning Not in 1.142.0
-`z2ui5_cl_ui5_view_builder` arrives with the next release. On 1.142.0 the typed
-builder is what you have, and it is not going anywhere: `z2ui5_cl_xml_view` and
-`z2ui5_cl_xml_view_cc` are frozen but ship unchanged, so a working view never
-has to be rewritten. Most cookbook pages are still written against them.
+::: tip Released in 1.143.0 — and nothing you have has to be rewritten
+`z2ui5_cl_ui5_view_builder` ships in 1.143.0, and this documentation is written
+against it throughout. `z2ui5_cl_xml_view` and `z2ui5_cl_xml_view_cc` are
+**frozen, not removed**: they ship unchanged and keep working, so a view that
+works today never has to be touched. Frozen means no new controls and no new
+properties — write the current builder for anything new, and migrate an old
+view when you are editing it anyway rather than for its own sake.
+
+On 1.142.0 or older the typed builder is what you have; the chain above needs
+1.143.0.
 :::
 
 ::: tip It was called `z2ui5_cl_ai_xml` for a while
