@@ -81,11 +81,23 @@ function resolveSamples() {
  *
  * The bold half is only there when the row carries a header of its own (the
  * generator drops one that would just repeat its section heading), so both
- * shapes have to parse. The trailing `<sub>` blocks are the small type under
- * the title - keywords, and the `@docs` links this script maintains - and there
- * may be none, one or several: matched as a group rather than counted, so
- * adding another one over there does not stop rows parsing over here. */
-const ROW = /^\|\s*(?:\*\*(?<title>[^*]+)\*\*\s*(?:—|--)\s*)?(?<sub>[^|<]*?)\s*(?<small>(?:<br><sub>[^<]*<\/sub>)*)\s*\|\s*\[`(?<cls>[A-Z0-9_]+)`\]\((?<path>[^)]+)\)\s*\|/;
+ * shapes have to parse.
+ *
+ * What follows the title is a run of `<br>` blocks, and they are matched as a
+ * GROUP rather than counted or typed: the small type in `<sub>` (keywords,
+ * then the `@docs` links this script maintains) and, since the samples
+ * repository gave every app a `" @summary`, a block of NORMAL type carrying
+ * that sentence:
+ *
+ *   | **Basics I** — Hello World<br>The smallest app that runs.<br><sub>hello world minimal</sub> | [`Z2UI5_CL_SMP_APP_493`](...) |
+ *
+ * The narrower pattern that expected `<br><sub>` blocks ONLY matched no rows
+ * at all the day the sentence arrived - every page's samples block then read
+ * "not in the sample catalogue", which is a wrong answer rather than a broken
+ * run. That is why this matches loosely: the row shape is maintained in
+ * another repository (three of them now), and a block this script does not
+ * know about must cost it nothing. */
+const ROW = /^\|\s*(?:\*\*(?<title>[^*]+)\*\*\s*(?:—|--)\s*)?(?<sub>[^|<]*?)\s*(?<small>(?:<br>(?:<sub>[^<]*<\/sub>|[^<]*))*)\s*\|\s*\[`(?<cls>[A-Z0-9_]+)`\]\((?<path>[^)]+)\)\s*\|/;
 
 /** class name (lower case) -> { label, path } for every app in the catalogue. */
 function parseCatalogue(text) {
