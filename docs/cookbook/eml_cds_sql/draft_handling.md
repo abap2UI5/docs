@@ -62,7 +62,7 @@ record       │  (user edits) │
 
 Everything on this page is built from just four EML operations. If you come from RAP, you will recognize them immediately — they are the standard draft actions every draft-enabled BO ships with. Read these once — the full app below is simply these four, wired to buttons.
 
-#### 1. Open a Draft — `Edit`
+### 1. Open a Draft — `Edit`
 Open (acquire) a draft for an existing active record. This takes the lock:
 ```abap
 MODIFY ENTITIES OF i_banktp
@@ -76,7 +76,7 @@ MODIFY ENTITIES OF i_banktp
 COMMIT ENTITIES.
 ```
 
-#### 2. Read a Draft — `%is_draft = on`
+### 2. Read a Draft — `%is_draft = on`
 Read the **draft** values (what the user is working on) instead of the active record. The only difference from a normal read is the `%is_draft` flag:
 ```abap
 READ ENTITIES OF i_banktp
@@ -88,7 +88,7 @@ READ ENTITIES OF i_banktp
   RESULT DATA(drafts).
 ```
 
-#### 3. Activate a Draft — `Activate`
+### 3. Activate a Draft — `Activate`
 Promote the draft to the active state. **This is the actual save** — the database row is updated:
 ```abap
 MODIFY ENTITIES OF i_banktp
@@ -102,7 +102,7 @@ MODIFY ENTITIES OF i_banktp
 COMMIT ENTITIES.
 ```
 
-#### 4. Discard a Draft — `Discard`
+### 4. Discard a Draft — `Discard`
 Throw the draft away and release the lock. The active record is untouched:
 ```abap
 MODIFY ENTITIES OF i_banktp
@@ -255,7 +255,7 @@ The rest of this page builds that app step by step. It uses two modes:
 
 Toggling between the modes drives the entire draft lifecycle (acquire, resume, save, activate, discard).
 
-#### 1. App Startup — Always Begin in View Mode
+### 1. App Startup — Always Begin in View Mode
 On `on_init` the app reads the **active** record and renders it read-only. No draft is touched yet, so other users can still edit the same record.
 ```abap
 METHOD on_init.
@@ -282,7 +282,7 @@ ENDMETHOD.
 ```
 `%is_draft = if_abap_behv=>mk-off` makes the read return the **active** row, not any open draft.
 
-#### 2. Entering Edit Mode — Check for an Existing Draft
+### 2. Entering Edit Mode — Check for an Existing Draft
 When the user clicks **Switch to Edit Mode**, the app first looks in the BO's draft-shadow table (here `cabnk_bank_d`) joined with `sdraft_admin` to find out whether a draft already exists for this key — and who owns it. (Simplified here; the full snippet at the end of the page additionally reads the draft's timestamp.)
 ```abap
 METHOD check_existing_draft.
@@ -329,7 +329,7 @@ Three branches:
 The shadow-table name (`cabnk_bank_d`) is BO-specific. To find it for your own BO, check the `draft table` keyword in its behavior definition.
 :::
 
-#### 3. Acquiring a Fresh Draft
+### 3. Acquiring a Fresh Draft
 A new draft is created by the `Edit` action. `%param-preserve_changes = abap_true` tells RAP to keep any existing draft instead of overwriting it — defensive even though we already checked.
 ```abap
 METHOD draft_acquire.
@@ -355,7 +355,7 @@ ENDMETHOD.
 ```
 After a successful `Edit`, the lock is held by the RAP framework and a row exists in the draft-shadow table. `draft_open = abap_true` switches the view's inputs from read-only to editable.
 
-#### 4. Resuming an Existing Draft
+### 4. Resuming an Existing Draft
 If the user picks **Resume Draft**, the `Resume` action re-takes the lock on the existing draft without overwriting its contents.
 ```abap
 METHOD draft_resume.
@@ -373,7 +373,7 @@ METHOD draft_resume.
 ENDMETHOD.
 ```
 
-#### 5. Reading the Draft into the App's Fields
+### 5. Reading the Draft into the App's Fields
 Once a draft is open, read it with `%is_draft = if_abap_behv=>mk-on` so the inputs bind to draft values rather than the active record.
 ```abap
 METHOD draft_read.
@@ -394,7 +394,7 @@ METHOD draft_read.
 ENDMETHOD.
 ```
 
-#### 6. Saving Typed Values Back to the Draft
+### 6. Saving Typed Values Back to the Draft
 The fields are bound (`client->_bind( … )`), so user input lives in ABAP variables on the next roundtrip. To persist them in the draft, push them back with `UPDATE FIELDS`.
 ```abap
 METHOD save_current_to_draft.
@@ -418,7 +418,7 @@ ENDMETHOD.
 ```
 This helper is called before **Activate** and before exiting edit mode with **Keep Draft**, so nothing the user typed is silently dropped.
 
-#### 7. Exiting Edit Mode — Compare Draft vs Active
+### 7. Exiting Edit Mode — Compare Draft vs Active
 Switching back to VIEW asks: did the user actually change anything? If not, just discard the draft silently. If yes, show a popup so the user explicitly chooses Keep or Discard.
 ```abap
 METHOD has_changes_vs_active.
@@ -439,7 +439,7 @@ ENDMETHOD.
 ```
 `on_event_edit_toggle` uses this to decide between a silent discard and the **Keep Draft / Discard Draft** popup. Picking **Keep Draft** runs `save_current_to_draft( )` and leaves the draft on the server for later. Picking **Discard Draft** executes the `Discard` action, releasing the lock and reverting the inputs to the active record.
 
-#### 8. Activating — Promote the Draft to Active
+### 8. Activating — Promote the Draft to Active
 Activation is two steps: first save the currently typed values into the draft, then run the `Activate` action. On success the database row is updated and the app returns to VIEW mode.
 ```abap
 METHOD on_event_activate.
@@ -469,7 +469,7 @@ METHOD on_event_activate.
 ENDMETHOD.
 ```
 
-#### 9. The Event Map and the View
+### 9. The Event Map and the View
 The dispatcher in `z2ui5_if_app~main` wires UI events to the methods above:
 ```abap
 IF client->check_on_init( ) OR client->check_on_navigated( ).
@@ -490,7 +490,7 @@ ENDIF.
 ```
 The view itself is a single `simple_form` whose `editable` and per-input `enabled` flags follow `draft_open`. The primary button label and type flip between **Switch to Edit Mode** and **Switch to View Mode** based on `mode`, and **Activate** is only enabled while a draft is open.
 
-#### Full Snippet
+### Full Snippet
 
 ::: details Full working example — `z2ui5_cl_sample_draft`
 ```abap

@@ -114,7 +114,7 @@ call without the indirection. If the global is missing the frontend logs
 `Z2UI5: 'z2ui5.myFunction' is not a function` rather than failing silently.
 :::
 
-#### Why It Is a Security Risk
+### Why It Is a Security Risk
 
 Custom JS works by sending a JavaScript string from the ABAP backend to the frontend, where it is injected into the DOM as an HTML `<script>` tag and executed in the user's browser. This pattern is essentially a **self-inflicted Cross-Site Scripting (XSS) vector** and breaks several security assumptions UI5 normally protects you from:
 
@@ -125,7 +125,7 @@ Custom JS works by sending a JavaScript string from the ABAP backend to the fron
 - **Hard to audit.** JavaScript assembled in ABAP strings is not covered by frontend linters, static analysis, or code review tools that normally catch dangerous patterns.
 - **No sandboxing.** The script has the same DOM and network access as the rest of the app. There is no isolation boundary.
 
-#### Safer Alternatives
+### Safer Alternatives
 
 Before reaching for raw JavaScript, consider:
 
@@ -134,7 +134,7 @@ Before reaching for raw JavaScript, consider:
 - Build a proper **[Custom Control](/advanced/extensibility/custom_control)** with a defined interface and reviewable frontend code.
 - Use the dedicated cookbook pages for [Clipboard](/cookbook/browser_interaction/clipboard), [Focus](/cookbook/browser_interaction/focus), [Scrolling](/cookbook/browser_interaction/scrolling), [Timer](/cookbook/browser_interaction/timer), [URL Handling](/cookbook/browser_interaction/url_handling), and similar.
 
-#### How It Works (If You Still Need It)
+### How It Works (If You Still Need It)
 
 If you accept the risks and decide to use it anyway, the idea is: send the JavaScript function with the view to the frontend, then call it later when an event fires.
 
@@ -176,7 +176,7 @@ ENDMETHOD.
 If you must use this, ensure the JavaScript content is **entirely static and hardcoded**. Never concatenate user input, database values, translatable texts, or any other dynamic data into the script string — doing so turns the feature into a direct XSS vulnerability.
 :::
 
-#### Embedding JavaScript Directly in an XML View
+### Embedding JavaScript Directly in an XML View
 
 ::: warning Also Not Recommended
 The same security considerations apply: any `<script>` element embedded in an XML view runs with full app privileges and bypasses UI5's output encoding. Prefer a [Custom Control](/advanced/extensibility/custom_control) or one of the built-in events instead.

@@ -13,7 +13,7 @@ See the official UI5 references for the underlying mechanics:
 [`template:repeat`](https://sapui5.hana.ondemand.com/sdk/#/topic/512e545ba66f4214ba0de1eb56f319e1),
 [`template:if`](https://sapui5.hana.ondemand.com/sdk/#/topic/fc185952184c48618ef46306a1517f8c).
 
-#### How It Works
+### How It Works
 
 Templating happens **once**, at view instantiation, against a JSON model. The preprocessor walks the XML, evaluates each `template:` instruction against that model, and replaces the instruction with the resulting XML. After that the control tree is built from the expanded XML and normal data binding takes over.
 
@@ -31,7 +31,7 @@ abap2UI5 wires up the templating model for you. Every variable you bind with `cl
 
 The `template>` model is the templating engine's view of the data — distinct from the default model used by runtime bindings like `{MT_DATA}`.
 
-#### `template:repeat` — Loops
+### `template:repeat` — Loops
 
 `template:repeat` clones its children once per row of the bound list. Use it when the **structure** of the view (e.g. which columns a table has) depends on data:
 
@@ -79,7 +79,7 @@ Notes on the snippet:
 
 The full sample is `Z2UI5_CL_SMP_APP_173`.
 
-#### `template:if` / `template:then` / `template:else` — Conditionals
+### `template:if` / `template:then` / `template:else` — Conditionals
 
 `template:if` evaluates an expression against the templating model and keeps or drops its children accordingly. With a `template:then` / `template:else` pair you get a two-branch switch:
 
@@ -105,7 +105,7 @@ The test argument follows the same rules as in UI5: any binding expression is fi
 
 `template:elseif` is also supported by UI5, and needs nothing extra here: it is the same `ele` call with a different name, `ns = template` and a `test` attribute. That is the point of the builder — every templating instruction UI5 has is reachable the moment UI5 has it, without waiting for a method.
 
-#### Re-rendering
+### Re-rendering
 
 Because templating runs once, the view must be rebuilt for changes in the templating model to take effect. There are two strategies:
 
@@ -166,7 +166,7 @@ client->nest_view_display( val           = nested->stringify( )
 
 `nest_view_display` targets a control in the existing view by id (`test`) and appends/replaces the nested view there. To refresh the templated piece on a data change, call `nest_view_display` again from the event handler — the main view is left untouched.
 
-#### Templating vs ABAP-side Composition
+### Templating vs ABAP-side Composition
 
 The two demo apps both build *dynamic* views, but with different mechanics. Pick based on what the dynamic part actually is:
 
@@ -179,7 +179,7 @@ The two demo apps both build *dynamic* views, but with different mechanics. Pick
 
 Plain ABAP control flow covers most cases and is easier to debug. Reach for `template:` when you want the expansion to live in the view (closer to standard UI5 patterns) or when you are mapping a metadata-style structure onto controls.
 
-#### Tips
+### Tips
 
 - Always bind the data that drives a template (`client->_bind`) **before** the builder call that references it. The binding registers the path that `{template>/...}` resolves against.
 - Inside `template:repeat`, prefer `{var>FIELD}` over deeper paths — it keeps the body readable and lets you nest repeats with distinct `var` names (`L0`, `L1`, ...) without collisions.

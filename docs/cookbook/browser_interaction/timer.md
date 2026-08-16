@@ -18,7 +18,7 @@ client->follow_up_action(
 
 After 2 seconds the browser triggers a backend roundtrip with the event name `REFRESH`, which you handle via `check_on_event` like any other event.
 
-#### Periodic Refresh
+### Periodic Refresh
 
 To get a repeating timer, simply re-arm it at the end of each handler:
 
@@ -66,7 +66,7 @@ ENDCLASS.
 
 The counter increments every 2 seconds. To stop the loop, simply don't re-arm the timer in the handler.
 
-#### One-Shot Timer
+### One-Shot Timer
 
 A single `start_timer` call fires once — perfect for a deferred action like opening a new tab after a short delay:
 
@@ -80,7 +80,7 @@ WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
                   t_arg = VALUE #( ( `https://www.google.com/search?q=abap2ui5` ) ) ).
 ```
 
-#### Replacing a Pending Timer
+### Replacing a Pending Timer
 
 There is one timer at a time. Calling `start_timer` again before the previous one fires replaces it — useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke.
 

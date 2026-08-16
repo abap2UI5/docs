@@ -7,7 +7,7 @@ By default, abap2UI5 runs **stateless** like any other UI5 freestyle app, with o
 
 For the small set of cases where a sticky backend session is needed — classic GUI-style locking, heavy session-bound resources, RFC connections that must stay open — abap2UI5 can also run in **stateful** mode.
 
-#### Stateless (default)
+## Stateless (default)
 | Phase | What happens |
 |---|---|
 | **Request** | Browser sends the serialized app state to the backend |
@@ -16,7 +16,7 @@ For the small set of cases where a sticky backend session is needed — classic 
 
 No work process is pinned, no enqueue is held, no `SET/GET` parameters survive. This is the recommended default for productive apps.
 
-#### Stateful Sessions
+## Stateful Sessions
 For private and on-premise systems, you can switch a running app to stateful mode. The same work process then handles every subsequent roundtrip of *this* user, and ABAP globals, locks, and open RFC connections survive between events:
 
 ```abap
@@ -33,7 +33,7 @@ client->set_session_stateful( abap_false ).
 
 See `Z2UI5_CL_SMPS_APP_485` (sticky session with locks) and `Z2UI5_CL_SMPS_APP_486` (sticky session) in the [samples-stack repository](https://github.com/abap2UI5/samples-stack) for complete examples.
 
-#### When to Use It
+## When to Use It
 Stateful sessions are useful when:
 
 - You need a **classic SAP-GUI-style enqueue** that survives between user interactions — see [Locks → Stateful Session](./lock.md#_5-stateful-session).
@@ -42,7 +42,7 @@ Stateful sessions are useful when:
 
 For everything else — and especially anything user-facing on a busy system — stick with the stateless default and use [optimistic checks](./lock.md#_3-optimistic-check) or [soft locks](./lock.md#_6-soft-lock) instead.
 
-#### Trade-offs
+## Trade-offs
 ::: warning
 A stateful session **pins one work process per active user** for the lifetime of the app. On a system with a handful of dialog work processes, a few dozen idle stateful sessions are enough to starve everyone else. Use it sparingly, on internal low-traffic apps, and always pair `set_session_stateful( )` with an explicit `set_session_stateful( abap_false )` on every exit path — otherwise a leaked enqueue or a pinned work process blocks future users until the session times out.
 :::

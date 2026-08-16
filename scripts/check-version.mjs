@@ -64,7 +64,15 @@ const SITES = [
   {
     file: 'docs/resources/changelog.md',
     what: 'the newest release heading',
-    re: /^###\s+(\d+\.\d+\.\d+)\s*$/m,
+    /* Any heading level, because the LEVEL is not what this gate is about and
+     * pinning it made the gate fail for the wrong reason: closing up the
+     * heading-level gaps across the site turned these from `###` into `##`,
+     * and a check on the release NUMBER went red over a `#`. It reported that
+     * honestly - "the file changed shape, fix the pattern" - rather than
+     * silently matching nothing, which is the failure mode it was written to
+     * avoid. Still: a gate that fires on a change it does not care about is a
+     * gate people learn to route around. */
+    re: /^#{2,4}\s+(\d+\.\d+\.\d+)\s*$/m,
   },
 ];
 

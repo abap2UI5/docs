@@ -8,7 +8,7 @@ samples:
 
 Set the text the browser shows in the tab and window title bar.
 
-#### Standalone
+### Standalone
 
 To change the title after the app is running — for example, to reflect the current record — call the `set_title` frontend event from the backend:
 
@@ -41,7 +41,7 @@ METHOD z2ui5_if_app~main.
   ENDMETHOD.
 ```
 
-#### Launchpad
+### Launchpad
 
 When the app runs inside an SAP Fiori Launchpad shell, use the dedicated `set_title_launchpad` event instead. It forwards the title to the shell's `ShellUIService` rather than setting `document.title`:
 

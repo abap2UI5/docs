@@ -9,7 +9,7 @@ abap2UI5 keeps frontend logic minimal: no business logic runs in the browser. Ev
 
 We've tested abap2UI5 with tables holding large numbers of entries and columns, so you can build your app with confidence — performance shouldn't be a concern.
 
-### Call `view_display( )` once
+## Call `view_display( )` once
 
 The biggest optimization is **not** rebuilding the view on every event:
 
@@ -55,7 +55,7 @@ the call; nothing replaces it.
 :::
 
 
-### Suggestions
+## Suggestions
 Want to tune your app further? A few tips:
 - Call `client->view_display` only when needed — on initialization and when the view structure changes. For a pure data change, set the attribute and return; the framework pushes the delta and UI5 re-renders only the controls that changed.
 
@@ -63,5 +63,5 @@ Want to tune your app further? A few tips:
 - Declare public attributes in your app class only for variables shown on the frontend. This keeps the framework from reading unused values.
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 
-### Performance Issues?
+## Performance Issues?
 If you hit performance issues, build a sample and submit a pull request to the samples repository. We're glad to analyze it and see whether abap2UI5 can be made even faster.

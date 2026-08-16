@@ -8,7 +8,7 @@ samples:
 
 Beyond plain messages, abap2UI5 ships dedicated popups and fallbacks for handling exceptions and unexpected failures.
 
-#### Error Popup
+### Error Popup
 To display full details of your exception:
 ```abap
 METHOD z2ui5_if_app~main.
@@ -22,7 +22,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Uncaught Errors
+### Uncaught Errors
 When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try this:
 
 ```abap
@@ -33,7 +33,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Uncatchable Exceptions / Short Dumps
+### Uncatchable Exceptions / Short Dumps
 What happens if your code raises uncatchable exceptions? The backend dumps, and the frontend shows its unified **fatal-error overlay**: a dialog that extracts and displays the server's error details, with a **Details** view, a **Copy** button for the error text and **Refresh / Logout** actions to restart. Processing halts until the user restarts the app from that dialog. Reserve this for unexpected cases:
 
 ```abap

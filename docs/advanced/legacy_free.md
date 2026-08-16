@@ -5,11 +5,11 @@ outline: [2, 4]
 
 The abap2UI5 frontend is also available as a **legacy-free** variant, bootstrapped from the new legacy-free distribution of OpenUI5 (`1.142.0-legacy-free`) — the build without `jQuery.sap.*`, synchronous APIs, and other deprecated globals. It is essentially a preview of the API surface that UI5 2.x will enforce.
 
-### What is UI5 Legacy-Free?
+## What is UI5 Legacy-Free?
 
 `*-legacy-free` is a parallel distribution of OpenUI5/SAPUI5 (starting with the 1.136.x line) that ships the same controls and APIs as the regular 1.x build, but with everything deprecated removed up front. In practice that means no `jQuery.sap.*`, no `sap.ui.getCore()`, no synchronous module loading (`sap.ui.requireSync`, sync XHR), no global view/controller factories, no jQuery bundled into the core, and none of the compatibility shims that 1.x kept around for backwards compatibility.
 
-### Why It Matters for the Future
+## Why It Matters for the Future
 
 UI5 2.x — the next major release line — will enforce exactly this surface. By developing against the legacy-free build today, the project gets several things at once:
 
@@ -21,7 +21,7 @@ UI5 2.x — the next major release line — will enforce exactly this surface. B
 
 In short: the legacy-free build is the bridge between today's UI5 1.x ecosystem and tomorrow's UI5 2.x. Building the abap2UI5 frontend on it now means the framework is ready for 2.x the day it lands, instead of chasing it afterwards.
 
-### Installation
+## Installation
 
 The legacy-free frontend ships as the `v2` branches of the [frontend repository](https://github.com/abap2UI5/frontend). Pull the branch that matches your system into your ABAP system with [abapGit](https://abapgit.org) and activate — there is no separate build step:
 
@@ -36,13 +36,13 @@ The v2 branches install the frontend under the same `z2ui5` name as the classic 
 The former separate repository `abap2UI5/frontend-legacy-free` is obsolete. The legacy-free frontend is now maintained on the `*_v2` branches of the [frontend repository](https://github.com/abap2UI5/frontend), generated from the same single source as the classic variant.
 :::
 
-### Why Try the v2 Version?
+## Why Try the v2 Version?
 
 - **Future-proof.** Apps already run on what UI5 2.x will require — no big-bang migration later.
 - **Smaller and faster.** No jQuery and no compatibility layers means a leaner core and quicker startup.
 - **Cleaner foundation.** Modern async patterns, no hidden globals, better alignment with current web standards.
 
-### Learn More
+## Learn More
 
 - [Available OpenUI5 versions](https://sdk.openui5.org/versionoverview.html) (incl. `*-legacy-free` builds)
 - [Explore SAPUI5/OpenUI5 1.136.x-legacy-free (SAP Community)](https://community.sap.com/t5/technology-blog-posts-by-sap/explore-sapui5-openui5-1-136-x-legacy-free/ba-p/14103271)

@@ -7,7 +7,7 @@ On SAP HANA you can match strings tolerantly — typos, missing letters, transpo
 
 Wire it to a UI5 `search_field` in the table toolbar and you get an ALV-style search that forgives the user's typing.
 
-#### Minimal Example
+## Minimal Example
 
 ```abap
 CLASS z2ui5_cl_sample_fuzzy DEFINITION PUBLIC.
@@ -119,7 +119,7 @@ ENDCLASS.
 
 Typing `Muller` matches `Müller`, `Hambrug` matches `Hamburg` — the lower the threshold, the more lenient (and the noisier) the result.
 
-#### Tuning the Threshold
+## Tuning the Threshold
 
 | Threshold | Behaviour                                              |
 | --------- | ------------------------------------------------------ |
@@ -129,7 +129,7 @@ Typing `Muller` matches `Müller`, `Hambrug` matches `Hamburg` — the lower the
 | `0.7`     | Lenient — short words start matching unrelated rows    |
 | `< 0.7`   | Mostly noise on real data                              |
 
-#### Multiple Columns
+## Multiple Columns
 
 Pass a list of columns to search several fields at once — HANA returns the best score across them:
 
@@ -137,7 +137,7 @@ Pass a list of columns to search several fields at once — HANA returns the bes
 WHERE contains( ( name1, ort01, stras ), @mv_search, 'FUZZY(0.8)' ) = 1
 ```
 
-#### Returning the Score
+## Returning the Score
 
 To order rows by relevance, expose the fuzzy score with `SCORE( )` and sort on it:
 

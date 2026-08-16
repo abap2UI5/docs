@@ -5,7 +5,7 @@ outline: [2, 4]
 
 Technically, abap2UI5 apps are standard UI5 freestyle applications. License them the same way you license other UI5 apps in your organization. abap2UI5 itself is MIT licensed (free for commercial use).
 
-### MIT
+## MIT
 
 MIT License
 

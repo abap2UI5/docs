@@ -6,7 +6,7 @@ outline: [2, 4]
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
-### 1.143.0
+## 1.143.0
 2026-08-16
 - Added `z2ui5_cl_ui5_view_builder`, the view builder this documentation is written against: `factory( )` / `ele( )` / `tag( )` / `a( )` / `end( )` / `stringify( )`, with every UI5 control and property reachable because the builder knows none of them by name. `z2ui5_cl_xml_view` is frozen, not removed — it ships unchanged and keeps working
 - The model is pushed **automatically** when an event roundtrip changed it. The framework compares the model before and after `main( )` and sends it to every open view slot when it differs, so a handler can no longer render stale by forgetting a call. An unchanged model sends no payload at all
@@ -37,7 +37,7 @@ shipping, and for the full removal list with migration notes.
 - Curated formatter: `round2DP`, `dimensions`, `stockStatusState`, `stockStatusIcon`, `deliveryStatusState`. Rounding, joining and status-to-`ValueState` mapping are things ABAP finishes — bind the result. The date helpers and `expandInlineIcons` remain
 - `render_documentation( )`, `render_system_popup( )` and `render_contribution( )` from `z2ui5_cl_ui5_app_start`, with `cs_event-open_info`, `cs_event-close` and `cs_event-open_debug` — internals of the framework's own start page
 
-### 1.142.0
+## 1.142.0
 2026-07-20
 - Added frontend action functions: `control_by_id`, `binding_call`
 - Added new frontend events, e.g. `SYSTEM_LOGOUT` and `KEYBOARD_SET_MODE`
@@ -52,7 +52,7 @@ shipping, and for the full removal list with migration notes.
 - `z2ui5_cl_util_api` and its environment-specific variants `z2ui5_cl_util_api_c` / `z2ui5_cl_util_api_s`. The methods were kept: `bal_*`, `tr_*`, `conv_get_itab_by_xlsx` / `conv_get_xlsx_by_itab` and `source_get_method` are now on `z2ui5_cl_util_ext`, the remaining ones on `z2ui5_cl_util`. Replace the `z2ui5_cl_util_api=>` prefix with the class that now holds the method
 - `z2ui5_cl_pop_bal` (BAL message popup) — removed without a replacement. The other built-in popups were not removed; they moved into the frozen package and keep working unchanged
 
-### 1.141.0
+## 1.141.0
 2025-12-14
 - Added Image Editor popup for image manipulation
 - Added Camera Selector control with facing mode support
@@ -65,7 +65,7 @@ shipping, and for the full removal list with migration notes.
 - Code quality improvements: refactoring, formatting, and ABAP Cloud ATC findings
 - Various bug fixes and performance improvements
 
-### 1.140.0
+## 1.140.0
 2025-09-15
 - New User Exit Logic with greater customization options
 - Added Data Binding with References
@@ -75,14 +75,14 @@ shipping, and for the full removal list with migration notes.
 - Bug fixes for Stateful Functionality
 - Various bug fixes and performance improvements
 
-### 1.139.0
+## 1.139.0
 2025-06-26
 - Improved documentation
 - Added multiple new control properties
 - Fixed Launchpad compatibility issues
 - Various bug fixes and performance improvements
 
-### 1.138.0
+## 1.138.0
 2025-03-31
 - Introduced a Copy to Clipboard feature for improved usability
 - Enhanced the BAL message popup with multiple improvements
@@ -90,7 +90,7 @@ shipping, and for the full removal list with migration notes.
 - Fixed Launchpad compatibility problems with older UI5 versions
 - Updated the bundled ajson library to the latest version
 
-### 1.137.0
+## 1.137.0
 2025-01-26
 - Introduced App State feature
 - Added App State Persistence for Navigation
@@ -99,7 +99,7 @@ shipping, and for the full removal list with migration notes.
 - Ensured Launchpad compatibility with OpenUI5 2.x
 - Multiple bug fixes and new properties added
 
-### 1.136.0
+## 1.136.0
 2024-12-15
 - Extended Model Handling with OData Support
 - UI5 2.x Compatibility
@@ -109,7 +109,7 @@ shipping, and for the full removal list with migration notes.
 - SetMaxWidth for Launchpads
 - Multiple bug fixes and new properties added
 
-### 1.135.0
+## 1.135.0
 2024-10-27
 - Stateful Session Handling
 - Object List Item now supports "type" attribute
@@ -118,7 +118,7 @@ shipping, and for the full removal list with migration notes.
 - Improved Frontend File Organization
 - Various bug fixes for Launchpad compatibility
 
-### 1.134.0
+## 1.134.0
 2024-09-22
 - Added Tile Controls
 - Added Color Control
@@ -127,7 +127,7 @@ shipping, and for the full removal list with migration notes.
 - Separated Custom Controls & Layouts from abap2UI5 Core
 - Multiple bug fixes and new properties added
 
-### 1.133.0
+## 1.133.0
 2024-08-24
 - Added Controls & Properties for Splitter, Grid, Generic Tag, Content Areas, Step Input, News Content, Numeric Content, etc.
 - Added Shell Bar Properties & Events
@@ -137,7 +137,7 @@ shipping, and for the full removal list with migration notes.
 - Fixed Low Release Compatibility of Method to Read Fix Values
 - Multiple bug fixes and new properties added
 
-### 1.132.0
+## 1.132.0
 2024-07-28
 - Added Properties for Multi Input, Slider, Search Field, etc.
 - Added Date Range Selection Control, etc.
@@ -147,14 +147,14 @@ shipping, and for the full removal list with migration notes.
 - Fixed ABAP 750 Syntax
 - Multiple bug fixes and new properties added
 
-### 1.131.0
+## 1.131.0
 2024-07-03
 - Added Radio Button, Radio Button Group, Date Range Selector
 - Added Popup Layout V2
 - Fixed Launchpad Title
 - Fixed Syntax for 7.50
 
-### 1.130.0
+## 1.130.0
 2024-06-13
 - Added Wizard Control, Wizard Steps
 - Added Frontend Info CC with Device Information
@@ -162,34 +162,34 @@ shipping, and for the full removal list with migration notes.
 - Fixed Multiple Issues for Focus CC
 - Added Message Strip Visible Property
 
-### 1.129.0
+## 1.129.0
 2024-06-01
 - Added New Attributes for FilterGroupItem Control
 - Added New Attributes for VariantManagement Control
 - Fixed Issues with Data Model & Binding Logic
 - Addressed Fixes for SAP Fiori Launchpad Integration
 
-### 1.128.0
+## 1.128.0
 2024-05-20
 - Fixed Popover and Message Toast Adjustments
 - Fixed Launchpad Compatibility
 - Fixed Data Binding with Generic Data References
 - Added New Properties for the XML View
 
-### 1.127.0
+## 1.127.0
 2024-05-05
 - Added New Properties for Range Slider and Status Indicator
 - Added Message Toast & Message Box Improvements
 - Added Support for Automatic Renaming
 - Bug fixes and small improvements
 
-### 1.126.0
+## 1.126.0
 2024-04-17
 - Fixed XML View Extensions
 - Improved Support for Attributes created with RTTI
 - Updated Spreadsheet CC for OpenUI5 Compatibility
 
-### 1.125.0
+## 1.125.0
 2024-04-06
 - Fixed Binding for Attributes created with RTTI
 - Added XML View Extensions
@@ -197,7 +197,7 @@ shipping, and for the full removal list with migration notes.
 - Added Download base64 Files
 - Added Features for Interactive Charts
 
-### 1.124.0
+## 1.124.0
 2024-04-01
 - Data Binding Improvements
 - Fixed Popup Handling
@@ -205,7 +205,7 @@ shipping, and for the full removal list with migration notes.
 - Added New XML Properties for MultiInput and Table
 - Added Table with Column Menu
 
-### 1.123.0
+## 1.123.0
 2024-03-20
 - Added Card Control
 - Fixed Nested View Data Binding
@@ -213,45 +213,45 @@ shipping, and for the full removal list with migration notes.
 - Added Popover in Popup
 - Added New Control Properties
 
-### 1.122.0
+## 1.122.0
 2024-03-11
 - Added New Control Properties
 - Improved F4-Dialog with Description
 - Fixed JSON Handling for Type P
 - Fixed Launchpad Compatibility for BTP and Title Handling
 
-### 1.121.0
+## 1.121.0
 2024-03-01
 - Fixed Launchpad Compatibility
 - Added Custom Control Message Manager
 - Fixed Issues for low UI5 releases
 
-### 1.120.0
+## 1.120.0
 2024-02-25
 - Added Templating
 - Added Popup & Layout Functionality
 - Fixed Debugging Tools XML Output
 - Fixed Messaging
 
-### 1.119.0
+## 1.119.0
 2024-02-16
 - Added Source Code View for Debugging Tools
 - Added New Parameters for the UI5 Tree Control
 - Changed Design for Start Page
 
-### 1.118.0
+## 1.118.0
 2024-02-08
 - Replaced /ui2/cl_json with ajson
 - Fixed Compatibility for Low Releases
 
-### 1.117.0
+## 1.117.0
 2024-02-02
 - Added NavContainer in Popups
 - Added New Properties to XML View
 - Improved POPUP_TO_SELECT (title, sorting, descriptions)
 - Fixed Issues for ABAP for Cloud Readiness
 
-### 1.116.0
+## 1.116.0
 2024-01-26
 - Added StartUp App with Value Help
 - Added Popup Error, Popup Range, Popup Table
@@ -259,18 +259,18 @@ shipping, and for the full removal list with migration notes.
 - Fixed Popup Model Handling
 - Bug fixes
 
-### 1.115.0
+## 1.115.0
 2024-01-19
 - Fixed Binding Logic
 - Added Popups (Confirm, Inform, Select Entry, PDF View, Message View)
 
-### 1.114.0
+## 1.114.0
 2024-01-12
 - Fixed Cross App Navigation
 - Fixed Table Output
 - Changed Debugger Tools
 
-### 1.113.0
+## 1.113.0
 2024-01-03
 - Added New Debugging Tools
 - Changed UI5 Module Loading

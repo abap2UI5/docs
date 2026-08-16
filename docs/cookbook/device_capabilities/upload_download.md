@@ -8,7 +8,7 @@ samples:
 
 abap2UI5 handles file uploads and downloads by sending base64-encoded data over the binding.
 
-#### Upload
+### Upload
 ```abap
 CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 
@@ -47,7 +47,7 @@ CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Download
+### Download
 See also `Z2UI5_CL_SMP_APP_186`:
 ```abap
   METHOD z2ui5_if_app~main.
