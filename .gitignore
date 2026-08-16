@@ -4,3 +4,11 @@ docs/.vitepress/dist
 
 # the sample catalogue, cloned by CI for scripts/link-samples.mjs
 .samples
+
+# generated at build time by scripts/generate-llms.mjs - a projection of the
+# pages next to them, so the only correct copy is the one this build made
+docs/public/llms.txt
+docs/public/llms-full.txt
+docs/public/**/*.md
+# ...except the one that was there first: a hand-written page, not a projection
+!docs/public/media/diagram.md

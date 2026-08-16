@@ -43,10 +43,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = join(ROOT, 'docs');
 const KEEP = process.argv.includes('--keep');
 
+/* `public` is static assets, and since scripts/generate-llms.mjs it also holds
+ * a raw-markdown COPY of every page, written on each build. Walking into it
+ * would check every fence twice and, worse, report the copy under its copied
+ * path - so a page on an allowlist here would be exempt under one name and
+ * reported under the other. */
 const walk = (dir) =>
   readdirSync(dir).flatMap((e) => {
     const p = join(dir, e);
-    if (e === '.vitepress' || e === 'node_modules') return [];
+    if (e === '.vitepress' || e === 'node_modules' || e === 'public') return [];
     return statSync(p).isDirectory() ? walk(p) : [p];
   });
 

@@ -12,13 +12,14 @@
   },
   "homepage": "https://github.com/abap2UI5/docs#readme",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:dev": "node scripts/generate-llms.mjs && vitepress dev docs",
+    "docs:build": "node scripts/generate-llms.mjs && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "check:examples": "node scripts/check-examples.mjs",
     "link:samples": "node scripts/link-samples.mjs",
     "check:samples": "node scripts/link-samples.mjs --check",
-    "check": "npm run docs:build && npm run check:examples && npm run check:samples"
+    "check": "npm run docs:build && npm run check:examples && npm run check:samples",
+    "llms": "node scripts/generate-llms.mjs"
   },
   "devDependencies": {
     "@abap2ui5/linter": "^0.1.1",
