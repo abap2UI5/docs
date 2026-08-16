@@ -19,7 +19,7 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
 
       SELECT FROM I_SalesOrder
        FIELDS salesorder, salesordertype, salesorganization

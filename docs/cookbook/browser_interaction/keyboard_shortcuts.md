@@ -14,7 +14,7 @@ The `keyboard_shortcut` frontend event binds a key combination to a **named back
 ```abap
 METHOD z2ui5_if_app~main.
 
-  IF client->check_on_init( ) OR client->check_on_navigated( ).
+  IF client->check_on_navigated( ).
 
     client->follow_up_action( val   = client->cs_event-keyboard_shortcut
                               t_arg = VALUE #( ( `Ctrl+S` )

@@ -55,7 +55,7 @@ CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `SAVE` ).
       on_event_save( ).
@@ -216,7 +216,7 @@ CLASS z2ui5_cl_sample_lock_2 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `SAVE` ).
       on_event_save( ).
@@ -387,7 +387,7 @@ CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `SAVE` ).
       on_event_save( ).
@@ -531,7 +531,7 @@ CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `SAVE` ).
       on_event_save( ).
@@ -662,7 +662,7 @@ ENDCLASS.
 ## 5. Stateful Session
 For classic SAP GUI-like behaviour, switch the session to stateful and call the lock function module on init. The lock survives subsequent roundtrips as long as the session stays alive:
 ```abap
-IF client->check_on_init( ) OR client->check_on_navigated( ).
+IF client->check_on_navigated( ).
 
   CALL FUNCTION `ENQUEUE_EVVBAK`
     EXPORTING
@@ -744,7 +744,7 @@ CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `SAVE` ).
       on_event_save( ).
@@ -945,7 +945,7 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `SAVE` ).
       on_event_save( ).

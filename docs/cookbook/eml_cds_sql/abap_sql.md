@@ -20,7 +20,7 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
 
       SELECT FROM sflight
         FIELDS carrid, connid, fldate, price, currency
@@ -82,7 +82,7 @@ ENDCLASS.
 
 Bind the search term with `_bind( )` and re-run the `SELECT` on every `SEARCH` event:
 ```abap
-IF client->check_on_init( ) OR client->check_on_navigated( ).
+IF client->check_on_navigated( ).
 
   load_data( ).
   render( ).
