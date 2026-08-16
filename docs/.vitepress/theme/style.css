@@ -9,3 +9,114 @@
     --vp-button-brand-bg-hover: #a83232;
     --vp-button-brand-border-hover: #a83232;
 }
+
+/* ============================================================== compact ===
+ *
+ * A denser reading layout: more prose and more code on a screen, and section
+ * headings that MARK a section rather than announce one.
+ *
+ * Why this is here rather than in the markdown: heading size and heading LEVEL
+ * are two different decisions, and only the second one is the writer's. A page
+ * needs `##` where a section starts, so the outline on the right and every
+ * reading tool see the structure — what that `##` weighs on the page is this
+ * file's business. Anyone tempted to write `####` because `##` "looks too big"
+ * is fixing typography by breaking semantics; the answer is to change a number
+ * here.
+ *
+ * The numbers this replaces come from vitepress 1.6.4,
+ * theme-default/styles/components/vp-doc.css:
+ *
+ *   h2   24px, line-height 32, margin-top 48, padding-top 24, 1px top rule
+ *        = about 105px of vertical chrome per section heading. At the 5.1
+ *          section headings this documentation averages per page, roughly
+ *          535px — a whole laptop screen — of framing per page.
+ *   h3   20px, margin-top 32
+ *   h4   18px
+ *   code line-height 1.7
+ *
+ * Measured effect on rendered document height: model/binding 5385 -> 5057,
+ * get_started/hello_world 6059 -> 5568, expert_more/lock 5797 -> 5431,
+ * get_started/full_example 9115 -> 8260. Six to nine per cent, which is
+ * modest; the visible win is that a code block now tends to CLOSE on screen
+ * instead of running off the bottom.
+ *
+ * Not touched on purpose: the content column stays at its 688px. It looks
+ * like the obvious lever and is not — 96% of the ABAP lines in this
+ * repository are under 81 characters, so widening it buys three percentage
+ * points and costs the line length that makes prose readable.
+ */
+
+/* Section headings. The top rule stays: on a long cookbook page it is what
+ * lets the eye find the next section while scrolling. Its padding does not. */
+.vp-doc h2 {
+  font-size: 19px;
+  line-height: 26px;
+  margin: 32px 0 12px;
+  padding-top: 12px;
+  letter-spacing: -0.01em;
+}
+
+/* The ¶ anchor is positioned against h2's padding, so it moves with it —
+ * otherwise it floats above the text it belongs to. */
+.vp-doc h2 .header-anchor {
+  top: 12px;
+}
+
+.vp-doc h3 {
+  font-size: 16.5px;
+  line-height: 24px;
+  margin: 24px 0 0;
+}
+
+.vp-doc h4 {
+  font-size: 15px;
+  line-height: 22px;
+  margin: 20px 0 0;
+}
+
+/* The page title keeps its rank — it is the one heading that should be
+ * unmistakable — but loses some of its size and the air beneath it.
+ *
+ * The default raises h1 to 32px inside `@media (min-width: 768px)`. A rule
+ * without that media query would win only by source order, which is the kind
+ * of thing that quietly stops being true after a dependency bump — so the
+ * breakpoint is mirrored rather than relied upon. */
+.vp-doc h1 {
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .vp-doc h1 {
+    font-size: 26px;
+    line-height: 34px;
+  }
+}
+
+/* Code. 1.7 is generous for prose and wasteful for a 236-line ABAP listing;
+ * 1.55 keeps the lines separable and shows about 10% more of them per
+ * screen. */
+:root {
+  --vp-code-line-height: 1.55;
+}
+
+.vp-doc div[class*='language-'] pre {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.vp-doc div[class*='language-'] {
+  margin: 14px 0;
+}
+
+/* Paragraph and list rhythm, tightened to match the headings above. */
+.vp-doc p,
+.vp-doc summary {
+  margin: 12px 0;
+}
+
+.vp-doc ul,
+.vp-doc ol {
+  margin: 12px 0;
+}
