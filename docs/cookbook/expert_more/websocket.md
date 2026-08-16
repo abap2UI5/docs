@@ -15,7 +15,7 @@ The building blocks:
 
 Once both channels are configured, any `COMMIT WORK` that fires an AMC publish reaches every connected browser within milliseconds — no polling, no timer.
 
-#### Server Side
+## Server Side
 
 An APC class extending `cl_apc_wsp_ext_stateless_base` binds an AMC consumer when a client connects, so AMC messages are forwarded to that socket. Broadcasting is then a one-liner from anywhere in the system:
 
@@ -28,7 +28,7 @@ lo_producer->send( i_message = `New order arrived` ).
 
 A full reference implementation lives in the [samples-stack repository](https://github.com/abap2UI5/samples-stack) — `Z2UI5_CL_SMPS_APP_489_WS` for the APC handler and `Z2UI5_CL_SMPS_APP_489` for the consuming app.
 
-#### Client Side
+## Client Side
 
 The browser opens the socket via [raw JavaScript](./follow_up_action.md#raw-javascript) embedded in the view. The connection stays open across normal abap2UI5 roundtrips — incoming messages can update a model, trigger a toast, or fire an abap2UI5 event to pull fresh data from the backend:
 
@@ -39,7 +39,7 @@ ws.onmessage = (e) => {
 };
 ```
 
-#### When to Reach For It
+## When to Reach For It
 
 WebSockets cost a permanent connection per user — comparable to a stateful session in resource terms. Use them when push really matters:
 

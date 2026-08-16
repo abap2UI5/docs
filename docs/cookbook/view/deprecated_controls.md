@@ -73,7 +73,7 @@ declared on the view.
 :::
 
 
-#### Next Steps
+### Next Steps
 
 - [Definition](/cookbook/view/definition) — how the XML view is built and where to look controls up
 - [Cheat Sheet](/cookbook/cheat_sheet) — the rules that matter most, on one page

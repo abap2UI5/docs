@@ -11,9 +11,9 @@ Embed your abap2UI5 apps into BTP services like SAP Build Work Zone. The integra
 
 All app logic stays in ABAP — nothing app-specific is deployed to BTP.
 
-### Configuration
+## Configuration
 
-#### Destination
+### Destination
 
 Create this destination in your BTP subaccount (**Connectivity → Destinations**):
 
@@ -28,7 +28,7 @@ Create this destination in your BTP subaccount (**Connectivity → Destinations*
 
 For on-premise systems without direct internet exposure, use Proxy Type `OnPremise` with the SAP Cloud Connector; for production, prefer a principal-propagation or SAMLAssertion setup over basic authentication.
 
-#### Extra Properties
+### Extra Properties
 
 SAP Build Work Zone needs these additional properties to route requests correctly to your ABAP backend:
 
@@ -40,7 +40,7 @@ SAP Build Work Zone needs these additional properties to route requests correctl
 | WebIDEEnabled | `true` | Enables the destination for SAP Business Application Studio |
 | WebIDEUsage | `odata_abap,dev_abap` | Declares supported protocols for development tools |
 
-#### Work Zone Setup
+### Work Zone Setup
 
 1. Subscribe to **SAP Build Work Zone** (standard edition is sufficient) in your subaccount and open the **Site Manager**.
 2. Deploy the connector app from the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization to your subaccount's HTML5 application repository.
@@ -49,7 +49,7 @@ SAP Build Work Zone needs these additional properties to route requests correctl
 
 After that, the tile opens your abap2UI5 app inside the Work Zone shell; the same content is also picked up by [SAP Mobile Start](/configuration/mobile_start).
 
-### Further Reading
+## Further Reading
 The original article series with step-by-step screenshots:
 - [Installation & Configuration of BTP](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-13-installation-lf1re/)
 - [Setup SAP Build Work Zone](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-23-setup-ujdqe/)

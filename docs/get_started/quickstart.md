@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Quickstart
 
-### 1. Installation via abapGit
+## 1. Installation via abapGit
 
 Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org). (New to abapGit? Install it first — see [abapGit](/technical/tools/abapgit); it's the one-time tool used to pull abap2UI5 into your system.)
 
@@ -13,7 +13,7 @@ Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://
 ![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
 :::
 
-### 2. Set Up HTTP Handler and Service
+## 2. Set Up HTTP Handler and Service
 Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
 
 ::: code-group
@@ -60,12 +60,12 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 abap2UI5 talks only to the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
 :::
 
-### 3. First Launch
+## 3. First Launch
 Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
 <img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` to verify your installation, then launch the bundled test app to confirm everything works. That's it — you can now build your own abap2UI5 apps.
 
-### 4. Your First App
+## 4. Your First App
 Build a class on your system:
 ```abap
 CLASS zcl_my_app DEFINITION PUBLIC.

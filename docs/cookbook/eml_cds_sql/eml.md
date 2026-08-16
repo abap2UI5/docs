@@ -5,10 +5,10 @@ outline: [2, 4]
 
 All examples in these docs work without EML. But on a recent ABAP release, you can also use this feature in abap2UI5 apps.
 
-### EML
+## EML
 The Entity Manipulation Language simplifies work with RAP business objects by giving a consistent way to read, create, update, and delete entities.
 
-#### Read
+### Read
 Use `READ ENTITIES` to fetch sales orders and show them in a UI5 table:
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
@@ -73,7 +73,7 @@ CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Modify
+### Modify
 The example below creates a sales order with `MODIFY` inside an abap2UI5 app:
 
 ```abap
@@ -110,7 +110,7 @@ Key Points:
 - EML calls in abap2UI5 apps run outside the RAP framework, so explicit transaction commits (COMMIT ENTITIES) are needed.
 - Restrictions inside the RAP framework, like disallowing direct calls to posting function modules or explicit commits, don't apply to abap2UI5 EML operations. You get more flexibility when handling commits and other actions.
 
-### Failure Handling
+## Failure Handling
 
 EML statements (`MODIFY ENTITIES`, `READ ENTITIES`, `COMMIT ENTITIES`) report problems through the `FAILED` and `REPORTED` structures rather than by raising exceptions. They can also raise classic ABAP exceptions for infrastructure-level failures.
 

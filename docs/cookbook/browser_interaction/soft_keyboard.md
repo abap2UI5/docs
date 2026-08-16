@@ -5,7 +5,7 @@ samples:
 ---
 # Soft Keyboard
 
-#### Hide Soft Keyboard
+### Hide Soft Keyboard
 
 For UI5 input fields, the soft keyboard pops up automatically when an input receives focus. Sometimes — for example, in warehouses with small devices used mainly for barcode scanning — you don't want this behavior.
 

@@ -39,7 +39,7 @@ view->_generic( name = `Button` ns = `sap.m`
 ```
 :::
 
-#### Next Steps
+## Next Steps
 
 - [Overview](/cookbook/overview) — the full map of cookbook topics
 - [Common Failures](/cookbook/troubleshooting/common_failures) — symptoms and their usual causes

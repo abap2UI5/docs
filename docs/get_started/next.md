@@ -5,7 +5,7 @@ outline: [2, 4]
 
 You've installed abap2UI5 and built your first app. From here, pick the direction that fits your goals.
 
-#### Sample Apps
+## Sample Apps
 With hundreds of samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5. Browse tables, lists, trees, and other UI5 controls — copy and paste snippets to speed up your own work:
 
 Looking for one in particular? The [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) lists every app on one page with the words you would search it by, so `Ctrl+F` for `f4`, `tree` or `nav_app_call` lands on the class that does it. The [Cookbook](/cookbook/overview) links the same apps from the page that explains the pattern.
@@ -18,17 +18,17 @@ _No system at hand? Run the samples directly [in your browser](https://abap2ui5.
 The samples evolve all the time. Have one to share? Open a PR so others can learn from it.
 :::
 
-#### Tooling
+## Tooling
 Optional, and worth the ten minutes: a project [template](https://github.com/abap2UI5/app-template) with the checks already wired up, a [linter](https://github.com/abap2UI5/linter) that finds broken views without a system, an [extension](https://github.com/abap2UI5/vscode-extension) that runs your app on `F9` next to the code, and an [MCP server](https://github.com/abap2UI5/ai-mcp) that lets an AI agent build and *look at* the app. See [Tooling](/get_started/tooling).
 
-#### Development
+## Development
 Build views, handle events, share data, and work with tables. The [Cookbook](/cookbook/overview) walks through the patterns you need for everyday work — start with the [Life Cycle](/cookbook/event_navigation/life_cycle) page.
 
-#### Configuration
+## Configuration
 Before going live, set up security, performance tuning, Launchpad integration, and more. Start with the [Configuration guide](/configuration/setup).
 
-#### Add-ons
+## Add-ons
 Extend your apps with community-built add-ons for layout handling, charts, table maintenance, and more. See the [Add-ons page](/advanced/addons).
 
-#### Real-World Use
+## Real-World Use
 See ready-to-use apps, real-world scenarios, and companies already running on abap2UI5 on the [Who Uses abap2UI5](/resources/who_uses) page.

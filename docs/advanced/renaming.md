@@ -10,7 +10,7 @@ prefix, which is what makes several installations in one system possible.
 
 ## The `z2ui5` Namespace
 
-#### Why a Prefix and Not a Package
+### Why a Prefix and Not a Package
 ABAP has no package manager. Every object abapGit pulls is created **globally**
 in the system, so two installations cannot hide behind their package the way two
 npm modules hide behind `node_modules`. The only thing that keeps objects apart
@@ -29,7 +29,7 @@ will overwrite yours.
 | Exception class | `z2ui5_cx_*` | `z2ui5_cx_ui5_util_error` |
 | DDIC table | `z2ui5_t_*` | `z2ui5_t_01` |
 
-#### The Second Segment
+### The Second Segment
 The scheme the abap2UI5 repositories share is
 `z2ui5_<type>_<segment>_<object>` — a name has one more part than the prefix
 suggests:
@@ -97,7 +97,7 @@ segment. abaplint's own naming rule only checks the `Z2UI5_` prefix, so without
 that gate a new segment would drift in unnoticed.
 :::
 
-#### Package Layout
+### Package Layout
 The prefix is flat, the packages are not. abapGit is configured with
 `FOLDER_LOGIC=PREFIX`, so the folders of a repository become the package
 hierarchy in your system. For the framework repository that is:
@@ -112,7 +112,7 @@ hierarchy in your system. For the framework repository that is:
 The package a class sits in is the honest answer to "may I use this?": `src/02`
 yes, `src/01` no, `src/99` only if your app already does.
 
-#### Name Length
+### Name Length
 ABAP object names are limited to 30 characters, and abap2UI5 does not spend all
 of them: every object name in `src/` stays at **25 characters or less**. The
 remaining five are headroom for renaming — a namespace of up to 10 characters
@@ -122,7 +122,7 @@ This is why the generated frontend classes carry compressed names like
 `z2ui5_cl_ui5f_scrfocus_js` rather than spelled-out ones: the generator caps them
 and fails rather than truncating silently.
 
-#### The Frontend Namespace
+### The Frontend Namespace
 `z2ui5` exists a second time — in the browser, as the UI5 module namespace. It is
 a **different namespace that happens to share the name**, and it is not an ABAP
 object at all:
@@ -140,7 +140,7 @@ installation, renamed or not. That is deliberate: the frontend namespace lives
 inside one browser page, where only one abap2UI5 installation is ever loaded, so
 there is nothing for it to collide with.
 
-#### Your Own Objects
+### Your Own Objects
 Nothing about the framework's naming applies to your apps. An app is a class in
 your own namespace that implements `z2ui5_if_app`:
 
@@ -166,7 +166,7 @@ requirements, like:
 abap2UI5 works with the abaplint renaming feature and supports namespaces up to
 10 characters, e.g., `zabap2ui5`.
 
-#### Why Rename?
+### Why Rename?
 Because objects are global, a system can hold only **one** version of abap2UI5 —
 and every app in the system is forced to use it. Pulling the latest version can
 then break existing apps. Public API changes are kept to a minimum, but a
@@ -178,7 +178,7 @@ and upgrade each installation at its own pace. At the app level, you simply
 implement the renamed app interface — e.g., `z2ui5_sd_if_app` or `z2411_if_app`
 instead of `z2ui5_if_app`.
 
-#### How It Works
+### How It Works
 [abaplint](https://abaplint.org) can rename ABAP artifacts across a whole repository: you define rename patterns (old name → new name, including regular expressions) in an abaplint configuration, and `abaplint --rename` rewrites every class, interface, and reference consistently, writing the result to an output folder:
 
 ```jsonc
@@ -192,7 +192,7 @@ instead of `z2ui5_if_app`.
 
 The renamed copy is a complete, installable abapGit project under your own namespace — install it side by side with the original, pin it to a release, or ship it inside your product. The abap2UI5 CI runs this transformation on every change (`npm run rename`, workflow `test_rename.yaml`) to guarantee the codebase stays renameable.
 
-#### Step-by-Step Guide
+### Step-by-Step Guide
 Everything is already set up in the main repository: the on-demand GitHub Action `build_rename` renames all artifacts to a namespace of your choice and pushes the result as a ready-to-install branch. Renaming abap2UI5 takes just two steps:
 
 1. **Fork** the [abap2UI5 repository](https://github.com/abap2UI5/abap2UI5)
@@ -202,7 +202,7 @@ The workflow runs `abaplint --rename` with the checked-in configuration `.github
 
 To upgrade an installation later, sync your fork with upstream and re-run the workflow with the same name: the branch is updated to the current state (nothing is pushed when there are no content changes), and you simply pull again with abapGit.
 
-#### What Renaming Does Not Cover
+### What Renaming Does Not Cover
 abaplint rewrites object names and every reference the compiler can see. Three
 things fall outside that, and it is worth knowing them before you ship a renamed
 installation.
@@ -236,9 +236,9 @@ such as `/ZZZ/` is a regular expression away in the abaplint configuration, but
 it is not what the workflow builds, and the namespace has to exist in the target
 system before you can import objects into it.
 
-#### Renaming in Practice: ajson
+### Renaming in Practice: ajson
 abap2UI5 itself relies on this feature: its JSON handling comes from the open-source project [ajson](https://github.com/sbcgua/ajson), which is integrated under the `z2ui5` namespace via renaming — so there are no collisions if you pull both abap2UI5 and ajson separately into the same system. A GitHub Action in the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository checks weekly for upstream changes and automatically creates a pull request with the latest ajson version renamed to `z2ui5`. abapGit bundles ajson under its own namespace the same way — renaming with abaplint also makes it possible to integrate open-source projects into each other.
 
-#### Further Reading
+### Further Reading
 - [Automagic standalone renaming of ABAP objects](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
 - [Renaming of ABAP Artifacts — The Power of abaplint and abapGit in ABAP Development](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)

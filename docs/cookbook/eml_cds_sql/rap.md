@@ -5,7 +5,7 @@ outline: [2, 4]
 
 abap2UI5 is OData/RAP-agnostic — it doesn't care where data lives. You keep all your RAP logic (validations, determinations, actions, draft tables); only the UI layer is different — instead of a Fiori Elements frontend, you build the view in ABAP.
 
-### RAP is a Programming Model — abap2UI5 is Not
+## RAP is a Programming Model — abap2UI5 is Not
 
 **RAP (RESTful Application Programming Model)** is a full-stack programming model. It prescribes how you design, expose, and consume business objects: you define entities with CDS views, declare their behavior in Behavior Definitions (BDEFs), implement handlers in Behavior Implementation classes, and expose everything as an OData V4 service consumed by a Fiori Elements frontend. Every layer is part of the model.
 
@@ -13,7 +13,7 @@ abap2UI5 is OData/RAP-agnostic — it doesn't care where data lives. You keep al
 
 This distinction matters: RAP defines the architecture *around* your application. abap2UI5 only defines how the UI is built *inside* your ABAP class.
 
-### abap2UI5 is Agnostic
+## abap2UI5 is Agnostic
 
 Because abap2UI5 imposes no access layer, you pick whatever fits:
 
@@ -28,7 +28,7 @@ Because abap2UI5 imposes no access layer, you pick whatever fits:
 
 Nothing is excluded. The abap2UI5 controller is a plain ABAP class — any statement that is valid in ABAP is valid there.
 
-### Using RAP Functionality from Outside
+## Using RAP Functionality from Outside
 
 When you call EML from inside the RAP framework (e.g., from a Behavior Implementation), the framework enforces its own rules: no explicit `COMMIT WORK`, no direct database modifications, controlled side effects.
 

@@ -7,11 +7,11 @@ You can build your own UI5 custom controls and use them in abap2UI5 apps.
 
 First, set up your VS Code environment with the abap2UI5 frontend artifacts, following the [Frontend](/advanced/extensibility/frontend) page.
 
-#### Frontend
+## Frontend
 
 Write the JavaScript for your new custom control. Each custom control lives in its own file under [app/webapp/cc/](https://github.com/abap2UI5/abap2UI5/tree/main/app/webapp/cc) — copy an existing one (e.g. `Timer.js`) and adapt it to your needs.
 
-#### Backend
+## Backend
 
 Nothing. The current view builder has no method per control, so a custom
 control needs no backend counterpart — write the element and its properties

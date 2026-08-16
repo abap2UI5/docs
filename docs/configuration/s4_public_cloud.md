@@ -7,7 +7,7 @@ Use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only 
 
 To install abap2UI5 on S/4 Public Cloud, follow these steps:
 
-### 1. Install abap2UI5 with abapGit
+## 1. Install abap2UI5 with abapGit
 
 S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only classes, interfaces, and tables, so you can pull it without issues.
 
@@ -35,7 +35,7 @@ After a moment, the installation completes:
 
 <img width="1332" height="28" alt="Installation complete confirmation" src="https://github.com/user-attachments/assets/dab3578e-755f-4a6a-adfa-5ef5f04bbfa9" />
 
-### 2. Mass Activate the Imported Artifacts
+## 2. Mass Activate the Imported Artifacts
 
 When installing repositories with ADT abapGit, all artifacts arrive inactive. Activate them manually. The simplest approach: create a dedicated inactive/active folder tree for the abap2UI5 project:
 
@@ -61,7 +61,7 @@ Now you'll see that all artifacts are active:
 
 <img width="641" height="88" alt="Fully activated abap2UI5 package" src="https://github.com/user-attachments/assets/632ea17d-2613-440a-81cd-4d40c526553a" />
 
-### 3. Set Up the HTTP Service
+## 3. Set Up the HTTP Service
 
 Build an HTTP handler manually or use the cloud branch of the [frontend](https://github.com/abap2UI5/frontend) repository.
 
@@ -69,7 +69,7 @@ Build an HTTP handler manually or use the cloud branch of the [frontend](https:/
 
 For production, finish the frontend deployment and tile configuration in the steps below.
 
-### 4. Deploy the UI5 App (Optional)
+## 4. Deploy the UI5 App (Optional)
 
 Up to here the HTTP service is enough — you can open it and use abap2UI5 with a developer role. Deploying the app is what makes it reachable for **business users**, through a Launchpad tile.
 
@@ -93,7 +93,7 @@ The `cloud` and `cloud_v2` branches ship `sap.app.dataSources.http.uri` as `/sap
 The on-premise branches (`standard`, `standard_v2`) use the SICF path `/sap/bc/z2ui5` instead.
 :::
 
-### 5. Give Business Users Access (Optional)
+## 5. Give Business Users Access (Optional)
 
 Opening the HTTP service directly works because a developer has `S_DEVELOP`. A business user has not, so the app has to be reached through a tile — which means one chain of objects, each published locally before the next one can see it:
 

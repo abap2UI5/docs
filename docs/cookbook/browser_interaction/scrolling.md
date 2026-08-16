@@ -13,7 +13,7 @@ Read the current scroll positions from the backend, or scroll a control programm
 
 Useful for jump-to-top buttons, restoring positions after navigation, or revealing a row after a backend search.
 
-#### Read the Scroll Position
+### Read the Scroll Position
 
 `client->get( )-s_scroll` reports the scroll positions of the page and any open dialogs at the moment the event was fired. Each container exposes the id of the scrollable element and its `x` / `y` offsets in pixels. `main` is the page's own scroll container, `nest` / `nest2` are the first and second [nested views](/cookbook/view/nested_views), and `popup` / `popover` are open dialogs.
 
@@ -27,7 +27,7 @@ DATA(popup_y)   = scroll-popup-y.      " open popup
 DATA(popover_y) = scroll-popover-y.    " open popover
 ```
 
-#### Scroll to a Position
+### Scroll to a Position
 
 Pass the control id and the vertical position. Optionally also a horizontal position and a scroll behavior (`auto`, `smooth`, or `instant`):
 
@@ -85,7 +85,7 @@ client->follow_up_action( val   = client->cs_event-scroll_to
                 t_arg = VALUE #( ( `id_page` ) ( `500` ) ( `0` ) ( `smooth` ) ) ).
 ```
 
-#### Scroll an Element into View
+### Scroll an Element into View
 
 To reveal a specific control — e.g. a row after a search — use `scroll_into_view` with the target control's id:
 

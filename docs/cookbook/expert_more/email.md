@@ -5,7 +5,7 @@ outline: [2, 4]
 
 abap2UI5 has no e-mail control of its own — sending mail is plain ABAP via `cl_bcs_message` (or `cl_bcs` on older releases). The UI part is a normal event handler that gathers the form fields and calls the BCS API.
 
-#### Plain Text Mail
+## Plain Text Mail
 
 ```abap
 CLASS z2ui5_cl_sample_email DEFINITION PUBLIC.
@@ -75,7 +75,7 @@ CLASS z2ui5_cl_sample_email IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Attachment
+## Attachment
 
 Reuse the [file upload](../device_capabilities/upload_download.md) flow to capture an attachment as base64, then hand it to `cl_bcs_message`:
 
@@ -92,6 +92,6 @@ lo_mail->add_attachment(
 SAPconnect (`SCOT`) must be configured for the mail to actually leave the system. If you do not see anything in `SOST`, that is where to look first.
 :::
 
-#### Compatibility
+## Compatibility
 
 `cl_bcs_message` is the modern API. On older releases or in ABAP Cloud check what is released for your platform — the structure of the example stays the same, only the API class changes.

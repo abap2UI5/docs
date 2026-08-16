@@ -7,7 +7,7 @@ samples:
 
 Render a PDF directly in your app — for printouts from Adobe Forms, SmartForms, archived documents from the Content Server, or anything else that produces an `xstring`.
 
-#### Built-In Popup
+### Built-In Popup
 
 The simplest path is the built-in popup `Z2UI5_CL_POP_PDF`. It expects the PDF as a `data:application/pdf;base64,...` URI and embeds it in an iframe:
 
@@ -44,7 +44,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-#### Download Instead of Display
+### Download Instead of Display
 
 To let the user save the PDF rather than view it inline, use the [file download](./upload_download.md) pattern:
 

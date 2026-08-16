@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Audio
 
-#### Play Sounds
+## Play Sounds
 
 Audio feedback is handy in some scenarios. Fire the `play_audio` frontend event with the URL of a sound file — for example a `.wav` from the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`.
 

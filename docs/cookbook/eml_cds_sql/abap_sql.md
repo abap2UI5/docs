@@ -5,7 +5,7 @@ outline: [2, 4]
 
 ABAP SQL is the standard way to read and change data in the database directly from ABAP. In an abap2UI5 controller you can issue `SELECT`, `INSERT`, `UPDATE`, `DELETE`, and `MODIFY` statements the same way as in any ABAP program, and bind the result straight to a UI5 view.
 
-### Read Data
+## Read Data
 
 The example below selects flights from the `sflight` table and shows them in a UI5 table:
 ```abap
@@ -78,7 +78,7 @@ CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Filter with a Search Field
+## Filter with a Search Field
 
 Bind the search term with `_bind( )` and re-run the `SELECT` on every `SEARCH` event:
 ```abap
@@ -108,7 +108,7 @@ METHOD load_data.
 ENDMETHOD.
 ```
 
-### Aggregations and Joins
+## Aggregations and Joins
 
 Aggregations and joins work like in any ABAP report — the result table is then bound to the view:
 ```abap
@@ -121,7 +121,7 @@ SELECT FROM sflight AS f
   UP TO 20 ROWS.
 ```
 
-### Change Data
+## Change Data
 
 `INSERT`, `UPDATE`, `DELETE`, and `MODIFY` are issued from event handlers — wrap them in a transaction and commit explicitly:
 ```abap

@@ -51,7 +51,7 @@ CLASS z2ui5_cl_sample_clipboard IMPLEMENTATION.
 ENDCLASS.
 ```
 
-#### Copy the App State URL
+### Copy the App State URL
 
 To share the current app state instead of a custom string, use `clipboard_app_state` — see [App State, Share, Bookmark](../expert_more/app_state_share.md).
 

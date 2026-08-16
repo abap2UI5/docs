@@ -11,7 +11,7 @@ app without leaving the editor.
 They are independent of each other. Take the first one and stop, or take all
 four.
 
-#### Start a project from the template
+## Start a project from the template
 
 [**abap2UI5/app-template**](https://github.com/abap2UI5/app-template) — press
 *Use this template* on GitHub and you have an app repository that is already
@@ -26,7 +26,7 @@ half a year later that they were never running.
 Use this template → clone → npm ci → npm run check
 ```
 
-#### Check the view without a system
+## Check the view without a system
 
 [**abap2UI5/linter**](https://github.com/abap2UI5/linter) — the view your app
 builds only exists at runtime, so no UI5 tooling can see it and the ABAP
@@ -48,7 +48,7 @@ No SAP system, no install beyond npm. It also ships as a GitHub Action, and
 the [app-template](https://github.com/abap2UI5/app-template) has it wired into
 CI already.
 
-#### Run the app from the editor
+## Run the app from the editor
 
 [**abap2UI5/vscode-extension**](https://github.com/abap2UI5/vscode-extension) —
 press `F9` on an app class and it starts in a preview beside your code,
@@ -60,7 +60,7 @@ Install it from the VS Code Marketplace or Open VSX; it needs the
 [ABAP remote filesystem](https://marketplace.visualstudio.com/items?itemName=murbani.vscode-abap-remote-fs)
 extension for the system connection.
 
-#### Let an AI agent build and see the app
+## Let an AI agent build and see the app
 
 [**abap2UI5/ai-mcp**](https://github.com/abap2UI5/ai-mcp) — an MCP server that
 gives a coding agent the whole loop *without* an SAP system: it validates the
@@ -80,7 +80,7 @@ repositories written for agents, and the
 that states the conventions an agent should follow in your project.
 :::
 
-#### Where the samples live
+## Where the samples live
 
 Three repositories, in the order they build on each other:
 

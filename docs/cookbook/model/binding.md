@@ -11,7 +11,7 @@ samples:
 
 In abap2UI5 you share data between your ABAP code and the UI5 frontend with `client->_bind( )`. There is only one binding, and it works **in both directions**: when the value is changed in an editable control, the framework writes it back to your ABAP attribute before the next event handler runs. Only the paths the user actually edited are transported back (a delta), so read-only data costs nothing on the way back.
 
-#### Displaying Data
+### Displaying Data
 Bind an attribute to a display-only control (e.g. `text`) — nothing is editable there, so nothing syncs back:
 
 ```abap
@@ -46,7 +46,7 @@ ENDCLASS.
 ```
 This method works with tables, trees, and other nested data structures — see [Tables](/cookbook/model/tables) and [Trees](/cookbook/model/trees).
 
-#### Editing Data
+### Editing Data
 Bind an attribute to an editable control (e.g. `input`). After an event, the framework has already synced the user's changes back to your ABAP attribute:
 
 ```abap
@@ -100,7 +100,7 @@ Earlier releases split binding into a display-only `_bind` and a writable `_bind
 Always declare bound data in `PUBLIC SECTION`. This resembles the PAI/PBO logic, where data lived in global variables. See also [Life Cycle → Lifecycle Pitfalls](/cookbook/event_navigation/life_cycle#lifecycle-pitfalls).
 :::
 
-#### Binding to Structures
+### Binding to Structures
 
 When the bound attribute is a structure, refer to a field directly with the `-` component selector. The framework generates one model path per field — the structure name and the component name, in upper case, joined by `/`:
 
@@ -125,7 +125,7 @@ DATA edit_row TYPE ts_order.
 
 Nested structures follow the same rule recursively (`edit_row-address-city` → `/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per item — see [Tables](/cookbook/model/tables).
 
-#### Data-Type Mapping
+### Data-Type Mapping
 
 ABAP and UI5 do not share a type system. When ABAP values cross to the frontend they are serialized to JSON and then read by UI5 controls. The table below is the reference for how each ABAP type travels on the wire and which UI5 binding it pairs with. For the controls that need an explicit `type:` or formatter, the linked sections in [Formatter](/cookbook/model/formatter) show the full binding-string pattern.
 
