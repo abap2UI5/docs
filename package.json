@@ -18,7 +18,8 @@
     "check:examples": "node scripts/check-examples.mjs",
     "link:samples": "node scripts/link-samples.mjs",
     "check:samples": "node scripts/link-samples.mjs --check",
-    "check": "npm run check:version && npm run docs:build && npm run check:examples && npm run check:samples",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run test && npm run check:version && npm run docs:build && npm run check:examples && npm run check:samples",
     "llms": "node scripts/generate-llms.mjs",
     "check:version": "node scripts/check-version.mjs"
   },
