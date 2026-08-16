@@ -1,3 +1,6 @@
 *node_modules
 docs/.vitepress/cache
 docs/.vitepress/dist
+
+# the sample catalogue, cloned by CI for scripts/link-samples.mjs
+.samples

@@ -16,7 +16,9 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "check:examples": "node scripts/check-examples.mjs",
-    "check": "npm run docs:build && npm run check:examples"
+    "link:samples": "node scripts/link-samples.mjs",
+    "check:samples": "node scripts/link-samples.mjs --check",
+    "check": "npm run docs:build && npm run check:examples && npm run check:samples"
   },
   "devDependencies": {
     "@abap2ui5/linter": "^0.1.1",

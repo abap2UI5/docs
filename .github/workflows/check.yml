@@ -24,6 +24,17 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      # The sample catalogue, for the Working Samples blocks. Shallow, and
+      # pinned to main on purpose: the links published here point at main, so
+      # main is what they have to be true against.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: abap2UI5/samples
+          ref: main
+          path: .samples
+          fetch-depth: 1
+
       - uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           node-version: '20'
@@ -40,3 +51,11 @@ jobs:
       - name: ABAP examples
         if: ${{ !cancelled() }}
         run: npm run check:examples
+
+      # the Working Samples blocks: still generated from what the catalogue says
+      # today, still pointing at classes that exist, and still pointed back at
+      # from those classes. A link into another repository is the one kind that
+      # goes stale without anybody here touching a file
+      - name: sample links
+        if: ${{ !cancelled() }}
+        run: npm run check:samples

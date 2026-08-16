@@ -8,6 +8,8 @@ You've installed abap2UI5 and built your first app. From here, pick the directio
 #### Sample Apps
 With hundreds of samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5. Browse tables, lists, trees, and other UI5 controls — copy and paste snippets to speed up your own work:
 
+Looking for one in particular? The [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) lists every app on one page with the words you would search it by, so `Ctrl+F` for `f4`, `tree` or `nav_app_call` lands on the class that does it. The [Cookbook](/cookbook/overview) links the same apps from the page that explains the pattern.
+
 ![Sample apps overview showing tables, lists, trees, and other UI5 controls](/get_started/image-1.png)
 
 _No system at hand? Run the samples directly [in your browser](https://abap2ui5.github.io/web-abap2ui5-samples/)._
