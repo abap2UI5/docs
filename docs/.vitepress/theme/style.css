@@ -208,15 +208,24 @@
 
 /* ------------------------------------------------- the callout boxes ---
  *
- * The tip/warning/info blocks keep the width the reading column had BEFORE it
- * was widened. A callout is an aside - a paragraph or two, set apart - and the
- * wider it gets the less it reads as one: at 830px a three-line note becomes a
- * two-line slab that competes with the prose it interrupts. Prose and code got
- * the extra width because they use it; a callout does not.
+ * The tip/warning/danger blocks keep the width the reading column had BEFORE
+ * it was widened. A callout is an aside - a paragraph or two, set apart - and
+ * the wider it gets the less it reads as one: at 830px a three-line note
+ * becomes a two-line slab that competes with the prose it interrupts. Prose
+ * and code got the extra width because they use it; a callout does not.
  *
  * 688px is not a round number picked to look tidy: it is exactly what the
  * reading column was, so these boxes are unchanged from what they were rather
- * than newly narrowed. */
-.vp-doc .custom-block {
+ * than newly narrowed.
+ *
+ * `::: details` is excluded, and the exclusion is the whole point of writing
+ * `:not(.details)` rather than listing the three types. VitePress gives both
+ * the same `custom-block` class, but they are opposite things: a callout holds
+ * a REMARK about the text, a details block holds CONTENT the reader opened on
+ * purpose - a screenshot, a long listing, the ABAP Cloud variant of a setup
+ * step. Capping that at 688px put a narrow box under a full-width screenshot
+ * on the quickstart page, which is where this was noticed. Content follows the
+ * reading column; commentary does not. */
+.vp-doc .custom-block:not(.details) {
   max-width: 688px;
 }
