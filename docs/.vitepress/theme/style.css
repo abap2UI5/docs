@@ -9,3 +9,184 @@
     --vp-button-brand-bg-hover: #a83232;
     --vp-button-brand-border-hover: #a83232;
 }
+
+/* ============================================================== compact ===
+ *
+ * A denser reading layout: more prose and more code on a screen, and section
+ * headings that MARK a section rather than announce one.
+ *
+ * Why this is here rather than in the markdown: heading size and heading LEVEL
+ * are two different decisions, and only the second one is the writer's. A page
+ * needs `##` where a section starts, so the outline on the right and every
+ * reading tool see the structure — what that `##` weighs on the page is this
+ * file's business. Anyone tempted to write `####` because `##` "looks too big"
+ * is fixing typography by breaking semantics; the answer is to change a number
+ * here.
+ *
+ * The numbers this replaces come from vitepress 1.6.4,
+ * theme-default/styles/components/vp-doc.css:
+ *
+ *   h2   24px, line-height 32, margin-top 48, padding-top 24, 1px top rule
+ *        = about 105px of vertical chrome per section heading. At the 5.1
+ *          section headings this documentation averages per page, roughly
+ *          535px — a whole laptop screen — of framing per page.
+ *   h3   20px, margin-top 32
+ *   h4   18px
+ *   code line-height 1.7
+ *
+ * Measured effect on rendered document height: model/binding 5385 -> 5057,
+ * get_started/hello_world 6059 -> 5568, expert_more/lock 5797 -> 5431,
+ * get_started/full_example 9115 -> 8260. Six to nine per cent, which is
+ * modest; the visible win is that a code block now tends to CLOSE on screen
+ * instead of running off the bottom.
+ *
+ * Not touched on purpose: the content column stays at its 688px. It looks
+ * like the obvious lever and is not — 96% of the ABAP lines in this
+ * repository are under 81 characters, so widening it buys three percentage
+ * points and costs the line length that makes prose readable.
+ */
+
+/* Section headings. The top rule stays: on a long cookbook page it is what
+ * lets the eye find the next section while scrolling. Its padding does not. */
+.vp-doc h2 {
+  font-size: 19px;
+  line-height: 26px;
+  margin: 32px 0 12px;
+  padding-top: 12px;
+  letter-spacing: -0.01em;
+}
+
+/* The ¶ anchor is positioned against h2's padding, so it moves with it —
+ * otherwise it floats above the text it belongs to. */
+.vp-doc h2 .header-anchor {
+  top: 12px;
+}
+
+.vp-doc h3 {
+  font-size: 16.5px;
+  line-height: 24px;
+  margin: 24px 0 0;
+}
+
+.vp-doc h4 {
+  font-size: 15px;
+  line-height: 22px;
+  margin: 20px 0 0;
+}
+
+/* The page title keeps its rank — it is the one heading that should be
+ * unmistakable — but loses some of its size and the air beneath it.
+ *
+ * The default raises h1 to 32px inside `@media (min-width: 768px)`. A rule
+ * without that media query would win only by source order, which is the kind
+ * of thing that quietly stops being true after a dependency bump — so the
+ * breakpoint is mirrored rather than relied upon. */
+.vp-doc h1 {
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .vp-doc h1 {
+    font-size: 26px;
+    line-height: 34px;
+  }
+}
+
+/* Code. 1.7 is generous for prose and wasteful for a 236-line ABAP listing;
+ * 1.55 keeps the lines separable and shows about 10% more of them per
+ * screen. */
+:root {
+  --vp-code-line-height: 1.55;
+}
+
+.vp-doc div[class*='language-'] pre {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.vp-doc div[class*='language-'] {
+  margin: 14px 0;
+}
+
+/* Paragraph and list rhythm, tightened to match the headings above. */
+.vp-doc p,
+.vp-doc summary {
+  margin: 12px 0;
+}
+
+.vp-doc ul,
+.vp-doc ol {
+  margin: 12px 0;
+}
+
+/* ====================================================== a wider page ===
+ *
+ * The default gives the reading column 688px and the outline beside it 224px,
+ * inside a 1440px layout. On a wide screen that leaves the middle third of the
+ * window carrying the text and the rest empty.
+ *
+ * The outline is the clearer defect of the two, and it is measurable: this
+ * documentation has 627 entries in it, and at 224px about 12% of them are cut
+ * off with an ellipsis - "Step 1 - State: Types a...", "Step 2 - The View:
+ * Sel...". An outline entry that does not say what the section is fails at its
+ * one job. At 308px the share drops to about 4%, and the rest is handled by
+ * letting a long entry WRAP instead of truncating: two short lines say the
+ * whole thing, an ellipsis says most of it and hides which part is missing.
+ *
+ * Only from 1440px up, and that breakpoint was measured rather than picked:
+ * at 1280px the window is the binding constraint, so a wider outline does not
+ * come out of the empty margin - it comes out of the text. Applying this from
+ * 1280 took the reading column from 624px DOWN to 576px, which is the opposite
+ * of the point.
+ */
+@media (min-width: 1440px) {
+  :root {
+    --vp-layout-max-width: 1600px;
+  }
+
+  /* `!important`, and not for want of trying. The theme rule is a Vue SCOPED
+   * style, so it compiles to
+   *
+   *     .VPDoc.has-aside .content-container[data-v-39a288b8] { max-width: 688px }
+   *
+   * - four selector units against this rule's three, so it wins on specificity
+   * no matter where the file is loaded. Matching it would mean writing that
+   * hash into this file, and the hash changes whenever the component does:
+   * the rule would stop applying at some future `npm update` and nobody would
+   * see anything except a page that quietly went narrow again. Adding an
+   * ancestor class instead only ties, which the next refactor breaks just as
+   * silently. So: stated loudly, once, with the reason.
+   *
+   * The `.aside` rules below need none of this - their scoped counterpart is
+   * `.aside-container[data-v-…]`, two units against three, so they win
+   * normally. The difference is not obvious from reading the theme source,
+   * which is why it is written down here. */
+  .VPDoc.has-aside .content-container {
+    max-width: 830px !important;
+  }
+
+  /* All three move together: `.aside` is the column, `.aside-container` the
+   * scrolling box inside it and `.aside-curtain` the fade at its bottom edge.
+   * Widening one and not the others is how the curtain ends up floating in
+   * the middle of the outline. */
+  .VPDoc.has-aside .aside {
+    max-width: 340px;
+  }
+
+  .VPDoc.has-aside .aside-container,
+  .VPDoc.has-aside .aside-curtain {
+    width: 308px;
+  }
+}
+
+/* An outline entry that is too long now wraps rather than being cut. The
+ * default is `white-space: nowrap` + `text-overflow: ellipsis`, which keeps
+ * every entry one line tall at the price of not saying what it points at.
+ * Line height comes down a little so a wrapped entry reads as one item. */
+.VPDocOutlineItem a.outline-link {
+  white-space: normal;
+  text-overflow: clip;
+  line-height: 20px;
+}

@@ -17,6 +17,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, and checks the link in both directions |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
+| `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 
 ## Build & verify — run before every commit
 
@@ -47,6 +48,19 @@ explicitly for this reason.
   the `IF` branch on each, and the prose on several pages walks through the code
   as it stands — that is R-6, worked across the whole organisation. The entry
   says so and names the condition for removing it.
+- **The release number lives in three hand-maintained places, and a release
+  happens in another repository.** The nav bar in `config.mjs`, the *Version
+  status* sentence in `deprecations.md` and the newest `###` heading in
+  `changelog.md`. `check:version` holds them to each other and to the newest
+  release tag. It exists because 1.143.0 shipped at 12:20 and for the rest of
+  that day the deprecations page said "Not in 1.142.0 — `z2ui5_cl_ui5_view_builder`
+  arrives with the next release": the page a reader opens to ask whether they
+  may use the current builder told them no, hours after it shipped. When you
+  move the number, **read the prose around it** — a sentence like "arrives with
+  the next release" goes stale with it and no gate can see that.
+  Note `releases/latest` answers `1.143.0-702` much of the time: the framework
+  publishes the 7.02 downport minutes after each release. Same version, second
+  distribution — the script strips the suffix.
 - **`llms.txt` is generated from the SIDEBAR, not from a directory walk.** A
   page in no sidebar is reported as an orphan and published anyway. If you add
   a page, add it to the sidebar or accept that nothing navigates to it.

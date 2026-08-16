@@ -91,7 +91,7 @@ export default defineConfig({
       {
         // the released framework version — z2ui5_if_app=>version in
         // abap2UI5/src/02/z2ui5_if_app.intf.abap is where it comes from
-        text: "1.142.0",
+        text: "1.143.0",
         items: [
           { text: "Release", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
