@@ -417,6 +417,12 @@ export default defineConfig({
           { text: "Contact", link: "/resources/contact" },
           { text: "Contribution", link: "/resources/contribution" },
           { text: "Sponsor", link: "/resources/sponsor" },
+          // The logo, the favicon and the cover image, for anyone writing
+          // about abap2UI5. The page existed and no sidebar linked it, so the
+          // only way in was knowing the URL - which nobody looking for a logo
+          // does. Found by scripts/generate-llms.mjs, which reports a page in
+          // the tree that no sidebar navigates to.
+          { text: "Logo, Press Kit", link: "/resources/logo" },
         ],
       },
     ],
