@@ -13,6 +13,12 @@ S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only c
 
 Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/).
 
+::: warning **Two choices you cannot change later without relinking**
+**Folder logic must be `PREFIX`.** It is what `.abapgit.xml` declares, and the repository's package tree is built for it.
+
+**Keep the target package name short.** abap2UI5 ships sub-packages two levels deep (`src/00/01`, `src/01/04`, …), and with `PREFIX` logic every derived sub-package name starts with the name you pick here. ABAP caps a package name at 30 characters, so a long root leaves the deeper ones no room — the pull then fails and the repository has to be unlinked and linked again against a shorter package. Something like `ZABAP2UI5` is plenty.
+:::
+
 <img width="649" height="573" alt="abapGit repository link dialog in ADT" src="https://github.com/user-attachments/assets/9ea46657-5ff5-4075-af12-4b5b359c212d" />
 
 <img width="650" height="571" alt="abapGit pull dialog for abap2UI5 repository" src="https://github.com/user-attachments/assets/41558033-3802-4234-8f50-2611574c870a" />
@@ -37,7 +43,7 @@ When installing repositories with ADT abapGit, all artifacts arrive inactive. Ac
 
 <img width="691" height="732" alt="Inactive artifacts list requiring activation" src="https://github.com/user-attachments/assets/f7ef6eb9-c13d-4d2f-a541-8854ac27300c" />
 
-Trigger the mass activation for all inactive artifacts:
+Trigger the mass activation for all inactive artifacts. Some objects may refuse to activate on the first pass because something they depend on is still inactive — repeat the mass activation, or force it, until the list is empty:
 
 <img width="638" height="179" alt="Mass activation of abap2UI5 artifacts in progress" src="https://github.com/user-attachments/assets/e133ba2f-d284-47fa-8dbe-cadee9679f2e" />
 
@@ -65,10 +71,19 @@ For production, finish the frontend deployment and tile configuration in the ste
 
 ### 4. Deploy the UI5 App (Optional)
 
-Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manually:
+Up to here the HTTP service is enough — you can open it and use abap2UI5 with a developer role. Deploying the app is what makes it reachable for **business users**, through a Launchpad tile.
 
-1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
-2. Deploy it to your system with the [SAP deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
+ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with the [SAP Fiori Tools](https://marketplace.visualstudio.com/items?itemName=SAPSE.sap-ux-fiori-tools-extension-pack) extension pack instead.
+
+1. Clone the branch that matches your stack — `cloud_v2` for the current UI5 runtime:
+
+   ```sh
+   git clone --branch cloud_v2 --single-branch https://github.com/abap2UI5/frontend.git
+   ```
+
+2. In the `app` folder, open the Fiori **Application Info** page and add a **deployment configuration** pointing at your system. Keep the target package name short here too.
+3. Add a **Launchpad configuration** in the same place. It writes the descriptors that let a tile start the app; pick the semantic object and action that suit your scenario.
+4. Deploy.
 
 ::: tip **Where the deployed app sends its requests**
 Only the *separately deployed* app needs this — when the backend serves the page itself, it tells the frontend to post back to the same URL.
@@ -78,12 +93,29 @@ The `cloud` and `cloud_v2` branches ship `sap.app.dataSources.http.uri` as `/sap
 The on-premise branches (`standard`, `standard_v2`) use the SICF path `/sap/bc/z2ui5` instead.
 :::
 
-### 5. Configure Launchpad and Tiles (Optional)
+### 5. Give Business Users Access (Optional)
 
-Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
+Opening the HTTP service directly works because a developer has `S_DEVELOP`. A business user has not, so the app has to be reached through a tile — which means one chain of objects, each published locally before the next one can see it:
 
-1. Follow the [SAP Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html)
-2. Configure tiles for business users and manage permissions
+**LADI → IAM App → Business Catalog → Business Role → Space, Page, Tile**
+
+1. **Launchpad App Descriptor Item (LADI)** — create it and add the navigation parameters naming the app to start.
+
+   ::: warning **The `id` has to be UPPERCASE**
+   A lower-case `id` is rejected, and the form editor may refuse to save without making clear why. Use *Open With → Source Editor* to edit the descriptor directly.
+   :::
+
+2. **IAM App** — create one, include the **HTTP service**, add the LADI from step 1, and publish locally.
+3. **Business Catalog** — link the IAM App to it and publish locally.
+4. **Business Role** — add the business catalog to a role in the ABAP Launchpad.
+5. **Space and page** — create them and place the tile, so the user has somewhere to click.
+
+SAP's [Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html) covers the generic mechanics of these objects.
+
+::: tip **A walkthrough with screenshots**
+Warren Eiserman documented a full first install of this scenario, step by step and with screenshots of every dialog:
+[UI5 in ABAP Cloud (without RAP or Fiori Elements)](https://blog.decabase.com/ui5-in-abap-cloud-without-rap-or-fiori-elements-4e8a70d961c3). Several of the warnings on this page come from that write-up.
+:::
 
 ::: tip **BTP ABAP Environment**
 BTP ABAP Environment shares the same technical base as S/4 Public Cloud. The instructions above work for both systems.
