@@ -1,0 +1,43 @@
+# Why this file exists, and what it was found by.
+#
+# Every other repository in the organisation had one; this one did not. The
+# consequence was not theoretical: the abap2UI5-linter moved from 0.1.1 to
+# 0.2.0 and every consumer was bumped except this one - and it was missed
+# precisely BECAUSE there was no Dependabot here to open the PR that would
+# have said so. A gap in the mechanism that notices gaps hides itself.
+#
+# Two ecosystems, matching the rest of the organisation:
+#
+#   npm             vitepress, abaplint and the abap2UI5-linter. The linter is
+#                   what checks every fenced ABAP block on this site, so a new
+#                   rule reaching it decides documentation examples - the one
+#                   place a wrong example is copied by everyone who reads it.
+#   github-actions  the deploy and check workflows. Their actions are pinned to
+#                   commits; Dependabot updates a SHA pin in place and keeps the
+#                   version comment right, so pinned does not become stale.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:23"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 5
+    groups:
+      # One PR for the toolchain rather than three: these move together and a
+      # site that builds is what has to be verified, not each package alone.
+      toolchain:
+        patterns: ["*"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:23"
+      timezone: Etc/UTC
+    groups:
+      actions:
+        patterns: ["*"]
