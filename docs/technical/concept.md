@@ -207,7 +207,7 @@ CLASS z2ui5_cl_app_partial_rerendering IMPLEMENTATION.
 
     text = text && ` text`.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ) OR partly = abap_false.
+    IF client->check_on_navigated( ) OR partly = abap_false.
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `xmlns`     v = `sap.m`

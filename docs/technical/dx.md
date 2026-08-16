@@ -70,7 +70,7 @@ ENDCLASS.
 CLASS zcl_app_input IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       client->view_display(
         z2ui5_cl_ui5_view_builder=>factory(
             )->ele( n = `View` ns = `mvc`
@@ -220,7 +220,7 @@ ENDCLASS.
 CLASS zcl_app_alv_event IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
       client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
         i_question_text = `Do you like dinosaurs?`
         i_title         = `Title`

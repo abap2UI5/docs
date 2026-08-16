@@ -20,7 +20,7 @@ No work process is pinned, no enqueue is held, no `SET/GET` parameters survive. 
 For private and on-premise systems, you can switch a running app to stateful mode. The same work process then handles every subsequent roundtrip of *this* user, and ABAP globals, locks, and open RFC connections survive between events:
 
 ```abap
-IF client->check_on_init( ) OR client->check_on_navigated( ).
+IF client->check_on_navigated( ).
   client->set_session_stateful( ).
 ENDIF.
 ```

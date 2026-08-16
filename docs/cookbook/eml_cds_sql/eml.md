@@ -22,7 +22,7 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ) OR client->check_on_navigated( ).
+    IF client->check_on_navigated( ).
 
       READ ENTITIES OF I_SalesOrderTP
         ENTITY SalesOrder

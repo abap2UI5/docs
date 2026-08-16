@@ -37,7 +37,7 @@ DATA(theme)           = ui5-theme.             " e.g. `sap_horizon`
 The `gav` (group–artifact–version) field tells you which UI5 distribution is loaded: SAPUI5 ships the `com.sap.ui5` modules, OpenUI5 does not. Checking whether `gav` contains `com.sap.ui5` is the same logic the framework itself uses internally to detect the distribution. No custom control and no extra roundtrip are needed — the info is part of every request, so it already works in `check_on_init( )`:
 
 ```abap
-IF client->check_on_init( ) OR client->check_on_navigated( ).
+IF client->check_on_navigated( ).
 
   DATA(ui5) = client->get( )-s_ui5.
 
