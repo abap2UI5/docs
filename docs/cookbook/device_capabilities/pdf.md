@@ -15,12 +15,18 @@ METHOD z2ui5_if_app~main.
   CASE abap_true.
 
     WHEN client->check_on_init( ).
-      client->view_display( z2ui5_cl_xml_view=>factory(
-          )->page(
-              )->button(
-                  text  = `show PDF`
-                  press = client->_event( `SHOW_PDF` )
-          )->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `show PDF`
+                      )->a( n = `press` v = client->_event( `SHOW_PDF` ) ).
+
+      client->view_display( view->stringify( ) ).
+
 
     WHEN client->check_on_event( `SHOW_PDF` ).
       "lv_xstring contains the binary PDF — e.g. from cl_fp_function_module=>get_pdf, SmartForm OTF

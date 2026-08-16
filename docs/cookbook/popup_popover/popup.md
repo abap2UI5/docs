@@ -11,9 +11,17 @@ To show a popup, call `client->popup_display` instead of `client->view_display`:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
-        )->dialog( `Popup - Info`
-          )->text( `this is information shown in a popup` ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+
+            )->ele( `Dialog`
+                )->a( n = `title` v = `Popup - Info`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `this is information shown in a popup` ).
+
     client->popup_display( popup->stringify( ) ).
 
   ENDMETHOD.
@@ -25,11 +33,18 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-        DATA(view) = z2ui5_cl_xml_view=>factory(
-            )->page( `abap2UI5 - Popups`
-                )->button(
-                    text  = `popup rendering, no background rendering`
-                    press = client->_event( `POPUP_OPEN` ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->a( n = `title` v = `abap2UI5 - Popups`
+
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `popup rendering, no background rendering`
+                        )->a( n = `press` v = client->_event( `POPUP_OPEN` ) ).
+
         client->view_display( view->stringify( ) ).
 
     ENDIF.
@@ -37,13 +52,22 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
     CASE client->get( )-event.
 
       WHEN `POPUP_OPEN`.
-        DATA(popup) = z2ui5_cl_xml_view=>factory_popup(
-            )->dialog( `Popup`
-                )->text( `this is a text in a popup`
-                )->button(
-                    text  = `close`
-                    press = client->_event( `POPUP_CLOSE` ) ).
+        DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `FragmentDefinition` ns = `core`
+                )->a( n = `xmlns`      v = `sap.m`
+                )->a( n = `xmlns:core` v = `sap.ui.core`
+
+                )->ele( `Dialog`
+                    )->a( n = `title` v = `Popup`
+
+                    )->tag( `Text`
+                        )->a( n = `text` v = `this is a text in a popup`
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `close`
+                        )->a( n = `press` v = client->_event( `POPUP_CLOSE` ) ).
+
         client->popup_display( popup->stringify( ) ).
+
 
       WHEN `POPUP_CLOSE`.
         client->popup_destroy( ).
@@ -53,7 +77,8 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
   ENDMETHOD.
 ```
 
-The popup has the same lifecycle trio as the main view: `popup_display( )` renders the XML, `popup_model_update( )` pushes changed ABAP data into the **already-rendered** popup without re-rendering it, and `popup_destroy( )` closes it.
+The popup has the same lifecycle as the main view: `popup_display( )` renders the XML and `popup_destroy( )` closes it. Changed ABAP data needs neither — the framework pushes the delta into the already-rendered popup with the response. (`popup_model_update( )` used to be how you asked for that; it is a no-op now and is on the removal list.)
+
 
 ## Separated App
 For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/cookbook/event_navigation/navigation).

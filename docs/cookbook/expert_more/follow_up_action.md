@@ -101,7 +101,7 @@ alternative.
 
 ::: tip `cs_event-z2ui5` is the older form of the same thing
 The constant calls a function you registered as a `z2ui5.*` global
-(`follow_up_action( val = cs_event-z2ui5 t_arg = VALUE #( ( `myFunction` ) ) )`).
+(``follow_up_action( val = cs_event-z2ui5 t_arg = VALUE #( ( `myFunction` ) ) )``).
 It still works and is still dispatched, but it sits with the obsolete constants
 in `z2ui5_if_client`: passing the expression directly, as above, is the same
 call without the indirection. If the global is missing the frontend logs
@@ -138,15 +138,25 @@ The `_generic` method creates a custom XML/HTML element — here an HTML `<scrip
   METHOD z2ui5_if_app~main.
 
   IF client->check_on_init( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      view->_generic( name = `script` ns = `html`
-        )->_cc_plain_xml(
-          |function myFunction() \{ console.log( `Hello World` ); \}|
-        ).
-      view->page(
-        )->button( text  = `call custom JS`
-                   press = client->_event( `CUSTOM_JS` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+
+              " the script travels as the CONTENT of a core:HTML control - the
+              " builder re-escapes it on stringify, so the literal markup is
+              " written here
+              )->tag( n = `HTML` ns = `core`
+                  )->a( n = `content` v = |<script>function myFunction() \{ console.log( `Hello World` ); \}</script>|
+
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `call custom JS`
+                      )->a( n = `press` v = client->_event( `CUSTOM_JS` ) ).
+
       client->view_display( view->stringify( ) ).
+
   ENDIF.
 
   IF client->get( )-event = `CUSTOM_JS`.
@@ -166,7 +176,7 @@ If you must use this, ensure the JavaScript content is **entirely static and har
 The same security considerations apply: any `<script>` element embedded in an XML view runs with full app privileges and bypasses UI5's output encoding. Prefer a [Custom Control](/advanced/extensibility/custom_control) or one of the built-in events instead.
 :::
 
-If you want to look at — or hand-craft — the raw XML view that abap2UI5 produces, a `<script>` tag is placed in the `html` namespace alongside the regular UI5 controls. The view stringified by `z2ui5_cl_xml_view=>factory( )` ends up looking like this:
+If you want to look at — or hand-craft — the raw XML view that abap2UI5 produces, a `<script>` tag is placed in the `html` namespace alongside the regular UI5 controls. The view stringified by `z2ui5_cl_ui5_view_builder=>factory( )` ends up looking like this:
 
 ```xml
 <mvc:View

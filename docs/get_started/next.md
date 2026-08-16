@@ -16,6 +16,9 @@ _No system at hand? Run the samples directly [in your browser](https://abap2ui5.
 The samples evolve all the time. Have one to share? Open a PR so others can learn from it.
 :::
 
+#### Tooling
+Optional, and worth the ten minutes: a project [template](https://github.com/abap2UI5/app-template) with the checks already wired up, a [linter](https://github.com/abap2UI5/linter) that finds broken views without a system, an [extension](https://github.com/abap2UI5/vscode-extension) that runs your app on `F9` next to the code, and an [MCP server](https://github.com/abap2UI5/ai-mcp) that lets an AI agent build and *look at* the app. See [Tooling](/get_started/tooling).
+
 #### Development
 Build views, handle events, share data, and work with tables. The [Cookbook](/cookbook/overview) walks through the patterns you need for everyday work — start with the [Life Cycle](/cookbook/event_navigation/life_cycle) page.
 

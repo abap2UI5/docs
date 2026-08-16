@@ -56,16 +56,22 @@ These show up as *property values* rather than as controls, which makes them eas
 - Belize, Blue Crystal, and Blue Crystal HCB themes — **removed** in 1.136, use Horizon → [Theme](/configuration/setup/theme)
 
 ::: warning Avatar — mind the namespace
-`z2ui5_cl_xml_view->avatar( )` passes the `ns` parameter straight through to the XML element. Leave it empty so the element resolves to `sap.m.Avatar` via the view's default `xmlns`:
+Write `Avatar` with no `ns`, so the element resolves to `sap.m.Avatar` through
+the view's default `xmlns`:
 
 ```abap
-view->avatar( src = `sap-icon://person-placeholder` ).   " → <Avatar> = sap.m.Avatar
+)->tag( `Avatar`
+    )->a( n = `src` v = `sap-icon://person-placeholder`   " → <Avatar> = sap.m.Avatar
 ```
 
-**Never pass `ns = 'f'`** — that produces `<f:Avatar>`, which is the deprecated `sap.f.Avatar`.
+**Never write `ns = `f``** — that produces `<f:Avatar>`, the deprecated
+`sap.f.Avatar`.
 
-`avatar_group( )` and `avatar_group_item( )` are different: they hardcode `ns = 'f'` internally and are correct that way, because those controls still live in `sap.f`.
+`AvatarGroup` and `AvatarGroupItem` are the other way round: those controls do
+still live in `sap.f`, so they need `ns = `f`` and the `sap.f` namespace
+declared on the view.
 :::
+
 
 #### Next Steps
 

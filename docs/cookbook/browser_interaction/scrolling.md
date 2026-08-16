@@ -40,13 +40,25 @@ CLASS z2ui5_cl_sample_scrolling IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      DATA(page) = z2ui5_cl_xml_view=>factory( )->page( id = `id_page` ).
-      page->footer( )->overflow_toolbar(
-         )->button( text  = `Top`
-                    press = client->_event( `SCROLL_TOP` )
-         )->button( text  = `Bottom`
-                    press = client->_event( `SCROLL_BOTTOM` ) ).
-      client->view_display( page->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `id` v = `id_page`
+
+                  )->ele( `footer`
+                      )->ele( `OverflowToolbar`
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `Top`
+                              )->a( n = `press` v = client->_event( `SCROLL_TOP` )
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `Bottom`
+                              )->a( n = `press` v = client->_event( `SCROLL_BOTTOM` ) ).
+
+      client->view_display( view->stringify( ) ).
+
       RETURN.
     ENDIF.
 

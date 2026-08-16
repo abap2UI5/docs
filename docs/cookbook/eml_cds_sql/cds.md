@@ -26,17 +26,40 @@ CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
        INTO TABLE @mt_salesorder
        UP TO 10 ROWS.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( ).
-      DATA(table) = view->table( client->_bind( mt_salesorder ) ).
-      table->columns(
-           )->column( )->text( `SalesOrder` )->get_parent(
-           )->column( )->text( `SalesOrderType` )->get_parent(
-           )->column( )->text( `SalesOrganization` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      table->items( )->column_list_item( )->cells(
-         )->text( `{SALESORDER}`
-         )->text( `{SALESORDERTYPE}`
-         )->text( `{SALESORGANIZATION}` ).
+              )->ele( `Page`
+                  )->ele( `Table`
+                      )->a( n = `items` v = client->_bind( mt_salesorder )
+
+                      )->ele( `columns`
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `SalesOrder`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `SalesOrderType`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `SalesOrganization`
+                          )->end(
+
+                      )->end(
+
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{SALESORDER}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{SALESORDERTYPE}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{SALESORGANIZATION}` ).
 
       client->view_display( view->stringify( ) ).
 

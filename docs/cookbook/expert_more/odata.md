@@ -17,21 +17,47 @@ client->follow_up_action(
 #### Bind Data
 Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
 ```abap
-DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-    items = `{FLIGHT>/Airport}`
-    growing = abap_true ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-tab->columns(
-    )->column( )->text( `AirportID` )->get_parent(
-    )->column( )->text( `Name` )->get_parent(
-    )->column( )->text( `City` )->get_parent(
-    )->column( )->text( `CountryCode` ).
+        )->ele( `Page`
+            )->ele( `Table`
+                )->a( n = `items`   v = `{FLIGHT>/Airport}`
+                )->a( n = `growing` b = abap_true
 
-tab->items( )->column_list_item( )->cells(
-    )->text( `{FLIGHT>AirportID}`
-    )->text( `{FLIGHT>Name}`
-    )->text( `{FLIGHT>City}`
-    )->text( `{FLIGHT>CountryCode}` ).
+                )->ele( `columns`
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `AirportID`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `Name`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `City`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `CountryCode`
+                    )->end(
+
+                )->end(
+
+                )->ele( `items`
+                    )->ele( `ColumnListItem`
+                        )->ele( `cells`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{FLIGHT>AirportID}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{FLIGHT>Name}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{FLIGHT>City}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{FLIGHT>CountryCode}` ).
 ```
 The `growing` property loads data in batches instead of all at once, boosting performance.
 
@@ -40,23 +66,49 @@ The full source code:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-        items   = `{FLIGHT>/Airport}`
-        growing = abap_true ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    tab->columns(
-        )->column( )->text( `AirportID` )->get_parent(
-        )->column( )->text( `Name` )->get_parent(
-        )->column( )->text( `City` )->get_parent(
-        )->column( )->text( `CountryCode` ).
+            )->ele( `Page`
+                )->ele( `Table`
+                    )->a( n = `items`   v = `{FLIGHT>/Airport}`
+                    )->a( n = `growing` b = abap_true
 
-    tab->items( )->column_list_item( )->cells(
-        )->text( `{FLIGHT>AirportID}`
-        )->text( `{FLIGHT>Name}`
-        )->text( `{FLIGHT>City}`
-        )->text( `{FLIGHT>CountryCode}` ).
+                    )->ele( `columns`
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `AirportID`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `Name`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `City`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `CountryCode`
+                        )->end(
 
-    client->view_display( tab->stringify( ) ).
+                    )->end(
+
+                    )->ele( `items`
+                        )->ele( `ColumnListItem`
+                            )->ele( `cells`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{FLIGHT>AirportID}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{FLIGHT>Name}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{FLIGHT>City}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{FLIGHT>CountryCode}` ).
+
+    client->view_display( view->stringify( ) ).
 
     client->follow_up_action(
         val   = z2ui5_if_client=>cs_event-set_odata_model
@@ -70,23 +122,49 @@ ENDMETHOD.
 #### Multiple OData Models
 You can also bind multiple OData models at once. For example, to bind an extra OData model under the name `TRAVEL`:
 ```abap
-DATA(tab) = z2ui5_cl_xml_view=>factory( )->page( )->table(
-    items   = `{TRAVEL>/BookingSupplement}`
-    growing = abap_true ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-tab->columns(
-    )->column( )->text( `TravelID` )->get_parent(
-    )->column( )->text( `BookingID` )->get_parent(
-    )->column( )->text( `BookingSupplementID` )->get_parent(
-    )->column( )->text( `SupplementID` )->get_parent( ).
+        )->ele( `Page`
+            )->ele( `Table`
+                )->a( n = `items`   v = `{TRAVEL>/BookingSupplement}`
+                )->a( n = `growing` b = abap_true
 
-tab->items( )->column_list_item( )->cells(
-    )->text( `{TRAVEL>TravelID}`
-    )->text( `{TRAVEL>BookingID}`
-    )->text( `{TRAVEL>BookingSupplementID}`
-    )->text( `{TRAVEL>SupplementID}` ).
+                )->ele( `columns`
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `TravelID`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `BookingID`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `BookingSupplementID`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `SupplementID`
+                    )->end(
 
-client->view_display( tab->stringify( ) ).
+                )->end(
+
+                )->ele( `items`
+                    )->ele( `ColumnListItem`
+                        )->ele( `cells`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>TravelID}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>BookingID}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>BookingSupplementID}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>SupplementID}` ).
+
+client->view_display( view->stringify( ) ).
 
 client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
@@ -126,23 +204,48 @@ So `{TRAVEL>/#Currency/Currency/@sap:label}` resolves to the value of `sap:label
 
 ```abap
 
-DATA(tab) = page->table(
-    items   = `{TRAVEL>/Currency}`
-    growing = abap_true ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-tab->columns(
-    )->column( )->text( `{TRAVEL>/#Currency/Currency/@sap:label}` )->get_parent(
-    )->column( )->text( `{TRAVEL>/#Currency/Currency_Text/@sap:label}` )->get_parent(
-    )->column( )->text( `{TRAVEL>/#Currency/Decimals/@sap:label}` )->get_parent(
-    )->column( )->text( `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}` ).
+        )->ele( `Page`
+            )->ele( `Table`
+                )->a( n = `items`   v = `{TRAVEL>/Currency}`
+                )->a( n = `growing` b = abap_true
 
-tab->items( )->column_list_item( )->cells(
-    )->text( `{TRAVEL>Currency}`
-    )->text( `{TRAVEL>Currency_Text}`
-    )->text( `{TRAVEL>Decimals}`
-    )->text( `{TRAVEL>CurrencyISOCode}` ).
+                )->ele( `columns`
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/Currency/@sap:label}`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/Currency_Text/@sap:label}`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/Decimals/@sap:label}`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `{TRAVEL>/#Currency/CurrencyISOCode/@sap:label}`
+                    )->end(
+                )->end(
 
-client->view_display( tab->stringify( ) ).
+                )->ele( `items`
+                    )->ele( `ColumnListItem`
+                        )->ele( `cells`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>Currency}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>Currency_Text}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>Decimals}`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{TRAVEL>CurrencyISOCode}` ).
+
+client->view_display( view->stringify( ) ).
 
 client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model

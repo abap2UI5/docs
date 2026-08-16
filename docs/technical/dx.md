@@ -72,9 +72,18 @@ CLASS zcl_app_input IMPLEMENTATION.
 
     IF client->check_on_init( ).
       client->view_display(
-        z2ui5_cl_xml_view=>factory(
-            )->input( client->_bind( pa_arbgb )
-            )->button( text  = `post` press = client->_event( `POST` ) ) ).
+        z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->tag( `Input`
+                        )->a( n = `value` v = client->_bind( pa_arbgb )
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `post`
+                        )->a( n = `press` v = client->_event( `POST` )
+            )->stringify( ) ).
       RETURN.
     ENDIF.
 
@@ -129,20 +138,43 @@ CLASS zcl_app_alv IMPLEMENTATION.
      INTO TABLE @gt_t100
      UP TO 10 ROWS.
 
-    DATA(tab) = z2ui5_cl_xml_view=>factory(
-        )->table( client->_bind( gt_t100 ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    DATA(columns) = tab->columns( ).
-    columns->column( )->text( `ARBGB` ).
-    columns->column( )->text( `MSGNR` ).
-    columns->column( )->text( `TEXT`  ).
+            )->ele( `Page`
+                )->ele( `Table`
+                    )->a( n = `items` v = client->_bind( gt_t100 )
 
-    DATA(cells) = tab->items( )->column_list_item( ).
-    cells->text( `{ARBGB}` ).
-    cells->text( `{MSGNR}` ).
-    cells->text( `{TEXT}` ).
+                    )->ele( `columns`
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `ARBGB`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `MSGNR`
+                        )->end(
+                        )->ele( `Column`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `TEXT`
+                        )->end(
 
-    client->view_display( tab->stringify( ) ).
+                    )->end(
+
+                    )->ele( `items`
+                        )->ele( `ColumnListItem`
+                            )->ele( `cells`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{ARBGB}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{MSGNR}`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `{TEXT}` ).
+
+    client->view_display( view->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.

@@ -42,6 +42,7 @@ EML/CDS/SQL integration with RAP, recurring patterns and helpers, troubleshootin
 - Each recipe stands on its own — read only the section you need.
 - Code snippets are copy-paste ready. Drop them into a class that implements `z2ui5_if_app`.
 - For full sample apps, browse the hundreds of examples in the [samples repository](https://github.com/abap2UI5/samples).
-- For the API surface (`z2ui5_if_client`, `z2ui5_cl_xml_view`, …), read the source in the [main repository](https://github.com/abap2UI5/abap2UI5).
+- For the API surface (`z2ui5_if_client`, `z2ui5_cl_ui5_view_builder`, …), read the source in the [main repository](https://github.com/abap2UI5/abap2UI5).
+
 
 → New to abap2UI5? Start with the [Getting Started Guide](/get_started/quickstart).

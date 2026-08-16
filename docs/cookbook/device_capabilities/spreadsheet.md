@@ -24,14 +24,20 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->_z2ui5( )->file_uploader(
-                value       = client->_bind( mv_value )
-                path        = client->_bind( mv_path )
-                placeholder = `filepath here...`
-                upload      = client->_event( `UPLOAD` )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`       v = `sap.m`
+            )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+
+            )->ele( `Page`
+                )->tag( n = `FileUploader` ns = `z2ui5`
+                    )->a( n = `value`       v = client->_bind( mv_value )
+                    )->a( n = `path`        v = client->_bind( mv_path )
+                    )->a( n = `placeholder` v = `filepath here...`
+                    )->a( n = `upload`      v = client->_event( `UPLOAD` ) ).
+
+    client->view_display( view->stringify( ) ).
 
     IF client->get( )-event = `UPLOAD`.
 
@@ -95,12 +101,17 @@ Convert an internal table to an XLSX file and download it to the frontend:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->page(
-            )->button(
-                text = `Open Download Popup`
-                press = client->_event( `DOWNLOAD` )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `Open Download Popup`
+                    )->a( n = `press` v = client->_event( `DOWNLOAD` ) ).
+
+    client->view_display( view->stringify( ) ).
 
     IF client->get( )-event = `DOWNLOAD`.
 
@@ -197,12 +208,18 @@ Instead of the XLSX API above (which can change between releases), consider the 
 ```abap
   METHOD z2ui5_if_app~main.
 
-  client->view_display( z2ui5_cl_xml_view=>factory(
-    )->page(
-      )->button(
-        text = `Open Download Popup`
-        press = client->_event( `DOWNLOAD` )
-    )->stringify( ) ).
+  DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+      )->ele( n = `View` ns = `mvc`
+          )->a( n = `xmlns`     v = `sap.m`
+          )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+          )->ele( `Page`
+              )->tag( `Button`
+                  )->a( n = `text`  v = `Open Download Popup`
+                  )->a( n = `press` v = client->_event( `DOWNLOAD` ) ).
+
+  client->view_display( view->stringify( ) ).
+
 
   IF client->get( )-event = `DOWNLOAD`.
 

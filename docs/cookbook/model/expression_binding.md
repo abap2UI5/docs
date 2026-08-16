@@ -30,22 +30,33 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_app_max_val IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell( )->page(
-      )->label( `max value of the first two inputs`
-                "UI5 type binding — validates integer input
-                "resolves to: { type: "sap.ui.model.type.Integer", path: "/INPUT31" }
-                )->input( `{ type : "sap.ui.model.type.Integer",` &&
-                          `  path:"` && client->_bind( val  = input31
-                                                       path = abap_true ) && `" }`
-                )->input( `{ type : "sap.ui.model.type.Integer",` && |\n| &&
-                          `  path:"` && client->_bind( val  = input32
-                                                       path = abap_true ) && `" }`
-                "Expression binding — computed in the browser
-                "resolves to: {= Math.max(${/INPUT31}, ${/INPUT32}) }
-                )->input(
-                    value   = `{= Math.max($` && client->_bind( input31 ) &&`, $` && client->_bind( input32 ) && `) }`
-                    enabled = abap_false ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `max value of the first two inputs`
+
+                    " UI5 type binding — validates integer input
+                    " resolves to: { type: "sap.ui.model.type.Integer", path: "/INPUT31" }
+                    )->tag( `Input`
+                        )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` &&
+                                              `  path:"` && client->_bind( val  = input31
+                                                                           path = abap_true ) && `" }`
+                    )->tag( `Input`
+                        )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` && |\n| &&
+                                              `  path:"` && client->_bind( val  = input32
+                                                                           path = abap_true ) && `" }`
+
+                    " Expression binding — computed in the browser
+                    " resolves to: {= Math.max(${/INPUT31}, ${/INPUT32}) }
+                    )->tag( `Input`
+                        )->a( n = `value`   v = `{= Math.max($` && client->_bind( input31 ) && `, $` && client->_bind( input32 ) && `) }`
+                        )->a( n = `enabled` b = abap_false ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -69,17 +80,28 @@ ENDCLASS.
 CLASS z2ui5_cl_demo_editable IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell( )->page(
-      )->label( `only enabled when the quantity equals 500`
-                )->input( `{ type : "sap.ui.model.type.Integer",` &&
-                          `  path:"` && client->_bind( val  = quantity
-                                                       path = abap_true ) && `"  }`
-                "enabled resolves to: {= 500===${/QUANTITY} }
-                )->input(
-                    value   = client->_bind( product )
-                    enabled = `{= 500===$` && client->_bind( quantity ) && ` }` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->tag( `Label`
+                        )->a( n = `text` v = `only enabled when the quantity equals 500`
+
+                    )->tag( `Input`
+                        )->a( n = `value` v = `{ type : "sap.ui.model.type.Integer",` &&
+                                              `  path:"` && client->_bind( val  = quantity
+                                                                           path = abap_true ) && `"  }`
+
+                    " enabled resolves to: {= 500===${/QUANTITY} }
+                    )->tag( `Input`
+                        )->a( n = `value`   v = client->_bind( product )
+                        )->a( n = `enabled` v = `{= 500===$` && client->_bind( quantity ) && ` }` ).
+
     client->view_display( view->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.

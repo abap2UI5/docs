@@ -2,6 +2,7 @@
 outline: [2, 4]
 ---
 # Tables
+
 This section walks through rendering tabular and nested data in views.
 
 ### Basic Table
@@ -33,17 +34,42 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
           descr = `this is a description` ) INTO TABLE mt_itab.
       ENDDO.
 
-      DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-          )->table( client->_bind( mt_itab ) ).
-      tab->columns(
-          )->column( )->text( `Count` )->get_parent(
-          )->column( )->text( `Value` )->get_parent(
-          )->column( )->text( `Description` ).
-      tab->items( )->column_list_item( )->cells(
-         )->text( `{COUNT}`
-         )->text( `{VALUE}`
-         )->text( `{DESCR}` ).
-      client->view_display( tab->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `Table`
+                      )->a( n = `items` v = client->_bind( mt_itab )
+
+                      )->ele( `columns`
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Count`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Value`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Description`
+                          )->end(
+
+                      )->end(
+
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{COUNT}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{VALUE}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{DESCR}` ).
+
+      client->view_display( view->stringify( ) ).
 
     ENDIF.
 
@@ -65,17 +91,42 @@ To make a table editable, use editable cell controls (e.g. `input`) — the bind
           descr = `this is a description` ) INTO TABLE mt_itab.
       ENDDO.
 
-      DATA(tab) = z2ui5_cl_xml_view=>factory( )->page(
-          )->table( client->_bind( mt_itab ) ).
-      tab->columns(
-          )->column( )->text( `Count` )->get_parent(
-          )->column( )->text( `Value` )->get_parent(
-          )->column( )->text( `Description` ).
-      tab->items( )->column_list_item( )->cells(
-         )->input( `{COUNT}`
-         )->input( `{VALUE}`
-         )->input( `{DESCR}` ).
-      client->view_display( tab->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `Table`
+                      )->a( n = `items` v = client->_bind( mt_itab )
+
+                      )->ele( `columns`
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Count`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Value`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Description`
+                          )->end(
+
+                      )->end(
+
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->tag( `Input`
+                                      )->a( n = `value` v = `{COUNT}`
+                                  )->tag( `Input`
+                                      )->a( n = `value` v = `{VALUE}`
+                                  )->tag( `Input`
+                                      )->a( n = `value` v = `{DESCR}` ).
+
+      client->view_display( view->stringify( ) ).
 
     ENDIF.
 
@@ -109,19 +160,43 @@ CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
         ( product = `chair` s_details = VALUE #( create_date = `25.10.2022` create_by = `Frank`  ) )
         ( product = `sofa`  s_details = VALUE #( create_date = `12.03.2024` create_by = `George` ) ) ).
 
-    DATA(tab) = z2ui5_cl_xml_view=>factory( )->table( client->_bind( mt_itab ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    DATA(columns) = tab->columns( ).
-    columns->column( )->text( text = `Product` ).
-    columns->column( )->text( text = `Created at` ).
-    columns->column( )->text( text = `By` ).
+            )->ele( `Table`
+                )->a( n = `items` v = client->_bind( mt_itab )
 
-    DATA(cells) = tab->items( )->column_list_item( ).
-    cells->text( `{PRODUCT}` ).
-    cells->text( `{S_DETAILS/CREATE_DATE}` ).
-    cells->text( `{S_DETAILS/CREATE_BY}` ).
+                )->ele( `columns`
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `Product`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `Created at`
+                    )->end(
+                    )->ele( `Column`
+                        )->tag( `Text`
+                            )->a( n = `text` v = `By`
+                    )->end(
 
-    client->view_display( tab->stringify( ) ).
+                )->end(
+
+                )->ele( `items`
+                    )->ele( `ColumnListItem`
+                        )->ele( `cells`
+                            )->tag( `Text`
+                                )->a( n = `text` v = `{PRODUCT}`
+                            )->tag( `Text`
+                                " abap2ui5lint-disable-next-line unknown-binding-path -- linter defect, fixed in @abap2ui5/linter 0.2.0: a nested BEGIN OF inside a row type was dropped. Delete this line with the pin bump; the path is correct
+                                )->a( n = `text` v = `{S_DETAILS/CREATE_DATE}`
+                            )->tag( `Text`
+                                " abap2ui5lint-disable-next-line unknown-binding-path -- same, and it goes with the same pin bump
+                                )->a( n = `text` v = `{S_DETAILS/CREATE_BY}` ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.

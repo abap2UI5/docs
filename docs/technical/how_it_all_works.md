@@ -244,11 +244,21 @@ But having no extra layer also means the framework doesn't always hide complexit
 
 XML-View created by the user and ready for the 'Wire'
 
-Luckily, utility classes greatly simplify the build process. For example, `z2ui5_cl_xml_view` offers a class-based approach to create views with access to the UI5 API via ADT code completion:
+Luckily, a view builder greatly simplifies the build process: it offers a
+class-based approach to creating views, and the chain is checked by the ABAP
+compiler rather than by the browser. The first one, `z2ui5_cl_xml_view`, took
+that as far as one method per UI5 control, so ADT code completion listed the
+controls and their properties:
 
-<img width="600" alt="z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)" src="https://github.com/user-attachments/assets/b8aa5f41-d958-4181-bdc3-bc92a4a57b4b" />
+<img width="600" alt="The first view builder - UI5 API (frontend) used for Code Completion in ADT (backend)" src="https://github.com/user-attachments/assets/b8aa5f41-d958-4181-bdc3-bc92a4a57b4b" />
 
-z2ui5_cl_xml_view - UI5 API (frontend) used for Code Completion in ADT (backend)
+The first view builder - UI5 API (frontend) used for Code Completion in ADT (backend)
+
+That is also where it ended: a control the class had no method for could not be
+written at all. Its successor `z2ui5_cl_ui5_view_builder` has four verbs instead
+— `ele`, `tag`, `a`, `end` — which trades the completion list for *every* UI5
+control, including the ones nobody has wrapped yet.
+
 
 This contrasts with RAP, where you benefit from well-documented and organized extra layers, though they sometimes have limited functionality. Take side effects, for example: RAP limits you to the `+`, `-`, and `*` operators. In abap2UI5, you write JavaScript directly, which takes more knowledge, but in return you get access to full expression binding on the frontend:
 

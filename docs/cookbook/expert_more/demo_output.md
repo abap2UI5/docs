@@ -84,13 +84,19 @@ METHOD z2ui5_if_app~main.
     DATA(lv_html) = `<h2 title="I'm a header">The title Attribute</h2>` && |\n|  &&
                     `<p title="I'm a tooltip">Mouse over this paragraph, to display the title attribute as a tooltip.</p>`.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-           )->page(
-          )->_cc_plain_xml( lv_style
-          )->html( lv_html ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->tag( n = `HTML` ns = `core`
+                        )->a( n = `content` v = lv_style && lv_html ).
 
     client->view_display( view->stringify( ) ).
+
 
 ENDMETHOD.
 ```

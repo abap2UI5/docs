@@ -16,30 +16,44 @@ Two ingredients are needed:
 
 ```abap
 " 1) Main view with an anchor
-DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
-DATA(page)    = lo_view->shell(
-    )->page( title = `Main View`
-             id    = `test` ).        " <-- the anchor id
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-page->content(
-  )->button( text  = `Re-render only the nested view`
-             press = client->_event( `NEST` ) ).
+        )->ele( `Shell`
+            )->ele( `Page`
+                )->a( n = `title` v = `Main View`
+                )->a( n = `id`    v = `test`        " <-- the anchor id
+
+                )->ele( `content`
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `Re-render only the nested view`
+                        )->a( n = `press` v = client->_event( `NEST` ) ).
 
 " 2) Nested view, built like any other view
-DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory(
-  )->page( `Nested View`
-    )->input( client->_bind( mv_input_nest )
-    )->button( text  = `event`
-               press = client->_event( `TEST` ) ).
+DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+        )->ele( `Page`
+            )->a( n = `title` v = `Nested View`
+
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( mv_input_nest )
+            )->tag( `Button`
+                )->a( n = `text`  v = `event`
+                )->a( n = `press` v = client->_event( `TEST` ) ).
 
 IF client->check_on_init( ).
-  client->view_display( lo_view->stringify( ) ).
+  client->view_display( view->stringify( ) ).
 ENDIF.
 
 CASE client->get( )-event.
   WHEN `NEST`.
     client->nest_view_display(
-        val           = lo_view_nested->stringify( )
+        val           = nested->stringify( )
         id            = `test`               " target the anchor
         method_insert = `addContent` ).      " UI5 mutator on that control
 ENDCASE.
@@ -95,34 +109,51 @@ The most common real-world use: a master list on the left, detail content on the
 
 ```abap
 " Master view — built once
-DATA(page) = z2ui5_cl_xml_view=>factory(
-  )->page( title = `abap2UI5 - Master Detail` ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:f`   v = `sap.f`
 
-DATA(lr_master) = page->flexible_column_layout(
-                       layout = client->_bind( mv_layout )
-                       id     = `test`                            " anchor
-                     )->begin_column_pages( ).
+        )->ele( `Page`
+            )->a( n = `title` v = `abap2UI5 - Master Detail`
 
-lr_master->list( items = client->_bind( t_tab )
-                 selectionchange = client->_event( `SELCHANGE` )
-  )->standard_list_item( title    = `{TITLE}`
-                         selected = `{SELECTED}` ).
+            )->ele( n = `FlexibleColumnLayout` ns = `f`
+                )->a( n = `layout` v = client->_bind( mv_layout )
+                )->a( n = `id`     v = `test`                     " anchor
 
-client->view_display( page->stringify( ) ).
+                )->ele( n = `beginColumnPages` ns = `f`
+                    )->ele( `List`
+                        )->a( n = `items`           v = client->_bind( t_tab )
+                        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` )
+
+                        )->ele( `items`
+                            )->tag( `StandardListItem`
+                                )->a( n = `title`    v = `{TITLE}`
+                                )->a( n = `selected` v = `{SELECTED}` ).
+
+client->view_display( view->stringify( ) ).
 ```
 
 When the user picks a row, a detail view is rendered into the middle column:
 
 ```abap
 METHOD view_display_detail.
-  DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-  DATA(page) = lo_view_nested->page( `Nested View` ).
+  DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+      )->ele( n = `View` ns = `mvc`
+          )->a( n = `xmlns`     v = `sap.m`
+          )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+          )->a( n = `xmlns:t`   v = `sap.ui.table`
 
-  page->ui_table( rows = client->_bind( t_tab2 ) ).
+          )->ele( `Page`
+              )->a( n = `title` v = `Nested View`
+
+              )->ele( n = `Table` ns = `t`
+                  )->a( n = `rows` v = client->_bind( t_tab2 ) ).
   " ...columns, toolbar, row actions...
 
   client->nest_view_display(
-    val            = lo_view_nested->stringify( )
+    val            = nested->stringify( )
     id             = `test`
     method_insert  = `addMidColumnPage`
     method_destroy = `removeAllMidColumnPages` ).
@@ -155,12 +186,20 @@ The middle column can itself host another nested view in the end column — usef
 
 ```abap
 METHOD view_display_detail_detail.
-  DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-  lo_view_nested->page( `Nested View`
-    )->text( client->_bind( mv_title ) ).
+  DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+      )->ele( n = `View` ns = `mvc`
+          )->a( n = `xmlns`     v = `sap.m`
+          )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+          )->ele( `Page`
+              )->a( n = `title` v = `Nested View`
+
+              )->tag( `Text`
+                  )->a( n = `text` v = client->_bind( mv_title ) ).
 
   client->nest2_view_display(
-    val            = lo_view_nested->stringify( )
+    val            = nested->stringify( )
+
     id             = `test`
     method_insert  = `addEndColumnPage`
     method_destroy = `removeAllEndColumnPages` ).

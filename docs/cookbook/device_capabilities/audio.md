@@ -23,17 +23,25 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
 
     IF client->check_on_init( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      DATA(vbox) = view->page( )->vbox( ).
-      vbox->input( id          = `inputApp`
-                   value       = client->_bind( company_code )
-                   type        = `Number`
-                   placeholder = `Company Code`
-                   submit      = client->_event( `CHECK_INPUT` ) ).
-      vbox->button( text  = `check`
-                    press = client->_event( `CHECK_INPUT` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `VBox`
+                      )->tag( `Input`
+                          )->a( n = `id`          v = `inputApp`
+                          )->a( n = `value`       v = client->_bind( company_code )
+                          )->a( n = `type`        v = `Number`
+                          )->a( n = `placeholder` v = `Company Code`
+                          )->a( n = `submit`      v = client->_event( `CHECK_INPUT` )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `check`
+                          )->a( n = `press` v = client->_event( `CHECK_INPUT` ) ).
 
       client->view_display( view->stringify( ) ).
+
       RETURN.
     ENDIF.
 
@@ -45,7 +53,6 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
       ELSE.
         CLEAR company_code.
       ENDIF.
-      client->view_model_update( ).
     ENDIF.
 
   ENDMETHOD.

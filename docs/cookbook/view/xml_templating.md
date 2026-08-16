@@ -38,25 +38,38 @@ mt_layout = VALUE #( ( fname = `NAME` merge = `false` visible = `true`  )
                      ( fname = `AGE`  merge = `false` visible = `false` ) ).
 client->_bind( mt_layout ).
 
-view->table( client->_bind( mt_data )
-  )->columns(
-    )->template_repeat( list = `{template>/MT_LAYOUT}`
-                        var  = `L0`
-      )->column( mergeduplicates = `{L0>MERGE}`
-                 visible         = `{L0>VISIBLE}`
-        )->text( `{L0>FNAME}` )->get_parent(
-    )->get_parent( )->get_parent(
-    )->items(
-      )->column_list_item(
-        )->cells(
-          )->template_repeat( list = `{template>/MT_LAYOUT}`
-                              var  = `L1`
-            )->object_identifier( text = `{= '{' + ${L1>FNAME} + '}' }` ).
+view->ele( `Table`
+    )->a( n = `items` v = client->_bind( mt_data )
+
+    )->ele( `columns`
+        )->ele( n = `repeat` ns = `template`
+            )->a( n = `list` v = `{template>/MT_LAYOUT}`
+            )->a( n = `var`  v = `L0`
+
+            )->ele( `Column`
+                )->a( n = `mergeDuplicates` v = `{L0>MERGE}`
+                )->a( n = `visible`         v = `{L0>VISIBLE}`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `{L0>FNAME}`
+            )->end(
+        )->end(
+    )->end(
+
+    )->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+                )->ele( n = `repeat` ns = `template`
+                    )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                    )->a( n = `var`  v = `L1`
+
+                    )->tag( `ObjectIdentifier`
+                        )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ).
 ```
 
 Notes on the snippet:
 
-- `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells).
+- `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells). `template` is an element namespace like any other, so the builder needs nothing beyond `ns = template` on the element — the prefix itself is declared once on the view's root.
 - Inside the loop, `{L0>FNAME}` is a templating-time read — it ends up as the literal string `NAME`/`DATE`/`AGE` in the expanded XML.
 - `{= '{' + ${L1>FNAME} + '}' }` is an [expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0) that **constructs another binding string at templating time**. With `L1>FNAME = NAME` it expands to `text="{NAME}"`, which becomes a normal runtime binding against the row of `mt_data`. This is the standard pattern for templated tables: outer loop builds the columns, inner loop builds the cells, expression binding wires each cell to the right field of the row.
 - `template_repeat` accepts the same optional attributes as the UI5 instruction (`startIndex`, `length`) plus list-binding extras like sorters and filters.
@@ -70,18 +83,24 @@ The full sample is `Z2UI5_CL_SMP_APP_173`.
 ```abap
 client->_bind( mv_flag ).
 
-view->template_if( `{template>/MV_FLAG}`
-  )->template_then(
-    )->icon( src   = `sap-icon://accept`
-             color = `green` )->get_parent(
-  )->template_else(
-    )->icon( src   = `sap-icon://decline`
-             color = `red` ).
+view->ele( n = `if` ns = `template`
+    )->a( n = `test` v = `{template>/MV_FLAG}`
+
+    )->ele( n = `then` ns = `template`
+        )->tag( n = `Icon` ns = `core`
+            )->a( n = `src`   v = `sap-icon://accept`
+            )->a( n = `color` v = `green`
+    )->end(
+
+    )->ele( n = `else` ns = `template`
+        )->tag( n = `Icon` ns = `core`
+            )->a( n = `src`   v = `sap-icon://decline`
+            )->a( n = `color` v = `red` ).
 ```
 
 The test argument follows the same rules as in UI5: any binding expression is fine, and the string `"false"` is treated as boolean `false` (a UI5 convenience). For richer conditions use expression binding, e.g. `` `{= ${template>/MV_COUNT} > 0 }` ``.
 
-`template:elseif` is also supported by UI5; check `Z2UI5_CL_XML_VIEW` for the corresponding fluent method or fall back to the generic builder (see [Definition](/cookbook/view/definition#the-fully-generic-builder)).
+`template:elseif` is also supported by UI5, and needs nothing extra here: it is the same `ele` call with a different name, `ns = template` and a `test` attribute. That is the point of the builder — every templating instruction UI5 has is reachable the moment UI5 has it, without waiting for a method.
 
 #### Re-rendering
 
@@ -102,21 +121,44 @@ This is the pattern used in `Z2UI5_CL_SMP_APP_173`: the switch fires `CHANGE_FLA
 
 ```abap
 " Main view: built once, stays on screen
-DATA(lo_view) = z2ui5_cl_xml_view=>factory( ).
-lo_view->shell( )->page( title = `Main View` id = `test` ... ).
-client->view_display( lo_view->stringify( ) ).
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`     v = `sap.m`
+        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-" Nested templated view: inserted into the main view by id
-DATA(lo_view_nested) = z2ui5_cl_xml_view=>factory( ).
-lo_view_nested->shell( )->page( `Nested View`
-  )->table( client->_bind( mt_data )
-  )->columns(
-    )->template_repeat( list = `{template>/MT_LAYOUT}` var = `L0`
-      )->column( ... ) " ...
+        )->ele( `Shell`
+            )->ele( `Page`
+                )->a( n = `title` v = `Main View`
+                )->a( n = `id`    v = `test` ).   " ...
 
-client->nest_view_display( val           = lo_view_nested->stringify( )
+client->view_display( view->stringify( ) ).
+
+" Nested templated view: inserted into the main view by id.
+" The template namespace has to be declared on the nested view's root.
+DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`          v = `sap.m`
+        )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1`
+
+        )->ele( `Shell`
+            )->ele( `Page`
+                )->a( n = `title` v = `Nested View`
+
+                )->ele( `Table`
+                    )->a( n = `items` v = client->_bind( mt_data )
+
+                    )->ele( `columns`
+                        )->ele( n = `repeat` ns = `template`
+                            )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                            )->a( n = `var`  v = `L0`
+
+                            )->ele( `Column` ).   " ...
+
+client->nest_view_display( val           = nested->stringify( )
                            id            = `test`
                            method_insert = `addContent` ).
+
 ```
 
 `nest_view_display` targets a control in the existing view by id (`test`) and appends/replaces the nested view there. To refresh the templated piece on a data change, call `nest_view_display` again from the event handler — the main view is left untouched.

@@ -6,9 +6,23 @@ outline: [2, 4]
 If you don't want to handle the event in the backend, fire actions directly on the frontend. The difference between the two event styles:
 
 - **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
-- **`client->_event_client( )`** — runs an action directly in the browser; no backend call
+- **`client->follow_up_action( )`** — runs an action in the browser; no backend call
 
-Use `_event_client` on a UI5 control property (like `press`) when the response should happen entirely in the browser. To fire a frontend event **after** backend processing has finished, use [`client->follow_up_action`](/cookbook/expert_more/follow_up_action) instead — it schedules the same frontend event but is called from the backend.
+`follow_up_action( )` is **one method in two positions**, and the position is
+what decides when it happens:
+
+- **in a view attribute** (`press = client->follow_up_action( … )`) its result
+  is consumed, and the action is wired to the control — the browser runs it
+  when the user presses, with no roundtrip at all;
+- **as a statement** in your `main` method it is scheduled, and the browser
+  runs it after the response arrives — i.e. after your backend work.
+
+::: tip `_event_client( )` is the older name for the first form
+It is obsolete: in the view-attribute position the two produce the identical
+wire, byte for byte. It stays in the interface so existing apps keep compiling
+— rename the calls at your leisure.
+:::
+
 
 The following frontend events are available:
 ```abap
@@ -62,13 +76,20 @@ For example, to open a new tab directly from a button press (no backend involved
 ```abap
 METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-        )->button(
-            text  = `open new tab`
-            press = client->_event_client(
-                val   = client->cs_event-open_new_tab
-                t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `open new tab`
+                    )->a( n = `press` v = client->follow_up_action(
+                                             val   = client->cs_event-open_new_tab
+                                             t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ).
+
+    client->view_display( view->stringify( ) ).
+
 
 ENDMETHOD.
 ```
@@ -88,12 +109,13 @@ For `control_by_id`, any public control method is callable as long as it is not 
 
 ```abap
 " toggle a MessagePopover open, anchored to the pressing button, no roundtrip
-press = client->_event_client(
+press = client->follow_up_action(
     val   = client->cs_event-control_by_id
     t_arg = VALUE #( ( `msgPopover` ) ( `toggleBy` ) ( `${$source>/id}` ) ) )
 ```
 
-The same events also work from the backend with `client->follow_up_action( )` using the identical `t_arg`.
+The same events also work as a **statement** in your `main` method, with the identical `t_arg` — then the browser runs them after the response arrives.
+
 
 ### Element-binding a view slot: `bind_element`
 
@@ -111,15 +133,16 @@ The `view` parameter selects the slot to bind; `t_arg` carries the row index and
 
 ### The `view` parameter
 
-For `control_by_id`, the control is looked up by id. Both `_event_client( )` and `follow_up_action( )` take a separate `view` parameter (default `cs_view-main`) that scopes this lookup:
+For `control_by_id`, the control is looked up by id. `follow_up_action( )` (and the obsolete `_event_client( )`) takes a separate `view` parameter (default `cs_view-main`) that scopes this lookup:
 
 - omit it (or pass `cs_view-main`) — the id is resolved across all open views;
 - pass `cs_view-popup` / `cs_view-popover` / `cs_view-nested` / … — the lookup is scoped to a control hosted in that view (e.g. a control living inside a popup).
 
 ```abap
 " call a method on a control that lives inside the popup view
-press = client->_event_client(
+press = client->follow_up_action(
     val   = client->cs_event-control_by_id
+
     view  = client->cs_view-popup
     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
 ```

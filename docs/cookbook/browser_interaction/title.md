@@ -15,12 +15,18 @@ METHOD z2ui5_if_app~main.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        client->view_display( z2ui5_cl_xml_view=>factory(
-            )->page(
-                )->button(
-                    text  = `change title`
-                    press = client->_event( `RENAME` )
-            )->stringify( ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `change title`
+                        )->a( n = `press` v = client->_event( `RENAME` ) ).
+
+        client->view_display( view->stringify( ) ).
+
 
       WHEN client->check_on_event( `RENAME` ).
         client->follow_up_action(

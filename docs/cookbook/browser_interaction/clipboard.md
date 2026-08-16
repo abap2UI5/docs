@@ -22,13 +22,19 @@ CLASS z2ui5_cl_sample_clipboard IMPLEMENTATION.
       WHEN client->check_on_init( ).
         mv_text = `Hello from abap2UI5`.
 
-        client->view_display( z2ui5_cl_xml_view=>factory(
-            )->page(
-                )->input( client->_bind( mv_text )
-                )->button(
-                    text  = `copy to clipboard`
-                    press = client->_event( `COPY` )
-            )->stringify( ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->tag( `Input`
+                        )->a( n = `value` v = client->_bind( mv_text )
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `copy to clipboard`
+                        )->a( n = `press` v = client->_event( `COPY` ) ).
+
+        client->view_display( view->stringify( ) ).
 
       WHEN client->check_on_event( `COPY` ).
         client->follow_up_action(

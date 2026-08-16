@@ -84,13 +84,22 @@ On the ABAP side, the app receives the Fiori startup parameters (like the app cl
 
     ENDIF.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->page( showheader = abap_false
-                             backgrounddesign = `List` )->content( ). "Backgrounddesign "List" sets a white background color
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    page->text( `TEXT` ).
+            )->ele( `Page`
+                )->a( n = `showHeader` b = abap_false
+                " backgroundDesign "List" sets a white background color
+                )->a( n = `backgroundDesign` v = `List`
+
+                )->ele( `content`
+                    )->tag( `Text`
+                        )->a( n = `text` v = `TEXT` ).
 
     client->view_display( view->stringify( ) ).
+
 
   ENDMETHOD.
 ```

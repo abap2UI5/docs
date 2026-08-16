@@ -2,6 +2,7 @@
 outline: [2, 4]
 ---
 # Trees
+
 For hierarchical data, abap2UI5 uses nested ABAP structures to represent tree levels. Each level holds a table of child nodes, which UI5 traverses to build the expandable tree control.
 
 ### Tree
@@ -61,13 +62,22 @@ CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
                 prodh = `001100010500000105` )
     ) ) ) ) ).
 
-    DATA(tree) = z2ui5_cl_xml_view=>factory( )->page(
-        )->tree( items = client->_bind( prodh_nodes )
-            )->items( )->standard_tree_item(
-                selected = `{IS_SELECTED}`
-                title    = `{TEXT}` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( tree->stringify( ) ).
+            )->ele( `Page`
+                )->ele( `Tree`
+                    )->a( n = `items` v = client->_bind( prodh_nodes )
+
+                    )->ele( `items`
+                        )->tag( `StandardTreeItem`
+                            )->a( n = `selected` v = `{IS_SELECTED}`
+                            )->a( n = `title`    v = `{TEXT}` ).
+
+    client->view_display( view->stringify( ) ).
+
 
   ENDMETHOD.
 ENDCLASS.

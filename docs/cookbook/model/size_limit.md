@@ -63,7 +63,6 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
         DO mv_combo_number TIMES.
           INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
         ENDDO.
-        client->view_model_update( ).
         RETURN.
     ENDCASE.
 
@@ -71,23 +70,44 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
       INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
     ENDDO.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->page( `Size Limit Demo`
-        )->simple_form( title = `Settings` editable = abap_true
-            )->content( `form`
-                )->label( `setSizeLimit`
-                )->input( value = client->_bind( mv_size_limit )
-                )->button(
-                    text  = `update size limit`
-                    press = client->_event( `UPDATE_LIMIT` )
-                )->label( `Number of Entries`
-                )->input( value = client->_bind( mv_combo_number )
-                )->button(
-                    text  = `update number of entries`
-                    press = client->_event( `UPDATE_MODEL` )
-                )->label( `ComboBox`
-                )->combobox( items = client->_bind( t_combo )
-                    )->item( key = `{KEY}` text = `{TEXT}` ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `Size Limit Demo`
+
+                )->ele( n = `SimpleForm` ns = `form`
+                    )->a( n = `title`    v = `Settings`
+                    )->a( n = `editable` b = abap_true
+
+                    )->ele( n = `content` ns = `form`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `setSizeLimit`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( mv_size_limit )
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `update size limit`
+                            )->a( n = `press` v = client->_event( `UPDATE_LIMIT` )
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Number of Entries`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( mv_combo_number )
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `update number of entries`
+                            )->a( n = `press` v = client->_event( `UPDATE_MODEL` )
+                        )->tag( `Label`
+                            )->a( n = `text` v = `ComboBox`
+                        )->ele( `ComboBox`
+                            )->a( n = `items` v = client->_bind( t_combo )
+
+                            )->tag( n = `Item` ns = `core`
+                                )->a( n = `key`  v = `{KEY}`
+                                )->a( n = `text` v = `{TEXT}` ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.

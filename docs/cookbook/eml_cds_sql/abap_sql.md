@@ -28,20 +28,47 @@ CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
         INTO TABLE @mt_flights
         UP TO 50 ROWS.
 
-      DATA(view)  = z2ui5_cl_xml_view=>factory( )->shell( )->page( ).
-      DATA(table) = view->table( client->_bind( mt_flights ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      table->columns(
-           )->column( )->text( `Carrier` )->get_parent(
-           )->column( )->text( `Connection` )->get_parent(
-           )->column( )->text( `Date` )->get_parent(
-           )->column( )->text( `Price` ).
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->ele( `Table`
+                          )->a( n = `items` v = client->_bind( mt_flights )
 
-      table->items( )->column_list_item( )->cells(
-         )->text( `{CARRID}`
-         )->text( `{CONNID}`
-         )->text( `{FLDATE}`
-         )->text( `{PRICE} {CURRENCY}` ).
+                          )->ele( `columns`
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Carrier`
+                              )->end(
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Connection`
+                              )->end(
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Date`
+                              )->end(
+                              )->ele( `Column`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `Price`
+                              )->end(
+
+                          )->end(
+
+                          )->ele( `items`
+                              )->ele( `ColumnListItem`
+                                  )->ele( `cells`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{CARRID}`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{CONNID}`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{FLDATE}`
+                                      )->tag( `Text`
+                                          )->a( n = `text` v = `{PRICE} {CURRENCY}` ).
 
       client->view_display( view->stringify( ) ).
 

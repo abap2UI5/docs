@@ -3,6 +3,7 @@ outline: [2, 4]
 ---
 # Full Example
 
+
 This tutorial walks through a complete app that follows a typical ABAP flow: a small selection screen, reading data from the database, showing the result in a table, opening a popup to edit a row, and posting the changes back. It ties together everything from the [Hello World](/get_started/hello_world) page and shows how the pieces fit into a real screen.
 
 The example uses sales-order-like data but keeps the SELECTs and updates as plain ABAP so you can adapt them to your own tables. Drop the class into your system and launch it the same way as the Hello World app.
@@ -84,48 +85,87 @@ The two date pickers and the customer input are bound with `_bind`, so whatever 
 ```abap
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Full Example`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    page->simple_form(
-        title    = `Order Selection`
-        editable = abap_true
-        )->content( `form`
-        )->label( `Order Date From`
-        )->date_picker(
-            value       = client->_bind( s_search-date_from )
-            valueformat = `yyyy-MM-dd`
-        )->label( `Order Date To`
-        )->date_picker(
-            value       = client->_bind( s_search-date_to )
-            valueformat = `yyyy-MM-dd`
-        )->label( `Customer`
-        )->input( client->_bind( s_search-customer )
-        )->button(
-            text  = `Read Orders`
-            press = client->_event( `READ` ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Full Example`
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->table( client->_bind( t_orders ) ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Order Selection`
+        )->a( n = `editable` v = `true`
 
-    tab->columns(
-        )->column( )->text( `Order` )->get_parent(
-        )->column( )->text( `Customer` )->get_parent(
-        )->column( )->text( `Order Date` )->get_parent(
-        )->column( )->text( `Delivery Date` )->get_parent(
-        )->column( `10%` )->get_parent( ).
+        )->ele( n = `content` ns = `form`
 
-    tab->items( )->column_list_item(
-        )->cells(
-            )->text( `{ORDER_ID}`
-            )->text( `{CUSTOMER}`
-            )->text( `{ORDER_DATE}`
-            )->text( `{DELIVERY_DATE}`
-            )->button(
-                icon  = `sap-icon://edit`
-                press = client->_event( val = `EDIT` t_arg = VALUE #( ( `${ORDER_ID}` ) ) ) ).
+            )->tag( `Label`
+                )->a( n = `text` v = `Order Date From`
+            )->tag( `DatePicker`
+                )->a( n = `value`       v = client->_bind( s_search-date_from )
+                )->a( n = `valueFormat` v = `yyyy-MM-dd`
+            )->tag( `Label`
+                )->a( n = `text` v = `Order Date To`
+            )->tag( `DatePicker`
+                )->a( n = `value`       v = client->_bind( s_search-date_to )
+                )->a( n = `valueFormat` v = `yyyy-MM-dd`
+            )->tag( `Label`
+                )->a( n = `text` v = `Customer`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( s_search-customer )
+            )->tag( `Button`
+                )->a( n = `text`  v = `Read Orders`
+                )->a( n = `press` v = client->_event( `READ` ) ).
+
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_orders ) ).
+
+    tab->ele( `columns`
+
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Order`
+
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Customer`
+
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Order Date`
+
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Delivery Date`
+
+        )->end(
+        )->ele( `Column`
+            )->a( n = `width` v = `10%` ).
+
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ORDER_ID}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{CUSTOMER}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ORDER_DATE}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DELIVERY_DATE}`
+                )->tag( `Button`
+                    )->a( n = `icon`    v = `sap-icon://edit`
+                    )->a( n = `tooltip` v = `Edit delivery date`
+                    )->a( n = `press`   v = client->_event( val   = `EDIT`
+                                                            t_arg = VALUE #( ( `${ORDER_ID}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -172,13 +212,22 @@ When the user presses **Read Orders**, the `READ` event arrives in `on_event`. R
   ENDMETHOD.
 ```
 
-Back in `on_event`, the crucial line is `view_model_update`. The view already exists in the browser — only the data changed — so instead of rebuilding it, the framework just sends the new model:
+Back in `on_event`, note what is **not** there: no second `view_display( )`.
+The view already exists in the browser and only the data changed, so the
+framework sends the new model by itself — every roundtrip that changed
+something bound pushes it. There is nothing to call:
 
 ```abap
       WHEN `READ`.
         data_read( ).
-        client->view_model_update( ).
 ```
+
+::: tip You may see `client->view_model_update( )` in older code
+It still compiles, and it still does nothing: the method is deliberately
+empty, because the model push is queued by the framework rather than asked
+for. Leaving it in is harmless; writing it in new code teaches a step that
+does not exist.
+:::
 
 ### Step 4 — The Edit Popup
 
@@ -190,29 +239,40 @@ Pressing the edit icon fires the `EDIT` event, and `client->get_event_arg( )` re
         popup_edit_display( ).
 ```
 
-A popup is built exactly like the main view — same fluent builder, just created with `factory_popup` and displayed with `popup_display`. The main view stays untouched in the background:
+A popup is built exactly like the main view — same builder, same verbs. The only differences are the root element (`core:FragmentDefinition` instead of `mvc:View`) and that it is handed to `popup_display( )`. The main view stays untouched in the background:
 
 ```abap
   METHOD popup_edit_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( |Order { s_edit-order_id } - { s_edit-customer }| ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    dialog->simple_form( editable = abap_true
-        )->content( `form`
-        )->label( `Delivery Date`
-        )->date_picker(
-            value       = client->_bind( s_edit-delivery_date )
-            valueformat = `yyyy-MM-dd` ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title` v = |Order { s_edit-order_id } - { s_edit-customer }| ).
 
-    dialog->buttons(
-        )->button(
-            text  = `Cancel`
-            press = client->_event( `CANCEL` )
-        )->button(
-            text  = `Post`
-            press = client->_event( `POST` )
-            type  = `Emphasized` ).
+    dialog->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `editable` v = `true`
+
+        )->ele( n = `content` ns = `form`
+
+            )->tag( `Label`
+                )->a( n = `text` v = `Delivery Date`
+            )->tag( `DatePicker`
+                )->a( n = `value`       v = client->_bind( s_edit-delivery_date )
+                )->a( n = `valueFormat` v = `yyyy-MM-dd` ).
+
+    dialog->ele( `buttons`
+
+        )->tag( `Button`
+            )->a( n = `text`  v = `Cancel`
+            )->a( n = `press` v = client->_event( `CANCEL` )
+        )->tag( `Button`
+            )->a( n = `text`  v = `Post`
+            )->a( n = `press` v = client->_event( `POST` )
+            )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -229,7 +289,6 @@ The date picker in the dialog binds to `s_edit-delivery_date` with `_bind` — w
       WHEN `POST`.
         data_update( ).
         client->popup_destroy( ).
-        client->view_model_update( ).
         client->message_toast_display( |Delivery date of order { s_edit-order_id } updated.| ).
       WHEN `CANCEL`.
         client->popup_destroy( ).
@@ -311,14 +370,12 @@ CLASS zcl_app_full_example IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `READ`.
         data_read( ).
-        client->view_model_update( ).
       WHEN `EDIT`.
         s_edit = VALUE #( t_orders[ order_id = client->get_event_arg( ) ] OPTIONAL ).
         popup_edit_display( ).
       WHEN `POST`.
         data_update( ).
         client->popup_destroy( ).
-        client->view_model_update( ).
         client->message_toast_display( |Delivery date of order { s_edit-order_id } updated.| ).
       WHEN `CANCEL`.
         client->popup_destroy( ).
@@ -329,48 +386,87 @@ CLASS zcl_app_full_example IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    DATA(page) = view->shell( )->page(
-        title          = `abap2UI5 - Full Example`
-        navbuttonpress = client->_event_nav_app_leave( )
-        shownavbutton  = client->check_app_prev_stack( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    page->simple_form(
-        title    = `Order Selection`
-        editable = abap_true
-        )->content( `form`
-        )->label( `Order Date From`
-        )->date_picker(
-            value       = client->_bind( s_search-date_from )
-            valueformat = `yyyy-MM-dd`
-        )->label( `Order Date To`
-        )->date_picker(
-            value       = client->_bind( s_search-date_to )
-            valueformat = `yyyy-MM-dd`
-        )->label( `Customer`
-        )->input( client->_bind( s_search-customer )
-        )->button(
-            text  = `Read Orders`
-            press = client->_event( `READ` ) ).
+    DATA(page) = view->ele( `Shell`
+        )->ele( `Page`
+            )->a( n = `title`          v = `abap2UI5 - Full Example`
+            )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+            )->a( n = `showNavButton`  b = client->check_app_prev_stack( ) ).
 
-    DATA(tab) = page->table( client->_bind( t_orders ) ).
+    page->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `title`    v = `Order Selection`
+        )->a( n = `editable` v = `true`
 
-    tab->columns(
-        )->column( )->text( `Order` )->get_parent(
-        )->column( )->text( `Customer` )->get_parent(
-        )->column( )->text( `Order Date` )->get_parent(
-        )->column( )->text( `Delivery Date` )->get_parent(
-        )->column( `10%` )->get_parent( ).
+        )->ele( n = `content` ns = `form`
 
-    tab->items( )->column_list_item(
-        )->cells(
-            )->text( `{ORDER_ID}`
-            )->text( `{CUSTOMER}`
-            )->text( `{ORDER_DATE}`
-            )->text( `{DELIVERY_DATE}`
-            )->button(
-                icon  = `sap-icon://edit`
-                press = client->_event( val = `EDIT` t_arg = VALUE #( ( `${ORDER_ID}` ) ) ) ).
+            )->tag( `Label`
+                )->a( n = `text` v = `Order Date From`
+            )->tag( `DatePicker`
+                )->a( n = `value`       v = client->_bind( s_search-date_from )
+                )->a( n = `valueFormat` v = `yyyy-MM-dd`
+            )->tag( `Label`
+                )->a( n = `text` v = `Order Date To`
+            )->tag( `DatePicker`
+                )->a( n = `value`       v = client->_bind( s_search-date_to )
+                )->a( n = `valueFormat` v = `yyyy-MM-dd`
+            )->tag( `Label`
+                )->a( n = `text` v = `Customer`
+            )->tag( `Input`
+                )->a( n = `value` v = client->_bind( s_search-customer )
+            )->tag( `Button`
+                )->a( n = `text`  v = `Read Orders`
+                )->a( n = `press` v = client->_event( `READ` ) ).
+
+    DATA(tab) = page->ele( `Table`
+        )->a( n = `items` v = client->_bind( t_orders ) ).
+
+    tab->ele( `columns`
+
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Order`
+
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Customer`
+
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Order Date`
+
+        )->end(
+        )->ele( `Column`
+            )->tag( `Text`
+                )->a( n = `text` v = `Delivery Date`
+
+        )->end(
+        )->ele( `Column`
+            )->a( n = `width` v = `10%` ).
+
+    tab->ele( `items`
+        )->ele( `ColumnListItem`
+            )->ele( `cells`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ORDER_ID}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{CUSTOMER}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{ORDER_DATE}`
+                )->tag( `Text`
+                    )->a( n = `text` v = `{DELIVERY_DATE}`
+                )->tag( `Button`
+                    )->a( n = `icon`    v = `sap-icon://edit`
+                    )->a( n = `tooltip` v = `Edit delivery date`
+                    )->a( n = `press`   v = client->_event( val   = `EDIT`
+                                                            t_arg = VALUE #( ( `${ORDER_ID}` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -379,24 +475,35 @@ CLASS zcl_app_full_example IMPLEMENTATION.
 
   METHOD popup_edit_display.
 
-    DATA(popup) = z2ui5_cl_xml_view=>factory_popup( ).
-    DATA(dialog) = popup->dialog( |Order { s_edit-order_id } - { s_edit-customer }| ).
+    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `FragmentDefinition` ns = `core`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:core` v = `sap.ui.core`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
 
-    dialog->simple_form( editable = abap_true
-        )->content( `form`
-        )->label( `Delivery Date`
-        )->date_picker(
-            value       = client->_bind( s_edit-delivery_date )
-            valueformat = `yyyy-MM-dd` ).
+    DATA(dialog) = popup->ele( `Dialog`
+        )->a( n = `title` v = |Order { s_edit-order_id } - { s_edit-customer }| ).
 
-    dialog->buttons(
-        )->button(
-            text  = `Cancel`
-            press = client->_event( `CANCEL` )
-        )->button(
-            text  = `Post`
-            press = client->_event( `POST` )
-            type  = `Emphasized` ).
+    dialog->ele( n = `SimpleForm` ns = `form`
+        )->a( n = `editable` v = `true`
+
+        )->ele( n = `content` ns = `form`
+
+            )->tag( `Label`
+                )->a( n = `text` v = `Delivery Date`
+            )->tag( `DatePicker`
+                )->a( n = `value`       v = client->_bind( s_edit-delivery_date )
+                )->a( n = `valueFormat` v = `yyyy-MM-dd` ).
+
+    dialog->ele( `buttons`
+
+        )->tag( `Button`
+            )->a( n = `text`  v = `Cancel`
+            )->a( n = `press` v = client->_event( `CANCEL` )
+        )->tag( `Button`
+            )->a( n = `text`  v = `Post`
+            )->a( n = `press` v = client->_event( `POST` )
+            )->a( n = `type`  v = `Emphasized` ).
 
     client->popup_display( popup->stringify( ) ).
 
@@ -449,7 +556,7 @@ ENDCLASS.
 
 - One controller class, one `main` method, all state in public attributes — that is the whole app
 - The view is rebuilt only when the structure changes. Edits, saves, and popup open/close do not need a fresh `view_display( )`
-- Popups are just a different factory (`factory_popup`) on the same `z2ui5_cl_xml_view`, displayed via `popup_display` / `popup_destroy` while the main view stays in place
+- Popups use the same builder as the view — a `core:FragmentDefinition` root instead of `mvc:View` — displayed via `popup_display` / `popup_destroy` while the main view stays in place
 - Reading and writing the database is plain ABAP — abap2UI5 does not abstract that layer, which is what makes it easy to plug into existing code
 
 From here, look at the [Cookbook](/cookbook/event_navigation/life_cycle) for value helps, navigation between apps, message handling, and other patterns you will need next.

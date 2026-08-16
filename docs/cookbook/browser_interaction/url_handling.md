@@ -29,10 +29,10 @@ Push a new history entry — the value is appended to the URL hash, so app state
 client->set_push_state( `&my-app-state=detail` ).
 ```
 
-Trigger a browser back navigation (`history.back()`) with the next response:
-```abap
-client->set_nav_back( ).
-```
+There is no method that presses the browser's back button for you — the
+pushed states above are what the back button walks through, and leaving an
+app is [`nav_app_leave( )`](/cookbook/event_navigation/navigation), which
+returns to the calling app rather than to the previous URL.
 
 For a complete example, see sample `Z2UI5_CL_DEMO_APP_139`.
 

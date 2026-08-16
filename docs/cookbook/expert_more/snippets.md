@@ -23,11 +23,20 @@ CLASS z2ui5_cl_app_skeleton IMPLEMENTATION.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->page( `My App`
-          )->text( `Hello World`
-          )->button( text  = `Go`
-                     press = client->_event( `GO` ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Page`
+                    )->a( n = `title` v = `My App`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `Hello World`
+                )->tag( `Button`
+                    )->a( n = `text`  v = `Go`
+                    )->a( n = `press` v = client->_event( `GO` ) ).
+
         client->view_display( view->stringify( ) ).
 
       WHEN client->check_on_event( `GO` ).
@@ -60,24 +69,45 @@ CLASS z2ui5_cl_app_selection IMPLEMENTATION.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        DATA(page) = z2ui5_cl_xml_view=>factory( )->page( `Selection Screen` ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+                )->a( n = `xmlns:form` v = `sap.ui.layout.form`
 
-        page->simple_form( title = `Selection Criteria` editable = abap_true
-            )->content( ns = `form`
-                )->label( `Carrier ID`
-                )->input( client->_bind( carrid )
-                )->label( `Connection ID`
-                )->input( client->_bind( connid )
-                )->label( `Flight Date`
-                )->date_picker( client->_bind( fldate ) ).
+                )->ele( `Page`
+                    )->a( n = `title` v = `Selection Screen`
 
-        page->footer( )->overflow_toolbar(
-            )->toolbar_spacer(
-            )->button( text  = `Execute`
-                       type  = `Emphasized`
-                       press = client->_event( `EXECUTE` ) ).
+                )->ele( n = `SimpleForm` ns = `form`
+                    )->a( n = `title`    v = `Selection Criteria`
+                    )->a( n = `editable` b = abap_true
 
-        client->view_display( page->stringify( ) ).
+                    )->ele( n = `content` ns = `form`
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Carrier ID`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( carrid )
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Connection ID`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( connid )
+                        )->tag( `Label`
+                            )->a( n = `text` v = `Flight Date`
+                        )->tag( `DatePicker`
+                            )->a( n = `value` v = client->_bind( fldate )
+
+                )->end(
+                )->end(
+
+                )->ele( `footer`
+                    )->ele( `OverflowToolbar`
+                        )->tag( `ToolbarSpacer`
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `Execute`
+                            )->a( n = `type`  v = `Emphasized`
+                            )->a( n = `press` v = client->_event( `EXECUTE` ) ).
+
+        client->view_display( view->stringify( ) ).
 
       WHEN client->check_on_event( `EXECUTE` ).
         " run the search with carrid / connid / fldate
@@ -115,8 +145,18 @@ CLASS z2ui5_cl_app_write_output IMPLEMENTATION.
       cl_demo_output=>write_data( sy-datum ).
       html = cl_demo_output=>get( ).
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( `Write Output` ).
-      view->html( content = client->_bind( html ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Write Output`
+
+              )->tag( n = `HTML` ns = `core`
+                  )->a( n = `content` v = client->_bind( html ) ).
+
       client->view_display( view->stringify( ) ).
 
     ENDIF.
@@ -155,16 +195,41 @@ CLASS z2ui5_cl_app_table_basic IMPLEMENTATION.
                         descr = `Sample row` ) INTO TABLE rows.
       ENDDO.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( `Basic Table` ).
-      DATA(tab)  = view->table( client->_bind( rows ) ).
-      tab->columns(
-          )->column( )->text( `ID` )->get_parent(
-          )->column( )->text( `Name` )->get_parent(
-          )->column( )->text( `Description` ).
-      tab->items( )->column_list_item( )->cells(
-          )->text( `{ID}`
-          )->text( `{NAME}`
-          )->text( `{DESCR}` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Basic Table`
+                  )->ele( `Table`
+                      )->a( n = `items` v = client->_bind( rows )
+
+                      )->ele( `columns`
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `ID`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Name`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Description`
+                          )->end(
+
+                      )->end(
+
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{ID}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{NAME}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{DESCR}` ).
 
       client->view_display( view->stringify( ) ).
 
@@ -176,7 +241,7 @@ ENDCLASS.
 
 ## Table with Sorting
 
-`sap.m.Table` has no built-in column sorting — in abap2UI5, sorting (and filtering) is backend work: react to an event, `SORT` the internal table in ABAP, and push the new order to the rendered view with `view_model_update`. No re-render needed:
+`sap.m.Table` has no built-in column sorting — in abap2UI5, sorting (and filtering) is backend work: react to an event and `SORT` the internal table in ABAP. The new order reaches the rendered view with the response — no re-render, and nothing else to call:
 
 ```abap
 CLASS z2ui5_cl_app_table_sort DEFINITION PUBLIC.
@@ -206,45 +271,69 @@ CLASS z2ui5_cl_app_table_sort IMPLEMENTATION.
           ) INTO TABLE rows.
       ENDDO.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory( )->page( `Sortable Table` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      DATA(tab) = view->table(
-          items            = client->_bind( rows )
-          growing          = abap_true
-          growingthreshold = `10`
-          sticky           = `ColumnHeaders` ).
+              )->ele( `Page`
+                  )->a( n = `title` v = `Sortable Table`
+                  )->ele( `Table`
+                      )->a( n = `items` v = client->_bind( rows )
+                      )->a( n = `growingThreshold` v = `10`
+                      )->a( n = `sticky`           v = `ColumnHeaders`
+                      )->a( n = `growing`          b = abap_true
 
-      tab->header_toolbar( )->toolbar(
-          )->title( `Orders`
-          )->toolbar_spacer(
-          )->button(
-              text  = `Sort by Name`
-              press = client->_event( `SORT_NAME` )
-          )->button(
-              text  = `Sort by Status`
-              press = client->_event( `SORT_STATUS` ) ).
+                      )->ele( `headerToolbar`
+                          )->ele( `Toolbar`
+                              )->tag( `Title`
+                                  )->a( n = `text` v = `Orders`
+                              )->tag( `ToolbarSpacer`
+                              )->tag( `Button`
+                                  )->a( n = `text`  v = `Sort by Name`
+                                  )->a( n = `press` v = client->_event( `SORT_NAME` )
+                              )->tag( `Button`
+                                  )->a( n = `text`  v = `Sort by Status`
+                                  )->a( n = `press` v = client->_event( `SORT_STATUS` )
 
-      tab->columns(
-          )->column( )->text( `ID` )->get_parent(
-          )->column( )->text( `Name` )->get_parent(
-          )->column( )->text( `Status` ).
+                          )->end(
+                      )->end(
 
-      tab->items( )->column_list_item( )->cells(
-          )->text( `{ID}`
-          )->text( `{NAME}`
-          )->text( `{STATUS}` ).
+                      )->ele( `columns`
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `ID`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Name`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Status`
+                          )->end(
+
+                      )->end(
+
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{ID}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{NAME}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{STATUS}` ).
 
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `SORT_NAME` ).
 
       SORT rows BY name.
-      client->view_model_update( ).
 
     ELSEIF client->check_on_event( `SORT_STATUS` ).
 
       SORT rows BY status.
-      client->view_model_update( ).
 
     ENDIF.
 

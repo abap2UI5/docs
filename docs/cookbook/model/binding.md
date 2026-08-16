@@ -20,11 +20,20 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
-          )->text( `My Text`
-          )->text( client->_bind( name )
-      )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `My Text`
+                )->tag( `Text`
+                    )->a( n = `text` v = client->_bind( name ) ).
+
+    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 ENDCLASS.
@@ -46,12 +55,24 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display( z2ui5_cl_xml_view=>factory(
-      )->page( `abap2UI5 - Hello World`
-          )->text( `Enter your name`
-          )->input( client->_bind( name )
-          )->button( text = `post` press = client->_event( `POST` )
-      )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `abap2UI5 - Hello World`
+
+                )->tag( `Text`
+                    )->a( n = `text` v = `Enter your name`
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( name )
+                )->tag( `Button`
+                    )->a( n = `text`  v = `post`
+                    )->a( n = `press` v = client->_event( `POST` ) ).
+
+    client->view_display( view->stringify( ) ).
+
 
     CASE client->get( )-event.
       WHEN `POST`.
@@ -88,9 +109,12 @@ DATA edit_row TYPE ts_order.
 
 ...
 
-)->input( client->_bind( edit_row-customer ) )  " resolves to {/EDIT_ROW/CUSTOMER}
-)->input( client->_bind( edit_row-material ) )
-)->input( client->_bind( edit_row-quantity ) )
+)->tag( `Input`
+    )->a( n = `value` v = client->_bind( edit_row-customer )   " resolves to {/EDIT_ROW/CUSTOMER}
+)->tag( `Input`
+    )->a( n = `value` v = client->_bind( edit_row-material )
+)->tag( `Input`
+    )->a( n = `value` v = client->_bind( edit_row-quantity )
 ```
 
 Nested structures follow the same rule recursively (`edit_row-address-city` → `/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per item — see [Tables](/cookbook/model/tables).
@@ -117,10 +141,10 @@ ABAP and UI5 do not share a type system. When ABAP values cross to the frontend 
 When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.ui.model.type.Date`, `sap.ui.model.type.Float`) or an abap2UI5 [Formatter](/cookbook/model/formatter). The shape is always the same — build a JSON binding string with `parts` and `type`, using `path = abap_true` on `_bind` to inject the raw model path:
 
 ```abap
-)->input(
-    |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
-                 `{ client->_bind( val = currency path = abap_true ) }` ],
-        type: 'sap.ui.model.type.Currency' \}| )
+)->tag( `Input`
+    )->a( n = `value` v = |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
+                                       `{ client->_bind( val = currency path = abap_true ) }` ],
+                              type: 'sap.ui.model.type.Currency' \}|
 ```
 
 See [Formatter](/cookbook/model/formatter) for the full example with `formatOptions`, `constraints`, and read-only display variants.

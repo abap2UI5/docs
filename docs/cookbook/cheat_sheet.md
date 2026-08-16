@@ -12,7 +12,8 @@ A one-page recap of the rules that decide whether an abap2UI5 app works or misbe
 | Always call `view_display( )` in the `check_on_navigated( )` branch | After a called app returns via `nav_app_leave( )`, the browser still shows *its* view — without a re-display the user is left on a stale or blank screen → [Navigation](/cookbook/event_navigation/navigation) |
 | Declare every attribute you bind in the `PUBLIC SECTION` | Binding works via dynamic `ASSIGN`; `PROTECTED` and `PRIVATE` attributes are silently ignored → [Binding](/cookbook/model/binding) |
 | Keep state in public attributes, not in local variables | Between two events the controller is serialized to the client and back — locals, `DATA(...)` declarations, open cursors and locks do not survive → [Statefulness](/cookbook/expert_more/statefulness) |
-| Respect the UI5 aggregation rules even though the builder does not enforce them | `z2ui5_cl_xml_view` lets you nest anything inside anything; UI5 does not, and the mismatch surfaces as broken rendering rather than a syntax error → [Definition](/cookbook/view/definition) |
+| Respect the UI5 aggregation rules even though the builder does not enforce them | The builder lets you nest anything inside anything; UI5 does not, and the mismatch surfaces as broken rendering rather than a syntax error → [Definition](/cookbook/view/definition) |
+
 | Never use a deprecated UI5 control | It renders today and vanishes on the next UI5 upgrade → [Deprecated Controls](/cookbook/view/deprecated_controls) |
 | Check the built-in popups before building a custom dialog | Roughly twenty ready-made dialogs ship with the framework — confirm, select, file up/download, ranges, PDF, … → [Built-In](/cookbook/popup_popover/built_in) |
 | Use backtick string literals (`` ` ``) | Project-wide convention in the framework, the samples and this documentation; keeps ABAP string handling consistent |

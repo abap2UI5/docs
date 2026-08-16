@@ -8,13 +8,20 @@ To show a popover, call `client->popover_display` and pass the ID of the control
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_init( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->shell(
-            )->page( `Popover Example`
-                )->button(
-                    text  = `display popover`
-                    press = client->_event( `POPOVER_OPEN` )
-                    id    = `TEST` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Popover Example`
+
+                      )->tag( `Button`
+                          )->a( n = `id`    v = `TEST`
+                          )->a( n = `text`  v = `display popover`
+                          )->a( n = `press` v = client->_event( `POPOVER_OPEN` ) ).
+
       client->view_display( view->stringify( ) ).
 
     ENDIF.
@@ -22,13 +29,21 @@ To show a popover, call `client->popover_display` and pass the ID of the control
     CASE client->get( )-event.
 
       WHEN `POPOVER_OPEN`.
-        DATA(popover) = z2ui5_cl_xml_view=>factory_popup(
-            )->popover( placement = `Left`
-                )->text( `this is a popover`
-                )->button(
-                    id    = `my_id`
-                    text  = `close`
-                    press = client->_event( `POPOVER_CLOSE` ) ).
+        DATA(popover) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `FragmentDefinition` ns = `core`
+                )->a( n = `xmlns`      v = `sap.m`
+                )->a( n = `xmlns:core` v = `sap.ui.core`
+
+                )->ele( `Popover`
+                    )->a( n = `placement` v = `Left`
+
+                    )->tag( `Text`
+                        )->a( n = `text` v = `this is a popover`
+                    )->tag( `Button`
+                        )->a( n = `id`    v = `my_id`
+                        )->a( n = `text`  v = `close`
+                        )->a( n = `press` v = client->_event( `POPOVER_CLOSE` ) ).
+
         client->popover_display(
             xml   = popover->stringify( )
             by_id = `TEST` ).

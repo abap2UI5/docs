@@ -57,23 +57,58 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
 
   METHOD render.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page( `Customers` ).
-    DATA(tab)  = view->table( client->_bind( mt_customers ) growing = abap_true ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    tab->header_toolbar( )->overflow_toolbar(
-        )->title( `Customer List`
-        )->toolbar_spacer( )
-        )->search_field(
-            value       = client->_bind( mv_search )
-            width       = `20rem`
-            placeholder = `try a misspelled name…`
-            search      = client->_event( `SEARCH` ) ).
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title` v = `Customers`
 
-    tab->columns( )->column( )->text( `Customer` )->get_parent(
-                  )->column( )->text( `Name` )->get_parent(
-                  )->column( )->text( `City` ).
-    tab->items( )->column_list_item( )->cells(
-       )->text( `{KUNNR}` )->text( `{NAME1}` )->text( `{ORT01}` ).
+                    )->ele( `Table`
+                        )->a( n = `items`   v = client->_bind( mt_customers )
+                        )->a( n = `growing` b = abap_true
+
+                        )->ele( `headerToolbar`
+                            )->ele( `OverflowToolbar`
+                                )->tag( `Title`
+                                    )->a( n = `text` v = `Customer List`
+                                )->tag( `ToolbarSpacer`
+                                )->tag( `SearchField`
+                                    )->a( n = `value`       v = client->_bind( mv_search )
+                                    )->a( n = `width`       v = `20rem`
+                                    )->a( n = `placeholder` v = `try a misspelled name…`
+                                    )->a( n = `search`      v = client->_event( `SEARCH` )
+
+                        )->end(
+                        )->end(
+
+                        )->ele( `columns`
+                            )->ele( `Column`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `Customer`
+                            )->end(
+                            )->ele( `Column`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `Name`
+                            )->end(
+                            )->ele( `Column`
+                                )->tag( `Text`
+                                    )->a( n = `text` v = `City`
+                            )->end(
+
+                        )->end(
+
+                        )->ele( `items`
+                            )->ele( `ColumnListItem`
+                                )->ele( `cells`
+                                    )->tag( `Text`
+                                        )->a( n = `text` v = `{KUNNR}`
+                                    )->tag( `Text`
+                                        )->a( n = `text` v = `{NAME1}`
+                                    )->tag( `Text`
+                                        )->a( n = `text` v = `{ORT01}` ).
 
     client->view_display( view->stringify( ) ).
 

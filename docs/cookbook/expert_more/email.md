@@ -24,17 +24,37 @@ CLASS z2ui5_cl_sample_email IMPLEMENTATION.
     CASE abap_true.
 
       WHEN client->check_on_init( ).
-        client->view_display( z2ui5_cl_xml_view=>factory(
-            )->page( `Send E-Mail`
-                )->simple_form( editable = abap_true
-                    )->content( `form`
-                        )->label( `To`      )->input( client->_bind( mv_to )
-                        )->label( `Subject` )->input( client->_bind( mv_subject )
-                        )->label( `Body`    )->text_area( client->_bind( mv_body )
-                        )->button(
-                            text  = `send`
-                            press = client->_event( `SEND` )
-            )->stringify( ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`      v = `sap.m`
+                )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+                )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+                )->ele( `Page`
+                    )->a( n = `title` v = `Send E-Mail`
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `To`
+                            )->tag( `Input`
+                                )->a( n = `value` v = client->_bind( mv_to )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Subject`
+                            )->tag( `Input`
+                                )->a( n = `value` v = client->_bind( mv_subject )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Body`
+                            )->tag( `TextArea`
+                                )->a( n = `value` v = client->_bind( mv_body )
+                            )->tag( `Button`
+                                )->a( n = `text`  v = `send`
+                                )->a( n = `press` v = client->_event( `SEND` ) ).
+
+        client->view_display( view->stringify( ) ).
+
 
       WHEN client->check_on_event( `SEND` ).
         TRY.

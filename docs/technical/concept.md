@@ -208,13 +208,24 @@ CLASS z2ui5_cl_app_partial_rerendering IMPLEMENTATION.
     text = text && ` text`.
 
     IF client->check_on_init( ) OR partly = abap_false.
-      client->view_display( z2ui5_cl_xml_view=>factory(
-        )->input( client->_bind( text )
-        )->input( submit = client->_event( )
-        )->checkbox( selected = client->_bind( partly ) text = `partly` ) ).
-    ELSE.
-      client->view_model_update( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( text )
+                  )->tag( `Input`
+                      )->a( n = `submit` v = client->_event( )
+                  )->tag( `CheckBox`
+                      )->a( n = `selected` v = client->_bind( partly )
+                      )->a( n = `text`     v = `partly` ).
+
+      client->view_display( view->stringify( ) ).
     ENDIF.
+    " no ELSE: a model-only change is pushed with the response by itself
+
 
   ENDMETHOD.
 ENDCLASS.

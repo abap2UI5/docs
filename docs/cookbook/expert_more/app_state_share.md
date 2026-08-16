@@ -26,14 +26,22 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-      DATA(view) = z2ui5_cl_xml_view=>factory( ).
-      client->view_display(
-        view->label( `quantity`
-            )->input( client->_bind( mv_quantity )
-            )->button(
-                text  = `post with state`
-                press = client->_event( `BUTTON_POST` )
-              )->stringify( ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->tag( `Label`
+                      )->a( n = `text` v = `quantity`
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( mv_quantity )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `post with state`
+                      )->a( n = `press` v = client->_event( `BUTTON_POST` ) ).
+
+      client->view_display( view->stringify( ) ).
+
     ENDIF.
 
     CASE client->get( )-event.
@@ -66,10 +74,22 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
 
       WHEN client->check_on_navigated( ).
 
-        DATA(view) = z2ui5_cl_xml_view=>factory( )->shell( )->page(
-          )->label( `quantity`
-          )->input( client->_bind( mv_quantity )
-          )->button( text  = `share` press = client->_event( `BUTTON_POST` ) ).
+        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `View` ns = `mvc`
+                )->a( n = `xmlns`     v = `sap.m`
+                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+                )->ele( `Shell`
+                    )->ele( `Page`
+
+                        )->tag( `Label`
+                            )->a( n = `text` v = `quantity`
+                        )->tag( `Input`
+                            )->a( n = `value` v = client->_bind( mv_quantity )
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `share`
+                            )->a( n = `press` v = client->_event( `BUTTON_POST` ) ).
+
         client->view_display( view->stringify( ) ).
 
       WHEN client->check_on_event( `BUTTON_POST` ).

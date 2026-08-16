@@ -59,11 +59,20 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
        INTO TABLE @mt_salesorder
        UP TO 10 ROWS.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-          )->list( client->_bind( mt_salesorder )
-            )->standard_list_item(
-              title       = `{SALESORDER}`
-              description = `{SALESORGANIZATION}` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `List`
+                      )->a( n = `items` v = client->_bind( mt_salesorder )
+
+                      )->ele( `items`
+                          )->tag( `StandardListItem`
+                              )->a( n = `title`       v = `{SALESORDER}`
+                              )->a( n = `description` v = `{SALESORGANIZATION}` ).
+
       client->view_display( view->stringify( ) ).
 
     ENDIF.
@@ -93,12 +102,22 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
        INTO TABLE @mt_salesorder
        UP TO 10 ROWS.
 
-      DATA(view) = z2ui5_cl_xml_view=>factory(
-        )->list( client->_bind( mt_salesorder )
-          )->standard_list_item(
-              title       = `{VBELN}`
-              description = `{VKORG}` ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->ele( `List`
+                      )->a( n = `items` v = client->_bind( mt_salesorder )
+
+                      )->ele( `items`
+                          )->tag( `StandardListItem`
+                              )->a( n = `title`       v = `{VBELN}`
+                              )->a( n = `description` v = `{VKORG}` ).
+
       client->view_display( view->stringify( ) ).
+
 
     ENDIF.
 

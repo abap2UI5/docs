@@ -25,18 +25,25 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    client->view_display( view->shell(
-        )->page( )->_z2ui5(
-            )->geolocation(
-                finished         = client->_event( `POST` )
-                longitude        = client->_bind( longitude )
-                latitude         = client->_bind( latitude )
-                altitude         = client->_bind( altitude )
-                altitudeaccuracy = client->_bind( altitudeaccuracy )
-                accuracy         = client->_bind( accuracy )
-                speed            = client->_bind( speed )
-        )->stringify( ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`       v = `sap.m`
+            )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->tag( n = `Geolocation` ns = `z2ui5`
+                        )->a( n = `finished`         v = client->_event( `POST` )
+                        )->a( n = `longitude`        v = client->_bind( longitude )
+                        )->a( n = `latitude`         v = client->_bind( latitude )
+                        )->a( n = `altitude`         v = client->_bind( altitude )
+                        )->a( n = `altitudeAccuracy` v = client->_bind( altitudeaccuracy )
+                        )->a( n = `accuracy`         v = client->_bind( accuracy )
+                        )->a( n = `speed`            v = client->_bind( speed ) ).
+
+    client->view_display( view->stringify( ) ).
+
 
     CASE client->get( )-event.
       WHEN `POST`.

@@ -95,33 +95,46 @@ CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Sales Order — No Locking`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event_nav_app_leave( )
-            )->simple_form(
-                title    = `Header`
-                editable = abap_true
-                )->content( `form`
-                )->label( `Sales Order`
-                )->input(
-                    value   = vbeln
-                    enabled = abap_false
-                )->label( `Type`
-                )->input( client->_bind( auart )
-                )->label( `Created by`
-                )->input(
-                    value   = ernam
-                    enabled = abap_false
-                )->label( `Created on`
-                )->input(
-                    value   = CONV string( erdat )
-                    enabled = abap_false
-                )->button(
-                    text  = `Save`
-                    press = client->_event( `SAVE` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Sales Order — No Locking`
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Header`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Sales Order`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = vbeln
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Type`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( auart )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Created by`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = ernam
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Created on`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = CONV string( erdat )
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Save`
+                                )->a( n = `press`   v = client->_event( `SAVE` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -264,25 +277,36 @@ CLASS z2ui5_cl_sample_lock_2 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Sales Order — Enqueue at Save`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event_nav_app_leave( )
-            )->simple_form(
-                title    = `Header`
-                editable = abap_true
-                )->content( `form`
-                )->label( `Sales Order`
-                )->input(
-                    value   = vbeln
-                    enabled = abap_false
-                )->label( `Type`
-                )->input( client->_bind( auart )
-                )->button(
-                    text  = `Save`
-                    press = client->_event( `SAVE` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Sales Order — Enqueue at Save`
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Header`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Sales Order`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = vbeln
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Type`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( auart )
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Save`
+                                )->a( n = `press`   v = client->_event( `SAVE` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -407,7 +431,7 @@ CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
     ENDIF.
 
     "don't do that, just for demo
-    "DATA(now) = z2ui5_cl_util=>time_get_timestampl( ).
+    "GET TIME STAMP FIELD now.
     "UPDATE vbak
     "  SET auart = @auart,
     "      aedat = @sy-datum,
@@ -416,7 +440,6 @@ CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
     "COMMIT WORK.
 
     data_read( ).
-    client->view_model_update( ).
     client->message_toast_display( `Saved.` ).
 
   ENDMETHOD.
@@ -424,25 +447,36 @@ CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Sales Order — Optimistic Locking`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event_nav_app_leave( )
-            )->simple_form(
-                title    = `Header`
-                editable = abap_true
-                )->content( `form`
-                )->label( `Sales Order`
-                )->input(
-                    value   = vbeln
-                    enabled = abap_false
-                )->label( `Type`
-                )->input( client->_bind( auart )
-                )->button(
-                    text  = `Save`
-                    press = client->_event( `SAVE` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Sales Order — Optimistic Locking`
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Header`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Sales Order`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = vbeln
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Type`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( auart )
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Save`
+                                )->a( n = `press`   v = client->_event( `SAVE` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -564,7 +598,7 @@ CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
     ENDIF.
 
     "don't do that, just for demo
-    "DATA(now) = z2ui5_cl_util=>time_get_timestampl( ).
+    "GET TIME STAMP FIELD now.
     "UPDATE vbak
     "  SET auart = @auart,
     "      aedat = @sy-datum,
@@ -579,7 +613,6 @@ CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
         vbeln     = vbeln.
 
     data_read( ).
-    client->view_model_update( ).
     client->message_toast_display( `Saved.` ).
 
   ENDMETHOD.
@@ -587,25 +620,36 @@ CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Sales Order — Enqueue + Optimistic`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event_nav_app_leave( )
-            )->simple_form(
-                title    = `Header`
-                editable = abap_true
-                )->content( `form`
-                )->label( `Sales Order`
-                )->input(
-                    value   = vbeln
-                    enabled = abap_false
-                )->label( `Type`
-                )->input( client->_bind( auart )
-                )->button(
-                    text  = `Save`
-                    press = client->_event( `SAVE` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Sales Order — Enqueue + Optimistic`
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Header`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Sales Order`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = vbeln
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Type`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( auart )
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Save`
+                                )->a( n = `press`   v = client->_event( `SAVE` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -771,7 +815,7 @@ CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
   METHOD on_event_save.
 
     "don't do that, just demo
-    "DATA(now) = z2ui5_cl_util=>time_get_timestampl( ).
+    "GET TIME STAMP FIELD now.
     "UPDATE vbak
     "  SET auart = @auart,
     "      aedat = @sy-datum,
@@ -796,28 +840,39 @@ CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
 
   METHOD view_display.
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Sales Order — Stateful Lock`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event( `CANCEL` )
-            )->simple_form(
-                title    = `Header`
-                editable = abap_true
-                )->content( `form`
-                )->label( `Sales Order`
-                )->input(
-                    value   = vbeln
-                    enabled = abap_false
-                )->label( `Type`
-                )->input( client->_bind( auart )
-                )->button(
-                    text  = `Save`
-                    press = client->_event( `SAVE` )
-                )->button(
-                    text  = `Cancel`
-                    press = client->_event( `CANCEL` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Sales Order — Stateful Lock`
+                    )->a( n = `navButtonPress` v = client->_event( `CANCEL` )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Header`
+                        )->a( n = `editable` b = abap_true
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Sales Order`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = vbeln
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Type`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( auart )
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Save`
+                                )->a( n = `press`   v = client->_event( `SAVE` )
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Cancel`
+                                )->a( n = `press`   v = client->_event( `CANCEL` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
@@ -932,7 +987,7 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
     DATA s_new TYPE z2ui5_sample_01.
     s_new-vbeln    = vbeln.
     s_new-username = sy-uname.
-    s_new-locked_at = z2ui5_cl_util=>time_get_timestampl( ).
+    GET TIME STAMP FIELD s_new-locked_at.
 
     MODIFY z2ui5_sample_01 FROM @s_new.
     COMMIT WORK.
@@ -1002,7 +1057,7 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
     ENDIF.
 
     "don't do that, just demo
-    "DATA(now) = z2ui5_cl_util=>time_get_timestampl( ).
+    "GET TIME STAMP FIELD now.
     "UPDATE vbak
     "  SET auart = @auart,
     "      aedat = @sy-datum,
@@ -1035,33 +1090,45 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
 
     DATA(editable) = COND abap_bool( WHEN locked_by IS INITIAL THEN abap_true ELSE abap_false ).
 
-    DATA(view) = z2ui5_cl_xml_view=>factory( ).
-    view->shell(
-        )->page(
-            title          = `Edit Sales Order — Soft Lock + Save Guard`
-            shownavbutton  = client->check_app_prev_stack( )
-            navbuttonpress = client->_event_nav_app_leave( )
-            )->simple_form(
-                title    = `Header`
-                editable = editable
-                )->content( `form`
-                )->label( `Sales Order`
-                )->input(
-                    value   = vbeln
-                    enabled = abap_false
-                )->label( `Type`
-                )->input( client->_bind( auart )
-                )->label( `Status`
-                )->input(
-                    value   = locked_by
-                    enabled = abap_false
-                )->button(
-                    text    = `Save`
-                    press   = client->_event( `SAVE` )
-                    enabled = editable
-                )->button(
-                    text  = `Release & Exit`
-                    press = client->_event( `RELEASE` ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`      v = `sap.m`
+            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Edit Sales Order — Soft Lock + Save Guard`
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Header`
+                        )->a( n = `editable` b = editable
+
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Sales Order`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = vbeln
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Type`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = client->_bind( auart )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Status`
+                            )->tag( `Input`
+                                )->a( n = `value`   v = locked_by
+                                )->a( n = `enabled` b = abap_false
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Save`
+                                )->a( n = `press`   v = client->_event( `SAVE` )
+                                )->a( n = `enabled` b = editable
+                            )->tag( `Button`
+                                )->a( n = `text`    v = `Release & Exit`
+                                )->a( n = `press`   v = client->_event( `RELEASE` ) ).
+
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
