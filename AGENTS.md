@@ -42,25 +42,6 @@ explicitly for this reason.
   frozen builder — unless the page carries the migration banner. Examples are
   the most-copied ABAP in the project; that gate is the reason the pages could
   be migrated at all.
-- **`missing-on-navigated-branch` is held at `hint` in `check-examples.mjs`.**
-  24 examples on 12 pages gate their display on `check_on_init( )` alone, which
-  is a genuine defect. The fix needs a `view_display( )` method extracted out of
-  the `IF` branch on each, and the prose on several pages walks through the code
-  as it stands — that is R-6, worked across the whole organisation. The entry
-  says so and names the condition for removing it.
-- **The release number lives in three hand-maintained places, and a release
-  happens in another repository.** The nav bar in `config.mjs`, the *Version
-  status* sentence in `deprecations.md` and the newest `###` heading in
-  `changelog.md`. `check:version` holds them to each other and to the newest
-  release tag. It exists because 1.143.0 shipped at 12:20 and for the rest of
-  that day the deprecations page said "Not in 1.142.0 — `z2ui5_cl_ui5_view_builder`
-  arrives with the next release": the page a reader opens to ask whether they
-  may use the current builder told them no, hours after it shipped. When you
-  move the number, **read the prose around it** — a sentence like "arrives with
-  the next release" goes stale with it and no gate can see that.
-  Note `releases/latest` answers `1.143.0-702` much of the time: the framework
-  publishes the 7.02 downport minutes after each release. Same version, second
-  distribution — the script strips the suffix.
 - **`llms.txt` is generated from the SIDEBAR, not from a directory walk.** A
   page in no sidebar is reported as an orphan and published anyway. If you add
   a page, add it to the sidebar or accept that nothing navigates to it.

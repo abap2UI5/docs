@@ -16,7 +16,7 @@ Enable routing once per session with `client->set_nav_routing( )` — typically 
 ```abap
 METHOD z2ui5_if_app~main.
 
-  IF client->check_on_init( ).
+  IF client->check_on_init( ) OR client->check_on_navigated( ).
     client->set_nav_routing( ).   " mode defaults to cs_nav_mode-keep
     view_display( ).
   ENDIF.

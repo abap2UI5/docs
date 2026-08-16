@@ -142,7 +142,7 @@ ENDCLASS.
 CLASS z2ui5_cl_app_write_output IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       cl_demo_output=>begin_section( `My Report` ).
       cl_demo_output=>write_data( sy-uname ).
@@ -191,7 +191,7 @@ ENDCLASS.
 CLASS z2ui5_cl_app_table_basic IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DO 20 TIMES.
         INSERT VALUE #( id    = sy-index
@@ -265,7 +265,7 @@ ENDCLASS.
 CLASS z2ui5_cl_app_table_sort IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DO 30 TIMES.
         INSERT VALUE #(

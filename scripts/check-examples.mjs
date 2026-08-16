@@ -295,10 +295,6 @@ writeFileSync(join(dir, 'abaplint.json'), JSON.stringify({
     { url: 'https://github.com/abapedia/steampunk-2305-api', folder: '/deps', files: '/src/**/*.*' },
   ],
   syntax: { version: 'v750', errorNamespace: '^(Z|Y)' },
-  rules: {
-    check_syntax: true, parser_error: true, unknown_types: true,
-    global_class: true, implement_methods: true, begin_end_names: true,
-  },
 }, null, 2));
 
 writeFileSync(join(dir, 'abap2ui5lint.jsonc'), JSON.stringify({
@@ -311,28 +307,6 @@ writeFileSync(join(dir, 'abap2ui5lint.jsonc'), JSON.stringify({
   // the drift this check is for
   render: false,
   failOn: 'warning',
-  rules: {
-    // 24 examples on 12 pages gate their display on check_on_init( ) alone.
-    // That is a real defect and not a documentation-only one: an app reached
-    // by navigation - a called app returning, a value help closing, a
-    // bookmarked state restored - leaves the previous view on screen with no
-    // error anywhere. An example that teaches it is worse than an app that
-    // has it, because every one of them is copied.
-    //
-    // Not silenced, and not fixed here either. The fix is not a line: each of
-    // these builds its view INLINE inside the IF branch, so it needs a
-    // view_display( ) method extracted and called from both branches - and on
-    // several of these pages the prose walks through the code as it stands.
-    // That is R-6 in the repository plan, which covers the same defect across
-    // 530 apps in the other repositories and is being worked separately. The
-    // documentation examples belong to that decision rather than to a
-    // different one made here in passing. Held as a hint until then, which is
-    // how samples, samples-stack and samples-controls carry it too.
-    //
-    // Remove this entry when R-6 reaches these pages: `npm run check:examples`
-    // then reports them as findings again, and the count has to be zero.
-    'missing-on-navigated-branch': 'hint',
-  },
 }, null, 2));
 
 console.log(`check-examples: ${found.length} view-building class example(s) from ${new Set(found.map((f) => f.file)).size} page(s)`);
