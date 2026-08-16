@@ -101,7 +101,7 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
@@ -163,7 +163,7 @@ ENDCLASS.
 CLASS zcl_app_hello_world IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`

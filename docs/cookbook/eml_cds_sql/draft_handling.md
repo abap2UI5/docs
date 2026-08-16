@@ -156,7 +156,7 @@ CLASS z2ui5_cl_sample_draft_min IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
       " 1. Open a draft so we can edit
       MODIFY ENTITIES OF i_banktp ENTITY Bank EXECUTE Edit
         FROM VALUE #( ( %key-BankCountry    = bank_country
@@ -472,7 +472,7 @@ ENDMETHOD.
 #### 9. The Event Map and the View
 The dispatcher in `z2ui5_if_app~main` wires UI events to the methods above:
 ```abap
-IF client->check_on_init( ).
+IF client->check_on_init( ) OR client->check_on_navigated( ).
   on_init( ).
 ELSEIF client->check_on_event( `EDIT_TOGGLE` ).
   on_event_edit_toggle( ).
@@ -531,7 +531,7 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     me->client = client.
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
       on_init( ).
     ELSEIF client->check_on_event( `EDIT_TOGGLE` ).
       on_event_edit_toggle( ).

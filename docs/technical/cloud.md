@@ -52,7 +52,7 @@ CLASS z2ui5_cl_demo_app_003 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       SELECT FROM I_SalesOrder
        FIELDS salesorder, salesorganization
@@ -95,7 +95,7 @@ CLASS z2ui5_cl_demo_app_004 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       SELECT FROM vbak
        FIELDS vbeln, vkorg

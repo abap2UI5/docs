@@ -36,7 +36,7 @@ ENDCLASS.
 CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DO 100 TIMES.
         INSERT VALUE #(
@@ -93,7 +93,7 @@ To make a table editable, use editable cell controls (e.g. `input`) — the bind
 ```abap
   METHOD z2ui5_if_app~main.
 
-    IF client->check_on_init( ).
+    IF client->check_on_init( ) OR client->check_on_navigated( ).
 
       DO 100 TIMES.
         INSERT VALUE #(

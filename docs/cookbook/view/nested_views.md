@@ -52,7 +52,7 @@ DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
                 )->a( n = `text`  v = `event`
                 )->a( n = `press` v = client->_event( `TEST` ) ).
 
-IF client->check_on_init( ).
+IF client->check_on_init( ) OR client->check_on_navigated( ).
   client->view_display( view->stringify( ) ).
 ENDIF.
 
