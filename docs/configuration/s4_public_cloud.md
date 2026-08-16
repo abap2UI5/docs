@@ -70,6 +70,14 @@ Since ADT abapGit doesn't support UI5 apps (BSPs) directly, deploy the app manua
 1. Download the app folder from the [frontend](https://github.com/abap2UI5/frontend) repository
 2. Deploy it to your system with the [SAP deployment guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-shop-ui.html#4c15de5c-bce6-46d0-a634-0008261b3117)
 
+::: tip **Where the deployed app sends its requests**
+Only the *separately deployed* app needs this — when the backend serves the page itself, it tells the frontend to post back to the same URL.
+
+The `cloud` and `cloud_v2` branches ship `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path an HTTP service with ID `Z2UI5` is published under. If you created the service under a **different ID**, change that entry in `manifest.json` to match — otherwise the POSTs go to a service that does not exist and the app fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
+
+The on-premise branches (`standard`, `standard_v2`) use the SICF path `/sap/bc/z2ui5` instead.
+:::
+
 ### 5. Configure Launchpad and Tiles (Optional)
 
 Set up the Fiori Launchpad, pages, sections, and tiles for the abap2UI5 apps:
