@@ -1,5 +1,14 @@
 import { defineConfig } from "vitepress";
 
+// Where the site is actually served from. Link previews (LinkedIn, Slack,
+// WhatsApp, X) only accept ABSOLUTE urls in og:image / og:url — a relative
+// "/docs/og-image.png" is silently dropped and the preview falls back to the
+// grey placeholder card.
+const SITE_URL = "https://abap2ui5.github.io/docs";
+// 1200x630 — the ratio LinkedIn renders as a large card. Anything narrower
+// than 1200px is shown as a small square thumbnail instead.
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lastUpdated: {
@@ -34,10 +43,56 @@ export default defineConfig({
     ['link', {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap'
-    }]
+    }],
+    // Link preview card — the per-page og:title, og:description and og:url are
+    // added in transformPageData below.
+    ["meta", { property: "og:type", content: "website" }],
+    ["meta", { property: "og:site_name", content: "abap2UI5" }],
+    ["meta", { property: "og:image", content: OG_IMAGE }],
+    ["meta", { property: "og:image:type", content: "image/png" }],
+    ["meta", { property: "og:image:width", content: "1200" }],
+    ["meta", { property: "og:image:height", content: "630" }],
+    [
+      "meta",
+      {
+        property: "og:image:alt",
+        content: "abap2UI5 — Build UI5 Apps Purely in ABAP",
+      },
+    ],
+    ["meta", { name: "twitter:card", content: "summary_large_image" }],
+    ["meta", { name: "twitter:image", content: OG_IMAGE }],
   ],
   title: "abap2UI5",
   description: "Build UI5 Apps Purely in ABAP",
+  // Every page gets its own og:title / og:description / og:url, so a shared
+  // link shows the page it points at instead of the site front page.
+  transformPageData(pageData) {
+    const url = `${SITE_URL}/${pageData.relativePath}`
+      .replace(/index\.md$/, "")
+      .replace(/\.md$/, ".html");
+    // `||`, not `??`: a page without frontmatter carries an EMPTY STRING here,
+    // not undefined, and an empty og:description is what a preview card shows
+    // as a blank line.
+    const pageTitle = pageData.frontmatter.title || pageData.title;
+    const title =
+      pageData.relativePath === "index.md" || !pageTitle
+        ? "abap2UI5 — Build UI5 Apps Purely in ABAP"
+        : `${pageTitle} | abap2UI5`;
+    const description =
+      pageData.frontmatter.description ||
+      pageData.description ||
+      "Build UI5 Apps Purely in ABAP";
+
+    pageData.frontmatter.head ??= [];
+    pageData.frontmatter.head.push(
+      ["link", { rel: "canonical", href: url }],
+      ["meta", { property: "og:url", content: url }],
+      ["meta", { property: "og:title", content: title }],
+      ["meta", { property: "og:description", content: description }],
+      ["meta", { name: "twitter:title", content: title }],
+      ["meta", { name: "twitter:description", content: description }],
+    );
+  },
   themeConfig: {
     logo: "/logo.png",
     footer: {
