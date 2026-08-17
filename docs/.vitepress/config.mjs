@@ -79,6 +79,14 @@ export default defineConfig({
               },
               { text: "addons", link: "https://github.com/abap2UI5-addons" },
               { text: "samples", link: "https://github.com/abap2UI5/samples" },
+              {
+                text: "samples-controls",
+                link: "https://github.com/abap2UI5/samples-controls",
+              },
+              {
+                text: "samples-stack",
+                link: "https://github.com/abap2UI5/samples-stack",
+              },
               { text: "docs", link: "https://github.com/abap2UI5/docs" },
               {
                 text: "issues",
@@ -409,6 +417,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Reference", link: "/resources/references" },
+          // 615 working apps in three repositories, and until this page the
+          // only way to find out which one to open was to know all three
+          // existed. The cookbook links individual samples per chapter; this
+          // says which CATALOGUE answers which question.
+          { text: "Sample Catalogues", link: "/resources/samples" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release", link: "/resources/changelog" },
           { text: "Deprecations", link: "/resources/deprecations" },
