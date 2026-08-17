@@ -42,6 +42,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import config from '../docs/.vitepress/config.mjs';
+import { countCatalogue } from './lib/catalogue.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
@@ -131,6 +132,23 @@ const title = (body, fallback) =>
 
 /* -------------------------------------------------------------------- run */
 
+/* How big each sample corpus is. These were typed into the index by hand and
+ * went stale the way a hand-typed number does: "152 complete apps" and "~400
+ * ports", next to a PAGE of this same site giving three different figures.
+ * A wrong count in the one file written to be quoted verbatim is the worst
+ * place in the repository to keep one.
+ *
+ * So it is counted, through the same parser the sample links go through - and
+ * when the catalogue is not at hand the phrase simply carries no number. The
+ * deploy workflow checks out no sample repository, so that is the normal case
+ * for the published file, and it is the right outcome: the sentence an agent
+ * needs is "ask SAMPLES.md before writing an app", not the size of the
+ * haystack. */
+const counted = (repo, phrase) => {
+  const n = countCatalogue(repo, ROOT);
+  return n === null ? phrase : `${n} ${phrase}`;
+};
+
 const pages = sidebarPages();
 const linked = new Set(pages.map((p) => p.link));
 
@@ -194,11 +212,11 @@ const index = [
   '- [abap2UI5](https://github.com/abap2UI5/abap2UI5): the framework. `AGENTS.md`',
   '  is the briefing for changing it; `src/02/z2ui5_if_client.intf.abap` is the',
   '  complete API an app may call, with inline documentation',
-  '- [samples](https://github.com/abap2UI5/samples): 152 complete apps, one class',
-  '  each. [`SAMPLES.md`](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)',
+  `- [samples](https://github.com/abap2UI5/samples): ${counted('samples', 'complete apps, one')}`,
+  '  class each. [`SAMPLES.md`](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)',
   '  lists all of them with search terms - ask it "is there a sample for X?"',
   '  before writing one',
-  '- [samples-controls](https://github.com/abap2UI5/samples-controls): ~400 ports',
+  `- [samples-controls](https://github.com/abap2UI5/samples-controls): ${counted('samples-controls', 'ports')}`,
   '  of the official UI5 demo kit, plus `CAPABILITIES.md` - what abap2UI5 can and',
   '  cannot express',
   '- [samples-stack](https://github.com/abap2UI5/samples-stack): abap2UI5 combined',
@@ -258,6 +276,13 @@ fs.writeFileSync(path.join(PUBLIC, 'llms-full.txt'), full);
 
 const kb = (s) => `${Math.round(s / 1024)} kB`;
 console.log(`llms.txt: ${pages.length} pages in ${bySection.size} sections (${kb(index.length)})`);
+/* Say it out loud, because "no checkout" and "counted" produce different files
+ * and both are valid - the only way to notice a number went missing that
+ * should have been there is to be told which ones were taken. */
+for (const repo of ['samples', 'samples-controls']) {
+  const n = countCatalogue(repo, ROOT);
+  console.log(`  ${repo}: ${n === null ? 'no catalogue here — published without a count' : `${n} apps`}`);
+}
 console.log(`llms-full.txt: ${kb(full.length)}`);
 console.log(`${written} page(s) published as raw markdown under docs/public/`);
 if (orphans.length) {

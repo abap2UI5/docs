@@ -10,6 +10,8 @@
  * /samples-stack - three repositories, none of them this one - and read here
  * and in abap2UI5/ai-mcp. It is a contract between five programs.
  */
+import fs from 'node:fs';
+import path from 'node:path';
 
 /* One catalogue row, as generate-samples-md.js writes it:
  *
@@ -34,6 +36,40 @@
  * another repository (three of them now), and a block this script does not
  * know about must cost it nothing. */
 const ROW = /^\|\s*(?:\*\*(?<title>[^*]+)\*\*\s*(?:—|--)\s*)?(?<sub>[^|<]*?)\s*(?<small>(?:<br>(?:<[a-z]+>[^<]*<\/[a-z]+>|[^<]*))*)\s*\|\s*\[`(?<cls>[A-Z0-9_]+)`\]\((?<path>[^)]+)\)\s*\|/;
+
+/* Where each sample repository's catalogue is, if it is at hand at all. The
+ * `samples` row is the list link-samples.mjs has always resolved against, so a
+ * checkout that works for one works for the other; CI puts it in `.samples`.
+ *
+ * Nothing here is required. A count that cannot be taken is reported as `null`
+ * and the caller leaves the number out - the deploy workflow checks out no
+ * sample repository whatsoever, and a stale number in a file an agent cites is
+ * worse than no number at all. */
+const HOMES = {
+  samples: ['SAMPLES_HOME', '.samples', '../samples', '../abap2UI5-samples'],
+  'samples-controls': ['SAMPLES_CONTROLS_HOME', '.samples-controls', '../samples-controls'],
+  'samples-stack': ['SAMPLES_STACK_HOME', '.samples-stack', '../samples-stack'],
+};
+
+/** How many apps `repo` lists today, or null if its catalogue is not here.
+ *
+ *  Counted through the same parser the sample links go through, so the number
+ *  is "what this repository can resolve", never a second opinion: a catalogue
+ *  lists supporting classes in tables of their own (samples-stack has eight),
+ *  and those are not apps and do not parse into a pointer. */
+export function countCatalogue(repo, root) {
+  const dirs = HOMES[repo];
+  if (!dirs) throw new Error(`no catalogue location known for ${repo}`);
+  for (const dir of dirs) {
+    const at = dir.endsWith('_HOME') ? process.env[dir] : path.join(root, dir);
+    if (!at) continue;
+    const file = path.join(at, 'SAMPLES.md');
+    if (!fs.existsSync(file)) continue;
+    const size = parseCatalogue(fs.readFileSync(file, 'utf8')).size;
+    if (size > 0) return size;
+  }
+  return null;
+}
 
 /** class name (lower case) -> { label, path } for every app in the catalogue. */
 export function parseCatalogue(text) {
