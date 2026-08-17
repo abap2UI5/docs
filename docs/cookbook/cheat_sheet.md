@@ -18,25 +18,24 @@ A one-page recap of the rules that decide whether an abap2UI5 app works or misbe
 | Check the built-in popups before building a custom dialog | Roughly twenty ready-made dialogs ship with the framework — confirm, select, file up/download, ranges, PDF, … → [Built-In](/cookbook/popup_popover/built_in) |
 | Use backtick string literals (`` ` ``) | Project-wide convention in the framework, the samples and this documentation; keeps ABAP string handling consistent |
 
-::: warning `abap_false` in `_generic( )` disappears from the view
-In the **fluent API** both flags work as expected — the builder inspects the type of the value it receives and writes `true` or `false`:
+::: warning An ABAP flag passed as `v` does not reach the view as a boolean
+`a( )` takes **either** `v` — any string expression — **or** `b`, an ABAP boolean. Only `b` converts, and it is the form to use whenever the value comes out of ABAP:
 
 ```abap
-view->button( text = `Save` enabled = abap_false ).   " → enabled="false"
+    )->tag( `Button`
+        )->a( n = `text`    v = `Save`
+        )->a( n = `enabled` b = abap_false )   " → enabled="false"
 ```
 
-In **`_generic( t_prop = ... )`** they do not. The property table stores values as `string`, so the boolean type is lost on the way in:
+Through `v` the flag is written verbatim: `abap_true` arrives in the view as `enabled="X"` and `abap_false` as an empty value. Neither is the `true` / `false` UI5 expects, and neither is a syntax error — the view renders, with the control in the wrong state.
 
-- `abap_true` still ends up correct — the serializer renders a value of `X` as `true`.
-- `abap_false` is a blank and becomes an empty string, and properties with an empty value are dropped from the XML entirely. The attribute is never written, so a control whose UI5 default is `true` (`enabled`, `visible`, …) silently stays enabled.
-
-Write the literal instead — it is unambiguous in both directions:
+A **literal** is a string and belongs in `v`, unquoted by any flag variable:
 
 ```abap
-view->_generic( name = `Button` ns = `sap.m`
-    t_prop = VALUE #( ( n = `text`    v = `Save` )
-                      ( n = `enabled` v = `false` ) ) ).
+    )->a( n = `enabled` v = `false` )
 ```
+
+Any expression that yields a flag works in `b`, so there is no reason to convert by hand: `` )->a( n = `visible` b = xsdbool( lines( mt_item ) > 0 ) ) ``.
 :::
 
 ## Next Steps
