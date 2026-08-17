@@ -15,16 +15,19 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs: build + ABAP examples + sample links
+npm run check        # what CI runs, all five steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but three things in
-it are decidable, and all three are decided before a merge:
+A documentation repository has no compiler for its prose, but five things in
+it are decidable, and all five are decided before a merge — `npm run check`
+and `.github/workflows/check.yml` run the same list, in the same order:
 
 | | |
 |---|---|
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate |
+| `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |

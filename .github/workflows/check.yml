@@ -41,12 +41,21 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
+      # the catalogue parser, against a row of every shape the three sample
+      # repositories generate. `npm run check` has run this since the parser
+      # stopped matching for the second time; CI did not, so the one check that
+      # exists BECAUSE something broke twice in silence was the only one no pull
+      # request had to pass. Seconds, and no network.
+      - name: unit tests
+        run: npm test
+
       # the release number in the nav bar, the deprecations page and the
       # changelog, against the newest release tag of the framework. This one
       # goes stale WITHOUT anybody touching this repository - a release happens
-      # over there - which is why it runs first: it is the check most likely to
-      # be true yesterday and false today.
+      # over there - which is why it runs before the build: it is the check most
+      # likely to be true yesterday and false today.
       - name: release version
+        if: ${{ !cancelled() }}
         run: npm run check:version
 
       # a page that does not build is a page nobody can read
