@@ -176,10 +176,18 @@ export default defineConfig({
             items: [
               { text: "Installation", link: "/get_started/quickstart" },
               { text: "Hello World", link: "/get_started/hello_world" },
+              // Between the smallest app and the complete one, because that is
+              // where the reader's question changes from "how do I write this"
+              // to "where does it live". Quickstart ends with a class typed
+              // into a system and nothing said the next step out of it; a
+              // reader who stopped once the app ran met the template, the
+              // linter and the agent setup on no page at all.
+              { text: "Your Project", link: "/get_started/project_setup" },
               { text: "Full Example", link: "/get_started/full_example" },
             ],
           },
           { text: "Tooling", link: "/get_started/tooling" },
+          { text: "Building with AI", link: "/get_started/ai" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
@@ -455,6 +463,11 @@ export default defineConfig({
             text: "Tool",
             collapsed: true,
             items: [
+              // The project's own linter, next to the tools it borrows. Every
+              // other gate in this section is somebody else's; this one is
+              // the only thing that can read a view that does not exist until
+              // the app runs.
+              { text: "abap2UI5-linter", link: "/technical/tools/linter" },
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },
               { text: "S-RTTI", link: "/technical/tools/srtti" },
