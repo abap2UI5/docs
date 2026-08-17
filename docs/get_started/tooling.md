@@ -73,11 +73,18 @@ a few checkouts and a first build that takes a while — the README says which
 tools need what, and validating views alone needs almost nothing.
 
 ::: tip Building with an AI agent?
-Point it at [`llms.txt`](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt)
-in the framework repository. It is a map of this documentation and the sample
-repositories written for agents, and the
-[app-template](https://github.com/abap2UI5/app-template) ships an `AGENTS.md`
-that states the conventions an agent should follow in your project.
+Point it at [`llms.txt`](https://abap2ui5.github.io/docs/llms.txt) — this site
+generates one on every build: every chapter with a one-line summary, and
+[`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) for all of it
+in a single fetch. There is a second one in the
+[framework repository](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt);
+the difference is what each maps — this site's is the map of the **prose**, the
+framework's is the map of the **code**, down to the interface files an agent
+should read instead of guessing at a signature.
+
+The [app-template](https://github.com/abap2UI5/app-template) then ships an
+`AGENTS.md` that states the conventions an agent should follow in your own
+project.
 :::
 
 ## Where the samples live
