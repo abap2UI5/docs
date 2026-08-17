@@ -35,6 +35,29 @@ jobs:
           path: .samples
           fetch-depth: 1
 
+      # The other two catalogues, for the counts on resources/samples.md. Only
+      # SAMPLES.md is needed, so only SAMPLES.md is fetched — and an unreachable
+      # repository costs one verified figure, never the run: check:counts skips
+      # what it cannot read and says which ones those were.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        continue-on-error: true
+        with:
+          repository: abap2UI5/samples-controls
+          ref: main
+          path: .samples-controls
+          fetch-depth: 1
+          sparse-checkout: SAMPLES.md
+          sparse-checkout-cone-mode: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        continue-on-error: true
+        with:
+          repository: abap2UI5/samples-stack
+          ref: main
+          path: .samples-stack
+          fetch-depth: 1
+          sparse-checkout: SAMPLES.md
+          sparse-checkout-cone-mode: false
+
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
@@ -77,3 +100,11 @@ jobs:
       - name: sample links
         if: ${{ !cancelled() }}
         run: npm run check:samples
+
+      # the four figures on resources/samples.md - three per-repository counts
+      # and the total they add up to - against the catalogues themselves. The
+      # generated llms.txt leaves a number out when it cannot count it; a prose
+      # page cannot, so the number stays and this is what holds it
+      - name: corpus counts
+        if: ${{ !cancelled() }}
+        run: npm run check:counts

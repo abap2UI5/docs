@@ -23,10 +23,10 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:samples
+npm run check          # test + check:version + docs:build + check:examples + check:samples + check:counts
 ```
 
-`.github/workflows/check.yml` runs the same five, in the same order. Keep the
+`.github/workflows/check.yml` runs the same six, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -35,6 +35,13 @@ catalogue parser broke twice in silence — went a release without CI.
 clone it as a sibling. Without one it *skips* rather than fails, so verify the
 output says what you think it says. CI checks out `abap2UI5/samples@main`
 explicitly for this reason.
+
+`check:counts` reads all three catalogues the same way, and skips per
+repository: with only `samples` at hand it verifies that one figure, says the
+other two were not verified, and leaves the total alone (it needs all three).
+CI sparse-checks out `SAMPLES.md` from `samples-controls` and `samples-stack`
+so the page is fully checked; both are `continue-on-error`, because an
+unreachable repository must cost a figure and not the run.
 
 ## Things that will trip you up
 

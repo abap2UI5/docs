@@ -15,13 +15,13 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all five steps
+npm run check        # what CI runs, all six steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but five things in
-it are decidable, and all five are decided before a merge — `npm run check`
+A documentation repository has no compiler for its prose, but six things in
+it are decidable, and all six are decided before a merge — `npm run check`
 and `.github/workflows/check.yml` run the same list, in the same order:
 
 | | |
@@ -31,6 +31,7 @@ and `.github/workflows/check.yml` run the same list, in the same order:
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
+| `check:counts` | the four figures on `resources/samples.md` — one count per sample repository and the total they add up to — against the catalogues themselves |
 
 ### What the site publishes for machines
 
