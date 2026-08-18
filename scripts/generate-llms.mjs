@@ -3,7 +3,7 @@
  * generate-llms — this documentation, in the form a machine can actually read.
  *
  * The case this exists for is the one nothing else covers. An agent with the
- * MCP server (abap2UI5/ai-mcp) has tools. An agent working inside a checkout
+ * MCP server (abap2UI5/mcp-server) has tools. An agent working inside a checkout
  * has AGENTS.md and the skills. An agent that is simply ASKED "build me an
  * abap2UI5 app", with nothing but a web search, has neither - it lands on 70
  * rendered HTML pages wrapped in site navigation, or it falls back on training
@@ -234,7 +234,7 @@ const index = [
   '  with both gates and CI already wired up - begin an app here',
   '- [linter](https://github.com/abap2UI5/linter): checks an app class and the',
   '  view it builds without an SAP system (CLI, GitHub Action, VS Code)',
-  '- [ai-mcp](https://github.com/abap2UI5/ai-mcp): MCP server - query the sample',
+  '- [mcp-server](https://github.com/abap2UI5/mcp-server): MCP server - query the sample',
   '  catalogue, validate a view, deploy, build, boot the app headless and get a',
   '  screenshot back. No SAP system needed',
   '',

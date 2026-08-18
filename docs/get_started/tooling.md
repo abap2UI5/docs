@@ -67,7 +67,7 @@ extension for the system connection.
 
 ## Let an AI agent build and see the app
 
-[**abap2UI5/ai-mcp**](https://github.com/abap2UI5/ai-mcp) — an MCP server that
+[**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) — an MCP server that
 gives a coding agent the whole loop *without* an SAP system: it validates the
 view, transpiles the framework and the app to Node, boots the app in a
 headless browser and hands the agent a **screenshot**. That last step is the

@@ -8,7 +8,7 @@
  *
  * The row shape is maintained in abap2UI5/samples, /samples-controls and
  * /samples-stack - three repositories, none of them this one - and read here
- * and in abap2UI5/ai-mcp. It is a contract between five programs.
+ * and in abap2UI5/mcp-server. It is a contract between five programs.
  */
 import fs from 'node:fs';
 import path from 'node:path';
