@@ -158,8 +158,10 @@ export default defineConfig({
         items: [
           { text: "Release", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
-          { text: "Contribution", link: "/resources/contribution" },
-          { text: "Sponsor", link: "/resources/sponsor" },
+          // NAV copy — the sidebar has the same two entries verbatim, further
+          // down under "Resource". Search for this marker, not for the text.
+          { text: "Contribution", link: "/resources/contribution" }, // nav
+          { text: "Sponsor", link: "/resources/sponsor" }, // nav
         ],
       },
     ],
@@ -485,10 +487,12 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Reference", link: "/resources/references" },
-          // 615 working apps in three repositories, and until this page the
-          // only way to find out which one to open was to know all three
-          // existed. The cookbook links individual samples per chapter; this
-          // says which CATALOGUE answers which question.
+          // Several hundred working apps in three repositories, and until this
+          // page the only way to find out which one to open was to know all
+          // three existed. The cookbook links individual samples per chapter;
+          // this says which CATALOGUE answers which question. The figures live
+          // on the page itself, where check:counts verifies them against the
+          // catalogues - do not repeat one here, where nothing would.
           { text: "Sample Catalogues", link: "/resources/samples" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release", link: "/resources/changelog" },
@@ -496,8 +500,11 @@ export default defineConfig({
           { text: "License", link: "/resources/license" },
           { text: "Support", link: "/resources/support" },
           { text: "Contact", link: "/resources/contact" },
-          { text: "Contribution", link: "/resources/contribution" },
-          { text: "Sponsor", link: "/resources/sponsor" },
+          // SIDEBAR copy — the nav bar has the same two entries verbatim,
+          // further up under the version number. Search for this marker, not
+          // for the text.
+          { text: "Contribution", link: "/resources/contribution" }, // sidebar
+          { text: "Sponsor", link: "/resources/sponsor" }, // sidebar
           // The logo, the favicon and the cover image, for anyone writing
           // about abap2UI5. The page existed and no sidebar linked it, so the
           // only way in was knowing the URL - which nobody looking for a logo

@@ -45,11 +45,13 @@ unreachable repository must cost a figure and not the run.
 
 ## Things that will trip you up
 
-- **The nav bar and the sidebar contain byte-identical lines.**
+- **The nav bar and the sidebar contain the same two entries.**
   `Contribution` and `Sponsor` appear in both `themeConfig.nav` and
-  `themeConfig.sidebar` in `config.mjs`. A replace-first edit hits the wrong
-  one and looks like it worked. Verify by reading the built config, not by
-  grepping the source.
+  `themeConfig.sidebar` in `config.mjs`. The four lines now carry a `// nav` or
+  `// sidebar` marker so each one is unique — match on the marker, not on the
+  link. Any further line that has to exist twice gets the same treatment;
+  a replace-first edit on a text that appears twice hits the wrong one and
+  looks like it worked.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
   frozen builder — unless the page carries the migration banner, and refuses a
