@@ -172,19 +172,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Introduction", link: "/get_started/about" },
-          { text: "Use Cases", link: "/get_started/use_cases" },
           {
             text: "Quickstart",
             items: [
               { text: "Installation", link: "/get_started/quickstart" },
               { text: "Hello World", link: "/get_started/hello_world" },
-              // Between the smallest app and the complete one, because that is
-              // where the reader's question changes from "how do I write this"
-              // to "where does it live". Quickstart ends with a class typed
-              // into a system and nothing said the next step out of it; a
-              // reader who stopped once the app ran met the template, the
-              // linter and the agent setup on no page at all.
-              { text: "Your Project", link: "/get_started/project_setup" },
               { text: "Full Example", link: "/get_started/full_example" },
             ],
           },
@@ -418,9 +410,31 @@ export default defineConfig({
         link: "/advanced/downporting",
         collapsed: true,
         items: [
+          // Both moved out of Getting Started on purpose: the extensibility
+          // tiers and the git/CI project setup answer questions a newcomer
+          // does not have yet, and on the entry pages they read as required
+          // steps. Here they sit with the other depth topics.
+          { text: "Use Cases", link: "/advanced/use_cases" },
           { text: "Add-ons", link: "/advanced/addons" },
           { text: "Downporting", link: "/advanced/downporting" },
           { text: "Namespaces, Renaming", link: "/advanced/renaming" },
+          { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
+          {
+            // The project's own tools, each documented in full here — this is
+            // the documentation for those three repositories, so their READMEs
+            // can stay short and point at a page instead of growing a second
+            // copy that drifts.
+            text: "Tools",
+            link: "/advanced/linter",
+            collapsed: true,
+            items: [
+              // ADVANCED copy — Technical Insight > Tool carries the same
+              // entry, pointing at the same page. Match on the marker.
+              { text: "abap2UI5 linter", link: "/advanced/linter" }, // advanced
+              { text: "MCP Server", link: "/advanced/mcp_server" },
+              { text: "VS Code Extension", link: "/advanced/vscode" },
+            ],
+          },
           { text: "Local Setup", link: "/advanced/local" },
           { text: "RFC Connector", link: "/advanced/rfc" },
           { text: "HTTP Connector", link: "/advanced/http" },
@@ -469,7 +483,11 @@ export default defineConfig({
               // other gate in this section is somebody else's; this one is
               // the only thing that can read a view that does not exist until
               // the app runs.
-              { text: "abap2UI5 linter", link: "/technical/tools/linter" },
+              //
+              // TECHNICAL copy — the page itself lives under Advanced Topic >
+              // Tools with the MCP server and the extension, the project's
+              // other two. Match on the marker, not on the text.
+              { text: "abap2UI5 linter", link: "/advanced/linter" }, // technical
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },
               { text: "S-RTTI", link: "/technical/tools/srtti" },

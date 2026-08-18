@@ -98,5 +98,5 @@ Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` pref
 ## Next Steps
 
 [Hello World](/get_started/hello_world) explains what that class actually did.
-Once it is more than one class, [Your Project](/get_started/project_setup) is
+Once it is more than one class, [Working Off-Stack](/advanced/working_off_stack) is
 where the source moves into a git repository with the checks in front of it.

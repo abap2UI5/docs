@@ -11,6 +11,36 @@ app, confidently, and in an API that is no longer the one to use.
 
 Everything below is a way of telling it otherwise, in rising order of effort.
 
+## Paste the essentials
+
+The zero-setup version, for any assistant with web access: paste this ahead of
+your task. It corrects the four things a model most reliably gets wrong about
+abap2UI5:
+
+```text
+Before writing any abap2UI5 code, read https://abap2ui5.github.io/docs/llms.txt
+and follow it to the pages you need.
+
+Four things that override whatever you remember about abap2UI5:
+1. An app is ONE ABAP class implementing z2ui5_if_app. Everything enters main( ),
+   which dispatches on client->check_on_navigated( ) (the display branch, true on
+   first start too), client->check_on_event( `X` ) and - for one-time setup only -
+   client->check_on_init( ).
+2. Build the view with z2ui5_cl_ui5_view_builder and its verbs ele / tag / a / end /
+   stringify. z2ui5_cl_xml_view is the FROZEN predecessor - it is what most examples
+   online show, and it is not what to write.
+3. Bind with client->_bind( ). It is bidirectional; only what the user edited comes back.
+4. Every roundtrip is a fresh ABAP session. Nothing survives on the server except
+   the app class itself, which is serialized.
+
+Before building something from scratch, check whether it exists: the sample
+catalogue lists every app with the words to search it by, at
+https://github.com/abap2UI5/samples/blob/main/SAMPLES.md
+
+When you are done, check the result with the abap2UI5-linter
+(npx abap2ui5lint) - it reads the view your ABAP builds and needs no SAP system.
+```
+
 ## Point it at the right index
 
 Two files describe this project to a machine, and they answer different
@@ -31,7 +61,7 @@ An index tells an agent what abap2UI5 is. `AGENTS.md` tells it what *your
 project* is — and it is read automatically, by every session, without anybody
 remembering to paste anything.
 
-The [app-template](/get_started/project_setup) ships one written for
+The [app-template](/advanced/working_off_stack) ships one written for
 app-building: the class shape, the lifecycle, the view builder, binding,
 events, and the gates to run before calling the work done. It also ships a
 `.claude/settings.json` allowlist so an agent can run `npm run check` itself
@@ -47,16 +77,16 @@ can run them on its own:
 npm run check
 ```
 
-The [abap2UI5 linter](/technical/tools/linter) half is the one that matters
+The [abap2UI5 linter](/advanced/linter) half is the one that matters
 here: it reconstructs the view from the builder chain and reports the names UI5
 does not have, the bindings that point at nothing — and a class still built on
 the frozen builder.
 
 ## Give it the loop
 
-[**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) is an MCP server that
-turns the checks into a development loop, still without a system. It works with
-any MCP client — Claude Code, Cursor, VS Code:
+The [**MCP server**](/advanced/mcp_server) turns the checks into a development
+loop, still without a system. It works with any MCP client — Claude Code,
+Cursor, VS Code:
 
 ```sh
 claude mcp add abap2ui5 -- node /path/to/mcp-server/server.mjs
@@ -75,24 +105,27 @@ The tools an agent then has:
 
 Set-up is levelled: validating views needs one small checkout and a minute;
 the screenshot loop needs a browser and a first build measured in tens of
-minutes. Stop where the value stops for you.
+minutes. Stop where the value stops for you — the
+[MCP Server page](/advanced/mcp_server) has the three levels, every tool and
+the loop they are meant to be used in.
 
 ## From the editor
 
-The [VS Code extension](/get_started/tooling#run-the-app-from-the-editor)
+The [VS Code extension](/advanced/vscode)
 registers that same MCP server for every client in the window — Copilot agent
 mode, Claude Code, anything else speaking MCP — so an agent working in your
 editor has the loop without any separate configuration. Point
 `abap2ui5.mcp.reposRoot` at the folder holding the checkouts and the extension
 passes the paths through.
 
-It adds a second server of its own for the half mcp-server deliberately does not
+It adds a second server of its own for the half that one deliberately does not
 have: your configured **systems**. An agent can list them, search app classes
 over ADT and get the app rendered on the real system as a screenshot — while
 every credential prompt stays an ordinary VS Code dialog the agent never sees.
 
 ## Next Steps
 
-- [Your Project](/get_started/project_setup) — the repository all of this
+- [Working Off-Stack](/advanced/working_off_stack) — the repository all of this
   assumes
-- [Tooling](/get_started/tooling) — the same four tools, for a human
+- [Tooling](/get_started/tooling) — the human side of the same loop: the
+  template, the linter, and the VS Code extension

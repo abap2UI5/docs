@@ -21,7 +21,7 @@ The samples evolve all the time. Have one to share? Open a PR so others can lear
 :::
 
 ## Tooling
-Optional, and worth the ten minutes: a project [template](/get_started/project_setup) with the checks already wired up, a [linter](/technical/tools/linter) that finds broken views without a system, an [extension](https://github.com/abap2UI5/vscode-extension) that runs your app on `F9` next to the code, and an [MCP server](https://github.com/abap2UI5/mcp-server) that lets an AI agent build and *look at* the app. See [Tooling](/get_started/tooling), and [Building with AI](/get_started/ai) if an assistant writes some of it.
+Optional, and worth the ten minutes: a project [template](/advanced/working_off_stack) with the checks already wired up, a [linter](/advanced/linter) that finds broken views without a system, an [extension](/advanced/vscode) that runs your app on `F9` next to the code, and an [MCP server](/advanced/mcp_server) that lets an AI agent build and *look at* the app. See [Tooling](/get_started/tooling), and [Building with AI](/get_started/ai) if an assistant writes some of it.
 
 ## Development
 Build views, handle events, share data, and work with tables. The [Cookbook](/cookbook/overview) walks through the patterns you need for everyday work — start with the [Life Cycle](/cookbook/event_navigation/life_cycle) page.

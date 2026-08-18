@@ -103,10 +103,10 @@ flag reaches the view without a conversion of its own:
 ```
 
 Tips for working with views:
-- The [VS Code extension](https://github.com/abap2UI5/vscode-extension) gives
+- The [VS Code extension](/advanced/vscode) gives
   the chain completion and hover for the whole UI5 API, and checks the view
   while you type.
-- The [abap2UI5 linter](https://github.com/abap2UI5/linter) rebuilds the view
+- The [abap2UI5 linter](/advanced/linter) rebuilds the view
   from your chain and reports unknown controls, properties, enum values and
   `@since` violations — no SAP system involved.
 - See the [samples repository](/get_started/next#sample-apps) for ready-made
@@ -131,7 +131,7 @@ control** to confirm:
 - which parent controls are valid for the control you want to use.
 
 The ABAP compiler cannot catch these mistakes — they are pure UI5 concerns.
-The [abap2UI5 linter](https://github.com/abap2UI5/linter) catches a large part
+The [abap2UI5 linter](/advanced/linter) catches a large part
 of them before you deploy, and the rest have to be verified against the SDK.
 :::
 
