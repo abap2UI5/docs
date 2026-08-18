@@ -32,6 +32,33 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # Not needed if lastUpdated is not enabled
+
+      # The sample catalogues, for the corpus sizes in the generated llms.txt -
+      # one file out of each repository, and nothing else. `continue-on-error`
+      # is the point: generate-llms.mjs leaves the number out when a catalogue
+      # is not here, so a repository that is unreachable costs the deploy a
+      # figure, never the site.
+      - name: Sample catalogues
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: abap2UI5/samples
+          ref: main
+          path: .samples
+          fetch-depth: 1
+          sparse-checkout: SAMPLES.md
+          sparse-checkout-cone-mode: false
+      - name: Sample catalogues (controls)
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: abap2UI5/samples-controls
+          ref: main
+          path: .samples-controls
+          fetch-depth: 1
+          sparse-checkout: SAMPLES.md
+          sparse-checkout-cone-mode: false
+
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:

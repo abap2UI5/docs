@@ -18,17 +18,30 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, and checks the link in both directions |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
+| `scripts/lib/catalogue.mjs` | Parses a sample catalogue's rows; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # docs:build + check:examples + check:samples
+npm run check          # test + check:version + docs:build + check:examples + check:samples + check:counts
 ```
+
+`.github/workflows/check.yml` runs the same six, in the same order. Keep the
+two in step: a step that exists only in `package.json` is a step no pull
+request has to pass, which is how `npm test` — the pin added *because* the
+catalogue parser broke twice in silence — went a release without CI.
 
 `check:samples` needs an `abap2UI5/samples` checkout — set `SAMPLES_HOME`, or
 clone it as a sibling. Without one it *skips* rather than fails, so verify the
 output says what you think it says. CI checks out `abap2UI5/samples@main`
 explicitly for this reason.
+
+`check:counts` reads all three catalogues the same way, and skips per
+repository: with only `samples` at hand it verifies that one figure, says the
+other two were not verified, and leaves the total alone (it needs all three).
+CI sparse-checks out `SAMPLES.md` from `samples-controls` and `samples-stack`
+so the page is fully checked; both are `continue-on-error`, because an
+unreachable repository must cost a figure and not the run.
 
 ## Things that will trip you up
 
@@ -39,9 +52,11 @@ explicitly for this reason.
   grepping the source.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
-  frozen builder — unless the page carries the migration banner. Examples are
-  the most-copied ABAP in the project; that gate is the reason the pages could
-  be migrated at all.
+  frozen builder — unless the page carries the migration banner, and refuses a
+  chain step calling anything but `ele` / `tag` / `a` / `end` / `stringify`,
+  whether it is written mid-chain (`)->input( )`) or on its receiver
+  (`page->input( )`). Examples are the most-copied ABAP in the project; that
+  gate is the reason the pages could be migrated at all.
 - **`llms.txt` is generated from the SIDEBAR, not from a directory walk.** A
   page in no sidebar is reported as an orphan and published anyway. If you add
   a page, add it to the sidebar or accept that nothing navigates to it.

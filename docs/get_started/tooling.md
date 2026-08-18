@@ -26,6 +26,9 @@ half a year later that they were never running.
 Use this template → clone → npm ci → npm run check
 ```
 
+[Your Project](/get_started/project_setup) walks through it — what is in the
+repository, the rename that makes it yours, and the way into your system.
+
 ## Check the view without a system
 
 [**abap2UI5/linter**](https://github.com/abap2UI5/linter) — the view your app
@@ -46,7 +49,9 @@ npx @abap2ui5/linter src
 
 No SAP system, no install beyond npm. It also ships as a GitHub Action, and
 the [app-template](https://github.com/abap2UI5/app-template) has it wired into
-CI already.
+CI already. The [linter page](/technical/tools/linter) has the rest: the two
+gates, `--fix`, and the baseline for switching it on over a codebase that
+already exists.
 
 ## Run the app from the editor
 
@@ -73,11 +78,18 @@ a few checkouts and a first build that takes a while — the README says which
 tools need what, and validating views alone needs almost nothing.
 
 ::: tip Building with an AI agent?
-Point it at [`llms.txt`](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt)
-in the framework repository. It is a map of this documentation and the sample
-repositories written for agents, and the
-[app-template](https://github.com/abap2UI5/app-template) ships an `AGENTS.md`
-that states the conventions an agent should follow in your project.
+Point it at [`llms.txt`](https://abap2ui5.github.io/docs/llms.txt) — this site
+generates one on every build: every chapter with a one-line summary, and
+[`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) for all of it
+in a single fetch. There is a second one in the
+[framework repository](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt);
+the difference is what each maps — this site's is the map of the **prose**, the
+framework's is the map of the **code**, down to the interface files an agent
+should read instead of guessing at a signature.
+
+The [app-template](https://github.com/abap2UI5/app-template) then ships an
+`AGENTS.md` that states the conventions an agent should follow in your own
+project. [Building with AI](/get_started/ai) puts the whole setup in order.
 :::
 
 ## Where the samples live

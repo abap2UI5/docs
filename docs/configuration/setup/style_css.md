@@ -18,7 +18,9 @@ ENDMETHOD.
 In the XML view you then reference your class via the `class` property:
 
 ```abap
-view->button( text = `Delete` class = `myRedButton` ).
+    )->tag( `Button`
+        )->a( n = `text`  v = `Delete`
+        )->a( n = `class` v = `myRedButton` )
 ```
 
 ## When to Use Custom CSS

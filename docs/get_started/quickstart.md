@@ -84,3 +84,9 @@ Back on the startup page, enter your class name `ZCL_MY_APP` in the input field 
 ::: tip **Naming**
 Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
 :::
+
+## Next Steps
+
+[Hello World](/get_started/hello_world) explains what that class actually did.
+Once it is more than one class, [Your Project](/get_started/project_setup) is
+where the source moves into a git repository with the checks in front of it.

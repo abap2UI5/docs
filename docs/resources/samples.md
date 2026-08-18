@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Sample Catalogues
 
-**615 working apps, in three repositories.** Every one is a single ABAP class
+**614 working apps, in three repositories.** Every one is a single ABAP class
 that compiles, renders, and is downported to three releases — so a sample is
 never a fragment you have to trust, it is an app you can pull and run.
 
@@ -13,7 +13,7 @@ time than reading this page.
 | | | you are asking |
 |---|--:|---|
 | [**samples**](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) | 152 | *has somebody already built this pattern?* — value help, navigation between apps, trees, tables, timers, file up- and download. Runs on a bare abap2UI5 install. |
-| [**samples-controls**](https://github.com/abap2UI5/samples-controls/blob/main/SAMPLES.md) | 431 | *how is this UI5 control expressed in ABAP?* — the UI5 demo kit, rebuilt control by control, grouped by library. |
+| [**samples-controls**](https://github.com/abap2UI5/samples-controls/blob/main/SAMPLES.md) | 430 | *how is this UI5 control expressed in ABAP?* — the UI5 demo kit, rebuilt control by control, grouped by library. |
 | [**samples-stack**](https://github.com/abap2UI5/samples-stack/blob/main/SAMPLES.md) | 32 | *how do I reach my system from an app?* — OData, RAP, APC, MIME, the Fiori Launchpad. Each needs something the framework alone does not give you. |
 
 Start with **samples** if you are learning abap2UI5, with **samples-controls**

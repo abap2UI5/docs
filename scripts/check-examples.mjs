@@ -76,6 +76,40 @@ const unmigrated = [];
  * anything else is calling a method of the frozen one. */
 const VERBS = new Set(['ele', 'tag', 'a', 'end', 'stringify']);
 
+/* The gate had one blind spot, and it cost four more pages. `)->input( )` is
+ * caught from its first character, but the SAME call written on its receiver -
+ * `page->input( )` - is not, because the regex needs the closing paren of a
+ * previous step to anchor on. A fragment that shows a single control naturally
+ * opens with the variable, so the shape that escaped the gate is the shape a
+ * one-control example is written in: `view->button( )` on the cheat sheet and
+ * on style_css, `page->input( )` on device_model and three `page->smart_*( )`
+ * calls on smart_controls outlived the migration that cleared every mid-chain
+ * call in the tree.
+ *
+ * A receiver name cannot be recognised in general - it is whatever the page
+ * called its variable - so the set of names that denote a view node is built
+ * from the fence itself: anything assigned out of the builder, and anything
+ * that calls one of the five verbs. `view` and `page` are seeded on top,
+ * because a fragment showing one control has no chain around it to derive
+ * from, and those two are the view root and the page node in every sample and
+ * on every page here. */
+const VIEW_NODE_SEED = ['view', 'page'];
+
+/** The variables that hold a view node in this fence. */
+function viewNodes(code) {
+  const names = new Set(VIEW_NODE_SEED);
+  /* assigned straight out of the builder, or out of a step of one */
+  for (const m of code.matchAll(/DATA\(\s*([a-z_][a-z0-9_]*)\s*\)\s*=\s*(?:z2ui5_cl_ui5_view_builder=>|[a-z_][a-z0-9_]*->(?:ele|tag|end)\()/gi)) {
+    names.add(m[1].toLowerCase());
+  }
+  /* or simply seen calling a verb - which no other object in this
+   * documentation does, and which is the whole current API */
+  for (const m of code.matchAll(/\b([a-z_][a-z0-9_]*)->(?:ele|tag|a|end|stringify)\(/gi)) {
+    names.add(m[1].toLowerCase());
+  }
+  return names;
+}
+
 /* Pages that show the previous builder ON PURPOSE. The deprecation record is
  * a before/after table - "this is what you had, this is what you write now" -
  * so the old call is the content, not a leftover. */
@@ -89,15 +123,24 @@ function legacyFragments() {
     const md = readFileSync(file, 'utf8');
     if (md.includes('This page still shows the previous view builder')) continue;
     for (const m of md.matchAll(/```abap\n([\s\S]*?)```/g)) {
+      const code = m[1];
       /* The other fluent API in this documentation. `z2ui5_cl_ajson` chains
        * the same way and its verbs are its own, so a fence building JSON is
        * not a view chain. Listed rather than guessed at from the receiver
        * name: most view fragments here start mid-chain, with no receiver to
        * read, and a heuristic that needs one would skip exactly the fragments
        * this gate exists for. */
-      if (/z2ui5_cl_ajson/i.test(m[1])) continue;
-      for (const call of m[1].matchAll(/\)->([a-z_][a-z0-9_]*)\(/gi)) {
+      if (/z2ui5_cl_ajson/i.test(code)) continue;
+      /* mid-chain: `)->input( )` */
+      for (const call of code.matchAll(/\)->([a-z_][a-z0-9_]*)\(/gi)) {
         if (!VERBS.has(call[1].toLowerCase())) out.push({ page, call: `)->${call[1]}(` });
+      }
+      /* on the receiver: `page->input( )` */
+      const nodes = viewNodes(code);
+      for (const call of code.matchAll(/\b([a-z_][a-z0-9_]*)->([a-z_][a-z0-9_]*)\(/gi)) {
+        if (!nodes.has(call[1].toLowerCase())) continue;
+        if (VERBS.has(call[2].toLowerCase())) continue;
+        out.push({ page, call: `${call[1]}->${call[2]}(` });
       }
     }
   }

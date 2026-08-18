@@ -19,7 +19,10 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseCatalogue } from '../scripts/lib/catalogue.mjs';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { parseCatalogue, countCatalogue } from '../scripts/lib/catalogue.mjs';
 
 const ROWS = [
   '## Basics',
@@ -64,4 +67,24 @@ test('a page link survives a block this parser has never seen', () => {
   const byClass = parseCatalogue(ROWS);
   assert.ok(byClass.has('z2ui5_cl_smp_app_999'), 'the row with an unknown block was dropped');
   assert.equal(byClass.get('z2ui5_cl_smp_app_999').path, 'src/01/z2ui5_cl_smp_app_999.clas.abap');
+});
+
+/* The corpus sizes in the generated llms.txt are counted rather than typed,
+ * and the deploy workflow may fail to reach a catalogue. Both outcomes are
+ * legitimate; what must never happen is a number that is not the count. */
+test('a corpus size is counted where the catalogue is, and absent where it is not', () => {
+  // an explicit checkout wins over the sibling directories, and a contributor
+  // who has one set would otherwise be told the wrong number by this test
+  delete process.env.SAMPLES_HOME;
+  delete process.env.SAMPLES_CONTROLS_HOME;
+
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'a2ui5-catalogue-'));
+  fs.mkdirSync(path.join(dir, '.samples'));
+  fs.writeFileSync(path.join(dir, '.samples', 'SAMPLES.md'), ROWS);
+
+  assert.equal(countCatalogue('samples', dir), 5);
+  // no checkout at all - the caller leaves the number out rather than guessing
+  assert.equal(countCatalogue('samples-controls', dir), null);
+
+  fs.rmSync(dir, { recursive: true, force: true });
 });

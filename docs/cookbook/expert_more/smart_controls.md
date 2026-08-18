@@ -9,9 +9,21 @@ Smart controls from the `sap.ui.comp` library (SmartFilterBar, SmartTable, Smart
 The `sap.ui.comp` library ships with SAPUI5 but not with OpenUI5 — apps using smart controls require a SAPUI5 bootstrap. See [UI5 Bootstrapping](/configuration/setup/ui5_bootstrapping).
 :::
 
-## Supported Controls
+## Declaring the Namespaces
 
-The XML view builder covers the `sap.ui.comp` namespaces `smartfilterbar`, `smarttable`, `smartvariants`, `smartform`, `smartfield`, `smartchart` and `navpopover`. Since smart controls are metadata-driven, the app usually carries no ABAP data at all — it switches the default model to an OData service instead (see [OData](/cookbook/expert_more/odata)):
+Smart controls live in their own `sap.ui.comp` sub-namespaces, so each one you use needs its `xmlns` on the root `View` — exactly as in a hand-written UI5 view. The three below cover a list report:
+
+```abap
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`                        v = `sap.m`
+            )->a( n = `xmlns:mvc`                    v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:smartFilterBar`         v = `sap.ui.comp.smartfilterbar`
+            )->a( n = `xmlns:smartTable`             v = `sap.ui.comp.smarttable`
+            )->a( n = `xmlns:smartVariantManagement` v = `sap.ui.comp.smartvariants` ).
+```
+
+`smartform`, `smartfield`, `smartchart` and `navpopover` are declared the same way. Since smart controls are metadata-driven, the app usually carries no ABAP data at all — it switches the default model to an OData service instead (see [OData](/cookbook/expert_more/odata)):
 
 ```abap
 client->view_display( val                       = view->stringify( )
@@ -23,25 +35,27 @@ client->view_display( val                       = view->stringify( )
 A page variant is one `SmartVariantManagement` that owns the persistency for the whole page; SmartFilterBar and SmartTable register with it through their `smartvariant` association, each contributing its own `persistencykey`:
 
 ```abap
-page->smart_variant_management(
-    id             = `pageVariantId`
-    persistencykey = `PageVariantPKey` ).
+    page->tag( n = `SmartVariantManagement` ns = `smartVariantManagement`
+        )->a( n = `id`             v = `pageVariantId`
+        )->a( n = `persistencyKey` v = `PageVariantPKey` ).
 
-page->smart_filter_bar(
-    id             = `smartFilterBar`
-    entityset      = `ProductSet`
-    smartvariant   = `pageVariantId`
-    persistencykey = `SmartFilterPKey` ).
+    page->tag( n = `SmartFilterBar` ns = `smartFilterBar`
+        )->a( n = `id`             v = `smartFilterBar`
+        )->a( n = `entitySet`      v = `ProductSet`
+        )->a( n = `smartVariant`   v = `pageVariantId`
+        )->a( n = `persistencyKey` v = `SmartFilterPKey` ).
 
-page->smart_table(
-    id                     = `smartTable`
-    smartfilterid          = `smartFilterBar`
-    smartvariant           = `pageVariantId`
-    entityset              = `ProductSet`
-    initiallyvisiblefields = `ProductID,Name,Category,Price`
-    usevariantmanagement   = `true`
-    persistencykey         = `SmartTablePKey` ).
+    page->tag( n = `SmartTable` ns = `smartTable`
+        )->a( n = `id`                     v = `smartTable`
+        )->a( n = `smartFilterId`          v = `smartFilterBar`
+        )->a( n = `smartVariant`           v = `pageVariantId`
+        )->a( n = `entitySet`              v = `ProductSet`
+        )->a( n = `initiallyVisibleFields` v = `ProductID,Name,Category,Price`
+        )->a( n = `useVariantManagement`   v = `true`
+        )->a( n = `persistencyKey`         v = `SmartTablePKey` ).
 ```
+
+Without an annotated `UI.LineItem` the SmartTable starts with no columns at all, so `initiallyVisibleFields` is not optional in practice — name the columns the service is meant to show.
 
 ### The `SMART_VARIANT_INIT` Handshake
 
