@@ -54,9 +54,19 @@ photograph it. Seconds per answer, no backend, no transpile.
 
 ```sh
 git clone https://github.com/abap2UI5/linter        # AI_VIEW_CHECK_HOME
-git clone https://github.com/abap2UI5/mcp-server
-cd linter && npm ci && cd ../mcp-server && npm ci
+cd linter && npm ci
 ```
+
+The server itself is published as `@abap2ui5/mcp-server`, so it needs no
+checkout — the `npx` command below fetches and runs it. Clone it as well only
+if you want to work *on* the server:
+
+```sh
+git clone https://github.com/abap2UI5/mcp-server && cd mcp-server && npm ci
+```
+
+That install is about 45 MB, and 19 MB of it is a Playwright driver only
+`run_app` uses — paid on the first start, cached afterwards.
 
 `screenshot_view` additionally needs the linter's render runtime and a browser
 — `npm i -D @abap2ui5/render-runtime && npx playwright install chromium` in the
@@ -101,8 +111,11 @@ far, and it is what buys an agent the ability to look at what it built.
 **Claude Code:**
 
 ```sh
-claude mcp add abap2ui5 -- node /path/to/mcp-server/server.mjs
+claude mcp add abap2ui5 -- npx --yes @abap2ui5/mcp-server
 ```
+
+From a checkout instead: `claude mcp add abap2ui5 -- node
+/path/to/mcp-server/server.mjs`.
 
 **Cursor** (`.cursor/mcp.json`), **VS Code** (`.vscode/mcp.json`), **Claude
 Desktop** (`claude_desktop_config.json`) and anything else reading the standard
@@ -112,8 +125,8 @@ stdio shape:
 {
   "mcpServers": {
     "abap2ui5": {
-      "command": "node",
-      "args": ["/path/to/mcp-server/server.mjs"],
+      "command": "npx",
+      "args": ["--yes", "@abap2ui5/mcp-server"],
       "env": {
         "AI_VIEW_CHECK_HOME": "/path/to/linter",
         "A2UI5_HOME": "/path/to/abap2UI5",
@@ -124,8 +137,12 @@ stdio shape:
 }
 ```
 
+To run a checkout instead, swap those two lines for `"command": "node"` and
+`"args": ["/path/to/mcp-server/server.mjs"]`.
+
 The three `env` entries are only needed when the checkouts are not siblings of
-`mcp-server`; drop the ones whose level you stopped short of. VS Code wants the
+the server — which they cannot be when it runs from npx, so state them there.
+Drop the ones whose level you stopped short of. VS Code wants the
 same object under a top-level `"servers"` key instead of `"mcpServers"`.
 
 ::: tip Using VS Code?

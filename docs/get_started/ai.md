@@ -89,7 +89,7 @@ loop, still without a system. It works with any MCP client — Claude Code,
 Cursor, VS Code:
 
 ```sh
-claude mcp add abap2ui5 -- node /path/to/mcp-server/server.mjs
+claude mcp add abap2ui5 -- npx --yes @abap2ui5/mcp-server
 ```
 
 The tools an agent then has:
