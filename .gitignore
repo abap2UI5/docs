@@ -13,5 +13,3 @@ docs/.vitepress/dist
 docs/public/llms.txt
 docs/public/llms-full.txt
 docs/public/**/*.md
-# ...except the one that was there first: a hand-written page, not a projection
-!docs/public/media/diagram.md

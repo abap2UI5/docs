@@ -47,7 +47,7 @@ can run them on its own:
 npm run check
 ```
 
-The [abap2UI5-linter](/technical/tools/linter) half is the one that matters
+The [abap2UI5 linter](/technical/tools/linter) half is the one that matters
 here: it reconstructs the view from the builder chain and reports the names UI5
 does not have, the bindings that point at nothing — and a class still built on
 the frozen builder.

@@ -20,40 +20,29 @@ npm run check        # what CI runs, all six steps
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but six things in
-it are decidable, and all six are decided before a merge — `npm run check`
-and `.github/workflows/check.yml` run the same list, in the same order:
+A documentation repository has no compiler for its prose, but six things in it
+are decidable, and `npm run check` decides all six before a merge — the prose
+builds (`docs:build`), the fenced ABAP examples compile and the views they
+build name real UI5 API (`check:examples`), the sample links and the sample
+counts still match the sample repositories (`check:samples`, `check:counts`),
+the release number in the nav bar still matches the framework
+(`check:version`), and the catalogue parser still parses (`test`).
+`.github/workflows/check.yml` runs the same list in the same order, so a green
+`npm run check` locally is a green pull request.
 
-| | |
-|---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate |
-| `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
-| `docs:build` | a page that does not build is a page nobody can read |
-| `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
-| `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
-| `check:counts` | the four figures on `resources/samples.md` — one count per sample repository and the total they add up to — against the catalogues themselves |
+**[AGENTS.md](AGENTS.md) describes each of the six**, what a failure means and
+which of them need a sibling checkout to say anything at all — read it before
+changing anything beyond prose.
 
 ### What the site publishes for machines
 
-`docs:build` runs `scripts/generate-llms.mjs` first, which writes three things
-into `docs/public/` — generated on every build and **gitignored**, because they
-are a projection of the pages next to them:
-
-| | |
-|---|---|
-| [`/docs/llms.txt`](https://abap2ui5.github.io/docs/llms.txt) | the map: every page with its title and one line of what it covers, plus the repositories around it |
-| [`/docs/llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) | the whole documentation as one markdown document |
-| `/docs/<page>.md` | each page as raw markdown, next to its `.html` |
-
-This is for the reader nothing else reaches: an agent that is simply *asked*
-about abap2UI5, with no MCP server and no checkout. Without it, it falls back
-on training data — where abap2UI5 still looks like `z2ui5_cl_xml_view`.
-
-The page list comes from the **sidebar**, not from a directory walk, so a
-machine meets the documentation in the order a reader does. A page in the tree
-that no sidebar links is reported by name and published anyway.
-
-Nothing needs maintaining. Adding a page to the sidebar adds it here.
+Besides the site, `docs:build` writes [`llms.txt`](https://abap2ui5.github.io/docs/llms.txt),
+[`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) and a raw
+`.md` next to every `.html`, so an AI assistant asked about abap2UI5 can read
+the current documentation instead of guessing from training data. All three are
+generated on every build and gitignored — never edit them, and nothing needs
+maintaining: the page list comes from the **sidebar**, so adding a page there
+adds it here. [AGENTS.md](AGENTS.md) has the details.
 
 ### Linking a sample from a page
 

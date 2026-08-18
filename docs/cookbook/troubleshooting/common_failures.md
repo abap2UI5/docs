@@ -8,7 +8,7 @@ samples:
 Not every problem raises an ABAP exception. Many failures surface only in the browser, fail silently, or look like framework bugs when they are actually pattern mistakes. The sections below cover the ten most common ones — what the symptom looks like and where to find the real cause.
 
 ::: tip Developer Tools first
-Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/troubleshooting) — the **Error**, **Log**, **Previous Request** and **Response** tabs show most of what the browser-DevTools steps below dig for, without leaving the app.
+Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/debugging) — the **Error**, **Log**, **Previous Request** and **Response** tabs show most of what the browser-DevTools steps below dig for, without leaving the app.
 :::
 
 ## Binding-Path Mismatch

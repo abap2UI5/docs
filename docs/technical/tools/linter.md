@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# abap2UI5-linter
+# abap2UI5 linter
 
 The view an abap2UI5 app shows does not exist until the app runs. It is built
 by a chain of `z2ui5_cl_ui5_view_builder` calls and handed to the browser as a
@@ -12,11 +12,16 @@ reconstructs the view from the builder chain and judges the class and the view
 **together**.
 
 ```sh
-npx abap2ui5lint src
+npx @abap2ui5/linter src
 ```
 
 No SAP system, no install, no configuration. The package is small and pulls in
 nothing else, so that line is a fast one.
+
+Name the **package** there, not the command: the executable it installs is
+called `abap2ui5lint` — and so are the config file, the baseline and the
+in-source waivers below — but `npx abap2ui5lint` would go looking for a package
+of that name, which is not this one.
 
 ## What it checks
 
@@ -63,7 +68,7 @@ anchor of its page in the rule reference at
 Some rules carry an exact correction and are rewritten in place:
 
 ```sh
-abap2ui5lint src --fix           # or --fix-dry-run to see it first
+npx @abap2ui5/linter src --fix    # or --fix-dry-run to see it first
 ```
 
 Only corrections that need no guessing — an obsolete call renamed, a missing
@@ -75,7 +80,7 @@ once, which is the moment most adoptions stop. The **baseline** freezes that
 debt instead of hiding it:
 
 ```sh
-npx abap2ui5lint src --update-baseline
+npx @abap2ui5/linter src --update-baseline
 ```
 
 Commit the resulting `abap2ui5lint-baseline.json` and name it in the config.

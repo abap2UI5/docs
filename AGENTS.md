@@ -26,6 +26,18 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 npm run check          # test + check:version + docs:build + check:examples + check:samples + check:counts
 ```
 
+A documentation repository has no compiler for its prose, but six things in it
+are decidable, and all six are decided before a merge:
+
+| | |
+|---|---|
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate |
+| `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
+| `docs:build` | a page that does not build is a page nobody can read |
+| `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
+| `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
+| `check:counts` | the four figures on `resources/samples.md` — one count per sample repository and the total they add up to — against the catalogues themselves |
+
 `.github/workflows/check.yml` runs the same six, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
@@ -43,13 +55,33 @@ CI sparse-checks out `SAMPLES.md` from `samples-controls` and `samples-stack`
 so the page is fully checked; both are `continue-on-error`, because an
 unreachable repository must cost a figure and not the run.
 
+## What the site publishes for machines
+
+`docs:build` runs `scripts/generate-llms.mjs` first, which writes three things
+into `docs/public/` — generated on every build and **gitignored**, because they
+are a projection of the pages next to them:
+
+| | |
+|---|---|
+| [`/docs/llms.txt`](https://abap2ui5.github.io/docs/llms.txt) | the map: every page with its title and one line of what it covers, plus the repositories around it |
+| [`/docs/llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) | the whole documentation as one markdown document |
+| `/docs/<page>.md` | each page as raw markdown, next to its `.html` |
+
+This is for the reader nothing else reaches: an agent that is simply *asked*
+about abap2UI5, with no MCP server and no checkout. Without it, it falls back
+on training data — where abap2UI5 still looks like `z2ui5_cl_xml_view`.
+
+Nothing needs maintaining. Adding a page to the sidebar adds it here.
+
 ## Things that will trip you up
 
-- **The nav bar and the sidebar contain byte-identical lines.**
+- **The nav bar and the sidebar contain the same two entries.**
   `Contribution` and `Sponsor` appear in both `themeConfig.nav` and
-  `themeConfig.sidebar` in `config.mjs`. A replace-first edit hits the wrong
-  one and looks like it worked. Verify by reading the built config, not by
-  grepping the source.
+  `themeConfig.sidebar` in `config.mjs`. The four lines now carry a `// nav` or
+  `// sidebar` marker so each one is unique — match on the marker, not on the
+  link. Any further line that has to exist twice gets the same treatment;
+  a replace-first edit on a text that appears twice hits the wrong one and
+  looks like it worked.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
   frozen builder — unless the page carries the migration banner, and refuses a
