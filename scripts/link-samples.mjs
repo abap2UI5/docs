@@ -7,7 +7,7 @@
  * link to the ROOT of abap2UI5/samples. A reader who follows it lands in a
  * repository of 300 files named z2ui5_cl_smp_app_<number> - the class name
  * encodes nothing - and has to guess. Meanwhile an AI agent can query the same
- * catalogue by keyword (abap2UI5/ai-mcp, the `examples` tool). The human had
+ * catalogue by keyword (abap2UI5/mcp-server, the `examples` tool). The human had
  * the worse deal.
  *
  * How it works, and why it is generated rather than written by hand:

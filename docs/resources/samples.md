@@ -50,7 +50,7 @@ gives you the same sentence the catalogue would have.
 ## For AI agents
 
 The same three catalogues are queryable through the
-[MCP server](https://github.com/abap2UI5/ai-mcp) — the `examples` tool searches
+[MCP server](https://github.com/abap2UI5/mcp-server) — the `examples` tool searches
 all of them at once and answers with a repository, a class name and a path to
 read, never with a copied snippet:
 

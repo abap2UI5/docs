@@ -54,12 +54,12 @@ the frozen builder.
 
 ## Give it the loop
 
-[**abap2UI5/ai-mcp**](https://github.com/abap2UI5/ai-mcp) is an MCP server that
+[**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) is an MCP server that
 turns the checks into a development loop, still without a system. It works with
 any MCP client — Claude Code, Cursor, VS Code:
 
 ```sh
-claude mcp add abap2ui5 -- node /path/to/ai-mcp/server.mjs
+claude mcp add abap2ui5 -- node /path/to/mcp-server/server.mjs
 ```
 
 The tools an agent then has:
@@ -86,7 +86,7 @@ editor has the loop without any separate configuration. Point
 `abap2ui5.mcp.reposRoot` at the folder holding the checkouts and the extension
 passes the paths through.
 
-It adds a second server of its own for the half ai-mcp deliberately does not
+It adds a second server of its own for the half mcp-server deliberately does not
 have: your configured **systems**. An agent can list them, search app classes
 over ADT and get the app rendered on the real system as a screenshot — while
 every credential prompt stays an ordinary VS Code dialog the agent never sees.
