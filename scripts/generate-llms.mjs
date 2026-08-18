@@ -197,6 +197,15 @@ const index = [
   '- [llms-full.txt](' + SITE + '/llms-full.txt): the whole documentation as one',
   '  document, if you would rather fetch it once than page by page',
   '',
+  /* The framework repository publishes a file of the same name describing the
+   * CODE - the src/ layering, the public API, where each concept is
+   * implemented. Its copy points here for the prose; without this line the
+   * pairing is only visible from that side, and a reader who arrived at the
+   * documentation first never learns the other half exists. */
+  '- [the code map](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt): the same',
+  '  idea for the framework source - the package layering, the public API and',
+  '  where each concept lives. This file maps the prose, that one maps the code',
+  '',
   ...[...bySection].flatMap(([section, list]) => [
     `## ${section}`,
     '',
