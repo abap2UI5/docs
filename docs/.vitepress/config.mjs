@@ -467,7 +467,7 @@ export default defineConfig({
               // other gate in this section is somebody else's; this one is
               // the only thing that can read a view that does not exist until
               // the app runs.
-              { text: "abap2UI5-linter", link: "/technical/tools/linter" },
+              { text: "abap2UI5 linter", link: "/technical/tools/linter" },
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },
               { text: "S-RTTI", link: "/technical/tools/srtti" },

@@ -15,7 +15,7 @@ UI5 itself (`sap.ui.commons`, the legacy charts, the Belize themes …) see
 ## Start with the linter
 
 Most of this page can be found — and part of it fixed — without reading
-further. The [abap2UI5-linter](https://github.com/abap2UI5/linter) checks app
+further. The [abap2UI5 linter](https://github.com/abap2UI5/linter) checks app
 classes without an SAP system and rewrites the mechanical corrections in place:
 
 ```sh
