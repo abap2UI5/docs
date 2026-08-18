@@ -11,6 +11,36 @@ app, confidently, and in an API that is no longer the one to use.
 
 Everything below is a way of telling it otherwise, in rising order of effort.
 
+## Paste the essentials
+
+The zero-setup version, for any assistant with web access: paste this ahead of
+your task. It corrects the four things a model most reliably gets wrong about
+abap2UI5:
+
+```text
+Before writing any abap2UI5 code, read https://abap2ui5.github.io/docs/llms.txt
+and follow it to the pages you need.
+
+Four things that override whatever you remember about abap2UI5:
+1. An app is ONE ABAP class implementing z2ui5_if_app. Everything enters main( ),
+   which dispatches on client->check_on_navigated( ) (the display branch, true on
+   first start too), client->check_on_event( `X` ) and - for one-time setup only -
+   client->check_on_init( ).
+2. Build the view with z2ui5_cl_ui5_view_builder and its verbs ele / tag / a / end /
+   stringify. z2ui5_cl_xml_view is the FROZEN predecessor - it is what most examples
+   online show, and it is not what to write.
+3. Bind with client->_bind( ). It is bidirectional; only what the user edited comes back.
+4. Every roundtrip is a fresh ABAP session. Nothing survives on the server except
+   the app class itself, which is serialized.
+
+Before building something from scratch, check whether it exists: the sample
+catalogue lists every app with the words to search it by, at
+https://github.com/abap2UI5/samples/blob/main/SAMPLES.md
+
+When you are done, check the result with the abap2UI5-linter
+(npx abap2ui5lint) - it reads the view your ABAP builds and needs no SAP system.
+```
+
 ## Point it at the right index
 
 Two files describe this project to a machine, and they answer different
@@ -31,7 +61,7 @@ An index tells an agent what abap2UI5 is. `AGENTS.md` tells it what *your
 project* is — and it is read automatically, by every session, without anybody
 remembering to paste anything.
 
-The [app-template](/get_started/project_setup) ships one written for
+The [app-template](/advanced/working_off_stack) ships one written for
 app-building: the class shape, the lifecycle, the view builder, binding,
 events, and the gates to run before calling the work done. It also ships a
 `.claude/settings.json` allowlist so an agent can run `npm run check` itself
@@ -93,6 +123,7 @@ every credential prompt stays an ordinary VS Code dialog the agent never sees.
 
 ## Next Steps
 
-- [Your Project](/get_started/project_setup) — the repository all of this
+- [Working Off-Stack](/advanced/working_off_stack) — the repository all of this
   assumes
-- [Tooling](/get_started/tooling) — the same four tools, for a human
+- [Tooling](/get_started/tooling) — the human side of the same loop: the
+  template, the linter, and the VS Code extension

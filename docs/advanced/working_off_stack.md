@@ -1,11 +1,12 @@
 ---
 outline: [2, 4]
 ---
-# Your Project
+# Working Off-Stack
 
-The class you just built lives in your system and nowhere else. That is fine
-for a first app and not fine for a second one: nothing versions it, nobody
-reviews it, and the mistakes an abap2UI5 app makes — a control that does not
+An abap2UI5 app usually starts as a class typed straight into a system, living
+there and nowhere else. That is fine for a first app and not fine for a second
+one: nothing versions it, nobody reviews it, and the mistakes an abap2UI5 app
+makes — a control that does not
 exist on the release your users are on, a binding pointing at nothing — are
 invisible to the ABAP compiler and show up as a blank screen.
 

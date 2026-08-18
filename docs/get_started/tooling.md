@@ -4,19 +4,21 @@ outline: [2, 4]
 # Tooling
 
 Everything on this page is optional — abap2UI5 is one ABAP class and needs no
-tools at all. What these four add is the loop that ABAP does not give you by
+tools at all. What these three add is the loop that ABAP does not give you by
 itself: catching a broken view **before** it reaches a system, and seeing the
 app without leaving the editor.
 
 They are independent of each other. Take the first one and stop, or take all
-four.
+three. Building with an AI assistant? That whole side of the tooling — the
+indexes, the agent conventions, the MCP server — is collected on
+[Building with AI](/get_started/ai).
 
 ## Start a project from the template
 
 [**abap2UI5/app-template**](https://github.com/abap2UI5/app-template) — press
 *Use this template* on GitHub and you have an app repository that is already
-set up: one working app class, both gates configured, a CI workflow that runs
-them on every push, and a guide for AI agents.
+set up: one working app class, both gates configured, and a CI workflow that
+runs them on every push.
 
 The alternative is creating a class by hand, which works fine — the template
 only saves you from assembling the checks below yourself, and from finding out
@@ -26,7 +28,7 @@ half a year later that they were never running.
 Use this template → clone → npm ci → npm run check
 ```
 
-[Your Project](/get_started/project_setup) walks through it — what is in the
+[Working Off-Stack](/advanced/working_off_stack) walks through it — what is in the
 repository, the rename that makes it yours, and the way into your system.
 
 ## Check the view without a system
@@ -64,33 +66,6 @@ jump-to-the-line inspector, and a traffic log of every roundtrip.
 Install it from the VS Code Marketplace or Open VSX; it needs the
 [ABAP remote filesystem](https://marketplace.visualstudio.com/items?itemName=murbani.vscode-abap-remote-fs)
 extension for the system connection.
-
-## Let an AI agent build and see the app
-
-[**abap2UI5/ai-mcp**](https://github.com/abap2UI5/ai-mcp) — an MCP server that
-gives a coding agent the whole loop *without* an SAP system: it validates the
-view, transpiles the framework and the app to Node, boots the app in a
-headless browser and hands the agent a **screenshot**. That last step is the
-difference between "the code compiles" and "the app works".
-
-Works with any MCP client (Claude Code, Cursor, VS Code). The full loop needs
-a few checkouts and a first build that takes a while — the README says which
-tools need what, and validating views alone needs almost nothing.
-
-::: tip Building with an AI agent?
-Point it at [`llms.txt`](https://abap2ui5.github.io/docs/llms.txt) — this site
-generates one on every build: every chapter with a one-line summary, and
-[`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) for all of it
-in a single fetch. There is a second one in the
-[framework repository](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt);
-the difference is what each maps — this site's is the map of the **prose**, the
-framework's is the map of the **code**, down to the interface files an agent
-should read instead of guessing at a signature.
-
-The [app-template](https://github.com/abap2UI5/app-template) then ships an
-`AGENTS.md` that states the conventions an agent should follow in your own
-project. [Building with AI](/get_started/ai) puts the whole setup in order.
-:::
 
 ## Where the samples live
 

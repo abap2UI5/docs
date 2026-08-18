@@ -94,5 +94,5 @@ The CLI, a GitHub Action (`abap2UI5/linter@v0`), a library, inside the
 [VS Code extension](/get_started/tooling#run-the-app-from-the-editor) as
 diagnostics while you type, and as the `validate_view` tool of the
 [MCP server](/get_started/ai). The
-[app-template](/get_started/project_setup) has the CLI and the workflow wired
+[app-template](/advanced/working_off_stack) has the CLI and the workflow wired
 up already.
