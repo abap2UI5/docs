@@ -77,19 +77,19 @@ can run them on its own:
 npm run check
 ```
 
-The [abap2UI5 linter](/technical/tools/linter) half is the one that matters
+The [abap2UI5 linter](/advanced/linter) half is the one that matters
 here: it reconstructs the view from the builder chain and reports the names UI5
 does not have, the bindings that point at nothing — and a class still built on
 the frozen builder.
 
 ## Give it the loop
 
-[**abap2UI5/ai-mcp**](https://github.com/abap2UI5/ai-mcp) is an MCP server that
-turns the checks into a development loop, still without a system. It works with
-any MCP client — Claude Code, Cursor, VS Code:
+The [**MCP server**](/advanced/mcp_server) turns the checks into a development
+loop, still without a system. It works with any MCP client — Claude Code,
+Cursor, VS Code:
 
 ```sh
-claude mcp add abap2ui5 -- node /path/to/ai-mcp/server.mjs
+claude mcp add abap2ui5 -- node /path/to/mcp-server/server.mjs
 ```
 
 The tools an agent then has:
@@ -105,18 +105,20 @@ The tools an agent then has:
 
 Set-up is levelled: validating views needs one small checkout and a minute;
 the screenshot loop needs a browser and a first build measured in tens of
-minutes. Stop where the value stops for you.
+minutes. Stop where the value stops for you — the
+[MCP Server page](/advanced/mcp_server) has the three levels, every tool and
+the loop they are meant to be used in.
 
 ## From the editor
 
-The [VS Code extension](/get_started/tooling#run-the-app-from-the-editor)
+The [VS Code extension](/advanced/vscode)
 registers that same MCP server for every client in the window — Copilot agent
 mode, Claude Code, anything else speaking MCP — so an agent working in your
 editor has the loop without any separate configuration. Point
 `abap2ui5.mcp.reposRoot` at the folder holding the checkouts and the extension
 passes the paths through.
 
-It adds a second server of its own for the half ai-mcp deliberately does not
+It adds a second server of its own for the half that one deliberately does not
 have: your configured **systems**. An agent can list them, search app classes
 over ADT and get the app rendered on the real system as a screenshot — while
 every credential prompt stays an ordinary VS Code dialog the agent never sees.

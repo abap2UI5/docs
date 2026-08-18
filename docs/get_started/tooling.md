@@ -51,7 +51,7 @@ npx @abap2ui5/linter src
 
 No SAP system, no install beyond npm. It also ships as a GitHub Action, and
 the [app-template](https://github.com/abap2UI5/app-template) has it wired into
-CI already. The [linter page](/technical/tools/linter) has the rest: the two
+CI already. The [linter page](/advanced/linter) has the rest: the two
 gates, `--fix`, and the baseline for switching it on over a codebase that
 already exists.
 

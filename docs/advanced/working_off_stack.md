@@ -21,7 +21,7 @@ repository, already assembled.
 | --- | --- |
 | `src/zcl_app_001` | a working app — an input, a bound table, an event — in the canonical shape its `AGENTS.md` describes |
 | `abaplint.jsonc` | ABAP syntax and style, with the framework resolved as a dependency, so it compiles the app **without an SAP system** |
-| `abap2ui5lint.jsonc` | the [abap2UI5 linter](/technical/tools/linter) — the view your ABAP builds, judged against the UI5 API and against your own class |
+| `abap2ui5lint.jsonc` | the [abap2UI5 linter](/advanced/linter) — the view your ABAP builds, judged against the UI5 API and against your own class |
 | `.github/workflows/check.yml` | both gates on every push and pull request, at the versions `package-lock.json` pins — so CI and your machine run the same thing |
 | `AGENTS.md` | the conventions an AI assistant should follow in this project, plus a `.claude/settings.json` allowlist so it can run the gates without asking |
 
@@ -77,5 +77,5 @@ checks just passed.
 ## Next Steps
 
 - [Tooling](/get_started/tooling) — the editor and agent side of the same loop
-- [abap2UI5 linter](/technical/tools/linter) — what the view gate actually
+- [abap2UI5 linter](/advanced/linter) — what the view gate actually
   checks, and how to adopt it on a codebase that already exists
