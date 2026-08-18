@@ -12,7 +12,9 @@ Looking for one in particular? The [sample catalogue](https://github.com/abap2UI
 
 ![Sample apps overview showing tables, lists, trees, and other UI5 controls](/get_started/image-1.png)
 
-_No system at hand? Run the samples directly [in your browser](https://abap2ui5.github.io/web-abap2ui5-samples/)._
+_No system at hand? The [live demo](https://abap2ui5.github.io/web-abap2UI5-build/) runs
+these samples in the browser — the whole abap2UI5 stack, backend included,
+transpiled to JavaScript and rebuilt daily from `main`. Nothing to install._
 
 ::: tip Contribution
 The samples evolve all the time. Have one to share? Open a PR so others can learn from it.

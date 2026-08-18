@@ -3,6 +3,16 @@ outline: [2, 4]
 ---
 # Quickstart
 
+::: tip No system at hand?
+Try abap2UI5 first in the
+[**live demo**](https://abap2ui5.github.io/web-abap2UI5-build/): the complete
+stack — framework, backend and sample apps — downported, transpiled to
+JavaScript and running inside your browser tab, against an in-memory database.
+No installation, no SAP system, no login. It is rebuilt daily from `main`, so
+what you click there is the current framework. Come back here when you want the
+same apps on a real system.
+:::
+
 ## 1. Installation via abapGit
 
 Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org). (New to abapGit? Install it first — see [abapGit](/technical/tools/abapgit); it's the one-time tool used to pull abap2UI5 into your system.)
