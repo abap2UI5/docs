@@ -358,7 +358,7 @@ export default defineConfig({
                 text: "Troubleshooting",
                 collapsed: true,
                 items: [
-                  { text: "Debugging", link: "/configuration/troubleshooting" },
+                  { text: "Debugging", link: "/configuration/debugging" },
                   { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
                 ],
               },
