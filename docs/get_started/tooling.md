@@ -69,13 +69,13 @@ extension for the system connection.
 
 ## Where the samples live
 
-Three repositories, in the order they build on each other:
+Three repositories, each with a searchable page of its own:
+[**Learn**](https://abap2ui5.github.io/samples/) for *“Where do I start?”*,
+[**Controls**](https://abap2ui5.github.io/samples-controls/) for *“Which
+control does what?”*, and [**Stack**](https://abap2ui5.github.io/samples-stack/)
+for *“Will my system run it?”*.
 
-| | |
-| --- | --- |
-| [samples](https://github.com/abap2UI5/samples) | the fundamentals — binding, events, popups, navigation, and complete little apps |
-| [samples-controls](https://github.com/abap2UI5/samples-controls) | the UI5 demo kit rebuilt in abap2UI5, one app per official sample |
-| [samples-stack](https://github.com/abap2UI5/samples-stack) | abap2UI5 together with OData, RAP, WebSockets and the Fiori Launchpad |
-
+[Sample Catalogues](/resources/samples) is the page that tells the three apart
+— what each one holds, how many, and which to search for what you are asking.
 All three install with abapGit and carry an overview app that lists everything
 they contain.

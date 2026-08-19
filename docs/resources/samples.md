@@ -12,13 +12,35 @@ time than reading this page.
 
 | | | you are asking |
 |---|--:|---|
-| [**samples**](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) | 152 | *has somebody already built this pattern?* — value help, navigation between apps, trees, tables, timers, file up- and download. Runs on a bare abap2UI5 install. |
-| [**samples-controls**](https://github.com/abap2UI5/samples-controls/blob/main/SAMPLES.md) | 430 | *how is this UI5 control expressed in ABAP?* — the UI5 demo kit, rebuilt control by control, grouped by library. |
-| [**samples-stack**](https://github.com/abap2UI5/samples-stack/blob/main/SAMPLES.md) | 32 | *how do I reach my system from an app?* — OData, RAP, APC, MIME, the Fiori Launchpad. Each needs something the framework alone does not give you. |
+| [**Learn**](https://abap2ui5.github.io/samples/) — abap2UI5/samples, [catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) | 152 | *“Where do I start?”* — value help, navigation between apps, trees, tables, timers, file up- and download. Runs on a bare abap2UI5 install. |
+| [**Controls**](https://abap2ui5.github.io/samples-controls/) — abap2UI5/samples-controls, [catalogue](https://github.com/abap2UI5/samples-controls/blob/main/SAMPLES.md) | 430 | *“Which control does what?”* — the UI5 demo kit, rebuilt control by control, grouped by library. |
+| [**Stack**](https://abap2ui5.github.io/samples-stack/) — abap2UI5/samples-stack, [catalogue](https://github.com/abap2UI5/samples-stack/blob/main/SAMPLES.md) | 32 | *“Will my system run it?”* — OData, RAP, APC, MIME, the Fiori Launchpad. Each needs something the framework alone does not give you. |
 
-Start with **samples** if you are learning abap2UI5, with **samples-controls**
-if you know which control you want, and with **samples-stack** only when the
-app has to talk to something in your system.
+They are not three steps to work through in order. **Learn** is a path and does
+have a beginning; **Controls** is a reference you come back to whenever you
+need one control; **Stack** only matters once the app has to talk to something
+in your system. Pick the one that matches what you are asking today.
+
+::: tip The three verbs are the same everywhere
+**Learn**, **Controls** and **Stack** are what the three pages call each other
+in the bar at the top of each of them, and what the playground calls them in
+its About dialog. Same word, same page, wherever you meet it.
+:::
+
+## Two ways to read a catalogue
+
+Each repository publishes its corpus twice, from one scan, so the two cannot
+disagree:
+
+| | |
+|---|---|
+| the **page** (the first link in each row above) | searchable in the browser, with the facets that corpus is actually asked for — a release your system runs, a control used anywhere in a view, a technology and the setup it needs |
+| the **catalogue** `SAMPLES.md` | the same corpus as one long page on GitHub, for `Ctrl+F` and for reading offline. The counts above are of these. |
+
+The pages are the better answer to *"is there a sample for X"*, because they
+filter; the catalogues are the better answer to *"show me everything"*. The
+page for **Learn** deliberately shows only the portable subset that survives
+every build, so it lists fewer apps than the 152 the catalogue counts.
 
 ## The pages have the same shape on purpose
 
@@ -77,3 +99,14 @@ with [abapGit](https://abapgit.org), then start any class by name:
 Each repository also ships an **overview app** that lists its own samples with
 a search box, so once the repository is in your system you do not need the page
 here at all.
+
+### Without a system
+
+Every card on the **Learn** and **Controls** pages carries a button that opens
+that class in the [playground](https://abap2ui5.github.io/playground/) — the
+ABAP in an editor with the app running beside it, in the browser, nothing
+installed anywhere.
+
+**Stack** is the exception, and says so on its own cards: a Gateway service, a
+RAP business object, an APC channel or a launchpad is precisely what the
+playground does not have, so those samples would open there and then fail.
