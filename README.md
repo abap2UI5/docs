@@ -60,8 +60,8 @@ Which blocks get a button is decided in `docs/.vitepress/playground.mjs`, and
 the rule is narrow on purpose — a button on an example that cannot run is worse
 than no button. It has to be a complete class implementing `z2ui5_if_app` that
 displays something and needs nothing the browser has not got: no table of its
-own, no CDS entity, no add-on repository, no on-premise SAP class. **39 of the
-262 ABAP blocks here** clear that today. Every rule was written from an example
+own, no CDS entity, no add-on repository, no on-premise SAP class. **38 of the
+261 ABAP blocks here** clear that today. Every rule was written from an example
 watched failing in a real playground; `test/playground.test.mjs` keeps one
 fixture per shape, and [AGENTS.md](AGENTS.md) says how to redo the measurement.
 

@@ -54,25 +54,3 @@ features:
     details: Browse the code, report issues, contribute — the project is built in the open.
     link: https://github.com/abap2UI5/abap2UI5/
 ---
-
-## A complete app in nine lines
-
-```abap
-CLASS zcl_app_hello_world DEFINITION PUBLIC.
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-ENDCLASS.
-
-CLASS zcl_app_hello_world IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-    client->message_box_display( `Hello World` ).
-  ENDMETHOD.
-ENDCLASS.
-```
-
-That's it — no JavaScript, no OData service, no frontend deployment. Copy the
-class into your system and it runs anywhere abapGit reaches, from legacy R/3
-releases to S/4HANA Cloud and BTP. The [Hello World](/get_started/hello_world)
-page explains what happens here — or press **Run this example** above and watch
-this very class start in the [playground](https://abap2ui5.github.io/playground/):
-the whole framework compiled into a browser page, no SAP system needed.

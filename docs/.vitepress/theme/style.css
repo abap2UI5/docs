@@ -206,26 +206,6 @@
   padding-bottom: 4px;
 }
 
-/* ------------------------------------------------------ the home page ---
- *
- * The markdown section under the feature cards (the hello-world class). The
- * home layout hands markdown content the full 1152px of the feature grid; a
- * nine-line code block at that width reads as a banner, not as code. Center
- * it at the width the reading column uses everywhere else, and give it air
- * against the cards above so it starts a section instead of trailing one. */
-.VPHome .vp-doc > div {
-  max-width: 688px;
-  margin: 40px auto 0;
-}
-
-/* The section heading on the home page has no sections above it to separate
- * from — the top rule that earns its keep on a long cookbook page is just a
- * stray line here. */
-.VPHome .vp-doc h2 {
-  border-top: none;
-  padding-top: 0;
-}
-
 /* ------------------------------------------------- the callout boxes ---
  *
  * The tip/warning/danger blocks keep the width the reading column had BEFORE
