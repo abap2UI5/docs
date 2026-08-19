@@ -249,3 +249,125 @@
 .vp-doc .custom-block:not(.details) {
   max-width: 688px;
 }
+
+/* ------------------------------------------------ the Run button ---
+ *
+ * Under a fenced example the playground can start (docs/.vitepress/
+ * playground.mjs decides which), a button that runs it — and, once pressed,
+ * the running app underneath it.
+ *
+ * The button sits ON the code block rather than beside it: it is about the
+ * lines above it and nothing else, so it is drawn as the block's own bottom
+ * edge, sharing its background and losing the rounded corners between them.
+ * The alternative — a floating button in the margin — reads as page chrome and
+ * has to be aimed at.
+ *
+ * It is deliberately quiet. A documentation page is read, and a red button
+ * under every second example would turn a chapter into a control panel. It
+ * uses the code block's own muted colours and takes the brand colour only on
+ * hover, when it is being considered. */
+.vp-doc .a2ui5-play {
+  margin: 16px 0;
+}
+
+.vp-doc .a2ui5-play div[class*="language-"] {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.vp-doc .a2ui5-play-run,
+.vp-doc .a2ui5-play-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 7px 14px;
+  border: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  border-radius: 0 0 8px 8px;
+  background-color: var(--vp-code-block-bg);
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: left;
+}
+
+.vp-doc .a2ui5-play-run {
+  gap: 9px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+/* A play triangle, drawn rather than fetched: this site's icon font is a
+ * stylesheet from a CDN, and a button showing an empty square until it arrives
+ * is worse than one that never needed it. */
+.vp-doc .a2ui5-play-run::before {
+  content: "";
+  border: 5px solid transparent;
+  border-right-width: 0;
+  border-left: 8px solid currentColor;
+}
+
+.vp-doc .a2ui5-play-run:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.vp-doc .a2ui5-play-run:disabled {
+  cursor: progress;
+}
+
+/* Once something is running, the bar is between the code and the app and is no
+ * longer the bottom of anything. */
+.vp-doc .a2ui5-play-bar {
+  gap: 16px;
+  border-radius: 0;
+}
+
+.vp-doc .a2ui5-play-close {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.vp-doc .a2ui5-play-open {
+  margin-left: auto;
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.vp-doc .a2ui5-play-open::after {
+  content: " ↗";
+}
+
+.vp-doc .a2ui5-play-close:hover,
+.vp-doc .a2ui5-play-open:hover {
+  color: var(--vp-c-brand-1);
+}
+
+/* The frame the app runs in. It is a live application, not a figure: it
+ * continues the code block's own edges downwards, so the example and what it
+ * produces read as one thing. */
+.vp-doc .a2ui5-play .abap2ui5-demo {
+  border: 1px solid var(--vp-c-divider);
+  border-top: 0;
+  border-radius: 0 0 8px 8px;
+  background: var(--vp-c-bg);
+  overflow: hidden;
+}
+
+/* The loader could not be reached — an offline reader, or a blocked
+ * third-party request. Say so where the button was, and say where the example
+ * can be run instead. */
+.vp-doc .a2ui5-play-failed {
+  margin: 0;
+  padding: 7px 14px;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0 0 8px 8px;
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+}

@@ -195,14 +195,14 @@ In standard UI5, updating the XML View usually causes a full re-render. But abap
 An example:
 
 ```abap
-CLASS z2ui5_cl_app_partial_rerendering DEFINITION PUBLIC.
+CLASS z2ui5_cl_app_partial_render DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA text TYPE string.
     DATA partly TYPE abap_bool.
 ENDCLASS.
 
-CLASS z2ui5_cl_app_partial_rerendering IMPLEMENTATION.
+CLASS z2ui5_cl_app_partial_render IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     text = text && ` text`.

@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import { playgroundButton } from "./playground.mjs";
 
 // Where the site is actually served from. Link previews (LinkedIn, Slack,
 // WhatsApp, X) only accept ABSOLUTE urls in og:image / og:url — a relative
@@ -11,6 +12,11 @@ const OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  // A Run button under every fenced example the playground can actually
+  // start. Which ones those are is decided in ./playground.mjs.
+  markdown: {
+    config: (md) => playgroundButton(md),
+  },
   lastUpdated: {
     text: "Updated at",
     formatOptions: {

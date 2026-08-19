@@ -44,6 +44,27 @@ generated on every build and gitignored — never edit them, and nothing needs
 maintaining: the page list comes from the **sidebar**, so adding a page there
 adds it here. [AGENTS.md](AGENTS.md) has the details.
 
+### Running an example from the page
+
+An ABAP example that the [playground](https://github.com/abap2UI5/playground)
+can start carries a **Run this example** button under it, and pressing it puts
+the running app under the code — the framework compiled into the page, no
+server and no SAP system anywhere. The code that runs is read out of the block
+the reader is looking at, so the printed example and the running one cannot be
+two different things.
+
+Nothing is fetched until somebody presses it: a reader who never does makes no
+request to another site.
+
+Which blocks get a button is decided in `docs/.vitepress/playground.mjs`, and
+the rule is narrow on purpose — a button on an example that cannot run is worse
+than no button. It has to be a complete class implementing `z2ui5_if_app` that
+displays something and needs nothing the browser has not got: no table of its
+own, no CDS entity, no add-on repository, no on-premise SAP class. **39 of the
+262 ABAP blocks here** clear that today. Every rule was written from an example
+watched failing in a real playground; `test/playground.test.mjs` keeps one
+fixture per shape, and [AGENTS.md](AGENTS.md) says how to redo the measurement.
+
 ### Linking a sample from a page
 
 A page lists the samples that demonstrate it in its frontmatter, by class name
