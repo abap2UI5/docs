@@ -371,3 +371,38 @@
   color: var(--vp-c-text-2);
   font-size: 13px;
 }
+
+/* ------------------------------------------- the Support icon ---
+ *
+ * `docs/.vitepress/theme/support-link.js` puts the Support page at the
+ * right-hand end of the nav bar, after the social icons. It is one more thing
+ * in that row, so it is drawn as one: the same 36px box, the same muted
+ * colour, the same 20px glyph — and the same disappearing act below 768px,
+ * where the default theme drops the social links and the hamburger takes over.
+ * Copied rather than inherited, because VPSocialLink's styles are scoped to
+ * that component and this is deliberately not one. */
+.a2ui5-support {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--vp-c-text-2);
+  transition: color 0.5s;
+}
+
+.a2ui5-support:hover {
+  color: var(--vp-c-text-1);
+  transition: color 0.25s;
+}
+
+.a2ui5-support svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 767px) {
+  .a2ui5-support {
+    display: none;
+  }
+}

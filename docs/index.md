@@ -17,11 +17,11 @@ hero:
       text: Get Started
       link: /get_started/quickstart
     - theme: alt
-      text: Introduction
-      link: /get_started/about
+      text: What's New?
+      link: /resources/changelog
     - theme: alt
-      text: Live Demo
-      link: https://abap2ui5.github.io/web-abap2UI5-build/
+      text: Playground
+      link: https://abap2ui5.github.io/playground/
 
 # One card per reader journey, in the order a newcomer meets them: install,
 # look things up, copy from working apps, take it to production, understand
@@ -73,6 +73,6 @@ ENDCLASS.
 That's it — no JavaScript, no OData service, no frontend deployment. Copy the
 class into your system and it runs anywhere abapGit reaches, from legacy R/3
 releases to S/4HANA Cloud and BTP. The [Hello World](/get_started/hello_world)
-page explains what happens here — or try apps like it in the
-[live demo](https://abap2ui5.github.io/web-abap2UI5-build/), right in your
-browser, no SAP system needed.
+page explains what happens here — or press **Run this example** above and watch
+this very class start in the [playground](https://abap2ui5.github.io/playground/):
+the whole framework compiled into a browser page, no SAP system needed.
