@@ -132,6 +132,27 @@ export default defineConfig({
         text: "Links",
         items: [
           {
+            // The three sample corpora publish a searchable page each, and
+            // those pages call each other Learn / Controls / Stack in a bar
+            // all three carry. Same three words here, so a reader arriving
+            // from one of them recognises where they are. The repositories are
+            // under "Project" below: a page is what you want when you are
+            // looking for a sample, the repository when you are installing it.
+            text: "Samples",
+            items: [
+              { text: "Learn", link: "https://abap2ui5.github.io/samples/" },
+              {
+                text: "Controls",
+                link: "https://abap2ui5.github.io/samples-controls/",
+              },
+              {
+                text: "Stack",
+                link: "https://abap2ui5.github.io/samples-stack/",
+              },
+              { text: "Which one to search", link: "/resources/samples" },
+            ],
+          },
+          {
             text: "Project",
             items: [
               {

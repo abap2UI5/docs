@@ -6,15 +6,16 @@ outline: [2, 4]
 You've installed abap2UI5 and built your first app. From here, pick the direction that fits your goals.
 
 ## Sample Apps
-With hundreds of samples, the [samples repository](https://github.com/abap2UI5/samples) is the fastest way to learn abap2UI5. Browse tables, lists, trees, and other UI5 controls — copy and paste snippets to speed up your own work:
+Hundreds of working apps, and the fastest way to learn abap2UI5 is to read one that already does what you are about to write. They live in three repositories, each with a page that searches it — [**Learn**](https://abap2ui5.github.io/samples/) is the one to start on: the path from the smallest app that runs to files, devices and custom CSS, one idea per sample.
 
-Looking for one in particular? The [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) lists every app on one page with the words you would search it by, so `Ctrl+F` for `f4`, `tree` or `nav_app_call` lands on the class that does it. The [Cookbook](/cookbook/overview) links the same apps from the page that explains the pattern.
+Looking for one in particular? Search the page, or `Ctrl+F` the [catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) for `f4`, `tree` or `nav_app_call`. [Sample Catalogues](/resources/samples) tells the three repositories apart, and the [Cookbook](/cookbook/overview) links the same apps from the page that explains the pattern.
 
 ![Sample apps overview showing tables, lists, trees, and other UI5 controls](/get_started/image-1.png)
 
-_No system at hand? The [live demo](https://abap2ui5.github.io/web-abap2UI5-build/) runs
-these samples in the browser — the whole abap2UI5 stack, backend included,
-transpiled to JavaScript and rebuilt daily from `main`. Nothing to install._
+_No system at hand? Every card on the **Learn** and **Controls** pages opens
+that class in the [playground](https://abap2ui5.github.io/playground/) — the
+ABAP in an editor with the app running beside it, in the browser. Nothing to
+install._
 
 ::: tip Contribution
 The samples evolve all the time. Have one to share? Open a PR so others can learn from it.
