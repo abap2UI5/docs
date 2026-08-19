@@ -26,10 +26,11 @@
  *
  * **Every rule below was put there by watching an example fail in a real
  * playground**, not by reasoning about what might. All 61 complete app classes
- * in this documentation were opened in one: 38 started, and the 23 that did not
- * are the list of shapes here — except for three, which were defects in the
- * documentation and were fixed instead. The 39 this module now offers a button
- * for were then run again, and all 39 started and rendered.
+ * this documentation had then were opened in one: 38 started, and the 23 that
+ * did not are the list of shapes here — except for three, which were defects in
+ * the documentation and were fixed instead. Every example that came out of that
+ * with a button was then run again, and every one of them started and
+ * rendered.
  *
  * AGENTS.md says how to repeat that measurement, and that is also the honest
  * limit of this file: the playground is the only thing that can decide the
