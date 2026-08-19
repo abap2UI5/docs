@@ -18,6 +18,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, and checks the link in both directions |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
+| `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/lib/catalogue.mjs` | Parses a sample catalogue's rows; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 
 ## Build & verify — run before every commit
@@ -100,6 +101,60 @@ Nothing needs maintaining. Adding a page to the sidebar adds it here.
   written into the markdown so the site builds without a samples checkout. Run
   `npm run link:samples` after changing a page's `samples:` frontmatter;
   `check:samples` fails if a rewrite would change anything.
+
+## The Run button, and why its rules are hand-maintained
+
+An example that the [playground](https://github.com/abap2UI5/playground) can
+start carries a Run button; pressing it mounts the running app under the code.
+The code travels in the playground's URL fragment, read out of the rendered
+block at click time — so nothing is hosted here, and the example that runs is
+the text on the page rather than a copy of it.
+
+**This is the seventh decidable thing in this repository and the only one CI
+cannot decide.** Whether an example runs is a question only a playground can
+answer, and a playground is a three-minute build of another repository. So the
+rules in `docs/.vitepress/playground.mjs` are an approximation, they fail
+towards *no button*, and every one of them came from an example watched failing
+in a real one:
+
+| | |
+| --- | --- |
+| a complete class implementing `z2ui5_if_app` | the playground compiles a whole abapGit object, and the framework starts an app |
+| a name of at most 30 characters | not a playground limit — a longer class exists nowhere. Two were printed here for years, invisible to `check:examples`, which renames every example to `zcl_docs_example_NN` before compiling it |
+| displays something | `configuration/authorization.md` starts, shows an empty frame and demonstrates nothing |
+| no `SELECT` outside the tables the page has | the database in the page holds the framework's tables and what open-abap ships; T100 is there, VBAK is not |
+| no EML, CDS or HANA SQL | same list `check-examples.mjs` already skips |
+| no add-on, no on-premise SAP class, no function module | `z2ui5_if_lp_kpi`, `cl_bcs_message`, `cl_demo_output`, `describe_by_name` |
+| no method declared and never implemented, no local class | neither compiles as printed, here or in a system |
+
+`test/playground.test.mjs` pins one fixture per line of that table, **plus the
+shapes a rule written one word wider would have swallowed**: a `SELECT` in a
+comment, the word FROM inside a string, `INSERT VALUE #( )` into an internal
+table.
+
+**To redo the measurement** — after adding examples, or after the playground
+changes — build the playground, serve it, and open each fenced example in an
+embedded one, checking that the status line reaches `running` and that the app
+frame contains something:
+
+```sh
+git clone https://github.com/abap2UI5/playground && cd playground
+npm ci && npm run build && npm run serve      # the first build is a few minutes
+# then, for each example: /?embed=1&view=app#<the deflated fragment>
+```
+
+The last measurement: **61 complete app classes, 39 with a button, all 39
+started and rendered.** The 22 without one each have a reason the module prints.
+
+**The published playground is what readers get**, not the checkout you tested
+against. A change to the rules here can ship on its own; a change that depends
+on new playground behaviour has to wait for that deploy — and the button in its
+first form does depend on one. It needs the loader that names the file after the
+class in it (before that, `data-code` only worked for a class called
+`zcl_playground`, and every button here would have shown the reader a name
+error), the app-only layout fix for a column narrower than 820px, and
+`frameOptions="allow"` on the app frame. **Merge and deploy
+[abap2UI5/playground](https://github.com/abap2UI5/playground) first**, then this.
 
 ## Toolchain
 

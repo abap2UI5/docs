@@ -147,7 +147,7 @@ To make a table editable, use editable cell controls (e.g. `input`) — the bind
 ### Nested Structures
 You can also bind nested structures — use `structure/component` as the binding path:
 ```abap
-CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
+CLASS z2ui5_cl_sample_nested_struc DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
@@ -163,7 +163,7 @@ CLASS z2ui5_cl_sample_nested_structures DEFINITION PUBLIC.
 
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_nested_structures IMPLEMENTATION.
+CLASS z2ui5_cl_sample_nested_struc IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     mt_itab = VALUE #(
