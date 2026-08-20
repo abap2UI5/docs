@@ -120,15 +120,17 @@ export default defineConfig({
       {
         text: "Guide",
         items: [
-          { text: "Introduction", link: "/get_started/about" },
+          // The section is called Getting Started in the sidebar this opens;
+          // "Introduction" was the first PAGE in it, one level down.
+          { text: "Getting Started", link: "/get_started/about" }, // nav
           { text: "Cookbook", link: "/cookbook/overview" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
           // subsection of Advanced Topic in the sidebar, and a flat dropdown
           // that still lists it next to its parent tells the reader a
           // different structure than the sidebar they land in.
-          { text: "Advanced Topic", link: "/advanced/downporting" },
-          { text: "Resource", link: "/resources/references" },
+          { text: "Advanced Topics", link: "/advanced/downporting" }, // nav
+          { text: "Resources", link: "/resources/references" }, // nav
         ],
       },
       {
@@ -161,7 +163,7 @@ export default defineConfig({
         // abap2UI5/src/02/z2ui5_if_app.intf.abap is where it comes from
         text: "1.143.0",
         items: [
-          { text: "Release", link: "/resources/changelog" },
+          { text: "Release Notes", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
           // NAV copy — the sidebar has the same two entries verbatim, further
           // down under "Resource". Search for this marker, not for the text.
@@ -176,11 +178,11 @@ export default defineConfig({
         link: "/get_started/about",
         collapsed: true,
         items: [
-          { text: "Introduction", link: "/get_started/about" },
+          { text: "Introduction", link: "/get_started/about" }, // sidebar
           {
             text: "Quickstart",
             items: [
-              { text: "Installation", link: "/get_started/quickstart" },
+              { text: "Install with abapGit", link: "/get_started/quickstart" },
               { text: "Hello World", link: "/get_started/hello_world" },
               { text: "Full Example", link: "/get_started/full_example" },
             ],
@@ -217,7 +219,7 @@ export default defineConfig({
                 text: "Binding",
                 link: "/cookbook/model/binding",
                 items: [
-                  { text: "Expression", link: "/cookbook/model/expression_binding" },
+                  { text: "Expression Binding", link: "/cookbook/model/expression_binding" },
                   { text: "Formatter", link: "/cookbook/model/formatter" },
                 ],
               },
@@ -241,7 +243,7 @@ export default defineConfig({
                   { text: "Frontend", link: "/cookbook/event_navigation/frontend" },
                 ],
               },
-              { text: "Action", link: "/cookbook/event_navigation/action" },
+              { text: "Action (Obsolete)", link: "/cookbook/event_navigation/action" },
               { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
               { text: "Navigation", link: "/cookbook/event_navigation/navigation" },
               { text: "Routing", link: "/cookbook/event_navigation/routing" },
@@ -392,10 +394,10 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
-          { text: "UI5 Version", link: "/configuration/ui5_versions" },
+          { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
           { text: "Transport", link: "/configuration/transport" },
-          { text: "Launchpad", link: "/configuration/launchpad" },
+          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
             collapsed: true,
@@ -412,7 +414,7 @@ export default defineConfig({
         ],
       },
       {
-        text: "Advanced Topic",
+        text: "Advanced Topics",
         link: "/advanced/downporting",
         collapsed: true,
         items: [
@@ -430,11 +432,11 @@ export default defineConfig({
             // the documentation for those three repositories, so their READMEs
             // can stay short and point at a page instead of growing a second
             // copy that drifts.
-            text: "Tools",
+            text: "Project Tools",
             link: "/advanced/linter",
             collapsed: true,
             items: [
-              // ADVANCED copy — Technical Insight > Tool carries the same
+              // ADVANCED copy — Technical Insight > Toolchain carries the same
               // entry, pointing at the same page. Match on the marker.
               { text: "abap2UI5 linter", link: "/advanced/linter" }, // advanced
               { text: "MCP Server", link: "/advanced/mcp_server" },
@@ -451,12 +453,12 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
-                text: "User Exit",
+                text: "User Exits",
                 link: "/advanced/extensibility/user_exits",
               },
               { text: "Frontend", link: "/advanced/extensibility/frontend" },
               {
-                text: "Custom Control",
+                text: "Custom Controls",
                 link: "/advanced/extensibility/custom_control",
               },
             ],
@@ -473,7 +475,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "UI5 Over-the-Wire", link: "/technical/concept" },
-              { text: "ABAP Thinking, UI5 Result", link: "/technical/dx" },
+              { text: "ABAP Thinking, UI5 Results", link: "/technical/dx" },
               { text: "Cloud Readiness", link: "/technical/cloud" },
               { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
               {
@@ -486,7 +488,7 @@ export default defineConfig({
                 ],
               },
               {
-                text: "Tool",
+                text: "Toolchain",
                 collapsed: true,
                 items: [
                   // The project's own linter, next to the tools it borrows. Every
@@ -494,9 +496,10 @@ export default defineConfig({
                   // the only thing that can read a view that does not exist until
                   // the app runs.
                   //
-                  // TECHNICAL copy — the page itself lives under Advanced Topic >
-                  // Tools with the MCP server and the extension, the project's
-                  // other two. Match on the marker, not on the text.
+                  // TECHNICAL copy — the page itself lives under Advanced
+                  // Topics > Project Tools with the MCP server and the
+                  // extension, the project's other two. Match on the marker,
+                  // not on the text.
                   { text: "abap2UI5 linter", link: "/advanced/linter" }, // technical
                   { text: "abapGit", link: "/technical/tools/abapgit" },
                   { text: "ajson", link: "/technical/tools/ajson" },
@@ -512,11 +515,11 @@ export default defineConfig({
         ],
       },
       {
-        text: "Resource",
+        text: "Resources",
         link: "/resources/references",
         collapsed: true,
         items: [
-          { text: "Reference", link: "/resources/references" },
+          { text: "References", link: "/resources/references" },
           // Several hundred working apps in three repositories, and until this
           // page the only way to find out which one to open was to know all
           // three existed. The cookbook links individual samples per chapter;
@@ -525,7 +528,7 @@ export default defineConfig({
           // catalogues - do not repeat one here, where nothing would.
           { text: "Sample Catalogues", link: "/resources/samples" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
-          { text: "Release", link: "/resources/changelog" },
+          { text: "Release Notes", link: "/resources/changelog" },
           // RESOURCE copy - see the marker on the Cookbook one.
           { text: "Deprecations", link: "/resources/deprecations" }, // resource
           { text: "License", link: "/resources/license" },
