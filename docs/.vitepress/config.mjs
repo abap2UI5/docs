@@ -120,12 +120,17 @@ export default defineConfig({
       {
         text: "Guide",
         items: [
-          { text: "Introduction", link: "/get_started/about" },
+          // The section is called Getting Started in the sidebar this opens;
+          // "Introduction" was the first PAGE in it, one level down.
+          { text: "Getting Started", link: "/get_started/about" }, // nav
           { text: "Cookbook", link: "/cookbook/overview" },
           { text: "Configuration", link: "/configuration/setup" },
-          { text: "Advanced Topic", link: "/advanced/downporting" },
-          { text: "Technical Insight", link: "/technical/concept" },
-          { text: "Resource", link: "/resources/references" },
+          // Technical Insight is not a line of its own here any more: it is a
+          // subsection of Advanced Topic in the sidebar, and a flat dropdown
+          // that still lists it next to its parent tells the reader a
+          // different structure than the sidebar they land in.
+          { text: "Advanced Topics", link: "/advanced/downporting" }, // nav
+          { text: "Resources", link: "/resources/references" }, // nav
         ],
       },
       {
@@ -158,7 +163,7 @@ export default defineConfig({
         // abap2UI5/src/02/z2ui5_if_app.intf.abap is where it comes from
         text: "1.143.0",
         items: [
-          { text: "Release", link: "/resources/changelog" },
+          { text: "Release Notes", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
           // NAV copy — the sidebar has the same two entries verbatim, further
           // down under "Resource". Search for this marker, not for the text.
@@ -173,11 +178,11 @@ export default defineConfig({
         link: "/get_started/about",
         collapsed: true,
         items: [
-          { text: "Introduction", link: "/get_started/about" },
+          { text: "Introduction", link: "/get_started/about" }, // sidebar
           {
             text: "Quickstart",
             items: [
-              { text: "Installation", link: "/get_started/quickstart" },
+              { text: "Install with abapGit", link: "/get_started/quickstart" },
               { text: "Hello World", link: "/get_started/hello_world" },
               { text: "Full Example", link: "/get_started/full_example" },
             ],
@@ -214,7 +219,7 @@ export default defineConfig({
                 text: "Binding",
                 link: "/cookbook/model/binding",
                 items: [
-                  { text: "Expression", link: "/cookbook/model/expression_binding" },
+                  { text: "Expression Binding", link: "/cookbook/model/expression_binding" },
                   { text: "Formatter", link: "/cookbook/model/formatter" },
                 ],
               },
@@ -238,7 +243,7 @@ export default defineConfig({
                   { text: "Frontend", link: "/cookbook/event_navigation/frontend" },
                 ],
               },
-              { text: "Action", link: "/cookbook/event_navigation/action" },
+              { text: "Action (Obsolete)", link: "/cookbook/event_navigation/action" },
               { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
               { text: "Navigation", link: "/cookbook/event_navigation/navigation" },
               { text: "Routing", link: "/cookbook/event_navigation/routing" },
@@ -320,49 +325,42 @@ export default defineConfig({
               { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
             ],
           },
+          // Three chapters that sat behind a collapsible called "More Topics"
+          // until now. The name said nothing, and the click it cost fell on
+          // Troubleshooting - one of the most-searched pages here, three
+          // levels deep behind a label that did not name it. Deprecations
+          // left with the group: it is one page and it has a home under
+          // Resources, and an entry standing twice in one sidebar makes its
+          // own search results ambiguous.
           {
-            text: "More Topics",
+            text: "EML, CDS, SQL",
             link: "/cookbook/eml_cds_sql/rap",
             collapsed: true,
             items: [
-              {
-                text: "EML, CDS, SQL",
-                link: "/cookbook/eml_cds_sql/rap",
-                collapsed: true,
-                items: [
-                  { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
-                  { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
-                  { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
-                  { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
-                  { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
-                ],
-              },
-              {
-                text: "Patterns, Helpers",
-                collapsed: true,
-                items: [
-                  { text: "Snippets", link: "/cookbook/expert_more/snippets" },
-                  { text: "Value Help", link: "/cookbook/expert_more/value_help" },
-                  { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
-                  { text: "E-Mail", link: "/cookbook/expert_more/email" },
-                  { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
-                ],
-              },
-              {
-                text: "Troubleshooting",
-                collapsed: true,
-                items: [
-                  { text: "Debugging", link: "/configuration/debugging" },
-                  { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
-                ],
-              },
-              {
-                text: "Obsolete",
-                collapsed: true,
-                items: [
-                  { text: "Deprecations", link: "/resources/deprecations" },
-                ],
-              },
+              { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
+              { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
+              { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
+              { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
+              { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
+            ],
+          },
+          {
+            text: "Patterns, Helpers",
+            collapsed: true,
+            items: [
+              { text: "Snippets", link: "/cookbook/expert_more/snippets" },
+              { text: "Value Help", link: "/cookbook/expert_more/value_help" },
+              { text: "Demo Output", link: "/cookbook/expert_more/demo_output" },
+              { text: "E-Mail", link: "/cookbook/expert_more/email" },
+              { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
+            ],
+          },
+          {
+            text: "Troubleshooting",
+            collapsed: true,
+            items: [
+              { text: "Debugging", link: "/configuration/debugging" },
+              { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
             ],
           },
         ],
@@ -389,10 +387,10 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
-          { text: "UI5 Version", link: "/configuration/ui5_versions" },
+          { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Production Use", link: "/configuration/productive_usage" },
           { text: "Transport", link: "/configuration/transport" },
-          { text: "Launchpad", link: "/configuration/launchpad" },
+          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
             collapsed: true,
@@ -409,105 +407,138 @@ export default defineConfig({
         ],
       },
       {
-        text: "Advanced Topic",
+        text: "Advanced Topics",
         link: "/advanced/downporting",
         collapsed: true,
         items: [
-          // Both moved out of Getting Started on purpose: the extensibility
-          // tiers and the git/CI project setup answer questions a newcomer
-          // does not have yet, and on the entry pages they read as required
-          // steps. Here they sit with the other depth topics.
+          // Twelve entries in a flat list until now, of four different kinds:
+          // what you can build with it, where you can run it, what it talks
+          // to, and what you extend. Grouped by that, the section is seven
+          // entries and Technical Insight - the last of them - is visible
+          // without scrolling, which it was not when it was the twelfth.
+          //
+          // Use Cases and Add-ons stay loose at the top: both moved out of
+          // Getting Started on purpose, because they answer questions a
+          // newcomer does not have yet, and on the entry pages they read as
+          // required steps. They are the two that say what this section is
+          // for, so they are what a reader opening it meets first.
           { text: "Use Cases", link: "/advanced/use_cases" },
           { text: "Add-ons", link: "/advanced/addons" },
-          { text: "Downporting", link: "/advanced/downporting" },
-          { text: "Namespaces, Renaming", link: "/advanced/renaming" },
-          { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
-          {
-            // The project's own tools, each documented in full here — this is
-            // the documentation for those three repositories, so their READMEs
-            // can stay short and point at a page instead of growing a second
-            // copy that drifts.
-            text: "Tools",
-            link: "/advanced/linter",
-            collapsed: true,
-            items: [
-              // ADVANCED copy — Technical Insight > Tool carries the same
-              // entry, pointing at the same page. Match on the marker.
-              { text: "abap2UI5 linter", link: "/advanced/linter" }, // advanced
-              { text: "MCP Server", link: "/advanced/mcp_server" },
-              { text: "VS Code Extension", link: "/advanced/vscode" },
-            ],
-          },
-          { text: "Local Setup", link: "/advanced/local" },
-          { text: "RFC Connector", link: "/advanced/rfc" },
-          { text: "HTTP Connector", link: "/advanced/http" },
-          { text: "Fiori Elements Integration", link: "/advanced/fiori" },
-          { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
           {
             text: "Extensibility",
             collapsed: true,
             items: [
               {
-                text: "User Exit",
+                text: "User Exits",
                 link: "/advanced/extensibility/user_exits",
               },
               { text: "Frontend", link: "/advanced/extensibility/frontend" },
               {
-                text: "Custom Control",
+                text: "Custom Controls",
                 link: "/advanced/extensibility/custom_control",
+              },
+            ],
+          },
+          {
+            // What the app talks to on the outside. Three pages that were
+            // three unrelated-looking lines in the flat list.
+            text: "Integration",
+            collapsed: true,
+            items: [
+              { text: "RFC Connector", link: "/advanced/rfc" },
+              { text: "HTTP Connector", link: "/advanced/http" },
+              { text: "Fiori Elements Integration", link: "/advanced/fiori" },
+            ],
+          },
+          {
+            // Where it runs: an older release, a renamed namespace, a system
+            // the framework is not installed on, a UI5 runtime without the
+            // legacy libraries. Every one of them is the same question -
+            // will this work on MY system - asked about a different axis.
+            text: "Releases, Stacks",
+            collapsed: true,
+            items: [
+              { text: "Downporting", link: "/advanced/downporting" },
+              { text: "Namespaces, Renaming", link: "/advanced/renaming" },
+              { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
+              { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
+            ],
+          },
+          {
+            // The machine you develop on, and the three tools the project
+            // ships for it - each documented in full here, so their READMEs
+            // can stay short and point at a page instead of growing a second
+            // copy that drifts.
+            text: "Developer Setup",
+            collapsed: true,
+            items: [
+              { text: "Local Setup", link: "/advanced/local" },
+              {
+                text: "Project Tools",
+                link: "/advanced/linter",
+                collapsed: true,
+                items: [
+                  { text: "abap2UI5 linter", link: "/advanced/linter" },
+                  { text: "MCP Server", link: "/advanced/mcp_server" },
+                  { text: "VS Code Extension", link: "/advanced/vscode" },
+                ],
+              },
+            ],
+          },
+          // A section of its own until now, next to Advanced Topics rather
+          // than inside it. It is the same kind of reading - what the
+          // framework does under the app, and the tools it stands on - and
+          // it is read after the app runs, not on the way in, so it sits
+          // here as the last entry instead of as a second top-level heading
+          // competing with this one.
+          {
+            text: "Technical Insight",
+            link: "/technical/concept",
+            collapsed: true,
+            items: [
+              { text: "UI5 Over-the-Wire", link: "/technical/concept" },
+              { text: "ABAP Thinking, UI5 Results", link: "/technical/dx" },
+              { text: "Cloud Readiness", link: "/technical/cloud" },
+              { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
+              {
+                text: "Technology",
+                link: "/technical/technology/overview",
+                collapsed: true,
+                items: [
+                  { text: "RAP", link: "/technical/technology/rap" },
+                  { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
+                ],
+              },
+              {
+                text: "Toolchain",
+                collapsed: true,
+                items: [
+                  // Every one of these is somebody else's project, which is
+                  // what this group is: the toolchain abap2UI5 stands on.
+                  // The project's own linter used to head the list, pointing
+                  // at the same page as Developer Setup > Project Tools two
+                  // groups up. One entry standing twice in one sidebar makes
+                  // its own search results ambiguous, and here it also made
+                  // the group claim something it no longer holds.
+                  { text: "abapGit", link: "/technical/tools/abapgit" },
+                  { text: "ajson", link: "/technical/tools/ajson" },
+                  { text: "S-RTTI", link: "/technical/tools/srtti" },
+                  { text: "abaplint", link: "/technical/tools/abaplint" },
+                  { text: "open-abap", link: "/technical/tools/open_abap" },
+                  { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
+                  { text: "abapmerge", link: "/technical/tools/abapmerge" },
+                ],
               },
             ],
           },
         ],
       },
       {
-        text: "Technical Insight",
-        link: "/technical/concept",
-        collapsed: true,
-        items: [
-          { text: "UI5 Over-the-Wire", link: "/technical/concept" },
-          { text: "ABAP Thinking, UI5 Result", link: "/technical/dx" },
-          { text: "Cloud Readiness", link: "/technical/cloud" },
-          { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
-          {
-            text: "Technology",
-            link: "/technical/technology/overview",
-            collapsed: true,
-            items: [
-              { text: "RAP", link: "/technical/technology/rap" },
-              { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
-            ],
-          },
-          {
-            text: "Tool",
-            collapsed: true,
-            items: [
-              // The project's own linter, next to the tools it borrows. Every
-              // other gate in this section is somebody else's; this one is
-              // the only thing that can read a view that does not exist until
-              // the app runs.
-              //
-              // TECHNICAL copy — the page itself lives under Advanced Topic >
-              // Tools with the MCP server and the extension, the project's
-              // other two. Match on the marker, not on the text.
-              { text: "abap2UI5 linter", link: "/advanced/linter" }, // technical
-              { text: "abapGit", link: "/technical/tools/abapgit" },
-              { text: "ajson", link: "/technical/tools/ajson" },
-              { text: "S-RTTI", link: "/technical/tools/srtti" },
-              { text: "abaplint", link: "/technical/tools/abaplint" },
-              { text: "open-abap", link: "/technical/tools/open_abap" },
-              { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
-              { text: "abapmerge", link: "/technical/tools/abapmerge" },
-            ],
-          },
-        ],
-      },
-      {
-        text: "Resource",
+        text: "Resources",
         link: "/resources/references",
         collapsed: true,
         items: [
-          { text: "Reference", link: "/resources/references" },
+          { text: "References", link: "/resources/references" },
           // Several hundred working apps in three repositories, and until this
           // page the only way to find out which one to open was to know all
           // three existed. The cookbook links individual samples per chapter;
@@ -516,22 +547,34 @@ export default defineConfig({
           // catalogues - do not repeat one here, where nothing would.
           { text: "Sample Catalogues", link: "/resources/samples" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
-          { text: "Release", link: "/resources/changelog" },
+          { text: "Release Notes", link: "/resources/changelog" },
           { text: "Deprecations", link: "/resources/deprecations" },
-          { text: "License", link: "/resources/license" },
-          { text: "Support", link: "/resources/support" },
-          { text: "Contact", link: "/resources/contact" },
-          // SIDEBAR copy — the nav bar has the same two entries verbatim,
-          // further up under the version number. Search for this marker, not
-          // for the text.
-          { text: "Contribution", link: "/resources/contribution" }, // sidebar
-          { text: "Sponsor", link: "/resources/sponsor" }, // sidebar
-          // The logo, the favicon and the cover image, for anyone writing
-          // about abap2UI5. The page existed and no sidebar linked it, so the
-          // only way in was knowing the URL - which nobody looking for a logo
-          // does. Found by scripts/generate-llms.mjs, which reports a page in
-          // the tree that no sidebar navigates to.
-          { text: "Logo, Press Kit", link: "/resources/logo" },
+          {
+            // The project rather than the framework: what it costs, who to
+            // ask, how to join in. Six entries that stood between the
+            // reading destinations above and pushed them off the first
+            // screen - and every one of them is already reachable twice
+            // over, from the footer and the version menu. Collapsed, at the
+            // bottom, where a reader goes looking for them on purpose.
+            text: "Project",
+            collapsed: true,
+            items: [
+              { text: "License", link: "/resources/license" },
+              { text: "Support", link: "/resources/support" },
+              { text: "Contact", link: "/resources/contact" },
+              // SIDEBAR copy — the nav bar has the same two entries verbatim,
+              // further up under the version number. Search for this marker,
+              // not for the text.
+              { text: "Contribution", link: "/resources/contribution" }, // sidebar
+              { text: "Sponsor", link: "/resources/sponsor" }, // sidebar
+              // The logo, the favicon and the cover image, for anyone writing
+              // about abap2UI5. The page existed and no sidebar linked it, so
+              // the only way in was knowing the URL - which nobody looking for
+              // a logo does. Found by scripts/generate-llms.mjs, which reports
+              // a page in the tree that no sidebar navigates to.
+              { text: "Logo, Press Kit", link: "/resources/logo" },
+            ],
+          },
         ],
       },
     ],

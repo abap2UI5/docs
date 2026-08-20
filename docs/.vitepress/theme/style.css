@@ -389,23 +389,19 @@
 
 /* ------------------------------------ the home page, below the hero ---
  *
- * Five feature cards, not six. VPFeatures picks its column count from the
- * NUMBER of cards — 6 gives `grid-6` and three per row, 5 gives `grid-4` and
- * four in the first row with the fifth alone under it. Five cards is the
- * decision (docs/index.md says why samples are not one of them), so the
- * column count is set here instead of being an accident of the count.
- * `.VPHome` in front only to outrank the component's own scoped rule without
- * an `!important`. */
-@media (min-width: 768px) {
-  .VPHome .VPFeatures .item.grid-4 {
-    width: calc(100% / 3);
-  }
-}
+ * Three feature cards. VPFeatures picks its column count from the NUMBER of
+ * cards, and three gives `grid-3` — three per row, which is the row this page
+ * wants — so nothing has to be overridden here any more. Change the count in
+ * docs/index.md and the row changes with it: five would give `grid-4` and a
+ * lone fifth card under four, which is what the override that used to live
+ * here existed to prevent.
+ */
 
-/* The three sample catalogues, under the grid and deliberately not part of it:
- * they are pages published by three OTHER repositories, and every card above
- * them stays on this site. A rule, small type and a row of pills — enough to
- * read as "and, separately, over there" rather than as a sixth card.
+/* The sample catalogues, under the grid and deliberately not part of it: a
+ * corpus of working apps is a different kind of destination from the cards
+ * above, and a fourth card would read as one of them. A rule, small type and
+ * a single button — enough to read as "and, separately, over there" rather
+ * than as another card.
  *
  * The selectors carry the block class twice because this sits inside
  * `.vp-doc` — VPHomeContent wraps the markdown that follows the frontmatter —
@@ -427,33 +423,32 @@
 
 .a2ui5-catalogues .a2ui5-catalogues-links {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 8px 12px;
-  margin: 16px 0 0;
+  margin: 20px 0 0;
 }
 
 .a2ui5-catalogues .a2ui5-catalogues-links a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--vp-c-brand-1);
   border-radius: 20px;
-  padding: 5px 16px;
-  color: var(--vp-c-text-1);
+  padding: 8px 22px;
+  color: var(--vp-c-brand-1);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.25s, color 0.25s;
+  transition: border-color 0.25s, color 0.25s, background-color 0.25s;
 }
 
 .a2ui5-catalogues .a2ui5-catalogues-links a::after {
-  content: "↗";
-  font-size: 12px;
-  opacity: 0.55;
+  content: "→";
+  font-size: 13px;
+  opacity: 0.7;
 }
 
 .a2ui5-catalogues .a2ui5-catalogues-links a:hover {
-  border-color: var(--vp-c-brand-1);
-  color: var(--vp-c-brand-1);
+  border-color: var(--vp-c-brand-2);
+  background-color: var(--vp-c-brand-soft);
+  color: var(--vp-c-brand-2);
 }
