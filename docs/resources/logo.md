@@ -4,9 +4,9 @@ outline: [2, 4]
 # Logo & Brand
 
 Everything the project signs — the documentation, the repositories, a talk
-slide, a link shared on LinkedIn — uses the same red mark. This page is the
-collection: every asset the project puts its name on, the colours behind them,
-and what may be done with them.
+slide, a link shared on LinkedIn — uses the same red mark, and the same three
+animals turn up around it. This page is the collection: every asset the project
+puts its name on, the colours behind them, and what may be done with them.
 
 The files are the originals. Download them from the links, and prefer them over
 a screenshot of one, a copy pasted out of a slide deck, or a copy re-uploaded
@@ -91,10 +91,63 @@ header, a slide, a repository social preview.
 | File | [`code_cover.png`](/code_cover.png) |
 | Size | 2278 × 830, PNG, transparent background |
 
+## Mascots
+
+Three animals travel with the project — on posts, slides and covers, where the
+mark alone is a logo and an animal is a picture. They are drawings, not marks:
+they stand next to the logo, never in place of it.
+
+Each comes in two files. The one to use is the `_brand` copy; the plain name is
+the artwork as it was drawn. Every animal arrived on a red of its own —
+`#C12E2B`, `#AB2319` and, under the JPEG noise, roughly `#F5021B` — three reds
+that are each almost, but not quite, the red of the mark. The `_brand` copies
+are shifted onto `#D03C4A`, so a mascot next to the logo is the same red as the
+logo. Only the red ink moved, in proportion to how much of it a pixel carries:
+outlines, shading, the sloth's cream fur and the white behind all three are
+untouched.
+
+### Sloth
+
+The sloth at the keyboard — unhurried, and the work still gets done.
+
+![The abap2UI5 sloth, at a computer](/mascots/sloth_brand.png){width=200}
+
+| | |
+| --- | --- |
+| File | [`sloth_brand.png`](/mascots/sloth_brand.png) — 400 × 400, PNG, white background |
+| As drawn | [`sloth.jpg`](/mascots/sloth.jpg) — JPEG, so it carries compression artefacts around the outline; the brand copy is a PNG and adds none of its own |
+| Red | ≈ `#F5021B` → `#D03C4A` |
+
+### Dinosaur
+
+![The abap2UI5 dinosaur](/mascots/dinosaur_brand.png){width=200}
+
+| | |
+| --- | --- |
+| File | [`dinosaur_brand.png`](/mascots/dinosaur_brand.png) — 400 × 400, PNG, white background |
+| As drawn | [`dinosaur.png`](/mascots/dinosaur.png) |
+| Red | `#C12E2B` → `#D03C4A` |
+
+### Sheep
+
+![The abap2UI5 sheep](/mascots/sheep_brand.png){width=200}
+
+| | |
+| --- | --- |
+| File | [`sheep_brand.png`](/mascots/sheep_brand.png) — 400 × 400, PNG, white background |
+| As drawn | [`sheep.png`](/mascots/sheep.png) |
+| Red | `#AB2319` → `#D03C4A` |
+
+All three sit on an opaque white background, so they belong on a white surface.
+On any other colour a white square appears around them — there is no
+transparent version, and cutting one out of these files by hand leaves a white
+fringe along every edge.
+
 ## Colours
 
-Two reds and white. The mark uses the first red and white only; the second red
-exists for interface states, where the first one has to darken under a cursor.
+Two reds and white. The mark, and every mascot above, uses the first red and
+white only; the second red exists for interface states, where the first one has
+to darken under a cursor.
 
 | | Hex | Where |
 | --- | --- | --- |
@@ -124,6 +177,9 @@ not a licence term — but they are what keeps the mark recognisable:
 - **Do not imply endorsement.** The mark next to your product name reads as "the
   project ships this". Say "built with abap2UI5" instead — that is accurate and
   needs no mark at all.
+- **The animals are not the mark.** The same rules cover them, with one more:
+  a mascot may sit next to the logo, illustrate a slide or head a post, but the
+  thing that identifies the project is the red circle.
 
 For anything this page does not answer — a print resolution, a variant that
 does not exist here, permission for something the list above rules out — write
