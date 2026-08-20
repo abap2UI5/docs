@@ -122,8 +122,10 @@ background that is not white.
 
 ### Sloth
 
-The expert. Knows how it works, and cannot be hurried into showing you. Ask,
-and the answer will be right — after a while.
+The expert — and happy to show you, at length, exactly how any of it works.
+The laziness is pointed at the work, not at the question: rather than build the
+thing the long way, the sloth goes looking for a shorter one. Which is a fair
+description of how a framework like this comes about.
 
 ![The abap2UI5 sloth, at a computer](/mascots/sloth_brand.png){width=200}
 
