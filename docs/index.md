@@ -20,7 +20,7 @@ hero:
       text: What's New?
       link: /resources/changelog
     - theme: alt
-      text: Playground
+      text: Live Demo
       link: https://abap2ui5.github.io/playground/
 
 # Three cards, one per thing a reader comes here to do: look a task up, take
