@@ -8,7 +8,7 @@ You've installed abap2UI5 and built your first app. From here, pick the directio
 ## Sample Apps
 Hundreds of working apps, and the fastest way to learn abap2UI5 is to read one that already does what you are about to write. They live in three repositories, each with a page that searches it — [**Learn**](https://abap2ui5.github.io/samples/) is the one to start on: the path from the smallest app that runs to files, devices and custom CSS, one idea per sample.
 
-Looking for one in particular? Search the page, or `Ctrl+F` the [catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) for `f4`, `tree` or `nav_app_call`. [Sample Catalogues](/resources/samples) tells the three repositories apart, and the [Cookbook](/cookbook/overview) links the same apps from the page that explains the pattern.
+Looking for one in particular? Search the page, or `Ctrl+F` the [catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) for `f4`, `tree` or `nav_app_call`. [**Controls**](https://abap2ui5.github.io/samples-controls/) is the UI5 demo kit rebuilt control by control and [**Stack**](https://abap2ui5.github.io/samples-stack/) the samples that need something from your system — each page links the other two at its top. The [Cookbook](/cookbook/overview) links the same apps from the page that explains the pattern.
 
 ![Sample apps overview showing tables, lists, trees, and other UI5 controls](/get_started/image-1.png)
 

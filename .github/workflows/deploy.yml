@@ -68,8 +68,8 @@ jobs:
           sparse-checkout: SAMPLES.md
           sparse-checkout-cone-mode: false
       # samples-stack was missing here while generate-llms.mjs counts three
-      # catalogues and check:counts holds four figures against them. The deploy
-      # therefore published a total it had counted two thirds of.
+      # catalogues into the llms.txt it publishes. The deploy therefore
+      # published a list it had counted two thirds of.
       - name: Sample catalogues (stack)
         continue-on-error: true
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -106,9 +106,6 @@ jobs:
       - name: sample links
         if: ${{ !cancelled() }}
         run: npm run check:samples
-      - name: corpus counts
-        if: ${{ !cancelled() }}
-        run: npm run check:counts
 
       # …and only then the thing that gets published. `docs:build` is itself
       # one of the gates - a page that does not build is a page nobody can

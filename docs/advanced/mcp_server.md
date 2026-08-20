@@ -90,8 +90,10 @@ thing here. It answers *"has somebody already built a value help, a tree,
 navigation between two apps?"* out of **614 working apps in three
 repositories**, and hands back a class to read rather than a snippet to trust.
 Any one of the three catalogues is enough to start; a missing clone is reported
-in the answer, not fatal. See [Sample Catalogues](/resources/samples) for what
-each one covers.
+in the answer, not fatal. Each catalogue says what it covers on its own page —
+[Learn](https://abap2ui5.github.io/samples/),
+[Controls](https://abap2ui5.github.io/samples-controls/),
+[Stack](https://abap2ui5.github.io/samples-stack/).
 
 ### Level 3 — see the running app (a browser, and time)
 

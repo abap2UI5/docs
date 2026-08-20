@@ -19,16 +19,16 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
-| `scripts/lib/catalogue.mjs` | Parses a sample catalogue's rows; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
+| `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue's rows, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt`; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:samples + check:counts
+npm run check          # test + check:version + docs:build + check:examples + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but six things in it
-are decidable, and all six are decided before a merge:
+A documentation repository has no compiler for its prose, but five things in it
+are decidable, and all five are decided before a merge:
 
 | | |
 |---|---|
@@ -37,9 +37,8 @@ are decidable, and all six are decided before a merge:
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
-| `check:counts` | the four figures on `resources/samples.md` — one count per sample repository and the total they add up to — against the catalogues themselves |
 
-`.github/workflows/check.yml` runs the same six, in the same order. Keep the
+`.github/workflows/check.yml` runs the same five, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -49,12 +48,15 @@ clone it as a sibling. Without one it *skips* rather than fails, so verify the
 output says what you think it says. CI checks out `abap2UI5/samples@main`
 explicitly for this reason.
 
-`check:counts` reads all three catalogues the same way, and skips per
-repository: with only `samples` at hand it verifies that one figure, says the
-other two were not verified, and leaves the total alone (it needs all three).
-CI sparse-checks out `SAMPLES.md` from `samples-controls` and `samples-stack`
-so the page is fully checked; both are `continue-on-error`, because an
-unreachable repository must cost a figure and not the run.
+There used to be a sixth, `check:counts`, holding four figures on a
+`resources/samples.md` page against the catalogues themselves. That page is
+gone — the home page opens [the samples page](https://abap2ui5.github.io/samples/)
+directly and each catalogue introduces itself — and with it the only prose
+copy of a number this repository does not own. `generate-llms.mjs` still counts
+the three catalogues into `llms.txt`, which is why CI sparse-checks out
+`SAMPLES.md` from `samples-controls` and `samples-stack`; both are
+`continue-on-error`, because an unreachable repository must cost a figure and
+not the run, and a generated line can simply leave the number out.
 
 ## What the site publishes for machines
 
@@ -110,7 +112,7 @@ The code travels in the playground's URL fragment, read out of the rendered
 block at click time — so nothing is hosted here, and the example that runs is
 the text on the page rather than a copy of it.
 
-**This is the seventh decidable thing in this repository and the only one CI
+**This is the sixth decidable thing in this repository and the only one CI
 cannot decide.** Whether an example runs is a question only a playground can
 answer, and a playground is a three-minute build of another repository. So the
 rules in `docs/.vitepress/playground.mjs` are an approximation, they fail

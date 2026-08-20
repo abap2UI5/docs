@@ -75,7 +75,7 @@ Three repositories, each with a searchable page of its own:
 control does what?”*, and [**Stack**](https://abap2ui5.github.io/samples-stack/)
 for *“Will my system run it?”*.
 
-[Sample Catalogues](/resources/samples) is the page that tells the three apart
-— what each one holds, how many, and which to search for what you are asking.
-All three install with abapGit and carry an overview app that lists everything
-they contain.
+Each page says what its own corpus holds, how many apps that is, and carries
+the search and the filters for it — and links the other two in the bar at its
+top, so any one of the three is a way in to all of them. All three install with
+abapGit and carry an overview app that lists everything they contain.

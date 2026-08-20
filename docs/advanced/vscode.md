@@ -248,8 +248,8 @@ can help while the chain is being written rather than after it:
   with run, preview and check on it: the list that says which thirty apps a
   repository has.
 - **Show Examples for this Control** — put the cursor on an `ele( )` call and
-  the [sample catalogues](/resources/samples) are searched for working uses of
-  that control, richest first, opening at the line. It reads the catalogues
+  the [sample catalogues](https://abap2ui5.github.io/samples/) are searched for
+  working uses of that control, richest first, opening at the line. It reads the catalogues
   from `abap2ui5.mcp.reposRoot`, so it needs those checkouts.
 
 ### Starting from a template
