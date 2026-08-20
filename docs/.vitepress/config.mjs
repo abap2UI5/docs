@@ -123,8 +123,11 @@ export default defineConfig({
           { text: "Introduction", link: "/get_started/about" },
           { text: "Cookbook", link: "/cookbook/overview" },
           { text: "Configuration", link: "/configuration/setup" },
+          // Technical Insight is not a line of its own here any more: it is a
+          // subsection of Advanced Topic in the sidebar, and a flat dropdown
+          // that still lists it next to its parent tells the reader a
+          // different structure than the sidebar they land in.
           { text: "Advanced Topic", link: "/advanced/downporting" },
-          { text: "Technical Insight", link: "/technical/concept" },
           { text: "Resource", link: "/resources/references" },
         ],
       },
@@ -356,13 +359,13 @@ export default defineConfig({
                   { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
                 ],
               },
-              {
-                text: "Obsolete",
-                collapsed: true,
-                items: [
-                  { text: "Deprecations", link: "/resources/deprecations" },
-                ],
-              },
+              // Was a one-entry "Obsolete" group of its own: a collapsible
+              // that costs a click to reveal a single link is a level nobody
+              // needs. The page sits here directly, next to Troubleshooting.
+              //
+              // COOKBOOK copy - Resource carries the same entry, pointing at
+              // the same page. Match on the marker.
+              { text: "Deprecations", link: "/resources/deprecations" }, // cookbook
             ],
           },
         ],
@@ -458,46 +461,52 @@ export default defineConfig({
               },
             ],
           },
-        ],
-      },
-      {
-        text: "Technical Insight",
-        link: "/technical/concept",
-        collapsed: true,
-        items: [
-          { text: "UI5 Over-the-Wire", link: "/technical/concept" },
-          { text: "ABAP Thinking, UI5 Result", link: "/technical/dx" },
-          { text: "Cloud Readiness", link: "/technical/cloud" },
-          { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
+          // A section of its own until now, next to Advanced Topic rather
+          // than inside it. It is the same kind of reading - what the
+          // framework does under the app, and the tools it stands on - and
+          // it is read after the app runs, not on the way in, so it sits
+          // here as the last entry instead of as a second top-level heading
+          // competing with this one.
           {
-            text: "Technology",
-            link: "/technical/technology/overview",
+            text: "Technical Insight",
+            link: "/technical/concept",
             collapsed: true,
             items: [
-              { text: "RAP", link: "/technical/technology/rap" },
-              { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
-            ],
-          },
-          {
-            text: "Tool",
-            collapsed: true,
-            items: [
-              // The project's own linter, next to the tools it borrows. Every
-              // other gate in this section is somebody else's; this one is
-              // the only thing that can read a view that does not exist until
-              // the app runs.
-              //
-              // TECHNICAL copy — the page itself lives under Advanced Topic >
-              // Tools with the MCP server and the extension, the project's
-              // other two. Match on the marker, not on the text.
-              { text: "abap2UI5 linter", link: "/advanced/linter" }, // technical
-              { text: "abapGit", link: "/technical/tools/abapgit" },
-              { text: "ajson", link: "/technical/tools/ajson" },
-              { text: "S-RTTI", link: "/technical/tools/srtti" },
-              { text: "abaplint", link: "/technical/tools/abaplint" },
-              { text: "open-abap", link: "/technical/tools/open_abap" },
-              { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
-              { text: "abapmerge", link: "/technical/tools/abapmerge" },
+              { text: "UI5 Over-the-Wire", link: "/technical/concept" },
+              { text: "ABAP Thinking, UI5 Result", link: "/technical/dx" },
+              { text: "Cloud Readiness", link: "/technical/cloud" },
+              { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
+              {
+                text: "Technology",
+                link: "/technical/technology/overview",
+                collapsed: true,
+                items: [
+                  { text: "RAP", link: "/technical/technology/rap" },
+                  { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
+                ],
+              },
+              {
+                text: "Tool",
+                collapsed: true,
+                items: [
+                  // The project's own linter, next to the tools it borrows. Every
+                  // other gate in this section is somebody else's; this one is
+                  // the only thing that can read a view that does not exist until
+                  // the app runs.
+                  //
+                  // TECHNICAL copy — the page itself lives under Advanced Topic >
+                  // Tools with the MCP server and the extension, the project's
+                  // other two. Match on the marker, not on the text.
+                  { text: "abap2UI5 linter", link: "/advanced/linter" }, // technical
+                  { text: "abapGit", link: "/technical/tools/abapgit" },
+                  { text: "ajson", link: "/technical/tools/ajson" },
+                  { text: "S-RTTI", link: "/technical/tools/srtti" },
+                  { text: "abaplint", link: "/technical/tools/abaplint" },
+                  { text: "open-abap", link: "/technical/tools/open_abap" },
+                  { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
+                  { text: "abapmerge", link: "/technical/tools/abapmerge" },
+                ],
+              },
             ],
           },
         ],
@@ -517,7 +526,8 @@ export default defineConfig({
           { text: "Sample Catalogues", link: "/resources/samples" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release", link: "/resources/changelog" },
-          { text: "Deprecations", link: "/resources/deprecations" },
+          // RESOURCE copy - see the marker on the Cookbook one.
+          { text: "Deprecations", link: "/resources/deprecations" }, // resource
           { text: "License", link: "/resources/license" },
           { text: "Support", link: "/resources/support" },
           { text: "Contact", link: "/resources/contact" },
