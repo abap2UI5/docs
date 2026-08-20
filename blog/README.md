@@ -52,21 +52,22 @@ comparison but to leave it out. Three rules, and they are load-bearing:
 
 **Free and MIT** gets mentioned once, in passing, never as a pitch.
 
-### One open tension
+### On titles
 
-The title of article 1 frames by negation — "is not a programming model" — and
-negation implies a thing being negated even when nothing is named. The body no
-longer works that way: it opens on the problem, and "programming model" appears
-once as a category rather than as a competitor. If the title should follow the
-body, alternatives are *"One Interface, and Nothing Else"* or *"The Cost of a
-Screen"*. Keeping the current title is defensible; it is a statement about
-abap2UI5's own shape, and it is memorable.
+Article 1 was called *"abap2UI5 is not a Programming Model"* while it was being
+written, and the body outgrew it. Negation implies a thing being negated even
+when nothing is named, so the title kept inviting the comparison the text had
+stopped making. *"The Cost of a Screen"* names the problem instead, which is
+what the article is actually about — and it let the phrase "programming model"
+disappear from the piece entirely.
+
+Worth applying to the rest of the roadmap: title the problem, not the contrast.
 
 ## Articles
 
 | # | File | Title | Status |
 |---|---|---|---|
-| 1 | [`01-not-a-programming-model.md`](01-not-a-programming-model.md) | abap2UI5 is not a Programming Model | draft |
+| 1 | [`01-the-cost-of-a-screen.md`](01-the-cost-of-a-screen.md) | The Cost of a Screen | draft |
 | 2 | [`02-abap2ui5-and-rtti.md`](02-abap2ui5-and-rtti.md) | Whatever Happened to RTTI? | draft |
 
 Each file contains the full article, then the teaser post under a heading at

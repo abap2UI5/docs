@@ -1,4 +1,4 @@
-# abap2UI5 is not a Programming Model
+# The Cost of a Screen
 
 *abap2UI5 Know-How #1*
 
@@ -21,9 +21,10 @@ way to draw a screen from ABAP, and then gets out of the way.
 
 ## The whole contract
 
-A programming model tells an application how to be built — its structure, its
-lifecycle, its layers, its transactional behaviour. abap2UI5 does none of that.
-This is the entire contract it asks an application to fulfil:
+Frameworks that put a screen in front of ABAP tend to ask for a great deal in
+return: a structure to follow, a lifecycle to fit into, layers to fill in.
+abap2UI5 asks for one thing. This is the entire contract an application has to
+fulfil:
 
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -118,9 +119,10 @@ can consume. Applications that need those things need something that provides
 them, and abap2UI5 is not a candidate — it has never been trying to be one.
 
 What it is, is a way for ABAP code to put a UI5 screen in front of itself
-without first becoming a different kind of application. For the screens
-described at the top of this article, that turns out to be the only thing that
-was missing.
+without first becoming a different kind of application. That is the whole
+proposition, and it is why the cost of a screen finally scales down to the size
+of the problem behind it. For the four screens at the top of this article, that
+turns out to be the only thing that was missing.
 
 ---
 
