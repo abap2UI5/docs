@@ -97,6 +97,10 @@ Three animals travel with the project — on posts, slides and covers, where the
 mark alone is a logo and an animal is a picture. They are drawings, not marks:
 they stand next to the logo, never in place of it.
 
+Each one is a character, and between them they are most of a development team.
+Pick the one that fits what the picture is about; on a given day every one of
+us is one of the three.
+
 Each animal comes in three files, the same way the mark does: a transparent
 PNG to use, a copy on white for the places that cannot handle transparency, and
 the artwork as it was drawn.
@@ -118,7 +122,8 @@ background that is not white.
 
 ### Sloth
 
-The sloth at the keyboard — unhurried, and the work still gets done.
+The expert. Knows how it works, and cannot be hurried into showing you. Ask,
+and the answer will be right — after a while.
 
 ![The abap2UI5 sloth, at a computer](/mascots/sloth_brand.png){width=200}
 
@@ -131,6 +136,10 @@ The sloth at the keyboard — unhurried, and the work still gets done.
 
 ### Dinosaur
 
+The old hand. Thirty years of ABAP, and a long memory of new things that were
+going to change everything. Unimpressed by this one too, and not always wrong
+about that.
+
 ![The abap2UI5 dinosaur](/mascots/dinosaur_brand.png){width=200}
 
 | | |
@@ -141,6 +150,10 @@ The sloth at the keyboard — unhurried, and the work still gets done.
 | Red | `#C12E2B` → `#D03C4A` |
 
 ### Sheep
+
+The enthusiast. Tries every new thing the week it appears, follows every
+tutorial to the end — and could not quite tell you afterwards how any of it
+works.
 
 ![The abap2UI5 sheep](/mascots/sheep_brand.png){width=200}
 
