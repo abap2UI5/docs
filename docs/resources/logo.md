@@ -97,14 +97,24 @@ Three animals travel with the project — on posts, slides and covers, where the
 mark alone is a logo and an animal is a picture. They are drawings, not marks:
 they stand next to the logo, never in place of it.
 
-Each comes in two files. The one to use is the `_brand` copy; the plain name is
-the artwork as it was drawn. Every animal arrived on a red of its own —
-`#C12E2B`, `#AB2319` and, under the JPEG noise, roughly `#F5021B` — three reds
-that are each almost, but not quite, the red of the mark. The `_brand` copies
-are shifted onto `#D03C4A`, so a mascot next to the logo is the same red as the
-logo. Only the red ink moved, in proportion to how much of it a pixel carries:
-outlines, shading, the sloth's cream fur and the white behind all three are
-untouched.
+Each animal comes in three files, the same way the mark does: a transparent
+PNG to use, a copy on white for the places that cannot handle transparency, and
+the artwork as it was drawn.
+
+Every animal arrived on a red of its own — `#C12E2B`, `#AB2319` and, under the
+JPEG noise, roughly `#F5021B` — three reds that are each almost, but not quite,
+the red of the mark. The brand copies are shifted onto `#D03C4A`, so a mascot
+next to the logo is the same red as the logo. Only the red ink moved, in
+proportion to how much of it a pixel carries: outlines, shading and the sloth's
+cream fur are untouched.
+
+The transparent copies are cut out along the drawing, not along its white. The
+white behind the sheep and the white of its wool are the same white, so the
+background was found by flooding in from the border — white that no path from
+the edge reaches is inside the animal and stays: the wool, the monitor, the
+keyboard. The soft grey edge these drawings carry is dropped rather than kept
+half-transparent, which is what would otherwise show as a grey halo on every
+background that is not white.
 
 ### Sloth
 
@@ -114,8 +124,9 @@ The sloth at the keyboard — unhurried, and the work still gets done.
 
 | | |
 | --- | --- |
-| File | [`sloth_brand.png`](/mascots/sloth_brand.png) — 400 × 400, PNG, white background |
-| As drawn | [`sloth.jpg`](/mascots/sloth.jpg) — JPEG, so it carries compression artefacts around the outline; the brand copy is a PNG and adds none of its own |
+| Use | [`sloth_brand.png`](/mascots/sloth_brand.png) — 400 × 400, PNG, transparent |
+| On white | [`sloth_brand_white_back.png`](/mascots/sloth_brand_white_back.png) |
+| As drawn | [`sloth.jpg`](/mascots/sloth.jpg) — a JPEG, so it carries compression artefacts along the outline; the copies above are PNGs and add none of their own |
 | Red | ≈ `#F5021B` → `#D03C4A` |
 
 ### Dinosaur
@@ -124,7 +135,8 @@ The sloth at the keyboard — unhurried, and the work still gets done.
 
 | | |
 | --- | --- |
-| File | [`dinosaur_brand.png`](/mascots/dinosaur_brand.png) — 400 × 400, PNG, white background |
+| Use | [`dinosaur_brand.png`](/mascots/dinosaur_brand.png) — 400 × 400, PNG, transparent |
+| On white | [`dinosaur_brand_white_back.png`](/mascots/dinosaur_brand_white_back.png) |
 | As drawn | [`dinosaur.png`](/mascots/dinosaur.png) |
 | Red | `#C12E2B` → `#D03C4A` |
 
@@ -134,14 +146,14 @@ The sloth at the keyboard — unhurried, and the work still gets done.
 
 | | |
 | --- | --- |
-| File | [`sheep_brand.png`](/mascots/sheep_brand.png) — 400 × 400, PNG, white background |
+| Use | [`sheep_brand.png`](/mascots/sheep_brand.png) — 400 × 400, PNG, transparent |
+| On white | [`sheep_brand_white_back.png`](/mascots/sheep_brand_white_back.png) |
 | As drawn | [`sheep.png`](/mascots/sheep.png) |
 | Red | `#AB2319` → `#D03C4A` |
 
-All three sit on an opaque white background, so they belong on a white surface.
-On any other colour a white square appears around them — there is no
-transparent version, and cutting one out of these files by hand leaves a white
-fringe along every edge.
+What is white inside an animal stays white — the wool, the screen, the keys.
+On a dark background that white is what you see, because it is part of the
+drawing and not the surface behind it.
 
 ## Colours
 
