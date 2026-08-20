@@ -38,10 +38,27 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync, readdirSyn
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
+import { declaredRelease } from './lib/release.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = join(ROOT, 'docs');
 const KEEP = process.argv.includes('--keep');
+
+/* WHICH framework do these examples have to compile against?
+ *
+ * Until now: whatever abap2UI5/abap2UI5 had on main. That is the wrong
+ * question asked of a documentation site. A reader installs a RELEASE, so an
+ * example is correct when it compiles against the release - and main is ahead
+ * of it by design. The gap is not theoretical: z2ui5_cl_ui5_view_builder sat
+ * on main from 2026-08-12 while the newest tag was 1.142.0 from 2026-07-20,
+ * so for three weeks a page could teach the view builder, compile green here,
+ * and not work for a single reader who had installed abap2UI5.
+ *
+ * So: the release the site itself names, read from the same three places
+ * check-version holds honest. A2UI5_REF overrides it - that is how the
+ * against-main canary runs, ahead of a release rather than instead of it.
+ */
+const REF = process.env.A2UI5_REF || declaredRelease(ROOT);
 
 /* `public` is static assets, and since scripts/generate-llms.mjs it also holds
  * a raw-markdown COPY of every page, written on each build. Walking into it
@@ -332,7 +349,7 @@ found.forEach((ex, i) => {
 writeFileSync(join(dir, 'abaplint.json'), JSON.stringify({
   global: { files: '/src/**/*.*' },
   dependencies: [
-    { url: 'https://github.com/abap2UI5/abap2UI5', files: '/src/**/*.*' },
+    { url: 'https://github.com/abap2UI5/abap2UI5', ...(REF ? { branch: REF } : {}), files: '/src/**/*.*' },
     // the SAP standard API an example may implement (if_http_extension and
     // friends); same mirror abap2UI5/samples-stack lints against
     { url: 'https://github.com/abapedia/steampunk-2305-api', folder: '/deps', files: '/src/**/*.*' },
@@ -353,6 +370,10 @@ writeFileSync(join(dir, 'abap2ui5lint.jsonc'), JSON.stringify({
 }, null, 2));
 
 console.log(`check-examples: ${found.length} view-building class example(s) from ${new Set(found.map((f) => f.file)).size} page(s)`);
+console.log(REF
+  ? `             compiled against abap2UI5 ${REF}${process.env.A2UI5_REF ? ' (A2UI5_REF)' : ' — the release this site names'}`
+  : '             compiled against abap2UI5 main — the three places naming the release DISAGREE,\n'
+    + '             so there is no release to pin to. Run npm run check:version.');
 for (const [name, file] of origin) console.log(`  ${name}  <-  ${file}`);
 if (pending.length) {
   console.log(`\nnot checked yet: ${pending.length} example(s) on ${pendingPages.size} page(s) still`);
@@ -382,7 +403,7 @@ if (failed) {
   console.error('a documentation example that does not compile is the defect it looks like.');
   process.exit(1);
 }
-console.log('\ncheck-examples: every view-building example compiles and names API that exists.');
+console.log(`\ncheck-examples: every view-building example compiles and names API that exists${REF ? ` in abap2UI5 ${REF}` : ''}.`);
 if (skipped.length) {
   const pages = [...new Set(skipped)];
   console.log(

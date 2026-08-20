@@ -162,6 +162,6 @@ error), the app-only layout fix for a column narrower than 820px, and
 
 Node 22, matching the rest of the organisation. Actions are pinned to commits
 with the tag in a comment; `.github/dependabot.yml` moves both the npm packages
-and the action pins every Monday. The `@abap2ui5/linter` version decides what
+and the action pins monthly. The `@abap2ui5/linter` version decides what
 `check:examples` catches, so a bump there is a content decision, not just a
 dependency one — read what the new rules say before merging it.

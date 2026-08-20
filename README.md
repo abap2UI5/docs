@@ -28,7 +28,11 @@ counts still match the sample repositories (`check:samples`, `check:counts`),
 the release number in the nav bar still matches the framework
 (`check:version`), and the catalogue parser still parses (`test`).
 `.github/workflows/check.yml` runs the same list in the same order, so a green
-`npm run check` locally is a green pull request.
+`npm run check` locally is a green pull request — and `deploy.yml` runs it
+again before it publishes, so the site is only ever built from a tree that
+passed. Several of these go stale without anybody touching this repository (a
+release is published elsewhere, a sample class is renamed elsewhere), which is
+why the deploy re-runs them rather than trusting the merge.
 
 **[AGENTS.md](AGENTS.md) describes each of the six**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
