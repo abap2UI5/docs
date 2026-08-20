@@ -129,53 +129,28 @@ export default defineConfig({
         ],
       },
       {
+        // Just the repositories, flat. The dropdown used to carry the three
+        // sample catalogues on top of them, which meant nine entries in two
+        // groups and a reader scanning for "where is the code" reading past
+        // half of it first. The catalogues are a reading destination and are
+        // linked where a reader looks for one — /resources/samples in the
+        // sidebar, and the cookbook chapters; this menu answers the other
+        // question, which repository to clone.
         text: "Links",
         items: [
+          { text: "abap2UI5", link: "https://github.com/abap2UI5/abap2UI5" },
+          { text: "addons", link: "https://github.com/abap2UI5-addons" },
+          { text: "samples", link: "https://github.com/abap2UI5/samples" },
           {
-            // The three sample corpora publish a searchable page each, and
-            // those pages call each other Learn / Controls / Stack in a bar
-            // all three carry. Same three words here, so a reader arriving
-            // from one of them recognises where they are. The repositories are
-            // under "Project" below: a page is what you want when you are
-            // looking for a sample, the repository when you are installing it.
-            text: "Samples",
-            items: [
-              { text: "Learn", link: "https://abap2ui5.github.io/samples/" },
-              {
-                text: "Controls",
-                link: "https://abap2ui5.github.io/samples-controls/",
-              },
-              {
-                text: "Stack",
-                link: "https://abap2ui5.github.io/samples-stack/",
-              },
-              { text: "Which one to search", link: "/resources/samples" },
-            ],
+            text: "samples-controls",
+            link: "https://github.com/abap2UI5/samples-controls",
           },
           {
-            text: "Project",
-            items: [
-              {
-                text: "abap2UI5",
-                link: "https://github.com/abap2UI5/abap2UI5",
-              },
-              { text: "addons", link: "https://github.com/abap2UI5-addons" },
-              { text: "samples", link: "https://github.com/abap2UI5/samples" },
-              {
-                text: "samples-controls",
-                link: "https://github.com/abap2UI5/samples-controls",
-              },
-              {
-                text: "samples-stack",
-                link: "https://github.com/abap2UI5/samples-stack",
-              },
-              { text: "docs", link: "https://github.com/abap2UI5/docs" },
-              {
-                text: "issues",
-                link: "https://github.com/abap2UI5/abap2UI5/issues",
-              },
-            ],
+            text: "samples-stack",
+            link: "https://github.com/abap2UI5/samples-stack",
           },
+          { text: "docs", link: "https://github.com/abap2UI5/docs" },
+          { text: "issues", link: "https://github.com/abap2UI5/abap2UI5/issues" },
         ],
       },
       {
