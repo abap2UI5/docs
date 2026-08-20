@@ -1,25 +1,28 @@
-# abap2UI5 Know-How #2 — Whatever Happened to RTTI?
+# Whatever Happened to RTTI?
 
-> **Status:** draft · **Target:** LinkedIn native post + code carousel
-> **Frame:** runtime typing is a capability we lost, not a better contract.
-> Do not argue against OData — argue for the category of tooling it never fit.
+*abap2UI5 Know-How #2*
 
-## Hook (the ~200 characters visible before "see more")
+Before Fiori, ABAP developers routinely built screens for tables whose
+structure they did not know when they wrote the code. It was ordinary work.
+`cl_salv_table=>factory( )` took any internal table and drew it, RTTI answered
+what the columns were, and the DDIC supplied the labels. A whole category of
+tooling — data browsers, table maintenance, migration cockpits, generic
+reports — was built that way.
 
-> Before Fiori, ABAP developers built screens for tables whose structure they
-> did not know at compile time. `cl_salv_table=>factory( )` took any internal
-> table and drew it.
->
-> Somewhere on the way to UI5, we lost that.
+Somewhere on the way to UI5, that stopped being possible, and I do not think we
+ever really discussed it.
 
-## Body
+## The design-time contract
 
 The standard path to a UI5 application goes through a typed OData service. A
 CDS view, an entity type, a metadata document. The shape of the model is
-decided at design time and baked into the contract. That is a feature — it is
-what makes a service consumable, cacheable, documentable and stable.
+decided when you write the code and baked into the contract.
 
-It is also a constraint, and ABAP has a long tradition of not needing it:
+That is a feature, and an important one. The metadata is what makes a service
+consumable by clients you do not control, cacheable, documentable, versionable
+and stable. For a published business service, the contract *is* the product.
+
+But it is also a constraint, and ABAP has a long tradition of not needing it:
 
 ```abap
 " ABAP, any release, since forever
@@ -28,20 +31,20 @@ cl_salv_table=>factory( IMPORTING r_salv_table = DATA(lo_alv)
 lo_alv->display( ).
 ```
 
-Two statements. Any internal table. No type known when the code was written.
-RTTI reads the structure at runtime, the field catalog follows from it, DDIC
-labels come along for free. Generic report tools, table maintenance, data
-browsers, migration cockpits — a whole category of ABAP tooling was built
-exactly this way.
+Two statements. Any internal table. No type known at the time of writing. RTTI
+reads the structure at runtime, the field catalog follows from it, DDIC labels
+come along for free.
 
-Try the same through OData and the friction shows up immediately: the entity
-type has to exist first.
+Try the same through OData and the friction shows up in the first minute: the
+entity type has to exist before anything else can happen. Which is fine when
+you know what it is, and a dead end when the whole point of the tool is that
+you do not.
 
-### abap2UI5 binds at runtime, not at design time
+## Binding at runtime
 
-An abap2UI5 view is a string the app builds, and the model is bound from ABAP
-data — including data whose type only exists at runtime. So the SALV pattern
-comes back:
+An abap2UI5 view is a string the application builds, and the model is bound
+from ABAP data — including data whose type only exists at runtime. Which means
+the old pattern comes back:
 
 ```abap
 METHOD display_any_table.
@@ -89,11 +92,13 @@ METHOD display_any_table.
 ENDMETHOD.
 ```
 
-No entity type. No CDS view. No service binding. The columns are whatever the
-table happens to have when the method runs.
+No entity type, no CDS view, no service binding. The columns are whatever the
+table happens to have when the method runs, and the UI5 binding paths are the
+component names RTTI just handed back.
 
-And you can go further than field names. RTTI reaches into the DDIC, so the
-same loop can pull the real data element label instead of the technical name:
+The DDIC is one step further along the same road. Since the component carries
+its type description, the loop can ask whether it is a dictionary type and pull
+the real field label instead of the technical name:
 
 ```abap
 IF ls_comp-type IS BOUND AND ls_comp-type->is_ddic_type( ) = abap_true.
@@ -104,61 +109,61 @@ ENDIF.
 
 Which is, of course, exactly what SALV always did.
 
-### This is not hypothetical — it ships
+## It is not hypothetical
 
-The framework itself uses the pattern. `z2ui5_cl_pop_table` is a generic table
-popup built on precisely this code, and calling it is a one-liner:
+The framework uses this pattern itself. `z2ui5_cl_pop_table` is a generic table
+popup built on precisely this code — RTTI over an arbitrary internal table,
+DDIC labels where they exist, technical names where they do not. Calling it is
+one line:
 
 ```abap
 client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab = lt_any ) ).
 ```
 
-Any table, any structure, a UI5 dialog with DDIC labels. No design-time
-contract anywhere.
+Any table, any structure, a UI5 dialog. No design-time contract anywhere in
+sight.
 
-### Where the line actually is
+## Where the line actually is
 
-I am not arguing that runtime typing beats a typed service. It does not — for a
-published API consumed by systems you do not control, the metadata contract
-*is* the value, and OData with RAP is the right tool for it.
+I want to be careful here, because there is an argument nearby that I am not
+making. Runtime typing does not beat a typed service. For an API consumed by
+systems you do not control, the metadata contract is the whole value, and OData
+with RAP is the right tool for it. A generic table has no contract, and that is
+a real cost: nothing external can rely on it, and nothing tells you when the
+underlying structure changes.
 
-The argument is narrower: a lot of ABAP work was never that. It was generic
-tooling over structures known only at runtime, and it was excellent at it. That
-capability never left the language — RTTI is still there, dynamic `SELECT` is
-still there. What disappeared was a UI technology willing to talk to it.
+The narrower point is that a great deal of ABAP work was never that kind of
+application. It was internal tooling over structures known only at runtime, and
+ABAP was unusually good at it — the language has had first-class runtime type
+information for two decades, and dynamic SQL alongside it. None of that went
+away. `cl_abap_structdescr` is still there, and it is released in ABAP Cloud.
 
-*abap2UI5 gives runtime-typed ABAP a UI5 face again. Everything you already run
-keeps running.*
+What went away was a UI technology willing to talk to it. That is the gap
+abap2UI5 happens to fill, more or less as a side effect of binding ABAP data
+directly rather than through a generated service.
+
+If you have a tool that has been an ALV grid since 2009 because there was never
+a sensible way to give it a modern UI, this is the specific thing that changed.
 
 ---
 
-**Closing question:** Where do you still use RTTI-driven tooling today — and
-what does its UI look like?
+## LinkedIn teaser post
 
-**Series line:** `abap2UI5 Know-How — #1 Not a Programming Model · #2 RTTI · #3 The Roundtrip (next)`
-
-**Hashtags:** `#ABAP #SAP #UI5 #RTTI #Fiori #OpenSource`
-
-**First comment:** link to https://github.com/abap2UI5/abap2UI5
-
-## Carousel outline (6 pages)
-
-1. **Whatever happened to RTTI?** — before Fiori, we drew screens for tables we
-   had never seen
-2. **Two statements, any table** — the `cl_salv_table=>factory( )` snippet
-3. **The OData path** — the entity type has to exist first. That is a feature,
-   and it is also a constraint
-4. **Discovered, not declared** — the RTTI loop building columns and cells
-5. **It ships** — `z2ui5_cl_pop_table=>factory( i_tab = lt_any )`, one line, any
-   structure, DDIC labels
-6. **Where the line is** — typed service for a published API; runtime typing
-   for generic tooling. Both, not either
-
-## Split option
-
-If this compresses badly on LinkedIn, it is two posts:
-
-- **2a — Whatever happened to RTTI?** the history and the SALV comparison,
-  ending on the question rather than the answer
-- **2b — A UI5 table for a structure you have never seen** the RTTI loop and
-  `z2ui5_cl_pop_table`
+> Before Fiori, we built screens for tables we had never seen.
+> `cl_salv_table=>factory( )` took any internal table and drew it — RTTI
+> answered what the columns were, the DDIC supplied the labels, and an entire
+> category of ABAP tooling was built that way.
+>
+> Then UI5 arrived, the path to a screen went through a typed OData service,
+> and the entity type had to exist first. Which is exactly right for a
+> published business service, and a dead end when the whole point of the tool
+> is that you do not know the structure yet.
+>
+> I wrote about how RTTI-driven UIs work in abap2UI5, and where the line
+> between the two approaches actually sits: [link]
+>
+> The question I keep coming back to: how many ALV-based internal tools are
+> still ALV-based purely because there was never a sensible way to give them a
+> modern UI?
+>
+> #ABAP #SAP #UI5

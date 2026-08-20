@@ -1,24 +1,31 @@
-# abap2UI5 Know-How #1 — abap2UI5 is not a Programming Model
+# abap2UI5 is not a Programming Model
 
-> **Status:** draft · **Target:** LinkedIn native post + code carousel
-> **Frame:** not a comparison with RAP. The EML snippet is the argument.
+*abap2UI5 Know-How #1*
 
-## Hook (the ~200 characters visible before "see more")
+Whenever abap2UI5 comes up in a conversation about ABAP UI development, the
+first question tends to be some form of "so, abap2UI5 or RAP?". It is a
+reasonable question to ask, and I think it is the wrong one — not because one
+of the two wins, but because the two are not the same kind of thing. RAP is a
+programming model. abap2UI5 is not. Everything interesting about how they
+relate follows from that.
 
-> RAP is a programming model. abap2UI5 is not.
->
-> That is not a criticism — it is a category difference, and it decides whether
-> the two compete or combine.
-
-## Body
+## What a programming model prescribes
 
 A programming model tells you *how* to build your application. RAP does that,
-and it does it well: a CDS data model, a behavior definition, a behavior
+and it does it thoroughly: a CDS data model, a behavior definition, a behavior
 implementation, a projection layer, a service definition, a service binding.
-Structure, lifecycle, transactional buffer, draft handling — the model
-prescribes them, and in return it gives you a great deal for free.
+Structure, lifecycle, the transactional buffer, draft handling — the model
+prescribes all of it, and in return it hands you a great deal for free. Locking,
+ETags, draft persistence, a typed OData service, and a Fiori Elements UI that
+you never wrote a line of.
 
-abap2UI5 prescribes exactly one thing. This is the entire contract:
+That is a genuinely good trade for the applications RAP was designed for. It is
+also, unavoidably, a commitment: you build the application the way the model
+says, from the database up to the UI.
+
+## What abap2UI5 prescribes
+
+One thing. This is the entire contract:
 
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -31,17 +38,25 @@ INTERFACE z2ui5_if_app PUBLIC.
 ENDINTERFACE.
 ```
 
-One interface. One method. That is the whole surface an application touches.
+One interface, one method. That is the whole surface an application touches.
+The framework calls `main( )` on every roundtrip, the app decides what to
+display and how to react, and the conversation ends there.
 
 Everything else stays yours: where the data comes from, how you persist it, how
-you authorize, how you structure your classes, whether you use a BOPF object, a
-RAP business object, a function module, or a plain `SELECT`. abap2UI5 has no
-opinion about any of it, because it is not a model — it is a UI layer.
+you authorize, how you structure your classes, whether you sit on a BOPF
+object, a RAP business object, a function module, or a plain `SELECT`. abap2UI5
+has no opinion about any of it, because it is not a model — it is a UI layer.
 
-### The interesting consequence: it composes with RAP
+That is what "minimally invasive" means concretely. There is no data model to
+declare, no service to define, no binding to create, no BSP application per
+app, and no frontend artefact to transport. You activate a class and call the
+ICF endpoint with `?app_start=zcl_my_app`.
 
-Nothing stops an abap2UI5 app from being a RAP consumer. The event handler
-calls EML like any other ABAP code would:
+## The consequence: it composes
+
+Because abap2UI5 makes no claim on the layers underneath it, nothing stops an
+abap2UI5 app from being a RAP consumer. The event handler calls EML the way any
+other ABAP code would:
 
 ```abap
 METHOD on_event.
@@ -73,56 +88,62 @@ ENDMETHOD.
 
 Your business object stays your business object. Its validations,
 determinations, authorizations and draft handling all still run — they sit
-behind EML, and EML does not care who calls it. What changed is only the thing
-in front: instead of a service binding, an OData V4 metadata document and a
-Fiori Elements annotation model, there is an ABAP class that draws a screen.
+behind EML, and EML does not care who calls it. The investment you made in the
+model is untouched.
 
-### Why that matters in practice
+What changed is only the thing in front of it. Instead of a service binding, an
+OData V4 metadata document and an annotation model, there is an ABAP class that
+draws a screen. For a Fiori Elements app that is a bad trade — you would be
+giving up generated UI to write it by hand. For a screen that Fiori Elements
+cannot express, it is the difference between having the screen and not having
+it.
 
-There is a class of screens a full programming model is expensive for. An
-internal maintenance tool. A migration cockpit. A monitoring view for a
-background job. A one-off approval screen for one department. The business
-logic is thirty lines; the ceremony of publishing it as a service is not.
+## Where the small contract earns its place
 
-For those, minimal invasiveness is the entire value: activate a class, call the
-ICF endpoint, done. No service definition, no binding, no BSP application per
-app, no transport of frontend artefacts. And when the tool grows up and
-deserves a proper service, the business logic never lived in the UI layer
-anyway — so it moves.
+There is a category of screen that a full programming model is expensive for.
+An internal maintenance tool. A migration cockpit. A monitoring view for a
+background job. A one-off approval screen for one department. A test harness
+that three people use. The business logic in these is often thirty lines; the
+ceremony of publishing them as a governed service is not.
 
-### The framing, stated plainly
+For those, the size of the contract *is* the feature. One class, no service,
+nothing to deprecate later. And when such a tool grows up and deserves a proper
+service, the business logic never lived in the UI layer to begin with — so it
+moves.
 
-This is not a "which one is better" post. RAP is the right answer for a
-published, typed, governed, transactional business service. It is genuinely
-good at that, and abap2UI5 is not trying to be a second one.
+## The part I want to be explicit about
 
-abap2UI5 is MIT-licensed and installs into any ABAP release from 7.02 to ABAP
-Cloud. It is one more option in the toolbox, next to what you already have —
-not a replacement for it.
+This is not an argument that abap2UI5 is better than RAP, and I would rather
+not have that conversation at all. RAP is the right answer for a published,
+typed, governed, transactional business service. It is very good at that, and
+abap2UI5 is not attempting to be a second one — it has no data model, no
+behavior, no transactional buffer, and no ambition to acquire them.
 
-*A framework that asks for one interface method cannot take much away from you.
-That is the point.*
+The claim is narrower and, I think, more useful: because abap2UI5 asks for one
+interface method and nothing else, it cannot take anything away from the
+architecture you already have. It sits next to RAP, on top of RAP, or nowhere
+near RAP, depending on the screen. It is MIT-licensed and installs on any ABAP
+release from 7.02 up to ABAP Cloud, so trying it costs an installation and a
+class.
+
+A framework that asks for one method cannot take much away from you. That is
+the point.
 
 ---
 
-**Closing question:** Where would a screen be worth building if it cost you one
-class and no service?
+## LinkedIn teaser post
 
-**Series line:** `abap2UI5 Know-How — #1 Not a Programming Model · #2 RTTI (next)`
-
-**Hashtags:** `#ABAP #SAP #UI5 #Fiori #RAP #OpenSource`
-
-**First comment:** link to https://github.com/abap2UI5/abap2UI5
-
-## Carousel outline (6 pages)
-
-1. **abap2UI5 is not a programming model** — and that is the point
-2. **What a programming model prescribes** — CDS, BDEF, projection, service
-   definition, service binding
-3. **What abap2UI5 prescribes** — the `z2ui5_if_app` interface, in full, as one
-   slide. The whole punchline is that it fits
-4. **So it composes** — the EML snippet
-5. **Where it earns its place** — maintenance tools, migration cockpits,
-   monitoring, one-off approvals
-6. **Not a comparison** — RAP for published services, abap2UI5 for the screen in
-   front. MIT, 7.02 to ABAP Cloud
+> The first question people ask about abap2UI5 is usually "abap2UI5 or RAP?".
+> I think that is the wrong question — not because one of them wins, but
+> because they are not the same kind of thing. RAP is a programming model:
+> it tells you how to build the application, from the data model up. abap2UI5
+> asks for one interface with one method, and has no opinion about anything
+> else. Which is why an abap2UI5 app can quite happily call your RAP business
+> object through EML and leave it exactly as it is.
+>
+> I wrote up what that difference means in practice, with code: [link]
+>
+> Curious about the other direction though — has anyone here put an abap2UI5
+> screen in front of an existing RAP BO, and where did it get awkward?
+>
+> #ABAP #SAP #UI5
