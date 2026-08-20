@@ -15,18 +15,18 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all six steps
+npm run check        # what CI runs, all five steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but six things in it
-are decidable, and `npm run check` decides all six before a merge — the prose
+A documentation repository has no compiler for its prose, but five things in it
+are decidable, and `npm run check` decides all five before a merge — the prose
 builds (`docs:build`), the fenced ABAP examples compile and the views they
-build name real UI5 API (`check:examples`), the sample links and the sample
-counts still match the sample repositories (`check:samples`, `check:counts`),
-the release number in the nav bar still matches the framework
-(`check:version`), and the catalogue parser still parses (`test`).
+build name real UI5 API (`check:examples`), the sample links still match the
+sample repositories (`check:samples`), the release number in the nav bar still
+matches the framework (`check:version`), and the catalogue parser still parses
+(`test`).
 `.github/workflows/check.yml` runs the same list in the same order, so a green
 `npm run check` locally is a green pull request — and `deploy.yml` runs it
 again before it publishes, so the site is only ever built from a tree that
@@ -34,7 +34,7 @@ passed. Several of these go stale without anybody touching this repository (a
 release is published elsewhere, a sample class is renamed elsewhere), which is
 why the deploy re-runs them rather than trusting the merge.
 
-**[AGENTS.md](AGENTS.md) describes each of the six**, what a failure means and
+**[AGENTS.md](AGENTS.md) describes each of the five**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
 

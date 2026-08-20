@@ -138,8 +138,8 @@ export default defineConfig({
         // sample catalogues on top of them, which meant nine entries in two
         // groups and a reader scanning for "where is the code" reading past
         // half of it first. The catalogues are a reading destination and are
-        // linked where a reader looks for one — /resources/samples in the
-        // sidebar, and the cookbook chapters; this menu answers the other
+        // linked where a reader looks for one — the button under the home
+        // page grid, and the cookbook chapters; this menu answers the other
         // question, which repository to clone.
         text: "Links",
         items: [
@@ -539,13 +539,12 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "References", link: "/resources/references" },
-          // Several hundred working apps in three repositories, and until this
-          // page the only way to find out which one to open was to know all
-          // three existed. The cookbook links individual samples per chapter;
-          // this says which CATALOGUE answers which question. The figures live
-          // on the page itself, where check:counts verifies them against the
-          // catalogues - do not repeat one here, where nothing would.
-          { text: "Sample Catalogues", link: "/resources/samples" },
+          // No "Sample Catalogues" entry here any more. A page that only
+          // described the three catalogues put a stop between the reader and
+          // the corpus, and had to be kept true about counts and facets it
+          // did not own. The catalogue pages introduce themselves and link
+          // one another; the home page opens the first of them directly, and
+          // the cookbook links individual samples per chapter.
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release Notes", link: "/resources/changelog" },
           { text: "Deprecations", link: "/resources/deprecations" },
