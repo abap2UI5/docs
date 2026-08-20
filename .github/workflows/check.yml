@@ -1,14 +1,19 @@
 # What a pull request against this documentation gets checked for.
 #
-# There was nothing before this: deploy.yml runs on push to main, so a broken
-# build or a broken example reached the site and was found there. A docs
+# There was nothing before this: deploy.yml published without checking, so a
+# broken build or a broken example reached the site and was found there. A docs
 # repository has no compiler for its prose - but the fenced ABAP is code, and
 # the site build is a build, so both can be decided before a merge.
+#
+# deploy.yml now runs this same list before it publishes, so this file is the
+# pull-request half of one gate rather than a second opinion nothing acted on.
 name: check
 
 on:
-  push:
-    branches: [main]
+  # Pull requests only. The same list runs on main from inside deploy.yml, in
+  # the job that publishes - which is what makes a green deploy mean something.
+  # Running it here as well would be the same work twice, and the version of it
+  # that mattered was never the one connected to the deploy.
   pull_request:
 
 concurrency:

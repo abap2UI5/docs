@@ -1,5 +1,16 @@
-# Sample workflow for building and deploying a VitePress site to GitHub Pages
+# Build and deploy the VitePress site to GitHub Pages.
 #
+# This used to build and publish without running a single check. check.yml ran
+# the six gates in parallel on the same push, which looks equivalent and is
+# not: nothing connected the two, so a red check and a green deploy simply both
+# happened, and the site went out with whatever the gates had objected to. The
+# gates are the ones that go stale WITHOUT anybody touching this repository -
+# a release is published elsewhere, a sample class is renamed elsewhere - so
+# "it was green when it merged" is not the same claim as "it is true now".
+#
+# So the gates run here, in the job that publishes, and the build only follows
+# a green one. check.yml keeps them for pull requests; it no longer runs on
+# main, because this is that run.
 name: Deploy VitePress site to Pages
 
 on:
@@ -46,8 +57,6 @@ jobs:
           ref: main
           path: .samples
           fetch-depth: 1
-          sparse-checkout: SAMPLES.md
-          sparse-checkout-cone-mode: false
       - name: Sample catalogues (controls)
         continue-on-error: true
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -55,6 +64,19 @@ jobs:
           repository: abap2UI5/samples-controls
           ref: main
           path: .samples-controls
+          fetch-depth: 1
+          sparse-checkout: SAMPLES.md
+          sparse-checkout-cone-mode: false
+      # samples-stack was missing here while generate-llms.mjs counts three
+      # catalogues and check:counts holds four figures against them. The deploy
+      # therefore published a total it had counted two thirds of.
+      - name: Sample catalogues (stack)
+        continue-on-error: true
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: abap2UI5/samples-stack
+          ref: main
+          path: .samples-stack
           fetch-depth: 1
           sparse-checkout: SAMPLES.md
           sparse-checkout-cone-mode: false
@@ -67,9 +89,32 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Install dependencies
-        run: npm ci # or pnpm install / yarn install / bun install
+        run: npm ci
+
+      # The same list check.yml runs for a pull request, in the same order, and
+      # the reason each one is here is written above it there. `!cancelled()`
+      # so one failure still reports the others: a deploy that is going to be
+      # refused should say everything that is wrong with it in one run.
+      - name: unit tests
+        run: npm test
+      - name: release version
+        if: ${{ !cancelled() }}
+        run: npm run check:version
+      - name: ABAP examples
+        if: ${{ !cancelled() }}
+        run: npm run check:examples
+      - name: sample links
+        if: ${{ !cancelled() }}
+        run: npm run check:samples
+      - name: corpus counts
+        if: ${{ !cancelled() }}
+        run: npm run check:counts
+
+      # …and only then the thing that gets published. `docs:build` is itself
+      # one of the gates - a page that does not build is a page nobody can
+      # read - so it stays a build step rather than being listed twice.
       - name: Build with VitePress
-        run: npm run docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
+        run: npm run docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
