@@ -32,6 +32,7 @@ ENDCLASS.
 | [Bootstrapping](/configuration/setup/ui5_bootstrapping)           | `src`                        | `src` of the bootstrap script (UI5 version + delivery channel) |
 | [Bootstrap Attributes](/configuration/setup/bootstrap_attributes) | `t_add_config`               | Additional `data-sap-ui-*` attributes |
 | [Style / CSS](/configuration/setup/style_css)                     | `styles_css`                 | Inline `<style>` block in the page `<head>` |
+| [Favicon](/configuration/setup/favicon)                           | `favicon`                    | `<link rel="icon">` in the page `<head>` — the tab icon |
 | [Language](/configuration/setup/logon_language)                   | URL parameter `sap-language` | SAP session language + UI5 locale |
 
 Security-relevant headers and the Content Security Policy meta tag are configured separately — see [Security](/configuration/security).
