@@ -1,0 +1,67 @@
+name: release-freshness
+
+# check:version already fails when this site names a release that is not the
+# newest one. It runs on pull requests and on pushes to main, which answers
+# "did THIS change get the number right" - and not the question that actually
+# goes wrong: a release is published in another repository and nothing here
+# moves, so the site is stale from the moment the tag appears until somebody
+# happens to open a pull request.
+#
+# That is what the gate was written for. On 2026-08-14 abap2UI5 1.143.0 was
+# published at 12:20 and the site said 1.142.0 for the rest of the day, with
+# the deprecations page telling readers that z2ui5_cl_ui5_view_builder
+# "arrives with the next release" hours after it had shipped. A quiet week
+# without pull requests would have made that a quiet week of wrong answers.
+#
+# So: weekly, and an issue rather than a red badge on a branch nobody pushed.
+
+on:
+  schedule:
+    - cron: '31 6 * * 1'   # Mondays 06:31 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+
+      # No install: check-version reads three files and one API, and a
+      # freshness check that first spends two minutes on npm ci is a freshness
+      # check people turn off.
+      - name: Does the site still name the release that exists
+        run: node scripts/check-version.mjs | tee version.txt
+
+      - name: Open or update the stale-release issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -e
+          title="the documentation names a release that is no longer the newest"
+          body="scripts/check-version.mjs found the site naming a release other than the newest published one: ${RUN_URL}
+
+          \`\`\`
+          $(cat version.txt 2>/dev/null || echo 'see the run log')
+          \`\`\`
+
+          The number lives in three hand-maintained places and no tool moves it. Change them together — and read the prose around them: a sentence like \"arrives with the next release\" goes stale with the number.
+
+          This issue is updated by each stale weekly run; close it when the run is green again."
+          existing=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "Still stale: ${RUN_URL}"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi

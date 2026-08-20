@@ -35,6 +35,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readSites } from './lib/release.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const API = 'https://api.github.com/repos/abap2UI5/abap2UI5/releases/latest';
@@ -49,53 +50,7 @@ const API = 'https://api.github.com/repos/abap2UI5/abap2UI5/releases/latest';
  * against the real API failed on a repository that had just been corrected. */
 const versionOf = (tag) => tag.replace(/-\w+$/, '');
 
-/** Where the version is written, and how to find it in each file. */
-const SITES = [
-  {
-    file: 'docs/.vitepress/config.mjs',
-    what: 'the version in the nav bar',
-    re: /text:\s*"(\d+\.\d+\.\d+)"/,
-  },
-  {
-    file: 'docs/resources/deprecations.md',
-    what: 'the "Version status" sentence',
-    re: /The released version is \*\*(\d+\.\d+\.\d+)\*\*/,
-  },
-  {
-    file: 'docs/resources/changelog.md',
-    what: 'the newest release heading',
-    /* Any heading level, because the LEVEL is not what this gate is about and
-     * pinning it made the gate fail for the wrong reason: closing up the
-     * heading-level gaps across the site turned these from `###` into `##`,
-     * and a check on the release NUMBER went red over a `#`. It reported that
-     * honestly - "the file changed shape, fix the pattern" - rather than
-     * silently matching nothing, which is the failure mode it was written to
-     * avoid. Still: a gate that fires on a change it does not care about is a
-     * gate people learn to route around. */
-    re: /^#{2,4}\s+(\d+\.\d+\.\d+)\s*$/m,
-  },
-];
-
-const problems = [];
-const found = [];
-
-for (const site of SITES) {
-  const full = path.join(ROOT, site.file);
-  if (!fs.existsSync(full)) {
-    problems.push(`${site.file}: gone — this gate names it as one of the places the version lives`);
-    continue;
-  }
-  const m = site.re.exec(fs.readFileSync(full, 'utf8'));
-  if (!m) {
-    problems.push(
-      `${site.file}: no version found where ${site.what} should be\n`
-      + '    the file changed shape — fix the pattern in scripts/check-version.mjs,\n'
-      + '    or this gate silently stops checking that place',
-    );
-    continue;
-  }
-  found.push({ ...site, version: m[1] });
-}
+const { found, problems } = readSites(ROOT);
 
 /* Half the check needs no network: three places naming three different
  * versions is wrong whatever the tag says. */
