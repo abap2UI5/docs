@@ -30,20 +30,37 @@ Language is English — the abap2UI5 community is international.
 
 ## The frame
 
-The series exists to show that **abap2UI5 extends what you already run**. It is
-not a competitor to RAP, and no draft may read as one. Two rules:
+The series exists to explain **a problem and how abap2UI5 addresses it**. It is
+not a comparison, and the way to keep it from becoming one is not to soften the
+comparison but to leave it out. Three rules, and they are load-bearing:
 
-1. **No comparison, and say so in the article.** State plainly that this is not
-   a "which is better" argument, and name what the other approach is genuinely
-   good at. Better still: show the two composing — article 1 does this with an
-   EML call from an abap2UI5 event handler, which is a stronger argument than
-   any paragraph, because it is code.
-2. **Free and MIT, mentioned once, in passing.** Never as a pitch.
+1. **Do not name other frameworks.** Neither to criticise them nor to be fair
+   to them — a paragraph defending RAP is still a paragraph about RAP, and it
+   invites exactly the argument the series is trying not to have. Where the
+   incumbent approach has to appear at all, describe the *mechanism* rather
+   than the product: "the standard path goes through a typed service", not a
+   brand name. Both current drafts name RAP zero times.
+2. **No first person.** The articles are written impersonally — no "I think",
+   no "the point I want to make". This holds for the teaser posts too. An
+   argument that stands on its own does not need an author vouching for it, and
+   the same text then works as documentation later.
+3. **State the limits in the article.** Article 1 says abap2UI5 has no data
+   model, no transactional buffer and no generated UI; article 2 says a generic
+   RTTI table has no contract and spells out what that costs. Naming the cost
+   is what makes the rest credible, and it does the work a comparison would
+   have done without mentioning anyone.
 
-Both drafts also state their own limits out loud (article 1: abap2UI5 has no
-data model and no transactional buffer; article 2: a generic table has no
-contract, and that is a real cost). Keep that habit — it is what makes the rest
-credible.
+**Free and MIT** gets mentioned once, in passing, never as a pitch.
+
+### One open tension
+
+The title of article 1 frames by negation — "is not a programming model" — and
+negation implies a thing being negated even when nothing is named. The body no
+longer works that way: it opens on the problem, and "programming model" appears
+once as a category rather than as a competitor. If the title should follow the
+body, alternatives are *"One Interface, and Nothing Else"* or *"The Cost of a
+Screen"*. Keeping the current title is defensible; it is a statement about
+abap2UI5's own shape, and it is memorable.
 
 ## Articles
 

@@ -2,30 +2,28 @@
 
 *abap2UI5 Know-How #1*
 
-Whenever abap2UI5 comes up in a conversation about ABAP UI development, the
-first question tends to be some form of "so, abap2UI5 or RAP?". It is a
-reasonable question to ask, and I think it is the wrong one — not because one
-of the two wins, but because the two are not the same kind of thing. RAP is a
-programming model. abap2UI5 is not. Everything interesting about how they
-relate follows from that.
+An ABAP team needs a screen. Not an application — a screen. A maintenance view
+for a customising table nobody wants to explain in SM30. A cockpit that shows
+what last night's job actually did. An approval step for one department. A test
+harness for three people.
 
-## What a programming model prescribes
+The business logic behind such a screen is often thirty lines. The cost of
+putting a user interface in front of those thirty lines is not proportional to
+them, and it does not scale down: a data model, a service, a binding, frontend
+artefacts, a deployment, and something that now has to be maintained and
+eventually deprecated. So the screen does not get built, or it gets built as a
+selection screen and an ALV grid, and everyone agrees to stop thinking about
+it.
 
-A programming model tells you *how* to build your application. RAP does that,
-and it does it thoroughly: a CDS data model, a behavior definition, a behavior
-implementation, a projection layer, a service definition, a service binding.
-Structure, lifecycle, the transactional buffer, draft handling — the model
-prescribes all of it, and in return it hands you a great deal for free. Locking,
-ETags, draft persistence, a typed OData service, and a Fiori Elements UI that
-you never wrote a line of.
+abap2UI5 addresses that gap, and the way it does so is worth stating precisely,
+because it is unusual: it does not add a way to build applications. It adds a
+way to draw a screen from ABAP, and then gets out of the way.
 
-That is a genuinely good trade for the applications RAP was designed for. It is
-also, unavoidably, a commitment: you build the application the way the model
-says, from the database up to the UI.
+## The whole contract
 
-## What abap2UI5 prescribes
-
-One thing. This is the entire contract:
+A programming model tells an application how to be built — its structure, its
+lifecycle, its layers, its transactional behaviour. abap2UI5 does none of that.
+This is the entire contract it asks an application to fulfil:
 
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -38,25 +36,23 @@ INTERFACE z2ui5_if_app PUBLIC.
 ENDINTERFACE.
 ```
 
-One interface, one method. That is the whole surface an application touches.
-The framework calls `main( )` on every roundtrip, the app decides what to
-display and how to react, and the conversation ends there.
+One interface, one method. The framework calls `main( )` on every roundtrip,
+the application decides what to display and how to react, and the conversation
+ends there. There is nothing else to implement, extend, register or configure.
 
-Everything else stays yours: where the data comes from, how you persist it, how
-you authorize, how you structure your classes, whether you sit on a BOPF
-object, a RAP business object, a function module, or a plain `SELECT`. abap2UI5
-has no opinion about any of it, because it is not a model — it is a UI layer.
+What is equally important is the list of things that are *not* in that
+contract. There is no data model to declare, no service to define, no binding
+to create, no annotation model, no BSP application per app, and no frontend
+artefact to transport. Activating the class and calling the ICF endpoint with
+`?app_start=zcl_my_app` is the deployment.
 
-That is what "minimally invasive" means concretely. There is no data model to
-declare, no service to define, no binding to create, no BSP application per
-app, and no frontend artefact to transport. You activate a class and call the
-ICF endpoint with `?app_start=zcl_my_app`.
+## Everything below the screen is untouched
 
-## The consequence: it composes
-
-Because abap2UI5 makes no claim on the layers underneath it, nothing stops an
-abap2UI5 app from being a RAP consumer. The event handler calls EML the way any
-other ABAP code would:
+Because the contract covers only the screen, an abap2UI5 application makes no
+claim on where its data comes from. It can run a `SELECT`, call a function
+module, use a class that has existed since 2011, or drive a modern business
+object. The event handler is ordinary ABAP, so it calls whatever the system
+already offers:
 
 ```abap
 METHOD on_event.
@@ -86,64 +82,62 @@ METHOD on_event.
 ENDMETHOD.
 ```
 
-Your business object stays your business object. Its validations,
-determinations, authorizations and draft handling all still run — they sit
-behind EML, and EML does not care who calls it. The investment you made in the
-model is untouched.
+The business object in that snippet is untouched by abap2UI5. Its validations,
+determinations, authorizations and draft handling all still run, because they
+sit behind the call and the call does not care who makes it. The same is true
+of a function module, a BAdI, or thirty lines in a local class: abap2UI5 sees a
+screen and an event, and the layers underneath keep whatever design they
+already had.
 
-What changed is only the thing in front of it. Instead of a service binding, an
-OData V4 metadata document and an annotation model, there is an ABAP class that
-draws a screen. For a Fiori Elements app that is a bad trade — you would be
-giving up generated UI to write it by hand. For a screen that Fiori Elements
-cannot express, it is the difference between having the screen and not having
-it.
+That is what "minimally invasive" means in practice. A framework that asks for
+one method cannot reorganise an architecture, because it never learns enough
+about it to try.
 
-## Where the small contract earns its place
+## What the small contract buys
 
-There is a category of screen that a full programming model is expensive for.
-An internal maintenance tool. A migration cockpit. A monitoring view for a
-background job. A one-off approval screen for one department. A test harness
-that three people use. The business logic in these is often thirty lines; the
-ceremony of publishing them as a governed service is not.
+The obvious gain is the screens that were previously not worth building. One
+class, no service, nothing published, nothing to deprecate — the cost finally
+scales down to match a thirty-line problem.
 
-For those, the size of the contract *is* the feature. One class, no service,
-nothing to deprecate later. And when such a tool grows up and deserves a proper
-service, the business logic never lived in the UI layer to begin with — so it
-moves.
+The less obvious gain is what happens when such a tool grows up. Because
+abap2UI5 never asked for the business logic, the business logic was never in
+the UI layer. If the maintenance view turns out to be a real application that
+deserves a governed service, the part worth keeping is already sitting where it
+belongs, behind an interface, ready to be called by something else.
 
-## The part I want to be explicit about
+And because the framework is MIT-licensed and installs on any ABAP release from
+7.02 up to ABAP Cloud, finding out whether it fits costs an installation and a
+class rather than a project.
 
-This is not an argument that abap2UI5 is better than RAP, and I would rather
-not have that conversation at all. RAP is the right answer for a published,
-typed, governed, transactional business service. It is very good at that, and
-abap2UI5 is not attempting to be a second one — it has no data model, no
-behavior, no transactional buffer, and no ambition to acquire them.
+## What it is not
 
-The claim is narrower and, I think, more useful: because abap2UI5 asks for one
-interface method and nothing else, it cannot take anything away from the
-architecture you already have. It sits next to RAP, on top of RAP, or nowhere
-near RAP, depending on the screen. It is MIT-licensed and installs on any ABAP
-release from 7.02 up to ABAP Cloud, so trying it costs an installation and a
-class.
+abap2UI5 has no data model, no behavior definition, no transactional buffer,
+and no generated user interface. It will not derive a screen from annotations,
+it will not manage drafts, and it will not publish anything a foreign system
+can consume. Applications that need those things need something that provides
+them, and abap2UI5 is not a candidate — it has never been trying to be one.
 
-A framework that asks for one method cannot take much away from you. That is
-the point.
+What it is, is a way for ABAP code to put a UI5 screen in front of itself
+without first becoming a different kind of application. For the screens
+described at the top of this article, that turns out to be the only thing that
+was missing.
 
 ---
 
 ## LinkedIn teaser post
 
-> The first question people ask about abap2UI5 is usually "abap2UI5 or RAP?".
-> I think that is the wrong question — not because one of them wins, but
-> because they are not the same kind of thing. RAP is a programming model:
-> it tells you how to build the application, from the data model up. abap2UI5
-> asks for one interface with one method, and has no opinion about anything
-> else. Which is why an abap2UI5 app can quite happily call your RAP business
-> object through EML and leave it exactly as it is.
+> An ABAP team needs a screen. Not an application — a maintenance view, a job
+> monitor, an approval step for one department. The logic behind it is thirty
+> lines; the cost of putting a UI in front of those thirty lines is not, and it
+> does not scale down. So the screen never gets built.
 >
-> I wrote up what that difference means in practice, with code: [link]
+> abap2UI5 asks an application for exactly one interface with one method, and
+> makes no claim on anything underneath it — the data access, the business
+> logic and the persistence keep whatever design they already had.
 >
-> Curious about the other direction though — has anyone here put an abap2UI5
-> screen in front of an existing RAP BO, and where did it get awkward?
+> New article on what that small contract buys, with code: [link]
+>
+> Which screen in your system has stayed a selection screen and an ALV grid
+> purely because a proper UI was never worth the effort?
 >
 > #ABAP #SAP #UI5
