@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Sample Catalogues
 
-**614 working apps, in three repositories.** Every one is a single ABAP class
+**612 working apps, in three repositories.** Every one is a single ABAP class
 that compiles, renders, and is downported to three releases — so a sample is
 never a fragment you have to trust, it is an app you can pull and run.
 
@@ -12,7 +12,7 @@ time than reading this page.
 
 | | | you are asking |
 |---|--:|---|
-| [**Learn**](https://abap2ui5.github.io/samples/) — abap2UI5/samples, [catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) | 152 | *“Where do I start?”* — value help, navigation between apps, trees, tables, timers, file up- and download. Runs on a bare abap2UI5 install. |
+| [**Learn**](https://abap2ui5.github.io/samples/) — abap2UI5/samples, [catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md) | 150 | *“Where do I start?”* — value help, navigation between apps, trees, tables, timers, file up- and download. Runs on a bare abap2UI5 install. |
 | [**Controls**](https://abap2ui5.github.io/samples-controls/) — abap2UI5/samples-controls, [catalogue](https://github.com/abap2UI5/samples-controls/blob/main/SAMPLES.md) | 430 | *“Which control does what?”* — the UI5 demo kit, rebuilt control by control, grouped by library. |
 | [**Stack**](https://abap2ui5.github.io/samples-stack/) — abap2UI5/samples-stack, [catalogue](https://github.com/abap2UI5/samples-stack/blob/main/SAMPLES.md) | 32 | *“Will my system run it?”* — OData, RAP, APC, MIME, the Fiori Launchpad. Each needs something the framework alone does not give you. |
 
@@ -40,7 +40,7 @@ disagree:
 The pages are the better answer to *"is there a sample for X"*, because they
 filter; the catalogues are the better answer to *"show me everything"*. The
 page for **Learn** deliberately shows only the portable subset that survives
-every build, so it lists fewer apps than the 152 the catalogue counts.
+every build, so it lists fewer apps than the 150 the catalogue counts.
 
 ## The pages have the same shape on purpose
 
