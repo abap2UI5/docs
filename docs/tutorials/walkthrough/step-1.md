@@ -1,10 +1,10 @@
 ---
 outline: [2, 4]
-description: The smallest possible abap2UI5 app — one class, one method, one message.
+description: The smallest possible abap2UI5 app — one class implementing z2ui5_if_app, and the one method the framework calls.
 samples:
   - z2ui5_cl_smp_app_493
 ---
-# Step 1: Hello World
+# Step 1: The App Class
 
 Every abap2UI5 app is one ABAP class implementing the interface
 `z2ui5_if_app`. That interface has a single method, `main`, and the framework

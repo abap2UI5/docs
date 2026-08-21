@@ -107,7 +107,7 @@ const NEEDS_MORE_THAN_A_BROWSER = [
  * ABAP with its comments taken out and its text blanked, so a rule can only be
  * tripped by code. Both halves were put here by a false positive:
  *
- *   - `get_started/full_example.md` shows the SELECT a reader would write, as a
+ *   - `tutorials/walkthrough/step-10.md` shows the SELECT a reader would write, as a
  *     comment, above the demo data it uses instead — and it runs perfectly
  *     well.
  *   - `clipboard.md` says `mv_text = \`Hello from abap2UI5\``, and a rule
