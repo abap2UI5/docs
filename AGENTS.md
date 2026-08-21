@@ -21,7 +21,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the release pin, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
-| `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue's rows, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt`; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
+| `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 
 ## Build & verify — run before every commit
 
@@ -57,10 +57,23 @@ There used to be one more, `check:counts`, holding four figures on a
 gone — the home page opens [the samples page](https://abap2ui5.github.io/samples/)
 directly and each catalogue introduces itself — and with it the only prose
 copy of a number this repository does not own. `generate-llms.mjs` still counts
-the three catalogues into `llms.txt`, which is why CI sparse-checks out
+the sample catalogues into `llms.txt`, which is why CI sparse-checks out
 `SAMPLES.md` from `samples-controls` and `samples-stack`; both are
 `continue-on-error`, because an unreachable repository must cost a figure and
 not the run, and a generated line can simply leave the number out.
+
+A count comes down a chain, first answer wins, all of it in
+`scripts/lib/catalogue.mjs` and pinned by `test/catalogue.test.mjs`: a sibling
+checkout's `catalogue.json` (the machine-readable catalogue each sample
+repository commits at its root), then the checkout's `SAMPLES.md` through the
+same parser the sample links go through, then the `catalogue.json` the
+repository publishes on its default branch, fetched — then no number. The two
+`catalogue.json` steps read the same file, so a build with a checkout and a
+build without one publish the same figure; and every step **counts entries**
+rather than repeating a `counts` field, so no path can hand `llms.txt` a claim
+instead of a count. The fetch is allowed to fail — 404 before the file is
+committed over there, timeout, no network — and every failure costs the
+figure, never the build.
 
 ## What the site publishes for machines
 

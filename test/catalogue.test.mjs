@@ -22,7 +22,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { parseCatalogue, countCatalogue } from '../scripts/lib/catalogue.mjs';
+import { parseCatalogue, countCatalogue, countEntries } from '../scripts/lib/catalogue.mjs';
 
 const ROWS = [
   '## Basics',
@@ -70,21 +70,125 @@ test('a page link survives a block this parser has never seen', () => {
 });
 
 /* The corpus sizes in the generated llms.txt are counted rather than typed,
- * and the deploy workflow may fail to reach a catalogue. Both outcomes are
- * legitimate; what must never happen is a number that is not the count. */
-test('a corpus size is counted where the catalogue is, and absent where it is not', () => {
+ * and a build may fail to reach a catalogue. Both outcomes are legitimate;
+ * what must never happen is a number that is not the count.
+ *
+ * The chain a count comes down (see countCatalogue): a checkout's
+ * catalogue.json, then its SAMPLES.md, then the catalogue.json the repository
+ * publishes on its default branch, then no number. The tests below hold one
+ * fixture against every link, and against the two ways the last link is
+ * allowed to fail: a 404 and no network at all. None of them may ever touch
+ * the real network - every one passes its own fetchFn. */
+
+/* catalogue.json, one fixture per repository shape. These mirror the real
+ * files: the entries live under a different key in each repository
+ * (`samples`, `ports`, `samples` again), other top-level arrays are not
+ * entries (`family`, `packages`), and each `counts` field DELIBERATELY LIES
+ * here - the parser must count the entries, never repeat a claim about them. */
+const JSON_SAMPLES = JSON.stringify({
+  repository: 'abap2UI5/samples',
+  family: [{ repository: 'abap2UI5/samples', classPrefix: 'z2ui5_cl_smp_app_' }],
+  counts: { samples: 999, categories: 23 },
+  samples: [
+    { class: 'Z2UI5_CL_SMP_APP_493', file: 'src/01/z2ui5_cl_smp_app_493.clas.abap', title: 'Hello World' },
+    { class: 'Z2UI5_CL_SMP_APP_494', file: 'src/01/z2ui5_cl_smp_app_494.clas.abap', title: 'Data Binding' },
+  ],
+});
+const JSON_CONTROLS = JSON.stringify({
+  repo: 'abap2UI5/samples-controls',
+  counts: { entries: 999, byStatus: { checked: 61 } },
+  ports: [
+    { class: 'Z2UI5_CL_SMPC_APP_001', file: 'src/01/z2ui5_cl_smpc_app_001.clas.abap', deviations: [] },
+    { class: 'Z2UI5_CL_SMPC_APP_002', file: 'src/01/z2ui5_cl_smpc_app_002.clas.abap', deviations: [] },
+    { class: 'Z2UI5_CL_SMPC_APP_003', file: 'src/01/z2ui5_cl_smpc_app_003.clas.abap', deviations: [] },
+  ],
+});
+const JSON_STACK = JSON.stringify({
+  repo: 'abap2UI5/samples-stack',
+  packages: [{ package: 'src/odata_v2', technology: 'OData' }],
+  samples: [
+    { class: 'Z2UI5_CL_SMPS_APP_100', path: 'src/odata_v2/z2ui5_cl_smps_app_100.clas.abap' },
+  ],
+});
+
+// a fetchFn is a fixture too: what it returns, and whether it was asked at all
+const served = (body) => async () => ({ ok: true, status: 200, text: async () => body });
+const missing = async () => ({ ok: false, status: 404, text: async () => 'Not Found' });
+const offline = async () => { throw new TypeError('fetch failed'); };
+const forbidden = async (url) => { throw new Error(`network reached for ${url} although a checkout was at hand`); };
+
+const scratch = () => {
   // an explicit checkout wins over the sibling directories, and a contributor
-  // who has one set would otherwise be told the wrong number by this test
+  // who has one set would otherwise be told the wrong number by these tests
   delete process.env.SAMPLES_HOME;
   delete process.env.SAMPLES_CONTROLS_HOME;
+  delete process.env.SAMPLES_STACK_HOME;
+  return fs.mkdtempSync(path.join(os.tmpdir(), 'a2ui5-catalogue-'));
+};
 
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'a2ui5-catalogue-'));
+test('a catalogue.json is counted entry by entry, and its counts field is never believed', () => {
+  assert.equal(countEntries(JSON.parse(JSON_SAMPLES)), 2);
+  assert.equal(countEntries(JSON.parse(JSON_CONTROLS)), 3);
+  assert.equal(countEntries(JSON.parse(JSON_STACK)), 1);
+  // no entries in hand and a counts field full of claims: the count is 0,
+  // which the chain treats as "this file answered nothing", not as a figure
+  assert.equal(countEntries({ counts: { samples: 40 }, samples: [] }), 0);
+  assert.equal(countEntries({ samples: [{ class: '', file: 'x' }, { class: 'Z', file: '' }, { title: 'no pointer' }] }), 0);
+});
+
+test('a corpus size is counted where the checkout is, without asking the network', async (t) => {
+  const dir = scratch();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   fs.mkdirSync(path.join(dir, '.samples'));
   fs.writeFileSync(path.join(dir, '.samples', 'SAMPLES.md'), ROWS);
 
-  assert.equal(countCatalogue('samples', dir), 5);
-  // no checkout at all - the caller leaves the number out rather than guessing
-  assert.equal(countCatalogue('samples-controls', dir), null);
+  assert.deepEqual(
+    await countCatalogue('samples', dir, { fetchFn: forbidden }),
+    { count: 5, source: 'checkout SAMPLES.md' },
+  );
+});
 
-  fs.rmSync(dir, { recursive: true, force: true });
+test("a checkout's own catalogue.json outranks the SAMPLES.md parse", async (t) => {
+  /* Deliberate, and the reason the checkout path and the fetch path cannot
+   * disagree: both read the file the repository generates about itself. In
+   * abap2UI5/samples the two sources really differ - SAMPLES.md also lists
+   * the src/00 system area and the helpers, catalogue.json scopes itself to
+   * the portable src/01 set - so this ordering IS the published figure. */
+  const dir = scratch();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  fs.mkdirSync(path.join(dir, '.samples'));
+  fs.writeFileSync(path.join(dir, '.samples', 'SAMPLES.md'), ROWS); // 5 rows
+  fs.writeFileSync(path.join(dir, '.samples', 'catalogue.json'), JSON_SAMPLES); // 2 entries
+
+  assert.deepEqual(
+    await countCatalogue('samples', dir, { fetchFn: forbidden }),
+    { count: 2, source: 'checkout catalogue.json' },
+  );
+});
+
+test('no checkout: the published catalogue.json is fetched and counted the same way', async (t) => {
+  const dir = scratch();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  assert.deepEqual(
+    await countCatalogue('samples-controls', dir, { fetchFn: served(JSON_CONTROLS) }),
+    { count: 3, source: 'published catalogue.json' },
+  );
+  assert.deepEqual(
+    await countCatalogue('samples-stack', dir, { fetchFn: served(JSON_STACK) }),
+    { count: 1, source: 'published catalogue.json' },
+  );
+});
+
+test('an unreachable published catalogue costs the figure, never the build', async (t) => {
+  const dir = scratch();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  // the file is not committed yet, or the repository moved: 404
+  assert.equal(await countCatalogue('samples', dir, { fetchFn: missing }), null);
+  // no network at all - the shape every deploy had before the fallback
+  assert.equal(await countCatalogue('samples', dir, { fetchFn: offline }), null);
+  // a half-written or wrong file must count for nothing, not throw
+  assert.equal(await countCatalogue('samples', dir, { fetchFn: served('not json {') }), null);
+  assert.equal(await countCatalogue('samples', dir, { fetchFn: served('{"counts":{"samples":97}}') }), null);
 });
