@@ -58,6 +58,7 @@ tell you what is coming if you do not.
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
 | `cs_config-title` | `cs_event-set_title` | *next release* |
+| `z2ui5_if_types=>…` | the same type on the object that uses it | *next release* |
 
 ## Obsolete: still compiles
 
@@ -382,6 +383,36 @@ simply has no effect. The generated page carries a constant
 any app can speak. Inside a Fiori Launchpad shell the title is
 `cs_event-set_title_launchpad`, unchanged. See
 [Title](/cookbook/browser_interaction/title).
+
+### `z2ui5_if_types` → the object that uses the type
+
+`z2ui5_if_types` was a shared interface holding the types the API passes
+around. Each of them now sits on the object whose signature is the reason it
+exists, so the type you need is declared where you already are:
+
+| What you have | What to write |
+|---|---|
+| `z2ui5_if_types=>ty_s_get` | `z2ui5_if_client=>ty_s_get` — the return type of `get( )` |
+| `z2ui5_if_types=>ty_s_event_control` | `z2ui5_if_client=>ty_s_event_control` — the `s_ctrl` of `_event( )` |
+| `z2ui5_if_types=>ty_s_name_value` / `ty_t_name_value` | `z2ui5_if_client=>ty_s_name_value` / `ty_t_name_value` |
+| `z2ui5_if_types=>cs_device` | `z2ui5_if_client=>cs_device` |
+| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_exit`, whose two methods take them |
+| `z2ui5_if_types=>ty_s_draft` | `z2ui5_cl_ui5_srv_draft=>ty_s_draft` |
+| `z2ui5_if_types=>ty_s_config` | written out inside `z2ui5_if_client=>ty_s_get-s_config` |
+
+```abap
+" old
+DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
+
+" new
+DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+```
+
+Nothing was deleted and nothing was reshaped. `z2ui5_if_types` still ships,
+unchanged, from the framework's frozen package — an app that names it compiles
+and runs exactly as before, and every moved type is identical field for field,
+so a variable declared the old way still fits the new signatures. There is no
+deadline; change it when you next touch the class.
 
 ### `z2ui5.Util` → `z2ui5.Formatter`
 
