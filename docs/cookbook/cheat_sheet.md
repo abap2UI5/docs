@@ -40,5 +40,4 @@ Any expression that yields a flag works in `b`, so there is no reason to convert
 
 ## Next Steps
 
-- [Overview](/cookbook/overview) — the full map of cookbook topics
 - [Common Failures](/cookbook/troubleshooting/common_failures) — symptoms and their usual causes

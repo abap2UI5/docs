@@ -40,7 +40,7 @@ features:
   - title: Cookbook
     icon: <i class="fa-solid fa-book"></i>
     details: Recipes for everyday tasks — views, binding, tables, events, popups, files.
-    link: /cookbook/overview
+    link: /cookbook/view/definition
   - title: Configuration
     icon: <i class="fa-solid fa-gear"></i>
     details: Setup, security, performance, launchpad — the road to production use.
