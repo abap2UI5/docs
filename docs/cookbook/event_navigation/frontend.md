@@ -102,11 +102,11 @@ The control-call constants — `control_by_id`, `control_global`, `binding_call`
 | Event            | `t_arg` (positional)                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------ |
 | `control_by_id`  | `id`, `method`, `params…` — call a method on a control resolved by id                 |
-| `control_global` | `object`, `method`, `params…` — `MESSAGE_TOAST`, `MESSAGE_BOX`, `BUSY_INDICATOR`, `THEMING` |
+| `control_global` | `object`, `method`, `params…` — `MESSAGE_TOAST`, `MESSAGE_BOX`, `BUSY_INDICATOR`, `THEMING`, `POPUP`, `INVISIBLE_MESSAGE`, `FORMATTING` |
 | `binding_call`   | `id`, `aggregation`, `method`, `params…` — e.g. `filter` (path, operator, value1, value2) or `sort` (path, descending, group) on the aggregation's binding |
 | `bind_element`   | `index`, `_bind( table )` — element-bind a whole view slot to a table row, see below  |
 
-For `control_by_id`, any public control method is callable as long as it is not on the framework's **denylist**: methods that would break abap2UI5's own invariants (destroying views, re-rendering, detaching the framework's handlers, …) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`, `enablePostButton`, …) simply work. A small set of methods is additionally special-cased for typed arguments. `control_global` and `binding_call` remain strict whitelists — only the listed global objects and the binding methods `filter` / `sort` are callable.
+For `control_by_id`, any public control method is callable as long as it is not on the framework's **denylist**: methods that would break abap2UI5's own invariants (destroying views, re-rendering, detaching the framework's handlers, …) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`, `enablePostButton`, …) simply work. A small set of methods is additionally special-cased for typed arguments. `control_global` and `binding_call` remain strict whitelists — only the listed global objects and the binding methods `filter` / `sort` are callable. Three of those objects are less obvious than the rest: `POPUP-setWithinArea` confines every popup to one control instead of to the window (UI5 &ge; 1.89; an empty argument releases it again), `INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without rendering it (UI5 &ge; 1.78; `t_arg` = text, mode), and `FORMATTING-setCustomCurrencies` / `-addCustomCurrency` register currency codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge; 1.120) — `set…` REPLACES the whole registration, `add…` adds one code.
 
 ```abap
 " toggle a MessagePopover open, anchored to the pressing button, no roundtrip
@@ -130,7 +130,7 @@ client->follow_up_action(
     t_arg = VALUE #( ( index ) ( client->_bind( t_product ) ) ) ).
 ```
 
-The `view` parameter selects the slot to bind; `t_arg` carries the row index and the table's binding path. See demo app 470 in the [samples repository](https://github.com/abap2UI5/samples) for a complete example.
+The `view` parameter selects the slot to bind; `t_arg` carries the row index and the table's binding path. See `Z2UI5_CL_SMP_APP_470` in the [samples repository](https://github.com/abap2UI5/samples) for a complete example.
 
 ### The `view` parameter
 
