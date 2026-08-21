@@ -57,6 +57,9 @@ tell you what is coming if you do not.
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
+| `cs_config-title` | `cs_event-set_title` | *next release* |
+| `z2ui5_if_types=>…` | the same type on the object that uses it | *next release* |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | *next release* |
 
 ## Obsolete: still compiles
 
@@ -354,6 +357,94 @@ client->follow_up_action( val   = client->cs_event-set_title
 The controls still ship and views that use them keep rendering. See
 [Follow-up Action](/cookbook/expert_more/follow_up_action) for the full argument
 list of each event.
+
+### `cs_config-title` → `cs_event-set_title`
+
+The page title used to be set in the user exit and the tab title while the app
+runs with the `set_title` frontend event — two mechanisms for one string, which
+could disagree about what the tab says. The one that stays is the one the app
+can reach at any point in its life:
+
+```abap
+" old - in your z2ui5_if_exit implementation
+METHOD z2ui5_if_exit~set_config_http_get.
+
+    cs_config-title = `Invoice App`.
+
+ENDMETHOD.
+
+" new - in your app, whenever the title should change
+client->follow_up_action( val   = client->cs_event-set_title
+                          t_arg = VALUE #( ( `Invoice App` ) ) ).
+```
+
+The field stays on `cs_config` and an exit that assigns it still compiles — it
+simply has no effect. The generated page carries a constant
+`<title>abap2UI5</title>`, which is what the tab shows while UI5 boots, before
+any app can speak. Inside a Fiori Launchpad shell the title is
+`cs_event-set_title_launchpad`, unchanged. See
+[Title](/cookbook/browser_interaction/title).
+
+### `z2ui5_if_exit` → `z2ui5_if_ui5_exit`
+
+The user-exit interface follows the framework's naming: everything that is the
+engine rather than the contract carries the `ui5` segment. The two methods, the
+three types and the behaviour are unchanged.
+
+```abap
+" old
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_exit.
+ENDCLASS.
+
+" new
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_ui5_exit.
+ENDCLASS.
+```
+
+**Nothing has to change today.** Both interfaces ship, and abap2UI5 looks up
+both when it searches for your exit class — a class implementing the old one is
+found and called exactly as before. A class implementing *both* is called once,
+through the new interface. The types on `z2ui5_if_exit` are references to the
+ones on `z2ui5_if_ui5_exit`, not copies, so a config structure that gains a
+field gains it under either name.
+
+`z2ui5_if_exit` is deleted after a transition period, so move your exit over
+when you next touch it — after the release that brings the new name, which the
+examples on this site still wait for.
+
+### `z2ui5_if_types` → the object that uses the type
+
+`z2ui5_if_types` was a shared interface holding the types the API passes
+around. Each of them now sits on the object whose signature is the reason it
+exists, so the type you need is declared where you already are:
+
+| What you have | What to write |
+|---|---|
+| `z2ui5_if_types=>ty_s_get` | `z2ui5_if_client=>ty_s_get` — the return type of `get( )` |
+| `z2ui5_if_types=>ty_s_event_control` | `z2ui5_if_client=>ty_s_event_control` — the `s_ctrl` of `_event( )` |
+| `z2ui5_if_types=>ty_s_name_value` / `ty_t_name_value` | `z2ui5_if_client=>ty_s_name_value` / `ty_t_name_value` |
+| `z2ui5_if_types=>cs_device` | `z2ui5_if_client=>cs_device` |
+| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_exit`, whose two methods take them |
+| `z2ui5_if_types=>ty_s_draft` | `z2ui5_cl_ui5_srv_draft=>ty_s_draft` |
+| `z2ui5_if_types=>ty_s_config` | written out inside `z2ui5_if_client=>ty_s_get-s_config` |
+
+```abap
+" old
+DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
+
+" new
+DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+```
+
+Nothing was deleted and nothing was reshaped. `z2ui5_if_types` still ships,
+unchanged, from the framework's frozen package — an app that names it compiles
+and runs exactly as before, and every moved type is identical field for field,
+so a variable declared the old way still fits the new signatures. There is no
+deadline; change it when you next touch the class.
 
 ### `z2ui5.Util` → `z2ui5.Formatter`
 

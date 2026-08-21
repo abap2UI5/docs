@@ -52,7 +52,7 @@ alone would let them collide; the segment is what keeps them apart.
 
 | Segment | Meaning |
 |---|---|
-| *(none)* — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_if_types`, `z2ui5_if_exit` | **The public API.** The four interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
+| *(none)* — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_if_exit` | **The public API.** The three interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers. `z2ui5_if_types` carries none either and is the exception that proves the rule: it is retired, ships unchanged so existing apps keep compiling, and every type it held now sits on the object that uses it — see [Deprecations](/resources/deprecations) |
 | `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the two public classes `z2ui5_cl_ui5_http_handler` and `z2ui5_cl_ui5_view_builder` |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
