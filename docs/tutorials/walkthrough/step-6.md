@@ -1,0 +1,92 @@
+---
+outline: [2, 4]
+description: React to a click on a list row and know which row it was — events with arguments.
+---
+# Step 6: Row Events
+
+A list of five rows raises a question [Step 3](/tutorials/walkthrough/step-3)
+did not have: *which* row was clicked? The event stays the same — what is new
+is the argument it carries:
+
+```abap
+CLASS zcl_app_walkthrough DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_s_invoice,
+        product  TYPE string,
+        supplier TYPE string,
+        quantity TYPE string,
+      END OF ty_s_invoice.
+
+    DATA t_invoices TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
+ENDCLASS.
+
+CLASS zcl_app_walkthrough IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      t_invoices = VALUE #(
+          ( product = `Pineapple`    supplier = `ACME`          quantity = `21` )
+          ( product = `Milk`         supplier = `Green Growers` quantity = `4`  )
+          ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  )
+          ( product = `Salad`        supplier = `Green Growers` quantity = `2`  )
+          ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  ) ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Walkthrough - Step 6`
+
+                      )->ele( `List`
+                          )->a( n = `headerText` v = `Invoices`
+                          )->a( n = `items`      v = client->_bind( t_invoices )
+
+                          )->ele( `items`
+                              )->tag( `StandardListItem`
+                                  )->a( n = `title`       v = `{PRODUCT}`
+                                  )->a( n = `description` v = `{SUPPLIER}`
+                                  )->a( n = `info`        v = `{QUANTITY}`
+                                  )->a( n = `type`        v = `Active`
+                                  )->a( n = `press`       v = client->_event( val   = `SHOW_INVOICE`
+                                                                              t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `SHOW_INVOICE` ).
+
+      DATA(s_invoice) = VALUE #( t_invoices[ product = client->get_event_arg( ) ] OPTIONAL ).
+      client->message_toast_display( |{ s_invoice-quantity } x { s_invoice-product } from { s_invoice-supplier }| ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+## Events With Arguments
+
+- **`type = Active`** makes the whole row clickable and gives it press
+  feedback; the `press` handler sits on the row template, so every row fires
+  the same event.
+- **The argument rides with the event:**
+  ``t_arg = VALUE #( ( `${PRODUCT}` ) )``. The `${...}` syntax is resolved
+  *per row* in the browser — each clone of the template carries its own
+  product name. On the server, `client->get_event_arg( )` returns it, and a
+  table read finds the row.
+- **The state is still there.** `t_invoices` was filled in the
+  `check_on_navigated` branch of an earlier roundtrip — the framework
+  restored it before this one, so the event handler can read it. That is the
+  serialization from [Step 4](/tutorials/walkthrough/step-4) doing its job.
+
+More on both event directions — server events like this one, and events
+handled purely in the browser — under
+[Event → Backend](/cookbook/event_navigation/backend).
+
+A toast is a modest way to show an invoice. Next, a real dialog.

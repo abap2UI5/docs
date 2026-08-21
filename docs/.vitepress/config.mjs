@@ -123,6 +123,7 @@ export default defineConfig({
           // The section is called Getting Started in the sidebar this opens;
           // "Introduction" was the first PAGE in it, one level down.
           { text: "Getting Started", link: "/get_started/about" }, // nav
+          { text: "Tutorials", link: "/tutorials/overview" }, // nav
           { text: "Cookbook", link: "/cookbook/overview" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
@@ -190,6 +191,33 @@ export default defineConfig({
           { text: "Tooling", link: "/get_started/tooling" },
           { text: "Building with AI", link: "/get_started/ai" },
           { text: `What's Next?`, link: "/get_started/next" },
+        ],
+      },
+      {
+        // Between Getting Started and the Cookbook on purpose: a tutorial is
+        // read after the framework is installed and before the reference
+        // chapters, and that is the order the three sections stand in.
+        text: "Tutorials",
+        link: "/tutorials/overview",
+        collapsed: true,
+        items: [
+          { text: "Overview", link: "/tutorials/overview" }, // sidebar
+          {
+            text: "Walkthrough",
+            link: "/tutorials/walkthrough/overview",
+            collapsed: true,
+            items: [
+              { text: "Introduction", link: "/tutorials/walkthrough/overview" }, // sidebar
+              { text: "1 — Hello World", link: "/tutorials/walkthrough/step-1" },
+              { text: "2 — A First View", link: "/tutorials/walkthrough/step-2" },
+              { text: "3 — Events", link: "/tutorials/walkthrough/step-3" },
+              { text: "4 — Data Binding", link: "/tutorials/walkthrough/step-4" },
+              { text: "5 — List Binding", link: "/tutorials/walkthrough/step-5" },
+              { text: "6 — Row Events", link: "/tutorials/walkthrough/step-6" },
+              { text: "7 — Popups", link: "/tutorials/walkthrough/step-7" },
+              { text: "8 — App Structure", link: "/tutorials/walkthrough/step-8" },
+            ],
+          },
         ],
       },
       {

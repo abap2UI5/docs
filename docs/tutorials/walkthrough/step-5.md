@@ -1,0 +1,82 @@
+---
+outline: [2, 4]
+description: Show an internal table as a UI5 list with aggregation binding.
+---
+# Step 5: List Binding
+
+An app that greets is nice; an app that shows data is useful. The invoice
+app starts here: an internal table of invoices, bound to a UI5 list —
+one row template, repeated per line of the table:
+
+```abap
+CLASS zcl_app_walkthrough DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_s_invoice,
+        product  TYPE string,
+        supplier TYPE string,
+        quantity TYPE string,
+      END OF ty_s_invoice.
+
+    DATA t_invoices TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
+ENDCLASS.
+
+CLASS zcl_app_walkthrough IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      t_invoices = VALUE #(
+          ( product = `Pineapple`    supplier = `ACME`          quantity = `21` )
+          ( product = `Milk`         supplier = `Green Growers` quantity = `4`  )
+          ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  )
+          ( product = `Salad`        supplier = `Green Growers` quantity = `2`  )
+          ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  ) ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Walkthrough - Step 5`
+
+                      )->ele( `List`
+                          )->a( n = `headerText` v = `Invoices`
+                          )->a( n = `items`      v = client->_bind( t_invoices )
+
+                          )->ele( `items`
+                              )->tag( `StandardListItem`
+                                  )->a( n = `title`       v = `{PRODUCT}`
+                                  )->a( n = `description` v = `{SUPPLIER}`
+                                  )->a( n = `info`        v = `{QUANTITY}` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+## One Template, Many Rows
+
+- **The table binds like the string did.** ``client->_bind( t_invoices )``
+  on the list's `items` aggregation — the same call as in
+  [Step 4](/tutorials/walkthrough/step-4), just with an internal table behind
+  it.
+- **The `StandardListItem` is a template, not a row.** UI5 clones it once per
+  line of the table. Inside the template, `{PRODUCT}` is a plain UI5 binding
+  path relative to the row — the framework maps your ABAP field names, in
+  uppercase.
+- **The data is initialized in the `check_on_navigated` branch**, right
+  before the view. In a real app this is where your `SELECT` runs; the
+  tutorial keeps demo data so the class stays self-contained.
+
+Tables (`sap.m.Table` with columns and cells) bind exactly the same way —
+the [Tables](/cookbook/model/tables) page has that variant.
+
+Next, the rows learn to react to a click.
