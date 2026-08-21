@@ -58,7 +58,7 @@ Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave 
 :::
 
 ::: tip Browser Back & Forward
-By default, the browser's Back button leaves the abap2UI5 page — it does not step through the app stack. Enable [hash-based routing](/cookbook/event_navigation/routing) with `client->set_nav_routing( )` to couple the browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps bookmarkable.
+By default, the browser's Back button leaves the abap2UI5 page — it does not step through the app stack. Enable [hash-based routing](/cookbook/event_navigation/routing) with `client->follow_up_action( client->cs_event-set_nav_routing )` to couple the browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps bookmarkable.
 :::
 
 For Launchpad-based cross app navigation, see the [Fiori Launchpad](/configuration/launchpad) page.

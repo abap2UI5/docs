@@ -71,7 +71,7 @@ entry, so Back returns to the calling app.
 client->nav_app_call( NEW z2ui5_cl_new_app( ) ).
 ```
 
-(The frontend-side `cs_event-nav_to_route` that used to do this was removed in
+(The frontend-side `nav_to_route` event that used to do this was removed in
 1.143.0 — see [Deprecations](/resources/deprecations).)
 
 ## Relation to Manual History Control

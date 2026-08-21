@@ -24,11 +24,11 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:samples
+npm run check          # test + check:version + docs:build + check:examples + check:api-names + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but five things in it
-are decidable, and all five are decided before a merge:
+A documentation repository has no compiler for its prose, but six things in it
+are decidable, and all six are decided before a merge:
 
 | | |
 |---|---|
@@ -36,9 +36,10 @@ are decidable, and all five are decided before a merge:
 | `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
+| `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` at the release this site names. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces. Four pages taught API that 1.143.0 had deleted and nothing was red |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
-`.github/workflows/check.yml` runs the same five, in the same order. Keep the
+`.github/workflows/check.yml` runs the same six, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -48,7 +49,7 @@ clone it as a sibling. Without one it *skips* rather than fails, so verify the
 output says what you think it says. CI checks out `abap2UI5/samples@main`
 explicitly for this reason.
 
-There used to be a sixth, `check:counts`, holding four figures on a
+There used to be one more, `check:counts`, holding four figures on a
 `resources/samples.md` page against the catalogues themselves. That page is
 gone — the home page opens [the samples page](https://abap2ui5.github.io/samples/)
 directly and each catalogue introduces itself — and with it the only prose
@@ -112,7 +113,7 @@ The code travels in the playground's URL fragment, read out of the rendered
 block at click time — so nothing is hosted here, and the example that runs is
 the text on the page rather than a copy of it.
 
-**This is the sixth decidable thing in this repository and the only one CI
+**This is the seventh decidable thing in this repository and the only one CI
 cannot decide.** Whether an example runs is a question only a playground can
 answer, and a playground is a three-minute build of another repository. So the
 rules in `docs/.vitepress/playground.mjs` are an approximation, they fail
