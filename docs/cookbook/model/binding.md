@@ -95,7 +95,16 @@ Earlier releases split binding into a display-only `_bind` and a writable `_bind
 :::
 
 ::: warning **Bound Attributes Must Be Public**
-`_bind( )` accesses your class attributes from outside the controller via dynamic ASSIGN. This only works for attributes in the `PUBLIC SECTION` — `PROTECTED` and `PRIVATE` attributes are not visible to the framework and silently fail to bind: the value never reaches the frontend and edits never sync back. There is no compile-time or runtime error.
+`_bind( )` resolves your class attributes from outside the controller via dynamic ASSIGN, and it only sees the `PUBLIC SECTION`. Passing a `PROTECTED` or `PRIVATE` attribute — or a local variable — is **not** silent: the framework finds no attribute for the reference and raises
+
+```
+BINDING_ERROR - No class attribute for binding found -
+Please check if the bound values are public attributes of your class
+```
+
+which reaches the browser as a 500 and is shown in the error view. The
+compiler cannot catch it (the call takes `TYPE data`), but the runtime says
+exactly what is wrong.
 
 Always declare bound data in `PUBLIC SECTION`. This resembles the PAI/PBO logic, where data lived in global variables. See also [Life Cycle → Lifecycle Pitfalls](/cookbook/event_navigation/life_cycle#lifecycle-pitfalls).
 :::
@@ -133,13 +142,14 @@ ABAP and UI5 do not share a type system. When ABAP values cross to the frontend 
 | -------------------- | ------------------ | ------------------------------------------------------ | -------------------------------------------------------------------- |
 | `string`, `c LENGTH n` | JSON string        | `Input`, `Text`                                        | Works without a formatter.                                           |
 | `i`, `int8`, `b`, `s` | JSON number       | `Input type="Number"`, `Text`                          | Returned as string from inputs; cast back if you need an integer.    |
-| `p LENGTH n DECIMALS m`, `decfloat16`, `decfloat34` | JSON string | `Input`, `Text` + `sap.ui.model.type.Float`/`Currency` | Sent as a string to preserve precision. Locale formatting needs an explicit type — see [Currency](/cookbook/model/formatter#currency). |
+| `p LENGTH n DECIMALS m`, `decfloat16`, `decfloat34` | JSON number | `Input`, `Text` + `sap.ui.model.type.Float`/`Currency` | The decimals travel as written (`1234.56`), no rounding through a binary float. Locale formatting needs an explicit type — see [Currency](/cookbook/model/formatter#currency). |
 | `f` (binary float)   | JSON number        | `Input`, `Text` + `sap.ui.model.type.Float`            | Binary float — prefer `p` or `decfloat34` for monetary values to avoid rounding drift. |
 | `n LENGTH n`         | JSON string of digits | `Input` + `sap.ui.model.odata.type.String` with `isDigitSequence: true` | Without the constraint, leading zeros render literally — see [Digit Sequence](/cookbook/model/formatter#digit-sequence). |
 | `d`                  | 8-char string `YYYYMMDD` | `DatePicker` + `sap.ui.model.type.Date`             | Not an ISO date — a formatter is required for explicit locale or pattern control. See [Date](/cookbook/model/formatter#date). |
 | `t`                  | 6-char string `HHMMSS` | `TimePicker` + `sap.ui.model.type.Time`                | Same pattern as `d` — see [Time](/cookbook/model/formatter#time).    |
-| `abap_bool` (`X`/` `) | JSON string `"X"` / `""` | `CheckBox` with expression binding or ABAP-side conversion | UI5's `CheckBox` expects `true`/`false`, not `"X"` — see [Boolean](/cookbook/model/formatter#boolean). |
-| `timestamp`, `timestampl`, `utclong` | JSON string (packed digits for `timestamp`/`timestampl`; ISO-like for `utclong`) | `DateTimePicker` + ABAP-side conversion or custom formatter | No built-in UI5 type reads them directly. Split into `d` + `t` or convert to a `yyyyMMddHHmmss` string — see [Timestamp](/cookbook/model/formatter#timestamp). |
+| `abap_bool` (`X`/` `) | JSON `true` / `false` | `CheckBox`, `Switch` — bind it directly | The framework maps the BOOLEAN ABAP TYPES to a JSON boolean and back, so no expression and no formatter is needed. A flag typed `c LENGTH 1` instead is just a string — see [Boolean](/cookbook/model/formatter#boolean). |
+| `timestamp`, `timestampl` | JSON number (the packed digits) | `DateTimePicker` + ABAP-side conversion or a formatter | No built-in UI5 type reads them directly. Split into `d` + `t` or convert to a `yyyyMMddHHmmss` string — see [Timestamp](/cookbook/model/formatter#timestamp). |
+| `utclong` | JSON string, ISO-like (`2026-08-21T14:00:00Z`) | `DateTimePicker` + `Formatter.DateCreateObject` | The one timestamp type that arrives in a shape `new Date( )` parses — see [The formatters abap2UI5 ships](/cookbook/model/formatter#the-formatters-abap2ui5-ships). |
 | `xstring`            | binary — must be base64-encoded in ABAP before binding | `Image`, `FileUploader`, `pdf_viewer`                  | The framework does not auto-encode. Convert with `cl_web_http_utility=>encode_x_base64( )` (or `cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases) — see [PDF](/cookbook/device_capabilities/pdf) and [Upload / Download](/cookbook/device_capabilities/upload_download). |
 | structure            | JSON object         | Bind individual fields with `struct-field`             | One model path per field — see [Binding to Structures](#binding-to-structures). |
 | internal table       | JSON array          | `Table`, `List`, `Tree`                                | One row context per item — see [Tables](/cookbook/model/tables) and [Trees](/cookbook/model/trees). |

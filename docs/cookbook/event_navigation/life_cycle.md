@@ -55,10 +55,10 @@ For a tiny app with one or two events, inline the view and the handler directly 
 
 ## Lifecycle Pitfalls
 
-A few details of the request lifecycle are easy to miss and produce bugs that look like framework issues but are actually pattern mistakes. These are not enforced by the compiler and not reported at runtime.
+A few details of the request lifecycle are easy to miss and produce bugs that look like framework issues but are actually pattern mistakes. None of them is enforced by the compiler, and all but the first go unreported at runtime.
 
 ### Bound Attributes Must Be Public
-Anything passed to `client->_bind( )` must live in `PUBLIC SECTION` — the framework binds via dynamic ASSIGN and silently ignores `PROTECTED`/`PRIVATE` attributes. Helper variables that never appear in a `_bind( )` call can stay private. Details and rationale on [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
+Anything passed to `client->_bind( )` must live in `PUBLIC SECTION` — the framework binds via dynamic ASSIGN and cannot see `PROTECTED`/`PRIVATE` attributes. This one *is* reported: the roundtrip fails with `BINDING_ERROR - No class attribute for binding found`. Helper variables that never appear in a `_bind( )` call can stay private. Details and rationale on [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
 
 ### The View Is Only Sent When You Call `view_display`
 abap2UI5 does not re-render the view automatically. After an event, if you do **not** call `client->view_display( ... )` again, the frontend keeps the previous view tree and only the model data is updated from the serialized state. This is the common case — most event handlers should mutate state and return, leaving the view alone.

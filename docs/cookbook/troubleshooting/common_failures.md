@@ -24,11 +24,18 @@ Binding silently drops the write-back when the path is invalid — your ABAP att
 
 ## Bound Attribute Not Public
 
-`_bind( )` resolves attributes via dynamic `ASSIGN` and only sees the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` is silently ignored — the binding path is generated, but no data is ever serialized for it. There is no compile-time or runtime error.
+`_bind( )` resolves attributes via dynamic `ASSIGN` and only sees the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` — or a local variable — cannot be found, and the framework says so rather than shrugging: it raises `z2ui5_cx_ui5_util_error` with
+
+```
+BINDING_ERROR - No class attribute for binding found -
+Please check if the bound values are public attributes of your class
+```
+
+Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error view. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
 
 Where to look:
-- **Symptom is identical to a binding-path mismatch.** The browser console shows the same `Binding "/path/..." was not found in model` warning, because the path was never populated on the wire.
-- **Check the visibility of the attribute** in the class definition before re-reading the XML. Helper variables that never appear in a `_bind( )` call can stay private; anything you bind must move to `PUBLIC SECTION`.
+- **The error text itself.** Unlike a binding-path mismatch, this failure is reported by name — if you are reading a browser-console warning, you are looking at the section above, not at this one.
+- **Check the visibility of the attribute** in the class definition. Helper variables that never appear in a `_bind( )` call can stay private; anything you bind must move to `PUBLIC SECTION`.
 
 See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
 
