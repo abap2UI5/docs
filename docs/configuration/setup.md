@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Setup
 
-Every UI5 application has an `index.html` that bootstraps the framework, picks a theme, defines the page title and so on. With abap2UI5 you don't maintain that file by hand — the framework generates it on every page load. To change what ends up in it, implement the `z2ui5_if_exit` interface in your own ABAP class:
+Every UI5 application has an `index.html` that bootstraps the framework, picks a theme, loads a UI5 version and so on. With abap2UI5 you don't maintain that file by hand — the framework generates it on every page load. To change what ends up in it, implement the `z2ui5_if_exit` interface in your own ABAP class:
 
 ```abap
 CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
@@ -35,6 +35,8 @@ ENDCLASS.
 | [Language](/configuration/setup/logon_language)                   | URL parameter `sap-language` | SAP session language + UI5 locale |
 
 Security-relevant headers and the Content Security Policy meta tag are configured separately — see [Security](/configuration/security).
+
+The tab title is **not** on this list. The generated page always carries `<title>abap2UI5</title>`, and the title the user sees is set by the running app with the `set_title` frontend event — see [Title](/cookbook/browser_interaction/title). The field `cs_config-title` still exists on `cs_config` so that existing exits compile, but nothing reads it.
 
 ## See Also
 

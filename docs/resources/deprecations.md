@@ -57,6 +57,7 @@ tell you what is coming if you do not.
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
+| `cs_config-title` | `cs_event-set_title` | *next release* |
 
 ## Obsolete: still compiles
 
@@ -354,6 +355,33 @@ client->follow_up_action( val   = client->cs_event-set_title
 The controls still ship and views that use them keep rendering. See
 [Follow-up Action](/cookbook/expert_more/follow_up_action) for the full argument
 list of each event.
+
+### `cs_config-title` → `cs_event-set_title`
+
+The page title used to be set in the user exit and the tab title while the app
+runs with the `set_title` frontend event — two mechanisms for one string, which
+could disagree about what the tab says. The one that stays is the one the app
+can reach at any point in its life:
+
+```abap
+" old - in your z2ui5_if_exit implementation
+METHOD z2ui5_if_exit~set_config_http_get.
+
+    cs_config-title = `Invoice App`.
+
+ENDMETHOD.
+
+" new - in your app, whenever the title should change
+client->follow_up_action( val   = client->cs_event-set_title
+                          t_arg = VALUE #( ( `Invoice App` ) ) ).
+```
+
+The field stays on `cs_config` and an exit that assigns it still compiles — it
+simply has no effect. The generated page carries a constant
+`<title>abap2UI5</title>`, which is what the tab shows while UI5 boots, before
+any app can speak. Inside a Fiori Launchpad shell the title is
+`cs_event-set_title_launchpad`, unchanged. See
+[Title](/cookbook/browser_interaction/title).
 
 ### `z2ui5.Util` → `z2ui5.Formatter`
 
