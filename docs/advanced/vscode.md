@@ -87,6 +87,18 @@ is not supported — use `external` mode there. *"abap2UI5: Clear Stored SAP
 Credentials"* forgets the password again.
 :::
 
+### When the preview stays white: the connection check
+
+The most common first-run failure is a launch URL that is slightly wrong, and
+its symptom in the preview is a white rectangle that says nothing. *"abap2UI5:
+Check System Connection"* diagnoses it: the command walks the exact route F9
+takes — the same URL expansion, the same stored credentials, the same proxy —
+and reports step by step where a launch would end: the URL's shape, the host,
+the logon, the ICF path, the page itself, each with the fix next to the
+failing step. The full report lands in the **abap2UI5** output channel. This
+also works for a system installed five minutes ago, which makes it the
+diagnosis step of the [Quickstart](/get_started/quickstart#_5-verify).
+
 ### Reload on activation, not on save
 
 Saving an ABAP class does not change what the server runs — only **activation**

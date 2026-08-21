@@ -139,6 +139,9 @@ Getting started is easy:
 2. Set up an HTTP service for browser communication
 3. Start building!
 
+No system at hand? The Quickstart opens with two ways to try abap2UI5 in the
+browser — the playground and the live demo — before anything is installed.
+
 → *See the [Quickstart Guide](/get_started/quickstart) for full instructions*
 
 ## Tooling

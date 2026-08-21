@@ -3,24 +3,77 @@ outline: [2, 4]
 ---
 # Quickstart
 
-::: tip No system at hand?
-Try abap2UI5 first in the
-[**live demo**](https://abap2ui5.github.io/web-abap2UI5-build/): the complete
+There are three ways to meet abap2UI5, and they differ in what you need: a
+browser, a browser, or a system of your own. Decide first, then follow one
+path — the first two need no installation at all.
+
+**Try it in the browser — nothing to install.** Every step of the
+[Tutorial](/tutorials/overview) is a complete class with a **Run** button under
+it, and the [playground](https://abap2ui5.github.io/playground/) behind that
+button is an ABAP editor with the running app beside it — write a class, press
+run, see the app. The sample catalogues open there too: every card on the
+[Learn](https://abap2ui5.github.io/samples/) and
+[Controls](https://abap2ui5.github.io/samples-controls/) pages starts that
+sample in the playground.
+
+**Explore the live demo.** The
+[live demo](https://abap2ui5.github.io/web-abap2UI5-build/) is the complete
 stack — framework, backend and sample apps — downported, transpiled to
 JavaScript and running inside your browser tab, against an in-memory database.
-No installation, no SAP system, no login. It is rebuilt daily from `main`, so
-what you click there is the current framework. Come back here when you want the
-same apps on a real system.
-:::
+It is rebuilt daily from `main`, so what you click there is the current
+framework. Where the playground runs one class at a time, the live demo is the
+whole delivered system, startup page included.
 
-## 1. Installation via abapGit
+**Install on your own system.** The rest of this page: the same apps on a real
+ABAP system, from the abapGit pull to a first app you wrote yourself, with a
+verification step at the end that says what you should be seeing.
 
-Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org). (New to abapGit? Install it first — see [abapGit](/technical/tools/abapgit); it's the one-time tool used to pull abap2UI5 into your system.)
+## 1. Install the Framework via abapGit
+
+Pull [abap2UI5](https://github.com/abap2UI5/abap2UI5) with
+[abapGit](https://abapgit.org). (New to abapGit? Install it first — see
+[abapGit](/technical/tools/abapgit); it's the one-time tool used to pull
+abap2UI5 into your system.) For anything beyond a first look, pull a
+[release](https://github.com/abap2UI5/abap2UI5/releases/) rather than `main` —
+see [Productive Usage](/configuration/productive_usage) for why.
 
 ![abapGit repository installation screen for abap2UI5](/get_started/image.png)
 
 ::: details ABAP Cloud
+On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT) and
+mass-activate the pulled objects afterwards — the
+[S/4 Public Cloud](/configuration/s4_public_cloud) page walks through it
+screenshot by screenshot, including the two link choices that cannot be changed
+later.
+
 ![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
+:::
+
+The framework is everything you need: the HTTP endpoint you create next serves
+the UI5 frontend itself, so there is no separate frontend to deploy.
+
+::: details When a separate frontend app is wanted anyway
+Some production scenarios install one later — on S/4 Public Cloud the HTTP
+endpoint needs `S_DEVELOP` authorization, so business users reach the app
+through a separately deployed frontend and a tile instead (see
+[S/4 Public Cloud](/configuration/s4_public_cloud)). For those cases the
+[frontend](https://github.com/abap2UI5/frontend) repository publishes the same
+frontend as ready-made deployment branches. Pull the one that matches your
+system:
+
+| Branch | System | UI5 |
+|---|---|---|
+| `cloud` | S/4 Public Cloud, BTP ABAP Environment | classic |
+| `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x) |
+| `standard` | S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver > 7.50 | classic |
+| `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x) |
+
+The `cloud` branches carry a complete Fiori source project plus the HTTP
+service artifacts; the `standard` branches carry the frontend as BSP `Z2UI5`
+with its ICF handler. The `_v2` variants differ only in the bootstrap — pick
+one when your system serves UI5 2.x. None of this is needed today: finish this
+page first, and come back via [Installation](/configuration/installation) when
+production planning starts.
 :::
 
 ## 2. Set Up HTTP Handler and Service
@@ -73,7 +126,7 @@ abap2UI5 talks only to the HTTP service you define, giving you full control over
 ## 3. First Launch
 Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
 <img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press `check` to verify your installation, then launch the bundled test app to confirm everything works. That's it — you can now build your own abap2UI5 apps.
+Press `check` to verify your installation, then launch the bundled test app to confirm everything works.
 
 ## 4. Your First App
 Build a class on your system:
@@ -89,11 +142,53 @@ CLASS zcl_my_app IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Back on the startup page, enter your class name `ZCL_MY_APP` in the input field and launch it — that's it: you've built your first abap2UI5 app.
+Back on the startup page, enter your class name `ZCL_MY_APP` in the input
+field and launch it. The startup page is a convenience around a URL parameter
+you will use from now on: `?app_start=<class>` appended to your service URL
+starts that app directly —
+
+```
+https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_my_app
+```
+
+— which is the form a browser bookmark, a Launchpad tile and every sample
+catalogue use.
 
 ::: tip **Naming**
 Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
 :::
+
+## 5. Verify
+
+You should now see an empty page with a **Hello World** message box on it, at
+`…?app_start=zcl_my_app`. That is the whole install verified: abapGit pull,
+handler, service and app class. If you see something else instead:
+
+- **The browser shows an ICF error page or a plain 404** — the request never
+  reached the handler. In `SICF`, check that the service node is *activated*
+  (right-click → Activate Service) and that the URL path matches the node.
+- **A logon prompt you did not expect, or a 401/403** — authentication is the
+  ICF node's job, exactly as for any other service. Check the node's **Logon
+  Data** tab, and see [Security](/configuration/security) for how access to
+  the endpoint is controlled.
+- **The page loads, but launching the app reports `The app 'ZCL_MY_APP' does
+  not exist in the system.`** — the framework could not instantiate the class:
+  a typo in the name, or the class is not activated yet.
+- **The startup page never appears, or stays white** — open the browser
+  console (`F12`); a bootstrap problem such as a blocked UI5 CDN logs there.
+  Systems without internet access must serve UI5 themselves — see
+  [Bootstrapping](/configuration/setup/ui5_bootstrapping).
+
+Anything that goes wrong *after* this point — an app that renders empty, a
+binding that does not update, an error view on a roundtrip — is catalogued
+with symptom, cause and fix in
+[Common Failures](/cookbook/troubleshooting/common_failures).
+
+If you use VS Code: the [abap2UI5 extension](/advanced/vscode) ships a command
+**"abap2UI5: Check System Connection"** that probes your service URL step by
+step — URL shape, host, logon, the page itself — and reports where a launch
+would fail, with the fix next to the failing step. It is the fastest way to
+diagnose a first-run problem without clicking through `SICF`.
 
 ## Next Steps
 
