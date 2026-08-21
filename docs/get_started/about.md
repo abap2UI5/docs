@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Introduction
+# In a Nutshell
 
 **Build UI5 Apps Purely in ABAP**
 

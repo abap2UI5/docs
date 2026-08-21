@@ -59,13 +59,8 @@ The indentation mirrors the XML tree — `Text` sits inside `Page` inside
 full layout rules are on the [View → Definition](/cookbook/view/definition)
 page.
 
-## Look at What It Built
-
-Press `Ctrl+F12` in any running app to open the **Developer Tools** — tabs for
-the app's source code, the rendered view XML, the model data, the
-request/response pair and the error log. The XML tab is the view this chain
-produced, which is the quickest way to see what a verb did:
-
-![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
+Want to see the XML this chain produced? Press `Ctrl+F12` in the running app
+and open the view tab — the [developer tools](/get_started/hello_world#jump-into-the-code)
+show the generated view, the model and the payload of every roundtrip.
 
 Next, the app gets its first button — and with it, the app lifecycle.
