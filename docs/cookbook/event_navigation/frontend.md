@@ -53,11 +53,9 @@ The following frontend events are available:
       keyboard_shortcut         TYPE string VALUE `KEYBOARD_SHORTCUT`,
       open_new_tab              TYPE string VALUE `OPEN_NEW_TAB`,
       location_reload           TYPE string VALUE `LOCATION_RELOAD`,
-      nav_to_route              TYPE string VALUE `NAV_TO_ROUTE`,
       system_logout             TYPE string VALUE `SYSTEM_LOGOUT`,
       download_b64_file         TYPE string VALUE `DOWNLOAD_B64_FILE`,
       urlhelper                 TYPE string VALUE `URLHELPER`,
-      history_back              TYPE string VALUE `HISTORY_BACK`,
       store_data                TYPE string VALUE `STORE_DATA`,
       play_audio                TYPE string VALUE `PLAY_AUDIO`,
       wizard_set_next_step      TYPE string VALUE `WIZARD_SET_NEXT_STEP`,
@@ -74,7 +72,7 @@ The following frontend events are available:
 
     END OF cs_event.
 ```
-Some of these events have their own pages: [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds key combinations to backend events, [`nav_to_route`](/cookbook/event_navigation/routing) navigates by hash route, and [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls) wire variant management for smart controls.
+Some of these events have their own pages: [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds key combinations to backend events, [`set_nav_routing`](/cookbook/event_navigation/routing) switches hash routing on, and [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls) wire variant management for smart controls.
 For example, to open a new tab directly from a button press (no backend involved):
 ```abap
 METHOD z2ui5_if_app~main.

@@ -26,7 +26,7 @@ client->follow_up_action(
 ```
 
 ### Browser History
-Two client methods control the browser history from the backend:
+One client method writes the browser history from the backend:
 
 Push a new history entry — the value is appended to the URL hash, so app state becomes bookmarkable and the browser back button steps through your pushed states:
 ```abap
@@ -36,9 +36,15 @@ client->set_push_state( `&my-app-state=detail` ).
 There is no method that presses the browser's back button for you — the
 pushed states above are what the back button walks through, and leaving an
 app is [`nav_app_leave( )`](/cookbook/event_navigation/navigation), which
-returns to the calling app rather than to the previous URL.
+returns to the calling app rather than to the previous URL. To step back
+through the pushed states from ABAP, hand the raw expression to
+`follow_up_action( )`:
 
-For a complete example, see sample `Z2UI5_CL_DEMO_APP_139`.
+```abap
+client->follow_up_action( |history.back()| ).
+```
+
+For a complete example, see sample `Z2UI5_CL_SMP_APP_322`.
 
 ::: tip Hash-based app routing
 For app-to-app navigation, the framework can own the URL hash itself: with [Routing](/cookbook/event_navigation/routing) enabled, each app gets a bookmarkable route and the browser Back/Forward buttons navigate the app stack — no manual push states needed.
