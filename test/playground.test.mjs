@@ -149,8 +149,10 @@ ${DISPLAY}`)), /on-premise/, call);
 });
 
 test('a method that is declared and never implemented gets nothing', () => {
-  // cookbook/event_navigation/life_cycle.md. This is not a playground limit
-  // either - the class does not activate in any system.
+  // Watched failing on cookbook/event_navigation/life_cycle.md, whose skeleton
+  // declared render_main and on_post and implemented neither; the page has
+  // since been completed and runs. The shape stays guarded because it is not a
+  // playground limit - such a class does not activate in any system.
   const code = `CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
