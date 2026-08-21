@@ -59,6 +59,7 @@ tell you what is coming if you do not.
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
 | `cs_config-title` | `cs_event-set_title` | *next release* |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | *next release* |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | *next release* |
 
 ## Obsolete: still compiles
 
@@ -383,6 +384,37 @@ simply has no effect. The generated page carries a constant
 any app can speak. Inside a Fiori Launchpad shell the title is
 `cs_event-set_title_launchpad`, unchanged. See
 [Title](/cookbook/browser_interaction/title).
+
+### `z2ui5_if_exit` → `z2ui5_if_ui5_exit`
+
+The user-exit interface follows the framework's naming: everything that is the
+engine rather than the contract carries the `ui5` segment. The two methods, the
+three types and the behaviour are unchanged.
+
+```abap
+" old
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_exit.
+ENDCLASS.
+
+" new
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_ui5_exit.
+ENDCLASS.
+```
+
+**Nothing has to change today.** Both interfaces ship, and abap2UI5 looks up
+both when it searches for your exit class — a class implementing the old one is
+found and called exactly as before. A class implementing *both* is called once,
+through the new interface. The types on `z2ui5_if_exit` are references to the
+ones on `z2ui5_if_ui5_exit`, not copies, so a config structure that gains a
+field gains it under either name.
+
+`z2ui5_if_exit` is deleted after a transition period, so move your exit over
+when you next touch it — after the release that brings the new name, which the
+examples on this site still wait for.
 
 ### `z2ui5_if_types` → the object that uses the type
 

@@ -40,6 +40,13 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip The interface is being renamed
+`z2ui5_if_exit` becomes `z2ui5_if_ui5_exit`, following the framework's naming.
+Both work — abap2UI5 looks up both interfaces, so an existing exit keeps
+running — and the examples here move to the new name once it is in a release.
+See [Deprecations](/resources/deprecations).
+:::
+
 ::: warning The tab title is not set here
 `cs_config-title` is still on the structure — an exit that assigns it compiles
 and runs — but nothing reads it any more. The generated page always carries
