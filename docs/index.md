@@ -43,7 +43,7 @@ hero:
 features:
   - title: Tutorial
     icon: <i class="fa-solid fa-graduation-cap"></i>
-    details: Learn by building — ten steps that grow one runnable app, from a message box to a table.
+    details: Learn by building — steps that grow one runnable app, from a message box to a tested app in production.
     link: /tutorials/overview
   - title: Configuration
     icon: <i class="fa-solid fa-gear"></i>

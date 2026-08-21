@@ -169,8 +169,9 @@ npm ci && npm run build && npm run serve      # the first build is a few minutes
 ```
 
 The last measurement: **61 complete app classes, 39 with a button, all 39
-started and rendered.** The home page has since dropped its example, so the
-figure today is 60 and 38; the 22 without a button each have a reason the module
+started and rendered.** The home page has since dropped its example, and
+tutorial Step 12 has since reprinted Step 10's measured class unchanged, so the
+figure today is 61 and 39; the 22 without a button each have a reason the module
 prints.
 
 **The published playground is what readers get**, not the checkout you tested

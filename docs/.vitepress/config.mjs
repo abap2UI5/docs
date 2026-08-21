@@ -222,6 +222,8 @@ export default defineConfig({
               { text: "8. Selection Screen", link: "/tutorials/walkthrough/step-8" },
               { text: "9. Tables", link: "/tutorials/walkthrough/step-9" },
               { text: "10. App Structure", link: "/tutorials/walkthrough/step-10" },
+              { text: "11. To Production", link: "/tutorials/walkthrough/step-11" },
+              { text: "12. Unit Tests", link: "/tutorials/walkthrough/step-12" },
             ],
           },
           // The sheet you keep open WHILE working through the steps. It keeps
