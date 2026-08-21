@@ -101,7 +101,7 @@ Where to look:
 - **Symptom**: a button on the main page "does nothing" right after a popup workflow, or a second open reopens the same popup on top of the first.
 - **Pair every `popup_display( )` with an explicit `popup_destroy( )`** in **every** branch that ends the dialog — Save and Cancel both need it, not just the happy path.
 
-See [Popup](/cookbook/popup_popover/popup) and the worked example in [Full Example](/get_started/full_example).
+See [Popup](/cookbook/popup_popover/popup) and the worked example in the walkthrough's [Popups step](/tutorials/walkthrough/step-7).
 
 ## Event-Name Casing Mismatch
 

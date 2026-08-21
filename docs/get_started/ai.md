@@ -1,34 +1,46 @@
 ---
 outline: [2, 4]
 ---
-# Building with AI
+# Developing with AI
 
-An AI assistant writing abap2UI5 starts at a disadvantage nothing about your
-project causes. Almost every abap2UI5 example on the public web builds its view
-with `z2ui5_cl_xml_view`, the frozen predecessor of
-`z2ui5_cl_ui5_view_builder` — so that is what a model writes when asked for an
-app, confidently, and in an API that is no longer the one to use.
+abap2UI5 is unusually well suited to being written by an AI assistant, and the
+reason is structural rather than lucky:
 
-Everything below is a way of telling it otherwise, in rising order of effort.
+- **An app is one ABAP class — source code, and nothing else.** No service to
+  generate, no OData artifacts, no frontend project, no manifest, no
+  deployment pipeline. There is exactly one file for an agent to write, and
+  the thing it writes is the thing that runs.
+- **The whole app is text.** View, logic, state and data flow live in the same
+  class, in one language. An agent never has to keep an ABAP backend and a
+  JavaScript frontend in step, because there is no second half to drift.
+- **There are hundreds of working examples to learn from.** The three sample
+  catalogues hold complete, tested apps — one per pattern, every one linted and
+  rendered — so "has somebody already built a value help, a tree, navigation
+  between two apps?" is a question with a real answer instead of a guess.
+- **The result can be checked without an SAP system.** The
+  [abap2UI5 linter](/advanced/linter) reconstructs the UI5 view out of the ABAP
+  that builds it and reports what UI5 does not have. An agent that can verify
+  its own work stops handing you apps that do not render.
+
+Everything below turns those properties into a setup, in rising order of
+effort. Start at the top; each level is useful on its own.
 
 ## Paste the essentials
 
 The zero-setup version, for any assistant with web access: paste this ahead of
-your task. It corrects the four things a model most reliably gets wrong about
-abap2UI5:
+your task.
 
 ```text
 Before writing any abap2UI5 code, read https://abap2ui5.github.io/docs/llms.txt
 and follow it to the pages you need.
 
-Four things that override whatever you remember about abap2UI5:
+The shape of an abap2UI5 app:
 1. An app is ONE ABAP class implementing z2ui5_if_app. Everything enters main( ),
    which dispatches on client->check_on_navigated( ) (the display branch, true on
    first start too), client->check_on_event( `X` ) and - for one-time setup only -
    client->check_on_init( ).
 2. Build the view with z2ui5_cl_ui5_view_builder and its verbs ele / tag / a / end /
-   stringify. z2ui5_cl_xml_view is the FROZEN predecessor - it is what most examples
-   online show, and it is not what to write.
+   stringify.
 3. Bind with client->_bind( ). It is bidirectional; only what the user edited comes back.
 4. Every roundtrip is a fresh ABAP session. Nothing survives on the server except
    the app class itself, which is serialized.
@@ -51,9 +63,9 @@ questions:
 | [`abap2ui5.github.io/docs/llms.txt`](https://abap2ui5.github.io/docs/llms.txt) | the map of the **prose** — every chapter of this site with one line of what it covers, and [`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) for all of it in one fetch |
 | [`github.com/abap2UI5/abap2UI5/llms.txt`](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt) | the map of the **code** — the interface files to read instead of guessing at a signature, and the guide for building apps that ships with the framework |
 
-Both are short and both are free to give an assistant that has web access. It
-is the cheapest correction available: an agent that has read either one does
-not reach for the frozen builder.
+Both are short and both are free to give an assistant that has web access.
+This is the cheapest step on the page: an agent that has read either one is
+working from what abap2UI5 is today rather than from what it recalls.
 
 ## Put the conventions in the repository
 
@@ -79,8 +91,8 @@ npm run check
 
 The [abap2UI5 linter](/advanced/linter) half is the one that matters
 here: it reconstructs the view from the builder chain and reports the names UI5
-does not have, the bindings that point at nothing — and a class still built on
-the frozen builder.
+does not have, the properties that do not exist on the release you target, and
+the bindings that point at nothing.
 
 ## Give it the loop
 

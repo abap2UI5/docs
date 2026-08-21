@@ -123,7 +123,7 @@ export default defineConfig({
           // The section is called Getting Started in the sidebar this opens;
           // "Introduction" was the first PAGE in it, one level down.
           { text: "Getting Started", link: "/get_started/about" }, // nav
-          { text: "Tutorials", link: "/tutorials/overview" }, // nav
+          { text: "Tutorial", link: "/tutorials/overview" }, // nav
           { text: "Cookbook", link: "/cookbook/view/definition" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
@@ -179,7 +179,7 @@ export default defineConfig({
         link: "/get_started/about",
         collapsed: true,
         items: [
-          { text: "Introduction", link: "/get_started/about" }, // sidebar
+          { text: "In a Nutshell", link: "/get_started/about" }, // sidebar
           {
             // Install it, and see one app run. The step-by-step tutorials -
             // Full Example among them - are a section of their own now; what
@@ -190,8 +190,7 @@ export default defineConfig({
               { text: "Hello World", link: "/get_started/hello_world" },
             ],
           },
-          { text: "Tooling", link: "/get_started/tooling" },
-          { text: "Building with AI", link: "/get_started/ai" },
+          { text: "Developing with AI", link: "/get_started/ai" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
@@ -199,39 +198,37 @@ export default defineConfig({
         // Between Getting Started and the Cookbook on purpose: a tutorial is
         // read after the framework is installed and before the reference
         // chapters, and that is the order the three sections stand in.
-        text: "Tutorials",
+        text: "Tutorial",
         link: "/tutorials/overview",
         collapsed: true,
         items: [
           { text: "Overview", link: "/tutorials/overview" }, // sidebar
           {
-            // NOT collapsed: the eight steps are the section's content, and a
-            // reader who is working through them needs to see where they are
-            // in the sequence on every page. A tutorial whose steps are behind
-            // one more click reads as a single page that happens to be long.
+            // No `collapsed` key at all, like Quickstart above: that is what
+            // makes a group a plain labelled list instead of a collapsible
+            // one. `collapsed: false` would still render the toggle and still
+            // let the steps be folded away - and the sequence IS the tutorial,
+            // so a reader working through it has to see where they are on
+            // every page.
             text: "Walkthrough",
-            link: "/tutorials/walkthrough/overview",
-            collapsed: false,
             items: [
-              { text: "Introduction", link: "/tutorials/walkthrough/overview" }, // sidebar
-              { text: "1. Hello World", link: "/tutorials/walkthrough/step-1" },
+              { text: "1. The App Class", link: "/tutorials/walkthrough/step-1" },
               { text: "2. A First View", link: "/tutorials/walkthrough/step-2" },
               { text: "3. Events", link: "/tutorials/walkthrough/step-3" },
               { text: "4. Data Binding", link: "/tutorials/walkthrough/step-4" },
               { text: "5. List Binding", link: "/tutorials/walkthrough/step-5" },
               { text: "6. Row Events", link: "/tutorials/walkthrough/step-6" },
               { text: "7. Popups", link: "/tutorials/walkthrough/step-7" },
-              { text: "8. App Structure", link: "/tutorials/walkthrough/step-8" },
+              { text: "8. Selection Screen", link: "/tutorials/walkthrough/step-8" },
+              { text: "9. Tables", link: "/tutorials/walkthrough/step-9" },
+              { text: "10. App Structure", link: "/tutorials/walkthrough/step-10" },
             ],
           },
-          // Both keep the URL they were published under - only the entry that
-          // navigates to them moved. Full Example is a step-by-step tutorial
-          // ("Step 1" to "Step 5") and was the second half of a Quickstart
-          // group that no longer had a tutorial section to hand it to; the
-          // Cheat Sheet is the sheet you keep open WHILE working through one.
-          // Neither is listed twice: an entry standing in two sidebar sections
-          // makes its own search results ambiguous.
-          { text: "Full Example", link: "/get_started/full_example" },
+          // The sheet you keep open WHILE working through the steps. It keeps
+          // the URL it was published under - only the entry that navigates to
+          // it moved out of the Cookbook, and it is not listed twice: an entry
+          // standing in two sidebar sections makes its own search results
+          // ambiguous.
           { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
         ],
       },
@@ -517,6 +514,11 @@ export default defineConfig({
             text: "Developer Setup",
             collapsed: true,
             items: [
+              // Moved out of Getting Started: which editor, transpiler and
+              // client tools you develop WITH is a question a newcomer does
+              // not have yet, and on the entry path it read as a required
+              // step. It belongs next to the local setup it describes.
+              { text: "Tooling", link: "/get_started/tooling" },
               { text: "Local Setup", link: "/advanced/local" },
               {
                 text: "Project Tools",

@@ -1,169 +1,150 @@
 ---
 outline: [2, 4]
-description: Refactor the walkthrough app into the structure real apps use — a dispatcher, named methods, protected state.
+description: A selection form above the list, and reading the data it asks for — the shape of a classic ABAP report.
 samples:
-  - z2ui5_cl_smp_app_070
+  - z2ui5_cl_smp_app_011
 ---
-# Step 8: App Structure
+# Step 8: Selection Screen
 
-The app is complete, but everything lives in one `main` method. Real apps —
-the framework's own, and the sample catalogues' — separate the phases into
-methods, so this last step changes no behavior at all: it puts the code where
-a reader expects it.
+Real apps rarely show all the data at once. They ask first: a selection screen
+on top, a result below, and a button between them. This step adds that form —
+and with it the way a real app reads its data.
+
+The invoice record gains a delivery date, so there is a date to select on:
 
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
-
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
     TYPES:
       BEGIN OF ty_s_invoice,
-        product  TYPE string,
-        supplier TYPE string,
-        quantity TYPE string,
+        product       TYPE string,
+        supplier      TYPE string,
+        quantity      TYPE string,
+        delivery_date TYPE string,
       END OF ty_s_invoice.
 
+    DATA:
+      BEGIN OF s_search,
+        supplier  TYPE string,
+        date_from TYPE string,
+        date_to   TYPE string,
+      END OF s_search.
+
     DATA t_invoices TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
-    DATA s_edit     TYPE ty_s_invoice.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
-
-    METHODS on_event.
-    METHODS view_display.
-    METHODS popup_edit_display.
-
 ENDCLASS.
 
 CLASS zcl_app_walkthrough IMPLEMENTATION.
-
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
     IF client->check_on_navigated( ).
-      view_display( ).
-    ELSEIF client->check_on_event( ).
-      on_event( ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form` ).
+
+      DATA(page) = view->ele( `Shell`
+          )->ele( `Page`
+              )->a( n = `title` v = `Walkthrough - Step 8` ).
+
+      page->ele( n = `SimpleForm` ns = `form`
+          )->a( n = `title`    v = `Selection`
+          )->a( n = `editable` v = `true`
+
+          )->ele( n = `content` ns = `form`
+
+              )->tag( `Label`
+                  )->a( n = `text` v = `Supplier`
+              )->tag( `Input`
+                  )->a( n = `value` v = client->_bind( s_search-supplier )
+              )->tag( `Label`
+                  )->a( n = `text` v = `Delivery Date From`
+              )->tag( `DatePicker`
+                  )->a( n = `value`       v = client->_bind( s_search-date_from )
+                  )->a( n = `valueFormat` v = `yyyy-MM-dd`
+              )->tag( `Label`
+                  )->a( n = `text` v = `Delivery Date To`
+              )->tag( `DatePicker`
+                  )->a( n = `value`       v = client->_bind( s_search-date_to )
+                  )->a( n = `valueFormat` v = `yyyy-MM-dd`
+              )->tag( `Button`
+                  )->a( n = `text`  v = `Read Invoices`
+                  )->a( n = `press` v = client->_event( `READ` )
+                  )->a( n = `type`  v = `Emphasized` ).
+
+      page->ele( `List`
+          )->a( n = `headerText` v = `Invoices`
+          )->a( n = `items`      v = client->_bind( t_invoices )
+
+          )->ele( `items`
+              )->tag( `StandardListItem`
+                  )->a( n = `title`       v = `{PRODUCT}`
+                  )->a( n = `description` v = `{SUPPLIER}`
+                  )->a( n = `info`        v = `{DELIVERY_DATE}` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `READ` ).
+
+      " demo data — in your system, replace this with a SELECT, e.g.:
+      " SELECT product, supplier, quantity, delivery_date
+      "   FROM zinvoice
+      "   WHERE supplier      LIKE @s_search-supplier
+      "     AND delivery_date BETWEEN @s_search-date_from AND @s_search-date_to
+      "   INTO TABLE @t_invoices.
+      t_invoices = VALUE #(
+          ( product = `Pineapple`    supplier = `ACME`          quantity = `21` delivery_date = `2026-07-15` )
+          ( product = `Milk`         supplier = `Green Growers` quantity = `4`  delivery_date = `2026-07-20` )
+          ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  delivery_date = `2026-08-01` )
+          ( product = `Salad`        supplier = `Green Growers` quantity = `2`  delivery_date = `2026-08-10` )
+          ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  delivery_date = `2026-08-12` ) ).
+
+      IF s_search-supplier IS NOT INITIAL.
+        " NS = `contains no string` — drop the rows whose supplier does not match
+        DELETE t_invoices WHERE supplier NS s_search-supplier.
+      ENDIF.
+
+      IF s_search-date_from IS NOT INITIAL.
+        DELETE t_invoices WHERE delivery_date < s_search-date_from.
+      ENDIF.
+
+      IF s_search-date_to IS NOT INITIAL.
+        DELETE t_invoices WHERE delivery_date > s_search-date_to.
+      ENDIF.
+
     ENDIF.
 
   ENDMETHOD.
-
-
-  METHOD on_event.
-
-    CASE client->get( )-event.
-      WHEN `EDIT`.
-        s_edit = VALUE #( t_invoices[ product = client->get_event_arg( ) ] OPTIONAL ).
-        popup_edit_display( ).
-      WHEN `SAVE`.
-        t_invoices[ product = s_edit-product ]-quantity = s_edit-quantity.
-        client->popup_destroy( ).
-        client->message_toast_display( |{ s_edit-product } updated.| ).
-      WHEN `CANCEL`.
-        client->popup_destroy( ).
-    ENDCASE.
-
-  ENDMETHOD.
-
-
-  METHOD view_display.
-
-    t_invoices = VALUE #(
-        ( product = `Pineapple`    supplier = `ACME`          quantity = `21` )
-        ( product = `Milk`         supplier = `Green Growers` quantity = `4`  )
-        ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  )
-        ( product = `Salad`        supplier = `Green Growers` quantity = `2`  )
-        ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  ) ).
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-            )->ele( `Shell`
-                )->ele( `Page`
-                    )->a( n = `title` v = `Walkthrough - Step 8`
-
-                    )->ele( `List`
-                        )->a( n = `headerText` v = `Invoices`
-                        )->a( n = `items`      v = client->_bind( t_invoices )
-
-                        )->ele( `items`
-                            )->tag( `StandardListItem`
-                                )->a( n = `title`       v = `{PRODUCT}`
-                                )->a( n = `description` v = `{SUPPLIER}`
-                                )->a( n = `info`        v = `{QUANTITY}`
-                                )->a( n = `type`        v = `Active`
-                                )->a( n = `press`       v = client->_event( val   = `EDIT`
-                                                                            t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-
-  METHOD popup_edit_display.
-
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
-
-            )->ele( `Dialog`
-                )->a( n = `title` v = |Edit { s_edit-product }|
-
-                )->ele( `content`
-
-                    )->tag( `Label`
-                        )->a( n = `text` v = `Quantity`
-                    )->tag( `Input`
-                        )->a( n = `value` v = client->_bind( s_edit-quantity )
-
-                )->end(
-
-                )->ele( `buttons`
-
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `Cancel`
-                        )->a( n = `press` v = client->_event( `CANCEL` )
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `Save`
-                        )->a( n = `press` v = client->_event( `SAVE` )
-                        )->a( n = `type`  v = `Emphasized` ).
-
-    client->popup_display( popup->stringify( ) ).
-
-  ENDMETHOD.
-
 ENDCLASS.
 ```
 
-## The Structure
+## What Is New
 
-- **`main` is a pure dispatcher.** It stashes `client` in a protected
-  attribute — so the handler methods can use it without passing it around —
-  and routes each roundtrip to the method for its phase. `check_on_event( )`
-  without an argument is true for *any* event; the `CASE` in `on_event`
-  decides which one.
-- **State stays public, everything else protected.** Public attributes are
-  the serialized, browser-visible model — bound data and nothing more. The
-  `client` reference and the methods are implementation.
-- **One method per screen.** `view_display` for the page, `popup_edit_display`
-  for the dialog. When an app grows, this is the seam it grows along.
+- **A form, from a second statement.** The chain is split: `view` holds the
+  root, `page` holds the `Page`, and the form and the list are each filled from
+  `page` in a statement of their own. That is the shape most abap2UI5 apps use
+  once a view has more than one part — see
+  [View → Definition](/cookbook/view/definition).
+- **`sap.ui.layout.form` needs its own namespace.** `xmlns:form` is declared on
+  the root next to `xmlns:mvc`, and `SimpleForm` and its `content` aggregation
+  are written with `ns = \`form\``. A `SimpleForm` lays out label/field pairs by
+  itself — no grid, no widths.
+- **`DatePicker` with `valueFormat`.** The picker shows the date in the user's
+  locale and hands your ABAP attribute the format you asked for — here
+  `yyyy-MM-dd`, so a string comparison sorts correctly.
+- **The event handler reads data, and nothing else.** No `view_display( )` in
+  the `READ` branch: the view already exists in the browser, only `t_invoices`
+  changed, and every roundtrip that changed bound data pushes the new model by
+  itself.
+- **The `SELECT` is the point.** In your system the demo data and the three
+  `DELETE`s are one `SELECT` with a `WHERE` clause. abap2UI5 does not abstract
+  the database layer — reading and writing stays plain ABAP, which is what
+  makes it easy to plug into code you already have.
 
-## Where to Go From Here
-
-You have seen everything an abap2UI5 app is made of. Three places continue
-from here:
-
-- the [Full Example](/get_started/full_example) — the same structure applied
-  to a realistic selection-screen app with a table and database access,
-- the [Cookbook](/cookbook/view/definition) — every topic of this walkthrough as a
-  reference chapter, from [value helps](/cookbook/expert_more/value_help) to
-  [navigation between apps](/cookbook/event_navigation/navigation),
-- the [sample catalogues](https://abap2ui5.github.io/samples/) — complete,
-  tested apps for nearly every pattern, each one class like here.
+Next, the list becomes a real table.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 
@@ -175,6 +156,6 @@ that use what this page describes. Each is a single class — pull the repositor
 
 | Sample | Class |
 |---|---|
-| Full Example with sap.ui.table | [`Z2UI5_CL_SMP_APP_070`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_070.clas.abap) |
+| Editable Cells, Add and Delete Rows | [`Z2UI5_CL_SMP_APP_011`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_011.clas.abap) |
 
 <!-- samples:end -->
