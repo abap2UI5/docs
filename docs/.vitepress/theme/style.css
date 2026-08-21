@@ -453,26 +453,31 @@
   color: var(--vp-c-brand-2);
 }
 
-/* ============================================== the home page, one screen ===
+/* ================================================ the home page, at 90% ===
  *
- * The home page is not a page you read — it is a signpost, and a signpost you
- * have to scroll is a signpost that failed. At the theme's own sizes it came
- * to 1152px: hero, three cards, the samples button and the footer, on a 13"
- * laptop that is a screen and a half, so the cards arrived only for readers
- * who went looking for them.
+ * The home page is not a page you read — it is a signpost, and at the theme's
+ * own sizes it came to 1152px on a 1440-wide window: hero, three cards, the
+ * samples button and the footer, which is a screenful and a bit, so the cards
+ * arrived only for a reader who went looking for them.
  *
- * Everything below is the same page at smaller numbers — nothing is dropped
- * and nothing is hidden. The type stays in its ranks (the hero name is still
- * the largest thing on the page, the tagline still smaller than the text it
- * follows); it is the AIR that goes, which is where the theme's default is
- * most generous: 144px above the hero name, 128px between the last card and
- * the footer, 64px of card padding around three lines of text.
+ * What is below is the theme's own design at nine tenths of its numbers —
+ * every one of them, type included, so the page keeps its proportions
+ * exactly. It is the page a reader gets by pressing ctrl-minus once, written
+ * down: the same relationship between the hero name, the headline and the
+ * tagline, the same air around the cards, at a size that leaves the whole
+ * signpost on one screen on a large display.
  *
- * Measured, at a 1440-wide window: 1152px -> 750px, footer included. The
- * target was 800px, the working height of a 13" MacBook's browser window;
- * anything taller and the footer goes under the fold again. The 50px left
- * over is deliberate — it is the room a hero headline needs when it wraps to
- * a second line, which it does at narrower windows and in other type.
+ * The first attempt at this cut harder — hero type to 40px, cards to 16px of
+ * padding — and hit 750px, which fit any laptop and read as a different,
+ * smaller page. Fitting a 13" window is not worth redesigning the front door
+ * for: at 90% the page is about 970px, so a 1200px-tall window shows all of
+ * it and a 800px one still scrolls a little. That is the deliberate trade.
+ *
+ * The one number NOT scaled is the gap under the last block: the theme's
+ * 128px assumes there is more page below, and here there is a footer. It is
+ * 48px instead. Nothing is visible in that space either way — when the page
+ * is shorter than the window the footer sits at the bottom regardless — so it
+ * costs nothing to look at and saves 80px on a short one.
  *
  * Specificity: the theme's rules are Vue SCOPED styles, so each compiles with
  * a `[data-v-…]` attribute — `.VPHero[data-v-x]` counts two units, and a bare
@@ -489,83 +494,85 @@
  * layout is one column, and a phone scrolls the home page whatever we do.
  */
 @media (min-width: 960px) {
-  /* The hero. Top padding has to keep the nav-height term — the hero is
-   * pulled up under the fixed nav bar by a negative margin, so a plain `40px`
-   * would put the name behind it. */
+  /* The hero: 80/64 of padding, 56/64 type, 24/36 tagline. Top padding has to
+   * keep the nav-height term — the hero is pulled up under the fixed nav bar
+   * by a negative margin, so a plain `72px` would put the name behind it. */
   .Layout .VPHome .VPHero {
-    padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 32px);
-    padding-bottom: 32px;
+    padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 72px);
+    padding-bottom: 58px;
   }
 
   .Layout .VPHome .VPHero .name,
   .Layout .VPHome .VPHero .text {
-    font-size: 40px;
-    line-height: 48px;
+    font-size: 50px;
+    line-height: 58px;
   }
 
   .Layout .VPHome .VPHero .tagline {
-    padding-top: 8px;
-    font-size: 17px;
-    line-height: 26px;
+    padding-top: 11px;
+    font-size: 22px;
+    line-height: 32px;
   }
 
   .Layout .VPHome .VPHero .actions {
-    padding-top: 18px;
+    padding-top: 29px;
   }
 
-  /* The cards. The icon is the one element that shrinks more than the rest:
-   * at 48px it is a tile of its own above the title, and the card is three
-   * lines of text under a picture. At 36px it reads as what it is — a mark on
-   * the card, not the card's subject. */
+  /* The three buttons scale with the type above them, or they end up looking
+   * bigger than the headline they sit under. */
+  .Layout .VPHome .VPHero .VPButton.medium {
+    padding: 0 18px;
+    font-size: 13px;
+    line-height: 34px;
+  }
+
+  /* The cards: 24px of padding, a 48px icon, 16/14 type. */
   .Layout .VPHome .VPFeature .box {
-    padding: 16px;
+    padding: 22px;
   }
 
   .Layout .VPHome .VPFeature .icon {
-    margin-bottom: 12px;
-    width: 36px;
-    height: 36px;
-    font-size: 19px;
+    margin-bottom: 18px;
+    width: 43px;
+    height: 43px;
+    font-size: 22px;
   }
 
-  .Layout .VPHome .VPFeature .details {
+  .Layout .VPHome .VPFeature .title {
+    font-size: 14.5px;
     line-height: 22px;
   }
 
-  /* The samples button, set apart under the grid. Its rule above already
-   * gives it a divider and 68px of air; on one screen that reads as the same
-   * separation at 42px. */
+  .Layout .VPHome .VPFeature .details {
+    padding-top: 7px;
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  /* The samples block is this file's own, further up — same treatment, so it
+   * shrinks with the grid it sits under instead of growing relative to it. */
   .Layout .VPHome .a2ui5-catalogues {
-    margin-top: 24px;
-    padding-top: 18px;
+    margin-top: 36px;
+    padding-top: 25px;
+  }
+
+  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-lead {
+    font-size: 13px;
+    line-height: 20px;
   }
 
   .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-links {
-    margin-top: 14px;
+    margin-top: 18px;
   }
 
-  /* And the gap below all of it. 128px under the last thing on a page is the
-   * theme assuming there is more page coming; here there is not, there is a
-   * footer. */
+  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-links a {
+    padding: 7px 20px;
+    font-size: 13px;
+  }
+
+  /* And the gap below all of it — the one number that is not nine tenths of
+   * the theme's, for the reason given above. */
   .Layout .VPContent .VPHome {
-    margin-bottom: 36px;
-  }
-}
-
-/* The footer is outside `.VPHome`, so it takes its own rule — and it is not
- * home-page-only: 32px above and below two lines of small grey text is the
- * same overspend on every page.
- *
- * `:not(.has-sidebar)` is here for specificity, not for the selection: the
- * theme hides the footer on sidebar pages anyway, so this matches every
- * footer anyone ever sees, and it takes the rule to three units against the
- * scoped `.VPFooter[data-v-…]`'s two. */
-.Layout .VPFooter:not(.has-sidebar) {
-  padding: 20px 24px;
-}
-
-@media (min-width: 768px) {
-  .Layout .VPFooter:not(.has-sidebar) {
-    padding: 20px 32px;
+    margin-bottom: 48px;
   }
 }
