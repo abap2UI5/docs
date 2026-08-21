@@ -87,6 +87,14 @@ on training data — where abap2UI5 still looks like `z2ui5_cl_xml_view`.
 
 Nothing needs maintaining. Adding a page to the sidebar adds it here.
 
+The reader with a checkout and no build gets the inverse problem: the three
+files are gitignored, so a clone contains none of them. `llms.txt` at the
+repository ROOT is the answer — a committed pointer naming the published URLs,
+maintained by hand because it names URLs and nothing else. Do not "fix" it by
+committing the generated files instead: they would be stale on every commit
+that touches a page, and a wrong committed copy outranks a right generated one
+in every tool that reads the tree.
+
 ## Things that will trip you up
 
 - **The nav bar and the sidebar contain the same two entries.**

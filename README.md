@@ -51,6 +51,11 @@ generated on every build and gitignored — never edit them, and nothing needs
 maintaining: the page list comes from the **sidebar**, so adding a page there
 adds it here. [AGENTS.md](AGENTS.md) has the details.
 
+Because they are gitignored, a **clone** of this repository carries none of
+them — so [`llms.txt`](llms.txt) at the repository root is a committed pointer
+naming the published URLs, for the agent that lands in the checkout rather
+than on the site.
+
 The client API is published for the same reader as one JSON document,
 [client-api.json](https://abap2ui5.github.io/docs/api/client-api.json) —
 generated from `z2ui5_if_client` at the pinned release by
