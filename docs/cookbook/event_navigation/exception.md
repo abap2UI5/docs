@@ -8,6 +8,14 @@ samples:
 
 Beyond plain messages, abap2UI5 ships dedicated popups and fallbacks for handling exceptions and unexpected failures.
 
+::: warning The built-in popups are frozen
+`Z2UI5_CL_POP_ERROR` and its siblings live in the framework's frozen `src/99/02` package:
+they still run, so existing apps keep working, but they are not maintained and
+are on the [removal list](/resources/deprecations).
+New code should take its popups from the separate
+[popups addon](https://github.com/abap2UI5-addons/popups).
+:::
+
 ### Error Popup
 To display full details of your exception:
 ```abap

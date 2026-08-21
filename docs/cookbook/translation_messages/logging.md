@@ -5,6 +5,14 @@ outline: [2, 4]
 
 Logging is critical for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available on-premise and in ABAP Cloud environments alike. With abap2UI5, use BAL like you would in classic ABAP and display logs with the framework's built-in popups.
 
+::: warning The built-in popups are frozen
+`Z2UI5_CL_POP_MESSAGES` and its siblings live in the framework's frozen `src/99/02` package:
+they still run, so existing apps keep working, but they are not maintained and
+are on the [removal list](/resources/deprecations).
+New code should take its popups from the separate
+[popups addon](https://github.com/abap2UI5-addons/popups).
+:::
+
 ## BAL Tables
 In classic ABAP, use the BAL function modules and show the BAL table with the popup `Z2UI5_CL_POP_MESSAGES`. In the `bal_t_msgr` structure, `msgno` is the message number within the message class (`msgid`), while `msgnumber` is the message's sequence number within the log:
 ```abap
