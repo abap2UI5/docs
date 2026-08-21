@@ -586,6 +586,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "References", link: "/resources/references" },
+          // Generated from z2ui5_if_client at the pinned release by
+          // scripts/generate-api-reference.mjs — the entry lives here rather
+          // than in the Cookbook because it is a lookup destination, not a
+          // reading path: the cookbook chapters explain, this page lists.
+          { text: "Client API", link: "/resources/api" },
           // No "Sample Catalogues" entry here any more. A page that only
           // described the three catalogues put a stop between the reader and
           // the corpus, and had to be kept true about counts and facets it

@@ -107,6 +107,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:api-names
 
+      # the committed API reference (resources/api.md and the JSON next to it),
+      # regenerated from z2ui5_if_client at the release the site names and
+      # compared against what is committed. The reference is generated so it
+      # cannot drift from the interface by hand - this is what makes that true
+      # after a release too
+      - name: API reference freshness
+        if: ${{ !cancelled() }}
+        run: npm run check:api-reference
+
       # the Working Samples blocks: still generated from what the catalogue says
       # today, still pointing at classes that exist, and still pointed back at
       # from those classes. A link into another repository is the one kind that

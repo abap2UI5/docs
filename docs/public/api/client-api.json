@@ -1,0 +1,1074 @@
+{
+  "description": "The abap2UI5 client API: everything an app may call on `client`, read from z2ui5_if_client at the release this documentation names.",
+  "release": "1.143.0",
+  "source": "https://github.com/abap2UI5/abap2UI5/blob/1.143.0/src/02/z2ui5_if_client.intf.abap",
+  "documentation": "https://abap2ui5.github.io/docs/resources/api.html",
+  "methods": [
+    {
+      "name": "view_destroy",
+      "group": "Main view",
+      "parameters": []
+    },
+    {
+      "name": "view_display",
+      "group": "Main view",
+      "doc": [
+        "Display the MAIN view. A new main view is a new screen, so an open popup and popover go with it - re-open one in the same roundtrip if it is meant to survive ( the frontend builds MAIN first, then the popup )."
+      ],
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike"
+        },
+        {
+          "name": "switch_default_model_anno_uri",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "switch_default_model_path",
+          "type": "clike",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "view_model_update",
+      "group": "Main view",
+      "doc": [
+        "obsolete - does NOTHING. An event round-trip that changes bound data pushes the model AUTOMATICALLY: the framework compares the model state before and after main( ) and, when it differs, sends it to every open view slot (see z2ui5_cl_ui5_handler=>main_end). A handler can therefore no longer render stale by forgetting a call, and there is nothing left for this method to do. It stays in the interface so existing apps keep compiling - remove the calls at your leisure."
+      ],
+      "parameters": []
+    },
+    {
+      "name": "set_session_stateful",
+      "group": "Session and app state",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "abap_bool",
+          "default": "abap_true"
+        }
+      ]
+    },
+    {
+      "name": "set_app_state_active",
+      "group": "Session and app state",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "abap_bool",
+          "default": "abap_true"
+        }
+      ]
+    },
+    {
+      "name": "set_push_state",
+      "group": "Session and app state",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "nest_view_display",
+      "group": "Nested views",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike"
+        },
+        {
+          "name": "id",
+          "type": "clike"
+        },
+        {
+          "name": "method_insert",
+          "type": "clike"
+        },
+        {
+          "name": "method_destroy",
+          "type": "clike",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "nest_view_destroy",
+      "group": "Nested views",
+      "parameters": []
+    },
+    {
+      "name": "nest_view_model_update",
+      "group": "Nested views",
+      "doc": [
+        "obsolete - does NOTHING, see view_model_update. A nested view inherits the MAIN view's model anyway, and that model is pushed automatically"
+      ],
+      "parameters": []
+    },
+    {
+      "name": "nest2_view_display",
+      "group": "Nested views",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike"
+        },
+        {
+          "name": "id",
+          "type": "clike"
+        },
+        {
+          "name": "method_insert",
+          "type": "clike"
+        },
+        {
+          "name": "method_destroy",
+          "type": "clike",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "nest2_view_destroy",
+      "group": "Nested views",
+      "parameters": []
+    },
+    {
+      "name": "nest2_view_model_update",
+      "group": "Nested views",
+      "doc": [
+        "obsolete - does NOTHING, see view_model_update. A nested view inherits the MAIN view's model anyway, and that model is pushed automatically"
+      ],
+      "parameters": []
+    },
+    {
+      "name": "popup_display",
+      "group": "Popups and popovers",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike"
+        }
+      ]
+    },
+    {
+      "name": "popup_model_update",
+      "group": "Popups and popovers",
+      "doc": [
+        "obsolete - does NOTHING, see view_model_update. The automatic push reaches the POPUP slot too, so an open popup refreshes on its own"
+      ],
+      "parameters": []
+    },
+    {
+      "name": "popup_destroy",
+      "group": "Popups and popovers",
+      "parameters": []
+    },
+    {
+      "name": "popover_model_update",
+      "group": "Popups and popovers",
+      "doc": [
+        "obsolete - does NOTHING, see view_model_update. The automatic push reaches the POPOVER slot too, so an open popover refreshes on its own"
+      ],
+      "parameters": []
+    },
+    {
+      "name": "popover_display",
+      "group": "Popups and popovers",
+      "parameters": [
+        {
+          "name": "xml",
+          "type": "clike"
+        },
+        {
+          "name": "by_id",
+          "type": "clike"
+        }
+      ]
+    },
+    {
+      "name": "popover_destroy",
+      "group": "Popups and popovers",
+      "parameters": []
+    },
+    {
+      "name": "get",
+      "group": "Reading the request",
+      "parameters": [],
+      "returns": "z2ui5_if_types=>ty_s_get"
+    },
+    {
+      "name": "get_event",
+      "group": "Reading the request",
+      "doc": [
+        "The name of the event that triggered this roundtrip - empty when no event is being handled (e.g. on the initial call). Shortcut for get( )-event, made for the dispatcher idiom CASE client->get_event( )."
+      ],
+      "parameters": [],
+      "returns": "string"
+    },
+    {
+      "name": "get_event_arg",
+      "group": "Reading the request",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "i",
+          "default": "1"
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "get_app",
+      "group": "App navigation",
+      "parameters": [
+        {
+          "name": "id",
+          "type": "clike",
+          "optional": true
+        }
+      ],
+      "returns": "REF TO z2ui5_if_app"
+    },
+    {
+      "name": "_event_nav_app_leave",
+      "group": "App navigation",
+      "parameters": [],
+      "returns": "string"
+    },
+    {
+      "name": "nav_app_leave",
+      "group": "App navigation",
+      "preferred": "app",
+      "parameters": [
+        {
+          "name": "app",
+          "type": "REF TO z2ui5_if_app",
+          "optional": true
+        },
+        {
+          "name": "event",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "r_data",
+          "type": "data",
+          "optional": true
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "nav_app_call",
+      "group": "App navigation",
+      "parameters": [
+        {
+          "name": "app",
+          "type": "REF TO z2ui5_if_app"
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "message_box_display",
+      "group": "Messages",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "any"
+        },
+        {
+          "name": "type",
+          "type": "clike",
+          "default": "`information`"
+        },
+        {
+          "name": "title",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "styleclass",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "onclose",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "actions",
+          "type": "string_table",
+          "optional": true
+        },
+        {
+          "name": "emphasizedaction",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "initialfocus",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "textdirection",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "icon",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "details",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "closeonnavigation",
+          "type": "abap_bool",
+          "default": "abap_true"
+        },
+        {
+          "name": "dependenton",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "contentwidth",
+          "type": "clike",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "message_toast_display",
+      "group": "Messages",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "clike"
+        },
+        {
+          "name": "duration",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "width",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "my",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "at",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "of",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "offset",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "collision",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "onclose",
+          "type": "clike",
+          "default": "``"
+        },
+        {
+          "name": "autoclose",
+          "type": "abap_bool",
+          "default": "abap_true"
+        },
+        {
+          "name": "animationtimingfunction",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "animationduration",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "closeonbrowsernavigation",
+          "type": "abap_bool",
+          "default": "abap_true"
+        },
+        {
+          "name": "class",
+          "type": "clike",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "name": "_event",
+      "group": "Events and frontend actions",
+      "doc": [
+        "Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_allow_multi_req sends the event while another roundtrip is still running, check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set."
+      ],
+      "preferred": "val",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike",
+          "optional": true
+        },
+        {
+          "name": "t_arg",
+          "type": "string_table",
+          "optional": true
+        },
+        {
+          "name": "s_ctrl",
+          "type": "z2ui5_if_types=>ty_s_event_control",
+          "optional": true
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "_event_client",
+      "group": "Events and frontend actions",
+      "doc": [
+        "obsolete - use follow_up_action( ), which is the same call in the same position now. Since follow_up_action( ) has a RETURNING parameter, a call whose result is CONSUMED - the view-attribute form `v = client->follow_up_action( val = ... t_arg = ... )` - takes its IF result IS SUPPLIED branch straight to get_event_client( ), which is this method's entire body: the identical roundtrip-free wire, byte for byte. One method therefore both schedules a frontend action and wires one, and this one is a second name for half of it.",
+        "The one difference is follow_up_action( )'s leading CASE, which claims cs_event-set_nav_routing / set_push_state / set_app_state_active before that branch. Those three are backend-side navigation options rather than frontend handlers, so wiring one into a view attribute never dispatched anything here either.",
+        "It stays in the interface so existing apps keep compiling - rename the calls at your leisure."
+      ],
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike"
+        },
+        {
+          "name": "view",
+          "type": "clike",
+          "default": "cs_view-main"
+        },
+        {
+          "name": "t_arg",
+          "type": "string_table",
+          "optional": true
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "_bind",
+      "group": "Data binding",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "data"
+        },
+        {
+          "name": "path",
+          "type": "abap_bool",
+          "default": "abap_false"
+        },
+        {
+          "name": "view",
+          "type": "clike",
+          "default": "cs_view-main",
+          "doc": "obsolete - inactive, not passed on internally"
+        },
+        {
+          "name": "custom_mapper",
+          "type": "REF TO z2ui5_if_ajson_mapping",
+          "optional": true,
+          "doc": "obsolete - still evaluated, but do not use in new code. Both hand an app a reference to the bundled AJSON library (src/00/01), which is a MIRRORED copy of an external project, not a contract this framework owns: an app implementing z2ui5_if_ajson_mapping / _filter binds itself to whatever that mirror looks like today. Everything they were reached for has a declarative counterpart on this method now - omit_initial / omit_initial_paths drop initial fields, json splices a JSON node - and the ABAP side can shape the value before it is bound"
+        },
+        {
+          "name": "custom_filter",
+          "type": "REF TO z2ui5_if_ajson_filter",
+          "optional": true
+        },
+        {
+          "name": "tab",
+          "type": "data",
+          "optional": true
+        },
+        {
+          "name": "tab_index",
+          "type": "i",
+          "optional": true
+        },
+        {
+          "name": "switch_default_model",
+          "type": "abap_bool",
+          "default": "abap_false"
+        },
+        {
+          "name": "omit_initial",
+          "type": "abap_bool",
+          "default": "abap_false",
+          "doc": "keep INITIAL fields out of the serialized model instead of sending them as `` / 0. An ABAP field is never absent - it is initial - so by default every field reaches the client as an explicit value, which overrides the UI5 property default the original view relies on (and an enum-typed property rejects the empty string outright). Set it when a bound template's rows fill different subsets of the same properties."
+        },
+        {
+          "name": "omit_initial_paths",
+          "type": "string_table",
+          "optional": true,
+          "doc": "the same omission SCOPED to the listed fields (upper-cased column names, the last path segment). Use it when the blanket flag is too coarse: an abap_false that MUST reach the client is itself initial, so omit_initial would drop it and the control would fall back to its own default - list the numeric/enum columns instead and leave the booleans."
+        },
+        {
+          "name": "json",
+          "type": "abap_bool",
+          "default": "abap_false",
+          "doc": "the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model."
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "_bind_edit",
+      "group": "Data binding",
+      "doc": [
+        "obsolete - alias of _bind with identical behaviour, please use _bind. custom_mapper_back / custom_filter_back are still accepted for source compatibility but are no longer evaluated."
+      ],
+      "parameters": [
+        {
+          "name": "val",
+          "type": "data"
+        },
+        {
+          "name": "path",
+          "type": "abap_bool",
+          "default": "abap_false"
+        },
+        {
+          "name": "view",
+          "type": "clike",
+          "default": "cs_view-main",
+          "doc": "obsolete - inactive, not passed on internally"
+        },
+        {
+          "name": "custom_mapper",
+          "type": "REF TO z2ui5_if_ajson_mapping",
+          "optional": true
+        },
+        {
+          "name": "custom_mapper_back",
+          "type": "REF TO z2ui5_if_ajson_mapping",
+          "optional": true
+        },
+        {
+          "name": "custom_filter",
+          "type": "REF TO z2ui5_if_ajson_filter",
+          "optional": true
+        },
+        {
+          "name": "custom_filter_back",
+          "type": "REF TO z2ui5_if_ajson_filter",
+          "optional": true
+        },
+        {
+          "name": "tab",
+          "type": "data",
+          "optional": true
+        },
+        {
+          "name": "tab_index",
+          "type": "i",
+          "optional": true
+        },
+        {
+          "name": "switch_default_model",
+          "type": "abap_bool",
+          "default": "abap_false"
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "follow_up_action",
+      "group": "Events and frontend actions",
+      "doc": [
+        "Schedule a frontend action to run after the backend response is processed. Two ways to call it: pass a frontend event as val (e.g. cs_event-set_title) with its arguments in t_arg and the framework builds the event call; or pass a raw JavaScript expression as val (without t_arg) to run it as-is. The control/binding calls are frontend events too; their t_arg is positional (an empty argument between filled ones keeps its slot as ``): cs_event-control_by_id - call a method on a control resolved by id: t_arg = id, method, params. Any public control method works unless it is on the frontend denylist (methods that would break framework invariants). The named per-aggregation mutators are on the allowed side of that line - addItem, removeItem, removeAllItems, destroyContent - and only the GENERIC reflection variants that take the member name as an argument are denied (addAggregation, removeAllAggregation, setAssociation, ...). The view is passed as the separate view parameter (default cs_view-main resolves the id across all open views; pass cs_view-popup/popover/... to scope the lookup to that view). Two entries are NOT UI5 methods but frontend capabilities in method form: `css` sets ONE whitelisted CSS declaration on the control's own DOM node (t_arg = id, `css`, property, value) - for a value the control has no property for at all, e.g. the width of a sap.m.Page; prefer a bound property wherever one exists. `toggleBy` opens/closes a popup anchored to a control (t_arg = id, `toggleBy`, anchor id). An association setter (setSelectedSection, setSelectedItem) clears the association when its argument is EMPTY. Wherever an argument takes a CONTROL ID, it also takes an aggregation ITEM, addressed positionally as `<id>/<aggregation>/<index>` (`carousel/pages/2`, 0-based). A control cloned from an aggregation template has no id the backend can spell - UI5 mints it from the template id, the parent id and the index, and the parent id carries the view prefix assigned at runtime - so this is the only way to reach one. It is the equivalent of the UI5 controller idiom `oCarousel.setActivePage( oCarousel.getPages()[ i ] )`. A plain id (no slashes) resolves exactly as before. cs_event-control_global - call a whitelisted method on a global object (MESSAGE_TOAST, MESSAGE_BOX, BUSY_INDICATOR, THEMING, POPUP, INVISIBLE_MESSAGE, FORMATTING): t_arg = object, method, params. POPUP-setWithinArea confines every popup to the control whose id is passed (sap.ui.core.Popup.setWithinArea, needs UI5 >= 1.89) instead of to the window; an EMPTY argument releases the restriction again. INVISIBLE_MESSAGE-announce reads a text out to a screen reader without rendering it (sap.ui.core.InvisibleMessage, needs UI5 >= 1.78): t_arg = text, mode (Polite, default, or Assertive). It is a singleton, so there is no control id - this is the only way to announce a change the backend made. FORMATTING-setCustomCurrencies registers currency codes the standard sap.ui.model.type.Currency does not know, or overrides their digit count (sap.ui.core.Formatting, needs UI5 >= 1.120): t_arg = JSON object, e.g. {\"BGN4\":{\"digits\":4}}. It REPLACES the whole registration - addCustomCurrency ADDS a single code to it instead (t_arg = code, JSON object). Reaching for the wrong one is silent: an app that registers currencies as it loads more data and calls setCustomCurrencies drops what it registered before, and the symptom is a wrong digit count in a table, never an error. cs_event-smart_variant_init - run the initialise( ) handshake sap.ui.comp variant management needs (a controller would call oSmartVariantManagement.initialise( fnCallback, oPersonalizableControl )). Without it the control keeps no personalizable control, saving a view fails inside sap.ui.fl and stored variants are never loaded: t_arg = SmartVariantManagement id, personalizable control id (optional, default: the first control that registered itself). The action waits for that registration, which the smart controls do once their OData metadata has loaded. cs_event-filter_bar_variant_init - wire a classic sap.ui.comp.filterbar.FilterBar to a SmartVariantManagement: t_arg = SmartVariantManagement id, FilterBar id. A SmartFilterBar knows its own fields and registers itself (see smart_variant_init above); a classic FilterBar does not, so a list report normally hand-writes the same controller boilerplate - registerFetchData / registerApplyData / registerGetFiltersWithValues, addPersonalizableControl( ) with a PersonalizableInfo, and a change handler per filter field that marks the variant as modified. This action does all of it, so saving, selecting and restoring a variant works without a single line of JavaScript. The restored values reach the backend through the binding of the filter fields, no extra roundtrip needed. cs_event-keyboard_shortcut - bind a key combination to a named backend event, the declarative equivalent of a sap.ui.core.CommandExecution shortcut: t_arg = combination, event name. The combination is spelled like the UI5 one (`Ctrl+S`, `Ctrl+Shift+D`, `F2`; ctrl/shift/alt/meta in any order, cmd/command/option/control accepted as aliases). Pressing it fires the event exactly like a button press and suppresses the browser's own default for the combination. Registering the same combination again rebinds it; an empty event name removes it. The registrations belong to the running app and are dropped when another app takes over. An optional THIRD t_arg SCOPES the shortcut: the scoped registration wins while its scope is OPEN and the unscoped one applies otherwise, which is how a UI5 CommandExecution in a Popover's dependents shadows the page-level one for the same command. A scope is either a view slot (cs_view-popover/popup/nested/nested2/main) or the ID OF A CONTROL that can be open or closed - a Popover/Dialog declared in the view and opened with control_by_id openBy, which never enters a framework slot. A control scope beats a slot scope (it is the more specific statement), then the innermost open slot wins. An empty event name removes the registration of THAT scope only. cs_event-binding_call - apply a declarative filter/sorter to an aggregation binding, the client-side equivalent of the UI5 controller pattern getBinding('items').filter(...); the model data stays untouched: t_arg = id, aggregation, method, params. method `filter`: params = path, operator, value1, value2 (empty values clear the filter); method `sort`: params = path, descending, group (abap_bool as `X`/``). Each of these events also works roundtrip-free when WIRED IN THE VIEW: write the same call where its result is consumed (`)->a( n = `press` v = client->follow_up_action( val = ... t_arg = ... ) )`) and the action runs in the browser without a server call. That is what the obsolete _event_client( ) did, and the only thing it did."
+      ],
+      "parameters": [
+        {
+          "name": "val",
+          "type": "string"
+        },
+        {
+          "name": "view",
+          "type": "clike",
+          "default": "cs_view-main"
+        },
+        {
+          "name": "t_arg",
+          "type": "string_table",
+          "optional": true
+        }
+      ],
+      "returns": "string"
+    },
+    {
+      "name": "check_on_event",
+      "group": "App lifecycle",
+      "parameters": [
+        {
+          "name": "val",
+          "type": "clike",
+          "optional": true
+        }
+      ],
+      "returns": "abap_bool"
+    },
+    {
+      "name": "check_on_init",
+      "group": "App lifecycle",
+      "parameters": [],
+      "returns": "abap_bool"
+    },
+    {
+      "name": "check_app_prev_stack",
+      "group": "App navigation",
+      "parameters": [],
+      "returns": "abap_bool"
+    },
+    {
+      "name": "check_on_navigated",
+      "group": "App lifecycle",
+      "parameters": [],
+      "returns": "abap_bool"
+    },
+    {
+      "name": "get_app_prev",
+      "group": "App navigation",
+      "parameters": [],
+      "returns": "REF TO z2ui5_if_app"
+    }
+  ],
+  "constants": [
+    {
+      "name": "cs_device",
+      "doc": [],
+      "members": [
+        {
+          "name": "system",
+          "doc": [],
+          "members": [
+            {
+              "name": "phone",
+              "type": "string",
+              "value": "phone"
+            },
+            {
+              "name": "tablet",
+              "type": "string",
+              "value": "tablet"
+            },
+            {
+              "name": "desktop",
+              "type": "string",
+              "value": "desktop"
+            },
+            {
+              "name": "combi",
+              "type": "string",
+              "value": "combi"
+            }
+          ]
+        },
+        {
+          "name": "browser",
+          "doc": [],
+          "members": [
+            {
+              "name": "chrome",
+              "type": "string",
+              "value": "cr"
+            },
+            {
+              "name": "firefox",
+              "type": "string",
+              "value": "ff"
+            },
+            {
+              "name": "safari",
+              "type": "string",
+              "value": "sf"
+            },
+            {
+              "name": "edge",
+              "type": "string",
+              "value": "ed"
+            }
+          ]
+        },
+        {
+          "name": "os",
+          "doc": [],
+          "members": [
+            {
+              "name": "windows",
+              "type": "string",
+              "value": "win"
+            },
+            {
+              "name": "macintosh",
+              "type": "string",
+              "value": "mac"
+            },
+            {
+              "name": "linux",
+              "type": "string",
+              "value": "linux"
+            },
+            {
+              "name": "ios",
+              "type": "string",
+              "value": "ios"
+            },
+            {
+              "name": "android",
+              "type": "string",
+              "value": "android"
+            }
+          ]
+        },
+        {
+          "name": "orientation",
+          "doc": [],
+          "members": [
+            {
+              "name": "portrait",
+              "type": "string",
+              "value": "portrait"
+            },
+            {
+              "name": "landscape",
+              "type": "string",
+              "value": "landscape"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cs_event",
+      "doc": [],
+      "members": [
+        {
+          "name": "popup_close",
+          "type": "string",
+          "value": "POPUP_CLOSE"
+        },
+        {
+          "name": "popover_close",
+          "type": "string",
+          "value": "POPOVER_CLOSE"
+        },
+        {
+          "name": "set_size_limit",
+          "type": "string",
+          "value": "SET_SIZE_LIMIT"
+        },
+        {
+          "name": "set_odata_model",
+          "type": "string",
+          "value": "SET_ODATA_MODEL"
+        },
+        {
+          "name": "cross_app_nav_to_ext",
+          "type": "string",
+          "value": "CROSS_APP_NAV_TO_EXT"
+        },
+        {
+          "name": "cross_app_nav_to_prev_app",
+          "type": "string",
+          "value": "CROSS_APP_NAV_TO_PREV_APP"
+        },
+        {
+          "name": "clipboard_copy",
+          "type": "string",
+          "value": "CLIPBOARD_COPY"
+        },
+        {
+          "name": "set_title",
+          "type": "string",
+          "value": "SET_TITLE"
+        },
+        {
+          "name": "set_favicon",
+          "type": "string",
+          "value": "SET_FAVICON"
+        },
+        {
+          "name": "set_focus",
+          "type": "string",
+          "value": "SET_FOCUS"
+        },
+        {
+          "name": "scroll_to",
+          "type": "string",
+          "value": "SCROLL_TO"
+        },
+        {
+          "name": "scroll_into_view",
+          "type": "string",
+          "value": "SCROLL_INTO_VIEW"
+        },
+        {
+          "name": "start_timer",
+          "type": "string",
+          "value": "START_TIMER"
+        },
+        {
+          "name": "system_logout",
+          "type": "string",
+          "value": "SYSTEM_LOGOUT"
+        },
+        {
+          "name": "keyboard_set_mode",
+          "type": "string",
+          "value": "KEYBOARD_SET_MODE"
+        },
+        {
+          "name": "keyboard_shortcut",
+          "type": "string",
+          "value": "KEYBOARD_SHORTCUT"
+        },
+        {
+          "name": "open_new_tab",
+          "type": "string",
+          "value": "OPEN_NEW_TAB"
+        },
+        {
+          "name": "location_reload",
+          "type": "string",
+          "value": "LOCATION_RELOAD"
+        },
+        {
+          "name": "set_title_launchpad",
+          "type": "string",
+          "value": "SET_TITLE_LAUNCHPAD"
+        },
+        {
+          "name": "download_b64_file",
+          "type": "string",
+          "value": "DOWNLOAD_B64_FILE"
+        },
+        {
+          "name": "urlhelper",
+          "type": "string",
+          "value": "URLHELPER"
+        },
+        {
+          "name": "clipboard_app_state",
+          "type": "string",
+          "value": "CLIPBOARD_APP_STATE"
+        },
+        {
+          "name": "store_data",
+          "type": "string",
+          "value": "STORE_DATA"
+        },
+        {
+          "name": "play_audio",
+          "type": "string",
+          "value": "PLAY_AUDIO"
+        },
+        {
+          "name": "smart_variant_init",
+          "type": "string",
+          "value": "SMART_VARIANT_INIT"
+        },
+        {
+          "name": "filter_bar_variant_init",
+          "type": "string",
+          "value": "FILTER_BAR_VARIANT_INIT"
+        },
+        {
+          "name": "control_by_id",
+          "type": "string",
+          "value": "CONTROL_BY_ID",
+          "label": "Control"
+        },
+        {
+          "name": "control_global",
+          "type": "string",
+          "value": "CONTROL_GLOBAL",
+          "label": "Control"
+        },
+        {
+          "name": "binding_call",
+          "type": "string",
+          "value": "BINDING_CALL",
+          "label": "Control"
+        },
+        {
+          "name": "bind_element",
+          "type": "string",
+          "value": "BIND_ELEMENT",
+          "label": "Control"
+        },
+        {
+          "name": "set_app_state_active",
+          "type": "string",
+          "value": "SET_APP_STATE_ACTIVE",
+          "label": "experimental"
+        },
+        {
+          "name": "set_push_state",
+          "type": "string",
+          "value": "SET_PUSH_STATE",
+          "label": "experimental"
+        },
+        {
+          "name": "set_nav_routing",
+          "type": "string",
+          "value": "SET_NAV_ROUTING",
+          "label": "experimental"
+        },
+        {
+          "name": "image_editor_popup_close",
+          "type": "string",
+          "value": "IMAGE_EDITOR_POPUP_CLOSE",
+          "label": "obsolet"
+        },
+        {
+          "name": "nav_container_to",
+          "type": "string",
+          "value": "NAV_CONTAINER_TO",
+          "label": "obsolet"
+        },
+        {
+          "name": "nest_nav_container_to",
+          "type": "string",
+          "value": "NEST_NAV_CONTAINER_TO",
+          "label": "obsolet"
+        },
+        {
+          "name": "nest2_nav_container_to",
+          "type": "string",
+          "value": "NEST2_NAV_CONTAINER_TO",
+          "label": "obsolet"
+        },
+        {
+          "name": "popup_nav_container_to",
+          "type": "string",
+          "value": "POPUP_NAV_CONTAINER_TO",
+          "label": "obsolet"
+        },
+        {
+          "name": "popover_nav_container_to",
+          "type": "string",
+          "value": "POPOVER_NAV_CONTAINER_TO",
+          "label": "obsolet"
+        },
+        {
+          "name": "z2ui5",
+          "type": "string",
+          "value": "Z2UI5",
+          "label": "obsolet"
+        },
+        {
+          "name": "wizard_set_next_step",
+          "type": "string",
+          "value": "WIZARD_SET_NEXT_STEP",
+          "label": "obsolet"
+        }
+      ]
+    },
+    {
+      "name": "cs_view",
+      "doc": [],
+      "members": [
+        {
+          "name": "main",
+          "type": "string",
+          "value": "MAIN"
+        },
+        {
+          "name": "nested",
+          "type": "string",
+          "value": "NEST"
+        },
+        {
+          "name": "nested2",
+          "type": "string",
+          "value": "NEST2"
+        },
+        {
+          "name": "popup",
+          "type": "string",
+          "value": "POPUP"
+        },
+        {
+          "name": "popover",
+          "type": "string",
+          "value": "POPOVER"
+        }
+      ]
+    },
+    {
+      "name": "cs_nav_mode",
+      "doc": [
+        "Hash-based app routing modes (see set_nav_routing). The mode decides how much of the running app the URL hash carries, and therefore what the browser Back/Forward buttons (and a reload / bookmark) restore: default - no routing: the hash is left untouched, exactly as before this feature. Back/Forward leave the abap2UI5 page (framework default). fresh   - route '#/app/<CLASS>' (class only): Back/Forward/reload/bookmark start the app FRESH (a clean instance, no preserved input). keep    - route '#/app/<CLASS>/<DRAFT>' (class + server draft): the exact preserved state is restored (all user input), falling back to a fresh start once the draft has expired."
+      ],
+      "members": [
+        {
+          "name": "default",
+          "type": "string",
+          "value": "DEFAULT"
+        },
+        {
+          "name": "fresh",
+          "type": "string",
+          "value": "FRESH"
+        },
+        {
+          "name": "keep",
+          "type": "string",
+          "value": "KEEP"
+        }
+      ]
+    }
+  ],
+  "types": [
+    {
+      "name": "ty_s_name_value",
+      "doc": [],
+      "members": [
+        {
+          "name": "n",
+          "type": "string"
+        },
+        {
+          "name": "v",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "ty_t_name_value",
+      "doc": [],
+      "definition": "STANDARD TABLE OF ty_s_name_value WITH EMPTY KEY"
+    }
+  ]
+}

@@ -51,6 +51,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { declaredRelease } from './lib/release.mjs';
+import { fetchInterface } from './lib/client-interface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGES = path.join(ROOT, 'docs');
@@ -69,13 +70,9 @@ if (!REF) {
   process.exit(0);
 }
 
-const SOURCE = `https://raw.githubusercontent.com/abap2UI5/abap2UI5/${REF}/src/02/z2ui5_if_client.intf.abap`;
-
 let iface;
 try {
-  const res = await fetch(SOURCE, { signal: AbortSignal.timeout(20000) });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  iface = await res.text();
+  iface = await fetchInterface(REF);
 } catch (err) {
   console.log(`z2ui5_if_client at ${REF}: not resolved (${err.message})`);
   console.log('SKIPPED: nothing was verified.');
@@ -98,7 +95,17 @@ const groups = new Map();
     const line = raw.replace(/^\s*"[!]?.*$/, '').replace(/\s"\s.*$/, '').trimEnd();
 
     const begin = /^\s*BEGIN OF ([a-z_0-9]+),?\s*$/i.exec(line);
-    if (begin) { open.push(begin[1].toLowerCase()); groups.set(open.at(-1), new Set()); continue; }
+    if (begin) {
+      const name = begin[1].toLowerCase();
+      // the nested group is itself a member of what encloses it: a page
+      // spelling the full path (`cs_device-system-phone`) trips the
+      // two-segment match `cs_device-system` first, and that spelling is
+      // exactly how an app writes the constant - it has to resolve
+      for (const g of open) groups.get(g).add(name);
+      open.push(name);
+      groups.set(name, new Set());
+      continue;
+    }
     if (/^\s*END OF ([a-z_0-9]+)/i.test(line)) { open.pop(); continue; }
     if (open.length) {
       // a member of every group it is nested in, so cs_device-system-phone

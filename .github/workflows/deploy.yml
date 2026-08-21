@@ -106,6 +106,9 @@ jobs:
       - name: API names
         if: ${{ !cancelled() }}
         run: npm run check:api-names
+      - name: API reference freshness
+        if: ${{ !cancelled() }}
+        run: npm run check:api-reference
       - name: sample links
         if: ${{ !cancelled() }}
         run: npm run check:samples
