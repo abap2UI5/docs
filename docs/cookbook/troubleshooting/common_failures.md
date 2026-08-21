@@ -24,11 +24,18 @@ Binding silently drops the write-back when the path is invalid — your ABAP att
 
 ## Bound Attribute Not Public
 
-`_bind( )` resolves attributes via dynamic `ASSIGN` and only sees the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` is silently ignored — the binding path is generated, but no data is ever serialized for it. There is no compile-time or runtime error.
+`_bind( )` resolves attributes via dynamic `ASSIGN` and only sees the `PUBLIC SECTION`. Anything declared `PROTECTED` or `PRIVATE` — or a local variable — cannot be found, and the framework says so rather than shrugging: it raises `z2ui5_cx_ui5_util_error` with
+
+```
+BINDING_ERROR - No class attribute for binding found -
+Please check if the bound values are public attributes of your class
+```
+
+Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error view. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
 
 Where to look:
-- **Symptom is identical to a binding-path mismatch.** The browser console shows the same `Binding "/path/..." was not found in model` warning, because the path was never populated on the wire.
-- **Check the visibility of the attribute** in the class definition before re-reading the XML. Helper variables that never appear in a `_bind( )` call can stay private; anything you bind must move to `PUBLIC SECTION`.
+- **The error text itself.** Unlike a binding-path mismatch, this failure is reported by name — if you are reading a browser-console warning, you are looking at the section above, not at this one.
+- **Check the visibility of the attribute** in the class definition. Helper variables that never appear in a `_bind( )` call can stay private; anything you bind must move to `PUBLIC SECTION`.
 
 See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
 
@@ -106,11 +113,12 @@ Where to look:
 
 ## State Lost Between Events
 
-Between two events the controller is serialized to the client and deserialized on the next request. Only `PUBLIC SECTION` attributes of **serializable** types survive — local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects do not.
+Between two events the app instance is serialized into a draft record on the **server** and read back on the next request; the browser only carries the draft id. **Attributes** of serializable types survive — at any visibility, `PROTECTED` and `PRIVATE` included. What does not survive is everything that is not an attribute or cannot be written: local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects.
 
 Where to look:
 - **Symptom**: a value set in one event is empty on the next; a calculated value built up in `check_on_init` is gone by the time the user clicks; a singleton or "global" state appears to reset between roundtrips.
-- **Fix**: move surviving state into the `PUBLIC SECTION` with concrete, serializable types. For resources that genuinely need to live server-side across events (file handles, persistent locks, expensive caches), see [Statefulness](/cookbook/expert_more/statefulness).
+- **Fix**: move surviving state out of the method into an attribute with a concrete, serializable type — it does not have to be public for that; only `_bind( )` needs public. If serialization itself is the problem the roundtrip says so, with `APP_SERIALIZATION_ERROR`. For resources that genuinely need to live server-side across events (file handles, persistent locks, expensive caches), see [Statefulness](/cookbook/expert_more/statefulness).
+- **The draft expires.** Four hours by default — an app left open longer starts fresh rather than restoring.
 
 ---
 

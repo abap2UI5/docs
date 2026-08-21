@@ -8,12 +8,12 @@ A logout button isn't a single action. Depending on how an abap2UI5 app was star
 ## The Logout Event
 Fire the event from any controller method to log the user off:
 ```abap
-client->_event_client( client->cs_event-system_logout ).
+client->follow_up_action( client->cs_event-system_logout ).
 ```
 
 Optionally pass a same-origin URL as the first argument to control where the user lands afterwards. The default is `/sap/public/bc/icf/logoff`:
 ```abap
-client->_event_client(
+client->follow_up_action(
   val   = client->cs_event-system_logout
   t_arg = VALUE #( ( `/sap/public/bsp/sap/system/logoff.htm` ) ) ).
 ```
@@ -25,7 +25,7 @@ abap2UI5 can be launched in three ways. Each one creates a different combination
 | Context | Typical URL | Fiori Launchpad shell? |
 |---|---|---|
 | Fiori Launchpad tile | `…/sap/bc/ui2/flp#Z2UI5-display` | yes |
-| ICF HTTP handler (e.g. `Z2UI5_CL_HTTP_HANDLER`) | `…/sap/bc/<your-service>` | no |
+| ICF HTTP handler (e.g. `Z2UI5_CL_UI5_HTTP_HANDLER`) | `…/sap/bc/<your-service>` | no |
 | BSP application (`Z2UI5`, `Z2UI5_V2`) | `…/sap/bc/bsp/sap/z2ui5/index.html` | no |
 
 ### Session Layers

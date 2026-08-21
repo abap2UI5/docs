@@ -91,6 +91,14 @@ The popup has the same lifecycle as the main view: `popup_display( )` renders th
 For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/cookbook/event_navigation/navigation).
 
 An example with the confirmation popup:
+
+::: warning The built-in popups are frozen
+`Z2UI5_CL_POP_TO_CONFIRM` and its siblings live in the framework's frozen `src/99/02` package:
+they still run, so existing apps keep working, but they are not maintained and
+are on the [removal list](/resources/deprecations).
+New code should take its popups from the separate
+[popups addon](https://github.com/abap2UI5-addons/popups).
+:::
 ```abap
   METHOD z2ui5_if_app~main.
 

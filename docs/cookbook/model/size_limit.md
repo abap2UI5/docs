@@ -135,6 +135,15 @@ client->follow_up_action(
     t_arg = VALUE #( ( `500` ) ( client->cs_view-nested ) ) ).
 ```
 
+::: warning The main view and the two nested views share one limit
+Only the popup and the popover own a model of their own. `MAIN`, `NEST` and
+`NEST2` are one control tree and inherit **one** JSON model through UI5 model
+propagation, so a limit set on any of them lands on that shared model and the
+**largest** of the three wins. Raising it for the nested view raises it for the
+main view too, and resetting the main view changes nothing while the nested one
+still asks for more. Reset all three to get back to `100`.
+:::
+
 ::: tip **When to raise it**
 Raise the limit only as high as you actually need. Large bindings increase memory consumption on the frontend and slow down rendering. For very large datasets, prefer a server-side pattern (OData with `growing`, paging, filtering) instead of pushing everything into the model.
 :::

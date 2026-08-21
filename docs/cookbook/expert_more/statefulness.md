@@ -10,9 +10,9 @@ For the small set of cases where a sticky backend session is needed — classic 
 ## Stateless (default)
 | Phase | What happens |
 |---|---|
-| **Request** | Browser sends the serialized app state to the backend |
-| **Process** | A free work process picks it up, runs the controller |
-| **Response** | New view + state are returned, the work process is released |
+| **Request** | Browser sends the draft id and the model delta — not the app state, which never leaves the server |
+| **Process** | A free work process picks it up, reads the app instance back from its draft row, runs the controller |
+| **Response** | View, model and a NEW draft id are returned; the app state is written to that new draft and the work process is released |
 
 No work process is pinned, no enqueue is held, no `SET/GET` parameters survive. This is the recommended default for productive apps.
 

@@ -16,10 +16,11 @@
     "docs:build": "node scripts/generate-llms.mjs && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "check:examples": "node scripts/check-examples.mjs",
+    "check:api-names": "node scripts/check-api-names.mjs",
     "link:samples": "node scripts/link-samples.mjs",
     "check:samples": "node scripts/link-samples.mjs --check",
     "test": "node --test test/*.test.mjs",
-    "check": "npm run test && npm run check:version && npm run docs:build && npm run check:examples && npm run check:samples",
+    "check": "npm run test && npm run check:version && npm run docs:build && npm run check:examples && npm run check:api-names && npm run check:samples",
     "llms": "node scripts/generate-llms.mjs",
     "check:version": "node scripts/check-version.mjs"
   },

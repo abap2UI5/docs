@@ -99,6 +99,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:examples
 
+      # every `client->` name on the site - in the prose and in the snippets
+      # check:examples cannot compile because they are not whole classes -
+      # against z2ui5_if_client at the release this site names. Four pages
+      # taught API that 1.143.0 had deleted, and nothing here was red.
+      - name: API names
+        if: ${{ !cancelled() }}
+        run: npm run check:api-names
+
       # the Working Samples blocks: still generated from what the catalogue says
       # today, still pointing at classes that exist, and still pointed back at
       # from those classes. A link into another repository is the one kind that

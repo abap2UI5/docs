@@ -30,7 +30,7 @@ CLASS z2ui5_cl_my_http_handler IMPLEMENTATION.
     ENDIF.
 
     " Call the abap2UI5 handler
-    z2ui5_cl_http_handler=>run( server ).
+    z2ui5_cl_ui5_http_handler=>run( server ).
   ENDMETHOD.
 
 ENDCLASS.
@@ -61,7 +61,7 @@ CLASS z2ui5_cl_my_http_handler IMPLEMENTATION.
     ENDIF.
 
     " Call the abap2UI5 handler if authorized
-    z2ui5_cl_http_handler=>run( server ).
+    z2ui5_cl_ui5_http_handler=>run( server ).
   ENDMETHOD.
 ENDCLASS.
 ```
