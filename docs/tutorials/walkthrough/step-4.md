@@ -1,0 +1,67 @@
+---
+outline: [2, 4]
+description: Bind an input field to a class attribute — data reaches the server by itself.
+---
+# Step 4: Data Binding
+
+So far the app only talks. Now the user answers: an input field replaces the
+text, and whatever is typed into it arrives in your class — without a single
+line of transfer code:
+
+```abap
+CLASS zcl_app_walkthrough DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA recipient TYPE string.
+ENDCLASS.
+
+CLASS zcl_app_walkthrough IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      recipient = `World`.
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Walkthrough - Step 4`
+
+                      )->tag( `Input`
+                          )->a( n = `value` v = client->_bind( recipient )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `Say Hello`
+                          )->a( n = `press` v = client->_event( `SAY_HELLO` ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `SAY_HELLO` ).
+
+      client->message_toast_display( |Hello { recipient }!| ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+## How the Value Travels
+
+- **`DATA recipient TYPE string`** — a public attribute is the model. The
+  framework serializes public attributes after every roundtrip and restores
+  them before the next one, so your class keeps its state without any session
+  handling. The attribute must be in the `PUBLIC SECTION`: the framework
+  reads it dynamically and silently ignores private or protected ones (full
+  rules on the [Binding](/cookbook/model/binding) page).
+- **`client->_bind( recipient )`** connects the attribute to the `value`
+  property of the input. When the button fires, the browser sends the current
+  screen state along with the event — by the time your `ELSEIF` branch runs,
+  `recipient` already holds what the user typed.
+- **Type it, press the button** — the toast greets whatever name is in the
+  field. Two-way, and you wrote no transfer code.
+
+Next, the same binding moves a whole internal table into a list.

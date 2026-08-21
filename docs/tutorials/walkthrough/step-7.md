@@ -1,0 +1,130 @@
+---
+outline: [2, 4]
+description: Edit a list row in a dialog — popups with the same builder, displayed over the running view.
+---
+# Step 7: Popups
+
+Clicking a row now opens a dialog to edit the invoice's quantity. A popup is
+built with the same builder and the same verbs as the view — only the root
+element changes (`core:FragmentDefinition` instead of `mvc:View`), and it is
+handed to `popup_display( )` while the main view stays untouched behind it:
+
+```abap
+CLASS zcl_app_walkthrough DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_s_invoice,
+        product  TYPE string,
+        supplier TYPE string,
+        quantity TYPE string,
+      END OF ty_s_invoice.
+
+    DATA t_invoices TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
+    DATA s_edit     TYPE ty_s_invoice.
+ENDCLASS.
+
+CLASS zcl_app_walkthrough IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      t_invoices = VALUE #(
+          ( product = `Pineapple`    supplier = `ACME`          quantity = `21` )
+          ( product = `Milk`         supplier = `Green Growers` quantity = `4`  )
+          ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  )
+          ( product = `Salad`        supplier = `Green Growers` quantity = `2`  )
+          ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  ) ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Walkthrough - Step 7`
+
+                      )->ele( `List`
+                          )->a( n = `headerText` v = `Invoices`
+                          )->a( n = `items`      v = client->_bind( t_invoices )
+
+                          )->ele( `items`
+                              )->tag( `StandardListItem`
+                                  )->a( n = `title`       v = `{PRODUCT}`
+                                  )->a( n = `description` v = `{SUPPLIER}`
+                                  )->a( n = `info`        v = `{QUANTITY}`
+                                  )->a( n = `type`        v = `Active`
+                                  )->a( n = `press`       v = client->_event( val   = `EDIT`
+                                                                              t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `EDIT` ).
+
+      s_edit = VALUE #( t_invoices[ product = client->get_event_arg( ) ] OPTIONAL ).
+
+      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+
+              )->ele( `Dialog`
+                  )->a( n = `title` v = |Edit { s_edit-product }|
+
+                  )->ele( `content`
+
+                      )->tag( `Label`
+                          )->a( n = `text` v = `Quantity`
+                      )->tag( `Input`
+                          )->a( n = `value` v = client->_bind( s_edit-quantity )
+
+                  )->end(
+
+                  )->ele( `buttons`
+
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `Cancel`
+                          )->a( n = `press` v = client->_event( `CANCEL` )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `Save`
+                          )->a( n = `press` v = client->_event( `SAVE` )
+                          )->a( n = `type`  v = `Emphasized` ).
+
+      client->popup_display( popup->stringify( ) ).
+
+    ELSEIF client->check_on_event( `SAVE` ).
+
+      t_invoices[ product = s_edit-product ]-quantity = s_edit-quantity.
+      client->popup_destroy( ).
+      client->message_toast_display( |{ s_edit-product } updated.| ).
+
+    ELSEIF client->check_on_event( `CANCEL` ).
+
+      client->popup_destroy( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+## What Is New
+
+- **`s_edit` is the popup's model.** The `EDIT` handler copies the clicked
+  row into it, and the dialog's input binds to `s_edit-quantity` — by the
+  time `SAVE` arrives, the attribute already holds the new value.
+- **`popup_display( )` / `popup_destroy( )`** show and close the dialog. The
+  main view is never rebuilt — it waits behind the popup.
+- **No refresh call after `SAVE`.** The handler changes `t_invoices` and
+  does nothing else: every roundtrip that changed bound data pushes the new
+  model to the browser by itself, and the list updates. (You may see
+  `view_model_update( )` in older code — it is deliberately empty and does
+  nothing.)
+
+Popovers, message boxes and the built-in popup classes are covered under
+[Popup, Popover](/cookbook/popup_popover/popup).
+
+The app is complete — one last step separates it into the structure real
+apps use.
