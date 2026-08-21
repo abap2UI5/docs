@@ -37,6 +37,9 @@ you are interested in.
 
 No prior abap2UI5 or UI5 experience is needed — the tutorial introduces every
 concept as it appears. Basic ABAP (classes, methods, internal tables) is
-assumed. If you want the framework installed in your own system first, do the
-[Quickstart](/get_started/quickstart) — but the Run button works without any
-installation at all.
+assumed, and [Hello World](/get_started/hello_world) is the one page worth
+reading first: it starts the smallest possible app in your own system, which
+is where this tutorial picks up.
+
+The Run button works without any installation at all, so you can also simply
+begin at [Step 1](/tutorials/walkthrough/step-1).

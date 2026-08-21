@@ -13,20 +13,18 @@ Run button, or copy it into your system and start it like any abap2UI5 app
 
 | Tutorial | Type | Content |
 |---|---|---|
-| [Walkthrough](/tutorials/walkthrough/overview) | Foundation | Builds a small invoice app from scratch, one step at a time — the app class and its lifecycle, views built in ABAP, events, data binding, lists, popups, and the structure real apps use. |
+| [Walkthrough](/tutorials/walkthrough/overview) | Foundation | Builds a small invoice app from scratch in eight steps — the app class and its lifecycle, views built in ABAP, events, data binding, lists, popups, and the structure real apps use. |
+| [Full Example](/get_started/full_example) | Deep dive | The same structure applied to a realistic ABAP flow: a selection screen, a `SELECT`, a result table, a popup that edits a row, and the change written back. |
 
-More tutorials — deep dives into single topics — will follow. Until then, the
-[Cookbook](/cookbook/overview) covers each topic as a reference chapter.
+Keep the [Cheat Sheet](/cookbook/cheat_sheet) open while you work through
+them — it is every recurring construct on one page, from binding syntax to
+the popup calls.
 
 ## After the Tutorials
 
-Three catalogues of complete, tested apps continue where the tutorials stop:
+The [Cookbook](/cookbook/view/definition) covers each topic again as a reference
+chapter, and three catalogues of complete, tested apps continue from there:
 
 - [Samples](https://abap2ui5.github.io/samples/) — one app per pattern, along a guided learning path
 - [Controls](https://abap2ui5.github.io/samples-controls/) — UI5 demo kit samples rebuilt as abap2UI5 apps, searchable by control
 - [Stack](https://abap2ui5.github.io/samples-stack/) — integration samples per technology, from RAP to WebSocket
-
-And two pages of this site compress the walkthrough for readers in a hurry:
-[Hello World](/get_started/hello_world) covers the first steps on a single
-page, the [Full Example](/get_started/full_example) builds a realistic
-selection-screen app on top of them.

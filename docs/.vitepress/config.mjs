@@ -124,7 +124,7 @@ export default defineConfig({
           // "Introduction" was the first PAGE in it, one level down.
           { text: "Getting Started", link: "/get_started/about" }, // nav
           { text: "Tutorials", link: "/tutorials/overview" }, // nav
-          { text: "Cookbook", link: "/cookbook/overview" },
+          { text: "Cookbook", link: "/cookbook/view/definition" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
           // subsection of Advanced Topic in the sidebar, and a flat dropdown
@@ -181,11 +181,13 @@ export default defineConfig({
         items: [
           { text: "Introduction", link: "/get_started/about" }, // sidebar
           {
+            // Install it, and see one app run. The step-by-step tutorials -
+            // Full Example among them - are a section of their own now; what
+            // stays here is the shortest path from nothing to a running app.
             text: "Quickstart",
             items: [
               { text: "Install with abapGit", link: "/get_started/quickstart" },
               { text: "Hello World", link: "/get_started/hello_world" },
-              { text: "Full Example", link: "/get_started/full_example" },
             ],
           },
           { text: "Tooling", link: "/get_started/tooling" },
@@ -203,30 +205,46 @@ export default defineConfig({
         items: [
           { text: "Overview", link: "/tutorials/overview" }, // sidebar
           {
+            // NOT collapsed: the eight steps are the section's content, and a
+            // reader who is working through them needs to see where they are
+            // in the sequence on every page. A tutorial whose steps are behind
+            // one more click reads as a single page that happens to be long.
             text: "Walkthrough",
             link: "/tutorials/walkthrough/overview",
-            collapsed: true,
+            collapsed: false,
             items: [
               { text: "Introduction", link: "/tutorials/walkthrough/overview" }, // sidebar
-              { text: "1 — Hello World", link: "/tutorials/walkthrough/step-1" },
-              { text: "2 — A First View", link: "/tutorials/walkthrough/step-2" },
-              { text: "3 — Events", link: "/tutorials/walkthrough/step-3" },
-              { text: "4 — Data Binding", link: "/tutorials/walkthrough/step-4" },
-              { text: "5 — List Binding", link: "/tutorials/walkthrough/step-5" },
-              { text: "6 — Row Events", link: "/tutorials/walkthrough/step-6" },
-              { text: "7 — Popups", link: "/tutorials/walkthrough/step-7" },
-              { text: "8 — App Structure", link: "/tutorials/walkthrough/step-8" },
+              { text: "1. Hello World", link: "/tutorials/walkthrough/step-1" },
+              { text: "2. A First View", link: "/tutorials/walkthrough/step-2" },
+              { text: "3. Events", link: "/tutorials/walkthrough/step-3" },
+              { text: "4. Data Binding", link: "/tutorials/walkthrough/step-4" },
+              { text: "5. List Binding", link: "/tutorials/walkthrough/step-5" },
+              { text: "6. Row Events", link: "/tutorials/walkthrough/step-6" },
+              { text: "7. Popups", link: "/tutorials/walkthrough/step-7" },
+              { text: "8. App Structure", link: "/tutorials/walkthrough/step-8" },
             ],
           },
+          // Both keep the URL they were published under - only the entry that
+          // navigates to them moved. Full Example is a step-by-step tutorial
+          // ("Step 1" to "Step 5") and was the second half of a Quickstart
+          // group that no longer had a tutorial section to hand it to; the
+          // Cheat Sheet is the sheet you keep open WHILE working through one.
+          // Neither is listed twice: an entry standing in two sidebar sections
+          // makes its own search results ambiguous.
+          { text: "Full Example", link: "/get_started/full_example" },
+          { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
         ],
       },
       {
+        // No overview page any more. This is a collection of concrete
+        // problem-and-solution chapters, and a map page in front of it was a
+        // stop between the reader and the recipe - it restated the sidebar
+        // they were already looking at. The section opens on the first
+        // chapter instead.
         text: "Cookbook",
-        link: "/cookbook/overview",
+        link: "/cookbook/view/definition",
         collapsed: true,
         items: [
-          { text: "Overview", link: "/cookbook/overview" },
-          { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
           {
             text: "View",
             link: "/cookbook/view/definition",
