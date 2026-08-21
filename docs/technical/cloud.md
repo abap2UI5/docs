@@ -40,6 +40,7 @@ While the framework itself is cloud-ready, you also need to build each app follo
 
 1. Example: Display Sales Orders (Cloud-Ready):
 
+<!-- playground: no Run button — reads the CDS view I_SalesOrder, which only a system has -->
 ```abap
 CLASS z2ui5_cl_demo_app_003 DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -83,6 +84,7 @@ ENDCLASS.
 This example uses only released APIs, like the CDS View `I_SalesOrder`.
 
 2. Example: Display Sales Orders (not Cloud-Ready):
+<!-- playground: no Run button — SELECTs from VBAK, which no browser database has -->
 ```abap
 CLASS z2ui5_cl_demo_app_004 DEFINITION PUBLIC.
   PUBLIC SECTION.

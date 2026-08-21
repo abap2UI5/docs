@@ -8,6 +8,7 @@ ABAP SQL is the standard way to read and change data in the database directly fr
 ## Read Data
 
 The example below selects flights from the `sflight` table and shows them in a UI5 table:
+<!-- playground: no Run button — SELECTs from SFLIGHT, which no browser database has -->
 ```abap
 CLASS z2ui5_cl_sample_sql DEFINITION PUBLIC.
 

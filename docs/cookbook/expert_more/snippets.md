@@ -130,6 +130,7 @@ The quickest way to surface ABAP data on screen: build the HTML with `cl_demo_ou
 
 See [Demo Output](/cookbook/expert_more/demo_output) for the full CSS block. The minimal version:
 
+<!-- playground: no Run button — cl_demo_output is an on-premise class the transpiler does not implement -->
 ```abap
 CLASS z2ui5_cl_app_write_output DEFINITION PUBLIC.
 

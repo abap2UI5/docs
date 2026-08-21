@@ -73,6 +73,7 @@ Alternatively, handle authorization within individual app classes. This approach
 ### Example: Authorization Check in an App Class
 In this approach, each app checks the user's permissions, like traditional ABAP apps.
 
+<!-- playground: no Run button — runs an authority check and shows nothing — an empty frame demonstrates nothing -->
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 

@@ -121,6 +121,7 @@ INTERFACE z2ui5_if_lp_kpi
 ENDINTERFACE.
 ```
 (2/3) Implement the interface in your app class next to `z2ui5_if_app`. The `count` method holds your KPI logic (e.g., counting open items from the database):
+<!-- playground: no Run button — z2ui5_if_lp_kpi lives in abap2UI5-addons, which the playground does not carry -->
 ```abap
 CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
 

@@ -39,7 +39,11 @@
  * button.
  *
  * An example that trips one of them is still printed, still checked by
- * `check:examples` and still copied by readers. It simply has no button.
+ * `check:examples` and still copied by readers. It simply has no button — and
+ * its page says why, in a `<!-- playground: no Run button — … -->` marker
+ * above the fence. `scripts/check-playground.mjs` refuses an app example that
+ * has neither button nor marker, and a marker whose example got its button, so
+ * nothing here is ever buttonless by accident.
  *
  * The code the button runs is read from the rendered block at click time
  * (`theme/playground.js`), not copied into an attribute here: the reader runs
