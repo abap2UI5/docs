@@ -113,11 +113,12 @@ Where to look:
 
 ## State Lost Between Events
 
-Between two events the controller is serialized to the client and deserialized on the next request. Only `PUBLIC SECTION` attributes of **serializable** types survive — local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects do not.
+Between two events the app instance is serialized into a draft record on the **server** and read back on the next request; the browser only carries the draft id. **Attributes** of serializable types survive — at any visibility, `PROTECTED` and `PRIVATE` included. What does not survive is everything that is not an attribute or cannot be written: local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects.
 
 Where to look:
 - **Symptom**: a value set in one event is empty on the next; a calculated value built up in `check_on_init` is gone by the time the user clicks; a singleton or "global" state appears to reset between roundtrips.
-- **Fix**: move surviving state into the `PUBLIC SECTION` with concrete, serializable types. For resources that genuinely need to live server-side across events (file handles, persistent locks, expensive caches), see [Statefulness](/cookbook/expert_more/statefulness).
+- **Fix**: move surviving state out of the method into an attribute with a concrete, serializable type — it does not have to be public for that; only `_bind( )` needs public. If serialization itself is the problem the roundtrip says so, with `APP_SERIALIZATION_ERROR`. For resources that genuinely need to live server-side across events (file handles, persistent locks, expensive caches), see [Statefulness](/cookbook/expert_more/statefulness).
+- **The draft expires.** Four hours by default — an app left open longer starts fresh rather than restoring.
 
 ---
 

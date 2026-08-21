@@ -53,18 +53,20 @@ ENDCLASS.
 
 ## How the Value Travels
 
-- **`DATA recipient TYPE string`** — a public attribute is the model. The
-  framework serializes public attributes after every roundtrip and restores
-  them before the next one, so your class keeps its state without any session
-  handling. The attribute must be in the `PUBLIC SECTION`: the framework
-  reads it dynamically and silently ignores private or protected ones (full
-  rules on the [Binding](/cookbook/model/binding) page).
+- **`DATA recipient TYPE string`** — a public attribute is the model. After
+  every roundtrip the framework serializes the whole app instance into a draft
+  on the server and restores it before the next one, so your class keeps its
+  state without any session handling. Attributes you `_bind( )` must be in the
+  `PUBLIC SECTION` — the framework reaches them dynamically, and a private or
+  protected one fails the roundtrip with `BINDING_ERROR`. (Everything else may
+  stay protected; it is serialized either way. Full rules on the
+  [Binding](/cookbook/model/binding) page.)
 - **`client->_bind( recipient )`** connects the attribute to the `value`
   property of the input. When the button fires, the browser sends the current
   screen state along with the event — by the time your `ELSEIF` branch runs,
   `recipient` already holds what the user typed.
 - **Type it, press the button** — the toast greets whatever name is in the
-  field. Two-way, and you wrote no transfer code.
+  field. Both directions, and you wrote no transfer code.
 
 Next, the same binding moves a whole internal table into a list.
 

@@ -23,7 +23,7 @@ The example uses sales-order-like data but keeps the SELECTs and updates as plai
 
 ### Step 1 — State: Types and Attributes
 
-The whole app is one class. Public attributes hold everything the framework needs to remember between roundtrips: the selection criteria, the order table, and the row currently being edited. abap2UI5 serializes and restores them automatically — no session handling on your side.
+The whole app is one class. Its attributes hold everything that has to survive a roundtrip: the selection criteria, the order table, and the row currently being edited. abap2UI5 serializes the instance into a server-side draft and restores it automatically — no session handling on your side. They are declared public here because every one of them is bound; state you never `_bind( )` can stay protected.
 
 ```abap
 CLASS zcl_app_full_example DEFINITION PUBLIC.
