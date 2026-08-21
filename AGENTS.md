@@ -36,7 +36,7 @@ are decidable, and all six are decided before a merge:
 | `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
-| `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` at the release this site names. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces. Four pages taught API that 1.143.0 had deleted and nothing was red |
+| `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` at the release this site names, plus every `blob/main/` link into the framework's tree. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
 `.github/workflows/check.yml` runs the same six, in the same order. Keep the

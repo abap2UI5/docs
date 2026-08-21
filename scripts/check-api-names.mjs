@@ -25,6 +25,12 @@
  *   `NAME = ` inside one   is it a parameter of that method?  (fenced ABAP only)
  *   `cs_GROUP-MEMBER`      is MEMBER in that constant group?
  *
+ * …and a fourth, of the same kind: a `github.com/abap2UI5/abap2UI5/blob/main/`
+ * link has to resolve. The user-exits page pointed at
+ * `src/02/z2ui5_if_exit.intf.abap` after the interface had been retired to
+ * `src/99` - a 404 for every reader who clicked it. Those links say `main`, so
+ * `main` is what they are checked against, not the release.
+ *
  * TRUTH is the release, never main. A page is correct when it matches what the
  * reader can install, and main is ahead of that by definition - judging
  * against main would pass a page teaching API that does not exist yet. The
@@ -200,14 +206,55 @@ for (const file of markdownFiles(PAGES)) {
   }
 }
 
-console.log(`check-api-names: ${checked} name(s) on ${markdownFiles(PAGES).length} page(s), against abap2UI5 ${REF}`);
+/* 4: the source links. Distinct URLs only - the same file is linked from
+ * several pages - and one HEAD each, which is a handful of requests. A network
+ * failure here SKIPS this question and leaves the three above intact. */
+let links = 0;
+{
+  const seen = new Map();
+  for (const file of markdownFiles(PAGES)) {
+    const rel = path.relative(PAGES, file).split(path.sep).join('/');
+    for (const m of fs.readFileSync(file, 'utf8')
+      .matchAll(/https:\/\/github\.com\/abap2UI5\/abap2UI5\/blob\/main\/([^)`"\s]+)/g)) {
+      const target = m[1].split('#')[0];
+      if (!seen.has(target)) seen.set(target, new Set());
+      seen.get(target).add(rel);
+    }
+  }
+  links = seen.size;
+  const raw = (f) => `https://raw.githubusercontent.com/abap2UI5/abap2UI5/main/${f}`;
+  const verdicts = await Promise.all([...seen.keys()].map(async (target) => {
+    try {
+      const res = await fetch(raw(target), { method: 'HEAD', signal: AbortSignal.timeout(20000) });
+      if (res.status === 404) return target;
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return null;
+    } catch {
+      return undefined;      // unreachable, not absent
+    }
+  }));
+  if (verdicts.some((v) => v === undefined)) {
+    console.log('source links: not resolved (network) - that question was skipped.');
+    links = 0;
+  } else {
+    for (const target of verdicts.filter(Boolean)) {
+      problems.push(
+        `${[...seen.get(target)].join(', ')}: links ${target} in abap2UI5, which is not there on main\n`
+        + '    the file moved or was deleted - a link every reader who clicks it gets a 404 from',
+      );
+    }
+  }
+}
+
+console.log(`check-api-names: ${checked} name(s) and ${links} source link(s) on ${markdownFiles(PAGES).length} page(s), against abap2UI5 ${REF}`);
 
 if (problems.length) {
   console.log(`\n${problems.length} problem(s):`);
   for (const p of problems) console.log(`  ${p}`);
-  console.log('\n  A name the reader\'s install does not have. Either the page is describing');
-  console.log('  a release that has not happened yet, or it describes one that is gone -');
-  console.log('  see resources/deprecations.md for what replaced it.');
+  console.log('\n  Something the reader cannot follow: a name their install does not');
+  console.log('  have, or a link that 404s. Either the page describes a release that');
+  console.log('  has not happened yet, or it describes one that is gone - see');
+  console.log('  resources/deprecations.md for what replaced it.');
   process.exit(1);
 }
 console.log('every client-> name on the site exists in the release it names - OK');
