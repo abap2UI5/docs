@@ -10,6 +10,7 @@ The Entity Manipulation Language simplifies work with RAP business objects by gi
 
 ### Read
 Use `READ ENTITIES` to fetch sales orders and show them in a UI5 table:
+<!-- playground: no Run button — EML needs a CDS entity and a behavior definition, which only a system has -->
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
 

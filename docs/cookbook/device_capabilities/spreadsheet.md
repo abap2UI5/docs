@@ -11,6 +11,7 @@ Convert uploaded XLSX files into an internal table:
 
 ::: code-group
 
+<!-- playground: no Run button — calls lcl_help, and a class-local class has no abapGit file of its own -->
 ```abap
 CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
 

@@ -7,21 +7,23 @@ description: Learn abap2UI5 by building — a step-by-step walkthrough where eve
 Learn abap2UI5 by building something. The **Walkthrough** grows a small invoice
 app from a single message box into a complete application, one concept per
 step: the app class and its lifecycle, views written in ABAP, events, data
-binding, lists, tables, a selection screen and popups.
+binding, lists, tables, a selection screen and popups — and then takes the
+finished app out of the playground: to production in Step 11, and under unit
+tests in Step 12.
 
-Each step is a **complete, runnable class** — the whole app as it stands at
-that point, not a fragment. Press the Run button under the code to start it in
-the browser, or copy the class into your system and launch it like any
-abap2UI5 app (see the [Quickstart](/get_started/quickstart)). No step depends
-on anything outside its own code, so you can also jump straight to the step
-you are interested in.
+Each building step (1–10) is a **complete, runnable class** — the whole app as
+it stands at that point, not a fragment. Press the Run button under the code
+to start it in the browser, or copy the class into your system and launch it
+like any abap2UI5 app (see the [Quickstart](/get_started/quickstart)). No step
+depends on anything outside its own code, so you can also jump straight to the
+step you are interested in.
 
 ## Preview
 
 ![The finished walkthrough app: a table of invoices with a selection form above it, and a dialog editing one row](/tutorials/walkthrough-preview.png)
 
-This is the app after the last step — a few hundred lines of ABAP, no frontend
-project, no OData service.
+This is the app after the last building step — a few hundred lines of ABAP,
+no frontend project, no OData service.
 
 ## Steps
 
@@ -35,6 +37,8 @@ project, no OData service.
 - **[Step 8: Selection Screen](/tutorials/walkthrough/step-8)** — a form above the list, and reading the data it asks for.
 - **[Step 9: Tables](/tutorials/walkthrough/step-9)** — swap the list for a real table with columns, cells and row actions.
 - **[Step 10: App Structure](/tutorials/walkthrough/step-10)** — refactor into the structure real apps use.
+- **[Step 11: From Playground to Production](/tutorials/walkthrough/step-11)** — real data, the transport order, authorization, and the URL users start from.
+- **[Step 12: Unit Tests](/tutorials/walkthrough/step-12)** — test the app class like any ABAP class; no UI5 runtime involved.
 
 ## What You Should Know
 

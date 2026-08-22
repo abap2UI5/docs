@@ -33,12 +33,39 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 
     CASE abap_true.
       WHEN client->check_on_init( ).
+        value = `World`.
         render_main( ).
       WHEN client->check_on_event( `POST` ).
         on_post( ).
       WHEN client->check_on_navigated( ).
         " optional: refresh state when returning from another app
     ENDCASE.
+
+  ENDMETHOD.
+
+  METHOD render_main.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `Life Cycle`
+
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( value )
+                )->tag( `Button`
+                    )->a( n = `text`  v = `Post`
+                    )->a( n = `press` v = client->_event( `POST` ) ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+  METHOD on_post.
+
+    client->message_toast_display( |POST received: { value }| ).
 
   ENDMETHOD.
 

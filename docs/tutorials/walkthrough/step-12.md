@@ -1,27 +1,21 @@
 ---
 outline: [2, 4]
-description: Put everything into the structure real apps use — a dispatcher, named methods, protected state, and the SELECT and UPDATE in one place.
-samples:
-  - z2ui5_cl_smp_app_070
-  - z2ui5_cl_smp_app_011
+description: Unit-test the app class like any ABAP class — the data methods are plain ABAP, the test class never touches the UI, and the structure from Step 10 is what makes that possible.
 ---
-# Step 10: App Structure
+# Step 12: Unit Tests
 
-Everything so far lived in one `main` method, and by now that method does five
-different jobs. Real apps — the framework's own, and the sample catalogues' —
-separate the phases into methods. This step changes no behavior at all: it
-puts the code where a reader expects it, and assembles every part of the
-tutorial into the complete app.
+The app is in production since [Step 11](/tutorials/walkthrough/step-11), and
+changes will keep coming — a new filter, a second editable field, the next
+framework release. What lets the next transport leave with confidence is the
+same thing as in every other ABAP project: unit tests. This step adds them to
+the walkthrough app, and the point of it is how little abap2UI5 gets in the
+way — the methods worth testing are plain ABAP, so the test class is one you
+could have written before ever hearing of this framework.
 
-## What It Does
+## The Class Under Test
 
-1. **Selection screen** — supplier and a delivery-date range ([Step 8](/tutorials/walkthrough/step-8)).
-2. **Read** — fetch the matching invoices on button press ([Step 8](/tutorials/walkthrough/step-8)).
-3. **Result table** — columns, cells and a row action ([Step 9](/tutorials/walkthrough/step-9)).
-4. **Popup** — edit the delivery date of one row ([Step 7](/tutorials/walkthrough/step-7)).
-5. **Post** — write the change back and refresh the table.
-
-## The Class
+The app is unchanged from [Step 10](/tutorials/walkthrough/step-10) — printed
+here in full so this step stands on its own:
 
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
@@ -263,64 +257,126 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
-## The Structure
+## The Test Class
 
-- **`main` is a pure dispatcher.** It stashes `client` in a protected attribute
-  — so the handler methods can use it without passing it around — and routes
-  each roundtrip to the method for its phase. `check_on_event( )` without an
-  argument is true for *any* event; the `CASE` in `on_event` decides which one.
-  Both dispatch shapes are fine, and
-  [Life Cycle](/cookbook/event_navigation/life_cycle) compares them: dispatch
-  by event name in the `IF` chain for a small app, this second level once there
-  are handler methods.
-- **State stays public, everything else protected.** Public attributes are the
-  serialized, browser-visible model — bound data and nothing more. The `client`
-  reference and the methods are implementation.
-- **One method per screen, one per data operation.** `view_display` and
-  `popup_edit_display` build; `data_read` and `data_update` touch the database.
-  When an app grows, those are the seams it grows along — and the two data
-  methods are the only places a `SELECT` or an `UPDATE` ever appears.
-- **A back button, when there is somewhere to go.** `navButtonPress` and
-  `showNavButton` give the page the standard back navigation, shown only when
-  this app was called from another one — see
-  [Navigation](/cookbook/event_navigation/navigation).
+Tests live where they always live: in the class's **Test Classes** include
+(the *Test Classes* tab in ADT). Nothing abap2UI5-specific is in them:
+
+```abap
+CLASS ltcl_walkthrough DEFINITION DEFERRED.
+CLASS zcl_app_walkthrough DEFINITION LOCAL FRIENDS ltcl_walkthrough.
+
+CLASS ltcl_walkthrough DEFINITION FINAL
+  FOR TESTING RISK LEVEL HARMLESS DURATION SHORT.
+
+  PRIVATE SECTION.
+    METHODS read_filters_by_supplier FOR TESTING.
+    METHODS read_filters_by_date     FOR TESTING.
+    METHODS update_writes_back       FOR TESTING.
+
+ENDCLASS.
+
+CLASS ltcl_walkthrough IMPLEMENTATION.
+
+  METHOD read_filters_by_supplier.
+
+    DATA(cut) = NEW zcl_app_walkthrough( ).
+    cut->s_search-supplier = `Green Growers`.
+
+    cut->data_read( ).
+
+    cl_abap_unit_assert=>assert_equals(
+        act = lines( cut->t_invoices )
+        exp = 2
+        msg = `expected exactly the two Green Growers invoices` ).
+
+  ENDMETHOD.
+
+
+  METHOD read_filters_by_date.
+
+    DATA(cut) = NEW zcl_app_walkthrough( ).
+    cut->s_search-date_from = `2026-08-01`.
+
+    cut->data_read( ).
+
+    LOOP AT cut->t_invoices INTO DATA(ls_invoice).
+      cl_abap_unit_assert=>assert_true(
+          act = xsdbool( ls_invoice-delivery_date >= `2026-08-01` )
+          msg = |{ ls_invoice-product } lies before the date filter| ).
+    ENDLOOP.
+
+  ENDMETHOD.
+
+
+  METHOD update_writes_back.
+
+    DATA(cut) = NEW zcl_app_walkthrough( ).
+    cut->data_read( ).
+
+    cut->s_edit = VALUE #( product = `Milk` delivery_date = `2026-09-01` ).
+    cut->data_update( ).
+
+    cl_abap_unit_assert=>assert_equals(
+        act = cut->t_invoices[ product = `Milk` ]-delivery_date
+        exp = `2026-09-01` ).
+
+  ENDMETHOD.
+
+ENDCLASS.
+```
+
+Run them as always — in ADT with `Ctrl+Shift+F10`. Three tests, three
+different seams:
+
+- **`read_filters_by_supplier`** fills the selection screen's backing
+  structure `s_search` — a plain public attribute — calls `data_read` and
+  counts the result. No button was pressed and no view was built: the test
+  enters through the same attribute the UI binds.
+- **`read_filters_by_date`** does the same for the date filter and checks a
+  property of every row rather than a count.
+- **`update_writes_back`** plays the popup workflow without the popup: fill
+  `s_edit` the way the dialog's bindings would, call `data_update`, and check
+  the table. When the demo data becomes a real `UPDATE` in
+  [Step 11](/tutorials/walkthrough/step-11), this is the test that grows a
+  test double for the database layer — the seam is already in place.
+
+## Why This Worked
+
+- **The tests never mock the framework.** `main` is a dispatcher and the
+  handler methods do not take `client` as a parameter — so the logic under
+  test is reachable without a single framework object. That is the payoff of
+  Step 10's structure.
+- **`LOCAL FRIENDS` opens the protected section.** `data_read` and
+  `data_update` are protected — implementation, not model. The two lines
+  above the test class (`DEFERRED`, then `LOCAL FRIENDS`) let the test class
+  call them anyway, without making them public for everyone. Do not skip
+  them: without `LOCAL FRIENDS` the class fails to activate on a real system
+  even where a linter stays quiet.
+- **Public attributes are the natural test interface.** The same attributes
+  the framework serializes and the view binds — `s_search`, `t_invoices`,
+  `s_edit` — are what tests fill and assert on. The UI enters the class the
+  same way the test does.
+
+What the unit tests deliberately do not cover is the view: whether `Table`
+has an `items` aggregation is not a question ABAP can answer. That check
+exists too, without a system — the [abap2UI5 linter](/advanced/linter)
+reconstructs the view from the builder chain and validates it against UI5,
+and the [tooling page](/get_started/tooling) shows how it runs in CI next to
+these tests.
 
 ## What to Take Away
 
-- One controller class, one `main` method, all state in public attributes — that is the whole app
-- The view is rebuilt only when the structure changes. Reading data, saving, and opening or closing a popup do not need a fresh `view_display( )`
-- Popups use the same builder as the view — a `core:FragmentDefinition` root instead of `mvc:View` — shown with `popup_display` / `popup_destroy` while the main view stays in place
-- Reading and writing the database is plain ABAP; abap2UI5 does not abstract that layer, which is what makes it easy to plug into existing code
+- An abap2UI5 app is testable like any ABAP class, because it *is* one —
+  no UI5 runtime, no HTTP, no mocks
+- Test through the same public attributes the view binds; call the data
+  methods directly
+- `DEFERRED` + `LOCAL FRIENDS` is the pattern for testing protected methods —
+  and a missing `LOCAL FRIENDS` is an activation error, not a style issue
+- Views are checked by the linter, logic by unit tests; together they run
+  without an SAP system
 
-## Where to Go From Here
-
-The app is built — the walkthrough's last two steps take it out of the
-playground:
-
-- **[Step 11: From Playground to Production](/tutorials/walkthrough/step-11)** —
-  real data, the transport order, authorization, and the URL users start from,
-- **[Step 12: Unit Tests](/tutorials/walkthrough/step-12)** — the structure of
-  this step pays off: the data methods are testable without any UI.
-
-And for everything beyond the walkthrough:
-
-- the [Cookbook](/cookbook/view/definition) — every topic of this walkthrough as a
-  reference chapter, from [value helps](/cookbook/expert_more/value_help) to
-  [navigation between apps](/cookbook/event_navigation/navigation),
-- the [sample catalogues](https://abap2ui5.github.io/samples/) — complete,
-  tested apps for nearly every pattern, each one class like here.
-
-<!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
-
-## Working Samples
-
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
-that use what this page describes. Each is a single class — pull the repository with
-[abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
-
-| Sample | Class |
-|---|---|
-| Full Example with sap.ui.table | [`Z2UI5_CL_SMP_APP_070`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_070.clas.abap) |
-| Editable Cells, Add and Delete Rows | [`Z2UI5_CL_SMP_APP_011`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_011.clas.abap) |
-
-<!-- samples:end -->
+That is the end of the walkthrough: one class, grown from a message box to a
+tested app in production. The [Cookbook](/cookbook/view/definition) covers
+every topic again as a reference chapter, and the
+[sample catalogues](https://abap2ui5.github.io/samples/) continue from here.

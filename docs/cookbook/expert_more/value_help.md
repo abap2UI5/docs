@@ -59,6 +59,7 @@ one because that is what existing code contains.
 :::
 
 
+<!-- playground: no Run button — SELECTs from SCARR, which no browser database has -->
 ```abap
 CLASS z2ui5_cl_sample_f4 DEFINITION PUBLIC.
 

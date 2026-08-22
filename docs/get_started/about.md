@@ -27,7 +27,7 @@ A finished app looks like any other UI5 app, because it is one — a selection s
 
 ![An abap2UI5 app: a selection form above a table of invoices, with a dialog editing one row](/tutorials/walkthrough-preview.png)
 
-→ *The [Tutorial](/tutorials/overview) grows exactly this app in ten steps, each one a complete class you can run in the browser*
+→ *The [Tutorial](/tutorials/overview) grows exactly this app in ten steps, each one a complete class you can run in the browser — then takes it to production, and under unit tests*
 
 ## Background
 Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework used by ABAP developers worldwide. The framework absorbs frontend complexity, so you can focus on business logic with your existing ABAP skills.
@@ -138,6 +138,9 @@ Getting started is easy:
 1. Import the project via abapGit
 2. Set up an HTTP service for browser communication
 3. Start building!
+
+No system at hand? The Quickstart opens with two ways to try abap2UI5 in the
+browser — the playground and the live demo — before anything is installed.
 
 → *See the [Quickstart Guide](/get_started/quickstart) for full instructions*
 

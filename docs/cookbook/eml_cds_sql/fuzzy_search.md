@@ -9,6 +9,7 @@ Wire it to a UI5 `search_field` in the table toolbar and you get an ALV-style se
 
 ## Minimal Example
 
+<!-- playground: no Run button — reads KNA1 with a HANA fuzzy search, and the browser has neither -->
 ```abap
 CLASS z2ui5_cl_sample_fuzzy DEFINITION PUBLIC.
 

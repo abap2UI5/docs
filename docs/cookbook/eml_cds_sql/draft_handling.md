@@ -138,6 +138,7 @@ COMMIT ENTITIES.
 
 Before the full-featured version, here is the **smallest app that actually works**. It does exactly three things: read the record, let the user edit, and save with one button. Start here — once this makes sense, the advanced version is just more buttons.
 
+<!-- playground: no Run button — EML needs a CDS entity and a behavior definition, which only a system has -->
 ```abap
 CLASS z2ui5_cl_sample_draft_min DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -493,6 +494,7 @@ The view itself is a single `simple_form` whose `editable` and per-input `enable
 ### Full Snippet
 
 ::: details Full working example — `z2ui5_cl_sample_draft`
+<!-- playground: no Run button — EML needs a CDS entity and a behavior definition, which only a system has -->
 ```abap
 CLASS z2ui5_cl_sample_draft DEFINITION PUBLIC.
   PUBLIC SECTION.

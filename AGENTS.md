@@ -17,18 +17,21 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, and checks the link in both directions |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
+| `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` at the pinned release; `--check` is the freshness gate |
+| `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the release pin, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
-| `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue's rows, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt`; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
+| `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
+| `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:api-names + check:samples
+npm run check          # test + check:version + docs:build + check:examples + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but six things in it
-are decidable, and all six are decided before a merge:
+A documentation repository has no compiler for its prose, but eight things in
+it are decidable, and all eight are decided before a merge:
 
 | | |
 |---|---|
@@ -37,9 +40,11 @@ are decidable, and all six are decided before a merge:
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` at the release this site names, plus every `blob/main/` link into the framework's tree. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
+| `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` at the release this site names and compared byte for byte. Goes stale the same way `check:version` does: a release happens over there, and the committed reference still describes the one before it. `npm run generate:api` rewrites both |
+| `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
-`.github/workflows/check.yml` runs the same six, in the same order. Keep the
+`.github/workflows/check.yml` runs the same eight, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -54,10 +59,23 @@ There used to be one more, `check:counts`, holding four figures on a
 gone — the home page opens [the samples page](https://abap2ui5.github.io/samples/)
 directly and each catalogue introduces itself — and with it the only prose
 copy of a number this repository does not own. `generate-llms.mjs` still counts
-the three catalogues into `llms.txt`, which is why CI sparse-checks out
+the sample catalogues into `llms.txt`, which is why CI sparse-checks out
 `SAMPLES.md` from `samples-controls` and `samples-stack`; both are
 `continue-on-error`, because an unreachable repository must cost a figure and
 not the run, and a generated line can simply leave the number out.
+
+A count comes down a chain, first answer wins, all of it in
+`scripts/lib/catalogue.mjs` and pinned by `test/catalogue.test.mjs`: a sibling
+checkout's `catalogue.json` (the machine-readable catalogue each sample
+repository commits at its root), then the checkout's `SAMPLES.md` through the
+same parser the sample links go through, then the `catalogue.json` the
+repository publishes on its default branch, fetched — then no number. The two
+`catalogue.json` steps read the same file, so a build with a checkout and a
+build without one publish the same figure; and every step **counts entries**
+rather than repeating a `counts` field, so no path can hand `llms.txt` a claim
+instead of a count. The fetch is allowed to fail — 404 before the file is
+committed over there, timeout, no network — and every failure costs the
+figure, never the build.
 
 ## What the site publishes for machines
 
@@ -71,11 +89,26 @@ are a projection of the pages next to them:
 | [`/docs/llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) | the whole documentation as one markdown document |
 | `/docs/<page>.md` | each page as raw markdown, next to its `.html` |
 
+One more file is published for machines and — unlike the three above —
+**committed**: [`/docs/api/client-api.json`](https://abap2ui5.github.io/docs/api/client-api.json),
+the client API as one JSON document. It is not a projection of the pages next
+to it but a claim about the framework at a pinned release, which is the
+samples-block case, not the llms.txt case — so it is generated by
+`npm run generate:api` and held fresh by `check:api-reference`.
+
 This is for the reader nothing else reaches: an agent that is simply *asked*
 about abap2UI5, with no MCP server and no checkout. Without it, it falls back
 on training data — where abap2UI5 still looks like `z2ui5_cl_xml_view`.
 
 Nothing needs maintaining. Adding a page to the sidebar adds it here.
+
+The reader with a checkout and no build gets the inverse problem: the three
+files are gitignored, so a clone contains none of them. `llms.txt` at the
+repository ROOT is the answer — a committed pointer naming the published URLs,
+maintained by hand because it names URLs and nothing else. Do not "fix" it by
+committing the generated files instead: they would be stale on every commit
+that touches a page, and a wrong committed copy outranks a right generated one
+in every tool that reads the tree.
 
 ## Things that will trip you up
 
@@ -103,7 +136,11 @@ Nothing needs maintaining. Adding a page to the sidebar adds it here.
 - **A generated block in a page is committed.** The *Working Samples* blocks are
   written into the markdown so the site builds without a samples checkout. Run
   `npm run link:samples` after changing a page's `samples:` frontmatter;
-  `check:samples` fails if a rewrite would change anything.
+  `check:samples` fails if a rewrite would change anything. The client API
+  reference on `resources/api.md` works the same way: everything between its
+  markers, plus `docs/public/api/client-api.json` next to it, comes from
+  `npm run generate:api` — edit the intro around the block by hand, never the
+  block, and regenerate after a release bump or `check:api-reference` fails.
 
 ## The Run button, and why its rules are hand-maintained
 
@@ -113,12 +150,11 @@ The code travels in the playground's URL fragment, read out of the rendered
 block at click time — so nothing is hosted here, and the example that runs is
 the text on the page rather than a copy of it.
 
-**This is the seventh decidable thing in this repository and the only one CI
-cannot decide.** Whether an example runs is a question only a playground can
-answer, and a playground is a three-minute build of another repository. So the
-rules in `docs/.vitepress/playground.mjs` are an approximation, they fail
-towards *no button*, and every one of them came from an example watched failing
-in a real one:
+**Whether an example runs is the one question CI cannot answer** — only a
+playground can, and a playground is a three-minute build of another repository.
+So the rules in `docs/.vitepress/playground.mjs` are an approximation, they
+fail towards *no button*, and every one of them came from an example watched
+failing in a real one:
 
 | | |
 | --- | --- |
@@ -135,6 +171,24 @@ shapes a rule written one word wider would have swallowed**: a `SELECT` in a
 comment, the word FROM inside a string, `INSERT VALUE #( )` into an internal
 table.
 
+**The bookkeeping half of the question, however, is decidable, and
+`check:playground` decides it.** An example the rules refuse carries a marker
+on its page, directly above the fence:
+
+```md
+<!-- playground: no Run button — SELECTs from VBAK, which no browser database has -->
+```
+
+A complete app class with neither a button nor a marker fails the gate: either
+it can run — then measure it (below) and let it have its button — or it cannot,
+and the marker records why in the page's own words, next to the code it is
+about. A marker above an example that *has* a button fails just as loudly, so
+intent cannot outlive a fix. `npm run check:playground -- --list` prints every
+deliberate exclusion with both reasons — the engine's and the page's — which is
+also the worklist for the next measurement. What the gate cannot decide, and
+says so, is whether a buttoned example actually starts; that stays a
+measurement.
+
 **To redo the measurement** — after adding examples, or after the playground
 changes — build the playground, serve it, and open each fenced example in an
 embedded one, checking that the status line reaches `running` and that the app
@@ -146,10 +200,18 @@ npm ci && npm run build && npm run serve      # the first build is a few minutes
 # then, for each example: /?embed=1&view=app#<the deflated fragment>
 ```
 
-The last measurement: **61 complete app classes, 39 with a button, all 39
-started and rendered.** The home page has since dropped its example, so the
-figure today is 60 and 38; the 22 without a button each have a reason the module
-prints.
+The last full measurement: **61 complete app classes, 39 with a button, all 39
+started and rendered.** The site has since grown, and the hand-kept copy of
+those figures here went stale without anyone noticing — which is what
+`check:playground` now exists to prevent. The bookkeeping today, printed by the
+gate on every run: **68 complete app classes, 47 with a button, 21 excluded on
+purpose**, every exclusion a marker on its page. The growth is examples whose
+shapes the measured rules already covered, plus one page completed so its
+example could run at all; a spot-check of six buttoned examples in a served
+playground build — the newly buttoned life-cycle class driven through its whole
+event roundtrip, the quickstart and About classes, tutorial Step 12, the
+tables page, and the `SELECT FROM t100` example — started and rendered, every
+one. The next full measurement opens all 47.
 
 **The published playground is what readers get**, not the checkout you tested
 against. A change to the rules here can ship on its own; a change that depends
