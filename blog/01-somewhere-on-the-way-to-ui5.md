@@ -15,11 +15,12 @@ cl_salv_table=>factory( IMPORTING r_salv_table = DATA(lo_alv)
 lo_alv->display( ).
 ```
 
-Two statements, any internal table, no type known at the time of writing. RTTI
-read the structure at runtime, the field catalog followed from it, DDIC labels
-came along for free. Data browsers, table maintenance, migration cockpits,
-generic reports — a whole category of tooling was built that way, and the
-generality was the requirement, not a trick.
+Two statements, any internal table, no type known at the time of writing.
+Before SALV it was `REUSE_ALV_GRID_DISPLAY` and a field catalog assembled by
+hand, which is the same idea with more typing. RTTI read the structure at
+runtime, the DDIC supplied the labels, and a whole category of tooling was
+built on it: data browsers, table maintenance, migration cockpits, half of what
+sits in a `Z` package on any system old enough to have one. The generality was the requirement, not a trick.
 
 ## Why those tools are still ALV grids
 
@@ -213,9 +214,9 @@ ENDCLASS.
 
 The interesting part is what is absent: no entity type, no CDS view, no
 service binding, and two loops that name no field. The columns are whatever
-`get_components( )` returned a microsecond ago, and the binding paths are the
-component names it handed back. `col_label( )` then asks the DDIC for the real
-field label, exactly as SALV always did.
+`get_components( )` just returned, the binding paths are the component names it
+handed back, and `col_label( )` asks the DDIC for the real label — the field
+catalog, rebuilt from the same source it always came from.
 
 The `AUTHORITY-CHECK` is not decoration — anything reading an arbitrary table
 needs one before it shows a row.
@@ -231,17 +232,31 @@ A generic table has no contract, and that is a real price. Nothing external can
 depend on it, nothing announces that the underlying structure changed, and a
 locally defined structure gets technical names instead of labels.
 
-So this is not an upgrade over a typed service — the two answer different
-questions. One asks what a foreign system can depend on for the next five
-years. The other asks what an internal tool should show a user right now, given
-a structure it was handed a millisecond ago.
+So this is not an upgrade over a typed service. One answers what a foreign
+system can depend on for the next five years; the other, what an internal tool
+should show a user right now, given a structure it was handed a millisecond
+ago.
+
+## It sits next to what is already there
+
+None of this asks a system to change direction. abap2UI5 installs with abapGit
+and runs behind one ICF node — an app class is one more object, not a
+migration, and the services already published stay published.
+
+Which matters for the two setups most systems actually run. Where the business
+logic is a RAP business object, an abap2UI5 screen calls it through EML like
+any other consumer; the BO never learns that something else is in front of it.
+Where the team hand-writes freestyle UI5 against OData, these are the same
+`sap.m` controls, and there is no second frontend stack to keep: no service to
+define, no BSP to deploy, no separate transport for the UI.
+
+The generic tools are just the natural first thing to move, because they are
+the ones a typed service never fitted. Nothing else has to.
 
 ## What actually changed
 
 None of the runtime machinery ever went away. `cl_abap_structdescr` is still
-there, still released in ABAP Cloud. Only the screen in front of it
-disappeared, and it disappeared by accident — a side effect of the path to a
-UI5 application running through a typed service.
+there, still released in ABAP Cloud. Only the screen in front of it did.
 
 abap2UI5 gives runtime-typed ABAP a UI5 face again. Not by adding a generic
 framework on top, but by binding ABAP data directly, so data typed at runtime
@@ -264,8 +279,9 @@ anything else was never realistic, that is the specific thing that changed.
 > anyone decided that was right, but because the road to anything newer began
 > with a question they could not answer.
 >
-> A new article on building UI5 views from RTTI at runtime, and what the
-> approach costs: [link]
+> A new article on building UI5 views from RTTI at runtime, with a complete
+> data browser in one class — and on how it sits next to the RAP and OData
+> services a system already runs, rather than in place of them: [link]
 >
 > Where do you still use RTTI-driven tooling today?
 >

@@ -35,10 +35,14 @@ exists only to introduce the article and ask one question — it is an
 announcement, not a second version of the content.
 
 **Short, though.** Not feed-short, but no longer than the idea needs: around
-**600–750 words of prose** outside the code blocks. The failure mode in these
-drafts has been restating a point in a second, more careful paragraph — the
-careful one usually replaces the first rather than following it. Article 1 is
-at 740 and carries a complete class; article 2 is at 910 and wants the pass.
+**600–800 words**, counting the article's prose only — not the code blocks and
+not the teaser post, which is measured in characters and belongs under ~1,200.
+Count those three separately or the number means nothing; conflating article
+and teaser is how article 1 was twice reported at a length it did not have.
+The failure mode in these drafts has been restating a point in a second, more
+careful paragraph — the careful one usually replaces the first rather than
+following it. Article 1 is at 761 and carries a complete class; article 2 is
+at 910 and wants the pass.
 
 Which means the usual reach mechanics are deliberately not applied here: no
 hook engineered to a character count, no carousel, no "link in the first
@@ -57,12 +61,21 @@ The series exists to explain **a problem and how abap2UI5 addresses it**. It is
 not a comparison, and the way to keep it from becoming one is not to soften the
 comparison but to leave it out. Three rules, and they are load-bearing:
 
-1. **Do not name other frameworks.** Neither to criticise them nor to be fair
-   to them — a paragraph defending RAP is still a paragraph about RAP, and it
-   invites exactly the argument the series is trying not to have. Where the
-   incumbent approach has to appear at all, describe the *mechanism* rather
-   than the product: "the standard path goes through a typed service", not a
-   brand name. Both current drafts name RAP zero times.
+1. **Never compare on merit — but do state how things coexist.** The two are
+   not the same sentence, and the difference is the whole series.
+   *Comparison* is what to leave out: which approach is better, faster or more
+   modern, and equally the even-handed version of it, because a paragraph
+   defending RAP is still a paragraph about RAP and invites the argument the
+   series exists to avoid. Where the incumbent approach appears only as the
+   backdrop to a problem, name the *mechanism*, not the product: "the standard
+   path goes through a typed service".
+   *Coexistence* is the point and has to be explicit, because a reader does
+   not infer it. Say plainly what runs next to what, what calls what, and what
+   does not have to change — and there, name the thing: an abap2UI5 screen
+   calls a RAP business object through EML, a freestyle UI5 team gets the same
+   `sap.m` controls and no second frontend stack. That is a fact about
+   installation and call direction, not a claim about merit.
+   Article 1 names RAP and OData once each, both in its coexistence section.
 2. **No authorial first person.** No "I think", no "the point I want to make",
    in the articles or the teaser posts. An argument that stands on its own does
    not need an author vouching for it, and the same text then works as
@@ -76,6 +89,13 @@ comparison but to leave it out. Three rules, and they are load-bearing:
    RTTI table has no contract and spells out what that costs. Naming the cost
    is what makes the rest credible, and it does the work a comparison would
    have done without mentioning anyone.
+
+4. **Write for the old hands.** The reader has built field catalogs by hand,
+   knows what `REUSE_ALV_GRID_DISPLAY` cost, and has a `Z` package full of
+   tools nobody has touched since. Use that vocabulary and skip the
+   explanations they do not need — the recognition is what earns the rest of
+   the argument. It also decides what an example may assume: article 1's data
+   browser needs no introduction to what SE16N is for.
 
 **Free and MIT** gets mentioned once, in passing, never as a pitch.
 
