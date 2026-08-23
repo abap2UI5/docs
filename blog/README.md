@@ -35,10 +35,10 @@ exists only to introduce the article and ask one question — it is an
 announcement, not a second version of the content.
 
 **Short, though.** Not feed-short, but no longer than the idea needs: around
-**600–700 words of prose** outside the code blocks, which is what article 1
-runs to. The failure mode in these drafts has been restating a point in a
-second, more careful paragraph — the careful one usually replaces the first
-rather than following it. Article 2 is still at 910 and wants the same pass.
+**600–750 words of prose** outside the code blocks. The failure mode in these
+drafts has been restating a point in a second, more careful paragraph — the
+careful one usually replaces the first rather than following it. Article 1 is
+at 740 and carries a complete class; article 2 is at 910 and wants the pass.
 
 Which means the usual reach mechanics are deliberately not applied here: no
 hook engineered to a character count, no carousel, no "link in the first
@@ -99,6 +99,30 @@ Worth applying to the rest of the roadmap: title the problem, not the contrast.
 
 Each file contains the full article, then the teaser post under a heading at
 the bottom.
+
+## The ABAP in a draft
+
+Two rules, both learned the hard way in this repository.
+
+**Check it before it ships.** A published snippet is the most-copied ABAP the
+project produces, and a wrong one is uncorrectable once it is on LinkedIn. Run
+the same two gates `check:examples` runs — the class in article 1 passes both:
+
+```sh
+# does it compile against the real framework and the released API mirror
+npx --yes @abaplint/cli abaplint.json     # deps: abap2UI5/abap2UI5 + abapedia/steampunk-2305-api
+# does the view name controls and properties that exist on UI5 1.71,
+# and is the chain laid out the way the house style says
+npx --yes @abap2ui5/linter --config <cfg> # rules: { "chain-house-layout": true }
+```
+
+**Never teach a frozen class.** `src/99/` is legacy that ships only so existing
+installations keep compiling — `z2ui5_cl_util*` and the built-in
+`z2ui5_cl_pop_*` popups are in it, and `z2ui5_cl_xml_view` is the reason this
+repository has a `check:examples` gate at all. Both drafts pointed at `src/99`
+before this was caught: an app uses plain `cl_abap_*` RTTI, `z2ui5_cl_ui5_view_builder`,
+and the addons for the rest. When a snippet wants a ready-made tool, link the
+[addon](https://github.com/abap2UI5-addons) rather than a frozen built-in.
 
 ## Images
 

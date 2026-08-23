@@ -36,55 +36,194 @@ So the generic tools stayed where they were. Not because anyone decided ALV was
 the right long-term answer, but because the road to anything newer began with a
 question they could not answer.
 
-## Binding at runtime
+## SE16N, in one class
 
 An abap2UI5 view is a string the application builds, and the model is bound
-from ABAP data — including data whose type only exists at runtime:
+from ABAP data — including data whose type only exists at runtime. So a small
+data browser fits in a single class: type a table name, get its first hundred
+rows.
 
 ```abap
-" what are the columns of this table?
-DATA(lo_tab)  = CAST cl_abap_tabledescr( cl_abap_typedescr=>describe_by_data( <lt_tab> ) ).
-DATA(lo_line) = CAST cl_abap_structdescr( lo_tab->get_table_line_type( ) ).
-DATA(lt_comp) = lo_line->get_components( ).
+CLASS zcl_data_browser DEFINITION PUBLIC.
 
-DATA(table) = z2ui5_cl_ui5_view_builder=>factory(
-                  )->ele( n = `View` ns = `mvc`
-                      )->a( n = `xmlns`     v = `sap.m`
-                      )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-                      )->ele( `Table`
-                          )->a( n = `items` v = client->_bind( <lt_tab> ) ).
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-" one column per component - discovered, not declared
-DATA(columns) = table->ele( `columns` ).
-LOOP AT lt_comp INTO DATA(ls_comp).
-  columns->ele( `Column`
-            )->ele( `header`
-                )->tag( `Text`
-                    )->a( n = `text` v = ls_comp-name ).
-ENDLOOP.
+    " PUBLIC = bound into the view and serialized between roundtrips
+    DATA table_name TYPE string.
+    DATA rows       TYPE REF TO data.
 
-" one cell per component, bound by field name
-DATA(cells) = table->ele( `items`
-                  )->ele( `ColumnListItem`
-                      )->ele( `cells` ).
-LOOP AT lt_comp INTO ls_comp.
-  cells->tag( `Text`
-          )->a( n = `text` v = |\{{ ls_comp-name }\}| ).
-ENDLOOP.
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+    METHODS on_event.
+    METHODS rows_select.
+    METHODS col_label
+      IMPORTING
+        comp          TYPE abap_componentdescr
+      RETURNING
+        VALUE(result) TYPE string.
+    METHODS model_init.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS zcl_data_browser IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+    IF client->check_on_init( ).
+      model_init( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( ).
+      on_event( ).
+    ENDIF.
+
+  ENDMETHOD.
+
+  METHOD view_display.
+
+    DATA(page) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`        v = `sap.m`
+            )->a( n = `xmlns:mvc`    v = `sap.ui.core.mvc`
+            )->a( n = `displayBlock` v = `true`
+            )->a( n = `height`       v = `100%`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `Data Browser` ).
+
+    page->ele( `subHeader`
+        )->ele( `Toolbar`
+            )->tag( `Input`
+                )->a( n = `value`       v = client->_bind( table_name )
+                )->a( n = `placeholder` v = `Table name, e.g. T000`
+                )->a( n = `width`       v = `18rem`
+                )->a( n = `submit`      v = client->_event( `DISPLAY` )
+
+            )->tag( `Button`
+                )->a( n = `text`  v = `Display`
+                )->a( n = `type`  v = `Emphasized`
+                )->a( n = `press` v = client->_event( `DISPLAY` ) ).
+
+    IF rows IS BOUND.
+
+      ASSIGN rows->* TO FIELD-SYMBOL(<rows>).
+
+      " the only question this app asks about the table it was handed
+      DATA(comps) = CAST cl_abap_structdescr(
+                        CAST cl_abap_tabledescr(
+                            cl_abap_typedescr=>describe_by_data( <rows> )
+                          )->get_table_line_type( ) )->get_components( ).
+
+      DATA(table) = page->ele( `Table`
+                        )->a( n = `items`      v = client->_bind( <rows> )
+                        )->a( n = `headerText` v = |{ lines( <rows> ) } rows| ).
+
+      " one column per component - discovered, not declared
+      DATA(columns) = table->ele( `columns` ).
+      LOOP AT comps INTO DATA(comp).
+        columns->ele( `Column`
+                  )->ele( `header`
+                      )->tag( `Text`
+                          )->a( n = `text` v = col_label( comp ) ).
+      ENDLOOP.
+
+      " one cell per component, bound by field name
+      DATA(cells) = table->ele( `items`
+                        )->ele( `ColumnListItem`
+                            )->ele( `cells` ).
+      LOOP AT comps INTO comp.
+        cells->tag( `Text`
+                )->a( n = `text` v = |\{{ comp-name }\}| ).
+      ENDLOOP.
+
+    ENDIF.
+
+    client->view_display( page->stringify( ) ).
+
+  ENDMETHOD.
+
+  METHOD on_event.
+
+    CASE client->get_event( ).
+      WHEN `DISPLAY`.
+        rows_select( ).
+        view_display( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+  METHOD rows_select.
+
+    CLEAR rows.
+    DATA(name) = CONV tabname( to_upper( table_name ) ).
+
+    " a data browser reads arbitrary tables - this check is not optional
+    AUTHORITY-CHECK OBJECT 'S_TABU_NAM'
+      ID 'ACTVT' FIELD '03'
+      ID 'TABLE' FIELD name.
+    IF sy-subrc <> 0.
+      client->message_box_display( text = |Not authorised to display { name }|
+                                   type = `error` ).
+      RETURN.
+    ENDIF.
+
+    TRY.
+        CREATE DATA rows TYPE STANDARD TABLE OF (name).
+        ASSIGN rows->* TO FIELD-SYMBOL(<rows>).
+
+        SELECT * FROM (name) INTO TABLE @<rows> UP TO 100 ROWS.
+
+      CATCH cx_root.
+        CLEAR rows.
+        client->message_box_display( text = |{ name } is not a readable table|
+                                     type = `error` ).
+    ENDTRY.
+
+  ENDMETHOD.
+
+  METHOD col_label.
+
+    result = comp-name.
+    IF comp-type->kind <> cl_abap_typedescr=>kind_elem.
+      RETURN.
+    ENDIF.
+
+    DATA(elem) = CAST cl_abap_elemdescr( comp-type ).
+    elem->get_ddic_field( RECEIVING  p_flddescr = DATA(field)
+                          EXCEPTIONS not_found  = 1 ).
+    IF sy-subrc = 0 AND field-scrtext_m IS NOT INITIAL.
+      result = field-scrtext_m.
+    ENDIF.
+
+  ENDMETHOD.
+
+  METHOD model_init.
+    table_name = `T000`.
+  ENDMETHOD.
+
+ENDCLASS.
 ```
 
-No entity type, no CDS view, no service binding. The columns are whatever the
-table happens to have when the method runs, and the binding paths are the
-component names RTTI just handed back. One step further, `ls_comp-type` answers
-whether a component is a DDIC type, which is where the real field labels come
-from — exactly as SALV always did it.
+The interesting part is what is absent: no entity type, no CDS view, no
+service binding, and two loops that name no field. The columns are whatever
+`get_components( )` returned a microsecond ago, and the binding paths are the
+component names it handed back. `col_label( )` then asks the DDIC for the real
+field label, exactly as SALV always did.
 
-The framework ships this. `z2ui5_cl_pop_table` is a generic table popup built
-on the same code, and calling it is one line:
+The `AUTHORITY-CHECK` is not decoration — anything reading an arbitrary table
+needs one before it shows a row.
 
-```abap
-client->nav_app_call( z2ui5_cl_pop_table=>factory( i_tab = lt_any ) ).
-```
+This is the mechanism, not the tool. The full version is the
+[se16n addon](https://github.com/abap2UI5-addons/se16n), with filters, paging
+and editing, and persistent column layouts are their own problem, solved by
+[layout-management](https://github.com/abap2UI5-addons/layout-management).
 
 ## What it costs
 

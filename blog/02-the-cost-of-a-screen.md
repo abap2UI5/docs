@@ -74,7 +74,7 @@ METHOD on_event.
         COMMIT ENTITIES.
         client->message_toast_display( `Saved` ).
       ELSE.
-        client->message_box_display( val  = `Save failed`
+        client->message_box_display( text = `Save failed`
                                      type = `error` ).
       ENDIF.
 
