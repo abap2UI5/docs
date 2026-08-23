@@ -1,17 +1,20 @@
-# Whatever Happened to RTTI?
+# Somewhere on the Way to UI5, We Lost RTTI
 
-*abap2UI5 Know-How #2*
+*abap2UI5 Know-How #1 — scheduled for Tuesday, 25 August 2026*
 
 Before Fiori, ABAP developers routinely built screens for tables whose
 structure was unknown when the code was written. It was ordinary work.
 `cl_salv_table=>factory( )` took any internal table and drew it, RTTI answered
-what the columns were, and the DDIC supplied the labels. A whole category of
-tooling was built that way: data browsers, table maintenance, migration
-cockpits, generic reports, anything whose job was to be useful for a structure
-it had never seen.
+what the columns were, and the DDIC supplied the labels.
 
-That capability is still in the language. What went missing was a way to give
-it a modern user interface.
+A whole category of tooling was built that way: data browsers, table
+maintenance, migration cockpits, generic reports, job monitors — anything whose
+job was to be useful for a structure it had never seen. The generality was not
+a clever trick, it was the requirement. A tool that only works for the
+structures somebody anticipated is not a tool, it is an application.
+
+That capability never left the language. What quietly disappeared was a way to
+put a modern user interface on it.
 
 ## The design-time contract
 
@@ -40,6 +43,10 @@ The same tool expressed as a typed service hits a wall in the first minute: the
 entity type has to exist before anything else can happen. Which is exactly
 right when the structure is known, and a dead end when not knowing it is the
 entire point of the tool.
+
+So the generic tools stayed where they were. Not because anyone decided ALV was
+the right long-term answer for them, but because the road to anything newer
+started with a question they could not answer.
 
 ## Binding at runtime
 
@@ -130,25 +137,33 @@ A generic table has no contract, and that is a real price rather than a
 technicality. Nothing external can rely on it. Nothing announces that the
 underlying structure changed — the screen simply grows a column, or loses one,
 and no consumer was warned because there was no consumer to warn. Field labels
-are as good as the DDIC underneath them, and a locally defined structure gets
-technical names.
+are only as good as the DDIC underneath them, and a locally defined structure
+gets technical names.
 
-So runtime typing is not an upgrade over a typed service, and choosing it for a
-published API would be a mistake. The two answer different questions: one asks
-what a foreign system can depend on, the other asks what this internal tool
-should show a user right now.
+So runtime typing is not an upgrade over a typed service, and reaching for it
+to publish an API would be a mistake. The two answer different questions. One
+asks what a foreign system can depend on for the next five years. The other
+asks what this internal tool should show a user right now, given a structure it
+was handed a millisecond ago.
 
-The observation worth taking away is that a great deal of ABAP work has always
-been the second question. Internal tooling over structures known only at
-runtime, where the generality *is* the requirement. ABAP has been unusually
-good at that for two decades — first-class runtime type information, dynamic
-SQL alongside it, and `cl_abap_structdescr` still released in ABAP Cloud.
+Most of the tooling described at the top of this article has always been the
+second question. ABAP has been unusually good at answering it for two decades:
+first-class runtime type information, dynamic SQL alongside it, and
+`cl_abap_structdescr` still released in ABAP Cloud.
 
-None of that went away. Only the screen in front of it did.
+## What actually changed
 
-If a tool in your system has been an ALV grid since 2009 because there was
-never a sensible way to give it anything else, that is the specific thing that
-changed.
+None of the runtime machinery went away. Only the screen in front of it did —
+and it went away by accident, as a side effect of the path to a UI5 application
+running through a typed service.
+
+abap2UI5 gives runtime-typed ABAP a UI5 face again. Not by adding a generic
+framework on top, but by binding ABAP data directly instead of through a
+generated service, which means data whose type is decided at runtime is not a
+special case. It is just data.
+
+If a tool in your system has been an ALV grid since 2009 because giving it
+anything else was never realistic, that is the specific thing that changed.
 
 ---
 
@@ -157,17 +172,19 @@ changed.
 > Before Fiori, screens were routinely built for tables nobody had seen.
 > `cl_salv_table=>factory( )` took any internal table and drew it — RTTI
 > answered what the columns were, the DDIC supplied the labels, and a whole
-> category of ABAP tooling was built that way.
+> category of ABAP tooling was built that way: data browsers, table
+> maintenance, migration cockpits.
 >
 > Then the path to a screen started going through a typed service, and the
 > entity type had to exist first. Exactly right for something a foreign system
 > depends on; a dead end when not knowing the structure is the entire point of
-> the tool.
+> the tool. So those tools stayed ALV grids — not because anyone decided that
+> was right, but because the road to anything newer began with a question they
+> could not answer.
 >
-> New article on building UI5 views from RTTI at runtime, and what that
-> approach genuinely costs: [link]
+> A new article on building UI5 views from RTTI at runtime, what the framework
+> already ships for it, and what the approach genuinely costs: [link]
 >
-> How many internal tools in your system are still an ALV grid purely because
-> giving them anything else was never realistic?
+> Where do you still use RTTI-driven tooling today?
 >
 > #ABAP #SAP #UI5
