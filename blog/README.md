@@ -14,7 +14,7 @@ pass the gates like every other page.
 | Date | Article | State |
 |---|---|---|
 | Tue, 25 Aug 2026 | #1 Somewhere on the Way to UI5, We Lost RTTI | ready, needs a URL |
-| tbd | #2 The Cost of a Screen | draft |
+| tbd | #2 The Cost of a Screen | draft, needs shortening |
 
 **The one thing blocking Tuesday is the `[link]` in the teaser post** — see
 *Where the articles are published* at the bottom. The post cannot go out
@@ -29,11 +29,16 @@ else depends on it.
 
 ## Format
 
-**The article is the artefact.** Each piece is written to be read in full, at
-whatever length the idea needs, and it is not cut down to fit a feed. The
-LinkedIn post at the bottom of each file exists only to introduce the article
-and ask one question — it is an announcement, not a second version of the
-content.
+**The article is the artefact.** Each piece is written to be read in full and
+is not cut down to fit a feed. The LinkedIn post at the bottom of each file
+exists only to introduce the article and ask one question — it is an
+announcement, not a second version of the content.
+
+**Short, though.** Not feed-short, but no longer than the idea needs: around
+**600–700 words of prose** outside the code blocks, which is what article 1
+runs to. The failure mode in these drafts has been restating a point in a
+second, more careful paragraph — the careful one usually replaces the first
+rather than following it. Article 2 is still at 910 and wants the same pass.
 
 Which means the usual reach mechanics are deliberately not applied here: no
 hook engineered to a character count, no carousel, no "link in the first
