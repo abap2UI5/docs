@@ -100,6 +100,24 @@ Worth applying to the rest of the roadmap: title the problem, not the contrast.
 Each file contains the full article, then the teaser post under a heading at
 the bottom.
 
+## Images
+
+`assets/make-header.py` builds the header image for article 1 and prints where
+it wrote it. Run it from the repository root; it needs `pillow` and the
+Chromium that ships with this environment.
+
+The three mascots are the project's own brand assets, embedded from
+`docs/public/mascots/` and only scaled — `docs/resources/logo.md` is explicit
+that brand art is scaled and nothing else, and a hand-traced dinosaur would be
+both off-brand and worse than the original. The ALV grid and the UI5 table are
+drawn in the script, because the whole point of the picture is that they are
+the same data behind two different faces.
+
+Only the PNG is committed. The intermediate SVG is not: it carries the three
+mascots as ~480 KB of inline base64, so it is a build artefact of the script
+rather than an editable source. **The script is the editable source** — change
+the layout there and re-run.
+
 ## Roadmap
 
 Rough arc: **1–2 positioning**, **3–5 mechanics**, **6–8 practice and
