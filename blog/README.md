@@ -147,13 +147,20 @@ and the addons for the rest. When a snippet wants a ready-made tool, link the
 
 ## Code that appears in an article
 
-A snippet printed in an article is a fragment; neither gate can check a
-fragment. So the **complete class it was cut from lives in `assets/`** and is
-what gets checked — `assets/zcl_rtti_table_view.clas.abap` passes abaplint against
-the framework and the abap2UI5 linter including `chain-house-layout`, and it
-is the same class as `abap2UI5/samples` sample 497. Cut the
-article's snippet out of that file rather than writing it twice, and re-run the
-gates on the file after any edit.
+A snippet printed in an article is a fragment, and neither gate can check a
+fragment. **So the complete class belongs in `abap2UI5/samples`, not in
+`assets/`** — a sample is compiled, linted and rendered on every commit there,
+while a copy here is a copy somebody has to keep in step, which is the failure
+this whole repository already has a `check:examples` gate for.
+
+Article 1 cuts its snippet from
+[sample 497](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_497.clas.abap)
+and links it. `assets/zcl_rtti_table_view.clas.abap` was that class living here
+first; it is gone now that the sample is merged.
+
+While drafting, keep the class in a scratch directory and run the two gates the
+samples repository runs — `npm run lint` / `check:cloud` / `check:abap2ui5`
+there — then open the sample PR and link it from the article.
 
 ## Images
 

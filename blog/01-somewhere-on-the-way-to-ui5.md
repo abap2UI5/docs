@@ -114,8 +114,10 @@ SE16N — a DDIC name from an input field, `CREATE DATA` on it, a dynamic
 `SELECT`. It shows well and it is a poor thing to copy: an app that reads
 whatever table it is handed. The genericity worth having is in the view, not
 in the data access. Whole class:
-[`zcl_rtti_table_view`](assets/zcl_rtti_table_view.clas.abap). If you do want
-the browser, take the [se16n addon](https://github.com/abap2UI5-addons/se16n).
+[`Z2UI5_CL_SMP_APP_497`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_497.clas.abap),
+one of the abap2UI5 samples, so it is compiled and linted on every commit. If
+you do want the browser, take the
+[se16n addon](https://github.com/abap2UI5-addons/se16n).
 
 ## Nothing here is exotic
 
