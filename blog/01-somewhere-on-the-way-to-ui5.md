@@ -60,7 +60,10 @@ An abap2UI5 view is a string the application builds, and the model is bound
 from ABAP data — including data whose type only exists at runtime:
 
 ```abap
-" what are the columns of this table?
+" <rows> is an internal table, filled somewhere above - any SELECT you like,
+" a function module, an EML read. Only its type matters from here on.
+
+" so: what are the columns of this table?
 DATA(comps) = CAST cl_abap_structdescr(
                   CAST cl_abap_tabledescr(
                       cl_abap_typedescr=>describe_by_data( <rows> )
@@ -88,9 +91,9 @@ LOOP AT comps INTO comp.
 ENDLOOP.
 ```
 
-RTTI, precisely — the read half of RTTS. The write half, RTTC, never appears:
-`CREATE DATA ... TYPE STANDARD TABLE OF (name)` takes a DDIC name, not a type
-handle from `cl_abap_structdescr=>create( )`.
+RTTI, precisely — the read half of RTTS. The write half, RTTC
+(`cl_abap_structdescr=>create( )`), never appears: nothing here builds a type,
+the code only asks what a type already is.
 
 No entity type, no CDS view, no service binding. The columns are whatever the
 table happens to have when the method runs, and the binding paths are the
@@ -98,10 +101,15 @@ component names RTTI just handed back. One step further, `comp-type` answers
 whether a component is a DDIC type, which is where the real field labels come
 from — the field catalog, rebuilt from the same source it always came from.
 
-A whole data browser — table name in, first 100 rows out — is about 100 lines;
-[`zcl_data_browser`](assets/zcl_data_browser.clas.abap) is that class. The
-built-out version is the
-[se16n addon](https://github.com/abap2UI5-addons/se16n); give it a try.
+Note what the code never asks: where `<rows>` came from. Put any `SELECT` you
+like above it, or a function module, or an EML read on a RAP business object —
+the binding is handed an internal table and asks it what it is. Nothing about
+this is tied to reading a table by name.
+
+That case is just the loudest one. A data browser that takes the DDIC name
+from an input field is about 100 lines
+([`zcl_data_browser`](assets/zcl_data_browser.clas.abap)), and the built-out
+version is the [se16n addon](https://github.com/abap2UI5-addons/se16n).
 
 ## Nothing here is exotic
 
