@@ -60,56 +60,62 @@ An abap2UI5 view is a string the application builds, and the model is bound
 from ABAP data — including data whose type only exists at runtime:
 
 ```abap
-" <rows> is an internal table, filled somewhere above - any SELECT you like,
-" a function module, an EML read. Only its type matters from here on.
+" tab is TYPE STANDARD TABLE - filled however you like, a SELECT, a function
+" module, an EML read. Only its type matters from here on.
+METHOD render_any.
 
-" so: what are the columns of this table?
-DATA(comps) = CAST cl_abap_structdescr(
-                  CAST cl_abap_tabledescr(
-                      cl_abap_typedescr=>describe_by_data( <rows> )
-                    )->get_table_line_type( ) )->get_components( ).
+  DATA(comps) = CAST cl_abap_structdescr(
+                    CAST cl_abap_tabledescr(
+                        cl_abap_typedescr=>describe_by_data( tab )
+                      )->get_table_line_type( ) )->get_components( ).
 
-DATA(table) = page->ele( `Table`
-                  )->a( n = `items` v = client->_bind( <rows> ) ).
+  DATA(ui_table) = parent->ele( `Table`
+                       )->a( n = `items` v = client->_bind( tab ) ).
 
-" one column per component - discovered, not declared
-DATA(columns) = table->ele( `columns` ).
-LOOP AT comps INTO DATA(comp).
-  columns->ele( `Column`
-            )->ele( `header`
-                )->tag( `Text`
-                    )->a( n = `text` v = col_label( comp ) ).
-ENDLOOP.
+  " one column per component - discovered, not declared
+  DATA(columns) = ui_table->ele( `columns` ).
+  LOOP AT comps INTO DATA(comp).
+    columns->ele( `Column`
+        )->ele( `header`
+            )->tag( `Text`
+                )->a( n = `text` v = comp-name ).
+  ENDLOOP.
 
-" one cell per component, bound by field name
-DATA(cells) = table->ele( `items`
-                  )->ele( `ColumnListItem`
-                      )->ele( `cells` ).
-LOOP AT comps INTO comp.
-  cells->tag( `Text`
-          )->a( n = `text` v = |\{{ comp-name }\}| ).
-ENDLOOP.
+  " one cell per component, bound by field name
+  DATA(cells) = ui_table->ele( `items`
+      )->ele( `ColumnListItem`
+          )->ele( `cells` ).
+  LOOP AT comps INTO comp.
+    cells->tag( `Text`
+        )->a( n = `text` v = |\{{ comp-name }\}| ).
+  ENDLOOP.
+
+ENDMETHOD.
 ```
 
 RTTI, precisely — the read half of RTTS. The write half, RTTC
 (`cl_abap_structdescr=>create( )`), never appears: nothing here builds a type,
 the code only asks what a type already is.
 
-No entity type, no CDS view, no service binding. The columns are whatever the
-table happens to have when the method runs, and the binding paths are the
-component names RTTI just handed back. One step further, `comp-type` answers
-whether a component is a DDIC type, which is where the real field labels come
-from — the field catalog, rebuilt from the same source it always came from.
+No entity type, no CDS view, no service binding — and no field name anywhere
+in the view. The columns are whatever the table happens to have, the binding
+paths are the component names RTTI just handed back, and `comp-type` will tell
+you whether a component is a DDIC type, which is where the real labels come
+from. The field catalog, rebuilt from the same source it always came from.
 
-Note what the code never asks: where `<rows>` came from. Put any `SELECT` you
-like above it, or a function module, or an EML read on a RAP business object —
-the binding is handed an internal table and asks it what it is. Nothing about
-this is tied to reading a table by name.
+The signature carries as much of the point as the body. `TYPE STANDARD TABLE`
+is the shape `cl_salv_table=>factory( )` has taken since forever — and it is
+the reason the caller stays ordinary. Fill the table with a plain typed
+`SELECT`, a function module, an EML read on a RAP business object; the
+renderer is handed an internal table and asks it what it is.
 
-That case is just the loudest one. A data browser that takes the DDIC name
-from an input field is about 100 lines
-([`zcl_data_browser`](assets/zcl_data_browser.clas.abap)), and the built-out
-version is the [se16n addon](https://github.com/abap2UI5-addons/se16n).
+Worth being precise about, because the demo everyone reaches for first is
+SE16N — a DDIC name from an input field, `CREATE DATA` on it, a dynamic
+`SELECT`. It shows well and it is a poor thing to copy: an app that reads
+whatever table it is handed. The genericity worth having is in the view, not
+in the data access. Whole class:
+[`zcl_rtti_table_view`](assets/zcl_rtti_table_view.clas.abap). If you do want
+the browser, take the [se16n addon](https://github.com/abap2UI5-addons/se16n).
 
 ## Nothing here is exotic
 
@@ -127,9 +133,8 @@ depend on it, nothing announces that the underlying structure changed, and a
 locally defined structure gets technical names instead of labels.
 
 So this is not an upgrade over a typed service. One answers what a foreign
-system can depend on for the next five years; the other, what an internal tool
-should show a user right now, given a structure it was handed a millisecond
-ago.
+system can depend on for five years; the other, what an internal tool should
+put on screen without being told twice.
 
 ## What actually changed
 

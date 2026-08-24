@@ -149,8 +149,9 @@ and the addons for the rest. When a snippet wants a ready-made tool, link the
 
 A snippet printed in an article is a fragment; neither gate can check a
 fragment. So the **complete class it was cut from lives in `assets/`** and is
-what gets checked — `assets/zcl_data_browser.clas.abap` passes abaplint against
-the framework and the abap2UI5 linter including `chain-house-layout`. Cut the
+what gets checked — `assets/zcl_rtti_table_view.clas.abap` passes abaplint against
+the framework and the abap2UI5 linter including `chain-house-layout`, and it
+is the same class as `abap2UI5/samples` sample 497. Cut the
 article's snippet out of that file rather than writing it twice, and re-run the
 gates on the file after any edit.
 
