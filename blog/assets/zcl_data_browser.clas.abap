@@ -4,6 +4,9 @@
 "! RTTI". The table is named at runtime, so nothing here knows its type: the
 "! columns come from RTTI and the labels from the DDIC.
 "!
+"! Structurally this is abap2UI5/samples z2ui5_cl_smp_app_061 with the DDIC
+"! name taken from an input field instead of being hard-coded.
+"!
 "! Reads whatever table it is given, with no authorization check.
 CLASS zcl_data_browser DEFINITION PUBLIC.
 
@@ -56,8 +59,11 @@ CLASS zcl_data_browser IMPLEMENTATION.
             )->a( n = `displayBlock` v = `true`
             )->a( n = `height`       v = `100%`
 
-            )->ele( `Page`
-                )->a( n = `title` v = `Data Browser` ).
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title`          v = `Data Browser`
+                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
+                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) ).
 
     page->ele( `subHeader`
         )->ele( `Toolbar`
