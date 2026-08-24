@@ -40,8 +40,8 @@ that contract is exactly what you want.
 
 ## Model definition at runtime — RTTI
 
-But some use cases do not know the model at design time either. Think of SE16N:
-the whole point is to display *any* table.
+But some use cases do not know the model at design time either. Think of SE16
+or SE16N: the whole point is to display any table.
 
 There the contract buys nothing. Backend and frontend are tightly coupled, one
 team builds both, and the client knows the system intimately — anything resting
@@ -52,7 +52,7 @@ not actually require OData to get one: a `JSONModel` can be filled from any HTTP
 endpoint, so nothing stops a request from carrying a different model shape every
 time.
 
-That is the gap abap2UI5 fills.
+That is one of the use cases abap2UI5 is built for.
 
 ## Binding at runtime with abap2UI5
 
@@ -94,31 +94,19 @@ component names RTTI just handed back. One step further, `comp-type` answers
 whether a component is a DDIC type, which is where the real field labels come
 from — the field catalog, rebuilt from the same source it always came from.
 
-A whole data browser — table name in, first 100 rows out, with an
-`AUTHORITY-CHECK` on `S_TABU_NAM`, because anything reading arbitrary tables
-needs one — is about 100 lines — [`zcl_data_browser`](assets/zcl_data_browser.clas.abap)
-next to this file is that class, compiled and linted. The built-out version is
-the
-[se16n addon](https://github.com/abap2UI5-addons/se16n); persistent column
-layouts are [layout-management](https://github.com/abap2UI5-addons/layout-management).
+A whole data browser — table name in, first 100 rows out, plus the
+`AUTHORITY-CHECK` on `S_TABU_NAM` that anything reading arbitrary tables owes
+you — is about 100 lines. The built-out version is the
+[se16n addon](https://github.com/abap2UI5-addons/se16n); give it a try.
 
 ## Nothing here is exotic
 
 Both halves stay inside the conventions you already work in, which is what
 makes this cheap to adopt and cheap to hand over.
 
-**The frontend is a freestyle UI5 app.** `sap.m` controls, XML views, a
-`JSONModel`, two-way binding. No proprietary control library, no template
-language — the view builder emits UI5 XML 1:1, every control, property and
-aggregation. If you can write the XML, you can write the chain.
-
-**The backend is a global ABAP class.** One interface, in a package, travelling
-in a transport or through abapGit, opening in ADT like any other class.
-Ordinary ABAP OO, unit-testable, with no generated repository object anywhere.
-
-**Deployment is an ICF node.** No BSP application per app, no frontend
-transport — and the app registers in the Fiori launchpad next to the tiles
-already there.
+The frontend is a freestyle UI5 app using `sap.m` controls, XML views, a
+`JSONModel` and two-way binding. The backend is a global ABAP class: one
+interface, in a package, travelling in a transport.
 
 ## What it costs
 
@@ -140,10 +128,9 @@ abap2UI5 gives runtime-typed ABAP a UI5 face again by binding ABAP data
 directly, so data typed at runtime is not a special case. It is just data.
 
 It is open source, runs on-premise and in the cloud, and sits beside what you
-already operate rather than in place of it: the published services stay
-published, and where the business logic is a RAP business object, the event
-handler calls it through EML like any other consumer — the BO never learns that
-a different UI is in front of it.
+already operate rather than in place of it. Put an abap2UI5 app into the
+launchpad and no user can tell it from the RAP and freestyle UI5 tiles next to
+it.
 
 So next time you reach for RTTI, give abap2UI5 a try. It may be a good
 complement to the UI5 solutions you already run.
