@@ -88,6 +88,10 @@ LOOP AT comps INTO comp.
 ENDLOOP.
 ```
 
+RTTI, precisely — the read half of RTTS. The write half, RTTC, never appears:
+`CREATE DATA ... TYPE STANDARD TABLE OF (name)` takes a DDIC name, not a type
+handle from `cl_abap_structdescr=>create( )`.
+
 No entity type, no CDS view, no service binding. The columns are whatever the
 table happens to have when the method runs, and the binding paths are the
 component names RTTI just handed back. One step further, `comp-type` answers
