@@ -94,9 +94,9 @@ component names RTTI just handed back. One step further, `comp-type` answers
 whether a component is a DDIC type, which is where the real field labels come
 from — the field catalog, rebuilt from the same source it always came from.
 
-A whole data browser — table name in, first 100 rows out, plus the
-`AUTHORITY-CHECK` on `S_TABU_NAM` that anything reading arbitrary tables owes
-you — is about 100 lines. The built-out version is the
+A whole data browser — table name in, first 100 rows out — is about 100 lines;
+[`zcl_data_browser`](assets/zcl_data_browser.clas.abap) is that class. The
+built-out version is the
 [se16n addon](https://github.com/abap2UI5-addons/se16n); give it a try.
 
 ## Nothing here is exotic

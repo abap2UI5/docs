@@ -1,3 +1,10 @@
+"! <p class="shorttext">Data browser — first 100 rows of any table</p>
+"!
+"! Companion snippet for the article "Somewhere on the Way to UI5, We Lost
+"! RTTI". The table is named at runtime, so nothing here knows its type: the
+"! columns come from RTTI and the labels from the DDIC.
+"!
+"! Reads whatever table it is given, with no authorization check.
 CLASS zcl_data_browser DEFINITION PUBLIC.
 
   PUBLIC SECTION.
@@ -116,17 +123,7 @@ CLASS zcl_data_browser IMPLEMENTATION.
   METHOD rows_select.
 
     CLEAR rows.
-    DATA(name) = CONV tabname( to_upper( table_name ) ).
-
-    " a data browser reads arbitrary tables - this check is not optional
-    AUTHORITY-CHECK OBJECT 'S_TABU_NAM'
-      ID 'ACTVT' FIELD '03'
-      ID 'TABLE' FIELD name.
-    IF sy-subrc <> 0.
-      client->message_box_display( text = |Not authorised to display { name }|
-                                   type = `error` ).
-      RETURN.
-    ENDIF.
+    DATA(name) = to_upper( table_name ).
 
     TRY.
         CREATE DATA rows TYPE STANDARD TABLE OF (name).
