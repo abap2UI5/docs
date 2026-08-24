@@ -35,14 +35,15 @@ exists only to introduce the article and ask one question — it is an
 announcement, not a second version of the content.
 
 **Short, though.** Not feed-short, but no longer than the idea needs: around
-**600–800 words**, counting the article's prose only — not the code blocks and
+**600–900 words**, counting the article's prose only — not the code blocks and
 not the teaser post, which is measured in characters and belongs under ~1,200.
 Count those three separately or the number means nothing; conflating article
 and teaser is how article 1 was twice reported at a length it did not have.
 The failure mode in these drafts has been restating a point in a second, more
 careful paragraph — the careful one usually replaces the first rather than
-following it. Article 1 is at 761 and carries a complete class; article 2 is
-at 910 and wants the pass.
+following it. Article 1 is at 887: it carries the design-time/runtime split, a
+mechanism section and a coexistence close, and each of those earns its words.
+Article 2 is at 910 and has not earned its extra 300 — it wants the pass.
 
 Which means the usual reach mechanics are deliberately not applied here: no
 hook engineered to a character count, no carousel, no "link in the first
@@ -143,6 +144,15 @@ repository has a `check:examples` gate at all. Both drafts pointed at `src/99`
 before this was caught: an app uses plain `cl_abap_*` RTTI, `z2ui5_cl_ui5_view_builder`,
 and the addons for the rest. When a snippet wants a ready-made tool, link the
 [addon](https://github.com/abap2UI5-addons) rather than a frozen built-in.
+
+## Code that appears in an article
+
+A snippet printed in an article is a fragment; neither gate can check a
+fragment. So the **complete class it was cut from lives in `assets/`** and is
+what gets checked — `assets/zcl_data_browser.clas.abap` passes abaplint against
+the framework and the abap2UI5 linter including `chain-house-layout`. Cut the
+article's snippet out of that file rather than writing it twice, and re-run the
+gates on the file after any edit.
 
 ## Images
 
