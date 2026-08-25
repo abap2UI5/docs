@@ -17,7 +17,7 @@ cl_salv_table=>factory( IMPORTING r_salv_table = DATA(lo_alv)
 lo_alv->display( ).
 ```
 
-Two statements, any internal table, no type known at design time. RTTI reads
+Two statements, any internal table, no type known at design time. RTTS reads
 the structure at runtime, the field catalog follows from it, DDIC labels come
 along for free.
 
@@ -32,13 +32,14 @@ a typed OData service. That holds for freestyle UI5, for Fiori Elements, and
 for a fully backend-driven RAP application with a consumption view. The shape
 of the model is decided when the code is written and baked into the contract.
 
-And that is powerful. The point of OData is that a client can trust the API and
-discover everything it needs from the metadata document
-([odata.org](https://www.odata.org)) — it does not have to know SAP at all.
-Whenever you do not know the client, or the client does not know your backend,
-that contract is exactly what you want.
+*[image: RESTful APIs in a simple and standard way — odata.org]*
 
-## Model definition at runtime — RTTI
+And that is powerful. The point of OData is that a client can trust the API and
+discover everything it needs from the metadata document — it does not have to
+know SAP at all. Whenever you do not know the client, or the client does not
+know your backend, that contract is exactly what you want.
+
+## Model definition at runtime — RTTS
 
 But some use cases do not know the model at design time either. Think of SE16
 or SE16N: the whole point is to display any table.
@@ -47,17 +48,25 @@ There the contract buys nothing. Backend and frontend are tightly coupled, one
 team builds both, and the client knows the system intimately — anything resting
 on design-time metadata is aimed at a different problem.
 
-What this needs is a model assembled at runtime, and a freestyle UI5 app does
-not actually require OData to get one: a `JSONModel` can be filled from any HTTP
-endpoint, so nothing stops a request from carrying a different model shape every
-time.
+*[image: RTTS — read metadata at runtime]*
 
-That is one of the use cases abap2UI5 is built for.
+What this needs is a model assembled at runtime, and in ABAP that is RTTS, a
+service nearly every ABAP developer already knows. (RTTS is the umbrella; the
+reading half is RTTI, and reading is all this needs.)
 
-## Binding at runtime with abap2UI5
+But how do we get that data into a UI5 app?
+
+Luckily, a freestyle UI5 app does not actually require OData: a `JSONModel` can
+be filled from any HTTP endpoint, so nothing stops a request from carrying a
+different model shape every time.
+
+And that is one of the use cases abap2UI5 is built for.
+
+## Data binding at runtime with abap2UI5
 
 An abap2UI5 view is a string the application builds, and the model is bound
-from ABAP data — including data whose type only exists at runtime:
+from ABAP data — including data whose type only exists at runtime. A view that
+draws any table looks like this:
 
 ```abap
 " tab is TYPE STANDARD TABLE - filled however you like, a SELECT, a function
@@ -93,30 +102,21 @@ METHOD render_any.
 ENDMETHOD.
 ```
 
-RTTI, precisely — the read half of RTTS. The write half, RTTC
-(`cl_abap_structdescr=>create( )`), never appears: nothing here builds a type,
-the code only asks what a type already is.
+No entity type, no CDS view, no service binding — and no field name anywhere in
+the view. The columns are whatever the table happens to have, and the binding
+paths are the component names RTTI just handed back. Go one step further and
+`comp-type` will tell you whether a component is a DDIC type, which is where
+the real labels come from — the field catalog, rebuilt from the same source it
+always came from.
 
-No entity type, no CDS view, no service binding — and no field name anywhere
-in the view. The columns are whatever the table happens to have, the binding
-paths are the component names RTTI just handed back, and `comp-type` will tell
-you whether a component is a DDIC type, which is where the real labels come
-from. The field catalog, rebuilt from the same source it always came from.
-
-The signature carries as much of the point as the body. `TYPE STANDARD TABLE`
-is the shape `cl_salv_table=>factory( )` has taken since forever — and it is
-the reason the caller stays ordinary. Fill the table with a plain typed
-`SELECT`, a function module, an EML read on a RAP business object; the
-renderer is handed an internal table and asks it what it is.
-
-Worth being precise about, because the demo everyone reaches for first is
-SE16N — a DDIC name from an input field, `CREATE DATA` on it, a dynamic
-`SELECT`. It shows well and it is a poor thing to copy: an app that reads
-whatever table it is handed. The genericity worth having is in the view, not
-in the data access. Whole class:
+Full source:
 [`Z2UI5_CL_SMP_APP_497`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_497.clas.abap),
-one of the abap2UI5 samples, so it is compiled and linted on every commit. If
-you do want the browser, take the
+one of the abap2UI5 samples, so it is compiled and linted on every commit.
+
+A table nobody described, drawn from whatever the data turned out to be.
+Doesn't that look a bit like `cl_salv_table` in a UI5 view? 😉
+
+You can go further and build a full SE16-flavoured app — have a look at the
 [se16n addon](https://github.com/abap2UI5-addons/se16n).
 
 ## Nothing here is exotic
@@ -143,11 +143,12 @@ put on screen without being told twice.
 None of the runtime machinery ever went away. `cl_abap_structdescr` is still
 there, still released in ABAP Cloud. Only the screen in front of it did.
 
-abap2UI5 gives runtime-typed ABAP a UI5 face again by binding ABAP data
-directly, so data typed at runtime is not a special case. It is just data.
+abap2UI5 can give runtime-typed ABAP a UI5 face again by binding ABAP data
+directly, so data typed at runtime is not a special case. It is just data —
+the way it was in the old SALV and field-catalog days.
 
-It is open source, runs on-premise and in the cloud, and sits beside what you
-already operate rather than in place of it. Put an abap2UI5 app into the
+abap2UI5 is open source, runs on-premise and in the cloud, and sits beside what
+you already operate rather than in place of it. Put an abap2UI5 app into the
 launchpad and no user can tell it from the RAP and freestyle UI5 tiles next to
 it.
 
