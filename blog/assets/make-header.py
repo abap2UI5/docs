@@ -108,19 +108,23 @@ a(f'''<defs>
 </defs>''')
 
 a(f'<rect width="{W}" height="{H}" fill="url(#bg)"/>')
+# a fat diagonal swash behind everything, so the page has a direction
+a(f'<path d="M 720 -80 L 1320 -80 L 1320 720 L 380 720 Z" fill="{RED}" opacity="0.07" '
+  f'transform="rotate(-8 850 320)"/>')
 a(f'<rect width="{W}" height="{H}" fill="url(#dots)"/>')
 a(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
 
 # ---- left column ------------------------------------------------------------
 a(f'<image xlink:href="data:image/png;base64,{logo}" x="62" y="44" width="92" height="90"/>')
 
-HL = 'font-size="40" font-weight="700" letter-spacing="-1"'
-a(f'<text x="64" y="212" {HL} fill="{INK}">RTTS never went away.</text>')
-a(f'<text x="64" y="264" {HL} fill="{INK}">Only <tspan fill="{RED}">the screen</tspan></text>')
-a(f'<text x="64" y="316" {HL} fill="{INK}">in front of it did.</text>')
-# the hand-drawn underline, under "the screen"
-a(f'<path d="M 172 278 q 48 9 96 3 q 40 -6 68 4" stroke="{RED}" stroke-width="5" fill="none" '
-  f'stroke-linecap="round" opacity="0.85"/>')
+HL = 'font-size="43" font-weight="700" letter-spacing="-1.4"'
+a(f'<text x="64" y="208" {HL} fill="{INK}">RTTS never went away.</text>')
+a(f'<text x="64" y="264" {HL} fill="{INK}">Only</text>')
+# marker swash under "the screen" - a slab, not a line
+a(f'<g transform="rotate(-1.8 340 250)">'
+  f'<rect x="176" y="228" width="252" height="48" rx="7" fill="{RED}"/></g>')
+a(f'<text x="188" y="264" {HL} fill="#FFFFFF">the screen</text>')
+a(f'<text x="64" y="320" {HL} fill="{INK}">in front of it did.</text>')
 
 a(f'<text x="64" y="360" font-size="17" fill="{MUTED}">'
   f'The columns are whatever the internal table</text>')
@@ -128,21 +132,24 @@ a(f'<text x="64" y="384" font-size="17" fill="{MUTED}">'
   f'turns out to have — the field catalog, in a UI5 view.</text>')
 
 
-def chip(x, y, text):
+def chip(x, y, text, solid=False):
     w = 15 + 8.15 * len(text)
-    return (f'<g><rect x="{x}" y="{y}" width="{w:.0f}" height="38" rx="19" fill="#FFFFFF" '
-            f'fill-opacity="0.75" stroke="{RED}" stroke-width="1.7"/>'
+    fill, stroke, col = ((RED, RED, '#FFFFFF') if solid
+                         else ('#FFFFFF', RED, DARK))
+    op = '' if solid else ' fill-opacity="0.75"'
+    return (f'<g><rect x="{x}" y="{y}" width="{w:.0f}" height="38" rx="19" fill="{fill}"{op} '
+            f'stroke="{stroke}" stroke-width="1.7"/>'
             f'<text x="{x + w / 2:.0f}" y="{y + 25}" font-size="14.5" font-weight="700" '
-            f'fill="{DARK}" text-anchor="middle">{text}</text></g>'), w
+            f'fill="{col}" text-anchor="middle">{text}</text></g>'), w
 
 
 x = 64
-for t in ('No entity type', 'No CDS view'):
-    g, w = chip(x, 418, t)
+for t, solid in (('No entity type', True), ('No CDS view', False)):
+    g, w = chip(x, 418, t, solid)
     a(g); x += w + 12
 x = 64
-for t in ('No service binding', 'Any internal table'):
-    g, w = chip(x, 470, t)
+for t, solid in (('No service binding', False), ('Any internal table', True)):
+    g, w = chip(x, 470, t, solid)
     a(g); x += w + 12
 
 a(f'<text x="64" y="{H - 26}" font-size="14" fill="{MUTED}">'
@@ -150,7 +157,9 @@ a(f'<text x="64" y="{H - 26}" font-size="14" fill="{MUTED}">'
   f'<tspan font-weight="700" fill="{RED}">abap2UI5.org</tspan></text>')
 
 # ---- code panel -------------------------------------------------------------
+# tilted, so it reads as stuck onto the page rather than laid out on it
 PX, PY, PW, PH = 636, 44, 520, 400
+a(f'<g transform="rotate(-1.9 {PX + PW / 2} {PY + PH / 2})">')
 a(f'<g filter="url(#panel)"><rect x="{PX}" y="{PY}" width="{PW}" height="{PH}" rx="12" '
   f'fill="#0F1724"/></g>')
 a(f'<rect x="{PX}" y="{PY}" width="{PW}" height="38" rx="12" fill="#182233"/>')
@@ -165,9 +174,11 @@ for line in CODE.split('\n'):
     a(f'<text x="{PX + 22}" y="{ly}" font-size="11.6" xml:space="preserve" '
       f'font-family="Menlo,Consolas,monospace">{highlight(line)}</text>')
     ly += 17
+a('</g>')
 
 # ---- the UI5 preview, overlapping the panel --------------------------------
 CX, CY, CW, CH = 866, 424, 300, 160
+a(f'<g transform="rotate(2.6 {CX + CW / 2} {CY + CH / 2})">')
 a(f'<g filter="url(#card)"><rect x="{CX}" y="{CY}" width="{CW}" height="{CH}" rx="10" '
   f'fill="#FFFFFF"/></g>')
 a(f'<rect x="{CX}" y="{CY}" width="{CW}" height="40" rx="10" fill="#F4F5F7"/>')
@@ -198,9 +209,27 @@ for r, row in enumerate(ROWS):
           f'font-weight="{"700" if i == 0 else "400"}" '
           f'text-anchor="{"end" if i == 3 else "start"}">{v}</text>')
 
+a('</g>')
+
+# ---- a sticker, slapped on the panel corner --------------------------------
+# top-RIGHT: on the left it covered the filename and the first line of code
+a(f'<g transform="rotate(11 1078 74)">'
+  f'<rect x="988" y="48" width="180" height="52" rx="26" fill="#FFFFFF" stroke="{RED}" '
+  f'stroke-width="3"/>'
+  f'<text x="1078" y="81" font-size="21" font-weight="700" fill="{RED}" '
+  f'text-anchor="middle">no OData!</text></g>')
+
 # ---- mascots ----------------------------------------------------------------
-a(f'<image xlink:href="data:image/png;base64,{sheep}" x="430" y="452" width="122" height="122"/>')
-a(f'<image xlink:href="data:image/png;base64,{dino}" x="536" y="440" width="134" height="134"/>')
+a(f'<image xlink:href="data:image/png;base64,{sheep}" x="404" y="456" width="118" height="118"/>')
+a(f'<image xlink:href="data:image/png;base64,{dino}" x="508" y="442" width="134" height="134"/>')
+a(f'<g transform="rotate(-5 700 432)">'
+  f'<rect x="626" y="404" width="150" height="54" rx="16" fill="#FFFFFF" stroke="{INK}" '
+  f'stroke-width="3"/>'
+  f'<path d="M 656 456 l -4 22 l 26 -20 z" fill="#FFFFFF" stroke="{INK}" stroke-width="3" '
+  f'stroke-linejoin="round"/>'
+  f'<rect x="640" y="452" width="42" height="7" fill="#FFFFFF"/>'
+  f'<text x="701" y="440" font-size="24" font-weight="700" fill="{INK}" '
+  f'text-anchor="middle">still here!</text></g>')
 
 a('</svg>')
 svg = '\n'.join(o)
