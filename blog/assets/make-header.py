@@ -100,7 +100,7 @@ def lane(y, label, note, steps, accent=False):
 a(lane(168, 'design time', 'the model is decided before the code runs',
        [('CDS view', 108), ('entity type', 122), ('OData metadata', 148)]))
 a(lane(268, 'runtime', 'the model is whatever the data turns out to be',
-       [('internal table', 140), ('RTTI', 78)], accent=True))
+       [('internal table', 140), ('RTTS', 84)], accent=True))
 
 # the shared destination
 CX, CY, CW, CH = 736, 132, 400, 204
@@ -150,8 +150,12 @@ a(img(dino, 78, FLOOR - 144, 150))
 a(img(sheep, 236, FLOOR - 130, 136))
 a(img(sloth, 378, FLOOR - 144, 150))
 
-a(f'<text x="560" y="{FLOOR + 34}" font-size="15" font-weight="700" fill="#5E5E66">'
-  f'RTTI never went away. Only the screen in front of it did.</text>')
+# the caption sits in the empty band between the card and the ground, not
+# stacked on the footer - three right-aligned lines in a row read as one block
+a(f'<text x="{W - 64}" y="424" font-size="21" font-weight="700" fill="#4A4A52" '
+  f'text-anchor="end">RTTS never went away.</text>')
+a(f'<text x="{W - 64}" y="454" font-size="21" font-weight="700" fill="{RED}" '
+  f'text-anchor="end">Only the screen in front of it did.</text>')
 
 a(f'<text x="64" y="{H - 22}" font-size="13" fill="#8A8A90">abap2UI5 Know-How \u00b7 #1</text>')
 a(f'<text x="{W - 64}" y="{H - 22}" font-size="13" font-weight="700" fill="{RED}" '
