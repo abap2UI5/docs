@@ -118,18 +118,18 @@ a(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
 a(f'<image xlink:href="data:image/png;base64,{logo}" x="62" y="44" width="92" height="90"/>')
 
 HL = 'font-size="43" font-weight="700" letter-spacing="-1.4"'
-a(f'<text x="64" y="208" {HL} fill="{INK}">RTTS never went away.</text>')
-a(f'<text x="64" y="264" {HL} fill="{INK}">Only</text>')
-# marker swash under "the screen" - a slab, not a line
-a(f'<g transform="rotate(-1.8 340 250)">'
-  f'<rect x="176" y="228" width="252" height="48" rx="7" fill="{RED}"/></g>')
-a(f'<text x="188" y="264" {HL} fill="#FFFFFF">the screen</text>')
-a(f'<text x="64" y="320" {HL} fill="{INK}">in front of it did.</text>')
+a(f'<text x="64" y="208" {HL} fill="{INK}">abap2UI5 gives</text>')
+a(f'<text x="64" y="264" {HL} fill="{INK}">runtime-typed ABAP</text>')
+# marker slab, not a line - the payoff of the sentence carries the colour
+a(f'<g transform="rotate(-1.8 186 306)">'
+  f'<rect x="58" y="284" width="252" height="48" rx="7" fill="{RED}"/></g>')
+a(f'<text x="70" y="320" {HL} fill="#FFFFFF">a UI5 face</text>')
+a(f'<text x="322" y="320" {HL} fill="{INK}">again.</text>')
 
-a(f'<text x="64" y="360" font-size="17" fill="{MUTED}">'
-  f'The columns are whatever the internal table</text>')
-a(f'<text x="64" y="384" font-size="17" fill="{MUTED}">'
-  f'turns out to have — the field catalog, in a UI5 view.</text>')
+a(f'<text x="64" y="366" font-size="17" fill="{MUTED}">'
+  f'By binding ABAP data directly — the columns are</text>')
+a(f'<text x="64" y="390" font-size="17" fill="{MUTED}">'
+  f'whatever the internal table turns out to have.</text>')
 
 
 def chip(x, y, text, solid=False):
