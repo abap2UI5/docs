@@ -50,25 +50,24 @@ on design-time metadata is aimed at a different problem.
 
 *[image: RTTS — read metadata at runtime]*
 
-What this needs is a model assembled at runtime, and in ABAP that is RTTS, a
-service nearly every ABAP developer already knows (RTTS is the umbrella; the
-reading half is RTTI):
+The model is assembled at runtime, and in ABAP that can be done with RTTS, a
+service nearly every ABAP developer already knows (the reading half is RTTI):
 
 *[image: RTTS — read metadata at runtime]*
 
 But how do we get that data into a UI5 app?
 
-Luckily, a freestyle UI5 app does not actually require OData: a `JSONModel` can
-be filled from any HTTP endpoint, so nothing stops a request from carrying a
+Luckily, UI5 apps do not actually require OData — a `JSONModel` can be filled
+from any plain HTTP endpoint, so nothing stops a request from carrying a
 different model shape every time.
 
 And that is one of the use cases abap2UI5 is built for.
 
 ## Data Binding at Runtime with abap2UI5
 
-An abap2UI5 view is a string the application builds, and the model is bound
-from ABAP data — including data whose type only exists at runtime. A view that
-draws any table looks like this:
+In abap2UI5, views are just strings the application builds, and the model is
+bound from ABAP data — including data whose type only exists at runtime. A view
+that draws any table looks like this:
 
 ```abap
 " tab is TYPE STANDARD TABLE - filled however you like, a SELECT, a function
@@ -127,8 +126,10 @@ Both halves stay inside the conventions you already work in, which is what
 makes this cheap to adopt and cheap to hand over.
 
 The frontend is a freestyle UI5 app using `sap.m` controls, XML views, a
-`JSONModel` and two-way binding. The backend is a global ABAP class: one
-interface, in a package, travelling in a transport.
+`JSONModel` and two-way binding — nothing proprietary, and nothing you have not
+written before. The backend is a global ABAP class: one interface, in a
+package, travelling in a transport, compiling on ABAP Standard and ABAP Cloud
+alike.
 
 ## What It Costs
 
@@ -151,9 +152,8 @@ directly, so data typed at runtime is not a special case. It is just data —
 the way it was in the old SALV and field-catalog days.
 
 abap2UI5 is open source, runs on-premise and in the cloud, and sits beside what
-you already operate rather than in place of it. Put an abap2UI5 app into the
-launchpad and no user can tell it from the RAP and freestyle UI5 tiles next to
-it.
+you already operate. Put an abap2UI5 app into the launchpad and no user can
+tell it from the RAP and freestyle UI5 tiles next to it.
 
 So next time you reach for RTTI and need a UI, give abap2UI5 a try. It may be
 a good complement to the UI5 solutions you already run.
