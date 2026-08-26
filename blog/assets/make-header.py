@@ -1,168 +1,208 @@
 #!/usr/bin/env python3
-"""Header image for blog article #1 — the mascots, an ALV grid and a UI5 table.
+"""Cover image for blog article #1.
 
 Run from the repository root:  python3 blog/assets/make-header.py
+Writes blog/assets/01-rtti-header.png at 2400x1260 (a 1200x630 design at 2x).
 
-Writes blog/assets/01-rtti-header.png at 2400x1260 (a 1200x630 design at 2x,
-the size LinkedIn wants for a link preview).
+The cover does NOT repeat the article's headline - a reader who is looking at
+the cover is already on the article. It carries the line the article ends on
+instead, which is the one worth remembering.
 
-The three mascots are the project's own brand assets from docs/public/mascots/,
-embedded as-is. They are NOT redrawn - docs/resources/logo.md is explicit that
-brand art is scaled and nothing else, and a hand-traced dinosaur would be both
-off-brand and worse than the original.
+Brand assets (the mark, the mascots) come from docs/public/ and are only
+scaled; docs/resources/logo.md is explicit that brand art is never redrawn.
+Everything else is drawn here.
 
-Everything else - the ALV grid and the UI5 table - is drawn here, because the
-point of the picture is that the two are the same data behind different faces.
-
-Rendering goes through the Chromium that ships with this environment. It is
-told to lay out a page TALLER than the design and the result is cropped down,
-because --screenshot clips a page to less than its --window-size height and
-would otherwise cut the footer off.
+Rendering goes through the Chromium that ships with this environment, laying
+out a page TALLER than the design and cropping the result, because --screenshot
+clips a page to less than its --window-size height and would otherwise cut the
+footer off.
 """
-import base64, os, shutil, subprocess, sys, tempfile
+import base64, os, re, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-M = os.path.join(ROOT, 'docs', 'public', 'mascots') + os.sep
+PUB = os.path.join(ROOT, 'docs', 'public')
 OUT = os.path.join(ROOT, 'blog', 'assets', '01-rtti-header.png')
 CHROME = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
 
+b64 = lambda p: base64.b64encode(open(os.path.join(PUB, p), 'rb').read()).decode()
+logo = b64('logo.png')
+dino = b64('mascots/dinosaur_brand.png')
+sheep = b64('mascots/sheep_brand.png')
 
-def b64(p):
-    return base64.b64encode(open(M + p, 'rb').read()).decode()
-
-
-dino, sheep, sloth = b64('dinosaur_brand.png'), b64('sheep_brand.png'), b64('sloth_brand.png')
-
-RED, DARKRED = '#D03C4A', '#A83232'
-INK, MUTED = '#2A2A2E', '#7A7A82'
+RED, DARK = '#D03C4A', '#A83232'
+INK, MUTED = '#241F22', '#7C7278'
 W, H = 1200, 630
+
+# ---- the code panel ---------------------------------------------------------
+CODE = """METHOD render_any.
+
+  DATA(comps) = CAST cl_abap_structdescr(
+      CAST cl_abap_tabledescr(
+        cl_abap_typedescr=>describe_by_data( tab )
+      )->get_table_line_type( ) )->get_components( ).
+
+  DATA(cols) = parent->ele( `Table`
+      )->a( n = `items` v = client->_bind( tab )
+      )->ele( `columns` ).
+
+  " one column per component - discovered, not declared
+  LOOP AT comps INTO DATA(comp).
+    cols->ele( `Column`
+        )->ele( `header`
+            )->tag( `Text` )->a( n = `text` v = comp-name ).
+  ENDLOOP.
+
+ENDMETHOD."""
+
+KW = r'\b(METHOD|ENDMETHOD|DATA|CAST|LOOP|AT|INTO|ENDLOOP)\b'
+CLS = r'\b(cl_abap_structdescr|cl_abap_tabledescr|cl_abap_typedescr|client|parent)\b'
+C_KW, C_STR, C_CLS, C_CMT, C_TXT, C_FN = '#C792EA', '#ECC48D', '#7FDBCA', '#5F7E97', '#D6DEEB', '#82AAFF'
+
+
+def esc(t):
+    return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def highlight(line):
+    """hand-rolled ABAP tokenizer - comment, backtick string, keyword, class, call"""
+    if line.lstrip().startswith('"'):
+        return f'<tspan fill="{C_CMT}" font-style="italic">{esc(line)}</tspan>'
+    out, i = [], 0
+    for m in re.finditer(r'`[^`]*`|' + KW + '|' + CLS + r'|\b(ele|tag|a|describe_by_data|'
+                         r'get_table_line_type|get_components|_bind)\b', line):
+        out.append(f'<tspan fill="{C_TXT}">{esc(line[i:m.start()])}</tspan>')
+        tok = m.group(0)
+        col = (C_STR if tok.startswith('`') else
+               C_KW if re.fullmatch(KW, tok) else
+               C_CLS if re.fullmatch(CLS, tok) else C_FN)
+        out.append(f'<tspan fill="{col}">{esc(tok)}</tspan>')
+        i = m.end()
+    out.append(f'<tspan fill="{C_TXT}">{esc(line[i:])}</tspan>')
+    return ''.join(out)
+
 
 o = []
 a = o.append
-
 a(f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
   f'width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
   f'font-family="Helvetica Neue,Helvetica,Arial,sans-serif">')
 
-a('''<defs>
-<filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
-  <feDropShadow dx="0" dy="6" stdDeviation="9" flood-color="#1A1A22" flood-opacity="0.13"/>
+a(f'''<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#FCE9EB"/><stop offset="0.55" stop-color="#FDF3F4"/>
+  <stop offset="1" stop-color="#FBFAFA"/>
+</linearGradient>
+<radialGradient id="glow" cx="0.12" cy="0.18" r="0.55">
+  <stop offset="0" stop-color="{RED}" stop-opacity="0.13"/>
+  <stop offset="1" stop-color="{RED}" stop-opacity="0"/>
+</radialGradient>
+<pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+  <circle cx="1.5" cy="1.5" r="1.1" fill="{RED}" opacity="0.10"/>
+</pattern>
+<filter id="panel" x="-15%" y="-15%" width="130%" height="135%">
+  <feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#3A1D24" flood-opacity="0.22"/>
 </filter>
-<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-  <path d="M0,0 L10,5 L0,10 z" fill="#B9B6B6"/>
-</marker>
-<marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-  <path d="M0,0 L10,5 L0,10 z" fill="#D03C4A"/>
-</marker>
+<filter id="card" x="-20%" y="-20%" width="145%" height="150%">
+  <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#3A1D24" flood-opacity="0.16"/>
+</filter>
 </defs>''')
 
-a(f'<rect width="{W}" height="{H}" fill="#FBFAFA"/>')
-a(f'<rect x="0" y="0" width="{W}" height="7" fill="{RED}"/>')
+a(f'<rect width="{W}" height="{H}" fill="url(#bg)"/>')
+a(f'<rect width="{W}" height="{H}" fill="url(#dots)"/>')
+a(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
 
-a(f'<text x="64" y="86" font-size="39" font-weight="700" fill="{INK}" letter-spacing="-0.6">'
-  f'Somewhere on the way to UI5, we lost RTTI</text>')
-a(f'<text x="64" y="118" font-size="18" fill="{MUTED}">'
-  f'Two roads to the same table — and only one of them waits for a type</text>')
+# ---- left column ------------------------------------------------------------
+a(f'<image xlink:href="data:image/png;base64,{logo}" x="62" y="44" width="92" height="90"/>')
 
+HL = 'font-size="40" font-weight="700" letter-spacing="-1"'
+a(f'<text x="64" y="212" {HL} fill="{INK}">RTTS never went away.</text>')
+a(f'<text x="64" y="264" {HL} fill="{INK}">Only <tspan fill="{RED}">the screen</tspan></text>')
+a(f'<text x="64" y="316" {HL} fill="{INK}">in front of it did.</text>')
+# the hand-drawn underline, under "the screen"
+a(f'<path d="M 172 278 q 48 9 96 3 q 40 -6 68 4" stroke="{RED}" stroke-width="5" fill="none" '
+  f'stroke-linecap="round" opacity="0.85"/>')
 
-def chip(x, y, w, text, accent=False):
-    """one step of a lane"""
-    fill, stroke = ('#FDF0F1', RED) if accent else ('#FFFFFF', '#DAD8D8')
-    col = DARKRED if accent else '#4A4A52'
-    wt = '700' if accent else '500'
-    return (f'<g><rect x="{x}" y="{y}" width="{w}" height="38" rx="7" fill="{fill}" '
-            f'stroke="{stroke}" stroke-width="{1.6 if accent else 1}"/>'
-            f'<text x="{x + w / 2}" y="{y + 24}" font-size="13" font-weight="{wt}" fill="{col}" '
-            f'text-anchor="middle" font-family="Menlo,Consolas,monospace">{text}</text></g>')
-
-
-def lane(y, label, note, steps, accent=False):
-    # one text element with two tspans - the browser lays the gap out, which a
-    # width estimate here got wrong and overlapped the note onto the label
-    g = [f'<text x="64" y="{y - 14}" font-size="13.5">'
-         f'<tspan font-weight="700" fill="{RED if accent else MUTED}" '
-         f'letter-spacing="0.6">{label.upper()}</tspan>'
-         f'<tspan font-size="13" fill="#A5A2A2" letter-spacing="0"> &#160; {note}</tspan></text>']
-    x = 64
-    for i, (txt, w) in enumerate(steps):
-        if i:
-            g.append(f'<line x1="{x - 20}" y1="{y + 19}" x2="{x - 7}" y2="{y + 19}" '
-                     f'stroke="#B9B6B6" stroke-width="1.6" marker-end="url(#ah)"/>')
-        g.append(chip(x, y, w, txt, accent and i == len(steps) - 1))
-        x += w + 20
-    # into the shared screen
-    g.append(f'<line x1="{x - 20}" y1="{y + 19}" x2="716" y2="{y + 19}" '
-             f'stroke="{RED if accent else "#B9B6B6"}" stroke-width="{2.2 if accent else 1.6}" '
-             f'marker-end="url(#{"ahr" if accent else "ah"})"/>')
-    return '\n'.join(g)
+a(f'<text x="64" y="360" font-size="17" fill="{MUTED}">'
+  f'The columns are whatever the internal table</text>')
+a(f'<text x="64" y="384" font-size="17" fill="{MUTED}">'
+  f'turns out to have — the field catalog, in a UI5 view.</text>')
 
 
-a(lane(168, 'design time', 'the model is decided before the code runs',
-       [('CDS view', 108), ('entity type', 122), ('OData metadata', 148)]))
-a(lane(268, 'runtime', 'the model is whatever the data turns out to be',
-       [('internal table', 140), ('RTTS', 84)], accent=True))
+def chip(x, y, text):
+    w = 15 + 8.15 * len(text)
+    return (f'<g><rect x="{x}" y="{y}" width="{w:.0f}" height="38" rx="19" fill="#FFFFFF" '
+            f'fill-opacity="0.75" stroke="{RED}" stroke-width="1.7"/>'
+            f'<text x="{x + w / 2:.0f}" y="{y + 25}" font-size="14.5" font-weight="700" '
+            f'fill="{DARK}" text-anchor="middle">{text}</text></g>'), w
 
-# the shared destination
-CX, CY, CW, CH = 736, 132, 400, 204
-a(f'<g filter="url(#sh)"><rect x="{CX}" y="{CY}" width="{CW}" height="{CH}" rx="9" '
-  f'fill="#FFFFFF" stroke="#E3E3E6"/></g>')
-a(f'<text x="{CX + 20}" y="{CY + 31}" font-size="15" font-weight="600" fill="{INK}">'
-  f'the same sap.m.Table</text>')
+
+x = 64
+for t in ('No entity type', 'No CDS view'):
+    g, w = chip(x, 418, t)
+    a(g); x += w + 12
+x = 64
+for t in ('No service binding', 'Any internal table'):
+    g, w = chip(x, 470, t)
+    a(g); x += w + 12
+
+a(f'<text x="64" y="{H - 26}" font-size="14" fill="{MUTED}">'
+  f'Open source · MIT · abap2UI5 Know-How #1 · '
+  f'<tspan font-weight="700" fill="{RED}">abap2UI5.org</tspan></text>')
+
+# ---- code panel -------------------------------------------------------------
+PX, PY, PW, PH = 636, 44, 520, 400
+a(f'<g filter="url(#panel)"><rect x="{PX}" y="{PY}" width="{PW}" height="{PH}" rx="12" '
+  f'fill="#0F1724"/></g>')
+a(f'<rect x="{PX}" y="{PY}" width="{PW}" height="38" rx="12" fill="#182233"/>')
+a(f'<rect x="{PX}" y="{PY + 26}" width="{PW}" height="12" fill="#182233"/>')
+for i, c in enumerate(('#FF5F57', '#FEBC2E', '#28C840')):
+    a(f'<circle cx="{PX + 22 + i * 19}" cy="{PY + 19}" r="6" fill="{c}"/>')
+a(f'<text x="{PX + 92}" y="{PY + 24}" font-size="12" fill="#8FA3BF" '
+  f'font-family="Menlo,Consolas,monospace">z2ui5_cl_smp_app_497.clas.abap</text>')
+
+ly = PY + 62
+for line in CODE.split('\n'):
+    a(f'<text x="{PX + 22}" y="{ly}" font-size="11.6" xml:space="preserve" '
+      f'font-family="Menlo,Consolas,monospace">{highlight(line)}</text>')
+    ly += 17
+
+# ---- the UI5 preview, overlapping the panel --------------------------------
+CX, CY, CW, CH = 866, 424, 300, 160
+a(f'<g filter="url(#card)"><rect x="{CX}" y="{CY}" width="{CW}" height="{CH}" rx="10" '
+  f'fill="#FFFFFF"/></g>')
+a(f'<rect x="{CX}" y="{CY}" width="{CW}" height="40" rx="10" fill="#F4F5F7"/>')
+a(f'<rect x="{CX}" y="{CY + 28}" width="{CW}" height="12" fill="#F4F5F7"/>')
+a(f'<text x="{CX + 16}" y="{CY + 26}" font-size="13.5" font-weight="700" fill="{INK}">Flights</text>')
+a(f'<rect x="{CX + CW - 68}" y="{CY + 11}" width="52" height="19" rx="9.5" fill="{RED}" opacity="0.13"/>')
+a(f'<text x="{CX + CW - 42}" y="{CY + 25}" font-size="10.5" font-weight="700" fill="{DARK}" '
+  f'text-anchor="middle">RTTS</text>')
+
 COLS = ['CARRID', 'CONNID', 'FLDATE', 'PRICE']
 ROWS = [['LH', '0400', '2026-08-25', '899.00'],
         ['LH', '0402', '2026-08-26', '915.00'],
-        ['AA', '0017', '2026-08-27', '422.50'],
-        ['UA', '0941', '2026-08-28', '780.00']]
-ty = CY + 46
-cw = (CW - 40) / len(COLS)
-a(f'<line x1="{CX + 20}" y1="{ty + 21}" x2="{CX + CW - 20}" y2="{ty + 21}" stroke="#E3E3E6"/>')
+        ['AA', '0017', '2026-08-27', '422.50']]
+cw = (CW - 32) / len(COLS)
+hy = CY + 60
+a(f'<line x1="{CX + 16}" y1="{hy + 8}" x2="{CX + CW - 16}" y2="{hy + 8}" stroke="#E6E7EA"/>')
 for i, c in enumerate(COLS):
-    cx = CX + 20 + i * cw
-    anc = 'end' if i == 3 else 'start'
-    tx = cx + cw - 4 if i == 3 else cx
-    a(f'<text x="{tx}" y="{ty + 15}" font-size="11" font-weight="600" fill="{MUTED}" '
-      f'text-anchor="{anc}" letter-spacing="0.4">{c}</text>')
+    tx = CX + 16 + i * cw + (cw - 4 if i == 3 else 0)
+    a(f'<text x="{tx:.0f}" y="{hy}" font-size="9.5" font-weight="700" fill="{MUTED}" '
+      f'letter-spacing="0.5" text-anchor="{"end" if i == 3 else "start"}">{c}</text>')
 for r, row in enumerate(ROWS):
-    ry = ty + 21 + r * 30
+    ry = hy + 8 + (r + 1) * 28
     if r:
-        a(f'<line x1="{CX + 20}" y1="{ry}" x2="{CX + CW - 20}" y2="{ry}" stroke="#F0F0F2"/>')
+        a(f'<line x1="{CX + 16}" y1="{ry - 20}" x2="{CX + CW - 16}" y2="{ry - 20}" stroke="#F2F3F5"/>')
     for i, v in enumerate(row):
-        cx = CX + 20 + i * cw
-        anc = 'end' if i == 3 else 'start'
-        tx = cx + cw - 4 if i == 3 else cx
-        a(f'<text x="{tx}" y="{ry + 20}" font-size="12.5" fill="{INK}" '
-          f'font-weight="{"600" if i == 0 else "400"}" text-anchor="{anc}">{v}</text>')
+        tx = CX + 16 + i * cw + (cw - 4 if i == 3 else 0)
+        a(f'<text x="{tx:.0f}" y="{ry - 6}" font-size="11.5" fill="{INK}" '
+          f'font-weight="{"700" if i == 0 else "400"}" '
+          f'text-anchor="{"end" if i == 3 else "start"}">{v}</text>')
 
-# ground band and the mascots on it
-FLOOR = 500
-a(f'<rect x="0" y="{FLOOR}" width="{W}" height="{H - FLOOR}" fill="#F1EFEF"/>')
-a(f'<line x1="0" y1="{FLOOR}" x2="{W}" y2="{FLOOR}" stroke="#E2DFDF"/>')
-for cx_, rx_ in ((150, 78), (300, 72), (450, 78)):
-    a(f'<ellipse cx="{cx_}" cy="{FLOOR}" rx="{rx_}" ry="8" fill="#1A1A22" opacity="0.07"/>')
-
-
-def img(data, x, y, s):
-    return (f'<image xlink:href="data:image/png;base64,{data}" x="{x}" y="{y}" '
-            f'width="{s}" height="{s}"/>')
-
-
-a(img(dino, 78, FLOOR - 144, 150))
-a(img(sheep, 236, FLOOR - 130, 136))
-a(img(sloth, 378, FLOOR - 144, 150))
-
-# the caption sits in the empty band between the card and the ground, not
-# stacked on the footer - three right-aligned lines in a row read as one block
-a(f'<text x="{W - 64}" y="424" font-size="21" font-weight="700" fill="#4A4A52" '
-  f'text-anchor="end">RTTS never went away.</text>')
-a(f'<text x="{W - 64}" y="454" font-size="21" font-weight="700" fill="{RED}" '
-  f'text-anchor="end">Only the screen in front of it did.</text>')
-
-a(f'<text x="64" y="{H - 22}" font-size="13" fill="#8A8A90">abap2UI5 Know-How \u00b7 #1</text>')
-a(f'<text x="{W - 64}" y="{H - 22}" font-size="13" font-weight="700" fill="{RED}" '
-  f'text-anchor="end">abap2UI5.org</text>')
+# ---- mascots ----------------------------------------------------------------
+a(f'<image xlink:href="data:image/png;base64,{sheep}" x="430" y="452" width="122" height="122"/>')
+a(f'<image xlink:href="data:image/png;base64,{dino}" x="536" y="440" width="134" height="134"/>')
 
 a('</svg>')
-
 svg = '\n'.join(o)
 
 if not os.path.exists(CHROME):
@@ -176,11 +216,9 @@ with tempfile.TemporaryDirectory() as tmp:
                 'svg{display:block}</style>')
         f.write(svg)
     raw = os.path.join(tmp, 'raw.png')
-    subprocess.run([CHROME, '--headless', '--disable-gpu', '--no-sandbox',
-                    '--hide-scrollbars', '--force-device-scale-factor=2',
-                    f'--window-size={W},{H + 230}',      # taller: see the module docstring
-                    f'--screenshot={raw}', 'file://' + page],
-                   check=True, capture_output=True)
+    subprocess.run([CHROME, '--headless', '--disable-gpu', '--no-sandbox', '--hide-scrollbars',
+                    '--force-device-scale-factor=2', f'--window-size={W},{H + 230}',
+                    f'--screenshot={raw}', 'file://' + page], check=True, capture_output=True)
     try:
         from PIL import Image
     except ImportError:
