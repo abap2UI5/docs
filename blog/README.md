@@ -13,19 +13,30 @@ pass the gates like every other page.
 
 | Date | Article | State |
 |---|---|---|
-| Tue, 25 Aug 2026 | #1 Somewhere on the Way to UI5, We Lost RTTI | ready, needs a URL |
-| tbd | #2 The Cost of a Screen | draft, needs shortening |
+| Tue, 25 Aug 2026 | #1 Somewhere on the Way to UI5, We Lost RTTS | **posted** |
+| tbd | #2 abap2UI5 is not a Programming Model | draft |
+| tbd | #3 The Cost of a Screen | draft |
 
-**The one thing blocking Tuesday is the `[link]` in the teaser post** — see
-*Where the articles are published* at the bottom. The post cannot go out
-without a destination, and the destination decides whether the article can be
-corrected afterwards.
+**#2 and #3 were one article until they were split.** They had to be: the
+draft opened on the cost of a screen and then spent half its length explaining
+the interface, which is a different argument with a different audience. Kept
+apart, each is short and each is answerable on its own.
 
-The RTTI article leads because it opens on a loss the audience recognises
-before it mentions abap2UI5 at all. "The Cost of a Screen" is the positioning
-piece and reads better once a reader has seen the framework do something
-concrete. Swap the numbers if that ordering turns out to be wrong — nothing
-else depends on it.
+| | asks | evidence | ends on |
+|---|---|---|---|
+| **#2** Not a Programming Model | what does abap2UI5 ask of my architecture? | the `z2ui5_if_app` interface in full, and an EML call from an event handler | nothing — so it composes |
+| **#3** The Cost of a Screen | why do small screens never get built? | a complete job monitor, and the list of steps it skips | the price scales down |
+
+**The boundary is load-bearing, so hold it.** #3 must not re-explain the
+contract and #2 must not argue the economics; each links the other once and
+moves on. Both articles open with a box saying which question they answer,
+because a reader arriving from the wrong one should find that out in a
+sentence rather than a paragraph.
+
+The shared temptation is "one class, no service" — which #2 states as a
+*contract* ("that is all it asks") and #3 as a *price* ("that is all it
+costs"). Same fact, two arguments; if either starts making the other's, they
+have merged again.
 
 ## Format
 
