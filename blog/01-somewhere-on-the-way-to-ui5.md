@@ -164,24 +164,21 @@ Happy ABAPing! 🦖🦕🦣
 
 ## LinkedIn teaser post
 
-As posted. Plain text — LinkedIn renders no markdown. The article link comes
-from the attached article preview, so the post carries no inline URL.
+Plain text — LinkedIn renders no markdown. The article link comes from the
+attached article preview, so the post carries no inline URL. 744 characters.
 
 > In the past, screens were routinely built for tables nobody had seen.
 > cl_salv_table=>factory( ) took any internal table and drew it — RTTS read the
 > structure at runtime, the DDIC supplied the labels, and a whole category of
-> ABAP tooling was built that way: data browsers, table maintenance, migration
-> cockpits.
+> ABAP tooling was built that way.
 >
-> With Fiori Elements, RAP or freestyle UI5, the path to a screen always goes
-> through a typed OData service, and the entity type has to exist first, at
-> design time. Exactly right when the client does not know your backend — but a
-> dead end for the use cases above.
+> With Fiori Elements, RAP or freestyle UI5, that path goes through a typed
+> OData service: the entity type has to exist first, at design time. Exactly
+> right when the client does not know your backend — but a dead end for those
+> tools.
 >
-> Check out this new article! 🎉
->
-> abap2UI5 can give a runtime-typed model a UI5 face, and be a perfect
-> complement to the UI5 and RAP solutions you already run.
+> New article 🎉 abap2UI5 can give a runtime-typed model a UI5 face, and be a
+> perfect complement to the UI5 and RAP solutions you already run.
 >
 > Where do you still use RTTS in UIs today? And how do you get around the
 > design-time bottleneck?
