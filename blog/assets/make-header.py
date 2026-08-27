@@ -115,21 +115,7 @@ a(f'<rect width="{W}" height="{H}" fill="url(#dots)"/>')
 a(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
 
 # ---- left column ------------------------------------------------------------
-a(f'<image xlink:href="data:image/png;base64,{logo}" x="62" y="44" width="92" height="90"/>')
-
-HL = 'font-size="43" font-weight="700" letter-spacing="-1.4"'
-a(f'<text x="64" y="208" {HL} fill="{INK}">abap2UI5 gives</text>')
-a(f'<text x="64" y="264" {HL} fill="{INK}">runtime-typed ABAP</text>')
-# marker slab, not a line - the payoff of the sentence carries the colour
-a(f'<g transform="rotate(-1.8 186 306)">'
-  f'<rect x="58" y="284" width="252" height="48" rx="7" fill="{RED}"/></g>')
-a(f'<text x="70" y="320" {HL} fill="#FFFFFF">a UI5 face</text>')
-a(f'<text x="322" y="320" {HL} fill="{INK}">again.</text>')
-
-a(f'<text x="64" y="366" font-size="17" fill="{MUTED}">'
-  f'By binding ABAP data directly — the columns are</text>')
-a(f'<text x="64" y="390" font-size="17" fill="{MUTED}">'
-  f'whatever the internal table turns out to have.</text>')
+a(f'<image xlink:href="data:image/png;base64,{logo}" x="74" y="96" width="222" height="217"/>')
 
 
 def chip(x, y, text, solid=False):
@@ -143,22 +129,22 @@ def chip(x, y, text, solid=False):
             f'fill="{col}" text-anchor="middle">{text}</text></g>'), w
 
 
-x = 64
+x = 74
 for t, solid in (('No entity type', True), ('No CDS view', False)):
-    g, w = chip(x, 418, t, solid)
+    g, w = chip(x, 348, t, solid)
     a(g); x += w + 12
-x = 64
+x = 74
 for t, solid in (('No service binding', False), ('Any internal table', True)):
-    g, w = chip(x, 470, t, solid)
+    g, w = chip(x, 400, t, solid)
     a(g); x += w + 12
 
-a(f'<text x="64" y="{H - 26}" font-size="14" fill="{MUTED}">'
+a(f'<text x="74" y="{H - 26}" font-size="14" fill="{MUTED}">'
   f'Open source · MIT · abap2UI5 Know-How #1 · '
   f'<tspan font-weight="700" fill="{RED}">abap2UI5.org</tspan></text>')
 
 # ---- code panel -------------------------------------------------------------
 # tilted, so it reads as stuck onto the page rather than laid out on it
-PX, PY, PW, PH = 636, 44, 520, 400
+PX, PY, PW, PH = 556, 44, 596, 424
 a(f'<g transform="rotate(-1.9 {PX + PW / 2} {PY + PH / 2})">')
 a(f'<g filter="url(#panel)"><rect x="{PX}" y="{PY}" width="{PW}" height="{PH}" rx="12" '
   f'fill="#0F1724"/></g>')
@@ -166,18 +152,18 @@ a(f'<rect x="{PX}" y="{PY}" width="{PW}" height="38" rx="12" fill="#182233"/>')
 a(f'<rect x="{PX}" y="{PY + 26}" width="{PW}" height="12" fill="#182233"/>')
 for i, c in enumerate(('#FF5F57', '#FEBC2E', '#28C840')):
     a(f'<circle cx="{PX + 22 + i * 19}" cy="{PY + 19}" r="6" fill="{c}"/>')
-a(f'<text x="{PX + 92}" y="{PY + 24}" font-size="12" fill="#8FA3BF" '
+a(f'<text x="{PX + 96}" y="{PY + 24}" font-size="12.5" fill="#8FA3BF" '
   f'font-family="Menlo,Consolas,monospace">z2ui5_cl_smp_app_497.clas.abap</text>')
 
 ly = PY + 62
 for line in CODE.split('\n'):
-    a(f'<text x="{PX + 22}" y="{ly}" font-size="11.6" xml:space="preserve" '
+    a(f'<text x="{PX + 26}" y="{ly}" font-size="12.7" xml:space="preserve" '
       f'font-family="Menlo,Consolas,monospace">{highlight(line)}</text>')
-    ly += 17
+    ly += 18
 a('</g>')
 
 # ---- the UI5 preview, overlapping the panel --------------------------------
-CX, CY, CW, CH = 866, 424, 300, 160
+CX, CY, CW, CH = 846, 438, 306, 160
 a(f'<g transform="rotate(2.6 {CX + CW / 2} {CY + CH / 2})">')
 a(f'<g filter="url(#card)"><rect x="{CX}" y="{CY}" width="{CW}" height="{CH}" rx="10" '
   f'fill="#FFFFFF"/></g>')
@@ -213,22 +199,22 @@ a('</g>')
 
 # ---- a sticker, slapped on the panel corner --------------------------------
 # top-RIGHT: on the left it covered the filename and the first line of code
-a(f'<g transform="rotate(11 1078 74)">'
-  f'<rect x="988" y="48" width="180" height="52" rx="26" fill="#FFFFFF" stroke="{RED}" '
+a(f'<g transform="rotate(11 1074 74)">'
+  f'<rect x="984" y="48" width="180" height="52" rx="26" fill="#FFFFFF" stroke="{RED}" '
   f'stroke-width="3"/>'
-  f'<text x="1078" y="81" font-size="21" font-weight="700" fill="{RED}" '
+  f'<text x="1074" y="81" font-size="21" font-weight="700" fill="{RED}" '
   f'text-anchor="middle">no OData!</text></g>')
 
 # ---- mascots ----------------------------------------------------------------
-a(f'<image xlink:href="data:image/png;base64,{sheep}" x="404" y="456" width="118" height="118"/>')
-a(f'<image xlink:href="data:image/png;base64,{dino}" x="508" y="442" width="134" height="134"/>')
-a(f'<g transform="rotate(-5 700 432)">'
-  f'<rect x="626" y="404" width="150" height="54" rx="16" fill="#FFFFFF" stroke="{INK}" '
+a(f'<image xlink:href="data:image/png;base64,{sheep}" x="86" y="460" width="126" height="126"/>')
+a(f'<image xlink:href="data:image/png;base64,{dino}" x="200" y="446" width="142" height="142"/>')
+a(f'<g transform="rotate(-5 410 480)">'
+  f'<rect x="330" y="452" width="162" height="56" rx="16" fill="#FFFFFF" stroke="{INK}" '
   f'stroke-width="3"/>'
-  f'<path d="M 656 456 l -4 22 l 26 -20 z" fill="#FFFFFF" stroke="{INK}" stroke-width="3" '
+  f'<path d="M 356 506 l -8 24 l 30 -22 z" fill="#FFFFFF" stroke="{INK}" stroke-width="3" '
   f'stroke-linejoin="round"/>'
-  f'<rect x="640" y="452" width="42" height="7" fill="#FFFFFF"/>'
-  f'<text x="701" y="440" font-size="24" font-weight="700" fill="{INK}" '
+  f'<rect x="342" y="502" width="46" height="7" fill="#FFFFFF"/>'
+  f'<text x="411" y="489" font-size="25" font-weight="700" fill="{INK}" '
   f'text-anchor="middle">still here!</text></g>')
 
 a('</svg>')
