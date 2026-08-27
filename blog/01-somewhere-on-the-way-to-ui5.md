@@ -164,8 +164,8 @@ Happy ABAPing! 🦖🦕🦣
 
 ## LinkedIn teaser post
 
-Plain text — LinkedIn renders no markdown. Replace [link] with the article URL
-before posting.
+As posted. Plain text — LinkedIn renders no markdown. The article link comes
+from the attached article preview, so the post carries no inline URL.
 
 > In the past, screens were routinely built for tables nobody had seen.
 > cl_salv_table=>factory( ) took any internal table and drew it — RTTS read the
@@ -178,11 +178,12 @@ before posting.
 > design time. Exactly right when the client does not know your backend — but a
 > dead end for the use cases above.
 >
-> Check out this article: abap2UI5 can give a runtime-typed model a UI5 face,
-> and be a perfect complement to the UI5 and RAP solutions you already run.
-> [link]
+> Check out this new article! 🎉
 >
-> Where do you still use RTTS-driven tooling in UIs today? And how do you get
-> around the design-time bottleneck?
+> abap2UI5 can give a runtime-typed model a UI5 face, and be a perfect
+> complement to the UI5 and RAP solutions you already run.
+>
+> Where do you still use RTTS in UIs today? And how do you get around the
+> design-time bottleneck?
 >
 > #ABAP #SAP #UI5
