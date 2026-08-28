@@ -106,4 +106,12 @@ if (problems.length) {
   console.error('sentence like "arrives with the next release" goes stale with the number.');
   process.exit(1);
 }
-console.log('the documentation names the release that exists - OK');
+/* Two different findings, so two different sentences. Without `latest` the
+ * run compared the three places against each other and against nothing else —
+ * saying "names the release that exists" there claims exactly the thing the
+ * line above has just reported as UNVERIFIED, which is how a green run comes
+ * to mean less than a reader thinks. Still exit 0 either way: an unreachable
+ * API is not a documentation defect. */
+console.log(latest
+  ? 'the documentation names the release that exists - OK'
+  : 'the three places agree with each other - OK (against the actual release: not checked)');

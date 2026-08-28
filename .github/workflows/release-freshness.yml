@@ -40,7 +40,22 @@ jobs:
       # freshness check that first spends two minutes on npm ci is a freshness
       # check people turn off.
       - name: Does the site still name the release that exists
-        run: node scripts/check-version.mjs | tee version.txt
+        # The exit code has to come from check-version.mjs, not from `tee`.
+        # GitHub runs a `run:` step as `bash -e {0}` — errexit, but NOT
+        # pipefail — so a pipeline reports its LAST command's status, and
+        # `tee` succeeds whenever it can write the file. The step therefore
+        # passed however stale the site was, the `if: failure()` step below
+        # never ran, and this weekly check has been unable to report anything
+        # since it was written.
+        #
+        # PIPESTATUS, the same way abap2UI5/linter's upstream-sync.yml handles
+        # the identical `node … | tee` shape.
+        run: |
+          set +e
+          node scripts/check-version.mjs | tee version.txt
+          STATUS=${PIPESTATUS[0]}
+          set -e
+          exit "$STATUS"
 
       - name: Open or update the stale-release issue
         if: failure()
