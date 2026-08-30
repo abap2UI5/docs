@@ -35,7 +35,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.143.0**. Entries marked *next release* are already
+The released version is **1.144.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
@@ -57,9 +57,9 @@ tell you what is coming if you do not.
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
-| `cs_config-title` | `cs_event-set_title` | *next release* |
-| `z2ui5_if_types=>…` | the same type on the object that uses it | *next release* |
-| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | *next release* |
+| `cs_config-title` | `cs_event-set_title` | 1.144.0 |
+| `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
 
 ## Obsolete: still compiles
 
