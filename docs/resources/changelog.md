@@ -6,6 +6,25 @@ outline: [2, 4]
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.144.0
+2026-08-30
+- Added `client->_event( arg = … )`, the one-value spelling of `t_arg`. `arg = x` is exactly `t_arg = VALUE #( ( x ) )` — the client folds it into the same table, so the wire and `get_event_arg( )` are unchanged — and it exists because most event wires carry a single value (a row key, a `${$source>/…}`, one event parameter), where the table constructor is longer than the value inside it. Passing both appends `arg` behind the `t_arg` rows. From two values on, `t_arg` stays the right parameter: there is deliberately no `arg2`/`arg3`
+- Added `client->_bind_path( val )`, the path form of `_bind( )` under a name of its own — what a bound aggregation, a `binding_call` filter/sorter and `bindElement` need. It is `_bind( val = … path = abap_true )`, byte for byte, and takes one parameter; combine `path` with `tab`/`tab_index`, `omit_initial`, `json` or `switch_default_model` and `_bind( )` is still the call. `path` stays on `_bind( )` and is not deprecated
+- Frontend actions: `expandSelected` / `collapseSelected` on a tree table, `setBadgeMinValue` / `setBadgeMaxValue`, `IconPool.registerFont` for a custom icon font (`sap.tnt`'s SAP-icons-TNT is the common one — without the registration such an icon renders no glyph and logs nothing), and `addCustomCurrencies`, which MERGES codes rather than replacing the whole registration the way `setCustomCurrencies` does
+- `NavContainer` `to( )` takes a typed page id plus an optional transition name, and `backToPage( )` no longer silently does nothing when handed a plain page id
+- Event arguments: an empty string arrives as an empty string, and a date-valued argument travels as the LOCAL date instead of shifting a day west of the system's timezone
+- `client->get( )-t_model_skipped` names the cells a model delta could not convert, instead of dropping them without a trace
+- The page-location block is latched when its request is confirmed rather than when it is built, so an aborted first request no longer suppresses it for the rest of the session
+- 7.02 / 7.31: a built-in function in a table-expression key no longer takes the whole class pool down at compile time (report #2664)
+- `MultiInputExt` gained the suggestion-row half of `addValidator`
+- Developer Tools: the cross-tab search moved onto a tab of its own
+
+**Renamed — the old name still ships**
+- `z2ui5_if_exit` is now `z2ui5_if_ui5_exit`. The old interface still ships and is still looked up and called, so every existing exit keeps working; rename at your leisure
+
+**Removed**
+- BREAKING: `z2ui5_if_types` is retired to `src/99` — every type it held now sits on the object that uses it (`ty_s_get` / `ty_s_event_control` / `ty_s_name_value` / `ty_t_name_value` / `cs_device` on `z2ui5_if_client`, the three HTTP config types on `z2ui5_if_ui5_exit`, `ty_s_draft` on `z2ui5_cl_ui5_srv_draft`). Nothing is deleted or reshaped: the interface ships unchanged from the frozen package, so `z2ui5_if_types=>…` still compiles, and every moved type is identical field for field
+
 ## 1.143.0
 2026-08-16
 - Added `z2ui5_cl_ui5_view_builder`, the view builder this documentation is written against: `factory( )` / `ele( )` / `tag( )` / `a( )` / `end( )` / `stringify( )`, with every UI5 control and property reachable because the builder knows none of them by name. `z2ui5_cl_xml_view` is frozen, not removed — it ships unchanged and keeps working
