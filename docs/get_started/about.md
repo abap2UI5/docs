@@ -108,9 +108,10 @@ By relying only on released APIs, abap2UI5 keeps your apps "cloud-ready" and "up
 Works with both ABAP Cloud and Standard ABAP:
 - S/4 Public Cloud and BTP ABAP Environment (ABAP for Cloud)
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
-- R/3 NetWeaver AS ABAP 7.50 or later (Standard ABAP)
+- R/3 NetWeaver AS ABAP 7.02 or later (Standard ABAP)
 
-For systems on releases before 7.50 (down to 7.02), a separate downported version is available.
+Below 7.50 you pull the `702` branch instead of `main` — same features, generated
+from it automatically. See [Downporting](/advanced/downporting).
 
 ### UI5 Versions
 The frontend is UI5 itself, loaded at bootstrap like it is for any other UI5 app. abap2UI5 bootstraps OpenUI5 from its public CDN by default; a single exit points it at SAPUI5, at a pinned version, or at the UI5 already delivered by your own system — which is what a system without internet access uses. `1.71` is the oldest supported release, and every change is tested against UI5 2.x as well.
