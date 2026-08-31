@@ -13,7 +13,6 @@ A one-page recap of the rules that decide whether an abap2UI5 app works or misbe
 | Declare every attribute you bind in the `PUBLIC SECTION` | Binding works via dynamic `ASSIGN` and cannot reach `PROTECTED` / `PRIVATE`; the roundtrip fails with `BINDING_ERROR` → [Binding](/cookbook/model/binding) |
 | Keep state in attributes, not in local variables | Between two events the app instance is serialized into a draft on the SERVER and read back — attributes survive at any visibility; locals, `DATA(...)` declarations, open cursors and locks do not → [Statefulness](/cookbook/expert_more/statefulness) |
 | Respect the UI5 aggregation rules even though the builder does not enforce them | The builder lets you nest anything inside anything; UI5 does not, and the mismatch surfaces as broken rendering rather than a syntax error → [Definition](/cookbook/view/definition) |
-
 | Never use a deprecated UI5 control | It renders today and vanishes on the next UI5 upgrade → [Deprecated Controls](/cookbook/view/deprecated_controls) |
 | Check the built-in popups before building a custom dialog | Roughly twenty ready-made dialogs ship with the framework — confirm, select, file up/download, ranges, PDF, … → [Built-In](/cookbook/popup_popover/built_in) |
 | Use backtick string literals (`` ` ``) | Project-wide convention in the framework, the samples and this documentation; keeps ABAP string handling consistent |

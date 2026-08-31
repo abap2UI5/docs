@@ -21,4 +21,4 @@ Nothing here is a source of truth about the framework: the API reference, the
 sample catalogue and the corpus figures are generated or checked against
 `abap2UI5`, `abap2UI5/samples` and its siblings. If a fact is wrong, it is
 usually wrong there first. [AGENTS.md](AGENTS.md) is the full contract — how
-the site is built, the seven gates, and what may be written where.
+the site is built, the eight gates, and what may be written where.

@@ -190,12 +190,25 @@ function renderConstants(group) {
   return out;
 }
 
+/** Every field of a type as its full spelled form, nested BEGIN OF groups
+ *  flattened the way an app reads them: s_device-system. Same shape as
+ *  constantRows above - ty_s_get grew nested groups in 1.144.0 and this
+ *  renderer only knew flat members, so `cell(undefined)` took the whole
+ *  generator down. */
+function fieldRows(members, prefix, rows) {
+  for (const f of members) {
+    if (f.members) fieldRows(f.members, `${prefix}${f.name}-`, rows);
+    else rows.push({ name: `${prefix}${f.name}`, type: f.type });
+  }
+  return rows;
+}
+
 function renderType(t) {
   const out = [`### \`${t.name}\``, ''];
   for (const para of t.doc ?? []) out.push(prose(para), '');
   if (t.members) {
     out.push('| Field | Type |', '|---|---|');
-    for (const f of t.members) out.push(`| \`${f.name}\` | \`${cell(f.type)}\` |`);
+    for (const f of fieldRows(t.members, '', [])) out.push(`| \`${f.name}\` | \`${cell(f.type)}\` |`);
     out.push('');
   } else {
     out.push(`Defined as \`${t.definition}\`.`, '');
