@@ -50,7 +50,8 @@ catalogue lists every app with the words to search it by, at
 https://github.com/abap2UI5/samples/blob/main/SAMPLES.md
 
 When you are done, check the result with the abap2UI5-linter
-(npx abap2ui5lint) - it reads the view your ABAP builds and needs no SAP system.
+(npx @abap2ui5/linter src) - it reads the view your ABAP builds and needs no
+SAP system.
 ```
 
 ## Point it at the right index
