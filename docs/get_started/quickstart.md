@@ -3,31 +3,6 @@ outline: [2, 4]
 ---
 # Quickstart
 
-There are three ways to meet abap2UI5, and they differ in what you need: a
-browser, a browser, or a system of your own. Decide first, then follow one
-path — the first two need no installation at all.
-
-**Try it in the browser — nothing to install.** Every step of the
-[Tutorial](/tutorials/overview) is a complete class with a **Run** button under
-it, and the [playground](https://abap2ui5.github.io/playground/) behind that
-button is an ABAP editor with the running app beside it — write a class, press
-run, see the app. The sample catalogues open there too: every card on the
-[Learn](https://abap2ui5.github.io/samples/) and
-[Controls](https://abap2ui5.github.io/samples-controls/) pages starts that
-sample in the playground.
-
-**Explore the live demo.** The
-[live demo](https://abap2ui5.github.io/web-abap2UI5-build/) is the complete
-stack — framework, backend and sample apps — downported, transpiled to
-JavaScript and running inside your browser tab, against an in-memory database.
-It is rebuilt daily from `main`, so what you click there is the current
-framework. Where the playground runs one class at a time, the live demo is the
-whole delivered system, startup page included.
-
-**Install on your own system.** The rest of this page: the same apps on a real
-ABAP system, from the abapGit pull to a first app you wrote yourself, with a
-verification step at the end that says what you should be seeing.
-
 ## 1. Install the Framework via abapGit
 
 Pull [abap2UI5](https://github.com/abap2UI5/abap2UI5) with
@@ -50,31 +25,7 @@ later.
 :::
 
 The framework is everything you need: the HTTP endpoint you create next serves
-the UI5 frontend itself, so there is no separate frontend to deploy.
-
-::: details When a separate frontend app is wanted anyway
-Some production scenarios install one later — on S/4 Public Cloud the HTTP
-endpoint needs `S_DEVELOP` authorization, so business users reach the app
-through a separately deployed frontend and a tile instead (see
-[S/4 Public Cloud](/configuration/s4_public_cloud)). For those cases the
-[frontend](https://github.com/abap2UI5/frontend) repository publishes the same
-frontend as ready-made deployment branches. Pull the one that matches your
-system:
-
-| Branch | System | UI5 |
-|---|---|---|
-| `cloud` | S/4 Public Cloud, BTP ABAP Environment | classic |
-| `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x) |
-| `standard` | S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver > 7.50 | classic |
-| `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x) |
-
-The `cloud` branches carry a complete Fiori source project plus the HTTP
-service artifacts; the `standard` branches carry the frontend as BSP `Z2UI5`
-with its ICF handler. The `_v2` variants differ only in the bootstrap — pick
-one when your system serves UI5 2.x. None of this is needed today: finish this
-page first, and come back via [Installation](/configuration/installation) when
-production planning starts.
-:::
+the UI5 frontend itself, so there is no separate frontend to deploy. In some scenarios an additional frontend app is needed, check out more information here(link).
 
 ## 2. Set Up HTTP Handler and Service
 Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
