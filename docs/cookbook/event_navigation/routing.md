@@ -3,7 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_468
   - z2ui5_cl_smp_app_480
-  - z2ui5_cl_smp_app_322
+  - z2ui5_cl_smp_app_499
 ---
 # Routing
 
@@ -88,8 +88,8 @@ that use what this page describes. Each is a single class — pull the repositor
 
 | Sample | Class |
 |---|---|
-| Navigation — Routing mode fresh | [`Z2UI5_CL_SMP_APP_468`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
-| Navigation — Routing mode keep | [`Z2UI5_CL_SMP_APP_480`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_480.clas.abap) |
-| Navigation — push state | [`Z2UI5_CL_SMP_APP_322`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_322.clas.abap) |
+| Routing mode fresh | [`Z2UI5_CL_SMP_APP_468`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_468.clas.abap) |
+| Routing mode keep | [`Z2UI5_CL_SMP_APP_480`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_480.clas.abap) |
+| App-Owned Routing (#/detail) | [`Z2UI5_CL_SMP_APP_499`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_499.clas.abap) |
 
 <!-- samples:end -->

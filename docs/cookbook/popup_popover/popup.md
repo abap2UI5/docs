@@ -6,7 +6,6 @@ samples:
   - z2ui5_cl_smp_app_161
   - z2ui5_cl_smp_app_170
   - z2ui5_cl_smp_app_470
-  - z2ui5_cl_smp_app_141
 ---
 # Popup
 
@@ -139,6 +138,5 @@ that use what this page describes. Each is a single class — pull the repositor
 | Dialog inside a Dialog | [`Z2UI5_CL_SMP_APP_161`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_161.clas.abap) |
 | Navigate between Dialogs (NavContainer) (A) | [`Z2UI5_CL_SMP_APP_170`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_170.clas.abap) |
 | Element Binding to the Selected Row (A) | [`Z2UI5_CL_SMP_APP_470`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_470.clas.abap) |
-| Popup — change a popup control from the backend | [`Z2UI5_CL_SMP_APP_141`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_141.clas.abap) |
 
 <!-- samples:end -->
