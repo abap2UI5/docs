@@ -1,24 +1,26 @@
 #!/usr/bin/env python3
-"""The reusable cover for the abap2UI5 Know-How series - a reading scene.
+"""The reusable cover for the abap2UI5 Know-How series - one reading scene.
 
 Run from the repository root:  python3 blog/assets/make-series-cover.py
 Writes blog/assets/series-cover.png at 2400x1260 (a 1200x630 design at 2x).
 
-Almost no words on purpose. The picture is the series: the dinosaur deep in a
-book with a thought over its head, the sheep reading beside it, the sloth
-already at the keyboard - learn, think, build. That reads for any article,
-which is what a series cover has to do.
+Almost no words: the dinosaur deep in a book with a thought over its head, the
+sheep reading beside it, the sloth already at the keyboard. Learn, think,
+build - which is true of every article, and that is the test a series cover has
+to pass.
 
-The three mascots are the project's brand art, embedded from docs/public/ and
-only scaled; docs/resources/logo.md is explicit that they are never redrawn.
-Everything around them - the shelf, the stacks, the open book, the desk, the
-lamp - is drawn here.
+EVERYTHING IS DRAWN IN ONE LANGUAGE. The first version put flat pastel props
+around the mascots and the two never became one picture. So the props now use
+the mascots' own vocabulary: three values of the brand red, cream, and details
+KNOCKED OUT IN WHITE rather than outlined - which is exactly how the animals
+are built. Nothing here has a dark outline, nothing has a gradient, and no prop
+introduces a hue the mascots do not already contain.
 
-Rendering goes through the Chromium that ships with this environment, laying
-out a page taller than the design and cropping it, because --screenshot clips a
-page to less than its --window-size height.
+The mascots themselves are brand art, embedded from docs/public/ and only
+scaled. docs/resources/logo.md is explicit that brand art is never redrawn, and
+a hand-traced dinosaur would be off-brand as well as worse.
 """
-import base64, os, subprocess, sys, tempfile
+import base64, math, os, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PUB = os.path.join(ROOT, 'docs', 'public')
@@ -29,140 +31,126 @@ b64 = lambda p: base64.b64encode(open(os.path.join(PUB, p), 'rb').read()).decode
 logo, dino, sheep, sloth = (b64('logo.png'), b64('mascots/dinosaur_brand.png'),
                             b64('mascots/sheep_brand.png'), b64('mascots/sloth_brand.png'))
 
-RED, DARK = '#D03C4A', '#A83232'
-INK, MUTED = '#2A2328', '#8B8087'
-NAVY, TAN, CREAM, SLATE = '#33405A', '#C8A480', '#EADDCB', '#7E8B99'
+# the mascots' own palette, and nothing else
+R1, R2, R3 = '#D03C4A', '#A83232', '#E79aa1'
+CREAM, SAND, WHITE = '#FAF2EC', '#F0DFD2', '#FFFFFF'
+INK, MUTED = '#3A2A2E', '#9C8A8E'
 W, H = 1200, 630
-FLOOR = 486
+FLOOR = 492
 
 o = []
 a = o.append
 a(f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
   f'width="{W}" height="{H}" viewBox="0 0 {W} {H}" '
   f'font-family="Helvetica Neue,Helvetica,Arial,sans-serif">')
+a(f'<rect width="{W}" height="{H}" fill="{CREAM}"/>')
 
-a(f'''<defs>
-<linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
-  <stop offset="0" stop-color="#FDF7F3"/><stop offset="1" stop-color="#F6EBE4"/>
-</linearGradient>
-<radialGradient id="lamp" cx="0.5" cy="0.5" r="0.5">
-  <stop offset="0" stop-color="#FFE9B8" stop-opacity="0.85"/>
-  <stop offset="1" stop-color="#FFE9B8" stop-opacity="0"/>
-</radialGradient>
-<linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0" stop-color="#E9DACE"/><stop offset="1" stop-color="#E2D0C1"/>
-</linearGradient>
-</defs>''')
-
-a(f'<rect width="{W}" height="{H}" fill="url(#bg)"/>')
+# the mark's own circle, enlarged into a halo behind the reader
+a(f'<circle cx="600" cy="336" r="238" fill="{R1}" opacity="0.055"/>')
 
 
-def book_flat(x, y, w, col, h=15):
-    """one volume lying down, seen from the side"""
-    return (f'<g><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="3" fill="{col}"/>'
-            f'<rect x="{x + 5}" y="{y + 3}" width="{w - 10}" height="{h - 6}" rx="1.5" '
-            f'fill="#FFFFFF" opacity="0.20"/>'
-            f'<rect x="{x + w - 9}" y="{y + 2}" width="4" height="{h - 4}" rx="1.5" '
-            f'fill="#000000" opacity="0.10"/></g>')
-
-
-def book_up(x, y, w, h, col, tilt=0):
-    """one volume standing on a shelf"""
+def spine(x, y, w, h, col, tilt=0):
+    """a standing volume - two white bands knocked out, the way the animals are"""
     g = (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="2.5" fill="{col}"/>'
-         f'<rect x="{x + 3}" y="{y + 6}" width="{w - 6}" height="3" fill="#FFFFFF" opacity="0.28"/>'
-         f'<rect x="{x + 3}" y="{y + h - 14}" width="{w - 6}" height="3" fill="#FFFFFF" '
-         f'opacity="0.28"/>')
-    if tilt:
-        return f'<g transform="rotate({tilt} {x + w / 2} {y + h})">{g}</g>'
-    return f'<g>{g}</g>'
+         f'<rect x="{x + 3.5}" y="{y + 8}" width="{w - 7}" height="2.6" fill="{WHITE}" '
+         f'opacity="0.72"/>'
+         f'<rect x="{x + 3.5}" y="{y + h - 15}" width="{w - 7}" height="2.6" fill="{WHITE}" '
+         f'opacity="0.72"/>')
+    return (f'<g transform="rotate({tilt} {x + w / 2} {y + h})">{g}</g>' if tilt else f'<g>{g}</g>')
 
 
-# ---- back wall: a shelf, kept faint so it stays scenery ----------------------
-a(f'<g opacity="0.5">')
-for sx, sy in ((96, 92), (96, 232)):
-    a(f'<rect x="{sx}" y="{sy + 104}" width="368" height="9" rx="3" fill="{TAN}"/>')
-    bx = sx + 14
-    for w, h, col, tilt in ((22, 96, NAVY, 0), (17, 88, RED, 0), (25, 100, TAN, 0),
-                            (15, 82, SLATE, 0), (20, 92, CREAM, 0), (18, 78, DARK, -9),
-                            (24, 98, NAVY, 0), (16, 86, TAN, 0), (21, 90, SLATE, 0),
-                            (19, 94, RED, 0), (23, 84, CREAM, 0), (17, 96, NAVY, -7)):
-        a(book_up(bx, sy + 104 - h, w, h, col, tilt))
+def flat(x, y, w, col, h=15):
+    """a volume lying down - one white rule along the fore-edge"""
+    return (f'<g><rect x="{x}" y="{y}" width="{w}" height="{h}" rx="3" fill="{col}"/>'
+            f'<rect x="{x + 6}" y="{y + h / 2 - 1.3}" width="{w - 20}" height="2.6" rx="1.3" '
+            f'fill="{WHITE}" opacity="0.66"/></g>')
+
+
+# ---- the shelf ---------------------------------------------------------------
+SHELF = [(112, 214), (112, 356)]
+for sx, sy in SHELF:
+    a(f'<rect x="{sx}" y="{sy}" width="356" height="10" rx="5" fill="{R2}"/>')
+    a(f'<rect x="{sx + 8}" y="{sy + 3.4}" width="340" height="2.6" rx="1.3" fill="{WHITE}" '
+      f'opacity="0.5"/>')
+    bx = sx + 12
+    for w, h, col, tilt in ((21, 96, R1, 0), (16, 84, SAND, 0), (24, 104, R2, 0),
+                            (15, 78, R3, 0), (20, 92, R1, 0), (18, 72, SAND, -10),
+                            (23, 100, R2, 0), (16, 86, R1, 0), (21, 90, R3, 0),
+                            (19, 96, SAND, 0), (22, 82, R2, 0), (17, 94, R1, -8)):
+        a(spine(bx, sy - h, w, h, col, tilt))
         bx += w + 5
-a('</g>')
 
-# ---- the lamp, and the glow it casts over the reading corner ---------------
-a(f'<ellipse cx="596" cy="300" rx="330" ry="260" fill="url(#lamp)"/>')
-a(f'<line x1="596" y1="0" x2="596" y2="86" stroke="#B9A899" stroke-width="3"/>')
-a(f'<path d="M 540 150 L 566 90 L 626 90 L 652 150 Z" fill="{DARK}"/>')
-a(f'<path d="M 540 150 L 652 150 L 646 158 L 546 158 Z" fill="{RED}"/>')
-a(f'<ellipse cx="596" cy="154" rx="52" ry="7" fill="#FFE9B8" opacity="0.9"/>')
+# ---- the lamp ---------------------------------------------------------------
+a(f'<line x1="600" y1="0" x2="600" y2="84" stroke="{R2}" stroke-width="3"/>')
+a(f'<path d="M 542 152 L 570 88 L 630 88 L 658 152 Z" fill="{R1}"/>')
+a(f'<path d="M 556 120 L 578 96 L 596 96 L 572 120 Z" fill="{WHITE}" opacity="0.30"/>')
+a(f'<rect x="538" y="150" width="124" height="9" rx="4.5" fill="{R2}"/>')
+a(f'<path d="M 556 160 L 644 160 L 706 336 L 494 336 Z" fill="{WHITE}" opacity="0.13"/>')
 
-# ---- desk -------------------------------------------------------------------
-a(f'<rect x="0" y="{FLOOR}" width="{W}" height="{H - FLOOR}" fill="url(#floor)"/>')
-a(f'<line x1="0" y1="{FLOOR}" x2="{W}" y2="{FLOOR}" stroke="#D3BFAE" stroke-width="2"/>')
-for cx_, rx_ in ((300, 96), (596, 128), (872, 104)):
-    a(f'<ellipse cx="{cx_}" cy="{FLOOR + 2}" rx="{rx_}" ry="11" fill="#8A6B55" opacity="0.13"/>')
+# ---- the desk ---------------------------------------------------------------
+a(f'<rect x="0" y="{FLOOR}" width="{W}" height="{H - FLOOR}" fill="{SAND}"/>')
+a(f'<rect x="0" y="{FLOOR}" width="{W}" height="4" fill="{R2}" opacity="0.30"/>')
+for cx_, rx_ in ((300, 100), (600, 136), (880, 108), (1030, 62)):
+    a(f'<ellipse cx="{cx_}" cy="{FLOOR + 3}" rx="{rx_}" ry="10" fill="{R2}" opacity="0.10"/>')
 
-# ---- left: a stack of volumes, the sheep reading on top of it ---------------
-sx, sy = 196, FLOOR
-for w, col, h in ((150, NAVY, 17), (138, TAN, 14), (156, RED, 16), (132, CREAM, 13)):
+# ---- left: the sheep, reading on a stack ------------------------------------
+sy = FLOOR
+for w, col, h in ((152, R2, 17), (140, SAND, 14), (158, R1, 16), (134, R3, 13)):
     sy -= h
-    a(book_flat(sx + (156 - w) // 2, sy, w, col, h))
-a(f'<image xlink:href="data:image/png;base64,{sheep}" x="206" y="{sy - 118}" '
-  f'width="126" height="126"/>')
+    a(flat(196 + (158 - w) // 2, sy, w, col, h))
+a(f'<image xlink:href="data:image/png;base64,{sheep}" x="208" y="{sy - 116}" '
+  f'width="124" height="124"/>')
 
-# ---- centre: the dinosaur, and the open book it is deep in ------------------
-a(f'<image xlink:href="data:image/png;base64,{dino}" x="512" y="292" width="188" height="188"/>')
+# ---- centre: the dinosaur and its open book ---------------------------------
+a(f'<image xlink:href="data:image/png;base64,{dino}" x="514" y="298" width="186" height="186"/>')
 
-BXc, BYc = 606, 466
-a(f'<g transform="rotate(-2 {BXc} {BYc})">'
-  f'<path d="M {BXc - 132} {BYc} q 66 -26 132 -6 q 66 -20 132 6 '
-  f'l 0 16 q -66 -22 -132 -2 q -66 -20 -132 2 z" fill="#FFFFFF" stroke="#D9CBBD" '
-  f'stroke-width="2" stroke-linejoin="round"/>'
-  f'<path d="M {BXc} {BYc - 6} l 0 18" stroke="#D9CBBD" stroke-width="2"/>')
+BX, BY = 608, 472
+a(f'<g transform="rotate(-2 {BX} {BY})">'
+  f'<path d="M {BX - 140} {BY} q 70 -28 140 -6 q 70 -22 140 6 l 0 12 '
+  f'q -70 -24 -140 -2 q -70 -22 -140 2 z" fill="{R1}"/>'
+  f'<path d="M {BX - 132} {BY - 4} q 66 -26 132 -6 q 66 -20 132 6 l 0 -9 '
+  f'q -66 -26 -132 -6 q -66 -20 -132 6 z" fill="{WHITE}"/>')
 for i in range(5):
-    yy = BYc - 20 + i * 5
-    a(f'<line x1="{BXc - 112}" y1="{yy + 12}" x2="{BXc - 22}" y2="{yy + 9}" '
-      f'stroke="#C9BCAE" stroke-width="1.6" opacity="0.75"/>')
-    a(f'<line x1="{BXc + 22}" y1="{yy + 9}" x2="{BXc + 112}" y2="{yy + 12}" '
-      f'stroke="#C9BCAE" stroke-width="1.6" opacity="0.75"/>')
-a(f'<path d="M {BXc - 138} {BYc + 4} q 68 -26 138 -6 q 70 -20 138 6 l 0 10 '
-  f'q -68 -24 -138 -4 q -70 -20 -138 4 z" fill="{TAN}" opacity="0.9"/></g>')
+    yy = BY - 26 + i * 5
+    a(f'<line x1="{BX - 108}" y1="{yy + 10}" x2="{BX - 24}" y2="{yy + 7}" stroke="{R3}" '
+      f'stroke-width="1.8" opacity="0.85"/>')
+    a(f'<line x1="{BX + 24}" y1="{yy + 7}" x2="{BX + 108}" y2="{yy + 10}" stroke="{R3}" '
+      f'stroke-width="1.8" opacity="0.85"/>')
+a(f'<line x1="{BX}" y1="{BY - 26}" x2="{BX}" y2="{BY + 6}" stroke="{R1}" stroke-width="2.5"/>'
+  f'</g>')
 
-# a couple of volumes waiting beside it
-a(book_flat(742, FLOOR - 15, 118, SLATE, 15))
-a(book_flat(748, FLOOR - 28, 106, RED, 13))
+a(flat(748, FLOOR - 15, 116, R2, 15))
+a(flat(754, FLOOR - 28, 104, SAND, 13))
 
-# ---- the thought over the dinosaur's head -----------------------------------
-a(f'<circle cx="712" cy="292" r="7" fill="#FFFFFF" stroke="#DDD0C4" stroke-width="2"/>')
-a(f'<circle cx="732" cy="268" r="11" fill="#FFFFFF" stroke="#DDD0C4" stroke-width="2"/>')
-a(f'<circle cx="794" cy="206" r="52" fill="#FFFFFF" stroke="#DDD0C4" stroke-width="2.5"/>')
-a(f'<path d="M 794 178 a 22 22 0 0 1 12 41 l 0 9 a 12 12 0 0 1 -24 0 l 0 -9 '
-  f'a 22 22 0 0 1 12 -41 z" fill="{RED}" opacity="0.92"/>')
-a(f'<rect x="786" y="230" width="17" height="5" rx="2.5" fill="{DARK}"/>')
-a(f'<rect x="788" y="238" width="13" height="4" rx="2" fill="{DARK}"/>')
-for ang, r0, r1 in ((-58, 60, 72), (-90, 60, 72), (-122, 60, 72)):
-    import math
+# ---- the thought ------------------------------------------------------------
+a(f'<circle cx="716" cy="298" r="7" fill="{WHITE}"/>')
+a(f'<circle cx="738" cy="272" r="11" fill="{WHITE}"/>')
+a(f'<circle cx="800" cy="208" r="54" fill="{WHITE}"/>')
+a(f'<path d="M 800 180 a 22 22 0 0 1 12 41 l 0 9 a 12 12 0 0 1 -24 0 l 0 -9 '
+  f'a 22 22 0 0 1 12 -41 z" fill="{R1}"/>')
+a(f'<rect x="792" y="232" width="17" height="5" rx="2.5" fill="{R2}"/>')
+a(f'<rect x="794" y="240" width="13" height="4" rx="2" fill="{R2}"/>')
+for ang in (-58, -90, -122):
     rad = math.radians(ang)
-    a(f'<line x1="{794 + r0 * math.cos(rad):.1f}" y1="{206 + r0 * math.sin(rad):.1f}" '
-      f'x2="{794 + r1 * math.cos(rad):.1f}" y2="{206 + r1 * math.sin(rad):.1f}" '
-      f'stroke="{RED}" stroke-width="3" stroke-linecap="round" opacity="0.55"/>')
+    a(f'<line x1="{800 + 62 * math.cos(rad):.1f}" y1="{208 + 62 * math.sin(rad):.1f}" '
+      f'x2="{800 + 75 * math.cos(rad):.1f}" y2="{208 + 75 * math.sin(rad):.1f}" '
+      f'stroke="{R1}" stroke-width="3.4" stroke-linecap="round"/>')
 
-# ---- right: the sloth, already building ------------------------------------
-a(f'<image xlink:href="data:image/png;base64,{sloth}" x="808" y="{FLOOR - 158}" '
-  f'width="164" height="164"/>')
-a(book_flat(984, FLOOR - 15, 104, NAVY, 15))
-a(book_flat(990, FLOOR - 28, 92, TAN, 13))
-a(book_flat(996, FLOOR - 39, 80, RED, 11))
+# ---- right: the sloth, already building -------------------------------------
+a(f'<image xlink:href="data:image/png;base64,{sloth}" x="814" y="{FLOOR - 156}" '
+  f'width="162" height="162"/>')
+a(flat(990, FLOOR - 15, 104, R1, 15))
+a(flat(996, FLOOR - 28, 92, SAND, 13))
+a(flat(1002, FLOOR - 39, 80, R2, 11))
 
-# ---- the only words on the picture -----------------------------------------
-a(f'<image xlink:href="data:image/png;base64,{logo}" x="62" y="{H - 118}" '
-  f'width="76" height="74"/>')
-a(f'<text x="152" y="{H - 68}" font-size="30" font-weight="700" letter-spacing="-1.1">'
-  f'<tspan fill="{RED}">#</tspan><tspan fill="{INK}">KNOW-HOW</tspan></text>')
-a(f'<text x="154" y="{H - 46}" font-size="12" font-weight="700" fill="{MUTED}" '
-  f'letter-spacing="2.6">abap2UI5 SERIES</text>')
-a(f'<text x="{W - 62}" y="{H - 48}" font-size="14" font-weight="700" fill="{RED}" '
+# ---- the only words ---------------------------------------------------------
+a(f'<image xlink:href="data:image/png;base64,{logo}" x="62" y="{H - 116}" '
+  f'width="74" height="72"/>')
+a(f'<text x="150" y="{H - 66}" font-size="30" font-weight="700" letter-spacing="-1.1">'
+  f'<tspan fill="{R1}">#</tspan><tspan fill="{INK}">KNOW-HOW</tspan></text>')
+a(f'<text x="152" y="{H - 44}" font-size="11.5" font-weight="700" fill="{MUTED}" '
+  f'letter-spacing="2.8">abap2UI5 SERIES</text>')
+a(f'<text x="{W - 62}" y="{H - 46}" font-size="14" font-weight="700" fill="{R1}" '
   f'text-anchor="end">abap2UI5.org</text>')
 
 a('</svg>')
@@ -175,7 +163,7 @@ with tempfile.TemporaryDirectory() as tmp:
     page = os.path.join(tmp, 'page.html')
     with open(page, 'w') as f:
         f.write('<!doctype html><meta charset=utf-8>'
-                '<style>html,body{margin:0;padding:0;overflow:hidden;background:#FDF7F3}'
+                f'<style>html,body{{margin:0;padding:0;overflow:hidden;background:{CREAM}}}'
                 'svg{display:block}</style>')
         f.write(svg)
     raw = os.path.join(tmp, 'raw.png')
@@ -185,4 +173,9 @@ with tempfile.TemporaryDirectory() as tmp:
     from PIL import Image
     Image.open(raw).convert('RGB').crop((0, 0, W * 2, H * 2)).save(OUT, optimize=True)
 
+# the shelf must not grow past its plank
+for sx, sy in SHELF:
+    assert sx + 12 + sum(w + 5 for w, *_ in ((21,), (16,), (24,), (15,), (20,), (18,),
+                                             (23,), (16,), (21,), (19,), (22,), (17,))) < sx + 356, \
+        'the books outgrew the shelf'
 print(f'wrote {OUT}  ({os.path.getsize(OUT) // 1024} KB)')
