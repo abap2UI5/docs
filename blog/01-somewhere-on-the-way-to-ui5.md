@@ -1,4 +1,4 @@
-# Somewhere on the Way to UI5, We Lost RTTI
+# Somewhere on the Way to UI5, We Lost RTTS
 
 *abap2UI5 Know-How #1 — scheduled for Tuesday, 25 August 2026*
 
@@ -47,8 +47,6 @@ or SE16N: the whole point is to display any table.
 There the contract buys nothing. Backend and frontend are tightly coupled, one
 team builds both, and the client knows the system intimately — anything resting
 on design-time metadata is aimed at a different problem.
-
-*[image: RTTS — read metadata at runtime]*
 
 The model is assembled at runtime, and in ABAP that can be done with RTTS, a
 service nearly every ABAP developer already knows (the reading half is RTTI):
@@ -155,7 +153,7 @@ abap2UI5 is open source, runs on-premise and in the cloud, and sits beside what
 you already operate. Put an abap2UI5 app into the launchpad and no user can
 tell it from the RAP and freestyle UI5 tiles next to it.
 
-So next time you reach for RTTI and need a UI, give abap2UI5 a try. It may be
+So next time you reach for RTTS and need a UI, give abap2UI5 a try. It may be
 a good complement to the UI5 solutions you already run.
 
 Happy ABAPing! 🦖🦕🦣
