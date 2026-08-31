@@ -181,6 +181,17 @@ Chromium that ships with this environment.
 | | |
 |---|---|
 | `assets/make-series-cover.py` → `series-cover.png` | **the reusable one.** Carries nothing article-specific: the mark, `#KNOW-HOW`, and the one mechanism every article stands on — an ABAP class implementing one interface, a UI5 freestyle view, and the roundtrip between them. Use it for any article in the series that does not have its own |
+
+The series cover is deliberately **quiet**: a near-white ground with a faint
+blueprint grid instead of the blush gradient the article-1 cover uses, red only
+on the accents, and the mascots at 62px in the corner rather than as
+characters. It closes on a spec strip — interface, frontend, transport, deploy,
+releases, licence — because that is what an expert reads first and a slogan is
+what they skip.
+
+**Do not put "No BSP" on it.** A BSP *can* be generated, and the addons ship in
+one; the accurate claim is "no BSP application **per app**", which is what the
+articles say and which does not fit a strip.
 | `assets/make-header.py` → `01-rtti-header.png` | article 1 only — its cover shows the RTTS code, so it belongs to that article |
 
 **The series cover has no episode number on purpose.** The post carries the

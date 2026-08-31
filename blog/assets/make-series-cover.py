@@ -74,18 +74,17 @@ a(f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/
 
 a(f'''<defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-  <stop offset="0" stop-color="#FCE9EB"/><stop offset="0.55" stop-color="#FDF3F4"/>
-  <stop offset="1" stop-color="#FBFAFA"/>
+  <stop offset="0" stop-color="#FAFAFB"/><stop offset="1" stop-color="#F4F4F6"/>
 </linearGradient>
-<radialGradient id="glow" cx="0.12" cy="0.15" r="0.6">
-  <stop offset="0" stop-color="{RED}" stop-opacity="0.14"/>
+<radialGradient id="glow" cx="0.10" cy="0.10" r="0.5">
+  <stop offset="0" stop-color="{RED}" stop-opacity="0.05"/>
   <stop offset="1" stop-color="{RED}" stop-opacity="0"/>
 </radialGradient>
-<pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
-  <circle cx="1.5" cy="1.5" r="1.1" fill="{RED}" opacity="0.10"/>
+<pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+  <path d="M 26 0 L 0 0 0 26" fill="none" stroke="#2A2A3A" stroke-width="0.6" opacity="0.045"/>
 </pattern>
 <filter id="panel" x="-15%" y="-15%" width="130%" height="140%">
-  <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#3A1D24" flood-opacity="0.20"/>
+  <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#1A1A28" flood-opacity="0.13"/>
 </filter>
 <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
   <path d="M0,0 L10,5 L0,10 z" fill="{RED}"/>
@@ -101,14 +100,14 @@ a(f'<rect width="{W}" height="{H}" fill="url(#glow)"/>')
 
 # ---- left: the series mark ---------------------------------------------------
 a(f'<image xlink:href="data:image/png;base64,{logo}" x="64" y="60" width="132" height="129"/>')
-a(f'<text x="64" y="286" font-size="62" font-weight="700" fill="{INK}" letter-spacing="-2.4">'
-  f'<tspan fill="{RED}">#</tspan>KNOW</text>')
-a(f'<text x="64" y="352" font-size="62" font-weight="700" fill="{INK}" letter-spacing="-2.4">'
-  f'HOW</text>')
-a(f'<rect x="66" y="372" width="196" height="7" rx="3.5" fill="{RED}"/>')
-a(f'<text x="64" y="416" font-size="16.5" fill="{MUTED}">One ABAP class, one interface,</text>')
-a(f'<text x="64" y="440" font-size="16.5" fill="{MUTED}">a UI5 view — and the roundtrip</text>')
-a(f'<text x="64" y="464" font-size="16.5" fill="{MUTED}">between them.</text>')
+a(f'<text x="66" y="246" font-size="11.5" font-weight="700" fill="{MUTED}" '
+  f'letter-spacing="3.8">abap2UI5 SERIES</text>')
+a(f'<text x="64" y="304" font-size="50" font-weight="700" letter-spacing="-1.8">'
+  f'<tspan fill="{RED}">#</tspan><tspan fill="{INK}">KNOW-HOW</tspan></text>')
+a(f'<rect x="66" y="322" width="306" height="3" fill="{RED}"/>')
+a(f'<text x="64" y="366" font-size="15.5" fill="{MUTED}">One ABAP class, one interface,</text>')
+a(f'<text x="64" y="389" font-size="15.5" fill="{MUTED}">a UI5 view — and the roundtrip</text>')
+a(f'<text x="64" y="412" font-size="15.5" fill="{MUTED}">between them.</text>')
 
 # ---- right: the mechanism every article stands on ---------------------------
 AX, AY, AW, AH = 440, 96, 302, 288
@@ -155,18 +154,32 @@ a(f'<path d="M {BX - 8} 262 L {AX + AW + 12} 262" stroke="#9C9599" stroke-width=
   f'fill="none" marker-end="url(#ag)"/>')
 a(f'<text x="{MID}" y="252" font-size="10.5" font-weight="700" fill="{MUTED}" '
   f'text-anchor="middle" font-family="Menlo,Consolas,monospace">event + model</text>')
-a(f'<text x="{MID}" y="292" font-size="10" fill="#A9A2A6" text-anchor="middle" '
-  f'font-family="Menlo,Consolas,monospace">HTTP · JSON</text>')
+a(f'<rect x="{MID - 62}" y="213" width="124" height="22" rx="11" fill="#FFFFFF" '
+  f'stroke="#DCDCE2"/>')
+a(f'<text x="{MID}" y="228" font-size="9.5" fill="{MUTED}" text-anchor="middle" '
+  f'font-family="Menlo,Consolas,monospace">ICF · one POST</text>')
 
 # ---- mascots and footer -----------------------------------------------------
-a(f'<image xlink:href="data:image/png;base64,{sheep}" x="470" y="452" width="120" height="120"/>')
-a(f'<image xlink:href="data:image/png;base64,{dino}" x="576" y="440" width="132" height="132"/>')
-a(f'<text x="{W - 64}" y="470" font-size="19" font-weight="700" fill="#5E5E66" '
-  f'text-anchor="end">No OData. No CDS. No BSP.</text>')
-a(f'<text x="{W - 64}" y="498" font-size="19" font-weight="700" fill="{RED}" '
-  f'text-anchor="end">One class and an ICF node.</text>')
-a(f'<text x="64" y="{H - 26}" font-size="14" fill="{MUTED}">'
-  f'Open source · MIT · <tspan font-weight="700" fill="{RED}">abap2UI5.org</tspan></text>')
+# a spec strip reads to an expert the way a slogan does not
+SY = 486
+a(f'<line x1="64" y1="{SY}" x2="{W - 64}" y2="{SY}" stroke="#DEDEE4"/>')
+SPEC = [('interface', 'z2ui5_if_app'), ('frontend', 'sap.m · JSONModel'),
+        ('transport', 'HTTP · JSON'), ('deploy', 'ICF node'),
+        ('releases', '7.02 → ABAP Cloud'), ('licence', 'MIT')]
+x = 64
+for label, val in SPEC:
+    a(f'<text x="{x}" y="{SY + 24}" font-size="9.5" font-weight="700" fill="#A6A2AA" '
+      f'letter-spacing="1.6">{label.upper()}</text>')
+    a(f'<text x="{x}" y="{SY + 45}" font-size="13" fill="{INK}" '
+      f'font-family="Menlo,Consolas,monospace">{val}</text>')
+    x += max(len(val) * 7.9, len(label) * 8.4) + 34
+
+a(f'<image xlink:href="data:image/png;base64,{sheep}" x="{W - 168}" y="{H - 92}" '
+  f'width="62" height="62" opacity="0.9"/>')
+a(f'<image xlink:href="data:image/png;base64,{dino}" x="{W - 118}" y="{H - 98}" '
+  f'width="68" height="68" opacity="0.9"/>')
+a(f'<text x="64" y="{H - 30}" font-size="13" fill="{MUTED}">'
+  f'Open source · <tspan font-weight="700" fill="{RED}">abap2UI5.org</tspan></text>')
 
 a('</svg>')
 svg = '\n'.join(o)
