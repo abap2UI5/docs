@@ -1,8 +1,7 @@
 ---
 outline: [2, 4]
 samples:
-  - z2ui5_cl_smp_app_321
-  - z2ui5_cl_smp_app_323
+  - z2ui5_cl_smp_app_498
 ---
 # App State, Share
 
@@ -118,7 +117,6 @@ that use what this page describes. Each is a single class — pull the repositor
 
 | Sample | Class |
 |---|---|
-| Navigation — app state | [`Z2UI5_CL_SMP_APP_321`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_321.clas.abap) |
-| Navigation — app state share | [`Z2UI5_CL_SMP_APP_323`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_323.clas.abap) |
+| App State, Bookmark and Share | [`Z2UI5_CL_SMP_APP_498`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_498.clas.abap) |
 
 <!-- samples:end -->
