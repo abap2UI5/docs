@@ -25,26 +25,37 @@ client->follow_up_action(
     t_arg = VALUE #( ( lv_url ) ) ).
 ```
 
-### Browser History
-One client method writes the browser history from the backend:
+### Browser History — the `hash_*` Family
+Everything that reads or writes the URL fragment is named after its UI5 original (`sap/ui/core/routing/HashChanger`), so an app can reproduce a UI5 router's URL behavior 1:1.
 
-Push a new history entry — the value is appended to the URL hash, so app state becomes bookmarkable and the browser back button steps through your pushed states:
+Read the live hash — it travels with every request:
 ```abap
-client->set_push_state( `&my-app-state=detail` ).
+DATA(lv_hash) = client->get( )-s_config-hash.
 ```
 
-There is no method that presses the browser's back button for you — the
-pushed states above are what the back button walks through, and leaving an
-app is [`nav_app_leave( )`](/cookbook/event_navigation/navigation), which
-returns to the calling app rather than to the previous URL. To step back
-through the pushed states from ABAP, hand the raw expression to
-`follow_up_action( )`:
-
+Write the app's hash as a **pushed** history entry (`setHash`) — the browser Back button gets a step to take:
 ```abap
-client->follow_up_action( |history.back()| ).
+client->hash_set( `/detail` ).
 ```
 
-For a complete example, see sample `Z2UI5_CL_SMP_APP_322`.
+Rewrite it **in place** (`replaceHash`) — the URL follows, but Back does not step through it:
+```abap
+client->hash_replace( `/detail/variant-b` ).
+```
+
+React to hash changes the app did **not** write — browser Back/Forward, a manual edit, a deep link (`attachHashChanged`). Register per render, then read the new hash from `s_config-hash` in the event handler:
+```abap
+client->follow_up_action( val   = client->cs_event-hash_attach_changed
+                          t_arg = VALUE #( ( `HASH_CHANGED` ) ) ).
+```
+
+Step back like a UI5 router's nav-back (`onNavBack`): one real, **consumed** history step — and with a fallback hash, a cold deep link replaces to that route instead of leaving the page:
+```abap
+client->follow_up_action( val   = client->cs_event-hash_back
+                          t_arg = VALUE #( ( `/` ) ) ).
+```
+
+For a complete example, see sample `Z2UI5_CL_SMP_APP_499`. The obsolete spelling `set_push_state( )` keeps compiling; leaving an app is still [`nav_app_leave( )`](/cookbook/event_navigation/navigation), which returns to the calling app rather than to the previous URL.
 
 ::: tip Hash-based app routing
 For app-to-app navigation, the framework can own the URL hash itself: with [Routing](/cookbook/event_navigation/routing) enabled, each app gets a bookmarkable route and the browser Back/Forward buttons navigate the app stack — no manual push states needed.
