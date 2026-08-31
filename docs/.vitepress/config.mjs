@@ -556,6 +556,7 @@ export default defineConfig({
                 items: [
                   { text: "RAP", link: "/technical/technology/rap" },
                   { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
+                  { text: "Low-Code Platforms", link: "/technical/technology/low_code" },
                 ],
               },
               {
