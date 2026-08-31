@@ -175,9 +175,17 @@ there — then open the sample PR and link it from the article.
 
 ## Images
 
-`assets/make-header.py` builds the header image for article 1 and prints where
-it wrote it. Run it from the repository root; it needs `pillow` and the
+Two generators, both run from the repository root; each needs `pillow` and the
 Chromium that ships with this environment.
+
+| | |
+|---|---|
+| `assets/make-series-cover.py` → `series-cover.png` | **the reusable one.** Carries nothing article-specific: the mark, `#KNOW-HOW`, and the one mechanism every article stands on — an ABAP class implementing one interface, a UI5 freestyle view, and the roundtrip between them. Use it for any article in the series that does not have its own |
+| `assets/make-header.py` → `01-rtti-header.png` | article 1 only — its cover shows the RTTS code, so it belongs to that article |
+
+**The series cover has no episode number on purpose.** The post carries the
+number; baked into the image it becomes a second thing to keep in step, and
+the picture stops being reusable the moment article 4 exists.
 
 The three mascots are the project's own brand assets, embedded from
 `docs/public/mascots/` and only scaled — `docs/resources/logo.md` is explicit
