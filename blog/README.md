@@ -17,12 +17,25 @@ pass the gates like every other page.
 | 2 | abap2UI5 is not a Programming Model | draft, 402 words |
 | 3 | The Cost of a Screen | draft, 330 words |
 | 4 | No Annotation in Between | draft, 346 words |
-| 5 | The Roundtrip | idea |
-| 6 | PUBLIC Means Persisted | idea |
-| 7 | One Codebase, 7.02 to ABAP Cloud | idea |
+| 5 | UI5 Over-the-Wire | draft, 321 words |
+| 6 | The Frontend That Does Not Know What It Shows | idea |
+| 7 | One Service for Every App | idea |
+| 8 | Only the Changed Part | idea |
+| 9 | PUBLIC Means Persisted | idea |
+| 10 | Swapping the View at Runtime | idea |
+| 11 | index.html Lives in a String | idea |
+| 12 | Your Own JavaScript, Over the Wire | idea |
+| 13 | Four Verbs | idea |
+| 14 | The Class That Runs | idea |
+| 15 | Where the Selection Screen Went | idea |
+| 16 | No Cache, No Deploy, Any IDE | idea |
+| 17 | One Codebase, 7.02 to ABAP Cloud | idea |
+| 18 | 2,300 Lines | idea |
+| 19 | Where the Line Is | idea |
 
-**Every article answers one question**, and the arc is 2–4 positioning, 5–6
-mechanics, 7 practice. Someone arriving at #5 first should not need #2.
+**Every article answers one question**, and the arc is 2–4 positioning, 5–8
+architecture, 9–13 mechanics, 14–16 developer experience, 17–19 practice and
+limits. Someone arriving at #9 first should not need #2.
 
 | # | asks | evidence |
 |---|---|---|
@@ -32,6 +45,88 @@ mechanics, 7 practice. Someone arriving at #5 first should not need #2.
 | **5** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
 | **6** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
 | **7** | does it run on my release? | the downport pipeline |
+
+## Source coverage — the three docs pages this series drains
+
+The series is the LinkedIn form of three pages in `docs/technical/`. Each page
+is one long read; the articles are the same material cut where a single
+question ends. This table is the contract: **every section of the three pages
+has exactly one article that carries it**, so nothing is lost and nothing is
+told twice.
+
+| source | section | carried by |
+|---|---|---|
+| `concept.md` | What is HTML Over-the-Wire / Comparison to Classic SSR | **5** |
+| `concept.md` | How UI5 Freestyle Works / Sending Views from Backend | **5** |
+| `concept.md` | Frontend Events on the Server | **6** |
+| `concept.md` | Create and Update Data / Application Flow | **7** |
+| `concept.md` | Partial HTML Updates | **8** |
+| `concept.md` | Conclusion — benefits and limitations | **19** |
+| `how_it_all_works.md` | 1–4 HTML Over-the-Wire, HDA, separation of concerns | **5** |
+| `how_it_all_works.md` | 5–7 UI5 architecture, abap2UI5 architecture, merging data and presentation | **6** |
+| `how_it_all_works.md` | 8 RAP | *not carried* — the series does not compare frameworks |
+| `how_it_all_works.md` | 9, 12, 13, 14 one HTTP service, decoupled from view and model, REST | **7** |
+| `how_it_all_works.md` | 10 define model at runtime | **1** (posted) |
+| `how_it_all_works.md` | 11 define view at runtime | **10** |
+| `how_it_all_works.md` | 15 the abap2UI5 app | **2** |
+| `how_it_all_works.md` | 16 draft | **9** |
+| `how_it_all_works.md` | 17 initial request, index.html as a string | **11** |
+| `how_it_all_works.md` | 18 everything maintained in the backend | **3** |
+| `how_it_all_works.md` | 19 no extra layer | **4** |
+| `how_it_all_works.md` | 20 no hiding of complexity, the two view builders | **13** |
+| `how_it_all_works.md` | 21 separated `_bind` and `_event` | **13** |
+| `how_it_all_works.md` | 22 sending JS, HTML and CSS over the wire | **12** |
+| `how_it_all_works.md` | 23 as simple as possible | **14** |
+| `how_it_all_works.md` | 24 downsides vs UI5 and RAP | **19** |
+| `how_it_all_works.md` | 25 system footprint | **18** |
+| `how_it_all_works.md` | 26–28 running everywhere, one code line, downporting | **17** |
+| `dx.md` | Simple Output with `IF_OO_ADT_CLASSRUN` | **14** |
+| `dx.md` | Classic Input Handling with Selection Screens | **15** |
+| `dx.md` | ALV-Style Table Output in the Browser | **1** (posted) |
+| `dx.md` | Classic Popups, Modern Events | *not carried* — see below |
+| `dx.md` | Zero-Setup Deployment / No Caching / Any IDE / Pure ABAP Debugging / Easy Code Sharing | **16** |
+
+**Two things the docs pages say that must not travel into an article.**
+`dx.md` tells the reader to "use `Z2UI5_CL_XML_VIEW` to define simple views"
+while the code beneath it uses `z2ui5_cl_ui5_view_builder`, and its popup
+section teaches `z2ui5_cl_pop_to_confirm`. Both classes are `src/99` — frozen
+legacy with zero in-repo consumers, kept only so existing installations keep
+compiling, and the framework's own AGENTS.md says they "must never be used,
+called from new code". A published snippet is the most-copied ABAP the project
+produces, so the popup section is dropped rather than ported, and the
+[popups addon](https://github.com/abap2UI5-addons/popups) is what an article
+would link instead. **The docs pages themselves need the same fix** — that is a
+`docs/` change, gated, and separate from this directory.
+
+**Section 8 of `how_it_all_works.md` is deliberately not carried.** It is a RAP
+comparison, and the series does not compare frameworks — that decision predates
+this table and survives it. What the section is *for* — that a generic service
+buys runtime freedom — is argued in **7** on its own evidence, without naming
+what it is freer than.
+
+## Publishing to the SAP Community as well
+
+Each article goes out on LinkedIn first and is then posted on the SAP
+Community. Cross-posting is allowed there **only when the source is stated** —
+the Rules of Engagement permit syndicated content that names where it came
+from, and prohibit duplicate content that does not. So every SCN post opens
+with a line naming the LinkedIn original and linking it, and no article is
+posted twice within SCN itself.
+
+One thing to know before starting: `how_it_all_works.md` **is itself already an
+SCN post** (linked at the top of the page). Articles 5–19 are cut from it, so
+each SCN post also links that original as the long version. That is the
+honest framing and it is also the useful one — the small article is the way in,
+the deep dive is where a reader who wants all of it goes.
+
+Practical differences from LinkedIn:
+
+- SCN needs a primary tag; the ABAP Development and SAP Fiori tags are where
+  this audience is.
+- SCN renders real code blocks, so the article does not need the LinkedIn
+  compromise of a screenshot or a link for code.
+- Images have to be uploaded to SCN; GitHub-hosted URLs in the docs pages are
+  not a substitute.
 
 ### What the splitting exercise settled
 
