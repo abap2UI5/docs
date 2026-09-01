@@ -21,6 +21,8 @@ CLASS z2ui5_cl_sample_geolocation DEFINITION PUBLIC.
     DATA altitudeaccuracy TYPE string.
     DATA accuracy TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.

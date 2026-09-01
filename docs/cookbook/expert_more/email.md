@@ -17,6 +17,8 @@ CLASS z2ui5_cl_sample_email DEFINITION PUBLIC.
     DATA mv_subject TYPE string.
     DATA mv_body    TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_email IMPLEMENTATION.

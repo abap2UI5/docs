@@ -479,13 +479,13 @@ ELSEIF client->check_on_event( `EDIT_TOGGLE` ).
 ELSEIF client->check_on_event( `ACTIVATE` ).
   on_event_activate( ).
 ELSEIF client->check_on_event( `STARTUP_ANSWERED` ).
-  IF client->get_event_arg( 1 ) = `Resume Draft`.
+  IF client->get_event_arg( ) = `Resume Draft`.
     on_event_startup_resume( ).
   ELSE.
     on_event_startup_discard( ).
   ENDIF.
 ELSEIF client->check_on_event( `EXIT_ANSWERED` ).
-  IF client->get_event_arg( 1 ) = `Keep Draft`.
+  IF client->get_event_arg( ) = `Keep Draft`.
     on_event_exit_keep( ).
   ELSE.
     on_event_exit_discard( ).
@@ -531,6 +531,8 @@ CLASS z2ui5_cl_sample_draft DEFINITION PUBLIC.
     METHODS read_active.
     METHODS exit_edit_mode.
     METHODS view_display.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
@@ -543,13 +545,13 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
     ELSEIF client->check_on_event( `ACTIVATE` ).
       on_event_activate( ).
     ELSEIF client->check_on_event( `STARTUP_ANSWERED` ).
-      IF client->get_event_arg( 1 ) = `Resume Draft`.
+      IF client->get_event_arg( ) = `Resume Draft`.
         on_event_startup_resume( ).
       ELSE.
         on_event_startup_discard( ).
       ENDIF.
     ELSEIF client->check_on_event( `EXIT_ANSWERED` ).
-      IF client->get_event_arg( 1 ) = `Keep Draft`.
+      IF client->get_event_arg( ) = `Keep Draft`.
         on_event_exit_keep( ).
       ELSE.
         on_event_exit_discard( ).

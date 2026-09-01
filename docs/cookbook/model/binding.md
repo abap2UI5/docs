@@ -21,6 +21,8 @@ CLASS zcl_app_hello_world DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_hello_world IMPLEMENTATION.
@@ -56,6 +58,8 @@ CLASS zcl_app_hello_world DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_hello_world IMPLEMENTATION.

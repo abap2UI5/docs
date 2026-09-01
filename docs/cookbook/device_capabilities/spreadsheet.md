@@ -20,6 +20,8 @@ CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
     DATA mv_path  TYPE string.
     DATA mv_value TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_upload IMPLEMENTATION.

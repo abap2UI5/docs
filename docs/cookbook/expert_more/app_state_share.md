@@ -22,6 +22,8 @@ CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mv_quantity TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
@@ -67,6 +69,8 @@ CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mv_quantity TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_share IMPLEMENTATION.

@@ -18,6 +18,8 @@ CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mt_salesorder TYPE TABLE FOR READ RESULT i_salesordertp\salesorder.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.

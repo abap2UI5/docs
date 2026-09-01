@@ -38,6 +38,8 @@ CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
       ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
     DATA prodh_nodes    TYPE ty_prodh_nodes.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_tree IMPLEMENTATION.

@@ -15,6 +15,9 @@ CLASS zcl_app_walkthrough DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA recipient TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_walkthrough IMPLEMENTATION.

@@ -23,6 +23,7 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
     METHODS view_display.
     METHODS on_post.
 
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.

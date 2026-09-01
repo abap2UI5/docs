@@ -120,7 +120,7 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
         client->popup_display( popup->stringify( ) ).
 
       WHEN client->check_on_event( `PICK` ).
-        mv_carrid = client->get_event_arg( 1 ).
+        mv_carrid = client->get_event_arg( ).
         client->popup_destroy( ).
 
     ENDCASE.

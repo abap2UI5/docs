@@ -31,6 +31,8 @@ CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
       END OF ty_row.
     DATA mt_itab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
@@ -161,6 +163,8 @@ CLASS z2ui5_cl_sample_nested_struc DEFINITION PUBLIC.
       END OF ty_s_tab.
     DATA mt_itab TYPE STANDARD TABLE OF ty_s_tab WITH EMPTY KEY.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_nested_struc IMPLEMENTATION.

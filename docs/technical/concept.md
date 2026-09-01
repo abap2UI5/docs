@@ -200,6 +200,9 @@ CLASS z2ui5_cl_app_partial_render DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA text TYPE string.
     DATA partly TYPE abap_bool.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_partial_render IMPLEMENTATION.

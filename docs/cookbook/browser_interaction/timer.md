@@ -29,6 +29,8 @@ CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA counter TYPE i.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_timer IMPLEMENTATION.

@@ -99,6 +99,15 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:examples
 
+      # the two house conventions the sample corpora gate and this repository
+      # did not: the view-chain layout (the linter's chain-house-layout rule,
+      # opt-in, so check:examples never emitted it) and the three class section
+      # blocks. Style is not decidable in prose, but in a fenced class it is -
+      # and this is the site where the style is learned
+      - name: house conventions
+        if: ${{ !cancelled() }}
+        run: npm run check:conventions
+
       # every complete app class either carries a Run button or a marker on its
       # page saying why it cannot run in the playground. The rules that offer
       # the button fail towards NOT offering one, so without this an example
