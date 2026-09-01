@@ -3,19 +3,19 @@ outline: [2, 4]
 ---
 # Setup
 
-Every UI5 application has an `index.html` that bootstraps the framework, picks a theme, loads a UI5 version and so on. With abap2UI5 you don't maintain that file by hand — the framework generates it on every page load. To change what ends up in it, implement the `z2ui5_if_exit` interface in your own ABAP class:
+Every UI5 application has an `index.html` that bootstraps the framework, picks a theme, loads a UI5 version and so on. With abap2UI5 you don't maintain that file by hand — the framework generates it on every page load. To change what ends up in it, implement the `z2ui5_if_ui5_exit` interface in your own ABAP class:
 
 ```abap
 CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
 
   PUBLIC SECTION.
-    INTERFACES z2ui5_if_exit.
+    INTERFACES z2ui5_if_ui5_exit.
 
 ENDCLASS.
 
 CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
 
-  METHOD z2ui5_if_exit~set_config_http_get.
+  METHOD z2ui5_if_ui5_exit~set_config_http_get.
     " your configuration goes here
   ENDMETHOD.
 
@@ -36,9 +36,9 @@ ENDCLASS.
 
 Security-relevant headers and the Content Security Policy meta tag are configured separately — see [Security](/configuration/security).
 
-The tab title is **not** on this list. The generated page always carries `<title>abap2UI5</title>`, and the title the user sees is set by the running app with the `set_title` frontend event — see [Title](/cookbook/browser_interaction/title). The field `cs_config-title` still exists on `cs_config` so that existing exits compile, but nothing reads it.
+The tab title is **not** on this list. The generated page always carries `<title>abap2UI5</title>`, and the title the user sees is set by the running app with the `set_title` frontend event — see [Title](/cookbook/browser_interaction/title).
 
 ## See Also
 
 - Official SAP documentation on [UI5 bootstrapping](https://sapui5.hana.ondemand.com/#/topic/91f2cebe7c8e4d289fd80a4f0c0bd2ca) and [configuration options](https://sapui5.hana.ondemand.com/#/topic/91f2d03b6f4d1014b6dd926db0e91070).
-- The [User Exit](/advanced/extensibility/user_exits) page documents every hook on `z2ui5_if_exit`.
+- The [User Exit](/advanced/extensibility/user_exits) page documents every hook on `z2ui5_if_ui5_exit`.

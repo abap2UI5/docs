@@ -48,18 +48,12 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-::: tip You may see `client->view_model_update( )` in older code
-It used to be the way to ask for that push. It is a **no-op** now — the
-framework does it unconditionally — and it is scheduled for removal. Delete
-the call; nothing replaces it.
-:::
-
 
 ## Suggestions
 Want to tune your app further? A few tips:
 - Call `client->view_display` only when needed — on initialization and when the view structure changes. For a pure data change, set the attribute and return; the framework pushes the delta and UI5 re-renders only the controls that changed.
 
-- Bind data with `client->_bind` — the framework sends only the paths the user actually edited back to ABAP (a delta), so read-only and untouched fields cost nothing on the return trip. (`_bind_edit` is an obsolete alias of `_bind`.)
+- Bind data with `client->_bind` — the framework sends only the paths the user actually edited back to ABAP (a delta), so read-only and untouched fields cost nothing on the return trip.
 - Declare public attributes in your app class only for variables shown on the frontend. This keeps the framework from reading unused values.
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 

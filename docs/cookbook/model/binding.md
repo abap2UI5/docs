@@ -90,9 +90,6 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-::: tip `_bind_edit` is obsolete
-Earlier releases split binding into a display-only `_bind` and a writable `_bind_edit`. Both now write to the same model and behave identically, so `_bind_edit` is only an obsolete alias of `_bind` — prefer `_bind( )`. You will still find `_bind_edit` in older examples.
-:::
 
 ::: warning **Bound Attributes Must Be Public**
 `_bind( )` resolves your class attributes from outside the controller via dynamic ASSIGN, and it only sees the `PUBLIC SECTION`. Passing a `PROTECTED` or `PRIVATE` attribute — or a local variable — is **not** silent: the framework finds no attribute for the reference and raises

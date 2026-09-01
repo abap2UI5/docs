@@ -91,7 +91,6 @@ IF client->check_on_navigated( ).
 ELSEIF client->check_on_event( `SEARCH` ).
 
   load_data( ).
-  client->view_model_update( ).
 
 ENDIF.
 ```

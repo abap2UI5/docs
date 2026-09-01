@@ -73,33 +73,62 @@ Alternatively, handle authorization within individual app classes. This approach
 ### Example: Authorization Check in an App Class
 In this approach, each app checks the user's permissions, like traditional ABAP apps.
 
-<!-- playground: no Run button — runs an authority check and shows nothing — an empty frame demonstrates nothing -->
+<!-- playground: no Run button — an authority check needs a user and roles, and the browser has neither -->
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+    DATA mv_status TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
-    " Run an authorization check before launching the app
-    AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
-                    ID `APP` FIELD `Z2UI5_APP_001`.
 
-    IF sy-subrc <> 0.
-      " Authorization failed, refuse access
-      RETURN.
+    IF client->check_on_navigated( ).
+
+      " Run an authorization check before showing anything
+      AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
+                      ID `APP` FIELD `Z2UI5_APP_001`.
+
+      IF sy-subrc <> 0.
+        " Refuse, and SAY so - a blank screen looks like a broken app
+        mv_status = `You are not authorized to use this app.`.
+        client->message_box_display( text  = mv_status
+                                     type  = `error`
+                                     title = `Not authorized` ).
+      ELSE.
+        mv_status = |Authorized as { sy-uname }|.
+      ENDIF.
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Authorization`
+
+                  )->tag( `Text`
+                      )->a( n = `text` v = client->_bind( mv_status ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
     ENDIF.
 
-    " Continue with app processing if authorized
-    " (App logic goes here)
   ENDMETHOD.
 
 ENDCLASS.
 ```
+
+The refusal branch matters as much as the check. Returning without displaying
+anything leaves the user on an empty frame with nothing to go on — indistinguishable
+from an app that crashed. Say what happened, then return.
 
 ::: warning
 If you don't add authorization checks at the app level, make sure users can't bypass service-level checks by navigating between apps.

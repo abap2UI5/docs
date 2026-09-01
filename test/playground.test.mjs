@@ -73,10 +73,15 @@ test('a class name longer than 30 characters gets nothing, and says why', () => 
 });
 
 test('an app that displays nothing gets nothing', () => {
-  // configuration/authorization.md: an authority check and a RETURN. It starts
-  // perfectly well and shows an empty frame, which demonstrates nothing.
-  const code = app('z2ui5_cl_app', `    AUTHORITY-CHECK OBJECT \`Z_APP_AUTH\` ID \`APP\` FIELD \`Z2UI5_APP_001\`.
-    IF sy-subrc <> 0.
+  // An app that computes and keeps it to itself. It starts perfectly well and
+  // shows an empty frame, which demonstrates nothing.
+  //
+  // This used to be pinned with configuration/authorization.md's authority
+  // check, which is the shape the rule was written for - that example is now
+  // refused one rule earlier, for having no user to check, so the two are
+  // pinned apart.
+  const code = app('z2ui5_cl_app', `    DATA(lv_total) = 1 + 1.
+    IF lv_total <> 2.
       RETURN.
     ENDIF.`);
   assert.match(refused(code), /displays nothing/);
@@ -146,6 +151,22 @@ test('an on-premise SAP class gets nothing', () => {
     assert.match(refused(app('z2ui5_cl_sample', `    DATA(x) = ${call}.
 ${DISPLAY}`)), /on-premise/, call);
   }
+});
+
+test('an authority check gets nothing', () => {
+  const code = app('z2ui5_cl_sample', `    AUTHORITY-CHECK OBJECT \`Z_APP_AUTH\` ID \`APP\` FIELD \`X\`.
+    IF sy-subrc <> 0.
+      RETURN.
+    ENDIF.
+${DISPLAY}`);
+  assert.match(refused(code), /no user and no roles/);
+});
+
+// and the words inside a literal are not one - abapOnly blanks them, the same
+// guard the SELECT rules needed
+test('the words of an authority check inside a literal are not one', () => {
+  assert.ok(runs(app('z2ui5_cl_sample', `    DATA(x) = \`AUTHORITY-CHECK is explained below\`.
+${DISPLAY}`)));
 });
 
 test('a method that is declared and never implemented gets nothing', () => {

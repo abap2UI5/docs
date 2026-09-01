@@ -121,11 +121,9 @@ ENDCLASS.
   main view is never rebuilt — it waits behind the popup.
 - **No refresh call after `SAVE`.** The handler changes `t_invoices` and
   does nothing else: every roundtrip that changed bound data pushes the new
-  model to the browser by itself, and the list updates. (You may see
-  `view_model_update( )` in older code — it is deliberately empty and does
-  nothing.)
+  model to the browser by itself, and the list updates.
 
-Popovers, message boxes and the built-in popup classes are covered under
+Popovers and message boxes are covered under
 [Popup, Popover](/cookbook/popup_popover/popup).
 
 The app is complete — one last step separates it into the structure real

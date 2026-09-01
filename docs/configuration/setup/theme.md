@@ -6,7 +6,7 @@ outline: [2, 4]
 The theme defines the look and feel of every UI5 control — colours, fonts, paddings, spacings. In a hand-written `index.html` it is set via the `data-sap-ui-theme` attribute on the bootstrap script. In abap2UI5 you set it from ABAP:
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-theme = `sap_horizon_dark`.
 

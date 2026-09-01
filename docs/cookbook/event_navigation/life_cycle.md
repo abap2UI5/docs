@@ -110,7 +110,7 @@ ENDCASE.
 
 When the sub-app is left, `main` runs again, but neither `check_on_init` nor any event matches, so `view_display( )` is never called and the user is left looking at a stale or empty screen. Nothing reports it: the response simply carries no view, and the browser keeps showing whatever was on it.
 
-Display from the navigation-return branch as well. `check_on_navigated( )` covers strictly more than `check_on_init( )` does — the first display of the app raises it too, along with a `nav_app_leave( )`, one of the built-in `z2ui5_cl_pop_*` value helps closing, and a bookmarked draft being restored — so an app with no one-time setup to do can react to it alone and drop the init branch entirely:
+Display from the navigation-return branch as well. `check_on_navigated( )` covers strictly more than `check_on_init( )` does — the first display of the app raises it too, along with a `nav_app_leave( )`, a called sub-app or value help closing, and a bookmarked draft being restored — so an app with no one-time setup to do can react to it alone and drop the init branch entirely:
 
 ```abap
 " CORRECT — the view is rebuilt on first display and on every return

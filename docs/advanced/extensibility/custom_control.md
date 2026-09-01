@@ -29,8 +29,8 @@ view->ele( n = `View` ns = `mvc`
             )->a( n = `onEvent` v = client->_event( `MY_EVENT` ) ).
 ```
 
-The wrapper class the previous builder needed for this
-([`z2ui5_cl_xml_view_cc`](https://github.com/abap2UI5/abap2UI5/blob/main/src/99/z2ui5_cl_xml_view_cc.clas.abap))
-is frozen along with the builder itself, and adding a method to it is no longer
-part of shipping a custom control.
+Nothing else is needed on the ABAP side. The builder writes whatever element
+and namespace you pass, verbatim, so a custom control is just another tag —
+there is no wrapper class to extend and no method to add before it can be
+used.
 

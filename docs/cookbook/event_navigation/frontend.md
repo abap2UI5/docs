@@ -58,28 +58,11 @@ in both: everything in the table below can be wired to a control *or* scheduled
 after a roundtrip. Pick the position by when the action has to happen, not by
 what it does.
 
-::: tip Two older names for the same two forms
-`_event_client( )` is the older name of the **attribute** form — in that
-position the two produce the identical wire, byte for byte. `action->gen( )`
-was the older name of the **statement** form, and took the same `val` and
-`t_arg`, so that migration is a plain rename too:
-
-```abap
-" obsolete
-client->action->gen( val   = client->cs_event-open_new_tab
-                     t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ).
-" now
-client->follow_up_action( val   = client->cs_event-open_new_tab
-                          t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ).
-```
-
-Both old names stay in the interface so existing apps keep compiling — rename
-the calls at your leisure. See [Deprecations](/resources/deprecations).
-:::
 
 ## The frontend events
 
-The following frontend events are available:
+The frontend events, as `z2ui5_if_client=>cs_event` carries them:
+
 ```abap
   CONSTANTS:
     BEGIN OF cs_event,
@@ -97,6 +80,7 @@ The following frontend events are available:
       clipboard_app_state       TYPE string VALUE `CLIPBOARD_APP_STATE`,
       set_title                 TYPE string VALUE `SET_TITLE`,
       set_title_launchpad       TYPE string VALUE `SET_TITLE_LAUNCHPAD`,
+      set_favicon               TYPE string VALUE `SET_FAVICON`,
       set_focus                 TYPE string VALUE `SET_FOCUS`,
       scroll_to                 TYPE string VALUE `SCROLL_TO`,
       scroll_into_view          TYPE string VALUE `SCROLL_INTO_VIEW`,
@@ -110,7 +94,6 @@ The following frontend events are available:
       urlhelper                 TYPE string VALUE `URLHELPER`,
       store_data                TYPE string VALUE `STORE_DATA`,
       play_audio                TYPE string VALUE `PLAY_AUDIO`,
-      wizard_set_next_step      TYPE string VALUE `WIZARD_SET_NEXT_STEP`,
 
       "Control calls (positional t_arg)
       control_by_id             TYPE string VALUE `CONTROL_BY_ID`,
@@ -122,8 +105,17 @@ The following frontend events are available:
       smart_variant_init        TYPE string VALUE `SMART_VARIANT_INIT`,
       filter_bar_variant_init   TYPE string VALUE `FILTER_BAR_VARIANT_INIT`,
 
+      "URL and app state
+      set_app_state_active      TYPE string VALUE `SET_APP_STATE_ACTIVE`,
+      set_push_state            TYPE string VALUE `SET_PUSH_STATE`,
+      set_nav_routing           TYPE string VALUE `SET_NAV_ROUTING`,
+
     END OF cs_event.
 ```
+
+The interface carries a few more that are obsolete and are not listed here —
+they still dispatch, so old code keeps running, and what replaced each one is
+on [Deprecations](/resources/deprecations).
 Some of these events have their own pages: [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds key combinations to backend events, [`set_nav_routing`](/cookbook/event_navigation/navigation/hash) switches hash routing on, and [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls) wire variant management for smart controls. The dedicated cookbook pages under [Browser Interaction](/cookbook/browser_interaction/title) and [Device Capabilities](/cookbook/device_capabilities/upload_download) carry the argument list of each event.
 
 ::: tip These used to be invisible custom controls
@@ -201,7 +193,7 @@ The `view` parameter selects the slot to bind; `t_arg` carries the row index and
 
 ### The `view` parameter
 
-For `control_by_id`, the control is looked up by id. `follow_up_action( )` (and the obsolete `_event_client( )`) takes a separate `view` parameter (default `cs_view-main`) that scopes this lookup:
+For `control_by_id`, the control is looked up by id. `follow_up_action( )` takes a separate `view` parameter (default `cs_view-main`) that scopes this lookup:
 
 - omit it (or pass `cs_view-main`) — the id is resolved across all open views;
 - pass `cs_view-popup` / `cs_view-popover` / `cs_view-nested` / … — the lookup is scoped to a control hosted in that view (e.g. a control living inside a popup).
@@ -241,14 +233,6 @@ security risks. Only use it if you fully understand the consequences and have no
 alternative.
 :::
 
-::: tip `cs_event-z2ui5` is the older form of the same thing
-The constant calls a function you registered as a `z2ui5.*` global
-(``follow_up_action( val = cs_event-z2ui5 t_arg = VALUE #( ( `myFunction` ) ) )``).
-It still works and is still dispatched, but it sits with the obsolete constants
-in `z2ui5_if_client`: passing the expression directly, as above, is the same
-call without the indirection. If the global is missing the frontend logs
-`Z2UI5: 'z2ui5.myFunction' is not a function` rather than failing silently.
-:::
 
 ### Why It Is a Security Risk
 

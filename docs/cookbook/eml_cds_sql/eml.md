@@ -148,8 +148,8 @@ TRY.
     ENDIF.
 
   CATCH cx_root INTO DATA(lx).
-    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
+    client->message_box_display( lx ).
 ENDTRY.
 ```
 
-For general exception handling and the framework's error popup, see the [Exception](/cookbook/event_navigation/exception) page.
+`message_box_display( )` reads the text out of the exception object itself. For what happens to an exception you do *not* catch, see [Exception](/cookbook/event_navigation/exception).

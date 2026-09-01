@@ -221,19 +221,20 @@ CLASS zcl_app_alv_event IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-      client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_question_text = `Do you like dinosaurs?`
-        i_title         = `Title`
-        i_event_confirm = `YES`
-        i_event_cancel  = `NO` ) ).
+      client->message_box_display( text    = `Do you like dinosaurs?`
+                                   type    = `confirm`
+                                   title   = `Title`
+                                   onclose = `ANSWERED` ).
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN `YES`.
-        client->message_box_display( `the result is YES` ).
-      WHEN `NO`.
-        client->message_box_display( `the result is NO` ).
+      WHEN `ANSWERED`.
+        IF client->get_event_arg( 1 ) = `OK`.
+          client->message_box_display( `the result is YES` ).
+        ELSE.
+          client->message_box_display( `the result is NO` ).
+        ENDIF.
     ENDCASE.
 
   ENDMETHOD.

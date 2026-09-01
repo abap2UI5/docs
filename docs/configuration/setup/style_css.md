@@ -6,7 +6,7 @@ outline: [2, 4]
 UI5 supports app-specific CSS in addition to the theme. abap2UI5 injects whatever string you assign to `cs_config-styles_css` directly into a `<style>` block in the page `<head>`, so any selector you write is applied to your application.
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-styles_css =
       |body \{ background-color: #f5f5f5; \}| &&

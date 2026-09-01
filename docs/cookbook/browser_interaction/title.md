@@ -11,15 +11,24 @@ Set the text the browser shows in the tab and window title bar.
 The running app is the only place this is decided. The page abap2UI5 generates
 always carries `<title>abap2UI5</title>` — that is what the tab says while UI5
 boots, before any app can speak — and from the first roundtrip on it says
-whatever the app last set. The user exit's `cs_config-title` is not read any
-more; see [Deprecations](/resources/deprecations).
+whatever the app last set.
 
 ### Standalone
 
 To change the title after the app is running — for example, to reflect the current record — call the `set_title` frontend event from the backend:
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_title DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_title IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
 
     CASE abap_true.
 
@@ -45,6 +54,7 @@ METHOD z2ui5_if_app~main.
     ENDCASE.
 
   ENDMETHOD.
+ENDCLASS.
 ```
 
 ### Launchpad

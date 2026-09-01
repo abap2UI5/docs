@@ -37,7 +37,6 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
 
       WHEN client->check_on_event( `SEARCH` ).
         load_data( ).
-        client->view_model_update( ).
 
     ENDCASE.
 

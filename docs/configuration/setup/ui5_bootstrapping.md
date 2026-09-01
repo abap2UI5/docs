@@ -8,7 +8,7 @@ Bootstrapping is the process of loading the UI5 runtime into the browser. abap2U
 ## Pick a Bootstrap Source
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-src = `https://ui5.sap.com/1.116.0/resources/sap-ui-core.js`.
 
