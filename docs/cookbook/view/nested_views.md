@@ -21,51 +21,73 @@ Two ingredients are needed:
 2. **A nested view + a `nest_view_display` call** — builds the fragment and ships it to the named anchor.
 
 ```abap
-" 1) Main view with an anchor
-DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-    )->ele( n = `View` ns = `mvc`
-        )->a( n = `xmlns`     v = `sap.m`
-        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+CLASS z2ui5_cl_sample_nest DEFINITION PUBLIC.
 
-        )->ele( `Shell`
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA mv_input_nest TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_nest IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    " 1) Main view with an anchor
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Shell`
+                )->ele( `Page`
+                    )->a( n = `title` v = `Main View`
+                    )->a( n = `id`    v = `test`        " <-- the anchor id
+
+                    )->ele( `content`
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `Re-render only the nested view`
+                            )->a( n = `press` v = client->_event( `NEST` ) ).
+
+    " 2) Nested view, built like any other view
+    DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
             )->ele( `Page`
-                )->a( n = `title` v = `Main View`
-                )->a( n = `id`    v = `test`        " <-- the anchor id
+                )->a( n = `title` v = `Nested View`
 
-                )->ele( `content`
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `Re-render only the nested view`
-                        )->a( n = `press` v = client->_event( `NEST` ) ).
+                )->tag( `Input`
+                    )->a( n = `value` v = client->_bind( mv_input_nest )
+                )->tag( `Button`
+                    )->a( n = `text`  v = `event`
+                    )->a( n = `press` v = client->_event( `TEST` ) ).
 
-" 2) Nested view, built like any other view
-DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
-    )->ele( n = `View` ns = `mvc`
-        )->a( n = `xmlns`     v = `sap.m`
-        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
+      client->view_display( view->stringify( ) ).
+    ENDIF.
 
-        )->ele( `Page`
-            )->a( n = `title` v = `Nested View`
+    CASE client->get( )-event.
+      WHEN `NEST`.
+        client->nest_view_display(
+            val            = nested->stringify( )
+            id             = `test`                " target the anchor
+            method_insert  = `addContent`          " UI5 mutator on that control
+            method_destroy = `removeAllContent` ). " and the one that clears it first
+      WHEN `TEST`.
+        client->message_toast_display( |nested input: { mv_input_nest }| ).
+    ENDCASE.
 
-            )->tag( `Input`
-                )->a( n = `value` v = client->_bind( mv_input_nest )
-            )->tag( `Button`
-                )->a( n = `text`  v = `event`
-                )->a( n = `press` v = client->_event( `TEST` ) ).
-
-IF client->check_on_navigated( ).
-  client->view_display( view->stringify( ) ).
-ENDIF.
-
-CASE client->get( )-event.
-  WHEN `NEST`.
-    client->nest_view_display(
-        val           = nested->stringify( )
-        id            = `test`               " target the anchor
-        method_insert = `addContent` ).      " UI5 mutator on that control
-ENDCASE.
+  ENDMETHOD.
+ENDCLASS.
 ```
 
-What happens at runtime: `view_display` paints the main view; the page with `id="test"` sits on screen. When the user clicks the button, `nest_view_display` ships the nested XML to the client, which calls `addContent( ... )` on the control with that id. The nested fragment appears inside the page — without re-rendering the page itself.
+What happens at runtime: `view_display` paints the main view; the page with `id="test"` sits on screen. When the user clicks the button, `nest_view_display` ships the nested XML to the client, which calls `removeAllContent( )` and then `addContent( ... )` on the control with that id. The nested fragment appears inside the page — without re-rendering the page itself.
+
+Press **Run** and then the button: the main view stays exactly where it is, the nested page appears inside it, and typing in the nested input and pressing *event* proves the two halves share one model — the toast reads back what the nested view bound.
 
 The full pattern (re-render everything vs. main only vs. nested only) is in `Z2UI5_CL_SMP_APP_065`.
 
@@ -114,57 +136,128 @@ A rule of thumb:
 The most common real-world use: a master list on the left, detail content on the right. `sap.f.FlexibleColumnLayout` is the standard container; abap2UI5 nests the detail view into its middle column.
 
 ```abap
-" Master view — built once
-DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-    )->ele( n = `View` ns = `mvc`
-        )->a( n = `xmlns`     v = `sap.m`
-        )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-        )->a( n = `xmlns:f`   v = `sap.f`
+CLASS z2ui5_cl_sample_nest_fcl DEFINITION PUBLIC.
 
-        )->ele( `Page`
-            )->a( n = `title` v = `abap2UI5 - Master Detail`
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-            )->ele( n = `FlexibleColumnLayout` ns = `f`
-                )->a( n = `layout` v = client->_bind( mv_layout )
-                )->a( n = `id`     v = `test`                     " anchor
+    TYPES:
+      BEGIN OF ty_s_row,
+        title    TYPE string,
+        selected TYPE abap_bool,
+      END OF ty_s_row.
 
-                )->ele( n = `beginColumnPages` ns = `f`
-                    )->ele( `List`
-                        )->a( n = `items`           v = client->_bind( t_tab )
-                        )->a( n = `selectionChange` v = client->_event( `SELCHANGE` )
+    DATA t_tab     TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA t_tab2    TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    DATA mv_layout TYPE string VALUE `OneColumn`.
 
-                        )->ele( `items`
-                            )->tag( `StandardListItem`
-                                )->a( n = `title`    v = `{TITLE}`
-                                )->a( n = `selected` v = `{SELECTED}` ).
+  PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
 
-client->view_display( view->stringify( ) ).
+    METHODS view_display_master.
+    METHODS view_display_detail.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_nest_fcl IMPLEMENTATION.
+
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    CASE abap_true.
+      WHEN client->check_on_init( ).
+        t_tab = VALUE #( ( title = `Order 4711` )
+                         ( title = `Order 4712` )
+                         ( title = `Order 4713` ) ).
+        view_display_master( ).
+      WHEN client->check_on_navigated( ).
+        view_display_master( ).
+      WHEN client->check_on_event( `SELCHANGE` ).
+        DATA(ls_row) = VALUE #( t_tab[ selected = abap_true ] OPTIONAL ).
+        t_tab2 = VALUE #( ( title = |{ ls_row-title } - item 10| )
+                          ( title = |{ ls_row-title } - item 20| ) ).
+        mv_layout = `TwoColumnsMidExpanded`.
+        view_display_detail( ).
+    ENDCASE.
+
+  ENDMETHOD.
+
+  METHOD view_display_master.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+            )->a( n = `xmlns:f`   v = `sap.f`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `abap2UI5 - Master Detail`
+
+                )->ele( n = `FlexibleColumnLayout` ns = `f`
+                    )->a( n = `layout` v = client->_bind( mv_layout )
+                    )->a( n = `id`     v = `test`                     " anchor
+
+                    )->ele( n = `beginColumnPages` ns = `f`
+                        )->ele( `List`
+                            )->a( n = `mode`            v = `SingleSelectMaster`
+                            )->a( n = `items`           v = client->_bind( t_tab )
+                            )->a( n = `selectionChange` v = client->_event( `SELCHANGE` )
+
+                            )->ele( `items`
+                                )->tag( `StandardListItem`
+                                    )->a( n = `title`    v = `{TITLE}`
+                                    )->a( n = `selected` v = `{SELECTED}` ).
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+
+  METHOD view_display_detail.
+
+    DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+            )->ele( `Page`
+                )->a( n = `title` v = `Nested View`
+
+                )->ele( `List`
+                    )->a( n = `items` v = client->_bind( t_tab2 )
+
+                    )->ele( `items`
+                        )->tag( `StandardListItem`
+                            )->a( n = `title` v = `{TITLE}` ).
+
+    client->nest_view_display(
+        val            = nested->stringify( )
+        id             = `test`
+        method_insert  = `addMidColumnPage`
+        method_destroy = `removeAllMidColumnPages` ).
+
+  ENDMETHOD.
+
+ENDCLASS.
 ```
 
-When the user picks a row, a detail view is rendered into the middle column:
+Press **Run** and pick a row: the master list stays exactly where it is, the
+FCL slides its middle column in, and only the detail view was built and sent.
+The `id="test"` on the `FlexibleColumnLayout` is the anchor — the whole
+difference from the pattern above is which mutator the detail is inserted with,
+`addMidColumnPage` instead of `addContent`.
 
-```abap
-METHOD view_display_detail.
-  DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
-      )->ele( n = `View` ns = `mvc`
-          )->a( n = `xmlns`     v = `sap.m`
-          )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-          )->a( n = `xmlns:t`   v = `sap.ui.table`
+Two details the demo depends on and that are easy to leave out:
 
-          )->ele( `Page`
-              )->a( n = `title` v = `Nested View`
-
-              )->ele( n = `Table` ns = `t`
-                  )->a( n = `rows` v = client->_bind( t_tab2 ) ).
-  " ...columns, toolbar, row actions...
-
-  client->nest_view_display(
-    val            = nested->stringify( )
-    id             = `test`
-    method_insert  = `addMidColumnPage`
-    method_destroy = `removeAllMidColumnPages` ).
-ENDMETHOD.
-```
+- **`mode="SingleSelectMaster"` on the list.** A `sap.m.List` defaults to
+  `mode="None"`, where nothing is selectable and `selectionChange` never fires
+  at all — the click does nothing and there is no error to go on.
+- **`view_display_master( )` under `check_on_navigated( )` as well.** `check_on_init( )`
+  is true exactly once per app instance; a value help or a sub-app returning
+  raises `check_on_navigated( )` alone, and without that branch the screen keeps
+  showing whatever the other app left there. See
+  [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
 
 The layout is bound editable (`mv_layout`), so events like *full-screen mode* or *close detail* simply update `mv_layout` — the changed model reaches the client with the response by itself. The FCL transitions itself; no view is rebuilt.
 

@@ -280,6 +280,33 @@ SAPUI5 ships libraries OpenUI5 does not — `sap.ui.comp` (Smart controls),
 SAPUI5 and a guaranteed runtime error on OpenUI5. With `openui5` those controls
 are reported as `sapui5-only-control`.
 
+### Deprecated controls
+
+This is the same setting seen from the other end, and it is why abap2UI5 has no
+list of deprecated controls to keep: the framework passes your XML through
+unchanged, so **every** control UI5 still knows will render — including the ones
+SAP has deprecated — and whether that matters depends entirely on the release
+you named above.
+
+| | |
+|---|---|
+| `control-deprecated` | the control itself, quoting SAP's own replacement text |
+| `member-deprecated` | one property or event of a control that is otherwise fine |
+| `deprecated-library` | a library deprecated *whole*: `sap.ui.commons` and `sap.ui.ux3` (1.38), `sap.makit` (1.38), `sap.me` (1.34), the legacy chart classes under `sap.viz.ui5` (1.32) |
+
+All three are held against `--ui5`: a control deprecated in 1.120 is not
+reported for a 1.71 system, because there it is simply a control. The last of
+the three is the one nothing else catches — a deprecated library is absent from
+the metadata the other rules read, so a `<c:Button>` out of `sap.ui.commons`
+used to pass every check in silence. It is also the one that actually happens:
+half of that library's control names (`Button`, `Label`, `Dialog`, `Panel`,
+`ComboBox`) have a namesake in `sap.m`, so XML copied from an old tutorial
+drags the dead namespace along and still renders something.
+
+For anything the snapshot cannot know yet,
+[ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is SAP's
+always-current index.
+
 ## The configuration file
 
 Pin the settings in the repository instead of repeating CLI flags — the same

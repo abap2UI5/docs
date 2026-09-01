@@ -250,7 +250,6 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Definition", link: "/cookbook/view/definition" },
-              { text: "Deprecated Controls", link: "/cookbook/view/deprecated_controls" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
             ],
@@ -288,10 +287,16 @@ export default defineConfig({
                   { text: "Frontend", link: "/cookbook/event_navigation/frontend" },
                 ],
               },
-              { text: "Action (Obsolete)", link: "/cookbook/event_navigation/action" },
-              { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
-              { text: "Navigation", link: "/cookbook/event_navigation/navigation" },
-              { text: "Routing", link: "/cookbook/event_navigation/routing" },
+              {
+                text: "Navigation",
+                link: "/cookbook/event_navigation/navigation/inner_app",
+                items: [
+                  { text: "Inner App", link: "/cookbook/event_navigation/navigation/inner_app" },
+                  { text: "Cross App", link: "/cookbook/event_navigation/navigation/cross_app" },
+                  { text: "Hash", link: "/cookbook/event_navigation/navigation/hash" },
+                  { text: "App State", link: "/cookbook/event_navigation/navigation/app_state" },
+                ],
+              },
               { text: "Exception", link: "/cookbook/event_navigation/exception" },
             ],
           },
@@ -302,7 +307,6 @@ export default defineConfig({
             items: [
               { text: "Popup", link: "/cookbook/popup_popover/popup" },
               { text: "Popover", link: "/cookbook/popup_popover/popover" },
-              { text: "Built-In", link: "/cookbook/popup_popover/built_in" },
             ],
           },
           {

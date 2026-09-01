@@ -35,6 +35,13 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
     " must accept cross-origin POSTs (see the Security page)
     " cs_config-check_csrf_active = abap_false.
 
+    " An unhandled exception is answered with a 500 whose body carries the
+    " whole exception chain - class names, source positions, the system
+    " context. Priceless while developing, more than a production system
+    " should hand a browser; this replaces it with a bare
+    " `Internal Server Error` (see the Exception page)
+    " cs_config-check_hide_error_details = abap_true.
+
   ENDMETHOD.
 
 ENDCLASS.

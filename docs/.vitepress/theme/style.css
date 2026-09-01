@@ -340,6 +340,40 @@
   overflow: hidden;
 }
 
+/* A FLOOR under the frame the embed sizes for itself, and the one piece of
+ * this that is not decoration.
+ *
+ * The embed loader starts an app-only demo at 320px and then grows it to the
+ * height the app reports, measured from the app document's `scrollHeight`.
+ * That measurement works for a document that FLOWS — and an abap2UI5 app is
+ * the other kind. Almost every example here is a `Shell` around a `Page`, laid
+ * out at 100% of whatever box it was given, so its scrollHeight is that box:
+ * the measurement can only ever confirm the height the frame already has, and
+ * 320px is where a Page, its header and about four lines of content stay
+ * forever. Every example on the site was being read through a slot the size of
+ * a large thumbnail.
+ *
+ * A min-height fixes it from this side, and this side is where it has to be
+ * fixed to reach anybody: the frame's height is an INLINE style, which
+ * `min-height` in a stylesheet still wins against, so the floor holds whatever
+ * the published playground decides — including the version deployed right now.
+ * An app that genuinely overflows still grows past it, because that is the one
+ * case where the app's own document really is taller than its box.
+ *
+ * 520px is the loader's own default for the editor-and-app layout, so it is
+ * the size the playground itself considers a demo worth looking at. Under
+ * `640px` the page is nearly all frame anyway, and a viewport-relative floor
+ * keeps a phone from scrolling past a box taller than its screen. */
+.vp-doc .a2ui5-play .abap2ui5-demo iframe {
+  min-height: 520px;
+}
+
+@media (max-width: 640px) {
+  .vp-doc .a2ui5-play .abap2ui5-demo iframe {
+    min-height: min(520px, 70vh);
+  }
+}
+
 /* The loader could not be reached — an offline reader, or a blocked
  * third-party request. Say so where the button was, and say where the example
  * can be run instead. */

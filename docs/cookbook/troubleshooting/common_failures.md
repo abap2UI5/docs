@@ -172,7 +172,7 @@ Two apps hand control to each other forever inside a single request — most
 often a `nav_app_call( )` that runs unconditionally in `main( )` instead of
 inside an event or `check_on_navigated( )` branch, so the called app's first
 roundtrip immediately navigates again. Guard the navigation; see
-[Navigation](/cookbook/event_navigation/navigation).
+[Navigation](/cookbook/event_navigation/navigation/inner_app).
 
 #### `failed to load 'sap/m/....js'` — browser console, view does not appear
 
