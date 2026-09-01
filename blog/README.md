@@ -14,7 +14,7 @@ pass the gates like every other page.
 | # | Article | State |
 |---|---|---|
 | 1 | Somewhere on the Way to UI5, We Lost RTTS | **posted** |
-| 2 | abap2UI5 is not a Programming Model | draft, 335 words |
+| 2 | abap2UI5 is not a Programming Model | draft, 402 words |
 | 3 | The Cost of a Screen | draft, 330 words |
 | 4 | The Roundtrip | idea |
 | 5 | PUBLIC Means Persisted | idea |
@@ -25,7 +25,7 @@ mechanics, 6 practice. Someone arriving at #4 first should not need #2.
 
 | # | asks | evidence |
 |---|---|---|
-| **2** | what does it want from my architecture? | the `z2ui5_if_app` interface in full, then an EML call from an event handler |
+| **2** | what does it want from my architecture? | the `z2ui5_if_app` interface in full, then one app with three save handlers — EML, `MODIFY` on a table, a BAPI |
 | **3** | why do small screens never get built? | a whole job monitor in one class |
 | **4** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
 | **5** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
@@ -181,9 +181,17 @@ open, so the final line ends `... v = \`x\` ).` — one parenthesis, never `) ).
 
 EML needs `"version": "v755"`; at `v750` the `MODIFY ENTITIES` and
 `COMMIT ENTITIES` statements are reported as parser errors that are not there.
-Neither gate resolves a CDS entity or a customer function module, so
-`z_i_travel` and `Z_GET_OPEN_ITEMS` in article 2 are checked for shape only —
-the surrounding ABAP is verified, the names behind them are not.
+
+**What `errorNamespace` does and does not check.** With `"^(Z|Y)"`, an unknown
+name outside the Z namespace is accepted in silence — `bapisdh1_NOPE` passes,
+`ztravel_NOPE` does not. So in article 2 the `MODIFY ztravel` handler is really
+checked (against a stub `ztravel.tabl.xml` with `TRAVEL_ID` and `DESCRIPTION`,
+kept in the scratch gate, not here), while `BAPI_SALESORDER_CHANGE`, `bapisdh1`
+and `bapisdh1x` parse without being resolved at all, and the EML entity
+`z_i_travel` is not resolved either. A standard-SAP name in a snippet is
+therefore checked by reading SAP's documentation, never by the gate — the
+BAPI's parameters were confirmed against se80.co.uk and SAP Community before
+publishing.
 
 **Never teach a frozen class.** `src/99/` is legacy that ships only so existing
 installations keep compiling — `z2ui5_cl_util*` and the built-in

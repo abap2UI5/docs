@@ -108,99 +108,66 @@ ENDCLASS.
 
 Nothing in the handler is abap2UI5 except the toast. The business object is
 untouched — its validations, determinations, authorizations and draft handling
-all still run, because they sit behind EML and EML does not care who makes the
-call.
+all still run, because EML does not care who makes the call.
 
-Which means the same skeleton reaches anything else ABAP can reach. Swap the
-handler for a function module and the rest of the class does not move:
+The handler is also the only part of the class that knows what is behind the
+screen. Against a database table it is the statement every ABAP developer has
+written a thousand times:
 
 ```abap
-CLASS zcl_open_items DEFINITION PUBLIC.
+  METHOD on_save.
 
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+    DATA(row) = VALUE ztravel( travel_id   = travel_id
+                               description = description ).
 
-    TYPES:
-      BEGIN OF ty_s_item,
-        document TYPE string,
-        due      TYPE string,
-        amount   TYPE string,
-      END OF ty_s_item.
+    MODIFY ztravel FROM @row.
 
-    DATA customer TYPE string.
-    DATA items    TYPE STANDARD TABLE OF ty_s_item WITH EMPTY KEY.
-
-  PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
-    METHODS set_view.
-    METHODS read_items.
-
-  PRIVATE SECTION.
-ENDCLASS.
-
-
-CLASS zcl_open_items IMPLEMENTATION.
-
-  METHOD z2ui5_if_app~main.
-
-    me->client = client.
-    IF client->get_event( ) = `READ`.
-      read_items( ).
-    ENDIF.
-    set_view( ).
-
-  ENDMETHOD.
-
-  METHOD set_view.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-            )->ele( `Page`
-                )->a( n = `title` v = `Open Items`
-
-                )->tag( `Input`
-                    )->a( n = `value`  v = client->_bind( customer )
-                    )->a( n = `submit` v = client->_event( `READ` )
-
-                )->ele( `List`
-                    )->a( n = `items` v = client->_bind( items )
-
-                    )->ele( `items`
-                        )->tag( `StandardListItem`
-                            )->a( n = `title` v = `{DOCUMENT}`
-                            )->a( n = `info`  v = `{AMOUNT}` ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-
-  METHOD read_items.
-
-    CALL FUNCTION 'Z_GET_OPEN_ITEMS'
-      EXPORTING iv_customer = customer
-      IMPORTING et_items    = items
-      EXCEPTIONS not_found  = 1
-                 OTHERS     = 2.
-
-    IF sy-subrc <> 0.
-      client->message_box_display( text = `No items found`
-                                   type = `error` ).
+    IF sy-subrc = 0.
+      COMMIT WORK AND WAIT.
+      client->message_toast_display( `Saved` ).
     ENDIF.
 
   ENDMETHOD.
-
-ENDCLASS.
 ```
 
-Two applications, one shape. A business object in the first, a decades-old
-function module in the second, and the framework never learns which — it asked
-for `main( )` and got it.
+And against a BAPI — a different object, a different decade, the same class
+around it, carrying `order_id` and `po_number` instead:
 
-Deployed as an ICF node, either app registers in the Fiori launchpad next to
-the tiles already there, and users cannot tell it apart from them.
+```abap
+  METHOD on_save.
+
+    DATA bapi_return TYPE STANDARD TABLE OF bapiret2.
+
+    CALL FUNCTION 'BAPI_SALESORDER_CHANGE'
+      EXPORTING salesdocument    = order_id
+                order_header_in  = VALUE bapisdh1( purch_no_c = po_number )
+                order_header_inx = VALUE bapisdh1x( updateflag = 'U'
+                                                    purch_no_c = abap_true )
+      TABLES    return           = bapi_return.
+
+    IF line_exists( bapi_return[ type = 'E' ] ).
+      client->message_box_display( text = |{ bapi_return[ type = 'E' ]-message }|
+                                   type = `error` ).
+      RETURN.
+    ENDIF.
+
+    CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+      EXPORTING wait = abap_true.
+
+    client->message_toast_display( `Saved` ).
+
+  ENDMETHOD.
+```
+
+All three are only examples, and none of them is the point. The framework sees
+the same thing every time: a method that ran and returned. It never looks
+inside. The same handler could call the EWM delivery classes, a proxy to
+another system, a legacy report wrapped in a function module, or whatever SAP
+releases next — none of it has to be taught to abap2UI5, because abap2UI5 never
+asks what is behind the screen.
+
+Deployed as an ICF node, the app registers in the Fiori launchpad next to the
+tiles already there, and users cannot tell it apart from them.
 
 **A framework that asks for one method cannot reorganise an architecture. It
 never learns enough about it to try.**
@@ -224,9 +191,10 @@ Plain text — LinkedIn renders no markdown.
 > no service, no binding, no annotations, no BSP per app, no frontend artefact
 > to transport.
 >
-> Which is why it composes instead of competing. The new article shows the same
-> class twice: once writing through a RAP business object with EML, once calling
-> an old function module. Same shape, and the framework never learns which.
+> Which is why it composes instead of competing. The new article shows one app
+> and three save handlers: EML against a business object, MODIFY against a
+> table, and a BAPI call. The framework never learns which — it could just as
+> well be the EWM classes, or whatever SAP releases next.
 >
 > New article 🎉
 >
