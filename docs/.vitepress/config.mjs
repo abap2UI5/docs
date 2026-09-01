@@ -250,7 +250,6 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Definition", link: "/cookbook/view/definition" },
-              { text: "Deprecated Controls", link: "/cookbook/view/deprecated_controls" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
             ],

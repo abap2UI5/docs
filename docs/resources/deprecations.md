@@ -7,9 +7,13 @@ Things in abap2UI5 that have a successor. Every entry says what to write instead
 each other.
 
 ::: tip Not the same as deprecated UI5 controls
-This page is about **abap2UI5's own** API. For controls SAP has deprecated in
-UI5 itself (`sap.ui.commons`, the legacy charts, the Belize themes …) see
-[Deprecated Controls](/cookbook/view/deprecated_controls).
+This page is about **abap2UI5's own** API. Controls SAP has deprecated in UI5
+itself — `sap.ui.commons`, the legacy charts, the Belize themes — are not
+abap2UI5's to deprecate and are not listed anywhere here: the framework passes
+your XML through unchanged, so every one of them still renders. The
+[linter](/advanced/linter) reports them against the release *your* system runs,
+and [ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the
+always-current list.
 :::
 
 ## Start with the linter
