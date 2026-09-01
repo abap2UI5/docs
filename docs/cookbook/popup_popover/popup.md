@@ -87,7 +87,7 @@ The popup has the same lifecycle as the main view: `popup_display( )` renders th
 
 
 ## Separated App
-For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/cookbook/event_navigation/navigation).
+For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/cookbook/event_navigation/navigation/inner_app).
 
 An example with the confirmation popup:
 

@@ -240,7 +240,7 @@ client->follow_up_action( `myFunction()` ).
 
 It still works and is still dispatched. Note that both forms ship hand-written
 JavaScript from the backend to the browser — read
-[Raw JavaScript](/cookbook/expert_more/follow_up_action#raw-javascript) before
+[Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) before
 using either.
 
 ### `z2ui5_cl_xml_view` → `z2ui5_cl_ui5_view_builder`
@@ -359,7 +359,7 @@ client->follow_up_action( val   = client->cs_event-set_title
 ```
 
 The controls still ship and views that use them keep rendering. See
-[Follow-up Action](/cookbook/expert_more/follow_up_action) for the full argument
+[Frontend](/cookbook/event_navigation/frontend) for the full argument
 list of each event.
 
 ### `cs_config-title` → `cs_event-set_title`

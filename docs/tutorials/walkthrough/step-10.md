@@ -283,7 +283,7 @@ ENDCLASS.
 - **A back button, when there is somewhere to go.** `navButtonPress` and
   `showNavButton` give the page the standard back navigation, shown only when
   this app was called from another one — see
-  [Navigation](/cookbook/event_navigation/navigation).
+  [Navigation](/cookbook/event_navigation/navigation/inner_app).
 
 ## What to Take Away
 
@@ -306,7 +306,7 @@ And for everything beyond the walkthrough:
 
 - the [Cookbook](/cookbook/view/definition) — every topic of this walkthrough as a
   reference chapter, from [value helps](/cookbook/expert_more/value_help) to
-  [navigation between apps](/cookbook/event_navigation/navigation),
+  [navigation between apps](/cookbook/event_navigation/navigation/inner_app),
 - the [sample catalogues](https://abap2ui5.github.io/samples/) — complete,
   tested apps for nearly every pattern, each one class like here.
 

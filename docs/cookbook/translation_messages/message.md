@@ -82,27 +82,15 @@ ENDMETHOD.
 ```
 The framework accepts other inputs too — pass your message structure and the message box shows it.
 
-### Multi-Message Popup
-The message box gives you basic output. For richer detail, use the popup `Z2UI5_CL_POP_MESSAGES`:
+### More Than One Message at a Time
 
-::: warning The built-in popups are frozen
-`Z2UI5_CL_POP_MESSAGES` and its siblings live in the framework's frozen `src/99/02` package:
-they still run, so existing apps keep working, but they are not maintained and
-are on the [removal list](/resources/deprecations).
-New code should take its popups from the separate
-[popups addon](https://github.com/abap2UI5-addons/popups).
-:::
-```abap
-METHOD z2ui5_if_app~main.
-
-  DATA(lt_msg) = VALUE bapirettab(
-    ( type = `E` id = `MSG1` number = `001` message = `This is an error message` )
-    ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
-
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
-
-ENDMETHOD.
-```
+The message box shows one message. For a list of them — a BAPI return table, a
+message log, the result of a validation run — use a dialog from the
+[popups add-on](https://github.com/abap2UI5-addons/popups), which carries
+`Z2UI5_CL_POP_MESSAGES` and its siblings and is versioned on its own. The
+`Z2UI5_CL_POP_*` classes still shipped inside the framework's `src/99/02`
+package are frozen: they run, so existing apps keep working, but they are not
+maintained and are on the [removal list](/resources/deprecations).
 
 ::: tip **Improvements**
 These message functions evolve all the time. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.

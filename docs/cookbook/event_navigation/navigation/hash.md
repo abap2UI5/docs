@@ -5,11 +5,26 @@ samples:
   - z2ui5_cl_smp_app_480
   - z2ui5_cl_smp_app_499
 ---
-# Routing
+# Hash
+
+The URL hash is one string, and in abap2UI5 exactly one thing may own it at a
+time. There are three candidates, and picking between them is most of what this
+page is about:
+
+| Owner | Turned on with | The hash then reads |
+|---|---|---|
+| **the framework's router** | `cs_event-set_nav_routing` | `#/app/<CLASS>` — one route per app on the stack |
+| **your app** | `client->set_push_state( )` | whatever you push — a state of your own naming |
+| **the app state** | `client->set_app_state_active( )` | the id of the current state — see [App State](./app_state) |
+
+They are not additive: each writes the same hash, so a second one turned on
+takes the first one's meaning away. Decide once, per app.
+
+## Framework routing
 
 By default, abap2UI5 leaves the URL hash untouched — the browser's Back and Forward buttons navigate away from the abap2UI5 page instead of moving between your apps. With **hash-based app routing** (UI5 Router style), the URL hash mirrors the running app as a bookmarkable route, and the browser Back/Forward buttons drive the server-side app stack.
 
-## Enabling Routing
+### Enabling routing
 
 Enable routing once per session with
 `client->follow_up_action( client->cs_event-set_nav_routing )` — typically in
@@ -33,7 +48,7 @@ navigation hop), so one call per session is enough.
 
 Once enabled, a forward navigation to another app (`client->nav_app_call`) pushes a new route history entry — the routing equivalent of a UI5 `navTo`. The browser Back button then returns to the calling app instead of leaving the page.
 
-## Routing Modes
+### Routing modes
 
 The mode (see `cs_nav_mode`) decides how much of the running app the URL hash carries — and therefore what Back/Forward, a reload, or a bookmark restores:
 
@@ -61,7 +76,7 @@ In `keep` mode, the calling app's route entry is advanced to the draft saved for
 Restoring a `keep` route (browser Back/Forward, a reload, a bookmark) loads the app from its draft and runs `main( )` with `client->check_on_navigated( )` true — `check_on_init( )` stays false, the instance already exists. As everywhere else, render the view in that branch (see [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init)). An app that renders only on `check_on_init( )` answers without a view and the browser keeps showing the previous screen — a Forward press onto such an app appears to do nothing. This applies to **every** app reachable through routing, including detail pages that are only ever entered via `nav_app_call( )`.
 :::
 
-## Navigating by Route
+### Navigating by route
 
 There is no separate route-navigation event: `client->nav_app_call( )` **is**
 the navigation, and with routing enabled it pushes the same route history
@@ -74,9 +89,47 @@ client->nav_app_call( NEW z2ui5_cl_new_app( ) ).
 (The frontend-side `nav_to_route` event that used to do this was removed in
 1.143.0 — see [Deprecations](/resources/deprecations).)
 
-## Relation to Manual History Control
+## Pushing your own states
 
-Routing coexists with the manual history control described in [URL Handling](/cookbook/browser_interaction/url_handling) — `set_push_state( )`, and a raw `history.back()` handed to `follow_up_action( )`. Those manipulate the hash yourself; routing lets the framework own the hash and map it to apps. For app-to-app navigation, prefer routing — reach for manual push states only for fine-grained in-app states.
+The router gives you one route per *app*. An app with several screens of its
+own — a list and a detail, a wizard, a FlexibleColumnLayout — may want the URL
+to follow those instead, and `set_push_state( )` is what writes it:
+
+```abap
+client->set_push_state( `&my-app-state=detail` ).
+```
+
+The value is appended to the URL hash as a **pushed** history entry, so the
+browser's Back button has a step to take and the screen is bookmarkable. There
+is no method that presses Back for you — the pushed states are what Back walks
+through, and leaving an app is [`nav_app_leave( )`](./inner_app), which returns
+to the calling app rather than to the previous URL. To step back from ABAP, hand
+the raw expression to `follow_up_action( )`:
+
+```abap
+client->follow_up_action( |history.back()| ).
+```
+
+That is raw JavaScript, with everything
+[that implies](/cookbook/event_navigation/frontend#raw-javascript) — it is the
+one place in this area where there is no built-in event yet.
+
+For a complete example, see sample `Z2UI5_CL_SMP_APP_322`.
+
+## Which One to Pick
+
+All three write the same hash, so the question is only who should own it:
+
+- **routes for your apps** — framework routing. One `set_nav_routing` call, and
+  `nav_app_call( )` / `nav_app_leave( )` become the navigation; nothing else to
+  write, and Back/Forward walk the app stack.
+- **states inside one app** — `set_push_state( )`. The framework stays out of
+  the way and the hash means whatever you decide it means.
+- **one link that restores exactly this screen** — neither; that is
+  [App State](./app_state), and it claims the hash too.
+
+Prefer routing for app-to-app navigation, and reach for manual push states only
+for fine-grained in-app states.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 
