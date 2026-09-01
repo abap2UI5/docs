@@ -11,32 +11,50 @@ pass the gates like every other page.
 
 ## Publishing plan
 
-| Date | Article | State |
+| # | Article | State |
 |---|---|---|
-| Tue, 25 Aug 2026 | #1 Somewhere on the Way to UI5, We Lost RTTS | **posted** |
-| tbd | #2 abap2UI5 is not a Programming Model | draft |
-| tbd | #3 The Cost of a Screen | draft |
+| 1 | Somewhere on the Way to UI5, We Lost RTTS | **posted** |
+| 2 | The Whole Contract | draft, 287 words |
+| 3 | Your RAP Business Object Doesn't Notice | draft, 210 words |
+| 4 | The Cost of a Screen | draft, 330 words |
+| 5 | The Roundtrip | idea |
+| 6 | PUBLIC Means Persisted | idea |
+| 7 | One Codebase, 7.02 to ABAP Cloud | idea |
 
-**#2 and #3 were one article until they were split.** They had to be: the
-draft opened on the cost of a screen and then spent half its length explaining
-the interface, which is a different argument with a different audience. Kept
-apart, each is short and each is answerable on its own.
+**Every article answers exactly one question, and the arc is 2–3 positioning,
+4–5 mechanics, 6–7 practice.** Someone arriving at #5 first should not need #2.
 
-| | asks | evidence | ends on |
-|---|---|---|---|
-| **#2** Not a Programming Model | what does abap2UI5 ask of my architecture? | the `z2ui5_if_app` interface in full, and an EML call from an event handler | nothing — so it composes |
-| **#3** The Cost of a Screen | why do small screens never get built? | a complete job monitor, and the list of steps it skips | the price scales down |
+| # | asks | evidence |
+|---|---|---|
+| **2** | what does it want from my architecture? | the `z2ui5_if_app` interface, in full |
+| **3** | does it compete with what I run? | an EML call from an event handler |
+| **4** | why do small screens never get built? | a whole job monitor in one class |
+| **5** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
+| **6** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
+| **7** | does it run on my release? | the downport pipeline |
 
-**The boundary is load-bearing, so hold it.** #3 must not re-explain the
-contract and #2 must not argue the economics; each links the other once and
-moves on. Both articles open with a box saying which question they answer,
-because a reader arriving from the wrong one should find that out in a
-sentence rather than a paragraph.
+**#2 and #3 were one article, and #4 was joined to them before that.** Each
+split happened for the same reason: the piece was carrying two claims for two
+different readers, so neither landed. The EML snippet in particular was buried
+as section two of the contract article — it is the strongest thing in the
+series, because it *shows* the composition instead of asserting it, and it
+needed its own slot.
 
-The shared temptation is "one class, no service" — which #2 states as a
-*contract* ("that is all it asks") and #3 as a *price* ("that is all it
-costs"). Same fact, two arguments; if either starts making the other's, they
-have merged again.
+**Holding the boundaries is the work.** All of #2, #3 and #4 can reach for "one
+class, no service": it belongs to #2 as a *contract*, to #3 as a *call
+direction*, and to #4 as a *price*. If any of them starts making another's
+argument they have merged again.
+
+**Two ideas deliberately held back.** "No JavaScript — where the line is" is
+honest and good, but a limits article lands better once the series has built
+some credit. "Building UI5 with an AI agent" has the most reach potential and
+would read as hype this early.
+
+**The numbering is a commitment.** The series was reordered once already, when
+the RTTS article moved from #2 to #1. Six published numbers cannot be
+resequenced — if that matters more than the pull towards the next post, use a
+suffix instead.
+
 
 ## Format
 
@@ -45,16 +63,15 @@ is not cut down to fit a feed. The LinkedIn post at the bottom of each file
 exists only to introduce the article and ask one question — it is an
 announcement, not a second version of the content.
 
-**Short, though.** Not feed-short, but no longer than the idea needs: around
-**600–900 words**, counting the article's prose only — not the code blocks and
-not the teaser post, which is measured in characters and belongs under ~1,200.
-Count those three separately or the number means nothing; conflating article
-and teaser is how article 1 was twice reported at a length it did not have.
-The failure mode in these drafts has been restating a point in a second, more
-careful paragraph — the careful one usually replaces the first rather than
-following it. Article 1 is at 887: it carries the design-time/runtime split, a
-mechanism section and a coexistence close, and each of those earns its words.
-Article 2 is at 910 and has not earned its extra 300 — it wants the pass.
+**Short.** Around **300–400 words of article prose** — not the code blocks and
+not the teaser post, which is measured in characters and belongs under ~1,000.
+Count the three separately or the number means nothing; conflating article and
+teaser is how article 1 was twice reported at a length it did not have.
+
+That target is half of what article 1 shipped at (917), and it is deliberate:
+at this size an article can only carry one claim, which is the constraint that
+made the splits obvious. When a draft will not come under 400, the usual reason
+is not that the topic is big — it is that there are two topics in it.
 
 Which means the usual reach mechanics are deliberately not applied here: no
 hook engineered to a character count, no carousel, no "link in the first
@@ -124,13 +141,16 @@ Worth applying to the rest of the roadmap: title the problem, not the contrast.
 
 ## Articles
 
-| # | File | Title | Status |
-|---|---|---|---|
-| 1 | [`01-somewhere-on-the-way-to-ui5.md`](01-somewhere-on-the-way-to-ui5.md) | Somewhere on the Way to UI5, We Lost RTTI | ready |
-| 2 | [`02-the-cost-of-a-screen.md`](02-the-cost-of-a-screen.md) | The Cost of a Screen | draft |
+| # | File | Title |
+|---|---|---|
+| 1 | [`01-somewhere-on-the-way-to-ui5.md`](01-somewhere-on-the-way-to-ui5.md) | Somewhere on the Way to UI5, We Lost RTTS |
+| 2 | [`02-the-whole-contract.md`](02-the-whole-contract.md) | The Whole Contract |
+| 3 | [`03-your-rap-bo-doesnt-notice.md`](03-your-rap-bo-doesnt-notice.md) | Your RAP Business Object Doesn't Notice |
+| 4 | [`04-the-cost-of-a-screen.md`](04-the-cost-of-a-screen.md) | The Cost of a Screen |
 
-Each file contains the full article, then the teaser post under a heading at
-the bottom.
+Each file holds the article, then the teaser post under a heading at the
+bottom.
+
 
 ## The ABAP in a draft
 
@@ -199,23 +219,18 @@ mascots as ~480 KB of inline base64, so it is a build artefact of the script
 rather than an editable source. **The script is the editable source** — change
 the layout there and re-run.
 
-## Roadmap
+## Beyond #7
 
-Rough arc: **1–2 positioning**, **3–5 mechanics**, **6–8 practice and
-enterprise**, **9–12 depth and outlook**.
+Ideas not yet placed, roughly in order of how well they would land:
 
-| # | Working title | Core idea |
-|---|---|---|
-| 3 | The Roundtrip — how a stateful ABAP SPA works | GET loads the shell once, everything after it is POST/JSON; a draft table instead of a session. The diagram in the framework's `AGENTS.md` carries the whole article |
-| 4 | Zero Deployment | No BSP per app, no frontend transport. Activate the class, call `?app_start=zcl_my_app` |
-| 5 | PUBLIC means persisted | Why `PUBLIC SECTION` is serialized state that travels every roundtrip — the convention people follow without knowing why |
-| 6 | "No JavaScript" — what that really means | Honest about the boundary: standard UI5 fully from ABAP, custom controls are JS |
-| 7 | One codebase, 7.02 to ABAP Cloud | The downporting pipeline. Highly relevant to everyone still on an older stack, and under-covered in the community |
-| 8 | abap2UI5 in the Fiori Launchpad | The hash split and the stripped `value` envelope — the two things that actually bite |
-| 9 | Two-way binding without OData | `_bind( )`, model deltas, why the data is already current in the event handler |
-| 10 | What CI looks like in an open source ABAP project | abaplint, the gates, generated artefacts. Aimed at developers who assume ABAP cannot have this |
-| 11 | Building UI5 with an AI agent, without an SAP system | MCP server, headless render, screenshot. Keep it concrete so it does not read as AI hype |
-| 12 | From an SE80 report to UI5 in an afternoon | One concrete ALV migration. A good closing article, and the natural sequel to #1 |
+| Working title | Core |
+|---|---|
+| No JavaScript — where the line is | standard UI5 fully from ABAP, custom controls are JS. A limits article, better once the series has credit |
+| abap2UI5 in the Fiori launchpad | the hash split and the stripped `value` envelope — the two things that actually bite |
+| Two-way binding without OData | `_bind( )`, model deltas, why the data is already current in the event handler |
+| What CI looks like in an open source ABAP project | abaplint, the gates, generated artefacts |
+| Building UI5 with an AI agent, without an SAP system | MCP server, headless render. Most reach potential, reads as hype if it comes early |
+| From an SE80 report to UI5 in an afternoon | one concrete ALV migration; the natural sequel to #1 |
 
 ## Where the articles are published
 
