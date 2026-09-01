@@ -14,7 +14,7 @@ pass the gates like every other page.
 | # | Article | State |
 |---|---|---|
 | 1 | Somewhere on the Way to UI5, We Lost RTTS | **posted** |
-| 2 | abap2UI5 is not a Programming Model | draft, 271 words |
+| 2 | abap2UI5 is not a Programming Model | draft, 335 words |
 | 3 | The Cost of a Screen | draft, 330 words |
 | 4 | The Roundtrip | idea |
 | 5 | PUBLIC Means Persisted | idea |
@@ -165,6 +165,25 @@ npx --yes @abaplint/cli abaplint.json     # deps: abap2UI5/abap2UI5 + abapedia/s
 # and is the chain laid out the way the house style says
 npx --yes @abap2ui5/linter --config <cfg> # rules: { "chain-house-layout": true }
 ```
+
+**The abaplint rules are `parser_error` and `check_syntax`.** A config that says
+`"syntax_check": true` is not a stricter spelling of them, it is a rule that
+does not exist — abaplint ignores it, reports `0 issue(s) found`, and the gate
+passes on anything, garbage included. That is how three drafts came to carry a
+view chain with one closing parenthesis too many: the `DATA(view) = ...`
+statement never parsed, and nothing said so. A snippet a gate has never
+actually rejected is a snippet nobody has checked. Break it on purpose once and
+watch the run go red before trusting a green one.
+
+Chains only balance if the last line closes exactly what it opened. Every line
+after the first begins with `)`, which closes the call the line above left
+open, so the final line ends `... v = \`x\` ).` — one parenthesis, never `) ).`
+
+EML needs `"version": "v755"`; at `v750` the `MODIFY ENTITIES` and
+`COMMIT ENTITIES` statements are reported as parser errors that are not there.
+Neither gate resolves a CDS entity or a customer function module, so
+`z_i_travel` and `Z_GET_OPEN_ITEMS` in article 2 are checked for shape only —
+the surrounding ABAP is verified, the names behind them are not.
 
 **Never teach a frozen class.** `src/99/` is legacy that ships only so existing
 installations keep compiling — `z2ui5_cl_util*` and the built-in

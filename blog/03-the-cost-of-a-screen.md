@@ -95,7 +95,7 @@ CLASS zcl_job_monitor IMPLEMENTATION.
                                     )->a( n = `text` v = `{FINISH}`
                                 )->tag( `ObjectStatus`
                                     )->a( n = `text`  v = `{STATE}`
-                                    )->a( n = `state` v = `{STATE}` ) ).
+                                    )->a( n = `state` v = `{STATE}` ).
 
     client->view_display( view->stringify( ) ).
 
