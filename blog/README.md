@@ -16,20 +16,22 @@ pass the gates like every other page.
 | 1 | Somewhere on the Way to UI5, We Lost RTTS | **posted** |
 | 2 | abap2UI5 is not a Programming Model | draft, 402 words |
 | 3 | The Cost of a Screen | draft, 330 words |
-| 4 | The Roundtrip | idea |
-| 5 | PUBLIC Means Persisted | idea |
-| 6 | One Codebase, 7.02 to ABAP Cloud | idea |
+| 4 | No Annotation in Between | draft, 346 words |
+| 5 | The Roundtrip | idea |
+| 6 | PUBLIC Means Persisted | idea |
+| 7 | One Codebase, 7.02 to ABAP Cloud | idea |
 
-**Every article answers one question**, and the arc is 2–3 positioning, 4–5
-mechanics, 6 practice. Someone arriving at #4 first should not need #2.
+**Every article answers one question**, and the arc is 2–4 positioning, 5–6
+mechanics, 7 practice. Someone arriving at #5 first should not need #2.
 
 | # | asks | evidence |
 |---|---|---|
 | **2** | what does it want from my architecture? | the `z2ui5_if_app` interface in full, then one app with three save handlers — EML, `MODIFY` on a table, a BAPI |
 | **3** | why do small screens never get built? | a whole job monitor in one class |
-| **4** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
-| **5** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
-| **6** | does it run on my release? | the downport pipeline |
+| **4** | what do I write the screen in? | a three-step `sap.m.Wizard` — a control no generator produces — named directly in UI5 terms |
+| **5** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
+| **6** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
+| **7** | does it run on my release? | the downport pipeline |
 
 ### What the splitting exercise settled
 
@@ -45,6 +47,15 @@ The contract and its consequence have the same one.
 is an economic argument for someone weighing effort, not a structural one.
 **"One class, no service" belongs to #2 as a contract and to #3 as a price**; if
 either starts making the other's argument they have merged again.
+
+**Why "no annotation in between" is not a paragraph in #2.** It passes the
+separability test above — it has its own reader. #2 answers what the framework
+wants from the architecture *below* the screen, and its reader is weighing
+coexistence with what is already installed. #4 answers what the screen is
+written in, and its reader has already hit a control the annotation vocabulary
+does not reach. #2 lists "no annotations" among the things the contract does not
+contain and stops there; the moment it starts arguing about the UI5 API the two
+have merged.
 
 **Two ideas deliberately held back.** "No JavaScript — where the line is" is a
 limits article and lands better once the series has credit. "Building UI5 with
