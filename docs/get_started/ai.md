@@ -3,8 +3,8 @@ outline: [2, 4]
 ---
 # Developing with AI
 
-abap2UI5 is unusually well suited to being written by an AI assistant, and the
-reason is structural rather than lucky:
+abap2UI5 is well suited to being written by an AI assistant, and the
+reason is structural:
 
 - **An app is one ABAP class — source code, and nothing else.** No service to
   generate, no OData artifacts, no frontend project, no manifest, no
