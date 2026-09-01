@@ -15,7 +15,7 @@ page is about:
 |---|---|---|
 | **the framework's router** | `cs_event-set_nav_routing` | `#/app/<CLASS>` — one route per app on the stack |
 | **your app** | `client->set_push_state( )` | whatever you push — a state of your own naming |
-| **the app state** | `client->set_app_state_active( )` | the id of the current state — see [App State](./app_state) |
+| **the app state** | `client->set_app_state_active( )` | the id of the current state — see [App State](/cookbook/event_navigation/navigation/app_state) |
 
 They are not additive: each writes the same hash, so a second one turned on
 takes the first one's meaning away. Decide once, per app.
@@ -102,7 +102,7 @@ client->set_push_state( `&my-app-state=detail` ).
 The value is appended to the URL hash as a **pushed** history entry, so the
 browser's Back button has a step to take and the screen is bookmarkable. There
 is no method that presses Back for you — the pushed states are what Back walks
-through, and leaving an app is [`nav_app_leave( )`](./inner_app), which returns
+through, and leaving an app is [`nav_app_leave( )`](/cookbook/event_navigation/navigation/inner_app), which returns
 to the calling app rather than to the previous URL. To step back from ABAP, hand
 the raw expression to `follow_up_action( )`:
 
@@ -126,7 +126,7 @@ All three write the same hash, so the question is only who should own it:
 - **states inside one app** — `set_push_state( )`. The framework stays out of
   the way and the hash means whatever you decide it means.
 - **one link that restores exactly this screen** — neither; that is
-  [App State](./app_state), and it claims the hash too.
+  [App State](/cookbook/event_navigation/navigation/app_state), and it claims the hash too.
 
 Prefer routing for app-to-app navigation, and reach for manual push states only
 for fine-grained in-app states.

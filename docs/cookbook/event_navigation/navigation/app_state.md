@@ -74,7 +74,7 @@ as everywhere else: [Life Cycle](/cookbook/event_navigation/life_cycle#returning
 ::: warning It claims the app hash
 The app state writes the URL, and so do framework routing and a manual push
 state — all three want the same string. Use one of them per app; see
-[Hash](./hash).
+[Hash](/cookbook/event_navigation/navigation/hash).
 :::
 
 ## App State or a Route?
@@ -83,8 +83,8 @@ They answer different questions, and the difference is what the link restores:
 
 | | restores |
 |---|---|
-| [Hash](./hash), routing mode `fresh` | the app, started clean |
-| [Hash](./hash), routing mode `keep` | the app on the stack, as the user left it |
+| [Hash](/cookbook/event_navigation/navigation/hash), routing mode `fresh` | the app, started clean |
+| [Hash](/cookbook/event_navigation/navigation/hash), routing mode `keep` | the app on the stack, as the user left it |
 | **App state** | the exact roundtrip — this app, this input, this selection |
 
 Routing is about *where the user is* and follows the app stack. The app state is

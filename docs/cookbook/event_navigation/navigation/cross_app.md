@@ -6,7 +6,7 @@ outline: [2, 4]
 Navigation *out of* your app and into another Fiori app, and back. This is the
 launchpad's own navigation, not abap2UI5's: it goes through the FLP shell, so
 the launchpad's history, its back button and its app-to-app contract all keep
-working. [Inner App](./inner_app) is the other direction — calling one of your
+working. [Inner App](/cookbook/event_navigation/navigation/inner_app) is the other direction — calling one of your
 own abap2UI5 classes, which never leaves the page and which the launchpad
 never hears about.
 
