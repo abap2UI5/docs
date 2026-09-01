@@ -14,24 +14,24 @@ pass the gates like every other page.
 | # | Article | State |
 |---|---|---|
 | 1 | Somewhere on the Way to UI5, We Lost RTTS | **posted** |
-| 2 | abap2UI5 is not a Programming Model | draft, 402 words |
-| 3 | The Cost of a Screen | draft, 330 words |
+| 2 | abap2UI5 is not a Programming Model | draft, 336 words |
+| 3 | The Cost of a Screen | draft, 334 words |
 | 4 | No Annotation in Between | draft, 346 words |
 | 5 | UI5 Over-the-Wire | draft, 321 words |
-| 6 | The Frontend That Does Not Know What It Shows | idea |
-| 7 | One Service for Every App | idea |
-| 8 | Only the Changed Part | idea |
-| 9 | PUBLIC Means Persisted | idea |
-| 10 | Swapping the View at Runtime | idea |
-| 11 | index.html Lives in a String | idea |
-| 12 | Your Own JavaScript, Over the Wire | idea |
-| 13 | Four Verbs | idea |
-| 14 | The Class That Runs | idea |
-| 15 | Where the Selection Screen Went | idea |
-| 16 | No Cache, No Deploy, Any IDE | idea |
-| 17 | One Codebase, 7.02 to ABAP Cloud | idea |
-| 18 | 2,300 Lines | idea |
-| 19 | Where the Line Is | idea |
+| 6 | The Frontend That Does Not Know What It Shows | draft, 280 words |
+| 7 | One Service for Every App | draft, 281 words |
+| 8 | Only the Changed Part | draft, 229 words |
+| 9 | PUBLIC Means Persisted | draft, 243 words |
+| 10 | Swapping the View at Runtime | draft, 220 words |
+| 11 | index.html Lives in a String | draft, 274 words |
+| 12 | Where Your Own JavaScript Goes | draft, 285 words |
+| 13 | Four Verbs | draft, 307 words |
+| 14 | The Class That Runs | draft, 213 words |
+| 15 | Where the Selection Screen Went | draft, 269 words |
+| 16 | No Cache, No Deploy, Any IDE | draft, 290 words |
+| 17 | One Codebase, 7.02 to ABAP Cloud | draft, 306 words |
+| 18 | 2,300 Lines | draft, 283 words |
+| 19 | Where the Line Is | draft, 324 words |
 
 **Every article answers one question**, and the arc is 2–4 positioning, 5–8
 architecture, 9–13 mechanics, 14–16 developer experience, 17–19 practice and
@@ -75,7 +75,7 @@ told twice.
 | `how_it_all_works.md` | 19 no extra layer | **4** |
 | `how_it_all_works.md` | 20 no hiding of complexity, the two view builders | **13** |
 | `how_it_all_works.md` | 21 separated `_bind` and `_event` | **13** |
-| `how_it_all_works.md` | 22 sending JS, HTML and CSS over the wire | **12** |
+| `how_it_all_works.md` | 22 sending JS, HTML and CSS over the wire | **12**, corrected — see below |
 | `how_it_all_works.md` | 23 as simple as possible | **14** |
 | `how_it_all_works.md` | 24 downsides vs UI5 and RAP | **19** |
 | `how_it_all_works.md` | 25 system footprint | **18** |
@@ -85,6 +85,16 @@ told twice.
 | `dx.md` | ALV-Style Table Output in the Browser | **1** (posted) |
 | `dx.md` | Classic Popups, Modern Events | *not carried* — see below |
 | `dx.md` | Zero-Setup Deployment / No Caching / Any IDE / Pure ABAP Debugging / Easy Code Sharing | **16** |
+
+**Section 22 of `how_it_all_works.md` describes a mechanism the framework no
+longer has.** It says an app can send its own JavaScript or custom controls on
+any request and the framework forwards them as-is. Today `custom_js` is a field
+of `ty_s_http_config`, set once per system in `set_config_http_get` through
+`z2ui5_if_exit` — the initial GET, not a per-request app decision — and custom
+controls live in their own BSP behind the reserved resource roots `z2ui5_cci`
+(addon) and `z2ui5_ccc` (customer extension). Article 12 describes the seams
+that exist now, with `follow_up_action( cs_event-control_by_id )` as the third.
+The docs page needs the same correction.
 
 **Two things the docs pages say that must not travel into an article.**
 `dx.md` tells the reader to "use `Z2UI5_CL_XML_VIEW` to define simple views"
@@ -160,6 +170,22 @@ an AI agent" has the most reach potential and would read as hype this early.
 pulling everything up one. That is free while only #1 is published and stops
 being free the moment #2 goes out.
 
+
+## One thought per article
+
+**250–350 words of prose, one claim, one piece of evidence.** Article 1 ran to
+938 and was the exception, not the template; everything after it fits on one
+screen. The test is whether the article can be summarised in a single sentence
+without losing anything — if it takes two, it is two articles.
+
+Each one also has to earn its place against what the reader is dealing with
+right now, and each does so on a different front rather than all on the same
+one: fewer governed objects (**7**), no build pipeline to audit (**11**), an app
+that survives the release migration (**17**), a dependency small enough to read
+(**18**), one file a reviewer or an agent can hold in full (**14**), iteration
+speed as the thing that decides which ideas get built (**16**). Where an article
+has no such angle, it does not get one bolted on — **8**, **13** and **15** are
+purely technical and stay that way.
 
 ## Format
 

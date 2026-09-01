@@ -20,8 +20,7 @@ ENDINTERFACE.
 ```
 
 One interface, one method. The framework calls `main( )` on every roundtrip,
-the application decides what to display and how to react, and the conversation
-ends there.
+the application decides what to display and how to react, and it ends there.
 
 The more interesting half is what the contract does **not** contain. No data
 model. No behavior definition. No service, no binding, no annotations. No BSP
@@ -29,8 +28,7 @@ application per app, no frontend artefact to transport. Activating the class
 and calling the ICF endpoint is the deployment.
 
 That is a statement about scope, not size — and it is why the data behind the
-screen can come from wherever it already lives. Here is a complete application
-that writes through a business object:
+screen can come from wherever it already lives:
 
 ```abap
 CLASS zcl_travel_edit DEFINITION PUBLIC.
@@ -111,8 +109,7 @@ untouched — its validations, determinations, authorizations and draft handling
 all still run, because EML does not care who makes the call.
 
 The handler is also the only part of the class that knows what is behind the
-screen. Against a database table it is the statement every ABAP developer has
-written a thousand times:
+screen. Against a database table:
 
 ```abap
   METHOD on_save.
@@ -131,7 +128,7 @@ written a thousand times:
 ```
 
 And against a BAPI — a different object, a different decade, the same class
-around it, carrying `order_id` and `po_number` instead:
+around it:
 
 ```abap
   METHOD on_save.
@@ -161,19 +158,15 @@ around it, carrying `order_id` and `po_number` instead:
 
 All three are only examples, and none of them is the point. The framework sees
 the same thing every time: a method that ran and returned. It never looks
-inside. The same handler could call the EWM delivery classes, a proxy to
-another system, a legacy report wrapped in a function module, or whatever SAP
-releases next — none of it has to be taught to abap2UI5, because abap2UI5 never
-asks what is behind the screen.
-
-Deployed as an ICF node, the app registers in the Fiori launchpad next to the
-tiles already there, and users cannot tell it apart from them.
+inside. The same handler could call the EWM delivery classes, a proxy to another
+system, or whatever SAP releases next — none of it has to be taught to abap2UI5,
+because abap2UI5 never asks what is behind the screen.
 
 **A framework that asks for one method cannot reorganise an architecture. It
 never learns enough about it to try.**
 
 What it is not, plainly: no data model, no transactional buffer, no generated
-user interface. Applications that need those need something that provides them.
+user interface. Applications needing those need something that provides them.
 
 Happy ABAPing! 🦖🦕🦣
 
