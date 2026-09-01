@@ -3,18 +3,16 @@ outline: [2, 4]
 ---
 # Logging
 
-Logging is critical for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available on-premise and in ABAP Cloud environments alike. With abap2UI5, use BAL like you would in classic ABAP and display logs with the framework's built-in popups.
+Logging is critical for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available on-premise and in ABAP Cloud environments alike. With abap2UI5, use BAL like you would in classic ABAP — and to show a log, hand it straight to `client->message_box_display( )`.
 
-::: warning The built-in popups are frozen
-`Z2UI5_CL_POP_MESSAGES` and its siblings live in the framework's frozen `src/99/02` package:
-they still run, so existing apps keep working, but they are not maintained and
-are on the [removal list](/resources/deprecations).
-New code should take its popups from the separate
-[popups addon](https://github.com/abap2UI5-addons/popups).
-:::
+That method takes **any** message source, not just a string: a BAL table, a
+`cl_bali_log`, a `bapiret2` table, `sy`, an exception. Anything that is not a
+plain string goes through the framework's message mapper, which flattens it
+into the lines the box shows — so every example below is the same one call with
+a different argument. See [Message](./message) for the other sources.
 
 ## BAL Tables
-In classic ABAP, use the BAL function modules and show the BAL table with the popup `Z2UI5_CL_POP_MESSAGES`. In the `bal_t_msgr` structure, `msgno` is the message number within the message class (`msgid`), while `msgnumber` is the message's sequence number within the log:
+In classic ABAP, use the BAL function modules and hand the BAL table over as it is. In the `bal_t_msgr` structure, `msgno` is the message number within the message class (`msgid`), while `msgnumber` is the message's sequence number within the log:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -22,13 +20,13 @@ METHOD z2ui5_if_app~main.
     ( msgid = `Z001` msgno = `001` msgty = `S` time_stmp = `21354` msgnumber = `01` )
     ( msgid = `Z001` msgno = `001` msgty = `S` time_stmp = `21354` msgnumber = `02` ) ).
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_bal ) ).
+  client->message_box_display( lt_bal ).
 
 ENDMETHOD.
 ```
 
 ## ABAP Cloud
-In ABAP Cloud, hand the logging object straight to the popup:
+In ABAP Cloud, hand the logging object over the same way:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -48,7 +46,7 @@ METHOD z2ui5_if_app~main.
       message_v1 = `Dummy` ) ).
   lo_log->add_item( lo_bapi ).
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
+  client->message_box_display( lo_log ).
 
 ENDMETHOD.
 ```
@@ -62,13 +60,13 @@ METHOD z2ui5_if_app~main.
   lo_log->e( `This is an error...` ).
   lo_log->s( `This is a success message...` ).
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
+  client->message_box_display( lo_log ).
 
 ENDMETHOD.
 ```
 
 ## BAL Logs
-Unlike message classes, BAL logs carry more detail — like timestamps. `Z2UI5_CL_POP_MESSAGES` accepts them like any other message source, so the examples above work for BAL logs too:
+Unlike message classes, BAL logs carry more detail — like timestamps. The mapper reads them like any other message source, so the examples above work for BAL logs too:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -76,11 +74,15 @@ METHOD z2ui5_if_app~main.
   DATA(lo_log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
   lo_log->e( `This is an error...` ).
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lo_log ) ).
+  client->message_box_display( lo_log ).
 
 ENDMETHOD.
 ```
 
-::: tip
-The BAL popup is still in its early stages and offers only basic features. If you've built BAL features with abap2UI5, please consider contributing to grow it.
+::: tip Something richer than a message box
+A message box is a list of lines. For a sortable table of the log with its
+severities, timestamps and long texts, either build the view yourself from the
+same data — it is an internal table like any other, see
+[Tables](/cookbook/model/tables) — or take the ready-made message dialog from
+the [popups add-on](https://github.com/abap2UI5-addons/popups).
 :::

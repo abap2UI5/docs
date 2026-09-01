@@ -52,7 +52,7 @@ client->follow_up_action( val   = client->cs_event-keyboard_shortcut
 
 - **Lifetime:** the registry lives in the frontend and survives every roundtrip until the app is left. Navigating to another app starts from an empty set.
 
-The same registration also works without a backend roundtrip via `client->_event_client( )` with the identical `t_arg`.
+The same registration also works without a backend roundtrip: write the `follow_up_action( )` call where its result is consumed, as a view attribute, with the identical `t_arg` — see [the two positions](/cookbook/event_navigation/frontend#the-two-positions).
 
 ::: tip
 See demo app 471 in the [samples repository](https://github.com/abap2UI5/samples) for a complete example.

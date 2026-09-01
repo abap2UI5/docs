@@ -44,7 +44,7 @@ By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`):
 If needed, adjust the CSP in the [user exit](/advanced/extensibility/user_exits). The exit runs after the framework fills in the defaults, so whatever you set there overrides the default policy:
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-content_security_policy = `<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' ui5.sap.com *.ui5.sap.com sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net"/>`.
 
@@ -55,7 +55,7 @@ ENDMETHOD.
 `'unsafe-eval'` weakens the protection CSP provides against script injection. The default keeps it only because OpenUI5 `1.71` — the oldest supported release — still executes fetched modules via `eval()` in its module loader. If you pin a modern UI5 release, no `eval()` is involved and you can remove `'unsafe-eval'` in the same exit where you set the bootstrap source. The example below is the default policy without `'unsafe-eval'`:
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-src   = `https://ui5.sap.com/resources/sap-ui-core.js`.
     cs_config-theme = `sap_horizon`.
@@ -113,7 +113,7 @@ They live in `cs_config-t_security_header` and are set in the same
 behind a proxy that already sets one of them can drop or change it:
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     " keep everything the framework set, override one entry
     DELETE cs_config-t_security_header WHERE n = `Referrer-Policy`.
@@ -129,7 +129,7 @@ Every state-changing request in abap2UI5 is a POST, so the framework ships its o
 **CSRF protection is active by default.** A fresh install rejects cross-origin POSTs without any configuration. If your endpoint must accept cross-origin POSTs (for example, behind a proxy setup where the origin legitimately differs), opt out in the [user exit](/advanced/extensibility/user_exits):
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_post.
+METHOD z2ui5_if_ui5_exit~set_config_http_post.
 
     " escape hatch - only disable this if your endpoint must accept cross-origin POSTs
     cs_config-check_csrf_active = abap_false.

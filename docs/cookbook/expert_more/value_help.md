@@ -46,18 +46,10 @@ client->view_display( view->stringify( ) ).
 
 ### Selection Popup
 
-For a *"pick from this list"* dialog, navigate to a picker as a sub-app, pass
-any internal table, and read the result on return.
-
-::: warning The built-in popups are frozen
-`Z2UI5_CL_POP_TO_SELECT` and its siblings live in the framework's frozen
-`src/99/02` package: they still run, so existing apps keep working, but they
-are not maintained and are on the removal list. Their successor is the separate
-[popups addon](https://github.com/abap2UI5-addons/popups), which is where new
-code should get its picker from. The example below is written with the built-in
-one because that is what existing code contains.
-:::
-
+For a *"pick from this list"* dialog, open a popup with the candidates in it
+and let the press event write the chosen value back. No sub-app and no
+navigation are involved — the popup is a second view of the same class, so the
+selected row is simply an attribute.
 
 <!-- playground: no Run button — SELECTs from SCARR, which no browser database has -->
 ```abap
@@ -65,8 +57,18 @@ CLASS z2ui5_cl_sample_f4 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA mv_carrid TYPE string.
 
+    TYPES:
+      BEGIN OF ty_s_carrier,
+        carrid   TYPE c LENGTH 3,
+        carrname TYPE c LENGTH 20,
+      END OF ty_s_carrier.
+
+    DATA mv_carrid   TYPE string.
+    DATA mt_carriers TYPE STANDARD TABLE OF ty_s_carrier WITH EMPTY KEY.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
@@ -74,7 +76,7 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
 
     CASE abap_true.
 
-      WHEN client->check_on_init( ).
+      WHEN client->check_on_navigated( ).
         DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
             )->ele( n = `View` ns = `mvc`
                 )->a( n = `xmlns`     v = `sap.m`
@@ -88,30 +90,48 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
 
         client->view_display( view->stringify( ) ).
 
-
       WHEN client->check_on_event( `F4` ).
-        SELECT carrid, carrname, url FROM scarr INTO TABLE @DATA(lt_carriers).
-        " abap2ui5lint-disable-next-line non-released-api -- frozen built-in picker, see the note above
-        client->nav_app_call( z2ui5_cl_pop_to_select=>factory(
-            i_tab   = lt_carriers
-            i_title = `Choose airline` ) ).
+        SELECT carrid, carrname FROM scarr INTO TABLE @mt_carriers.
 
-      WHEN client->check_on_navigated( ).
-        " abap2ui5lint-disable-next-line non-released-api -- frozen built-in picker, see the note above
-        DATA(lo_prev) = CAST z2ui5_cl_pop_to_select( client->get_app_prev( ) ).
-        DATA(ls_res)  = lo_prev->result( ).
-        IF ls_res-check_confirmed = abap_true.
-          FIELD-SYMBOLS <row> TYPE any.
-          ASSIGN ls_res-row->* TO <row>.
-          ASSIGN COMPONENT `CARRID` OF STRUCTURE <row> TO FIELD-SYMBOL(<carrid>).
-          mv_carrid = <carrid>.
-        ENDIF.
+        DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `FragmentDefinition` ns = `core`
+                )->a( n = `xmlns`      v = `sap.m`
+                )->a( n = `xmlns:core` v = `sap.ui.core`
+
+                )->ele( `Dialog`
+                    )->a( n = `title` v = `Choose airline`
+
+                    )->ele( `List`
+                        )->a( n = `items` v = client->_bind( mt_carriers )
+
+                        )->ele( `items`
+                            )->tag( `StandardListItem`
+                                )->a( n = `title`       v = `{CARRNAME}`
+                                )->a( n = `description` v = `{CARRID}`
+                                )->a( n = `type`        v = `Active`
+                                )->a( n = `press`       v = client->_event(
+                                                                val = `PICK`
+                                                                t_arg = VALUE #( ( `${CARRID}` ) ) ) ) ).
+
+        client->popup_display( popup->stringify( ) ).
+
+      WHEN client->check_on_event( `PICK` ).
+        mv_carrid = client->get_event_arg( 1 ).
+        client->popup_destroy( ).
 
     ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.
 ```
+
+The chosen key travels in the event argument, so nothing has to be looked up
+again on the way back. `type="Active"` is what makes a `StandardListItem`
+pressable — without it the `press` event never fires.
+
+For a ready-made picker with sorting, multi-select and a search field, the
+[popups add-on](https://github.com/abap2UI5-addons/popups) carries one.
+
 
 Pass `i_multiselect = abap_true` for multi-pick; the result table is then in `ls_res-table`.
 

@@ -83,43 +83,97 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
   ENDMETHOD.
 ```
 
-The popup has the same lifecycle as the main view: `popup_display( )` renders the XML and `popup_destroy( )` closes it. Changed ABAP data needs neither — the framework pushes the delta into the already-rendered popup with the response. (`popup_model_update( )` used to be how you asked for that; it is a no-op now and is on the removal list.)
+The popup has the same lifecycle as the main view: `popup_display( )` renders the XML and `popup_destroy( )` closes it. Changed ABAP data needs neither — the framework pushes the delta into the already-rendered popup with the response.
 
 
 ## Separated App
-For a cleaner source layout, encapsulate popups in separate classes and call them via [navigation](/cookbook/event_navigation/navigation/inner_app).
 
-An example with the confirmation popup:
+For a cleaner source layout, put a popup in its own class and call it via
+[navigation](/cookbook/event_navigation/navigation/inner_app). The popup is
+then an ordinary `z2ui5_if_app` — it just displays into the popup slot instead
+of the main one, and ends by handing control back:
 
-::: warning The built-in popups are frozen
-`Z2UI5_CL_POP_TO_CONFIRM` and its siblings live in the framework's frozen `src/99/02` package:
-they still run, so existing apps keep working, but they are not maintained and
-are on the [removal list](/resources/deprecations).
-New code should take its popups from the separate
-[popups addon](https://github.com/abap2UI5-addons/popups).
-:::
 ```abap
+CLASS z2ui5_cl_sample_confirm DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA mv_question TYPE string.
+    DATA mv_confirmed TYPE abap_bool.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_confirm IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.
 
-      WHEN client->check_on_init( ).
-        DATA(popup) = z2ui5_cl_pop_to_confirm=>factory(
-                          i_question_text = `Can you confirm this?`
-                          i_event_confirm = `CONFIRM`
-                          i_event_cancel  = `CANCEL` ).
-        client->nav_app_call( popup ).
+      WHEN client->check_on_navigated( ).
+        DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+            )->ele( n = `FragmentDefinition` ns = `core`
+                )->a( n = `xmlns`      v = `sap.m`
+                )->a( n = `xmlns:core` v = `sap.ui.core`
+
+                )->ele( `Dialog`
+                    )->a( n = `title` v = `Please confirm`
+
+                    )->tag( `Text`
+                        )->a( n = `text` v = client->_bind( mv_question )
+
+                    )->ele( `buttons`
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `OK`
+                            )->a( n = `press` v = client->_event( `CONFIRM` )
+                        )->tag( `Button`
+                            )->a( n = `text`  v = `Cancel`
+                            )->a( n = `press` v = client->_event( `CANCEL` ) ).
+
+        client->popup_display( popup->stringify( ) ).
 
       WHEN client->check_on_event( `CONFIRM` ).
-        client->message_box_display( `the result is confirmed` ).
+        mv_confirmed = abap_true.
+        client->nav_app_leave( ).
 
       WHEN client->check_on_event( `CANCEL` ).
-        client->message_box_display( `the result is rejected` ).
+        mv_confirmed = abap_false.
+        client->nav_app_leave( ).
 
     ENDCASE.
 
   ENDMETHOD.
+ENDCLASS.
 ```
+
+The caller sets the question, hands the instance to `nav_app_call( )`, and
+reads the answer back off the same instance when control returns:
+
+```abap
+CASE abap_true.
+
+  WHEN client->check_on_event( `DELETE` ).
+    client->nav_app_call( NEW z2ui5_cl_sample_confirm( mv_question = `Delete this entry?` ) ).
+
+  WHEN client->check_on_navigated( ).
+    DATA(lo_prev) = CAST z2ui5_cl_sample_confirm( client->get_app_prev( ) ).
+    IF lo_prev IS BOUND AND lo_prev->mv_confirmed = abap_true.
+      delete_entry( ).
+    ENDIF.
+    view_display( ).
+
+ENDCASE.
+```
+
+Two things carry the whole pattern: the popup's answer is a **public attribute**
+on its own instance, and `get_app_prev( )` is how the caller reaches it. Nothing
+is passed back through events.
+
+A ready-made set of these — confirm, select, ranges, file up- and download and
+about a dozen more — is the
+[popups add-on](https://github.com/abap2UI5-addons/popups), which is versioned
+on its own.
 
 To handle multiple stacked popups, note that abap2UI5 shows only one popup at a time on the frontend. But you can keep a popup stack in your backend logic and re-display the previous popup as needed. See `Z2UI5_CL_SMP_APP_161`.
 

@@ -86,9 +86,6 @@ entry, so Back returns to the calling app.
 client->nav_app_call( NEW z2ui5_cl_new_app( ) ).
 ```
 
-(The frontend-side `nav_to_route` event that used to do this was removed in
-1.143.0 — see [Deprecations](/resources/deprecations).)
-
 ## Pushing your own states
 
 The router gives you one route per *app*. An app with several screens of its

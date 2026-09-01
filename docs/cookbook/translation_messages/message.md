@@ -84,13 +84,15 @@ The framework accepts other inputs too — pass your message structure and the m
 
 ### More Than One Message at a Time
 
-The message box shows one message. For a list of them — a BAPI return table, a
-message log, the result of a validation run — use a dialog from the
-[popups add-on](https://github.com/abap2UI5-addons/popups), which carries
-`Z2UI5_CL_POP_MESSAGES` and its siblings and is versioned on its own. The
-`Z2UI5_CL_POP_*` classes still shipped inside the framework's `src/99/02`
-package are frozen: they run, so existing apps keep working, but they are not
-maintained and are on the [removal list](/resources/deprecations).
+The message box shows one message — but it also takes a whole set of them. Pass
+a BAPI return table, a message log or the result of a validation run and the
+framework flattens it into the lines the box shows; see
+[Logging](./logging) for the sources it reads.
+
+For something richer than a list of lines — a sortable table with severities
+and long texts — build the view from the same data, or take the ready-made
+message dialog from the
+[popups add-on](https://github.com/abap2UI5-addons/popups).
 
 ::: tip **Improvements**
 These message functions evolve all the time. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.

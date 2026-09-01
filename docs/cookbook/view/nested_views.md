@@ -113,13 +113,12 @@ Always pass `method_destroy` when the nested view is going to be replaced over t
 
 ### Independent Re-rendering
 
-The whole point of nested views is to re-render only what changed. Four calls cover the common needs:
+The whole point of nested views is to re-render only what changed. Three calls cover the common needs:
 
 | Call                              | What it does                                                                                  |
 | --------------------------------- | --------------------------------------------------------------------------------------------- |
 | `client->view_display( ... )`     | Replaces the main view's XML. The anchor is recreated, so any nested content is lost too.    |
 | `client->nest_view_display( ... )`| Replaces only the nested view. The main view stays on screen.                                |
-| `client->view_model_update( )`    | Pushes current ABAP data values into **all already-rendered views**. No re-render.           |
 | `client->nest_view_destroy( )`    | Removes the nested view from the frontend without touching the main view.                    |
 
 The main view has the matching `client->view_destroy( )`; the second nested slot has `nest2_view_display( )` and `nest2_view_destroy( )`.
@@ -127,9 +126,9 @@ The main view has the matching `client->view_destroy( )`; the second nested slot
 A rule of thumb:
 
 - **Layout changed** (different controls, new columns, new sections) → `view_display` / `nest_view_display`.
-- **Only the data changed** (a flag flipped, a row added to a bound table) → `view_model_update`.
+- **Only the data changed** (a flag flipped, a row added to a bound table) → **nothing**. The framework compares the model before and after `main( )` and pushes the difference into every rendered view by itself.
 
-`Z2UI5_CL_SMP_APP_065` shows the difference between the three options in a single screen with one button per call.
+`Z2UI5_CL_SMP_APP_065` shows the difference between the options in a single screen with one button per call.
 
 ### Master-Detail with `FlexibleColumnLayout`
 
@@ -272,12 +271,10 @@ All bound data lives in a **single client-side model**, regardless of which view
 
 ```abap
 DELETE t_tab2 WHERE title = ls_arg-title.
-client->view_model_update( ).   " push the new data into all rendered views
 ```
 
-::: tip `nest_view_model_update` and the `view` parameter of `_bind` are obsolete
-Earlier releases kept a separate model per view: bindings were tagged with `view = client->cs_view-...` and each view had its own refresh call (`nest_view_model_update( )`, `nest2_view_model_update( )`). That separation is gone — there is now one root model. The old per-view refresh methods still exist as compatibility aliases and behave like `view_model_update( )`, and the `view` parameter of `_bind` / `_bind_edit` is an inert no-op. In new code, omit the parameter and use `view_model_update( )` only.
-:::
+That is the whole handler. The row is gone from the nested table on the next
+response, and nothing had to ask for it.
 
 ### Two Levels of Nesting
 
@@ -324,7 +321,7 @@ Plain composition is the right starting point: keep helper methods that take a p
 - The anchor id must be unique in the main view. The framework calls `byId` on the rendered view to find it; duplicate ids break the lookup.
 - Always provide `method_destroy` when a nested slot will be replaced more than once. Forgetting it causes nested fragments to accumulate.
 - Build the nested view in its own method (e.g. `view_display_detail`) and call it both from the initial render and from event handlers. Two call sites, one definition.
-- If a nested view does not pick up a data change, the value did not change on the ABAP side of the roundtrip — the push is automatic (`view_model_update( )` has been an empty method since 1.143.0). If a control simply isn't there, you need `nest_view_display( )` again.
+- If a nested view does not pick up a data change, the value did not change on the ABAP side of the roundtrip — the push itself is automatic. If a control simply isn't there, you need `nest_view_display( )` again.
 - For very large apps, look at `Z2UI5_CL_SMP_APP_104`, which loads each detail screen from a separate `z2ui5_if_app` class and renders it into the nested slot. It is an advanced pattern — start with the simpler form first.
 
 See `Z2UI5_CL_SMP_APP_065`, `Z2UI5_CL_SMP_APP_097`, `Z2UI5_CL_SMP_APP_098`, `Z2UI5_CL_SMP_APP_104` and `Z2UI5_CL_SMP_APP_176` for runnable examples covering every variation above.
