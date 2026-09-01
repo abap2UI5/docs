@@ -32,7 +32,17 @@ This is useful for guided data entry, barcode scanning, or any flow where the ne
 After processing an event, call `client->follow_up_action( )` with `cs_event-set_focus` and the id of the input to focus next. (The value bindings on the inputs are omitted here to keep the focus logic clear — see [Barcode Scanning](/cookbook/device_capabilities/barcode_scanning) for the same form with bound inputs.)
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -68,7 +78,8 @@ METHOD z2ui5_if_app~main.
 
     ENDIF.
 
-ENDMETHOD.
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 After the user presses Enter in `id1`, the backend fires `set_focus` for `id2` and the cursor moves to the second input. The same pattern works for any chain of fields.

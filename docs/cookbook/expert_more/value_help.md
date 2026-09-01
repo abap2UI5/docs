@@ -51,7 +51,6 @@ and let the press event write the chosen value back. No sub-app and no
 navigation are involved — the popup is a second view of the same class, so the
 selected row is simply an attribute.
 
-<!-- playground: no Run button — SELECTs from SCARR, which no browser database has -->
 ```abap
 CLASS z2ui5_cl_sample_f4 DEFINITION PUBLIC.
 
@@ -91,7 +90,12 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
         client->view_display( view->stringify( ) ).
 
       WHEN client->check_on_event( `F4` ).
-        SELECT carrid, carrname FROM scarr INTO TABLE @mt_carriers.
+        " On a system this is your SELECT:
+        "   SELECT carrid, carrname FROM scarr INTO TABLE @mt_carriers.
+        mt_carriers = VALUE #( ( carrid = `LH` carrname = `Lufthansa` )
+                               ( carrid = `UA` carrname = `United Airlines` )
+                               ( carrid = `AA` carrname = `American Airlines` )
+                               ( carrid = `SQ` carrname = `Singapore Airlines` ) ).
 
         DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
             )->ele( n = `FragmentDefinition` ns = `core`

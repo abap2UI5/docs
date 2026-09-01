@@ -73,6 +73,72 @@ ENDMETHOD.
 Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
 :::
 
+### The Whole Stack in One Class
+
+The called app does not have to be a *different* class. An app that calls
+another instance of itself shows the stack, the return and `get_app_prev( )`
+in one runnable piece — press **Run** and walk down and back up:
+
+```abap
+CLASS z2ui5_cl_sample_stack DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA mv_level TYPE i.
+    DATA mv_note  TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      " Coming back up: read what the app above left on its own instance
+      DATA(lo_prev) = CAST z2ui5_cl_sample_stack( client->get_app_prev( ) ).
+      IF lo_prev IS BOUND.
+        mv_note = |back from level { lo_prev->mv_level }|.
+      ENDIF.
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = |Level { mv_level }|
+
+                  )->tag( `Text`
+                      )->a( n = `text` v = client->_bind( mv_note )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `call one level deeper`
+                      )->a( n = `press` v = client->_event( `DOWN` )
+                  )->tag( `Button`
+                      )->a( n = `text`    v = `leave, back to the caller`
+                      )->a( n = `press`   v = client->_event( `UP` )
+                      )->a( n = `enabled` b = client->check_app_prev_stack( ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `DOWN` ).
+      client->nav_app_call( NEW z2ui5_cl_sample_stack( mv_level = mv_level + 1 ) ).
+
+    ELSEIF client->check_on_event( `UP` ).
+      client->nav_app_leave( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+`check_app_prev_stack( )` is what greys out *leave* at the bottom of the stack —
+calling `nav_app_leave( )` with nothing to return to drops the user out of the
+app.
+
 ::: tip Browser Back & Forward
 By default, the browser's Back button leaves the abap2UI5 page — it does not step through the app stack. Enable [hash routing](/cookbook/event_navigation/navigation/hash) with `client->follow_up_action( client->cs_event-set_nav_routing )` to couple the browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps bookmarkable.
 :::

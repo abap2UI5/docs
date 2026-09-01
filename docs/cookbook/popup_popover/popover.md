@@ -12,6 +12,16 @@ samples:
 
 To show a popover, call `client->popover_display` and pass the ID of the control the popover should attach to:
 ```abap
+CLASS z2ui5_cl_sample_popover DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_popover IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -60,6 +70,7 @@ To show a popover, call `client->popover_display` and pass the ID of the control
     ENDCASE.
 
   ENDMETHOD.
+ENDCLASS.
 ```
 
 Like popups, a popover picks up changed ABAP values on its own: the framework compares the model before and after `main( )` and pushes the difference into the open popover, without re-rendering its XML. A handler that only changes data has nothing else to call.

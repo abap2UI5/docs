@@ -105,6 +105,16 @@ const NEEDS_MORE_THAN_A_BROWSER = [
     why: 'calls a function module, and there is no application server to call one on',
     what: /\bCALL\s+FUNCTION\b/i,
   },
+  {
+    /* Not a transpiler question - whatever AUTHORITY-CHECK compiles to, the
+     * page in the browser has no user, no roles and no authorization objects,
+     * so sy-subrc after it means nothing. An example whose whole point is
+     * which branch the check takes cannot take either one here. Reasoned
+     * rather than watched, unlike the lines above it, and it fails towards no
+     * button like the rest. */
+    why: 'runs an authority check, and the browser has no user and no roles for one',
+    what: /\bAUTHORITY-CHECK\b/i,
+  },
 ];
 
 /*

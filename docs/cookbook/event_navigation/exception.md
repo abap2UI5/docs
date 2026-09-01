@@ -64,15 +64,43 @@ locked object, a service that is not there — is better caught where it happens
 and shown as a message, which costs the user nothing:
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_exception DEFINITION PUBLIC.
 
-  TRY.
-      DATA(lv_val) = 1 / 0.
-    CATCH cx_root INTO DATA(lx).
-      client->message_box_display( lx ).
-  ENDTRY.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-ENDMETHOD.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_exception IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Exception`
+
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `divide by zero`
+                      )->a( n = `press` v = client->_event( `DIVIDE` ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `DIVIDE` ).
+      TRY.
+          DATA(lv_val) = 1 / 0.
+        CATCH cx_root INTO DATA(lx).
+          client->message_box_display( lx ).
+      ENDTRY.
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 `message_box_display( )` takes the exception object directly and reads the text

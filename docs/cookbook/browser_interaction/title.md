@@ -18,7 +18,17 @@ whatever the app last set.
 To change the title after the app is running — for example, to reflect the current record — call the `set_title` frontend event from the backend:
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_title DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_title IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
 
     CASE abap_true.
 
@@ -44,6 +54,7 @@ METHOD z2ui5_if_app~main.
     ENDCASE.
 
   ENDMETHOD.
+ENDCLASS.
 ```
 
 ### Launchpad
