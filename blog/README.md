@@ -14,46 +14,45 @@ pass the gates like every other page.
 | # | Article | State |
 |---|---|---|
 | 1 | Somewhere on the Way to UI5, We Lost RTTS | **posted** |
-| 2 | The Whole Contract | draft, 287 words |
-| 3 | Your RAP Business Object Doesn't Notice | draft, 210 words |
-| 4 | The Cost of a Screen | draft, 330 words |
-| 5 | The Roundtrip | idea |
-| 6 | PUBLIC Means Persisted | idea |
-| 7 | One Codebase, 7.02 to ABAP Cloud | idea |
+| 2 | abap2UI5 is not a Programming Model | draft, 271 words |
+| 3 | The Cost of a Screen | draft, 330 words |
+| 4 | The Roundtrip | idea |
+| 5 | PUBLIC Means Persisted | idea |
+| 6 | One Codebase, 7.02 to ABAP Cloud | idea |
 
-**Every article answers exactly one question, and the arc is 2–3 positioning,
-4–5 mechanics, 6–7 practice.** Someone arriving at #5 first should not need #2.
+**Every article answers one question**, and the arc is 2–3 positioning, 4–5
+mechanics, 6 practice. Someone arriving at #4 first should not need #2.
 
 | # | asks | evidence |
 |---|---|---|
-| **2** | what does it want from my architecture? | the `z2ui5_if_app` interface, in full |
-| **3** | does it compete with what I run? | an EML call from an event handler |
-| **4** | why do small screens never get built? | a whole job monitor in one class |
-| **5** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
-| **6** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
-| **7** | does it run on my release? | the downport pipeline |
+| **2** | what does it want from my architecture? | the `z2ui5_if_app` interface in full, then an EML call from an event handler |
+| **3** | why do small screens never get built? | a whole job monitor in one class |
+| **4** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
+| **5** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
+| **6** | does it run on my release? | the downport pipeline |
 
-**#2 and #3 were one article, and #4 was joined to them before that.** Each
-split happened for the same reason: the piece was carrying two claims for two
-different readers, so neither landed. The EML snippet in particular was buried
-as section two of the contract article — it is the strongest thing in the
-series, because it *shows* the composition instead of asserting it, and it
-needed its own slot.
+### What the splitting exercise settled
 
-**Holding the boundaries is the work.** All of #2, #3 and #4 can reach for "one
-class, no service": it belongs to #2 as a *contract*, to #3 as a *call
-direction*, and to #4 as a *price*. If any of them starts making another's
-argument they have merged again.
+#2 was split into a contract article and an EML article, then merged back. The
+merge was right and the reason is worth keeping: **"the contract is tiny,
+therefore nothing below it changes" is one causal chain, not two claims.** Split
+apart, the EML half was 210 words — a code block with a wrapper, not an article.
 
-**Two ideas deliberately held back.** "No JavaScript — where the line is" is
-honest and good, but a limits article lands better once the series has built
-some credit. "Building UI5 with an AI agent" has the most reach potential and
-would read as hype this early.
+The test that survives: two claims are separable when each has its own *reader*.
+The contract and its consequence have the same one.
 
-**The numbering is a commitment.** The series was reordered once already, when
-the RTTS article moved from #2 to #1. Six published numbers cannot be
-resequenced — if that matters more than the pull towards the next post, use a
-suffix instead.
+#3 was joined to #2 before that, and stays out — "why screens never get built"
+is an economic argument for someone weighing effort, not a structural one.
+**"One class, no service" belongs to #2 as a contract and to #3 as a price**; if
+either starts making the other's argument they have merged again.
+
+**Two ideas deliberately held back.** "No JavaScript — where the line is" is a
+limits article and lands better once the series has credit. "Building UI5 with
+an AI agent" has the most reach potential and would read as hype this early.
+
+**The numbering has now moved twice** — RTTS from #2 to #1, and this merge
+pulling everything up one. That is free while only #1 is published and stops
+being free the moment #2 goes out.
 
 
 ## Format
@@ -144,9 +143,8 @@ Worth applying to the rest of the roadmap: title the problem, not the contrast.
 | # | File | Title |
 |---|---|---|
 | 1 | [`01-somewhere-on-the-way-to-ui5.md`](01-somewhere-on-the-way-to-ui5.md) | Somewhere on the Way to UI5, We Lost RTTS |
-| 2 | [`02-the-whole-contract.md`](02-the-whole-contract.md) | The Whole Contract |
-| 3 | [`03-your-rap-bo-doesnt-notice.md`](03-your-rap-bo-doesnt-notice.md) | Your RAP Business Object Doesn't Notice |
-| 4 | [`04-the-cost-of-a-screen.md`](04-the-cost-of-a-screen.md) | The Cost of a Screen |
+| 2 | [`02-not-a-programming-model.md`](02-not-a-programming-model.md) | abap2UI5 is not a Programming Model |
+| 3 | [`03-the-cost-of-a-screen.md`](03-the-cost-of-a-screen.md) | The Cost of a Screen |
 
 Each file holds the article, then the teaser post under a heading at the
 bottom.
