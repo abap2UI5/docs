@@ -80,7 +80,12 @@ much it matters:
 you name in the config to change or switch a rule off, what a source waiver
 names, and the anchor of that rule's page in the full reference at
 [abap2ui5.github.io/linter](https://abap2ui5.github.io/linter/) — every rule is
-documented one page away, with what it means and why it exists.
+documented one page away, with what it means, why it exists, the offending
+source next to the same source fixed, and a link into the module in the linter
+that decides it. Every report carries those addresses rather than the bare id:
+the terminal output ends in a reference block naming each rule it reported, a
+job summary links each row, and a GitHub annotation ends in its rule id and a
+link straight at the before/after pair.
 
 Which severities break the build is a separate decision from what is reported:
 `--fail-on error|warning|hint|never` sets the exit code (default `warning`,
@@ -156,10 +161,10 @@ them:
 | `source-line-too-long` | a source line over 255 characters — the class does not fail to lint, it fails to **import**, and abapGit leaves an empty class stub behind |
 | `chain-indentation` | a builder call whose indentation contradicts the tree it builds. The chain is the only picture of the view's structure there is, and nothing else in the toolchain formats it |
 
-There are more than eighty rules in total. The full list, each with the
-paragraph explaining why it exists, is the
+There are more than a hundred rules in total. The full list, each with the
+paragraph explaining why it exists and a before/after pair showing it, is the
 [rule reference](https://abap2ui5.github.io/linter/) — one page, searchable,
-one anchor per rule id.
+one anchor per rule id and one per pair (`#<rule-id>-example`).
 
 ### What it cannot do, by design
 
