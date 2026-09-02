@@ -111,7 +111,7 @@ That is raw JavaScript, with everything
 [that implies](/cookbook/event_navigation/frontend#raw-javascript) — it is the
 one place in this area where there is no built-in event yet.
 
-For a complete example, see sample `Z2UI5_CL_SMP_APP_322`.
+For a complete example, see sample `Z2UI5_CL_SMP_APP_499` in the table below.
 
 ## Which One to Pick
 
