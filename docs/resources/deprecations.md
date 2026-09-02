@@ -326,10 +326,11 @@ Inside the framework they were replaced by an internal context class.
 ::: warning No drop-in successor for apps
 There is no public replacement API for app code. The classes still ship and
 still work; treat them as stable-but-closed rather than as something to migrate
-away from today. Several pages of this documentation still use them
-([Logon Language](/configuration/setup/logon_language),
-[Lock](/cookbook/expert_more/lock),
-[Spreadsheet](/cookbook/device_capabilities/spreadsheet)).
+away from today. No page of this documentation uses them any more: what the
+examples reached them for is SAP standard — `cl_web_http_utility` for base64
+(`cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases), and
+a failing library raises its own exception instead of being wrapped. The JSON
+reader an app needs is the released `z2ui5_cl_ui5_json`.
 :::
 
 ### Invisible custom controls

@@ -44,6 +44,15 @@
  * changelog exist to name the old names, and a gate that forbids that forbids
  * documenting a migration at all.
  *
+ * The same exemption carries a fifth question: no page outside it names an
+ * object of the framework's FROZEN package (src/99 - the util classes, the
+ * built-in popups, the predecessor view builder, the superseded exit and
+ * types interfaces, the handler shim). Those still ship, so a page teaching
+ * them would compile and pass every question above - four pages did, with
+ * z2ui5_cl_util=>conv_encode_x_base64( ) where cl_web_http_utility is the
+ * answer. The rule the deprecations page exists for: what is superseded is
+ * named there, with its successor, and nowhere else.
+ *
  *   node scripts/check-api-names.mjs      (npm run check:api-names)
  */
 import fs from 'fs';
@@ -154,6 +163,11 @@ const withoutLiterals = (text) => text
   .replace(/`[^`\n]*`/g, (x) => ' '.repeat(x.length))
   .replace(/\|[^|\n]*\|/g, (x) => ' '.repeat(x.length));
 
+/* The frozen package, by the name segments renaming.md documents for it
+ * (`util`, `pop`, `xml_view`) plus the four objects that were relocated into
+ * it whole. A name is matched wherever it is written - prose or code. */
+const FROZEN = /\bz2ui5_(?:cl_(?:pop_|util|xml_view|http_handler)\w*|if_(?:exit|types)|cx_util_error|t_91)\b/gi;
+
 const problems = [];
 let checked = 0;
 
@@ -198,6 +212,12 @@ for (const file of markdownFiles(PAGES)) {
         }
       }
     }
+  }
+
+  // 5: nothing from the frozen package, wherever it is written
+  for (const use of text.matchAll(FROZEN)) {
+    checked += 1;
+    problems.push(`${rel}: \`${use[0]}\` is in the framework's frozen package (src/99) - resources/deprecations.md is the one page that names it`);
   }
 
   // 3: cs_<group>-<member>, wherever it is written

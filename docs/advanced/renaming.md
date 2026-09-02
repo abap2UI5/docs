@@ -212,9 +212,9 @@ installation.
 **Class names written as strings.** A dynamic lookup passes its class or
 interface name as text, and text is not a reference. One production lookup in
 `src/` is affected: the user exit. `<ns>_cl_ui5_user_exit=>get_user_exit_class( )`
-searches for classes implementing the literal `` `Z2UI5_IF_EXIT` ``, which in a
-renamed installation is not the interface your exit implements — that one is
-`<NS>_IF_EXIT`. The lookup therefore comes back empty (or, next to an original
+searches for classes implementing the literal `` `Z2UI5_IF_UI5_EXIT` ``, which
+in a renamed installation is not the interface your exit implements — that one
+is `<NS>_IF_UI5_EXIT`. The lookup therefore comes back empty (or, next to an original
 installation, with the *other* installation's exit class, which then cannot be
 instantiated into the renamed reference and is discarded). The search is wrapped
 in `CATCH cx_root`, so nothing is reported: the installation just runs with the
