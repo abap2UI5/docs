@@ -58,7 +58,6 @@ Nothing survives on the server between two clicks, and that is deliberate: `z2ui
 
 Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea behind htmx, Hotwire and Phoenix LiveView. abap2UI5 applies it to UI5.
 
-→ *See [UI5 Over-the-Wire](/technical/concept) for the architecture, and [Behind the Scenes](/technical/how_it_all_works) for what happens on a single request*
 
 ## Overview
 <br>
@@ -96,7 +95,7 @@ It is deliberately not built for everything. Three cases are a poor fit, and kno
 - **Offline use and complex client-side behaviour.** The browser renders; it does not hold the application.
 - **Teams that work strictly separately.** The app is one ABAP class — that is the point, and it means there is no frontend project for a frontend team to own.
 
-→ *See [Use Cases](/advanced/use_cases) for the on-stack, side-by-side and SaaS scenarios, and [UI5 Over-the-Wire](/technical/concept) for the reasoning behind the boundary*
+→ *See [Use Cases](/advanced/use_cases) for the on-stack, side-by-side and SaaS scenarios*
 
 ## Compatibility
 <br>
