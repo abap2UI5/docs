@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress";
 import { playgroundButton } from "./playground.mjs";
+import { tableScroll, codeTitle } from "./markup.mjs";
 
 // Where the site is actually served from. Link previews (LinkedIn, Slack,
 // WhatsApp, X) only accept ABSOLUTE urls in og:image / og:url — a relative
@@ -15,7 +16,14 @@ export default defineConfig({
   // A Run button under every fenced example the playground can actually
   // start. Which ones those are is decided in ./playground.mjs.
   markdown: {
-    config: (md) => playgroundButton(md),
+    // Order matters: `codeTitle` wraps whatever the fence renderer before it
+    // produced, so the Run button ends up INSIDE the titled block rather than
+    // beside it.
+    config: (md) => {
+      tableScroll(md);
+      playgroundButton(md);
+      codeTitle(md);
+    },
   },
   lastUpdated: {
     text: "Updated at",

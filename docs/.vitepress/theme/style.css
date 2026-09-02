@@ -108,10 +108,10 @@
  * modest; the visible win is that a code block now tends to CLOSE on screen
  * instead of running off the bottom.
  *
- * Not touched on purpose: the content column stays at its 688px. It looks
- * like the obvious lever and is not — 96% of the ABAP lines in this
- * repository are under 81 characters, so widening it buys three percentage
- * points and costs the line length that makes prose readable.
+ * The content column is set further down, in `one column, and a measure`.
+ * The 81-character figure quoted there — 96% of the ABAP lines in this
+ * organisation fit in it — is the reason the column can be narrow enough for
+ * prose without cutting the code in half.
  */
 
 /* Section headings. The top rule stays: on a long cookbook page it is what
@@ -226,89 +226,6 @@
   line-height: 24px;
 }
 
-/* ------------------------------------------------------- the measure ---
- *
- * The reading column and the MEASURE are two different decisions, and until
- * now they were one number. The column was widened to 830px for a reason that
- * still holds — an outline that truncated 12% of its entries, and a third of
- * a wide window carrying the text with the rest empty. What did not survive
- * the widening is the line length, and the smaller type made it worse rather
- * than better: at 16px the column ran about 105 characters a line, and at 15px
- * it runs about 120. The workable band for technical prose is 75 to 90.
- *
- * (Those are counted, not estimated: the median of eleven real paragraphs on
- * `technical/how_it_all_works`, measured with a Range binary-searched to the
- * last character that still sits on the first line. An average-character-width
- * calculation is off by ten characters either way on a proportional face.)
- *
- * So the two decisions are separated here. Prose is capped at 600px — about
- * 86 characters — and everything the width was actually widened FOR keeps the
- * full column: code blocks, tables, images, the Run frame. That is the whole
- * point of doing it this way round rather than narrowing the container: a
- * 236-line ABAP listing and a four-column parameter table both want 830px,
- * and a paragraph wants nothing of the sort.
- *
- * Headings are deliberately NOT capped. `h2` carries a rule along its top
- * edge, and that rule marks a section across the content area rather than
- * across the sentence under it; capping it would shorten the rule and leave
- * the code block below sticking out past it. The heading TEXT never comes
- * near 600px anyway, so this costs nothing and keeps the rule full width.
- *
- * The callout cap moves from 688px to 620px for the same reason — with the
- * 3px rule and 16px of padding, 620 puts its text on the same 600px measure
- * as the prose it interrupts.
- *
- * What this costs, stated rather than buried: the pages get TALLER again.
- * Measured against the same baseline as the leading block above, the height
- * savings roughly halve once this cap is in — how_it_all_works goes from -14%
- * to -2%, model/binding from -10% to -7%. Both numbers are real and the trade
- * is deliberate: length is cheap on a page nobody reads without scrolling,
- * and a 120-character line is expensive on every line of it. */
-.vp-doc p,
-.vp-doc li,
-.vp-doc blockquote,
-.vp-doc dd {
-  max-width: 600px;
-}
-
-/* A paragraph inside a table cell or a callout is already inside something
- * that sets its own width; a second cap there just makes a narrow column
- * narrower. */
-.vp-doc td p,
-.vp-doc th p,
-.vp-doc .custom-block:not(.details) p,
-.vp-doc .custom-block:not(.details) li,
-.vp-doc li li {
-  max-width: none;
-}
-
-/* …and neither is a paragraph that turns out to be a FIGURE.
- *
- * This is the hole the first version of the cap left, and it was invisible in
- * the page I checked it on. Markdown has no figure element: `![alt](src)` on a
- * line of its own compiles to `<p><img></p>`, so every screenshot on the site
- * is, structurally, a paragraph — and the cap above put all 39 of them on
- * `technical/how_it_all_works` at the prose measure. The result was a page
- * with THREE right edges (prose at 600, screenshots at 600, code and tables at
- * 830) where the whole point of the split was to have two, and a screenshot
- * shrunk to 72% for no reason a reader could see.
- *
- * A figure is not prose. It is measured in pixels the author chose, not in
- * characters, and it belongs on the same edge as the code block and the table.
- *
- * `:has()` is what makes this expressible — there is no parent selector
- * otherwise, and the constraint lives on the `<p>`, not the `<img>`, so
- * `.vp-doc p > img { max-width: none }` cannot reach it. Where `:has()` is
- * unsupported the rule is simply dropped and images stay at 600px, which is
- * what they do today: the fallback is the current behaviour, so nothing can
- * break in a browser that does not understand it. */
-.vp-doc p:has(> img),
-.vp-doc p:has(> a > img),
-.vp-doc p:has(> video),
-.vp-doc p:has(> iframe) {
-  max-width: none;
-}
-
 /* The chrome around the page — sidebar, outline, nav, the prev/next footer —
  * at 13px. It is navigation, not text: it is scanned for a word that is
  * already known, never read, and at the size of the prose it competes with
@@ -324,22 +241,24 @@
   font-size: 13px;
 }
 
-/* …and the group headings in the sidebar one step below the pages under them.
+/* …and the group headings in the sidebar back ABOVE the pages under them.
  *
- * `Getting Started`, `Cookbook`, `Configuration` are not peers of the pages
- * they contain — they are the LABEL over a list, and the theme sets them at
- * the same size as their children in weight 700, so six of them down the
- * column read as six competing headlines. 12px in the muted colour at weight
- * 600 puts the label under the thing it labels, which is the relationship
- * that actually holds; the indent and the divider rule already say where each
- * group ends, so the weight does not have to.
+ * The previous version of this rule put them at 12px muted, one step BELOW
+ * their own children, on a GitHub argument: a section label over a list. Set
+ * against capire — SAP's CAP documentation, VitePress like this one and the
+ * nearest comparable corpus — that reads as the odd choice. There the tree
+ * descends, `Develop` over `Domain Modeling` over `Status Flows`, each level
+ * a step smaller than the one it contains, which is what a navigation tree has
+ * always done and what makes its shape readable without being read.
  *
- * The size comes down, the ROW does not: `padding: 4px 0` and the 24px line
- * are the theme's, left alone on purpose. Every one of these headings is also
- * a link (each carries a `link:` in config.mjs alongside its `items`), and
- * shrinking the target along with the type is how a heading becomes a thing
- * you have to aim at. The hover rule the theme ships still turns them the
- * brand colour, so the affordance survives the smaller type.
+ * A sidebar is not a page of labelled lists. It is one tree, and the size of
+ * an entry is the reader's only cue to its depth: a group title smaller than
+ * its own children says the children outrank it, which is false.
+ *
+ * So 14px semibold in the full text colour, one step above the 13px of the
+ * entries under it. The row is the theme's, untouched, for the reason it was
+ * untouched before: every one of these headings is also a link, and a target
+ * that shrinks with its type is a target you have to aim at.
  *
  * Specificity: the theme's rule is `.VPSidebarItem.level-0 .text[data-v-…]`,
  * four units. `.VPSidebar` in front of the same three classes makes four
@@ -347,16 +266,8 @@
  * carries a fifth. Ties here are decided by load order, and load order is the
  * one thing in this file that is not allowed to be the reason a rule wins. */
 .VPSidebar .VPSidebarItem.level-0 > .item .text {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--vp-c-text-2);
-}
-
-/* The open group keeps its heading legible: `has-active` is the group the
- * current page is in, and at 12px muted it was the one label on the column
- * that had to say "you are in here" and did not. */
-.VPSidebar .VPSidebarItem.level-0.has-active > .item .text {
   color: var(--vp-c-text-1);
 }
 
@@ -550,22 +461,48 @@
   font-weight: 600;
 }
 
-/* …and the escape hatch the `display: block` above used to provide. VitePress
- * wraps every table in `.vp-doc-table`; scrolling belongs on the wrapper, so
- * a table too wide for the column still scrolls instead of pushing the page
- * sideways. Without this line the widest table on the site takes the whole
- * document with it on a narrow window. */
+/* …and the escape hatch the `display: block` above used to provide.
+ *
+ * `.vp-doc-table` is NOT a VitePress class — 1.6.4 emits a bare `<table>` and
+ * puts the scroll on the table itself. The wrapper is made in
+ * `.vitepress/markup.mjs`, which is where to look when this rule appears to do
+ * nothing. It was written here first, against a wrapper that did not exist,
+ * and matched nothing for two releases; that is why the note is this loud.
+ *
+ * The wrapper also carries the `tabindex`, moved off the table by the same
+ * rule: whatever scrolls has to be reachable from a keyboard, and after this
+ * change the table is not the thing that scrolls. */
 .vp-doc .vp-doc-table {
   overflow-x: auto;
 }
 
-/* ====================================================== a wider page ===
+/* ============================================ one column, and a measure ===
  *
- * The default gives the reading column 688px and the outline beside it 224px,
- * inside a 1440px layout. On a wide screen that leaves the middle third of the
- * window carrying the text and the rest empty.
+ * The theme gives the reading column 688px and the outline beside it 224px,
+ * inside a 1440px layout. Only ONE of those two numbers was ever wrong here.
  *
- * The outline is the clearer defect of the two, and it is measurable: this
+ * The column was widened to 830px, and then — because 830px of 15px type is
+ * about 120 characters a line — prose was capped back to 600px inside it,
+ * leaving code, tables and figures at the full width. That worked, and it cost
+ * more than it was worth: two right edges on every page, three separate
+ * follow-up fixes for the places the cap did not reach (a figure is a `<p>`, so
+ * is prose inside a details block), and a rule that had to name every exception
+ * to itself. A layout that needs an exception list is a layout that is fighting
+ * the document.
+ *
+ * So: one column, 640px, which is about 92 characters at this type size. That
+ * is the same measure SAP's capire — VitePress too, and the nearest comparable
+ * corpus — runs at: counted off its rendered pages, its lines come in at 84 to
+ * 91 characters. It is also enough for the ABAP: 96% of the ABAP lines in this
+ * organisation are under 81 characters, and 81 characters of the 13px mono face
+ * fits inside 640px. The 4% that do not, and the widest API tables, scroll
+ * inside their own box, which is what the `.vp-doc-table` wrapper is for.
+ *
+ * The layout width override goes with it. 1600px existed to make room for an
+ * 830px column beside a widened outline; at 640px the theme's own 1440px is
+ * more than enough, and one less number to keep true.
+ *
+ * The outline widening STAYS, because that defect was real and is unrelated: this
  * documentation has 627 entries in it, and at 224px about 12% of them are cut
  * off with an ellipsis - "Step 1 - State: Types a...", "Step 2 - The View:
  * Sel...". An outline entry that does not say what the section is fails at its
@@ -575,14 +512,9 @@
  *
  * Only from 1440px up, and that breakpoint was measured rather than picked:
  * at 1280px the window is the binding constraint, so a wider outline does not
- * come out of the empty margin - it comes out of the text. Applying this from
- * 1280 took the reading column from 624px DOWN to 576px, which is the opposite
- * of the point.
+ * come out of the empty margin - it comes out of the text.
  */
 @media (min-width: 1440px) {
-  :root {
-    --vp-layout-max-width: 1600px;
-  }
 
   /* `!important`, and not for want of trying. The theme rule is a Vue SCOPED
    * style, so it compiles to
@@ -602,7 +534,7 @@
    * normally. The difference is not obvious from reading the theme source,
    * which is why it is written down here. */
   .VPDoc.has-aside .content-container {
-    max-width: 830px !important;
+    max-width: 640px !important;
   }
 
   /* All three move together: `.aside` is the column, `.aside-container` the
@@ -644,28 +576,61 @@
   padding-bottom: 4px;
 }
 
-/* ------------------------------------------------- the callout boxes ---
+/* ------------------------------------------ the filename over a block ---
  *
- * The tip/warning/danger blocks keep the width the reading column had BEFORE
- * it was widened. A callout is an aside - a paragraph or two, set apart - and
- * the wider it gets the less it reads as one: at 830px a three-line note
- * becomes a two-line slab that competes with the prose it interrupts. Prose
- * and code got the extra width because they use it; a callout does not.
+ * Drawn as the tab a `::: code-group` draws, because that is what it is: the
+ * one-tab case of the same thing. A block promoted into a real group later
+ * keeps its shape, and a page mixing the two does not show the reader two
+ * different ways of saying which file this is.
  *
- * 688px is not a round number picked to look tidy: it is exactly what the
- * reading column was, so these boxes are unchanged from what they were rather
- * than newly narrowed.
- *
- * `::: details` is excluded, and the exclusion is the whole point of writing
- * `:not(.details)` rather than listing the three types. VitePress gives both
- * the same `custom-block` class, but they are opposite things: a callout holds
- * a REMARK about the text, a details block holds CONTENT the reader opened on
- * purpose - a screenshot, a long listing, the ABAP Cloud variant of a setup
- * step. Capping that at 688px put a narrow box under a full-width screenshot
- * on the quickstart page, which is where this was noticed. Content follows the
- * reading column; commentary does not. */
-.vp-doc .custom-block:not(.details) {
-  max-width: 620px;
+ * The rule is in `.vitepress/markup.mjs`, and it says there which blocks get
+ * one — not the ABAP, whose class name is already the first word of its own
+ * first line. */
+.vp-doc .a2ui5-titled {
+  margin: 16px 0;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 6px;
+  background-color: var(--a2ui5-c-surface);
+  overflow: hidden;
+}
+
+.vp-doc .a2ui5-titled-name {
+  padding: 8px 14px 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-mono);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/* The underline is the tab, and it is only as wide as the name — a full-width
+ * rule under a short filename reads as a section divider, which this is not. */
+.vp-doc .a2ui5-titled-name span {
+  display: inline-block;
+  padding-bottom: 7px;
+  border-bottom: 2px solid var(--vp-c-brand-1);
+  margin-bottom: -1px;
+}
+
+/* The block inside has already been drawn with its own edge and radius; here
+ * it is the body of a box that has both, so it gives them up. */
+.vp-doc .a2ui5-titled div[class*='language-'] {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.vp-doc .a2ui5-titled .a2ui5-play {
+  margin: 0;
+}
+
+.vp-doc .a2ui5-titled .a2ui5-play-run,
+.vp-doc .a2ui5-titled .a2ui5-play-bar,
+.vp-doc .a2ui5-titled .a2ui5-play-failed {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 0;
 }
 
 /* ------------------------------------------------ the Run button ---
