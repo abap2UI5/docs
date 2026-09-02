@@ -34,10 +34,12 @@ pass the gates like every other page.
 | 19 | Where the Line Is | draft, 324 words |
 | 20 | Cloud-Ready Is a Property of Your App | draft, 230 words |
 | 21 | Twenty-Five Years of ABAP on the Web | draft, 298 words |
+| 22 | Where the View Lives | draft, 332 words |
 
 **Every article answers one question**, and the arc is 2–4 positioning, 5–8
 architecture, 9–13 mechanics, 14–16 developer experience, 17–20 practice and
-limits, 21 the long view. Someone arriving at #9 first should not need #2.
+limits, 21–22 the long view and the landscape. Someone arriving at #9 first
+should not need #2.
 
 | # | asks | evidence |
 |---|---|---|
@@ -61,6 +63,7 @@ limits, 21 the long view. Someone arriving at #9 first should not need #2.
 | **19** | what does it not do? | offline, HANA pushdown, real-time, split teams, and where a floorplan wins |
 | **20** | is my app cloud-ready because the framework is? | `SELECT FROM i_salesorder` beside `SELECT FROM vbak` |
 | **21** | where does this sit in the line? | ITS to abap2UI5, and what actually moved |
+| **22** | how does it sit next to the others? | build time, activation time, request time — the one axis the rest follows from |
 
 ## Source coverage — the docs pages this series drains
 
@@ -72,8 +75,8 @@ nothing is told twice.
 
 The section holds six pages, not the three this started with. `cloud.md` and
 `technology/overview.md` were not covered by anything and now have articles
-**20** and **21**. `technology/rap.md` and `technology/ui5.md` are the open
-question — see "Before these pages can be archived" below. The **Toolchain**
+**20** and **21**. `technology/rap.md` and `technology/ui5.md` are carried by **22**,
+under a rule that changed for them — see below. The **Toolchain**
 group (abapGit, ajson, S-RTTI, abaplint, open-abap, abap-cleaner, abapmerge) is
 out of scope entirely: those pages document other people's projects and are
 reference material, not narrative.
@@ -124,25 +127,36 @@ The docs page needs the same correction.
 | `cloud.md` | Are abap2UI5 Apps Cloud Ready — `I_SalesOrder` vs `VBAK` | **20** |
 | `cloud.md` | Do I Have to Use RAP to Be Cloud Ready | **20** (as "the framework's badge is not the app's") |
 | `technology/overview.md` | ITS, BSP, Web Dynpro, UI5 Freestyle, RAP, abap2UI5 | **21** |
-| `technology/rap.md` | the whole page | **open — see below** |
-| `technology/ui5.md` | the whole page | **open — see below** |
+| `technology/rap.md` | architecture, communication, workflow, runtime | **22** |
+| `technology/ui5.md` | architecture, communication, workflow, runtime | **22** |
+| both | the verdict rows — Learning Curve, Use Case Fit, ✅/❌ | *not carried, deliberately* |
 
-## Before these pages can be archived
+## The comparison rule, and how it changed
 
-Four of the six are drained: `concept.md`, `how_it_all_works.md`, `dx.md` and
-`cloud.md` have an article behind every section, and `technology/overview.md`
-now has **21**. Archiving those five loses nothing that is not written down
-somewhere in this directory.
+The series began with a rule against comparing frameworks, and that rule kept
+section 8 of `how_it_all_works.md` out and left `technology/rap.md` and
+`technology/ui5.md` unconverted. The owner then narrowed it rather than dropping
+it: **a comparison is fine when it is purely informative and shows the
+differences.** What stays out is ranking.
 
-**`technology/rap.md` and `technology/ui5.md` are a decision, not a gap.** Both
-are head-to-head comparison tables, and the series was set up not to compare
-frameworks — the same rule that kept section 8 of `how_it_all_works.md` out.
-Their *substance* is almost entirely carried already, stated positively instead
-of comparatively:
+That line is easy to state and easy to lose, so concretely — article **22**
+carries the architectural rows of both pages: where the view is defined, where
+it is rendered, what travels, what is deployed per app, when the definition is
+fixed. It does **not** carry the verdict rows those pages also have — "Learning
+Curve: High / Low", "Use Case Fit", the ✅/❌ columns. Those score one approach
+against another, which is the part the series still does not do, and it is also
+the part that ages worst.
+
+The article ends by saying so outright: a definition fixed early standardises
+well, one fixed late adapts well, and those are different properties rather than
+different amounts of the same one. If a future article starts totalling up
+points again, it has crossed back over.
+
+Everything else in those two pages is already carried positively elsewhere:
 
 | the row | where it already lives |
 |---|---|
-| backend sends the view / client builds from metadata | **5**, **6** |
+| backend sends the view / client builds from metadata | **5**, **6**, **22** |
 | model at design time / at runtime | **1**, **10** |
 | drafts on model level / serialization on app level | **9** |
 | separate frontend transport / single backend deployment | **3**, **11**, **16** |
@@ -152,24 +166,12 @@ of comparatively:
 | cloud-ready and clean core | **20** |
 | OData metadata flow / HTTP event flow | **5**, **7**, **8** |
 
-What is **not** carried is the comparative frame itself and the verdict rows —
-"Learning Curve: High / Low", "Use Case Fit", the ✅/❌ columns. That is the part
-the series decided against, and it is also the part that ages worst and invites
-the argument nobody wanted.
+## Archiving
 
-So the choice is yours, and it is a real one:
-
-1. **Archive both and accept the loss.** Nothing factual disappears; the
-   side-by-side reading does. Whoever wants it can still find it in the git
-   history.
-2. **Keep both as documentation** and archive only the four narrative pages.
-   A comparison table is reference material, which is what a docs site is for —
-   it just is not what this series is.
-3. **Ask for a comparison article** and the rule changes. That is a decision
-   about the series, not about these two pages, and it would be worth making
-   deliberately rather than by absorbing two tables.
-
-Nothing here is archived until that is settled.
+All six pages of Technical Insight are now drained, so the section can be
+archived once these drafts are published. The **Toolchain** group stays: those
+pages document other people's projects and are reference material, not
+narrative.
 
 **Two things the docs pages say that must not travel into an article.**
 `dx.md` tells the reader to "use `Z2UI5_CL_XML_VIEW` to define simple views"
@@ -237,13 +239,15 @@ does not reach. #2 lists "no annotations" among the things the contract does not
 contain and stops there; the moment it starts arguing about the UI5 API the two
 have merged.
 
-**Two ideas deliberately held back.** "No JavaScript — where the line is" is a
-limits article and lands better once the series has credit. "Building UI5 with
-an AI agent" has the most reach potential and would read as hype this early.
+**One idea is still held back.** "Building UI5 with an AI agent" has the most
+reach potential and would read as hype this early. The other one that was held
+back, "No JavaScript — where the line is", has since been spent: **19** is the
+limits article and **12** covers where custom JavaScript goes.
 
-**The numbering has now moved twice** — RTTS from #2 to #1, and this merge
-pulling everything up one. That is free while only #1 is published and stops
-being free the moment #2 goes out.
+**The numbering has moved three times** — RTTS from #2 to #1, the contract/EML
+merge pulling everything up one, and the docs conversion inserting #4 and #5.
+That was free while only #1 was published, and it stops being free the moment #2
+goes out. The series is complete now, so it should not move again.
 
 
 ## One thought per article
@@ -451,22 +455,27 @@ mascots as ~480 KB of inline base64, so it is a build artefact of the script
 rather than an editable source. **The script is the editable source** — change
 the layout there and re-run.
 
-## Beyond #7
+## Beyond #22
 
-Ideas not yet placed, roughly in order of how well they would land:
+The Technical Insight pages are fully converted, so nothing below is owed to a
+source page — these are ideas of their own, roughly in order of how well they
+would land:
 
 | Working title | Core |
 |---|---|
-| No JavaScript — where the line is | standard UI5 fully from ABAP, custom controls are JS. A limits article, better once the series has credit |
 | abap2UI5 in the Fiori launchpad | the hash split and the stripped `value` envelope — the two things that actually bite |
 | Two-way binding without OData | `_bind( )`, model deltas, why the data is already current in the event handler |
 | What CI looks like in an open source ABAP project | abaplint, the gates, generated artefacts |
 | Building UI5 with an AI agent, without an SAP system | MCP server, headless render. Most reach potential, reads as hype if it comes early |
 | From an SE80 report to UI5 in an afternoon | one concrete ALV migration; the natural sequel to #1 |
 
+"No JavaScript — where the line is" was held back here for a long time and is
+now spent: **19** is the limits article, and **12** covers where custom
+JavaScript goes.
+
 ## Where the articles are published
 
-Undecided. A LinkedIn article keeps everything in one place but is hard to link
+Undecided for the article body. A LinkedIn article keeps everything in one place but is hard to link
 to later and impossible to correct cleanly. A page under `docs/` — or a post on
 a blog of your own — survives, can be fixed, and can be linked from the
 repository; the LinkedIn post then introduces that instead. If the articles end
