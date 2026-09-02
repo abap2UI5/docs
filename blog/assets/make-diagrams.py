@@ -267,5 +267,93 @@ def d22():
     svg('22-where-the-view-lives.svg', 624, 240, ''.join(b))
 
 
-for f in (d05, d06, d07, d08, d09, d17, d18, d21, d22):
+# ------------------------------------------------------------- 10 view swap
+def d10():
+    b = [head(28, 34, 'One class, one IF, two views')]
+    # left: table
+    b.append(box(28, 56, 196, 130, '', ''))
+    b.append(label(126, 78, 'as_list = abap_false', size=11.5, mono=True, anchor='middle'))
+    for r in range(4):
+        y = 96 + r * 20
+        for c in range(3):
+            x = 46 + c * 60
+            b.append(f'<rect x="{x}" y="{y}" width="52" height="13" rx="2" '
+                     f'fill="{SAND if r == 0 else WHITE}" stroke="{LINE}"/>')
+    b.append(label(126, 200, 'sap.m.Table', size=11.5, anchor='middle'))
+    # the switch
+    b.append(arrow(232, 120, 276, 120, accent=True))
+    b.append(label(254, 146, 'IF', size=12.5, fill=R2, weight=700, anchor='middle', mono=True))
+    # right: list
+    b.append(box(284, 56, 196, 130, '', ''))
+    b.append(label(382, 78, 'as_list = abap_true', size=11.5, mono=True, anchor='middle'))
+    for r in range(4):
+        y = 94 + r * 22
+        b.append(f'<rect x="302" y="{y}" width="160" height="16" rx="2" '
+                 f'fill="{WHITE}" stroke="{LINE}"/>')
+        b.append(f'<circle cx="312" cy="{y + 8}" r="3" fill="{MUTED}"/>')
+    b.append(label(382, 200, 'sap.m.List', size=11.5, anchor='middle'))
+    b.append(caption(28, 226, 'Same data, same request handler - a different control, '
+                              'chosen in ABAP'))
+    svg('10-view-swap.svg', 508, 246, ''.join(b))
+
+
+# -------------------------------------------------------- 11 initial request
+def d11():
+    b = [head(28, 34, 'The first GET')]
+    b.append(label(28, 56, 'with a BSP', size=12, fill=INK, weight=600))
+    for i, t in enumerate(['build', 'deploy', 'transport', 'clear cache']):
+        x = 28 + i * 122
+        b.append(box(x, 68, 104, 34, t, dashed=True))
+        if i < 3:
+            b.append(arrow(136 + i * 122, 85, 148 + i * 122, 85))
+    b.append(label(28, 136, 'in abap2UI5', size=12, fill=R2, weight=600))
+    b.append(box(28, 148, 216, 42, 'a method returns a string', accent=True))
+    b.append(arrow(250, 169, 300, 169, 'GET', accent=True))
+    b.append(box(306, 148, 158, 42, 'the browser has the app'))
+    b.append(caption(28, 216, 'Nothing is built, so nothing can go stale - and every '
+                              'file that reaches the browser is in the repository'))
+    svg('11-initial-request.svg', 556, 236, ''.join(b))
+
+
+# ------------------------------------------------------------- 13 four verbs
+def d13():
+    b = [head(28, 34, 'What each verb does to the cursor')]
+    rows = [('ele', 'adds a child and descends into it', 'down'),
+            ('tag', 'adds a child and stays', 'stay'),
+            ('a', 'sets an attribute on the current element', 'here'),
+            ('end', 'ascends to the parent', 'up')]
+    for i, (v, t, m) in enumerate(rows):
+        y = 58 + i * 38
+        b.append(f'<rect x="28" y="{y}" width="62" height="28" rx="5" fill="{RL}" '
+                 f'stroke="{R}" stroke-width="1.4"/>')
+        b.append(label(59, y + 19, v, size=13, fill=R2, weight=700, anchor='middle', mono=True))
+        b.append(label(104, y + 19, t, size=12.5, fill=INK))
+        b.append(label(452, y + 19, m, size=11.5, fill=MUTED, anchor='end'))
+    b.append(f'<line x1="28" y1="216" x2="452" y2="216" stroke="{LINE}"/>')
+    b.append(caption(28, 236, 'None of the four names a control, which is why every '
+                              'control is reachable'))
+    svg('13-four-verbs.svg', 480, 256, ''.join(b))
+
+
+# --------------------------------------------------------------------- 20 VDM
+def d20():
+    b = [head(28, 34, 'What the app reads')]
+    b.append(box(28, 56, 180, 38, 'your app'))
+    b.append(arrow(118, 98, 118, 124, accent=True))
+    b.append(box(28, 130, 180, 38, 'released CDS view', accent=True))
+    b.append(arrow(118, 172, 118, 196))
+    b.append(box(28, 202, 180, 38, 'tables', dashed=True))
+    b.append(label(118, 262, 'the shape SAP maintains', size=11.5, fill=R2,
+                   weight=600, anchor='middle'))
+    b.append(f'<line x1="248" y1="24" x2="248" y2="278" stroke="{LINE}"/>')
+    b.append(box(274, 56, 180, 38, 'your app'))
+    b.append(f'<path d="M364 98 L364 196" fill="none" stroke="{MUTED}" '
+             f'stroke-width="1.6" marker-end="url(#am)"/>')
+    b.append(box(274, 202, 180, 38, 'tables', dashed=True))
+    b.append(label(376, 149, 'nothing in between', size=11.5))
+    b.append(label(364, 262, 'the shape of this release', size=11.5, anchor='middle'))
+    svg('20-vdm.svg', 482, 292, ''.join(b))
+
+
+for f in (d05, d06, d07, d08, d09, d10, d11, d13, d17, d18, d20, d21, d22):
     f()

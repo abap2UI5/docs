@@ -44,6 +44,10 @@ Nothing does.
   ENDMETHOD.
 ```
 
+![Same data, same class — the control is chosen in an IF.](assets/diagrams/10-view-swap.svg)
+
+*Same data, same class — the control is chosen in an IF.*
+
 Same data, same class, same request handler. One click and the table is a list —
 not a table with its columns hidden, and not a second app behind a navigation
 step. A different control, chosen in ABAP, in an `IF`.

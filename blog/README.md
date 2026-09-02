@@ -183,13 +183,13 @@ actually work" would find nothing. Either the articles move into `docs/` — the
 ABAP already passes the gates, so that is cheap — or the pages stay as the long
 version and link out.
 
-**2. Fifty diagrams and sixty-two references were not carried.** Nine are now
+**2. Fifty diagrams and sixty-two references were not carried.** Thirteen are now
 redrawn — see "The diagrams" below — which closes the argument-carrying half of
 this and leaves the rest open.
 
 | | source pages | articles |
 |---|---|---|
-| images | 50 (39 in `how_it_all_works.md`, 11 in `concept.md`) | 10 |
+| images | 50 (39 in `how_it_all_works.md`, 11 in `concept.md`) | 14 |
 | external links | 62 | 5 |
 
 In `how_it_all_works.md` the diagrams *are* the explanation — the Over-the-Wire
@@ -214,12 +214,22 @@ from, and no article carries either citation.
 
 ## The diagrams
 
-`assets/make-diagrams.py` draws nine SVGs into `assets/diagrams/`, one per
+`assets/make-diagrams.py` draws thirteen SVGs into `assets/diagrams/`, one per
 article whose argument needs a picture: **5** the two strings, **6** MPA / SPA /
 HDA, **7** a service per app against one handler, **8** what a response carries,
-**9** the roundtrip through `z2ui5_t_draft`, **17** local against CDN
-bootstrapping, **18** the footprint, **21** the timeline, **22** when the view is
-fixed.
+**9** the roundtrip through `z2ui5_t_draft`, **10** the same class rendering a
+table or a list, **11** four deployment steps against a method that returns a
+string, **13** where each verb leaves the cursor, **17** local against CDN
+bootstrapping, **18** the footprint, **20** reading through the released view or
+past it, **21** the timeline, **22** when the view is fixed.
+
+**Nine articles have no diagram, and that is the decision, not an omission.**
+A picture earns its place when it carries the argument. In **2**, **3**, **4**,
+**14** and **15** the code *is* the argument — a diagram beside it would restate
+the listing in worse form. **12** is a list of three seams, **16** a list of
+things that are absent, **19** a list of limits: none of the three has a shape.
+**1** is posted and has its own header image. If a later article gets a diagram
+because the others have one, that is the wrong reason.
 
 Three decisions worth not relitigating. **SVG, not PNG** — these are boxes,
 arrows and words, which is what raster is worst at; an SVG stays sharp, diffs as
@@ -229,10 +239,17 @@ VitePress's theme class, only `prefers-color-scheme`, which is wrong the moment 
 reader uses the theme toggle against their system setting. **The palette is the
 brand's** (`docs/resources/logo.md`), no new hues.
 
-Render before believing: the first pass had the handler label overflowing its
-box in **7**, a caption running off the card in **17**, the legend colliding with
-the first tick in **21**, and two labels sitting on top of arrows in **9**. None
-of that is visible in the source, all of it in a screenshot.
+Render before believing: the passes so far caught a handler label overflowing
+its box in **7**, a caption running off the card in **17**, the legend colliding
+with the first tick in **21**, two labels sitting on top of arrows in **9**, a
+box overflowing in **11** and a label on the arrow in **20**. None of that is
+visible in the source, all of it in a screenshot.
+
+**Give the screenshot window room.** A window shorter than the diagram makes the
+browser scale the `<img>` to fit, and the result looks exactly like a card that
+is too short for its own content — a defect that is not in the file. Render one
+diagram at a time with height to spare, or pass `width`/`height` on the `<img>`,
+before believing a clipped bottom edge.
 
 **What cannot be redrawn, and is the real remaining loss.** Of the 50 images,
 these are not diagrams and no generator replaces them:

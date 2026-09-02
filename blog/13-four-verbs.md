@@ -16,6 +16,10 @@ written at all. Every new UI5 control was a pull request, and a wrapper is a
 translation — it can be behind, and it can be wrong, in a way the browser only
 discovers at runtime.
 
+![The four verbs, and where each one leaves the cursor in the tree.](assets/diagrams/13-four-verbs.svg)
+
+*The four verbs, and where each one leaves the cursor in the tree.*
+
 Its successor `z2ui5_cl_ui5_view_builder` has four verbs instead. `ele` opens an
 element and descends into it, `tag` adds a child and stays, `a` sets an
 attribute, `end` goes back up. Nothing in there names a control, which is

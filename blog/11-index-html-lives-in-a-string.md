@@ -11,6 +11,10 @@ abap2UI5 does not have one. The initial GET is answered from ABAP source code â€
 the page and the frontend files it needs are strings inside the handler, and
 serving them is a method call.
 
+![Four steps, or a method that returns a string.](assets/diagrams/11-initial-request.svg)
+
+*Four steps, or a method that returns a string.*
+
 The consequence is a project made of nothing but ABAP.
 
 That is what makes the whole thing installable with abapGit and nothing else.
