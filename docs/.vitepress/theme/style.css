@@ -47,12 +47,35 @@
   --a2ui5-c-link-hover: #0550ae;
   /* The one-pixel edge on code blocks, tables and the Run bar. */
   --a2ui5-c-hairline: #d1d9e0;
+
+  /* …and the flat grey behind them. ONE value, because the theme ships two
+   * and they do not match: a code block is an opaque `#f6f6f7`, while a
+   * `::: details` block, being drawn with `--vp-c-default-soft`, is a
+   * TRANSLUCENT blue-grey that resolves to about #eff0f3 over the page. Side
+   * by side — and on `get_started/quickstart.md` they are literally adjacent
+   * — the details block reads a shade darker and a shade bluer than the code
+   * block inside it, which looks like a mistake because it is one.
+   *
+   * The value is the lighter of the two, and it is #f6f8fa rather than the
+   * theme's #f6f6f7: the borders on these panels are `--a2ui5-c-hairline`,
+   * a blue-grey, and a neutral fill inside a blue-grey edge is the same
+   * half-step mismatch one level down. In dark the two diverge in OPPOSITE
+   * directions — the code block is darker than the page, the details block is
+   * a lighter overlay on it — so the unification matters more there, not less.
+   *
+   * Inline code is deliberately NOT on this token. It keeps the stronger
+   * `--vp-c-default-soft` tint, because a chip in the middle of a sentence
+   * needs more separation from its background than a panel the size of a
+   * paragraph does, and because at this value it would vanish entirely inside
+   * one of the panels above. GitHub splits the two for the same reason. */
+  --a2ui5-c-surface: #f6f8fa;
 }
 
 .dark {
   --a2ui5-c-link: #4493f8;
   --a2ui5-c-link-hover: #6cb6ff;
   --a2ui5-c-hairline: #3d444d;
+  --a2ui5-c-surface: #161b22;
 }
 
 /* ============================================================== compact ===
@@ -181,12 +204,19 @@
  * reader of this site is actually looking for the boundary.
  *
  * Measured on the rendered document height, at 1512px wide, against the
- * layout this replaces: hello_world 3478 -> 3255 (-6%), quickstart 4515 ->
- * 4110 (-9%), model/binding 5568 -> 5007 (-10%), how_it_all_works 13496 ->
- * 11604 (-14%), resources/api 24019 -> 20276 (-16%). The spread is the point:
- * a page that is mostly prose barely moves, and the reference pages — the
- * ones read by scrolling and scanning rather than start to finish — lose a
- * seventh of their length. */
+ * layout this replaces: hello_world 3859 -> 3638 (-6%), quickstart 3502 ->
+ * 3115 (-11%), model/binding 5568 -> 5193 (-7%), how_it_all_works 13496 ->
+ * 13239 (-2%), resources/api 26565 -> 24103 (-9%).
+ *
+ * Those figures were nearly twice as large before the measure cap below went
+ * in — how_it_all_works alone was -14% — and they are stated after it on
+ * purpose, because that is what the page actually does. A 600px measure means
+ * more lines of prose, so it hands back a good part of what the tighter
+ * leading saved. That is a trade made with open eyes: vertical length is
+ * cheap on a page you scroll, and a 120-character line is expensive on every
+ * one of them. What survives the trade is still real, and it is largest where
+ * it matters most — the reference pages, read by scrolling and scanning
+ * rather than start to finish. */
 .vp-doc p,
 .vp-doc li,
 .vp-doc summary,
@@ -194,6 +224,62 @@
 .vp-doc dd {
   font-size: 15px;
   line-height: 24px;
+}
+
+/* ------------------------------------------------------- the measure ---
+ *
+ * The reading column and the MEASURE are two different decisions, and until
+ * now they were one number. The column was widened to 830px for a reason that
+ * still holds — an outline that truncated 12% of its entries, and a third of
+ * a wide window carrying the text with the rest empty. What did not survive
+ * the widening is the line length, and the smaller type made it worse rather
+ * than better: at 16px the column ran about 105 characters a line, and at 15px
+ * it runs about 120. The workable band for technical prose is 75 to 90.
+ *
+ * (Those are counted, not estimated: the median of eleven real paragraphs on
+ * `technical/how_it_all_works`, measured with a Range binary-searched to the
+ * last character that still sits on the first line. An average-character-width
+ * calculation is off by ten characters either way on a proportional face.)
+ *
+ * So the two decisions are separated here. Prose is capped at 600px — about
+ * 86 characters — and everything the width was actually widened FOR keeps the
+ * full column: code blocks, tables, images, the Run frame. That is the whole
+ * point of doing it this way round rather than narrowing the container: a
+ * 236-line ABAP listing and a four-column parameter table both want 830px,
+ * and a paragraph wants nothing of the sort.
+ *
+ * Headings are deliberately NOT capped. `h2` carries a rule along its top
+ * edge, and that rule marks a section across the content area rather than
+ * across the sentence under it; capping it would shorten the rule and leave
+ * the code block below sticking out past it. The heading TEXT never comes
+ * near 600px anyway, so this costs nothing and keeps the rule full width.
+ *
+ * The callout cap moves from 688px to 620px for the same reason — with the
+ * 3px rule and 16px of padding, 620 puts its text on the same 600px measure
+ * as the prose it interrupts.
+ *
+ * What this costs, stated rather than buried: the pages get TALLER again.
+ * Measured against the same baseline as the leading block above, the height
+ * savings roughly halve once this cap is in — how_it_all_works goes from -14%
+ * to -2%, model/binding from -10% to -7%. Both numbers are real and the trade
+ * is deliberate: length is cheap on a page nobody reads without scrolling,
+ * and a 120-character line is expensive on every line of it. */
+.vp-doc p,
+.vp-doc li,
+.vp-doc blockquote,
+.vp-doc dd {
+  max-width: 600px;
+}
+
+/* A paragraph inside a table cell or a callout is already inside something
+ * that sets its own width; a second cap there just makes a narrow column
+ * narrower. */
+.vp-doc td p,
+.vp-doc th p,
+.vp-doc .custom-block p,
+.vp-doc .custom-block li,
+.vp-doc li li {
+  max-width: none;
 }
 
 /* The chrome around the page — sidebar, outline, nav, the prev/next footer —
@@ -260,9 +346,23 @@
  * rendering artefact, and it is the one the reader's other technical tabs use.
  */
 
+:root {
+  --vp-code-block-bg: var(--a2ui5-c-surface);
+}
+
 .vp-doc div[class*='language-'] {
   border: 1px solid var(--a2ui5-c-hairline);
   border-radius: 6px;
+}
+
+/* The `::: details` block onto the same grey, the same edge and the same
+ * radius as the code block it usually contains. It is the one custom block
+ * that is CONTENT the reader opened rather than a remark, so it keeps a panel
+ * where the tip/warning/danger blocks above lost theirs. */
+.vp-doc .custom-block.details {
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 6px;
+  background-color: var(--a2ui5-c-surface);
 }
 
 /* Inline code. The theme colours it with the BRAND colour, which is this
@@ -361,7 +461,7 @@
 }
 
 .vp-doc th {
-  background: var(--vp-c-bg-soft);
+  background: var(--a2ui5-c-surface);
   font-weight: 600;
 }
 
@@ -480,7 +580,7 @@
  * on the quickstart page, which is where this was noticed. Content follows the
  * reading column; commentary does not. */
 .vp-doc .custom-block:not(.details) {
-  max-width: 688px;
+  max-width: 620px;
 }
 
 /* ------------------------------------------------ the Run button ---
