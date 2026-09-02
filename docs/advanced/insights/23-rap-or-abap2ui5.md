@@ -3,6 +3,16 @@
 The honest answer is that most systems end up with both, and the question is
 never "which framework" but "which one for this screen".
 
+| | RAP with Fiori Elements | abap2UI5 |
+|---|---|---|
+| **Backend** | CDS views, behavior definitions, OData V4 | ABAP classes producing an XML view and a JSON model |
+| **Frontend** | a Fiori Elements app per service | one static UI5 shell, shared by every app |
+| **UI definition** | UI annotations on CDS | XML views written in ABAP |
+| **Data model** | fixed at design time in CDS | design time, or at runtime from internal tables |
+| **Drafts** | RAP drafts, on the model | serialization, on the app |
+| **Communication** | OData V4 — metadata, entities, actions | HTTP, two strings per request |
+| **Deployment** | frontend and backend transported separately | activating the class |
+
 Here is the split that holds up in practice.
 
 **Reach for RAP when the behaviour matters more than the screen.** A

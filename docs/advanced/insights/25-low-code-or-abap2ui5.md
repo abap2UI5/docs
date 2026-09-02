@@ -6,6 +6,17 @@ hardly be further apart — a visual designer on a licensed platform, or plain
 ABAP in an open-source framework — so the choice is unusually clear once the
 right question is asked.
 
+| | Low-code platform | abap2UI5 |
+|---|---|---|
+| **App definition** | visual designer, platform-specific format | ABAP classes, written in any ABAP IDE |
+| **App storage** | the platform's repository | your system, like any other development object |
+| **Versioning, transport** | platform mechanisms | CTS or abapGit |
+| **Testing** | platform tooling | ABAP Unit, plus the project's linter |
+| **License** | commercial, typically per end user | MIT, unlimited users |
+| **Installation** | platform or add-on, plus client components | one abapGit pull |
+| **Release coverage** | what the vendor supports | NW 7.02 to ABAP Cloud |
+| **Exit path** | apps exist in the platform's format | apps stay plain ABAP classes in your system |
+
 **Reach for a low-code platform when the requirement is outside code.**
 Offline-capable native mobile apps, where local storage and synchronisation
 are the whole point. A bundled suite — workflow, API management, a portal —

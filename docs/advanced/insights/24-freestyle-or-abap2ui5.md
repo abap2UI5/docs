@@ -4,6 +4,16 @@ Both give full access to the UI5 control library. Neither limits what a screen
 can contain. So the choice is not about what is possible — it is about where the
 work happens and who does it.
 
+| | UI5 Freestyle | abap2UI5 |
+|---|---|---|
+| **Backend** | OData or REST services, loosely coupled | ABAP classes producing an XML view and a JSON model |
+| **Frontend** | your own UI5 app: JavaScript, XML views, controllers | one static UI5 shell, shared by every app |
+| **UI definition** | XML views in the frontend project | XML views written in ABAP |
+| **Where the logic runs** | split between controller and backend | backend only |
+| **Client state** | held in the browser between roundtrips | travels with the request |
+| **Tooling** | Business Application Studio, a frontend build | any ABAP IDE, no extra toolchain |
+| **Deployment** | build and deploy the frontend, plus the backend | activating the class |
+
 **Reach for UI5 Freestyle when the browser has to be smart.** Anything that must
 keep working offline, anything where interesting state lives on the client
 between roundtrips, anything genuinely interactive — drag and drop across a
