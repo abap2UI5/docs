@@ -1,13 +1,21 @@
+/* One red. The brand has a single red — the circle in the mark, #d03c4a —
+ * and every brand token below is that one value, the hover tokens included.
+ * There used to be a second, darker red (#a83232) for the hover state of
+ * links and buttons; next to the mark it read as a second brand colour, and
+ * the page that documents the palette (resources/logo.md) had to list two
+ * reds to stay honest. A link already answers "is this one a link" with the
+ * underline it gains on hover (see `.vp-doc a:hover` below), so the shade
+ * bought nothing the underline does not. */
 :root {
     --vp-home-hero-name-color: #d03c4a;
     --vp-c-brand-1: #d03c4a;
-    --vp-c-brand-2: #a83232;
+    --vp-c-brand-2: #d03c4a;
     --vp-c-brand-3: #d03c4a;
     --vp-button-brand-bg: #d03c4a;
     --vp-button-brand-border: #d03c4a;
     --vp-button-brand-text: #ffffff;
-    --vp-button-brand-bg-hover: #a83232;
-    --vp-button-brand-border-hover: #a83232;
+    --vp-button-brand-bg-hover: #d03c4a;
+    --vp-button-brand-border-hover: #d03c4a;
 }
 
 /* ============================================================ the type ===
@@ -49,10 +57,13 @@
    * `--vp-c-brand-1` on white measures 4.74:1, which clears AA for body text
    * — but only just, and in DARK it is 3.62:1 against `#1b1b1f`, which fails.
    * So the dark theme lightens it rather than inheriting it; the value below
-   * is the same hue at 5.76:1. That is the whole reason this is a token pair
-   * and not one `var(--vp-c-brand-1)`. */
+   * is the same hue at 5.76:1. That is the whole reason this is a token
+   * and not `var(--vp-c-brand-1)` written out at each use.
+   *
+   * The hover colour is the link colour: one red, and the underline a link
+   * gains on hover carries the hover state (see `.vp-doc a:hover`). */
   --a2ui5-c-link: var(--vp-c-brand-1);
-  --a2ui5-c-link-hover: var(--vp-c-brand-2);
+  --a2ui5-c-link-hover: var(--a2ui5-c-link);
   /* The one-pixel edge on code blocks, tables and the Run bar. */
   --a2ui5-c-hairline: #d1d9e0;
 
@@ -83,7 +94,7 @@
   /* 5.76:1 on the dark ground, where the brand red itself manages 3.62 and
    * fails AA. Same hue, lifted until it reads. */
   --a2ui5-c-link: #e8707c;
-  --a2ui5-c-link-hover: #f0949c;
+  --a2ui5-c-link-hover: var(--a2ui5-c-link);
   --a2ui5-c-hairline: #3d444d;
   --a2ui5-c-surface: #161b22;
 }
