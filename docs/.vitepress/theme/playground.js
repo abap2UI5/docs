@@ -23,7 +23,8 @@
  * site's own font and highlighting; a second copy in an editor beside it would
  * be the same thing twice. What the page cannot show is the running app, so
  * that is what the frame shows. "Open in the playground" is one link away for
- * a reader who wants to change it.
+ * a reader who wants to change it — and it opens the full playground, editor
+ * and the Problems / abaplint panel included, not another embedded frame.
  */
 
 /* The published playground. Absolute rather than site-relative on purpose: it
@@ -115,14 +116,33 @@ function bar(container, demo, embed, source) {
   /* Built by the loader rather than here: the fragment format is the
    * playground's, and a fragment it cannot read is quietly replaced by its own
    * sample — a wrong link that looks like a working one. An older loader that
-   * cannot build one still gets a link, to the playground itself. */
+   * cannot build one still gets a link, to the playground itself.
+   *
+   * The loader builds the URL for a FRAME, with `embed=1` in the query — and
+   * an embedded playground hides everything but the code and the app: no
+   * examples menu, no Share, and the panel under the editor with the Problems,
+   * Outline, Log and abaplint tabs stays tucked away. That is right inside the
+   * page and wrong for this link, whose whole point is the tooling around the
+   * code. So the query is taken off again and only the fragment travels: the
+   * reader lands in the playground as it is when they open it themselves. */
   open.href = PLAYGROUND;
   Promise.resolve(embed.url?.({ code: source })).then((href) => {
-    if (href) open.href = href;
+    if (href) open.href = standalone(href);
   }, () => {});
 
   bar.append(close, open);
   return bar;
+}
+
+/** The same playground, not embedded: the loader's URL without the query
+ *  that turns the page into a frame. The code stays where it was, in the
+ *  fragment; `view` goes with `embed`, since the app-only layout is the other
+ *  half of being furniture in somebody else's page. */
+function standalone(href) {
+  const url = new URL(href, PLAYGROUND);
+  url.searchParams.delete('embed');
+  url.searchParams.delete('view');
+  return url.href;
 }
 
 const runButton = () => {
