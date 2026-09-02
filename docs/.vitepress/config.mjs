@@ -472,11 +472,10 @@ export default defineConfig({
           // entries and Technical Insight - the last of them - is visible
           // without scrolling, which it was not when it was the twelfth.
           //
-          // Use Cases stays loose at the top: it moved out of Getting
-          // Started on purpose, because it answers a question a newcomer
-          // does not have yet, and on the entry page it reads as a required
-          // step. It is the one that says what this section is for, so it is
-          // what a reader opening it meets first.
+          // Use Cases is gone from this section: it was converted into the
+          // Technical Insights articles below - the clean core levels and the
+          // wrapper, on-stack against side-by-side, and one app serving many
+          // systems - and the page it used to be is in the git history.
           //
           // Add-ons stood next to it and is now under Resources. Every other
           // page in this section teaches something you do to your own app -
@@ -484,7 +483,6 @@ export default defineConfig({
           // Add-ons teaches nothing: it is a list of what other people
           // published, which is the same kind of page as References and Who
           // Uses abap2UI5?. The pages that need it still link it by name.
-          { text: "Use Cases", link: "/advanced/use_cases" },
           {
             text: "Extensibility",
             collapsed: true,
@@ -595,8 +593,8 @@ export default defineConfig({
               { text: "#3 The Cost of a Screen", link: "/advanced/insights/03-the-cost-of-a-screen" },
               { text: "#4 No Annotation in Between", link: "/advanced/insights/04-no-annotation-in-between" },
               { text: "#5 UI5 Over-the-Wire", link: "/advanced/insights/05-ui5-over-the-wire" },
-              { text: "#6 The Frontend That Does Not Know What It Shows", link: "/advanced/insights/06-the-frontend-that-does-not-know" },
-              { text: "#7 One Service for Every App", link: "/advanced/insights/07-one-service-for-every-app" },
+              { text: "#6 The Frontend Knows Nothing", link: "/advanced/insights/06-the-frontend-that-does-not-know" },
+              { text: "#7 The Same Service for Every App", link: "/advanced/insights/07-one-service-for-every-app" },
               { text: "#8 Only the Changed Part", link: "/advanced/insights/08-only-the-changed-part" },
               { text: "#9 PUBLIC Means Persisted", link: "/advanced/insights/09-public-means-persisted" },
               { text: "#10 Swapping the View at Runtime", link: "/advanced/insights/10-swapping-the-view-at-runtime" },
@@ -607,17 +605,17 @@ export default defineConfig({
               { text: "#15 Where the Selection Screen Went", link: "/advanced/insights/15-where-the-selection-screen-went" },
               { text: "#16 No Cache, No Deploy, Any IDE", link: "/advanced/insights/16-no-cache-no-deploy-any-ide" },
               { text: "#17 One Codebase, 7.02 to ABAP Cloud", link: "/advanced/insights/17-one-codebase-702-to-abap-cloud" },
-              { text: "#18 2,300 Lines", link: "/advanced/insights/18-2300-lines" },
-              { text: "#19 Where the Line Is", link: "/advanced/insights/19-where-the-line-is" },
-              { text: "#20 Cloud-Ready Is a Property of Your App", link: "/advanced/insights/20-cloud-ready-is-a-property-of-your-app" },
-              { text: "#21 Twenty-Five Years of ABAP on the Web", link: "/advanced/insights/21-abap-on-the-web" },
-              { text: "#22 Where the View Lives", link: "/advanced/insights/22-where-the-view-lives" },
-              { text: "#23 RAP or abap2UI5 — When to Use Which", link: "/advanced/insights/23-rap-or-abap2ui5" },
-              { text: "#24 UI5 Freestyle or abap2UI5 — When to Use Which", link: "/advanced/insights/24-freestyle-or-abap2ui5" },
-              { text: "#25 Low-Code or abap2UI5 — When to Use Which", link: "/advanced/insights/25-low-code-or-abap2ui5" },
-              { text: "#26 When the API Is Not Released", link: "/advanced/insights/26-when-the-api-is-not-released" },
-              { text: "#27 On-Stack or Side-by-Side", link: "/advanced/insights/27-on-stack-or-side-by-side" },
-              { text: "#28 One App, Many Systems", link: "/advanced/insights/28-one-app-many-systems" },
+              { text: "#18 Cloud-Ready Is a Property of Your App", link: "/advanced/insights/18-cloud-ready-is-a-property-of-your-app" },
+              { text: "#19 When the API Is Not Released", link: "/advanced/insights/19-when-the-api-is-not-released" },
+              { text: "#20 On-Stack or Side-by-Side", link: "/advanced/insights/20-on-stack-or-side-by-side" },
+              { text: "#21 One App, Many Systems", link: "/advanced/insights/21-one-app-many-systems" },
+              { text: "#22 2,300 Lines", link: "/advanced/insights/22-2300-lines" },
+              { text: "#23 From ITS to abap2UI5", link: "/advanced/insights/23-abap-on-the-web" },
+              { text: "#24 What It Does Not Do", link: "/advanced/insights/24-where-the-line-is" },
+              { text: "#25 Where the View Lives", link: "/advanced/insights/25-where-the-view-lives" },
+              { text: "#26 RAP or abap2UI5 — When to Use Which", link: "/advanced/insights/26-rap-or-abap2ui5" },
+              { text: "#27 UI5 Freestyle or abap2UI5 — When to Use Which", link: "/advanced/insights/27-freestyle-or-abap2ui5" },
+              { text: "#28 Low-Code or abap2UI5 — When to Use Which", link: "/advanced/insights/28-low-code-or-abap2ui5" },
             ],
           },
         ],

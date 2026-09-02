@@ -1,6 +1,5 @@
 # Somewhere on the Way to UI5, We Lost RTTS
 
-*abap2UI5 Know-How #1 — scheduled for Tuesday, 25 August 2026*
 
 ![The dinosaur at a classic ALV grid, the sheep and the sloth at the same table
 rendered in UI5, with cl_abap_structdescr->get_components( ) bridging the

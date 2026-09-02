@@ -1,4 +1,4 @@
-# One Service for Every App
+# The Same Service for Every App
 
 Count what a screen usually costs in backend artefacts. A CDS view or two, a
 service definition, a service binding, a behavior definition and its

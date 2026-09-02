@@ -116,7 +116,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## The Frontend That Does Not Know What It Shows
+## The Frontend Knows Nothing
 
 Plain text — LinkedIn renders no markdown.
 
@@ -139,7 +139,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## One Service for Every App
+## The Same Service for Every App
 
 Plain text — LinkedIn renders no markdown.
 
@@ -399,7 +399,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## Where the Line Is
+## What It Does Not Do
 
 Plain text — LinkedIn renders no markdown.
 
@@ -443,7 +443,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## Twenty-Five Years of ABAP on the Web
+## From ITS to abap2UI5
 
 Plain text — LinkedIn renders no markdown.
 

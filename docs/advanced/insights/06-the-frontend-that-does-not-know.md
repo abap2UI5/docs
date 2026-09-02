@@ -1,4 +1,4 @@
-# The Frontend That Does Not Know What It Shows
+# The Frontend Knows Nothing
 
 The first GET request delivers a UI5 app to the browser. It is worth asking
 what is actually in it.

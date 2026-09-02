@@ -1,6 +1,7 @@
-# Where the Line Is
+# What It Does Not Do
 
-Eighteen articles is enough credit to say what this does not do.
+Before choosing anything, the part that is easiest to leave out: what this
+does not do.
 
 **Offline is out.** Every event asks the server what happens next. Take the
 server away and there is no app left — not a degraded one, none. An app that has
