@@ -10,6 +10,51 @@
     --vp-button-brand-border-hover: #a83232;
 }
 
+/* ============================================================ the type ===
+ *
+ * The system font, not a webfont. VitePress ships Inter and self-hosts it;
+ * Inter is a good typeface and it is a PRODUCT typeface — geometric, even
+ * colour, drawn to make an interface feel designed. This documentation is
+ * read next to an ABAP editor and a GitHub tab, and the register those two
+ * share is the one the operating system already has: San Francisco on macOS,
+ * Segoe UI on Windows. Switching to it is the single change that moves the
+ * site furthest towards "technical" and costs nothing — the fonts are already
+ * on the machine, so it also removes a 100kB webfont from the critical path.
+ *
+ * The mono stack gains SFMono-Regular / "SF Mono" ahead of Menlo. `ui-mono-
+ * space` already resolves to SF Mono on current Safari and Chrome, but not on
+ * older Chromium and not on Firefox, where the fallback was Menlo — a wider
+ * face, so the same ABAP line took more columns on some machines than others.
+ *
+ * Two more webfonts, Montserrat and Fira Code, were requested in
+ * `config.mjs` and applied by nothing: no rule in this file, or anywhere
+ * else, ever named them. They are gone from the head with this change. */
+:root {
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         "Noto Sans", Helvetica, Arial, sans-serif,
+                         "Apple Color Emoji", "Segoe UI Emoji";
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+                         Consolas, "Liberation Mono", monospace;
+
+  /* Body links. The brand red stays where it identifies the project — logo,
+   * nav, the active page in the sidebar — and comes out of the prose, where
+   * it does not mean "brand" but "look here, something is wrong". On a page
+   * like `resources/api.md` the first paragraph carried six red spans and a
+   * red link and read as a page full of errors. Blue is the convention every
+   * reader of this documentation already has from GitHub and from SAP's own
+   * help; it says "link" and nothing else. */
+  --a2ui5-c-link: #0969da;
+  --a2ui5-c-link-hover: #0550ae;
+  /* The one-pixel edge on code blocks, tables and the Run bar. */
+  --a2ui5-c-hairline: #d1d9e0;
+}
+
+.dark {
+  --a2ui5-c-link: #4493f8;
+  --a2ui5-c-link-hover: #6cb6ff;
+  --a2ui5-c-hairline: #3d444d;
+}
+
 /* ============================================================== compact ===
  *
  * A denser reading layout: more prose and more code on a screen, and section
@@ -49,8 +94,8 @@
 /* Section headings. The top rule stays: on a long cookbook page it is what
  * lets the eye find the next section while scrolling. Its padding does not. */
 .vp-doc h2 {
-  font-size: 19px;
-  line-height: 26px;
+  font-size: 17px;
+  line-height: 24px;
   margin: 32px 0 12px;
   padding-top: 12px;
   letter-spacing: -0.01em;
@@ -63,14 +108,14 @@
 }
 
 .vp-doc h3 {
-  font-size: 16.5px;
-  line-height: 24px;
+  font-size: 15px;
+  line-height: 22px;
   margin: 24px 0 0;
 }
 
 .vp-doc h4 {
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 20px;
   margin: 20px 0 0;
 }
 
@@ -82,15 +127,15 @@
  * of thing that quietly stops being true after a dependency bump — so the
  * breakpoint is mirrored rather than relied upon. */
 .vp-doc h1 {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 22px;
+  line-height: 30px;
   margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
   .vp-doc h1 {
-    font-size: 26px;
-    line-height: 34px;
+    font-size: 24px;
+    line-height: 32px;
   }
 }
 
@@ -99,6 +144,10 @@
  * screen. */
 :root {
   --vp-code-line-height: 1.55;
+  /* 13px flat, not the theme's `.875em`. The relative unit made a listing
+   * inside a callout or a list item shrink with its container, so the same
+   * ABAP was set at three different sizes on one page. */
+  --vp-code-font-size: 13px;
 }
 
 .vp-doc div[class*='language-'] pre {
@@ -119,6 +168,210 @@
 .vp-doc ul,
 .vp-doc ol {
   margin: 12px 0;
+}
+
+/* Body text at 15/24 rather than the theme's 16/28.
+ *
+ * The line-height is the bigger half of this. 1.75 is a magazine setting — it
+ * is right for a column of uninterrupted prose and wrong for a page that
+ * breaks every third line for a code block, a table or an identifier in a
+ * box: the extra leading pulls the paragraph apart without any run of text
+ * long enough to need it. 1.6 keeps the paragraph as one block and puts the
+ * air back between the paragraph and the listing under it, which is where a
+ * reader of this site is actually looking for the boundary.
+ *
+ * Measured on the rendered document height, at 1512px wide, against the
+ * layout this replaces: hello_world 3478 -> 3255 (-6%), quickstart 4515 ->
+ * 4110 (-9%), model/binding 5568 -> 5007 (-10%), how_it_all_works 13496 ->
+ * 11604 (-14%), resources/api 24019 -> 20276 (-16%). The spread is the point:
+ * a page that is mostly prose barely moves, and the reference pages — the
+ * ones read by scrolling and scanning rather than start to finish — lose a
+ * seventh of their length. */
+.vp-doc p,
+.vp-doc li,
+.vp-doc summary,
+.vp-doc blockquote,
+.vp-doc dd {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* The chrome around the page — sidebar, outline, nav, the prev/next footer —
+ * at 13px. It is navigation, not text: it is scanned for a word that is
+ * already known, never read, and at the size of the prose it competes with
+ * it. This is the size GitHub sets its own chrome at, and the reason its
+ * pages read as denser than they measure. */
+.VPSidebar .VPSidebarItem .text,
+.VPDocOutlineItem a.outline-link,
+.VPDocAside .outline-title,
+.VPNavBarMenu .VPLink,
+.VPNavBarMenuGroup .button,
+.VPDocFooter .title,
+.VPDocFooter .desc {
+  font-size: 13px;
+}
+
+/* …and the group headings in the sidebar one step below the pages under them.
+ *
+ * `Getting Started`, `Cookbook`, `Configuration` are not peers of the pages
+ * they contain — they are the LABEL over a list, and the theme sets them at
+ * the same size as their children in weight 700, so six of them down the
+ * column read as six competing headlines. 12px in the muted colour at weight
+ * 600 puts the label under the thing it labels, which is the relationship
+ * that actually holds; the indent and the divider rule already say where each
+ * group ends, so the weight does not have to.
+ *
+ * The size comes down, the ROW does not: `padding: 4px 0` and the 24px line
+ * are the theme's, left alone on purpose. Every one of these headings is also
+ * a link (each carries a `link:` in config.mjs alongside its `items`), and
+ * shrinking the target along with the type is how a heading becomes a thing
+ * you have to aim at. The hover rule the theme ships still turns them the
+ * brand colour, so the affordance survives the smaller type.
+ *
+ * Specificity: the theme's rule is `.VPSidebarItem.level-0 .text[data-v-…]`,
+ * four units. `.VPSidebar` in front of the same three classes makes four
+ * without the attribute, which only TIES — so the `> .item` child combinator
+ * carries a fifth. Ties here are decided by load order, and load order is the
+ * one thing in this file that is not allowed to be the reason a rule wins. */
+.VPSidebar .VPSidebarItem.level-0 > .item .text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--vp-c-text-2);
+}
+
+/* The open group keeps its heading legible: `has-active` is the group the
+ * current page is in, and at 12px muted it was the one label on the column
+ * that had to say "you are in here" and did not. */
+.VPSidebar .VPSidebarItem.level-0.has-active > .item .text {
+  color: var(--vp-c-text-1);
+}
+
+/* ================================================ edges, not surfaces ===
+ *
+ * The theme draws the things it wants to set apart — a code block, a callout,
+ * a table row — as filled panels with an 8px radius. Six of them down a page
+ * is six grey slabs, and the page reads as a sequence of cards rather than as
+ * a document with code in it. The same separation is available from a
+ * one-pixel edge, which does the job and then stops being visible.
+ *
+ * The radius goes 8px -> 6px throughout. Nothing depends on the number; it is
+ * simply the smallest radius that still reads as intentional rather than as a
+ * rendering artefact, and it is the one the reader's other technical tabs use.
+ */
+
+.vp-doc div[class*='language-'] {
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 6px;
+}
+
+/* Inline code. The theme colours it with the BRAND colour, which is this
+ * project's red — so `z2ui5_if_client` in a sentence is set in the same red
+ * as a compiler error, and a paragraph naming four identifiers reads as a
+ * paragraph with four things wrong in it. An identifier is not emphasis: the
+ * monospace face and the tint already say "this is a name", and that is the
+ * whole message. */
+.vp-doc :not(pre) > code {
+  color: var(--vp-c-text-1);
+  background-color: var(--vp-c-default-soft);
+  border-radius: 6px;
+}
+
+/* Callouts as a margin note — a rule down the left edge, the text on the
+ * page's own background — rather than a coloured plate. A tip is an ASIDE:
+ * something the writer stepped out of the paragraph to say. A filled block
+ * interrupts the reading line and takes the eye first, which inverts that:
+ * the remark outranks the text it is a remark about. The rule marks the same
+ * boundary and lets the eye pass.
+ *
+ * The colour survives on the rule, so the three types stay distinguishable
+ * at a glance; it is the 600 square pixels of tinted background that go. */
+.vp-doc .custom-block:not(.details) {
+  border: 0;
+  border-left: 3px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
+  padding: 2px 0 2px 16px;
+}
+
+.vp-doc .custom-block.tip     { border-left-color: var(--a2ui5-c-link); }
+.vp-doc .custom-block.info    { border-left-color: var(--vp-c-text-3); }
+.vp-doc .custom-block.warning { border-left-color: #bf8700; }
+.vp-doc .custom-block.danger  { border-left-color: #cf222e; }
+
+.vp-doc .custom-block-title {
+  color: var(--vp-c-text-1);
+  font-size: 14px;
+}
+
+.vp-doc .custom-block p,
+.vp-doc .custom-block li {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--vp-c-text-2);
+}
+
+/* Links in the body take the blue defined at the top of this file, and lose
+ * the permanent underline — the underline is what makes a paragraph with
+ * five links in it look struck through. It comes back on hover, where it is
+ * the answer to "is this one a link". */
+.vp-doc a {
+  color: var(--a2ui5-c-link);
+  text-decoration: none;
+}
+
+.vp-doc a:hover {
+  color: var(--a2ui5-c-link-hover);
+  text-decoration: underline;
+}
+
+/* Tables as a grid rather than as zebra stripes.
+ *
+ * Almost every table on this site is a two- or three-column lookup — a
+ * parameter and its type, a setting and its default — and the question asked
+ * of it is "which cell is this". Alternating row fills answer "which ROW is
+ * this", which is the question a long table of records raises and none of
+ * these do; between them they gave the page another set of grey slabs. Ruled
+ * cells answer the question actually being asked.
+ *
+ * `display: table` restores what the theme sets to `display: block` with
+ * `overflow-x: auto`. That default exists so a wide table can scroll instead
+ * of breaking the layout — but as a side effect a table shrinks to its
+ * CONTENT width, so the four-column parameter tables on `resources/api.md`
+ * sat at about 40% of the column with three quarters of the page beside them
+ * empty. The scroll is preserved by the wrapper rule below. */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.vp-doc tr {
+  background: transparent;
+  border: 0;
+}
+
+.vp-doc th,
+.vp-doc td {
+  border: 1px solid var(--a2ui5-c-hairline);
+  padding: 6px 13px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
+  font-weight: 600;
+}
+
+/* …and the escape hatch the `display: block` above used to provide. VitePress
+ * wraps every table in `.vp-doc-table`; scrolling belongs on the wrapper, so
+ * a table too wide for the column still scrolls instead of pushing the page
+ * sideways. Without this line the widest table on the site takes the whole
+ * document with it on a narrow window. */
+.vp-doc .vp-doc-table {
+  overflow-x: auto;
 }
 
 /* ====================================================== a wider page ===
@@ -252,6 +505,7 @@
 
 .vp-doc .a2ui5-play div[class*="language-"] {
   margin-bottom: 0;
+  border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -262,9 +516,8 @@
   align-items: center;
   width: 100%;
   padding: 7px 14px;
-  border: 0;
-  border-top: 1px solid var(--vp-c-divider);
-  border-radius: 0 0 8px 8px;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 0 0 6px 6px;
   background-color: var(--vp-code-block-bg);
   color: var(--vp-c-text-2);
   font-size: 13px;
@@ -333,9 +586,9 @@
  * continues the code block's own edges downwards, so the example and what it
  * produces read as one thing. */
 .vp-doc .a2ui5-play .abap2ui5-demo {
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--a2ui5-c-hairline);
   border-top: 0;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 6px 6px;
   background: var(--vp-c-bg);
   overflow: hidden;
 }
@@ -380,8 +633,8 @@
 .vp-doc .a2ui5-play-failed {
   margin: 0;
   padding: 7px 14px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 0 0 8px 8px;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 0 0 6px 6px;
   color: var(--vp-c-text-2);
   font-size: 13px;
 }
@@ -466,8 +719,8 @@
   align-items: center;
   gap: 6px;
   border: 1px solid var(--vp-c-brand-1);
-  border-radius: 20px;
-  padding: 8px 22px;
+  border-radius: 6px;
+  padding: 7px 18px;
   color: var(--vp-c-brand-1);
   font-size: 14px;
   font-weight: 600;
@@ -485,6 +738,76 @@
   border-color: var(--vp-c-brand-2);
   background-color: var(--vp-c-brand-soft);
   color: var(--vp-c-brand-2);
+}
+
+/* ==================================== the home page, in the same register ===
+ *
+ * Everything above this point is about the PAGES. The home page is a
+ * different kind of surface — a signpost, not a document — and for a while
+ * that was the argument for leaving it alone. It is not a good enough one:
+ * the front door is where a reader decides what kind of project this is, and
+ * a door in a different register than every room behind it makes the promise
+ * the rooms then break. So the same three moves apply here — system type,
+ * edges instead of fills, a 6px radius — and only the SCALE stays generous,
+ * because a signpost may be read from further away than a paragraph.
+ *
+ * What deliberately does not change: the logo stays a 200px red disc, and
+ * the Quickstart button stays a filled red block. Those two are the identity
+ * and the one action the page exists to offer; a page with nothing filled on
+ * it has no primary action, only a list of links.
+ *
+ * Specificity, as everywhere in this file: the theme's rules are Vue SCOPED
+ * styles and compile with a `[data-v-…]` attribute, so `.VPFeature[data-v-x]`
+ * counts two units and a bare `.VPFeature` here would never apply. The
+ * ancestors below are counted against the real compiled selectors —
+ * `.VPButton.medium[data-v-x]` is three, so the button rules carry four. */
+
+/* The three feature cards. The theme draws them with `background-color` and
+ * `border-color` both set to `--vp-c-bg-soft`: a filled tile whose border is
+ * invisible because it is the same colour as its fill. Swapping the fill for
+ * the divider colour turns the same element into an outlined card and costs
+ * nothing else — the hover rule the theme already ships
+ * (`.VPFeature.link:hover { border-color: var(--vp-c-brand-1) }`) only starts
+ * being visible once the resting border is. */
+.Layout .VPHome .VPFeature {
+  border-color: var(--vp-c-divider);
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+/* The icon loses its 48px grey plate. The plate is a container drawn for a
+ * glyph that does not need containing — three of them across the row read as
+ * three empty squares before they read as an icon, which is exactly how they
+ * render on any visit where the Font Awesome stylesheet is slow or blocked.
+ * The glyph alone, at the size of a heading and in the muted text colour,
+ * says the same thing and says nothing when it is missing. */
+.Layout .VPHome .VPFeature .icon {
+  width: auto;
+  height: auto;
+  margin-bottom: 14px;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--vp-c-text-2);
+  font-size: 20px;
+  justify-content: flex-start;
+}
+
+/* The buttons. 20px on a 34px-tall button is a pill, and a pill is a control
+ * on a marketing page; 6px is the radius everything else on this site now
+ * carries. The secondary pair also lose their grey fill for a hairline — two
+ * filled grey blocks beside a filled red one made a row of three buttons look
+ * like three equal choices, when only the first is the one the page wants. */
+.Layout .VPHome .VPHero .VPButton.medium {
+  border-radius: 6px;
+}
+
+.Layout .VPHome {
+  --vp-button-alt-border: var(--vp-c-divider);
+  --vp-button-alt-bg: transparent;
+  --vp-button-alt-hover-border: var(--vp-c-text-3);
+  --vp-button-alt-hover-bg: transparent;
+  --vp-button-alt-active-border: var(--vp-c-text-2);
+  --vp-button-alt-active-bg: transparent;
 }
 
 /* ================================================ the home page, at 90% ===
@@ -532,20 +855,29 @@
    * keep the nav-height term — the hero is pulled up under the fixed nav bar
    * by a negative margin, so a plain `72px` would put the name behind it. */
   .Layout .VPHome .VPHero {
-    padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 72px);
-    padding-bottom: 58px;
+    padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 56px);
+    padding-bottom: 44px;
   }
 
+  /* 38px, not the theme's 56 or the 50 that stood here. The headline is six
+   * words and it is the only thing on the page set larger than the reader's
+   * own browser default by more than a factor of two; at 50px it was a
+   * poster, and a poster is the one thing a framework's front page cannot
+   * afford to look like to somebody deciding whether it is serious. Weight
+   * comes down with it, 700 -> 600: at this size 700 is a shout, and the
+   * tracking below does the work of holding the line together instead. */
   .Layout .VPHome .VPHero .name,
   .Layout .VPHome .VPHero .text {
-    font-size: 50px;
-    line-height: 58px;
+    font-size: 38px;
+    line-height: 46px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   .Layout .VPHome .VPHero .tagline {
-    padding-top: 11px;
-    font-size: 22px;
-    line-height: 32px;
+    padding-top: 12px;
+    font-size: 17px;
+    line-height: 26px;
   }
 
   .Layout .VPHome .VPHero .actions {
@@ -565,15 +897,15 @@
     padding: 22px;
   }
 
+  /* No width or height any more — the plate above is gone, so there is
+   * nothing to size; only the glyph and the gap under it. */
   .Layout .VPHome .VPFeature .icon {
-    margin-bottom: 18px;
-    width: 43px;
-    height: 43px;
-    font-size: 22px;
+    margin-bottom: 12px;
+    font-size: 19px;
   }
 
   .Layout .VPHome .VPFeature .title {
-    font-size: 14.5px;
+    font-size: 15px;
     line-height: 22px;
   }
 
