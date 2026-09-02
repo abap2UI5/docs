@@ -94,8 +94,9 @@ ${DISPLAY}`);
 });
 
 test('a SELECT from a table the page does have keeps its button', () => {
-  // technical/dx.md reads T100, which open-abap ships and which therefore is
-  // there. A rule that refused every SELECT would have taken this one too.
+  // T100 is shipped by open-abap and is therefore actually there in the
+  // browser. A rule that refused every SELECT would have taken this one too.
+  // (The example that prompted this lived on technical/dx.md, since removed.)
   assert.equal(runs(app('zcl_app_alv', `    SELECT FROM t100 FIELDS * INTO TABLE @DATA(rows).
 ${DISPLAY}`)), 'zcl_app_alv');
 });

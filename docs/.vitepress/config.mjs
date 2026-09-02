@@ -545,33 +545,15 @@ export default defineConfig({
               },
             ],
           },
-          // A section of its own until now, next to Advanced Topics rather
-          // than inside it. It is the same kind of reading - what the
-          // framework does under the app - and it is read after the app
-          // runs, not on the way in, so it sits here instead of as a second
-          // top-level heading competing with this one. The toolchain it
-          // stands on follows as a group of its own, below.
-          {
-            text: "Technical Insight",
-            link: "/technical/concept",
-            collapsed: true,
-            items: [
-              { text: "UI5 Over-the-Wire", link: "/technical/concept" },
-              { text: "ABAP Thinking, UI5 Results", link: "/technical/dx" },
-              { text: "Cloud Readiness", link: "/technical/cloud" },
-              { text: "Behind the Scenes", link: "/technical/how_it_all_works" },
-              {
-                text: "Technology",
-                link: "/technical/technology/overview",
-                collapsed: true,
-                items: [
-                  { text: "RAP", link: "/technical/technology/rap" },
-                  { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
-                  { text: "Low-Code Platforms", link: "/technical/technology/low_code" },
-                ],
-              },
-            ],
-          },
+          // "Technical Insight" was a group of its own here: eight narrative
+          // pages on what the framework does under the app. They were
+          // converted into the abap2UI5 Know-How article series and removed;
+          // the git history holds them (see the commit that deletes them).
+          // What is left of that reading is the toolchain group below, which
+          // was always a different kind of page - reference on somebody
+          // else's project rather than narrative on this one - and so stands
+          // on its own now rather than nested under a heading with nothing
+          // else beneath it.
           {
             // Every one of these is somebody else's project, which is what
             // this group is: the toolchain abap2UI5 stands on. It used to be

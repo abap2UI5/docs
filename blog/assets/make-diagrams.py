@@ -180,7 +180,7 @@ def d09():
     b.append(f'<line x1="286" y1="114" x2="286" y2="148" stroke="{R}" stroke-width="1.6" '
              f'marker-end="url(#ar)"/>')
     b.append(label(298, 136, 'PUBLIC only', size=11.5, fill=R, weight=600))
-    b.append(box(204, 154, 164, 44, 'z2ui5_t_draft', accent=True, mono=True))
+    b.append(box(204, 154, 164, 44, 'z2ui5_t_01', accent=True, mono=True))
     b.append(arrow(368, 82, 460, 82, 'view + model'))
     b.append(box(466, 58, 118, 48, 'browser', 'renders'))
     b.append(f'<path d="M368 176 L424 176 L424 90" fill="none" stroke="{R}" '

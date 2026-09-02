@@ -9,14 +9,14 @@ server.
 So how does anything the user typed three clicks ago still exist?
 
 `z2ui5_if_app` inherits `if_serializable_object`. After each request the
-framework serializes the app instance into `z2ui5_t_draft` — one generic table
+framework serializes the app instance into `z2ui5_t_01` — one generic table
 for every app, not a typed draft table per data model — and reads it back on the
 next one. What survives is exactly the `PUBLIC SECTION`; nothing else is part of
 the serialized state.
 
-![Every request is a new instance; z2ui5_t_draft is what carries the last one forward.](assets/diagrams/09-draft.svg)
+![Every request is a new instance; z2ui5_t_01 is what carries the last one forward.](assets/diagrams/09-draft.svg)
 
-*Every request is a new instance; z2ui5_t_draft is what carries the last one forward.*
+*Every request is a new instance; z2ui5_t_01 is what carries the last one forward.*
 
 That single fact is the convention that catches people:
 
