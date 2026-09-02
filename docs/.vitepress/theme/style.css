@@ -201,7 +201,7 @@
  * already known, never read, and at the size of the prose it competes with
  * it. This is the size GitHub sets its own chrome at, and the reason its
  * pages read as denser than they measure. */
-.VPSidebarItem .text,
+.VPSidebar .VPSidebarItem .text,
 .VPDocOutlineItem a.outline-link,
 .VPDocAside .outline-title,
 .VPNavBarMenu .VPLink,
@@ -209,6 +209,42 @@
 .VPDocFooter .title,
 .VPDocFooter .desc {
   font-size: 13px;
+}
+
+/* …and the group headings in the sidebar one step below the pages under them.
+ *
+ * `Getting Started`, `Cookbook`, `Configuration` are not peers of the pages
+ * they contain — they are the LABEL over a list, and the theme sets them at
+ * the same size as their children in weight 700, so six of them down the
+ * column read as six competing headlines. 12px in the muted colour at weight
+ * 600 puts the label under the thing it labels, which is the relationship
+ * that actually holds; the indent and the divider rule already say where each
+ * group ends, so the weight does not have to.
+ *
+ * The size comes down, the ROW does not: `padding: 4px 0` and the 24px line
+ * are the theme's, left alone on purpose. Every one of these headings is also
+ * a link (each carries a `link:` in config.mjs alongside its `items`), and
+ * shrinking the target along with the type is how a heading becomes a thing
+ * you have to aim at. The hover rule the theme ships still turns them the
+ * brand colour, so the affordance survives the smaller type.
+ *
+ * Specificity: the theme's rule is `.VPSidebarItem.level-0 .text[data-v-…]`,
+ * four units. `.VPSidebar` in front of the same three classes makes four
+ * without the attribute, which only TIES — so the `> .item` child combinator
+ * carries a fifth. Ties here are decided by load order, and load order is the
+ * one thing in this file that is not allowed to be the reason a rule wins. */
+.VPSidebar .VPSidebarItem.level-0 > .item .text {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--vp-c-text-2);
+}
+
+/* The open group keeps its heading legible: `has-active` is the group the
+ * current page is in, and at 12px muted it was the one label on the column
+ * that had to say "you are in here" and did not. */
+.VPSidebar .VPSidebarItem.level-0.has-active > .item .text {
+  color: var(--vp-c-text-1);
 }
 
 /* ================================================ edges, not surfaces ===
