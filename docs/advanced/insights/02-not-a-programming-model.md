@@ -1,7 +1,5 @@
 # abap2UI5 is not a Programming Model
 
-*abap2UI5 Know-How #2 — draft*
-
 The useful question about a UI framework is not what it can do. It is what it
 wants from you: a structure to follow, a lifecycle to fit into, layers to fill
 in.
@@ -30,6 +28,7 @@ and calling the ICF endpoint is the deployment.
 That is a statement about scope, not size — and it is why the data behind the
 screen can come from wherever it already lives:
 
+<!-- playground: no Run button — writes through a RAP business object, which only a system has -->
 ```abap
 CLASS zcl_travel_edit DEFINITION PUBLIC.
 
@@ -169,28 +168,3 @@ What it is not, plainly: no data model, no transactional buffer, no generated
 user interface. Applications needing those need something that provides them.
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> The useful question about a UI framework is not what it can do. It is what it
-> wants from you: a structure to follow, a lifecycle to fit into, layers to fill
-> in.
->
-> abap2UI5 fits its answer on a page — one interface, one method. No data model,
-> no service, no binding, no annotations, no BSP per app, no frontend artefact
-> to transport.
->
-> Which is why it composes instead of competing. The new article shows one app
-> and three save handlers: EML against a business object, MODIFY against a
-> table, and a BAPI call. The framework never learns which — it could just as
-> well be the EWM classes, or whatever SAP releases next.
->
-> New article 🎉
->
-> What does your UI framework ask of your architecture?
->
-> #ABAP #SAP #UI5

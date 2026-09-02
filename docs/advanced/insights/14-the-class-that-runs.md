@@ -1,7 +1,5 @@
 # The Class That Runs
 
-*abap2UI5 Know-How #14 — draft*
-
 Every ABAP developer already knows the smallest program that does something:
 
 ```abap
@@ -26,6 +24,9 @@ That is the shape abap2UI5 copied:
 CLASS zcl_app_ui5 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_ui5 IMPLEMENTATION.
@@ -53,27 +54,3 @@ confidently, and there is not much of that around.
 **The unit of an abap2UI5 application is a file somebody can read.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> The smallest ABAP program that does something is a class with
-> if_oo_adt_classrun: one interface, one method, F9. No transaction, no program,
-> nothing beside it.
->
-> abap2UI5 copied that silhouette exactly. Same shape, different destination —
-> it renders in a browser, follows the Fiori guidelines, and goes to a colleague
-> as a URL instead of "open ADT and press F9".
->
-> Which leaves a property that has quietly become valuable: the whole app is one
-> file. Anything that has to reason about it — a reviewer, a successor, a search,
-> an agent — can hold all of it at once.
->
-> New article 🎉
->
-> What is the smallest complete app in your system, measured in files?
->
-> #ABAP #SAP #UI5

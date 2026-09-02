@@ -1,7 +1,5 @@
 # One Service for Every App
 
-*abap2UI5 Know-How #7 — draft*
-
 Count what a screen usually costs in backend artefacts. A CDS view or two, a
 service definition, a service binding, a behavior definition and its
 implementation, a projection — each one named, transported, reviewed, and each
@@ -12,7 +10,7 @@ either. Every app in the system is served by the same generic HTTP handler, and
 it is generic in a specific way: it does not know the app, the view or the
 model. It moves two strings.
 
-![A service per screen, against one handler that knows none of them.](assets/diagrams/07-one-service.svg)
+![A service per screen, against one handler that knows none of them.](/insights/07-one-service.svg)
 
 *A service per screen, against one handler that knows none of them.*
 
@@ -36,28 +34,3 @@ is the one that was never created.
 again for the next one.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Count what one screen usually costs in backend artefacts: a CDS view or two, a
-> service definition, a service binding, a behavior definition and its
-> implementation — each named, transported, reviewed, and each belonging to
-> exactly one app.
->
-> An abap2UI5 app adds none of them. Every app is served by the same generic
-> handler, which does not know the app, the view or the model — it moves two
-> strings. Set a breakpoint and look at the call stack: one frame.
->
-> It can be generic because nothing about the data is agreed in advance. The
-> model travels with every response, so every response may carry a different one.
->
-> New article 🎉
->
-> How many of the objects in your last transport existed only to get one screen
-> onto a display?
->
-> #ABAP #SAP #UI5

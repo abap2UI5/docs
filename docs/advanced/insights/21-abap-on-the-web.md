@@ -1,7 +1,5 @@
 # Twenty-Five Years of ABAP on the Web
 
-*abap2UI5 Know-How #21 — draft*
-
 Worth laying out end to end, because the shape of it is not what most people
 remember.
 
@@ -26,7 +24,7 @@ annotations, and a runtime in the browser turns them into the app.
 **abap2UI5, 2023.** The backend sends the XML view itself, and a static UI5 app
 renders it.
 
-![Twenty-three years, and the one move that did not reverse.](assets/diagrams/21-timeline.svg)
+![Twenty-three years, and the one move that did not reverse.](/insights/21-timeline.svg)
 
 *Twenty-three years, and the one move that did not reverse.*
 
@@ -44,25 +42,3 @@ browser.
 home.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> ITS 2000. BSP 2001. Web Dynpro 2003. UI5 Freestyle 2010. RAP and Fiori
-> Elements 2019. abap2UI5 2023.
->
-> Read as a line, it is not a march away from the server. For the first ten
-> years ABAP built the HTML. Then rendering left for the browser — and it stays
-> there, because that is where a modern UI belongs.
->
-> What has been moving back ever since is not the rendering but the definition
-> of the screen: first as annotations, then as the view itself.
->
-> New article 🎉
->
-> Which of these six did you write your first web app in?
->
-> #ABAP #SAP #UI5

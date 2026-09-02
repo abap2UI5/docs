@@ -1,7 +1,5 @@
 # Low-Code or abap2UI5 — When to Use Which
 
-*abap2UI5 Know-How #25 — draft*
-
 A commercial low-code platform and abap2UI5 answer the same question: modern
 UIs for SAP systems without a full frontend stack per app. The models could
 hardly be further apart — a visual designer on a licensed platform, or plain
@@ -33,28 +31,3 @@ hundred UI5 sample ports were produced that way and are guarded by CI.
 one costs an abapGit pull and an afternoon.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> A commercial low-code platform and abap2UI5 answer the same question: modern
-> UIs for SAP systems without a frontend stack per app. A visual designer on a
-> licensed platform, or plain ABAP in an open-source framework.
->
-> Low-code when the requirement is outside code: offline-capable native mobile,
-> a bundled workflow or portal suite, contractual SLAs, or app building by
-> non-developers — a designer exists so that a non-developer can produce
-> something, and no code-first framework replaces that.
->
-> abap2UI5 when apps should be code in your own system: diffable, transportable,
-> unit-testable, nothing recurring per seat. And code-first is what AI agents are
-> actually good at — a visual designer needs a human in front of it.
->
-> New article 🎉
->
-> Is your bottleneck building the apps, or governing them afterwards?
->
-> #ABAP #SAP #UI5

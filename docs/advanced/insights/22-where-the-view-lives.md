@@ -1,7 +1,5 @@
 # Where the View Lives
 
-*abap2UI5 Know-How #22 — draft*
-
 Three ways to put a UI5 screen in front of a user on an ABAP stack. All three
 render in the browser, with the same control library, through the same
 framework. What differs is one thing: where the view is defined, and therefore
@@ -23,7 +21,7 @@ for this request, rendered by a shell app that is the same for every
 application. It is fixed when the request is answered, and the next request may
 answer differently.
 
-![One axis: when the definition of the screen stops being changeable.](assets/diagrams/22-where-the-view-lives.svg)
+![One axis: when the definition of the screen stops being changeable.](/insights/22-where-the-view-lives.svg)
 
 *One axis: when the definition of the screen stops being changeable.*
 
@@ -41,27 +39,3 @@ properties, not different amounts of the same one.
 made for you.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Three ways to get a UI5 screen in front of a user on an ABAP stack. All three
-> render in the browser, same control library, same framework. What differs is
-> where the view is defined — and therefore when it is fixed.
->
-> UI5 Freestyle: a file in a frontend project, fixed at build time.
-> RAP with Fiori Elements: UI annotations on CDS, fixed when they are activated.
-> abap2UI5: an XML string an ABAP class produced for this request.
->
-> Everything else follows from that axis — what gets deployed per app, what a
-> screen costs in artefacts, what can still change at runtime. Not a ranking:
-> fixed early standardises well, fixed late adapts well.
->
-> New article 🎉
->
-> Where does the view live in the app you are working on today?
->
-> #ABAP #SAP #UI5

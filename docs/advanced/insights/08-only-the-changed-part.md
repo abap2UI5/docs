@@ -1,7 +1,5 @@
 # Only the Changed Part
 
-*abap2UI5 Know-How #8 — draft*
-
 If the backend sends the view on every request, does the screen rebuild itself
 on every click?
 
@@ -30,7 +28,7 @@ in the browser is the one already standing, and UI5 does what UI5 does with a
 changed model: data binding updates the controls bound to what changed, and
 touches nothing else.
 
-![What a response carries decides what survives on the screen.](assets/diagrams/08-partial-update.svg)
+![What a response carries decides what survives on the screen.](/insights/08-partial-update.svg)
 
 *What a response carries decides what survives on the screen.*
 
@@ -46,26 +44,3 @@ just a model that changed and a binding that noticed.
 **Sending the whole view is the exception, not the rhythm.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> If the backend sends the view on every request, does the screen rebuild itself
-> on every click?
->
-> It would — and the user would feel it. A rebuilt view is a new set of
-> controls: focus lost, half-typed input gone, table scrolled back to the top.
->
-> So the view is not sent every time. It is one IF in the app. When it is
-> skipped, the response carries only the model, and UI5 data binding updates
-> exactly the controls bound to what changed. No diffing, no virtual DOM, no
-> reconciler — a mechanism UI5 has had all along.
->
-> New article 🎉
->
-> Where has a full re-render cost you a user's input?
->
-> #ABAP #SAP #UI5

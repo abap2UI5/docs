@@ -1,7 +1,5 @@
 # Where Your Own JavaScript Goes
 
-*abap2UI5 Know-How #12 — draft*
-
 Sooner or later an app needs something the XML view cannot express. A chart
 library. A control nobody has wrapped. A UI5 method that exists only as a
 method — `sap.m.Carousel` moves through `setActivePage( )` and through nothing
@@ -50,27 +48,3 @@ for either.
 the boundary is.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Sooner or later an app needs what an XML view cannot express: a chart library,
-> an unwrapped control, or a UI5 method that exists only as a method —
-> sap.m.Carousel moves through setActivePage( ) and nothing else.
->
-> abap2UI5 has no plugin system for that, on purpose. It has three declared
-> seams: an imperative method reached by control id from ABAP, a custom control
-> living in its own BSP behind a reserved resource root, and extra JavaScript
-> for the initial page set once through the framework exit.
->
-> None lets an app change the framework. None makes the framework change for an
-> app.
->
-> New article 🎉
->
-> When you last needed a custom control, what did it cost to get it in?
->
-> #ABAP #SAP #UI5

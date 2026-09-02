@@ -1,7 +1,5 @@
 # The Cost of a Screen
 
-*abap2UI5 Know-How #3 — draft*
-
 An ABAP team needs a screen. Not an application — a screen. A maintenance view
 for a customising table nobody wants to explain in SM30. A cockpit showing what
 last night's job actually did. An approval step for one department.
@@ -123,29 +121,3 @@ Fiori Elements will beat this by a distance.
 Knowing which of the two you are looking at is most of the skill.
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> A maintenance view for a customising table. A cockpit showing what last
-> night's job did. An approval step for one department.
->
-> The logic behind each is about thirty lines. The cost of putting a UI in front
-> of thirty lines is not thirty lines, and it does not scale down: a data model,
-> a service, a binding, a frontend artefact, a deployment — and an object that
-> has to be transported, survive upgrades, and one day be deprecated by someone
-> who never met the department that asked for it.
->
-> So the screen never gets built. Every system has a Z package full of the ones
-> that became a selection screen and an ALV grid instead.
->
-> New article 🎉 with a job monitor as a complete abap2UI5 app — and an honest
-> note on where this is the wrong trade.
->
-> Which screen in your system stayed an ALV grid because a proper UI was never
-> worth the effort?
->
-> #ABAP #SAP #UI5

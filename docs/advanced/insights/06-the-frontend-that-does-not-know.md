@@ -1,7 +1,5 @@
 # The Frontend That Does Not Know What It Shows
 
-*abap2UI5 Know-How #6 — draft*
-
 The first GET request delivers a UI5 app to the browser. It is worth asking
 what is actually in it.
 
@@ -21,7 +19,7 @@ rebuild to change either, an HDA renders what the server sends and knows
 nothing else. It is the sweet spot those two leave open, and it is where htmx,
 Hotwire and LiveView all sit.
 
-![Multi-page, single-page, hypermedia-driven — and what each has to rebuild.](assets/diagrams/06-mpa-spa-hda.svg)
+![Multi-page, single-page, hypermedia-driven — and what each has to rebuild.](/insights/06-mpa-spa-hda.svg)
 
 *Multi-page, single-page, hypermedia-driven — and what each has to rebuild.*
 
@@ -42,28 +40,3 @@ keep current, and every app is current with it.
 to be redeployed when the app changes.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> The UI5 app that abap2UI5 sends to the browser does not contain the screen.
-> Not the fields, not the table, not the buttons. It is a shell: enough UI5 to
-> render a view and a model that arrive from the server, and to send events
-> back.
->
-> It cannot tell whether it is showing a table or a wizard, and it does not know
-> which action follows the next click. PBO builds, PAI decides — the dialog step
-> just became an AJAX call.
->
-> Which means there is one shell, shared by every app in the system. Not one
-> deployed frontend per app, each pinned to whichever UI5 version someone last
-> had time for.
->
-> New article 🎉
->
-> How many separately deployed frontends does your system carry right now?
->
-> #ABAP #SAP #UI5
