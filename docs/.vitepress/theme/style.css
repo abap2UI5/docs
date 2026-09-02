@@ -461,11 +461,17 @@
   font-weight: 600;
 }
 
-/* …and the escape hatch the `display: block` above used to provide. VitePress
- * wraps every table in `.vp-doc-table`; scrolling belongs on the wrapper, so
- * a table too wide for the column still scrolls instead of pushing the page
- * sideways. Without this line the widest table on the site takes the whole
- * document with it on a narrow window. */
+/* …and the escape hatch the `display: block` above used to provide.
+ *
+ * `.vp-doc-table` is NOT a VitePress class — 1.6.4 emits a bare `<table>` and
+ * puts the scroll on the table itself. The wrapper is made in
+ * `.vitepress/markup.mjs`, which is where to look when this rule appears to do
+ * nothing. It was written here first, against a wrapper that did not exist,
+ * and matched nothing for two releases; that is why the note is this loud.
+ *
+ * The wrapper also carries the `tabindex`, moved off the table by the same
+ * rule: whatever scrolls has to be reachable from a keyboard, and after this
+ * change the table is not the thing that scrolls. */
 .vp-doc .vp-doc-table {
   overflow-x: auto;
 }

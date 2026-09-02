@@ -22,12 +22,38 @@
  * column was 830px wide, because no table was wider than that. At 640px the
  * widest are, and a 900px window scrolled sideways.
  *
- * So the wrapper is made here, where it can actually be made, and the CSS rule
- * that names it becomes true.
+ * So the wrapper is made here, where it can actually be made.
+ *
+ * The table is rendered through `self.renderToken` rather than written out as
+ * a literal `<table>`: a literal drops whatever attributes markdown-it and its
+ * plugins put on the token, and a rule that silently discards other people's
+ * output is a trap for whoever adds the next plugin.
+ *
+ * `tabindex` is the one attribute that deliberately MOVES. VitePress puts it
+ * on the table because in its layout the table is what scrolls, and a
+ * scrollable box has to be reachable from the keyboard or it can only be read
+ * with a mouse. Here the wrapper scrolls, so the wrapper is what needs to be
+ * focusable — and leaving it on both would put two tab stops on one table.
  */
 export function tableScroll(md) {
-  md.renderer.rules.table_open = () => '<div class="vp-doc-table">\n<table>\n';
-  md.renderer.rules.table_close = () => '</table>\n</div>\n';
+  const open = md.renderer.rules.table_open;
+  const close = md.renderer.rules.table_close;
+
+  md.renderer.rules.table_open = (tokens, idx, options, env, self) => {
+    const inner = open ? open(tokens, idx, options, env, self) : self.renderToken(tokens, idx, options);
+    // The `tabindex` is not on the token — VitePress writes it in its own
+    // `table_open` renderer, so it arrives here already inside the string. It
+    // is taken off that string rather than left in place: two tab stops for
+    // one table is worse than one, and the inner one would land on an element
+    // that no longer scrolls. Anchored and single, so it can only ever touch
+    // the opening tag this function produced a line above.
+    return `<div class="vp-doc-table" tabindex="0">\n${inner.replace(/^<table tabindex="0"/, '<table')}`;
+  };
+
+  md.renderer.rules.table_close = (tokens, idx, options, env, self) => {
+    const inner = close ? close(tokens, idx, options, env, self) : self.renderToken(tokens, idx, options);
+    return `${inner}</div>\n`;
+  };
 }
 
 /*
@@ -43,16 +69,29 @@ export function tableScroll(md) {
  * and a block can be promoted into a group later without the page changing
  * shape.
  *
- * Deliberately NOT applied to the ABAP examples, which are the overwhelming
- * majority here: an abap2UI5 example is a global class, its name is the first
- * token of its own first line, and it is pasted into a system rather than
- * saved to a path. A tab reading `zcl_app_hello_world.clas.abap` over a block
- * that opens `CLASS zcl_app_hello_world DEFINITION PUBLIC.` is the same word
- * twice. The blocks that get one are the ones that really are files — a
- * manifest, a controller, a workflow, a linter config — where the path is
- * information the code itself does not carry.
+ * Two things it must NOT do, and the first version of this did both:
+ *
+ *   - A fence inside a `::: code-group` already has its label drawn, as the
+ *     tab of the group. Wrapping it again printed `ABAP` twice on
+ *     `get_started/quickstart.md`, once as the group's tab and once as a title
+ *     bar inside it. So the core rule below tracks the container depth and
+ *     leaves anything inside a group alone.
+ *
+ *   - Not every bracketed title is a filename. This documentation also uses
+ *     them as plain labels — `[lcl_help]` over the local helper class on
+ *     `translation_i18n.md` — and a label is not a path. So a title only
+ *     becomes a filename tab if it looks like a file: a dot or a slash in it.
+ *     That also keeps this off the 838 ABAP examples for good, which is the
+ *     point: an abap2UI5 example is a global class whose name is the first
+ *     token of its own first line, pasted into a system rather than saved to a
+ *     path, so a tab repeating it is the same word twice.
+ *
+ * Both were caught in review rather than by any gate here, which is worth
+ * remembering: `check:examples` reads the ABAP, and nothing reads the shape of
+ * the HTML around it.
  */
-const TITLE = /\[(.+)\]/;
+const TITLE = /\[(.+?)\]/;
+const LOOKS_LIKE_A_FILE = /[./]/;
 
 export function codeTitle(md) {
   /* The title has to be taken in the CORE phase, not in the fence renderer.
@@ -62,10 +101,16 @@ export function codeTitle(md) {
    * info string as it was written, and parks the title on `token.meta` where
    * the renderer below can find it. */
   md.core.ruler.push('a2ui5_code_title', (state) => {
+    let insideGroup = 0;
     for (const token of state.tokens) {
-      if (token.type !== 'fence') continue;
+      if (token.type === 'container_code-group_open') insideGroup++;
+      else if (token.type === 'container_code-group_close') insideGroup--;
+      if (token.type !== 'fence' || insideGroup > 0) continue;
       const match = TITLE.exec(token.info || '');
-      if (match) token.meta = { ...(token.meta || {}), a2ui5Title: match[1].trim() };
+      if (!match) continue;
+      const title = match[1].trim();
+      if (!LOOKS_LIKE_A_FILE.test(title)) continue;
+      token.meta = { ...(token.meta || {}), a2ui5Title: title };
     }
     return true;
   });
