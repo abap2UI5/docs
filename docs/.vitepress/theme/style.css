@@ -36,15 +36,23 @@
   --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
                          Consolas, "Liberation Mono", monospace;
 
-  /* Body links. The brand red stays where it identifies the project — logo,
-   * nav, the active page in the sidebar — and comes out of the prose, where
-   * it does not mean "brand" but "look here, something is wrong". On a page
-   * like `resources/api.md` the first paragraph carried six red spans and a
-   * red link and read as a page full of errors. Blue is the convention every
-   * reader of this documentation already has from GitHub and from SAP's own
-   * help; it says "link" and nothing else. */
-  --a2ui5-c-link: #0969da;
-  --a2ui5-c-link-hover: #0550ae;
+  /* Body links in the brand colour.
+   *
+   * These were blue for a while, on the argument that red in running text
+   * reads as an error rather than as a brand. That argument is not wrong —
+   * it is why inline CODE is still neutral, and that half stays — but it lost
+   * to the simpler one: a site with a red mark and blue links carries two
+   * accents, and the reader has to learn which of them means anything. One
+   * accent, used for the project and for the things you can click, is the
+   * commoner arrangement and the one capire uses (theirs is teal, for both).
+   *
+   * `--vp-c-brand-1` on white measures 4.74:1, which clears AA for body text
+   * — but only just, and in DARK it is 3.62:1 against `#1b1b1f`, which fails.
+   * So the dark theme lightens it rather than inheriting it; the value below
+   * is the same hue at 5.76:1. That is the whole reason this is a token pair
+   * and not one `var(--vp-c-brand-1)`. */
+  --a2ui5-c-link: var(--vp-c-brand-1);
+  --a2ui5-c-link-hover: var(--vp-c-brand-2);
   /* The one-pixel edge on code blocks, tables and the Run bar. */
   --a2ui5-c-hairline: #d1d9e0;
 
@@ -72,8 +80,10 @@
 }
 
 .dark {
-  --a2ui5-c-link: #4493f8;
-  --a2ui5-c-link-hover: #6cb6ff;
+  /* 5.76:1 on the dark ground, where the brand red itself manages 3.62 and
+   * fails AA. Same hue, lifted until it reads. */
+  --a2ui5-c-link: #e8707c;
+  --a2ui5-c-link-hover: #f0949c;
   --a2ui5-c-hairline: #3d444d;
   --a2ui5-c-surface: #161b22;
 }
@@ -346,7 +356,12 @@
   padding: 2px 0 2px 16px;
 }
 
-.vp-doc .custom-block.tip     { border-left-color: var(--a2ui5-c-link); }
+/* `tip` takes the neutral rule, not the link colour it used to borrow: now
+ * that links are the brand red, a red tip would be indistinguishable from a
+ * red `danger`, and most callouts on this site are tips. What is left is the
+ * discipline worth having — colour on a callout means SEVERITY and nothing
+ * else, so amber warns, red is dangerous, and a remark carries no colour. */
+.vp-doc .custom-block.tip     { border-left-color: var(--vp-c-text-3); }
 .vp-doc .custom-block.info    { border-left-color: var(--vp-c-text-3); }
 .vp-doc .custom-block.warning { border-left-color: #bf8700; }
 .vp-doc .custom-block.danger  { border-left-color: #cf222e; }
@@ -407,7 +422,7 @@
   color: var(--a2ui5-c-link);
 }
 
-/* Links in the body take the blue defined at the top of this file, and lose
+/* Links in the body take the accent defined at the top of this file, and lose
  * the permanent underline — the underline is what makes a paragraph with
  * five links in it look struck through. It comes back on hover, where it is
  * the answer to "is this one a link". */
