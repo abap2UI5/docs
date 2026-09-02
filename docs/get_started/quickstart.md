@@ -74,6 +74,12 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 abap2UI5 talks only to the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
 :::
 
+::: tip **ABAP Language Versions**
+The handler above is the one place the distinction matters. Your *apps* are
+independent of it — you are free to choose whether to build them with ABAP
+Cloud compatibility, whichever handler this system runs.
+:::
+
 ## 3. First Launch
 Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
 <img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
