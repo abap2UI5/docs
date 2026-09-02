@@ -11,6 +11,9 @@ Just copy the following class into your system:
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_hello_world IMPLEMENTATION.
@@ -38,6 +41,9 @@ CLASS zcl_app_hello_screen DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_hello_screen IMPLEMENTATION.

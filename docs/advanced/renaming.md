@@ -148,6 +148,9 @@ your own namespace that implements `z2ui5_if_app`:
 CLASS zcl_my_app DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 ```
 

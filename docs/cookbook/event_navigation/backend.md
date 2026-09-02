@@ -139,6 +139,8 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.

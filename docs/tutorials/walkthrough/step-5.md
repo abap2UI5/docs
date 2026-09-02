@@ -23,6 +23,9 @@ CLASS zcl_app_walkthrough DEFINITION PUBLIC.
       END OF ty_s_invoice.
 
     DATA t_invoices TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_walkthrough IMPLEMENTATION.

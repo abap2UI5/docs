@@ -15,15 +15,17 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all eight steps
+npm run check        # what CI runs, all nine steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but eight things in
-it are decidable, and `npm run check` decides all eight before a merge — the
+A documentation repository has no compiler for its prose, but nine things in
+it are decidable, and `npm run check` decides all nine before a merge — the
 prose builds (`docs:build`), the fenced ABAP examples compile and the views
-they build name real UI5 API (`check:examples`), every `client->` name and
+they build name real UI5 API (`check:examples`), those examples are written
+in the same house style as the sample corpora — chain layout and class shell —
+(`check:conventions`), every `client->` name and
 `cs_*` constant the prose and snippets mention still exists in the release the
 site names (`check:api-names`), the generated client API reference still
 matches the interface at that release (`check:api-reference`), the sample
@@ -39,7 +41,7 @@ passed. Several of these go stale without anybody touching this repository (a
 release is published elsewhere, a sample class is renamed elsewhere), which is
 why the deploy re-runs them rather than trusting the merge.
 
-**[AGENTS.md](AGENTS.md) describes each of the eight**, what a failure means and
+**[AGENTS.md](AGENTS.md) describes each of the nine**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
 

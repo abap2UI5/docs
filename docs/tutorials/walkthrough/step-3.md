@@ -16,6 +16,9 @@ has to tell those calls apart. That job falls to the lifecycle checks, and
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_walkthrough IMPLEMENTATION.

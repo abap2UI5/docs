@@ -24,6 +24,8 @@ CLASS z2ui5_cl_sample_fuzzy DEFINITION PUBLIC.
     DATA mt_customers TYPE STANDARD TABLE OF ty_customer WITH EMPTY KEY.
     DATA mv_search    TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
@@ -81,7 +83,7 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
                                     )->a( n = `placeholder` v = `try a misspelled name…`
                                     )->a( n = `search`      v = client->_event( `SEARCH` )
 
-                        )->end(
+                            )->end(
                         )->end(
 
                         )->ele( `columns`

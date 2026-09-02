@@ -207,6 +207,8 @@ CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
     DATA numeric           TYPE n LENGTH 12.
     DATA check_initialized TYPE abap_bool.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
@@ -312,7 +314,7 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
                                 )->a( n = `text`  v = `send`
                                 )->a( n = `press` v = client->_event( `BUTTON` )
 
-                    )->end(
+                        )->end(
                     )->end(
 
                     " Remove leading zeros from a numeric string with OData type formatting.

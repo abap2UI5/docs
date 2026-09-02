@@ -15,6 +15,8 @@ CLASS z2ui5_cl_sample_clipboard DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mv_text TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_clipboard IMPLEMENTATION.

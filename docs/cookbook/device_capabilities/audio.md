@@ -16,6 +16,8 @@ CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA company_code TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_sound IMPLEMENTATION.

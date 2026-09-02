@@ -12,6 +12,9 @@ views — and in abap2UI5 you write that view in ABAP, with
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_walkthrough IMPLEMENTATION.

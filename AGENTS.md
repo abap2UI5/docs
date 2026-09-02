@@ -22,16 +22,17 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
+| `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but eight things in
-it are decidable, and all eight are decided before a merge:
+A documentation repository has no compiler for its prose, but nine things in
+it are decidable, and all nine are decided before a merge:
 
 | | |
 |---|---|
@@ -41,10 +42,11 @@ it are decidable, and all eight are decided before a merge:
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` at the release this site names, plus every `blob/main/` link into the framework's tree. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
 | `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` at the release this site names and compared byte for byte. Goes stale the same way `check:version` does: a release happens over there, and the committed reference still describes the one before it. `npm run generate:api` rewrites both |
+| `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
-`.github/workflows/check.yml` runs the same eight, in the same order. Keep the
+`.github/workflows/check.yml` runs the same nine, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -126,6 +128,17 @@ in every tool that reads the tree.
   whether it is written mid-chain (`)->input( )`) or on its receiver
   (`page->input( )`). Examples are the most-copied ABAP in the project; that
   gate is the reason the pages could be migrated at all.
+- **…and it is written in the same house style as the samples.** The layout of
+  a view chain is not taste — the indentation is the only picture the reader
+  has of the tree, and `check:conventions` holds it to the rules in the
+  organisation's `view-chain-layout` guide: one call per line including
+  attributes, four spaces per level, `end( )` in the column of the `ele( )` it
+  closes. `npm run fmt:chains` reformats a drifted chain (whitespace-only, and
+  verified as such — a layout fix can never change what the view builds), so
+  do not re-indent one by hand. The same gate holds every app class to all
+  three section blocks. What is NOT gated here, on purpose: the blank-line
+  rules around `end( )` and the `t_arg` continuation column, which are
+  warnings in the sample corpora and not clean there either.
 - **`llms.txt` is generated from the SIDEBAR, not from a directory walk.** A
   page in no sidebar is reported as an orphan and published anyway. If you add
   a page, add it to the sidebar or accept that nothing navigates to it.

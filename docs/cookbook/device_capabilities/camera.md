@@ -15,6 +15,8 @@ CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mv_picture_base TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.

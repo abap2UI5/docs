@@ -19,6 +19,8 @@ CLASS z2ui5_cl_app_skeleton DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_skeleton IMPLEMENTATION.
@@ -35,11 +37,11 @@ CLASS z2ui5_cl_app_skeleton IMPLEMENTATION.
                 )->ele( `Page`
                     )->a( n = `title` v = `My App`
 
-                )->tag( `Text`
-                    )->a( n = `text` v = `Hello World`
-                )->tag( `Button`
-                    )->a( n = `text`  v = `Go`
-                    )->a( n = `press` v = client->_event( `GO` ) ).
+                    )->tag( `Text`
+                        )->a( n = `text` v = `Hello World`
+                    )->tag( `Button`
+                        )->a( n = `text`  v = `Go`
+                        )->a( n = `press` v = client->_event( `GO` ) ).
 
         client->view_display( view->stringify( ) ).
 
@@ -65,6 +67,8 @@ CLASS z2ui5_cl_app_selection DEFINITION PUBLIC.
     DATA connid   TYPE string.
     DATA fldate   TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_selection IMPLEMENTATION.
@@ -82,34 +86,34 @@ CLASS z2ui5_cl_app_selection IMPLEMENTATION.
                 )->ele( `Page`
                     )->a( n = `title` v = `Selection Screen`
 
-                )->ele( n = `SimpleForm` ns = `form`
-                    )->a( n = `title`    v = `Selection Criteria`
-                    )->a( n = `editable` b = abap_true
+                    )->ele( n = `SimpleForm` ns = `form`
+                        )->a( n = `title`    v = `Selection Criteria`
+                        )->a( n = `editable` b = abap_true
 
-                    )->ele( n = `content` ns = `form`
-                        )->tag( `Label`
-                            )->a( n = `text` v = `Carrier ID`
-                        )->tag( `Input`
-                            )->a( n = `value` v = client->_bind( carrid )
-                        )->tag( `Label`
-                            )->a( n = `text` v = `Connection ID`
-                        )->tag( `Input`
-                            )->a( n = `value` v = client->_bind( connid )
-                        )->tag( `Label`
-                            )->a( n = `text` v = `Flight Date`
-                        )->tag( `DatePicker`
-                            )->a( n = `value` v = client->_bind( fldate )
+                        )->ele( n = `content` ns = `form`
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Carrier ID`
+                            )->tag( `Input`
+                                )->a( n = `value` v = client->_bind( carrid )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Connection ID`
+                            )->tag( `Input`
+                                )->a( n = `value` v = client->_bind( connid )
+                            )->tag( `Label`
+                                )->a( n = `text` v = `Flight Date`
+                            )->tag( `DatePicker`
+                                )->a( n = `value` v = client->_bind( fldate )
 
-                )->end(
-                )->end(
+                        )->end(
+                    )->end(
 
-                )->ele( `footer`
-                    )->ele( `OverflowToolbar`
-                        )->tag( `ToolbarSpacer`
-                        )->tag( `Button`
-                            )->a( n = `text`  v = `Execute`
-                            )->a( n = `type`  v = `Emphasized`
-                            )->a( n = `press` v = client->_event( `EXECUTE` ) ).
+                    )->ele( `footer`
+                        )->ele( `OverflowToolbar`
+                            )->tag( `ToolbarSpacer`
+                            )->tag( `Button`
+                                )->a( n = `text`  v = `Execute`
+                                )->a( n = `type`  v = `Emphasized`
+                                )->a( n = `press` v = client->_event( `EXECUTE` ) ).
 
         client->view_display( view->stringify( ) ).
 
@@ -138,6 +142,8 @@ CLASS z2ui5_cl_app_write_output DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA html TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_write_output IMPLEMENTATION.
@@ -159,8 +165,8 @@ CLASS z2ui5_cl_app_write_output IMPLEMENTATION.
               )->ele( `Page`
                   )->a( n = `title` v = `Write Output`
 
-              )->tag( n = `HTML` ns = `core`
-                  )->a( n = `content` v = client->_bind( html ) ).
+                  )->tag( n = `HTML` ns = `core`
+                      )->a( n = `content` v = client->_bind( html ) ).
 
       client->view_display( view->stringify( ) ).
 
@@ -187,6 +193,8 @@ CLASS z2ui5_cl_app_table_basic DEFINITION PUBLIC.
       END OF ty_row.
     DATA rows TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_table_basic IMPLEMENTATION.
@@ -261,6 +269,8 @@ CLASS z2ui5_cl_app_table_sort DEFINITION PUBLIC.
       END OF ty_row.
     DATA rows TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app_table_sort IMPLEMENTATION.

@@ -85,6 +85,9 @@ Build a class on your system:
 CLASS zcl_my_app DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_my_app IMPLEMENTATION.

@@ -12,6 +12,9 @@ abap2UI5 is an open-source framework that brings the simplicity of classic ABAP 
 CLASS zcl_my_app DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_my_app IMPLEMENTATION.
