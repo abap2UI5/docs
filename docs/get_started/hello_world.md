@@ -53,12 +53,6 @@ roundtrip — is catalogued with symptom, cause and fix in
 Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
 :::
 
-::: tip ABAP Language Versions
-While the HTTP handler has to distinguish between Standard ABAP and ABAP for
-Cloud, the apps themselves are independent. You are free to choose whether to
-build your apps with ABAP Cloud compatibility.
-:::
-
 ## A Real Screen, an Event and Data Exchange
 
 A message box is not an app. This second class is still one class, and it has
