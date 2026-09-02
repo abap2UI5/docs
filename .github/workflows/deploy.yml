@@ -38,6 +38,7 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -103,6 +104,15 @@ jobs:
       - name: ABAP examples
         if: ${{ !cancelled() }}
         run: npm run check:examples
+      - name: Run-button coverage
+        if: ${{ !cancelled() }}
+        run: npm run check:playground
+      - name: API names
+        if: ${{ !cancelled() }}
+        run: npm run check:api-names
+      - name: API reference freshness
+        if: ${{ !cancelled() }}
+        run: npm run check:api-reference
       - name: sample links
         if: ${{ !cancelled() }}
         run: npm run check:samples
@@ -124,6 +134,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     name: Deploy
     steps:
       - name: Deploy to GitHub Pages

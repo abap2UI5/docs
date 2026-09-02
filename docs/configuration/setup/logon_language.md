@@ -31,7 +31,7 @@ Most apps don't need this — the browser locale and the SAP logon language agre
 You can also pin the UI5 locale via the bootstrap, instead of relying on a URL parameter:
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-t_add_config = VALUE #(
       ( n = `data-sap-ui-language` v = `en` ) ).

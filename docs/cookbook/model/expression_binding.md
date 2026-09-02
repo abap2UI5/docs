@@ -27,6 +27,8 @@ CLASS z2ui5_cl_demo_app_max_val DEFINITION PUBLIC.
     DATA input31 TYPE i.
     DATA input32 TYPE i.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_app_max_val IMPLEMENTATION.
@@ -77,6 +79,8 @@ CLASS z2ui5_cl_demo_editable DEFINITION PUBLIC.
     DATA quantity TYPE i.
     DATA product TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_demo_editable IMPLEMENTATION.

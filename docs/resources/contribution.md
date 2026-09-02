@@ -14,5 +14,17 @@ There are several ways to get involved and help:
 - Improve the documentation and polish code snippets to make abap2UI5 easier to learn
 - Propose something new — every contribution is appreciated, no matter the size
 
+## Turn Answers into Documentation
+The cheapest contribution is one you have already half-made: when a question
+comes up on Slack or in an issue for the second time, the answer wants to
+become permanent — an entry in
+[Common Failures](/cookbook/troubleshooting/common_failures) when it starts
+from an error message, a paragraph on the page that should have answered it,
+or, when a script can decide it, a check that makes the mistake impossible to
+merge. That is how the whole project works internally — every defect found by
+hand becomes a rule, a reference example or a gate, so nobody has to discover
+it twice — and a distilled answer helps every future reader, where a Slack
+thread helps one.
+
 ## Need Help?
 If you hit any issues or have questions, open an [issue](https://github.com/abap2UI5/abap2UI5/issues).

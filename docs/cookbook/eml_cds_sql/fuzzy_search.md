@@ -9,6 +9,7 @@ Wire it to a UI5 `search_field` in the table toolbar and you get an ALV-style se
 
 ## Minimal Example
 
+<!-- playground: no Run button — reads KNA1 with a HANA fuzzy search, and the browser has neither -->
 ```abap
 CLASS z2ui5_cl_sample_fuzzy DEFINITION PUBLIC.
 
@@ -23,6 +24,8 @@ CLASS z2ui5_cl_sample_fuzzy DEFINITION PUBLIC.
     DATA mt_customers TYPE STANDARD TABLE OF ty_customer WITH EMPTY KEY.
     DATA mv_search    TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
@@ -36,7 +39,6 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
 
       WHEN client->check_on_event( `SEARCH` ).
         load_data( ).
-        client->view_model_update( ).
 
     ENDCASE.
 
@@ -81,7 +83,7 @@ CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
                                     )->a( n = `placeholder` v = `try a misspelled name…`
                                     )->a( n = `search`      v = client->_event( `SEARCH` )
 
-                        )->end(
+                            )->end(
                         )->end(
 
                         )->ele( `columns`

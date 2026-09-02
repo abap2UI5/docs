@@ -19,6 +19,8 @@ CLASS z2ui5_cl_app DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mr_tab TYPE REF TO data.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app IMPLEMENTATION.
@@ -49,6 +51,7 @@ ENDCLASS.
 
 ## Transformation with S-RTTI
 When working with data typed dynamically at runtime via local types, S-RTTI is needed:
+<!-- playground: no Run button — describe_by_name is a DDIC lookup, and there is no DDIC in the browser -->
 ```abap
 CLASS z2ui5_cl_app DEFINITION PUBLIC.
 
@@ -56,6 +59,8 @@ CLASS z2ui5_cl_app DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mr_tab TYPE REF TO data.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_app IMPLEMENTATION.

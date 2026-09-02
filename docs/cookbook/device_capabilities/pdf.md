@@ -7,42 +7,76 @@ samples:
 
 Render a PDF directly in your app — for printouts from Adobe Forms, SmartForms, archived documents from the Content Server, or anything else that produces an `xstring`.
 
-### Built-In Popup
+### Show It in Your Own View
 
-The simplest path is the built-in popup `Z2UI5_CL_POP_PDF`. It expects the PDF as a `data:application/pdf;base64,...` URI and embeds it in an iframe:
+`sap.m.PDFViewer` renders the document inline. It takes the PDF as a
+`data:application/pdf;base64,...` URI, so the whole job is: get the bytes,
+base64 them, bind the result.
+
+Press **Run** — the base64 below is a real one-page PDF, so the viewer has
+something to show:
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_pdf DEFINITION PUBLIC.
 
-  CASE abap_true.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-    WHEN client->check_on_init( ).
+    DATA mv_pdf TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_pdf IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      " In a real app this is your document, base64-encoded:
+      "   DATA(lv_base64) = z2ui5_cl_util=>conv_encode_x_base64( lv_xstring ).
+      " where lv_xstring comes from cl_fp_function_module=>get_pdf, an OTF
+      " conversion of a SmartForm, or a SELECT from the archive.
+    mv_pdf = `data:application/pdf;base64,` &&
+             `JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwg` &&
+             `L1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2Ug` &&
+             `L1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUgODQyXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAg` &&
+             `UiA+PiA+PiAvQ29udGVudHMgNSAwIFIgPj4KZW5kb2JqCjQgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5` &&
+             `cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggNTMgPj4Kc3RyZWFtCkJU` &&
+             `IC9GMSAyNCBUZiA2MCA3MDAgVGQgKGFiYXAyVUk1IC0gUERGIFZpZXdlcikgVGogRVQKZW5kc3RyZWFtCmVuZG9iagp4` &&
+             `cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1OCAwMDAwMCBuIAow` &&
+             `MDAwMDAwMTE1IDAwMDAwIG4gCjAwMDAwMDAyNDEgMDAwMDAgbiAKMDAwMDAwMDMxMSAwMDAwMCBuIAp0cmFpbGVyCjw8` &&
+             `IC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjQxMwolJUVPRgo=`.
+
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `xmlns`     v = `sap.m`
               )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
               )->ele( `Page`
-                  )->tag( `Button`
-                      )->a( n = `text`  v = `show PDF`
-                      )->a( n = `press` v = client->_event( `SHOW_PDF` ) ).
+                  )->a( n = `title` v = `Invoice 4711`
+
+                  )->tag( `PDFViewer`
+                      )->a( n = `source` v = client->_bind( mv_pdf )
+                      )->a( n = `title`  v = `Invoice 4711`
+                      )->a( n = `height` v = `600px` ) ).
 
       client->view_display( view->stringify( ) ).
+    ENDIF.
 
-
-    WHEN client->check_on_event( `SHOW_PDF` ).
-      "lv_xstring contains the binary PDF — e.g. from cl_fp_function_module=>get_pdf, SmartForm OTF
-      "conversion, or SELECT FROM the SOFFCONT1 archive
-      DATA(lv_base64) = cl_web_http_utility=>encode_x_base64( lv_xstring ).
-      DATA(lo_popup)  = z2ui5_cl_pop_pdf=>factory(
-          i_title = `Invoice 4711`
-          i_pdf   = `data:application/pdf;base64,` && lv_base64 ).
-      client->nav_app_call( lo_popup ).
-
-  ENDCASE.
-
-ENDMETHOD.
+  ENDMETHOD.
+ENDCLASS.
 ```
+
+Leave `height` off and the viewer opens in its own dialog instead of sitting in
+the page — the same control, one property apart.
+
+The base64 string travels in the model, so a large document is a large
+roundtrip. Past a few megabytes, offer the
+[download](#download-instead-of-display) below rather than rendering it inline.
+
+For a ready-made dialog with a title bar and buttons, the
+[popups add-on](https://github.com/abap2UI5-addons/popups) carries one.
 
 ### Download Instead of Display
 

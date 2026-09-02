@@ -33,6 +33,9 @@ This simplicity also inspired the entry point for abap2UI5 apps. For basic outpu
 CLASS zcl_app_ui5 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_ui5 IMPLEMENTATION.
@@ -65,6 +68,9 @@ CLASS zcl_app_input DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA pa_arbgb TYPE string VALUE `MDG_TR`.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_input IMPLEMENTATION.
@@ -128,6 +134,9 @@ CLASS zcl_app_alv DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA gt_t100 TYPE STANDARD TABLE OF t100 WITH EMPTY KEY.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_alv IMPLEMENTATION.
@@ -215,25 +224,29 @@ abap2UI5 offers a similar experience: apps can call each other and wrap dialog l
 CLASS zcl_app_alv_event DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_alv_event IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-      client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_question_text = `Do you like dinosaurs?`
-        i_title         = `Title`
-        i_event_confirm = `YES`
-        i_event_cancel  = `NO` ) ).
+      client->message_box_display( text    = `Do you like dinosaurs?`
+                                   type    = `confirm`
+                                   title   = `Title`
+                                   onclose = `ANSWERED` ).
       RETURN.
     ENDIF.
 
     CASE client->get( )-event.
-      WHEN `YES`.
-        client->message_box_display( `the result is YES` ).
-      WHEN `NO`.
-        client->message_box_display( `the result is NO` ).
+      WHEN `ANSWERED`.
+        IF client->get_event_arg( ) = `OK`.
+          client->message_box_display( `the result is YES` ).
+        ELSE.
+          client->message_box_display( `the result is NO` ).
+        ENDIF.
     ENDCASE.
 
   ENDMETHOD.

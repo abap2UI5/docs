@@ -15,18 +15,25 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all five steps
+npm run check        # what CI runs, all nine steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but five things in it
-are decidable, and `npm run check` decides all five before a merge — the prose
-builds (`docs:build`), the fenced ABAP examples compile and the views they
-build name real UI5 API (`check:examples`), the sample links still match the
-sample repositories (`check:samples`), the release number in the nav bar still
-matches the framework (`check:version`), and the catalogue parser still parses
-(`test`).
+A documentation repository has no compiler for its prose, but nine things in
+it are decidable, and `npm run check` decides all nine before a merge — the
+prose builds (`docs:build`), the fenced ABAP examples compile and the views
+they build name real UI5 API (`check:examples`), those examples are written
+in the same house style as the sample corpora — chain layout and class shell —
+(`check:conventions`), every `client->` name and
+`cs_*` constant the prose and snippets mention still exists in the release the
+site names (`check:api-names`), the generated client API reference still
+matches the interface at that release (`check:api-reference`), the sample
+links still match the sample repositories (`check:samples`), every complete
+app example carries a playground Run button or its declared reason not to
+(`check:playground`), the release
+number in the nav bar still matches the framework (`check:version`), and the
+catalogue parser still parses (`test`).
 `.github/workflows/check.yml` runs the same list in the same order, so a green
 `npm run check` locally is a green pull request — and `deploy.yml` runs it
 again before it publishes, so the site is only ever built from a tree that
@@ -34,7 +41,7 @@ passed. Several of these go stale without anybody touching this repository (a
 release is published elsewhere, a sample class is renamed elsewhere), which is
 why the deploy re-runs them rather than trusting the merge.
 
-**[AGENTS.md](AGENTS.md) describes each of the five**, what a failure means and
+**[AGENTS.md](AGENTS.md) describes each of the nine**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
 
@@ -47,6 +54,17 @@ the current documentation instead of guessing from training data. All three are
 generated on every build and gitignored — never edit them, and nothing needs
 maintaining: the page list comes from the **sidebar**, so adding a page there
 adds it here. [AGENTS.md](AGENTS.md) has the details.
+
+Because they are gitignored, a **clone** of this repository carries none of
+them — so [`llms.txt`](llms.txt) at the repository root is a committed pointer
+naming the published URLs, for the agent that lands in the checkout rather
+than on the site.
+
+The client API is published for the same reader as one JSON document,
+[client-api.json](https://abap2ui5.github.io/docs/api/client-api.json) —
+generated from `z2ui5_if_client` at the pinned release by
+`npm run generate:api`, committed, and held fresh by `check:api-reference`.
+The human-readable half is the [Client API page](https://abap2ui5.github.io/docs/resources/api.html).
 
 ### Running an example from the page
 

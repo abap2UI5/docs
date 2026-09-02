@@ -99,6 +99,41 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:examples
 
+      # the two house conventions the sample corpora gate and this repository
+      # did not: the view-chain layout (the linter's chain-house-layout rule,
+      # opt-in, so check:examples never emitted it) and the three class section
+      # blocks. Style is not decidable in prose, but in a fenced class it is -
+      # and this is the site where the style is learned
+      - name: house conventions
+        if: ${{ !cancelled() }}
+        run: npm run check:conventions
+
+      # every complete app class either carries a Run button or a marker on its
+      # page saying why it cannot run in the playground. The rules that offer
+      # the button fail towards NOT offering one, so without this an example
+      # nobody measured is indistinguishable from an example that can never
+      # run - and the hand-kept ledger of that difference had already gone stale
+      - name: Run-button coverage
+        if: ${{ !cancelled() }}
+        run: npm run check:playground
+
+      # every `client->` name on the site - in the prose and in the snippets
+      # check:examples cannot compile because they are not whole classes -
+      # against z2ui5_if_client at the release this site names. Four pages
+      # taught API that 1.143.0 had deleted, and nothing here was red.
+      - name: API names
+        if: ${{ !cancelled() }}
+        run: npm run check:api-names
+
+      # the committed API reference (resources/api.md and the JSON next to it),
+      # regenerated from z2ui5_if_client at the release the site names and
+      # compared against what is committed. The reference is generated so it
+      # cannot drift from the interface by hand - this is what makes that true
+      # after a release too
+      - name: API reference freshness
+        if: ${{ !cancelled() }}
+        run: npm run check:api-reference
+
       # the Working Samples blocks: still generated from what the catalogue says
       # today, still pointing at classes that exist, and still pointed back at
       # from those classes. A link into another repository is the one kind that

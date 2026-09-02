@@ -9,13 +9,12 @@ A one-page recap of the rules that decide whether an abap2UI5 app works or misbe
 |---|---|
 | Implement `z2ui5_if_app` and put everything in the single `main` method | It is the only entry point the framework calls — on the initial load *and* on every user interaction → [Life Cycle](/cookbook/event_navigation/life_cycle) |
 | Dispatch with one `IF` / `ELSEIF` chain over `check_on_init( )`, `check_on_navigated( )` and `check_on_event( )` | Each check answers for its own phase only; separate `IF` blocks let two branches run in the same roundtrip → [Life Cycle](/cookbook/event_navigation/life_cycle) |
-| Always call `view_display( )` in the `check_on_navigated( )` branch | After a called app returns via `nav_app_leave( )`, the browser still shows *its* view — without a re-display the user is left on a stale or blank screen → [Navigation](/cookbook/event_navigation/navigation) |
-| Declare every attribute you bind in the `PUBLIC SECTION` | Binding works via dynamic `ASSIGN`; `PROTECTED` and `PRIVATE` attributes are silently ignored → [Binding](/cookbook/model/binding) |
-| Keep state in public attributes, not in local variables | Between two events the controller is serialized to the client and back — locals, `DATA(...)` declarations, open cursors and locks do not survive → [Statefulness](/cookbook/expert_more/statefulness) |
+| Always call `view_display( )` in the `check_on_navigated( )` branch | After a called app returns via `nav_app_leave( )`, the browser still shows *its* view — without a re-display the user is left on a stale or blank screen → [Navigation](/cookbook/event_navigation/navigation/inner_app) |
+| Declare every attribute you bind in the `PUBLIC SECTION` | Binding works via dynamic `ASSIGN` and cannot reach `PROTECTED` / `PRIVATE`; the roundtrip fails with `BINDING_ERROR` → [Binding](/cookbook/model/binding) |
+| Keep state in attributes, not in local variables | Between two events the app instance is serialized into a draft on the SERVER and read back — attributes survive at any visibility; locals, `DATA(...)` declarations, open cursors and locks do not → [Statefulness](/cookbook/expert_more/statefulness) |
 | Respect the UI5 aggregation rules even though the builder does not enforce them | The builder lets you nest anything inside anything; UI5 does not, and the mismatch surfaces as broken rendering rather than a syntax error → [Definition](/cookbook/view/definition) |
-
-| Never use a deprecated UI5 control | It renders today and vanishes on the next UI5 upgrade → [Deprecated Controls](/cookbook/view/deprecated_controls) |
-| Check the built-in popups before building a custom dialog | Roughly twenty ready-made dialogs ship with the framework — confirm, select, file up/download, ranges, PDF, … → [Built-In](/cookbook/popup_popover/built_in) |
+| Never use a deprecated UI5 control | It renders today and vanishes on the next UI5 upgrade — and the XML is passed through unchanged, so nothing in the framework stops you → [linter](/advanced/linter), which reports it against the release your system runs |
+| Take a ready-made dialog from the popups add-on before building your own | Confirm, select, file up/download, ranges, PDF and about a dozen more, versioned on their own → [popups add-on](https://github.com/abap2UI5-addons/popups) |
 | Use backtick string literals (`` ` ``) | Project-wide convention in the framework, the samples and this documentation; keeps ABAP string handling consistent |
 
 ::: warning An ABAP flag passed as `v` does not reach the view as a boolean
@@ -40,5 +39,4 @@ Any expression that yields a flag works in `b`, so there is no reason to convert
 
 ## Next Steps
 
-- [Overview](/cookbook/overview) — the full map of cookbook topics
 - [Common Failures](/cookbook/troubleshooting/common_failures) — symptoms and their usual causes

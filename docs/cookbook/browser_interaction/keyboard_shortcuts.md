@@ -12,28 +12,51 @@ The `keyboard_shortcut` frontend event binds a key combination to a **named back
 `t_arg` is positional — the key combination and the backend event name:
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_shortcut DEFINITION PUBLIC.
 
-  IF client->check_on_navigated( ).
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-    client->follow_up_action( val   = client->cs_event-keyboard_shortcut
-                              t_arg = VALUE #( ( `Ctrl+S` )
-                                               ( `SAVE` ) ) ).
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
 
-    client->follow_up_action( val   = client->cs_event-keyboard_shortcut
-                              t_arg = VALUE #( ( `Ctrl+D` )
-                                               ( `DELETE` ) ) ).
-    view_display( ).
-  ENDIF.
+CLASS z2ui5_cl_sample_shortcut IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
 
-  CASE client->get( )-event.
-    WHEN `SAVE`.
+    IF client->check_on_navigated( ).
+
+      client->follow_up_action( val   = client->cs_event-keyboard_shortcut
+                                t_arg = VALUE #( ( `Ctrl+S` )
+                                                 ( `SAVE` ) ) ).
+
+      client->follow_up_action( val   = client->cs_event-keyboard_shortcut
+                                t_arg = VALUE #( ( `Ctrl+D` )
+                                                 ( `DELETE` ) ) ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Keyboard Shortcuts`
+
+                  )->tag( `Text`
+                      )->a( n = `text` v = `Press Ctrl+S or Ctrl+D` ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `SAVE` ).
       client->message_toast_display( `Saved via Ctrl+S` ).
-    WHEN `DELETE`.
-      client->message_toast_display( `Deleted via Ctrl+D` ).
-  ENDCASE.
 
-ENDMETHOD.
+    ELSEIF client->check_on_event( `DELETE` ).
+      client->message_toast_display( `Deleted via Ctrl+D` ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 Pressing the combination fires the backend event exactly like a button press would — and the browser default for the combination is suppressed.
@@ -52,7 +75,7 @@ client->follow_up_action( val   = client->cs_event-keyboard_shortcut
 
 - **Lifetime:** the registry lives in the frontend and survives every roundtrip until the app is left. Navigating to another app starts from an empty set.
 
-The same registration also works without a backend roundtrip via `client->_event_client( )` with the identical `t_arg`.
+The same registration also works without a backend roundtrip: write the `follow_up_action( )` call where its result is consumed, as a view attribute, with the identical `t_arg` — see [the two positions](/cookbook/event_navigation/frontend#the-two-positions).
 
 ::: tip
 See demo app 471 in the [samples repository](https://github.com/abap2UI5/samples) for a complete example.

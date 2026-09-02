@@ -1,5 +1,6 @@
 import { defineConfig } from "vitepress";
 import { playgroundButton } from "./playground.mjs";
+import { tableScroll, codeTitle } from "./markup.mjs";
 
 // Where the site is actually served from. Link previews (LinkedIn, Slack,
 // WhatsApp, X) only accept ABSOLUTE urls in og:image / og:url — a relative
@@ -15,7 +16,14 @@ export default defineConfig({
   // A Run button under every fenced example the playground can actually
   // start. Which ones those are is decided in ./playground.mjs.
   markdown: {
-    config: (md) => playgroundButton(md),
+    // Order matters: `codeTitle` wraps whatever the fence renderer before it
+    // produced, so the Run button ends up INSIDE the titled block rather than
+    // beside it.
+    config: (md) => {
+      tableScroll(md);
+      playgroundButton(md);
+      codeTitle(md);
+    },
   },
   lastUpdated: {
     text: "Updated at",
@@ -38,18 +46,12 @@ export default defineConfig({
         href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
       },
     ],
-    // Montserrat
-    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
-    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap'
-    }],
-    // Optional: Fira Code
-    ['link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap'
-    }],
+    // No webfonts. Montserrat and Fira Code were requested here and applied
+    // by nothing — no rule in theme/style.css, or anywhere else, ever named
+    // either one — so the site paid for two render-blocking stylesheets and
+    // four font files it never showed a glyph from. The type is now the
+    // system stack, set in theme/style.css. Font Awesome below STAYS: the
+    // three home-page feature icons are `fa-solid`/`fa-brands` classes.
     // Link preview card — the per-page og:title, og:description and og:url are
     // added in transformPageData below.
     ["meta", { property: "og:type", content: "website" }],
@@ -123,7 +125,8 @@ export default defineConfig({
           // The section is called Getting Started in the sidebar this opens;
           // "Introduction" was the first PAGE in it, one level down.
           { text: "Getting Started", link: "/get_started/about" }, // nav
-          { text: "Cookbook", link: "/cookbook/overview" },
+          { text: "Tutorial", link: "/tutorials/walkthrough/" }, // nav
+          { text: "Cookbook", link: "/cookbook/view/definition" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
           // subsection of Advanced Topic in the sidebar, and a flat dropdown
@@ -161,7 +164,7 @@ export default defineConfig({
       {
         // the released framework version — z2ui5_if_app=>version in
         // abap2UI5/src/02/z2ui5_if_app.intf.abap is where it comes from
-        text: "1.143.0",
+        text: "1.144.0",
         items: [
           { text: "Release Notes", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
@@ -178,34 +181,83 @@ export default defineConfig({
         link: "/get_started/about",
         collapsed: true,
         items: [
-          { text: "Introduction", link: "/get_started/about" }, // sidebar
+          { text: "In a Nutshell", link: "/get_started/about" }, // sidebar
           {
+            // Install it, and see one app run. The step-by-step tutorials -
+            // Full Example among them - are a section of their own now; what
+            // stays here is the shortest path from nothing to a running app.
             text: "Quickstart",
             items: [
               { text: "Install with abapGit", link: "/get_started/quickstart" },
               { text: "Hello World", link: "/get_started/hello_world" },
-              { text: "Full Example", link: "/get_started/full_example" },
             ],
           },
-          { text: "Tooling", link: "/get_started/tooling" },
-          { text: "Building with AI", link: "/get_started/ai" },
+          { text: "Developing with AI", link: "/get_started/ai" },
           { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
       {
-        text: "Cookbook",
-        link: "/cookbook/overview",
+        // Between Getting Started and the Cookbook on purpose: a tutorial is
+        // read after the framework is installed and before the reference
+        // chapters, and that is the order the three sections stand in.
+        text: "Tutorial",
+        link: "/tutorials/walkthrough/",
         collapsed: true,
         items: [
-          { text: "Overview", link: "/cookbook/overview" },
+          {
+            // No `collapsed` key at all, like Quickstart above: that is what
+            // makes a group a plain labelled list instead of a collapsible
+            // one. `collapsed: false` would still render the toggle and still
+            // let the steps be folded away - and the sequence IS the tutorial,
+            // so a reader working through it has to see where they are on
+            // every page.
+            //
+            // The group label itself opens the walkthrough's index page.
+            // That page used to stand above the group as a separate
+            // "Overview" entry, which put two lines in front of the reader
+            // for one page - the label they were looking for and the entry
+            // that actually opened it.
+            text: "Walkthrough",
+            link: "/tutorials/walkthrough/",
+            items: [
+              { text: "1. The App Class", link: "/tutorials/walkthrough/step-1" },
+              { text: "2. A First View", link: "/tutorials/walkthrough/step-2" },
+              { text: "3. Events", link: "/tutorials/walkthrough/step-3" },
+              { text: "4. Data Binding", link: "/tutorials/walkthrough/step-4" },
+              { text: "5. List Binding", link: "/tutorials/walkthrough/step-5" },
+              { text: "6. Row Events", link: "/tutorials/walkthrough/step-6" },
+              { text: "7. Popups", link: "/tutorials/walkthrough/step-7" },
+              { text: "8. Selection Screen", link: "/tutorials/walkthrough/step-8" },
+              { text: "9. Tables", link: "/tutorials/walkthrough/step-9" },
+              { text: "10. App Structure", link: "/tutorials/walkthrough/step-10" },
+              { text: "11. To Production", link: "/tutorials/walkthrough/step-11" },
+              { text: "12. Unit Tests", link: "/tutorials/walkthrough/step-12" },
+            ],
+          },
+          // The sheet you keep open WHILE working through the steps. It keeps
+          // the URL it was published under - only the entry that navigates to
+          // it moved out of the Cookbook, and it is not listed twice: an entry
+          // standing in two sidebar sections makes its own search results
+          // ambiguous.
           { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
+        ],
+      },
+      {
+        // No overview page any more. This is a collection of concrete
+        // problem-and-solution chapters, and a map page in front of it was a
+        // stop between the reader and the recipe - it restated the sidebar
+        // they were already looking at. The section opens on the first
+        // chapter instead.
+        text: "Cookbook",
+        link: "/cookbook/view/definition",
+        collapsed: true,
+        items: [
           {
             text: "View",
             link: "/cookbook/view/definition",
             collapsed: true,
             items: [
               { text: "Definition", link: "/cookbook/view/definition" },
-              { text: "Deprecated Controls", link: "/cookbook/view/deprecated_controls" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
             ],
@@ -243,10 +295,16 @@ export default defineConfig({
                   { text: "Frontend", link: "/cookbook/event_navigation/frontend" },
                 ],
               },
-              { text: "Action (Obsolete)", link: "/cookbook/event_navigation/action" },
-              { text: "Follow-up Action", link: "/cookbook/expert_more/follow_up_action" },
-              { text: "Navigation", link: "/cookbook/event_navigation/navigation" },
-              { text: "Routing", link: "/cookbook/event_navigation/routing" },
+              {
+                text: "Navigation",
+                link: "/cookbook/event_navigation/navigation/inner_app",
+                items: [
+                  { text: "Inner App", link: "/cookbook/event_navigation/navigation/inner_app" },
+                  { text: "Cross App", link: "/cookbook/event_navigation/navigation/cross_app" },
+                  { text: "Hash", link: "/cookbook/event_navigation/navigation/hash" },
+                  { text: "App State, Share, Bookmark", link: "/cookbook/event_navigation/navigation/app_state" },
+                ],
+              },
               { text: "Exception", link: "/cookbook/event_navigation/exception" },
             ],
           },
@@ -257,7 +315,6 @@ export default defineConfig({
             items: [
               { text: "Popup", link: "/cookbook/popup_popover/popup" },
               { text: "Popover", link: "/cookbook/popup_popover/popover" },
-              { text: "Built-In", link: "/cookbook/popup_popover/built_in" },
             ],
           },
           {
@@ -322,7 +379,6 @@ export default defineConfig({
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
               { text: "Smart Controls", link: "/cookbook/expert_more/smart_controls" },
-              { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
             ],
           },
           // Three chapters that sat behind a collapsible called "More Topics"
@@ -380,7 +436,6 @@ export default defineConfig({
               { text: "Bootstrapping", link: "/configuration/setup/ui5_bootstrapping" },
               { text: "Bootstrap Attributes", link: "/configuration/setup/bootstrap_attributes" },
               { text: "Style / CSS", link: "/configuration/setup/style_css" },
-              { text: "Favicon", link: "/configuration/setup/favicon" },
               { text: "Logon Language", link: "/configuration/setup/logon_language" },
             ],
           },
@@ -472,6 +527,11 @@ export default defineConfig({
             text: "Developer Setup",
             collapsed: true,
             items: [
+              // Moved out of Getting Started: which editor, transpiler and
+              // client tools you develop WITH is a question a newcomer does
+              // not have yet, and on the entry path it read as a required
+              // step. It belongs next to the local setup it describes.
+              { text: "Tooling", link: "/get_started/tooling" },
               { text: "Local Setup", link: "/advanced/local" },
               {
                 text: "Project Tools",
@@ -487,10 +547,10 @@ export default defineConfig({
           },
           // A section of its own until now, next to Advanced Topics rather
           // than inside it. It is the same kind of reading - what the
-          // framework does under the app, and the tools it stands on - and
-          // it is read after the app runs, not on the way in, so it sits
-          // here as the last entry instead of as a second top-level heading
-          // competing with this one.
+          // framework does under the app - and it is read after the app
+          // runs, not on the way in, so it sits here instead of as a second
+          // top-level heading competing with this one. The toolchain it
+          // stands on follows as a group of its own, below.
           {
             text: "Technical Insight",
             link: "/technical/concept",
@@ -507,28 +567,36 @@ export default defineConfig({
                 items: [
                   { text: "RAP", link: "/technical/technology/rap" },
                   { text: "UI5 Freestyle", link: "/technical/technology/ui5" },
+                  { text: "Low-Code Platforms", link: "/technical/technology/low_code" },
                 ],
               },
-              {
-                text: "Toolchain",
-                collapsed: true,
-                items: [
-                  // Every one of these is somebody else's project, which is
-                  // what this group is: the toolchain abap2UI5 stands on.
-                  // The project's own linter used to head the list, pointing
-                  // at the same page as Developer Setup > Project Tools two
-                  // groups up. One entry standing twice in one sidebar makes
-                  // its own search results ambiguous, and here it also made
-                  // the group claim something it no longer holds.
-                  { text: "abapGit", link: "/technical/tools/abapgit" },
-                  { text: "ajson", link: "/technical/tools/ajson" },
-                  { text: "S-RTTI", link: "/technical/tools/srtti" },
-                  { text: "abaplint", link: "/technical/tools/abaplint" },
-                  { text: "open-abap", link: "/technical/tools/open_abap" },
-                  { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
-                  { text: "abapmerge", link: "/technical/tools/abapmerge" },
-                ],
-              },
+            ],
+          },
+          {
+            // Every one of these is somebody else's project, which is what
+            // this group is: the toolchain abap2UI5 stands on. It used to be
+            // the last entry INSIDE Technical Insight, one level further
+            // down, where a reader looking for "how does abapGit fit in" had
+            // to open a group about the framework's internals first. Next to
+            // Developer Setup - the tools you develop WITH - and Technical
+            // Insight - what the framework does under the app - it is one of
+            // the things this section is for, and reachable in one click.
+            //
+            // The project's own linter used to head the list, pointing at
+            // the same page as Developer Setup > Project Tools above. One
+            // entry standing twice in one sidebar makes its own search
+            // results ambiguous, and here it also made the group claim
+            // something it no longer holds.
+            text: "Toolchain",
+            collapsed: true,
+            items: [
+              { text: "abapGit", link: "/technical/tools/abapgit" },
+              { text: "ajson", link: "/technical/tools/ajson" },
+              { text: "S-RTTI", link: "/technical/tools/srtti" },
+              { text: "abaplint", link: "/technical/tools/abaplint" },
+              { text: "open-abap", link: "/technical/tools/open_abap" },
+              { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
+              { text: "abapmerge", link: "/technical/tools/abapmerge" },
             ],
           },
         ],
@@ -539,6 +607,11 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "References", link: "/resources/references" },
+          // Generated from z2ui5_if_client at the pinned release by
+          // scripts/generate-api-reference.mjs — the entry lives here rather
+          // than in the Cookbook because it is a lookup destination, not a
+          // reading path: the cookbook chapters explain, this page lists.
+          { text: "Client API", link: "/resources/api" },
           // No "Sample Catalogues" entry here any more. A page that only
           // described the three catalogues put a stop between the reader and
           // the corpus, and had to be kept true about counts and facets it

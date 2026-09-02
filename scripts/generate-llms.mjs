@@ -81,8 +81,21 @@ function markdownFiles(dir, out = []) {
   return out;
 }
 
-const linkOf = (file) => `/${path.relative(DOCS, file).replace(/\\/g, '/').replace(/\.md$/, '')}`;
-const fileOf = (link) => path.join(DOCS, `${link.slice(1)}.md`);
+/* A page link and the file behind it are NOT a plain `.md` suffix apart.
+ * VitePress serves `<dir>/index.md` at `<dir>/`, so the trailing slash IS the
+ * index page, and `docs/index.md` (the home page) is the same rule at the
+ * root - which is why the orphan filter below used to carry a hand-written
+ * `/index` exception. Everything that converts between the two goes through
+ * mdSuffix, or a directory index resolves to `<dir>/.md` and takes the build
+ * down, which is exactly what happened the first time a section grew one. */
+const mdSuffix = (link) => (link.endsWith('/') ? `${link}index.md` : `${link}.md`);
+const linkOf = (file) => {
+  const rel = path.relative(DOCS, file).replace(/\\/g, '/');
+  if (rel === 'index.md') return '/';
+  if (rel.endsWith('/index.md')) return `/${rel.slice(0, -'index.md'.length)}`;
+  return `/${rel.replace(/\.md$/, '')}`;
+};
+const fileOf = (link) => path.join(DOCS, mdSuffix(link).slice(1));
 
 /* ------------------------------------------------------------ the content */
 
@@ -138,15 +151,23 @@ const title = (body, fallback) =>
  * A wrong count in the one file written to be quoted verbatim is the worst
  * place in the repository to keep one.
  *
- * So it is counted, through the same parser the sample links go through - and
- * when the catalogue is not at hand the phrase simply carries no number. The
- * deploy workflow checks out no sample repository, so that is the normal case
- * for the published file, and it is the right outcome: the sentence an agent
- * needs is "ask SAMPLES.md before writing an app", not the size of the
- * haystack. */
+ * So it is counted, never typed: from a sibling checkout when the workflow has
+ * one, else from the catalogue.json each sample repository publishes at its
+ * root - the same file, so the two paths cannot answer differently - and when
+ * neither is reachable the phrase simply carries no number. The checkout steps
+ * are continue-on-error and the fetch can 404 or time out; both cost only the
+ * figure, and that is the right trade: the sentence an agent needs is "ask
+ * SAMPLES.md before writing an app", not the size of the haystack.
+ *
+ * Counted ONCE per repository, here, so the phrase in llms.txt and the log
+ * line at the bottom cannot come from two different attempts. */
+const corpus = new Map();
+for (const repo of ['samples', 'samples-controls']) {
+  corpus.set(repo, await countCatalogue(repo, ROOT));
+}
 const counted = (repo, phrase) => {
-  const n = countCatalogue(repo, ROOT);
-  return n === null ? phrase : `${n} ${phrase}`;
+  const c = corpus.get(repo);
+  return c === null ? phrase : `${c.count} ${phrase}`;
 };
 
 const pages = sidebarPages();
@@ -156,7 +177,7 @@ const linked = new Set(pages.map((p) => p.link));
 // still gets them
 const orphans = markdownFiles(DOCS)
   .map(linkOf)
-  .filter((l) => !linked.has(l) && l !== '/index')
+  .filter((l) => !linked.has(l) && l !== '/')
   .sort();
 
 const read = new Map();
@@ -179,7 +200,7 @@ for (const p of pages) {
 const entry = (p) => {
   const body = read.get(p.link);
   const note = summarise(body);
-  return `- [${title(body, p.text)}](${SITE}${p.link}.md)${note ? `: ${note}` : ''}`;
+  return `- [${title(body, p.text)}](${SITE}${mdSuffix(p.link)})${note ? `: ${note}` : ''}`;
 };
 
 const index = [
@@ -274,7 +295,7 @@ const full = [
 
 let written = 0;
 for (const [link, body] of read) {
-  const out = path.join(PUBLIC, `${link.slice(1)}.md`);
+  const out = path.join(PUBLIC, mdSuffix(link).slice(1));
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, `<!-- ${SITE}${link} -->\n\n${stripFrontmatter(body).trim()}\n`);
   written += 1;
@@ -285,12 +306,13 @@ fs.writeFileSync(path.join(PUBLIC, 'llms-full.txt'), full);
 
 const kb = (s) => `${Math.round(s / 1024)} kB`;
 console.log(`llms.txt: ${pages.length} pages in ${bySection.size} sections (${kb(index.length)})`);
-/* Say it out loud, because "no checkout" and "counted" produce different files
- * and both are valid - the only way to notice a number went missing that
- * should have been there is to be told which ones were taken. */
+/* Say it out loud, because "no catalogue" and "counted" produce different
+ * files and both are valid - the only way to notice a number went missing that
+ * should have been there, or arrived from the fallback when a checkout was
+ * expected, is to be told which ones were taken and from where. */
 for (const repo of ['samples', 'samples-controls']) {
-  const n = countCatalogue(repo, ROOT);
-  console.log(`  ${repo}: ${n === null ? 'no catalogue here — published without a count' : `${n} apps`}`);
+  const c = corpus.get(repo);
+  console.log(`  ${repo}: ${c === null ? 'no catalogue anywhere — published without a count' : `${c.count} apps (${c.source})`}`);
 }
 console.log(`llms-full.txt: ${kb(full.length)}`);
 console.log(`${written} page(s) published as raw markdown under docs/public/`);

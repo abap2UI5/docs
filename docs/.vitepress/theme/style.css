@@ -10,6 +10,84 @@
     --vp-button-brand-border-hover: #a83232;
 }
 
+/* ============================================================ the type ===
+ *
+ * The system font, not a webfont. VitePress ships Inter and self-hosts it;
+ * Inter is a good typeface and it is a PRODUCT typeface — geometric, even
+ * colour, drawn to make an interface feel designed. This documentation is
+ * read next to an ABAP editor and a GitHub tab, and the register those two
+ * share is the one the operating system already has: San Francisco on macOS,
+ * Segoe UI on Windows. Switching to it is the single change that moves the
+ * site furthest towards "technical" and costs nothing — the fonts are already
+ * on the machine, so it also removes a 100kB webfont from the critical path.
+ *
+ * The mono stack gains SFMono-Regular / "SF Mono" ahead of Menlo. `ui-mono-
+ * space` already resolves to SF Mono on current Safari and Chrome, but not on
+ * older Chromium and not on Firefox, where the fallback was Menlo — a wider
+ * face, so the same ABAP line took more columns on some machines than others.
+ *
+ * Two more webfonts, Montserrat and Fira Code, were requested in
+ * `config.mjs` and applied by nothing: no rule in this file, or anywhere
+ * else, ever named them. They are gone from the head with this change. */
+:root {
+  --vp-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         "Noto Sans", Helvetica, Arial, sans-serif,
+                         "Apple Color Emoji", "Segoe UI Emoji";
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+                         Consolas, "Liberation Mono", monospace;
+
+  /* Body links in the brand colour.
+   *
+   * These were blue for a while, on the argument that red in running text
+   * reads as an error rather than as a brand. That argument is not wrong —
+   * it is why inline CODE is still neutral, and that half stays — but it lost
+   * to the simpler one: a site with a red mark and blue links carries two
+   * accents, and the reader has to learn which of them means anything. One
+   * accent, used for the project and for the things you can click, is the
+   * commoner arrangement and the one capire uses (theirs is teal, for both).
+   *
+   * `--vp-c-brand-1` on white measures 4.74:1, which clears AA for body text
+   * — but only just, and in DARK it is 3.62:1 against `#1b1b1f`, which fails.
+   * So the dark theme lightens it rather than inheriting it; the value below
+   * is the same hue at 5.76:1. That is the whole reason this is a token pair
+   * and not one `var(--vp-c-brand-1)`. */
+  --a2ui5-c-link: var(--vp-c-brand-1);
+  --a2ui5-c-link-hover: var(--vp-c-brand-2);
+  /* The one-pixel edge on code blocks, tables and the Run bar. */
+  --a2ui5-c-hairline: #d1d9e0;
+
+  /* …and the flat grey behind them. ONE value, because the theme ships two
+   * and they do not match: a code block is an opaque `#f6f6f7`, while a
+   * `::: details` block, being drawn with `--vp-c-default-soft`, is a
+   * TRANSLUCENT blue-grey that resolves to about #eff0f3 over the page. Side
+   * by side — and on `get_started/quickstart.md` they are literally adjacent
+   * — the details block reads a shade darker and a shade bluer than the code
+   * block inside it, which looks like a mistake because it is one.
+   *
+   * The value is the lighter of the two, and it is #f6f8fa rather than the
+   * theme's #f6f6f7: the borders on these panels are `--a2ui5-c-hairline`,
+   * a blue-grey, and a neutral fill inside a blue-grey edge is the same
+   * half-step mismatch one level down. In dark the two diverge in OPPOSITE
+   * directions — the code block is darker than the page, the details block is
+   * a lighter overlay on it — so the unification matters more there, not less.
+   *
+   * Inline code is deliberately NOT on this token. It keeps the stronger
+   * `--vp-c-default-soft` tint, because a chip in the middle of a sentence
+   * needs more separation from its background than a panel the size of a
+   * paragraph does, and because at this value it would vanish entirely inside
+   * one of the panels above. GitHub splits the two for the same reason. */
+  --a2ui5-c-surface: #f6f8fa;
+}
+
+.dark {
+  /* 5.76:1 on the dark ground, where the brand red itself manages 3.62 and
+   * fails AA. Same hue, lifted until it reads. */
+  --a2ui5-c-link: #e8707c;
+  --a2ui5-c-link-hover: #f0949c;
+  --a2ui5-c-hairline: #3d444d;
+  --a2ui5-c-surface: #161b22;
+}
+
 /* ============================================================== compact ===
  *
  * A denser reading layout: more prose and more code on a screen, and section
@@ -40,17 +118,17 @@
  * modest; the visible win is that a code block now tends to CLOSE on screen
  * instead of running off the bottom.
  *
- * Not touched on purpose: the content column stays at its 688px. It looks
- * like the obvious lever and is not — 96% of the ABAP lines in this
- * repository are under 81 characters, so widening it buys three percentage
- * points and costs the line length that makes prose readable.
+ * The content column is set further down, in `one column, and a measure`.
+ * The 81-character figure quoted there — 96% of the ABAP lines in this
+ * organisation fit in it — is the reason the column can be narrow enough for
+ * prose without cutting the code in half.
  */
 
 /* Section headings. The top rule stays: on a long cookbook page it is what
  * lets the eye find the next section while scrolling. Its padding does not. */
 .vp-doc h2 {
-  font-size: 19px;
-  line-height: 26px;
+  font-size: 17px;
+  line-height: 24px;
   margin: 32px 0 12px;
   padding-top: 12px;
   letter-spacing: -0.01em;
@@ -63,14 +141,14 @@
 }
 
 .vp-doc h3 {
-  font-size: 16.5px;
-  line-height: 24px;
+  font-size: 15px;
+  line-height: 22px;
   margin: 24px 0 0;
 }
 
 .vp-doc h4 {
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 14px;
+  line-height: 20px;
   margin: 20px 0 0;
 }
 
@@ -82,15 +160,15 @@
  * of thing that quietly stops being true after a dependency bump — so the
  * breakpoint is mirrored rather than relied upon. */
 .vp-doc h1 {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 22px;
+  line-height: 30px;
   margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
   .vp-doc h1 {
-    font-size: 26px;
-    line-height: 34px;
+    font-size: 24px;
+    line-height: 32px;
   }
 }
 
@@ -99,6 +177,10 @@
  * screen. */
 :root {
   --vp-code-line-height: 1.55;
+  /* 13px flat, not the theme's `.875em`. The relative unit made a listing
+   * inside a callout or a list item shrink with its container, so the same
+   * ABAP was set at three different sizes on one page. */
+  --vp-code-font-size: 13px;
 }
 
 .vp-doc div[class*='language-'] pre {
@@ -121,13 +203,321 @@
   margin: 12px 0;
 }
 
-/* ====================================================== a wider page ===
+/* Body text at 15/24 rather than the theme's 16/28.
  *
- * The default gives the reading column 688px and the outline beside it 224px,
- * inside a 1440px layout. On a wide screen that leaves the middle third of the
- * window carrying the text and the rest empty.
+ * The line-height is the bigger half of this. 1.75 is a magazine setting — it
+ * is right for a column of uninterrupted prose and wrong for a page that
+ * breaks every third line for a code block, a table or an identifier in a
+ * box: the extra leading pulls the paragraph apart without any run of text
+ * long enough to need it. 1.6 keeps the paragraph as one block and puts the
+ * air back between the paragraph and the listing under it, which is where a
+ * reader of this site is actually looking for the boundary.
  *
- * The outline is the clearer defect of the two, and it is measurable: this
+ * Measured on the rendered document height, at 1512px wide, against the
+ * layout this replaces: hello_world 3859 -> 3638 (-6%), quickstart 3502 ->
+ * 3115 (-11%), model/binding 5568 -> 5193 (-7%), how_it_all_works 13496 ->
+ * 13239 (-2%), resources/api 26565 -> 24103 (-9%).
+ *
+ * Those figures were nearly twice as large before the measure cap below went
+ * in — how_it_all_works alone was -14% — and they are stated after it on
+ * purpose, because that is what the page actually does. A 600px measure means
+ * more lines of prose, so it hands back a good part of what the tighter
+ * leading saved. That is a trade made with open eyes: vertical length is
+ * cheap on a page you scroll, and a 120-character line is expensive on every
+ * one of them. What survives the trade is still real, and it is largest where
+ * it matters most — the reference pages, read by scrolling and scanning
+ * rather than start to finish. */
+.vp-doc p,
+.vp-doc li,
+.vp-doc summary,
+.vp-doc blockquote,
+.vp-doc dd {
+  font-size: 15px;
+  line-height: 24px;
+}
+
+/* The chrome around the page — sidebar, outline, nav, the prev/next footer —
+ * at 13px. It is navigation, not text: it is scanned for a word that is
+ * already known, never read, and at the size of the prose it competes with
+ * it. This is the size GitHub sets its own chrome at, and the reason its
+ * pages read as denser than they measure. */
+.VPSidebar .VPSidebarItem .text,
+.VPDocOutlineItem a.outline-link,
+.VPDocAside .outline-title,
+.VPNavBarMenu .VPLink,
+.VPNavBarMenuGroup .button,
+.VPDocFooter .title,
+.VPDocFooter .desc {
+  font-size: 13px;
+}
+
+/* …and the group headings in the sidebar back ABOVE the pages under them.
+ *
+ * The previous version of this rule put them at 12px muted, one step BELOW
+ * their own children, on a GitHub argument: a section label over a list. Set
+ * against capire — SAP's CAP documentation, VitePress like this one and the
+ * nearest comparable corpus — that reads as the odd choice. There the tree
+ * descends, `Develop` over `Domain Modeling` over `Status Flows`, each level
+ * a step smaller than the one it contains, which is what a navigation tree has
+ * always done and what makes its shape readable without being read.
+ *
+ * A sidebar is not a page of labelled lists. It is one tree, and the size of
+ * an entry is the reader's only cue to its depth: a group title smaller than
+ * its own children says the children outrank it, which is false.
+ *
+ * So 14px semibold in the full text colour, one step above the 13px of the
+ * entries under it. The row is the theme's, untouched, for the reason it was
+ * untouched before: every one of these headings is also a link, and a target
+ * that shrinks with its type is a target you have to aim at.
+ *
+ * Specificity: the theme's rule is `.VPSidebarItem.level-0 .text[data-v-…]`,
+ * four units. `.VPSidebar` in front of the same three classes makes four
+ * without the attribute, which only TIES — so the `> .item` child combinator
+ * carries a fifth. Ties here are decided by load order, and load order is the
+ * one thing in this file that is not allowed to be the reason a rule wins. */
+.VPSidebar .VPSidebarItem.level-0 > .item .text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vp-c-text-1);
+}
+
+/* ================================================ edges, not surfaces ===
+ *
+ * The theme draws the things it wants to set apart — a code block, a callout,
+ * a table row — as filled panels with an 8px radius. Six of them down a page
+ * is six grey slabs, and the page reads as a sequence of cards rather than as
+ * a document with code in it. The same separation is available from a
+ * one-pixel edge, which does the job and then stops being visible.
+ *
+ * The radius goes 8px -> 6px throughout. Nothing depends on the number; it is
+ * simply the smallest radius that still reads as intentional rather than as a
+ * rendering artefact, and it is the one the reader's other technical tabs use.
+ */
+
+:root {
+  --vp-code-block-bg: var(--a2ui5-c-surface);
+}
+
+.vp-doc div[class*='language-'] {
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 6px;
+}
+
+/* The `::: details` block onto the same grey as the code block it usually
+ * contains. It is the one custom block that is CONTENT the reader opened
+ * rather than a remark, so it keeps a panel where the tip/warning/danger
+ * blocks above lost theirs.
+ *
+ * The fill without an edge, though. A details block is almost always a
+ * WRAPPER — the ABAP Cloud variant of a setup step, holding a paragraph and a
+ * code block — so an edge on it is a second rectangle drawn around a thing
+ * that already has one, and the code block inside ends up as a bordered box
+ * sitting a few pixels inside another bordered box. Collapsed, which is how a
+ * reader meets it, the two edges frame one line of text and about sixty pixels
+ * of nothing.
+ *
+ * The fill alone is enough to say "this is a container": it is the same grey
+ * as the code block, so an open details block reads as one surface with the
+ * listing sitting on it rather than as a box inside a box. Nothing else on the
+ * site now carries a fill without an edge, which is what makes this one read
+ * as the container it is. */
+.vp-doc .custom-block.details {
+  border: 0;
+  border-radius: 6px;
+  background-color: var(--a2ui5-c-surface);
+}
+
+/* Inline code. The theme colours it with the BRAND colour, which is this
+ * project's red — so `z2ui5_if_client` in a sentence is set in the same red
+ * as a compiler error, and a paragraph naming four identifiers reads as a
+ * paragraph with four things wrong in it. An identifier is not emphasis: the
+ * monospace face and the tint already say "this is a name", and that is the
+ * whole message. */
+.vp-doc :not(pre) > code {
+  color: var(--vp-c-text-1);
+  background-color: var(--vp-c-default-soft);
+  border-radius: 6px;
+}
+
+/* Callouts as a margin note — a rule down the left edge, the text on the
+ * page's own background — rather than a coloured plate. A tip is an ASIDE:
+ * something the writer stepped out of the paragraph to say. A filled block
+ * interrupts the reading line and takes the eye first, which inverts that:
+ * the remark outranks the text it is a remark about. The rule marks the same
+ * boundary and lets the eye pass.
+ *
+ * The colour survives on the rule, so the three types stay distinguishable
+ * at a glance; it is the 600 square pixels of tinted background that go. */
+.vp-doc .custom-block:not(.details) {
+  border: 0;
+  border-left: 3px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
+  padding: 2px 0 2px 16px;
+}
+
+/* `tip` takes the neutral rule, not the link colour it used to borrow: now
+ * that links are the brand red, a red tip would be indistinguishable from a
+ * red `danger`, and most callouts on this site are tips. What is left is the
+ * discipline worth having — colour on a callout means SEVERITY and nothing
+ * else, so amber warns, red is dangerous, and a remark carries no colour. */
+.vp-doc .custom-block.tip     { border-left-color: var(--vp-c-text-3); }
+.vp-doc .custom-block.info    { border-left-color: var(--vp-c-text-3); }
+.vp-doc .custom-block.warning { border-left-color: #bf8700; }
+.vp-doc .custom-block.danger  { border-left-color: #cf222e; }
+
+.vp-doc .custom-block-title {
+  color: var(--vp-c-text-1);
+  font-size: 14px;
+}
+
+.vp-doc .custom-block p,
+.vp-doc .custom-block li {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--vp-c-text-2);
+}
+
+/* ---------------------------- and the custom blocks get the memo too ---
+ *
+ * Three of the decisions above stopped at the edge of a `:::` block, and each
+ * one left the block contradicting the page around it. All three are measured
+ * on the rendered page, not guessed:
+ *
+ *   prose inside a details block   798px, where the page is 600 — about 120
+ *                                  characters, which is the exact number the
+ *                                  measure cap exists to prevent
+ *   a link inside any block        rgb(208,60,74), the brand red, where every
+ *                                  other link on the page is rgb(9,105,218)
+ *   inline code inside any block   tinted by the block's TYPE — brown on
+ *                                  yellow in a warning — where code in prose
+ *                                  is neutral
+ *
+ * The last one is the clearest case, and it is a consequence of this file:
+ * the theme tints a code chip to match the plate its callout sits on, and the
+ * callouts here no longer have a plate. So the chip was carrying a warning's
+ * yellow on the page's own white background, which reads as a highlight
+ * nobody applied.
+ *
+ * Specificity: the theme writes these per block type — `.custom-block.info a,
+ * .custom-block.info code { color: var(--vp-c-brand-1) }` and one pair like it
+ * for each of the eight types, three units each. Matching that by enumerating
+ * the types here would mean this file goes stale the day VitePress adds a
+ * ninth. `[class]` is always true on an element that has one, and it buys the
+ * fourth unit without naming anything that can change. */
+.vp-doc .custom-block[class] a {
+  color: var(--a2ui5-c-link);
+}
+
+.vp-doc .custom-block[class] a:hover {
+  color: var(--a2ui5-c-link-hover);
+}
+
+.vp-doc .custom-block[class] :not(pre) > code {
+  color: var(--vp-c-text-1);
+  background-color: var(--vp-c-default-soft);
+}
+
+.vp-doc .custom-block[class] a > code {
+  color: var(--a2ui5-c-link);
+}
+
+/* Links in the body take the accent defined at the top of this file, and lose
+ * the permanent underline — the underline is what makes a paragraph with
+ * five links in it look struck through. It comes back on hover, where it is
+ * the answer to "is this one a link". */
+.vp-doc a {
+  color: var(--a2ui5-c-link);
+  text-decoration: none;
+}
+
+.vp-doc a:hover {
+  color: var(--a2ui5-c-link-hover);
+  text-decoration: underline;
+}
+
+/* Tables as a grid rather than as zebra stripes.
+ *
+ * Almost every table on this site is a two- or three-column lookup — a
+ * parameter and its type, a setting and its default — and the question asked
+ * of it is "which cell is this". Alternating row fills answer "which ROW is
+ * this", which is the question a long table of records raises and none of
+ * these do; between them they gave the page another set of grey slabs. Ruled
+ * cells answer the question actually being asked.
+ *
+ * `display: table` restores what the theme sets to `display: block` with
+ * `overflow-x: auto`. That default exists so a wide table can scroll instead
+ * of breaking the layout — but as a side effect a table shrinks to its
+ * CONTENT width, so the four-column parameter tables on `resources/api.md`
+ * sat at about 40% of the column with three quarters of the page beside them
+ * empty. The scroll is preserved by the wrapper rule below. */
+.vp-doc table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+
+.vp-doc tr {
+  background: transparent;
+  border: 0;
+}
+
+.vp-doc th,
+.vp-doc td {
+  border: 1px solid var(--a2ui5-c-hairline);
+  padding: 6px 13px;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.vp-doc th {
+  background: var(--a2ui5-c-surface);
+  font-weight: 600;
+}
+
+/* …and the escape hatch the `display: block` above used to provide.
+ *
+ * `.vp-doc-table` is NOT a VitePress class — 1.6.4 emits a bare `<table>` and
+ * puts the scroll on the table itself. The wrapper is made in
+ * `.vitepress/markup.mjs`, which is where to look when this rule appears to do
+ * nothing. It was written here first, against a wrapper that did not exist,
+ * and matched nothing for two releases; that is why the note is this loud.
+ *
+ * The wrapper also carries the `tabindex`, moved off the table by the same
+ * rule: whatever scrolls has to be reachable from a keyboard, and after this
+ * change the table is not the thing that scrolls. */
+.vp-doc .vp-doc-table {
+  overflow-x: auto;
+}
+
+/* ============================================ one column, and a measure ===
+ *
+ * The theme gives the reading column 688px and the outline beside it 224px,
+ * inside a 1440px layout. Only ONE of those two numbers was ever wrong here.
+ *
+ * The column was widened to 830px, and then — because 830px of 15px type is
+ * about 120 characters a line — prose was capped back to 600px inside it,
+ * leaving code, tables and figures at the full width. That worked, and it cost
+ * more than it was worth: two right edges on every page, three separate
+ * follow-up fixes for the places the cap did not reach (a figure is a `<p>`, so
+ * is prose inside a details block), and a rule that had to name every exception
+ * to itself. A layout that needs an exception list is a layout that is fighting
+ * the document.
+ *
+ * So: one column, 640px, which is about 92 characters at this type size. That
+ * is the same measure SAP's capire — VitePress too, and the nearest comparable
+ * corpus — runs at: counted off its rendered pages, its lines come in at 84 to
+ * 91 characters. It is also enough for the ABAP: 96% of the ABAP lines in this
+ * organisation are under 81 characters, and 81 characters of the 13px mono face
+ * fits inside 640px. The 4% that do not, and the widest API tables, scroll
+ * inside their own box, which is what the `.vp-doc-table` wrapper is for.
+ *
+ * The layout width override goes with it. 1600px existed to make room for an
+ * 830px column beside a widened outline; at 640px the theme's own 1440px is
+ * more than enough, and one less number to keep true.
+ *
+ * The outline widening STAYS, because that defect was real and is unrelated: this
  * documentation has 627 entries in it, and at 224px about 12% of them are cut
  * off with an ellipsis - "Step 1 - State: Types a...", "Step 2 - The View:
  * Sel...". An outline entry that does not say what the section is fails at its
@@ -137,14 +527,9 @@
  *
  * Only from 1440px up, and that breakpoint was measured rather than picked:
  * at 1280px the window is the binding constraint, so a wider outline does not
- * come out of the empty margin - it comes out of the text. Applying this from
- * 1280 took the reading column from 624px DOWN to 576px, which is the opposite
- * of the point.
+ * come out of the empty margin - it comes out of the text.
  */
 @media (min-width: 1440px) {
-  :root {
-    --vp-layout-max-width: 1600px;
-  }
 
   /* `!important`, and not for want of trying. The theme rule is a Vue SCOPED
    * style, so it compiles to
@@ -164,7 +549,7 @@
    * normally. The difference is not obvious from reading the theme source,
    * which is why it is written down here. */
   .VPDoc.has-aside .content-container {
-    max-width: 830px !important;
+    max-width: 640px !important;
   }
 
   /* All three move together: `.aside` is the column, `.aside-container` the
@@ -206,28 +591,61 @@
   padding-bottom: 4px;
 }
 
-/* ------------------------------------------------- the callout boxes ---
+/* ------------------------------------------ the filename over a block ---
  *
- * The tip/warning/danger blocks keep the width the reading column had BEFORE
- * it was widened. A callout is an aside - a paragraph or two, set apart - and
- * the wider it gets the less it reads as one: at 830px a three-line note
- * becomes a two-line slab that competes with the prose it interrupts. Prose
- * and code got the extra width because they use it; a callout does not.
+ * Drawn as the tab a `::: code-group` draws, because that is what it is: the
+ * one-tab case of the same thing. A block promoted into a real group later
+ * keeps its shape, and a page mixing the two does not show the reader two
+ * different ways of saying which file this is.
  *
- * 688px is not a round number picked to look tidy: it is exactly what the
- * reading column was, so these boxes are unchanged from what they were rather
- * than newly narrowed.
- *
- * `::: details` is excluded, and the exclusion is the whole point of writing
- * `:not(.details)` rather than listing the three types. VitePress gives both
- * the same `custom-block` class, but they are opposite things: a callout holds
- * a REMARK about the text, a details block holds CONTENT the reader opened on
- * purpose - a screenshot, a long listing, the ABAP Cloud variant of a setup
- * step. Capping that at 688px put a narrow box under a full-width screenshot
- * on the quickstart page, which is where this was noticed. Content follows the
- * reading column; commentary does not. */
-.vp-doc .custom-block:not(.details) {
-  max-width: 688px;
+ * The rule is in `.vitepress/markup.mjs`, and it says there which blocks get
+ * one — not the ABAP, whose class name is already the first word of its own
+ * first line. */
+.vp-doc .a2ui5-titled {
+  margin: 16px 0;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 6px;
+  background-color: var(--a2ui5-c-surface);
+  overflow: hidden;
+}
+
+.vp-doc .a2ui5-titled-name {
+  padding: 8px 14px 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-mono);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/* The underline is the tab, and it is only as wide as the name — a full-width
+ * rule under a short filename reads as a section divider, which this is not. */
+.vp-doc .a2ui5-titled-name span {
+  display: inline-block;
+  padding-bottom: 7px;
+  border-bottom: 2px solid var(--vp-c-brand-1);
+  margin-bottom: -1px;
+}
+
+/* The block inside has already been drawn with its own edge and radius; here
+ * it is the body of a box that has both, so it gives them up. */
+.vp-doc .a2ui5-titled div[class*='language-'] {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.vp-doc .a2ui5-titled .a2ui5-play {
+  margin: 0;
+}
+
+.vp-doc .a2ui5-titled .a2ui5-play-run,
+.vp-doc .a2ui5-titled .a2ui5-play-bar,
+.vp-doc .a2ui5-titled .a2ui5-play-failed {
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: 0;
 }
 
 /* ------------------------------------------------ the Run button ---
@@ -252,6 +670,7 @@
 
 .vp-doc .a2ui5-play div[class*="language-"] {
   margin-bottom: 0;
+  border-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -262,9 +681,8 @@
   align-items: center;
   width: 100%;
   padding: 7px 14px;
-  border: 0;
-  border-top: 1px solid var(--vp-c-divider);
-  border-radius: 0 0 8px 8px;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 0 0 6px 6px;
   background-color: var(--vp-code-block-bg);
   color: var(--vp-c-text-2);
   font-size: 13px;
@@ -333,11 +751,45 @@
  * continues the code block's own edges downwards, so the example and what it
  * produces read as one thing. */
 .vp-doc .a2ui5-play .abap2ui5-demo {
-  border: 1px solid var(--vp-c-divider);
+  border: 1px solid var(--a2ui5-c-hairline);
   border-top: 0;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 6px 6px;
   background: var(--vp-c-bg);
   overflow: hidden;
+}
+
+/* A FLOOR under the frame the embed sizes for itself, and the one piece of
+ * this that is not decoration.
+ *
+ * The embed loader starts an app-only demo at 320px and then grows it to the
+ * height the app reports, measured from the app document's `scrollHeight`.
+ * That measurement works for a document that FLOWS — and an abap2UI5 app is
+ * the other kind. Almost every example here is a `Shell` around a `Page`, laid
+ * out at 100% of whatever box it was given, so its scrollHeight is that box:
+ * the measurement can only ever confirm the height the frame already has, and
+ * 320px is where a Page, its header and about four lines of content stay
+ * forever. Every example on the site was being read through a slot the size of
+ * a large thumbnail.
+ *
+ * A min-height fixes it from this side, and this side is where it has to be
+ * fixed to reach anybody: the frame's height is an INLINE style, which
+ * `min-height` in a stylesheet still wins against, so the floor holds whatever
+ * the published playground decides — including the version deployed right now.
+ * An app that genuinely overflows still grows past it, because that is the one
+ * case where the app's own document really is taller than its box.
+ *
+ * 520px is the loader's own default for the editor-and-app layout, so it is
+ * the size the playground itself considers a demo worth looking at. Under
+ * `640px` the page is nearly all frame anyway, and a viewport-relative floor
+ * keeps a phone from scrolling past a box taller than its screen. */
+.vp-doc .a2ui5-play .abap2ui5-demo iframe {
+  min-height: 520px;
+}
+
+@media (max-width: 640px) {
+  .vp-doc .a2ui5-play .abap2ui5-demo iframe {
+    min-height: min(520px, 70vh);
+  }
 }
 
 /* The loader could not be reached — an offline reader, or a blocked
@@ -346,8 +798,8 @@
 .vp-doc .a2ui5-play-failed {
   margin: 0;
   padding: 7px 14px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 0 0 8px 8px;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: 0 0 6px 6px;
   color: var(--vp-c-text-2);
   font-size: 13px;
 }
@@ -432,8 +884,8 @@
   align-items: center;
   gap: 6px;
   border: 1px solid var(--vp-c-brand-1);
-  border-radius: 20px;
-  padding: 8px 22px;
+  border-radius: 6px;
+  padding: 7px 18px;
   color: var(--vp-c-brand-1);
   font-size: 14px;
   font-weight: 600;
@@ -451,4 +903,207 @@
   border-color: var(--vp-c-brand-2);
   background-color: var(--vp-c-brand-soft);
   color: var(--vp-c-brand-2);
+}
+
+/* ==================================== the home page, in the same register ===
+ *
+ * Everything above this point is about the PAGES. The home page is a
+ * different kind of surface — a signpost, not a document — and for a while
+ * that was the argument for leaving it alone. It is not a good enough one:
+ * the front door is where a reader decides what kind of project this is, and
+ * a door in a different register than every room behind it makes the promise
+ * the rooms then break. So the same three moves apply here — system type,
+ * edges instead of fills, a 6px radius — and only the SCALE stays generous,
+ * because a signpost may be read from further away than a paragraph.
+ *
+ * What deliberately does not change: the logo stays a 200px red disc, and
+ * the Quickstart button stays a filled red block. Those two are the identity
+ * and the one action the page exists to offer; a page with nothing filled on
+ * it has no primary action, only a list of links.
+ *
+ * Specificity, as everywhere in this file: the theme's rules are Vue SCOPED
+ * styles and compile with a `[data-v-…]` attribute, so `.VPFeature[data-v-x]`
+ * counts two units and a bare `.VPFeature` here would never apply. The
+ * ancestors below are counted against the real compiled selectors —
+ * `.VPButton.medium[data-v-x]` is three, so the button rules carry four. */
+
+/* The three feature cards. The theme draws them with `background-color` and
+ * `border-color` both set to `--vp-c-bg-soft`: a filled tile whose border is
+ * invisible because it is the same colour as its fill. Swapping the fill for
+ * the divider colour turns the same element into an outlined card and costs
+ * nothing else — the hover rule the theme already ships
+ * (`.VPFeature.link:hover { border-color: var(--vp-c-brand-1) }`) only starts
+ * being visible once the resting border is. */
+.Layout .VPHome .VPFeature {
+  border-color: var(--vp-c-divider);
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+/* The icon loses its 48px grey plate. The plate is a container drawn for a
+ * glyph that does not need containing — three of them across the row read as
+ * three empty squares before they read as an icon, which is exactly how they
+ * render on any visit where the Font Awesome stylesheet is slow or blocked.
+ * The glyph alone, at the size of a heading and in the muted text colour,
+ * says the same thing and says nothing when it is missing. */
+.Layout .VPHome .VPFeature .icon {
+  width: auto;
+  height: auto;
+  margin-bottom: 14px;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--vp-c-text-2);
+  font-size: 20px;
+  justify-content: flex-start;
+}
+
+/* The buttons. 20px on a 34px-tall button is a pill, and a pill is a control
+ * on a marketing page; 6px is the radius everything else on this site now
+ * carries. The secondary pair also lose their grey fill for a hairline — two
+ * filled grey blocks beside a filled red one made a row of three buttons look
+ * like three equal choices, when only the first is the one the page wants. */
+.Layout .VPHome .VPHero .VPButton.medium {
+  border-radius: 6px;
+}
+
+.Layout .VPHome {
+  --vp-button-alt-border: var(--vp-c-divider);
+  --vp-button-alt-bg: transparent;
+  --vp-button-alt-hover-border: var(--vp-c-text-3);
+  --vp-button-alt-hover-bg: transparent;
+  --vp-button-alt-active-border: var(--vp-c-text-2);
+  --vp-button-alt-active-bg: transparent;
+}
+
+/* ================================================ the home page, at 90% ===
+ *
+ * The home page is not a page you read — it is a signpost, and at the theme's
+ * own sizes it came to 1152px on a 1440-wide window: hero, three cards, the
+ * samples button and the footer, which is a screenful and a bit, so the cards
+ * arrived only for a reader who went looking for them.
+ *
+ * What is below is the theme's own design at nine tenths of its numbers —
+ * every one of them, type included, so the page keeps its proportions
+ * exactly. It is the page a reader gets by pressing ctrl-minus once, written
+ * down: the same relationship between the hero name, the headline and the
+ * tagline, the same air around the cards, at a size that leaves the whole
+ * signpost on one screen on a large display.
+ *
+ * The first attempt at this cut harder — hero type to 40px, cards to 16px of
+ * padding — and hit 750px, which fit any laptop and read as a different,
+ * smaller page. Fitting a 13" window is not worth redesigning the front door
+ * for: at 90% the page is about 970px, so a 1200px-tall window shows all of
+ * it and a 800px one still scrolls a little. That is the deliberate trade.
+ *
+ * The one number NOT scaled is the gap under the last block: the theme's
+ * 128px assumes there is more page below, and here there is a footer. It is
+ * 48px instead. Nothing is visible in that space either way — when the page
+ * is shorter than the window the footer sits at the bottom regardless — so it
+ * costs nothing to look at and saves 80px on a short one.
+ *
+ * Specificity: the theme's rules are Vue SCOPED styles, so each compiles with
+ * a `[data-v-…]` attribute — `.VPHero[data-v-x]` counts two units, and a bare
+ * `.VPHero` here counts one and never applies. Every rule below therefore
+ * carries two ancestors, `.Layout .VPHome`, which takes it to three and wins
+ * on specificity rather than on this file happening to load later; `.VPHome`
+ * itself is the one element the theme styles directly, so its own rule needs
+ * a third ancestor to clear the same bar. The `data-v` hash is deliberately
+ * not written down anywhere: it changes whenever the component does. This is
+ * not hypothetical — the first version of this block used one-unit selectors
+ * for the two gaps that matter most, and they silently did nothing.
+ *
+ * Only from 960px up. Below that the theme is already at its small sizes, the
+ * layout is one column, and a phone scrolls the home page whatever we do.
+ */
+@media (min-width: 960px) {
+  /* The hero: 80/64 of padding, 56/64 type, 24/36 tagline. Top padding has to
+   * keep the nav-height term — the hero is pulled up under the fixed nav bar
+   * by a negative margin, so a plain `72px` would put the name behind it. */
+  .Layout .VPHome .VPHero {
+    padding-top: calc(var(--vp-nav-height) + var(--vp-layout-top-height, 0px) + 56px);
+    padding-bottom: 44px;
+  }
+
+  /* 38px, not the theme's 56 or the 50 that stood here. The headline is six
+   * words and it is the only thing on the page set larger than the reader's
+   * own browser default by more than a factor of two; at 50px it was a
+   * poster, and a poster is the one thing a framework's front page cannot
+   * afford to look like to somebody deciding whether it is serious. Weight
+   * comes down with it, 700 -> 600: at this size 700 is a shout, and the
+   * tracking below does the work of holding the line together instead. */
+  .Layout .VPHome .VPHero .name,
+  .Layout .VPHome .VPHero .text {
+    font-size: 38px;
+    line-height: 46px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .Layout .VPHome .VPHero .tagline {
+    padding-top: 12px;
+    font-size: 17px;
+    line-height: 26px;
+  }
+
+  .Layout .VPHome .VPHero .actions {
+    padding-top: 29px;
+  }
+
+  /* The three buttons scale with the type above them, or they end up looking
+   * bigger than the headline they sit under. */
+  .Layout .VPHome .VPHero .VPButton.medium {
+    padding: 0 18px;
+    font-size: 13px;
+    line-height: 34px;
+  }
+
+  /* The cards: 24px of padding, a 48px icon, 16/14 type. */
+  .Layout .VPHome .VPFeature .box {
+    padding: 22px;
+  }
+
+  /* No width or height any more — the plate above is gone, so there is
+   * nothing to size; only the glyph and the gap under it. */
+  .Layout .VPHome .VPFeature .icon {
+    margin-bottom: 12px;
+    font-size: 19px;
+  }
+
+  .Layout .VPHome .VPFeature .title {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .Layout .VPHome .VPFeature .details {
+    padding-top: 7px;
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  /* The samples block is this file's own, further up — same treatment, so it
+   * shrinks with the grid it sits under instead of growing relative to it. */
+  .Layout .VPHome .a2ui5-catalogues {
+    margin-top: 36px;
+    padding-top: 25px;
+  }
+
+  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-lead {
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-links {
+    margin-top: 18px;
+  }
+
+  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-links a {
+    padding: 7px 20px;
+    font-size: 13px;
+  }
+
+  /* And the gap below all of it — the one number that is not nine tenths of
+   * the theme's, for the reason given above. */
+  .Layout .VPContent .VPHome {
+    margin-bottom: 48px;
+  }
 }

@@ -94,29 +94,45 @@ ABAP `t` is a 6-character string `HHMMSS`. Same pattern as Date, with `sap.ui.mo
 
 ## Boolean
 
-ABAP `abap_bool` is `"X"` or `""`. UI5's `CheckBox` expects `true` / `false`. Two practical bridges:
+**A boolean needs no formatter.** `abap_bool` is `"X"` or `""` in ABAP, but it
+does not travel that way: the framework serializes the boolean ABAP types to a
+JSON `true` / `false` and converts back on the way in. So bind the attribute
+straight to the control and both directions work:
 
-**Expression binding** — compare the bound value to `'X'` inline. Read-only:
 ```abap
 )->tag( `CheckBox`
-    )->a( n = `selected` v = `{= $` && client->_bind( mv_flag ) && ` === 'X' }`
+    )->a( n = `selected` v = client->_bind( mv_flag ) )
 ```
-This resolves to `{= ${/MV_FLAG} === 'X' }`. Note that expression bindings cannot write back — checking the box will not flip the ABAP attribute.
 
-**ABAP-side conversion** — keep a parallel `string`-typed attribute (`'true'` / `'false'`) to bind against, and translate before/after each event:
+Inside a table row template, the same thing relative to the row:
+
 ```abap
-DATA flag_bool TYPE abap_bool.
-DATA flag_str  TYPE string.   " 'true' / 'false' for the checkbox
-
-" before view_display:
-flag_str = COND #( WHEN flag_bool = abap_true THEN 'true' ELSE 'false' ).
-
-" after the event:
-flag_bool = COND #( WHEN flag_str = 'true' THEN abap_true ELSE abap_false ).
+)->tag( `CheckBox`
+    )->a( n = `selected` v = `{CHECKBOX}` )
 ```
-Then a `CheckBox` whose `selected` attribute is `client->_bind( flag_str )` works both directions. More boilerplate in the controller, simpler view.
 
-A custom JS formatter wired through `sap.ui.model.SimpleType` is the third option — see the [samples repository](https://github.com/abap2UI5/samples).
+::: warning It is the TYPE that decides, not the value
+The mapping is keyed on the ABAP type: `abap_bool`, `abap_boolean`,
+`xsdboolean`, `flag` and `xfeld` become a JSON boolean. A flag you declared as
+`c LENGTH 1` looks identical in the debugger and travels as the **string**
+`"X"` — a `CheckBox` bound to it stays unchecked, because `"X"` is not `true`.
+Type the attribute `abap_bool` and the problem disappears; that is the fix, not
+an expression binding.
+:::
+
+An expression binding (`{= ${/MV_FLAG} === 'X' }`) is the wrong tool here twice
+over: it compares against a value that is not on the wire, and an expression
+binding cannot write back, so the box would not flip the attribute even if the
+comparison held.
+
+::: tip A boolean written into the view is a different question
+All of the above is about a **bound** value. An ABAP boolean put straight into
+the XML as an attribute value — `)->a( n = `visible` v = flag )` — is
+stringified, and UI5 reads any non-empty string as true, so `abap_false`
+renders the control **visible**. Use the builder's boolean parameter for that:
+`)->a( n = `visible` b = flag )`. The linter rule
+[`unconverted-abap-boolean`](/advanced/linter) catches it.
+:::
 
 ## Timestamp
 
@@ -136,6 +152,46 @@ Conversion happens in ABAP (`WRITE timestamp TO ts_string …` or a helper); the
 
 A custom JS formatter is the third option when neither fits.
 
+## The formatters abap2UI5 ships
+
+A UI5 `type` covers the `value` property, which is a string. It does not cover
+a property that wants a **JavaScript `Date` object** — `DatePicker.dateValue`,
+`PlanningCalendarAppointment.startDate` — and JSON has no date type, so the
+model physically cannot carry one. For that, and for one text case, the
+framework ships a small curated formatter module. It is a public contract:
+`z2ui5/model/formatter`, also published as the `z2ui5.Formatter` global for
+releases without `core:require`.
+
+Load it once on the view root, then name a helper in the binding string:
+
+```abap
+view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
+
+...
+
+)->tag( `DatePicker`
+    )->a( n = `dateValue` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
+                                 formatter: 'Formatter.DateAbapDateToDateObject' \}|
+```
+
+| Helper | Takes | Returns |
+|---|---|---|
+| `DateAbapDateToDateObject` | an ABAP `d` on the wire (`YYYYMMDD`) | a `Date` at midnight local time |
+| `DateAbapDateTimeToDateObject` | an ABAP `d` and `t` as two `parts` (the `t` may be omitted → midnight) | a `Date` with the time applied |
+| `DateCreateObject` | anything the JS `Date` constructor parses (an ISO string, `utclong`) | a `Date` |
+| `expandInlineIcons` | a formatted-text string carrying `%%icon:sap-icon://<name>%%` placeholders | the same text with the theme's icon glyphs inlined — for a `MessageStrip` text |
+
+An **initial or empty** value yields `null`, never an `Invalid Date`. That
+matters more than it sounds: an Invalid Date is truthy, so a control accepts it
+and fails much later — a `sap.ui.unified` calendar throws for every rendered
+day and takes the whole view down. `null` is what "no date" means to a UI5 date
+property, so an optional date field in a bound row stays empty instead.
+
+The module grows through framework pull requests only; a helper of your own
+goes in your own module and is required the same way. See
+`Z2UI5_CL_SMP_APP_457` (DatePicker) and `Z2UI5_CL_SMP_APP_456`
+(PlanningCalendar) in the [samples repository](https://github.com/abap2UI5/samples).
+
 ## Full Worked Example
 
 The class below combines the Currency and Digit Sequence patterns in one app and demonstrates every `formatOptions` variant listed under [Currency](#currency):
@@ -151,6 +207,8 @@ CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
     DATA numeric           TYPE n LENGTH 12.
     DATA check_initialized TYPE abap_bool.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
@@ -256,7 +314,7 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
                                 )->a( n = `text`  v = `send`
                                 )->a( n = `press` v = client->_event( `BUTTON` )
 
-                    )->end(
+                        )->end(
                     )->end(
 
                     " Remove leading zeros from a numeric string with OData type formatting.

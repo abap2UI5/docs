@@ -39,7 +39,11 @@
  * button.
  *
  * An example that trips one of them is still printed, still checked by
- * `check:examples` and still copied by readers. It simply has no button.
+ * `check:examples` and still copied by readers. It simply has no button — and
+ * its page says why, in a `<!-- playground: no Run button — … -->` marker
+ * above the fence. `scripts/check-playground.mjs` refuses an app example that
+ * has neither button nor marker, and a marker whose example got its button, so
+ * nothing here is ever buttonless by accident.
  *
  * The code the button runs is read from the rendered block at click time
  * (`theme/playground.js`), not copied into an attribute here: the reader runs
@@ -101,13 +105,23 @@ const NEEDS_MORE_THAN_A_BROWSER = [
     why: 'calls a function module, and there is no application server to call one on',
     what: /\bCALL\s+FUNCTION\b/i,
   },
+  {
+    /* Not a transpiler question - whatever AUTHORITY-CHECK compiles to, the
+     * page in the browser has no user, no roles and no authorization objects,
+     * so sy-subrc after it means nothing. An example whose whole point is
+     * which branch the check takes cannot take either one here. Reasoned
+     * rather than watched, unlike the lines above it, and it fails towards no
+     * button like the rest. */
+    why: 'runs an authority check, and the browser has no user and no roles for one',
+    what: /\bAUTHORITY-CHECK\b/i,
+  },
 ];
 
 /*
  * ABAP with its comments taken out and its text blanked, so a rule can only be
  * tripped by code. Both halves were put here by a false positive:
  *
- *   - `get_started/full_example.md` shows the SELECT a reader would write, as a
+ *   - `tutorials/walkthrough/step-10.md` shows the SELECT a reader would write, as a
  *     comment, above the demo data it uses instead — and it runs perfectly
  *     well.
  *   - `clipboard.md` says `mv_text = \`Hello from abap2UI5\``, and a rule

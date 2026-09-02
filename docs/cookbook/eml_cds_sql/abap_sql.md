@@ -8,6 +8,7 @@ ABAP SQL is the standard way to read and change data in the database directly fr
 ## Read Data
 
 The example below selects flights from the `sflight` table and shows them in a UI5 table:
+<!-- playground: no Run button — SELECTs from SFLIGHT, which no browser database has -->
 ```abap
 CLASS z2ui5_cl_sample_sql DEFINITION PUBLIC.
 
@@ -15,6 +16,8 @@ CLASS z2ui5_cl_sample_sql DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mt_flights TYPE STANDARD TABLE OF sflight WITH EMPTY KEY.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
@@ -90,7 +93,6 @@ IF client->check_on_navigated( ).
 ELSEIF client->check_on_event( `SEARCH` ).
 
   load_data( ).
-  client->view_model_update( ).
 
 ENDIF.
 ```

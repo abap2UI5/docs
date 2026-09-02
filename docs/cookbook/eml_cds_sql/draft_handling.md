@@ -138,6 +138,7 @@ COMMIT ENTITIES.
 
 Before the full-featured version, here is the **smallest app that actually works**. It does exactly three things: read the record, let the user edit, and save with one button. Start here — once this makes sense, the advanced version is just more buttons.
 
+<!-- playground: no Run button — EML needs a CDS entity and a behavior definition, which only a system has -->
 ```abap
 CLASS z2ui5_cl_sample_draft_min DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -305,14 +306,13 @@ METHOD check_existing_draft.
 
   IF draft_info-created_by = sy-uname.
     " Same user — popup with Resume / Discard choice
-    client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_title               = `Existing Draft Found`
-        i_question_text       = `You have an open draft. Resume working on it, or discard and start fresh?`
-        i_icon                = `sap-icon://edit`
-        i_button_text_confirm = `Resume Draft`
-        i_button_text_cancel  = `Discard && Start New`
-        i_event_confirm       = `STARTUP_RESUME`
-        i_event_cancel        = `STARTUP_DISCARD` ) ).
+    client->message_box_display(
+        type             = `confirm`
+        title            = `Existing Draft Found`
+        text             = `You have an open draft. Resume working on it, or discard and start fresh?`
+        actions          = VALUE #( ( `Resume Draft` ) ( `Discard && Start New` ) )
+        emphasizedaction = `Resume Draft`
+        onclose          = `STARTUP_ANSWERED` ).
   ELSE.
     " Different user holds the draft — stay in VIEW mode
     status_text = |Draft locked by user { draft_info-created_by }. Cannot enter edit mode.|.
@@ -322,7 +322,7 @@ ENDMETHOD.
 ```
 Three branches:
 - **no draft** — call `draft_acquire( )` and go straight to EDIT,
-- **same user** — show a popup so the user can resume or throw the draft away,
+- **same user** — ask, with a confirm box, whether to resume or throw the draft away,
 - **other user** — refuse and stay in VIEW with an explanatory status text.
 
 ::: tip
@@ -478,14 +478,18 @@ ELSEIF client->check_on_event( `EDIT_TOGGLE` ).
   on_event_edit_toggle( ).
 ELSEIF client->check_on_event( `ACTIVATE` ).
   on_event_activate( ).
-ELSEIF client->check_on_event( `STARTUP_RESUME` ).
-  on_event_startup_resume( ).
-ELSEIF client->check_on_event( `STARTUP_DISCARD` ).
-  on_event_startup_discard( ).
-ELSEIF client->check_on_event( `EXIT_KEEP` ).
-  on_event_exit_keep( ).
-ELSEIF client->check_on_event( `EXIT_DISCARD` ).
-  on_event_exit_discard( ).
+ELSEIF client->check_on_event( `STARTUP_ANSWERED` ).
+  IF client->get_event_arg( ) = `Resume Draft`.
+    on_event_startup_resume( ).
+  ELSE.
+    on_event_startup_discard( ).
+  ENDIF.
+ELSEIF client->check_on_event( `EXIT_ANSWERED` ).
+  IF client->get_event_arg( ) = `Keep Draft`.
+    on_event_exit_keep( ).
+  ELSE.
+    on_event_exit_discard( ).
+  ENDIF.
 ENDIF.
 ```
 The view itself is a single `simple_form` whose `editable` and per-input `enabled` flags follow `draft_open`. The primary button label and type flip between **Switch to Edit Mode** and **Switch to View Mode** based on `mode`, and **Activate** is only enabled while a draft is open.
@@ -493,6 +497,7 @@ The view itself is a single `simple_form` whose `editable` and per-input `enable
 ### Full Snippet
 
 ::: details Full working example — `z2ui5_cl_sample_draft`
+<!-- playground: no Run button — EML needs a CDS entity and a behavior definition, which only a system has -->
 ```abap
 CLASS z2ui5_cl_sample_draft DEFINITION PUBLIC.
   PUBLIC SECTION.
@@ -526,6 +531,8 @@ CLASS z2ui5_cl_sample_draft DEFINITION PUBLIC.
     METHODS read_active.
     METHODS exit_edit_mode.
     METHODS view_display.
+
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
@@ -537,14 +544,18 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
       on_event_edit_toggle( ).
     ELSEIF client->check_on_event( `ACTIVATE` ).
       on_event_activate( ).
-    ELSEIF client->check_on_event( `STARTUP_RESUME` ).
-      on_event_startup_resume( ).
-    ELSEIF client->check_on_event( `STARTUP_DISCARD` ).
-      on_event_startup_discard( ).
-    ELSEIF client->check_on_event( `EXIT_KEEP` ).
-      on_event_exit_keep( ).
-    ELSEIF client->check_on_event( `EXIT_DISCARD` ).
-      on_event_exit_discard( ).
+    ELSEIF client->check_on_event( `STARTUP_ANSWERED` ).
+      IF client->get_event_arg( ) = `Resume Draft`.
+        on_event_startup_resume( ).
+      ELSE.
+        on_event_startup_discard( ).
+      ENDIF.
+    ELSEIF client->check_on_event( `EXIT_ANSWERED` ).
+      IF client->get_event_arg( ) = `Keep Draft`.
+        on_event_exit_keep( ).
+      ELSE.
+        on_event_exit_discard( ).
+      ENDIF.
     ELSEIF client->check_on_event( `LEAVE_APP` ).
       on_event_leave_app( ).
     ENDIF.
@@ -586,14 +597,13 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
     ENDIF.
 
     " Changes detected — ask whether to keep or discard
-    client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-        i_title               = `Exit Edit Mode`
-        i_question_text       = `You have unsaved changes. Keep the draft for later, or discard it now?`
-        i_icon                = `sap-icon://question-mark`
-        i_button_text_confirm = `Keep Draft`
-        i_button_text_cancel  = `Discard Draft`
-        i_event_confirm       = `EXIT_KEEP`
-        i_event_cancel        = `EXIT_DISCARD` ) ).
+    client->message_box_display(
+        type             = `confirm`
+        title            = `Exit Edit Mode`
+        text             = `You have unsaved changes. Keep the draft for later, or discard it now?`
+        actions          = VALUE #( ( `Keep Draft` ) ( `Discard Draft` ) )
+        emphasizedaction = `Keep Draft`
+        onclose          = `EXIT_ANSWERED` ).
   ENDMETHOD.
 
   METHOD has_changes_vs_active.
@@ -710,15 +720,14 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
 
     IF lv_owner = sy-uname.
       " Same user — popup with Resume / Discard choice
-      client->nav_app_call( z2ui5_cl_pop_to_confirm=>factory(
-          i_title               = `Existing Draft Found`
-          i_question_text       = |You have an open draft (last changed: { lv_time_text }). | &
-                                  |Resume working on it, or discard and start fresh?|
-          i_icon                = `sap-icon://edit`
-          i_button_text_confirm = `Resume Draft`
-          i_button_text_cancel  = `Discard && Start New`
-          i_event_confirm       = `STARTUP_RESUME`
-          i_event_cancel        = `STARTUP_DISCARD` ) ).
+      client->message_box_display(
+          type             = `confirm`
+          title            = `Existing Draft Found`
+          text             = |You have an open draft (last changed: { lv_time_text }). | &
+                             |Resume working on it, or discard and start fresh?|
+          actions          = VALUE #( ( `Resume Draft` ) ( `Discard && Start New` ) )
+          emphasizedaction = `Resume Draft`
+          onclose          = `STARTUP_ANSWERED` ).
     ELSE.
       " Different user holds the draft — stay in VIEW mode
       mode        = `VIEW`.

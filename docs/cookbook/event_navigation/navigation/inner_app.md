@@ -1,0 +1,160 @@
+---
+outline: [2, 4]
+samples:
+  - z2ui5_cl_smp_app_024
+  - z2ui5_cl_smp_app_488
+  - z2ui5_cl_smp_app_279
+---
+# Inner App
+
+Navigation *inside* one abap2UI5 deployment: switching screens within a class,
+and calling one of your app classes from another. Everything here runs through
+the abap2UI5 backend and its own app stack — it never leaves the page, and the
+launchpad, if there is one, does not hear about it. Navigating between *Fiori*
+apps is a different mechanism: [Cross App](/cookbook/event_navigation/navigation/cross_app).
+
+In abap2UI5, each app is a single ABAP class. You can pack all logic into one class, but keeping classes at a reasonable size is better practice. Splitting functionality into multiple interacting classes lets you build reusable apps and popups that work in different contexts.
+
+## Within One Class
+
+Use class attributes to track the current state and switch views as needed. A
+flag, an enum-like string or a step number decides which view
+`view_display( )` builds, and the event handlers move it along. This keeps the
+navigation in a single ABAP class with no app stack involved — no call, no
+return, and nothing to unwind.
+
+Reach for it whenever the screens share their data. Two views over the same
+internal table are two branches of one class, not two classes.
+
+## Between App Classes
+
+To call another app class:
+```abap
+  METHOD z2ui5_if_app~main.
+
+    DATA(lo_app) = NEW z2ui5_cl_new_app( ).
+    client->nav_app_call( lo_app ).
+
+ENDMETHOD.
+```
+The framework keeps a call stack. From the newly called class, return to the previous app with:
+```abap
+  METHOD z2ui5_if_app~main.
+
+    client->nav_app_leave( ).
+
+ENDMETHOD.
+```
+To read data from the previous app, cast it like this:
+```abap
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+        DATA(lo_called_app) = CAST z2ui5_cl_new_app( client->get_app_prev( ) ).
+        client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
+        view_display( ).
+    ENDIF.
+
+ENDMETHOD.
+```
+::: warning Re-display your view on return
+When the called app took over the screen with its own `view_display( )`, the browser still shows that view after `nav_app_leave( )` — the framework does not restore the previous view automatically. Call `view_display( )` again in the `check_on_navigated( )` branch. Your class attributes survived the roundtrip serialization, so no data re-read is needed — only the view must be rendered again. See [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
+:::
+Called **with** an app instance, `nav_app_leave` works differently: it leaves the current app and starts the given one *without* pushing the current app onto the call stack — so there is nothing to return to. Use this to navigate forward while discarding the current app:
+```abap
+  METHOD z2ui5_if_app~main.
+
+    DATA(lo_app) = NEW z2ui5_cl_new_app( ).
+    client->nav_app_leave( lo_app ).
+
+ENDMETHOD.
+```
+::: tip
+Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
+:::
+
+### The Whole Stack in One Class
+
+The called app does not have to be a *different* class. An app that calls
+another instance of itself shows the stack, the return and `get_app_prev( )`
+in one runnable piece — press **Run** and walk down and back up:
+
+```abap
+CLASS z2ui5_cl_sample_stack DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    DATA mv_level TYPE i.
+    DATA mv_note  TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      " Coming back up: read what the app above left on its own instance
+      DATA(lo_prev) = CAST z2ui5_cl_sample_stack( client->get_app_prev( ) ).
+      IF lo_prev IS BOUND.
+        mv_note = |back from level { lo_prev->mv_level }|.
+      ENDIF.
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = |Level { mv_level }|
+
+                  )->tag( `Text`
+                      )->a( n = `text` v = client->_bind( mv_note )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `call one level deeper`
+                      )->a( n = `press` v = client->_event( `DOWN` )
+                  )->tag( `Button`
+                      )->a( n = `text`    v = `leave, back to the caller`
+                      )->a( n = `press`   v = client->_event( `UP` )
+                      )->a( n = `enabled` b = client->check_app_prev_stack( ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `DOWN` ).
+      client->nav_app_call( NEW z2ui5_cl_sample_stack( mv_level = mv_level + 1 ) ).
+
+    ELSEIF client->check_on_event( `UP` ).
+      client->nav_app_leave( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+`check_app_prev_stack( )` is what greys out *leave* at the bottom of the stack —
+calling `nav_app_leave( )` with nothing to return to drops the user out of the
+app.
+
+::: tip Browser Back & Forward
+By default, the browser's Back button leaves the abap2UI5 page — it does not step through the app stack. Enable [hash routing](/cookbook/event_navigation/navigation/hash) with `client->follow_up_action( client->cs_event-hash_routing )` to couple the browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps bookmarkable.
+:::
+
+<!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
+
+## Working Samples
+
+Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+that use what this page describes. Each is a single class — pull the repository with
+[abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
+
+| Sample | Class |
+|---|---|
+| Call and Leave Apps (nav_app_call) | [`Z2UI5_CL_SMP_APP_024`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_024.clas.abap) |
+| Return Data and Events to the Caller | [`Z2UI5_CL_SMP_APP_488`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_488.clas.abap) |
+| Data Loss Protection on Leaving (A,C) | [`Z2UI5_CL_SMP_APP_279`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_279.clas.abap) |
+
+<!-- samples:end -->

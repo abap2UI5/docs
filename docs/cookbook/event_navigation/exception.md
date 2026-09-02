@@ -6,47 +6,130 @@ samples:
 ---
 # Exception
 
-Beyond plain messages, abap2UI5 ships dedicated popups and fallbacks for handling exceptions and unexpected failures.
+An exception that escapes your `main` method is **not** caught anywhere near
+your app. abap2UI5 lets it travel: there is exactly one top-level catch, in
+`z2ui5_cl_ui5_http_handler`, and everything the framework does about errors
+happens there. Knowing that one path is most of what this page is for — the
+behaviour is the same whether the exception came out of your code, out of the
+framework, or out of a wrong app name in the URL.
 
-### Error Popup
-To display full details of your exception:
+## What Happens When One Escapes
+
+1. **The roundtrip ends with HTTP 500.** No view is displayed, no model is
+   pushed, and — unless the app is sticky — the database work of that roundtrip
+   is rolled back. The response body is not an SAP error page: the handler puts
+   the **whole exception chain** in it, with each entry's class, message, source
+   position and attributes, because that body is the only diagnostic that
+   survives the roundtrip. Nothing else anywhere records it.
+2. **The browser shows the fatal-error overlay.** It reads *Application Error -
+   Please Restart The App*, shows a short preview of the message, and offers
+   **Details** and **Copy** for the full text and **Refresh** / **Logout** to
+   start over. It is drawn from raw DOM rather than from UI5 controls, so it
+   still appears when the failure left the UI5 core itself unusable.
+3. **The app is over.** There is no *continue* on that overlay by design: the
+   roundtrip that would have carried the app's next state is the one that
+   failed, so what is on screen no longer matches anything on the server. The
+   user restarts; the draft is still in the database, so a bookmarked app comes
+   back where it was.
+
+A short dump reaches the browser the same way — the application server's own
+500 page comes back instead of the handler's body, and the overlay strips it
+down to the message it carries. So `ASSERT 1 = 2` and
+`RAISE EXCEPTION NEW cx_sy_itab_line_not_found( )` look nearly identical from
+the front, and differ only in how much detail arrives.
+
 ```abap
 METHOD z2ui5_if_app~main.
 
-  TRY.
-    DATA(lv_val) = 1 / 0.
-  CATCH cx_root INTO DATA(lx).
-    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
-  ENDTRY.
-
-ENDMETHOD.
-```
-
-### Uncaught Errors
-When your code doesn't catch exceptions, the framework catches them and displays the standard error popup. Try this:
-
-```abap
-METHOD z2ui5_if_app~main.
-
+    " uncaught: the roundtrip ends in a 500 and the overlay
     RAISE EXCEPTION NEW cx_sy_itab_line_not_found( ).
 
 ENDMETHOD.
 ```
 
-### Uncatchable Exceptions / Short Dumps
-What happens if your code raises uncatchable exceptions? The backend dumps, and the frontend shows its unified **fatal-error overlay**: a dialog that extracts and displays the server's error details, with a **Details** view, a **Copy** button for the error text and **Refresh / Logout** actions to restart. Processing halts until the user restarts the app from that dialog. Reserve this for unexpected cases:
+::: warning The details are on by default, and are meant to be turned off
+The body carries RTTI and DDIC names, source positions and the system context
+of the failure — everything a developer needs and more than a production system
+should hand a browser. A hardened installation switches it off in the
+[user exit](/advanced/extensibility/user_exits): set `check_hide_error_details`
+in `set_config_http_post`, and the body becomes a bare `Internal Server Error`
+while everything else on this page stays as it is.
+:::
+
+## Handling It Yourself
+
+Everything above is the fallback, and reaching it means the user has lost the
+screen. Anything you can predict — a division by zero, a failed conversion, a
+locked object, a service that is not there — is better caught where it happens
+and shown as a message, which costs the user nothing:
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_exception DEFINITION PUBLIC.
 
-    ASSERT 1 = 2. " always fails → short dump
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-ENDMETHOD.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_exception IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Exception`
+
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `divide by zero`
+                      )->a( n = `press` v = client->_event( `DIVIDE` ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `DIVIDE` ).
+      TRY.
+          DATA(lv_val) = 1 / 0.
+        CATCH cx_root INTO DATA(lx).
+          client->message_box_display( lx ).
+      ENDTRY.
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
 ```
 
-For non-exception failures (binding-path mismatches, malformed XML, and other silent frontend issues), see [Common Failures](/cookbook/troubleshooting/common_failures).
+`message_box_display( )` takes the exception object directly and reads the text
+out of it — see [Message](/cookbook/translation_messages/message#sy-bapiret-cx-root),
+which does the same for `sy` and for a BAPI return table. The app stays on
+screen and the user can carry on, which is the whole difference from the
+overlay.
 
-For EML-specific failure handling (`FAILED` / `REPORTED`, transactional behavior, `cx_abap_behv`, `cx_abap_lock_failure`, defensive `TRY/CATCH` patterns), see the [EML](/cookbook/eml_cds_sql/eml) page.
+Two things are worth catching even when you cannot do anything about them:
+
+- **anything inside a loop over user data**, so one bad row does not cost the
+  other ninety-nine;
+- **anything you are about to write into the view**, since a failure between
+  building the view and displaying it leaves the user on the previous screen
+  with no explanation.
+
+## When It Is Not an Exception at All
+
+A large class of abap2UI5 failures raises nothing: a binding path with a typo,
+a control name UI5 does not know, an aggregation that rejects its child. The
+roundtrip succeeds, the response is a valid 200, and the screen is simply wrong
+— empty, half-rendered, or showing a stale value. Nothing on this page applies
+to those; see [Common Failures](/cookbook/troubleshooting/common_failures), and
+run the [linter](/advanced/linter), which is written for exactly that class of
+defect.
+
+For EML-specific failure handling (`FAILED` / `REPORTED`, transactional
+behavior, `cx_abap_behv`, `cx_abap_lock_failure`, defensive `TRY`/`CATCH`
+patterns), see the [EML](/cookbook/eml_cds_sql/eml) page.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

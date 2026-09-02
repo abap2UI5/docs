@@ -18,6 +18,7 @@ The minimal starting point — the user edits and saves, no lock and no conflict
 <details>
 <summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_1</code></summary>
 
+<!-- playground: no Run button — SELECTs from VBAK, which no browser database has -->
 ```abap
 * Scenario 1 — Naive editing (no locking)
 *
@@ -181,6 +182,7 @@ The lock exists for milliseconds, so this scales — but two parallel saves can 
 <details>
 <summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_2</code></summary>
 
+<!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
 * Scenario 2 — Edit + Enqueue at save
 *
@@ -348,6 +350,7 @@ Pick a column that *always* updates on writes. If anyone writes the table bypass
 <details>
 <summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_3</code></summary>
 
+<!-- playground: no Run button — SELECTs from VBAK, which no browser database has -->
 ```abap
 * Scenario 3 — Optimistic locking (timestamp check)
 *
@@ -492,6 +495,7 @@ ENDCLASS.
 <details>
 <summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_4</code></summary>
 
+<!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
 * Scenario 4 — Combined (the recommended default)
 *
@@ -702,6 +706,7 @@ Each active user pins a work process. Use stateful sessions only for low-traffic
 <details>
 <summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_5</code></summary>
 
+<!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
 * Scenario 5 — Stateful session with a persistent enqueue
 *
@@ -897,6 +902,7 @@ A user closing the browser without pressing *Release* leaves the row behind, so 
 <details>
 <summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_6</code></summary>
 
+<!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
 * Scenario 6 — Soft lock (advisory only)
 *

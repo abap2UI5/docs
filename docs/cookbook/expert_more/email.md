@@ -7,6 +7,7 @@ abap2UI5 has no e-mail control of its own — sending mail is plain ABAP via `cl
 
 ## Plain Text Mail
 
+<!-- playground: no Run button — cl_bcs_message is an on-premise class the transpiler does not implement -->
 ```abap
 CLASS z2ui5_cl_sample_email DEFINITION PUBLIC.
 
@@ -16,6 +17,8 @@ CLASS z2ui5_cl_sample_email DEFINITION PUBLIC.
     DATA mv_subject TYPE string.
     DATA mv_body    TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_email IMPLEMENTATION.

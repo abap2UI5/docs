@@ -16,6 +16,16 @@ The consequence: **everything in the UI5 SDK works in abap2UI5 1:1 when you writ
 The simplest case: build an XML string and ship it to the client.
 
 ```abap
+CLASS z2ui5_cl_sample_view_xml DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_view_xml IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display(
@@ -28,7 +38,8 @@ The simplest case: build an XML string and ship it to the client.
         |  </Shell>| &
         |</mvc:View>| ).
 
-ENDMETHOD.
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 Swap `<Text>` for any other control from the SDK; the framework doesn't care.
@@ -42,6 +53,16 @@ one call per control, so the shape of the chain is the shape of the view.
 frontend:
 
 ```abap
+CLASS z2ui5_cl_sample_view_builder DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_view_builder IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
@@ -60,11 +81,12 @@ frontend:
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
+ENDCLASS.
 ```
 
-Both snippets produce the exact same view. Use whichever you prefer — raw
-strings are fine for a handful of lines, the builder scales better for real
-apps.
+Both classes produce the exact same view — press **Run** on either one and the
+same page comes up. Use whichever you prefer: raw strings are fine for a
+handful of lines, the builder scales better for real apps.
 
 Four verbs, and no catalogue of controls behind them:
 
@@ -144,7 +166,17 @@ Because UI5 XML is used 1:1, **the UI5 documentation is your reference** for any
 
 Find a control you like in the UI5 docs, copy its XML, paste it into `view_display( )` — done. abap2UI5 has no separate control catalog to learn.
 
-One thing the SDK will not warn you about while you copy: the control may be deprecated. Because the XML is passed through 1:1, a deprecated control renders exactly like any other — until UI5 removes it. See [Deprecated Controls](/cookbook/view/deprecated_controls) for the cases that come up most often.
+One thing the SDK will not warn you about while you copy: the control may be deprecated. Because the XML is passed through 1:1, a deprecated control renders exactly like any other — until UI5 removes it, which has already happened once (the Belize themes went in 1.136). Nothing in the framework stops you, so this is a question to hand to a tool rather than to remember: the [linter](/advanced/linter) reports a deprecated control, member or whole library against the release *your* system runs, and [ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the always-current list.
+
+The one trap worth knowing by hand is the *namespace* of a control that exists
+twice. `Avatar` written with no `ns` resolves through the view's default
+`xmlns` to `sap.m.Avatar`, which is the one to use; ``ns = `f` `` produces
+`<f:Avatar>` — `sap.f.Avatar`, deprecated since 1.73. `AvatarGroup` and
+`AvatarGroupItem` are the other way round: those really do live in `sap.f` and
+need the prefix. The same shape catches whole libraries — half of
+`sap.ui.commons` (`Button`, `Label`, `Dialog`, `Panel`, …) has a namesake in
+`sap.m`, so XML copied from an old tutorial can drag a library that has been
+dead since 1.38 along with it and still render something.
 
 ### Choosing a Control
 

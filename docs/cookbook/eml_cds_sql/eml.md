@@ -10,6 +10,7 @@ The Entity Manipulation Language simplifies work with RAP business objects by gi
 
 ### Read
 Use `READ ENTITIES` to fetch sales orders and show them in a UI5 table:
+<!-- playground: no Run button — EML needs a CDS entity and a behavior definition, which only a system has -->
 ```abap
 CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
 
@@ -17,6 +18,8 @@ CLASS z2ui5_cl_sample_eml_read DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA mt_salesorder TYPE TABLE FOR READ RESULT i_salesordertp\salesorder.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_eml_read IMPLEMENTATION.
@@ -147,8 +150,8 @@ TRY.
     ENDIF.
 
   CATCH cx_root INTO DATA(lx).
-    client->nav_app_call( z2ui5_cl_pop_error=>factory( lx ) ).
+    client->message_box_display( lx ).
 ENDTRY.
 ```
 
-For general exception handling and the framework's error popup, see the [Exception](/cookbook/event_navigation/exception) page.
+`message_box_display( )` reads the text out of the exception object itself. For what happens to an exception you do *not* catch, see [Exception](/cookbook/event_navigation/exception).

@@ -79,6 +79,103 @@ Notes on the snippet:
 
 The full sample is `Z2UI5_CL_SMP_APP_173`.
 
+### The Whole Thing, Runnable
+
+The fragments above are two halves of one view. Press **Run** to see the
+expansion happen — three rows of data, three columns built by the outer loop,
+and each cell wired to its field by the inner one:
+
+```abap
+CLASS z2ui5_cl_sample_templating DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+    TYPES:
+      BEGIN OF ty_s_layout,
+        fname   TYPE string,
+        merge   TYPE string,
+        visible TYPE string,
+      END OF ty_s_layout.
+
+    TYPES:
+      BEGIN OF ty_s_row,
+        name TYPE string,
+        date TYPE string,
+        age  TYPE string,
+      END OF ty_s_row.
+
+    DATA mt_layout TYPE STANDARD TABLE OF ty_s_layout WITH EMPTY KEY.
+    DATA mt_data   TYPE STANDARD TABLE OF ty_s_row    WITH EMPTY KEY.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_templating IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      mt_layout = VALUE #( ( fname = `NAME` merge = `true`  visible = `true` )
+                           ( fname = `DATE` merge = `false` visible = `true` )
+                           ( fname = `AGE`  merge = `false` visible = `true` ) ).
+
+      mt_data = VALUE #( ( name = `Alice` date = `2026-01-15` age = `34` )
+                         ( name = `Bob`   date = `2026-02-03` age = `28` )
+                         ( name = `Cleo`  date = `2026-03-21` age = `41` ) ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`          v = `sap.m`
+              )->a( n = `xmlns:mvc`      v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:template` v = `http://schemas.sap.com/sapui5/extension/sap.ui.core.template/1`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `XML Templating`
+
+                  )->ele( `Table`
+                      )->a( n = `items` v = client->_bind( mt_data )
+
+                      )->ele( `columns`
+                          )->ele( n = `repeat` ns = `template`
+                              )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                              )->a( n = `var`  v = `L0`
+
+                              )->ele( `Column`
+                                  )->a( n = `mergeDuplicates` v = `{L0>MERGE}`
+                                  )->a( n = `visible`         v = `{L0>VISIBLE}`
+
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{L0>FNAME}`
+
+                              )->end(
+
+                          )->end(
+
+                      )->end(
+
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->ele( n = `repeat` ns = `template`
+                                      )->a( n = `list` v = `{template>/MT_LAYOUT}`
+                                      )->a( n = `var`  v = `L1`
+
+                                      )->tag( `ObjectIdentifier`
+                                          )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+Flip a row's `visible` to `false` and re-run: the column is gone from the
+expanded XML entirely, not merely hidden.
+
 ### `template:if` / `template:then` / `template:else` — Conditionals
 
 `template:if` evaluates an expression against the templating model and keeps or drops its children accordingly. With a `template:then` / `template:else` pair you get a two-branch switch:

@@ -7,9 +7,13 @@ Things in abap2UI5 that have a successor. Every entry says what to write instead
 each other.
 
 ::: tip Not the same as deprecated UI5 controls
-This page is about **abap2UI5's own** API. For controls SAP has deprecated in
-UI5 itself (`sap.ui.commons`, the legacy charts, the Belize themes …) see
-[Deprecated Controls](/cookbook/view/deprecated_controls).
+This page is about **abap2UI5's own** API. Controls SAP has deprecated in UI5
+itself — `sap.ui.commons`, the legacy charts, the Belize themes — are not
+abap2UI5's to deprecate and are not listed anywhere here: the framework passes
+your XML through unchanged, so every one of them still renders. The
+[linter](/advanced/linter) reports them against the release *your* system runs,
+and [ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the
+always-current list.
 :::
 
 ## Start with the linter
@@ -35,7 +39,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.143.0**. Entries marked *next release* are already
+The released version is **1.144.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
@@ -57,6 +61,13 @@ tell you what is coming if you do not.
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
+| `cs_config-title` | `cs_event-set_title` | 1.144.0 |
+| `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
+| `set_push_state( )` | `hash_set( )` | *next release* |
+| `set_app_state_active( )` | `app_state_set_active( )` | *next release* |
+| `cs_event-set_nav_routing` | `cs_event-hash_routing` | *next release* |
+| `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | *next release* |
 
 ## Obsolete: still compiles
 
@@ -233,7 +244,7 @@ client->follow_up_action( `myFunction()` ).
 
 It still works and is still dispatched. Note that both forms ship hand-written
 JavaScript from the backend to the browser — read
-[Raw JavaScript](/cookbook/expert_more/follow_up_action#raw-javascript) before
+[Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) before
 using either.
 
 ### `z2ui5_cl_xml_view` → `z2ui5_cl_ui5_view_builder`
@@ -352,8 +363,148 @@ client->follow_up_action( val   = client->cs_event-set_title
 ```
 
 The controls still ship and views that use them keep rendering. See
-[Follow-up Action](/cookbook/expert_more/follow_up_action) for the full argument
+[Frontend](/cookbook/event_navigation/frontend) for the full argument
 list of each event.
+
+### `cs_config-title` → `cs_event-set_title`
+
+The page title used to be set in the user exit and the tab title while the app
+runs with the `set_title` frontend event — two mechanisms for one string, which
+could disagree about what the tab says. The one that stays is the one the app
+can reach at any point in its life:
+
+```abap
+" old - in your z2ui5_if_exit implementation
+METHOD z2ui5_if_exit~set_config_http_get.
+
+    cs_config-title = `Invoice App`.
+
+ENDMETHOD.
+
+" new - in your app, whenever the title should change
+client->follow_up_action( val   = client->cs_event-set_title
+                          t_arg = VALUE #( ( `Invoice App` ) ) ).
+```
+
+The field stays on `cs_config` and an exit that assigns it still compiles — it
+simply has no effect. The generated page carries a constant
+`<title>abap2UI5</title>`, which is what the tab shows while UI5 boots, before
+any app can speak. Inside a Fiori Launchpad shell the title is
+`cs_event-set_title_launchpad`, unchanged. See
+[Title](/cookbook/browser_interaction/title).
+
+### `z2ui5_if_exit` → `z2ui5_if_ui5_exit`
+
+The user-exit interface follows the framework's naming: everything that is the
+engine rather than the contract carries the `ui5` segment. The two methods, the
+three types and the behaviour are unchanged.
+
+```abap
+" old
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_exit.
+ENDCLASS.
+
+" new
+CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_ui5_exit.
+ENDCLASS.
+```
+
+**Nothing has to change today.** Both interfaces ship, and abap2UI5 looks up
+both when it searches for your exit class — a class implementing the old one is
+found and called exactly as before. A class implementing *both* is called once,
+through the new interface. The types on `z2ui5_if_exit` are references to the
+ones on `z2ui5_if_ui5_exit`, not copies, so a config structure that gains a
+field gains it under either name.
+
+`z2ui5_if_exit` is deleted after a transition period, so move your exit over
+when you next touch it — after the release that brings the new name, which the
+examples on this site still wait for.
+
+### `z2ui5_if_types` → the object that uses the type
+
+`z2ui5_if_types` was a shared interface holding the types the API passes
+around. Each of them now sits on the object whose signature is the reason it
+exists, so the type you need is declared where you already are:
+
+| What you have | What to write |
+|---|---|
+| `z2ui5_if_types=>ty_s_get` | `z2ui5_if_client=>ty_s_get` — the return type of `get( )` |
+| `z2ui5_if_types=>ty_s_event_control` | `z2ui5_if_client=>ty_s_event_control` — the `s_ctrl` of `_event( )` |
+| `z2ui5_if_types=>ty_s_name_value` / `ty_t_name_value` | `z2ui5_if_client=>ty_s_name_value` / `ty_t_name_value` |
+| `z2ui5_if_types=>cs_device` | `z2ui5_if_client=>cs_device` |
+| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_exit`, whose two methods take them |
+| `z2ui5_if_types=>ty_s_draft` | `z2ui5_cl_ui5_srv_draft=>ty_s_draft` |
+| `z2ui5_if_types=>ty_s_config` | written out inside `z2ui5_if_client=>ty_s_get-s_config` |
+
+```abap
+" old
+DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
+
+" new
+DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+```
+
+Nothing was deleted and nothing was reshaped. `z2ui5_if_types` still ships,
+unchanged, from the framework's frozen package — an app that names it compiles
+and runs exactly as before, and every moved type is identical field for field,
+so a variable declared the old way still fits the new signatures. There is no
+deadline; change it when you next touch the class.
+
+### The URL API is `hash_*` and `app_state_*` now
+
+<Badge type="tip" text="next release" />
+
+One naming rule for everything that touches the URL, taken from UI5's own:
+`nav_*` keeps meaning real navigation between apps, `hash_*` is the URL
+fragment (named after `sap/ui/core/routing/HashChanger`), and `app_state_*` is
+the state the URL carries.
+
+| What you have | What to write | Why the name changed |
+|---|---|---|
+| `client->set_push_state( )` | `client->hash_set( )` | `HashChanger#setHash`. "Push state" described the old `history.pushState` implementation, which the HashChanger-backed write replaced |
+| `client->set_app_state_active( )` | `client->app_state_set_active( )` | the family prefix, so it sorts next to `app_state_get_href( )` |
+| `cs_event-set_nav_routing` | `cs_event-hash_routing` | it is the *hash* that is being routed; `nav_*` is app-to-app navigation |
+| `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | the backend composes the link now, so the app can show or mail it, not only copy it |
+
+Both spellings compile, and the first three share their wire value — the old
+name and the new one reach the same branch, so there is no behavior to migrate,
+only a name:
+
+```abap
+" before
+client->set_push_state( `&my-app-state=detail` ).
+client->follow_up_action( client->cs_event-set_nav_routing ).
+
+" after
+client->hash_set( `&my-app-state=detail` ).
+client->follow_up_action( client->cs_event-hash_routing ).
+```
+
+`cs_event-clipboard_app_state` is the one that is not a pure rename: it
+composed the link in the browser and could only put it on the clipboard. The
+replacement hands the string to the backend, which is what lets an app show it
+in an `Input`, mail it or render it as a QR code — and the composed link keeps
+a Fiori Launchpad's shell hash, so a recipient lands in the app instead of on
+the launchpad home page:
+
+```abap
+" before - fire and forget, the link never existed in ABAP
+client->follow_up_action( client->cs_event-clipboard_app_state ).
+
+" after - the app owns the string
+share_link = client->app_state_get_href( ).
+client->follow_up_action( val   = client->cs_event-clipboard_copy
+                          t_arg = VALUE #( ( share_link ) ) ).
+```
+
+What is genuinely new rather than renamed — `hash_replace( )`,
+`cs_event-hash_back` and `cs_event-hash_attach_changed`, which together give an
+app the URL semantics of a UI5 router — is on
+[Hash](/cookbook/event_navigation/navigation/hash).
 
 ### `z2ui5.Util` → `z2ui5.Formatter`
 

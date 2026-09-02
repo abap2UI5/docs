@@ -37,7 +37,7 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 
     IF client->get( )-event = `SCAN_SUCCESS`.
 
-        DATA(lv_input)  = client->get_event_arg( 1 ).
+        DATA(lv_input)  = client->get_event_arg( ).
         DATA(lv_format) = client->get_event_arg( 2 ).
         "custom processing...
         client->message_box_display( |Scan finished: { lv_input } { lv_format }| ).
@@ -45,7 +45,6 @@ Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of t
 
 ENDMETHOD.
 ```
-To see barcode scanning in action, check the `Z2UI5_CL_DEMO_APP_124` sample app.
 
 ::: tip **UI5 Versions**
 This feature works only with the UI5 framework, not with OpenUI5.
@@ -64,6 +63,8 @@ CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
     DATA one TYPE string.
     DATA two TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
@@ -121,6 +122,8 @@ CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
     DATA company_code TYPE string.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_sound IMPLEMENTATION.

@@ -12,9 +12,19 @@ For UI5 input fields, the soft keyboard pops up automatically when an input rece
 The `keyboard_set_mode` frontend event sets the HTML `inputmode` attribute on a UI5 input. Pass the control id and the desired mode (`none` hides the soft keyboard; `text`, `numeric`, `decimal`, `tel`, etc. restore it with the matching layout).
 
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_softkeyb DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
     DATA input TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS z2ui5_cl_sample_softkeyb IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
 
@@ -42,7 +52,6 @@ METHOD z2ui5_if_app~main.
                                   )->a( n = `id`               v = `ZINPUT`
                                   )->a( n = `value`            v = client->_bind( input )
                                   )->a( n = `valueHelpRequest` v = client->_event( `CALL_KEYBOARD` )
-                                  )->a( n = `valueHelpIconSrc` v = `sap-icon://keyboard-and-mouse`
                                   )->a( n = `showValueHelp`    b = abap_true ).
 
       client->view_display( view->stringify( ) ).
@@ -58,7 +67,8 @@ METHOD z2ui5_if_app~main.
         client->nav_app_leave( ).
     ENDCASE.
 
-ENDMETHOD.
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 To re-enable the keyboard, fire the same event with a different mode (`text`, `numeric`, …).

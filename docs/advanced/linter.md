@@ -80,7 +80,12 @@ much it matters:
 you name in the config to change or switch a rule off, what a source waiver
 names, and the anchor of that rule's page in the full reference at
 [abap2ui5.github.io/linter](https://abap2ui5.github.io/linter/) — every rule is
-documented one page away, with what it means and why it exists.
+documented one page away, with what it means, why it exists, the offending
+source next to the same source fixed, and a link into the module in the linter
+that decides it. Every report carries those addresses rather than the bare id:
+the terminal output ends in a reference block naming each rule it reported, a
+job summary links each row, and a GitHub annotation ends in its rule id and a
+link straight at the before/after pair.
 
 Which severities break the build is a separate decision from what is reported:
 `--fail-on error|warning|hint|never` sets the exit code (default `warning`,
@@ -156,10 +161,10 @@ them:
 | `source-line-too-long` | a source line over 255 characters — the class does not fail to lint, it fails to **import**, and abapGit leaves an empty class stub behind |
 | `chain-indentation` | a builder call whose indentation contradicts the tree it builds. The chain is the only picture of the view's structure there is, and nothing else in the toolchain formats it |
 
-There are more than eighty rules in total. The full list, each with the
-paragraph explaining why it exists, is the
+There are more than a hundred rules in total. The full list, each with the
+paragraph explaining why it exists and a before/after pair showing it, is the
 [rule reference](https://abap2ui5.github.io/linter/) — one page, searchable,
-one anchor per rule id.
+one anchor per rule id and one per pair (`#<rule-id>-example`).
 
 ### What it cannot do, by design
 
@@ -280,6 +285,33 @@ SAPUI5 ships libraries OpenUI5 does not — `sap.ui.comp` (Smart controls),
 SAPUI5 and a guaranteed runtime error on OpenUI5. With `openui5` those controls
 are reported as `sapui5-only-control`.
 
+### Deprecated controls
+
+This is the same setting seen from the other end, and it is why abap2UI5 has no
+list of deprecated controls to keep: the framework passes your XML through
+unchanged, so **every** control UI5 still knows will render — including the ones
+SAP has deprecated — and whether that matters depends entirely on the release
+you named above.
+
+| | |
+|---|---|
+| `control-deprecated` | the control itself, quoting SAP's own replacement text |
+| `member-deprecated` | one property or event of a control that is otherwise fine |
+| `deprecated-library` | a library deprecated *whole*: `sap.ui.commons` and `sap.ui.ux3` (1.38), `sap.makit` (1.38), `sap.me` (1.34), the legacy chart classes under `sap.viz.ui5` (1.32) |
+
+All three are held against `--ui5`: a control deprecated in 1.120 is not
+reported for a 1.71 system, because there it is simply a control. The last of
+the three is the one nothing else catches — a deprecated library is absent from
+the metadata the other rules read, so a `<c:Button>` out of `sap.ui.commons`
+used to pass every check in silence. It is also the one that actually happens:
+half of that library's control names (`Button`, `Label`, `Dialog`, `Panel`,
+`ComboBox`) have a namesake in `sap.m`, so XML copied from an old tutorial
+drags the dead namespace along and still renders something.
+
+For anything the snapshot cannot know yet,
+[ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is SAP's
+always-current index.
+
 ## The configuration file
 
 Pin the settings in the repository instead of repeating CLI flags — the same
@@ -287,7 +319,7 @@ idea as `abaplint.jsonc`. `abap2ui5lint --init` writes a commented starter
 version; discovery is eslint-style, and precedence is CLI flag > config file >
 built-in default.
 
-```jsonc
+```jsonc [abap2ui5lint.jsonc]
 {
   "$schema": "./node_modules/@abap2ui5/linter/data/abap2ui5lint.schema.json",
   "paths": ["src"],          // used when the CLI got no positional paths

@@ -82,19 +82,76 @@ ENDMETHOD.
 ```
 The framework accepts other inputs too — pass your message structure and the message box shows it.
 
-### Multi-Message Popup
-The message box gives you basic output. For richer detail, use the popup `Z2UI5_CL_POP_MESSAGES`:
+### All of Them in One App
+
+The fragments above are each one call. Press **Run** to see the whole family in
+a single app:
+
 ```abap
-METHOD z2ui5_if_app~main.
+CLASS z2ui5_cl_sample_message DEFINITION PUBLIC.
 
-  DATA(lt_msg) = VALUE bapirettab(
-    ( type = `E` id = `MSG1` number = `001` message = `This is an error message` )
-    ( type = `I` id = `MSG2` number = `002` message = `Product already in use` ) ).
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
 
-  client->nav_app_call( z2ui5_cl_pop_messages=>factory( lt_msg ) ).
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
 
-ENDMETHOD.
+CLASS z2ui5_cl_sample_message IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Messages`
+
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `toast`
+                      )->a( n = `press` v = client->_event( `TOAST` )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `box`
+                      )->a( n = `press` v = client->_event( `BOX` )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `from an exception`
+                      )->a( n = `press` v = client->_event( `EXC` ) ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `TOAST` ).
+      client->message_toast_display( `this is a message` ).
+
+    ELSEIF client->check_on_event( `BOX` ).
+      client->message_box_display( text = `This is an error message`
+                                   type = `error` ).
+
+    ELSEIF client->check_on_event( `EXC` ).
+      TRY.
+          DATA(lv_val) = 1 / 0.
+        CATCH cx_root INTO DATA(lx).
+          client->message_box_display( lx ).
+      ENDTRY.
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
 ```
+
+### More Than One Message at a Time
+
+The message box shows one message — but it also takes a whole set of them. Pass
+a BAPI return table, a message log or the result of a validation run and the
+framework flattens it into the lines the box shows; see
+[Logging](./logging) for the sources it reads.
+
+For something richer than a list of lines — a sortable table with severities
+and long texts — build the view from the same data, or take the ready-made
+message dialog from the
+[popups add-on](https://github.com/abap2UI5-addons/popups).
 
 ::: tip **Improvements**
 These message functions evolve all the time. Open an issue if you hit errors or incompatibilities, or submit a PR to extend them.

@@ -1,0 +1,21 @@
+# abap2UI5 documentation — you are in the source, the site is the reading copy
+
+> This repository builds https://abap2ui5.github.io/docs — the abap2UI5
+> documentation site. The machine-readable projection of that site is
+> generated at build time and is deliberately NOT committed here (it is a
+> projection of the pages next to it, so the only correct copy is the one the
+> build just made). Fetch it from the site:
+
+- https://abap2ui5.github.io/docs/llms.txt — the map: every page with its
+  title and one line of what it covers, plus the repositories around it
+- https://abap2ui5.github.io/docs/llms-full.txt — the whole documentation as
+  one markdown document
+- https://abap2ui5.github.io/docs/<page>.md — any single page as raw markdown
+  (drop the `.md` for the rendered version)
+- https://abap2ui5.github.io/docs/api/client-api.json — the client API
+  (z2ui5_if_client at the pinned release) as one JSON document; this one IS
+  committed, at docs/public/api/client-api.json
+
+Working in this checkout instead? The pages are under docs/, the sidebar in
+docs/.vitepress/config.mjs, and AGENTS.md is the briefing — read it before
+changing anything.

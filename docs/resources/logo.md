@@ -48,9 +48,9 @@ edges the day the page turns grey.
 
 ## Favicon
 
-The mark at tab size, as an `.ico`. The browser tab of this documentation, and
-the tab of any abap2UI5 app that does not
-[set its own](/configuration/setup/favicon).
+The mark at tab size, as an `.ico`. The browser tab of this documentation. An
+abap2UI5 app sets its own tab icon from the running app, with the `set_favicon`
+frontend event — see [Title](/cookbook/browser_interaction/title).
 
 ![The abap2UI5 favicon](/favicon.ico){width=64}
 

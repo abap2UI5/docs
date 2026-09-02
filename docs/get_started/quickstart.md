@@ -3,25 +3,29 @@ outline: [2, 4]
 ---
 # Quickstart
 
-::: tip No system at hand?
-Try abap2UI5 first in the
-[**live demo**](https://abap2ui5.github.io/web-abap2UI5-build/): the complete
-stack — framework, backend and sample apps — downported, transpiled to
-JavaScript and running inside your browser tab, against an in-memory database.
-No installation, no SAP system, no login. It is rebuilt daily from `main`, so
-what you click there is the current framework. Come back here when you want the
-same apps on a real system.
-:::
+## 1. Install the Framework via abapGit
 
-## 1. Installation via abapGit
-
-Install [abap2UI5](https://github.com/abap2UI5/abap2UI5) with [abapGit](https://abapgit.org). (New to abapGit? Install it first — see [abapGit](/technical/tools/abapgit); it's the one-time tool used to pull abap2UI5 into your system.)
+Pull [abap2UI5](https://github.com/abap2UI5/abap2UI5) with
+[abapGit](https://abapgit.org). (New to abapGit? Install it first — see
+[abapGit](/technical/tools/abapgit); it's the one-time tool used to pull
+abap2UI5 into your system.) For anything beyond a first look, pull a
+[release](https://github.com/abap2UI5/abap2UI5/releases/) rather than `main` —
+see [Productive Usage](/configuration/productive_usage) for why.
 
 ![abapGit repository installation screen for abap2UI5](/get_started/image.png)
 
 ::: details ABAP Cloud
+On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT) and
+mass-activate the pulled objects afterwards — the
+[S/4 Public Cloud](/configuration/s4_public_cloud) page walks through it
+screenshot by screenshot, including the two link choices that cannot be changed
+later.
+
 ![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
 :::
+
+The framework is everything you need: the HTTP endpoint you create next serves
+the UI5 frontend itself, so there is no separate frontend to deploy. In some scenarios an additional frontend app is needed, check out more information here(link).
 
 ## 2. Set Up HTTP Handler and Service
 Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
@@ -70,33 +74,35 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 abap2UI5 talks only to the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
 :::
 
+::: tip **ABAP Language Versions**
+The handler above is the one place the distinction matters. Your *apps* are
+independent of it — you are free to choose whether to build them with ABAP
+Cloud compatibility, whichever handler this system runs.
+:::
+
 ## 3. First Launch
 Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
 <img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press `check` to verify your installation, then launch the bundled test app to confirm everything works. That's it — you can now build your own abap2UI5 apps.
+Press `check` to verify your installation, then launch the bundled test app to confirm everything works.
 
-## 4. Your First App
-Build a class on your system:
-```abap
-CLASS zcl_my_app DEFINITION PUBLIC.
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-ENDCLASS.
+You should now see the page of the startup app. That is the whole install verified: abapGit pull,
+handler, service and app class. If you see something else instead:
 
-CLASS zcl_my_app IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-    client->message_box_display( `Hello World` ).
-  ENDMETHOD.
-ENDCLASS.
-```
-Back on the startup page, enter your class name `ZCL_MY_APP` in the input field and launch it — that's it: you've built your first abap2UI5 app.
+- **The browser shows an ICF error page or a plain 404** — the request never
+  reached the handler. In `SICF`, check that the service node is *activated*
+  (right-click → Activate Service) and that the URL path matches the node.
+- **A logon prompt you did not expect, or a 401/403** — authentication is the
+  ICF node's job, exactly as for any other service. Check the node's **Logon
+  Data** tab, and see [Security](/configuration/security) for how access to
+  the endpoint is controlled.
+- **The startup page never appears, or stays white** — open the browser
+  console (`F12`); a bootstrap problem such as a blocked UI5 CDN logs there.
+  Systems without internet access must serve UI5 themselves — see
+  [Bootstrapping](/configuration/setup/ui5_bootstrapping).
 
-::: tip **Naming**
-Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
-:::
 
 ## Next Steps
 
-[Hello World](/get_started/hello_world) explains what that class actually did.
-Once it is more than one class, [Working Off-Stack](/advanced/working_off_stack) is
-where the source moves into a git repository with the checks in front of it.
+The framework is installed and verified. [Hello World](/get_started/hello_world)
+is the next page: it is the smallest app that can exist, how to start it, and
+what each line of it does.

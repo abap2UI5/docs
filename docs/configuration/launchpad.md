@@ -48,25 +48,11 @@ DATA(lv_product) = VALUE #( lt_params[ n = `PRODUCT` ]-v OPTIONAL ).
 ```
 
 ### Cross App Navigation
-Handle view changes and popups through the abap2UI5 backend as usual. But for navigation *between* apps in a Launchpad, use the Launchpad's own cross-app navigation instead of a backend roundtrip — this keeps browser navigation and history working. Fire the `cross_app_nav_to_ext` event with the target intent (and optional parameters, here taken from a bound structure):
 
-```abap
-)->tag( `Button`
-    )->a( n = `text`  v = `go to app 128`
-    )->a( n = `press` v = client->follow_up_action(
-              val   = client->cs_event-cross_app_nav_to_ext
-              t_arg = VALUE #(
-                  ( `{ semanticObject: "Z2UI5_CL_LP_SAMPLE_04", action: "display" }` )
-                  ( `$` && client->_bind( nav_params ) ) ) )
-```
-
-To navigate back to the previous Launchpad app, use `cross_app_nav_to_prev_app`:
-
-```abap
-)->tag( `Button`
-    )->a( n = `text`  v = `BACK`
-    )->a( n = `press` v = client->follow_up_action( client->cs_event-cross_app_nav_to_prev_app )
-```
+Navigating between Fiori apps goes through the Launchpad's own cross-app
+navigation rather than through an abap2UI5 roundtrip, so the shell's history
+and back button keep working. The intent, the parameters and the way back are
+on [Navigation → Cross App](/cookbook/event_navigation/navigation/cross_app).
 
 ## Troubleshooting
 Sometimes installation via abapGit causes cache-related issues. Here's how to clear them:
@@ -121,6 +107,7 @@ INTERFACE z2ui5_if_lp_kpi
 ENDINTERFACE.
 ```
 (2/3) Implement the interface in your app class next to `z2ui5_if_app`. The `count` method holds your KPI logic (e.g., counting open items from the database):
+<!-- playground: no Run button — z2ui5_if_lp_kpi lives in abap2UI5-addons, which the playground does not carry -->
 ```abap
 CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
 
@@ -128,6 +115,8 @@ CLASS z2ui5_cl_lp_kpi_hello_world DEFINITION PUBLIC.
     INTERFACES z2ui5_if_lp_kpi.
     INTERFACES z2ui5_if_app.
 
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_lp_kpi_hello_world IMPLEMENTATION.

@@ -52,7 +52,7 @@ alone would let them collide; the segment is what keeps them apart.
 
 | Segment | Meaning |
 |---|---|
-| *(none)* — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_if_types`, `z2ui5_if_exit` | **The public API.** The four interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
+| *(none)* — `z2ui5_if_app`, `z2ui5_if_client` | **The public API.** Both interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers. `z2ui5_if_types` carries none either and is the exception that proves the rule: it is retired, ships unchanged so existing apps keep compiling, and every type it held now sits on the object that uses it — see [Deprecations](/resources/deprecations) |
 | `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the two public classes `z2ui5_cl_ui5_http_handler` and `z2ui5_cl_ui5_view_builder` |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
@@ -132,7 +132,7 @@ object at all:
 | Module IDs | `z2ui5/core/Server`, `z2ui5/model/formatter` |
 | Globals | `z2ui5.Formatter`, `z2ui5.Util` |
 | Custom control XML namespace | `xmlns:z2ui5="z2ui5.cc"` → `z2ui5/cc/<Name>` |
-| The event constant | `cs_event-z2ui5`, which calls a `z2ui5.*` global — see [Raw JavaScript](/cookbook/expert_more/follow_up_action#raw-javascript) |
+| The event constant | `cs_event-z2ui5`, which calls a `z2ui5.*` global — see [Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) |
 | Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
 
 Renaming the ABAP side does not touch any of these — they stay `z2ui5` in every
@@ -148,6 +148,9 @@ your own namespace that implements `z2ui5_if_app`:
 CLASS zcl_my_app DEFINITION PUBLIC CREATE PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 ```
 
@@ -181,7 +184,7 @@ instead of `z2ui5_if_app`.
 ### How It Works
 [abaplint](https://abaplint.org) can rename ABAP artifacts across a whole repository: you define rename patterns (old name → new name, including regular expressions) in an abaplint configuration, and `abaplint --rename` rewrites every class, interface, and reference consistently, writing the result to an output folder:
 
-```jsonc
+```jsonc [abaplint.json]
 "rename": {
   "output": "output",
   "patterns": [

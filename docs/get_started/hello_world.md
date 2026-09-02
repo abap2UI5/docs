@@ -11,6 +11,9 @@ Just copy the following class into your system:
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_app_hello_world IMPLEMENTATION.
@@ -19,151 +22,58 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-Open the abap2UI5 startup page in your browser (the same page as in the [Quickstart](/get_started/quickstart)), enter the class name `ZCL_APP_HELLO_WORLD` in the input field, and launch your app.
 
-::: tip **ABAP Language Versions**
-While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
+Open the abap2UI5 startup page in your browser — the page the
+[Quickstart](/get_started/quickstart#_3-first-launch) ends on — enter the class
+name `ZCL_APP_HELLO_WORLD` in the input field, and launch it.
+
+That is a complete abap2UI5 app: one class, one method, no frontend project and no OData service.
+
+## Starting an App by URL
+
+The startup page is a convenience around a URL parameter you will use from now
+on. `?app_start=<class>` appended to your service URL starts that app directly:
+
+```
+https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_app_hello_world
+```
+
+That is the form a browser bookmark, a Launchpad tile and every sample
+catalogue use — the sample pages all say "start it with `?app_start=<class>`"
+and mean exactly this.
+
+If launching reports `The app 'ZCL_APP_HELLO_WORLD' does not exist in the
+system.`, the framework could not instantiate the class: a typo in the name, or
+the class is not activated yet. Anything that goes wrong *after* this point —
+an app that renders empty, a binding that does not update, an error view on a
+roundtrip — is catalogued with symptom, cause and fix in
+[Common Failures](/cookbook/troubleshooting/common_failures).
+
+::: tip **Naming**
+Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
 :::
 
-### How Apps Work
-abap2UI5 follows a thin-frontend model: the browser only renders UI5 views, while all logic, state, and data handling stay in ABAP on the server. Three ideas to keep in mind before writing code:
+## A Real Screen, an Event and Data Exchange
 
-- **One method, many calls.** The framework calls your app's `main` method on every roundtrip — on the initial start *and* after every user interaction (button press, input change, navigation).
-- **State lives in your class.** Public attributes of your app class hold data between roundtrips; abap2UI5 serializes and restores them for you, so you don't manage sessions manually.
-- **The `client` object is your only API.** Use it to display views, check which event fired, bind attributes to UI5 controls, and trigger navigation.
+A message box is not an app. This second class is still one class, and it has
+everything a real one has — a view, data travelling both ways, and an event:
 
-Every abap2UI5 app implements the `z2ui5_if_app` interface. It has a single method, `main`, with one parameter: `client` of type `z2ui5_if_client`. (The real interface also declares a few attributes that the framework manages for you — you can ignore them.)
 ```abap
-INTERFACE z2ui5_if_app PUBLIC.
-  METHODS main
-    IMPORTING
-      client TYPE REF TO z2ui5_if_client.
-ENDINTERFACE.
-```
-
-→ *For a deeper look at the lifecycle and framework internals, see [How It All Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
-
-### View Display
-Instead of a message box, let's render a view with some text:
-```abap
-CLASS zcl_app_hello_world DEFINITION PUBLIC.
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-ENDCLASS.
-
-CLASS zcl_app_hello_world IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-            )->ele( `Shell`
-                )->ele( `Page`
-                    )->a( n = `title` v = `abap2UI5 - Hello World`
-
-                    )->tag( `Text`
-                        )->a( n = `text` v = `My Text` ).
-
-    client->view_display( view->stringify( ) ).
-
-  ENDMETHOD.
-ENDCLASS.
-```
-
-You are writing a UI5 XML view, one control per call. `z2ui5_cl_ui5_view_builder`
-has four verbs and no list of controls to look up — every UI5 control,
-property and aggregation is available because the builder never knew any of
-them by name:
-
-| | |
-| --- | --- |
-| `ele( )` | add a control and **descend** into it — for a container |
-| `tag( )` | add a control and **stay** — for a leaf |
-| `a( )` | set **one** attribute on the control the chain is pointing at |
-| `end( )` | ascend to the parent |
-
-The single rule: `a( )` applies to the control the chain currently points at,
-so attributes follow their control — and a control gets them *before* its
-first child. The root `mvc:View` and its `xmlns` declarations are written by
-hand, exactly as in a real UI5 view. A trailing `end( )` can be left out:
-`stringify( )` renders from the root wherever the chain stopped.
-
-### Events
-Now add a button and react to its press event:
-```abap
-CLASS zcl_app_hello_world DEFINITION PUBLIC.
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-ENDCLASS.
-
-CLASS zcl_app_hello_world IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-              )->ele( `Shell`
-                  )->ele( `Page`
-                      )->a( n = `title` v = `abap2UI5 - Hello World`
-
-                      )->tag( `Text`
-                          )->a( n = `text` v = `My Text`
-                      )->tag( `Button`
-                          )->a( n = `text`  v = `post`
-                          )->a( n = `press` v = client->_event( `POST` ) ).
-
-      client->view_display( view->stringify( ) ).
-
-    ELSEIF client->check_on_event( `POST` ).
-
-      client->message_box_display( `Hello World!` ).
-
-    ENDIF.
-
-  ENDMETHOD.
-ENDCLASS.
-```
-
-As introduced above, the framework calls `main` on every roundtrip. The diagram shows both phases — the initial load and a later user event:
-
-```text
-┌──────────┐       ┌──────────┐       ┌──────────┐
-│ Browser  │──────>│  main()  │──────>│ Browser  │
-│ (Start)  │  HTTP │  init    │  HTTP │ (View)   │
-└──────────┘       └──────────┘       └────┬─────┘
-                                           │ user clicks
-┌──────────┐       ┌──────────┐       ┌────┴─────┐
-│ Browser  │<──────│  main()  │<──────│ Browser  │
-│ (Update) │  HTTP │  event   │  HTTP │ (Event)  │
-└──────────┘       └──────────┘       └──────────┘
-```
-
-Use the lifecycle checks to tell these phases apart:
-
-- `client->check_on_init( )` — first call when the app starts
-- `client->check_on_event( )` — user triggered an event (e.g. a button press)
-
-Each `check_*` method returns `abap_true` only for its own phase, so the `IF`/`ELSEIF` chain acts as a dispatcher.
-
-### Data Flow
-Finally, add a public attribute and bind it to an input field to send data back to the server. The attribute must be in the `PUBLIC SECTION` — the framework accesses it dynamically and silently ignores private or protected attributes (full rules on the [Binding](/cookbook/model/binding) page):
-```abap
-CLASS zcl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_app_hello_screen DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA name TYPE string.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_app_hello_world IMPLEMENTATION.
+CLASS zcl_app_hello_screen IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
+
+      name = `World`.
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
@@ -174,30 +84,49 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
                   )->ele( `Page`
                       )->a( n = `title` v = `abap2UI5 - Hello World`
 
-                      )->tag( `Text`
-                          )->a( n = `text` v = `My Text`
                       )->tag( `Input`
                           )->a( n = `value` v = client->_bind( name )
                       )->tag( `Button`
-                          )->a( n = `text`  v = `post`
-                          )->a( n = `press` v = client->_event( `POST` ) ).
+                          )->a( n = `text`  v = `Say Hello`
+                          )->a( n = `press` v = client->_event( `SAY_HELLO` ) ).
 
       client->view_display( view->stringify( ) ).
 
-    ELSEIF client->check_on_event( `POST` ).
+    ELSEIF client->check_on_event( `SAY_HELLO` ).
 
-      client->message_box_display( |Your name is { name }.| ).
+      client->message_toast_display( |Hello { name }!| ).
 
     ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
 ```
-That's all you need. Set a breakpoint to watch the communication and data updates in action, then try changing the view, events, and data flow.
 
-### Jump into the Code
-Press `Ctrl+F12` in any running app to open the **Developer Tools** — tabs for the app's source code, the rendered view XML, the model data, the request/response pair and the error log:
+Type a name, press the button, and the toast greets it. Three things are
+happening, and none of them needed any code you had to write yourself:
+
+- the **view** is a UI5 XML view, built in ABAP with `z2ui5_cl_ui5_view_builder`
+- `client->_bind( name )` ties the input to the public attribute, so what the
+  user types is in `name` on the next roundtrip
+- `client->_event( )` sends the button press back to `main`, and
+  `check_on_event( )` catches it
+
+## Jump into the Code
+
+Press `Ctrl+F12` in any running app to open the **Developer Tools** — tabs for
+the app's source code, the rendered view XML, the model data, the
+request/response pair and the error log. It is the first place to look when
+something does not render the way you expected:
+
 ![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
+
+## Next: Build Something
+
+Want all of that explained rather than just shown? The
+[Walkthrough](/tutorials/walkthrough/) takes these two classes apart and grows them
+into a complete app, one concept per step — views, events, binding, lists,
+tables, a selection screen and popups. Every step is a complete class you can
+run in the browser.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

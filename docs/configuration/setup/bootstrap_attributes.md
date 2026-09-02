@@ -23,7 +23,7 @@ The UI5 bootstrap script tag in `index.html` accepts a long list of `data-sap-ui
 To add an attribute — or override one of the defaults — append a row to `cs_config-t_add_config`. Each row contributes one `name='value'` pair to the script tag:
 
 ```abap
-METHOD z2ui5_if_exit~set_config_http_get.
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-t_add_config = VALUE #(
       ( n = `data-sap-ui-libs`         v = `sap.m,sap.ui.table` )

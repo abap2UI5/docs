@@ -1,0 +1,69 @@
+# The abap2UI5 linter checks every fenced ABAP block on this site - the one
+# place a wrong example is copied by everyone who reads it - and the declared
+# range decided which rules did that checking. `^0.2.2` cannot reach a 0.3.x
+# release at all, so the examples were checked by a linter four minors old
+# while every gate in the organisation ran 0.6.x; Dependabot's own header in
+# .github/dependabot.yml records the identical miss at 0.1.1 -> 0.2.0, because
+# a 0.x minor counts as a major there and waits in a PR nobody is watching
+# for. The samples repositories already run this same weekly move (their
+# bump-linter.yaml is the model): resolve `latest`, pin it, run the gates
+# that consume the linter, open a PR.
+name: bump-linter
+
+on:
+  schedule:
+    - cron: '46 6 * * 1'   # Mondays 06:46 UTC - after samples' 06:41
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump-linter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      with:
+        node-version: '22'
+
+    - name: Move @abap2ui5/linter to the latest published version
+      id: pin
+      run: |
+        set -euo pipefail
+        # Resolved first and checked, because `npm view` prints nothing and
+        # still exits 0 when a package has no `latest` dist-tag - installing
+        # `@abap2ui5/linter@` would then resolve to whatever npm felt like.
+        VERSION=$(npm view @abap2ui5/linter version)
+        test -n "$VERSION"
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        npm install --save-dev "@abap2ui5/linter@$VERSION"
+        if git diff --quiet package.json package-lock.json; then
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    # The gates that consume the linter: every fenced example on the site,
+    # plus the script tests. A rule that starts rejecting a documented
+    # example fails here, in the PR run, not on main - and a rejected
+    # example is a finding about the DOCUMENTATION, which is the point.
+    - if: steps.pin.outputs.changed == 'true'
+      run: npm test
+    - if: steps.pin.outputs.changed == 'true'
+      run: npm run check:examples
+    - if: steps.pin.outputs.changed == 'true'
+      run: npm run check:playground
+
+    - if: steps.pin.outputs.changed == 'true'
+      uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      with:
+        branch: bump-linter
+        title: 'chore: bump @abap2ui5/linter'
+        commit-message: 'chore: bump @abap2ui5/linter to ${{ steps.pin.outputs.version }}'
+        body: |
+          Weekly move of `@abap2ui5/linter` to the latest version on npm
+          (${{ steps.pin.outputs.version }}). Every fenced ABAP example on
+          the site was re-checked in the workflow that opened this PR.
