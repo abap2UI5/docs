@@ -16,7 +16,7 @@ here is what your install has — not what `main` already promises.
 The interface is deliberately small and deliberately stable: obsolete methods
 stay in it so existing apps keep compiling, and they are marked as such below,
 each one naming its replacement. How the pieces fit together — the lifecycle,
-binding, events — is what the [Tutorial](/tutorials/overview) and the
+binding, events — is what the [Tutorial](/tutorials/walkthrough/) and the
 [Cookbook](/cookbook/view/definition) explain; this page is the contract they
 explain it against.
 

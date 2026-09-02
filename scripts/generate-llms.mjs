@@ -81,8 +81,21 @@ function markdownFiles(dir, out = []) {
   return out;
 }
 
-const linkOf = (file) => `/${path.relative(DOCS, file).replace(/\\/g, '/').replace(/\.md$/, '')}`;
-const fileOf = (link) => path.join(DOCS, `${link.slice(1)}.md`);
+/* A page link and the file behind it are NOT a plain `.md` suffix apart.
+ * VitePress serves `<dir>/index.md` at `<dir>/`, so the trailing slash IS the
+ * index page, and `docs/index.md` (the home page) is the same rule at the
+ * root - which is why the orphan filter below used to carry a hand-written
+ * `/index` exception. Everything that converts between the two goes through
+ * mdSuffix, or a directory index resolves to `<dir>/.md` and takes the build
+ * down, which is exactly what happened the first time a section grew one. */
+const mdSuffix = (link) => (link.endsWith('/') ? `${link}index.md` : `${link}.md`);
+const linkOf = (file) => {
+  const rel = path.relative(DOCS, file).replace(/\\/g, '/');
+  if (rel === 'index.md') return '/';
+  if (rel.endsWith('/index.md')) return `/${rel.slice(0, -'index.md'.length)}`;
+  return `/${rel.replace(/\.md$/, '')}`;
+};
+const fileOf = (link) => path.join(DOCS, mdSuffix(link).slice(1));
 
 /* ------------------------------------------------------------ the content */
 
@@ -164,7 +177,7 @@ const linked = new Set(pages.map((p) => p.link));
 // still gets them
 const orphans = markdownFiles(DOCS)
   .map(linkOf)
-  .filter((l) => !linked.has(l) && l !== '/index')
+  .filter((l) => !linked.has(l) && l !== '/')
   .sort();
 
 const read = new Map();
@@ -187,7 +200,7 @@ for (const p of pages) {
 const entry = (p) => {
   const body = read.get(p.link);
   const note = summarise(body);
-  return `- [${title(body, p.text)}](${SITE}${p.link}.md)${note ? `: ${note}` : ''}`;
+  return `- [${title(body, p.text)}](${SITE}${mdSuffix(p.link)})${note ? `: ${note}` : ''}`;
 };
 
 const index = [
@@ -282,7 +295,7 @@ const full = [
 
 let written = 0;
 for (const [link, body] of read) {
-  const out = path.join(PUBLIC, `${link.slice(1)}.md`);
+  const out = path.join(PUBLIC, mdSuffix(link).slice(1));
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, `<!-- ${SITE}${link} -->\n\n${stripFrontmatter(body).trim()}\n`);
   written += 1;
