@@ -19,9 +19,6 @@ hero:
     - theme: alt
       text: What's New?
       link: /resources/changelog
-    - theme: alt
-      text: Live Demo
-      link: https://abap2ui5.github.io/playground/
 
 # Three cards, one per thing a reader comes here to do: learn it, take it to
 # production, join in. The Cookbook is not one of them any more: it answers a
@@ -35,11 +32,15 @@ hero:
 # bar as social icons, and a card spent on a link that is always visible is a
 # card not spent on a journey.
 #
-# Samples are NOT a card either, and that is the one deliberate gap: the
-# catalogue is a reading destination of its own, and a card that looks like
-# the three around it and then hands you a corpus is the card people click by
-# accident. It sits below the grid instead, as a single button, set apart,
-# where leaving the grid — and this site — is the obvious thing to be doing.
+# The playground is not a card, and that is the one deliberate gap: it is
+# not a page to read but a thing to try, and a card that looks like the three
+# around it and then opens an editor is the card people click by accident.
+# It sits below the grid instead, as a single button, set apart, where
+# leaving the grid — and this site — is the obvious thing to be doing. It
+# used to be the hero's third button, "Live Demo", next to Quickstart and
+# What's New; three buttons in a row read as three equal choices, and the
+# one that lets you try the thing before reading a word deserves a line of
+# its own.
 features:
   - title: Tutorial
     icon: <i class="fa-solid fa-graduation-cap"></i>
@@ -55,19 +56,17 @@ features:
     link: https://github.com/abap2UI5/abap2UI5/
 ---
 
-<!-- Below the feature grid, off on its own: one button, straight to the
-     sample page itself rather than to a page here describing it. That page
-     names its own corpus, carries the search and the filters, and links the
-     other two catalogues in the bar at its top — everything the page here
-     used to say, said where the samples are. No figure on purpose: the count
-     is on that page, kept by the repository that owns it, and a second copy
-     here is one nothing would check. -->
+<!-- Below the feature grid, off on its own: one button, straight into the
+     playground. The invitation carries what the hero cannot in five words:
+     nothing to install, nothing to sign up for, the app runs in the browser
+     next to the code. The samples are a click away from there, and from the
+     cookbook chapters, so they need no button here. -->
 <div class="a2ui5-catalogues">
 
-Looking for a working app to copy? Hundreds of them are searchable in the browser — nothing to install.
+Curious what an app looks like? Write ABAP in the browser and watch it run — nothing to install, nothing to sign up for.
 {.a2ui5-catalogues-lead}
 
-[Browse the Samples](https://abap2ui5.github.io/samples/)
+[Try it in the Playground](https://abap2ui5.github.io/playground/)
 {.a2ui5-catalogues-links}
 
 </div>

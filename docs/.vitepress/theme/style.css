@@ -860,11 +860,12 @@
  * here existed to prevent.
  */
 
-/* The sample catalogues, under the grid and deliberately not part of it: a
- * corpus of working apps is a different kind of destination from the cards
- * above, and a fourth card would read as one of them. A rule, small type and
- * a single button — enough to read as "and, separately, over there" rather
- * than as another card.
+/* The playground, under the grid and deliberately not part of it: a place to
+ * try the thing is a different kind of destination from the cards above, and
+ * a fourth card would read as one of them. A rule, small type and a single
+ * button — enough to read as "and, separately, over there" rather than as
+ * another card. (The block class still says catalogues: it carried the
+ * samples button before the playground took its place.)
  *
  * The selectors carry the block class twice because this sits inside
  * `.vp-doc` — VPHomeContent wraps the markdown that follows the frontmatter —
@@ -1091,8 +1092,8 @@
     line-height: 22px;
   }
 
-  /* The samples block is this file's own, further up — same treatment, so it
-   * shrinks with the grid it sits under instead of growing relative to it. */
+  /* The playground block is this file's own, further up — same treatment, so
+   * it shrinks with the grid it sits under instead of growing relative to it. */
   .Layout .VPHome .a2ui5-catalogues {
     margin-top: 36px;
     padding-top: 25px;

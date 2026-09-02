@@ -141,8 +141,8 @@ export default defineConfig({
         // sample catalogues on top of them, which meant nine entries in two
         // groups and a reader scanning for "where is the code" reading past
         // half of it first. The catalogues are a reading destination and are
-        // linked where a reader looks for one — the button under the home
-        // page grid, and the cookbook chapters; this menu answers the other
+        // linked where a reader looks for one — the cookbook chapters, and
+        // the playground the home page opens; this menu answers the other
         // question, which repository to clone.
         text: "Links",
         items: [
