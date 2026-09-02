@@ -166,12 +166,65 @@ Everything else in those two pages is already carried positively elsewhere:
 | cloud-ready and clean core | **20** |
 | OData metadata flow / HTTP event flow | **5**, **7**, **8** |
 
-## Archiving
+## Archiving — audited, not yet safe
 
-All six pages of Technical Insight are now drained, so the section can be
-archived once these drafts are published. The **Toolchain** group stays: those
-pages document other people's projects and are reference material, not
-narrative.
+Every *argument* in the seven pages has an article. That is not the same as
+every *thing* in them, and an audit against the pages rather than against the
+table above turns up three blockers. None is a reason not to archive; each is
+work that has to happen first.
+
+**1. The content would leave the website.** `blog/` sits at the repository root,
+outside `docs/`. The site is built with `vitepress build docs` and
+`generate-llms.mjs` walks the same tree, so these articles are in neither. The
+seven pages are ~10,400 words of the only architecture documentation the site
+has; deleting them moves that to LinkedIn and the SAP Community, which are not
+this project's documentation. A reader landing on the docs asking "how does this
+actually work" would find nothing. Either the articles move into `docs/` — their
+ABAP already passes the gates, so that is cheap — or the pages stay as the long
+version and link out.
+
+**2. Fifty diagrams and sixty-two references are not carried.**
+
+| | source pages | articles |
+|---|---|---|
+| images | 50 (39 in `how_it_all_works.md`, 11 in `concept.md`) | 1 |
+| external links | 62 | 4 |
+
+In `how_it_all_works.md` the diagrams *are* the explanation — the Over-the-Wire
+lifecycle, UI5 versus abap2UI5 communication, the call stack, `z2ui5_t_draft`,
+CDN against local bootstrapping, plus animated demos of the model and the view
+being swapped at runtime and of the class being edited without reloading the
+frontend. Three hundred words of prose do not replace an animation of the thing
+happening. The links are attribution as much as reference: `concept.md` quotes
+signalvnoise verbatim and credits the SAP Community htmx article the idea came
+from, and no article carries either citation.
+
+**3. Six facts are in no article at all.** Measured by grepping the articles for
+each term, not by reading the table:
+
+| missing | source | why it matters |
+|---|---|---|
+| Hypermedia-Driven Application, MPA vs SPA vs HDA, the "sweet spot" | `how_it_all_works.md` 2, 4 | the vocabulary a reader searches for; **5** and **6** have the idea without the name |
+| `z2ui5_t_draft` | 16 | **9** explains the mechanism and never names the table somebody has to look into |
+| expression binding / side effects, and RAP's `+ - *` | 20 | carried nowhere; **12** covers the seams, not this |
+| VDM by name | `cloud.md` | **20** says "the released data model" without the term |
+| SEGW | 9 | minor, but it is the thing not being built |
+| the SCN backlink | `how_it_all_works.md` header | the page *is* a published SAP Community post; deleting it orphans that |
+
+**Also to handle before deletion**, cheap but easy to forget:
+`docs/get_started/hello_world.md:44` links to `concept` and `how_it_all_works`
+in prose; `docs/.vitepress/config.mjs` 496-509 has the whole Technical Insight
+group; `test/playground.test.mjs:92` names `technical/dx.md` in a comment about
+T100.
+
+**The recommendation is archive, not delete.** Keep the seven pages as the long
+version, add the article links to them, and let the series be the way in. If
+they must go, the order is: move the articles into `docs/`, re-home the
+diagrams, fold the six missing facts into the articles that should have had
+them, and only then remove the pages.
+
+The **Toolchain** group is untouched either way: those pages document other
+people's projects and are reference material, not narrative.
 
 **Two things the docs pages say that must not travel into an article.**
 `dx.md` tells the reader to "use `Z2UI5_CL_XML_VIEW` to define simple views"
