@@ -58,8 +58,8 @@ explicitly for this reason.
 
 There used to be one more, `check:counts`, holding four figures on a
 `resources/samples.md` page against the catalogues themselves. That page is
-gone — the home page opens [the samples page](https://abap2ui5.github.io/samples/)
-directly and each catalogue introduces itself — and with it the only prose
+gone — the cookbook links [the samples page](https://abap2ui5.github.io/samples/)
+and each catalogue introduces itself — and with it the only prose
 copy of a number this repository does not own. `generate-llms.mjs` still counts
 the sample catalogues into `llms.txt`, which is why CI sparse-checks out
 `SAMPLES.md` from `samples-controls` and `samples-stack`; both are
