@@ -314,7 +314,7 @@ z2ui5_cl_popup_to_confirm=>factory( `Delete this entry?` )
 
 The name gains the two letters `up`: the add-on ships under `z2ui5_cl_popup_*`,
 the frozen built-ins are `z2ui5_cl_pop_*`. The shipped classes are unchanged, so
-existing calls keep compiling. See [Add-ons](/advanced/addons).
+existing calls keep compiling. See [Add-ons](/resources/addons).
 
 ### Utility classes
 
