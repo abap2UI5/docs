@@ -79,6 +79,22 @@ Open the HTTP endpoint in your browser — in `SICF`, right-click your service n
 <img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` to verify your installation, then launch the bundled test app to confirm everything works.
 
+You should now see the page of the startup app. That is the whole install verified: abapGit pull,
+handler, service and app class. If you see something else instead:
+
+- **The browser shows an ICF error page or a plain 404** — the request never
+  reached the handler. In `SICF`, check that the service node is *activated*
+  (right-click → Activate Service) and that the URL path matches the node.
+- **A logon prompt you did not expect, or a 401/403** — authentication is the
+  ICF node's job, exactly as for any other service. Check the node's **Logon
+  Data** tab, and see [Security](/configuration/security) for how access to
+  the endpoint is controlled.
+- **The startup page never appears, or stays white** — open the browser
+  console (`F12`); a bootstrap problem such as a blocked UI5 CDN logs there.
+  Systems without internet access must serve UI5 themselves — see
+  [Bootstrapping](/configuration/setup/ui5_bootstrapping).
+
+  
 ## 4. Your First App
 Build a class on your system:
 ```abap
@@ -108,44 +124,15 @@ https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_my_app
 — which is the form a browser bookmark, a Launchpad tile and every sample
 catalogue use.
 
+If launching the app reports `The app 'ZCL_MY_APP' does not exist in the system.` — the framework could not instantiate the class: a typo in the name, or the class is not activated yet. Anything that goes wrong *after* this point — an app that renders empty, a binding that does not update, an error view on a roundtrip — is catalogued with symptom, cause and fix in [Common Failures](/cookbook/troubleshooting/common_failures).
+
+
 ::: tip **Naming**
 Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
 :::
+::: tip ABAP Language Versions While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility. :::
 
-## 5. Verify
-
-You should now see an empty page with a **Hello World** message box on it, at
-`…?app_start=zcl_my_app`. That is the whole install verified: abapGit pull,
-handler, service and app class. If you see something else instead:
-
-- **The browser shows an ICF error page or a plain 404** — the request never
-  reached the handler. In `SICF`, check that the service node is *activated*
-  (right-click → Activate Service) and that the URL path matches the node.
-- **A logon prompt you did not expect, or a 401/403** — authentication is the
-  ICF node's job, exactly as for any other service. Check the node's **Logon
-  Data** tab, and see [Security](/configuration/security) for how access to
-  the endpoint is controlled.
-- **The page loads, but launching the app reports `The app 'ZCL_MY_APP' does
-  not exist in the system.`** — the framework could not instantiate the class:
-  a typo in the name, or the class is not activated yet.
-- **The startup page never appears, or stays white** — open the browser
-  console (`F12`); a bootstrap problem such as a blocked UI5 CDN logs there.
-  Systems without internet access must serve UI5 themselves — see
-  [Bootstrapping](/configuration/setup/ui5_bootstrapping).
-
-Anything that goes wrong *after* this point — an app that renders empty, a
-binding that does not update, an error view on a roundtrip — is catalogued
-with symptom, cause and fix in
-[Common Failures](/cookbook/troubleshooting/common_failures).
-
-If you use VS Code: the [abap2UI5 extension](/advanced/vscode) ships a command
-**"abap2UI5: Check System Connection"** that probes your service URL step by
-step — URL shape, host, logon, the page itself — and reports where a launch
-would fail, with the fix next to the failing step. It is the fastest way to
-diagnose a first-run problem without clicking through `SICF`.
 
 ## Next Steps
 
 [Hello World](/get_started/hello_world) explains what that class actually did.
-Once it is more than one class, [Working Off-Stack](/advanced/working_off_stack) is
-where the source moves into a git repository with the checks in front of it.
