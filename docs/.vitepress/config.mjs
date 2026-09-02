@@ -204,7 +204,6 @@ export default defineConfig({
         link: "/tutorials/walkthrough/",
         collapsed: true,
         items: [
-          { text: "Overview", link: "/tutorials/walkthrough/" }, // sidebar
           {
             // No `collapsed` key at all, like Quickstart above: that is what
             // makes a group a plain labelled list instead of a collapsible
@@ -212,7 +211,14 @@ export default defineConfig({
             // let the steps be folded away - and the sequence IS the tutorial,
             // so a reader working through it has to see where they are on
             // every page.
+            //
+            // The group label itself opens the walkthrough's index page.
+            // That page used to stand above the group as a separate
+            // "Overview" entry, which put two lines in front of the reader
+            // for one page - the label they were looking for and the entry
+            // that actually opened it.
             text: "Walkthrough",
+            link: "/tutorials/walkthrough/",
             items: [
               { text: "1. The App Class", link: "/tutorials/walkthrough/step-1" },
               { text: "2. A First View", link: "/tutorials/walkthrough/step-2" },
@@ -541,10 +547,10 @@ export default defineConfig({
           },
           // A section of its own until now, next to Advanced Topics rather
           // than inside it. It is the same kind of reading - what the
-          // framework does under the app, and the tools it stands on - and
-          // it is read after the app runs, not on the way in, so it sits
-          // here as the last entry instead of as a second top-level heading
-          // competing with this one.
+          // framework does under the app - and it is read after the app
+          // runs, not on the way in, so it sits here instead of as a second
+          // top-level heading competing with this one. The toolchain it
+          // stands on follows as a group of its own, below.
           {
             text: "Technical Insight",
             link: "/technical/concept",
@@ -564,26 +570,33 @@ export default defineConfig({
                   { text: "Low-Code Platforms", link: "/technical/technology/low_code" },
                 ],
               },
-              {
-                text: "Toolchain",
-                collapsed: true,
-                items: [
-                  // Every one of these is somebody else's project, which is
-                  // what this group is: the toolchain abap2UI5 stands on.
-                  // The project's own linter used to head the list, pointing
-                  // at the same page as Developer Setup > Project Tools two
-                  // groups up. One entry standing twice in one sidebar makes
-                  // its own search results ambiguous, and here it also made
-                  // the group claim something it no longer holds.
-                  { text: "abapGit", link: "/technical/tools/abapgit" },
-                  { text: "ajson", link: "/technical/tools/ajson" },
-                  { text: "S-RTTI", link: "/technical/tools/srtti" },
-                  { text: "abaplint", link: "/technical/tools/abaplint" },
-                  { text: "open-abap", link: "/technical/tools/open_abap" },
-                  { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
-                  { text: "abapmerge", link: "/technical/tools/abapmerge" },
-                ],
-              },
+            ],
+          },
+          {
+            // Every one of these is somebody else's project, which is what
+            // this group is: the toolchain abap2UI5 stands on. It used to be
+            // the last entry INSIDE Technical Insight, one level further
+            // down, where a reader looking for "how does abapGit fit in" had
+            // to open a group about the framework's internals first. Next to
+            // Developer Setup - the tools you develop WITH - and Technical
+            // Insight - what the framework does under the app - it is one of
+            // the things this section is for, and reachable in one click.
+            //
+            // The project's own linter used to head the list, pointing at
+            // the same page as Developer Setup > Project Tools above. One
+            // entry standing twice in one sidebar makes its own search
+            // results ambiguous, and here it also made the group claim
+            // something it no longer holds.
+            text: "Toolchain",
+            collapsed: true,
+            items: [
+              { text: "abapGit", link: "/technical/tools/abapgit" },
+              { text: "ajson", link: "/technical/tools/ajson" },
+              { text: "S-RTTI", link: "/technical/tools/srtti" },
+              { text: "abaplint", link: "/technical/tools/abaplint" },
+              { text: "open-abap", link: "/technical/tools/open_abap" },
+              { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
+              { text: "abapmerge", link: "/technical/tools/abapmerge" },
             ],
           },
         ],
