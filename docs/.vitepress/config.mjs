@@ -691,6 +691,25 @@ export default defineConfig({
     socialLinks: [
       { icon: "linkedin", link: "https://www.linkedin.com/company/abap2ui5/" },
       { icon: "github", link: "https://github.com/abap2UI5/abap2UI5" },
+      // The playground, at the right-hand end of the bar: try the thing from
+      // any page, not only from the home page button. It belongs in this row
+      // because VPSocialLink opens in a new tab and passes the link through
+      // verbatim - right for a site of its own, which is exactly why the
+      // Support page could NOT sit here (it lived in a custom component in
+      // the `nav-bar-content-after` slot until this icon took its place;
+      // Support stays under the version menu and in the sidebar). The glyph
+      // is inline rather than one of Font Awesome's: that stylesheet comes
+      // from a CDN, and an icon that is an empty square until it arrives is
+      // worse than one that never needed it. A play triangle in a ring, at
+      // the 20px the row gives it; the ring is a stroke so it reads as one
+      // shape next to the two solid marks and not as a third blob.
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 7.9v8.2a.5.5 0 0 0 .76.43l6.6-4.1a.5.5 0 0 0 0-.86l-6.6-4.1a.5.5 0 0 0-.76.43z" fill="currentColor"/></svg>',
+        },
+        link: "https://abap2ui5.github.io/playground/",
+        ariaLabel: "Playground",
+      },
     ],
   },
 });
