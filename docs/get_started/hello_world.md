@@ -27,11 +27,7 @@ Open the abap2UI5 startup page in your browser (the same page as in the [Quickst
 
 That is a complete abap2UI5 app: one class, one method, no frontend project and no OData service.
 
-::: tip **ABAP Language Versions**
-While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility.
-:::
-
-## A Real Screen
+## A Real Screen, an Event and Data Exchange
 
 A message box is not an app. This second class is still one class, and it has
 everything a real one has — a view, data travelling both ways, and an event:
