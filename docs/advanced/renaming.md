@@ -52,11 +52,11 @@ alone would let them collide; the segment is what keeps them apart.
 
 | Segment | Meaning |
 |---|---|
-| *(none)* — `z2ui5_if_app`, `z2ui5_if_client` | **The public API.** Both interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers. `z2ui5_if_types` carries none either and is the exception that proves the rule: it is retired, ships unchanged so existing apps keep compiling, and every type it held now sits on the object that uses it — see [Deprecations](/resources/deprecations) |
+| *(none)* — `z2ui5_if_app`, `z2ui5_if_client` | **The public API.** Both interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
 | `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the two public classes `z2ui5_cl_ui5_http_handler` and `z2ui5_cl_ui5_view_builder` |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
-| `util`, `pop`, `xml_view` | Frozen legacy code — still ships, still works, no longer developed. See [Deprecations](/resources/deprecations) |
+| `util`, `pop`, `xml_view` | Frozen — see [Deprecations](/resources/deprecations) |
 
 **Everything else that installs under `Z2UI5_`:**
 
@@ -107,7 +107,7 @@ hierarchy in your system. For the framework repository that is:
 | `src/00/` | External libraries — ajson, S-RTTI and the vendored context/HTTP helpers |
 | `src/01/` | Internal use only — draft persistence, request handling, event routing, binding, and the generated frontend |
 | `src/02/` | The released API — the six objects above |
-| `src/99/` | Frozen — the legacy view builder, the utility classes and the built-in popups |
+| `src/99/` | Frozen — see [Deprecations](/resources/deprecations) |
 
 The package a class sits in is the honest answer to "may I use this?": `src/02`
 yes, `src/01` no, `src/99` only if your app already does.
@@ -130,9 +130,8 @@ object at all:
 | Form | Example |
 |---|---|
 | Module IDs | `z2ui5/core/Server`, `z2ui5/model/formatter` |
-| Globals | `z2ui5.Formatter`, `z2ui5.Util` |
+| Globals | `z2ui5.Formatter` |
 | Custom control XML namespace | `xmlns:z2ui5="z2ui5.cc"` → `z2ui5/cc/<Name>` |
-| The event constant | `cs_event-z2ui5`, which calls a `z2ui5.*` global — see [Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) |
 | Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
 
 Renaming the ABAP side does not touch any of these — they stay `z2ui5` in every
@@ -213,9 +212,9 @@ installation.
 **Class names written as strings.** A dynamic lookup passes its class or
 interface name as text, and text is not a reference. One production lookup in
 `src/` is affected: the user exit. `<ns>_cl_ui5_user_exit=>get_user_exit_class( )`
-searches for classes implementing the literal `` `Z2UI5_IF_EXIT` ``, which in a
-renamed installation is not the interface your exit implements — that one is
-`<NS>_IF_EXIT`. The lookup therefore comes back empty (or, next to an original
+searches for classes implementing the literal `` `Z2UI5_IF_UI5_EXIT` ``, which
+in a renamed installation is not the interface your exit implements — that one
+is `<NS>_IF_UI5_EXIT`. The lookup therefore comes back empty (or, next to an original
 installation, with the *other* installation's exit class, which then cannot be
 instantiated into the renamed reference and is discarded). The search is wrapped
 in `CATCH cx_root`, so nothing is reported: the installation just runs with the

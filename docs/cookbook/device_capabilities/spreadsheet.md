@@ -79,7 +79,7 @@ CLASS lcl_help IMPLEMENTATION.
     SPLIT val AT `;` INTO DATA(lv_dummy) DATA(lv_data).
     SPLIT lv_data AT `,` INTO lv_dummy lv_data.
 
-    DATA(lv_xdata) = z2ui5_cl_util=>conv_decode_x_base64( lv_data ).
+    DATA(lv_xdata) = cl_web_http_utility=>decode_x_base64( lv_data ).
     DATA(lo_excel) = NEW cl_fdt_xl_spreadsheet(
         document_name = `test`
         xdocument     = lv_xdata ).
@@ -191,7 +191,7 @@ CLASS lcl_help IMPLEMENTATION.
       IMPORTING
         er_result_file       = DATA(lv_xstring) ).
 
-    result = z2ui5_cl_util=>conv_encode_x_base64( lv_xstring ).
+    result = cl_web_http_utility=>encode_x_base64( lv_xstring ).
     result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
 
   ENDMETHOD.
@@ -239,10 +239,15 @@ Instead of the XLSX API above (which can change between releases), consider the 
       ( count = `2` value = `red` descr = `this is a description` )
       ( count = `3` value = `red` descr = `this is a description` ) ).
 
-    DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
-    client->follow_up_action(
-      val   = client->cs_event-download_b64_file
-      t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+    TRY.
+        DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
+        client->follow_up_action(
+          val   = client->cs_event-download_b64_file
+          t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+      CATCH zcx_excel INTO DATA(x).
+        client->message_box_display( text = x->get_text( )
+                                     type = `error` ).
+    ENDTRY.
   ENDIF.
 
 ENDMETHOD.
@@ -256,45 +261,43 @@ CLASS lcl_help DEFINITION FINAL CREATE PUBLIC.
       IMPORTING
         val           TYPE any
       RETURNING
-        VALUE(result) TYPE string.
+        VALUE(result) TYPE string
+      RAISING
+        zcx_excel.
 
 ENDCLASS.
 
 CLASS lcl_help IMPLEMENTATION.
   METHOD xlsx_get_by_itab.
-    TRY.
 
-      DATA: lo_excel     TYPE REF TO zcl_excel,
-            lo_writer    TYPE REF TO zif_excel_writer,
-            lo_worksheet TYPE REF TO zcl_excel_worksheet.
+    DATA: lo_excel     TYPE REF TO zcl_excel,
+          lo_writer    TYPE REF TO zif_excel_writer,
+          lo_worksheet TYPE REF TO zcl_excel_worksheet.
 
-      DATA: lt_field_catalog  TYPE zexcel_t_fieldcatalog,
-            ls_table_settings TYPE zexcel_s_table_settings.
+    DATA: lt_field_catalog  TYPE zexcel_t_fieldcatalog,
+          ls_table_settings TYPE zexcel_s_table_settings.
 
-      " Creates active sheet
-      CREATE OBJECT lo_excel.
+    " Creates active sheet
+    CREATE OBJECT lo_excel.
 
-      " Get active sheet
-      lo_worksheet = lo_excel->get_active_worksheet( ).
-      lo_worksheet->set_title( `Internal table` ).
+    " Get active sheet
+    lo_worksheet = lo_excel->get_active_worksheet( ).
+    lo_worksheet->set_title( `Internal table` ).
 
-      lt_field_catalog = zcl_excel_common=>get_fieldcatalog( ip_table = val ).
-      ls_table_settings-table_style  = zcl_excel_table=>builtinstyle_medium5.
-      lo_worksheet->bind_table( ip_table          = val
-                                is_table_settings = ls_table_settings
-                                it_field_catalog  = lt_field_catalog ).
+    lt_field_catalog = zcl_excel_common=>get_fieldcatalog( ip_table = val ).
+    ls_table_settings-table_style  = zcl_excel_table=>builtinstyle_medium5.
+    lo_worksheet->bind_table( ip_table          = val
+                              is_table_settings = ls_table_settings
+                              it_field_catalog  = lt_field_catalog ).
 
-      lo_worksheet->freeze_panes( ip_num_rows = 1 ).
+    lo_worksheet->freeze_panes( ip_num_rows = 1 ).
 
-      CREATE OBJECT lo_writer TYPE zcl_excel_writer_2007.
-      DATA(lv_file) = lo_writer->write_file( lo_excel ).
+    CREATE OBJECT lo_writer TYPE zcl_excel_writer_2007.
+    DATA(lv_file) = lo_writer->write_file( lo_excel ).
 
-      result = z2ui5_cl_util=>conv_encode_x_base64( lv_file ).
-      result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
+    result = cl_web_http_utility=>encode_x_base64( lv_file ).
+    result = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,` && result.
 
-    CATCH cx_root INTO DATA(x).
-      z2ui5_cl_util=>x_raise( x->get_text( ) ).
-    ENDTRY.
   ENDMETHOD.
 ENDCLASS.
 ```

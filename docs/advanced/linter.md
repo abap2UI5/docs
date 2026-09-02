@@ -152,7 +152,7 @@ them:
 | Rule | What it catches |
 | --- | --- |
 | `unknown-binding-path` | a hand-written `{/TYPO}` the derived model has no path for — the field just stays empty. Inside a bound aggregation a relative `{TYPO}` is resolved against the **row**, so a misspelled column is caught too |
-| `frozen-view-builder` | the class builds its view with `z2ui5_cl_xml_view`, the predecessor. That is fine to keep — it works, and is headed for an addon of its own — but no rule above can read it, so none of them ran: switching to `z2ui5_cl_ui5_view_builder` is what buys the whole gate |
+| `frozen-view-builder` | the class builds its view with the frozen predecessor of `z2ui5_cl_ui5_view_builder` (see [Deprecations](/resources/deprecations)). That is fine to keep — it works — but no rule above can read it, so none of them ran: switching to `z2ui5_cl_ui5_view_builder` is what buys the whole gate |
 | `binding-to-nonpublic` | a `PROTECTED`/`PRIVATE` attribute bound — only `PUBLIC` attributes are serialized into the model, so the first roundtrip fails with `BINDING_ERROR` |
 | `binding-to-local` | a local variable bound — the instance is serialized across the roundtrip, the method stack is not, so the value is lost |
 | `unconverted-abap-boolean` | an ABAP boolean written straight into the view: it arrives as `'X'`/`' '` and UI5 reads any non-empty string as true, so `visible = abap_false` makes the control **visible** |
@@ -225,9 +225,8 @@ Some rules carry an exact correction and are rewritten in place:
 npx @abap2ui5/linter src --fix          # or --fix-dry-run to see it first
 ```
 
-Among them: `client->_bind_edit( )` rewritten to `client->_bind( )`, the empty
-`*_model_update( )` calls deleted, `client->_event_client( )` rewritten to
-`client->follow_up_action( )`, a missing `$` inserted in an event argument, a
+Among them: the superseded calls on [Deprecations](/resources/deprecations)
+rewritten to their successors, a missing `$` inserted in an event argument, a
 missing `xmlns:` declaration added at the view root.
 
 Nothing else is touched. A correction that would have to **guess** — which of

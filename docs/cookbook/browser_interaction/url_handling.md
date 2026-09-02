@@ -42,8 +42,8 @@ covers framework routing, the twin `hash_replace( )` that writes *without* a
 history entry, and `cs_event-hash_back` for stepping back from ABAP.
 
 ::: tip Register a listener and the value becomes the whole hash
-Used on its own, as above, `hash_set( )` appends its value to the hash — the
-behavior it had under its old name `set_push_state( )`. An app that registers
+Used on its own, as above, `hash_set( )` appends its value to the hash. An app
+that registers
 `cs_event-hash_attach_changed` owns the hash outright, and the same call then
 writes `#/detail` the way a UI5 router does, with browser Back/Forward
 round-tripping back into the running app. That is the

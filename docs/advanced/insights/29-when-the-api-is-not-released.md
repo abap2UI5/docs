@@ -29,7 +29,7 @@ The move is a wrapper. A class in Standard ABAP that calls the classic API and
 is itself released for ABAP for Cloud Development. It is graded on its own — B,
 as long as it stays with classic APIs — and the app calling it stays A.
 
-![The app stays in ABAP for Cloud Development and reaches a classic API through a wrapper written in Standard ABAP](/advanced/use_cases/on_stack_wrapper.svg){ width=60% }
+![The app stays in ABAP for Cloud Development and reaches a classic API through a wrapper written in Standard ABAP](/advanced/use_cases/on_stack_wrapper.svg){ width=90% }
 
 The value of that is not the grade. It is that the part of the system which is
 not upgrade-stable has a name, a size and a boundary. One class to re-check when
@@ -41,7 +41,7 @@ ABAP, and on releases that do not know ABAP for Cloud Development yet that is
 the only option. The framework stays Level A either way, so moving an app up a
 level later means changing what it calls, not how it renders:
 
-![Apps written in Standard ABAP call classic APIs or SAP-internal objects, while abap2UI5 itself stays Level A](/advanced/use_cases/on_stack_level_b.svg){ width=60% }
+![Apps written in Standard ABAP call classic APIs or SAP-internal objects, while abap2UI5 itself stays Level A](/advanced/use_cases/on_stack_level_b.svg){ width=90% }
 
 **A wrapper does not make the dependency clean. It makes it findable.**
 

@@ -326,10 +326,11 @@ Inside the framework they were replaced by an internal context class.
 ::: warning No drop-in successor for apps
 There is no public replacement API for app code. The classes still ship and
 still work; treat them as stable-but-closed rather than as something to migrate
-away from today. Several pages of this documentation still use them
-([Logon Language](/configuration/setup/logon_language),
-[Lock](/cookbook/expert_more/lock),
-[Spreadsheet](/cookbook/device_capabilities/spreadsheet)).
+away from today. No page of this documentation uses them any more: what the
+examples reached them for is SAP standard — `cl_web_http_utility` for base64
+(`cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases), and
+a failing library raises its own exception instead of being wrapped. The JSON
+reader an app needs is the released `z2ui5_cl_ui5_json`.
 :::
 
 ### Invisible custom controls
@@ -348,7 +349,7 @@ ABAP with no control in the view at all:
 | `Favicon` | `cs_event-set_favicon` |
 | `SoftKeyboard` | `cs_event-keyboard_set_mode` — [Soft Keyboard](/cookbook/browser_interaction/soft_keyboard) |
 | `Info` | `client->get( )-s_device` / `-s_ui5` / `-s_focus` / `-s_scroll` — [Device Info](/cookbook/device_capabilities/info) |
-| `History` | `client->set_push_state( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
+| `History` | `client->hash_set( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
 
 The pattern is the same for all of them — drop the control from the view and
 call the event after your event handler:

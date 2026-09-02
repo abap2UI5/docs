@@ -29,6 +29,16 @@
  * file (lib/client-interface.mjs). A2UI5_REF overrides it to pin a run back
  * to a release.
  *
+ * What is OBSOLETE in the interface is not on the page. The interface keeps
+ * every superseded method, parameter and constant so existing apps compile
+ * (AGENTS.md rule 5 over there), and marks each one in its own source: a
+ * method whose ABAP-Doc opens with "obsolete", a parameter whose plain
+ * comment does, a constant under a label that does. This page is what to
+ * WRITE, so those are left out - of the page and of the JSON - and the one
+ * place that names them is resources/deprecations.md, next to what replaced
+ * each. Nothing else on the site mentions them either; that is the rule the
+ * deprecations page exists for.
+ *
  * Committed rather than build-time (like llms.txt) because it is a claim
  * about ANOTHER repository at a pinned release, not a projection of the pages
  * next to it - exactly the samples-block case, and it gets the same freshness
@@ -86,6 +96,22 @@ if (model.methods.length < 20 || !model.constants.some((c) => c.name === 'cs_eve
   process.exit(1);
 }
 
+/* ------------------------------------------------------ what is obsolete */
+
+/* The interface marks what it keeps only for compatibility, each in the place
+ * the parser reads it from: a method's ABAP-Doc, a parameter's plain comment,
+ * a constant run's label. All three open with the word. */
+const obsolete = (text) => /^obsolet/i.test(text ?? '');
+
+const liveMembers = (members) => members
+  .filter((m) => !obsolete(m.label))
+  .map((m) => (m.members ? { ...m, members: liveMembers(m.members) } : m));
+
+model.methods = model.methods
+  .filter((m) => !obsolete(m.doc[0]))
+  .map((m) => ({ ...m, params: m.params.filter((p) => !obsolete(p.doc)) }));
+model.constants = model.constants.map((c) => ({ ...c, members: liveMembers(c.members) }));
+
 /* ------------------------------------------------------- grouping the methods */
 
 /* Derived from the interface's own naming, not invented here: the prefixes ARE
@@ -101,10 +127,8 @@ const RULES = [
   ['App navigation', /^(_event_nav|nav_app_|get_app|check_app)/],
   /* The interface's own URL vocabulary (added with the hash_* wave): nav_*
    * stays real navigation, hash_* is the URL fragment named after
-   * sap/ui/core/routing/HashChanger, app_state_* is the state the URL carries.
-   * The two obsolete spellings join their successors rather than sitting in a
-   * different section from the method they are an alias of. */
-  ['Hash and app state', /^(hash_|app_state_|set_app_state_active$|set_push_state$)/],
+   * sap/ui/core/routing/HashChanger, app_state_* is the state the URL carries. */
+  ['Hash and app state', /^(hash_|app_state_)/],
   ['Events and frontend actions', /^(_event|follow_up_action)/],
   ['Reading the request', /^get(_event(_arg)?)?$/],
 ];
@@ -146,8 +170,6 @@ const prose = (s) => s
  *  escaped pipe as a pipe even inside a code span). */
 const cell = (s) => prose(s).replace(/\|/g, '\\|').replace(/\s*\r?\n\s*/g, ' ');
 
-const isObsolete = (doc) => /^obsolete\b/i.test(doc[0] ?? '');
-
 const defaultCell = (p) => {
   if (p.default === undefined) return p.optional ? '*optional*' : '';
   const literal = /^`(.*)`$/.exec(p.default);
@@ -157,8 +179,7 @@ const defaultCell = (p) => {
 
 function renderMethod(m) {
   const out = [];
-  const badge = isObsolete(m.doc) ? ' <Badge type="warning" text="obsolete" />' : '';
-  out.push(`### \`${m.name}\`${badge}`, '');
+  out.push(`### \`${m.name}\``, '');
   for (const para of m.doc) out.push(prose(para), '');
   if (m.params.length) {
     out.push('| Parameter | Type | Default | Description |', '|---|---|---|---|');

@@ -34,7 +34,7 @@ CLASS z2ui5_cl_sample_pdf IMPLEMENTATION.
     IF client->check_on_navigated( ).
 
       " In a real app this is your document, base64-encoded:
-      "   DATA(lv_base64) = z2ui5_cl_util=>conv_encode_x_base64( lv_xstring ).
+      "   DATA(lv_base64) = cl_web_http_utility=>encode_x_base64( lv_xstring ).
       " where lv_xstring comes from cl_fp_function_module=>get_pdf, an OTF
       " conversion of a SmartForm, or a SELECT from the archive.
     mv_pdf = `data:application/pdf;base64,` &&

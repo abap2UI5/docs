@@ -32,10 +32,6 @@ The legacy-free frontend ships as the `v2` branches of the [frontend repository]
 
 The v2 branches install the frontend under the same `z2ui5` name as the classic branches. To evaluate the legacy-free frontend side by side with the classic one in the same system, use the frontend repository's `build_rename` workflow to generate a branch with the whole deployment identity (BSP, ICF nodes, handler class) under a different name — see the [frontend repository](https://github.com/abap2UI5/frontend) for details.
 
-::: warning Obsolete Repository
-The former separate repository `abap2UI5/frontend-legacy-free` is obsolete. The legacy-free frontend is now maintained on the `*_v2` branches of the [frontend repository](https://github.com/abap2UI5/frontend), generated from the same single source as the classic variant.
-:::
-
 ## Why Try the v2 Version?
 
 - **Future-proof.** Apps already run on what UI5 2.x will require — no big-bang migration later.

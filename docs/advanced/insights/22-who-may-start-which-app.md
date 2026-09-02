@@ -11,34 +11,42 @@ places.
 visibility — the node is configured like the node of any other UI5 app, and
 abap2UI5 adds nothing to it and takes nothing away.
 
-**Authorization is yours, and the natural place is the handler.** The handler
-class the node points to is a class you write, and `run( )` is one line in it.
-Everything before that line is an ordinary ABAP authorization check:
+**Authorization is the app's, the way a report checks before it selects.** An
+app is one class, `main( )` is its entry, and the branch that shows the first
+view is where an ordinary `AUTHORITY-CHECK` goes — before anything is selected
+and before anything is displayed. When it fails, the user gets a message
+instead of a view:
 
 ```abap
-  METHOD if_http_extension~handle_request.
+  METHOD z2ui5_if_app~main.
 
-    DATA(app) = to_upper( server->request->get_form_field( `app_start` ) ).
+    IF client->check_on_navigated( ).
 
-    AUTHORITY-CHECK OBJECT 'Z_APP_AUTH'
-                    ID 'APP' FIELD app.
-    IF sy-subrc <> 0.
-      RETURN.
+      AUTHORITY-CHECK OBJECT 'Z_APP_AUTH'
+                      ID 'APP' FIELD 'ZCL_JOB_MONITOR'.
+      IF sy-subrc <> 0.
+        client->message_box_display( text  = `You are not authorized to use this app.`
+                                     type  = `error`
+                                     title = `Not authorized` ).
+        RETURN.
+      ENDIF.
+
+      " build and display the view as usual
+
     ENDIF.
-
-    z2ui5_cl_ui5_http_handler=>run( server ).
 
   ENDMETHOD.
 ```
 
 One authorization object with one field, the app class as the value, roles as
-usual in PFCG. A department that needs its own set of apps gets its own node
-and its own handler — the framework does not mind how many there are.
-
-**Or inside the app**, the way a report checks before it selects. An
-`AUTHORITY-CHECK` in the `check_on_navigated( )` branch, and a message instead
-of a view when it fails. The two combine: the handler decides who may start
-what, the app decides what they may do inside.
+usual in PFCG. The check sits in the class it protects, so a transport carries
+the app and its guard together, and nothing on the node has to know which
+classes exist. It also holds on the way an app is reached that the URL never
+names: a `nav_app_call( )` from another app arrives as an ordinary roundtrip
+with no `app_start` on it, and the check in `main( )` is the one that runs for
+it. The complete example, with
+the refusal branch and what it should say, is on
+[Authorization](/configuration/authorization).
 
 What the framework itself brings to the table is the part a web application
 needs and a report never did. A CSRF token on every POST, on by default. A
@@ -48,6 +56,6 @@ served. Error details off in production, as [#20](/advanced/insights/20-message-
 described. And the business logic never leaves the server: the browser gets a
 view and the data bound to it, and nothing else.
 
-**One node, one handler, one AUTHORITY-CHECK. The rest is PFCG.**
+**One node, one class, one AUTHORITY-CHECK. The rest is PFCG.**
 
 Happy ABAPing! 🦖🦕🦣

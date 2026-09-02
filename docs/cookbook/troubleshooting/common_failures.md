@@ -61,7 +61,7 @@ See [Formatter](/cookbook/model/formatter).
 
 ## Malformed XML
 
-`Z2UI5_CL_XML_VIEW` produces XML; UI5 parses it on the frontend. A typo in a control name, an unclosed tag, or an aggregation that contains an invalid child can break parsing entirely.
+`z2ui5_cl_ui5_view_builder` produces XML; UI5 parses it on the frontend. A typo in a control name, an unclosed tag, or an aggregation that contains an invalid child can break parsing entirely.
 
 Where the error surfaces depends on what went wrong:
 - **Pure XML syntax errors** (unclosed tag, bad escape) — the XML parser fails and UI5 logs a `Parse error` in the browser console. The page renders blank or up to the broken element.
