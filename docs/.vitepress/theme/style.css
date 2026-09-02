@@ -282,6 +282,33 @@
   max-width: none;
 }
 
+/* …and neither is a paragraph that turns out to be a FIGURE.
+ *
+ * This is the hole the first version of the cap left, and it was invisible in
+ * the page I checked it on. Markdown has no figure element: `![alt](src)` on a
+ * line of its own compiles to `<p><img></p>`, so every screenshot on the site
+ * is, structurally, a paragraph — and the cap above put all 39 of them on
+ * `technical/how_it_all_works` at the prose measure. The result was a page
+ * with THREE right edges (prose at 600, screenshots at 600, code and tables at
+ * 830) where the whole point of the split was to have two, and a screenshot
+ * shrunk to 72% for no reason a reader could see.
+ *
+ * A figure is not prose. It is measured in pixels the author chose, not in
+ * characters, and it belongs on the same edge as the code block and the table.
+ *
+ * `:has()` is what makes this expressible — there is no parent selector
+ * otherwise, and the constraint lives on the `<p>`, not the `<img>`, so
+ * `.vp-doc p > img { max-width: none }` cannot reach it. Where `:has()` is
+ * unsupported the rule is simply dropped and images stay at 600px, which is
+ * what they do today: the fallback is the current behaviour, so nothing can
+ * break in a browser that does not understand it. */
+.vp-doc p:has(> img),
+.vp-doc p:has(> a > img),
+.vp-doc p:has(> video),
+.vp-doc p:has(> iframe) {
+  max-width: none;
+}
+
 /* The chrome around the page — sidebar, outline, nav, the prev/next footer —
  * at 13px. It is navigation, not text: it is scanned for a word that is
  * already known, never read, and at the size of the prose it competes with
