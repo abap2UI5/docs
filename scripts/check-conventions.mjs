@@ -37,6 +37,14 @@
 // rewrite is the linter's own, whitespace-only and verified as such - a layout
 // fix can never change what the view builds. The sections are NOT auto-fixed:
 // where a block goes is a judgement about the class, not about whitespace.
+//
+// So `--fix` is a FORMATTER and checks nothing else: it does not run the
+// section gate, and it leaves with 0 once it has written what it could. A
+// formatter that exits non-zero over something it was never going to fix
+// cannot be chained onto anything, and reads as a failed reformat. The one
+// case where it still fails is a chain the linter reports but hands no fix
+// for - that one is a real "this file needs a human", not a check the
+// formatter is running on the side.
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -102,8 +110,14 @@ for (const file of pages) {
     const found = result.findings.filter((f) => f.type === 'chain-house-layout');
     if (!found.length) continue;
     if (FIX) {
-      rewrites.push({ fence, fixes: found.flatMap((f) => f.fixes ?? []) });
-      continue;
+      /* A finding the rule carries no fix for falls through to be REPORTED:
+       * the chain has something the scanner mis-reads, and a formatter that
+       * silently wrote nothing would be the worst of both. */
+      const fixes = found.flatMap((f) => f.fixes ?? []);
+      if (fixes.length) {
+        rewrites.push({ fence, fixes });
+        continue;
+      }
     }
     for (const f of found) {
       chainFindings.push({ page, line: fence.start + f.line - 1, count: f.count });
@@ -134,7 +148,7 @@ for (const file of pages) {
 const sectionFindings = [];
 let classesJudged = 0;
 
-for (const file of pages) {
+for (const file of FIX ? [] : pages) {
   const page = file.slice(ROOT.length + 1);
   const md = readFileSync(file, 'utf8');
   for (const fence of fences(md)) {
@@ -162,15 +176,18 @@ for (const file of pages) {
 
 /* ----------------------------------------------------------------- verdict */
 
-console.log(`check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) in fenced examples`);
+console.log(FIX
+  ? `check-conventions --fix: ${chainsJudged} view chain(s) in fenced examples`
+  : `check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) in fenced examples`);
 
 if (chainFindings.length) {
   console.error(`\n${chainFindings.length} chain(s) are not in the house layout — one call per line including`);
   console.error('attributes, four spaces per level of the tree, end( ) in the column of the ele( )');
   console.error('it closes:\n');
   for (const f of chainFindings) console.error(`  - ${f.page}:${f.line}  ${f.count} line(s) differ`);
-  console.error('\nnpm run fmt:chains rewrites them. The fix is whitespace-only and verified as');
-  console.error('such — it cannot change what the view builds.');
+  console.error(FIX
+    ? '\nThe rule reported these but handed no fix for them — a chain with something the\nscanner mis-reads. Fix those by hand, and say so.'
+    : '\nnpm run fmt:chains rewrites them. The fix is whitespace-only and verified as\nsuch — it cannot change what the view builds.');
 }
 
 if (sectionFindings.length) {
