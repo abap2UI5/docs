@@ -592,6 +592,11 @@ export default defineConfig({
               // belongs - and the index page at the link above names them. The
               // numbers are part of each title on purpose: the articles are
               // posted one at a time, and "#21" is how a reader refers to one.
+              //
+              // The index page is the group's own link, but a link on a group
+              // heading is invisible next to a caret - so it stands here as
+              // the first entry as well.
+              { text: "Overview", link: "/advanced/insights/" },
               { text: "#1 Somewhere on the Way to UI5, We Lost RTTS", link: "/advanced/insights/01-somewhere-on-the-way-to-ui5" },
               { text: "#2 abap2UI5 Is Not a Programming Model", link: "/advanced/insights/02-not-a-programming-model" },
               { text: "#3 The Cost of a Screen", link: "/advanced/insights/03-the-cost-of-a-screen" },
