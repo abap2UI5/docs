@@ -21,6 +21,10 @@ places, maintained by two people, kept in step by a service in between.
 
 abap2UI5 puts them back together with `_bind`:
 
+![PARAMETERS: one declaration is the variable and the field. OData: variable and field are two artefacts with a service between. _bind: the field is the variable again.](/insights/15-parameters-bind.svg)
+
+*PARAMETERS: one declaration is the variable and the field. OData: variable and field are two artefacts with a service between. _bind: the field is the variable again.*
+
 ```abap
     )->tag( `Input`
         )->a( n = `value` v = client->_bind( pa_arbgb )

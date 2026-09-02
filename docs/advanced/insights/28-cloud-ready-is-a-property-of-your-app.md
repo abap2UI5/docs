@@ -1,4 +1,4 @@
-# #18 Cloud-Ready Is a Property of Your App
+# #28 Cloud-Ready Is a Property of Your App
 
 The framework is ABAP Cloud compliant. It is written in the ABAP for Cloud
 language version, it calls released APIs only, it modifies no standard SAP
@@ -12,7 +12,7 @@ Virtual Data Model — the CDS views SAP publishes and maintains as an API — i
 the way in, and that is exactly what keeps an app upgrade-stable when the tables
 beneath it change.
 
-![The released view is the shape SAP keeps stable across the upgrade.](/insights/20-vdm.svg)
+![The released view is the shape SAP keeps stable across the upgrade.](/insights/28-vdm.svg)
 
 *The released view is the shape SAP keeps stable across the upgrade.*
 

@@ -1,4 +1,4 @@
-# #28 Low-Code or abap2UI5 — When to Use Which
+# #35 Low-Code or abap2UI5?
 
 A commercial low-code platform and abap2UI5 answer the same question: modern
 UIs for SAP systems without a full frontend stack per app. The models could

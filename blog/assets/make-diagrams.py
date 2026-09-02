@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""The diagrams for the abap2UI5 Know-How series.
+"""The diagrams for the Technical Insights series.
 
 Run from the repository root:  python3 blog/assets/make-diagrams.py
 Writes docs/public/insights/*.svg, one per article that needs one - the pages
-reference them absolutely (/insights/...), because generate-llms.mjs copies
+reference them absolutely (/insights/...), and the number in a file name is
+the number of the article that shows it (00 is the series index), because generate-llms.mjs copies
 every page into docs/public/ as raw markdown and a relative asset path does not
 resolve from that copy.
 
@@ -99,17 +100,18 @@ def svg(name, w, h, body):
 
 # ---------------------------------------------------------------- 05 the wire
 def d05():
-    b = [head(28, 34, 'What the backend answers with')]
-    b.append(box(28, 56, 150, 62, 'ABAP class', 'builds both', accent=True))
+    b = [head(28, 34, 'One roundtrip - what travels each way')]
+    b.append(box(28, 56, 150, 88, 'ABAP class', 'builds both', accent=True))
     b.append(arrow(186, 74, 300, 74, 'XML view', accent=True))
     b.append(arrow(186, 100, 300, 100, 'JSON model', accent=True))
-    b.append(box(308, 44, 150, 86, 'UI5', 'renders the HTML'))
-    b.append(label(28, 152, 'Classic split - the backend sends only the data,'
+    b.append(arrow(300, 130, 186, 130, 'event + changed values', above=False))
+    b.append(box(308, 56, 150, 88, 'UI5', 'renders the HTML'))
+    b.append(label(28, 182, 'Classic split - the backend sends only the data,'
                             ' the view was deployed with the app', size=11.5))
-    b.append(box(28, 166, 150, 44, 'ABAP service', mono=False))
-    b.append(arrow(186, 188, 300, 188, 'data'))
-    b.append(box(308, 166, 150, 44, 'UI5 + view file'))
-    svg('05-two-strings.svg', 486, 232, ''.join(b))
+    b.append(box(28, 196, 150, 44, 'ABAP service', mono=False))
+    b.append(arrow(186, 218, 300, 218, 'data'))
+    b.append(box(308, 196, 150, 44, 'UI5 + view file'))
+    svg('05-two-strings.svg', 486, 262, ''.join(b))
 
 
 # ------------------------------------------------------- 06 MPA / SPA / HDA
@@ -194,8 +196,8 @@ def d09():
     svg('09-draft.svg', 612, 244, ''.join(b))
 
 
-# --------------------------------------------------------------- 17 bootstrap
-def d17():
+# --------------------------------------------------------------- 27 bootstrap
+def d27():
     b = [head(28, 34, 'UI5 served by the system')]
     b.append(box(28, 54, 200, 44, 'SAP release'))
     b.append(arrow(128, 102, 128, 128))
@@ -209,27 +211,14 @@ def d17():
              f'stroke-dasharray="4 4"/>')
     b.append(label(392, 120, 'independent', size=11.5, fill=R2, weight=600))
     b.append(caption(282, 200, 'a current control on a system that never had it'))
-    svg('17-bootstrap.svg', 540, 226, ''.join(b))
+    svg('27-bootstrap.svg', 540, 226, ''.join(b))
 
 
-# --------------------------------------------------------------- 18 footprint
-def d18():
-    b = [head(28, 34, 'Everything in the request path')]
-    items = [('1', 'HTTP handler class', True), ('2', 'interfaces', False),
-             ('1', 'database table', False)]
-    for i, (n, t, acc) in enumerate(items):
-        x = 28 + i * 168
-        b.append(box(x, 58, 148, 74, n, t, accent=acc))
-    b.append(caption(28, 158, 'Originally about 2,300 lines of ABAP. Views, program flow '
-                              'and controls live in the apps, not in here.'))
-    svg('18-footprint.svg', 552, 178, ''.join(b))
-
-
-# ---------------------------------------------------------------- 21 timeline
-def d21():
+# ---------------------------------------------------------------- 32 timeline
+def d32():
     b = [head(28, 32, 'Where the HTML is built')]
-    yrs = [('2000', 'ITS'), ('2001', 'BSP'), ('2003', 'Web Dynpro'),
-           ('2010', 'UI5 Freestyle'), ('2019', 'RAP / FE'), ('2023', 'abap2UI5')]
+    yrs = [('1996', 'ITS'), ('2001', 'BSP'), ('2006', 'Web Dynpro'),
+           ('2012', 'UI5 Freestyle'), ('2019', 'RAP / FE'), ('2023', 'abap2UI5')]
     x0, step = 128, 104
     xe = x0 + step * 5
     b.append(f'<line x1="{x0 - 26}" y1="112" x2="{xe + 30}" y2="112" stroke="{LINE}"/>')
@@ -249,11 +238,11 @@ def d21():
     b.append(label(28, 164, 'the browser', size=11.5, fill=MUTED, weight=600))
     b.append(caption(28, 214, 'The rendering moved once and stayed. What has been coming '
                               'back since is the definition of the screen.'))
-    svg('21-timeline.svg', 720, 234, ''.join(b))
+    svg('32-timeline.svg', 720, 234, ''.join(b))
 
 
-# ------------------------------------------------------- 22 where the view lives
-def d22():
+# ------------------------------------------------------- 00 where the view lives
+def d00():
     b = [head(28, 34, 'When the view is fixed')]
     cols = [('UI5 Freestyle', 'build time', 'a file in a\nfrontend project', False),
             ('RAP / Fiori Elements', 'activation time', 'UI annotations\non CDS', False),
@@ -268,7 +257,7 @@ def d22():
     b.append(f'<line x1="28" y1="196" x2="596" y2="196" stroke="{LINE}"/>')
     b.append(caption(28, 218, 'All three render in the browser, with the same controls. '
                               'This is the axis the rest follows from.'))
-    svg('22-where-the-view-lives.svg', 624, 240, ''.join(b))
+    svg('00-where-the-view-lives.svg', 624, 240, ''.join(b))
 
 
 # ------------------------------------------------------------- 10 view swap
@@ -339,8 +328,8 @@ def d13():
     svg('13-four-verbs.svg', 480, 256, ''.join(b))
 
 
-# --------------------------------------------------------------------- 20 VDM
-def d20():
+# --------------------------------------------------------------------- 28 VDM
+def d28():
     b = [head(28, 34, 'What the app reads')]
     b.append(box(28, 56, 180, 38, 'your app'))
     b.append(arrow(118, 98, 118, 124, accent=True))
@@ -356,8 +345,146 @@ def d20():
     b.append(box(274, 202, 180, 38, 'tables', dashed=True))
     b.append(label(376, 149, 'nothing in between', size=11.5))
     b.append(label(364, 262, 'the shape of this release', size=11.5, anchor='middle'))
-    svg('20-vdm.svg', 482, 292, ''.join(b))
+    svg('28-vdm.svg', 482, 292, ''.join(b))
 
 
-for f in (d05, d06, d07, d08, d09, d10, d11, d13, d17, d18, d20, d21, d22):
+
+# ---------------------------------------------------------- 01 runtime model
+def d01():
+    b = [head(28, 34, 'Model at design time')]
+    b.append(box(28, 54, 176, 40, 'entity type', 'declared in CDS'))
+    b.append(arrow(116, 98, 116, 124))
+    b.append(box(28, 130, 176, 40, 'OData metadata', 'fixed for every client'))
+    b.append(arrow(116, 174, 116, 200))
+    b.append(box(28, 206, 176, 40, 'data', 'in that shape', dashed=True))
+    b.append(f'<line x1="240" y1="24" x2="240" y2="262" stroke="{LINE}"/>')
+    b.append(head(268, 34, 'Model at runtime'))
+    b.append(box(268, 54, 176, 40, 'any internal table', 'a SELECT, a BAPI, an EML read',
+                 dashed=True))
+    b.append(arrow(356, 98, 356, 124, accent=True))
+    b.append(box(268, 130, 176, 40, 'RTTS', 'reads the components', accent=True))
+    b.append(arrow(356, 174, 356, 200, accent=True))
+    b.append(box(268, 206, 176, 40, 'columns + bindings', 'built for this table'))
+    svg('01-runtime-model.svg', 472, 276, ''.join(b))
+
+
+# ------------------------------------------------------------ 12 three seams
+def d12():
+    b = [head(28, 34, 'Where an app reaches past the XML view')]
+    rows = [('a method by control id', 'follow_up_action( cs_event-control_by_id )',
+             'no JavaScript at all'),
+            ('an expression in the view', '{= ${STATUS} === \'E\' ? \'Error\' : \'None\' }',
+             'evaluated in the browser'),
+            ('a custom control', 'z2ui5_ccc - a BSP the UI5 loader resolves',
+             'a module, not a string')]
+    for i, (t, how, note) in enumerate(rows):
+        y = 56 + i * 54
+        b.append(box(28, y, 178, 40, t, accent=(i == 0)))
+        b.append(arrow(214, y + 20, 246, y + 20, accent=(i == 0)))
+        b.append(label(254, y + 17, how, size=11.5, fill=INK, mono=True))
+        b.append(label(254, y + 33, note, size=11, fill=MUTED))
+    b.append(f'<line x1="28" y1="226" x2="560" y2="226" stroke="{LINE}"/>')
+    b.append(caption(28, 246, 'Everything else - JavaScript for the first page - '
+                              'is one setting in the user exit, for the whole system'))
+    svg('12-three-seams.svg', 588, 264, ''.join(b))
+
+
+# ------------------------------------------------------ 15 PARAMETERS / _bind
+def d15():
+    b = [head(28, 34, 'PARAMETERS')]
+    b.append(box(28, 54, 150, 62, 'pa_arbgb', 'variable = field', accent=True, mono=True))
+    b.append(caption(28, 140, 'one declaration'))
+    b.append(f'<line x1="206" y1="24" x2="206" y2="160" stroke="{LINE}"/>')
+    b.append(head(232, 34, 'OData'))
+    b.append(box(232, 54, 96, 62, 'variable', 'in ABAP'))
+    b.append(arrow(336, 85, 386, 85, 'service', dashed=True))
+    b.append(box(392, 54, 96, 62, 'field', 'in the view'))
+    b.append(caption(232, 140, 'two artefacts, kept in step by a contract'))
+    b.append(f'<line x1="516" y1="24" x2="516" y2="160" stroke="{LINE}"/>')
+    b.append(head(542, 34, '_bind'))
+    b.append(box(542, 54, 150, 62, 'client->_bind( pa_arbgb )', 'the variable, by reference',
+                 accent=True, mono=True))
+    b.append(caption(542, 140, 'the field is the variable again'))
+    svg('15-parameters-bind.svg', 720, 168, ''.join(b))
+
+
+# ---------------------------------------------------------------- 16 dispatch
+def d16():
+    b = [head(28, 34, 'main( ) asks three questions, in this order')]
+    rows = [('check_on_init( )', 'once - the instance has never run', 'read data, show the view', True),
+            ('check_on_navigated( )', 'back from a sub-app or popup', 'show the view again', False),
+            ('check_on_event( )', 'the user did something', 'change attributes - the view stands', False)]
+    for i, (q, when, owes, acc) in enumerate(rows):
+        y = 56 + i * 54
+        b.append(box(28, y, 190, 40, q, accent=acc, mono=True))
+        b.append(label(232, y + 17, when, size=12, fill=INK))
+        b.append(label(232, y + 33, owes, size=11.5, fill=R2 if acc else MUTED,
+                       weight=600 if acc else 400))
+    b.append(f'<line x1="28" y1="226" x2="520" y2="226" stroke="{LINE}"/>')
+    b.append(caption(28, 246, 'A first call raises init AND navigated - so init stands first, '
+                              'or it never runs'))
+    svg('16-dispatch.svg', 548, 264, ''.join(b))
+
+
+# ------------------------------------------------------------ 21 lock at save
+def d21():
+    b = [head(28, 34, 'Where the lock lives')]
+    b.append(label(28, 60, 'GUI dialog', size=12, fill=INK, weight=600))
+    b.append(f'<rect x="120" y="48" width="400" height="18" rx="4" fill="{SAND}" stroke="{LINE}"/>')
+    b.append(label(320, 61, 'ENQUEUE held for the whole session', size=11, anchor='middle'))
+    b.append(label(28, 106, 'abap2UI5', size=12, fill=R2, weight=600))
+    for i, x in enumerate((120, 262, 404)):
+        b.append(f'<rect x="{x}" y="92" width="116" height="20" rx="4" fill="{WHITE}" stroke="{LINE}"/>')
+        b.append(label(x + 58, 106, ['open', 'edit', 'save'][i], size=11, anchor='middle'))
+    b.append(f'<rect x="452" y="92" width="52" height="20" rx="4" fill="{RL}" stroke="{R}" stroke-width="1.4"/>')
+    b.append(label(478, 106, 'lock', size=11, fill=R2, weight=700, anchor='middle'))
+    b.append(f'<line x1="238" y1="126" x2="402" y2="126" stroke="{MUTED}" stroke-dasharray="4 3"/>')
+    b.append(label(320, 142, 'minutes - nobody holds anything', size=11, anchor='middle'))
+    b.append(label(320, 158, 'the timestamp read at open is compared at save', size=11,
+                   fill=R2, anchor='middle'))
+    b.append(f'<line x1="28" y1="178" x2="520" y2="178" stroke="{LINE}"/>')
+    b.append(caption(28, 198, 'The lock exists for milliseconds, inside one roundtrip; '
+                              'the optimistic check guards the rest'))
+    svg('21-lock-at-save.svg', 548, 216, ''.join(b))
+
+
+# ------------------------------------------------------ 23 what a click costs
+def d23():
+    b = [head(28, 34, 'What one click moves')]
+    b.append(box(28, 62, 118, 48, 'browser', 'event + changes'))
+    b.append(arrow(154, 86, 214, 86, 'POST'))
+    b.append(box(220, 62, 132, 48, 'app instance', 'runs main( )', accent=True))
+    b.append(arrow(360, 86, 420, 86, 'model'))
+    b.append(box(426, 62, 118, 48, 'browser', 'renders'))
+    b.append(f'<line x1="286" y1="118" x2="286" y2="150" stroke="{R}" stroke-width="1.6" '
+             f'marker-end="url(#ar)"/>')
+    b.append(f'<line x1="270" y1="150" x2="270" y2="118" stroke="{R}" stroke-width="1.6" '
+             f'marker-end="url(#ar)"/>')
+    b.append(label(298, 140, 'the whole instance', size=11.5, fill=R, weight=600))
+    b.append(box(204, 156, 164, 40, 'z2ui5_t_01', accent=True, mono=True))
+    b.append(caption(28, 224, 'The model is the bound attributes; the instance is all of them. '
+                              'Both are paid on every click.'))
+    svg('23-what-a-click-costs.svg', 572, 244, ''.join(b))
+
+
+# ------------------------------------------------- 25 more than one class
+def d25():
+    b = [head(28, 34, 'One app, several classes')]
+    b.append(box(28, 56, 150, 48, 'zcl_app_list', 'a screen', accent=True, mono=True))
+    b.append(arrow(186, 80, 296, 80, 'nav_app_call', accent=True))
+    b.append(box(302, 56, 150, 48, 'zcl_app_detail', 'a screen', accent=True, mono=True))
+    b.append(arrow(377, 108, 377, 148, accent=True))
+    b.append(box(302, 154, 150, 48, 'zcl_app_confirm', 'a popup on the stack', mono=True))
+    b.append(arrow(103, 108, 103, 148))
+    b.append(box(28, 154, 150, 48, 'nest_view_display', 'a part of the screen', mono=True))
+    b.append(arrow(460, 80, 530, 80, 'calls'))
+    b.append(box(536, 56, 160, 48, 'zcl_invoice_service', 'no screen', mono=True))
+    b.append(f'<line x1="28" y1="224" x2="696" y2="224" stroke="{LINE}"/>')
+    b.append(caption(28, 244, 'Classes, method calls and one stack - '
+                              'no component, no manifest, no router'))
+    svg('25-more-than-one-class.svg', 724, 262, ''.join(b))
+
+
+for f in (d00, d01, d05, d06, d07, d08, d09, d10, d11, d12, d13, d15, d16, d21, d23,
+          d25, d27, d28, d32):
     f()

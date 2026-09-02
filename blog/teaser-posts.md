@@ -27,7 +27,7 @@ attached article preview, so the post carries no inline URL. 744 characters.
 >
 > #ABAP #SAP #UI5
 
-## abap2UI5 is not a Programming Model
+## abap2UI5 Is Not a Programming Model
 
 Plain text — LinkedIn renders no markdown.
 
@@ -139,7 +139,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## The Same Service for Every App
+## One Handler for Every App
 
 Plain text — LinkedIn renders no markdown.
 
@@ -183,7 +183,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## PUBLIC Means Persisted
+## A New Instance on Every Request
 
 Plain text — LinkedIn renders no markdown.
 
@@ -227,7 +227,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## index.html Lives in a String
+## No Build, No Deploy, No Cache
 
 Plain text — LinkedIn renders no markdown.
 
@@ -271,7 +271,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## Four Verbs
+## Four Verbs, Every Control
 
 Plain text — LinkedIn renders no markdown.
 
@@ -292,7 +292,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## The Class That Runs
+## A Classrun for the Browser
 
 Plain text — LinkedIn renders no markdown.
 
@@ -485,7 +485,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## RAP or abap2UI5 — When to Use Which
+## RAP or abap2UI5?
 
 Plain text — LinkedIn renders no markdown.
 
@@ -508,7 +508,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## UI5 Freestyle or abap2UI5 — When to Use Which
+## UI5 Freestyle or abap2UI5?
 
 Plain text — LinkedIn renders no markdown.
 
@@ -530,7 +530,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## Low-Code or abap2UI5 — When to Use Which
+## Low-Code or abap2UI5?
 
 Plain text — LinkedIn renders no markdown.
 

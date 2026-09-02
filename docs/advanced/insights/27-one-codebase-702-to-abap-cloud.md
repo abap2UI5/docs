@@ -1,4 +1,4 @@
-# #17 One Codebase, 7.02 to ABAP Cloud
+# #27 One Codebase, 7.02 to ABAP Cloud
 
 Most SAP landscapes are currently two landscapes. Something old that runs the
 business, something new that is being built beside it, and a migration between
@@ -24,7 +24,7 @@ And the frontend does not age with the backend. UI5 is bootstrapped from a CDN,
 so the UI5 version is a configuration decision rather than a property of the
 SAP release. A current UI5 control works on a system that has never heard of it.
 
-![Where UI5 comes from decides whether its version follows the SAP release.](/insights/17-bootstrap.svg)
+![Where UI5 comes from decides whether its version follows the SAP release.](/insights/27-bootstrap.svg)
 
 *Where UI5 comes from decides whether its version follows the SAP release.*
 

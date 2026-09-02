@@ -1,4 +1,4 @@
-# #14 The Class That Runs
+# #14 A Classrun for the Browser
 
 Every ABAP developer already knows the smallest program that does something:
 
@@ -41,16 +41,15 @@ destination: it runs in a browser instead of the console, follows the Fiori
 design guidelines, and can be sent to a colleague as a URL rather than as an
 instruction to open ADT and press F9.
 
-There is a property here that has quietly become valuable. The entire
-application is one file. Not a class plus a service plus a binding plus a
-frontend project — one artefact, read from top to bottom, with its state, its
-screen and its logic in the same place.
+There is a property here that is easy to underrate. A small application is one
+class, and a class is one thing to read: state, screen and logic in the same
+place, top to bottom. A reviewer, a colleague inheriting it, a search across the
+system, an agent asked to change something — each can hold the whole thing.
+Code that is understood in one piece is code that is changed confidently.
 
-Anything that has to reason about the app — a reviewer, a colleague inheriting
-it, a search across the system, an agent asked to change something — can hold it
-in full. Code that is understood in one piece is code that is changed
-confidently, and there is not much of that around.
-
-**The unit of an abap2UI5 application is a file somebody can read.**
+That holds for the small screens this series keeps coming back to. A larger app
+splits into several classes like any other ABAP program does, and how is
+[its own article](/advanced/insights/25-when-one-class-is-not-enough). The
+point is where it starts: one class, one method, and it runs.
 
 Happy ABAPing! 🦖🦕🦣

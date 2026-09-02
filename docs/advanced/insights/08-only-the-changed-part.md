@@ -13,17 +13,23 @@ So the view is not sent every time. Sending it is a decision the app makes:
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    text = text && ` text`.
 
-    IF client->check_on_navigated( ) OR partly = abap_false.
-      set_view( ).
+    IF client->check_on_navigated( ).
+      set_view( ).          " first display, and every return from a sub-app
+      RETURN.
     ENDIF.
-    " no ELSE - a model-only change travels with the response by itself
+
+    IF client->get_event( ) = `COUNT`.
+      count = count + 1.    " changes the model - and nothing else happens
+    ENDIF.
+    " no set_view( ) here: the response carries the model alone
 
   ENDMETHOD.
 ```
 
-When `set_view( )` is skipped, the response carries the model alone. The view
+`count` is a public attribute bound to a `Text` in the view. Every press of
+the button runs `main( )`, and `main( )` changes a number and returns.
+When `set_view( )` is not called, the response carries the model alone. The view
 in the browser is the one already standing, and UI5 does what UI5 does with a
 changed model: data binding updates the controls bound to what changed, and
 touches nothing else.
