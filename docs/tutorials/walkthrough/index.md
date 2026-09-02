@@ -2,7 +2,7 @@
 outline: [2, 4]
 description: Learn abap2UI5 by building — a step-by-step walkthrough where every step is a complete class you can run in the browser.
 ---
-# Tutorial
+# Walkthrough
 
 Learn abap2UI5 by building something. The **Walkthrough** grows a small invoice
 app from a single message box into a complete application, one concept per
