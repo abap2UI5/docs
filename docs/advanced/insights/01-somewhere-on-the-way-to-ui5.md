@@ -26,8 +26,6 @@ a typed OData service. That holds for freestyle UI5, for Fiori Elements, and
 for a fully backend-driven RAP application with a consumption view. The shape
 of the model is decided when the code is written and baked into the contract.
 
-*[image: RESTful APIs in a simple and standard way — odata.org]*
-
 And that is powerful! The point of OData is that a client can trust the API and
 discover everything it needs from the metadata document — it does not have to
 know SAP at all. Whenever you do not know the client, or the client does not
@@ -45,7 +43,9 @@ on design-time metadata is aimed at a different problem.
 The model is assembled at runtime, and in ABAP that can be done with RTTS, a
 service nearly every ABAP developer already knows (the reading half is RTTI):
 
-*[image: RTTS — read metadata at runtime]*
+![Design time: the entity type is declared before any data exists. Runtime: RTTS reads the shape from the data that is there.](/insights/01-runtime-model.svg)
+
+*Design time: the entity type is declared before any data exists. Runtime: RTTS reads the shape from the data that is there.*
 
 But how do we get that data into a UI5 app?
 

@@ -8,6 +8,10 @@ else, and no property will do it for you.
 abap2UI5 has no plugin system for this, and that is deliberate. It has three
 seams, each one a declared place rather than an escape hatch.
 
+![Three seams, from the cheapest to the widest: a method call by control id, an expression in the view, a custom control in its own BSP.](/insights/12-three-seams.svg)
+
+*Three seams, from the cheapest to the widest: a method call by control id, an expression in the view, a custom control in its own BSP.*
+
 **An imperative method needs no JavaScript at all.** The client can call one on
 a control by id:
 
@@ -36,9 +40,9 @@ has to escape every brace, and one missed escape is a parser error on the whole
 statement instead of a wrong string.
 
 **Everything else is a system decision, not an app decision.** Extra JavaScript
-for the initial page is `custom_js` in the HTTP GET configuration, set through
-`z2ui5_if_exit` — one place, reviewable, and the same for every app in the
-system.
+for the initial page is `custom_js` in the HTTP GET configuration, set in the
+[user exit](/advanced/extensibility/user_exits) through `z2ui5_if_ui5_exit` —
+one place, reviewable, and the same for every app in the system.
 
 None of them lets an app change the framework, and none requires the framework
 to change for an app. No plugin registry to learn, and no pull request to wait

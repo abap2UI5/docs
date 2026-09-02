@@ -1,4 +1,4 @@
-# #13 Four Verbs
+# #13 Four Verbs, Every Control
 
 The first view builder in abap2UI5 had one method per UI5 control. `button( )`,
 `input( )`, `table( )` — hundreds of them, each with the control's properties as

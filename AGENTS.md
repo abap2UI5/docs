@@ -234,14 +234,14 @@ The last full measurement: **61 complete app classes, 39 with a button, all 39
 started and rendered.** The site has since grown, and the hand-kept copy of
 those figures here went stale without anyone noticing — which is what
 `check:playground` now exists to prevent. The bookkeeping today, printed by the
-gate on every run: **68 complete app classes, 47 with a button, 21 excluded on
+gate on every run: **82 complete app classes, 63 with a button, 19 excluded on
 purpose**, every exclusion a marker on its page. The growth is examples whose
 shapes the measured rules already covered, plus one page completed so its
 example could run at all; a spot-check of six buttoned examples in a served
 playground build — the newly buttoned life-cycle class driven through its whole
 event roundtrip, the quickstart and About classes, tutorial Step 12, the
 tables page, and the `SELECT FROM t100` example — started and rendered, every
-one. The next full measurement opens all 47.
+one. The next full measurement opens all 63.
 
 **The published playground is what readers get**, not the checkout you tested
 against. A change to the rules here can ship on its own; a change that depends
