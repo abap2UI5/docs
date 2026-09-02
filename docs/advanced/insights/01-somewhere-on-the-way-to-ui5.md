@@ -1,10 +1,5 @@
 # #1 Somewhere on the Way to UI5, We Lost RTTS
 
-
-![The dinosaur at a classic ALV grid, the sheep and the sloth at the same table
-rendered in UI5, with cl_abap_structdescr->get_components( ) bridging the
-two](/insights/01-rtti-header.png)
-
 ABAP developers have always built screens for tables whose structure is unknown
 when the code is written. With ALV you either assemble the field catalog
 yourself and hand it to the iconic `CL_GUI_ALV_GRID`, or you let
