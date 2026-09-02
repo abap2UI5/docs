@@ -87,6 +87,19 @@ const unmigrated = [];
  * anything else is calling a method of the frozen one. */
 const VERBS = new Set(['ele', 'tag', 'a', 'end', 'stringify']);
 
+/* The THIRD fluent chain in this documentation, after the view builder and
+ * z2ui5_cl_ajson: RTTS. `CAST cl_abap_tabledescr( … )->get_table_line_type( )`
+ * is `)->method(` like any view step, and the mid-chain regex below cannot see
+ * the receiver that would tell it apart — the same reason ajson is skipped by
+ * name rather than by receiver. Skipping the whole fence is wrong here: a page
+ * that derives a type at runtime usually builds a view from it in the SAME
+ * fence, and that view is exactly what this gate is for. So the RTTS calls are
+ * named instead, and the view chain around them stays checked. */
+const RTTI_CALLS = new Set([
+  'get_components', 'get_table_line_type', 'get_relative_name', 'get_ddic_field_list',
+  'describe_by_data', 'describe_by_name', 'get_ddic_header', 'applies_to_data',
+]);
+
 /* The gate had one blind spot, and it cost four more pages. `)->input( )` is
  * caught from its first character, but the SAME call written on its receiver -
  * `page->input( )` - is not, because the regex needs the closing paren of a
@@ -144,13 +157,14 @@ function legacyFragments() {
       if (/z2ui5_cl_ajson/i.test(code)) continue;
       /* mid-chain: `)->input( )` */
       for (const call of code.matchAll(/\)->([a-z_][a-z0-9_]*)\(/gi)) {
-        if (!VERBS.has(call[1].toLowerCase())) out.push({ page, call: `)->${call[1]}(` });
+        const verb = call[1].toLowerCase();
+        if (!VERBS.has(verb) && !RTTI_CALLS.has(verb)) out.push({ page, call: `)->${call[1]}(` });
       }
       /* on the receiver: `page->input( )` */
       const nodes = viewNodes(code);
       for (const call of code.matchAll(/\b([a-z_][a-z0-9_]*)->([a-z_][a-z0-9_]*)\(/gi)) {
         if (!nodes.has(call[1].toLowerCase())) continue;
-        if (VERBS.has(call[2].toLowerCase())) continue;
+        if (VERBS.has(call[2].toLowerCase()) || RTTI_CALLS.has(call[2].toLowerCase())) continue;
         out.push({ page, call: `${call[1]}->${call[2]}(` });
       }
     }

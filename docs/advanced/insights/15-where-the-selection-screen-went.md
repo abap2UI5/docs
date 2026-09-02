@@ -1,7 +1,5 @@
 # Where the Selection Screen Went
 
-*abap2UI5 Know-How #15 — draft*
-
 Before anyone called it full-stack, ABAP had this:
 
 ```abap
@@ -43,26 +41,3 @@ variable.
 variable and the field were the same declaration.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Before anyone called it full-stack, ABAP had PARAMETERS. Four lines and every
-> layer is there: a typed, labelled input with a default and value help, plus
-> validation and event handling. Nobody wrote a frontend, because declaring the
-> variable was writing the frontend.
->
-> That trade is what disappeared on the way to the browser: the variable and the
-> field became two artefacts in two places, kept in step by a service in between.
->
-> _bind puts them back together. The attribute is not a field name in a string —
-> it is the ABAP variable.
->
-> New article 🎉
->
-> How many places does one input field touch in your current stack?
->
-> #ABAP #SAP #UI5

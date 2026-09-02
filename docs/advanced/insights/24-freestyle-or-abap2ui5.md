@@ -1,7 +1,5 @@
 # UI5 Freestyle or abap2UI5 — When to Use Which
 
-*abap2UI5 Know-How #24 — draft*
-
 Both give full access to the UI5 control library. Neither limits what a screen
 can contain. So the choice is not about what is possible — it is about where the
 work happens and who does it.
@@ -30,27 +28,3 @@ work on a tablet with no signal.
 either way, and the controls are the same controls.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> UI5 Freestyle or abap2UI5? Both give you the whole UI5 control library, so the
-> choice is not about what is possible — it is about where the work happens.
->
-> Freestyle when the browser has to be smart: offline, client-side state between
-> roundtrips, genuinely interactive UIs. Also when a frontend team with its own
-> release cycle owns the app — there the contract between front and back is a
-> feature.
->
-> abap2UI5 when the backend already knows everything: the data, the rules and the
-> decisions are in ABAP, and a separate frontend project would be a second place
-> to maintain for a screen whose logic never left the server.
->
-> New article 🎉
->
-> Iteration speed or client richness — which one is actually scarce for you?
->
-> #ABAP #SAP #UI5

@@ -1,7 +1,5 @@
 # One Codebase, 7.02 to ABAP Cloud
 
-*abap2UI5 Know-How #17 — draft*
-
 Most SAP landscapes are currently two landscapes. Something old that runs the
 business, something new that is being built beside it, and a migration between
 them measured in years rather than sprints. Anything written for one side is
@@ -26,7 +24,7 @@ And the frontend does not age with the backend. UI5 is bootstrapped from a CDN,
 so the UI5 version is a configuration decision rather than a property of the
 SAP release. A current UI5 control works on a system that has never heard of it.
 
-![Where UI5 comes from decides whether its version follows the SAP release.](assets/diagrams/17-bootstrap.svg)
+![Where UI5 comes from decides whether its version follows the SAP release.](/insights/17-bootstrap.svg)
 
 *Where UI5 comes from decides whether its version follows the SAP release.*
 
@@ -38,27 +36,3 @@ The screen built for the system being replaced is not thrown away with it.
 when the release changes.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Most SAP landscapes are two landscapes right now: something old running the
-> business, something new beside it, and a migration measured in years. Anything
-> written for one side usually gets written again for the other.
->
-> abap2UI5 needs almost nothing from the release, because it only produces two
-> strings and moves them over HTTP. The one real SAP dependency is GUID
-> creation, written for both language versions in a single code line — and
-> abaplint generates the 7.02 branch automatically, so the downport cannot drift.
->
-> UI5 comes from a CDN, so the UI5 version is configuration, not a property of
-> the release.
->
-> New article 🎉
->
-> How much of what you build today will survive your next release upgrade?
->
-> #ABAP #SAP #UI5

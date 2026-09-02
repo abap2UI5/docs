@@ -1,7 +1,5 @@
 # RAP or abap2UI5 — When to Use Which
 
-*abap2UI5 Know-How #23 — draft*
-
 The honest answer is that most systems end up with both, and the question is
 never "which framework" but "which one for this screen".
 
@@ -33,28 +31,3 @@ front of it.
 use it. Build the screen wherever it is cheapest.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> RAP or abap2UI5? Most systems end up with both, so the real question is never
-> "which framework" but "which one for this screen".
->
-> RAP when the behaviour matters more than the screen: a transactional object
-> with validations, drafts and authorizations, and more than one consumer for it.
->
-> abap2UI5 when the screen is the deliverable: one consumer, one purpose, often a
-> short life — an ops tool, a correction screen, a dashboard for one team. Or when
-> the shape is only known at runtime, or the release is too old for RAP.
->
-> And they compose: an abap2UI5 app calls a RAP business object through EML like
-> any other consumer.
->
-> New article 🎉
->
-> Which of your screens is really a behaviour, and which is really just a screen?
->
-> #ABAP #SAP #UI5

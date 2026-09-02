@@ -1,7 +1,5 @@
 # Where the Line Is
 
-*abap2UI5 Know-How #19 — draft*
-
 Eighteen articles is enough credit to say what this does not do.
 
 **Offline is out.** Every event asks the server what happens next. Take the
@@ -38,27 +36,3 @@ for.
 shape, and the shape has edges.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Eighteen articles is enough credit to say what abap2UI5 does not do.
->
-> Offline is out — every event asks the server what happens next; take the
-> server away and there is no app left. Pushdown to HANA is indirect, and a
-> frontend fuzzy search help is not available. Real-time and collaborative UIs
-> are the wrong shape for a request-per-event model. Separate frontend and
-> backend teams lose the contract between them. And where a Fiori Elements
-> floorplan fits, it fits — that is less work, not more.
->
-> What is left is still most business software: forms, tables, dashboards,
-> approvals, the small screens nobody funds a project for.
->
-> New article 🎉
->
-> Where would you put the line?
->
-> #ABAP #SAP #UI5

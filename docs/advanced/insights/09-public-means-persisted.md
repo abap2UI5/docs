@@ -1,7 +1,5 @@
 # PUBLIC Means Persisted
 
-*abap2UI5 Know-How #9 — draft*
-
 Every request lands on a fresh instance of the app class. No session holds the
 previous one, and the next request may not even reach the same application
 server.
@@ -14,7 +12,7 @@ for every app, not a typed draft table per data model — and reads it back on t
 next one. What survives is exactly the `PUBLIC SECTION`; nothing else is part of
 the serialized state.
 
-![Every request is a new instance; z2ui5_t_01 is what carries the last one forward.](assets/diagrams/09-draft.svg)
+![Every request is a new instance; z2ui5_t_01 is what carries the last one forward.](/insights/09-draft.svg)
 
 *Every request is a new instance; z2ui5_t_01 is what carries the last one forward.*
 
@@ -47,27 +45,3 @@ or replicated between nodes.
 which section an attribute belongs in.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> Every abap2UI5 request lands on a fresh instance of the app class. No session
-> holds the previous one, and the next request may not even reach the same app
-> server.
->
-> So how does what the user typed three clicks ago still exist? The app class is
-> serializable, and after each request the framework serializes it into a draft
-> table. What survives is exactly the PUBLIC SECTION.
->
-> Which makes one keyword a performance decision. A catalogue parked in a public
-> attribute is not cached — it is written to the database and shipped to the
-> browser after every click. State public, working data protected.
->
-> New article 🎉
->
-> Where in your code does a keyword quietly decide what travels?
->
-> #ABAP #SAP #UI5

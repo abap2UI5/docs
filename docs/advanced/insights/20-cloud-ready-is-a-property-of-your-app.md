@@ -1,7 +1,5 @@
 # Cloud-Ready Is a Property of Your App
 
-*abap2UI5 Know-How #20 — draft*
-
 The framework is ABAP Cloud compliant. It is written in the ABAP for Cloud
 language version, it calls released APIs only, it modifies no standard SAP
 code, and it installs on BTP ABAP Environment and S/4HANA Public Cloud.
@@ -14,7 +12,7 @@ Virtual Data Model — the CDS views SAP publishes and maintains as an API — i
 the way in, and that is exactly what keeps an app upgrade-stable when the tables
 beneath it change.
 
-![The released view is the shape SAP keeps stable across the upgrade.](assets/diagrams/20-vdm.svg)
+![The released view is the shape SAP keeps stable across the upgrade.](/insights/20-vdm.svg)
 
 *The released view is the shape SAP keeps stable across the upgrade.*
 
@@ -53,27 +51,3 @@ is a property of what the application reads and writes, and it is decided in the
 the reason one is not.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> abap2UI5 is ABAP Cloud compliant: written in ABAP for Cloud, released APIs
-> only, no modifications, installs on BTP and S/4HANA Public Cloud.
->
-> None of that says anything about the app you build with it.
->
-> SELECT FROM i_salesorder, or SELECT FROM vbak. Same screen, same framework —
-> one survives the next upgrade and can move to a cloud system, the other
-> cannot. Nothing about the UI is involved in the difference.
->
-> Clean core is not a property a dependency grants your application. It is
-> decided in the SELECT.
->
-> New article 🎉
->
-> Where does your team actually check this — review, ATC, or after the upgrade?
->
-> #ABAP #SAP #UI5

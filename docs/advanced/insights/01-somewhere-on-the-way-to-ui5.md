@@ -4,7 +4,7 @@
 
 ![The dinosaur at a classic ALV grid, the sheep and the sloth at the same table
 rendered in UI5, with cl_abap_structdescr->get_components( ) bridging the
-two](assets/01-rtti-header.png)
+two](/insights/01-rtti-header.png)
 
 ABAP developers have always built screens for tables whose structure is unknown
 when the code is written. With ALV you either assemble the field catalog
@@ -157,28 +157,3 @@ So next time you reach for RTTS and need a UI, give abap2UI5 a try. It may be
 a good complement to the UI5 solutions you already run.
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown. The article link comes from the
-attached article preview, so the post carries no inline URL. 744 characters.
-
-> In the past, screens were routinely built for tables nobody had seen.
-> cl_salv_table=>factory( ) took any internal table and drew it — RTTS read the
-> structure at runtime, the DDIC supplied the labels, and a whole category of
-> ABAP tooling was built that way.
->
-> With Fiori Elements, RAP or freestyle UI5, that path goes through a typed
-> OData service: the entity type has to exist first, at design time. Exactly
-> right when the client does not know your backend — but a dead end for those
-> tools.
->
-> New article 🎉 abap2UI5 can give a runtime-typed model a UI5 face, and be a
-> perfect complement to the UI5 and RAP solutions you already run.
->
-> Where do you still use RTTS in UIs today? And how do you get around the
-> design-time bottleneck?
->
-> #ABAP #SAP #UI5

@@ -1,7 +1,5 @@
 # No Annotation in Between
 
-*abap2UI5 Know-How #4 — draft*
-
 In a metadata-driven UI a screen is described rather than written. The
 description has a vocabulary — line items, selection fields, facets,
 identification — and a generator turns it into UI5 at runtime. Whatever the
@@ -115,26 +113,3 @@ Reaching every control is not the same as being handed one.
 promise, and takes nothing off the table either.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> A metadata-driven screen is described, not written — and the description has a
-> vocabulary. What the vocabulary covers arrives in an afternoon. What it does
-> not becomes an extension point.
->
-> abap2UI5 has no vocabulary of its own to run out of. It sends a UI5 XML view,
-> so the vocabulary is the UI5 control library itself, all of it, at whatever
-> version the launchpad already serves. The new article builds a three-step
-> sap.m.Wizard in one ABAP class to show what that means in practice.
->
-> The price is on the same page: nothing writes the layout for you.
->
-> New article 🎉
->
-> Which control did you last want, and not have a way to ask for?
->
-> #ABAP #SAP #UI5

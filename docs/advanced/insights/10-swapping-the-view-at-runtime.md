@@ -1,7 +1,5 @@
 # Swapping the View at Runtime
 
-*abap2UI5 Know-How #10 — draft*
-
 The view is a string the app produced for this request. Which raises an
 uncomfortable question: what stops the next request from producing a different
 one?
@@ -44,7 +42,7 @@ Nothing does.
   ENDMETHOD.
 ```
 
-![Same data, same class — the control is chosen in an IF.](assets/diagrams/10-view-swap.svg)
+![Same data, same class — the control is chosen in an IF.](/insights/10-view-swap.svg)
 
 *Same data, same class — the control is chosen in an IF.*
 
@@ -66,27 +64,3 @@ things a screen can adapt to are no longer fixed on the day it was designed.
 **A view that is built is a view that can be built differently.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> In abap2UI5 the view is a string the app produced for this request. So what
-> stops the next request from producing a different one?
->
-> Nothing does. One IF in the app class, and the table is a list — not a table
-> with hidden columns, not a second app behind a navigation step. A different
-> control, chosen in ABAP.
->
-> A screen assembled at design time varies only where somebody anticipated
-> variation and left a switch. A screen assembled per request varies wherever
-> the code branches.
->
-> New article 🎉
->
-> Which screen in your system would you rebuild differently per user, if it cost
-> you an IF?
->
-> #ABAP #SAP #UI5

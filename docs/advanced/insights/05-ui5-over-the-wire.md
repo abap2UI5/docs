@@ -1,7 +1,5 @@
 # UI5 Over-the-Wire
 
-*abap2UI5 Know-How #5 — draft*
-
 A UI5 freestyle app is a single-page application. The view is deployed with the
 app in the frontend, the backend delivers data through OData, and the browser
 puts the two together and renders the HTML.
@@ -30,7 +28,7 @@ and the model that fills it:
 { "MODEL": { "NAME": "test" } }
 ```
 
-![The backend answers with a view and its model; the browser renders both.](assets/diagrams/05-two-strings.svg)
+![The backend answers with a view and its model; the browser renders both.](/insights/05-two-strings.svg)
 
 *The backend answers with a view and its model; the browser renders both.*
 
@@ -59,26 +57,3 @@ Happy ABAPing! 🦖🦕🦣
 *This article and the ones that follow it are cut from
 [Under the Hood of abap2UI5](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459),
 published on the SAP Community — the long version, with the diagrams.*
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> UI5 does not render from objects you assemble by hand. It renders from an XML
-> view, bound to its data. The view is a document — and documents can travel.
->
-> So what if the backend sent the view too? That is the whole of abap2UI5: every
-> request is answered with two strings, a UI5 XML view and a UI5 JSON model.
-> Neither is a protocol the framework invented, and the frontend does what it
-> always did.
->
-> What changes is who owns the view. Not an artefact deployed beside the app —
-> a string an ABAP class produced for this request.
->
-> New article 🎉
->
-> Where would you draw the line between a frontend and a renderer?
->
-> #ABAP #SAP #UI5

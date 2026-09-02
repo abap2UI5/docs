@@ -1,7 +1,5 @@
 # No Cache, No Deploy, Any IDE
 
-*abap2UI5 Know-How #16 — draft*
-
 The loop is: change the class, activate, refresh the browser.
 
 That is the whole article, and it is worth spelling out what is missing from it.
@@ -34,26 +32,3 @@ tried at all: when an experiment costs a class and a refresh, the answer to
 **Iteration speed is not a nice-to-have. It decides which ideas get built.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> The abap2UI5 loop is: change the class, activate, refresh the browser.
->
-> What is missing from that sentence is the point. No deployment — activating is
-> the deployment. No cache to invalidate — the UI is built per request, so
-> nothing can be stale. No IDE agreement, because it is ABAP. No context switch
-> to debug: a breakpoint in the method that built the view stops there.
->
-> Individually, conveniences. Together, the reason a screen gets tried at all —
-> when an experiment costs a class and a refresh, "could we just show this?"
-> stops being a project.
->
-> New article 🎉
->
-> What is your current edit-to-see-it time on a Fiori change?
->
-> #ABAP #SAP #UI5

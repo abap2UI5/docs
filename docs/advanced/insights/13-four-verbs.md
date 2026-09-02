@@ -1,7 +1,5 @@
 # Four Verbs
 
-*abap2UI5 Know-How #13 — draft*
-
 The first view builder in abap2UI5 had one method per UI5 control. `button( )`,
 `input( )`, `table( )` — hundreds of them, each with the control's properties as
 named parameters.
@@ -16,7 +14,7 @@ written at all. Every new UI5 control was a pull request, and a wrapper is a
 translation — it can be behind, and it can be wrong, in a way the browser only
 discovers at runtime.
 
-![The four verbs, and where each one leaves the cursor in the tree.](assets/diagrams/13-four-verbs.svg)
+![The four verbs, and where each one leaves the cursor in the tree.](/insights/13-four-verbs.svg)
 
 *The four verbs, and where each one leaves the cursor in the tree.*
 
@@ -38,26 +36,3 @@ API is worth more than a shortcut around part of it.
 **Four verbs that know no controls can build every control.**
 
 Happy ABAPing! 🦖🦕🦣
-
----
-
-## LinkedIn teaser post
-
-Plain text — LinkedIn renders no markdown.
-
-> The first view builder in abap2UI5 had one method per UI5 control — hundreds
-> of them, properties as named parameters. Good reason: ADT code completion
-> listed them, so the frontend API was imported into backend tooling.
->
-> Hard edge: a control the class had no method for could not be written at all.
-> Every new UI5 control was a pull request.
->
-> Its successor has four verbs — ele, tag, a, end. None of them names a control,
-> which is exactly why every control is reachable. The completion list is gone;
-> the compiler and the linter still check the chain.
->
-> New article 🎉
->
-> Wrapper or raw API — which side do you land on, and why?
->
-> #ABAP #SAP #UI5
