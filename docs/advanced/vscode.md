@@ -97,7 +97,7 @@ and reports step by step where a launch would end: the URL's shape, the host,
 the logon, the ICF path, the page itself, each with the fix next to the
 failing step. The full report lands in the **abap2UI5** output channel. This
 also works for a system installed five minutes ago, which makes it the
-diagnosis step of the [Quickstart](/get_started/quickstart#_5-verify).
+diagnosis step of the [Quickstart](/get_started/quickstart#_3-first-launch).
 
 ### Reload on activation, not on save
 

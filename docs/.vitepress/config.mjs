@@ -123,7 +123,7 @@ export default defineConfig({
           // The section is called Getting Started in the sidebar this opens;
           // "Introduction" was the first PAGE in it, one level down.
           { text: "Getting Started", link: "/get_started/about" }, // nav
-          { text: "Tutorial", link: "/tutorials/overview" }, // nav
+          { text: "Tutorial", link: "/tutorials/walkthrough/" }, // nav
           { text: "Cookbook", link: "/cookbook/view/definition" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
@@ -199,10 +199,10 @@ export default defineConfig({
         // read after the framework is installed and before the reference
         // chapters, and that is the order the three sections stand in.
         text: "Tutorial",
-        link: "/tutorials/overview",
+        link: "/tutorials/walkthrough/",
         collapsed: true,
         items: [
-          { text: "Overview", link: "/tutorials/overview" }, // sidebar
+          { text: "Overview", link: "/tutorials/walkthrough/" }, // sidebar
           {
             // No `collapsed` key at all, like Quickstart above: that is what
             // makes a group a plain labelled list instead of a collapsible

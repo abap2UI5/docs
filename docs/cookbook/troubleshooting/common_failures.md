@@ -133,7 +133,7 @@ the entry says what caused it and where the fix is explained.
 The framework could not instantiate the class named in `?app_start=` — a typo
 in the URL, or the class exists but is not activated. The roundtrip answers
 500 and shows this message. Fix the name or activate the class; the
-[Quickstart's verify step](/get_started/quickstart#_5-verify) covers the other
+[Quickstart's verify step](/get_started/quickstart#_3-first-launch) covers the other
 first-launch failures around it.
 
 #### `BINDING_ERROR - No class attribute for binding found - Please check if the bound values are public attributes of your class`

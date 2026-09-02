@@ -94,45 +94,9 @@ handler, service and app class. If you see something else instead:
   Systems without internet access must serve UI5 themselves — see
   [Bootstrapping](/configuration/setup/ui5_bootstrapping).
 
-  
-## 4. Your First App
-Build a class on your system:
-```abap
-CLASS zcl_my_app DEFINITION PUBLIC.
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
-
-CLASS zcl_my_app IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-    client->message_box_display( `Hello World` ).
-  ENDMETHOD.
-ENDCLASS.
-```
-Back on the startup page, enter your class name `ZCL_MY_APP` in the input
-field and launch it. The startup page is a convenience around a URL parameter
-you will use from now on: `?app_start=<class>` appended to your service URL
-starts that app directly —
-
-```
-https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_my_app
-```
-
-— which is the form a browser bookmark, a Launchpad tile and every sample
-catalogue use.
-
-If launching the app reports `The app 'ZCL_MY_APP' does not exist in the system.` — the framework could not instantiate the class: a typo in the name, or the class is not activated yet. Anything that goes wrong *after* this point — an app that renders empty, a binding that does not update, an error view on a roundtrip — is catalogued with symptom, cause and fix in [Common Failures](/cookbook/troubleshooting/common_failures).
-
-
-::: tip **Naming**
-Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
-:::
-::: tip ABAP Language Versions While the HTTP handler has to distinguish between Standard ABAP and ABAP for Cloud, the apps themselves are independent. You're free to choose whether to build your apps with ABAP Cloud compatibility. :::
-
 
 ## Next Steps
 
-[Hello World](/get_started/hello_world) explains what that class actually did.
+The framework is installed and verified. [Hello World](/get_started/hello_world)
+is the next page: it is the smallest app that can exist, how to start it, and
+what each line of it does.
