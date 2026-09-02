@@ -53,7 +53,7 @@ https://host:44300/sap/bc/z2ui5?app_start={class}&sap-client=100
 
 Working against several systems is the normal case, so name them instead:
 
-```jsonc
+```jsonc [settings.json]
 "abap2ui5.systems": [
   { "name": "DEV",     "url": "https://dev:44300/sap/bc/z2ui5?app_start={class}&sap-client=100" },
   { "name": "Sandbox", "url": "https://box:44300/sap/bc/z2ui5?app_start={class}" }

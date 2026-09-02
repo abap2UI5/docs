@@ -184,7 +184,7 @@ instead of `z2ui5_if_app`.
 ### How It Works
 [abaplint](https://abaplint.org) can rename ABAP artifacts across a whole repository: you define rename patterns (old name → new name, including regular expressions) in an abaplint configuration, and `abaplint --rename` rewrites every class, interface, and reference consistently, writing the result to an output folder:
 
-```jsonc
+```jsonc [abaplint.json]
 "rename": {
   "output": "output",
   "patterns": [

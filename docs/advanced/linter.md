@@ -314,7 +314,7 @@ idea as `abaplint.jsonc`. `abap2ui5lint --init` writes a commented starter
 version; discovery is eslint-style, and precedence is CLI flag > config file >
 built-in default.
 
-```jsonc
+```jsonc [abap2ui5lint.jsonc]
 {
   "$schema": "./node_modules/@abap2ui5/linter/data/abap2ui5lint.schema.json",
   "paths": ["src"],          // used when the CLI got no positional paths
