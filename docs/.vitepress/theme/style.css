@@ -276,8 +276,8 @@
  * narrower. */
 .vp-doc td p,
 .vp-doc th p,
-.vp-doc .custom-block p,
-.vp-doc .custom-block li,
+.vp-doc .custom-block:not(.details) p,
+.vp-doc .custom-block:not(.details) li,
 .vp-doc li li {
   max-width: none;
 }
@@ -382,12 +382,26 @@
   border-radius: 6px;
 }
 
-/* The `::: details` block onto the same grey, the same edge and the same
- * radius as the code block it usually contains. It is the one custom block
- * that is CONTENT the reader opened rather than a remark, so it keeps a panel
- * where the tip/warning/danger blocks above lost theirs. */
+/* The `::: details` block onto the same grey as the code block it usually
+ * contains. It is the one custom block that is CONTENT the reader opened
+ * rather than a remark, so it keeps a panel where the tip/warning/danger
+ * blocks above lost theirs.
+ *
+ * The fill without an edge, though. A details block is almost always a
+ * WRAPPER — the ABAP Cloud variant of a setup step, holding a paragraph and a
+ * code block — so an edge on it is a second rectangle drawn around a thing
+ * that already has one, and the code block inside ends up as a bordered box
+ * sitting a few pixels inside another bordered box. Collapsed, which is how a
+ * reader meets it, the two edges frame one line of text and about sixty pixels
+ * of nothing.
+ *
+ * The fill alone is enough to say "this is a container": it is the same grey
+ * as the code block, so an open details block reads as one surface with the
+ * listing sitting on it rather than as a box inside a box. Nothing else on the
+ * site now carries a fill without an edge, which is what makes this one read
+ * as the container it is. */
 .vp-doc .custom-block.details {
-  border: 1px solid var(--a2ui5-c-hairline);
+  border: 0;
   border-radius: 6px;
   background-color: var(--a2ui5-c-surface);
 }
@@ -436,6 +450,50 @@
   font-size: 14px;
   line-height: 22px;
   color: var(--vp-c-text-2);
+}
+
+/* ---------------------------- and the custom blocks get the memo too ---
+ *
+ * Three of the decisions above stopped at the edge of a `:::` block, and each
+ * one left the block contradicting the page around it. All three are measured
+ * on the rendered page, not guessed:
+ *
+ *   prose inside a details block   798px, where the page is 600 — about 120
+ *                                  characters, which is the exact number the
+ *                                  measure cap exists to prevent
+ *   a link inside any block        rgb(208,60,74), the brand red, where every
+ *                                  other link on the page is rgb(9,105,218)
+ *   inline code inside any block   tinted by the block's TYPE — brown on
+ *                                  yellow in a warning — where code in prose
+ *                                  is neutral
+ *
+ * The last one is the clearest case, and it is a consequence of this file:
+ * the theme tints a code chip to match the plate its callout sits on, and the
+ * callouts here no longer have a plate. So the chip was carrying a warning's
+ * yellow on the page's own white background, which reads as a highlight
+ * nobody applied.
+ *
+ * Specificity: the theme writes these per block type — `.custom-block.info a,
+ * .custom-block.info code { color: var(--vp-c-brand-1) }` and one pair like it
+ * for each of the eight types, three units each. Matching that by enumerating
+ * the types here would mean this file goes stale the day VitePress adds a
+ * ninth. `[class]` is always true on an element that has one, and it buys the
+ * fourth unit without naming anything that can change. */
+.vp-doc .custom-block[class] a {
+  color: var(--a2ui5-c-link);
+}
+
+.vp-doc .custom-block[class] a:hover {
+  color: var(--a2ui5-c-link-hover);
+}
+
+.vp-doc .custom-block[class] :not(pre) > code {
+  color: var(--vp-c-text-1);
+  background-color: var(--vp-c-default-soft);
+}
+
+.vp-doc .custom-block[class] a > code {
+  color: var(--a2ui5-c-link);
 }
 
 /* Links in the body take the blue defined at the top of this file, and lose
