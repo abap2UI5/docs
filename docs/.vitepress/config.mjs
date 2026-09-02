@@ -294,7 +294,7 @@ export default defineConfig({
                   { text: "Inner App", link: "/cookbook/event_navigation/navigation/inner_app" },
                   { text: "Cross App", link: "/cookbook/event_navigation/navigation/cross_app" },
                   { text: "Hash", link: "/cookbook/event_navigation/navigation/hash" },
-                  { text: "App State", link: "/cookbook/event_navigation/navigation/app_state" },
+                  { text: "App State, Share, Bookmark", link: "/cookbook/event_navigation/navigation/app_state" },
                 ],
               },
               { text: "Exception", link: "/cookbook/event_navigation/exception" },
@@ -371,7 +371,6 @@ export default defineConfig({
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
               { text: "Smart Controls", link: "/cookbook/expert_more/smart_controls" },
-              { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
             ],
           },
           // Three chapters that sat behind a collapsible called "More Topics"
