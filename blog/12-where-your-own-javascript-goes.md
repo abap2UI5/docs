@@ -26,18 +26,25 @@ a method it already declares costs one call, and an argument it does not
 declare is dropped in silence.
 
 **A custom control lives in its own BSP.** The frontend resolves two reserved
-resource roots, `z2ui5_cci` for the community custom-controls addon and
-`z2ui5_ccc` for a customer's own frontend extension, so a control loads through
-the UI5 loader like any other module — not as a string smuggled through a view.
+resource roots — `z2ui5_cci` for the custom-controls addon, `z2ui5_ccc` for a
+customer's own extension — so a control loads through the UI5 loader like any
+other module, not as a string smuggled through a view.
+
+**A view attribute can compute.** UI5 expression binding is available in an
+app view — `{= ${STATUS} === 'E' ? 'Error' : 'None' }` — evaluated in the
+browser against the model that just arrived, with no roundtrip and no module to
+load. Write it as a backtick literal rather than a string template: a template
+has to escape every brace, and one missed escape is a parser error on the whole
+statement instead of a wrong string.
 
 **Everything else is a system decision, not an app decision.** Extra JavaScript
 for the initial page is `custom_js` in the HTTP GET configuration, set through
 `z2ui5_if_exit` — one place, reviewable, and the same for every app in the
 system.
 
-None of the three lets an app change the framework, and none of them requires
-the framework to change for an app. That is the trade: no plugin registry to
-learn, and no pull request to wait for either.
+None of them lets an app change the framework, and none requires the framework
+to change for an app. No plugin registry to learn, and no pull request to wait
+for either.
 
 **Extensibility is not the absence of a boundary. It is knowing exactly where
 the boundary is.**

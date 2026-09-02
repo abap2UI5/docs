@@ -7,9 +7,14 @@ service definition, a service binding, a behavior definition and its
 implementation, a projection — each one named, transported, reviewed, and each
 one belonging to exactly one application.
 
-An abap2UI5 app adds none of them. Every app in the system is served by the
-same generic HTTP handler, and it is generic in a specific way: it does not
-know the app, the view or the model. It moves two strings.
+An abap2UI5 app adds none of them — and there is no SEGW project underneath
+either. Every app in the system is served by the same generic HTTP handler, and
+it is generic in a specific way: it does not know the app, the view or the
+model. It moves two strings.
+
+![A service per screen, against one handler that knows none of them.](assets/diagrams/07-one-service.svg)
+
+*A service per screen, against one handler that knows none of them.*
 
 That is visible from inside. Set a breakpoint in an app class and look at the
 call stack — there is one frame between the app and the handler. No OData

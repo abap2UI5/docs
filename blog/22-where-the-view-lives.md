@@ -23,6 +23,10 @@ for this request, rendered by a shell app that is the same for every
 application. It is fixed when the request is answered, and the next request may
 answer differently.
 
+![One axis: when the definition of the screen stops being changeable.](assets/diagrams/22-where-the-view-lives.svg)
+
+*One axis: when the definition of the screen stops being changeable.*
+
 Everything else follows from that axis. What has to be deployed per app, how
 many artefacts a screen costs, what can still change at runtime, which language
 the definition is written in — none of those are independent choices, they are

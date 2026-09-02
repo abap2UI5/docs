@@ -183,12 +183,14 @@ actually work" would find nothing. Either the articles move into `docs/` — the
 ABAP already passes the gates, so that is cheap — or the pages stay as the long
 version and link out.
 
-**2. Fifty diagrams and sixty-two references are not carried.**
+**2. Fifty diagrams and sixty-two references were not carried.** Nine are now
+redrawn — see "The diagrams" below — which closes the argument-carrying half of
+this and leaves the rest open.
 
 | | source pages | articles |
 |---|---|---|
-| images | 50 (39 in `how_it_all_works.md`, 11 in `concept.md`) | 1 |
-| external links | 62 | 4 |
+| images | 50 (39 in `how_it_all_works.md`, 11 in `concept.md`) | 10 |
+| external links | 62 | 5 |
 
 In `how_it_all_works.md` the diagrams *are* the explanation — the Over-the-Wire
 lifecycle, UI5 versus abap2UI5 communication, the call stack, `z2ui5_t_draft`,
@@ -199,8 +201,7 @@ happening. The links are attribution as much as reference: `concept.md` quotes
 signalvnoise verbatim and credits the SAP Community htmx article the idea came
 from, and no article carries either citation.
 
-**3. Six facts are in no article at all.** Measured by grepping the articles for
-each term, not by reading the table:
+**3. Six facts were in no article at all** — all six are folded in now (**6** HDA and the MPA/SPA/HDA framing, **9** `z2ui5_t_draft`, **12** expression binding, **20** the VDM by name, **7** SEGW, **5** the SCN backlink). They were found by grepping the articles for each term, not by reading the table:
 
 | missing | source | why it matters |
 |---|---|---|
@@ -210,6 +211,41 @@ each term, not by reading the table:
 | VDM by name | `cloud.md` | **20** says "the released data model" without the term |
 | SEGW | 9 | minor, but it is the thing not being built |
 | the SCN backlink | `how_it_all_works.md` header | the page *is* a published SAP Community post; deleting it orphans that |
+
+## The diagrams
+
+`assets/make-diagrams.py` draws nine SVGs into `assets/diagrams/`, one per
+article whose argument needs a picture: **5** the two strings, **6** MPA / SPA /
+HDA, **7** a service per app against one handler, **8** what a response carries,
+**9** the roundtrip through `z2ui5_t_draft`, **17** local against CDN
+bootstrapping, **18** the footprint, **21** the timeline, **22** when the view is
+fixed.
+
+Three decisions worth not relitigating. **SVG, not PNG** — these are boxes,
+arrows and words, which is what raster is worst at; an SVG stays sharp, diffs as
+text when a label changes, and costs a few kB. **Each one paints its own cream
+card** rather than going transparent: an SVG embedded through `<img>` cannot see
+VitePress's theme class, only `prefers-color-scheme`, which is wrong the moment a
+reader uses the theme toggle against their system setting. **The palette is the
+brand's** (`docs/resources/logo.md`), no new hues.
+
+Render before believing: the first pass had the handler label overflowing its
+box in **7**, a caption running off the card in **17**, the legend colliding with
+the first tick in **21**, and two labels sitting on top of arrows in **9**. None
+of that is visible in the source, all of it in a screenshot.
+
+**What cannot be redrawn, and is the real remaining loss.** Of the 50 images,
+these are not diagrams and no generator replaces them:
+
+- the animated demos — the data model being swapped at runtime, a table control
+  becoming a list, the ABAP class being edited while the frontend keeps running.
+  A GIF of the thing happening is the evidence; a still of it is not.
+- the screenshots of a real system — the call stack with one frame between app
+  and handler, ADT code completion listing the old builder's methods, the
+  abaplint dashboard.
+
+They live in the source pages and nowhere else. That alone is an argument for
+archiving those pages rather than deleting them.
 
 **Also to handle before deletion**, cheap but easy to forget:
 `docs/get_started/hello_world.md:44` links to `concept` and `how_it_all_works`

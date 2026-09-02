@@ -30,6 +30,10 @@ and the model that fills it:
 { "MODEL": { "NAME": "test" } }
 ```
 
+![The backend answers with a view and its model; the browser renders both.](assets/diagrams/05-two-strings.svg)
+
+*The backend answers with a view and its model; the browser renders both.*
+
 Nothing there is a protocol abap2UI5 invented. The XML is UI5's own view
 format, the JSON is an ordinary UI5 JSON model, and the frontend does what it
 has always done — build HTML from a view and its data. What changes is who owns
@@ -44,13 +48,17 @@ Hotwire, Phoenix LiveView, Livewire and Unpoly are all built on it.
 It is not a return to full-page reloads either. ITS Mobile and SAP GUI for HTML
 answered every interaction with a whole document; Over-the-Wire replaces
 fragments and leaves the page standing. UI5 cannot take HTML off the wire — it
-renders in the browser by design — so what travels instead is the layer directly
-above it. A view, not a page.
+renders in the browser by design — so what travels is the layer directly above
+it. A view, not a page.
 
 **The frontend stopped being an application and became a renderer. Everything
 else in this series is a consequence of that one move.**
 
 Happy ABAPing! 🦖🦕🦣
+
+*This article and the ones that follow it are cut from
+[Under the Hood of abap2UI5](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459),
+published on the SAP Community — the long version, with the diagrams.*
 
 ---
 

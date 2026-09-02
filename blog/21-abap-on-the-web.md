@@ -26,6 +26,10 @@ annotations, and a runtime in the browser turns them into the app.
 **abap2UI5, 2023.** The backend sends the XML view itself, and a static UI5 app
 renders it.
 
+![Twenty-three years, and the one move that did not reverse.](assets/diagrams/21-timeline.svg)
+
+*Twenty-three years, and the one move that did not reverse.*
+
 Read as a line, it is not a march away from the server. For the first ten years
 ABAP built the HTML. Then rendering left for the browser, where it stays —
 because that is where a modern UI belongs, and nobody is proposing otherwise.

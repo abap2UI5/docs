@@ -14,6 +14,17 @@ know which action follows the next click.
 Everything it needs arrives per request. Everything it decides is decided on
 the server.
 
+The pattern has a name: a **Hypermedia-Driven Application**. Between the
+multi-page app, where every interaction fetches a whole document, and the
+single-page app, which holds routes and state in the browser and needs a
+rebuild to change either, an HDA renders what the server sends and knows
+nothing else. It is the sweet spot those two leave open, and it is where htmx,
+Hotwire and LiveView all sit.
+
+![Multi-page, single-page, hypermedia-driven — and what each has to rebuild.](assets/diagrams/06-mpa-spa-hda.svg)
+
+*Multi-page, single-page, hypermedia-driven — and what each has to rebuild.*
+
 That is the same division of labour SAP GUI had. PBO builds the screen, the
 user acts, PAI receives the event and decides what happens next. The dialog
 step moved to AJAX and the screen became an XML view, but the shape of the

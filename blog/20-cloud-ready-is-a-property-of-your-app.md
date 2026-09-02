@@ -10,9 +10,9 @@ None of that says anything about the app somebody builds with it.
 
 ABAP Cloud is a restricted language version, and the restriction that matters
 most on a screen is this one: no direct access to SAP database tables. The
-released data model — the CDS views SAP publishes as an API — is the way in,
-and that is exactly what keeps an app upgrade-stable when the tables beneath it
-change.
+Virtual Data Model — the CDS views SAP publishes and maintains as an API — is
+the way in, and that is exactly what keeps an app upgrade-stable when the tables
+beneath it change.
 
 Two lines decide it:
 

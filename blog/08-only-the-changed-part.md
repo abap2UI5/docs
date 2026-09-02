@@ -30,6 +30,10 @@ in the browser is the one already standing, and UI5 does what UI5 does with a
 changed model: data binding updates the controls bound to what changed, and
 touches nothing else.
 
+![What a response carries decides what survives on the screen.](assets/diagrams/08-partial-update.svg)
+
+*What a response carries decides what survives on the screen.*
+
 The DOM is not rebuilt. Focus stays in the field. The scroll position holds.
 The value the user is halfway through typing survives, because the input
 control was never replaced — only its bound value was.
