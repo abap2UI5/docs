@@ -545,15 +545,6 @@ export default defineConfig({
               },
             ],
           },
-          // "Technical Insight" was a group of its own here: eight narrative
-          // pages on what the framework does under the app. They were
-          // converted into the abap2UI5 Know-How article series and removed;
-          // the git history holds them (see the commit that deletes them).
-          // What is left of that reading is the toolchain group below, which
-          // was always a different kind of page - reference on somebody
-          // else's project rather than narrative on this one - and so stands
-          // on its own now rather than nested under a heading with nothing
-          // else beneath it.
           {
             // Every one of these is somebody else's project, which is what
             // this group is: the toolchain abap2UI5 stands on. It used to be
@@ -579,6 +570,45 @@ export default defineConfig({
               { text: "open-abap", link: "/technical/tools/open_abap" },
               { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
               { text: "abapmerge", link: "/technical/tools/abapmerge" },
+            ],
+          },
+          {
+            // The article series. It replaced eight narrative pages that used
+            // to stand here as "Technical Insight" - the same reading, cut
+            // into one claim per article so each can be read on its own and
+            // posted on its own. Last in this section on purpose: it is the
+            // part read after the app runs, not on the way in, and a reader
+            // who opens Advanced Topics for a how-to should meet the how-tos
+            // first.
+            text: "Technical Insights",
+            link: "/advanced/insights/01-somewhere-on-the-way-to-ui5",
+            collapsed: true,
+            items: [
+              { text: "Somewhere on the Way to UI5, We Lost RTTS", link: "/advanced/insights/01-somewhere-on-the-way-to-ui5" },
+              { text: "abap2UI5 is not a Programming Model", link: "/advanced/insights/02-not-a-programming-model" },
+              { text: "The Cost of a Screen", link: "/advanced/insights/03-the-cost-of-a-screen" },
+              { text: "No Annotation in Between", link: "/advanced/insights/04-no-annotation-in-between" },
+              { text: "UI5 Over-the-Wire", link: "/advanced/insights/05-ui5-over-the-wire" },
+              { text: "The Frontend That Does Not Know What It Shows", link: "/advanced/insights/06-the-frontend-that-does-not-know" },
+              { text: "One Service for Every App", link: "/advanced/insights/07-one-service-for-every-app" },
+              { text: "Only the Changed Part", link: "/advanced/insights/08-only-the-changed-part" },
+              { text: "PUBLIC Means Persisted", link: "/advanced/insights/09-public-means-persisted" },
+              { text: "Swapping the View at Runtime", link: "/advanced/insights/10-swapping-the-view-at-runtime" },
+              { text: "index.html Lives in a String", link: "/advanced/insights/11-index-html-lives-in-a-string" },
+              { text: "Where Your Own JavaScript Goes", link: "/advanced/insights/12-where-your-own-javascript-goes" },
+              { text: "Four Verbs", link: "/advanced/insights/13-four-verbs" },
+              { text: "The Class That Runs", link: "/advanced/insights/14-the-class-that-runs" },
+              { text: "Where the Selection Screen Went", link: "/advanced/insights/15-where-the-selection-screen-went" },
+              { text: "No Cache, No Deploy, Any IDE", link: "/advanced/insights/16-no-cache-no-deploy-any-ide" },
+              { text: "One Codebase, 7.02 to ABAP Cloud", link: "/advanced/insights/17-one-codebase-702-to-abap-cloud" },
+              { text: "2,300 Lines", link: "/advanced/insights/18-2300-lines" },
+              { text: "Where the Line Is", link: "/advanced/insights/19-where-the-line-is" },
+              { text: "Cloud-Ready Is a Property of Your App", link: "/advanced/insights/20-cloud-ready-is-a-property-of-your-app" },
+              { text: "Twenty-Five Years of ABAP on the Web", link: "/advanced/insights/21-abap-on-the-web" },
+              { text: "Where the View Lives", link: "/advanced/insights/22-where-the-view-lives" },
+              { text: "RAP or abap2UI5 — When to Use Which", link: "/advanced/insights/23-rap-or-abap2ui5" },
+              { text: "UI5 Freestyle or abap2UI5 — When to Use Which", link: "/advanced/insights/24-freestyle-or-abap2ui5" },
+              { text: "Low-Code or abap2UI5 — When to Use Which", link: "/advanced/insights/25-low-code-or-abap2ui5" },
             ],
           },
         ],

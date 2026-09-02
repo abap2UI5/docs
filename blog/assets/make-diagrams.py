@@ -2,7 +2,10 @@
 """The diagrams for the abap2UI5 Know-How series.
 
 Run from the repository root:  python3 blog/assets/make-diagrams.py
-Writes blog/assets/diagrams/*.svg, one per article that needs one.
+Writes docs/public/insights/*.svg, one per article that needs one - the pages
+reference them absolutely (/insights/...), because generate-llms.mjs copies
+every page into docs/public/ as raw markdown and a relative asset path does not
+resolve from that copy.
 
 WHY SVG AND NOT PNG. These are boxes, arrows and words - the one thing a
 raster format is worst at. An SVG stays sharp at any width, diffs as text when
@@ -20,7 +23,8 @@ structure, muted for everything the reader is not being pointed at.
 """
 import os
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'diagrams')
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+OUT = os.path.join(ROOT, 'docs', 'public', 'insights')
 R, R2, RL = '#D03C4A', '#A83232', '#F6E3E5'
 CREAM, SAND, WHITE = '#FAF2EC', '#F0DFD2', '#FFFFFF'
 INK, MUTED, LINE = '#3A2A2E', '#9C8A8E', '#D8C7BC'
