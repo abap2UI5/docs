@@ -32,27 +32,51 @@ pass the gates like every other page.
 | 17 | One Codebase, 7.02 to ABAP Cloud | draft, 306 words |
 | 18 | 2,300 Lines | draft, 283 words |
 | 19 | Where the Line Is | draft, 324 words |
+| 20 | Cloud-Ready Is a Property of Your App | draft, 230 words |
+| 21 | Twenty-Five Years of ABAP on the Web | draft, 298 words |
 
 **Every article answers one question**, and the arc is 2–4 positioning, 5–8
-architecture, 9–13 mechanics, 14–16 developer experience, 17–19 practice and
-limits. Someone arriving at #9 first should not need #2.
+architecture, 9–13 mechanics, 14–16 developer experience, 17–20 practice and
+limits, 21 the long view. Someone arriving at #9 first should not need #2.
 
 | # | asks | evidence |
 |---|---|---|
 | **2** | what does it want from my architecture? | the `z2ui5_if_app` interface in full, then one app with three save handlers — EML, `MODIFY` on a table, a BAPI |
 | **3** | why do small screens never get built? | a whole job monitor in one class |
 | **4** | what do I write the screen in? | a three-step `sap.m.Wizard` — a control no generator produces — named directly in UI5 terms |
-| **5** | how does it actually work? | GET loads the shell once, then only POST/JSON; a draft table instead of a session |
-| **6** | which convention will bite me? | why `PUBLIC SECTION` is state that travels every roundtrip |
-| **7** | does it run on my release? | the downport pipeline |
+| **5** | what actually goes over the wire? | the two strings a response is: a UI5 XML view and a UI5 JSON model |
+| **6** | what is in the app the browser gets? | a shell that cannot tell a table from a wizard, shared by every app |
+| **7** | what does a screen cost in artefacts? | one generic handler, one stack frame, no service per app |
+| **8** | does the screen rebuild on every click? | the `IF` that skips the view and sends the model alone |
+| **9** | which convention will bite me? | `PUBLIC SECTION` is state that travels every roundtrip |
+| **10** | how far does runtime freedom go? | one `IF` turns the table into a list |
+| **11** | where is the frontend deployment? | there is none — the initial GET is answered from ABAP source |
+| **12** | how do I get my own JavaScript in? | the three declared seams, and which one to reach for |
+| **13** | why four verbs instead of a method per control? | the wrapper that could not name a control it lacked |
+| **14** | how small is the smallest app? | `if_oo_adt_classrun` beside its abap2UI5 twin |
+| **15** | what happened to `PARAMETERS`? | the variable and the field, reunited by `_bind` |
+| **16** | what does the loop feel like? | change, activate, refresh — and everything that is not in that sentence |
+| **17** | does it run on my release? | one code line, the generated 7.02 branch, UI5 from a CDN |
+| **18** | how much of it do I have to trust? | one handler, two interfaces, one table |
+| **19** | what does it not do? | offline, HANA pushdown, real-time, split teams, and where a floorplan wins |
+| **20** | is my app cloud-ready because the framework is? | `SELECT FROM i_salesorder` beside `SELECT FROM vbak` |
+| **21** | where does this sit in the line? | ITS to abap2UI5, and what actually moved |
 
-## Source coverage — the three docs pages this series drains
+## Source coverage — the docs pages this series drains
 
-The series is the LinkedIn form of three pages in `docs/technical/`. Each page
-is one long read; the articles are the same material cut where a single
-question ends. This table is the contract: **every section of the three pages
-has exactly one article that carries it**, so nothing is lost and nothing is
-told twice.
+The series is the LinkedIn form of the **Technical Insight** section of
+`docs/technical/`. Each page is one long read; the articles are the same
+material cut where a single question ends. This table is the contract: **every
+section has exactly one article that carries it**, so nothing is lost and
+nothing is told twice.
+
+The section holds six pages, not the three this started with. `cloud.md` and
+`technology/overview.md` were not covered by anything and now have articles
+**20** and **21**. `technology/rap.md` and `technology/ui5.md` are the open
+question — see "Before these pages can be archived" below. The **Toolchain**
+group (abapGit, ajson, S-RTTI, abaplint, open-abap, abap-cleaner, abapmerge) is
+out of scope entirely: those pages document other people's projects and are
+reference material, not narrative.
 
 | source | section | carried by |
 |---|---|---|
@@ -95,6 +119,57 @@ controls live in their own BSP behind the reserved resource roots `z2ui5_cci`
 (addon) and `z2ui5_ccc` (customer extension). Article 12 describes the seams
 that exist now, with `follow_up_action( cs_event-control_by_id )` as the third.
 The docs page needs the same correction.
+
+| `cloud.md` | What is ABAP Cloud / Is abap2UI5 Cloud Ready | **20** |
+| `cloud.md` | Are abap2UI5 Apps Cloud Ready — `I_SalesOrder` vs `VBAK` | **20** |
+| `cloud.md` | Do I Have to Use RAP to Be Cloud Ready | **20** (as "the framework's badge is not the app's") |
+| `technology/overview.md` | ITS, BSP, Web Dynpro, UI5 Freestyle, RAP, abap2UI5 | **21** |
+| `technology/rap.md` | the whole page | **open — see below** |
+| `technology/ui5.md` | the whole page | **open — see below** |
+
+## Before these pages can be archived
+
+Four of the six are drained: `concept.md`, `how_it_all_works.md`, `dx.md` and
+`cloud.md` have an article behind every section, and `technology/overview.md`
+now has **21**. Archiving those five loses nothing that is not written down
+somewhere in this directory.
+
+**`technology/rap.md` and `technology/ui5.md` are a decision, not a gap.** Both
+are head-to-head comparison tables, and the series was set up not to compare
+frameworks — the same rule that kept section 8 of `how_it_all_works.md` out.
+Their *substance* is almost entirely carried already, stated positively instead
+of comparatively:
+
+| the row | where it already lives |
+|---|---|
+| backend sends the view / client builds from metadata | **5**, **6** |
+| model at design time / at runtime | **1**, **10** |
+| drafts on model level / serialization on app level | **9** |
+| separate frontend transport / single backend deployment | **3**, **11**, **16** |
+| any ABAP IDE, no extra tooling | **16** |
+| multiple layers / one layer | **7**, **18** |
+| annotations to learn / the UI5 API to learn | **4**, **13** |
+| cloud-ready and clean core | **20** |
+| OData metadata flow / HTTP event flow | **5**, **7**, **8** |
+
+What is **not** carried is the comparative frame itself and the verdict rows —
+"Learning Curve: High / Low", "Use Case Fit", the ✅/❌ columns. That is the part
+the series decided against, and it is also the part that ages worst and invites
+the argument nobody wanted.
+
+So the choice is yours, and it is a real one:
+
+1. **Archive both and accept the loss.** Nothing factual disappears; the
+   side-by-side reading does. Whoever wants it can still find it in the git
+   history.
+2. **Keep both as documentation** and archive only the four narrative pages.
+   A comparison table is reference material, which is what a docs site is for —
+   it just is not what this series is.
+3. **Ask for a comparison article** and the rule changes. That is a decision
+   about the series, not about these two pages, and it would be worth making
+   deliberately rather than by absorbing two tables.
+
+Nothing here is archived until that is settled.
 
 **Two things the docs pages say that must not travel into an article.**
 `dx.md` tells the reader to "use `Z2UI5_CL_XML_VIEW` to define simple views"
