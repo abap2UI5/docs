@@ -24,10 +24,10 @@
  *                                    tooling fetches one URL instead of
  *                                    parsing a page
  *
- * TRUTH is the release, never main - the same rule check-api-names and
- * check-examples follow, reading the same pin (lib/release.mjs) and the same
- * source file (lib/client-interface.mjs). A2UI5_REF overrides it for a canary
- * run against main.
+ * TRUTH is main - the same rule check-api-names and check-examples follow,
+ * reading the same ref (lib/release.mjs, frameworkRef) and the same source
+ * file (lib/client-interface.mjs). A2UI5_REF overrides it to pin a run back
+ * to a release.
  *
  * Committed rather than build-time (like llms.txt) because it is a claim
  * about ANOTHER repository at a pinned release, not a projection of the pages
@@ -45,7 +45,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { declaredRelease } from './lib/release.mjs';
+import { frameworkRef } from './lib/release.mjs';
 import { fetchInterface, parseInterface, interfacePath } from './lib/client-interface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -59,7 +59,7 @@ const SITE = 'https://abap2ui5.github.io/docs';
 
 /* ------------------------------------------------------------- the source */
 
-const REF = process.env.A2UI5_REF || declaredRelease(ROOT);
+const REF = frameworkRef();
 if (!REF) {
   console.log('the three places naming the release DISAGREE, so there is nothing to pin to.');
   console.log('SKIPPED: run npm run check:version.');
@@ -99,6 +99,12 @@ const RULES = [
   ['Popups and popovers', /^(popup|popover)_/],
   ['Messages', /^message_/],
   ['App navigation', /^(_event_nav|nav_app_|get_app|check_app)/],
+  /* The interface's own URL vocabulary (added with the hash_* wave): nav_*
+   * stays real navigation, hash_* is the URL fragment named after
+   * sap/ui/core/routing/HashChanger, app_state_* is the state the URL carries.
+   * The two obsolete spellings join their successors rather than sitting in a
+   * different section from the method they are an alias of. */
+  ['Hash and app state', /^(hash_|app_state_|set_app_state_active$|set_push_state$)/],
   ['Events and frontend actions', /^(_event|follow_up_action)/],
   ['Reading the request', /^get(_event(_arg)?)?$/],
 ];
@@ -115,13 +121,14 @@ const ORDER = [
   'Reading the request',
   'Messages',
   'App navigation',
-  'Session and app state',
+  'Hash and app state',
+  'Session',
   'Other',
 ];
 
 const groupOf = (name) => {
   for (const [group, re] of RULES) if (re.test(name)) return group;
-  if (name.startsWith('set_')) return 'Session and app state';
+  if (name.startsWith('set_')) return 'Session';
   return 'Other';
 };
 for (const m of model.methods) m.group = groupOf(m.name);
@@ -224,7 +231,7 @@ const body = [
   START,
   '',
   `Generated from [\`z2ui5_if_client\`](https://github.com/abap2UI5/abap2UI5/blob/${REF}/${interfacePath})`,
-  `at release **${REF}** — ${model.methods.length} methods, ${model.constants.length} constant`,
+  `on **${REF}** — ${model.methods.length} methods, ${model.constants.length} constant`,
   `structures. The same reference as one JSON document: [client-api.json](${SITE}/api/client-api.json).`,
   '',
   ...[...groups].filter(([, list]) => list.length).flatMap(([name, list]) => [
@@ -255,8 +262,10 @@ if (body.includes('{{')) {
 
 const json = `${JSON.stringify({
   description: 'The abap2UI5 client API: everything an app may call on `client`, '
-    + 'read from z2ui5_if_client at the release this documentation names.',
-  release: REF,
+    + 'read from z2ui5_if_client on the framework branch this documentation tracks. '
+    + 'Ahead of the newest release by design - resources/deprecations.html says '
+    + 'what is not in a tag yet.',
+  ref: REF,
   source: `https://github.com/abap2UI5/abap2UI5/blob/${REF}/${interfacePath}`,
   documentation: `${SITE}/resources/api.html`,
   methods: model.methods.map(({ name, group, doc, preferred, params, returning }) => ({
@@ -302,7 +311,7 @@ if (CHECK) {
     console.error('edited by hand. Run `npm run generate:api` and commit what it writes.');
     process.exit(1);
   }
-  console.log('the committed API reference matches the interface at that release - OK');
+  console.log('the committed API reference matches the interface at that ref - OK');
 } else {
   fs.mkdirSync(path.dirname(JSON_OUT), { recursive: true });
   const wrote = [];

@@ -55,7 +55,7 @@ ENDCLASS.
 
 ### Copy the App State URL
 
-To share the current app state instead of a custom string, use `clipboard_app_state` — see [App State, Share, Bookmark](../expert_more/app_state_share.md).
+To share the current app state instead of a custom string, compose the link with `client->app_state_get_href( )` and hand it to the same `clipboard_copy` action — see [App State](../event_navigation/navigation/app_state.md).
 
 ::: warning
 The browser's Clipboard API requires HTTPS (or `localhost`). On plain HTTP the call is silently ignored.

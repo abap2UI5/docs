@@ -117,7 +117,7 @@ export default defineConfig({
           // The section is called Getting Started in the sidebar this opens;
           // "Introduction" was the first PAGE in it, one level down.
           { text: "Getting Started", link: "/get_started/about" }, // nav
-          { text: "Tutorial", link: "/tutorials/overview" }, // nav
+          { text: "Tutorial", link: "/tutorials/walkthrough/" }, // nav
           { text: "Cookbook", link: "/cookbook/view/definition" },
           { text: "Configuration", link: "/configuration/setup" },
           // Technical Insight is not a line of its own here any more: it is a
@@ -193,10 +193,10 @@ export default defineConfig({
         // read after the framework is installed and before the reference
         // chapters, and that is the order the three sections stand in.
         text: "Tutorial",
-        link: "/tutorials/overview",
+        link: "/tutorials/walkthrough/",
         collapsed: true,
         items: [
-          { text: "Overview", link: "/tutorials/overview" }, // sidebar
+          { text: "Overview", link: "/tutorials/walkthrough/" }, // sidebar
           {
             // No `collapsed` key at all, like Quickstart above: that is what
             // makes a group a plain labelled list instead of a collapsible
@@ -288,7 +288,7 @@ export default defineConfig({
                   { text: "Inner App", link: "/cookbook/event_navigation/navigation/inner_app" },
                   { text: "Cross App", link: "/cookbook/event_navigation/navigation/cross_app" },
                   { text: "Hash", link: "/cookbook/event_navigation/navigation/hash" },
-                  { text: "App State", link: "/cookbook/event_navigation/navigation/app_state" },
+                  { text: "App State, Share, Bookmark", link: "/cookbook/event_navigation/navigation/app_state" },
                 ],
               },
               { text: "Exception", link: "/cookbook/event_navigation/exception" },
@@ -365,7 +365,6 @@ export default defineConfig({
               { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
               { text: "Smart Controls", link: "/cookbook/expert_more/smart_controls" },
-              { text: "App State, Share", link: "/cookbook/expert_more/app_state_share" },
             ],
           },
           // Three chapters that sat behind a collapsible called "More Topics"

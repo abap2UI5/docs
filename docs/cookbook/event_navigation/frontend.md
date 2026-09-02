@@ -77,7 +77,6 @@ The frontend events, as `z2ui5_if_client=>cs_event` carries them:
 
       "Actions
       clipboard_copy            TYPE string VALUE `CLIPBOARD_COPY`,
-      clipboard_app_state       TYPE string VALUE `CLIPBOARD_APP_STATE`,
       set_title                 TYPE string VALUE `SET_TITLE`,
       set_title_launchpad       TYPE string VALUE `SET_TITLE_LAUNCHPAD`,
       set_favicon               TYPE string VALUE `SET_FAVICON`,
@@ -105,10 +104,14 @@ The frontend events, as `z2ui5_if_client=>cs_event` carries them:
       smart_variant_init        TYPE string VALUE `SMART_VARIANT_INIT`,
       filter_bar_variant_init   TYPE string VALUE `FILTER_BAR_VARIANT_INIT`,
 
-      "URL and app state
-      set_app_state_active      TYPE string VALUE `SET_APP_STATE_ACTIVE`,
-      set_push_state            TYPE string VALUE `SET_PUSH_STATE`,
-      set_nav_routing           TYPE string VALUE `SET_NAV_ROUTING`,
+      "URL and app state - the hash_* family is named after UI5's
+      "sap/ui/core/routing/HashChanger
+      hash_set                  TYPE string VALUE `SET_PUSH_STATE`,
+      hash_replace              TYPE string VALUE `HASH_REPLACE`,
+      hash_back                 TYPE string VALUE `HASH_BACK`,
+      hash_attach_changed       TYPE string VALUE `HASH_ATTACH_CHANGED`,
+      hash_routing              TYPE string VALUE `SET_NAV_ROUTING`,
+      app_state_set_active      TYPE string VALUE `SET_APP_STATE_ACTIVE`,
 
     END OF cs_event.
 ```
@@ -116,7 +119,7 @@ The frontend events, as `z2ui5_if_client=>cs_event` carries them:
 The interface carries a few more that are obsolete and are not listed here —
 they still dispatch, so old code keeps running, and what replaced each one is
 on [Deprecations](/resources/deprecations).
-Some of these events have their own pages: [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds key combinations to backend events, [`set_nav_routing`](/cookbook/event_navigation/navigation/hash) switches hash routing on, and [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls) wire variant management for smart controls. The dedicated cookbook pages under [Browser Interaction](/cookbook/browser_interaction/title) and [Device Capabilities](/cookbook/device_capabilities/upload_download) carry the argument list of each event.
+Some of these events have their own pages: [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds key combinations to backend events, [the `hash_*` family](/cookbook/event_navigation/navigation/hash) puts the URL fragment under the router's control or the app's own, and [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls) wire variant management for smart controls. The dedicated cookbook pages under [Browser Interaction](/cookbook/browser_interaction/title) and [Device Capabilities](/cookbook/device_capabilities/upload_download) carry the argument list of each event.
 
 ::: tip These used to be invisible custom controls
 Earlier versions of abap2UI5 needed an invisible custom UI5 control for each of
