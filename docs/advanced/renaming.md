@@ -65,7 +65,7 @@ alone would let them collide; the segment is what keeps them apart.
 | `smp` | [samples](https://github.com/abap2UI5/samples) — the sample catalog, `z2ui5_cl_smp_app_*` |
 | `smps` | [samples-stack](https://github.com/abap2UI5/samples-stack) — full-stack samples |
 | `smpc` | [samples-controls](https://github.com/abap2UI5/samples-controls) — control samples |
-| `popup` | [popups](https://github.com/abap2UI5-addons/popups) — the popups [add-on](/advanced/addons) |
+| `popup` | [popups](https://github.com/abap2UI5-addons/popups) — the popups [add-on](/resources/addons) |
 | `cci` | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) — custom controls shared with the community |
 | `ccc` | [custom-controls-customer](https://github.com/abap2UI5/custom-controls-customer) — the template for **your own** frontend artefacts |
 

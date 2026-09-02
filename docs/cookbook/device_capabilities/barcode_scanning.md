@@ -169,4 +169,4 @@ ENDCLASS.
 For a complete sound sample, see `Z2UI5_CL_SMPS_APP_487` in the [samples-stack repository](https://github.com/abap2UI5/samples-stack).
 
 ## Render Barcodes
-To also render barcodes, use bwip-js, which ships with the js-libraries add-on. See [Add-ons](/advanced/addons) for details.
+To also render barcodes, use bwip-js, which ships with the js-libraries add-on. See [Add-ons](/resources/addons) for details.

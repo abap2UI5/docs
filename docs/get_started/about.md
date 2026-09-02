@@ -80,7 +80,7 @@ Authentication is the ICF node's job, exactly as for any other service on your s
 ### System Footprint
 The framework has a small system footprint — essentially classes, interfaces, and a single draft table. The core stays minimal; optional add-ons provide extra functionality only when you need it.
 
-→ *See [Add-ons](/advanced/addons) for the ecosystem around the core — layout variants, table maintenance, charts*
+→ *See [Add-ons](/resources/addons) for the ecosystem around the core — layout variants, table maintenance, charts*
 
 ### Transparency
 All source code lives publicly on GitHub. We discuss features and issues openly, publish technical blog posts that explain key concepts, and ship fixes quickly via abapGit. You'll always understand how the framework works and can confirm its behavior.

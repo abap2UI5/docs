@@ -472,13 +472,19 @@ export default defineConfig({
           // entries and Technical Insight - the last of them - is visible
           // without scrolling, which it was not when it was the twelfth.
           //
-          // Use Cases and Add-ons stay loose at the top: both moved out of
-          // Getting Started on purpose, because they answer questions a
-          // newcomer does not have yet, and on the entry pages they read as
-          // required steps. They are the two that say what this section is
-          // for, so they are what a reader opening it meets first.
+          // Use Cases stays loose at the top: it moved out of Getting
+          // Started on purpose, because it answers a question a newcomer
+          // does not have yet, and on the entry page it reads as a required
+          // step. It is the one that says what this section is for, so it is
+          // what a reader opening it meets first.
+          //
+          // Add-ons stood next to it and is now under Resources. Every other
+          // page in this section teaches something you do to your own app -
+          // downport it, run it off-stack, extend it, wire it to something.
+          // Add-ons teaches nothing: it is a list of what other people
+          // published, which is the same kind of page as References and Who
+          // Uses abap2UI5?. The pages that need it still link it by name.
           { text: "Use Cases", link: "/advanced/use_cases" },
-          { text: "Add-ons", link: "/advanced/addons" },
           {
             text: "Extensibility",
             collapsed: true,
@@ -630,6 +636,12 @@ export default defineConfig({
           // did not own. The catalogue pages introduce themselves and link
           // one another; the home page opens the first of them directly, and
           // the cookbook links individual samples per chapter.
+          //
+          // Moved here from Advanced Topics: the ecosystem around the
+          // framework rather than a technique to apply to your own app, and
+          // it closes by asking the reader to add their project - the same
+          // invitation Who Uses abap2UI5? makes below it.
+          { text: "Add-ons", link: "/resources/addons" },
           { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release Notes", link: "/resources/changelog" },
           { text: "Deprecations", link: "/resources/deprecations" },
