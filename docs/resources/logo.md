@@ -105,12 +105,13 @@ Each animal comes in three files, the same way the mark does: a transparent
 PNG to use, a copy on white for the places that cannot handle transparency, and
 the artwork as it was drawn.
 
-Every animal arrived on a red of its own — `#C12E2B`, `#AB2319` and, under the
-JPEG noise, roughly `#F5021B` — three reds that are each almost, but not quite,
-the red of the mark. The brand copies are shifted onto `#D03C4A`, so a mascot
-next to the logo is the same red as the logo. Only the red ink moved, in
-proportion to how much of it a pixel carries: outlines, shading and the sloth's
-cream fur are untouched.
+Every animal arrived on a red of its own — `#C12E2B`, `#A62219` and, under the
+JPEG noise, roughly `#F5011D` — three reds that are each almost, but not quite,
+the red of the mark. The brand copies move that red onto `#D03C4A`: the flat
+fill of each drawing lands on it exactly, so a mascot next to the logo is the
+same red as the logo. Only the red ink moved, in proportion to how much of it a
+pixel carries — shading and highlights become darker and lighter shades of that
+one red, and the outlines and the sloth's cream fur are untouched.
 
 The transparent copies are cut out along the drawing, not along its white. The
 white behind the sheep and the white of its wool are the same white, so the
@@ -134,7 +135,7 @@ description of how a framework like this comes about.
 | Use | [`sloth_brand.png`](/mascots/sloth_brand.png) — 400 × 400, PNG, transparent |
 | On white | [`sloth_brand_white_back.png`](/mascots/sloth_brand_white_back.png) |
 | As drawn | [`sloth.jpg`](/mascots/sloth.jpg) — a JPEG, so it carries compression artefacts along the outline; the copies above are PNGs and add none of their own |
-| Red | ≈ `#F5021B` → `#D03C4A` |
+| Red | ≈ `#F5011D` → `#D03C4A` |
 
 ### Dinosaur
 
@@ -164,7 +165,7 @@ works.
 | Use | [`sheep_brand.png`](/mascots/sheep_brand.png) — 400 × 400, PNG, transparent |
 | On white | [`sheep_brand_white_back.png`](/mascots/sheep_brand_white_back.png) |
 | As drawn | [`sheep.png`](/mascots/sheep.png) |
-| Red | `#AB2319` → `#D03C4A` |
+| Red | `#A62219` → `#D03C4A` |
 
 What is white inside an animal stays white — the wool, the screen, the keys.
 On a dark background that white is what you see, because it is part of the
@@ -172,14 +173,13 @@ drawing and not the surface behind it.
 
 ## Colours
 
-Two reds and white. The mark, and every mascot above, uses the first red and
-white only; the second red exists for interface states, where the first one has
-to darken under a cursor.
+One red and white. The mark, every mascot above and this site use that red
+and nothing else. There is no second shade for interface states: a link under
+a cursor gains an underline, not a darker red, and a button keeps its colour.
 
 | | Hex | Where |
 | --- | --- | --- |
-| <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#D03C4A"></span> Red | `#D03C4A` | the circle in the mark, and `--vp-c-brand-1` — links, buttons, the hero name |
-| <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#A83232"></span> Dark red | `#A83232` | `--vp-c-brand-2` — the hover state of the above, nothing in the mark |
+| <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#D03C4A"></span> Red | `#D03C4A` | the circle in the mark, the red ink of the mascots, and every brand token of this site — links, buttons, the hero name, and their hover states |
 | <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border:1px solid var(--vp-c-divider);border-radius:3px;background:#FFFFFF"></span> White | `#FFFFFF` | the wordmark knocked out of the circle |
 
 The site's own tokens are set in `docs/.vitepress/theme/style.css`. Take the hex
