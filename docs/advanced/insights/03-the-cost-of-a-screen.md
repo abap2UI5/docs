@@ -1,4 +1,4 @@
-# The Cost of a Screen
+# #3 The Cost of a Screen
 
 An ABAP team needs a screen. Not an application — a screen. A maintenance view
 for a customising table nobody wants to explain in SM30. A cockpit showing what

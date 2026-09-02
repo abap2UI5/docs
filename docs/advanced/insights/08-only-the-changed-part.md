@@ -1,4 +1,4 @@
-# Only the Changed Part
+# #8 Only the Changed Part
 
 If the backend sends the view on every request, does the screen rebuild itself
 on every click?
