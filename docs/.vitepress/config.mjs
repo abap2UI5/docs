@@ -38,18 +38,12 @@ export default defineConfig({
         href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
       },
     ],
-    // Montserrat
-    ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
-    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
-    ['link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap'
-    }],
-    // Optional: Fira Code
-    ['link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap'
-    }],
+    // No webfonts. Montserrat and Fira Code were requested here and applied
+    // by nothing — no rule in theme/style.css, or anywhere else, ever named
+    // either one — so the site paid for two render-blocking stylesheets and
+    // four font files it never showed a glyph from. The type is now the
+    // system stack, set in theme/style.css. Font Awesome below STAYS: the
+    // three home-page feature icons are `fa-solid`/`fa-brands` classes.
     // Link preview card — the per-page og:title, og:description and og:url are
     // added in transformPageData below.
     ["meta", { property: "og:type", content: "website" }],
