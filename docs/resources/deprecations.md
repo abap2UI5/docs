@@ -348,7 +348,7 @@ ABAP with no control in the view at all:
 | `Favicon` | `cs_event-set_favicon` |
 | `SoftKeyboard` | `cs_event-keyboard_set_mode` — [Soft Keyboard](/cookbook/browser_interaction/soft_keyboard) |
 | `Info` | `client->get( )-s_device` / `-s_ui5` / `-s_focus` / `-s_scroll` — [Device Info](/cookbook/device_capabilities/info) |
-| `History` | `client->set_push_state( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
+| `History` | `client->hash_set( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
 
 The pattern is the same for all of them — drop the control from the view and
 call the event after your event handler:

@@ -156,6 +156,21 @@ in every tool that reads the tree.
   three section blocks. What is NOT gated here, on purpose: the blank-line
   rules around `end( )` and the `t_arg` continuation column, which are
   warnings in the sample corpora and not clean there either.
+- **What is obsolete is on `resources/deprecations.md` and nowhere else.**
+  Every other page is written as if the superseded name had never existed: no
+  "formerly called", no "the older spelling still compiles", no obsolete
+  constant in a `cs_event` listing — a page that has to mention what went
+  away links to the deprecations page instead. The generated client API
+  reference follows the same rule mechanically: `generate-api-reference.mjs`
+  drops every method whose ABAP-Doc opens with "obsolete", every parameter
+  whose plain comment does and every constant under a label that does, from
+  the page and from `client-api.json` alike. The interface marks them that
+  way (its comments say so), so a new compatibility-only member over there
+  needs its label, and a sentence in a live method's doc that names an old
+  name is a documentation bug on that side. `check:api-names` exempts the
+  deprecations page and the changelog for the same reason: they are the pages
+  whose subject is the old names. The changelog stays a dated record — a
+  rename that happened is history there, not a mention to remove.
 - **`llms.txt` is generated from the SIDEBAR, not from a directory walk.** A
   page in no sidebar is reported as an orphan and published anyway. If you add
   a page, add it to the sidebar or accept that nothing navigates to it.

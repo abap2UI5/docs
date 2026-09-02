@@ -151,10 +151,7 @@ instead of on the launchpad home page.
 `app_state_get_href( )` is a backend method, so a *Share* button that calls it
 is a normal event. That is the useful shape: whatever has to be saved before
 the link is worth sharing is saved in the same roundtrip, and the composed link
-can be shown as well as copied. The older fire-and-forget
-`cs_event-clipboard_app_state` — which composed the link in the browser and
-could only ever put it on the clipboard — is obsolete; see
-[Deprecations](/resources/deprecations).
+can be shown as well as copied.
 :::
 
 ## What the Link Restores

@@ -100,10 +100,14 @@ function splitDoc(rawLines) {
  *   }
  *
  * A nested BEGIN OF inside a group is a member with `members` of its own. A
- * plain `"…` comment line inside a constant group is a LABEL for the members
- * after it (cs_event marks its runs `Control` / `experimental` / `obsolet`
- * that way) and lands on each of them as `label`; the same comment before a
- * method parameter is a note on that one parameter and lands as `doc`.
+ * plain `"…` comment inside a constant group is a LABEL for the members
+ * after it (cs_event marks its runs `Control` / `experimental` / `obsolete`
+ * that way) and lands on each of them as `label`. The label is the FIRST
+ * line of a comment run: a run that goes on explains the run, and its last
+ * line is not a label - the hash_* family used to be labelled "with their
+ * obsolete spellings below - both names reach the same branch" that way.
+ * The same comment before a method parameter is a note on that one
+ * parameter and lands as `doc`.
  */
 export function parseInterface(text) {
   const model = { constants: [], types: [], methods: [] };
@@ -112,6 +116,7 @@ export function parseInterface(text) {
   let mode = null;       // 'constants' | 'types' after the introducing keyword
   const stack = [];      // open BEGIN OF groups
   let label = null;      // current run label inside the innermost group
+  let inRun = false;     // the previous line was a plain comment
   let method = null;     // the method being read
   let section = null;    // 'importing' | 'returning' | …
 
@@ -138,10 +143,12 @@ export function parseInterface(text) {
     if (abapDoc) { doc.push(abapDoc[1]); continue; }
     const comment = /^\s*"(?!!)\s?(.*)$/.exec(raw);
     if (comment) {
-      if (stack.length) label = decode(comment[1].trim());
+      if (stack.length) { if (!inRun) label = decode(comment[1].trim()); }
       else note.push(comment[1].trim());
+      inRun = true;
       continue;
     }
+    inRun = false;
 
     const line = raw.trimEnd();
     if (!line.trim()) continue;

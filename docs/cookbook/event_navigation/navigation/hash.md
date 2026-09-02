@@ -26,9 +26,7 @@ Everything on this page that touches the URL fragment is named after
 `hash_replace( )` is `replaceHash`, `cs_event-hash_attach_changed` is
 `attachHashChanged`, and `cs_event-hash_back` is the `onNavBack` pattern.
 `nav_*` keeps meaning real navigation between apps, `app_state_*` is the state
-the URL carries. The older spellings — `set_push_state( )`,
-`cs_event-set_nav_routing`, `set_app_state_active( )` — still compile and reach
-the same code; see [Deprecations](/resources/deprecations).
+the URL carries.
 :::
 
 ## Framework routing
@@ -170,10 +168,10 @@ fallback is then written as a **replace** instead, so the user lands on the
 start page rather than on whatever was in the browser before.
 
 ::: warning Without a listener, `hash_set( )` writes a suffix
-`hash_set( )` predates the listener (it was called `set_push_state( )` then) and
-keeps its old behavior when no listener is registered: the value is appended to
-the hash rather than being the whole of it, which is what
-<code>hash_set( `&amp;my-app-state=detail` )</code> in older code is doing. Registering the
+`hash_set( )` predates the listener and keeps its original behavior when no
+listener is registered: the value is appended to the hash rather than being the
+whole of it, which is what <code>hash_set( `&amp;my-app-state=detail` )</code>
+is doing. Registering the
 listener is what makes the value the *whole* app hash — and what makes browser
 Back reach your app at all.
 :::

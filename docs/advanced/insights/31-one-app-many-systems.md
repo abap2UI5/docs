@@ -8,7 +8,7 @@ More than one. The app lives on the SAP BTP ABAP Environment and reaches each
 S/4 system through its released APIs, so the connection is configuration rather
 than code.
 
-![One abap2UI5 app on the SAP BTP ABAP Environment serves several S/4HANA systems through their released APIs](/advanced/use_cases/saas.svg){ width=60% }
+![One abap2UI5 app on the SAP BTP ABAP Environment serves several S/4HANA systems through their released APIs](/advanced/use_cases/saas.svg){ width=90% }
 
 That is a real SaaS shape, in ABAP. One codebase, deployed once, serving several
 customer tenants — each with its own system, its own data and its own release,

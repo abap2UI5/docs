@@ -33,14 +33,6 @@
       ]
     },
     {
-      "name": "view_model_update",
-      "group": "Main view",
-      "doc": [
-        "obsolete - does NOTHING. An event round-trip that changes bound data pushes the model AUTOMATICALLY: the framework compares the model state before and after main( ) and, when it differs, sends it to every open view slot (see z2ui5_cl_ui5_handler=>main_end). A handler can therefore no longer render stale by forgetting a call, and there is nothing left for this method to do. It stays in the interface so existing apps keep compiling - remove the calls at your leisure."
-      ],
-      "parameters": []
-    },
-    {
       "name": "set_session_stateful",
       "group": "Session",
       "parameters": [
@@ -103,34 +95,6 @@
       ]
     },
     {
-      "name": "set_app_state_active",
-      "group": "Hash and app state",
-      "doc": [
-        "obsolete spelling of app_state_set_active( ) - same behavior. It stays in the interface so existing apps keep compiling."
-      ],
-      "parameters": [
-        {
-          "name": "val",
-          "type": "abap_bool",
-          "default": "abap_true"
-        }
-      ]
-    },
-    {
-      "name": "set_push_state",
-      "group": "Hash and app state",
-      "doc": [
-        "obsolete spelling of hash_set( ) - same behavior ('push state' described the old history.pushState implementation, which the HashChanger-backed write replaced). It stays in the interface so existing apps keep compiling."
-      ],
-      "parameters": [
-        {
-          "name": "val",
-          "type": "string",
-          "optional": true
-        }
-      ]
-    },
-    {
       "name": "nest_view_display",
       "group": "Nested views",
       "parameters": [
@@ -156,14 +120,6 @@
     {
       "name": "nest_view_destroy",
       "group": "Nested views",
-      "parameters": []
-    },
-    {
-      "name": "nest_view_model_update",
-      "group": "Nested views",
-      "doc": [
-        "obsolete - does NOTHING, see view_model_update. A nested view inherits the MAIN view's model anyway, and that model is pushed automatically"
-      ],
       "parameters": []
     },
     {
@@ -195,14 +151,6 @@
       "parameters": []
     },
     {
-      "name": "nest2_view_model_update",
-      "group": "Nested views",
-      "doc": [
-        "obsolete - does NOTHING, see view_model_update. A nested view inherits the MAIN view's model anyway, and that model is pushed automatically"
-      ],
-      "parameters": []
-    },
-    {
       "name": "popup_display",
       "group": "Popups and popovers",
       "parameters": [
@@ -213,24 +161,8 @@
       ]
     },
     {
-      "name": "popup_model_update",
-      "group": "Popups and popovers",
-      "doc": [
-        "obsolete - does NOTHING, see view_model_update. The automatic push reaches the POPUP slot too, so an open popup refreshes on its own"
-      ],
-      "parameters": []
-    },
-    {
       "name": "popup_destroy",
       "group": "Popups and popovers",
-      "parameters": []
-    },
-    {
-      "name": "popover_model_update",
-      "group": "Popups and popovers",
-      "doc": [
-        "obsolete - does NOTHING, see view_model_update. The automatic push reaches the POPOVER slot too, so an open popover refreshes on its own"
-      ],
       "parameters": []
     },
     {
@@ -514,32 +446,6 @@
       "returns": "string"
     },
     {
-      "name": "_event_client",
-      "group": "Events and frontend actions",
-      "doc": [
-        "obsolete - use follow_up_action( ), which is the same call in the same position now. Since follow_up_action( ) has a RETURNING parameter, a call whose result is CONSUMED - the view-attribute form `v = client->follow_up_action( val = ... t_arg = ... )` - takes its IF result IS SUPPLIED branch straight to get_event_client( ), which is this method's entire body: the identical roundtrip-free wire, byte for byte. One method therefore both schedules a frontend action and wires one, and this one is a second name for half of it.",
-        "The one difference is follow_up_action( )'s leading CASE, which claims cs_event-hash_routing / hash_set / hash_replace / hash_attach_changed / app_state_set_active (and their obsolete set_* spellings) before that branch. Those are backend-side navigation options rather than frontend handlers, so wiring one into a view attribute never dispatched anything here either.",
-        "It stays in the interface so existing apps keep compiling - rename the calls at your leisure."
-      ],
-      "parameters": [
-        {
-          "name": "val",
-          "type": "clike"
-        },
-        {
-          "name": "view",
-          "type": "clike",
-          "default": "cs_view-main"
-        },
-        {
-          "name": "t_arg",
-          "type": "string_table",
-          "optional": true
-        }
-      ],
-      "returns": "string"
-    },
-    {
       "name": "_bind",
       "group": "Data binding",
       "parameters": [
@@ -551,18 +457,6 @@
           "name": "path",
           "type": "abap_bool",
           "default": "abap_false"
-        },
-        {
-          "name": "view",
-          "type": "clike",
-          "default": "cs_view-main",
-          "doc": "obsolete - inactive, not passed on internally"
-        },
-        {
-          "name": "custom_mapper",
-          "type": "REF TO z2ui5_if_ajson_mapping",
-          "optional": true,
-          "doc": "obsolete - still evaluated, but do not use in new code. Both hand an app a reference to the bundled AJSON library (src/00/01), which is a MIRRORED copy of an external project, not a contract this framework owns: an app implementing z2ui5_if_ajson_mapping / _filter binds itself to whatever that mirror looks like today. Everything they were reached for has a declarative counterpart on this method now - omit_initial / omit_initial_paths drop initial fields, json splices a JSON node - and the ABAP side can shape the value before it is bound"
         },
         {
           "name": "custom_filter",
@@ -603,66 +497,6 @@
           "type": "abap_bool",
           "default": "abap_false",
           "doc": "the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model."
-        }
-      ],
-      "returns": "string"
-    },
-    {
-      "name": "_bind_edit",
-      "group": "Data binding",
-      "doc": [
-        "obsolete - alias of _bind with identical behaviour, please use _bind. custom_mapper_back / custom_filter_back are still accepted for source compatibility but are no longer evaluated."
-      ],
-      "parameters": [
-        {
-          "name": "val",
-          "type": "data"
-        },
-        {
-          "name": "path",
-          "type": "abap_bool",
-          "default": "abap_false"
-        },
-        {
-          "name": "view",
-          "type": "clike",
-          "default": "cs_view-main",
-          "doc": "obsolete - inactive, not passed on internally"
-        },
-        {
-          "name": "custom_mapper",
-          "type": "REF TO z2ui5_if_ajson_mapping",
-          "optional": true
-        },
-        {
-          "name": "custom_mapper_back",
-          "type": "REF TO z2ui5_if_ajson_mapping",
-          "optional": true
-        },
-        {
-          "name": "custom_filter",
-          "type": "REF TO z2ui5_if_ajson_filter",
-          "optional": true
-        },
-        {
-          "name": "custom_filter_back",
-          "type": "REF TO z2ui5_if_ajson_filter",
-          "optional": true
-        },
-        {
-          "name": "tab",
-          "type": "data",
-          "optional": true
-        },
-        {
-          "name": "tab_index",
-          "type": "i",
-          "optional": true
-        },
-        {
-          "name": "switch_default_model",
-          "type": "abap_bool",
-          "default": "abap_false"
         }
       ],
       "returns": "string"
@@ -1017,109 +851,91 @@
           "name": "hash_set",
           "type": "string",
           "value": "SET_PUSH_STATE",
-          "label": "with their obsolete spellings below - both names reach the same branch"
+          "label": "experimental"
         },
         {
           "name": "hash_replace",
           "type": "string",
           "value": "HASH_REPLACE",
-          "label": "with their obsolete spellings below - both names reach the same branch"
+          "label": "experimental"
         },
         {
           "name": "hash_back",
           "type": "string",
           "value": "HASH_BACK",
-          "label": "with their obsolete spellings below - both names reach the same branch"
+          "label": "experimental"
         },
         {
           "name": "hash_attach_changed",
           "type": "string",
           "value": "HASH_ATTACH_CHANGED",
-          "label": "with their obsolete spellings below - both names reach the same branch"
+          "label": "experimental"
         },
         {
           "name": "hash_routing",
           "type": "string",
           "value": "SET_NAV_ROUTING",
-          "label": "with their obsolete spellings below - both names reach the same branch"
+          "label": "experimental"
         },
         {
           "name": "app_state_set_active",
           "type": "string",
           "value": "SET_APP_STATE_ACTIVE",
-          "label": "with their obsolete spellings below - both names reach the same branch"
-        },
-        {
-          "name": "set_app_state_active",
-          "type": "string",
-          "value": "SET_APP_STATE_ACTIVE",
-          "label": "obsolet"
-        },
-        {
-          "name": "set_push_state",
-          "type": "string",
-          "value": "SET_PUSH_STATE",
-          "label": "obsolet"
-        },
-        {
-          "name": "set_nav_routing",
-          "type": "string",
-          "value": "SET_NAV_ROUTING",
-          "label": "obsolet"
+          "label": "experimental"
         },
         {
           "name": "clipboard_app_state",
           "type": "string",
           "value": "CLIPBOARD_APP_STATE",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "image_editor_popup_close",
           "type": "string",
           "value": "IMAGE_EDITOR_POPUP_CLOSE",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "nav_container_to",
           "type": "string",
           "value": "NAV_CONTAINER_TO",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "nest_nav_container_to",
           "type": "string",
           "value": "NEST_NAV_CONTAINER_TO",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "nest2_nav_container_to",
           "type": "string",
           "value": "NEST2_NAV_CONTAINER_TO",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "popup_nav_container_to",
           "type": "string",
           "value": "POPUP_NAV_CONTAINER_TO",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "popover_nav_container_to",
           "type": "string",
           "value": "POPOVER_NAV_CONTAINER_TO",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "z2ui5",
           "type": "string",
           "value": "Z2UI5",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         },
         {
           "name": "wizard_set_next_step",
           "type": "string",
           "value": "WIZARD_SET_NEXT_STEP",
-          "label": "the live hash ride with the requests), so the app can also SHOW it"
+          "label": "superseded by app_state_get_href( ) + cs_event-clipboard_copy: the"
         }
       ]
     },
@@ -1208,12 +1024,12 @@
         {
           "name": "name",
           "type": "string",
-          "label": "which a rename breaks silently"
+          "label": "the bound attribute that holds the table, spelled as the app declared"
         },
         {
           "name": "row",
           "type": "i",
-          "label": "row_parent below"
+          "label": "1-based ABAP row index in the table `name` ends at. For a NESTED cell"
         },
         {
           "name": "field",
@@ -1223,12 +1039,12 @@
         {
           "name": "row_parent",
           "type": "i",
-          "label": "isAdditiveTypeComponents)"
+          "label": "for a NESTED cell the 1-based row index of the IMMEDIATE parent in"
         },
         {
           "name": "value",
           "type": "string",
-          "label": "value that would not convert, a broken node)"
+          "label": "the refused raw value exactly as it arrived from the client, so the"
         }
       ]
     },
@@ -1538,7 +1354,7 @@
         {
           "name": "t_model_skipped",
           "type": "ty_t_model_skip",
-          "label": "violation"
+          "label": "The table cells this roundtrip's delta could not apply - empty in"
         }
       ]
     },
@@ -1555,12 +1371,12 @@
         {
           "name": "check_prevent_default",
           "type": "abap_bool",
-          "label": "still sent, so the backend decides what happens instead"
+          "label": "cancel the control's built-in default for this event before the"
         },
         {
           "name": "prevent_default_expr",
           "type": "string",
-          "label": "in either case, exactly as with the flag"
+          "label": "the same veto, but decided PER FIRING instead of per wire: a client"
         }
       ]
     }
