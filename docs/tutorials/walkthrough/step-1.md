@@ -61,8 +61,6 @@ ENDINTERFACE.
 (The real interface also declares a few attributes the framework manages for
 you — you can ignore them.)
 
-→ *For a deeper look at the lifecycle and framework internals, see [How It All
-Works](/technical/how_it_all_works) and [Concept](/technical/concept).*
 
 Next, we replace the message box with a real UI5 view.
 
