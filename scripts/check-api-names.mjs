@@ -31,11 +31,10 @@
  * `src/99` - a 404 for every reader who clicked it. Those links say `main`, so
  * `main` is what they are checked against, not the release.
  *
- * TRUTH is the release, never main. A page is correct when it matches what the
- * reader can install, and main is ahead of that by definition - judging
- * against main would pass a page teaching API that does not exist yet. The
- * release number comes from lib/release.mjs, the same one check-examples
- * pins to, and `A2UI5_REF` overrides it for a canary run against main.
+ * TRUTH is main - the framework as it IS, the same branch the source links
+ * above resolve against and the same one check-examples compiles to. It used
+ * to be the release; lib/release.mjs (frameworkRef) carries why that changed
+ * and what now answers "does the reader's install have this" instead.
  *
  * When the interface cannot be fetched the run SAYS SO and passes. A
  * documentation gate must not go red because github.com is unreachable, and
@@ -50,7 +49,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { declaredRelease } from './lib/release.mjs';
+import { frameworkRef } from './lib/release.mjs';
 import { fetchInterface } from './lib/client-interface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -63,7 +62,7 @@ const EXEMPT = new Set([
   'cookbook/event_navigation/action.md',
 ]);
 
-const REF = process.env.A2UI5_REF || declaredRelease(ROOT);
+const REF = frameworkRef();
 if (!REF) {
   console.log('the three places naming the release DISAGREE, so there is nothing to pin to.');
   console.log('SKIPPED: run npm run check:version.');
@@ -170,7 +169,7 @@ for (const file of markdownFiles(PAGES)) {
       checked += 1;
       if (!methods.has(name)) {
         if (!source.params) {
-          problems.push(`${rel}: \`client->${name}( )\` is not a method of z2ui5_if_client in ${REF}`);
+          problems.push(`${rel}: \`client->${name}( )\` is not a method of z2ui5_if_client on ${REF}`);
         }
         continue;
       }
@@ -193,7 +192,7 @@ for (const file of markdownFiles(PAGES)) {
         const param = token[2].toLowerCase();
         if (!methods.get(name).has(param)) {
           problems.push(
-            `${rel}: \`client->${name}( ${param} = ... )\` - no such parameter in ${REF}\n`
+            `${rel}: \`client->${name}( ${param} = ... )\` - no such parameter on ${REF}\n`
             + `    it takes: ${[...methods.get(name)].join(', ') || '(none)'}`,
           );
         }
@@ -208,7 +207,7 @@ for (const file of markdownFiles(PAGES)) {
     if (!groups.has(group)) continue;
     checked += 1;
     if (!groups.get(group).has(member)) {
-      problems.push(`${rel}: \`${use[0]}\` is not in ${group} in ${REF}`);
+      problems.push(`${rel}: \`${use[0]}\` is not in ${group} on ${REF}`);
     }
   }
 }
@@ -264,4 +263,4 @@ if (problems.length) {
   console.log('  resources/deprecations.md for what replaced it.');
   process.exit(1);
 }
-console.log('every client-> name on the site exists in the release it names - OK');
+console.log('every client-> name on the site exists in the framework it tracks - OK');

@@ -8,7 +8,7 @@ samples:
 abap2UI5 saves the current app state so you can return to it later — like how standard UI5 apps manage state. This opens up several useful options, like sharing and bookmarking the current state of your app.
 
 ### Usage
-Each state persists as a draft with a unique ID. Calling `client->set_app_state_active` appends this ID as a hash fragment to the URL. The resulting URL is shareable — copy it and open it in another browser window (or send it to a colleague) to restore the same app state. The hash value (`z2ui5-xapp-state=...`) is a server-side key that points to the saved draft. Drafts expire after a configurable time (default: 4 hours, adjustable via [User Exits](/advanced/extensibility/user_exits)).
+Each state persists as a draft with a unique ID. Calling `client->app_state_set_active` appends this ID as a hash fragment to the URL. The resulting URL is shareable — copy it and open it in another browser window (or send it to a colleague) to restore the same app state. The hash value (`z2ui5-xapp-state=...`) is a server-side key that points to the saved draft. Drafts expire after a configurable time (default: 4 hours, adjustable via [User Exits](/advanced/extensibility/user_exits)).
 
 An example URL: <br>
 `.../sap/bc/z2ui5?sap-client=001&app_start=z2ui5_cl_smp_app_004#/z2ui5-xapp-state=024251849E5A1EDFB1DAE2C97C8CE8C2`
@@ -51,16 +51,21 @@ CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
     CASE client->get( )-event.
       WHEN `BUTTON_POST`.
         client->message_toast_display( `data updated and url adjusted` ).
-        client->set_app_state_active( ).
+        client->app_state_set_active( ).
     ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.
 ```
 
-For a complete implementation, see sample `Z2UI5_CL_SMP_APP_321`.
+For a complete implementation, see sample `Z2UI5_CL_SMP_APP_498` in the table below.
 
 ### Share
+`client->app_state_get_href( )` returns the absolute link to the current state,
+composed in the backend — so the app owns the string and can copy it, show it,
+mail it or render it as a QR code. The link keeps a Fiori Launchpad's shell
+hash, so a recipient lands in the app rather than on the launchpad home page.
+
 Add a share button that copies the current state to the clipboard to share with colleagues:
 ```abap
 CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
@@ -100,7 +105,8 @@ CLASS z2ui5_cl_sample_share IMPLEMENTATION.
 
       WHEN client->check_on_event( `BUTTON_POST` ).
 
-        client->follow_up_action( z2ui5_if_client=>cs_event-clipboard_app_state ).
+        client->follow_up_action( val   = z2ui5_if_client=>cs_event-clipboard_copy
+                                  t_arg = VALUE #( ( client->app_state_get_href( ) ) ) ).
         client->message_toast_display( `clipboard copied` ).
 
     ENDCASE.

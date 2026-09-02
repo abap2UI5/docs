@@ -82,3 +82,35 @@ export function declaredRelease(ROOT) {
   const distinct = [...new Set(found.map((f) => f.version))];
   return distinct.length === 1 ? distinct[0] : null;
 }
+
+/**
+ * WHICH framework do the API gates judge a page against?
+ *
+ * Until 2026-09-02: the release above. The reasoning was that a reader
+ * installs a RELEASE, so a page is correct when it matches one - and main is
+ * ahead of that by design, so judging against main would pass a page teaching
+ * API that does not exist yet.
+ *
+ * That answered the wrong half of the question. The maintainer's cadence is
+ * monthly releases and daily merges, and the same coupling had already been
+ * cut everywhere else: the sample corpora resolve the framework's main branch
+ * (abap2UI5's .github/shared/check-framework-pin.mjs, adopted by samples#815,
+ * samples-stack#67, samples-controls#179), because "releases never gate a
+ * merge". This repository was the last one still waiting for a tag. It cost
+ * exactly what the framework predicted: the hash_* / app_state_* API landed on
+ * main on 2026-08-31 and these pages could not be corrected to it - not
+ * "should not", COULD not, the gate rejected the new names - so the site kept
+ * teaching the old spellings while the samples the pages link to had already
+ * migrated to the new ones.
+ *
+ * So: main. The docs and the framework advance together and a tag is cut for
+ * both. What a reader on the newest RELEASE does not have yet is a question of
+ * PROSE - resources/deprecations.md carries the "next release" column for
+ * exactly that - and check-version keeps the release number in the nav bar,
+ * the deprecations page and the changelog honest, which is where the reader
+ * looks for "what do I have". A2UI5_REF still overrides, now for pinning a
+ * gate run BACK to a release rather than forward to main.
+ */
+export function frameworkRef() {
+  return process.env.A2UI5_REF || 'main';
+}

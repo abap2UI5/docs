@@ -17,8 +17,8 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, and checks the link in both directions |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
-| `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` at the pinned release; `--check` is the freshness gate |
-| `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the release pin, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
+| `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
+| `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
@@ -40,8 +40,8 @@ it are decidable, and all nine are decided before a merge:
 | `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
-| `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` at the release this site names, plus every `blob/main/` link into the framework's tree. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
-| `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` at the release this site names and compared byte for byte. Goes stale the same way `check:version` does: a release happens over there, and the committed reference still describes the one before it. `npm run generate:api` rewrites both |
+| `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` on `main`, plus every `blob/main/` link into the framework's tree. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
+| `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` on `main` and compared byte for byte. Goes stale whenever the interface changes over there and the committed reference still describes the shape before it. `npm run generate:api` rewrites both |
 | `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
@@ -94,7 +94,7 @@ are a projection of the pages next to them:
 One more file is published for machines and — unlike the three above —
 **committed**: [`/docs/api/client-api.json`](https://abap2ui5.github.io/docs/api/client-api.json),
 the client API as one JSON document. It is not a projection of the pages next
-to it but a claim about the framework at a pinned release, which is the
+to it but a claim about the framework at a given ref, which is the
 samples-block case, not the llms.txt case — so it is generated by
 `npm run generate:api` and held fresh by `check:api-reference`.
 
@@ -113,6 +113,23 @@ that touches a page, and a wrong committed copy outranks a right generated one
 in every tool that reads the tree.
 
 ## Things that will trip you up
+
+- **The API gates judge the site against `main`, not against a release.**
+  `check:api-names`, `check:api-reference` and `check:examples` all resolve
+  `frameworkRef( )` in `scripts/lib/release.mjs`, which is `main`. This
+  repository used to pin them to the release it names, and the reasoning was
+  sound in isolation — a reader installs a release, main is ahead of it — but
+  it coupled every documentation merge to the framework's monthly tag. When
+  the `hash_*` / `app_state_*` API landed on main these pages could not be
+  corrected to it: the gate rejected the new names, so the site kept teaching
+  the old spellings while the samples it links to had already migrated. The
+  rest of the organisation had cut the same coupling already (abap2UI5's
+  `.github/shared/check-framework-pin.mjs`, "releases never gate a merge").
+  What a reader on the newest release does not have yet is now a question of
+  PROSE: `resources/deprecations.md` carries a *next release* column, and
+  `check:version` keeps the release number in the nav bar, the deprecations
+  page and the changelog honest. `A2UI5_REF` still overrides the ref — now to
+  pin a run BACK to a release rather than forward to main.
 
 - **The nav bar and the sidebar contain the same two entries.**
   `Contribution` and `Sponsor` appear in both `themeConfig.nav` and
