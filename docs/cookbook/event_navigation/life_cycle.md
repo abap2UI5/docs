@@ -73,7 +73,7 @@ CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Whether you dispatch with `CASE abap_true` (as above) or with an equivalent `IF` / `ELSEIF` chain (as the [Hello World](/get_started/hello_world) page and the first steps of the [Walkthrough](/tutorials/overview) do) is a matter of taste — the structure is what counts. Three things make this the recommended shape:
+Whether you dispatch with `CASE abap_true` (as above) or with an equivalent `IF` / `ELSEIF` chain (as the [Hello World](/get_started/hello_world) page and the first steps of the [Walkthrough](/tutorials/walkthrough/) do) is a matter of taste — the structure is what counts. Three things make this the recommended shape:
 
 1. **Store `client` on `me->client`** so handler methods can use it without passing it around.
 2. **Dispatch by event name** — `` check_on_event( `POST` ) `` rather than a generic `` CASE client->get( )-event `` with a second dispatch level. Each event gets its own `WHEN`. (With many events or extracted handler methods, the `CASE client->get( )-event` form is a fine alternative — the walkthrough's [last step](/tutorials/walkthrough/step-10) uses it.)

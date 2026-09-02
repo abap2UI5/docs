@@ -23,9 +23,41 @@ CLASS zcl_app_hello_world IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Open the abap2UI5 startup page in your browser (the same page as in the [Quickstart](/get_started/quickstart)), enter the class name `ZCL_APP_HELLO_WORLD` in the input field, and launch your app.
+Open the abap2UI5 startup page in your browser — the page the
+[Quickstart](/get_started/quickstart#_3-first-launch) ends on — enter the class
+name `ZCL_APP_HELLO_WORLD` in the input field, and launch it.
 
 That is a complete abap2UI5 app: one class, one method, no frontend project and no OData service.
+
+## Starting an App by URL
+
+The startup page is a convenience around a URL parameter you will use from now
+on. `?app_start=<class>` appended to your service URL starts that app directly:
+
+```
+https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_app_hello_world
+```
+
+That is the form a browser bookmark, a Launchpad tile and every sample
+catalogue use — the sample pages all say "start it with `?app_start=<class>`"
+and mean exactly this.
+
+If launching reports `The app 'ZCL_APP_HELLO_WORLD' does not exist in the
+system.`, the framework could not instantiate the class: a typo in the name, or
+the class is not activated yet. Anything that goes wrong *after* this point —
+an app that renders empty, a binding that does not update, an error view on a
+roundtrip — is catalogued with symptom, cause and fix in
+[Common Failures](/cookbook/troubleshooting/common_failures).
+
+::: tip **Naming**
+Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
+:::
+
+::: tip ABAP Language Versions
+While the HTTP handler has to distinguish between Standard ABAP and ABAP for
+Cloud, the apps themselves are independent. You are free to choose whether to
+build your apps with ABAP Cloud compatibility.
+:::
 
 ## A Real Screen, an Event and Data Exchange
 
@@ -97,7 +129,7 @@ something does not render the way you expected:
 ## Next: Build Something
 
 Want all of that explained rather than just shown? The
-[Walkthrough](/tutorials/overview) takes these two classes apart and grows them
+[Walkthrough](/tutorials/walkthrough/) takes these two classes apart and grows them
 into a complete app, one concept per step — views, events, binding, lists,
 tables, a selection screen and popups. Every step is a complete class you can
 run in the browser.
