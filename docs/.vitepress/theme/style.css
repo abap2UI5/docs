@@ -665,6 +665,21 @@
   border-radius: 0;
 }
 
+/* ------------------------------------------- a mark inside a sentence ---
+ *
+ * One page puts an icon in front of a link (the GitHub mark before the
+ * Launchpad KPI repository on configuration/launchpad). It used to be a
+ * Font Awesome `<i>`; it is an inline `<svg>` now, like every other mark on
+ * the site, and this is the rule that makes an `<svg>` behave like the glyph
+ * it replaced: the size and colour of the text around it, on its baseline. */
+.vp-doc .a2ui5-mark {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.16em;
+  color: var(--vp-c-text-1);
+}
+
 /* ------------------------------------------------ the Run button ---
  *
  * Under a fenced example the playground can start (docs/.vitepress/
@@ -823,17 +838,18 @@
 
 /* ------------------------------------ the home page, below the hero ---
  *
- * Two feature cards, and a second row of three below them that is this
+ * Three feature cards, and a second row of three below them that is this
  * file's own. VPFeatures picks its column count from the NUMBER of cards,
- * and two gives `grid-2` — two per row, the line break above the second row
- * — so nothing has to be overridden here. Change the count in docs/index.md
- * and the row changes with it: five would give `grid-4` and a lone fifth
- * card under four, which is what the override that used to live here
- * existed to prevent.
+ * and three gives `grid-3` — full width below 768px, a third of the row
+ * above it — so nothing has to be overridden for the first row. Change the
+ * count in docs/index.md and that row changes with it: five would give
+ * `grid-4` and a lone fifth card under four, which is what the override that
+ * used to live here existed to prevent — and the second row below, whose
+ * breakpoint is written out by hand, would no longer line up with it.
  */
 
 /* The second row of cards - the repository, LinkedIn, the playground - under
- * the theme's two and on the same grid: the same 1152px, the same 16px
+ * the theme's three and on the same grid: the same 1152px, the same 16px
  * gutters, the same padding, so the two rows read as one grid with a line
  * break in it. What sets the row apart is the drawing: the cards above are
  * outlined, these are filled with the brand's soft tint and carry the mark
@@ -853,13 +869,12 @@
   max-width: 1152px;
 }
 
-@media (min-width: 640px) {
-  .a2ui5-out {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 960px) {
+/* One breakpoint, and it is `grid-3`'s: the row above goes from stacked to
+ * three-across at 768px, and a second row that broke to two columns at 640px
+ * and to three at 960px spent the two widths in between disagreeing with it
+ * — three cards over two, then two over three. Two rows of three, changing
+ * together, is the whole point of drawing them on one grid. */
+@media (min-width: 768px) {
   .a2ui5-out {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -954,7 +969,7 @@
  * ancestors below are counted against the real compiled selectors —
  * `.VPButton.medium[data-v-x]` is three, so the button rules carry four. */
 
-/* The two feature cards. The theme draws them with `background-color` and
+/* The three feature cards. The theme draws them with `background-color` and
  * `border-color` both set to `--vp-c-bg-soft`: a filled tile whose border is
  * invisible because it is the same colour as its fill. Swapping the fill for
  * the divider colour turns the same element into an outlined card and costs
@@ -968,11 +983,16 @@
 }
 
 /* The icon loses its 48px grey plate. The plate is a container drawn for a
- * glyph that does not need containing — three of them across the row read as
- * three empty squares before they read as an icon, which is exactly how they
- * render on any visit where the Font Awesome stylesheet is slow or blocked.
- * The glyph alone, at the size of a heading and in the muted text colour,
- * says the same thing and says nothing when it is missing. */
+ * mark that does not need containing — three of them across the row read as
+ * three empty squares before they read as an icon. The mark alone, at the
+ * size of a heading and in the muted text colour, says the same thing.
+ *
+ * The mark is an inline `<svg>` in the frontmatter, sized here rather than
+ * by `font-size`: these were Font Awesome classes until the stylesheet came
+ * off the site, and on a visit where that CDN was slow or blocked they did
+ * not degrade to the empty square above — there was nothing in the box at
+ * all. `font-size` stays for the same reason `.icon` still exists: VitePress
+ * accepts any HTML here, and a future icon that is text again inherits it. */
 .Layout .VPHome .VPFeature .icon {
   width: auto;
   height: auto;
@@ -982,6 +1002,12 @@
   color: var(--vp-c-text-2);
   font-size: 20px;
   justify-content: flex-start;
+}
+
+.Layout .VPHome .VPFeature .icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
 }
 
 /* The buttons. 20px on a 34px-tall button is a pill, and a pill is a control
@@ -1090,10 +1116,15 @@
   }
 
   /* No width or height any more — the plate above is gone, so there is
-   * nothing to size; only the glyph and the gap under it. */
+   * nothing to size; only the mark and the gap under it. */
   .Layout .VPHome .VPFeature .icon {
     margin-bottom: 12px;
     font-size: 19px;
+  }
+
+  .Layout .VPHome .VPFeature .icon svg {
+    width: 21px;
+    height: 21px;
   }
 
   .Layout .VPHome .VPFeature .title {

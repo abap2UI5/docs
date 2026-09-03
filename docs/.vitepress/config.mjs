@@ -39,19 +39,24 @@ export default defineConfig({
       "link",
       { rel: "apple-touch-icon", sizes: "180x180", href: "/docs/favicon.ico" },
     ],
-    [
-      "link",
-      {
-        rel: "stylesheet",
-        href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css",
-      },
-    ],
-    // No webfonts. Montserrat and Fira Code were requested here and applied
-    // by nothing — no rule in theme/style.css, or anywhere else, ever named
-    // either one — so the site paid for two render-blocking stylesheets and
-    // four font files it never showed a glyph from. The type is now the
-    // system stack, set in theme/style.css. Font Awesome below STAYS: the
-    // three home-page feature icons are `fa-solid`/`fa-brands` classes.
+    // No third-party stylesheets at all, and none of them render-blocking.
+    // Montserrat and Fira Code were requested here and applied by nothing —
+    // no rule in theme/style.css, or anywhere else, ever named either one —
+    // so the site paid for two stylesheets and four font files it never
+    // showed a glyph from. The type is the system stack, set in
+    // theme/style.css.
+    //
+    // Font Awesome went the same way, one release later. It was loaded on
+    // EVERY page of the site — a render-blocking stylesheet plus the webfont
+    // behind whichever glyph was used — to draw four icons: the three on the
+    // home page's feature cards and one GitHub mark on configuration/
+    // launchpad. All four are inline SVG now, in the markdown that shows
+    // them, next to the marks in the home page's second row of cards that
+    // were already drawn that way. The argument is the one written over
+    // those: an icon that is an empty square until a stylesheet from a CDN
+    // arrives is worse than one that never needed it — and on a blocked or
+    // slow CDN the feature icons did not degrade to a square, they were
+    // simply not there. Adding an icon means adding an `<svg>`, not a class.
     // Link preview card — the per-page og:title, og:description and og:url are
     // added in transformPageData below.
     ["meta", { property: "og:type", content: "website" }],
