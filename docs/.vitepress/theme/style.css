@@ -64,6 +64,11 @@
    * gains on hover carries the hover state (see `.vp-doc a:hover`). */
   --a2ui5-c-link: var(--vp-c-brand-1);
   --a2ui5-c-link-hover: var(--a2ui5-c-link);
+  /* The fill of the home page's second row of cards: the brand, at a tint.
+   * Not the theme's `--vp-c-brand-soft`, which this site never redefined
+   * and which is still VitePress's own indigo - a lavender card on a red
+   * site. The dark value is the dark link colour below at a tint. */
+  --a2ui5-c-out-tint: rgb(208 60 74 / 0.07);
   /* The one-pixel edge on code blocks, tables and the Run bar. */
   --a2ui5-c-hairline: #d1d9e0;
 
@@ -95,6 +100,7 @@
    * fails AA. Same hue, lifted until it reads. */
   --a2ui5-c-link: #e8707c;
   --a2ui5-c-link-hover: var(--a2ui5-c-link);
+  --a2ui5-c-out-tint: rgb(232 112 124 / 0.12);
   --a2ui5-c-hairline: #3d444d;
   --a2ui5-c-surface: #161b22;
 }
@@ -817,69 +823,113 @@
 
 /* ------------------------------------ the home page, below the hero ---
  *
- * Three feature cards. VPFeatures picks its column count from the NUMBER of
- * cards, and three gives `grid-3` — three per row, which is the row this page
- * wants — so nothing has to be overridden here any more. Change the count in
- * docs/index.md and the row changes with it: five would give `grid-4` and a
- * lone fifth card under four, which is what the override that used to live
- * here existed to prevent.
+ * Two feature cards, and a second row of three below them that is this
+ * file's own. VPFeatures picks its column count from the NUMBER of cards,
+ * and two gives `grid-2` — two per row, the line break above the second row
+ * — so nothing has to be overridden here. Change the count in docs/index.md
+ * and the row changes with it: five would give `grid-4` and a lone fifth
+ * card under four, which is what the override that used to live here
+ * existed to prevent.
  */
 
-/* The playground, under the grid and deliberately not part of it: a place to
- * try the thing is a different kind of destination from the cards above, and
- * a fourth card would read as one of them. A rule, small type and a single
- * button — enough to read as "and, separately, over there" rather than as
- * another card. (The block class still says catalogues: it carried the
- * samples button before the playground took its place.)
+/* The second row of cards - the repository, LinkedIn, the playground - under
+ * the theme's two and on the same grid: the same 1152px, the same 16px
+ * gutters, the same padding, so the two rows read as one grid with a line
+ * break in it. What sets the row apart is the drawing: the cards above are
+ * outlined, these are filled with the brand's soft tint and carry the mark
+ * in the brand colour, with an arrow after the title that says "elsewhere"
+ * - and on hover the border turns brand, the card lifts a couple of pixels
+ * and the arrow moves. A card that leaves this site should look like one
+ * before it is clicked, and like something to click rather than to read.
  *
  * The selectors carry the block class twice because this sits inside
  * `.vp-doc` — VPHomeContent wraps the markdown that follows the frontmatter —
- * and `.vp-doc p` / `.vp-doc a` outrank a single class. */
-.a2ui5-catalogues {
-  margin: 40px auto 0;
+ * and `.vp-doc a` outranks a single class. */
+.a2ui5-out {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 16px auto 0;
   max-width: 1152px;
-  padding-top: 28px;
-  border-top: 1px solid var(--vp-c-divider);
-  text-align: center;
 }
 
-.a2ui5-catalogues .a2ui5-catalogues-lead {
-  margin: 0;
-  color: var(--vp-c-text-2);
-  font-size: 14px;
-  line-height: 22px;
+@media (min-width: 640px) {
+  .a2ui5-out {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.a2ui5-catalogues .a2ui5-catalogues-links {
+@media (min-width: 960px) {
+  .a2ui5-out {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.a2ui5-out .a2ui5-out-card {
   display: flex;
-  justify-content: center;
-  margin: 20px 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100%;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 24px;
+  background-color: var(--a2ui5-c-out-tint);
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
 }
 
-.a2ui5-catalogues .a2ui5-catalogues-links a {
-  display: inline-flex;
+/* `.vp-doc a:hover` above would turn the whole card red and underline it:
+ * the answer to "is this a link" is the card itself here, so the text stays
+ * as it is and the card moves instead. */
+.a2ui5-out .a2ui5-out-card:hover {
+  border-color: var(--a2ui5-c-link);
+  transform: translateY(-2px);
+  box-shadow: var(--vp-shadow-2);
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+
+.a2ui5-out .a2ui5-out-icon {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--a2ui5-c-link);
+}
+
+.a2ui5-out .a2ui5-out-icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
+}
+
+.a2ui5-out .a2ui5-out-title {
+  display: flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid var(--vp-c-brand-1);
-  border-radius: 6px;
-  padding: 7px 18px;
-  color: var(--vp-c-brand-1);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
-  text-decoration: none;
-  transition: border-color 0.25s, color 0.25s, background-color 0.25s;
+  line-height: 24px;
 }
 
-.a2ui5-catalogues .a2ui5-catalogues-links a::after {
-  content: "→";
-  font-size: 13px;
-  opacity: 0.7;
+.a2ui5-out .a2ui5-out-title::after {
+  content: "↗";
+  color: var(--a2ui5-c-link);
+  font-size: 14px;
+  font-weight: 400;
+  transition: transform 0.25s;
 }
 
-.a2ui5-catalogues .a2ui5-catalogues-links a:hover {
-  border-color: var(--vp-c-brand-2);
-  background-color: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-2);
+.a2ui5-out .a2ui5-out-card:hover .a2ui5-out-title::after {
+  transform: translate(2px, -2px);
+}
+
+.a2ui5-out .a2ui5-out-details {
+  display: block;
+  padding-top: 8px;
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 /* ==================================== the home page, in the same register ===
@@ -904,7 +954,7 @@
  * ancestors below are counted against the real compiled selectors —
  * `.VPButton.medium[data-v-x]` is three, so the button rules carry four. */
 
-/* The three feature cards. The theme draws them with `background-color` and
+/* The two feature cards. The theme draws them with `background-color` and
  * `border-color` both set to `--vp-c-bg-soft`: a filled tile whose border is
  * invisible because it is the same colour as its fill. Swapping the fill for
  * the divider colour turns the same element into an outlined card and costs
@@ -1057,25 +1107,30 @@
     line-height: 22px;
   }
 
-  /* The playground block is this file's own, further up — same treatment, so
-   * it shrinks with the grid it sits under instead of growing relative to it. */
-  .Layout .VPHome .a2ui5-catalogues {
-    margin-top: 36px;
-    padding-top: 25px;
+  /* The second row of cards is this file's own, further up — the same
+   * treatment as the theme's cards, so the two rows stay one grid. */
+  .Layout .VPHome .a2ui5-out .a2ui5-out-card {
+    padding: 22px;
   }
 
-  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-lead {
+  .Layout .VPHome .a2ui5-out .a2ui5-out-icon {
+    margin-bottom: 12px;
+  }
+
+  .Layout .VPHome .a2ui5-out .a2ui5-out-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .Layout .VPHome .a2ui5-out .a2ui5-out-title {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .Layout .VPHome .a2ui5-out .a2ui5-out-details {
+    padding-top: 7px;
     font-size: 13px;
-    line-height: 20px;
-  }
-
-  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-links {
-    margin-top: 18px;
-  }
-
-  .Layout .VPHome .a2ui5-catalogues .a2ui5-catalogues-links a {
-    padding: 7px 20px;
-    font-size: 13px;
+    line-height: 22px;
   }
 
   /* And the gap below all of it — the one number that is not nine tenths of
