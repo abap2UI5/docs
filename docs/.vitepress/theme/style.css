@@ -823,17 +823,18 @@
 
 /* ------------------------------------ the home page, below the hero ---
  *
- * Two feature cards, and a second row of three below them that is this
+ * Three feature cards, and a second row of three below them that is this
  * file's own. VPFeatures picks its column count from the NUMBER of cards,
- * and two gives `grid-2` — two per row, the line break above the second row
- * — so nothing has to be overridden here. Change the count in docs/index.md
- * and the row changes with it: five would give `grid-4` and a lone fifth
- * card under four, which is what the override that used to live here
- * existed to prevent.
+ * and three gives `grid-3` — full width below 768px, a third of the row
+ * above it — so nothing has to be overridden for the first row. Change the
+ * count in docs/index.md and that row changes with it: five would give
+ * `grid-4` and a lone fifth card under four, which is what the override that
+ * used to live here existed to prevent — and the second row below, whose
+ * breakpoint is written out by hand, would no longer line up with it.
  */
 
 /* The second row of cards - the repository, LinkedIn, the playground - under
- * the theme's two and on the same grid: the same 1152px, the same 16px
+ * the theme's three and on the same grid: the same 1152px, the same 16px
  * gutters, the same padding, so the two rows read as one grid with a line
  * break in it. What sets the row apart is the drawing: the cards above are
  * outlined, these are filled with the brand's soft tint and carry the mark
@@ -853,13 +854,12 @@
   max-width: 1152px;
 }
 
-@media (min-width: 640px) {
-  .a2ui5-out {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 960px) {
+/* One breakpoint, and it is `grid-3`'s: the row above goes from stacked to
+ * three-across at 768px, and a second row that broke to two columns at 640px
+ * and to three at 960px spent the two widths in between disagreeing with it
+ * — three cards over two, then two over three. Two rows of three, changing
+ * together, is the whole point of drawing them on one grid. */
+@media (min-width: 768px) {
   .a2ui5-out {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -954,7 +954,7 @@
  * ancestors below are counted against the real compiled selectors —
  * `.VPButton.medium[data-v-x]` is three, so the button rules carry four. */
 
-/* The two feature cards. The theme draws them with `background-color` and
+/* The three feature cards. The theme draws them with `background-color` and
  * `border-color` both set to `--vp-c-bg-soft`: a filled tile whose border is
  * invisible because it is the same colour as its fill. Swapping the fill for
  * the divider colour turns the same element into an outlined card and costs
