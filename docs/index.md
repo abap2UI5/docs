@@ -12,13 +12,22 @@ hero:
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
+  # Two buttons: install it, and understand what it is. The second one was
+  # "What's New?" on the changelog — a page for the reader who is already
+  # here every month, reached from the hero of the page written for the one
+  # who is not. It is not lost: the version number in the nav bar opens a
+  # menu whose first entry is Release Notes, which is where somebody looking
+  # for what changed goes anyway. "In a Nutshell" was the gap — the page
+  # that answers "what IS this" had no path from the home page at all, only
+  # the Guide dropdown. It carries the label the sidebar gives it, so a
+  # reader who clicks knows where they landed.
   actions:
     - theme: brand
       text: Quickstart
       link: /get_started/quickstart
     - theme: alt
-      text: What's New?
-      link: /resources/changelog
+      text: In a Nutshell
+      link: /get_started/about
 
 # Two rows of three. The first, the theme's own, is the three ways INTO the
 # documentation, in the order a reader meets them: learn it, look things up
