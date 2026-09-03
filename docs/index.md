@@ -44,15 +44,15 @@ hero:
 # the search box.
 features:
   - title: Tutorial
-    icon: <i class="fa-solid fa-graduation-cap"></i>
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 1.4 7.6 12 12.2l10.6-4.6z"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M5.6 10.3v4.8c0 1.8 2.9 3.2 6.4 3.2s6.4-1.4 6.4-3.2v-4.8"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M21.4 8.7v5.6"/></svg>
     details: Start here — one app you build step by step, from a first message box to a tested app running in production.
     link: /tutorials/walkthrough/
   - title: Cookbook
-    icon: <i class="fa-solid fa-book-open"></i>
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 6.9C10.4 5.5 8.2 4.8 5.4 4.8H2.4v12.6h3c2.8 0 5 .7 6.6 2.1 1.6-1.4 3.8-2.1 6.6-2.1h3V4.8h-3c-2.8 0-5 .7-6.6 2.1z"/><path fill="none" stroke="currentColor" stroke-width="1.7" d="M12 6.9v12.6"/></svg>
     details: Look it up — tables, popups, navigation, file upload and download. One page per problem, each with code to copy.
     link: /cookbook/view/definition
   - title: Configuration
-    icon: <i class="fa-solid fa-gear"></i>
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M9.89 4.65 10.11 1.82h3.78l.22 2.83 1.6.66 2.15-1.84 2.67 2.67-1.84 2.15.66 1.6 2.83.22v3.78l-2.83.22-.66 1.6 1.84 2.15-2.67 2.67-2.15-1.84-1.6.66-.22 2.83h-3.78l-.22-2.83-1.6-.66-2.15 1.84-2.67-2.67 1.84-2.15-.66-1.6-2.83-.22v-3.78l2.83-.22.66-1.6-1.84-2.15 2.67-2.67 2.15 1.84z"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
     details: Go live — setup, security, performance, transport and the launchpad. Everything between your first app and real users.
     link: /configuration/setup
 ---

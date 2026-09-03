@@ -665,6 +665,21 @@
   border-radius: 0;
 }
 
+/* ------------------------------------------- a mark inside a sentence ---
+ *
+ * One page puts an icon in front of a link (the GitHub mark before the
+ * Launchpad KPI repository on configuration/launchpad). It used to be a
+ * Font Awesome `<i>`; it is an inline `<svg>` now, like every other mark on
+ * the site, and this is the rule that makes an `<svg>` behave like the glyph
+ * it replaced: the size and colour of the text around it, on its baseline. */
+.vp-doc .a2ui5-mark {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  vertical-align: -0.16em;
+  color: var(--vp-c-text-1);
+}
+
 /* ------------------------------------------------ the Run button ---
  *
  * Under a fenced example the playground can start (docs/.vitepress/
@@ -968,11 +983,16 @@
 }
 
 /* The icon loses its 48px grey plate. The plate is a container drawn for a
- * glyph that does not need containing — three of them across the row read as
- * three empty squares before they read as an icon, which is exactly how they
- * render on any visit where the Font Awesome stylesheet is slow or blocked.
- * The glyph alone, at the size of a heading and in the muted text colour,
- * says the same thing and says nothing when it is missing. */
+ * mark that does not need containing — three of them across the row read as
+ * three empty squares before they read as an icon. The mark alone, at the
+ * size of a heading and in the muted text colour, says the same thing.
+ *
+ * The mark is an inline `<svg>` in the frontmatter, sized here rather than
+ * by `font-size`: these were Font Awesome classes until the stylesheet came
+ * off the site, and on a visit where that CDN was slow or blocked they did
+ * not degrade to the empty square above — there was nothing in the box at
+ * all. `font-size` stays for the same reason `.icon` still exists: VitePress
+ * accepts any HTML here, and a future icon that is text again inherits it. */
 .Layout .VPHome .VPFeature .icon {
   width: auto;
   height: auto;
@@ -982,6 +1002,12 @@
   color: var(--vp-c-text-2);
   font-size: 20px;
   justify-content: flex-start;
+}
+
+.Layout .VPHome .VPFeature .icon svg {
+  display: block;
+  width: 22px;
+  height: 22px;
 }
 
 /* The buttons. 20px on a 34px-tall button is a pill, and a pill is a control
@@ -1090,10 +1116,15 @@
   }
 
   /* No width or height any more — the plate above is gone, so there is
-   * nothing to size; only the glyph and the gap under it. */
+   * nothing to size; only the mark and the gap under it. */
   .Layout .VPHome .VPFeature .icon {
     margin-bottom: 12px;
     font-size: 19px;
+  }
+
+  .Layout .VPHome .VPFeature .icon svg {
+    width: 21px;
+    height: 21px;
   }
 
   .Layout .VPHome .VPFeature .title {
