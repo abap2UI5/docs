@@ -1,10 +1,12 @@
 # #2 abap2UI5 Is Not a Programming Model
 
-The useful question about a UI framework is not what it can do. It is what it
-wants from you: a structure to follow, a lifecycle to fit into, layers to fill
-in.
+When you pick up a framework for building screens, the first question is
+usually what it can do. The more useful one is what it expects from you: a
+structure to follow, a lifecycle to fit into, layers to fill in. Most
+frameworks have a good answer to that, and the answer is usually a few pages
+long.
 
-abap2UI5 fits its answer on a page, so here it is, complete:
+The one from abap2UI5 fits in a code block, so here it is in full:
 
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -18,15 +20,23 @@ ENDINTERFACE.
 ```
 
 One interface, one method. The framework calls `main( )` on every roundtrip,
-the application decides what to display and how to react, and it ends there.
+your class decides what to display and how to react, and that is the end of the
+contract.
 
-The more interesting half is what the contract does **not** contain. No data
+## What Is Not in It
+
+The more interesting half is what the interface does not ask for. No data
 model. No behavior definition. No service, no binding, no annotations. No BSP
-application per app, no frontend artefact to transport. Activating the class
-and calling the ICF endpoint is the deployment.
+application per app, no frontend artefact to transport. You activate the class,
+call the ICF endpoint, and the app is there.
 
-That is a statement about scope, not size — and it is why the data behind the
-screen can come from wherever it already lives:
+That is a statement about scope rather than about size, and it has one pleasant
+side effect: because abap2UI5 never asks where your data comes from, it can
+come from wherever it already lives.
+
+## The Same Class Around Three Different Backends
+
+Here is a small edit screen writing through a RAP business object:
 
 <!-- playground: no Run button — writes through a RAP business object, which only a system has -->
 ```abap
@@ -103,12 +113,13 @@ CLASS zcl_travel_edit IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Nothing in the handler is abap2UI5 except the toast. The business object is
-untouched — its validations, determinations, authorizations and draft handling
-all still run, because EML does not care who makes the call.
+Nothing in the save handler is abap2UI5 except the toast at the end. The
+business object does not notice anything unusual either — its validations,
+determinations, authorizations and draft handling all still run, because EML
+does not care who makes the call.
 
 The handler is also the only part of the class that knows what is behind the
-screen. Against a database table:
+screen. Writing straight to a database table, it looks like this:
 
 ```abap
   METHOD on_save.
@@ -126,8 +137,8 @@ screen. Against a database table:
   ENDMETHOD.
 ```
 
-And against a BAPI — a different object, a different decade, the same class
-around it:
+And against a BAPI you have had in the system for twenty years — a different
+object, a different decade, the same class around it:
 
 ```abap
   METHOD on_save.
@@ -155,16 +166,25 @@ around it:
   ENDMETHOD.
 ```
 
-All three are only examples, and none of them is the point. The framework sees
-the same thing every time: a method that ran and returned. It never looks
-inside. The same handler could call the EWM delivery classes, a proxy to another
-system, or whatever SAP releases next — none of it has to be taught to abap2UI5,
-because abap2UI5 never asks what is behind the screen.
+None of the three examples is the point in itself. The point is that abap2UI5
+sees the same thing in all of them: a method that ran and returned. It never
+looks inside. The same handler could call your EWM delivery classes, a proxy to
+another system, or whatever SAP releases next year — none of that has to be
+taught to abap2UI5, because abap2UI5 never asks what is behind the screen.
 
-**A framework that asks for one method cannot reorganise an architecture. It
-never learns enough about it to try.**
+That is the whole advantage here, and it is a modest one: a framework that only
+asks for one method cannot reorganise your architecture, simply because it
+never learns enough about it to try. What you have already built stays where it
+is and keeps its own rules.
 
-What it is not, plainly: no data model, no transactional buffer, no generated
-user interface. Applications needing those need something that provides them.
+## And What You Do Not Get
+
+The other side, just as plainly: no data model, no transactional buffer, no
+generated user interface. You write the view yourself. An application that
+needs those things is better served by a framework that provides them — RAP and
+Fiori Elements do exactly that, and they do it well.
+
+So abap2UI5 is not a replacement for anything. It is one more option next to
+what you already run, for the cases where one method really is all you need.
 
 Happy ABAPing! 🦖🦕🦣
