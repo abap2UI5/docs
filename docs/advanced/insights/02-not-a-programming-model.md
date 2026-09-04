@@ -171,18 +171,13 @@ What you have already built stays where it is and keeps its rules.
 
 ## And What You Do Not Get
 
-No data model, no transactional buffer, no generated user interface. You write
-the view yourself, and the behaviour with it: validations, authorizations,
-locking and drafts live in your app instead of on a business object every
-consumer shares.
-
-RAP gives you all of that. For an application with a straightforward use case,
-done the standard way, that is where you want to be.
+No data model, no transactional buffer, no generated user interface. RAP gives
+you all of that. For an application with a straightforward use case, done the
+standard way, that is where you want to be.
 
 So this is not an either-or. abap2UI5 runs in the same system, under the same
-authorizations, in the same launchpad, and it reaches your business objects
-through EML like any other consumer — the first example on this page does
-nothing else. It is one more option next to what you already run, for the screen
-that would otherwise not get built at all.
+authorizations, in the same launchpad, and it reaches your business logic
+however you like. It is one more option next to what you already run, for the
+screen that would otherwise not get built at all.
 
 Happy ABAPing! 🦖🦕🦣
