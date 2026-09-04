@@ -21,12 +21,13 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
 | `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
-| `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
-| `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the light/dark button. Rendered into `nav-bar-content-after` by `theme/index.js` |
-| `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `scripts/list-runnable.mjs` | The measurement's worklist: every fenced example that carries a Run button, out of the same `playground.mjs` that decides the button. `--json` adds each example's ABAP verbatim - what the button sends - so the measurement below can be driven rather than clicked |
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
 | `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
+| `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
+| `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the light/dark button. Rendered into `nav-bar-content-after` by `theme/index.js` |
+| `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
 
 ## Build & verify — run before every commit
 
@@ -282,15 +283,24 @@ says so, is whether a buttoned example actually starts; that stays a
 measurement.
 
 **To redo the measurement** — after adding examples, or after the playground
-changes — build the playground, serve it, and open each fenced example in an
-embedded one, checking that the status line reaches `running` and that the app
-frame contains something:
+changes — take the worklist from `npm run runnable`, build the playground,
+serve it, and open each example in it, checking that the status line reaches
+`running` and that the app frame contains something:
 
 ```sh
+npm run runnable -- --json > /tmp/runnable.json   # 63 examples, ABAP included
 git clone https://github.com/abap2UI5/playground && cd playground
 npm ci && npm run build && npm run serve      # the first build is a few minutes
-# then, for each example: /?embed=1&view=app#<the deflated fragment>
+# then, per example: put its ABAP in the editor and press Run - or open
+# /?embed=1&view=app#<the deflated fragment>. The playground's own Playwright
+# helpers (tests/helpers.mjs: open, setSource, run) drive that loop on one
+# page, which is the difference between an afternoon and twenty minutes.
 ```
+
+The class in the example has to match the file it goes into: the playground
+refuses the pair when they disagree, exactly as a system does. Renaming the
+class to the open file's is enough — nothing in these examples depends on
+its name.
 
 The last full measurement: **61 complete app classes, 39 with a button, all 39
 started and rendered.** The site has since grown, and the hand-kept copy of
