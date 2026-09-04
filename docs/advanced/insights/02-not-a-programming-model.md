@@ -172,10 +172,23 @@ What you have already built stays where it is and keeps its rules.
 ## And What You Do Not Get
 
 No data model, no transactional buffer, no generated user interface. You write
-the view yourself. An application that needs those is better off with a
-framework that provides them — RAP and Fiori Elements do, and they do it well.
+the view yourself.
 
-So abap2UI5 replaces nothing. It is one more option next to what you already
-run, for the cases where one method really is enough.
+Which is exactly what RAP and Fiori Elements do give you, and they give you a
+lot. The behaviour lives in the business object instead of in a screen, so
+validations, determinations, authorizations, locking and draft handling hold for
+every consumer — not only for the one user interface somebody happened to build.
+The annotations buy you a filter bar, variants, personalisation and export
+without writing a line of them, and the result looks like every other Fiori app
+your users already know. SAP maintains all of it, and it survives the next
+upgrade. For a transactional application with a real model behind it, several
+screens and more than one consumer, that is where you want to be, and abap2UI5
+has nothing to offer you there.
+
+So this is not an either-or. abap2UI5 runs in the same system, under the same
+authorizations, in the same launchpad, and it reaches your business objects
+through EML like any other consumer — the first example on this page does
+nothing else. It is one more option next to what you already run, for the screen
+that would otherwise not get built at all.
 
 Happy ABAPing! 🦖🦕🦣
