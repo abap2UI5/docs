@@ -112,7 +112,7 @@ CLASS z2ui5_cl_sample_device IMPLEMENTATION.
                           )->tag( `Label`
                               )->a( n = `text` v = `viewport`
                           )->tag( `Text`
-                              )->a( n = `text` v = client->_bind( mv_size ) ) ).
+                              )->a( n = `text` v = client->_bind( mv_size ) ).
 
       client->view_display( view->stringify( ) ).
 

@@ -91,7 +91,7 @@ CLASS z2ui5_cl_sample_url IMPLEMENTATION.
                                                t_arg = VALUE #( ( `https://www.abap2UI5.org` ) ) )
                   )->tag( `Button`
                       )->a( n = `text`  v = `push a history entry`
-                      )->a( n = `press` v = client->_event( `PUSH` ) ) ).
+                      )->a( n = `press` v = client->_event( `PUSH` ) ).
 
       client->view_display( view->stringify( ) ).
 

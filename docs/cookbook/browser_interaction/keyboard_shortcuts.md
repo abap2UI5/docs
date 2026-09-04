@@ -43,7 +43,7 @@ CLASS z2ui5_cl_sample_shortcut IMPLEMENTATION.
                   )->a( n = `title` v = `Keyboard Shortcuts`
 
                   )->tag( `Text`
-                      )->a( n = `text` v = `Press Ctrl+S or Ctrl+D` ) ).
+                      )->a( n = `text` v = `Press Ctrl+S or Ctrl+D` ).
 
       client->view_display( view->stringify( ) ).
 

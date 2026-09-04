@@ -117,7 +117,7 @@ CLASS z2ui5_cl_sample_message IMPLEMENTATION.
                       )->a( n = `press` v = client->_event( `BOX` )
                   )->tag( `Button`
                       )->a( n = `text`  v = `from an exception`
-                      )->a( n = `press` v = client->_event( `EXC` ) ) ).
+                      )->a( n = `press` v = client->_event( `EXC` ) ).
 
       client->view_display( view->stringify( ) ).
 

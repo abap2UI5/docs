@@ -163,7 +163,7 @@ CLASS z2ui5_cl_sample_templating IMPLEMENTATION.
                                       )->a( n = `var`  v = `L1`
 
                                       )->tag( `ObjectIdentifier`
-                                          )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ) ).
+                                          )->a( n = `text` v = `{= '{' + ${L1>FNAME} + '}' }` ).
 
       client->view_display( view->stringify( ) ).
 

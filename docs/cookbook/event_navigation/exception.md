@@ -87,7 +87,7 @@ CLASS z2ui5_cl_sample_exception IMPLEMENTATION.
 
                   )->tag( `Button`
                       )->a( n = `text`  v = `divide by zero`
-                      )->a( n = `press` v = client->_event( `DIVIDE` ) ) ).
+                      )->a( n = `press` v = client->_event( `DIVIDE` ) ).
 
       client->view_display( view->stringify( ) ).
 
