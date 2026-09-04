@@ -1297,21 +1297,45 @@
  * bar being shared with two other documents. `:not(.screen-open)` is not a
  * condition, it is a fourth unit of specificity — the theme's own rule for an
  * open mobile menu paints the same colour anyway. */
-.Layout .VPNav .VPNavBar:not(.screen-open),
-.Layout .VPNav .VPNavBar .title,
-.Layout .VPNav .VPNavBar .content-body {
+.Layout .VPNav .VPNavBar:not(.screen-open) {
   background-color: var(--bg-sunken);
 }
 
-/* One hairline under it, always — the theme draws it as a `.divider-line`
- * element that is only there on a page with a sidebar, so the home page had
- * none and the bar ran into the hero. */
+/* NOTHING INSIDE IT CARRIES A FILL. The theme draws this bar in pieces — a
+ * transparent bar with a painted brand and a painted content strip, so that
+ * the strip can fade in over the home page's hero — and both pieces are
+ * `var(--vp-nav-height)` tall, which is one pixel MORE than the bar's content
+ * box now that the bar carries the hairline as its own bottom border. Each of
+ * them therefore painted over that pixel: the fill under the brand hid the
+ * line beneath the mark, the fill under the content hid it from the search box
+ * rightwards, and what was left read as a rule with two gaps in it. With the
+ * whole bar painted above, neither fill has anything left to do. */
+.Layout .VPNav .VPNavBar .title,
+.Layout .VPNav .VPNavBar .content-body {
+  background-color: transparent;
+}
+
+/* And the content strip is held INSIDE the bar's content box, one pixel short
+ * of it, rather than only asked not to paint. The theme's own fill for that
+ * strip is `.VPNavBar:not(.home.top) .content-body` — five units against the
+ * four above it, so it wins the colour argument on a page that is not the home
+ * page at the top, and the hairline came back missing from the sidebar's edge
+ * rightwards. It cannot cover a row it does not reach; the height rule is two
+ * units in the theme, so this one wins it outright. */
+.Layout .VPNav .VPNavBar .content-body {
+  height: calc(var(--vp-nav-height) - 1px);
+}
+
+/* One hairline under the bar, and one only. The theme draws its own as a
+ * `.divider` element BELOW the 46px — so the bar came to 47px and the line was
+ * two pixels thick everywhere the brand did not cover it. The border is inside
+ * the 46, which is where the catalogue's is. */
 .Layout .VPNav .VPNavBar {
   border-bottom: 1px solid var(--line);
 }
 
-.Layout .VPNav .VPNavBar .divider-line {
-  background-color: transparent;
+.Layout .VPNav .VPNavBar .divider {
+  display: none;
 }
 
 /* The brand: the mark, then the site in the ordinary weight and the part of it
