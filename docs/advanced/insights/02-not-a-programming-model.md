@@ -178,8 +178,8 @@ RAP and Fiori Elements give you all of that. The behaviour sits on the business
 object instead of on a screen, so validations, authorizations, locking and
 drafts hold for every consumer, and the annotations turn into a filter bar,
 variants and export in the standard Fiori look, maintained by SAP. For a
-transactional application with several screens and more than one consumer, that
-is where you want to be.
+transactional application with a straightforward use case, done the standard
+way, that is where you want to be.
 
 So this is not an either-or. abap2UI5 runs in the same system, under the same
 authorizations, in the same launchpad, and it reaches your business objects
