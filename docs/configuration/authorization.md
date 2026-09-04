@@ -115,7 +115,7 @@ CLASS z2ui5_cl_app IMPLEMENTATION.
                   )->a( n = `title` v = `Authorization`
 
                   )->tag( `Text`
-                      )->a( n = `text` v = client->_bind( mv_status ) ) ).
+                      )->a( n = `text` v = client->_bind( mv_status ) ).
 
       client->view_display( view->stringify( ) ).
 

@@ -363,6 +363,35 @@ writeFileSync(join(dir, 'abaplint.json'), JSON.stringify({
     { url: 'https://github.com/abapedia/steampunk-2305-api', folder: '/deps', files: '/src/**/*.*' },
   ],
   syntax: { version: 'v750', errorNamespace: '^(Z|Y)' },
+  /* WITHOUT THIS BLOCK abaplint runs NO RULES.
+   *
+   * It still walks every file and still prints "0 issue(s) found, N file(s)
+   * analyzed", which reads exactly like a pass - and this gate believed it for
+   * as long as it has existed. Nine examples on nine pages carried an
+   * unbalanced parenthesis in their view chain, each one offered to the reader
+   * with a Run button, and the gate whose whole job is "does the class compile
+   * against the framework at all" said nothing about any of them.
+   *
+   * The three rules are the compile ones the sample repositories run (the
+   * shared app rule set in abap2UI5/abap2UI5 `.github/abaplint/app-rules.json`
+   * enables all three). Deliberately no style rules here: an example is
+   * written to be READ, and it is trimmed and indented for a page rather than
+   * for a package. What it must do is compile.
+   *
+   * That line was drawn with the whole 188-rule sample set run over these
+   * examples once, rather than by taste. Everything else it reports is either
+   * an artefact of this harness - `identical_descriptions` and `object_naming`
+   * both fire on the `zcl_docs_example_NN` rename above, 69 times - or a
+   * teaching choice: `commented_code` is how half these pages explain
+   * themselves, `check_subrc` would put four lines of error handling into a
+   * three-line SELECT example, `unused_variables` names the `DATA(lv_val) =
+   * 1 / 0.` whose whole purpose is to not be used, and `definitions_top`,
+   * `short_case` and `align_type_expressions` are about packages, not pages. */
+  rules: {
+    parser_error: true,
+    check_syntax: true,
+    unknown_types: true,
+  },
 }, null, 2));
 
 writeFileSync(join(dir, 'abap2ui5lint.jsonc'), JSON.stringify({

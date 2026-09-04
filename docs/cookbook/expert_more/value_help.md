@@ -82,8 +82,11 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
                 )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
                 )->ele( `Page`
+                    )->a( n = `title` v = `Value help`
+
                     )->tag( `Input`
                         )->a( n = `value`            v = client->_bind( mv_carrid )
+                        )->a( n = `placeholder`      v = `press the value-help icon`
                         )->a( n = `valueHelpRequest` v = client->_event( `F4` )
                         )->a( n = `showValueHelp`    b = abap_true ).
 
@@ -115,7 +118,7 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
                                 )->a( n = `type`        v = `Active`
                                 )->a( n = `press`       v = client->_event(
                                                                 val = `PICK`
-                                                                t_arg = VALUE #( ( `${CARRID}` ) ) ) ) ).
+                                                                t_arg = VALUE #( ( `${CARRID}` ) ) ) ).
 
         client->popup_display( popup->stringify( ) ).
 

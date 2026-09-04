@@ -119,12 +119,14 @@ CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
                   )->tag( `Button`
                       )->a( n = `text`    v = `leave, back to the caller`
                       )->a( n = `press`   v = client->_event( `UP` )
-                      )->a( n = `enabled` b = client->check_app_prev_stack( ) ) ).
+                      )->a( n = `enabled` b = client->check_app_prev_stack( ) ).
 
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `DOWN` ).
-      client->nav_app_call( NEW z2ui5_cl_sample_stack( mv_level = mv_level + 1 ) ).
+      DATA(lo_next) = NEW z2ui5_cl_sample_stack( ).
+      lo_next->mv_level = mv_level + 1.
+      client->nav_app_call( lo_next ).
 
     ELSEIF client->check_on_event( `UP` ).
       client->nav_app_leave( ).

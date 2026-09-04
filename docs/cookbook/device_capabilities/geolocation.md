@@ -37,6 +37,8 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
 
             )->ele( `Shell`
                 )->ele( `Page`
+                    )->a( n = `title` v = `Geolocation`
+
                     )->tag( n = `Geolocation` ns = `z2ui5`
                         )->a( n = `finished`         v = client->_event( `POST` )
                         )->a( n = `longitude`        v = client->_bind( longitude )
@@ -44,7 +46,25 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
                         )->a( n = `altitude`         v = client->_bind( altitude )
                         )->a( n = `altitudeAccuracy` v = client->_bind( altitudeaccuracy )
                         )->a( n = `accuracy`         v = client->_bind( accuracy )
-                        )->a( n = `speed`            v = client->_bind( speed ) ).
+                        )->a( n = `speed`            v = client->_bind( speed )
+
+                    " the control itself draws nothing - it reads the position
+                    " and writes it into the bound attributes. Show them.
+                    )->ele( `List`
+                        )->a( n = `headerText` v = `Device position`
+                        )->ele( `items`
+                            )->tag( `DisplayListItem`
+                                )->a( n = `label` v = `Latitude`
+                                )->a( n = `value` v = client->_bind( latitude )
+                            )->tag( `DisplayListItem`
+                                )->a( n = `label` v = `Longitude`
+                                )->a( n = `value` v = client->_bind( longitude )
+                            )->tag( `DisplayListItem`
+                                )->a( n = `label` v = `Altitude`
+                                )->a( n = `value` v = client->_bind( altitude )
+                            )->tag( `DisplayListItem`
+                                )->a( n = `label` v = `Accuracy`
+                                )->a( n = `value` v = client->_bind( accuracy ) ).
 
     client->view_display( view->stringify( ) ).
 

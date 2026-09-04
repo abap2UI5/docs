@@ -59,7 +59,7 @@ CLASS z2ui5_cl_sample_pdf IMPLEMENTATION.
                   )->tag( `PDFViewer`
                       )->a( n = `source` v = client->_bind( mv_pdf )
                       )->a( n = `title`  v = `Invoice 4711`
-                      )->a( n = `height` v = `600px` ) ).
+                      )->a( n = `height` v = `600px` ).
 
       client->view_display( view->stringify( ) ).
     ENDIF.
