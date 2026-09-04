@@ -247,30 +247,51 @@ serve it, and open each example in it, checking that the status line reaches
 ```sh
 npm run runnable -- --json > /tmp/runnable.json   # 63 examples, ABAP included
 git clone https://github.com/abap2UI5/playground && cd playground
-npm ci && npm run build && npm run serve      # the first build is a few minutes
-# then, per example: put its ABAP in the editor and press Run - or open
-# /?embed=1&view=app#<the deflated fragment>. The playground's own Playwright
-# helpers (tests/helpers.mjs: open, setSource, run) drive that loop on one
-# page, which is the difference between an afternoon and twenty minutes.
+npm ci && npm run build                       # the first build is a few minutes
+RUNNABLE_JSON=/tmp/runnable.json npm test -- docs-examples
 ```
+
+The driving half lives THERE, in `tests/docs-examples.spec.js`, because that is
+where the browser harness already is — a documentation site should not need
+Playwright to run something once a quarter. It is not part of that repository's
+`npm test`: with no worklist it contributes no tests. One example is one test,
+named for its page and its class, so a failure names the page to open.
 
 The class in the example has to match the file it goes into: the playground
 refuses the pair when they disagree, exactly as a system does. Renaming the
 class to the open file's is enough — nothing in these examples depends on
 its name.
 
-The last full measurement: **61 complete app classes, 39 with a button, all 39
-started and rendered.** The site has since grown, and the hand-kept copy of
-those figures here went stale without anyone noticing — which is what
-`check:playground` now exists to prevent. The bookkeeping today, printed by the
-gate on every run: **82 complete app classes, 63 with a button, 19 excluded on
-purpose**, every exclusion a marker on its page. The growth is examples whose
-shapes the measured rules already covered, plus one page completed so its
-example could run at all; a spot-check of six buttoned examples in a served
-playground build — the newly buttoned life-cycle class driven through its whole
-event roundtrip, the quickstart and About classes, tutorial Step 12, the
-tables page, and the `SELECT FROM t100` example — started and rendered, every
-one. The next full measurement opens all 63.
+The bookkeeping, printed by the gate on every run: **82 complete app classes,
+63 with a button, 19 excluded on purpose**, every exclusion a marker on its
+page.
+
+**The last full measurement — 2026-09-04, all 63 opened in a served playground
+build: 58 started and rendered.** The five that did not, and why, because that
+is the half worth keeping:
+
+| | |
+| --- | --- |
+| `expert_more/value_help.md` | started, and showed **nothing**: a `Page` with no title holding one `Input` with no label draws no text at all. Fixed here — the page has a title and the input a placeholder |
+| `device_capabilities/geolocation.md` | same shape, worse: the `z2ui5:Geolocation` control is invisible by design, so the whole demo was an empty frame. Fixed here — the example now lists the values it reads, which is what the page is about |
+| `browser_interaction/url_handling.md` | `client->hash_set( )` |
+| `navigation/app_state.md` (both examples) | `client->app_state_set_active( )`, `client->app_state_get_href( )` |
+
+Both fixes were re-measured the same way: `value_help` now puts "Value help" on
+screen, `geolocation` "Device position / Latitude / Longitude / Altitude /
+Accuracy" — so **60 of the 63 render**, and the three that do not are all one
+thing.
+
+The last three are **not** the documentation's: all three methods exist in
+`z2ui5_if_client` on abap2UI5 `main`, which is what `check:examples` compiles
+these pages against, and the playground pins an older framework commit
+(`tools/fetch-deps.mjs`). The playground is right to refuse them and the pin is
+what moves; the pages stay as they are.
+
+The measurement before this one read *61 complete app classes, 39 with a
+button, all 39 started* and had gone stale without anyone noticing — which is
+what `check:playground` now exists to prevent for the bookkeeping half, and
+what the dated table above is for on the half a gate cannot decide.
 
 **The published playground is what readers get**, not the checkout you tested
 against. A change to the rules here can ship on its own; a change that depends

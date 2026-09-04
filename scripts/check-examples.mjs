@@ -376,7 +376,17 @@ writeFileSync(join(dir, 'abaplint.json'), JSON.stringify({
    * shared app rule set in abap2UI5/abap2UI5 `.github/abaplint/app-rules.json`
    * enables all three). Deliberately no style rules here: an example is
    * written to be READ, and it is trimmed and indented for a page rather than
-   * for a package. What it must do is compile. */
+   * for a package. What it must do is compile.
+   *
+   * That line was drawn with the whole 188-rule sample set run over these
+   * examples once, rather than by taste. Everything else it reports is either
+   * an artefact of this harness - `identical_descriptions` and `object_naming`
+   * both fire on the `zcl_docs_example_NN` rename above, 69 times - or a
+   * teaching choice: `commented_code` is how half these pages explain
+   * themselves, `check_subrc` would put four lines of error handling into a
+   * three-line SELECT example, `unused_variables` names the `DATA(lv_val) =
+   * 1 / 0.` whose whole purpose is to not be used, and `definitions_top`,
+   * `short_case` and `align_type_expressions` are about packages, not pages. */
   rules: {
     parser_error: true,
     check_syntax: true,
