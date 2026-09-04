@@ -3,7 +3,7 @@
 A commercial low-code platform and abap2UI5 answer the same question: modern
 UIs for SAP systems without a full frontend stack per app. The models could
 hardly be further apart — a visual designer on a licensed platform, or plain
-ABAP in an open-source framework — so the choice is unusually clear once the
+ABAP in an open-source framework — so the choice is usually clear once the
 right question is asked.
 
 | | Low-code platform | abap2UI5 |
@@ -38,7 +38,7 @@ human in front of it. Code-first is what AI coding agents are actually good at
 — write the class, validate the view, run it, read the screenshot — and several
 hundred UI5 sample ports were produced that way and are guarded by CI.
 
-**Neither is a migration. abap2UI5 is adopted one app at a time, and the first
-one costs an abapGit pull and an afternoon.**
+Neither is a migration. abap2UI5 is adopted one app at a time, and the first
+one costs an abapGit pull and an afternoon.
 
 Happy ABAPing! 🦖🦕🦣

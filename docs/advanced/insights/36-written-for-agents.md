@@ -39,6 +39,6 @@ is a file somebody can read — and an agent is only the newest somebody.
 The setup, from *paste this* to an MCP server, is on
 [Developing with AI](/get_started/ai).
 
-**Code-first was the design. Agent-friendly was the consequence.**
+Code-first was the design. Agent-friendly was the consequence.
 
 Happy ABAPing! 🦖🦕🦣

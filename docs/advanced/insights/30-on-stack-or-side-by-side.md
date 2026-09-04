@@ -33,7 +33,7 @@ BTP side stays Level A:
 
 ![The apps on SAP BTP stay Level A and call a service on S/4HANA that wraps classic APIs in Standard ABAP](/advanced/use_cases/side_by_side_custom_service.svg){ width=90% }
 
-**Neither choice touches the app class. The same code renders in both places —
-only what it reads changes.**
+Neither choice touches the app class. The same code renders in both places —
+only what it reads changes.
 
 Happy ABAPing! 🦖🦕🦣

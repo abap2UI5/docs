@@ -56,6 +56,6 @@ served. Error details off in production, as [#20](/advanced/insights/20-message-
 described. And the business logic never leaves the server: the browser gets a
 view and the data bound to it, and nothing else.
 
-**One node, one class, one AUTHORITY-CHECK. The rest is PFCG.**
+One node, one class, one AUTHORITY-CHECK. The rest is PFCG.
 
 Happy ABAPing! 🦖🦕🦣

@@ -148,7 +148,7 @@ reconstructs the XML the chain builds and holds it against the UI5 metadata —
 unknown control, misspelled property, wrong type — without a system. Logic in
 ABAP Unit, view in the linter, and the roundtrip in a browser.
 
-**Keep the client out of the logic, and the logic is testable the way any
-ABAP class is.**
+Keep the client out of the logic, and the logic is testable the way any
+ABAP class is.
 
 Happy ABAPing! 🦖🦕🦣

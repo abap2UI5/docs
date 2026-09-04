@@ -43,7 +43,7 @@ level later means changing what it calls, not how it renders:
 
 ![Apps written in Standard ABAP call classic APIs or SAP-internal objects, while abap2UI5 itself stays Level A](/advanced/use_cases/on_stack_level_b.svg){ width=90% }
 
-**A wrapper does not make the dependency clean. It makes it findable.**
+A wrapper does not make the dependency clean. It makes it findable.
 
 Happy ABAPing! 🦖🦕🦣
 

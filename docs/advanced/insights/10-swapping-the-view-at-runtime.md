@@ -1,7 +1,7 @@
 # #10 Swapping the View at Runtime
 
 The view is a string the app produced for this request. Which raises an
-uncomfortable question: what stops the next request from producing a different
+obvious question: what stops the next request from producing a different
 one?
 
 Nothing does.
@@ -50,17 +50,17 @@ Same data, same class, same request handler. One click and the table is a list �
 not a table with its columns hidden, and not a second app behind a navigation
 step. A different control, chosen in ABAP, in an `IF`.
 
-This is ordinary in the way it is written and unusual in what it implies. A
-screen assembled at design time can vary only where somebody anticipated
+It is written like ordinary ABAP, and what it implies is the interesting part.
+A screen assembled at design time can vary only where somebody anticipated
 variation and left a switch. A screen assembled per request varies wherever the
 code branches, which is everywhere.
 
 It is the same freedom the first article in this series claimed for the model — a structure
 described at runtime rather than declared up front — arriving now on the view
-side. The two together are the whole argument: if both the shape of the data
+side. The two together are the point: if both the shape of the data
 and the shape of the screen are decided while the request is running, then the
 things a screen can adapt to are no longer fixed on the day it was designed.
 
-**A view that is built is a view that can be built differently.**
+A view that is built is a view that can be built differently.
 
 Happy ABAPing! 🦖🦕🦣

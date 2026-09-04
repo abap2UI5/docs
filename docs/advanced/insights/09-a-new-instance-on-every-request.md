@@ -45,12 +45,12 @@ section, and it makes every click slower for as long as the app runs. The fix
 is not a keyword. Anything large is re-read per request instead of carried, and
 the instance stays the size of what the screen needs.
 
-What is bought with that discipline is worth the rule. The app feels stateful —
+What that discipline buys is worth the rule. The app feels stateful —
 PBO, PAI, cancel, back — while every request is genuinely independent. Any
 server can answer any click. Nothing has to be sticky, drained before a restart,
 or replicated between nodes.
 
-**Stateful for the user, stateless for the system — and the price is keeping
-the instance small.**
+Stateful for the user, stateless for the system — and the price is keeping
+the instance small.
 
 Happy ABAPing! 🦖🦕🦣

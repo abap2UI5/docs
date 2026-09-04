@@ -4,7 +4,7 @@ A UI5 freestyle app is a single-page application. The view is deployed with the
 app in the frontend, the backend delivers data through OData, and the browser
 puts the two together and renders the HTML.
 
-One detail in that split is worth staring at. UI5 does not render from
+One detail in that split is worth a closer look. UI5 does not render from
 JavaScript objects assembled by hand — it renders from an **XML view**, bound to
 its data. The view is a document. Documents can travel.
 
@@ -49,7 +49,7 @@ fragments and leaves the page standing. UI5 cannot take HTML off the wire — it
 renders in the browser by design — so what travels is the layer directly above
 it. A view, not a page.
 
-**The frontend stopped being an application and became a renderer. Everything
-else in this series is a consequence of that one move.**
+The frontend stopped being an application and became a renderer, and most of
+what follows in this series comes out of that one move.
 
 Happy ABAPing! 🦖🦕🦣

@@ -50,6 +50,6 @@ Individually these are conveniences. Together they are the reason a screen gets
 tried at all: when an experiment costs a class and a refresh, the answer to
 "could we just show this on a screen?" stops being a project.
 
-**Iteration speed is not a nice-to-have. It decides which ideas get built.**
+Iteration speed is not a nice-to-have. It decides which ideas get built.
 
 Happy ABAPing! 🦖🦕🦣

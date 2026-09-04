@@ -1,7 +1,6 @@
 # #32 From ITS to abap2UI5
 
-Worth laying out end to end, because the shape of it is not what most people
-remember.
+Worth laying out end to end, because the shape of it is easy to misremember.
 
 **ITS, 1996.** Dynpro screens rendered as HTML by the server. Every interaction
 a full page from the server. Still in warehouses today, on scanners.

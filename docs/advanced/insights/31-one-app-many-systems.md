@@ -1,8 +1,7 @@
 # #31 One App, Many Systems
 
 A side-by-side app already runs outside the system it serves. Which raises a
-question with a more interesting answer than it looks: how many systems can it
-serve?
+question worth asking: how many systems can it serve?
 
 More than one. The app lives on the SAP BTP ABAP Environment and reaches each
 S/4 system through its released APIs, so the connection is configuration rather
@@ -28,7 +27,7 @@ reachable, latency is now on the wire, and the tenant's data boundary is
 something the app has to enforce rather than something the system enforces for
 it — one app now sees several customers.
 
-**A framework with nothing to install per system is a framework that can serve
-systems it was never installed on.**
+A framework with nothing to install per system is a framework that can serve
+systems it was never installed on.
 
 Happy ABAPing! 🦖🦕🦣

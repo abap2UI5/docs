@@ -52,7 +52,7 @@ That is the whole API surface an app ever touches. The full list with every
 parameter is on the [Client API](/resources/api) page, generated from the
 interface itself.
 
-**One method in, one interface out. Everything an app can do is a method on
-`client`.**
+One method in, one interface out. Everything an app can do is a method on
+`client`.
 
 Happy ABAPing! 🦖🦕🦣

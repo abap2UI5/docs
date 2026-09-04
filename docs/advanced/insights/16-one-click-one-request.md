@@ -35,7 +35,7 @@ can answer:
 
 *Three questions, in this order, and what each branch owes the browser.*
 
-Three things about that shape are not taste.
+Three things about that shape are worth knowing.
 
 **Init before navigated.** `check_on_init( )` is true exactly once, on the very
 first call. Every path to a first call raises `check_on_navigated( )` as well,
@@ -57,6 +57,6 @@ The variable that survives between the three is the instance itself,
 serialized after every request — [#9](/advanced/insights/09-a-new-instance-on-every-request).
 Local variables, an open cursor, a lock: gone with the work process, every time.
 
-**PBO builds, PAI decides, and the dialog step is a POST.**
+PBO builds, PAI decides, and the dialog step is a POST.
 
 Happy ABAPing! 🦖🦕🦣

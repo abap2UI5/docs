@@ -47,7 +47,7 @@ a guarantee. Clean core is not a property a dependency grants an application. It
 is a property of what the application reads and writes, and it is decided in the
 `SELECT`.
 
-**A cloud-ready framework does not make a cloud-ready app. It just stops being
-the reason one is not.**
+A cloud-ready framework does not make a cloud-ready app. It just stops being
+the reason one is not.
 
 Happy ABAPing! 🦖🦕🦣
