@@ -74,6 +74,32 @@ export default defineConfig({
     ],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
     ["meta", { name: "twitter:image", content: OG_IMAGE }],
+    // One theme across the three deployments on this origin - this site, the
+    // playground and the sample catalogue (abap2ui5.github.io/docs and
+    // /playground). They share a localStorage, and now that all three wear
+    // the same bar, a switch that only turned half of them dark would read as
+    // a broken switch rather than as three sites.
+    //
+    // The playground's key is the one that carries it; VitePress's own is
+    // written from it here so that everything downstream - its runtime, its
+    // `appearance` handling, the `.dark` class - goes on believing it is in
+    // charge. In the head and synchronous, after VitePress's own appearance
+    // script and still before the first paint, so a reader arriving from a
+    // dark playground gets a dark page rather than a white flash.
+    //
+    // theme/SiteBar.vue writes the playground key back when the button here
+    // is pressed. Its two lines and these are one mechanism.
+    [
+      "script",
+      {},
+      `try {
+  var t = localStorage.getItem("abap2ui5-playground:theme");
+  if (t === "dark" || t === "light") {
+    localStorage.setItem("vitepress-theme-appearance", t);
+    document.documentElement.classList.toggle("dark", t === "dark");
+  }
+} catch (e) { /* a browser that refuses storage keeps this site's own theme */ }`,
+    ],
   ],
   title: "abap2UI5",
   description: "Build UI5 Apps Purely in ABAP",
@@ -108,6 +134,13 @@ export default defineConfig({
   },
   themeConfig: {
     logo: "/logo.png",
+    // The mark, then the site in the ordinary weight and the part of it you
+    // are in in the heavy one - the brand the playground and the sample
+    // catalogue wear (src/shell/index.html, src/catalogue/index.html over
+    // there), so somebody moving between the three reads one bar rather than
+    // three. `siteTitle` is rendered with v-html, which is what lets the
+    // second word carry the weight.
+    siteTitle: "abap2UI5 <b>docs</b>",
     footer: {
       message: `
       <a href="/docs/resources/license">License</a> |
@@ -693,28 +726,37 @@ export default defineConfig({
       },
     ],
     outline: [2, 6],
+    // The two marks, as inline SVG rather than by name. VitePress draws a
+    // named icon from a CSS mask and, if that mask has not been generated,
+    // falls back to fetching the glyph from api.iconify.design - a CDN, which
+    // is the one thing every other mark on this site was taken off. These are
+    // the exact paths the playground's bar and the catalogue's carry
+    // (src/shell/index.html, src/catalogue/index.html), so the end of the bar
+    // is the same two shapes on all four documents rather than two drawings of
+    // the same two brands.
     socialLinks: [
-      { icon: "linkedin", link: "https://www.linkedin.com/company/abap2ui5/" },
-      { icon: "github", link: "https://github.com/abap2UI5/abap2UI5" },
-      // The playground, at the right-hand end of the bar: try the thing from
-      // any page, not only from the home page button. It belongs in this row
-      // because VPSocialLink opens in a new tab and passes the link through
-      // verbatim - right for a site of its own, which is exactly why the
-      // Support page could NOT sit here (it lived in a custom component in
-      // the `nav-bar-content-after` slot until this icon took its place;
-      // Support stays under the version menu and in the sidebar). The glyph
-      // is inline rather than one of Font Awesome's: that stylesheet comes
-      // from a CDN, and an icon that is an empty square until it arrives is
-      // worse than one that never needed it. A play triangle in a ring, at
-      // the 20px the row gives it; the ring is a stroke so it reads as one
-      // shape next to the two solid marks and not as a third blob.
       {
         icon: {
-          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 7.9v8.2a.5.5 0 0 0 .76.43l6.6-4.1a.5.5 0 0 0 0-.86l-6.6-4.1a.5.5 0 0 0-.76.43z" fill="currentColor"/></svg>',
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>',
         },
-        link: "https://abap2ui5.github.io/playground/",
-        ariaLabel: "Playground",
+        link: "https://www.linkedin.com/company/abap2ui5/",
+        ariaLabel: "abap2UI5 on LinkedIn",
       },
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
+        },
+        link: "https://github.com/abap2UI5/abap2UI5",
+        ariaLabel: "abap2UI5 on GitHub",
+      },
+      // Two marks and no more, which is what the playground's bar and the
+      // catalogue's each carry. The playground used to be a third one here -
+      // a play triangle in a ring - and it is a NAV ITEM now
+      // (theme/SiteBar.vue), beside Samples and Docs: it is one of the three
+      // places this project lives, and naming it beats a glyph somebody has
+      // to hover. The Support page could never sit in this row for the
+      // opposite reason and still cannot; it stays under the version menu and
+      // in the sidebar.
     ],
   },
 });

@@ -25,6 +25,9 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
 | `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
+| `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
+| `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the light/dark button. Rendered into `nav-bar-content-after` by `theme/index.js` |
+| `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
 
 ## Build & verify — run before every commit
 
@@ -37,7 +40,7 @@ it are decidable, and all nine are decided before a merge:
 
 | | |
 |---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate |
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate — and the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow |
 | `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets |
@@ -112,6 +115,46 @@ maintained by hand because it names URLs and nothing else. Do not "fix" it by
 committing the generated files instead: they would be stale on every commit
 that touches a page, and a wrong committed copy outranks a right generated one
 in every tool that reads the tree.
+
+## One site in three places
+
+This documentation, the [playground](https://abap2ui5.github.io/playground/)
+and the [sample catalogue](https://abap2ui5.github.io/playground/samples/) are
+three deployments on **one origin**, and from 2026-09-04 they are meant to be
+read as one site: the same bar, the same palette, the same measure. The other
+two live in [abap2UI5/playground](https://github.com/abap2UI5/playground)
+(`src/shell/`, `src/catalogue/` and the per-sample pages
+`tools/sample-pages.mjs` writes).
+
+**The palette is copied, not imported.** The seven values at the top of
+`theme/style.css` are `src/catalogue/catalogue.css`'s, written out. Three
+repositories deploy separately, and a stylesheet fetched across them would be a
+request in front of the first paint. Change them together — the same applies to
+the bar's markup, which exists four times by hand for the same reason.
+
+**The accent is SAP blue, and the mark is still red.** `#0a6ed1` / `#4aa3ff` is
+what a link, a button and the hero name are set in; `#d03c4a` is the circle in
+the wordmark and belongs to the mark alone. `resources/logo.md` is the page
+that says so and the one place either value is quoted to a reader — if you move
+an accent, move that table with it.
+
+**One origin means one localStorage**, which is what two things here rely on:
+
+| | |
+|---|---|
+| the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteBar.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
+| where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the href the markup carries, which is what makes a poisoned or stale key cost a restored position and nothing else. The eleven cases are `test/site-memory.test.mjs` |
+
+The playground is consulted by both and remembered by neither: its URL carries
+the code in the editor, so an item that reopened yesterday's sample would be a
+different promise from the one the word makes.
+
+**What a browser test in this repository cannot reach.** `vitepress preview`
+serves this site on localhost while the catalogue link points at
+abap2ui5.github.io, so every path through `lastVisited( )` takes the
+different-origin branch and falls back. That is why the same-origin cases are a
+unit test with a stubbed `location` rather than an end-to-end one. The round
+trip itself is held over there, in `tests/site-memory.spec.js`.
 
 ## Things that will trip you up
 
