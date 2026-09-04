@@ -19,6 +19,7 @@
     "check:conventions": "node scripts/check-conventions.mjs",
     "fmt:chains": "node scripts/check-conventions.mjs --fix",
     "check:playground": "node scripts/check-playground.mjs",
+    "runnable": "node scripts/list-runnable.mjs",
     "check:api-names": "node scripts/check-api-names.mjs",
     "generate:api": "node scripts/generate-api-reference.mjs",
     "check:api-reference": "node scripts/generate-api-reference.mjs --check",
