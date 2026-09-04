@@ -60,6 +60,18 @@ for (const file of walk(DOCS).filter((f) => f.endsWith('.md')).sort()) {
   for (const one of result.excluded) excluded.push({ page, ...one });
 }
 
+/* A gate that checked nothing reports the same shape as a gate that found
+ * nothing wrong. `check:examples` spent its whole life doing exactly that -
+ * an abaplint config with no rules block, "0 issue(s) found, 139 file(s)
+ * analyzed", green - so the floor is written down here too: this walk finds
+ * app classes on this site, and zero of them means the walk broke, not that
+ * the site is clean. */
+if (total.apps === 0) {
+  console.error('check-playground: no complete app class found on the site — has the fence');
+  console.error('language, the page layout or z2ui5_if_app\'s name changed?');
+  process.exit(1);
+}
+
 console.log(
   `check-playground: ${total.apps} complete app class(es) on the site — `
   + `${total.buttons} with a Run button, ${total.excluded} excluded on purpose`

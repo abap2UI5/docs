@@ -162,6 +162,14 @@ for (const file of pages) {
 
 /* ----------------------------------------------------------------- verdict */
 
+/* The same floor check-playground and check-examples carry: a walk that found
+ * nothing reports exactly like a site with nothing wrong in it. */
+if (chainsJudged === 0 && classesJudged === 0) {
+  console.error('check-conventions: no view chain and no app class found in any fence —');
+  console.error('has the fence language or the builder name changed?');
+  process.exit(1);
+}
+
 console.log(`check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) in fenced examples`);
 
 if (chainFindings.length) {
