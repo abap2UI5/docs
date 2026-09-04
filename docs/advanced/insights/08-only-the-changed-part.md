@@ -47,6 +47,6 @@ and UI5 gives it for free through a mechanism that was in the framework long
 before this one existed. No diffing algorithm, no virtual DOM, no reconciler —
 just a model that changed and a binding that noticed.
 
-**Sending the whole view is the exception, not the rhythm.**
+Sending the whole view is the exception, not the rhythm.
 
 Happy ABAPing! 🦖🦕🦣

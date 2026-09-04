@@ -32,7 +32,7 @@ What that buys is portability in both directions. An app written on ABAP Cloud
 runs on the older system. An app written on 7.02 runs on BTP ABAP Environment.
 The screen built for the system being replaced is not thrown away with it.
 
-**A framework that needs nothing from the release does not have to be ported
-when the release changes.**
+A framework that needs nothing from the release does not have to be ported
+when the release changes.
 
 Happy ABAPing! 🦖🦕🦣

@@ -67,7 +67,7 @@ of a dialog flow and for a resource that is expensive to rebuild per request.
 It is also one pinned work process per active user, has to be released on
 every exit path, and is not available on public cloud. Use it knowingly.
 
-**A lock is a promise about a session. Where the session is one request long,
-the promise has to be, too.**
+A lock is a promise about a session. Where the session is one request long,
+the promise has to be, too.
 
 Happy ABAPing! 🦖🦕🦣

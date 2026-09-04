@@ -53,6 +53,6 @@ goes through the launchpad's cross-app navigation, so that the shell's history
 and back button keep working — that is a `cs_event` constant rather than a
 `nav_app_call( )`, and [its own page](/cookbook/event_navigation/navigation/cross_app).
 
-**The stack came along. Its elements are instances now, not screen numbers.**
+The stack came along. Its elements are instances now, not screen numbers.
 
 Happy ABAPing! 🦖🦕🦣

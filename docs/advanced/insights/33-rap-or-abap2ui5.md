@@ -37,7 +37,7 @@ apply. So a screen that RAP cannot shape the way it needs to be shaped is not a
 reason to abandon the business object — only a reason to put a different UI in
 front of it.
 
-**Rule of thumb: model the behaviour once, in RAP, if more than one thing will
-use it. Build the screen wherever it is cheapest.**
+Rule of thumb: model the behaviour once, in RAP, if more than one thing will
+use it. Build the screen wherever it is cheapest.
 
 Happy ABAPing! 🦖🦕🦣

@@ -47,7 +47,7 @@ What that removes is not effort — the app still decides everything — but
 artefacts. A screen stops being a set of objects to create, name, transport and
 govern, and becomes a class.
 
-**A handler that knows nothing about the application never has to be written
-again for the next one.**
+A handler that knows nothing about the application never has to be written
+again for the next one.
 
 Happy ABAPing! 🦖🦕🦣

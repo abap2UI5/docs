@@ -95,7 +95,7 @@ not one is translated on the way. The chain builds XML, the browser gets that
 XML, and the reference for the view is the UI5 SDK. There is no second place to
 look and no mapping to learn.
 
-Two things follow, and the second is worth more than the first.
+Two things follow from that.
 
 Anything the SDK documents is reachable the day the frontend serves it. A
 control added in a newer UI5 release needs no framework release behind it,
@@ -109,7 +109,7 @@ The price is on the same page. Nothing writes the layout: a list report a few
 annotations would have described is here a table built control by control.
 Reaching every control is not the same as being handed one.
 
-**A vocabulary is a promise about what will be needed. An API makes no such
-promise, and takes nothing off the table either.**
+A vocabulary is a promise about what will be needed. An API makes no such
+promise, and takes nothing off the table either.
 
 Happy ABAPing! 🦖🦕🦣

@@ -41,7 +41,7 @@ destination: it runs in a browser instead of the console, follows the Fiori
 design guidelines, and can be sent to a colleague as a URL rather than as an
 instruction to open ADT and press F9.
 
-There is a property here that is easy to underrate. A small application is one
+There is a property here worth mentioning. A small application is one
 class, and a class is one thing to read: state, screen and logic in the same
 place, top to bottom. A reviewer, a colleague inheriting it, a search across the
 system, an agent asked to change something — each can hold the whole thing.

@@ -48,7 +48,7 @@ What is left after the edges is still most business software: forms, tables,
 dashboards, approvals, admin tools, the small screens nobody funds a project
 for.
 
-**Nothing about picking one rules out the other later. The view is a string
-either way, and the controls are the same controls.**
+Nothing about picking one rules out the other later. The view is a string
+either way, and the controls are the same controls.
 
 Happy ABAPing! 🦖🦕🦣

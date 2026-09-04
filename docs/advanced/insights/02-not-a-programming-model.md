@@ -180,4 +180,6 @@ authorizations, in the same launchpad, and it reaches your business logic
 however you like. It is one more option next to what you already run, for the
 screen that would otherwise not get built at all.
 
+One interface, one method, and no opinion about what is behind the screen.
+
 Happy ABAPing! 🦖🦕🦣

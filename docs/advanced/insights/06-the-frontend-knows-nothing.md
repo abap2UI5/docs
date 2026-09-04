@@ -30,13 +30,13 @@ conversation did not change — which is why the flow reads as familiar to
 anyone who has written a module pool, and as strange to anyone who has only
 written SPAs.
 
-The consequence is the part worth keeping. There is **one** shell, and every
+The consequence is what matters here. There is **one** shell, and every
 app in the system shares it. Not one deployed frontend per app, drifting to a
 different UI5 version, a different bootstrap, a different set of libraries,
 each pinned to whenever someone last had time to touch it. One artefact to
 keep current, and every app is current with it.
 
-**A frontend that knows nothing about the app is a frontend that never needs
-to be redeployed when the app changes.**
+A frontend that knows nothing about the app is a frontend that never needs
+to be redeployed when the app changes.
 
 Happy ABAPing! 🦖🦕🦣

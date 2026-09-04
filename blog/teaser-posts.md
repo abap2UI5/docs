@@ -43,9 +43,9 @@ Plain text — LinkedIn renders no markdown.
 > be the EWM classes, or whatever SAP releases next.
 >
 > And what it does not give you: no data model, no transactional buffer, no
-> generated UI. That is what RAP and Fiori Elements are for, and they are good
-> at it. abap2UI5 sits next to them, for the screen that would otherwise not get
-> built at all.
+> generated UI. That is what RAP is for, and for a straightforward use case done
+> the standard way that is where you want to be. abap2UI5 sits next to it, for
+> the screen that would otherwise not get built at all.
 >
 > New article 🎉
 >

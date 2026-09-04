@@ -45,7 +45,7 @@ app but the UI5 app index after an abapGit import: run
 Public Cloud is a different door: there the launchpad is Build Work Zone, and
 the [ABAP Cloud pages](/configuration/btp) describe the setup.
 
-**One shell in the UI5 repository, one parameter per tile. No user can tell
-the difference.**
+One shell in the UI5 repository, one parameter per tile. No user can tell
+the difference.
 
 Happy ABAPing! 🦖🦕🦣

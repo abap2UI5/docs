@@ -48,7 +48,7 @@ None of them lets an app change the framework, and none requires the framework
 to change for an app. No plugin registry to learn, and no pull request to wait
 for either.
 
-**Extensibility is not the absence of a boundary. It is knowing exactly where
-the boundary is.**
+Extensibility is not the absence of a boundary. It is knowing exactly where
+the boundary is.
 
 Happy ABAPing! 🦖🦕🦣

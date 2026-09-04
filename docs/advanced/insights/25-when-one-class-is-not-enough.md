@@ -39,6 +39,6 @@ manifest, no router, no controller hierarchy — the seams are classes, method
 calls and one stack, which is exactly what a larger ABAP program has been made
 of for thirty years.
 
-**A larger app is more classes. The unit stayed the same size.**
+A larger app is more classes. The unit stayed the same size.
 
 Happy ABAPing! 🦖🦕🦣

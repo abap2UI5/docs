@@ -43,7 +43,7 @@ The rule that follows is the same as in a dynpro program with global variables:
 keep in the instance what the screen shows, and nothing that can be read
 again.
 
-**Small instance, bounded model, one request per click. Everything else the
-system already does well.**
+Small instance, bounded model, one request per click. Everything else the
+system already does well.
 
 Happy ABAPing! 🦖🦕🦣

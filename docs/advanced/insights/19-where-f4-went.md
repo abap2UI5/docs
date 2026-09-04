@@ -50,7 +50,7 @@ candidates. What came back is that the candidates can be anything an ABAP
 `SELECT` can produce — including a table that did not exist a millisecond
 ago, which is where [#1](/advanced/insights/01-somewhere-on-the-way-to-ui5) started.
 
-**F4 is three lines and a SELECT now. It is no longer free, and it is no
-longer limited to the DDIC either.**
+F4 is three lines and a SELECT now. It is no longer free, and it is no
+longer limited to the DDIC either.
 
 Happy ABAPing! 🦖🦕🦣

@@ -54,7 +54,7 @@ more than a browser should get. `check_hide_error_details` in the
 [user exit](/advanced/extensibility/user_exits) turns the body into a bare
 *Internal Server Error* and leaves everything else as it is.
 
-**The message classes, the texts and the translation stay. Only the dump
-looks different.**
+The message classes, the texts and the translation stay. Only the dump
+looks different.
 
 Happy ABAPing! 🦖🦕🦣
