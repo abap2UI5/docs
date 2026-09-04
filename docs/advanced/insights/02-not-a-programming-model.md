@@ -26,8 +26,8 @@ No BSP application per app, no frontend artefact to transport. You activate the
 class, call the ICF endpoint, and the app is there.
 
 That is about scope, not about size — and it has a pleasant side effect. Since
-abap2UI5 never asks where your data comes from, it can come from wherever it
-already lives.
+abap2UI5 just serves a UI5 screen and never asks where your data comes from, it
+can come from wherever it already lives.
 
 ## The Same Class Around Three Backends
 
