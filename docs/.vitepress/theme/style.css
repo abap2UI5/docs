@@ -1,22 +1,88 @@
-/* One red. The brand has a single red — the circle in the mark, #d03c4a —
- * and every brand token below is that one value, the hover tokens included.
- * There used to be a second, darker red (#a83232) for the hover state of
- * links and buttons; next to the mark it read as a second brand colour, and
- * the page that documents the palette (resources/logo.md) had to list two
- * reds to stay honest. A link already answers "is this one a link" with the
- * underline it gains on hover (see `.vp-doc a:hover` below), so the shade
- * bought nothing the underline does not. */
+/* ========================================================== the palette ===
+ *
+ * ONE PALETTE ACROSS THREE SITES. These seven values are the playground's and
+ * the sample catalogue's, copied out of src/shell/shell.css and
+ * src/catalogue/catalogue.css in abap2UI5/playground rather than approximated:
+ * the three deployments sit on one origin, wear one bar, and are read as one
+ * site by anybody moving between them. A reader who crosses from the catalogue
+ * to a page here should not be able to tell that they changed sites - which
+ * they could, when this file's greys were half a step bluer and its accent was
+ * a different colour entirely.
+ *
+ * They are written out rather than imported. Three repositories deploy
+ * separately and a stylesheet fetched across them would be a request in front
+ * of the first paint; the copies are kept in step by hand, as the bar's own
+ * markup is. Change them together.
+ *
+ * THE ACCENT IS SAP BLUE, not the brand red this site used to set every link
+ * and button in. That red is the circle in the mark and it stays the mark's -
+ * see the note under the logo rules on the home page, and resources/logo.md,
+ * which documents the press kit and is the one page that still names it. What
+ * changed is what a LINK is coloured with, and it is now the same blue the
+ * playground fills its Run button with and the catalogue marks a matching card
+ * with. The measurements: #0a6ed1 on white is 5.04:1 and #4aa3ff on #16171a is
+ * 6.81:1, so both clear AA for body text - the red cleared it on white at
+ * 4.74:1 and FAILED in dark at 3.62:1, which is why it needed a second, lifted
+ * value there. One value per theme now does the whole job. */
 :root {
-    --vp-home-hero-name-color: #d03c4a;
-    --vp-c-brand-1: #d03c4a;
-    --vp-c-brand-2: #d03c4a;
-    --vp-c-brand-3: #d03c4a;
-    --vp-button-brand-bg: #d03c4a;
-    --vp-button-brand-border: #d03c4a;
-    --vp-button-brand-text: #ffffff;
-    --vp-button-brand-bg-hover: #d03c4a;
-    --vp-button-brand-border-hover: #d03c4a;
+  --bg: #ffffff;
+  --bg-sunken: #f4f5f7;
+  --fg: #1c1d21;
+  --fg-dim: #6a6d76;
+  --line: #d9dbe0;
+  --accent: #0a6ed1;
+  --accent-fg: #ffffff;
+  color-scheme: light;
 }
+
+/* VitePress keys everything off `.dark` on the root element, so there is no
+ * media query here and no `[data-theme]`: its own appearance script decides,
+ * and the head script in config.mjs hands it the choice the other two sites
+ * were left on. */
+.dark {
+  --bg: #16171a;
+  --bg-sunken: #1e2024;
+  --fg: #e6e7ea;
+  --fg-dim: #9a9da6;
+  --line: #303338;
+  --accent: #4aa3ff;
+  --accent-fg: #0b1620;
+  color-scheme: dark;
+}
+
+/* …and the theme's own tokens, pointed at them. Everything below this line in
+ * this file, and everything in VitePress's default theme, goes on reading the
+ * `--vp-*` names; this is the one place the two vocabularies meet. */
+:root,
+.dark {
+  --vp-c-bg: var(--bg);
+  --vp-c-bg-alt: var(--bg-sunken);
+  --vp-c-bg-soft: var(--bg-sunken);
+  --vp-c-bg-elv: var(--bg);
+  --vp-c-divider: var(--line);
+  --vp-c-border: var(--line);
+  --vp-c-gutter: var(--line);
+  --vp-c-text-1: var(--fg);
+  --vp-c-text-2: var(--fg-dim);
+
+  --vp-home-hero-name-color: var(--accent);
+  --vp-c-brand-1: var(--accent);
+  --vp-c-brand-2: var(--accent);
+  --vp-c-brand-3: var(--accent);
+  --vp-button-brand-bg: var(--accent);
+  --vp-button-brand-border: var(--accent);
+  --vp-button-brand-text: var(--accent-fg);
+  --vp-button-brand-bg-hover: var(--accent);
+  --vp-button-brand-border-hover: var(--accent);
+}
+
+/* The third text colour is the one the catalogue does not have: it carries two
+ * greys and this site needs a fainter one still, for a placeholder and for the
+ * rule down the side of a remark. So the two themes lend each other theirs -
+ * light takes the dark theme's dim grey, dark takes the light theme's - which
+ * keeps even the faintest step inside the same seven values. */
+:root { --vp-c-text-3: #9a9da6; }
+.dark { --vp-c-text-3: #6a6d76; }
 
 /* ============================================================ the type ===
  *
@@ -44,33 +110,32 @@
   --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
                          Consolas, "Liberation Mono", monospace;
 
-  /* Body links in the brand colour.
+  /* Body links in the accent.
    *
-   * These were blue for a while, on the argument that red in running text
-   * reads as an error rather than as a brand. That argument is not wrong —
-   * it is why inline CODE is still neutral, and that half stays — but it lost
-   * to the simpler one: a site with a red mark and blue links carries two
-   * accents, and the reader has to learn which of them means anything. One
-   * accent, used for the project and for the things you can click, is the
-   * commoner arrangement and the one capire uses (theirs is teal, for both).
+   * These were red for a while, and before that blue, and the argument that
+   * settled it then still holds: one accent, used for the project and for the
+   * things you can click, beats two the reader has to learn to tell apart.
+   * What changed is WHICH one — see the palette at the top of this file. The
+   * exception stays what it was: inline CODE is neutral, because an identifier
+   * is not a link.
    *
-   * `--vp-c-brand-1` on white measures 4.74:1, which clears AA for body text
-   * — but only just, and in DARK it is 3.62:1 against `#1b1b1f`, which fails.
-   * So the dark theme lightens it rather than inheriting it; the value below
-   * is the same hue at 5.76:1. That is the whole reason this is a token
-   * and not `var(--vp-c-brand-1)` written out at each use.
-   *
-   * The hover colour is the link colour: one red, and the underline a link
-   * gains on hover carries the hover state (see `.vp-doc a:hover`). */
-  --a2ui5-c-link: var(--vp-c-brand-1);
+   * Both themes inherit now. The red needed a lifted value in dark to clear AA
+   * at all; `--accent` is already two values, one per theme, and both clear it,
+   * so there is nothing left for this token to correct. It stays a token
+   * because the rules below name it and because the hover colour is defined
+   * against it: the link colour, with the underline a link gains on hover
+   * carrying the state (see `.vp-doc a:hover`). */
+  --a2ui5-c-link: var(--accent);
   --a2ui5-c-link-hover: var(--a2ui5-c-link);
-  /* The fill of the home page's second row of cards: the brand, at a tint.
-   * Not the theme's `--vp-c-brand-soft`, which this site never redefined
-   * and which is still VitePress's own indigo - a lavender card on a red
-   * site. The dark value is the dark link colour below at a tint. */
-  --a2ui5-c-out-tint: rgb(208 60 74 / 0.07);
-  /* The one-pixel edge on code blocks, tables and the Run bar. */
-  --a2ui5-c-hairline: #d1d9e0;
+  /* The fill of the home page's second row of cards: the accent, at a tint.
+   * Not the theme's `--vp-c-brand-soft`, which this site never redefined and
+   * which is still VitePress's own indigo. Written out rather than mixed from
+   * `--accent`, because the two themes want different alphas. */
+  --a2ui5-c-out-tint: rgb(10 110 209 / 0.07);
+  /* The one-pixel edge on code blocks, tables and the Run bar — the same
+   * hairline the bar above them is drawn with, which is the catalogue's
+   * `--line`. It used to be its own blue-grey, half a step off. */
+  --a2ui5-c-hairline: var(--line);
 
   /* …and the flat grey behind them. ONE value, because the theme ships two
    * and they do not match: a code block is an opaque `#f6f6f7`, while a
@@ -80,10 +145,11 @@
    * — the details block reads a shade darker and a shade bluer than the code
    * block inside it, which looks like a mistake because it is one.
    *
-   * The value is the lighter of the two, and it is #f6f8fa rather than the
-   * theme's #f6f6f7: the borders on these panels are `--a2ui5-c-hairline`,
-   * a blue-grey, and a neutral fill inside a blue-grey edge is the same
-   * half-step mismatch one level down. In dark the two diverge in OPPOSITE
+   * The value is the catalogue's `--bg-sunken`, which is the grey the bar and
+   * the sidebar are already drawn in: a panel inside the page is the same
+   * surface as the frame around it, one level in. It used to be a blue-grey of
+   * its own (#f6f8fa), picked to match a hairline that was also its own — both
+   * come out of the shared palette now. In dark the two diverge in OPPOSITE
    * directions — the code block is darker than the page, the details block is
    * a lighter overlay on it — so the unification matters more there, not less.
    *
@@ -92,17 +158,13 @@
    * needs more separation from its background than a panel the size of a
    * paragraph does, and because at this value it would vanish entirely inside
    * one of the panels above. GitHub splits the two for the same reason. */
-  --a2ui5-c-surface: #f6f8fa;
+  --a2ui5-c-surface: var(--bg-sunken);
 }
 
+/* Two of the four still differ by theme; the other two now come out of the
+ * palette and need no second value at all. */
 .dark {
-  /* 5.76:1 on the dark ground, where the brand red itself manages 3.62 and
-   * fails AA. Same hue, lifted until it reads. */
-  --a2ui5-c-link: #e8707c;
-  --a2ui5-c-link-hover: var(--a2ui5-c-link);
-  --a2ui5-c-out-tint: rgb(232 112 124 / 0.12);
-  --a2ui5-c-hairline: #3d444d;
-  --a2ui5-c-surface: #161b22;
+  --a2ui5-c-out-tint: rgb(74 163 255 / 0.12);
 }
 
 /* ============================================================== compact ===
@@ -144,8 +206,8 @@
 /* Section headings. The top rule stays: on a long cookbook page it is what
  * lets the eye find the next section while scrolling. Its padding does not. */
 .vp-doc h2 {
-  font-size: 17px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 22px;
   margin: 32px 0 12px;
   padding-top: 12px;
   letter-spacing: -0.01em;
@@ -159,7 +221,7 @@
 
 .vp-doc h3 {
   font-size: 15px;
-  line-height: 22px;
+  line-height: 21px;
   margin: 24px 0 0;
 }
 
@@ -169,23 +231,28 @@
   margin: 20px 0 0;
 }
 
-/* The page title keeps its rank — it is the one heading that should be
- * unmistakable — but loses some of its size and the air beneath it.
+/* The page title, at the size a sample's own page sets its title in over in
+ * the catalogue (26px/1.25, tools/sample-pages.mjs). It went the other way
+ * from everything else in this pass — 22px up to 26px — and that is the shape
+ * of the catalogue's scale rather than an exception to it: the body is tight
+ * and the one heading that says WHICH PAGE THIS IS is generous, because those
+ * two decisions are about different things. At 22px over a 15px body it was
+ * one and a half steps from the prose under it.
  *
- * The default raises h1 to 32px inside `@media (min-width: 768px)`. A rule
- * without that media query would win only by source order, which is the kind
- * of thing that quietly stops being true after a dependency bump — so the
- * breakpoint is mirrored rather than relied upon. */
+ * One size at both widths now, and the breakpoint is still mirrored: the
+ * theme raises h1 to 32px inside `@media (min-width: 768px)`, and a rule
+ * without that media query would win only by source order — the kind of thing
+ * that quietly stops being true after a dependency bump. */
 .vp-doc h1 {
-  font-size: 22px;
-  line-height: 30px;
+  font-size: 26px;
+  line-height: 34px;
   margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
   .vp-doc h1 {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 26px;
+    line-height: 34px;
   }
 }
 
@@ -220,9 +287,19 @@
   margin: 12px 0;
 }
 
-/* Body text at 15/24 rather than the theme's 16/28.
+/* Body text at 14px/1.55 — the catalogue's own `font: 14px/1.55`, which the
+ * playground's shell now sets too, so the three sites set running text at one
+ * size. It was 15/24 here, itself already down from the theme's 16/28, and the
+ * last step is the one that makes a paragraph here and a card's blurb over
+ * there the same text rather than nearly the same text.
  *
- * The line-height is the bigger half of this. 1.75 is a magazine setting — it
+ * 22px carries the 1.55 (14 × 1.55 = 21.7), written as a length for the reason
+ * the sizes below it are: a unitless line-height is inherited by every nested
+ * element and re-multiplied against ITS size, so a 13px caption inside a
+ * paragraph would silently get a different measure from the one meant here.
+ *
+ * The line-height was the bigger half of the earlier move and the reasoning
+ * still holds. 1.75 is a magazine setting — it
  * is right for a column of uninterrupted prose and wrong for a page that
  * breaks every third line for a code block, a table or an identifier in a
  * box: the extra leading pulls the paragraph apart without any run of text
@@ -249,8 +326,8 @@
 .vp-doc summary,
 .vp-doc blockquote,
 .vp-doc dd {
-  font-size: 15px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 /* The chrome around the page — sidebar, outline, nav, the prev/next footer —
@@ -958,10 +1035,13 @@
  * edges instead of fills, a 6px radius — and only the SCALE stays generous,
  * because a signpost may be read from further away than a paragraph.
  *
- * What deliberately does not change: the logo stays a 200px red disc, and
- * the Quickstart button stays a filled red block. Those two are the identity
- * and the one action the page exists to offer; a page with nothing filled on
- * it has no primary action, only a list of links.
+ * What deliberately does not change: the logo stays a 200px disc — and it
+ * stays RED, which is now the one red thing on the page, because it is the
+ * mark and the mark is not the interface (see the palette at the top of this
+ * file, and resources/logo.md) — and the Quickstart button stays a filled
+ * block. Those two are the identity and the one action the page exists to
+ * offer; a page with nothing filled on it has no primary action, only a list
+ * of links.
  *
  * Specificity, as everywhere in this file: the theme's rules are Vue SCOPED
  * styles and compile with a `[data-v-…]` attribute, so `.VPFeature[data-v-x]`
@@ -1169,4 +1249,249 @@
   .Layout .VPContent .VPHome {
     margin-bottom: 48px;
   }
+}
+
+/* ============================================== the bar the three sites share ===
+ *
+ * The playground, the sample catalogue and this site are three deployments on
+ * one origin, and from here on they wear ONE bar: the mark and the site, the
+ * part of it you are in, a button for light and dark, one hairline, then
+ * LinkedIn and GitHub. The numbers below are the catalogue's own
+ * (src/catalogue/catalogue.css in abap2UI5/playground) — 46px tall on the
+ * sunken grey, 5px pills, a 30x26 theme button, 18px marks in a 30px box —
+ * because a reader crossing between them should read one bar and not three
+ * interpretations of a house style.
+ *
+ * What is NOT the catalogue's is everything this site has that a catalogue
+ * does not: the search box, the Guide and Cookbook menus, the version menu.
+ * Those keep VitePress's own drawing and only lose their size, so they sit in
+ * the row rather than setting its height.
+ *
+ * The three items and the button are theme/SiteBar.vue, rendered into the
+ * `nav-bar-content-after` slot — which is the LAST thing in the row, after
+ * VitePress's own appearance switch and social links. `order` puts it back
+ * where it belongs; see below.
+ *
+ * Specificity, as everywhere in this file: the theme's rules are Vue SCOPED
+ * styles and compile with a `[data-v-…]` attribute, so a bare class here would
+ * lose to them. `.Layout .VPNav` in front of a rule takes it to three units
+ * and past most of them; where the theme's own selector is longer than that,
+ * the rule below says so and carries more.
+ */
+
+:root {
+  /* 46px, the catalogue's bar height. Everything the theme lays out under the
+   * bar — the sidebar's top, the scroll offset a `#hash` lands at, the home
+   * page's hero padding — is written against this variable, so the one number
+   * moves all of it. */
+  --vp-nav-height: 46px;
+  --vp-nav-bg-color: var(--bg-sunken);
+  /* The mark, at the size the other three bars draw it. */
+  --vp-nav-logo-height: 20px;
+}
+
+/* The bar is the sunken grey at every width and on every page, the home page
+ * included. The theme leaves it TRANSPARENT at the top of the home page and
+ * paints only the `.content-body` strip on a page with a sidebar; both are
+ * good decisions for a site whose bar is its own, and neither survives the
+ * bar being shared with two other documents. `:not(.screen-open)` is not a
+ * condition, it is a fourth unit of specificity — the theme's own rule for an
+ * open mobile menu paints the same colour anyway. */
+.Layout .VPNav .VPNavBar:not(.screen-open),
+.Layout .VPNav .VPNavBar .title,
+.Layout .VPNav .VPNavBar .content-body {
+  background-color: var(--bg-sunken);
+}
+
+/* One hairline under it, always — the theme draws it as a `.divider-line`
+ * element that is only there on a page with a sidebar, so the home page had
+ * none and the bar ran into the hero. */
+.Layout .VPNav .VPNavBar {
+  border-bottom: 1px solid var(--line);
+}
+
+.Layout .VPNav .VPNavBar .divider-line {
+  background-color: transparent;
+}
+
+/* The brand: the mark, then the site in the ordinary weight and the part of it
+ * you are in in the heavy one (`siteTitle` in config.mjs carries the `<b>`).
+ * The theme sets 16px semibold, which is a heading; over there it is body
+ * text with one word emphasised. */
+.Layout .VPNav .VPNavBar .title {
+  font-size: 14px;
+  font-weight: 400;
+  gap: 8px;
+}
+
+.Layout .VPNav .VPNavBar .title b {
+  font-weight: 600;
+}
+
+.Layout .VPNav .VPNavBar .title .logo {
+  margin-right: 0;
+}
+
+/* ---------------------------------------------------- the row's order ---
+ *
+ * `.content-body` is a flex row, so the slot's content can be moved without
+ * moving it in the DOM: search and the menus keep the default 0, the three
+ * sites come next, then the theme button, the hairline and the marks. The
+ * hamburger stays last. */
+.Layout .VPNav .VPNavBar .bar-nav { order: 1; }
+.Layout .VPNav .VPNavBar .theme { order: 2; }
+.Layout .VPNav .VPNavBar .social-links { order: 3; }
+.Layout .VPNav .VPNavBar .extra { order: 4; }
+.Layout .VPNav .VPNavBar .hamburger { order: 5; }
+
+/* The theme's own appearance switch, which SiteBar.vue replaces with the
+ * button the other three bars carry. It is still mounted and still doing the
+ * work — `isDark` is read and written through it — it is simply not drawn. */
+.Layout .VPNav .VPNavBar .appearance {
+  display: none;
+}
+
+/* The theme's dividers between the groups it knows about. They are drawn from
+ * `.menu + .appearance::before` and friends, and with the appearance switch
+ * gone they land in the wrong places; the one hairline this bar has is the
+ * one in front of the marks, below. */
+.Layout .VPNav .VPNavBar .menu + .translations::before,
+.Layout .VPNav .VPNavBar .menu + .appearance::before,
+.Layout .VPNav .VPNavBar .menu + .social-links::before,
+.Layout .VPNav .VPNavBar .translations + .appearance::before,
+.Layout .VPNav .VPNavBar .appearance + .social-links::before {
+  display: none;
+}
+
+/* ------------------------------------------------------- the three sites ---
+ *
+ * The catalogue's `.bar-nav`, to the pixel: 5px pills in the dim colour, the
+ * hover filling with the PAGE background — lighter than the bar it sits on,
+ * which is what makes the pill read as raised rather than as a hole — and the
+ * one you are on in full colour and semibold. */
+.Layout .VPNav .bar-nav {
+  display: flex;
+  gap: 4px;
+  margin-left: 16px;
+  line-height: 1.55;
+}
+
+.Layout .VPNav .bar-nav a,
+.Layout .VPNav .bar-nav .here {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--fg-dim);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.Layout .VPNav .bar-nav a:hover {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.Layout .VPNav .bar-nav .here {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------- light and dark ---
+ *
+ * The catalogue's button, and the same trick: the sun and the moon are both in
+ * the markup and CSS shows one of them, so the button says the right thing
+ * before any of this site's JavaScript has run. Over there the swap keys off
+ * `[data-theme]` and a media query; here VitePress has already resolved both
+ * into a single class on the root element. */
+.Layout .VPNav .theme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--fg-dim);
+  font-family: var(--vp-font-family-base);
+  font-size: 13px;
+  line-height: 1;
+  width: 30px;
+  height: 26px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.Layout .VPNav .theme:hover { color: var(--fg); }
+.Layout .VPNav .theme-moon { display: none; }
+.dark .Layout .VPNav .theme-sun { display: none; }
+.dark .Layout .VPNav .theme-moon { display: inline; }
+
+/* ------------------------------------------------------------ the marks ---
+ *
+ * One hairline, then the two of them — the end of the bar on all four
+ * documents. The theme draws a `.VPSocialLink` at 36px with a 20px glyph; the
+ * catalogue draws 30px with an 18px glyph, and the slow colour change on hover
+ * is its own. */
+.Layout .VPNav .VPNavBar .social-links::before {
+  content: "";
+  width: 1px;
+  height: 22px;
+  margin: 0 6px 0 12px;
+  background: var(--line);
+}
+
+.Layout .VPNav .VPNavBar .social-links {
+  display: flex;
+  align-items: center;
+  margin-right: -6px;
+}
+
+.Layout .VPNav .VPSocialLink {
+  width: 30px;
+  height: 30px;
+  color: var(--fg-dim);
+  transition: color 0.5s;
+}
+
+.Layout .VPNav .VPSocialLink:hover { color: var(--fg); }
+
+.Layout .VPNav .VPSocialLink svg,
+.Layout .VPNav .VPSocialLink > span {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* -------------------------------------------------------- and narrower ---
+ *
+ * The theme folds its menu into a hamburger below 768px, and the three sites
+ * go with it rather than wrapping the row: they are in the menu that opens
+ * instead (`nav-screen-content-after`), where they are a list rather than a
+ * strip. The marks go at the same width, as they go from the catalogue's bar
+ * at 620px and the playground's at 820px — on a phone the bar is what is paid
+ * for before anything is read. The theme button stays: it is the one item in
+ * the group that is not reachable any other way. */
+@media (max-width: 767px) {
+  .Layout .VPNav .VPNavBar .bar-nav,
+  .Layout .VPNav .VPNavBar .social-links {
+    display: none;
+  }
+
+  .Layout .VPNav .VPNavBar .theme {
+    margin-left: 8px;
+  }
+}
+
+/* In the menu itself the three sites are a row of the same pills, given room
+ * to be touched. */
+.Layout .VPNavScreen .bar-nav {
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.Layout .VPNavScreen .bar-nav a,
+.Layout .VPNavScreen .bar-nav .here {
+  padding: 8px 12px;
 }

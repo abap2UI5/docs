@@ -173,19 +173,34 @@ drawing and not the surface behind it.
 
 ## Colours
 
-One red and white. The mark, every mascot above and this site use that red
-and nothing else. There is no second shade for interface states: a link under
-a cursor gains an underline, not a darker red, and a button keeps its colour.
+**One red, and it is the mark's.** The circle in the wordmark, the red ink of
+every mascot above — one value, and no second shade for a hover or a pressed
+state anywhere it is used.
+
+The mark is not the same thing as the interface around it, and the two carry
+different colours on purpose. The three sites this project publishes — this
+documentation, the [playground](https://abap2ui5.github.io/playground/) and the
+[sample catalogue](https://abap2ui5.github.io/playground/samples/) — share one
+bar, one palette and one accent, and that accent is **SAP blue**: it is the
+colour of the platform these apps run on, it is what the playground fills its
+Run button with, and it clears AA for body text in both themes, which the red
+does not do on a dark ground. So a link on this page is blue and the mark at
+the top of it is red, and neither is a mistake.
 
 | | Hex | Where |
 | --- | --- | --- |
-| <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#D03C4A"></span> Red | `#D03C4A` | the circle in the mark, the red ink of the mascots, and every brand token of this site — links, buttons, the hero name, and their hover states |
+| <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#D03C4A"></span> Red | `#D03C4A` | the circle in the mark, and the red ink of the mascots |
 | <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border:1px solid var(--vp-c-divider);border-radius:3px;background:#FFFFFF"></span> White | `#FFFFFF` | the wordmark knocked out of the circle |
+| <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#0A6ED1"></span> Blue | `#0A6ED1` | the accent of all three sites — links, buttons, the hero name; `#4AA3FF` in dark |
 
-The site's own tokens are set in `docs/.vitepress/theme/style.css`. Take the hex
-values from this table rather than picking them out of a screenshot with a
-colour dropper: a PNG scaled in a browser hands you an interpolated pixel,
-which is a red that appears nowhere in the brand.
+A link under a cursor still gains an underline rather than a second shade, and
+a button still keeps its colour: that rule was never about which colour it was.
+
+The site's own tokens are set in `docs/.vitepress/theme/style.css`, which takes
+its seven values from the playground's stylesheet so that the three stay one
+palette. Take the hex values from this table rather than picking them out of a
+screenshot with a colour dropper: a PNG scaled in a browser hands you an
+interpolated pixel, which is a colour that appears nowhere in the brand.
 
 ## Using the Mark
 
