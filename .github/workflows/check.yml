@@ -64,6 +64,20 @@ jobs:
           sparse-checkout: SAMPLES.md
           sparse-checkout-cone-mode: false
 
+      # The playground's stylesheet, for the shared-design gate. One file, and
+      # continue-on-error because the gate falls back to the published copy
+      # over the network; when neither is reachable it fails rather than
+      # passing on one stylesheet agreeing with itself.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        continue-on-error: true
+        with:
+          repository: abap2UI5/playground
+          ref: main
+          path: .playground
+          fetch-depth: 1
+          sparse-checkout: src/catalogue/catalogue.css
+          sparse-checkout-cone-mode: false
+
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22'
@@ -101,6 +115,18 @@ jobs:
       - name: cross-site links
         if: ${{ !cancelled() }}
         run: npm run check:cross-site
+
+      # the values the four bars are made of - the palette, the two type
+      # stacks, the two radii - against the copy abap2UI5/playground keeps.
+      # They are copied by hand on purpose (a stylesheet fetched across two
+      # deployments would be a request in front of the first paint), and until
+      # this gate nothing compared the copies: they agreed because whoever
+      # touched one remembered the other. One had already drifted - two font
+      # stacks that lead with different families, which is one bar in two
+      # typefaces on Linux
+      - name: shared design values
+        if: ${{ !cancelled() }}
+        run: npm run check:design
 
       # the ABAP in the fenced blocks, against the real framework: does it
       # compile, and does the view it builds name controls and properties that

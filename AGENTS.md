@@ -30,17 +30,19 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
 | `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the menu behind the bar's last button — the light/dark switch, the project's tools and its repositories. Rendered into `nav-bar-content-after` by `theme/index.js`; the marks between them are VitePress's own `socialLinks`, ordered by `style.css` |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `docs/.vitepress/theme/TheBar.vue` | The bar, as one element this repository owns: the brand, `SiteNav.vue` (the four sections), `SearchBox.vue`, the two marks, `SiteMenu.vue` (the menu behind the last button, and the version number `check:version` reads). It used to be the theme's bar with our parts in its slots and 85 override lines arguing its own parts out of the way; the theme now keeps two things, the hamburger and the screen it opens on a phone |
 | `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
+| `scripts/check-design.mjs` | The palette, the type and the radii the four bars share, against `abap2UI5/playground`'s copy of them — needs a checkout (`PLAYGROUND_HOME`, `.playground`, `../playground`) or the network, and fails rather than passing without one. The table of what is shared, and both spellings of each value, is `scripts/lib/design.mjs` |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:cross-site + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:cross-site + check:design + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but ten things in
-it are decidable, and all ten are decided before a merge:
+A documentation repository has no compiler for its prose, but eleven things in
+it are decidable, and all eleven are decided before a merge:
 
 | | |
 |---|---|
@@ -53,6 +55,7 @@ it are decidable, and all ten are decided before a merge:
 | `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
 | `check:cross-site` | every link that leaves this deployment for a neighbouring one on the same origin — the playground, the catalogue, the linter's rule pages — carries a `target`. Without it VitePress's router treats the link as a route of THIS site, finds no page behind `/playground/` and renders the 404 *at that URL*, which reads as the other site being broken. Every way out of the manual was in that state at once: both bar items, the Linter rules row in the menu and the Run bar's link. Judges the built HTML, so it runs straight after `docs:build`. What it cannot see is the Run bar's link — built in a browser, in no built page — which is why `test/cross-site.test.mjs` pins that one as source |
+| `check:design` | the values the four bars are made of — the seven palette colours, the two type stacks, the two radii — against the copy [abap2UI5/playground](https://github.com/abap2UI5/playground) keeps, in **both** schemes. They are copied by hand on purpose (a stylesheet fetched across two deployments is a request in front of the first paint), and until this gate nothing compared the copies: they agreed because whoever touched one remembered the other. One had already drifted — two font stacks leading with different families, which is the same face on macOS and Windows and two different ones on Linux, so the same four words in the same bar measured 59/122/78/97px here and 65/141/87/110 there. It compares the EFFECTIVE value (a property the dark block does not redeclare keeps its light one), because the two sides switch schemes differently: `.dark` here, `[data-theme]` over there |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
 **All four walking gates carry a floor.** A gate that checked nothing reports
@@ -64,7 +67,7 @@ page layout or the builder name is the likely cause. `check:cross-site` carries
 the same floor twice over: no HTML in `dist` at all, and no cross-site link on
 a site whose bar carries three of them on every page.
 
-`.github/workflows/check.yml` runs the same ten, in the same order. Keep the
+`.github/workflows/check.yml` runs the same eleven, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.

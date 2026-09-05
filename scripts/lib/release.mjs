@@ -28,7 +28,7 @@ const SITES = [
      * have found the FIRST nav-shaped string in a 700-line file, which is
      * exactly the silent wrong answer the shape checks below exist to
      * prevent. */
-    file: 'docs/.vitepress/theme/SiteBar.vue',
+    file: 'docs/.vitepress/theme/SiteMenu.vue',
     what: "the version in the bar's menu",
     re: /const VERSION = "(\d+\.\d+\.\d+)"/,
   },

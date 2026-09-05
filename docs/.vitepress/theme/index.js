@@ -3,8 +3,8 @@ import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import { setUpPlayground } from './playground.js'
-import SiteBar from './SiteBar.vue'
-import SearchBox from './SearchBox.vue'
+import TheBar from './TheBar.vue'
+import SiteNav from './SiteNav.vue'
 import { rememberHere } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
@@ -17,19 +17,17 @@ export default {
   // lands: the slot renders after VitePress's own appearance switch and
   // social links, and CSS orders the sites back in front of the marks and the
   // menu after them.
+  // ONE ELEMENT, AND IT IS OURS (TheBar.vue). The theme's own bar keeps
+  // exactly two parts, because they are worth keeping and not worth
+  // rebuilding: the hamburger, and the screen it opens on a phone - which
+  // carries the same four sections as a list.
   Layout() {
     return h(DefaultTheme.Layout, null, {
-      // The search, in the middle of the row. `nav-bar-content-before` is the
-      // FIRST thing in `.content-body`; style.css gives it auto margins, which
-      // is what centres it between the four sections on the left and the marks
-      // on the right. It is not in SiteBar because SiteBar is rendered twice -
-      // the bar and the screen a phone opens instead of it - and two search
-      // boxes in one document is two ids, two shortcuts and one of them wrong.
-      'nav-bar-content-before': () => h(SearchBox),
-      'nav-bar-content-after': () => h(SiteBar),
-      'nav-screen-content-after': () => h(SiteBar, { theme: false }),
+      'nav-bar-content-before': () => h(TheBar),
+      'nav-screen-content-after': () => h(SiteNav),
     })
   },
+
   enhanceApp({ app, router, siteData }) {
     // The Run button under a runnable ABAP example. One delegated listener for
     // the whole site — the browser half of docs/.vitepress/playground.mjs.
