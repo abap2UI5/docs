@@ -29,6 +29,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `docs/.vitepress/theme/link-to-selection.js` | **Copy link to selection** — the button under a selection inside the article, and the fallback for a browser too old for `:~:`. `theme/text-fragment.js` is the half with no DOM in it (what to quote, how to spell it), pinned by `test/text-fragment.test.mjs` |
 | `docs/.vitepress/theme/TheBar.vue` | The bar, as one element this repository owns: the brand, `SiteNav.vue` (the four sections), `SearchBox.vue`, the two marks, `SiteMenu.vue` (the menu behind the last button, and the version number `check:version` reads). It used to be the theme's bar with our parts in its slots and 85 override lines arguing its own parts out of the way; the theme now keeps two things, the hamburger and the screen it opens on a phone |
 | `docs/.vitepress/theme/SiteNav.vue` | The four sections, in the bar and again in the phone screen the theme's hamburger opens. Every item that leaves this deployment carries a `target` (`check:cross-site`), and three of the four are lifted to where the reader last was (`site-memory.js`) |
 | `docs/.vitepress/theme/SiteMenu.vue` | The menu behind the bar's last button: the light/dark switch, the project's tools and its repositories, and the version number `check:version` reads (`VERSION`) |
@@ -47,7 +48,7 @@ it are decidable, and all eleven are decided before a merge:
 
 | | |
 |---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate — and the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow |
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; and the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it |
 | `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteMenu.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt, and in `SiteBar.vue` until the bar was split), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
@@ -465,6 +466,79 @@ class in it (before that, `data-code` only worked for a class called
 error), the app-only layout fix for a column narrower than 820px, and
 `frameOptions="allow"` on the app frame. **Merge and deploy
 [abap2UI5/playground](https://github.com/abap2UI5/playground) first**, then this.
+
+## A link to what you selected
+
+Select anything inside a page of the manual — a sentence, a chain out of a
+fence, one method of an example — and a small **Copy link to selection** button
+appears under it. What it copies is this page's URL with the words quoted in it,
+as the browser's own [text fragment](https://developer.mozilla.org/en-US/docs/Web/URI/Fragment/Text_fragments):
+
+```
+.../development/lifecycle.html#:~:text=client-%3Eview_display
+```
+
+The browser finds those words and highlights them.
+
+**Why the words and not the line.** The per-sample pages in
+[abap2UI5/playground](https://github.com/abap2UI5/playground) answer "look at
+line 40 to 55" with `#L40-L55`, and that is right over there: one class per
+page, printed whole, so a line number is an address. A page here is a dozen
+fences and the prose around them — and, the part that decides it, nothing here
+has a commit behind it. GitHub's line links are permalinks because they name a
+SHA; a line number on a documentation page names whatever is on that line
+*today*, and the next correction to the example above it moves the line
+silently. A link somebody pasted into an issue would then point at the wrong
+line and nothing would be red. A quote of the words survives every edit that
+does not delete the words themselves, and when it does not survive it lands at
+the top of the page rather than on something else.
+
+**What it costs the pages: nothing.** No ids on a fence, no numbers in a
+gutter, no markup on any of the 838 examples — a text fragment is a property of
+the URL, not of the document, which is the whole reason this is a hundred lines
+of theme and no change to a single page.
+
+The parts worth knowing about `theme/text-fragment.js`, which is where the
+decisions are and what `test/text-fragment.test.mjs` pins:
+
+- A **short** selection is quoted whole; anything longer is quoted as its first
+  and last few words (`text=start,end`), because a directive carrying two
+  paragraphs is a URL nobody pastes into a chat window.
+- A selection that **crosses lines** is always quoted as start and end, however
+  short. An exact quote has to be found inside ONE block, and every line of a
+  highlighted fence is an element of its own — a two-line exact quote matches
+  nothing at all.
+- The **whitespace is collapsed**, because that is how the browser compares it:
+  an indented chain selected out of a fence is the same text as the one line
+  the directive spells.
+- A quote the page carries **twice** is an address for the wrong one, so the
+  words in front of the selection are added as a prefix (and the words after it
+  as a suffix if the page repeats those too). Only when it is actually
+  ambiguous: context is length in a URL and one more thing that can go stale.
+- The **hyphen is escaped by hand**. `encodeURIComponent` leaves `-` alone
+  because it is unreserved, and `-` is exactly what marks a part of the
+  directive as the prefix or the suffix: `client->view_display` written out
+  unescaped is a valid directive for something else entirely. That one is a
+  silent wrong answer, not an error, which is why it has a test of its own.
+
+**What a browser too old for `:~:` gets.** Text fragments are Chrome 80,
+Safari 16.1 and Firefox 131 and later; an older one ignores the directive and
+lands at the top of the page, which reads as a broken link. So
+`markDirective( )` in `link-to-selection.js` scrolls to the block the words are
+in and marks it for a few seconds instead — and it only ever runs where it is
+needed, because a browser that supports fragments takes the directive OUT of
+`location.href` (and has `document.fragmentDirective`, which is what is
+actually tested).
+
+**What could not be verified here, and has to be checked by hand once.**
+Headless Chromium under Playwright *parses* the directive — it strips it from
+`location.href` — and never acts on it: no scroll, no highlight, for a plain
+static page, cross-origin, same-origin, followed by a real click or opened
+directly. So everything up to the clipboard is checked (the button appears on a
+selection inside the article and on nothing else, the directive is the selected
+words, the URL is this page, the old-browser fallback marks the right element)
+and the last step — the browser actually jumping to the words — is not. Open
+one of these links in a real browser after changing anything here.
 
 ## Toolchain
 
