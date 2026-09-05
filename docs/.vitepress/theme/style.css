@@ -1017,6 +1017,28 @@
   transform: translate(2px, -2px);
 }
 
+/* A CARD THAT STAYS ON THIS SITE SAYS SO BY NOT SAYING THE OPPOSITE.
+ *
+ * The tint and the arrow are this row's whole signal: it is drawn differently
+ * from the feature cards above it so that a card which LEAVES is recognisable
+ * as one before it is clicked. The home page now has a row mixing both - two
+ * of its three "around the framework" cards are pages of this manual - and a
+ * card that is tinted and arrowed and then lands on /docs/resources/addons
+ * spends that signal on nothing. So a card that stays takes the outline the
+ * feature cards have, and drops the arrow. */
+.a2ui5-out .a2ui5-out-card.is-inside {
+  background-color: transparent;
+  border-color: var(--vp-c-divider);
+}
+
+.a2ui5-out .a2ui5-out-card.is-inside:hover {
+  border-color: var(--a2ui5-c-link);
+}
+
+.a2ui5-out .a2ui5-out-card.is-inside .a2ui5-out-title::after {
+  content: none;
+}
+
 .a2ui5-out .a2ui5-out-details {
   display: block;
   padding-top: 8px;
