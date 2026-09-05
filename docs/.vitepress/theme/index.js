@@ -5,7 +5,7 @@ import './style.css'
 import { setUpPlayground } from './playground.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
-import { rememberHere } from './site-memory.js'
+import { rememberHere, rememberScroll, takeHandoff } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -13,7 +13,7 @@ export default {
   // The bar's right-hand end - the three sites, and the menu behind the bar's
   // last button with the light/dark switch in it - injected into the nav bar
   // and, without the menu, into the screen a phone opens instead of it. See
-  // SiteBar.vue for what the group is and style.css for where in the row it
+  // SiteNav.vue for what the group is and style.css for where in the row it
   // lands: the slot renders after VitePress's own appearance switch and
   // social links, and CSS orders the sites back in front of the marks and the
   // menu after them.
@@ -48,11 +48,48 @@ export default {
     const rememberUnlessHome = () => {
       if (!location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs')
     }
+
+    // How far DOWN the page, which is the other half of coming back to it.
+    // The offset is written for every page including the home page: what the
+    // rule above is about is which page the Documentation item opens, and
+    // that is a different question from where in a page the reader was.
+    //
+    // Throttled, because scroll fires per frame and this writes to storage.
+    // `pagehide` as well, for a reader who leaves inside the window - and
+    // SiteNav.vue writes it on the click itself, which is the case that has
+    // to be exact.
+    let pending = 0
+    const noteScroll = () => {
+      if (pending) return
+      pending = setTimeout(() => { pending = 0; rememberScroll() }, 300)
+    }
+
+    // ...and back to it, but ONLY when the bar said so (site-memory.js). The
+    // router draws the new page and scrolls it to the top itself, not always
+    // in the same frame, so the offset is re-applied for a few frames until
+    // it holds. About a tenth of a second, and it stops the moment it works.
+    const restore = () => {
+      const y = takeHandoff()
+      if (y === null) return
+      let tries = 0
+      const put = () => {
+        scrollTo(0, y)
+        if (++tries < 6 && Math.abs(scrollY - y) > 2) requestAnimationFrame(put)
+      }
+      requestAnimationFrame(put)
+    }
+
     if (!import.meta.env.SSR) {
       rememberUnlessHome()
+      restore()
+      addEventListener('scroll', noteScroll, { passive: true })
+      addEventListener('pagehide', () => rememberScroll())
       const onAfter = router.onAfterRouteChange
       router.onAfterRouteChange = (to) => {
         rememberUnlessHome()
+        // Home -> Documentation is a route change, not a load: this site is
+        // one application and two of the bar's four items are pages of it.
+        restore()
         onAfter?.(to)
       }
     }

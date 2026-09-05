@@ -87,3 +87,128 @@ export function lastVisited(site, fallback, scope = fallback) {
     return fallback;
   }
 }
+
+/* ── WHERE ON THE PAGE, not only which page ─────────────────────────────────
+ *
+ * The item above comes back to the page you left. It came back to the TOP of
+ * it, which on the two pages a reader actually leaves half-read - the manual's
+ * long chapters, and a catalogue of 770 rows - is most of the way to not
+ * having been remembered at all: the reader who was at sample 400, looked
+ * something up in the manual and pressed Samples, arrived at sample 1.
+ *
+ * So the offset is written down per path, and restored on ARRIVAL BY THE BAR
+ * and nowhere else. That last part is the whole design. A page that restored
+ * its offset on every load would fight the browser (which already restores it
+ * for back and forward) and would surprise a reader who followed a link to a
+ * page they happen to have read before - landing them mid-chapter with no
+ * scrollbar movement to explain it. The bar says, in one record, "I am sending
+ * you back to X"; the page that IS X, and arrives within seconds, honours it.
+ * Anything else ignores it.
+ *
+ * A hash in the URL wins: `#section` is a destination the reader named, and an
+ * offset is only ever a memory of one.
+ */
+
+const SCROLL_KEY = "abap2ui5-playground:scroll";
+const HANDOFF_KEY = "abap2ui5-playground:returning";
+/* Enough paths for moving between the four sections without losing any of
+ * them, and small enough that the value stays a few hundred bytes. */
+const SCROLL_MAX = 12;
+/* The bar's click and the page that arrives are one navigation. Half a minute
+ * is a slow connection; a record older than that belongs to a journey that
+ * ended some other way. */
+const HANDOFF_TTL = 30_000;
+
+/** This document, as the scroll map keys it. The hash is deliberately not part
+ *  of it: it is one page, wherever in it the reader entered. */
+const here = () => location.pathname + location.search;
+
+const readMap = () => {
+  try {
+    const raw = JSON.parse(localStorage.getItem(SCROLL_KEY) || "{}");
+    return raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+  } catch {
+    return {};
+  }
+};
+
+/** Write down how far down this page the reader is. Cheap enough to call from
+ *  a scroll handler, which is where it is called from - `pagehide` alone loses
+ *  the offset whenever a browser decides not to fire it. */
+export function rememberScroll(y = window.scrollY, path = here()) {
+  if (typeof localStorage === "undefined") return;
+  if (!Number.isFinite(y) || y < 0) return;
+  try {
+    const map = readMap();
+    /* Re-inserted, so the key order is least-recently-written first and the
+     * oldest is the one that falls off. */
+    delete map[path];
+    map[path] = Math.round(y);
+    for (const old of Object.keys(map).slice(0, -SCROLL_MAX)) delete map[old];
+    localStorage.setItem(SCROLL_KEY, JSON.stringify(map));
+  } catch {
+    /* A refused or full storage. The reader lands at the top, as before. */
+  }
+}
+
+/** The offset stored for `path`, or 0. Checked, not followed: anything on this
+ *  origin can write anything here, and `scrollTo` will take whatever it is
+ *  given. */
+export function scrollOf(path = here()) {
+  if (typeof localStorage === "undefined") return 0;
+  try {
+    const y = readMap()[path];
+    return Number.isFinite(y) && y >= 0 && y < 1e7 ? y : 0;
+  } catch {
+    return 0;
+  }
+}
+
+/**
+ * "I am sending the reader back to `href`" — written by a bar item as it is
+ * clicked, read by the page that arrives.
+ *
+ * The href is resolved against this origin and stored as a path, so a link to
+ * another host (which shares no storage) writes nothing.
+ */
+export function handOff(href) {
+  if (typeof localStorage === "undefined" || !href) return;
+  try {
+    const to = new URL(href, location.href);
+    if (to.origin !== location.origin) return;
+    localStorage.setItem(HANDOFF_KEY, JSON.stringify({ to: to.pathname + to.search, at: Date.now() }));
+  } catch {
+    /* Not a URL, or no storage. Nothing is restored, which is the old
+     * behaviour and not a broken one. */
+  }
+}
+
+/**
+ * The offset this page should be restored to, if the bar just sent the reader
+ * here — and `null` in every other case, which is most of them.
+ *
+ * Reading it CONSUMES it: the record describes one arrival, and a second read
+ * would be a later navigation inheriting somebody else's destination.
+ */
+export function takeHandoff() {
+  if (typeof localStorage === "undefined") return null;
+  let record = null;
+  try {
+    record = JSON.parse(localStorage.getItem(HANDOFF_KEY) || "null");
+    localStorage.removeItem(HANDOFF_KEY);
+  } catch {
+    return null;
+  }
+  if (!record || typeof record.to !== "string" || typeof record.at !== "number") return null;
+  const age = Date.now() - record.at;
+  if (!(age >= 0 && age < HANDOFF_TTL)) return null;
+  /* The record has to name THIS page. It is written before a navigation that
+   * may not happen (a middle click, a refused link, a reader who went
+   * somewhere else instead), so arriving anywhere but at `to` means it was
+   * not this journey. */
+  if (record.to !== here()) return null;
+  /* A destination the reader named beats one this remembered. */
+  if (location.hash) return null;
+  const y = scrollOf(record.to);
+  return y > 0 ? y : null;
+}

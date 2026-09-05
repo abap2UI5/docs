@@ -18,7 +18,7 @@
  * wire), which is not a price to charge a reader who came to read one page.
  */
 import { computed, nextTick, ref, shallowRef, watch, onMounted, onUnmounted } from 'vue';
-import { search, grouped, loadIndex, highlight } from './search-engine.js';
+import { search, grouped, loadIndex, highlight, rememberQuery, recallQuery } from './search-engine.js';
 
 const open = ref(false);
 const query = ref('');
@@ -50,7 +50,15 @@ async function fetchIndex() {
 function show() {
   open.value = true;
   fetchIndex();
-  nextTick(() => input.value?.focus());
+  /* The last thing that was searched for, if a hit was opened recently
+   * (search-engine.js). Selected, not merely filled in: the reader who wants
+   * it presses Enter or arrows, and the reader who wants something else types
+   * over it without reaching for Backspace. */
+  if (!query.value) query.value = recallQuery();
+  nextTick(() => {
+    input.value?.focus();
+    if (query.value) input.value?.select();
+  });
 }
 
 function hide() {
@@ -83,10 +91,17 @@ function hrefOf(hit) {
   }
 }
 
+/* A hit was opened - by Enter, by a click, or by a middle click that opened it
+ * in a tab of its own. Written down BEFORE hide(), which clears the field. */
+function leave() {
+  rememberQuery(query.value);
+  hide();
+}
+
 function go(hit) {
   if (!hit) return;
   const { href } = hrefOf(hit);
-  hide();
+  leave();
   location.assign(href);
 }
 
@@ -170,7 +185,7 @@ const parts = (text) => highlight(text, query.value);
               :href="hrefOf(hit).href"
               :target="hrefOf(hit).target"
               @mouseenter="active = indexOf(hit)"
-              @click="hide"
+              @click="leave"
             >
               <span class="a2ui5-search-hit-title">
                 <span v-for="([text, on], i) in parts(hit.entry.title)" :key="i" :class="{ hl: on }">{{ text }}</span>
