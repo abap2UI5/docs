@@ -212,3 +212,67 @@ export function takeHandoff() {
   const y = scrollOf(record.to);
   return y > 0 ? y : null;
 }
+
+/**
+ * Take the handoff and act on it: scroll to the offset, and keep scrolling to
+ * it until it takes.
+ *
+ * One `scrollTo` is not enough. The router draws the new page and scrolls it
+ * to the top itself, not always in the same frame, and a page whose content is
+ * still arriving is a page too short to reach the offset - which the browser
+ * clamps to the top, the exact thing this is here to stop. So it is re-applied
+ * as the page settles, for up to three seconds.
+ *
+ * It stops the moment the offset takes, and the moment the READER scrolls:
+ * a scroll that was not this one is the reader saying where they want to be,
+ * and it wins. Without that a page shorter than the stored offset would hold
+ * them at the bottom of it.
+ */
+export function restoreScroll() {
+  const y = takeHandoff();
+  if (y === null) return;
+
+  /* WHAT CANCELS THIS IS THE READER, AND NOTHING ELSE.
+   *
+   * It used to stop as soon as `scrollY` was not where the last frame put it,
+   * on the theory that a scroll this did not cause is the reader taking over.
+   * It is not: a page still loading moves its own scroll. The browser's scroll
+   * anchoring shifts the offset to keep the content under your eyes steady as
+   * things arrive above it - and the home page, whose hero image is the
+   * largest thing on the site to arrive late, is where that happens every
+   * time. The offset was applied to a page still a few hundred pixels short,
+   * anchoring nudged it, this read the nudge as a reader and gave up. It went
+   * "a little way down" and stopped, on that page and no other.
+   *
+   * So the reader is asked directly. A wheel, a touch, a key, a pointer:
+   * those are somebody saying where they want to be, and they win. Layout
+   * settling is not one of them. */
+  const until = Date.now() + 2000;
+  const MOVED = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+  let stopped = false;
+  const stop = () => {
+    stopped = true;
+    for (const e of MOVED) removeEventListener(e, stop, true);
+  };
+  for (const e of MOVED) addEventListener(e, stop, { capture: true, passive: true });
+
+  /* IT HOLDS THE POSITION, it does not merely reach it. Reaching it once is
+   * not enough and stopping there is how this failed: the router draws the
+   * page and scrolls it to the top ITSELF, after this - measured, in that
+   * order, `scrollTo(0, 1600)` and then `scrollTo(0, 0)` - so the offset was
+   * applied, taken away again a frame later, and the loop had already
+   * congratulated itself and gone. Two seconds of holding covers that, and a
+   * page still growing underneath, and costs about a hundred and twenty
+   * frames of one assignment each.
+   *
+   * Holding is only safe BECAUSE the reader can take it back: the four events
+   * above end it on the first wheel, key, touch or pointer - a scrollbar drag
+   * included - so nothing is ever fought with. */
+  const put = () => {
+    if (stopped) return;
+    if (Math.round(scrollY) !== y) scrollTo(0, y);
+    if (Date.now() < until) requestAnimationFrame(put);
+    else stop();
+  };
+  requestAnimationFrame(put);
+}

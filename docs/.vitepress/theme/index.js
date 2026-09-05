@@ -5,7 +5,7 @@ import './style.css'
 import { setUpPlayground } from './playground.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
-import { rememberHere, rememberScroll, takeHandoff } from './site-memory.js'
+import { rememberHere, rememberScroll, restoreScroll } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -64,24 +64,12 @@ export default {
       pending = setTimeout(() => { pending = 0; rememberScroll() }, 300)
     }
 
-    // ...and back to it, but ONLY when the bar said so (site-memory.js). The
-    // router draws the new page and scrolls it to the top itself, not always
-    // in the same frame, so the offset is re-applied for a few frames until
-    // it holds. About a tenth of a second, and it stops the moment it works.
-    const restore = () => {
-      const y = takeHandoff()
-      if (y === null) return
-      let tries = 0
-      const put = () => {
-        scrollTo(0, y)
-        if (++tries < 6 && Math.abs(scrollY - y) > 2) requestAnimationFrame(put)
-      }
-      requestAnimationFrame(put)
-    }
-
+    // ...and back to it, but ONLY when the bar said so. site-memory.js decides
+    // whether this arrival is the one the bar named, and holds the offset
+    // against the router's own scroll-to-top and a page that is still growing.
     if (!import.meta.env.SSR) {
       rememberUnlessHome()
-      restore()
+      restoreScroll()
       addEventListener('scroll', noteScroll, { passive: true })
       addEventListener('pagehide', () => rememberScroll())
       const onAfter = router.onAfterRouteChange
@@ -89,7 +77,7 @@ export default {
         rememberUnlessHome()
         // Home -> Documentation is a route change, not a load: this site is
         // one application and two of the bar's four items are pages of it.
-        restore()
+        restoreScroll()
         onAfter?.(to)
       }
     }

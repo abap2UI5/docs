@@ -109,12 +109,18 @@ export function search(entries, query, { limit = 30 } = {}) {
  * first, then each sample corpus — with at most `perGroup` in each, so one
  * corpus of 636 ports cannot bury the four pages that explain them.
  */
-export function grouped(hits, { perGroup = 6 } = {}) {
+export function grouped(hits, { perGroup = 8 } = {}) {
   const order = [];
   const byGroup = new Map();
+  /* How many a group HAS, beside how many it shows. A reader who typed
+   * "table" and sees eight is looking at eight of two hundred and thirty-one,
+   * and the difference between those two numbers is the difference between
+   * "that is all there is" and "there is a whole shelf of this". */
+  const total = new Map();
   for (const hit of hits) {
     const key = hit.entry.area === 'docs' ? 'Documentation' : hit.entry.group;
     if (!byGroup.has(key)) { byGroup.set(key, []); order.push(key); }
+    total.set(key, (total.get(key) ?? 0) + 1);
     const rows = byGroup.get(key);
     if (rows.length < perGroup) rows.push(hit);
   }
@@ -122,7 +128,7 @@ export function grouped(hits, { perGroup = 6 } = {}) {
    * typed a word that is both a chapter and a control wants the explanation
    * before the seven hundred examples of it. */
   order.sort((a, b) => (a === 'Documentation' ? -1 : b === 'Documentation' ? 1 : 0));
-  return order.map((label) => ({ label, hits: byGroup.get(label) }));
+  return order.map((label) => ({ label, hits: byGroup.get(label), total: total.get(label) }));
 }
 
 /** The index, fetched once. Callers await this on the first keystroke, never
