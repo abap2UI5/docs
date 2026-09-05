@@ -22,10 +22,19 @@
 // it is what every step below falls back to - nothing here ever returns a link
 // worse than the one it was given.
 //
-// THE PLAYGROUND IS NOT REMEMBERED, only consulted. Its URL carries the code
-// in the editor (?src=...), and a Playground item that reopened yesterday's
-// sample instead of an empty editor would be a different promise from the one
-// the word makes. Samples and docs are places; the playground is a workbench.
+// THE PLAYGROUND IS REMEMBERED TOO, and it did not used to be. The reasoning
+// against it was that its URL carries the code in the editor, so an item that
+// reopened yesterday's sample would be a different promise from the one the
+// word makes: samples and docs are places, the playground is a workbench.
+//
+// What that argument missed is the case it creates. A reader who opens a
+// SAMPLE over there has code that is not a draft - a sample that was picked
+// and read is deliberately not stored - so pressing Documentation and then
+// Playground threw it away and started them on the default sample. Their own
+// edits survived that trip; the sample they were reading did not.
+//
+// This site only ever READS that key. The playground writes it, and never
+// from an embedded or app-only view.
 
 /* The playground's namespace, for keys this site writes too. It is the wrong
  * word for a value shared by three deployments and it is the namespace every
@@ -35,6 +44,7 @@
 const KEY = {
   samples: "abap2ui5-playground:last-samples",
   docs: "abap2ui5-playground:last-docs",
+  playground: "abap2ui5-playground:last-playground",
 };
 
 /** Write down that the reader is on this site's page. */
