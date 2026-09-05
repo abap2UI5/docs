@@ -92,6 +92,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run docs:build
 
+      # every link out of this deployment and into a neighbouring one on the
+      # same origin - the playground, the catalogue, the linter's rule pages.
+      # They share an origin, so VitePress's router takes such a link over,
+      # finds no page of THIS site behind it and renders the 404 at the
+      # neighbour's URL. It read as the other site being broken. Reads the
+      # built HTML, so it runs after the build
+      - name: cross-site links
+        if: ${{ !cancelled() }}
+        run: npm run check:cross-site
+
       # the ABAP in the fenced blocks, against the real framework: does it
       # compile, and does the view it builds name controls and properties that
       # exist on the UI5 floor this documentation targets

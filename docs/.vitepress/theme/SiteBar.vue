@@ -35,6 +35,21 @@ defineProps({ theme: { type: Boolean, default: true } });
 const PLAYGROUND = "https://abap2ui5.github.io/playground/";
 const SAMPLES = "https://abap2ui5.github.io/playground/samples/";
 
+/* EVERY LINK OUT OF THIS SITE AND INTO A NEIGHBOURING ONE CARRIES A `target`,
+ * and it is not decoration: without it the link does not arrive.
+ *
+ * The three sites share an origin - the thing that makes the shared theme and
+ * the shared position memory possible - and that is also what breaks a plain
+ * link between them. This site is a single page application: VitePress's
+ * router takes over any link that is same-origin and looks like a page, and
+ * /playground/ is both. It then has no page of THIS site to render there, so
+ * it drew this site's 404 at the playground's URL. `_self` is the value
+ * because it is the behaviour these items already promised - one site, one
+ * tab. A link to another host needs nothing; only abap2ui5.github.io outside
+ * /docs/ is affected. scripts/lib/cross-site.mjs is the whole story, and
+ * scripts/check-cross-site.mjs holds the built site to it. */
+const SAME_TAB = "_self";
+
 /* The catalogue's front page until the browser says otherwise. This is what
  * the server renders, what a crawler is given and what a first visit follows;
  * onMounted only ever replaces it with a deeper page of the same site. */
@@ -94,8 +109,8 @@ watch(isDark, (dark) => {
     <!-- The one you are on, which is why it is a span and not a link - the
          look aria-current gets on the other three bars. -->
     <span class="here" aria-current="page">Documentation</span>
-    <a :href="samplesHref" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
-    <a :href="PLAYGROUND" title="Write ABAP and run it in the browser">Playground</a>
+    <a :href="samplesHref" :target="SAME_TAB" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
+    <a :href="PLAYGROUND" :target="SAME_TAB" title="Write ABAP and run it in the browser">Playground</a>
   </nav>
   <!-- The rest of abap2UI5 behind one more button: light or dark, then the
        practical links (issues, release notes, install, support), the project's
@@ -119,7 +134,9 @@ watch(isDark, (dark) => {
       <a href="/docs/resources/sponsor">Sponsor</a>
       <span class="a2ui5-menu-head">Tools</span>
       <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
-      <a href="https://abap2ui5.github.io/linter/">Linter rules</a>
+      <!-- Same origin, another deployment: the attribute above, not the
+           `target="_blank"` the github.com rows carry. -->
+      <a href="https://abap2ui5.github.io/linter/" :target="SAME_TAB">Linter rules</a>
       <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">VS Code extension</a>
       <a href="/docs/advanced/mcp_server">MCP server</a>
       <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">App template</a>

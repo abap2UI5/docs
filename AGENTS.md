@@ -28,15 +28,16 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
 | `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the menu behind the bar's last button — the light/dark switch, the project's tools and its repositories. Rendered into `nav-bar-content-after` by `theme/index.js`; the marks between them are VitePress's own `socialLinks`, ordered by `style.css` |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:cross-site + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but nine things in
-it are decidable, and all nine are decided before a merge:
+A documentation repository has no compiler for its prose, but ten things in
+it are decidable, and all ten are decided before a merge:
 
 | | |
 |---|---|
@@ -48,16 +49,19 @@ it are decidable, and all nine are decided before a merge:
 | `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` on `main` and compared byte for byte. Goes stale whenever the interface changes over there and the committed reference still describes the shape before it. `npm run generate:api` rewrites both |
 | `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
+| `check:cross-site` | every link that leaves this deployment for a neighbouring one on the same origin — the playground, the catalogue, the linter's rule pages — carries a `target`. Without it VitePress's router treats the link as a route of THIS site, finds no page behind `/playground/` and renders the 404 *at that URL*, which reads as the other site being broken. Every way out of the manual was in that state at once: both bar items, the Linter rules row in the menu and the Run bar's link. Judges the built HTML, so it runs straight after `docs:build`. What it cannot see is the Run bar's link — built in a browser, in no built page — which is why `test/cross-site.test.mjs` pins that one as source |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
-**All three walking gates carry a floor.** A gate that checked nothing reports
+**All four walking gates carry a floor.** A gate that checked nothing reports
 the same shape as a gate that found nothing wrong — which is precisely how
 `check:examples` passed for years on an abaplint config with no rules in it. So
 `check:examples`, `check:conventions` and `check:playground` each exit 1 when
 their walk finds no example at all, and say which of the fence language, the
-page layout or the builder name is the likely cause.
+page layout or the builder name is the likely cause. `check:cross-site` carries
+the same floor twice over: no HTML in `dist` at all, and no cross-site link on
+a site whose bar carries three of them on every page.
 
-`.github/workflows/check.yml` runs the same nine, in the same order. Keep the
+`.github/workflows/check.yml` runs the same ten, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -148,6 +152,30 @@ the wordmark and belongs to the mark alone. `resources/logo.md` is the page
 that says so and the one place either value is quoted to a reader — if you move
 an accent, move that table with it.
 
+**One origin is also what breaks a plain link between them, and every link out
+of this site carries `target="_self"` because of it.** This site is a single
+page application: VitePress's router listens on the window and takes over any
+link that is same-origin and looks like a page
+(`origin === currentUrl.origin && treatAsHtml(pathname)`, in
+`vitepress/dist/client/app/router.js`). `/playground/` passes both tests — so
+the router pushed the URL, went looking for a page of THIS site to render
+there, found none, and drew this site's own **404** in its place. The address
+bar said `/playground/`, the document said PAGE NOT FOUND, and a reload then
+loaded the real playground, which is what a failed SPA route change looks like
+from the outside. Every way out of the manual was in that state at once: both
+bar items, the *Linter rules* row in the menu, and the Run bar's *Switch to
+Playground with this code*.
+
+The router's own escape hatch is the line above those two tests — a link with a
+`target` attribute is left alone, whatever the value. `_self` is the value,
+because these three are one site and open in one tab. It is needed for
+**neighbours on this origin only**: a link to github.com is another origin, the
+router never looks at it, and VitePress gives external links in a page a
+`target="_blank"` of their own — which is why only the hand-written bar and
+menu ever got this wrong. `check:cross-site` now holds the whole built site to
+it, and the direction back needs nothing: the other three documents are static
+pages with no router in front of them.
+
 **One origin means one localStorage**, which is what two things here rely on:
 
 | | |
@@ -165,6 +193,26 @@ abap2ui5.github.io, so every path through `lastVisited( )` takes the
 different-origin branch and falls back. That is why the same-origin cases are a
 unit test with a stubbed `location` rather than an end-to-end one. The round
 trip itself is held over there, in `tests/site-memory.spec.js`.
+
+**Why this is not one deployment, and why merging them would not have helped.**
+The question comes up whenever the bar misbehaves: put the documentation, the
+playground and the catalogue in one GitHub Pages site and the seams go away.
+They are already on one origin — that is what a project page per repository
+under `abap2ui5.github.io` gives you — so a merge would buy no origin that is
+not already shared, and the 404 above was **not** a cross-origin problem: it
+was a same-origin one, caused by exactly the sharing a merge would deepen. One
+deployment would still serve the playground at a path VitePress does not own,
+the router would still swallow the link, and the fix would still be the
+attribute.
+
+What it would cost is concrete: one repository publishing everything means the
+documentation waits on the playground's build (a pinned framework, a transpile,
+UI5, seven hundred catalogue pages) to publish a typo fix, one `pages` queue
+for both, and the gates of two very different projects in one run. What it
+would buy — one bar instead of four, one palette — is real, and is the price
+deliberately paid above for a first paint that fetches nothing across a
+deployment. If that trade is ever re-opened, re-open it for the four copies of
+the bar, not for the links between the sites; those are one attribute.
 
 ## Things that will trip you up
 
@@ -184,6 +232,16 @@ trip itself is held over there, in `tests/site-memory.spec.js`.
   `check:version` keeps the release number in the nav bar, the deprecations
   page and the changelog honest. `A2UI5_REF` still overrides the ref — now to
   pin a run BACK to a release rather than forward to main.
+
+- **A link to a neighbouring site needs `target="_self"`, and looks fine
+  without it.** The playground, the catalogue and the linter's rule pages are
+  on this origin, so VitePress's router takes an ordinary link to them over,
+  finds no page of this site there and renders the 404 at their URL. Nothing
+  is red: the markup is valid, the URL is right, and a reload lands on the
+  real page — so it reads as the other site being down. Adding a row to the
+  bar or to the menu behind its last button means adding the attribute;
+  `npm run check:cross-site` (after a build) says so if you forget. A link to
+  another host needs nothing.
 
 - **The nav bar and the sidebar contain the same two entries.**
   `Contribution` and `Sponsor` appear in both `themeConfig.nav` and
