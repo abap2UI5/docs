@@ -12,8 +12,8 @@
   },
   "homepage": "https://github.com/abap2UI5/docs#readme",
   "scripts": {
-    "docs:dev": "node scripts/generate-llms.mjs && vitepress dev docs",
-    "docs:build": "node scripts/generate-llms.mjs && vitepress build docs",
+    "docs:dev": "node scripts/generate-llms.mjs && node scripts/generate-search.mjs && vitepress dev docs",
+    "docs:build": "node scripts/generate-llms.mjs && node scripts/generate-search.mjs && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "check:examples": "node scripts/check-examples.mjs",
     "check:conventions": "node scripts/check-conventions.mjs",
@@ -29,6 +29,7 @@
     "test": "node --test test/*.test.mjs",
     "check": "npm run test && npm run check:version && npm run docs:build && npm run check:cross-site && npm run check:examples && npm run check:conventions && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
     "llms": "node scripts/generate-llms.mjs",
+    "search": "node scripts/generate-search.mjs",
     "check:version": "node scripts/check-version.mjs"
   },
   "devDependencies": {

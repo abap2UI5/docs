@@ -152,67 +152,39 @@ export default defineConfig({
         "https://github.com/abap2UI5/docs/tree/main/docs/:path",
       text: "Edit this page on GitHub",
     },
-    search: {
-      provider: "local",
-    },
+    /* No `search` provider. VitePress's local search indexes the pages of THIS
+     * site and nothing else, and half of what a reader comes here to find is a
+     * sample in another repository - which meant knowing the catalogue existed
+     * and searching a second time, over there. The box in the middle of the bar
+     * is theme/SearchBox.vue, over one index that carries both areas
+     * (scripts/lib/search-index.mjs). The theme's own search slot stays empty;
+     * the component is rendered into `nav-bar-content-before`. */
     // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      {
-        text: "Guide",
-        items: [
-          // The section is called Getting Started in the sidebar this opens;
-          // "Introduction" was the first PAGE in it, one level down.
-          { text: "Getting Started", link: "/get_started/about" }, // nav
-          { text: "Tutorial", link: "/tutorials/walkthrough/" }, // nav
-          { text: "Cookbook", link: "/cookbook/view/definition" },
-          { text: "Configuration", link: "/configuration/setup" },
-          // Technical Insight is not a line of its own here any more: it is a
-          // subsection of Advanced Topic in the sidebar, and a flat dropdown
-          // that still lists it next to its parent tells the reader a
-          // different structure than the sidebar they land in.
-          { text: "Advanced Topics", link: "/advanced/downporting" }, // nav
-          { text: "Resources", link: "/resources/references" }, // nav
-        ],
-      },
-      {
-        // Just the repositories, flat. The dropdown used to carry the three
-        // sample catalogues on top of them, which meant nine entries in two
-        // groups and a reader scanning for "where is the code" reading past
-        // half of it first. The catalogues are a reading destination and are
-        // linked where a reader looks for one — the cookbook chapters, and
-        // the playground the home page opens; this menu answers the other
-        // question, which repository to clone.
-        text: "Links",
-        items: [
-          { text: "abap2UI5", link: "https://github.com/abap2UI5/abap2UI5" },
-          { text: "addons", link: "https://github.com/abap2UI5-addons" },
-          { text: "samples", link: "https://github.com/abap2UI5/samples" },
-          {
-            text: "samples-controls",
-            link: "https://github.com/abap2UI5/samples-controls",
-          },
-          {
-            text: "samples-stack",
-            link: "https://github.com/abap2UI5/samples-stack",
-          },
-          { text: "docs", link: "https://github.com/abap2UI5/docs" },
-          { text: "issues", link: "https://github.com/abap2UI5/abap2UI5/issues" },
-        ],
-      },
-      {
-        // the released framework version — z2ui5_if_app=>version in
-        // abap2UI5/src/02/z2ui5_if_app.intf.abap is where it comes from
-        text: "1.144.0",
-        items: [
-          { text: "Release Notes", link: "/resources/changelog" },
-          { text: "Support", link: "/resources/support" },
-          // NAV copy — the sidebar has the same two entries verbatim, further
-          // down under "Resource". Search for this marker, not for the text.
-          { text: "Contribution", link: "/resources/contribution" }, // nav
-          { text: "Sponsor", link: "/resources/sponsor" }, // nav
-        ],
-      },
-    ],
+    //
+    // EMPTY, AND THAT IS THE BAR'S SHAPE NOW. There were three dropdowns here
+    // - Guide, Links and the version number - and the bar they sat in has been
+    // rebuilt around the four sections of the project (Home, Documentation,
+    // Samples, Playground, in theme/SiteBar.vue), with the search in the
+    // middle and everything else behind the menu at the right-hand end. All
+    // three were duplicates of something the reader already had:
+    //
+    //   Guide      six entries, every one of them a section of the sidebar
+    //              that opens the moment Documentation is clicked. A dropdown
+    //              listing the navigation standing open below it is a second
+    //              copy to keep in step, and it drifted twice already - the
+    //              `// nav` / `// sidebar` markers in this file are the scar.
+    //   Links      seven repositories, all seven in the menu behind the bar's
+    //              last button, grouped by kind rather than flat.
+    //   1.144.0    four entries - release notes, support, contribute, sponsor
+    //              - all four already in that same menu. What was NOT
+    //              elsewhere is the NUMBER, which moved into the menu as its
+    //              first heading (`VERSION` in SiteBar.vue; check:version
+    //              follows it there).
+    //
+    // So nothing was taken off the site, only out of the row. Keep it empty:
+    // an entry added here lands between the sections and the search box, and
+    // the row stops reading left to right.
+    nav: [],
     sidebar: [
       {
         text: "Getting Started",

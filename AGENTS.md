@@ -19,7 +19,9 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
-| `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
+| `scripts/check-version.mjs` | The release number in the bar's menu, the deprecations page and the changelog, against the newest release tag of the framework |
+| `scripts/generate-search.mjs` | Builds `docs/public/search-index.json` — the pages of this site plus every entry in the three sample catalogues, which is what the box in the middle of the bar searches. Runs inside `docs:build`, so the deploy publishes it; `scripts/lib/search-index.mjs` is what goes in |
+| `scripts/lib/pages.mjs` | What a page of this site IS: the sidebar walk, its title, its first sentence, its headings, its words. Shared by `generate-llms.mjs` and `generate-search.mjs` so a page added to the sidebar reaches both |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/list-runnable.mjs` | The measurement's worklist: every fenced example that carries a Run button, out of the same `playground.mjs` that decides the button. `--json` adds each example's ABAP verbatim - what the button sends - so the measurement below can be driven rather than clicked |
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
@@ -28,6 +30,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
 | `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the menu behind the bar's last button — the light/dark switch, the project's tools and its repositories. Rendered into `nav-bar-content-after` by `theme/index.js`; the marks between them are VitePress's own `socialLinks`, ordered by `style.css` |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
 ## Build & verify — run before every commit
@@ -42,7 +45,7 @@ it are decidable, and all ten are decided before a merge:
 | | |
 |---|---|
 | `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate — and the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow |
-| `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
+| `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteBar.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` on `main`, plus every `blob/main/` link into the framework's tree, plus **no name from the frozen package** (`src/99`: `z2ui5_cl_util*`, `z2ui5_cl_pop_*`, `z2ui5_cl_xml_view*`, `z2ui5_if_exit`, `z2ui5_if_types`, …) anywhere but on the deprecations page and in the changelog. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
@@ -152,6 +155,39 @@ the wordmark and belongs to the mark alone. `resources/logo.md` is the page
 that says so and the one place either value is quoted to a reader — if you move
 an accent, move that table with it.
 
+**What the bar carries, left to right.** The mark and the name, then the four
+sections of the project — **Home**, **Documentation**, **Samples**,
+**Playground** — then the search, then the two marks and the menu behind the
+last button. One row at every width, which is the whole bar: the sections are
+hard against the brand because that is where a reader's eye already is, and the
+search sits on auto margins so it is centred in whatever the row has left
+rather than at a number that is right on one screen.
+
+Two of the four sections are pages of THIS deployment (Home is
+`docs/index.md`, which the brand alone used to open and nothing named;
+Documentation opens the manual) and two are the neighbouring sites. The one
+you are on is marked, which for this site means Home *or* Documentation
+depending on the page — `relativePath` decides it, server-side, so the bar is
+right in the HTML rather than after hydration.
+
+**The search is one box for the whole project.** It was VitePress's own local
+search, which indexes the pages of this site and nothing else — and half of
+what a reader wants is a sample, in another repository, on another deployment.
+`theme/SearchBox.vue` searches one index instead
+(`/docs/search-index.json`, built by `generate-search.mjs`): every page of the
+manual with its headings and its words, and all ~770 entries of the three
+sample catalogues with the titles, summaries and keywords those repositories
+maintain. Results are grouped by area, documentation first, and a sample hit
+opens that sample's own page in the catalogue.
+
+The index is generated, gitignored and fetched lazily — nothing is loaded until
+somebody types. The matching is `theme/search-engine.js`, deliberately
+framework-free: the other three bars are static HTML and carry a copy of it,
+the same arrangement as the palette and the position memory. **The index is not
+copied.** It is one document on the shared origin, fetched by whichever site
+the reader is on, because two copies of the data would be two answers to the
+same query.
+
 **One origin is also what breaks a plain link between them, and every link out
 of this site carries `target="_self"` because of it.** This site is a single
 page application: VitePress's router listens on the window and takes over any
@@ -229,7 +265,7 @@ the bar, not for the links between the sites; those are one attribute.
   `.github/shared/check-framework-pin.mjs`, "releases never gate a merge").
   What a reader on the newest release does not have yet is now a question of
   PROSE: `resources/deprecations.md` carries a *next release* column, and
-  `check:version` keeps the release number in the nav bar, the deprecations
+  `check:version` keeps the release number in the bar's menu, the deprecations
   page and the changelog honest. `A2UI5_REF` still overrides the ref — now to
   pin a run BACK to a release rather than forward to main.
 
@@ -243,13 +279,15 @@ the bar, not for the links between the sites; those are one attribute.
   `npm run check:cross-site` (after a build) says so if you forget. A link to
   another host needs nothing.
 
-- **The nav bar and the sidebar contain the same two entries.**
-  `Contribution` and `Sponsor` appear in both `themeConfig.nav` and
-  `themeConfig.sidebar` in `config.mjs`. The four lines now carry a `// nav` or
-  `// sidebar` marker so each one is unique — match on the marker, not on the
-  link. Any further line that has to exist twice gets the same treatment;
-  a replace-first edit on a text that appears twice hits the wrong one and
-  looks like it worked.
+- **`themeConfig.nav` is empty, and it stays empty.** The bar carries the four
+  sections of the project (`theme/SiteBar.vue`), the search, and everything
+  else behind the menu at its right-hand end. An entry added back to `nav`
+  lands between the sections and the search box and the row stops reading left
+  to right. What used to be there — Guide, Links, the version number — is
+  written out in `config.mjs` where the array was, including where each one
+  went. The `// nav` / `// sidebar` markers left in the sidebar are the scar of
+  the duplication that dropdown cost: two of its entries stood twice in one
+  file, and a replace-first edit hit the wrong one and looked like it worked.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
   frozen builder — unless the page carries the migration banner, and refuses a

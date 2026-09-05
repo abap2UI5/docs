@@ -40,108 +40,19 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import config from '../docs/.vitepress/config.mjs';
 import { countCatalogue } from './lib/catalogue.mjs';
+/* The page walk and the two things read out of a page are in lib/pages.mjs,
+ * shared with generate-search.mjs: what counts as a page of this site is one
+ * answer, not one per generator. */
+import {
+  ROOT, DOCS, SITE,
+  sidebarPages, markdownFiles, mdSuffix, linkOf, fileOf,
+  stripFrontmatter, summarise, title,
+} from './lib/pages.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const DOCS = path.join(ROOT, 'docs');
 const PUBLIC = path.join(DOCS, 'public');
-const SITE = 'https://abap2ui5.github.io/docs';
 
 /* ------------------------------------------------------------- the pages */
-
-/** Every sidebar entry with a local link, in sidebar order, first one wins:
- *  several groups deliberately point their own heading at their first page. */
-function sidebarPages() {
-  const seen = new Set();
-  const out = [];
-  const walk = (nodes, section) => {
-    for (const node of nodes || []) {
-      // a top-level group names the section everything under it belongs to
-      const here = section ?? node.text;
-      if (node.link?.startsWith('/') && !seen.has(node.link)) {
-        seen.add(node.link);
-        out.push({ section: here, text: node.text, link: node.link });
-      }
-      walk(node.items, here);
-    }
-  };
-  walk(config.themeConfig.sidebar, null);
-  return out;
-}
-
-function markdownFiles(dir, out = []) {
-  for (const name of fs.readdirSync(dir)) {
-    if (name === '.vitepress' || name === 'public' || name === 'node_modules') continue;
-    const full = path.join(dir, name);
-    if (fs.statSync(full).isDirectory()) markdownFiles(full, out);
-    else if (full.endsWith('.md')) out.push(full);
-  }
-  return out;
-}
-
-/* A page link and the file behind it are NOT a plain `.md` suffix apart.
- * VitePress serves `<dir>/index.md` at `<dir>/`, so the trailing slash IS the
- * index page, and `docs/index.md` (the home page) is the same rule at the
- * root - which is why the orphan filter below used to carry a hand-written
- * `/index` exception. Everything that converts between the two goes through
- * mdSuffix, or a directory index resolves to `<dir>/.md` and takes the build
- * down, which is exactly what happened the first time a section grew one. */
-const mdSuffix = (link) => (link.endsWith('/') ? `${link}index.md` : `${link}.md`);
-const linkOf = (file) => {
-  const rel = path.relative(DOCS, file).replace(/\\/g, '/');
-  if (rel === 'index.md') return '/';
-  if (rel.endsWith('/index.md')) return `/${rel.slice(0, -'index.md'.length)}`;
-  return `/${rel.replace(/\.md$/, '')}`;
-};
-const fileOf = (link) => path.join(DOCS, mdSuffix(link).slice(1));
-
-/* ------------------------------------------------------------ the content */
-
-const stripFrontmatter = (text) => text.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
-
-/** The first real sentence of a page, for the one-line note in the index.
- *
- *  The WHOLE first paragraph is collected before cutting: the sources are hard
- *  wrapped, so stopping at the newline would end half the notes mid-sentence.
- *
- *  Link syntax and `*` emphasis are flattened, and backticks with them - but
- *  NOT the underscore. Almost every identifier this documentation is about
- *  carries one (`_bind`, `check_on_init`, `s_device`), and an index that
- *  advertises `client->bind( )` is worse than no index: it is a plausible,
- *  citable, wrong API name aimed at the one reader least able to notice. */
-function summarise(body) {
-  const lines = stripFrontmatter(body).split('\n');
-  const para = [];
-  let inFence = false;
-  for (const line of lines) {
-    if (line.startsWith('```')) { inFence = !inFence; continue; }
-    if (inFence) continue;
-    const t = line.trim();
-    if (!para.length) {
-      if (!t || t.startsWith('#') || t.startsWith(':::') || t.startsWith('|') || t.startsWith('<')) continue;
-      para.push(t);
-      continue;
-    }
-    if (!t) break; // the paragraph ended
-    para.push(t);
-  }
-  const plain = para.join(' ')
-    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-    .replace(/[*`]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-  if (!plain) return '';
-  // cut at the end of the first sentence, but not so early that the note says
-  // nothing; a period inside `sap.m.Table` or `1.71` is not a sentence end
-  const stop = plain.search(/\.(?=\s|$)|:\s—|\s—\s/);
-  const first = stop > 40 ? plain.slice(0, stop + 1) : plain;
-  return first.length > 220 ? `${first.slice(0, 217)}...` : first;
-}
-
-const title = (body, fallback) =>
-  (stripFrontmatter(body).match(/^#\s+(.+?)\s*$/m) || [, fallback])[1].trim();
 
 /* -------------------------------------------------------------------- run */
 

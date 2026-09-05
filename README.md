@@ -47,6 +47,23 @@ why the deploy re-runs them rather than trusting the merge.
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
 
+### The bar, and what the search covers
+
+The bar is the mark, then the four sections — **Home**, **Documentation**,
+**Samples**, **Playground** — then one search box, then the project's links.
+The two middle sections are this site; Samples and Playground are the two
+neighbouring deployments on the same origin, and all four bars across them are
+kept identical by hand.
+
+The search covers **both areas at once**: every page here, and every one of the
+~770 samples in [samples](https://github.com/abap2UI5/samples),
+[samples-controls](https://github.com/abap2UI5/samples-controls) and
+[samples-stack](https://github.com/abap2UI5/samples-stack). It reads one
+generated index (`npm run search`), published at
+[`/docs/search-index.json`](https://abap2ui5.github.io/docs/search-index.json)
+and fetched by the playground and the catalogue too, so one query answers from
+one place wherever it is typed.
+
 ### What the site publishes for machines
 
 Besides the site, `docs:build` writes [`llms.txt`](https://abap2ui5.github.io/docs/llms.txt),

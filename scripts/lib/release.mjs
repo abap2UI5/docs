@@ -20,9 +20,17 @@ import path from 'path';
 /** Where the version is written, and how to find it in each file. */
 const SITES = [
   {
-    file: 'docs/.vitepress/config.mjs',
-    what: 'the version in the nav bar',
-    re: /text:\s*"(\d+\.\d+\.\d+)"/,
+    /* The bar, which is theme/SiteBar.vue and not config.mjs any more. The
+     * number used to be a nav dropdown's label - `text: "1.144.0"` - and the
+     * dropdown is gone: its four entries were already in the menu behind the
+     * bar's last button, so the rebuilt bar kept the number and dropped the
+     * duplicate rows. A gate that still matched `text:` in config.mjs would
+     * have found the FIRST nav-shaped string in a 700-line file, which is
+     * exactly the silent wrong answer the shape checks below exist to
+     * prevent. */
+    file: 'docs/.vitepress/theme/SiteBar.vue',
+    what: "the version in the bar's menu",
+    re: /const VERSION = "(\d+\.\d+\.\d+)"/,
   },
   {
     file: 'docs/resources/deprecations.md',
