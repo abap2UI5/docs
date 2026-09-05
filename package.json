@@ -20,6 +20,7 @@
     "fmt:chains": "node scripts/check-conventions.mjs --fix",
     "check:playground": "node scripts/check-playground.mjs",
     "check:cross-site": "node scripts/check-cross-site.mjs",
+    "check:design": "node scripts/check-design.mjs",
     "runnable": "node scripts/list-runnable.mjs",
     "check:api-names": "node scripts/check-api-names.mjs",
     "generate:api": "node scripts/generate-api-reference.mjs",
@@ -27,7 +28,7 @@
     "link:samples": "node scripts/link-samples.mjs",
     "check:samples": "node scripts/link-samples.mjs --check",
     "test": "node --test test/*.test.mjs",
-    "check": "npm run test && npm run check:version && npm run docs:build && npm run check:cross-site && npm run check:examples && npm run check:conventions && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
+    "check": "npm run test && npm run check:version && npm run docs:build && npm run check:cross-site && npm run check:design && npm run check:examples && npm run check:conventions && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
     "llms": "node scripts/generate-llms.mjs",
     "search": "node scripts/generate-search.mjs",
     "check:version": "node scripts/check-version.mjs"

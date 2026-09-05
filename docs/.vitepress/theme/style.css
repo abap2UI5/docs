@@ -104,11 +104,50 @@
  * `config.mjs` and applied by nothing: no rule in this file, or anywhere
  * else, ever named them. They are gone from the head with this change. */
 :root {
-  --vp-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                         "Noto Sans", Helvetica, Arial, sans-serif,
+  /* THE SAME TWO STACKS AS THE OTHER THREE DOCUMENTS, character for character
+   * (`--font-ui` / `--font-mono` in src/catalogue/catalogue.css and
+   * src/shell/shell.css over there). They were two stacks that agreed on every
+   * platform but one: this one led with `-apple-system` and the playground's
+   * with `system-ui`, which resolve to the same face on macOS and to the same
+   * fallback on Windows - and to DIFFERENT fonts on Linux, where
+   * `-apple-system` means nothing. Measured there, the four bars drew the same
+   * four words at 59/122/78/97px here and 65/141/87/110 over there: one bar in
+   * two typefaces.
+   *
+   * `system-ui` leads now, with `-apple-system` behind it for the Safari
+   * versions that predate it, and the union of both mono lists. Both files
+   * carry the same string, and check:design holds them to it - the palette
+   * below has been copied by hand between the repositories since it was
+   * written, and until that gate existed nothing but care kept it true. */
+
+  /* TWO RADII, NAMED, AND THE SAME TWO IN ALL FOUR DOCUMENTS.
+   *
+   * Neither side of this project had a scale before: measured across the two
+   * stylesheets there were 5, 6, 8, 4, 10 and 999px in use, and the spread
+   * INSIDE each was as wide as the spread between them. So this is not "the
+   * catalogue's number, adopted" - there was no number to adopt. It is one
+   * decision, written down once:
+   *
+   *   control   what you click or type in - a pill, a button, an input, the
+   *             search box in the bar. 5px, which is what the bar already
+   *             carried on all four documents.
+   *   surface   what things sit ON - a panel, a dialog, a card. 8px.
+   *
+   * What is deliberately NOT swept into them is every existing 6px in this
+   * file: the reading column's own furniture (code blocks, custom blocks, the
+   * feature cards) is VitePress's scale, it is internally consistent, and
+   * re-cutting twenty corners for a pixel nobody can see next to a page they
+   * are not looking at would be a large diff buying nothing. The tokens are
+   * for what the four documents SHARE, and check:design holds those to the
+   * same values on both sides. */
+  --radius-control: 5px;
+  --radius-surface: 8px;
+
+  --vp-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, "Noto Sans", Helvetica, Arial, sans-serif,
                          "Apple Color Emoji", "Segoe UI Emoji";
-  --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
-                         Consolas, "Liberation Mono", monospace;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", "Cascadia Mono",
+                         Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Body links in the accent.
    *
@@ -1275,86 +1314,60 @@
   }
 }
 
-/* ============================================== the bar the three sites share ===
+/* ============================================== the bar the four sites share ===
  *
- * The playground, the sample catalogue and this site are three deployments on
- * one origin, and from here on they wear ONE bar: the mark and the name,
- * closed by a hairline; at the other end a hairline, the three sites with the
- * one you are on in bold, a hairline, LinkedIn and GitHub, then the button
- * that opens the menu - light or dark, the project's tools and repositories.
- * The numbers below are the catalogue's own (src/catalogue/catalogue.css in
- * abap2UI5/playground) — 46px tall on the sunken grey, 5px pills, 18px marks
- * in a 30px box, every hairline 16px from what is on either side of it —
- * because a reader crossing between them should read one bar and not three
- * interpretations of a house style.
+ * The playground, the sample catalogue, the per-sample pages and this site are
+ * four deployments on one origin, and they wear ONE bar: the mark and the
+ * name, closed by a hairline; the four sections of the project with the one
+ * you are on in bold; the search box in the middle; then a hairline, LinkedIn
+ * and GitHub, then the button that opens the menu - light or dark, the
+ * project's tools and repositories.
  *
- * What is NOT the catalogue's is everything this site has that a catalogue
- * does not: the search box, the Guide and Links menus, the version menu.
- * Those keep VitePress's own drawing and only lose their size, so they sit in
- * the row rather than setting its height.
+ * THE BAR IS ONE ELEMENT OF OURS NOW (theme/TheBar.vue), rendered into
+ * `nav-bar-content-before`. It used to be the theme's bar with our parts
+ * pushed into its slots and its own parts argued out of the way here: 85
+ * selector lines under `.Layout .VPNav …` against 42 theme elements - the
+ * brand placed absolutely over the sidebar's column, five slot children
+ * ordered by hand, two wrappers made `position: relative` by the theme, its
+ * own "…" menu, its appearance switch, its social links' margins. Every
+ * change in that layout had to undo something first: centring the search box
+ * needed two of the theme's rules taken back before it could be measured.
  *
- * The three items and the menu are theme/SiteBar.vue, rendered into the
- * `nav-bar-content-after` slot — which is the LAST thing in the row, after
- * VitePress's own appearance switch and social links. `order` puts each half
- * where it belongs, the sites before the marks and the menu after them; see
- * below.
+ * What is left below is the small half of that: the theme's bar is now a
+ * CONTAINER for one element, so what it needs is a height, a colour, a
+ * hairline, and its own parts told not to draw. Everything else in this
+ * section styles our own markup and reads like the catalogue's stylesheet,
+ * because it is the same bar - 46px on the sunken grey, 5px pills, 18px marks
+ * in a 30px box, every hairline 16px from what is on either side of it.
+ *
+ * The theme keeps exactly two things, because they are worth keeping and not
+ * worth rebuilding: the hamburger, and the screen it opens on a phone.
  *
  * Specificity, as everywhere in this file: the theme's rules are Vue SCOPED
  * styles and compile with a `[data-v-…]` attribute, so a bare class here would
  * lose to them. `.Layout .VPNav` in front of a rule takes it to three units
- * and past most of them; where the theme's own selector is longer than that,
- * the rule below says so and carries more.
+ * and past most of them.
  */
 
 :root {
   /* 46px, the catalogue's bar height. Everything the theme lays out under the
-   * bar — the sidebar's top, the scroll offset a `#hash` lands at, the home
-   * page's hero padding — is written against this variable, so the one number
+   * bar - the sidebar's top, the scroll offset a `#hash` lands at, the home
+   * page's hero padding - is written against this variable, so the one number
    * moves all of it. */
   --vp-nav-height: 46px;
   --vp-nav-bg-color: var(--bg-sunken);
-  /* The mark, at the size the other three bars draw it. */
-  --vp-nav-logo-height: 20px;
 }
 
 /* The bar is the sunken grey at every width and on every page, the home page
- * included. The theme leaves it TRANSPARENT at the top of the home page and
- * paints only the `.content-body` strip on a page with a sidebar; both are
- * good decisions for a site whose bar is its own, and neither survives the
- * bar being shared with two other documents. `:not(.screen-open)` is not a
- * condition, it is a fourth unit of specificity — the theme's own rule for an
- * open mobile menu paints the same colour anyway. */
+ * included. `:not(.screen-open)` is not a condition, it is a fourth unit of
+ * specificity - the theme's own rule for an open mobile menu paints the same
+ * colour anyway. */
 .Layout .VPNav .VPNavBar:not(.screen-open) {
   background-color: var(--bg-sunken);
 }
 
-/* NOTHING INSIDE IT CARRIES A FILL. The theme draws this bar in pieces — a
- * transparent bar with a painted brand and a painted content strip, so that
- * the strip can fade in over the home page's hero — and both pieces are
- * `var(--vp-nav-height)` tall, which is one pixel MORE than the bar's content
- * box now that the bar carries the hairline as its own bottom border. Each of
- * them therefore painted over that pixel: the fill under the brand hid the
- * line beneath the mark, the fill under the content hid it from the search box
- * rightwards, and what was left read as a rule with two gaps in it. With the
- * whole bar painted above, neither fill has anything left to do. */
-.Layout .VPNav .VPNavBar .title,
-.Layout .VPNav .VPNavBar .content-body {
-  background-color: transparent;
-}
-
-/* And the content strip is held INSIDE the bar's content box, one pixel short
- * of it, rather than only asked not to paint. The theme's own fill for that
- * strip is `.VPNavBar:not(.home.top) .content-body` — five units against the
- * four above it, so it wins the colour argument on a page that is not the home
- * page at the top, and the hairline came back missing from the sidebar's edge
- * rightwards. It cannot cover a row it does not reach; the height rule is two
- * units in the theme, so this one wins it outright. */
-.Layout .VPNav .VPNavBar .content-body {
-  height: calc(var(--vp-nav-height) - 1px);
-}
-
 /* One hairline under the bar, and one only. The theme draws its own as a
- * `.divider` element BELOW the 46px — so the bar came to 47px and the line was
+ * `.divider` element BELOW the 46px - so the bar came to 47px and the line was
  * two pixels thick everywhere the brand did not cover it. The border is inside
  * the 46, which is where the catalogue's is. */
 .Layout .VPNav .VPNavBar {
@@ -1365,42 +1378,29 @@
   display: none;
 }
 
-/* The brand: the mark and the name (`siteTitle` in config.mjs), closed by a
- * hairline 16px from it - 8 of the gap, 8 of its own margin - as on the other
- * three bars. The theme sets 16px semibold, which is a heading; over there it
- * is body text. */
-.Layout .VPNav .VPNavBar .title {
-  font-size: 14px;
-  font-weight: 400;
-  gap: 8px;
+/* THE THEME'S OWN PARTS, TOLD NOT TO DRAW. Each one is replaced by something
+ * in TheBar.vue: its brand by ours, its search slot by our box, its nav menu
+ * by the four sections, its appearance switch and its "…" menu by the menu
+ * behind the last mark, its social links by the two marks we draw. They are
+ * hidden rather than removed because the theme still mounts them, and two of
+ * them still do work while invisible: the appearance switch is what `isDark`
+ * is read and written through. */
+.Layout .VPNav .VPNavBar .title,
+.Layout .VPNav .VPNavBar .search,
+.Layout .VPNav .VPNavBar .menu,
+.Layout .VPNav .VPNavBar .translations,
+.Layout .VPNav .VPNavBar .appearance,
+.Layout .VPNav .VPNavBar .social-links,
+.Layout .VPNav .VPNavBar .extra {
+  display: none;
 }
 
-.Layout .VPNav .VPNavBar a.title::after {
-  content: "";
-  width: 1px;
-  height: 22px;
-  margin-left: 8px;
-  background: var(--line);
-}
-
-.Layout .VPNav .VPNavBar .title .logo {
-  margin-right: 0;
-}
-
-/* ------------------------------------------------------- the measure ---
- *
- * The catalogue's bar stands 20px from either edge at every width, over the
- * whole width, and 12px on a phone (catalogue.css); the theme's stands 24 and
- * then 32, and from 1440px it is centred with the page under it. A reader
- * crossing from the catalogue saw the brand step 12px to the right and the
- * menu's button step in from the edge - the one difference left between the
- * four bars, and one with no reason behind it. So: the catalogue's numbers,
- * for the two layouts the theme has. On a page without a sidebar the bar is
- * one `.wrapper` with padding and a centred `.container`; on a page with one,
- * from 960px, the wrapper's padding goes and the brand is placed absolutely
- * at the left, with the content strip padded to sit beside it. The sidebar's
- * own text stays where the theme puts it (32px): it is a column of the page,
- * not part of the bar. */
+/* And the row that holds ours: the whole width, 20px from either edge, 12px on
+ * a phone - the catalogue's measure, for the two layouts the theme has. On a
+ * page with a sidebar the theme pads this strip by the sidebar's width so it
+ * lines up with the column below; that was right when the brand sat
+ * absolutely over that column and is a 272px hole now that the brand is in
+ * the row. */
 .Layout .VPNav .VPNavBar .wrapper {
   padding: 0 20px;
 }
@@ -1409,49 +1409,29 @@
   max-width: none;
 }
 
-/* ONE ROW, AND THE BRAND IS PART OF IT.
- *
- * The theme has two nav layouts, and the second one is the reason this block
- * exists. On a page with a sidebar it places the brand ABSOLUTELY over the
- * sidebar's column and pads the content strip by the sidebar's width, so that
- * the two line up with the columns below them. That is a good decision for a
- * bar whose only job is to sit on top of this site - and it puts a 272px gap
- * between the brand and the first thing after it, which is exactly where the
- * four sections now go. Left of the gap: the mark. Right of it: everything.
- *
- * So the brand is placed in the row like any other item, at every width, and
- * the content strip beside it starts where the brand ends. The bar reads as
- * one row across the whole width - which is what the catalogue's bar already
- * was, and what the sections needed to sit next to the name. */
+.Layout .VPNav .VPNavBar .content {
+  flex: 1;
+}
+
+.Layout .VPNav .VPNavBar .content-body {
+  height: calc(var(--vp-nav-height) - 1px);
+  background: transparent;
+}
+
 @media (min-width: 960px) {
   .Layout .VPNav .VPNavBar.has-sidebar .wrapper {
-    padding: 0 0 0 20px;
-  }
-
-  .Layout .VPNav .VPNavBar.has-sidebar .title {
-    position: static;
-    padding: 0;
-    width: auto;
+    padding: 0 20px;
   }
 
   .Layout .VPNav .VPNavBar.has-sidebar .content {
-    padding-right: 20px;
+    padding-right: 0;
     padding-left: 0;
   }
 }
 
-/* The same two rules again for the width at which the theme centres the bar
- * over the page: from 1440px it recomputes the brand's width and the strip's
- * padding from the layout's max width, and both terms are the sidebar again.
- * Left as they were, the gap comes back on a wide screen only. */
 @media (min-width: 1440px) {
-  .Layout .VPNav .VPNavBar.has-sidebar .title {
-    padding-left: 0;
-    width: auto;
-  }
-
   .Layout .VPNav .VPNavBar.has-sidebar .content {
-    padding-right: 20px;
+    padding-right: 0;
     padding-left: 0;
   }
 }
@@ -1462,105 +1442,45 @@
   }
 }
 
-/* ---------------------------------------------------- the row's order ---
+/* ------------------------------------------------------------ our bar ---
  *
- * `.content-body` is a flex row, so the slot's content can be moved without
- * moving it in the DOM. Three groups, in this order:
- *
- *   the four sections   hard against the brand, which is what "the menu on
- *                       the left" means: a reader's eye starts at the mark and
- *                       the next thing it meets is where they can go
- *   the search          in the middle, on auto margins - it takes whatever is
- *                       left between the sections and the marks, so it is
- *                       centred in the row's free space at every width
- *                       rather than at a number that is only right on one
- *                       screen
- *   the rest            the two marks and the menu behind the last button,
- *                       right, where they were
- *
- * The DOM order is search (`nav-bar-content-before`), then the sections and
- * the menu (`nav-bar-content-after`); `order` is what makes the row read
- * left to right. The hamburger stays last. */
-.Layout .VPNav .VPNavBar .bar-nav { order: 1; }
-.Layout .VPNav .VPNavBar .a2ui5-search-button { order: 2; margin: 0 auto; }
-
-/* THE BOX IS CENTRED ON THE BAR, NOT ON WHAT IS LEFT OVER.
- *
- * `margin: 0 auto` above centres it in the free space of `.content-body`, and
- * that is not the middle of anything a reader can see: the row it sits in
- * starts AFTER the brand, and the group on its left (four words) is far wider
- * than the group on its right (three glyphs). Measured, it stood 181px right
- * of the window's centre at every width - which is what it looked like.
- *
- * So above the width where the row is comfortable it is placed absolutely,
- * against `.container` - the element that spans the whole bar, brand included.
- * The auto margins stay for narrower windows, where an absolutely placed box
- * would sooner or later sit on top of the words on either side of it.
- *
- * The two `position: relative` rules being undone here are the theme's, and
- * they were for the layout this bar no longer uses: they raised the content
- * strip above the brand back when the brand was placed absolutely over the
- * sidebar's column. The brand is in the row now (see "ONE ROW" above), so
- * there is nothing left for them to lift, and while they stood they were the
- * nearest positioned ancestor - which would have centred the box on the strip
- * again, the very thing this rule is for. */
-@media (min-width: 1100px) {
-  .Layout .VPNav .VPNavBar .container {
-    position: relative;
-  }
-
-  .Layout .VPNav .VPNavBar.has-sidebar .content,
-  .Layout .VPNav .VPNavBar:not(.home.top) .content-body {
-    position: static;
-  }
-
-  .Layout .VPNav .VPNavBar .a2ui5-search-button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin: 0;
-    transform: translate(-50%, -50%);
-  }
-
-  /* And the sections hold the left themselves. `.content-body` justifies to
-   * the END, so while the box was in the row its auto margins were what kept
-   * the four words against the brand; the moment it left the flow they packed
-   * to the right with the marks - 820px away from the mark they belong to.
-   * This is that job, done by the group that needs it. */
-  .Layout .VPNav .VPNavBar .bar-nav {
-    margin-right: auto;
-  }
-}
-.Layout .VPNav .VPNavBar .social-links { order: 3; }
-.Layout .VPNav .VPNavBar .a2ui5-extra { order: 4; }
-.Layout .VPNav .VPNavBar .hamburger { order: 5; }
-
-/* The theme's own search slot, which is empty now (no `search` provider in
- * config.mjs) but still laid out with a width and a margin on some widths. */
-.Layout .VPNav .VPNavBar .search { display: none; }
-
-/* The theme's own "…" menu, shown between 768 and 1279px with its appearance
- * switch and its social links in it. The menu behind the third mark replaces
- * it at every width. */
-.Layout .VPNav .VPNavBar .extra { display: none; }
-
-/* The theme's own appearance switch, which SiteBar.vue replaces with the
- * button the other three bars carry. It is still mounted and still doing the
- * work — `isDark` is read and written through it — it is simply not drawn. */
-.Layout .VPNav .VPNavBar .appearance {
-  display: none;
+ * One flex row across the whole width. Everything in it is ours, so there is
+ * no `order` to juggle and nothing to push out of the way: the brand, the
+ * sections, the marks and the menu sit in the order they are written, and the
+ * search box is placed at the middle of THIS element - which spans the bar,
+ * brand included, and is why the box can simply be centred instead of being
+ * pushed towards the middle by auto margins in a row that starts after the
+ * brand. */
+.Layout .VPNav .a2ui5-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: calc(var(--vp-nav-height) - 1px);
 }
 
-/* The theme's dividers between the groups it knows about. They are drawn from
- * `.menu + .appearance::before` and friends, and with the appearance switch
- * gone they land in the wrong places. The one in front of the marks is the
- * same pseudo-element as the marks' own line below, so it is not hidden here
- * but restyled there - with one class more than the theme's `.appearance +
- * .social-links::before`, which otherwise wins the margins. */
-.Layout .VPNav .VPNavBar .menu + .translations::before,
-.Layout .VPNav .VPNavBar .menu + .appearance::before,
-.Layout .VPNav .VPNavBar .translations + .appearance::before {
-  display: none;
+/* The mark and the name, closed by a hairline 16px from the first word after
+ * it - 8 of the line's own margin, 6 of the nav's, 10 of the link's padding.
+ * The theme sets its brand in 16px semibold, which is a heading; on the other
+ * three bars it is body text. */
+.Layout .VPNav .a2ui5-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: var(--fg);
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.Layout .VPNav .a2ui5-brand::after {
+  content: "";
+  width: 1px;
+  height: 22px;
+  margin-left: 8px;
+  background: var(--line);
 }
 
 /* ------------------------------------------------------ the four sections ---
@@ -1586,7 +1506,7 @@
 .Layout .VPNav .bar-nav a,
 .Layout .VPNav .bar-nav .here {
   padding: 5px 10px;
-  border-radius: 5px;
+  border-radius: var(--radius-control);
   color: var(--fg-dim);
   font-size: 14px;
   text-decoration: none;
@@ -1769,43 +1689,66 @@
 
 /* ------------------------------------------------------------ the marks ---
  *
- * One hairline, then the two of them, then the menu's button — the end of the
- * bar on all four documents. The line stands 16px from the word (the link's
- * padding 10 + 6) and 16px from the mark (10 + the 6 a glyph sits inside its
- * box). The theme draws a `.VPSocialLink` at 36px with a 20px glyph; the
- * catalogue draws 30px with an 18px glyph, and the slow colour change on hover
- * is its own. */
-.Layout .VPNav .VPNavBar .content-body .social-links::before {
+ * One hairline, then the two of them, then the menu's button - the end of the
+ * bar on all four documents. The line stands 16px from the word before it (the
+ * link's padding 10 + 6) and 16px from the mark (10 + the 6 a glyph sits
+ * inside its box). They are our own markup now (TheBar.vue): the theme drew a
+ * `.VPSocialLink` at 36px with a 20px glyph and pulled the group 8px past the
+ * row's end, and holding that to the catalogue's 30px box and 18px glyph took
+ * four overrides that are gone with it.
+ *
+ * `margin-left: auto` is what holds this group, and the menu after it, at the
+ * right-hand end - the one auto margin left in the bar, and the only one it
+ * needs now that everything in the row is ours. */
+.Layout .VPNav .a2ui5-socials {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.Layout .VPNav .a2ui5-socials::before {
   content: "";
-  display: block;
   width: 1px;
   height: 22px;
   margin: 0 10px 0 6px;
   background: var(--line);
 }
 
-/* The theme pulls the marks 8px past the row's end; here the menu's button is
- * last and carries that margin instead. */
-.Layout .VPNav .VPNavBar .social-links {
+.Layout .VPNav .a2ui5-socials a {
   display: flex;
   align-items: center;
-  margin-right: 0;
-}
-
-.Layout .VPNav .VPSocialLink {
+  justify-content: center;
   width: 30px;
   height: 30px;
   color: var(--fg-dim);
   transition: color 0.5s;
 }
 
-.Layout .VPNav .VPSocialLink:hover { color: var(--fg); }
+.Layout .VPNav .a2ui5-socials a:hover { color: var(--fg); }
 
-.Layout .VPNav .VPSocialLink svg,
-.Layout .VPNav .VPSocialLink > span {
+.Layout .VPNav .a2ui5-socials svg {
   width: 18px;
   height: 18px;
   fill: currentColor;
+}
+
+/* THE BOX IS CENTRED ON THE BAR, and now that is one rule: `.a2ui5-bar` spans
+ * the whole row, brand included, and is positioned, so the box is placed at
+ * its middle. It took three rules and two UNDONE theme rules while the bar was
+ * the theme's - the box lived in a strip that starts after the brand, so
+ * `margin: 0 auto` centred it 181px right of the window's middle, and the
+ * nearest positioned ancestor was that strip rather than the bar.
+ *
+ * Only above the width where the row is comfortable; below it the box stays in
+ * the flow, where it cannot come to rest on top of the words beside it. */
+@media (min-width: 1100px) {
+  .Layout .VPNav .a2ui5-search-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
 }
 
 /* --------------------------------------------------------- the search ---
@@ -1826,6 +1769,10 @@
 .Layout .VPNav .a2ui5-search-button {
   display: flex;
   align-items: center;
+  /* Below 1100px the box is a flex child again and takes the free space
+   * between the sections and the marks - not the middle of the window, but
+   * never on top of a word either. */
+  margin: 0 auto;
   gap: 6px;
   padding: 0 8px;
   height: 30px;
@@ -1833,7 +1780,7 @@
   max-width: 380px;
   flex: 0 1 320px;
   border: 1px solid var(--line);
-  border-radius: 5px;
+  border-radius: var(--radius-control);
   background: var(--bg);
   color: var(--fg-dim);
   font-size: 13px;
@@ -1909,7 +1856,7 @@
   width: min(680px, 100%);
   max-height: 76vh;
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: var(--radius-surface);
   background: var(--bg);
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.25);
   overflow: hidden;
@@ -2044,15 +1991,15 @@
  * for before anything is read. The menu stays: the theme switch is in it, and
  * GitHub is one of its rows. */
 @media (max-width: 767px) {
-  .Layout .VPNav .VPNavBar .bar-nav,
-  .Layout .VPNav .VPNavBar .social-links {
+  .Layout .VPNav .a2ui5-bar .bar-nav,
+  .Layout .VPNav .a2ui5-bar .a2ui5-socials {
     display: none;
   }
 
   /* The search stays. It is the one thing on a phone that answers a question
    * without a menu first, so it keeps the row and loses its label to the
    * glyph. */
-  .Layout .VPNav .VPNavBar .a2ui5-search-button {
+  .Layout .VPNav .a2ui5-search-button {
     margin-left: auto;
     margin-right: 4px;
   }
@@ -2070,4 +2017,24 @@
 .Layout .VPNavScreen .bar-nav a,
 .Layout .VPNavScreen .bar-nav .here {
   padding: 8px 12px;
+}
+
+/* ONE FOCUS RING, AND THE DOCUMENTATION HAD NONE OF ITS OWN.
+ *
+ * The catalogue draws `2px solid var(--accent)` with a 2px offset on anything
+ * that takes focus (catalogue.css); here it was whatever the browser and the
+ * default theme happened to agree on, which on the same origin, in the same
+ * bar, is two different rings a keyboard reader meets one tab apart. Same
+ * ring, same offset, same colour - and `:focus-visible`, so a mouse click does
+ * not draw it. */
+.Layout a:focus-visible,
+.Layout button:focus-visible,
+.Layout summary:focus-visible,
+.Layout input:focus-visible,
+.a2ui5-search-scrim a:focus-visible,
+.a2ui5-search-scrim button:focus-visible,
+.a2ui5-search-scrim input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
 }
