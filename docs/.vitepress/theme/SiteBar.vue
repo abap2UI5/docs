@@ -40,8 +40,23 @@ const SAMPLES = "https://abap2ui5.github.io/playground/samples/";
  * onMounted only ever replaces it with a deeper page of the same site. */
 const samplesHref = ref(SAMPLES);
 const extra = ref(null);
-onMounted(() => {
+/* Lifted on mount, and again whenever it can have moved while this page stayed
+ * open: the catalogue narrowed in another tab, a Back that brought this page
+ * out of the back-forward cache. The click itself is the lift that cannot be
+ * missed - the href is set on the element there, before the browser follows
+ * it, because a ref set in the handler reaches the DOM a tick too late. */
+const lift = () => {
   samplesHref.value = lastVisited("samples", SAMPLES);
+};
+const liftNow = (e) => {
+  e.currentTarget.href = lastVisited("samples", SAMPLES);
+};
+onMounted(() => {
+  lift();
+  addEventListener("pageshow", lift);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") lift();
+  });
   document.addEventListener("click", (e) => {
     const el = extra.value;
     if (el?.open && !el.contains(e.target)) el.open = false;
@@ -79,13 +94,14 @@ watch(isDark, (dark) => {
     <!-- The one you are on, which is why it is a span and not a link - the
          look aria-current gets on the other three bars. -->
     <span class="here" aria-current="page">Documentation</span>
-    <a :href="samplesHref" data-site="samples" title="Every abap2UI5 sample, searchable">Samples</a>
+    <a :href="samplesHref" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
     <a :href="PLAYGROUND" title="Write ABAP and run it in the browser">Playground</a>
   </nav>
   <!-- The rest of abap2UI5 behind one more button: light or dark, then the
-       project's tools and its repositories - the list the Links menu carries,
-       in the order the other three bars carry it. The switch says what a press
-       does and swaps its whole label with the theme (style.css). -->
+       practical links (issues, release notes, install, support), the project's
+       tools and its repositories by kind - the same rows, in the same order,
+       as the other three bars carry. The switch says what a press does and
+       swaps its whole label with the theme (style.css). -->
   <details v-if="theme" ref="extra" class="a2ui5-extra">
     <summary class="a2ui5-extra-button" title="More: light or dark, and the rest of abap2UI5" aria-label="More: light or dark, and the rest of abap2UI5">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg>
@@ -95,20 +111,67 @@ watch(isDark, (dark) => {
         <span class="when-light"><span class="glyph" aria-hidden="true">☾</span>Switch to dark</span>
         <span class="when-dark"><span class="glyph" aria-hidden="true">☀</span>Switch to light</span>
       </button>
+      <a href="https://github.com/abap2UI5/abap2UI5/issues" target="_blank" rel="noopener">Issues</a>
+      <a href="/docs/resources/changelog">Release notes</a>
+      <a href="/docs/get_started/quickstart">Install with abapGit</a>
+      <a href="/docs/resources/support">Support</a>
+      <a href="/docs/resources/contribution">Contribute</a>
+      <a href="/docs/resources/sponsor">Sponsor</a>
       <span class="a2ui5-menu-head">Tools</span>
       <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
+      <a href="https://abap2ui5.github.io/linter/">Linter rules</a>
       <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">VS Code extension</a>
       <a href="/docs/advanced/mcp_server">MCP server</a>
       <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">App template</a>
-      <a href="https://github.com/abap2UI5-addons" target="_blank" rel="noopener">Add-ons</a>
+      <a href="/docs/resources/addons">Add-ons</a>
       <span class="a2ui5-menu-head">Repositories</span>
-      <a href="https://github.com/abap2UI5/abap2UI5" target="_blank" rel="noopener">abap2UI5</a>
-      <a href="https://github.com/abap2UI5/samples" target="_blank" rel="noopener">samples</a>
-      <a href="https://github.com/abap2UI5/samples-controls" target="_blank" rel="noopener">samples-controls</a>
-      <a href="https://github.com/abap2UI5/samples-stack" target="_blank" rel="noopener">samples-stack</a>
-      <a href="https://github.com/abap2UI5/playground" target="_blank" rel="noopener">playground</a>
-      <a href="https://github.com/abap2UI5/docs" target="_blank" rel="noopener">docs</a>
-      <a href="https://github.com/abap2UI5/abap2UI5/issues" target="_blank" rel="noopener">Issues</a>
+      <div class="a2ui5-menu-repos">
+        <div class="a2ui5-menu-group">
+          <span class="a2ui5-menu-sub">Framework</span>
+          <a href="https://github.com/abap2UI5/abap2UI5" target="_blank" rel="noopener">abap2UI5</a>
+          <a href="https://github.com/abap2UI5/frontend" target="_blank" rel="noopener">frontend</a>
+          <a href="https://github.com/abap2UI5/abap2UI5-local" target="_blank" rel="noopener">abap2UI5-local</a>
+          <a href="https://github.com/abap2UI5/mirror-ajson" target="_blank" rel="noopener">mirror-ajson</a>
+          <a href="https://github.com/abap2UI5/mirror-srtti" target="_blank" rel="noopener">mirror-srtti</a>
+          <a href="https://github.com/abap2UI5/web-abap2UI5" target="_blank" rel="noopener">web-abap2UI5</a>
+        </div>
+        <div class="a2ui5-menu-group">
+          <span class="a2ui5-menu-sub">Samples</span>
+          <a href="https://github.com/abap2UI5/samples" target="_blank" rel="noopener">samples</a>
+          <a href="https://github.com/abap2UI5/samples-controls" target="_blank" rel="noopener">samples-controls</a>
+          <a href="https://github.com/abap2UI5/samples-stack" target="_blank" rel="noopener">samples-stack</a>
+        </div>
+        <div class="a2ui5-menu-group">
+          <span class="a2ui5-menu-sub">Sites</span>
+          <a href="https://github.com/abap2UI5/docs" target="_blank" rel="noopener">docs</a>
+          <a href="https://github.com/abap2UI5/playground" target="_blank" rel="noopener">playground</a>
+        </div>
+        <div class="a2ui5-menu-group">
+          <span class="a2ui5-menu-sub">Tools</span>
+          <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">linter</a>
+          <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">vscode-extension</a>
+          <a href="https://github.com/abap2UI5/mcp-server" target="_blank" rel="noopener">mcp-server</a>
+          <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">app-template</a>
+        </div>
+        <div class="a2ui5-menu-group">
+          <span class="a2ui5-menu-sub">Add-ons</span>
+          <a href="https://github.com/abap2UI5-addons/popups" target="_blank" rel="noopener">popups</a>
+          <a href="https://github.com/abap2UI5-addons/http-connector" target="_blank" rel="noopener">http-connector</a>
+          <a href="https://github.com/abap2UI5-addons/rfc-connector" target="_blank" rel="noopener">rfc-connector</a>
+          <a href="https://github.com/abap2UI5-addons/lock-manager" target="_blank" rel="noopener">lock-manager</a>
+          <a href="https://github.com/abap2UI5-addons/launchpad-kpi" target="_blank" rel="noopener">launchpad-kpi</a>
+          <a href="https://github.com/abap2UI5-addons/table-maintenance" target="_blank" rel="noopener">table-maintenance</a>
+          <a href="https://github.com/abap2UI5-addons/se16n" target="_blank" rel="noopener">se16n</a>
+          <a href="https://github.com/abap2UI5-addons/custom-controls" target="_blank" rel="noopener">custom-controls</a>
+          <a href="https://github.com/abap2UI5-addons" target="_blank" rel="noopener">All add-ons</a>
+        </div>
+        <div class="a2ui5-menu-group">
+          <span class="a2ui5-menu-sub">Apps</span>
+          <a href="https://github.com/abap2UI5-apps/sql-console" target="_blank" rel="noopener">sql-console</a>
+          <a href="https://github.com/abap2UI5-apps/table-content-loader" target="_blank" rel="noopener">table-content-loader</a>
+          <a href="https://github.com/abap2UI5-apps" target="_blank" rel="noopener">All apps</a>
+        </div>
+      </div>
     </div>
   </details>
 </template>

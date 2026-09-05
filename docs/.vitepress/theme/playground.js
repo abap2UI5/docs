@@ -22,9 +22,10 @@
  * **The app is shown, not the editor.** The code is already above it, in this
  * site's own font and highlighting; a second copy in an editor beside it would
  * be the same thing twice. What the page cannot show is the running app, so
- * that is what the frame shows. "Open in the playground" is one link away for
- * a reader who wants to change it — and it opens the full playground, editor
- * and the Problems / abaplint panel included, not another embedded frame.
+ * that is what the frame shows. "Switch to Playground with this code" is one
+ * link away for a reader who wants to change it — and it goes to the full
+ * playground, editor and the Problems / abaplint panel included, in this tab,
+ * not to another embedded frame.
  */
 
 /* The published playground. Absolute rather than site-relative on purpose: it
@@ -108,11 +109,14 @@ function bar(container, demo, embed, source) {
     bar.replaceWith(runButton());
   });
 
+  /* In THIS tab, and the label says so: a switch to the playground with the
+   * code that is on this page, not a window that opens beside it. The way
+   * back is the Documentation item in the playground's bar, which comes back
+   * to this page (site-memory.js); a reader who wants a second tab has the
+   * middle button. */
   const open = document.createElement('a');
   open.className = 'a2ui5-play-open';
-  open.target = '_blank';
-  open.rel = 'noopener';
-  open.textContent = 'Open in the playground';
+  open.textContent = 'Switch to Playground with this code';
   /* Built by the loader rather than here: the fragment format is the
    * playground's, and a fragment it cannot read is quietly replaced by its own
    * sample — a wrong link that looks like a working one. An older loader that
