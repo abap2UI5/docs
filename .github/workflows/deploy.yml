@@ -107,10 +107,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # The same list check.yml runs for a pull request, in the same order, and
-      # the reason each one is here is written above it there. `!cancelled()`
-      # so one failure still reports the others: a deploy that is going to be
-      # refused should say everything that is wrong with it in one run.
+      # The same eleven gates check.yml runs for a pull request, and the reason
+      # each one is here is written above it there. The ORDER is the one thing
+      # that cannot match: this job has to build the site it publishes, so
+      # `docs:build` and `check:cross-site` - which judges the built HTML -
+      # come after the eight that need neither, instead of third and fourth.
+      # What has to stay in step is the SET; a gate that runs for a pull
+      # request and not for the deploy is a gate main can be published past.
+      # `!cancelled()` so one failure still reports the others: a deploy that
+      # is going to be refused should say everything that is wrong with it in
+      # one run.
       - name: unit tests
         run: npm test
       - name: release version
@@ -122,6 +128,9 @@ jobs:
       - name: ABAP examples
         if: ${{ !cancelled() }}
         run: npm run check:examples
+      - name: house conventions
+        if: ${{ !cancelled() }}
+        run: npm run check:conventions
       - name: Run-button coverage
         if: ${{ !cancelled() }}
         run: npm run check:playground
