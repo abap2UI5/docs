@@ -67,8 +67,33 @@ function hide() {
   active.value = 0;
 }
 
-const hits = computed(() => (entries.value.length ? search(entries.value, query.value) : []));
+/* A high limit, and the grouping does the capping. `search` slices to thirty
+ * by default, and a group's count would then be "eight of twenty-nine" for a
+ * word with two hundred and thirty-one answers - a number that is worse than
+ * no number. Scoring is over ~940 short entries; the cost of asking for all of
+ * them is not measurable. */
+const hits = computed(() => (entries.value.length ? search(entries.value, query.value, { limit: 500 }) : []));
 const groups = computed(() => grouped(hits.value));
+
+/* What is in the box, in the two numbers a reader recognises. Only once the
+ * index has arrived - before that the box says what it is, not how much. */
+const counts = computed(() => {
+  if (!entries.value.length) return null;
+  let docs = 0;
+  for (const e of entries.value) if (e.area === 'docs') docs++;
+  return { docs, samples: entries.value.length - docs };
+});
+
+/* SOMETHING TO PRESS WHEN YOU DO NOT KNOW WHAT TO ASK. An empty search box is
+ * a question put to somebody who came to browse, and these are the answers
+ * worth having: eight words that each open a shelf rather than a page. They
+ * are checked against the real index - the smallest of them, `chart`, returns
+ * sixteen hits across three of the four areas. */
+const SUGGESTIONS = ['table', 'dialog', 'value help', 'upload', 'chart', 'navigation', 'binding', 'launchpad'];
+function suggest(word) {
+  query.value = word;
+  input.value?.focus();
+}
 /* The rows in the order the arrow keys walk them, which is the order they are
  * drawn in - grouped, not scored. */
 const rows = computed(() => groups.value.flatMap((g) => g.hits));
@@ -167,16 +192,43 @@ const parts = (text) => highlight(text, query.value);
             <a href="https://abap2ui5.github.io/playground/samples/" target="_self">sample catalogue</a>
             are both browsable without it.
           </p>
-          <p v-else-if="!query" class="a2ui5-search-note">
-            Every page of the documentation and every sample in the three catalogues.
-            <kbd>↑</kbd><kbd>↓</kbd> to move, <kbd>↵</kbd> to open.
-          </p>
+          <div v-else-if="!query" class="a2ui5-search-empty">
+            <p class="a2ui5-search-note">
+              <template v-if="counts">
+                <strong>{{ counts.docs }}</strong> pages of the manual and
+                <strong>{{ counts.samples }}</strong> working samples, in one box —
+                search by control, by class name, or by what you are trying to do.
+              </template>
+              <template v-else>
+                Every page of the documentation and every sample in the three catalogues.
+              </template>
+            </p>
+            <div class="a2ui5-search-try">
+              <span class="a2ui5-search-try-head">Have a look at</span>
+              <button
+                v-for="word in SUGGESTIONS"
+                :key="word"
+                class="a2ui5-search-chip"
+                type="button"
+                @click="suggest(word)"
+              >{{ word }}</button>
+            </div>
+          </div>
           <p v-else-if="!rows.length" class="a2ui5-search-note">
             Nothing matches <strong>{{ query }}</strong>.
           </p>
 
           <div v-for="group in groups" :key="group.label" class="a2ui5-search-group">
-            <div class="a2ui5-search-group-head">{{ group.label }}</div>
+            <div class="a2ui5-search-group-head">
+              {{ group.label }}
+              <!-- Eight of two hundred and thirty-one is a different answer
+                   from eight, and the difference is whether there is more to
+                   look at. -->
+              <span v-if="group.total > group.hits.length" class="a2ui5-search-count">
+                &nbsp;{{ group.hits.length }} of {{ group.total }}
+              </span>
+              <span v-else class="a2ui5-search-count">&nbsp;{{ group.total }}</span>
+            </div>
             <a
               v-for="hit in group.hits"
               :key="hit.entry.url"
@@ -199,6 +251,19 @@ const parts = (text) => highlight(text, query.value);
               </span>
             </a>
           </div>
+        </div>
+
+        <!-- THE KEYS, ALWAYS. They used to be in the line the empty state
+             showed, which is the one moment a reader is not using them: the
+             first keystroke replaced that line with results and took the only
+             mention of the arrows and Enter with it. And the shortcut that
+             opens the box was printed on the button and nowhere inside, so
+             once you were in you were told nothing at all. -->
+        <div class="a2ui5-search-keys">
+          <span><kbd>↑</kbd><kbd>↓</kbd> to move</span>
+          <span><kbd>↵</kbd> to open</span>
+          <span><kbd>esc</kbd> to close</span>
+          <span class="a2ui5-search-keys-end"><kbd>/</kbd> or <kbd>⌘</kbd><kbd>K</kbd> from anywhere</span>
         </div>
       </div>
     </div>

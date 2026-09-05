@@ -234,9 +234,14 @@ pages with no router in front of them.
 | where **on** the page you were | `theme/site-memory.js` again, keys `:scroll` (a small map of path → offset, the twelve most recent) and `:returning`. Restored **on arrival by the bar and nowhere else**: a bar item writes one record saying where it is sending the reader, and the page that *is* that, arriving within half a minute and with no hash of its own, honours it. Restoring on every load would fight the browser's own back-and-forward restoration and would drop a reader who followed an ordinary link into the middle of a page with nothing to explain it. A stored offset is checked the same way a stored path is — `scrollTo` takes whatever it is given. `test/scroll-memory.test.mjs` |
 | the last thing you searched for | `theme/search-engine.js`, key `:search`. A hit opens another page, often another deployment, and the box that opens there was empty; the query is written down as a hit is opened and the next box starts with it, selected, so the first keystroke replaces it. Checked (a string, short, and less than half an hour old) rather than used. `test/search.test.mjs` |
 
-The playground is consulted by both and remembered by neither: its URL carries
-the code in the editor, so an item that reopened yesterday's sample would be a
-different promise from the one the word makes.
+**The playground is remembered too** (`:last-playground`), and it did not use
+to be. The argument against was that its URL carries the code in the editor
+rather than a place. What that missed is the case it creates: a reader with a
+SAMPLE open over there has code that is not a draft, and a sample that was
+picked and read is deliberately not stored, so pressing Documentation and then
+Playground threw it away. The URL is what carries it, so the URL is what comes
+back. This site only READS that key; the playground writes it, and never from
+an embedded or app-only view.
 
 **What a browser test in this repository cannot reach.** `vitepress preview`
 serves this site on localhost while the catalogue link points at

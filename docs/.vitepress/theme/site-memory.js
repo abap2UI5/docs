@@ -22,10 +22,19 @@
 // it is what every step below falls back to - nothing here ever returns a link
 // worse than the one it was given.
 //
-// THE PLAYGROUND IS NOT REMEMBERED, only consulted. Its URL carries the code
-// in the editor (?src=...), and a Playground item that reopened yesterday's
-// sample instead of an empty editor would be a different promise from the one
-// the word makes. Samples and docs are places; the playground is a workbench.
+// THE PLAYGROUND IS REMEMBERED TOO, and it did not used to be. The reasoning
+// against it was that its URL carries the code in the editor, so an item that
+// reopened yesterday's sample would be a different promise from the one the
+// word makes: samples and docs are places, the playground is a workbench.
+//
+// What that argument missed is the case it creates. A reader who opens a
+// SAMPLE over there has code that is not a draft - a sample that was picked
+// and read is deliberately not stored - so pressing Documentation and then
+// Playground threw it away and started them on the default sample. Their own
+// edits survived that trip; the sample they were reading did not.
+//
+// This site only ever READS that key. The playground writes it, and never
+// from an embedded or app-only view.
 
 /* The playground's namespace, for keys this site writes too. It is the wrong
  * word for a value shared by three deployments and it is the namespace every
@@ -35,6 +44,7 @@
 const KEY = {
   samples: "abap2ui5-playground:last-samples",
   docs: "abap2ui5-playground:last-docs",
+  playground: "abap2ui5-playground:last-playground",
 };
 
 /** Write down that the reader is on this site's page. */
@@ -211,4 +221,68 @@ export function takeHandoff() {
   if (location.hash) return null;
   const y = scrollOf(record.to);
   return y > 0 ? y : null;
+}
+
+/**
+ * Take the handoff and act on it: scroll to the offset, and keep scrolling to
+ * it until it takes.
+ *
+ * One `scrollTo` is not enough. The router draws the new page and scrolls it
+ * to the top itself, not always in the same frame, and a page whose content is
+ * still arriving is a page too short to reach the offset - which the browser
+ * clamps to the top, the exact thing this is here to stop. So it is re-applied
+ * as the page settles, for up to three seconds.
+ *
+ * It stops the moment the offset takes, and the moment the READER scrolls:
+ * a scroll that was not this one is the reader saying where they want to be,
+ * and it wins. Without that a page shorter than the stored offset would hold
+ * them at the bottom of it.
+ */
+export function restoreScroll() {
+  const y = takeHandoff();
+  if (y === null) return;
+
+  /* WHAT CANCELS THIS IS THE READER, AND NOTHING ELSE.
+   *
+   * It used to stop as soon as `scrollY` was not where the last frame put it,
+   * on the theory that a scroll this did not cause is the reader taking over.
+   * It is not: a page still loading moves its own scroll. The browser's scroll
+   * anchoring shifts the offset to keep the content under your eyes steady as
+   * things arrive above it - and the home page, whose hero image is the
+   * largest thing on the site to arrive late, is where that happens every
+   * time. The offset was applied to a page still a few hundred pixels short,
+   * anchoring nudged it, this read the nudge as a reader and gave up. It went
+   * "a little way down" and stopped, on that page and no other.
+   *
+   * So the reader is asked directly. A wheel, a touch, a key, a pointer:
+   * those are somebody saying where they want to be, and they win. Layout
+   * settling is not one of them. */
+  const until = Date.now() + 2000;
+  const MOVED = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+  let stopped = false;
+  const stop = () => {
+    stopped = true;
+    for (const e of MOVED) removeEventListener(e, stop, true);
+  };
+  for (const e of MOVED) addEventListener(e, stop, { capture: true, passive: true });
+
+  /* IT HOLDS THE POSITION, it does not merely reach it. Reaching it once is
+   * not enough and stopping there is how this failed: the router draws the
+   * page and scrolls it to the top ITSELF, after this - measured, in that
+   * order, `scrollTo(0, 1600)` and then `scrollTo(0, 0)` - so the offset was
+   * applied, taken away again a frame later, and the loop had already
+   * congratulated itself and gone. Two seconds of holding covers that, and a
+   * page still growing underneath, and costs about a hundred and twenty
+   * frames of one assignment each.
+   *
+   * Holding is only safe BECAUSE the reader can take it back: the four events
+   * above end it on the first wheel, key, touch or pointer - a scrollbar drag
+   * included - so nothing is ever fought with. */
+  const put = () => {
+    if (stopped) return;
+    if (Math.round(scrollY) !== y) scrollTo(0, y);
+    if (Date.now() < until) requestAnimationFrame(put);
+    else stop();
+  };
+  requestAnimationFrame(put);
 }

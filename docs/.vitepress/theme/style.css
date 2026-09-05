@@ -1868,7 +1868,9 @@
   z-index: 200;
   display: flex;
   justify-content: center;
-  padding: 12vh 16px 16px;
+  /* Higher up and roomier than it was: this is a place to browse ~940 entries
+     in, and 12vh of dimmed page above it was margin nobody reads. */
+  padding: 8vh 16px 16px;
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(2px);
 }
@@ -1876,8 +1878,11 @@
 .a2ui5-search-panel {
   display: flex;
   flex-direction: column;
-  width: min(680px, 100%);
-  max-height: 76vh;
+  /* 820, not 680. A sample's row is a title, a class name and a sentence, and
+     at 680 the sentence wrapped to two lines on most of them - a list of
+     two-line rows reads as a wall rather than as something to run an eye down. */
+  width: min(820px, 100%);
+  max-height: 82vh;
   border: 1px solid var(--line);
   border-radius: var(--radius-surface);
   background: var(--bg);
@@ -2054,6 +2059,114 @@
 .Layout button:focus-visible,
 .Layout summary:focus-visible,
 .Layout input:focus-visible,
+/* ---- the empty state, which is the invitation ----
+ *
+ * A box that opens on one grey line is a question asked of somebody who came
+ * to look around. So it says what is in it, in the two numbers that mean
+ * something, and then offers eight words to press. They are not decoration:
+ * each one opens a shelf (the smallest, `chart`, returns sixteen hits across
+ * three areas), and pressing one fills the field, so the next thing the reader
+ * does is edit a real query rather than compose one from nothing. */
+.a2ui5-search-empty {
+  padding: 10px 6px 18px;
+}
+
+.a2ui5-search-empty .a2ui5-search-note {
+  padding-bottom: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.a2ui5-search-empty strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.a2ui5-search-try {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 0;
+}
+
+.a2ui5-search-try-head {
+  margin-right: 2px;
+  color: var(--fg-dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.a2ui5-search-chip {
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-sunken);
+  color: var(--fg);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.a2ui5-search-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* How many the group has, beside how many it is showing. */
+.a2ui5-search-count {
+  margin-left: 6px;
+  color: var(--fg-dim);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ---- the keys, on screen the whole time ----
+ *
+ * They used to be one line in the empty state - gone the moment anybody typed,
+ * which is the moment they start mattering - and the shortcut that opens the
+ * box was printed on the button and nowhere inside it. */
+.a2ui5-search-keys {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 9px 14px;
+  border-top: 1px solid var(--line);
+  background: var(--bg-sunken);
+  color: var(--fg-dim);
+  font-size: 12px;
+}
+
+.a2ui5-search-keys-end {
+  margin-left: auto;
+}
+
+.a2ui5-search-keys kbd {
+  display: inline-block;
+  min-width: 17px;
+  margin-right: 3px;
+  padding: 1px 5px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--fg-dim);
+  font-family: var(--vp-font-family-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (max-width: 620px) {
+  /* On a phone the row keeps the three keys that work there and drops the one
+     that names a keyboard shortcut for opening it. */
+  .a2ui5-search-keys-end { display: none; }
+}
+
 .a2ui5-search-scrim a:focus-visible,
 .a2ui5-search-scrim button:focus-visible,
 .a2ui5-search-scrim input:focus-visible {

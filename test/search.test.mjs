@@ -170,9 +170,15 @@ test('one corpus cannot bury the others', () => {
     area: 'samples', group: 'Controls', title: `List ${i}`, text: '', code: `z2ui5_cl_smpc_app_${i}`, terms: 'list', url: `/x/${i}/`,
   }));
   many.push({ area: 'docs', group: 'Cookbook', title: 'Lists', text: '', headings: [], terms: 'list', url: '/docs/list.html' });
-  const groups = grouped(search(many, 'list'));
+  const groups = grouped(search(many, 'list', { limit: 500 }));
   assert.equal(groups[0].label, 'Documentation');
-  assert.ok(groups[1].hits.length <= 6);
+  assert.ok(groups[1].hits.length <= 8);
+  /* And it SAYS how many it is holding back, which is the difference between
+   * "that is all there is" and "there is a shelf of this". The count is of the
+   * hits it was GIVEN - which is why the box asks search( ) for a high limit
+   * and lets this do the capping, rather than counting a slice of thirty. */
+  assert.equal(groups[1].total, 40);
+  assert.equal(groups[0].total, 1);
 });
 
 test('an empty query is not a search for everything', () => {

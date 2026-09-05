@@ -74,9 +74,10 @@ const lift = () => {
  * at the top of it (site-memory.js). It is written after the lift, so it names
  * the href that is actually followed and not the one in the markup.
  *
- * The Playground item writes none: its URL carries the code in the editor, so
- * there is no position of it to come back to - the same reason it is consulted
- * by the memory and remembered by neither.
+ * The Playground item does this too now. It used to write nothing, on the
+ * grounds that its URL carries the code in the editor rather than a place -
+ * but that URL is exactly what a reader with a SAMPLE open over there loses by
+ * pressing Documentation and then Playground, and site-memory.js says the rest.
  */
 const leave = (e) => {
   const el = e.currentTarget;
@@ -114,6 +115,6 @@ onMounted(() => {
     <a :href="HOME" :class="{ here: onHome }" :aria-current="onHome ? 'page' : undefined" title="abap2UI5 in one page" @click="leave"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3.6 10.9 12 4.2l8.4 6.7v8.3a1 1 0 0 1-1 1h-4.3v-6.1H8.9v6.1H4.6a1 1 0 0 1-1-1z"/></svg><span data-text="Home">Home</span></a>
     <a :href="docsHref" data-site="docs" :class="{ here: !onHome }" :aria-current="!onHome ? 'page' : undefined" title="The manual, where you left it" @click="leave"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 7.2C10.5 5.9 8.5 5.2 6 5.2H3.3v11.9H6c2.5 0 4.5.7 6 1.9 1.5-1.2 3.5-1.9 6-1.9h2.7V5.2H18c-2.5 0-4.5.7-6 1.9z"/><path d="M12 7.2v11.8"/></svg><span data-text="Documentation">Documentation</span></a>
     <a :href="samplesHref" :target="SAME_TAB" data-site="samples" title="Every abap2UI5 sample, searchable" @click="leave"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3.2" y="4.8" width="17.6" height="14.4" rx="2"/><path d="M3.2 9.4h17.6M8.5 9.4v9.8"/></svg><span data-text="Samples">Samples</span></a>
-    <a :href="PLAYGROUND" :target="SAME_TAB" title="Write ABAP and run it in the browser"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M10.2 8.4v7.2a.5.5 0 0 0 .76.43l5.8-3.6a.5.5 0 0 0 0-.86l-5.8-3.6a.5.5 0 0 0-.76.43z" fill="currentColor" stroke="none"/></svg><span data-text="Playground">Playground</span></a>
+    <a :href="playgroundHref" data-site="playground" :target="SAME_TAB" title="Write ABAP and run it in the browser" @click="leave"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M10.2 8.4v7.2a.5.5 0 0 0 .76.43l5.8-3.6a.5.5 0 0 0 0-.86l-5.8-3.6a.5.5 0 0 0-.76.43z" fill="currentColor" stroke="none"/></svg><span data-text="Playground">Playground</span></a>
   </nav>
 </template>

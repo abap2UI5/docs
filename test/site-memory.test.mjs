@@ -128,3 +128,53 @@ test('a scope wider than the link is what restores a section from a deep href', 
   /* And the scope is a fence, not a door: outside it, the written link stands. */
   assert.equal(on(SITE, '/docs/cookbook/view/definition.html', () => lastVisited('samples', deep, SAMPLES)), deep);
 });
+
+/* ── THE PLAYGROUND IS A PLACE AFTER ALL ────────────────────────────────────
+ *
+ * It used to be consulted and never remembered: its URL carries the code in
+ * the editor, so an item that reopened yesterday's sample was held to be a
+ * different promise from the one the word makes. What that missed is the case
+ * it creates — a reader with a SAMPLE open over there has code that is not a
+ * draft, and is not stored as one, so this round trip threw it away. The URL
+ * is what carries it, so the URL is what comes back.
+ */
+const PLAYGROUND = 'https://abap2ui5.github.io/playground/';
+const PLAYGROUND_KEY = 'abap2ui5-playground:last-playground';
+
+/** The same stub as above, on the playground's key. */
+function withPlayground(stored, run) {
+  const before = { location: globalThis.location, localStorage: globalThis.localStorage };
+  globalThis.location = { href: SITE + '/docs/get_started/about.html', origin: SITE };
+  globalThis.localStorage = {
+    getItem: (k) => (k === PLAYGROUND_KEY && stored !== undefined ? stored : null),
+    setItem: () => {},
+  };
+  try {
+    return run();
+  } finally {
+    globalThis.location = before.location;
+    globalThis.localStorage = before.localStorage;
+  }
+}
+
+test('the playground comes back to the sample that was open in it', () => {
+  const last = '/playground/?src=https%3A%2F%2Fraw.githubusercontent.com%2Fx%2Fy.clas.abap';
+  assert.equal(withPlayground(last, () => lastVisited('playground', PLAYGROUND)), last);
+});
+
+test('a shared link keeps the code it carries in its fragment', () => {
+  const last = '/playground/#code=AAAA';
+  assert.equal(withPlayground(last, () => lastVisited('playground', PLAYGROUND)), last);
+});
+
+test('nothing stored opens the empty editor, as the markup says', () => {
+  assert.equal(withPlayground(undefined, () => lastVisited('playground', PLAYGROUND)), PLAYGROUND);
+});
+
+test("a stored value outside the playground is not the playground", () => {
+  /* The same check every other item gets: resolved against this origin and
+   * kept only if it is still inside the link the markup carries. */
+  for (const junk of ['https://elsewhere.example/x', '/docs/cookbook/tables', '/playground/../docs/x', 'javascript:alert(1)']) {
+    assert.equal(withPlayground(junk, () => lastVisited('playground', PLAYGROUND)), PLAYGROUND, junk);
+  }
+});
