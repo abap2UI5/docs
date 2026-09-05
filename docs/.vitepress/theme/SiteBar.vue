@@ -2,16 +2,23 @@
 /*
  * The right-hand end of the bar, which is the playground's right-hand end and
  * the sample catalogue's (src/shell/index.html, src/catalogue/catalogue.css in
- * abap2UI5/playground) down to the numbers: where in this project you are, a
- * button for light and dark, one hairline, then the two marks. Four documents
- * carry that group now - this one, the playground, the catalogue and the
- * per-sample pages - and somebody moving between them reads ONE bar, so it is
- * kept identical by hand rather than left to four interpretations of a house
- * style.
+ * abap2UI5/playground) down to the numbers: a hairline, where in this project
+ * you are, a hairline, the two marks, then one more button, drawn as a third
+ * mark, that opens the menu - the switch for light and dark, the project's
+ * tools and its repositories. Four documents carry that group now - this one,
+ * the playground, the catalogue and the per-sample pages - and somebody moving
+ * between them reads ONE bar, so it is kept identical by hand rather than left
+ * to four interpretations of a house style.
  *
  * The two marks are not here: they are VitePress's own `socialLinks`, which
- * draws the same LinkedIn and GitHub inline. The hairline in front of them is
- * in style.css, where the ordering that puts this group before them also is.
+ * draws the same LinkedIn and GitHub inline. The hairlines are in style.css,
+ * where the ordering that puts the three sites before the marks and the menu
+ * after them also is.
+ *
+ * The menu is a <details>, so it opens and closes with no script; the two
+ * listeners below close it the two ways a menu is expected to close and a
+ * <details> does not - a click anywhere outside it, and Escape. The same lines
+ * as setUpExtra() in the playground's catalogue.mjs and extra.mjs.
  */
 import { inject, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
@@ -20,9 +27,9 @@ import { lastVisited } from "./site-memory.js";
 const { isDark } = useData();
 
 /* The same three items serve the bar and the menu a phone opens instead of it
- * (`nav-screen-content-after`). Only the button differs: down there VitePress
- * draws its own appearance control, and two of them in one menu is one too
- * many. */
+ * (`nav-screen-content-after`). Only the menu behind the third mark differs:
+ * down there VitePress draws its own appearance control and the Links group,
+ * and two of each in one screen is one too many. */
 defineProps({ theme: { type: Boolean, default: true } });
 
 const PLAYGROUND = "https://abap2ui5.github.io/playground/";
@@ -32,8 +39,20 @@ const SAMPLES = "https://abap2ui5.github.io/playground/samples/";
  * the server renders, what a crawler is given and what a first visit follows;
  * onMounted only ever replaces it with a deeper page of the same site. */
 const samplesHref = ref(SAMPLES);
+const extra = ref(null);
 onMounted(() => {
   samplesHref.value = lastVisited("samples", SAMPLES);
+  document.addEventListener("click", (e) => {
+    const el = extra.value;
+    if (el?.open && !el.contains(e.target)) el.open = false;
+  });
+  document.addEventListener("keydown", (e) => {
+    const el = extra.value;
+    if (e.key === "Escape" && el?.open) {
+      el.open = false;
+      el.querySelector("summary")?.focus();
+    }
+  });
 });
 
 /* VitePress's own toggle, so a site that provides one (the appearance
@@ -57,23 +76,39 @@ watch(isDark, (dark) => {
 
 <template>
   <nav class="bar-nav" aria-label="abap2UI5 sites">
-    <a :href="PLAYGROUND" title="Write ABAP and run it in the browser">Playground</a>
-    <a :href="samplesHref" data-site="samples" title="Every abap2UI5 sample, searchable">Samples</a>
     <!-- The one you are on, which is why it is a span and not a link - the
          look aria-current gets on the other three bars. -->
-    <span class="here" aria-current="page">Docs</span>
+    <span class="here" aria-current="page">Documentation</span>
+    <a :href="samplesHref" data-site="samples" title="Every abap2UI5 sample, searchable">Samples</a>
+    <a :href="PLAYGROUND" title="Write ABAP and run it in the browser">Playground</a>
   </nav>
-  <button
-    v-if="theme"
-    class="theme"
-    type="button"
-    role="switch"
-    :aria-checked="isDark"
-    :aria-label="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
-    :title="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
-    @click="toggleAppearance"
-  >
-    <span class="theme-sun" aria-hidden="true">☀</span>
-    <span class="theme-moon" aria-hidden="true">☾</span>
-  </button>
+  <!-- The rest of abap2UI5 behind one more button: light or dark, then the
+       project's tools and its repositories - the list the Links menu carries,
+       in the order the other three bars carry it. The switch says what a press
+       does and swaps its whole label with the theme (style.css). -->
+  <details v-if="theme" ref="extra" class="a2ui5-extra">
+    <summary class="a2ui5-extra-button" title="More: light or dark, and the rest of abap2UI5" aria-label="More: light or dark, and the rest of abap2UI5">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg>
+    </summary>
+    <div class="a2ui5-menu">
+      <button class="theme" type="button" role="switch" :aria-checked="isDark" @click="toggleAppearance">
+        <span class="when-light"><span class="glyph" aria-hidden="true">☾</span>Switch to dark</span>
+        <span class="when-dark"><span class="glyph" aria-hidden="true">☀</span>Switch to light</span>
+      </button>
+      <span class="a2ui5-menu-head">Tools</span>
+      <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
+      <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">VS Code extension</a>
+      <a href="/docs/advanced/mcp_server">MCP server</a>
+      <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">App template</a>
+      <a href="https://github.com/abap2UI5-addons" target="_blank" rel="noopener">Add-ons</a>
+      <span class="a2ui5-menu-head">Repositories</span>
+      <a href="https://github.com/abap2UI5/abap2UI5" target="_blank" rel="noopener">abap2UI5</a>
+      <a href="https://github.com/abap2UI5/samples" target="_blank" rel="noopener">samples</a>
+      <a href="https://github.com/abap2UI5/samples-controls" target="_blank" rel="noopener">samples-controls</a>
+      <a href="https://github.com/abap2UI5/samples-stack" target="_blank" rel="noopener">samples-stack</a>
+      <a href="https://github.com/abap2UI5/playground" target="_blank" rel="noopener">playground</a>
+      <a href="https://github.com/abap2UI5/docs" target="_blank" rel="noopener">docs</a>
+      <a href="https://github.com/abap2UI5/abap2UI5/issues" target="_blank" rel="noopener">Issues</a>
+    </div>
+  </details>
 </template>
