@@ -9,11 +9,13 @@ import { rememberHere } from './site-memory.js'
 /** @type {import('vitepress').Theme} */
 export default {
   extends: DefaultTheme,
-  // The bar's right-hand end - the three sites, and the light/dark button -
-  // injected into the nav bar and into the menu a phone opens instead of it.
-  // See SiteBar.vue for what the group is and style.css for where in the row
-  // it lands: the slot renders after VitePress's own appearance switch and
-  // social links, and CSS orders it back in front of them.
+  // The bar's right-hand end - the three sites, and the menu behind the bar's
+  // last button with the light/dark switch in it - injected into the nav bar
+  // and, without the menu, into the screen a phone opens instead of it. See
+  // SiteBar.vue for what the group is and style.css for where in the row it
+  // lands: the slot renders after VitePress's own appearance switch and
+  // social links, and CSS orders the sites back in front of the marks and the
+  // menu after them.
   Layout() {
     return h(DefaultTheme.Layout, null, {
       'nav-bar-content-after': () => h(SiteBar),

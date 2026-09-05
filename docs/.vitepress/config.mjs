@@ -134,13 +134,13 @@ export default defineConfig({
   },
   themeConfig: {
     logo: "/logo.png",
-    // The mark, then the site in the ordinary weight and the part of it you
-    // are in in the heavy one - the brand the playground and the sample
-    // catalogue wear (src/shell/index.html, src/catalogue/index.html over
-    // there), so somebody moving between the three reads one bar rather than
-    // three. `siteTitle` is rendered with v-html, which is what lets the
-    // second word carry the weight.
-    siteTitle: "abap2UI5 <b>docs</b>",
+    // The mark and the name, nothing more - the brand the playground and the
+    // sample catalogue wear (src/shell/index.html, src/catalogue/index.html
+    // over there), so somebody moving between the three reads one bar rather
+    // than three. The bar's nav says which of them you are on, in bold, and a
+    // brand that said it too said it twice; style.css closes it with a
+    // hairline.
+    siteTitle: "abap2UI5",
     footer: {
       message: `
       <a href="/docs/resources/license">License</a> |

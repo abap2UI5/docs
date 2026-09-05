@@ -1254,11 +1254,13 @@
 /* ============================================== the bar the three sites share ===
  *
  * The playground, the sample catalogue and this site are three deployments on
- * one origin, and from here on they wear ONE bar: the mark and the site, the
- * part of it you are in, a button for light and dark, one hairline, then
- * LinkedIn and GitHub. The numbers below are the catalogue's own
- * (src/catalogue/catalogue.css in abap2UI5/playground) — 46px tall on the
- * sunken grey, 5px pills, a 30x26 theme button, 18px marks in a 30px box —
+ * one origin, and from here on they wear ONE bar: the mark and the name,
+ * closed by a hairline; at the other end a hairline, the three sites with the
+ * one you are on in bold, a hairline, LinkedIn and GitHub, then the button
+ * that opens the menu - light or dark, the project's tools and repositories.
+ * The numbers below are the catalogue's own (src/catalogue/catalogue.css in
+ * abap2UI5/playground) — 46px tall on the sunken grey, 5px pills, 18px marks
+ * in a 30px box, every hairline 16px from what is on either side of it —
  * because a reader crossing between them should read one bar and not three
  * interpretations of a house style.
  *
@@ -1267,10 +1269,11 @@
  * Those keep VitePress's own drawing and only lose their size, so they sit in
  * the row rather than setting its height.
  *
- * The three items and the button are theme/SiteBar.vue, rendered into the
+ * The three items and the menu are theme/SiteBar.vue, rendered into the
  * `nav-bar-content-after` slot — which is the LAST thing in the row, after
- * VitePress's own appearance switch and social links. `order` puts it back
- * where it belongs; see below.
+ * VitePress's own appearance switch and social links. `order` puts each half
+ * where it belongs, the sites before the marks and the menu after them; see
+ * below.
  *
  * Specificity, as everywhere in this file: the theme's rules are Vue SCOPED
  * styles and compile with a `[data-v-…]` attribute, so a bare class here would
@@ -1338,18 +1341,22 @@
   display: none;
 }
 
-/* The brand: the mark, then the site in the ordinary weight and the part of it
- * you are in in the heavy one (`siteTitle` in config.mjs carries the `<b>`).
- * The theme sets 16px semibold, which is a heading; over there it is body
- * text with one word emphasised. */
+/* The brand: the mark and the name (`siteTitle` in config.mjs), closed by a
+ * hairline 16px from it - 8 of the gap, 8 of its own margin - as on the other
+ * three bars. The theme sets 16px semibold, which is a heading; over there it
+ * is body text. */
 .Layout .VPNav .VPNavBar .title {
   font-size: 14px;
   font-weight: 400;
   gap: 8px;
 }
 
-.Layout .VPNav .VPNavBar .title b {
-  font-weight: 600;
+.Layout .VPNav .VPNavBar a.title::after {
+  content: "";
+  width: 1px;
+  height: 22px;
+  margin-left: 8px;
+  background: var(--line);
 }
 
 .Layout .VPNav .VPNavBar .title .logo {
@@ -1360,13 +1367,17 @@
  *
  * `.content-body` is a flex row, so the slot's content can be moved without
  * moving it in the DOM: search and the menus keep the default 0, the three
- * sites come next, then the theme button, the hairline and the marks. The
+ * sites come next, then the marks, then the menu behind the third mark. The
  * hamburger stays last. */
 .Layout .VPNav .VPNavBar .bar-nav { order: 1; }
-.Layout .VPNav .VPNavBar .theme { order: 2; }
 .Layout .VPNav .VPNavBar .social-links { order: 3; }
-.Layout .VPNav .VPNavBar .extra { order: 4; }
+.Layout .VPNav .VPNavBar .a2ui5-extra { order: 4; }
 .Layout .VPNav .VPNavBar .hamburger { order: 5; }
+
+/* The theme's own "…" menu, shown between 768 and 1279px with its appearance
+ * switch and its social links in it. The menu behind the third mark replaces
+ * it at every width. */
+.Layout .VPNav .VPNavBar .extra { display: none; }
 
 /* The theme's own appearance switch, which SiteBar.vue replaces with the
  * button the other three bars carry. It is still mounted and still doing the
@@ -1377,13 +1388,13 @@
 
 /* The theme's dividers between the groups it knows about. They are drawn from
  * `.menu + .appearance::before` and friends, and with the appearance switch
- * gone they land in the wrong places; the one hairline this bar has is the
- * one in front of the marks, below. */
+ * gone they land in the wrong places. The one in front of the marks is the
+ * same pseudo-element as the marks' own line below, so it is not hidden here
+ * but restyled there - with one class more than the theme's `.appearance +
+ * .social-links::before`, which otherwise wins the margins. */
 .Layout .VPNav .VPNavBar .menu + .translations::before,
 .Layout .VPNav .VPNavBar .menu + .appearance::before,
-.Layout .VPNav .VPNavBar .menu + .social-links::before,
-.Layout .VPNav .VPNavBar .translations + .appearance::before,
-.Layout .VPNav .VPNavBar .appearance + .social-links::before {
+.Layout .VPNav .VPNavBar .translations + .appearance::before {
   display: none;
 }
 
@@ -1395,9 +1406,23 @@
  * one you are on in full colour and semibold. */
 .Layout .VPNav .bar-nav {
   display: flex;
+  align-items: center;
   gap: 4px;
-  margin-left: 16px;
+  /* The theme's menu links carry 12px of padding; 4 more is the 16 the line
+   * below stands from the word before it. */
+  margin-left: 4px;
   line-height: 1.55;
+}
+
+/* A hairline in front of the three sites, 16px from the word on either side
+ * of it: the margin above before it, 2 + the gap 4 + the link's padding 10
+ * after. */
+.Layout .VPNav .bar-nav::before {
+  content: "";
+  width: 1px;
+  height: 22px;
+  margin-right: 2px;
+  background: var(--line);
 }
 
 .Layout .VPNav .bar-nav a,
@@ -1420,54 +1445,126 @@
   font-weight: 600;
 }
 
-/* ---------------------------------------------------- light and dark ---
+/* ----------------------------------------------------------- the menu ---
  *
- * The catalogue's button, and the same trick: the sun and the moon are both in
- * the markup and CSS shows one of them, so the button says the right thing
- * before any of this site's JavaScript has run. Over there the swap keys off
- * `[data-theme]` and a media query; here VitePress has already resolved both
- * into a single class on the root element. */
-.Layout .VPNav .theme {
+ * The button after the marks and what opens under it: the switch for light and
+ * dark, the project's tools and its repositories - the other three bars' menu
+ * in their numbers (a 30px box for the button, a 220px sheet, rows of 5px
+ * pills). A <details>, so it opens and closes with no script; SiteBar.vue
+ * closes it on a click anywhere else and on Escape. The switch swaps its whole
+ * label with the theme: over there the swap keys off `[data-theme]` and a
+ * media query, here VitePress has already resolved both into a single class
+ * on the root element. `a2ui5-` in front of the names, because `.extra` is
+ * the theme's own "…" menu. */
+.Layout .VPNav .a2ui5-extra {
+  position: relative;
+  display: flex;
+  margin-right: -6px;
+}
+
+.Layout .VPNav .a2ui5-extra-button {
+  list-style: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 16px;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  background: var(--bg);
-  color: var(--fg-dim);
-  font-family: var(--vp-font-family-base);
-  font-size: 13px;
-  line-height: 1;
   width: 30px;
-  height: 26px;
-  padding: 0;
+  height: 30px;
+  color: var(--fg-dim);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.5s;
+}
+
+.Layout .VPNav .a2ui5-extra-button::-webkit-details-marker { display: none; }
+.Layout .VPNav .a2ui5-extra-button:hover,
+.Layout .VPNav .a2ui5-extra[open] .a2ui5-extra-button { color: var(--fg); }
+.Layout .VPNav .a2ui5-extra[open] .a2ui5-extra-button { background: var(--bg); }
+.Layout .VPNav .a2ui5-extra-button svg { width: 18px; height: 18px; fill: currentColor; }
+
+.Layout .VPNav .a2ui5-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  min-width: 220px;
+  padding: 6px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.Layout .VPNav .a2ui5-menu a,
+.Layout .VPNav .a2ui5-menu .theme {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 5px;
+  color: var(--fg);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.Layout .VPNav .a2ui5-menu .theme {
+  font: inherit;
+  width: 100%;
+  background: none;
+  border: 0;
+  text-align: left;
   cursor: pointer;
 }
 
-.Layout .VPNav .theme:hover { color: var(--fg); }
-.Layout .VPNav .theme-moon { display: none; }
-.dark .Layout .VPNav .theme-sun { display: none; }
-.dark .Layout .VPNav .theme-moon { display: inline; }
+.Layout .VPNav .a2ui5-menu a:hover,
+.Layout .VPNav .a2ui5-menu .theme:hover { background: var(--bg-sunken); }
+
+.Layout .VPNav .a2ui5-menu .glyph {
+  display: inline-block;
+  width: 16px;
+  margin-right: 8px;
+  text-align: center;
+}
+
+.Layout .VPNav .a2ui5-menu-head {
+  margin: 6px 0 2px;
+  padding: 8px 10px 0;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.Layout .VPNav .when-dark { display: none; }
+.dark .Layout .VPNav .when-light { display: none; }
+.dark .Layout .VPNav .when-dark { display: inline; }
 
 /* ------------------------------------------------------------ the marks ---
  *
- * One hairline, then the two of them — the end of the bar on all four
- * documents. The theme draws a `.VPSocialLink` at 36px with a 20px glyph; the
+ * One hairline, then the two of them, then the menu's button — the end of the
+ * bar on all four documents. The line stands 16px from the word (the link's
+ * padding 10 + 6) and 16px from the mark (10 + the 6 a glyph sits inside its
+ * box). The theme draws a `.VPSocialLink` at 36px with a 20px glyph; the
  * catalogue draws 30px with an 18px glyph, and the slow colour change on hover
  * is its own. */
-.Layout .VPNav .VPNavBar .social-links::before {
+.Layout .VPNav .VPNavBar .content-body .social-links::before {
   content: "";
+  display: block;
   width: 1px;
   height: 22px;
-  margin: 0 6px 0 12px;
+  margin: 0 10px 0 6px;
   background: var(--line);
 }
 
+/* The theme pulls the marks 8px past the row's end; here the menu's button is
+ * last and carries that margin instead. */
 .Layout .VPNav .VPNavBar .social-links {
   display: flex;
   align-items: center;
-  margin-right: -6px;
+  margin-right: 0;
 }
 
 .Layout .VPNav .VPSocialLink {
@@ -1493,16 +1590,12 @@
  * instead (`nav-screen-content-after`), where they are a list rather than a
  * strip. The marks go at the same width, as they go from the catalogue's bar
  * at 620px and the playground's at 820px — on a phone the bar is what is paid
- * for before anything is read. The theme button stays: it is the one item in
- * the group that is not reachable any other way. */
+ * for before anything is read. The menu stays: the theme switch is in it, and
+ * GitHub is one of its rows. */
 @media (max-width: 767px) {
   .Layout .VPNav .VPNavBar .bar-nav,
   .Layout .VPNav .VPNavBar .social-links {
     display: none;
-  }
-
-  .Layout .VPNav .VPNavBar .theme {
-    margin-left: 8px;
   }
 }
 
