@@ -40,11 +40,21 @@ export default {
     // single page application: the first page would otherwise be the only one
     // ever written down. `onAfterRouteChange` rather than `onBeforeRouteChange`
     // - the location is the new one only after the change has happened.
+    // THE HOME PAGE IS NOT WRITTEN DOWN. Every other page is, and the
+    // Documentation item on all four bars comes back to whatever was written
+    // last. If the front door counted as a page of the manual, going Home
+    // would overwrite the chapter you were reading with `/docs/`, and
+    // Documentation would then open the home page - which is what the Home
+    // item is for and not what the word Documentation promises. Home stays a
+    // place you go to, never a place you are returned to.
+    const rememberUnlessHome = () => {
+      if (!location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs')
+    }
     if (!import.meta.env.SSR) {
-      rememberHere('docs')
+      rememberUnlessHome()
       const onAfter = router.onAfterRouteChange
       router.onAfterRouteChange = (to) => {
-        rememberHere('docs')
+        rememberUnlessHome()
         onAfter?.(to)
       }
     }
