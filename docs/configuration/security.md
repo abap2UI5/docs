@@ -107,6 +107,7 @@ abap2UI5 sets these on every response, out of the box:
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | a cross-origin request leaks the origin, never the path or query |
 | `Permissions-Policy` | `geolocation=(self), microphone=(self), camera=(self), payment=(), usb=()` | the device APIs abap2UI5 offers stay available to the app itself; payment and USB are off |
 | `cache-control` / `Pragma` / `Expires` | `no-cache, no-store, must-revalidate` / `no-cache` / `0` | the roundtrip responses carry application state — nothing about them may be cached |
+| `Cross-Origin-Resource-Policy` | `same-origin` | no other site may embed a response of the app as a resource |
 
 They live in `cs_config-t_security_header` and are set in the same
 [user exit](/advanced/extensibility/user_exits) as the CSP, so an installation
@@ -118,6 +119,40 @@ METHOD z2ui5_if_ui5_exit~set_config_http_get.
     " keep everything the framework set, override one entry
     DELETE cs_config-t_security_header WHERE n = `Referrer-Policy`.
     APPEND VALUE #( n = `Referrer-Policy` v = `no-referrer` )
+        TO cs_config-t_security_header.
+
+ENDMETHOD.
+```
+
+### Two headers only an HTTPS installation gets
+`Strict-Transport-Security` and `Cross-Origin-Opener-Policy` are **not** in
+that list, both for the same reason: they belong to a deployment served over
+TLS, and abap2UI5 cannot see from inside the ICF node whether TLS terminated in
+front of it — the request hands out the path, the parameters and the `Host`,
+never the scheme.
+
+COOP is the one with a visible symptom. A browser honours it on a
+**trustworthy origin** only (`https://…`, or a `localhost` host), so on a
+plain-HTTP system it is dropped and the console shows a red entry on every app
+start:
+
+```
+The Cross-Origin-Opener-Policy header has been ignored, because the URL's
+origin was untrustworthy.
+```
+
+Nothing is broken there — the header simply did nothing — which is why it is no
+longer sent by default. Behind HTTPS both are worth having, and the exit is
+where they go:
+
+```abap
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
+
+    " an installation served over HTTPS - sever cross-origin window
+    " references and keep the browser on TLS
+    APPEND VALUE #( n = `Cross-Origin-Opener-Policy` v = `same-origin` )
+        TO cs_config-t_security_header.
+    APPEND VALUE #( n = `Strict-Transport-Security` v = `max-age=31536000` )
         TO cs_config-t_security_header.
 
 ENDMETHOD.
