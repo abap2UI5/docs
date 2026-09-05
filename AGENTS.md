@@ -137,7 +137,10 @@ two live in [abap2UI5/playground](https://github.com/abap2UI5/playground)
 `theme/style.css` are `src/catalogue/catalogue.css`'s, written out. Three
 repositories deploy separately, and a stylesheet fetched across them would be a
 request in front of the first paint. Change them together — the same applies to
-the bar's markup, which exists four times by hand for the same reason.
+the bar's markup, which exists four times by hand for the same reason, and to
+the bar's **measure**: 20px from either edge at every width, 12px on a phone,
+over the whole width and never centred, which is the catalogue's bar and which
+`style.css` (*the measure*) holds the theme's two nav layouts to.
 
 **The accent is SAP blue, and the mark is still red.** `#0a6ed1` / `#4aa3ff` is
 what a link, a button and the hero name are set in; `#d03c4a` is the circle in
