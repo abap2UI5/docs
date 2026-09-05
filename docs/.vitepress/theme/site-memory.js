@@ -54,12 +54,21 @@ export function rememberHere(site = "docs") {
  * A stored value is untrusted: anything running on this origin can put
  * anything in it, and a stale one outlives the page it named. So it is not
  * returned, it is CHECKED - resolved against this origin first, and kept only
- * if what comes back is still inside `fallback`'s own path. That is what turns
+ * if what comes back is still inside `scope`, which is `fallback`'s own path
+ * unless the caller names a wider one.
+ *
+ * `scope` is for a link written DEEPER than the section it restores inside:
+ * the other three bars point Documentation at the first page of the manual and
+ * still come back to wherever the reader was in it (`data-scope` on the link
+ * over there, src/shell/site-memory.mjs). It is a value the CALLER passes,
+ * never one that comes out of storage, so it widens nothing - what may be
+ * restored is still declared by this document and still checked against this
+ * origin. That is what turns
  * "//elsewhere/x" (a different origin), "/docs/../x" (a path that normalises
  * out of the section) and "javascript:…" (an origin of "null") into three
  * values that are simply ignored.
  */
-export function lastVisited(site, fallback) {
+export function lastVisited(site, fallback, scope = fallback) {
   if (typeof localStorage === "undefined") return fallback;
   try {
     const last = localStorage.getItem(KEY[site]);
@@ -68,7 +77,7 @@ export function lastVisited(site, fallback) {
      * unchanged on a dev server where the three sites sit at other paths - and
      * so a link to another HOST, which shares no storage and therefore has
      * nothing to restore, falls through the origin test. */
-    const base = new URL(fallback, location.href);
+    const base = new URL(scope, location.href);
     if (base.origin !== location.origin) return fallback;
     const target = new URL(last, location.origin);
     if (target.origin !== location.origin) return fallback;

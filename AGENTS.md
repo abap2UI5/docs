@@ -217,7 +217,7 @@ pages with no router in front of them.
 | | |
 |---|---|
 | the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteBar.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
-| where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the href the markup carries, which is what makes a poisoned or stale key cost a restored position and nothing else. The eleven cases are `test/site-memory.test.mjs` |
+| where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the section the markup declares: the href it carries, or a wider `scope` the caller names for a link written deeper than what it restores (the other three bars point Documentation at the first page of the manual and still come back to wherever the reader was in it). A poisoned or stale key costs a restored position and nothing else. The cases are `test/site-memory.test.mjs` |
 
 The playground is consulted by both and remembered by neither: its URL carries
 the code in the editor, so an item that reopened yesterday's sample would be a
