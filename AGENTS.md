@@ -224,12 +224,14 @@ menu ever got this wrong. `check:cross-site` now holds the whole built site to
 it, and the direction back needs nothing: the other three documents are static
 pages with no router in front of them.
 
-**One origin means one localStorage**, which is what two things here rely on:
+**One origin means one localStorage**, which is what four things here rely on:
 
 | | |
 |---|---|
 | the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteMenu.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
 | where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the section the markup declares: the href it carries, or a wider `scope` the caller names for a link written deeper than what it restores (the other three bars point Documentation at the first page of the manual and still come back to wherever the reader was in it). A poisoned or stale key costs a restored position and nothing else. The cases are `test/site-memory.test.mjs` |
+| where **on** the page you were | `theme/site-memory.js` again, keys `:scroll` (a small map of path → offset, the twelve most recent) and `:returning`. Restored **on arrival by the bar and nowhere else**: a bar item writes one record saying where it is sending the reader, and the page that *is* that, arriving within half a minute and with no hash of its own, honours it. Restoring on every load would fight the browser's own back-and-forward restoration and would drop a reader who followed an ordinary link into the middle of a page with nothing to explain it. A stored offset is checked the same way a stored path is — `scrollTo` takes whatever it is given. `test/scroll-memory.test.mjs` |
+| the last thing you searched for | `theme/search-engine.js`, key `:search`. A hit opens another page, often another deployment, and the box that opens there was empty; the query is written down as a hit is opened and the next box starts with it, selected, so the first keystroke replaces it. Checked (a string, short, and less than half an hour old) rather than used. `test/search.test.mjs` |
 
 The playground is consulted by both and remembered by neither: its URL carries
 the code in the editor, so an item that reopened yesterday's sample would be a

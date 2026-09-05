@@ -168,3 +168,57 @@ export function highlight(text, query) {
   if (at < hay.length) out.push([hay.slice(at), false]);
   return out;
 }
+
+/* ── THE LAST THING YOU SEARCHED FOR ────────────────────────────────────────
+ *
+ * A search that finds something ends on another page — often on another
+ * deployment — and the box that opens there is a new one, empty. A reader
+ * comparing three samples of the same control typed the same word three times,
+ * which is the search asking them to remember what they had just told it.
+ *
+ * So the query is written down when a hit is opened, and the next box on this
+ * origin opens with it, SELECTED, so the first keystroke replaces it rather
+ * than appending to it: the field is a suggestion, not a state to clear.
+ *
+ * It is the one-origin-one-localStorage the theme and the position memory
+ * already use, and it is CHECKED rather than followed — anything on this
+ * origin can write anything into that key. A string, short enough to have been
+ * typed, and recent: after half an hour a prefilled field is a question the
+ * reader has stopped asking.
+ */
+
+const QUERY_KEY = 'abap2ui5-playground:search';
+const QUERY_TTL = 30 * 60 * 1000;
+const QUERY_MAX = 120;
+
+/** Write down what was typed, as a hit is opened. An empty or absurd query
+ *  clears the memory rather than storing itself. */
+export function rememberQuery(query) {
+  if (typeof localStorage === 'undefined') return;
+  const q = (query || '').trim();
+  try {
+    if (!q || q.length > QUERY_MAX) localStorage.removeItem(QUERY_KEY);
+    else localStorage.setItem(QUERY_KEY, JSON.stringify({ q, at: Date.now() }));
+  } catch {
+    /* A refused or full storage. The reader types it again, as before. */
+  }
+}
+
+/** What to open the box with, or `''` — which is every case that is not a
+ *  recent query written by this box. */
+export function recallQuery() {
+  if (typeof localStorage === 'undefined') return '';
+  let record = null;
+  try {
+    record = JSON.parse(localStorage.getItem(QUERY_KEY) || 'null');
+  } catch {
+    return ''; /* not JSON: not something this wrote */
+  }
+  if (!record || typeof record.q !== 'string' || typeof record.at !== 'number') return '';
+  const age = Date.now() - record.at;
+  /* Backwards too. A clock that moved, or a timestamp somebody put in the
+   * future, is not an age this trusts. */
+  if (!(age >= 0 && age < QUERY_TTL)) return '';
+  const q = record.q.trim();
+  return q && q.length <= QUERY_MAX ? q : '';
+}
