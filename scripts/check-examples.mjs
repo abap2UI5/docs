@@ -399,9 +399,26 @@ writeFileSync(join(dir, 'abap2ui5lint.jsonc'), JSON.stringify({
   // the floor the documentation targets, and abap2UI5's own
   ui5: '1.71',
   distribution: 'openui5',
-  // the render gate needs a browser and ~118 MB of UI5 sources; the property
-  // gate is what decides whether an example names API that exists, which is
-  // the drift this check is for
+  /* The render gate needs a browser and ~118 MB of UI5 sources; the property
+   * gate is what decides whether an example names API that exists, which is
+   * the drift this check is for.
+   *
+   * It was run over these examples once, by hand, on 2026-09-04 - set
+   * `render: true` here and point the CLI at the `--keep` directory - and the
+   * answer is why it stays off rather than merely being expensive. Five of the
+   * 69 fail, and all five for the same reason: the harness serves plain
+   * OpenUI5, which ships neither abap2UI5's own custom controls
+   * (`z2ui5/cc/CameraPicture`, `Geolocation`, `FileUploader` - the camera,
+   * geolocation and upload pages) nor SAPUI5's XML-templating extension
+   * (`xml_templating.md`). Turning the gate on would fail five correct pages
+   * for having nothing to do with them.
+   *
+   * The run was worth making anyway: a sixth failure was real, and it was the
+   * linter's. `cookbook/model/expression_binding.md` writes a UI5 type binding
+   * across two lines with `|\n|`, the resolver reduced that to the letter `n`,
+   * and UI5 answered "SyntaxError: Expected ':' instead of 'p'" - a broken
+   * view reported against an example that runs. Fixed upstream in
+   * abap2UI5/linter#97; there is nothing to change here. */
   render: false,
   failOn: 'warning',
 }, null, 2));
