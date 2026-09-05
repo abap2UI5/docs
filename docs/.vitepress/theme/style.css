@@ -50,6 +50,32 @@
   color-scheme: dark;
 }
 
+
+/* ---- THE MARK'S RED, and where it is allowed ----
+ *
+ * The site's accent is SAP blue and stays blue: that decision is measured and
+ * written down above, and the four bars share the value across two
+ * repositories. This is the other colour the project actually has - the circle
+ * in the mark, sampled from logo.png at #d03c4a - and it is used on ONE page,
+ * the home page, which is the mark's own page and the one place a reader is
+ * being greeted rather than being read to.
+ *
+ * The dark value is lifted, and that is not decoration: #d03c4a on #16171a is
+ * 3.78:1, which fails AA for text. #e8697a on the same ground is 5.75:1. On
+ * white the mark's own red is 4.74:1 and passes as it is. The tint is the same
+ * red at the alpha the out-cards were already using. */
+:root {
+  --a2ui5-red: #d03c4a;
+  --a2ui5-red-strong: #b8323f;
+  --a2ui5-red-tint: rgb(208 60 74 / 0.07);
+}
+
+.dark {
+  --a2ui5-red: #e8697a;
+  --a2ui5-red-strong: #f0808e;
+  --a2ui5-red-tint: rgb(232 105 122 / 0.12);
+}
+
 /* …and the theme's own tokens, pointed at them. Everything below this line in
  * this file, and everything in VitePress's default theme, goes on reading the
  * `--vp-*` names; this is the one place the two vocabularies meet. */
@@ -427,13 +453,61 @@
  * rendering artefact, and it is the one the reader's other technical tabs use.
  */
 
-:root {
-  --vp-code-block-bg: var(--a2ui5-c-surface);
-}
-
 .vp-doc div[class*='language-'] {
   border: 1px solid var(--a2ui5-c-hairline);
   border-radius: 6px;
+}
+
+
+/* ============================== the code gets the width the page has ===
+ *
+ * A walkthrough step is a paragraph and a listing, and the listing is the
+ * point. At 1440 they were the same 640px, while the same class printed on its
+ * page over in the catalogue gets 880 - and the same ABAP at two widths wraps
+ * differently in each, which is a different listing rather than a differently
+ * sized one.
+ *
+ * WHAT THIS DOES NOT DO is widen the column. That was tried here and reverted,
+ * and the reasons are written out under "one column, and a measure" below: a
+ * wide column with the prose capped back inside it put two right edges on
+ * every page and needed an exception named for every prose-like element that
+ * the cap did not reach. 640px is a measured decision about READING, and it
+ * stands.
+ *
+ * So the listing alone steps out of the column, into the space the column is
+ * centred in. One selector, no exception list, and the prose keeps its single
+ * edge. It is worth 112px - 640 to 752 - which is fourteen more characters of
+ * the 13px mono face before a wrap.
+ *
+ * Only from 1440px up. Below that the theme's content column has no slack
+ * around it (`min-width: 640px` on `.content`), so a bleed would come out of
+ * the outline rather than out of the margin. The 56px is that slack measured
+ * at 1440 with the widened outline this file already sets, less a cushion.
+ */
+@media (min-width: 1440px) {
+  .Layout .VPDoc.has-aside .vp-doc div[class*='language-'] {
+    margin-left: -56px;
+    margin-right: -56px;
+  }
+}
+
+/* ---- and it is the catalogue's box ----
+ *
+ * The two documents drew the same ABAP differently: over there a bordered box
+ * with the page's own background behind the code, here a bordered box with a
+ * grey fill inside it. The grey is a leftover - this file's own "edges, not
+ * surfaces" section above took the fill off the callouts, the tables and the
+ * details blocks and left it on the one element it is least useful on, where
+ * the syntax colours have to sit on top of it.
+ *
+ * The edge stays, the fill goes, and the two listings are one listing at two
+ * URLs. The radius stays 6px rather than the catalogue's 8: that number is
+ * this site's, applied throughout, and one box on one page at a different
+ * radius from every other box on the page is a worse mismatch than the one
+ * being fixed.
+ */
+:root {
+  --vp-code-block-bg: var(--bg);
 }
 
 /* The `::: details` block onto the same grey as the code block it usually
@@ -1169,6 +1243,48 @@
   --vp-button-alt-hover-bg: transparent;
   --vp-button-alt-active-border: var(--vp-c-text-2);
   --vp-button-alt-active-bg: transparent;
+
+  /* THIS PAGE IS RED. Everywhere else on the site a link is blue, and the bar
+     above stays blue because three other documents wear the same one - but
+     the front door is the mark's page. The mark is a red circle 200px across
+     at the top of it, and a blue headline and a blue button under a red mark
+     are two brands on one screen.
+     Scoped rather than declared: `--accent` keeps its own value at `:root`,
+     which is what the four bars share and what check:design holds. */
+  --accent: var(--a2ui5-red);
+  --vp-home-hero-name-color: var(--a2ui5-red);
+  --vp-c-brand-1: var(--a2ui5-red);
+  --vp-c-brand-2: var(--a2ui5-red-strong);
+  --vp-c-brand-3: var(--a2ui5-red-strong);
+  --a2ui5-c-out-tint: var(--a2ui5-red-tint);
+
+  /* The button needs saying twice. The theme derives its fill from
+     `--vp-c-brand-3` in a declaration that lives on `:root`, so a brand colour
+     set HERE never reaches it - the variable it reads was already resolved
+     against the root value. Measured, not guessed: the button stayed blue
+     under a red headline until these six lines existed. */
+  --vp-button-brand-bg: var(--a2ui5-red);
+  --vp-button-brand-border: transparent;
+  --vp-button-brand-hover-bg: var(--a2ui5-red-strong);
+  --vp-button-brand-hover-border: transparent;
+  --vp-button-brand-active-bg: var(--a2ui5-red-strong);
+  --vp-button-brand-active-border: transparent;
+
+  /* ...and the links, for exactly the same reason. `--a2ui5-c-link` is
+     declared as `var(--accent)` at `:root`, so it was resolved there, in blue,
+     long before this page redefined `--accent`. A variable that stands for
+     another variable has to be re-stated wherever the one underneath changes.
+     Measured too: the prose and the table on this page stayed blue under a red
+     headline and a red button until this line existed. */
+  --a2ui5-c-link: var(--a2ui5-red);
+  --a2ui5-c-link-hover: var(--a2ui5-red-strong);
+}
+
+/* ...including the three marks on the cards, which were the muted text colour.
+   Red at 22px is a mark, not a warning: it is the same weight of colour the
+   headline above them carries. */
+.Layout .VPHome .VPFeature .icon {
+  color: var(--a2ui5-red);
 }
 
 /* ================================================ the home page, at 90% ===
@@ -1868,6 +1984,12 @@
   z-index: 200;
   display: flex;
   justify-content: center;
+  /* Against the top, not stretched to the full height. The scrim is a flex row
+     and its default `align-items: stretch` made the panel as tall as the space
+     it was given, whatever it held: the empty state was a paragraph, a row of
+     chips and the key row, and then four hundred pixels of white nothing under
+     them. `max-height` still caps it, and a long list still scrolls inside. */
+  align-items: flex-start;
   /* Higher up and roomier than it was: this is a place to browse ~940 entries
      in, and 12vh of dimmed page above it was margin nobody reads. */
   padding: 8vh 16px 16px;
