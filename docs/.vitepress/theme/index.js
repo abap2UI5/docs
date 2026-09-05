@@ -3,6 +3,7 @@ import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import { setUpPlayground } from './playground.js'
+import { markDirective, setUpLinkToSelection } from './link-to-selection.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
 import { rememberHere } from './site-memory.js'
@@ -32,6 +33,18 @@ export default {
     // The Run button under a runnable ABAP example. One delegated listener for
     // the whole site — the browser half of docs/.vitepress/playground.mjs.
     if (!import.meta.env.SSR) setUpPlayground()
+
+    // "Copy link to selection" — a link to the words a reader marked, as a
+    // text fragment (link-to-selection.js, and text-fragment.js for why the
+    // link names the words rather than the line they are on). One delegated
+    // listener for the whole site, like the Run button above it; the second
+    // call is only ever reached by a browser too old for `:~:`, and lands it
+    // where the words are instead of at the top of the page.
+    if (!import.meta.env.SSR) {
+      setUpLinkToSelection()
+      if (document.readyState === 'complete') markDirective()
+      else window.addEventListener('load', markDirective, { once: true })
+    }
 
     // Where the reader is, for the Docs item on the other three bars to come
     // back to (site-memory.js). On every route change, because this site is a

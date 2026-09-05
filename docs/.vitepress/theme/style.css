@@ -2038,3 +2038,49 @@
   outline-offset: 2px;
   border-radius: var(--radius-control);
 }
+
+/* =========================================== copy link to selection ===
+ *
+ * The button that appears under a selection inside the article, and the mark
+ * a browser too old for text fragments gets instead of the browser's own.
+ * theme/text-fragment.js says why the link quotes the words rather than
+ * numbering the lines; theme/link-to-selection.js is what puts this on screen.
+ *
+ * Positioned in DOCUMENT coordinates rather than the viewport, so it stays on
+ * the words it belongs to while the page scrolls under it - a floating button
+ * that drifts away from its own selection reads as a bug in the page. */
+.a2ui5-quote {
+  position: absolute;
+  z-index: 20;
+  padding: 5px 11px;
+  border: 1px solid var(--a2ui5-c-hairline);
+  border-radius: var(--radius-control);
+  background-color: var(--bg);
+  color: var(--a2ui5-c-link);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+}
+
+.a2ui5-quote:hover {
+  background-color: var(--bg-sunken);
+}
+
+/* The fallback's mark. The same tint the sample pages colour a linked line
+ * with (sample.css in abap2UI5/playground), because it is the same promise:
+ * this is the part of the page the link was about. It is removed after a few
+ * seconds - it says "here", it is not a state the page is in. */
+.vp-doc .a2ui5-quoted {
+  background-color: var(--a2ui5-c-out-tint);
+  border-radius: var(--radius-control);
+  transition: background-color 0.4s;
+}
+
+/* Printing a page prints its text, and a button is not text. */
+@media print {
+  .a2ui5-quote { display: none; }
+}
