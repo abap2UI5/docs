@@ -4,6 +4,7 @@ import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import { setUpPlayground } from './playground.js'
 import SiteBar from './SiteBar.vue'
+import SearchBox from './SearchBox.vue'
 import { rememberHere } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
@@ -18,6 +19,13 @@ export default {
   // menu after them.
   Layout() {
     return h(DefaultTheme.Layout, null, {
+      // The search, in the middle of the row. `nav-bar-content-before` is the
+      // FIRST thing in `.content-body`; style.css gives it auto margins, which
+      // is what centres it between the four sections on the left and the marks
+      // on the right. It is not in SiteBar because SiteBar is rendered twice -
+      // the bar and the screen a phone opens instead of it - and two search
+      // boxes in one document is two ids, two shortcuts and one of them wrong.
+      'nav-bar-content-before': () => h(SearchBox),
       'nav-bar-content-after': () => h(SiteBar),
       'nav-screen-content-after': () => h(SiteBar, { theme: false }),
     })

@@ -19,7 +19,9 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
-| `scripts/check-version.mjs` | The release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework |
+| `scripts/check-version.mjs` | The release number in the bar's menu, the deprecations page and the changelog, against the newest release tag of the framework |
+| `scripts/generate-search.mjs` | Builds `docs/public/search-index.json` — the pages of this site plus every entry in the three sample catalogues, which is what the box in the middle of the bar searches. Runs inside `docs:build`, so the deploy publishes it; `scripts/lib/search-index.mjs` is what goes in |
+| `scripts/lib/pages.mjs` | What a page of this site IS: the sidebar walk, its title, its first sentence, its headings, its words. Shared by `generate-llms.mjs` and `generate-search.mjs` so a page added to the sidebar reaches both |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/list-runnable.mjs` | The measurement's worklist: every fenced example that carries a Run button, out of the same `playground.mjs` that decides the button. `--json` adds each example's ABAP verbatim - what the button sends - so the measurement below can be driven rather than clicked |
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
@@ -28,36 +30,41 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
 | `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the menu behind the bar's last button — the light/dark switch, the project's tools and its repositories. Rendered into `nav-bar-content-after` by `theme/index.js`; the marks between them are VitePress's own `socialLinks`, ordered by `style.css` |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
+| `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:cross-site + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but nine things in
-it are decidable, and all nine are decided before a merge:
+A documentation repository has no compiler for its prose, but ten things in
+it are decidable, and all ten are decided before a merge:
 
 | | |
 |---|---|
 | `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate — and the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow |
-| `check:version` | the release number in the nav bar, the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
+| `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteBar.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` on `main`, plus every `blob/main/` link into the framework's tree, plus **no name from the frozen package** (`src/99`: `z2ui5_cl_util*`, `z2ui5_cl_pop_*`, `z2ui5_cl_xml_view*`, `z2ui5_if_exit`, `z2ui5_if_types`, …) anywhere but on the deprecations page and in the changelog. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
 | `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` on `main` and compared byte for byte. Goes stale whenever the interface changes over there and the committed reference still describes the shape before it. `npm run generate:api` rewrites both |
 | `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
+| `check:cross-site` | every link that leaves this deployment for a neighbouring one on the same origin — the playground, the catalogue, the linter's rule pages — carries a `target`. Without it VitePress's router treats the link as a route of THIS site, finds no page behind `/playground/` and renders the 404 *at that URL*, which reads as the other site being broken. Every way out of the manual was in that state at once: both bar items, the Linter rules row in the menu and the Run bar's link. Judges the built HTML, so it runs straight after `docs:build`. What it cannot see is the Run bar's link — built in a browser, in no built page — which is why `test/cross-site.test.mjs` pins that one as source |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
-**All three walking gates carry a floor.** A gate that checked nothing reports
+**All four walking gates carry a floor.** A gate that checked nothing reports
 the same shape as a gate that found nothing wrong — which is precisely how
 `check:examples` passed for years on an abaplint config with no rules in it. So
 `check:examples`, `check:conventions` and `check:playground` each exit 1 when
 their walk finds no example at all, and say which of the fence language, the
-page layout or the builder name is the likely cause.
+page layout or the builder name is the likely cause. `check:cross-site` carries
+the same floor twice over: no HTML in `dist` at all, and no cross-site link on
+a site whose bar carries three of them on every page.
 
-`.github/workflows/check.yml` runs the same nine, in the same order. Keep the
+`.github/workflows/check.yml` runs the same ten, in the same order. Keep the
 two in step: a step that exists only in `package.json` is a step no pull
 request has to pass, which is how `npm test` — the pin added *because* the
 catalogue parser broke twice in silence — went a release without CI.
@@ -148,12 +155,69 @@ the wordmark and belongs to the mark alone. `resources/logo.md` is the page
 that says so and the one place either value is quoted to a reader — if you move
 an accent, move that table with it.
 
+**What the bar carries, left to right.** The mark and the name, then the four
+sections of the project — **Home**, **Documentation**, **Samples**,
+**Playground** — then the search, then the two marks and the menu behind the
+last button. One row at every width, which is the whole bar: the sections are
+hard against the brand because that is where a reader's eye already is, and the
+search sits on auto margins so it is centred in whatever the row has left
+rather than at a number that is right on one screen.
+
+Two of the four sections are pages of THIS deployment (Home is
+`docs/index.md`, which the brand alone used to open and nothing named;
+Documentation opens the manual) and two are the neighbouring sites. The one
+you are on is marked, which for this site means Home *or* Documentation
+depending on the page — `relativePath` decides it, server-side, so the bar is
+right in the HTML rather than after hydration.
+
+**The search is one box for the whole project.** It was VitePress's own local
+search, which indexes the pages of this site and nothing else — and half of
+what a reader wants is a sample, in another repository, on another deployment.
+`theme/SearchBox.vue` searches one index instead
+(`/docs/search-index.json`, built by `generate-search.mjs`): every page of the
+manual with its headings and its words, and all ~770 entries of the three
+sample catalogues with the titles, summaries and keywords those repositories
+maintain. Results are grouped by area, documentation first, and a sample hit
+opens that sample's own page in the catalogue.
+
+The index is generated, gitignored and fetched lazily — nothing is loaded until
+somebody types. The matching is `theme/search-engine.js`, deliberately
+framework-free: the other three bars are static HTML and carry a copy of it,
+the same arrangement as the palette and the position memory. **The index is not
+copied.** It is one document on the shared origin, fetched by whichever site
+the reader is on, because two copies of the data would be two answers to the
+same query.
+
+**One origin is also what breaks a plain link between them, and every link out
+of this site carries `target="_self"` because of it.** This site is a single
+page application: VitePress's router listens on the window and takes over any
+link that is same-origin and looks like a page
+(`origin === currentUrl.origin && treatAsHtml(pathname)`, in
+`vitepress/dist/client/app/router.js`). `/playground/` passes both tests — so
+the router pushed the URL, went looking for a page of THIS site to render
+there, found none, and drew this site's own **404** in its place. The address
+bar said `/playground/`, the document said PAGE NOT FOUND, and a reload then
+loaded the real playground, which is what a failed SPA route change looks like
+from the outside. Every way out of the manual was in that state at once: both
+bar items, the *Linter rules* row in the menu, and the Run bar's *Switch to
+Playground with this code*.
+
+The router's own escape hatch is the line above those two tests — a link with a
+`target` attribute is left alone, whatever the value. `_self` is the value,
+because these three are one site and open in one tab. It is needed for
+**neighbours on this origin only**: a link to github.com is another origin, the
+router never looks at it, and VitePress gives external links in a page a
+`target="_blank"` of their own — which is why only the hand-written bar and
+menu ever got this wrong. `check:cross-site` now holds the whole built site to
+it, and the direction back needs nothing: the other three documents are static
+pages with no router in front of them.
+
 **One origin means one localStorage**, which is what two things here rely on:
 
 | | |
 |---|---|
 | the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteBar.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
-| where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the href the markup carries, which is what makes a poisoned or stale key cost a restored position and nothing else. The eleven cases are `test/site-memory.test.mjs` |
+| where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the section the markup declares: the href it carries, or a wider `scope` the caller names for a link written deeper than what it restores (the other three bars point Documentation at the first page of the manual and still come back to wherever the reader was in it). A poisoned or stale key costs a restored position and nothing else. The cases are `test/site-memory.test.mjs` |
 
 The playground is consulted by both and remembered by neither: its URL carries
 the code in the editor, so an item that reopened yesterday's sample would be a
@@ -165,6 +229,26 @@ abap2ui5.github.io, so every path through `lastVisited( )` takes the
 different-origin branch and falls back. That is why the same-origin cases are a
 unit test with a stubbed `location` rather than an end-to-end one. The round
 trip itself is held over there, in `tests/site-memory.spec.js`.
+
+**Why this is not one deployment, and why merging them would not have helped.**
+The question comes up whenever the bar misbehaves: put the documentation, the
+playground and the catalogue in one GitHub Pages site and the seams go away.
+They are already on one origin — that is what a project page per repository
+under `abap2ui5.github.io` gives you — so a merge would buy no origin that is
+not already shared, and the 404 above was **not** a cross-origin problem: it
+was a same-origin one, caused by exactly the sharing a merge would deepen. One
+deployment would still serve the playground at a path VitePress does not own,
+the router would still swallow the link, and the fix would still be the
+attribute.
+
+What it would cost is concrete: one repository publishing everything means the
+documentation waits on the playground's build (a pinned framework, a transpile,
+UI5, seven hundred catalogue pages) to publish a typo fix, one `pages` queue
+for both, and the gates of two very different projects in one run. What it
+would buy — one bar instead of four, one palette — is real, and is the price
+deliberately paid above for a first paint that fetches nothing across a
+deployment. If that trade is ever re-opened, re-open it for the four copies of
+the bar, not for the links between the sites; those are one attribute.
 
 ## Things that will trip you up
 
@@ -181,17 +265,29 @@ trip itself is held over there, in `tests/site-memory.spec.js`.
   `.github/shared/check-framework-pin.mjs`, "releases never gate a merge").
   What a reader on the newest release does not have yet is now a question of
   PROSE: `resources/deprecations.md` carries a *next release* column, and
-  `check:version` keeps the release number in the nav bar, the deprecations
+  `check:version` keeps the release number in the bar's menu, the deprecations
   page and the changelog honest. `A2UI5_REF` still overrides the ref — now to
   pin a run BACK to a release rather than forward to main.
 
-- **The nav bar and the sidebar contain the same two entries.**
-  `Contribution` and `Sponsor` appear in both `themeConfig.nav` and
-  `themeConfig.sidebar` in `config.mjs`. The four lines now carry a `// nav` or
-  `// sidebar` marker so each one is unique — match on the marker, not on the
-  link. Any further line that has to exist twice gets the same treatment;
-  a replace-first edit on a text that appears twice hits the wrong one and
-  looks like it worked.
+- **A link to a neighbouring site needs `target="_self"`, and looks fine
+  without it.** The playground, the catalogue and the linter's rule pages are
+  on this origin, so VitePress's router takes an ordinary link to them over,
+  finds no page of this site there and renders the 404 at their URL. Nothing
+  is red: the markup is valid, the URL is right, and a reload lands on the
+  real page — so it reads as the other site being down. Adding a row to the
+  bar or to the menu behind its last button means adding the attribute;
+  `npm run check:cross-site` (after a build) says so if you forget. A link to
+  another host needs nothing.
+
+- **`themeConfig.nav` is empty, and it stays empty.** The bar carries the four
+  sections of the project (`theme/SiteBar.vue`), the search, and everything
+  else behind the menu at its right-hand end. An entry added back to `nav`
+  lands between the sections and the search box and the row stops reading left
+  to right. What used to be there — Guide, Links, the version number — is
+  written out in `config.mjs` where the array was, including where each one
+  went. The `// nav` / `// sidebar` markers left in the sidebar are the scar of
+  the duplication that dropdown cost: two of its entries stood twice in one
+  file, and a replace-first edit hit the wrong one and looked like it worked.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
   frozen builder — unless the page carries the migration banner, and refuses a

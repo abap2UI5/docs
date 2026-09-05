@@ -20,11 +20,22 @@
  * <details> does not - a click anywhere outside it, and Escape. The same lines
  * as setUpExtra() in the playground's catalogue.mjs and extra.mjs.
  */
-import { inject, onMounted, ref, watch } from "vue";
+import { computed, inject, onMounted, ref, watch } from "vue";
 import { useData } from "vitepress";
 import { lastVisited } from "./site-memory.js";
 
-const { isDark } = useData();
+const { isDark, page } = useData();
+
+/* The released framework version - z2ui5_if_app=>version in
+ * abap2UI5/src/02/z2ui5_if_app.intf.abap is where the number comes from, and
+ * check:version (scripts/lib/release.mjs) holds this line against the newest
+ * release tag, the deprecations page and the changelog. It stood in a nav
+ * dropdown of its own until the bar was rebuilt around the four sections; the
+ * four entries under it - release notes, support, contribute, sponsor - were
+ * already in the menu below, so what was left of that dropdown was the
+ * NUMBER, and this is where the number went. Moving it means moving the
+ * pattern in release.mjs with it. */
+const VERSION = "1.144.0";
 
 /* The same three items serve the bar and the menu a phone opens instead of it
  * (`nav-screen-content-after`). Only the menu behind the third mark differs:
@@ -34,6 +45,33 @@ defineProps({ theme: { type: Boolean, default: true } });
 
 const PLAYGROUND = "https://abap2ui5.github.io/playground/";
 const SAMPLES = "https://abap2ui5.github.io/playground/samples/";
+/* The two sections of THIS deployment. Home is the page the brand has always
+ * opened and nothing else ever named; Documentation opens on the first page of
+ * the manual, which is where the Guide dropdown used to send a reader who
+ * clicked its first entry. Both are pages of this site, so neither needs the
+ * `target` the two above carry. */
+const HOME = "/docs/";
+const DOCS = "/docs/get_started/about";
+
+/* Which of the two is the one you are on. `relativePath` rather than the URL:
+ * it is what the server rendered as well, so the bar is right in the HTML and
+ * not only after hydration. */
+const onHome = computed(() => page.value.relativePath === "index.md");
+
+/* EVERY LINK OUT OF THIS SITE AND INTO A NEIGHBOURING ONE CARRIES A `target`,
+ * and it is not decoration: without it the link does not arrive.
+ *
+ * The three sites share an origin - the thing that makes the shared theme and
+ * the shared position memory possible - and that is also what breaks a plain
+ * link between them. This site is a single page application: VitePress's
+ * router takes over any link that is same-origin and looks like a page, and
+ * /playground/ is both. It then has no page of THIS site to render there, so
+ * it drew this site's 404 at the playground's URL. `_self` is the value
+ * because it is the behaviour these items already promised - one site, one
+ * tab. A link to another host needs nothing; only abap2ui5.github.io outside
+ * /docs/ is affected. scripts/lib/cross-site.mjs is the whole story, and
+ * scripts/check-cross-site.mjs holds the built site to it. */
+const SAME_TAB = "_self";
 
 /* The catalogue's front page until the browser says otherwise. This is what
  * the server renders, what a crawler is given and what a first visit follows;
@@ -91,11 +129,15 @@ watch(isDark, (dark) => {
 
 <template>
   <nav class="bar-nav" aria-label="abap2UI5 sites">
-    <!-- The one you are on, which is why it is a span and not a link - the
-         look aria-current gets on the other three bars. -->
-    <span class="here" aria-current="page">Documentation</span>
-    <a :href="samplesHref" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
-    <a :href="PLAYGROUND" title="Write ABAP and run it in the browser">Playground</a>
+    <!-- The four sections of the project, left to right in the order a reader
+         meets them, and the one you are on marked. Home and Documentation are
+         two sections of THIS deployment now - the section that used to be one
+         non-clickable word ("Documentation") is two places a reader can move
+         between, which is what the brand alone could not offer. -->
+    <a :href="HOME" :class="{ here: onHome }" :aria-current="onHome ? 'page' : undefined" title="abap2UI5 in one page">Home</a>
+    <a :href="DOCS" :class="{ here: !onHome }" :aria-current="!onHome ? 'page' : undefined" title="The manual: guide, cookbook, reference">Documentation</a>
+    <a :href="samplesHref" :target="SAME_TAB" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
+    <a :href="PLAYGROUND" :target="SAME_TAB" title="Write ABAP and run it in the browser">Playground</a>
   </nav>
   <!-- The rest of abap2UI5 behind one more button: light or dark, then the
        practical links (issues, release notes, install, support), the project's
@@ -111,6 +153,7 @@ watch(isDark, (dark) => {
         <span class="when-light"><span class="glyph" aria-hidden="true">☾</span>Switch to dark</span>
         <span class="when-dark"><span class="glyph" aria-hidden="true">☀</span>Switch to light</span>
       </button>
+      <span class="a2ui5-menu-head">Version {{ VERSION }}</span>
       <a href="https://github.com/abap2UI5/abap2UI5/issues" target="_blank" rel="noopener">Issues</a>
       <a href="/docs/resources/changelog">Release notes</a>
       <a href="/docs/get_started/quickstart">Install with abapGit</a>
@@ -119,7 +162,9 @@ watch(isDark, (dark) => {
       <a href="/docs/resources/sponsor">Sponsor</a>
       <span class="a2ui5-menu-head">Tools</span>
       <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
-      <a href="https://abap2ui5.github.io/linter/">Linter rules</a>
+      <!-- Same origin, another deployment: the attribute above, not the
+           `target="_blank"` the github.com rows carry. -->
+      <a href="https://abap2ui5.github.io/linter/" :target="SAME_TAB">Linter rules</a>
       <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">VS Code extension</a>
       <a href="/docs/advanced/mcp_server">MCP server</a>
       <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">App template</a>

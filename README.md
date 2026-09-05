@@ -15,14 +15,16 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all nine steps
+npm run check        # what CI runs, all ten steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but nine things in
-it are decidable, and `npm run check` decides all nine before a merge — the
-prose builds (`docs:build`), the fenced ABAP examples compile and the views
+A documentation repository has no compiler for its prose, but ten things in
+it are decidable, and `npm run check` decides all ten before a merge — the
+prose builds (`docs:build`), every link into a neighbouring site on this origin
+— the playground, the catalogue — still leads there rather than to this site's
+own 404 (`check:cross-site`), the fenced ABAP examples compile and the views
 they build name real UI5 API (`check:examples`), those examples are written
 in the same house style as the sample corpora — chain layout and class shell —
 (`check:conventions`), every `client->` name and
@@ -41,9 +43,26 @@ passed. Several of these go stale without anybody touching this repository (a
 release is published elsewhere, a sample class is renamed elsewhere), which is
 why the deploy re-runs them rather than trusting the merge.
 
-**[AGENTS.md](AGENTS.md) describes each of the nine**, what a failure means and
+**[AGENTS.md](AGENTS.md) describes each of the ten**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
+
+### The bar, and what the search covers
+
+The bar is the mark, then the four sections — **Home**, **Documentation**,
+**Samples**, **Playground** — then one search box, then the project's links.
+The two middle sections are this site; Samples and Playground are the two
+neighbouring deployments on the same origin, and all four bars across them are
+kept identical by hand.
+
+The search covers **both areas at once**: every page here, and every one of the
+~770 samples in [samples](https://github.com/abap2UI5/samples),
+[samples-controls](https://github.com/abap2UI5/samples-controls) and
+[samples-stack](https://github.com/abap2UI5/samples-stack). It reads one
+generated index (`npm run search`), published at
+[`/docs/search-index.json`](https://abap2ui5.github.io/docs/search-index.json)
+and fetched by the playground and the catalogue too, so one query answers from
+one place wherever it is typed.
 
 ### What the site publishes for machines
 

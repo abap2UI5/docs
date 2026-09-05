@@ -113,3 +113,18 @@ test('a storage that refuses everything does not throw', () => {
     globalThis.localStorage = before.localStorage;
   }
 });
+
+test('a scope wider than the link is what restores a section from a deep href', () => {
+  /* The other three bars point Documentation at the first page of the manual
+   * and still come back to wherever the reader was in it. Without a scope the
+   * containment test is against that one page, so every restore falls back -
+   * a memory that silently does not work. Written here with the key this file
+   * stubs; the case is the shape, not the section. */
+  const deep = 'https://abap2ui5.github.io/playground/samples/all/';
+  const last = '/playground/samples/z2ui5_cl_smp_app_001/';
+  assert.equal(on(SITE, last, () => lastVisited('samples', deep)), deep,
+    'without a scope, a sibling page is not inside the link');
+  assert.equal(on(SITE, last, () => lastVisited('samples', deep, SAMPLES)), last);
+  /* And the scope is a fence, not a door: outside it, the written link stands. */
+  assert.equal(on(SITE, '/docs/cookbook/view/definition.html', () => lastVisited('samples', deep, SAMPLES)), deep);
+});

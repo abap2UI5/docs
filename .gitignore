@@ -13,3 +13,9 @@ docs/.vitepress/dist
 docs/public/llms.txt
 docs/public/llms-full.txt
 docs/public/**/*.md
+
+# and by scripts/generate-search.mjs - the index behind the box in the bar, a
+# projection of those same pages plus the three sample catalogues. Committed it
+# would be stale on every commit that touches a page, and a stale index answers
+# a search with a page that has moved.
+docs/public/search-index.json

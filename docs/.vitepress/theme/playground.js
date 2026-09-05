@@ -117,6 +117,14 @@ function bar(container, demo, embed, source) {
   const open = document.createElement('a');
   open.className = 'a2ui5-play-open';
   open.textContent = 'Switch to Playground with this code';
+  /* In this tab, and out of VitePress's hands: the playground is same-origin
+   * and its path looks like a page, so without a `target` the router takes
+   * this link over, has no page of this site to render at it and shows the
+   * 404 instead. The reasoning is in scripts/lib/cross-site.mjs. The gate
+   * that holds the bar to this cannot see this link - it is built here, in a
+   * browser, from a URL the loader returns - so test/cross-site.test.mjs
+   * reads this line instead. */
+  open.target = '_self';
   /* Built by the loader rather than here: the fragment format is the
    * playground's, and a fragment it cannot read is quietly replaced by its own
    * sample — a wrong link that looks like a working one. An older loader that

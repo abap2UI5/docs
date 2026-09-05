@@ -69,18 +69,62 @@ const PUBLISHED = (repo) => `https://raw.githubusercontent.com/abap2UI5/${repo}/
  *  entries; where the entries themselves are in hand, counting them is the
  *  answer that cannot have gone stale separately. */
 export function countEntries(catalogue) {
-  if (!catalogue || typeof catalogue !== 'object') return 0;
-  let n = 0;
+  return entriesOf(catalogue).length;
+}
+
+/** The entries themselves, by the same shape rule countEntries counts by -
+ *  something with a class name and a pointer to its source file, under
+ *  whatever key this repository happens to keep them (`samples` here and in
+ *  samples-stack, `ports` in samples-controls).
+ *
+ *  countEntries is `entriesOf(...).length` and not a second walk, because the
+ *  search index and the figure in llms.txt disagreeing about what a sample is
+ *  would be a bug nobody could see: both numbers look plausible. */
+export function entriesOf(catalogue) {
+  if (!catalogue || typeof catalogue !== 'object') return [];
+  const out = [];
   for (const value of Object.values(catalogue)) {
     if (!Array.isArray(value)) continue;
     for (const entry of value) {
       if (!entry || typeof entry !== 'object') continue;
       const cls = entry.class;
       const file = entry.file ?? entry.path;
-      if (typeof cls === 'string' && cls.trim() && typeof file === 'string' && file.trim()) n++;
+      if (typeof cls === 'string' && cls.trim() && typeof file === 'string' && file.trim()) out.push(entry);
     }
   }
-  return n;
+  return out;
+}
+
+/** A whole `catalogue.json` for `repo`, for a caller that wants the entries
+ *  rather than how many there are: a checkout's copy first, then the one the
+ *  repository publishes on its default branch, then null.
+ *
+ *  The SAMPLES.md step countCatalogue carries is deliberately not here. That
+ *  parser answers "how many rows", and a row is a title and a class; the index
+ *  wants what an entry declares about itself - its summary, its keywords, the
+ *  library it belongs to. A repository reachable only as a rendered table
+ *  contributes no search entries rather than worse ones. */
+export async function loadCatalogue(repo, root, { fetchFn = globalThis.fetch } = {}) {
+  const dirs = HOMES[repo];
+  if (!dirs) throw new Error(`no catalogue location known for ${repo}`);
+  for (const dir of dirs) {
+    const at = dir.endsWith('_HOME') ? process.env[dir] : path.join(root, dir);
+    if (!at) continue;
+    const json = path.join(at, 'catalogue.json');
+    if (!fs.existsSync(json)) continue;
+    try {
+      const parsed = JSON.parse(fs.readFileSync(json, 'utf8'));
+      if (countEntries(parsed) > 0) return { catalogue: parsed, source: 'checkout catalogue.json' };
+    } catch { /* fall through to the next home, then to the network */ }
+  }
+  try {
+    const res = await fetchFn(PUBLISHED(repo), { signal: AbortSignal.timeout(10_000) });
+    if (res && res.ok) {
+      const parsed = JSON.parse(await res.text());
+      if (countEntries(parsed) > 0) return { catalogue: parsed, source: 'published catalogue.json' };
+    }
+  } catch { /* no network, no entries - never a broken build */ }
+  return null;
 }
 
 /** How many apps `repo` lists today: `{ count, source }`, or null if no
