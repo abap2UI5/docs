@@ -453,13 +453,61 @@
  * rendering artefact, and it is the one the reader's other technical tabs use.
  */
 
-:root {
-  --vp-code-block-bg: var(--a2ui5-c-surface);
-}
-
 .vp-doc div[class*='language-'] {
   border: 1px solid var(--a2ui5-c-hairline);
   border-radius: 6px;
+}
+
+
+/* ============================== the code gets the width the page has ===
+ *
+ * A walkthrough step is a paragraph and a listing, and the listing is the
+ * point. At 1440 they were the same 640px, while the same class printed on its
+ * page over in the catalogue gets 880 - and the same ABAP at two widths wraps
+ * differently in each, which is a different listing rather than a differently
+ * sized one.
+ *
+ * WHAT THIS DOES NOT DO is widen the column. That was tried here and reverted,
+ * and the reasons are written out under "one column, and a measure" below: a
+ * wide column with the prose capped back inside it put two right edges on
+ * every page and needed an exception named for every prose-like element that
+ * the cap did not reach. 640px is a measured decision about READING, and it
+ * stands.
+ *
+ * So the listing alone steps out of the column, into the space the column is
+ * centred in. One selector, no exception list, and the prose keeps its single
+ * edge. It is worth 112px - 640 to 752 - which is fourteen more characters of
+ * the 13px mono face before a wrap.
+ *
+ * Only from 1440px up. Below that the theme's content column has no slack
+ * around it (`min-width: 640px` on `.content`), so a bleed would come out of
+ * the outline rather than out of the margin. The 56px is that slack measured
+ * at 1440 with the widened outline this file already sets, less a cushion.
+ */
+@media (min-width: 1440px) {
+  .Layout .VPDoc.has-aside .vp-doc div[class*='language-'] {
+    margin-left: -56px;
+    margin-right: -56px;
+  }
+}
+
+/* ---- and it is the catalogue's box ----
+ *
+ * The two documents drew the same ABAP differently: over there a bordered box
+ * with the page's own background behind the code, here a bordered box with a
+ * grey fill inside it. The grey is a leftover - this file's own "edges, not
+ * surfaces" section above took the fill off the callouts, the tables and the
+ * details blocks and left it on the one element it is least useful on, where
+ * the syntax colours have to sit on top of it.
+ *
+ * The edge stays, the fill goes, and the two listings are one listing at two
+ * URLs. The radius stays 6px rather than the catalogue's 8: that number is
+ * this site's, applied throughout, and one box on one page at a different
+ * radius from every other box on the page is a worse mismatch than the one
+ * being fixed.
+ */
+:root {
+  --vp-code-block-bg: var(--bg);
 }
 
 /* The `::: details` block onto the same grey as the code block it usually
