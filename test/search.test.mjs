@@ -199,3 +199,79 @@ test('the search box in the bar carries the cross-site attribute on a sample hit
   const fn = box.slice(box.indexOf('function hrefOf'), box.indexOf('function go'));
   assert.match(fn, /target:\s*'_self'/);
 });
+
+/* ── THE LAST THING YOU SEARCHED FOR ────────────────────────────────────────
+ *
+ * A hit opens another page, often on another deployment, and the box that
+ * opens there used to be empty: a reader comparing three samples of the same
+ * control typed the same word three times. So the query is written down as a
+ * hit is opened and the next box starts with it - and, because it comes back
+ * out of a localStorage anything on this origin can write to, what comes back
+ * is checked rather than used. */
+const { rememberQuery, recallQuery } = await import('../docs/.vitepress/theme/search-engine.js');
+
+const QUERY_KEY = 'abap2ui5-playground:search';
+
+/** The one global these two touch, as a store this test can look inside. */
+function stored(store, run) {
+  const before = globalThis.localStorage;
+  globalThis.localStorage = {
+    getItem: (k) => (k in store ? store[k] : null),
+    setItem: (k, v) => { store[k] = String(v); },
+    removeItem: (k) => { delete store[k]; },
+  };
+  try {
+    return run();
+  } finally {
+    globalThis.localStorage = before;
+  }
+}
+
+test('a query survives the hit that was opened on it', () => {
+  const store = {};
+  stored(store, () => rememberQuery('table select dialog'));
+  assert.equal(stored(store, () => recallQuery()), 'table select dialog');
+});
+
+test('an empty query clears the memory rather than storing itself', () => {
+  const store = {};
+  stored(store, () => rememberQuery('carousel'));
+  stored(store, () => rememberQuery('   '));
+  assert.equal(store[QUERY_KEY], undefined);
+  assert.equal(stored(store, () => recallQuery()), '');
+});
+
+test('a query the reader has stopped asking is not offered back', () => {
+  /* Half an hour. A field prefilled with yesterday's question is a worse
+   * starting point than an empty one. */
+  const store = { [QUERY_KEY]: JSON.stringify({ q: 'carousel', at: Date.now() - 31 * 60 * 1000 }) };
+  assert.equal(stored(store, () => recallQuery()), '');
+});
+
+test('what comes back out of storage is checked, not used', () => {
+  for (const junk of [
+    'not json',
+    'null',
+    '"carousel"',
+    JSON.stringify({ q: 'carousel' }),
+    JSON.stringify({ q: 42, at: Date.now() }),
+    JSON.stringify({ q: 'carousel', at: 'now' }),
+    /* A timestamp in the future is not an age, and a query longer than
+     * anything anybody typed into a 320px field is not one either. */
+    JSON.stringify({ q: 'carousel', at: Date.now() + 60_000 }),
+    JSON.stringify({ q: 'x'.repeat(500), at: Date.now() }),
+  ]) {
+    assert.equal(stored({ [QUERY_KEY]: junk }, () => recallQuery()), '', junk.slice(0, 40));
+  }
+});
+
+test('no storage at all is an empty box, not a broken one', () => {
+  const before = globalThis.localStorage;
+  globalThis.localStorage = undefined;
+  try {
+    assert.equal(recallQuery(), '');
+    rememberQuery('carousel'); /* must not throw */
+  } finally {
+    globalThis.localStorage = before;
+  }
+});

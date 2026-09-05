@@ -28,10 +28,11 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
-| `docs/.vitepress/theme/SiteBar.vue` | The right-hand end of the bar: the three sites, and the menu behind the bar's last button — the light/dark switch, the project's tools and its repositories. Rendered into `nav-bar-content-after` by `theme/index.js`; the marks between them are VitePress's own `socialLinks`, ordered by `style.css` |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
 | `docs/.vitepress/theme/link-to-selection.js` | **Copy link to selection** — the button under a selection inside the article, and the fallback for a browser too old for `:~:`. `theme/text-fragment.js` is the half with no DOM in it (what to quote, how to spell it), pinned by `test/text-fragment.test.mjs` |
 | `docs/.vitepress/theme/TheBar.vue` | The bar, as one element this repository owns: the brand, `SiteNav.vue` (the four sections), `SearchBox.vue`, the two marks, `SiteMenu.vue` (the menu behind the last button, and the version number `check:version` reads). It used to be the theme's bar with our parts in its slots and 85 override lines arguing its own parts out of the way; the theme now keeps two things, the hamburger and the screen it opens on a phone |
+| `docs/.vitepress/theme/SiteNav.vue` | The four sections, in the bar and again in the phone screen the theme's hamburger opens. Every item that leaves this deployment carries a `target` (`check:cross-site`), and three of the four are lifted to where the reader last was (`site-memory.js`) |
+| `docs/.vitepress/theme/SiteMenu.vue` | The menu behind the bar's last button: the light/dark switch, the project's tools and its repositories, and the version number `check:version` reads (`VERSION`) |
 | `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
 | `scripts/check-design.mjs` | The palette, the type and the radii the four bars share, against `abap2UI5/playground`'s copy of them — needs a checkout (`PLAYGROUND_HOME`, `.playground`, `../playground`) or the network, and fails rather than passing without one. The table of what is shared, and both spellings of each value, is `scripts/lib/design.mjs` |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
@@ -48,7 +49,7 @@ it are decidable, and all eleven are decided before a merge:
 | | |
 |---|---|
 | `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; and the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it |
-| `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteBar.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
+| `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteMenu.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt, and in `SiteBar.vue` until the bar was split), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` on `main`, plus every `blob/main/` link into the framework's tree, plus **no name from the frozen package** (`src/99`: `z2ui5_cl_util*`, `z2ui5_cl_pop_*`, `z2ui5_cl_xml_view*`, `z2ui5_if_exit`, `z2ui5_if_types`, …) anywhere but on the deprecations page and in the changelog. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
@@ -68,10 +69,18 @@ page layout or the builder name is the likely cause. `check:cross-site` carries
 the same floor twice over: no HTML in `dist` at all, and no cross-site link on
 a site whose bar carries three of them on every page.
 
-`.github/workflows/check.yml` runs the same eleven, in the same order. Keep the
-two in step: a step that exists only in `package.json` is a step no pull
-request has to pass, which is how `npm test` — the pin added *because* the
-catalogue parser broke twice in silence — went a release without CI.
+The eleven are written out in **three** places, and all three have to name the
+same set: `package.json`'s `check` script, `.github/workflows/check.yml` for a
+pull request, and `.github/workflows/deploy.yml` before the site is published.
+`check.yml` runs them in the script's order; `deploy.yml` cannot, because it
+has to build the site it publishes, so `docs:build` and `check:cross-site` —
+which judges the built HTML — move to the end there. The SET is what has to
+stay in step, and it is the thing that quietly does not: a step that exists
+only in `package.json` is a step no pull request has to pass, which is how
+`npm test` — the pin added *because* the catalogue parser broke twice in
+silence — went a release without CI, and how `check:conventions` sat in
+`check.yml` and not in `deploy.yml` from the day it was added, which is a gate
+`main` could be published past.
 
 `check:samples` needs an `abap2UI5/samples` checkout — set `SAMPLES_HOME`, or
 clone it as a sibling. Without one it *skips* rather than fails, so verify the
@@ -216,12 +225,14 @@ menu ever got this wrong. `check:cross-site` now holds the whole built site to
 it, and the direction back needs nothing: the other three documents are static
 pages with no router in front of them.
 
-**One origin means one localStorage**, which is what two things here rely on:
+**One origin means one localStorage**, which is what four things here rely on:
 
 | | |
 |---|---|
-| the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteBar.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
+| the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteMenu.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
 | where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the section the markup declares: the href it carries, or a wider `scope` the caller names for a link written deeper than what it restores (the other three bars point Documentation at the first page of the manual and still come back to wherever the reader was in it). A poisoned or stale key costs a restored position and nothing else. The cases are `test/site-memory.test.mjs` |
+| where **on** the page you were | `theme/site-memory.js` again, keys `:scroll` (a small map of path → offset, the twelve most recent) and `:returning`. Restored **on arrival by the bar and nowhere else**: a bar item writes one record saying where it is sending the reader, and the page that *is* that, arriving within half a minute and with no hash of its own, honours it. Restoring on every load would fight the browser's own back-and-forward restoration and would drop a reader who followed an ordinary link into the middle of a page with nothing to explain it. A stored offset is checked the same way a stored path is — `scrollTo` takes whatever it is given. `test/scroll-memory.test.mjs` |
+| the last thing you searched for | `theme/search-engine.js`, key `:search`. A hit opens another page, often another deployment, and the box that opens there was empty; the query is written down as a hit is opened and the next box starts with it, selected, so the first keystroke replaces it. Checked (a string, short, and less than half an hour old) rather than used. `test/search.test.mjs` |
 
 The playground is consulted by both and remembered by neither: its URL carries
 the code in the editor, so an item that reopened yesterday's sample would be a
@@ -284,7 +295,7 @@ the bar, not for the links between the sites; those are one attribute.
   another host needs nothing.
 
 - **`themeConfig.nav` is empty, and it stays empty.** The bar carries the four
-  sections of the project (`theme/SiteBar.vue`), the search, and everything
+  sections of the project (`theme/SiteNav.vue`), the search, and everything
   else behind the menu at its right-hand end. An entry added back to `nav`
   lands between the sections and the search box and the row stops reading left
   to right. What used to be there — Guide, Links, the version number — is

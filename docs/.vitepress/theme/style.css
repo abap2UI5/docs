@@ -1531,19 +1531,42 @@
  * back. */
 .Layout .VPNav .bar-nav a,
 .Layout .VPNav .bar-nav .here {
+  /* A row now, because each item is a mark and a word: the reservation moved
+     one level in, onto the word, which is the part that goes bold. */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.Layout .VPNav .bar-nav a > span,
+.Layout .VPNav .bar-nav .here > span {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
 }
 
-.Layout .VPNav .bar-nav a::after,
-.Layout .VPNav .bar-nav .here::after {
+.Layout .VPNav .bar-nav a > span::after,
+.Layout .VPNav .bar-nav .here > span::after {
   content: attr(data-text);
   height: 0;
   overflow: hidden;
   visibility: hidden;
   font-weight: 600;
   pointer-events: none;
+}
+
+/* THE MARK IN FRONT OF THE WORD. The same four this site's home page draws on
+ * its cards - a house, a book, a window, a play button - in the link's own
+ * colour, so they dim and brighten with it and the section you are on is
+ * marked twice. 15px, which is the search box's glyph and the two marks at the
+ * other end: two icon sizes in one bar is something a reader sees without
+ * being able to name it. The same rule is on the other three bars
+ * (src/catalogue/catalogue.css and src/shell/shell.css in abap2UI5/playground),
+ * kept in step by hand like everything else in this row. */
+.Layout .VPNav .bar-nav svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
 }
 
 .Layout .VPNav .bar-nav a:hover {
@@ -1561,7 +1584,7 @@
  * The button after the marks and what opens under it: the switch for light and
  * dark, the project's tools and its repositories - the other three bars' menu
  * in their numbers (a 30px box for the button, a 220px sheet, rows of 5px
- * pills). A <details>, so it opens and closes with no script; SiteBar.vue
+ * pills). A <details>, so it opens and closes with no script; SiteMenu.vue
  * closes it on a click anywhere else and on Escape. The switch swaps its whole
  * label with the theme: over there the swap keys off `[data-theme]` and a
  * media query, here VitePress has already resolved both into a single class

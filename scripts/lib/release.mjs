@@ -20,7 +20,7 @@ import path from 'path';
 /** Where the version is written, and how to find it in each file. */
 const SITES = [
   {
-    /* The bar, which is theme/SiteBar.vue and not config.mjs any more. The
+    /* The bar's menu, which is theme/SiteMenu.vue and not config.mjs any more. The
      * number used to be a nav dropdown's label - `text: "1.144.0"` - and the
      * dropdown is gone: its four entries were already in the menu behind the
      * bar's last button, so the rebuilt bar kept the number and dropped the

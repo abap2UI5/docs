@@ -87,7 +87,7 @@ export default defineConfig({
     // script and still before the first paint, so a reader arriving from a
     // dark playground gets a dark page rather than a white flash.
     //
-    // theme/SiteBar.vue writes the playground key back when the button here
+    // theme/SiteMenu.vue writes the playground key back when the button here
     // is pressed. Its two lines and these are one mechanism.
     [
       "script",
@@ -164,7 +164,7 @@ export default defineConfig({
     // EMPTY, AND THAT IS THE BAR'S SHAPE NOW. There were three dropdowns here
     // - Guide, Links and the version number - and the bar they sat in has been
     // rebuilt around the four sections of the project (Home, Documentation,
-    // Samples, Playground, in theme/SiteBar.vue), with the search in the
+    // Samples, Playground, in theme/SiteNav.vue), with the search in the
     // middle and everything else behind the menu at the right-hand end. All
     // three were duplicates of something the reader already had:
     //
@@ -178,7 +178,7 @@ export default defineConfig({
     //   1.144.0    four entries - release notes, support, contribute, sponsor
     //              - all four already in that same menu. What was NOT
     //              elsewhere is the NUMBER, which moved into the menu as its
-    //              first heading (`VERSION` in SiteBar.vue; check:version
+    //              first heading (`VERSION` in SiteMenu.vue; check:version
     //              follows it there).
     //
     // So nothing was taken off the site, only out of the row. Keep it empty:
