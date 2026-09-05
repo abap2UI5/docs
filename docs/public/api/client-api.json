@@ -443,7 +443,7 @@
           "name": "arg",
           "type": "clike",
           "optional": true,
-          "doc": "appended rather than slotted next to t_arg, where it would read better: rule 5 allows a new optional parameter at the END of the list - inserting one reorders a public signature the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings."
+          "doc": "appended rather than slotted next to t_arg, where it would read better: rule 5 allows a new optional parameter at the END of the list - inserting one reorders a public signature the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. An argument that starts with `$` or `{` (or an .eB( expression) is written RAW, as live UI5 expression syntax - that is how `${$source>/KEY}` reaches the handler as the row's value. Data that may start with those characters (text a user typed, a key from a foreign system) is therefore evaluated, not passed: set s_ctrl-check_arg_literal to have every argument of the wire quoted as a string instead."
         }
       ],
       "returns": "string"
@@ -494,7 +494,7 @@
           "name": "json",
           "type": "abap_bool",
           "default": "abap_false",
-          "doc": "the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model."
+          "doc": "the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model. Ignored for a CELL (tab supplied): whether a value is JSON is decided on the table's bind. custom_mapper, custom_filter and the omit_initial pair are passed on to the table there, like a _bind( ) of the table itself would store them."
         }
       ],
       "returns": "string"
@@ -1321,6 +1321,11 @@
           "name": "prevent_default_expr",
           "type": "string",
           "label": "the same veto, but decided PER FIRING instead of per wire: a client"
+        },
+        {
+          "name": "check_arg_literal",
+          "type": "abap_bool",
+          "label": "quote EVERY argument of this wire as a string. An argument that"
         }
       ]
     }

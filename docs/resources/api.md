@@ -126,7 +126,7 @@ Display the MAIN view. A new main view is a new screen, so an open popup and pop
 | `switch_default_model` | `abap_bool` | `abap_false` |  |
 | `omit_initial` | `abap_bool` | `abap_false` | keep INITIAL fields out of the serialized model instead of sending them as `` / 0. An ABAP field is never absent - it is initial - so by default every field reaches the client as an explicit value, which overrides the UI5 property default the original view relies on (and an enum-typed property rejects the empty string outright). Set it when a bound template's rows fill different subsets of the same properties. |
 | `omit_initial_paths` | `string_table` | *optional* | the same omission SCOPED to the listed fields (upper-cased column names, the last path segment). Use it when the blanket flag is too coarse: an abap_false that MUST reach the client is itself initial, so omit_initial would drop it and the control would fall back to its own default - list the numeric/enum columns instead and leave the booleans. |
-| `json` | `abap_bool` | `abap_false` | the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model. |
+| `json` | `abap_bool` | `abap_false` | the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model. Ignored for a CELL (tab supplied): whether a value is JSON is decided on the table's bind. custom_mapper, custom_filter and the omit_initial pair are passed on to the table there, like a _bind( ) of the table itself would store them. |
 
 Returns `string`.
 
@@ -155,7 +155,7 @@ Register a backend event and return the handler expression for a view attribute 
 | `val` | `clike` | *optional* |  |
 | `t_arg` | `string_table` | *optional* |  |
 | `s_ctrl` | `ty_s_event_control` | *optional* |  |
-| `arg` | `clike` | *optional* | appended rather than slotted next to t_arg, where it would read better: rule 5 allows a new optional parameter at the END of the list - inserting one reorders a public signature the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. |
+| `arg` | `clike` | *optional* | appended rather than slotted next to t_arg, where it would read better: rule 5 allows a new optional parameter at the END of the list - inserting one reorders a public signature the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. An argument that starts with `$` or `{` (or an .eB( expression) is written RAW, as live UI5 expression syntax - that is how `${$source>/KEY}` reaches the handler as the row's value. Data that may start with those characters (text a user typed, a key from a foreign system) is therefore evaluated, not passed: set s_ctrl-check_arg_literal to have every argument of the wire quoted as a string instead. |
 
 Preferred parameter: `val` — a positional call passes it.
 
@@ -500,5 +500,6 @@ The per-wire options of _event( ) - see the documentation on the method for what
 | `check_allow_multi_req` | `abap_bool` |
 | `check_prevent_default` | `abap_bool` |
 | `prevent_default_expr` | `string` |
+| `check_arg_literal` | `abap_bool` |
 
 <!-- api:end -->
