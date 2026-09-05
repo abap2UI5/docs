@@ -17,7 +17,11 @@ title: Home
 # what is built around it. A reader who wants the manual is one word away in
 # the bar; this page does not compete with it.
 hero:
-  name: abap2UI5
+  # The greeting, because this is the front door and a reader who arrives from
+  # a talk or a colleague's link should be met rather than pitched at. The
+  # headline under it still says what the project IS, in the same words as
+  # before - the two lines are a welcome and an answer, in that order.
+  name: Welcome to abap2UI5
   text: Build UI5 Apps Purely in ABAP
   tagline: "One ABAP class is one UI5 app. No JavaScript, no OData service, no RAP, no frontend project.\nInstall it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
