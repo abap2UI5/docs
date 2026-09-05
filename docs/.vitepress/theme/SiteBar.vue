@@ -73,21 +73,40 @@ const onHome = computed(() => page.value.relativePath === "index.md");
  * scripts/check-cross-site.mjs holds the built site to it. */
 const SAME_TAB = "_self";
 
-/* The catalogue's front page until the browser says otherwise. This is what
- * the server renders, what a crawler is given and what a first visit follows;
- * onMounted only ever replaces it with a deeper page of the same site. */
+/* The two links the memory can move, as the SERVER renders them: the front
+ * page of each section. That is what a crawler is given and what a first visit
+ * follows; onMounted only ever replaces one with a deeper page of the same
+ * section. */
 const samplesHref = ref(SAMPLES);
+const docsHref = ref(DOCS);
 const extra = ref(null);
 /* Lifted on mount, and again whenever it can have moved while this page stayed
  * open: the catalogue narrowed in another tab, a Back that brought this page
  * out of the back-forward cache. The click itself is the lift that cannot be
  * missed - the href is set on the element there, before the browser follows
  * it, because a ref set in the handler reaches the DOM a tick too late. */
+/* Documentation restores WHEREVER IN THE MANUAL you were, which is why it
+ * passes a scope: the link is written at the manual's first page, and a stored
+ * /docs/cookbook/... is not inside that page. Without the third argument the
+ * containment test is against `get_started/about` alone and every restore
+ * falls back - which is exactly how this item behaved on this site while the
+ * other three bars restored it correctly. The scope is a value passed HERE,
+ * never one out of storage.
+ *
+ * The Home page is deliberately not part of it: rememberHere() does not write
+ * it (theme/index.js), so going Home and back does not overwrite the page you
+ * were reading with the front door. */
 const lift = () => {
   samplesHref.value = lastVisited("samples", SAMPLES);
+  docsHref.value = lastVisited("docs", DOCS, HOME);
 };
+/* The lift that cannot be missed: on the click itself, on the element, because
+ * a ref set in the handler reaches the DOM a tick too late. */
 const liftNow = (e) => {
-  e.currentTarget.href = lastVisited("samples", SAMPLES);
+  const el = e.currentTarget;
+  el.href = el.dataset.site === "docs"
+    ? lastVisited("docs", DOCS, HOME)
+    : lastVisited("samples", SAMPLES);
 };
 onMounted(() => {
   lift();
@@ -134,10 +153,10 @@ watch(isDark, (dark) => {
          two sections of THIS deployment now - the section that used to be one
          non-clickable word ("Documentation") is two places a reader can move
          between, which is what the brand alone could not offer. -->
-    <a :href="HOME" :class="{ here: onHome }" :aria-current="onHome ? 'page' : undefined" title="abap2UI5 in one page">Home</a>
-    <a :href="DOCS" :class="{ here: !onHome }" :aria-current="!onHome ? 'page' : undefined" title="The manual: guide, cookbook, reference">Documentation</a>
-    <a :href="samplesHref" :target="SAME_TAB" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
-    <a :href="PLAYGROUND" :target="SAME_TAB" title="Write ABAP and run it in the browser">Playground</a>
+    <a :href="HOME" data-text="Home" :class="{ here: onHome }" :aria-current="onHome ? 'page' : undefined" title="abap2UI5 in one page">Home</a>
+    <a :href="docsHref" data-text="Documentation" data-site="docs" :class="{ here: !onHome }" :aria-current="!onHome ? 'page' : undefined" title="The manual, where you left it" @click="liftNow">Documentation</a>
+    <a :href="samplesHref" data-text="Samples" :target="SAME_TAB" data-site="samples" title="Every abap2UI5 sample, searchable" @click="liftNow">Samples</a>
+    <a :href="PLAYGROUND" data-text="Playground" :target="SAME_TAB" title="Write ABAP and run it in the browser">Playground</a>
   </nav>
   <!-- The rest of abap2UI5 behind one more button: light or dark, then the
        practical links (issues, release notes, install, support), the project's

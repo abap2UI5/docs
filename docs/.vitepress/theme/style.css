@@ -1461,6 +1461,54 @@
  * left to right. The hamburger stays last. */
 .Layout .VPNav .VPNavBar .bar-nav { order: 1; }
 .Layout .VPNav .VPNavBar .a2ui5-search-button { order: 2; margin: 0 auto; }
+
+/* THE BOX IS CENTRED ON THE BAR, NOT ON WHAT IS LEFT OVER.
+ *
+ * `margin: 0 auto` above centres it in the free space of `.content-body`, and
+ * that is not the middle of anything a reader can see: the row it sits in
+ * starts AFTER the brand, and the group on its left (four words) is far wider
+ * than the group on its right (three glyphs). Measured, it stood 181px right
+ * of the window's centre at every width - which is what it looked like.
+ *
+ * So above the width where the row is comfortable it is placed absolutely,
+ * against `.container` - the element that spans the whole bar, brand included.
+ * The auto margins stay for narrower windows, where an absolutely placed box
+ * would sooner or later sit on top of the words on either side of it.
+ *
+ * The two `position: relative` rules being undone here are the theme's, and
+ * they were for the layout this bar no longer uses: they raised the content
+ * strip above the brand back when the brand was placed absolutely over the
+ * sidebar's column. The brand is in the row now (see "ONE ROW" above), so
+ * there is nothing left for them to lift, and while they stood they were the
+ * nearest positioned ancestor - which would have centred the box on the strip
+ * again, the very thing this rule is for. */
+@media (min-width: 1100px) {
+  .Layout .VPNav .VPNavBar .container {
+    position: relative;
+  }
+
+  .Layout .VPNav .VPNavBar.has-sidebar .content,
+  .Layout .VPNav .VPNavBar:not(.home.top) .content-body {
+    position: static;
+  }
+
+  .Layout .VPNav .VPNavBar .a2ui5-search-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  /* And the sections hold the left themselves. `.content-body` justifies to
+   * the END, so while the box was in the row its auto margins were what kept
+   * the four words against the brand; the moment it left the flow they packed
+   * to the right with the marks - 820px away from the mark they belong to.
+   * This is that job, done by the group that needs it. */
+  .Layout .VPNav .VPNavBar .bar-nav {
+    margin-right: auto;
+  }
+}
 .Layout .VPNav .VPNavBar .social-links { order: 3; }
 .Layout .VPNav .VPNavBar .a2ui5-extra { order: 4; }
 .Layout .VPNav .VPNavBar .hamburger { order: 5; }
@@ -1521,6 +1569,39 @@
   font-size: 14px;
   text-decoration: none;
   white-space: nowrap;
+}
+
+/* EVERY ITEM IS AS WIDE AS ITS OWN BOLD SELF, ALWAYS.
+ *
+ * The one you are on is semibold, and semibold is wider - "Documentation"
+ * measures 114px at 400 and 122 at 600. So the moment the marked item changed,
+ * everything after it moved: clicking Documentation on the home page pushed
+ * Samples and Playground 6px to the right, and the row twitched under the
+ * cursor. It never showed before this bar had two items of ITS OWN to move
+ * between - the marked one used to be the same word on every page of the site.
+ *
+ * So each item carries its own label a second time, in bold, in a
+ * pseudo-element with no height: it is never seen, it only reserves the width.
+ * The link is a column so the two overlap rather than stack. `data-text` is
+ * what the copy reads - the label has to be in the markup twice, and an
+ * attribute is the copy that cannot fall out of step with the text, since the
+ * gate below would not notice a typo but the reader would see the jump come
+ * back. */
+.Layout .VPNav .bar-nav a,
+.Layout .VPNav .bar-nav .here {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Layout .VPNav .bar-nav a::after,
+.Layout .VPNav .bar-nav .here::after {
+  content: attr(data-text);
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-weight: 600;
+  pointer-events: none;
 }
 
 .Layout .VPNav .bar-nav a:hover {
