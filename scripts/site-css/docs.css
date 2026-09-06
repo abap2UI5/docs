@@ -723,3 +723,27 @@ html { scroll-padding-top: 62px; }
   border: 1px solid var(--line); border-radius: 0 0 8px 8px;
   color: var(--fg-dim); font-size: 13px;
 }
+
+/* ---- on paper ---------------------------------------------------------
+ *
+ * A manual gets printed, and saved as a PDF, and neither this site nor the
+ * catalogue had ever said anything about how. What came out was the bar
+ * across the top of page one, the whole chapter menu down the left of every
+ * page, "On this page" beside it and the article squeezed into what was
+ * left - a third of the paper spent on navigation that cannot be clicked.
+ *
+ * What is kept is the page: the crumb line (which says where it came from),
+ * the title, the article, and the footer's line of links. A listing may not
+ * be broken across two sheets if it fits on one, and a heading may not be
+ * the last thing on a sheet. */
+@media print {
+  .bar, .sidebar, .outline, .prev-next, .skip, .side-button, .side-scrim, .run-panel { display: none !important; }
+  html { scroll-padding-top: 0; }
+  body { background: #fff; }
+  .manual, .doc-body, .home { display: block; max-width: none; margin: 0; padding: 0; }
+  .vp-doc { max-width: none; }
+  a { color: inherit; }
+  pre, table, figure, img { break-inside: avoid; page-break-inside: avoid; }
+  h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+  pre { white-space: pre-wrap; word-break: break-word; }
+}

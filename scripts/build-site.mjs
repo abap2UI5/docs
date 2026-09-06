@@ -509,10 +509,25 @@ const home = ({ body, fm }) => {
  *
  * The text has to be handed over as it was written, which means undoing the
  * escaping the renderer did - and `&amp;` last, or `&amp;lt;` becomes a tag. */
-const unescape = (s) => s
-  .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-  .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-  .replace(/&amp;/g, '&');
+/* ONE PASS, LEFT TO RIGHT, and it has to be. Five `replace` calls in a row
+ * were wrong twice over: they knew five named entities and Shiki writes
+ * NUMERIC ones - `&#x3C;` for `<` and `&#x26;` for `&` - so an XML view inside
+ * an ABAP string template arrived as the literal text `&#x3C;mvc:View`, the
+ * highlighter escaped its `&` again, and 28 pages printed `&#x3C;mvc:View`
+ * where the reader should have seen `<mvc:View`. And a chain of replaces
+ * re-reads what the one before it produced: `&amp;lt;` - which is how an ABAP
+ * source containing the four characters `&lt;` reaches here - would decode to
+ * `&lt;` and then to `<`, which is a different program.
+ *
+ * A single regex with an alternation never re-scans its own output, so each
+ * entity is decoded exactly once and the order stops mattering. An entity this
+ * does not know is left exactly as it was rather than guessed at. */
+const CHARS = { lt: '<', gt: '>', quot: '"', apos: "'", amp: '&', nbsp: '\u00a0' };
+const unescape = (s) => s.replace(/&(#x[0-9a-fA-F]+|#\d+|[a-zA-Z][a-zA-Z0-9]*);/g, (all, what) => {
+  if (what[0] !== '#') return Object.hasOwn(CHARS, what) ? CHARS[what] : all;
+  const code = what[1] === 'x' || what[1] === 'X' ? parseInt(what.slice(2), 16) : Number(what.slice(1));
+  return Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : all;
+});
 
 const abapify = (html) => html.replace(
   /(<div class="language-abap[^"]*">[\s\S]*?<code>)([\s\S]*?)(<\/code>)/g,
@@ -520,7 +535,31 @@ const abapify = (html) => html.replace(
     const lines = [...code.matchAll(/<span class="line">([\s\S]*?)<\/span>\s*(?=<span class="line">|$)/g)]
       .map((m) => unescape(m[1].replace(/<[^>]*>/g, '')));
     if (!lines.length) return all;
-    return head + highlightAbapLines(lines.join('\n'))
+    const source = lines.join('\n');
+    /* AND NOTHING MAY STILL BE AN ESCAPE. This is the check that would have
+       caught `&#x3C;mvc:View`, and the round trip below would not: Shiki
+       writes NUMERIC entities, the decoder above knew only named ones, so
+       `<` arrived as the four characters `&#x` `3` `C` `;`, was escaped a
+       second time on the way out, and came back through the same blind
+       decoder unchanged - agreeing with itself, wrongly, on 28 pages. An
+       entity that survives decoding is a decoder that does not know it. ABAP
+       has no reason to contain one literally; if a listing ever does, this
+       stops the build rather than printing it as markup. */
+    const left = source.match(/&(?:#x?[0-9a-fA-F]+|lt|gt|amp|quot|apos);/);
+    if (left) throw new Error(`an escape survived decoding in a listing: ${left[0]} in ${JSON.stringify(source.slice(Math.max(0, left.index - 30), left.index + 40))}`);
+    const coloured = highlightAbapLines(source);
+    /* THE HIGHLIGHTER MAY COLOUR, IT MAY NOT REWRITE. Reading the text back out
+       of what it returned has to give exactly the text it was given: that is
+       the contract, and this is what holds a highlighter that drops, reorders
+       or re-escapes a character. */
+    const back = coloured.map((line) => unescape(line.replace(/<[^>]*>/g, ''))).join('\n');
+    if (back !== source) {
+      const at = [...source].findIndex((c, i) => c !== back[i]);
+      throw new Error(`a listing came back changed at character ${at}:\n`
+        + `   source: ${JSON.stringify(source.slice(Math.max(0, at - 20), at + 40))}\n`
+        + `   after:  ${JSON.stringify(back.slice(Math.max(0, at - 20), at + 40))}`);
+    }
+    return head + coloured
       .map((line) => `<span class="line">${line}</span>`).join('\n') + tail;
   },
 );
@@ -614,7 +653,8 @@ const sized = (html) => html.replace(/<img ([^>]*?)src="([^"]+)"([^>]*)>/g, (tag
   /* The loading hints go on every image, including one hosted somewhere else -
      those are the slowest of all, and the ones a reader is likeliest to be
      waiting on for nothing. */
-  const later = seenImages++ ? ' loading="lazy" decoding="async"' : ' decoding="async"';
+  const hinted = /\b(?:loading|decoding)=/.test(tag);     // a page that said it itself keeps what it said
+  const later = hinted ? '' : (seenImages++ ? ' loading="lazy" decoding="async"' : ' decoding="async"');
   const size = src.startsWith(BASE) ? measure(path.join(DOCS, 'public', src.slice(BASE.length))) : null;
   if (/\bheight=/.test(tag) || !size || !size.w || !size.h) return tag.replace(/\s*\/?>$/, `${later}>`);
   const declared = tag.match(/\bwidth="(\d+)"/);
