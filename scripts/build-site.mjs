@@ -475,8 +475,17 @@ const home = ({ body, fm }) => {
         <a class="hero-action ${a.theme === 'brand' ? 'primary' : 'plain'}" href="${esc(linkOf(a.link))}"${a.target ? ` target="${esc(a.target)}"` : ''}>${esc(a.text)}</a>`).join('')}
       </div>
     </div>
-    ${img.src ? `<div class="hero-image"><img src="${esc(BASE + String(img.src).replace(/^\//, ''))}"
-         alt="${esc(img.alt || '')}" width="200"></div>` : ''}
+    ${img.src ? (() => {
+      /* The one image on this site that is NOT lazy - it is the first thing on
+         the front door - and the only one `sized` never sees, because the hero
+         is this template rather than markdown. It still needs its height, or
+         the tagline under it jumps when the file lands. */
+      const at = BASE + String(img.src).replace(/^\//, '');
+      const box = measure(path.join(DOCS, 'public', at.slice(BASE.length)));
+      const h = box && box.w ? ` height="${Math.round(box.h * 200 / box.w)}"` : '';
+      return `<div class="hero-image"><img src="${esc(at)}"
+         alt="${esc(img.alt || '')}" width="200"${h} decoding="async"></div>`;
+    })() : ''}
   </section>
   <section class="tiles">${(fm.features || []).map(tile).join('')}
   </section>
@@ -594,15 +603,24 @@ const measure = (file) => {
   return null;
 };
 
+/* ...and one that is not on the screen yet is not fetched yet. A chapter with
+ * four screenshots fetched all four before the reader had scrolled past the
+ * first paragraph. `loading="lazy"` from the SECOND image down - the first may
+ * well be in the first screen, and lazy-loading something already in view only
+ * delays it - and `decoding="async"` on all of them, so decoding a large PNG
+ * never blocks the paint of the text around it. */
+let seenImages = 0;
 const sized = (html) => html.replace(/<img ([^>]*?)src="([^"]+)"([^>]*)>/g, (tag, before, src, after) => {
-  if (/\bheight=/.test(tag) || !src.startsWith(BASE)) return tag;
-  const at = path.join(DOCS, 'public', src.slice(BASE.length));
-  const size = measure(at);
-  if (!size || !size.w || !size.h) return tag;
+  /* The loading hints go on every image, including one hosted somewhere else -
+     those are the slowest of all, and the ones a reader is likeliest to be
+     waiting on for nothing. */
+  const later = seenImages++ ? ' loading="lazy" decoding="async"' : ' decoding="async"';
+  const size = src.startsWith(BASE) ? measure(path.join(DOCS, 'public', src.slice(BASE.length))) : null;
+  if (/\bheight=/.test(tag) || !size || !size.w || !size.h) return tag.replace(/\s*\/?>$/, `${later}>`);
   const declared = tag.match(/\bwidth="(\d+)"/);
-  if (declared) return tag.replace(/>$/, ` height="${Math.round(size.h * +declared[1] / size.w)}">`);
-  if (/\bwidth=/.test(tag)) return tag;                    // a percentage, or something else
-  return `<img ${before}src="${src}" width="${size.w}" height="${size.h}"${after}>`;
+  if (declared) return tag.replace(/>$/, ` height="${Math.round(size.h * +declared[1] / size.w)}"${later}>`);
+  if (/\bwidth=/.test(tag)) return tag.replace(/>$/, `${later}>`);   // a percentage, or something else
+  return `<img ${before}src="${src}" width="${size.w}" height="${size.h}"${later}${after}>`;
 });
 
 const recolour = (html) => html.replace(
@@ -666,6 +684,7 @@ for (const page of pages) {
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
+  seenImages = 0;
   body = sized(recolour(abapify(body)));
   /* A link that opens a new tab hands that tab a `window.opener` pointing at
      this one unless it says otherwise. Every current browser implies

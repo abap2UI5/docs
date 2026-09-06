@@ -30,7 +30,7 @@ hero:
   # wrap where the column says they wrap.
   tagline: "One ABAP class is one UI5 app. No JavaScript, no OData service, no RAP, no frontend project. Install it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
-    src: /logo.png
+    src: /logo-hero.png
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
