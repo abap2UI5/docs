@@ -20,6 +20,9 @@ docs/public/**/*.md
 # a search with a page that has moved.
 docs/public/search-index.json
 
-# Where scripts/prototype-site.mjs writes. A prototype's output is not a build
-# and is never committed; the generator rewrites it from scratch each run.
+# Where `npm run build` writes - scripts/build-site.mjs, the site that is
+# published. Rewritten from scratch on every run, so never committed.
+.site/
+# VitePress still builds in CI as a second opinion; its output is not published
+# any more and is not committed either.
 .prototype/

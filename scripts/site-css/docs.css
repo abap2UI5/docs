@@ -485,3 +485,47 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   display: inline-block; width: 1.05em; height: 1.05em;
   vertical-align: -.16em; color: var(--fg);
 }
+
+/* ---- what comes before and after --------------------------------------
+ *
+ * Under the article, over the same hairline the edit line uses. Two cells that
+ * keep their sides whether or not both are filled - the first page of the
+ * manual has no previous, and its Next has to stay on the right. */
+.prev-next {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  margin-top: 14px;
+}
+.prev-next .pn {
+  display: block; padding: 10px 14px;
+  border: 1px solid var(--line); border-radius: var(--radius-surface);
+  color: var(--fg); text-decoration: none;
+}
+.prev-next .pn:hover { border-color: var(--accent); }
+.prev-next .pn-next { text-align: right; }
+.prev-next .pn-what { display: block; font-size: 11px; color: var(--fg-dim); }
+.prev-next .pn-title { display: block; font-size: 13px; font-weight: 600; color: var(--accent); }
+@media (max-width: 620px) { .prev-next { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- a code group -----------------------------------------------------
+ *
+ * The renderer emits a radio per tab, a label per radio and the blocks after
+ * them, with `active` on the first. The radios do the state; site.js moves the
+ * class, because the blocks are in a different container from the inputs and
+ * the sibling selector cannot reach across it. */
+.vp-code-group .tabs {
+  display: flex; flex-wrap: wrap; gap: 2px;
+  margin: 16px 0 0; padding: 0 4px;
+  border: 1px solid var(--line); border-bottom: 0; border-radius: 8px 8px 0 0;
+  background: var(--bg-sunken);
+}
+.vp-code-group .tabs input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.vp-code-group .tabs label {
+  padding: 7px 10px 6px;
+  border-bottom: 2px solid transparent;
+  color: var(--fg-dim); font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.vp-code-group .tabs label:hover { color: var(--fg); }
+.vp-code-group .tabs input:checked + label { color: var(--accent); border-bottom-color: var(--accent); }
+.vp-code-group .tabs input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: -2px; }
+.vp-code-group .blocks > div[class*="language-"] { display: none; margin: 0; border-radius: 0 0 8px 8px; }
+.vp-code-group .blocks > div[class*="language-"].active { display: block; }
