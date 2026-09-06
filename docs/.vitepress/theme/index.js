@@ -3,6 +3,7 @@ import { h } from 'vue'
 import DefaultTheme from 'vitepress/theme'
 import './style.css'
 import { setUpPlayground } from './playground.js'
+import { setUpCodeLines, watchCodeLines } from './code-lines.js'
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
@@ -33,6 +34,18 @@ export default {
     // The Run button under a runnable ABAP example. One delegated listener for
     // the whole site — the browser half of docs/.vitepress/playground.mjs.
     if (!import.meta.env.SSR) setUpPlayground()
+
+    // A number beside every line of every listing, and an address for it -
+    // #B2L42 is line 42 of the second listing on the page, #B2L42-L58 a
+    // passage of it. The sample catalogue has had this since its pages
+    // started printing whole classes; the manual is where the same ABAP is
+    // explained, and "look at line 40 to 55" could not be said about it.
+    // code-lines.js says why the block is part of the address.
+    //
+    // The listeners are the document's and are hung once; the numbering runs
+    // again on every route change, because this is one application and the
+    // next page's listings are new elements.
+    if (!import.meta.env.SSR) watchCodeLines()
 
     // "Copy link to selection" — a link to the words a reader marked, as a
     // text fragment (link-to-selection.js, and text-fragment.js for why the
@@ -82,6 +95,7 @@ export default {
     // against the router's own scroll-to-top and a page that is still growing.
     if (!import.meta.env.SSR) {
       rememberUnlessHome()
+      setUpCodeLines()
       restoreScroll()
       addEventListener('scroll', noteScroll, { passive: true })
       addEventListener('pagehide', () => rememberScroll())
@@ -90,6 +104,7 @@ export default {
         rememberUnlessHome()
         // Home -> Documentation is a route change, not a load: this site is
         // one application and two of the bar's four items are pages of it.
+        setUpCodeLines()
         restoreScroll()
         onAfter?.(to)
       }

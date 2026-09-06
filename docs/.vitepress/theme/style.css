@@ -65,12 +65,15 @@
  * white the mark's own red is 4.74:1 and passes as it is. The tint is the same
  * red at the alpha the out-cards were already using. */
 :root {
+  /* The fill behind a line somebody linked to. The catalogue's `--mark`. */
+  --a2ui5-c-mark: #fff8c5;
   --a2ui5-red: #d03c4a;
   --a2ui5-red-strong: #b8323f;
   --a2ui5-red-tint: rgb(208 60 74 / 0.07);
 }
 
 .dark {
+  --a2ui5-c-mark: #1d2836;
   --a2ui5-red: #e8697a;
   --a2ui5-red-strong: #f0808e;
   --a2ui5-red-tint: rgb(232 105 122 / 0.12);
@@ -1351,7 +1354,19 @@
    * afford to look like to somebody deciding whether it is serious. Weight
    * comes down with it, 700 -> 600: at this size 700 is a shout, and the
    * tracking below does the work of holding the line together instead. */
-  .Layout .VPHome .VPHero .name,
+  /* THE GREETING IS NOT THE HEADLINE. They were both 38px, so neither led:
+     two lines of the same weight and size, one under the other, read as one
+     heading that changed colour halfway down. The greeting is a hello - it
+     goes above the claim, at the size of a line that introduces one - and
+     "Build UI5 Apps Purely in ABAP" is what the page is actually saying, so
+     it keeps the 38. */
+  .Layout .VPHome .VPHero .name {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
   .Layout .VPHome .VPHero .text {
     font-size: 38px;
     line-height: 46px;
@@ -2189,6 +2204,68 @@
 .Layout button:focus-visible,
 .Layout summary:focus-visible,
 .Layout input:focus-visible,
+
+/* ---- a number beside every line, and an address for it ----
+ *
+ * The catalogue's own rules (`.ln` in tools/sample-pages.mjs over in
+ * abap2UI5/playground), on the element Shiki already gives us: it wraps every
+ * line in a `span.line`, so the numbering is a class and an empty link added
+ * to something that is there rather than markup written per line.
+ *
+ * The number is a COUNTER, drawn by `::before` from a link with no text. That
+ * is what keeps it out of what a reader copies - the block still copies as a
+ * file they can paste, which is the whole reason the code is printed here
+ * rather than linked.
+ *
+ * The gutter is sticky, because a view chain is written wide: a number that
+ * has scrolled out of the box is a number nobody can read a link off. It sits
+ * over the background the line owns, so a marked line has no pale column down
+ * its edge. */
+.vp-doc div[class*='language-'] code {
+  counter-reset: line;
+}
+
+.vp-doc .ln {
+  display: inline-block;
+  min-width: 100%;
+  counter-increment: line;
+  /* Under a sticky bar 46px tall, plus air. */
+  scroll-margin: 70px 0;
+}
+
+.vp-doc .ln > a {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  display: inline-block;
+  min-width: 3ch;
+  margin-right: 14px;
+  padding-right: 8px;
+  text-align: right;
+  background: var(--vp-code-block-bg);
+  color: var(--vp-c-text-3);
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.vp-doc .ln > a::before {
+  content: counter(line);
+}
+
+.vp-doc .ln > a:hover {
+  color: var(--a2ui5-c-link);
+}
+
+.vp-doc .ln.is-marked {
+  background: var(--a2ui5-c-mark);
+}
+
+/* The block's own left padding goes: the gutter is the left edge now. */
+.vp-doc div[class*='language-'] pre:has(.ln) {
+  padding-left: 0;
+}
+
 /* ---- the empty state, which is the invitation ----
  *
  * A box that opens on one grey line is a question asked of somebody who came
