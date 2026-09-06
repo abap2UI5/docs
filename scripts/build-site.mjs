@@ -24,6 +24,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createMarkdownRenderer } from 'vitepress';
+import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
 
@@ -198,6 +199,33 @@ const BAR = (() => {
  * Both marks are made by finding a string in somebody else's markup, so both
  * throw when it is not there rather than quietly marking nothing: a bar with
  * nothing in bold reads as a bug in whichever site you came from. */
+/* THE BAR IS MARKUP AND BEHAVIOUR, and only the markup was being borrowed.
+ *
+ * Two of the bar's parts need a script: the light/dark switch in the menu
+ * behind the last button, and the menu itself, which is a <details> that has
+ * to close when the reader clicks anywhere else or presses Escape. A sample
+ * page carries both in one inline script at the end of its body - so the
+ * switch WORKED over there and did nothing at all here, on a bar that draws
+ * the same button in the same place. A reader pressing it saw a page that
+ * stayed light.
+ *
+ * It comes from the same page the bar comes from, for the same reason: one
+ * implementation of a thing two documents show. Not the script beside it,
+ * which writes down where the reader is - that one says `last-samples`, and
+ * saying it here would tell the Samples item that the manual is a sample
+ * page. site.js writes this site's own.
+ *
+ * Identified by what it DOES rather than by its position, and the match may
+ * not cross a script boundary - `[\s\S]*?` would happily start at the
+ * theme-restoring script in the head and swallow everything down to here. */
+const MENU_SCRIPT = (() => {
+  const one = /<script>(?:(?!<\/script>)[\s\S])*getElementById\("extra"\)(?:(?!<\/script>)[\s\S])*<\/script>/;
+  const m = frame.page.match(one);
+  if (!m) throw new Error(`no menu script in the sample page from ${frame.from} - the bar's switch would be dead`);
+  if (!m[0].includes('getElementById("theme")')) throw new Error("the borrowed menu script no longer wires the theme switch");
+  return m[0];
+})();
+
 const marked = (find) => inNav(BAR, (nav) => once(nav, find, ' aria-current="page"'));
 const BAR_DOCS = marked('data-site="docs"');
 const BAR_HOME = marked(`href="${HOME}"`);
@@ -331,15 +359,14 @@ const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
-<link rel="shortcut icon" href="${BASE}favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="${BASE}favicon.ico">
+<script>try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="icon" href="${BASE}favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" href="${BASE}favicon.png" sizes="64x64">
+<link rel="apple-touch-icon" sizes="180x180" href="${BASE}apple-touch-icon.png">
 <link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${BASE}catalogue.css">
-<link rel="stylesheet" href="${BASE}sample.css">
-<link rel="stylesheet" href="${BASE}docs.css">
+<link rel="stylesheet" href="${BASE}site.css">
 <script type="module" src="${BASE}site.js"></script>
 <script type="module" src="${BASE}search.mjs"></script>
-<script>try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 ${head}
 </head>
 <body>
@@ -350,6 +377,7 @@ ${main}
   <a href="${BASE}resources/contact.html">Contact</a> —
   Copyright © 2023-2026 abap2UI5
 </p></footer>
+${MENU_SCRIPT}
 </body>
 </html>
 `;
@@ -524,6 +552,55 @@ const INK = {
   },
 };
 
+/* ---- HOW BIG AN IMAGE IS, BEFORE IT ARRIVES ---------------------------
+ *
+ * A markdown image is `<img src="…">` and nothing else, so the browser
+ * discovers its shape only when the file lands: the article is laid out
+ * without it, the paragraph below sits where the picture will be, and it is
+ * pushed down when the bytes arrive. On the quickstart that is four
+ * screenshots pushing the text the reader is on, twice.
+ *
+ * The build has the file, so it can say. `width`/`height` are the intrinsic
+ * pixels; what they are FOR here is the ratio - `.vp-doc img` caps the width
+ * at the column and `height: auto` scales the rest, and a browser given both
+ * attributes reserves the right box before the image exists.
+ *
+ * An image with a width already on it (`{width=64}` in the markdown) keeps it
+ * and is given the height that width implies, so it reserves its box too. A
+ * percentage width, or a file this cannot measure - an external one, above
+ * all - is left exactly as it was. */
+const measure = (file) => {
+  let b;
+  try { b = fs.readFileSync(file); } catch { return null; }
+  if (b.length > 24 && b.readUInt32BE(0) === 0x89504e47 && b.toString('latin1', 12, 16) === 'IHDR')
+    return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+  if (b.length > 4 && b[0] === 0xff && b[1] === 0xd8) {
+    for (let i = 2; i + 9 < b.length;) {
+      if (b[i] !== 0xff) { i++; continue; }
+      const marker = b[i + 1];
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker))
+        return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+    return null;
+  }
+  const svg = b.toString('utf8', 0, 2000);
+  const box = svg.match(/viewBox="[\d.+-]+\s+[\d.+-]+\s+([\d.]+)\s+([\d.]+)"/);
+  if (box) return { w: Math.round(+box[1]), h: Math.round(+box[2]) };
+  return null;
+};
+
+const sized = (html) => html.replace(/<img ([^>]*?)src="([^"]+)"([^>]*)>/g, (tag, before, src, after) => {
+  if (/\bheight=/.test(tag) || !src.startsWith(BASE)) return tag;
+  const at = path.join(DOCS, 'public', src.slice(BASE.length));
+  const size = measure(at);
+  if (!size || !size.w || !size.h) return tag;
+  const declared = tag.match(/\bwidth="(\d+)"/);
+  if (declared) return tag.replace(/>$/, ` height="${Math.round(size.h * +declared[1] / size.w)}">`);
+  if (/\bwidth=/.test(tag)) return tag;                    // a percentage, or something else
+  return `<img ${before}src="${src}" width="${size.w}" height="${size.h}"${after}>`;
+});
+
 const recolour = (html) => html.replace(
   /<span style="--shiki-light:(#[0-9A-F]{6});--shiki-dark:#[0-9A-F]{6}">([^<]*)<\/span>/g,
   (all, light, text) => {
@@ -562,7 +639,7 @@ for (const page of pages) {
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
-  body = recolour(abapify(body));
+  body = sized(recolour(abapify(body)));
   /* And a page written by hand as `/docs/resources/addons` gets its `.html`.
      VitePress resolves that in the router, and GitHub Pages happens to resolve
      it too, by trying `<path>.html` - so it was never broken on the site and
@@ -648,29 +725,91 @@ const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
    is not a second implementation of that one, it is that one, mounting into
    the `[data-search]` slot the borrowed bar already carries and reading the
    index this repository publishes. */
-for (const [name, text] of Object.entries(frame.files)) fs.writeFileSync(path.join(OUT, 'docs', name), text);
-/* One adaptation to the borrowed stylesheet, and it is about DEPTH, not taste.
- * catalogue.css names the type as `../fonts/inter-…woff2`, which is right where
- * it lives: one directory down, in `dist/samples/`, beside `dist/fonts/`. Here
- * it sits at the root of this deployment, so `../fonts/` would leave the site
- * altogether - `/fonts/` on the shared origin is nobody's. The same two files
- * are already in this repository under docs/public/fonts and land beside it,
- * so the `..` goes and nothing else changes. */
+for (const [name, text] of Object.entries(frame.files))
+  if (!name.endsWith('.css')) fs.writeFileSync(path.join(OUT, 'docs', name), text);
+
+/* ---- ONE STYLESHEET ---------------------------------------------------
+ *
+ * Three files were linked in the head - the catalogue's, the sample page's,
+ * and the manual's own layer on top - in that order, because that order is
+ * the cascade. They are joined here in the same order and minified, which is
+ * not a nicety on these particular files: they are written in the house style,
+ * with the reasoning for every rule beside it, and comments are most of them.
+ * 72 kB becomes 30, and over the wire - GitHub Pages gzips - 21.6 kB becomes
+ * 6.5. That is on the critical path of every single page, because a
+ * stylesheet blocks the first paint by design.
+ *
+ * What is lost is reading the borrowed stylesheets at their published url,
+ * and they are not this site's to explain: the playground publishes its own
+ * readable copies beside the pages they belong to, which is where the
+ * reasoning is maintained. This repository keeps its own layer in
+ * scripts/site-css/docs.css, in full.
+ *
+ * ONE ADAPTATION TO THE BORROWED FILE, and it is about DEPTH, not taste.
+ * catalogue.css names the type as `../fonts/inter-…woff2`, which is right
+ * where it lives: one directory down, in `dist/samples/`, beside
+ * `dist/fonts/`. Here it sits at the root of this deployment, so `../fonts/`
+ * would leave the site altogether - `/fonts/` on the shared origin is
+ * nobody's. The same two files are in this repository under
+ * docs/public/fonts and land beside it, so the `..` goes and nothing else
+ * changes. */
 {
-  const at = path.join(OUT, 'docs', 'catalogue.css');
-  const css = fs.readFileSync(at, 'utf8');
-  if (!css.includes('../fonts/')) throw new Error('catalogue.css no longer names ../fonts/ - check what the type is now');
-  fs.writeFileSync(at, css.replace(/\.\.\/fonts\//g, 'fonts/'));
+  const catalogue = frame.files['catalogue.css'];
+  if (!catalogue.includes('../fonts/')) throw new Error('catalogue.css no longer names ../fonts/ - check what the type is now');
+  const joined = [
+    catalogue.replace(/\.\.\/fonts\//g, 'fonts/'),
+    frame.files['sample.css'],
+    fs.readFileSync(path.join(ROOT, 'scripts', 'site-css', 'docs.css'), 'utf8'),
+  ].join('\n');
+  const { code, warnings } = await transform(joined, { loader: 'css', minify: true });
+  for (const w of warnings) console.warn(`site.css: ${w.text}`);
+  fs.writeFileSync(path.join(OUT, 'docs', 'site.css'), code);
 }
-fs.copyFileSync(path.join(ROOT, 'scripts', 'site-css', 'docs.css'), path.join(OUT, 'docs', 'docs.css'));
-fs.copyFileSync(path.join(ROOT, 'scripts', 'site-js', 'site.js'), path.join(OUT, 'docs', 'site.js'));
-/* The behaviour a page has beyond its markup was already framework-free in
-   the theme - the Run button, the line numbers and their addresses, the link
-   to a selection, the position memory between the four sites. `index.js` was
-   the only Vue in front of them; these are the modules themselves. */
+/* THE BEHAVIOUR A PAGE HAS BEYOND ITS MARKUP, as one file.
+ *
+ * It was already framework-free in the theme - the Run button, the line
+ * numbers and their addresses, the link to a selection, the position memory
+ * between the four sites. `index.js` was the only Vue in front of them, and
+ * the switch to this build simply copied the five modules out beside site.js.
+ *
+ * Copied, they cost six requests in a three-deep waterfall for 49 kB: the
+ * browser cannot know that site.js imports four files until site.js has
+ * arrived and been parsed, nor that one of those imports a fifth. Two round
+ * trips before anything is wired, on a connection where a round trip is the
+ * expensive part. Bundled and minified it is one request of about 20 kB.
+ *
+ * The SOURCE stays five readable modules with their reasoning in them - this
+ * is a build step, not a rewrite - and the theme still imports the same files,
+ * so VitePress's build goes on being the second opinion it is.
+ *
+ * The modules live in the theme and site.js in scripts/, so `./code-lines.js`
+ * does not resolve from the importer's own directory; the copy that used to
+ * put them side by side is what made it work at runtime. The resolver below
+ * is that copy, done at build time and only for a name the theme actually
+ * has. */
 const THEME = path.join(DOCS, '.vitepress', 'theme');
-const modules = ['playground.js', 'code-lines.js', 'link-to-selection.js', 'text-fragment.js', 'site-memory.js'];
-for (const f of modules) fs.copyFileSync(path.join(THEME, f), path.join(OUT, 'docs', f));
+await bundle({
+  entryPoints: [path.join(ROOT, 'scripts', 'site-js', 'site.js')],
+  outfile: path.join(OUT, 'docs', 'site.js'),
+  bundle: true,
+  format: 'esm',
+  target: 'es2022',
+  minify: true,
+  legalComments: 'none',
+  logLevel: 'warning',
+  plugins: [{
+    name: 'the theme’s modules',
+    setup(build) {
+      build.onResolve({ filter: /^\.\/[\w-]+\.js$/ }, ({ path: name, importer }) => {
+        const beside = path.join(path.dirname(importer), name);
+        if (fs.existsSync(beside)) return null;
+        const inTheme = path.join(THEME, name.slice(2));
+        if (fs.existsSync(inTheme)) return { path: inTheme };
+        throw new Error(`${importer} imports ${name}, which is neither beside it nor in the theme`);
+      });
+    },
+  }],
+});
 
 /* ---- every internal link, before anything is published -----------------
  *

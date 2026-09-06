@@ -278,7 +278,10 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .vp-doc table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
 .vp-doc th, .vp-doc td { padding: 7px 10px; border: 1px solid var(--line); text-align: left; }
 .vp-doc th { background: var(--bg-sunken); font-weight: 600; }
-.vp-doc img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+/* `height: auto` is what makes the build's width/height attributes a RATIO
+   rather than a size: the column caps the width, and the height follows it
+   instead of being taken literally and squashing the picture. */
+.vp-doc img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
 
 /* The outline column is the sample page's, and it needs its two-column
    breakpoint lifted because this layout is three columns wide. */

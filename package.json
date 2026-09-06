@@ -37,6 +37,7 @@
   "devDependencies": {
     "@abap2ui5/linter": "^0.6.1",
     "@abaplint/cli": "^2.120.39",
+    "esbuild": "^0.21.5",
     "vitepress": "^1.6.4"
   },
   "engines": {
