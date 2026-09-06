@@ -1088,10 +1088,18 @@
   flex-direction: column;
   align-items: flex-start;
   height: 100%;
-  border: 1px solid transparent;
+  /* ONE CARD, DRAWN ONE WAY. Half of these were tinted and half outlined,
+     because the tint used to mean "this leaves the site" - and on a row where
+     two of three cards are pages of this manual, a reader reads that as two
+     kinds of thing rather than as one row of six places to go. The outline is
+     the one that survives: it is what the three feature cards above wear, and
+     what this file's own "edges, not surfaces" section argues for. What tells
+     you whether a card leaves is the arrow on it, which is a thing you can
+     read rather than a shade you have to compare. */
+  border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   padding: 24px;
-  background-color: var(--a2ui5-c-out-tint);
+  background-color: transparent;
   color: var(--vp-c-text-1);
   text-decoration: none;
   transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
@@ -1141,26 +1149,16 @@
   transform: translate(2px, -2px);
 }
 
-/* A CARD THAT STAYS ON THIS SITE SAYS SO BY NOT SAYING THE OPPOSITE.
+/* EVERY CARD CARRIES AN ARROW, AND THE ARROW SAYS WHICH KIND IT IS.
  *
- * The tint and the arrow are this row's whole signal: it is drawn differently
- * from the feature cards above it so that a card which LEAVES is recognisable
- * as one before it is clicked. The home page now has a row mixing both - two
- * of its three "around the framework" cards are pages of this manual - and a
- * card that is tinted and arrowed and then lands on /docs/resources/addons
- * spends that signal on nothing. So a card that stays takes the outline the
- * feature cards have, and drops the arrow. */
-.a2ui5-out .a2ui5-out-card.is-inside {
-  background-color: transparent;
-  border-color: var(--vp-c-divider);
-}
-
-.a2ui5-out .a2ui5-out-card.is-inside:hover {
-  border-color: var(--a2ui5-c-link);
-}
-
+ * A card that stayed on this site used to carry none at all, on the argument
+ * that the arrow means "this leaves". That left half a row with nothing on it
+ * to say it could be pressed - and a card with no affordance at all reads as a
+ * panel rather than as a door. So both kinds are arrowed: `↗` leaves this
+ * deployment, `→` stays on it. The reader who does not know the convention
+ * still sees something that points. */
 .a2ui5-out .a2ui5-out-card.is-inside .a2ui5-out-title::after {
-  content: none;
+  content: "→";
 }
 
 .a2ui5-out .a2ui5-out-details {
@@ -1296,6 +1294,29 @@
    headline above them carries. */
 .Layout .VPHome .VPFeature .icon {
   color: var(--a2ui5-red);
+}
+
+/* ...and the same arrow as the row below them, for the same reason: three
+   cards that are links and look like panels are three doors with no handle.
+   `↗` when the card leaves this deployment - the two that open the playground
+   are absolute URLs, which is what the attribute selector reads - and `→` for
+   the one that stays in the manual. */
+.Layout .VPHome .VPFeature.link .title::after {
+  content: "→";
+  margin-left: 6px;
+  color: var(--a2ui5-red);
+  font-size: 14px;
+  font-weight: 400;
+  display: inline-block;
+  transition: transform 0.25s;
+}
+
+.Layout .VPHome a.VPFeature.link[href^="http"] .title::after {
+  content: "↗";
+}
+
+.Layout .VPHome .VPFeature.link:hover .title::after {
+  transform: translate(2px, -2px);
 }
 
 /* ================================================ the home page, at 90% ===
@@ -2238,9 +2259,13 @@
   left: 0;
   z-index: 1;
   display: inline-block;
+  /* The catalogue's gutter, to the pixel: three characters of number with
+     14px either side. Its own padding rather than a margin, because the
+     column has to be opaque all the way to the edge it sticks to - a gap
+     there is a stripe of code showing through the number as a wide chain
+     scrolls under it. */
   min-width: 3ch;
-  margin-right: 14px;
-  padding-right: 8px;
+  padding: 0 14px;
   text-align: right;
   background: var(--vp-code-block-bg);
   color: var(--vp-c-text-3);
@@ -2261,8 +2286,13 @@
   background: var(--a2ui5-c-mark);
 }
 
-/* The block's own left padding goes: the gutter is the left edge now. */
-.vp-doc div[class*='language-'] pre:has(.ln) {
+/* The block's own left padding goes: the gutter IS the left edge now, and it
+   carries its own. The theme puts 24px on the `code` element rather than on
+   the `pre`, which is what made the numbers sit 24px inboard of the box while
+   sticking to the box - so a chain scrolled sideways moved the number 24px and
+   left a stripe of code down the outside of it. */
+.vp-doc div[class*='language-'] pre:has(.ln),
+.vp-doc div[class*='language-'] code:has(.ln) {
   padding-left: 0;
 }
 
