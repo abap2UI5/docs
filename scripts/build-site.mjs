@@ -138,12 +138,45 @@ const frame = await (async () => {
   };
 })();
 
+/* The front of THIS section. The wordmark and the Home item both point at it,
+ * and the marker below finds the Home item by it. */
+const HOME = 'https://abap2ui5.github.io/docs/';
+
+/* EVERY EDIT BELOW IS TO THE NAV, AND CUTS IT OUT TO SAY SO.
+ *
+ * The bar names the catalogue twice: the wordmark on the left goes there as
+ * well, from the sample page this is borrowed from. A plain `replace` takes
+ * the first of the two, which is the wordmark - so `data-site="samples"`
+ * landed on the wordmark and the Samples ITEM, the one a reader presses,
+ * carried nothing for site.js to lift. It opened the front of the catalogue
+ * however deep the reader had been, which is the memory not working at all
+ * for the half of the bar most people use. */
+const NAV = /<nav class="bar-nav">[\s\S]*?<\/nav>/;
+const inNav = (bar, edit) => {
+  const nav = bar.match(NAV);
+  if (!nav) throw new Error(`no <nav class="bar-nav"> in the bar from ${frame.from}`);
+  return bar.replace(NAV, edit(nav[0]));
+};
+/* ...and once means once. A marker that matches twice edits the wrong item and
+ * one that matches nothing edits none, and both are silent. */
+const once = (nav, find, add) => {
+  const n = nav.split(find).length - 1;
+  if (n !== 1) throw new Error(`${find} occurs ${n} times in the borrowed bar's nav, expected exactly one`);
+  return nav.replace(find, find + add);
+};
+
 const BAR = (() => {
   const m = frame.page.match(/<header class="bar">[\s\S]*?<\/header>/);
   if (!m) throw new Error(`no bar in the sample page from ${frame.from}`);
-  const bar = m[0]
+  const brand = /(<a class="brand" href=")[^"]*"/;
+  let bar = m[0]
     .replace(/(?:href|src)="\.\.\/\.\.\//g, (t) => t.slice(0, -6) + `${PUBLISHED}/`)
     .replace(/ aria-current="page"/g, '');
+  /* The wordmark leads to the front of the section the reader is in - the
+     catalogue, on the page this came from, and from here that walked out of
+     the manual. Here the front of the section is the manual's own. */
+  if (!brand.test(bar)) throw new Error(`no wordmark in the bar from ${frame.from}`);
+  bar = bar.replace(brand, `$1${HOME}"`);
   /* THE SAMPLES ITEM HAS TO SAY WHICH SECTION IT RESTORES.
    *
    * The bar is lifted from a per-sample page, where Samples is the section the
@@ -153,9 +186,8 @@ const BAR = (() => {
    * opened the front of the catalogue however deep the reader had been. The
    * `data-scope` is what the stored value is checked against, exactly as the
    * Documentation item over there declares its own. */
-  const samples = `href="${PUBLISHED}/samples/"`;
-  if (!bar.includes(samples)) throw new Error(`the borrowed bar has no ${samples} to point at the catalogue`);
-  return bar.replace(samples, `${samples} data-site="samples" data-scope="${PUBLISHED}/samples/"`);
+  return inNav(bar, (nav) => once(nav, `href="${PUBLISHED}/samples/"`,
+    ` data-site="samples" data-scope="${PUBLISHED}/samples/"`));
 })();
 
 /* WHICH OF THE FOUR THE READER IS ON. The bar names Home, Documentation,
@@ -166,12 +198,21 @@ const BAR = (() => {
  * Both marks are made by finding a string in somebody else's markup, so both
  * throw when it is not there rather than quietly marking nothing: a bar with
  * nothing in bold reads as a bug in whichever site you came from. */
-const marked = (find) => {
-  if (!BAR.includes(find)) throw new Error(`the borrowed bar has no ${find} to mark`);
-  return BAR.replace(find, `${find} aria-current="page"`);
-};
+const marked = (find) => inNav(BAR, (nav) => once(nav, find, ' aria-current="page"'));
 const BAR_DOCS = marked('data-site="docs"');
-const BAR_HOME = marked('href="https://abap2ui5.github.io/docs/"');
+const BAR_HOME = marked(`href="${HOME}"`);
+
+/* THE OTHER HALF OF THE PAIR IS THE BORROWED MARKUP'S, so it is checked rather
+ * than assumed. `data-site` above says which page to come back to; `data-back`,
+ * which the catalogue writes on every bar item that leads to a place, says to
+ * come back to the same POSITION in it. Losing it upstream would take the
+ * scroll memory and leave everything else working - the quietest half of a
+ * failure this file has already shipped once. */
+{
+  const item = BAR.match(/<a [^>]*data-site="samples"[^>]*>/);
+  if (!item) throw new Error('the Samples item did not come out of the bar surgery');
+  if (!item[0].includes('data-back')) throw new Error(`the borrowed bar's Samples item has no data-back: ${item[0]}`);
+}
 
 const urlOf = (page) => BASE + page.replace(/\.md$/, '.html');
 
