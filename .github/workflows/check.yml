@@ -16,6 +16,12 @@ on:
   # that mattered was never the one connected to the deploy.
   pull_request:
 
+  # ...and by hand, which there was no way to do. A pull request whose run
+  # never got created - GitHub does not always raise the event when a branch
+  # has just been recreated under an open pull request - left the twelve gates
+  # with no way to be asked again short of pushing something. This is that way.
+  workflow_dispatch:
+
 concurrency:
   group: check-${{ github.ref }}
   cancel-in-progress: true
