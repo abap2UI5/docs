@@ -239,6 +239,17 @@ sample catalogues with the titles, summaries and keywords those repositories
 maintain. Results are grouped by area, documentation first, and a sample hit
 opens that sample's own page in the catalogue.
 
+**The box states the type it would otherwise inherit.** Every rule inside the
+panel is identical to `.search-panel`'s in `catalogue.css` — and the two still
+rendered differently, because what a rule does not state is inherited, and the
+two documents have different bodies (16px on 24px here, 14px on 1.55 there). A
+result row came out 67px tall on one side and 59 on the other. So
+`.a2ui5-search-panel` carries `font-size: 14px; line-height: 1.55` itself, the
+input and the Esc button carry `font: inherit` (a form control inherits
+nothing, and the query was set in Arial), and the ring on `:focus-visible` is
+drawn for what you TAB to and not for the field, which is focused on every
+open. One box on four documents cannot depend on which document it opened over.
+
 The index is generated, gitignored and fetched lazily — nothing is loaded until
 somebody types. The matching is `theme/search-engine.js`, deliberately
 framework-free: the other three bars are static HTML and carry a copy of it,
