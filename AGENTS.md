@@ -177,6 +177,14 @@ comes from the row being rendered, and this one is walked out of
 sections is a second list to keep in step — the bar's old Guide dropdown was
 exactly that and it drifted twice.
 
+**A page is THREE columns and all three start at 96px.** The sidebar, the
+article and the outline all begin under the same 46px bar; the article and the
+outline open 48px below it (the theme's `.VPDoc` padding) and the sidebar
+opened 10px below it, so the manual's own navigation started a line and a half
+above the page it navigates. The 32px that closes it is on `.VPSidebar .nav`,
+never on `.group` — `.group` also spaces the sections from each other. Check
+all three when changing any of them; two of them agreeing is what hid this.
+
 **So is the outline column.** *On this page* is the catalogue's row for row:
 13px on `1.4` with `4px 0` of padding and 2px between rows, and its heading
 level with the crumb line beside it. Two of those were wrong for a while in a

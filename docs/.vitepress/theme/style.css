@@ -446,6 +446,35 @@
   font-size: 13px;
 }
 
+/* THE THIRD COLUMN. The sidebar opened 32px above the other two.
+ *
+ * A page is three columns and they all begin under the same 46px bar, but
+ * only two of them had been checked against each other. The arithmetic, all
+ * of it the theme's:
+ *
+ *   sidebar   46 (bar) + 10 (`.group` padding-top)  = 56  -> glyphs at 64
+ *   article   46 (bar) + 48 (`.VPDoc` padding-top)  = 94  -> glyphs at 96
+ *   outline   the same 94                            = 96
+ *
+ * So the manual's own navigation started a line and a half above the page it
+ * navigates, and that is the step a reader sees when they look across. 48px
+ * is the number to keep - it is the theme's for the article, it is what the
+ * sample catalogue was aligned to, and 10px under a sticky bar is not air,
+ * it is a collision waiting for a scroll.
+ *
+ * The 32px goes on `.nav` rather than on `.group`, because `.group` also
+ * spaces the sections FROM EACH OTHER: adding it there would open 42px
+ * between Cookbook and Configuration as well. On the nav it moves the whole
+ * list once and leaves every gap inside it alone.
+ *
+ * From 960px up only, which is where both of the numbers above are set; below
+ * it the sidebar is a drawer over the page and has no column to line up with. */
+@media (min-width: 960px) {
+  .VPSidebar .nav {
+    padding-top: 32px;
+  }
+}
+
 /* "On this page", level with the crumb line beside it.
  *
  * THE BOX WAS ALREADY RIGHT AND THE LETTERS WERE NOT, which is why this was
