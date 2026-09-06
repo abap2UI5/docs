@@ -65,7 +65,22 @@
  * -240px is the only number: the container's padding box starts 20px left of
  * the article, so 20 - 40 - 220 puts the menu's right edge 40 short of the
  * article's left one. */
-.side-open { display: none; }
+/* THE CHECKBOX IS THE DRAWER'S STATE, AND IT HAS TO STAY REACHABLE.
+   `display: none` takes it out of the tab order, and a <label> is not
+   focusable on its own - so the chapter menu could not be opened from a
+   keyboard AT ALL below 1680px, which is every phone and most laptops. 40 tab
+   stops on a 390px screen never reached it. Hidden the way a visually-hidden
+   control is hidden instead: one pixel, clipped, still focusable, still
+   toggled by Space. The ring is drawn on the label, because that is the part
+   a reader can see. */
+.side-open {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.side-open:focus-visible ~ .doc-body .side-button {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 .sidebar {
   position: fixed;
@@ -122,6 +137,9 @@
 /* From 1680 up the margin holds it, so it stands there instead: no button, no
    scrim, no drawer - the same nav, placed. */
 @media (min-width: 1680px) {
+  /* No drawer here, so no control for it either - an invisible tab stop that
+     does nothing is worse than none. */
+  .side-open { display: none; }
   .side-button { display: none; }
   .side-scrim { display: none; }
   .sidebar {
@@ -412,8 +430,15 @@ html { scroll-padding-top: 62px; }
      screen. Scoped to this element exactly as the theme scopes it to `.VPHome`,
      so `--accent` keeps its own value everywhere else - the value four bars
      share and `check:design` holds. The red itself has no name in the
-     catalogue's stylesheet, because the catalogue has no page that wears it. */
-  --a2ui5-red: #d03c4a;
+     catalogue's stylesheet, because the catalogue has no page that wears it.
+
+     #d03c4a was the mark's own red and it did not quite clear AA as TEXT:
+     4.35 against the sunken grey the Run bar under a listing is drawn on,
+     where 4.5 is the line. Two steps darker clears it on both grounds - 5.03
+     on the page, 4.61 on the grey - and takes the white on the primary button
+     from 4.74 to 5.03 with it. The hue is the same; the mark in the hero is
+     the file it always was. */
+  --a2ui5-red: #cc3644;
   --accent: var(--a2ui5-red);
 }
 :root[data-theme="dark"] .home { --a2ui5-red: #e8697a; }

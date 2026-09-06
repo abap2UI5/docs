@@ -28,6 +28,7 @@ import { createMarkdownRenderer } from 'vitepress';
 import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
+import { summarise } from './lib/pages.mjs';
 
 const ROOT = process.cwd();
 const DOCS = path.join(ROOT, 'docs');
@@ -353,7 +354,56 @@ const meta = ({ page, title, description }) => {
     ['meta', { name: 'twitter:title', content: title }],
     ['meta', { name: 'twitter:description', content: description }],
   ].map(([tag, attrs]) => `<${tag} ${Object.entries(attrs)
-    .map(([k, v]) => `${k}="${esc(v)}"`).join(' ')}>`).join('\n');
+    .map(([k, v]) => `${k}="${esc(v)}"`).join(' ')}>`).join('\n')
+  + '\n' + linkedData({ page, title, description, url });
+};
+
+/* ---- what a machine reads instead of the page ------------------------
+ *
+ * The per-sample pages already carry this - a `SoftwareSourceCode` each - and
+ * the manual carried none, so a search engine had a title, a description and
+ * nothing that says what KIND of thing the page is or where it sits. Two
+ * objects, both of them things this build already knows:
+ *
+ *   TechArticle     the page: what it is called, what it is about, where it
+ *                   lives, and who publishes it.
+ *   BreadcrumbList  the trail printed above the title - Documentation ›
+ *                   Cookbook › Model. A result that shows the path a page sits
+ *                   on tells a reader more than a url with three slashes in it.
+ *
+ * `</script>` cannot be written by any of this: JSON.stringify escapes the
+ * quotes, and `<` is escaped as `\u003c` afterwards, which is the one
+ * character that could end the block early. */
+const linkedData = ({ page, title, description, url }) => {
+  const trail = trailFor(config.themeConfig.sidebar, page);
+  const json = JSON.stringify([
+    {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      headline: title.replace(/ \| abap2UI5$/, ''),
+      description,
+      url,
+      inLanguage: 'en',
+      isPartOf: { '@type': 'WebSite', name: 'abap2UI5', url: `${SITE_URL}/` },
+      publisher: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5' },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        ...trail.map((c, i) => ({
+          '@type': 'ListItem', position: i + 1, name: c.text,
+          /* Named exactly as the crumb line names it, `.html` and all - the
+             same rule `crumbsFor` uses - so the url in the structured data is
+             the url a reader would land on, and the one the page declares as
+             canonical. */
+          ...(c.link ? { item: SITE_URL + c.link + (c.link.endsWith('/') ? 'index.html' : '.html') } : {}),
+        })),
+        { '@type': 'ListItem', position: trail.length + 1, name: title.replace(/ \| abap2UI5$/, ''), item: url },
+      ],
+    },
+  ]);
+  return `<script type="application/ld+json">${json.replace(/</g, '\\u003c')}</script>`;
 };
 
 const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
@@ -366,6 +416,8 @@ const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 <link rel="icon" href="${BASE}favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" href="${BASE}favicon.png" sizes="64x64">
 <link rel="apple-touch-icon" sizes="180x180" href="${BASE}apple-touch-icon.png">
+<meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1e2024" media="(prefers-color-scheme: dark)">
 <link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${BASE}site.css">
 <script type="module" src="${BASE}site.js"></script>
@@ -757,7 +809,19 @@ for (const page of pages) {
     head: meta({
       page,
       title: isHome ? 'abap2UI5 — Build UI5 Apps Purely in ABAP' : title,
-      description: fm.description || SITE_DESC,
+      /* 151 of the 166 pages declare no description of their own, and every
+         one of them was being given the project's slogan. That is the same
+         sentence under 151 different results in a search engine, and the same
+         card in Slack and LinkedIn whichever chapter was shared - a preview
+         that says nothing about the page it previews.
+         The page's own opening sentence is a better description than a
+         constant, and the site already knows how to take one: `summarise` is
+         what writes the one-line note beside every entry of llms.txt and the
+         line under every hit in the search box. Same sentence, one
+         implementation. The slogan stays for the front door, whose subject
+         really is the project, and for a page that opens with something a
+         sentence cannot be taken from. */
+      description: fm.description || (isHome ? SITE_DESC : summarise(src) || SITE_DESC),
     }),
     bar: isHome ? BAR_HOME : BAR_DOCS,
     main: isHome ? home({ body, fm }) : chapter({ body, page, route }),

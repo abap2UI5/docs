@@ -117,7 +117,12 @@ export function summarise(body) {
   // cut at the end of the first sentence, but not so early that the note says
   // nothing; a period inside `sap.m.Table` or `1.71` is not a sentence end
   const stop = plain.search(/\.(?=\s|$)|:\s—|\s—\s/);
-  const first = stop > 40 ? plain.slice(0, stop + 1) : plain;
+  /* Trimmed, because two of the three cuts land ON a space: the dash forms
+     match `\s—\s`, and keeping the character at `stop` keeps that space. It
+     showed up as "…control of its own " under a search hit, in the note beside
+     an llms.txt entry, and - since the descriptions started coming from here -
+     in the meta description of two pages. */
+  const first = (stop > 40 ? plain.slice(0, stop + 1) : plain).trim();
   return first.length > 220 ? `${first.slice(0, 217)}...` : first;
 }
 
