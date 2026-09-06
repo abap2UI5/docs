@@ -20,6 +20,7 @@
  *
  *   node scripts/build-site.mjs [out-dir]
  */
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -330,8 +331,10 @@ const SITE_URL = 'https://abap2ui5.github.io/docs';
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const SITE_DESC = 'Build UI5 Apps Purely in ABAP';
 
+const canonical = (page) => `${SITE_URL}/${page}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
+
 const meta = ({ page, title, description }) => {
-  const url = `${SITE_URL}/${page}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
+  const url = canonical(page);
   return [
     ['link', { rel: 'canonical', href: url }],
     ['meta', { name: 'description', content: description }],
@@ -370,6 +373,7 @@ const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 ${head}
 </head>
 <body>
+<a class="skip" href="#main-content">Skip to content</a>
 ${bar}
 ${main}
 <footer class="foot"><p>
@@ -422,7 +426,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
   <input class="side-open" type="checkbox" id="side-open">
   ${sidebarFor(route)}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
-  <div class="doc-body">
+  <div class="doc-body" id="main-content" tabindex="-1">
     <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
     <p class="crumbs">${crumbsFor(page)}</p>
     <div class="vp-doc">${body}</div>
@@ -627,6 +631,29 @@ if (typeof highlightAbapLines !== 'function') {
   throw new Error(`abap-highlight.mjs from ${frame.from} no longer exports highlightAbapLines( )`);
 }
 
+/* ---- TWO PAGES CALLED THE SAME THING ----------------------------------
+ *
+ * `Frontend` is a chapter of Cookbook › Event & Navigation and also one of
+ * Advanced › Extensibility, and both said `Frontend | abap2UI5` and nothing
+ * else. In a browser's history, in a list of open tabs and in a search result
+ * the two were the same page, and the one the reader wanted was a coin toss.
+ *
+ * The crumb line above the title has always told them apart; this puts the
+ * same word in the title, and ONLY for a name that actually repeats - a title
+ * carrying its section when nothing collides is noise in every tab. */
+const nameOf = (page) => {
+  const src = fs.readFileSync(path.join(DOCS, page), 'utf8');
+  const fm = src.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const declared = fm && fm[1].match(/^title:\s*(.+)$/m);
+  if (declared) return declared[1].trim().replace(/^["']|["']$/g, '');
+  return (src.match(/^#\s+(.+)$/m) || [, page])[1].trim();
+};
+const shared = (() => {
+  const seen = new Map();
+  for (const page of pages) seen.set(nameOf(page), (seen.get(nameOf(page)) || 0) + 1);
+  return new Set([...seen].filter(([, n]) => n > 1).map(([name]) => name));
+})();
+
 let written = 0, headings = 0, blocks = 0;
 for (const page of pages) {
   const src = fs.readFileSync(path.join(DOCS, page), 'utf8');
@@ -640,6 +667,14 @@ for (const page of pages) {
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
   body = sized(recolour(abapify(body)));
+  /* A link that opens a new tab hands that tab a `window.opener` pointing at
+     this one unless it says otherwise. Every current browser implies
+     `noopener` for `target="_blank"` and has since 2020 - this is for the ones
+     that do not, and it costs nothing. `noreferrer` is deliberately NOT added:
+     these links go to the project's own repositories, and the referrer is how
+     they can tell the manual sent you. */
+  body = body.replace(/<a ([^>]*\btarget="_blank"[^>]*)>/g, (tag, attrs) =>
+    /\brel="/.test(attrs) ? tag.replace(/\brel="(?![^"]*noopener)/, 'rel="noopener ') : `<a ${attrs} rel="noopener">`);
   /* And a page written by hand as `/docs/resources/addons` gets its `.html`.
      VitePress resolves that in the router, and GitHub Pages happens to resolve
      it too, by trying `<path>.html` - so it was never broken on the site and
@@ -654,8 +689,10 @@ for (const page of pages) {
   const route = routeOf(page);
   const isHome = fm.layout === 'home';
   /* The theme's own title template, and its own rule for the preview: a
-     chapter previews as itself, the front door as the project. */
-  const title = `${name} | abap2UI5`;
+     chapter previews as itself, the front door as the project. A name two
+     chapters share carries the section that tells them apart. */
+  const under = shared.has(name) ? trailFor(config.themeConfig.sidebar, page).at(-1)?.text : null;
+  const title = `${name}${under && under !== name ? ` · ${under}` : ''} | abap2UI5`;
   const html = shell({
     title,
     head: meta({
@@ -689,7 +726,7 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   <input class="side-open" type="checkbox" id="side-open">
   ${sidebarFor('/404')}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
-  <div class="doc-body">
+  <div class="doc-body" id="main-content" tabindex="-1">
     <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
     <p class="crumbs"><a href="${BASE}get_started/about.html">Documentation</a></p>
     <div class="vp-doc">
@@ -704,6 +741,45 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   </div>
 </main>`,
 }));
+
+/* ---- WHAT IS HERE, FOR A CRAWLER --------------------------------------
+ *
+ * 166 pages and nothing saying so. The playground publishes a sitemap beside
+ * its 772; this site published none, so a crawler had to find every page by
+ * following links from whichever one it landed on, and a page reachable only
+ * through the menu (which is a link in every page, so most are fine) or only
+ * through prev/next is a page it is entitled to give up on.
+ *
+ * `lastmod` is the date of the commit that last touched the page, not the
+ * date of the build: a deploy that changed one chapter should not tell a
+ * crawler that all 166 changed. One `git log` for the whole tree rather than
+ * one per file, and a checkout too shallow to know - CI clones a pull request
+ * at depth 1 - falls back to the build's date, which is the only thing it can
+ * honestly say then.
+ *
+ * robots.txt is deliberately NOT written, for the reason the playground gives
+ * for not writing one either: a crawler reads /robots.txt at the ORIGIN root,
+ * and abap2ui5.github.io/ belongs to another repository. This file is
+ * discovered by being submitted, or through the links. */
+const lastTouched = (() => {
+  const when = new Map();
+  try {
+    const log = execFileSync('git', ['log', '--pretty=format:%cs', '--name-only', '--', 'docs'],
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    let date = '';
+    for (const line of log.split('\n')) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(line)) { date = line; continue; }
+      const f = line.trim();
+      if (f.startsWith('docs/') && f.endsWith('.md') && !when.has(f)) when.set(f, date);
+    }
+  } catch { /* no git, or a checkout with no history in it */ }
+  return (page) => when.get(`docs/${page}`) || new Date().toISOString().slice(0, 10);
+})();
+
+fs.writeFileSync(path.join(OUT, 'docs', 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
+  + pages.map((page) => `<url><loc>${esc(canonical(page))}</loc><lastmod>${lastTouched(page)}</lastmod></url>`).join('\n')
+  + `\n</urlset>\n`);
 
 /* ---- what the pages need beside them --------------------------------- */
 const copyInto = (from, to) => {

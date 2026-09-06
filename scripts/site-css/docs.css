@@ -274,7 +274,55 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .vp-doc .custom-block-title { margin: 0 0 4px; font-size: 13px; font-weight: 700; }
 .vp-doc .custom-block p { margin: 4px 0; font-size: 13px; }
 
+/* ---- skip to content --------------------------------------------------
+ *
+ * 26 tab stops stand between the top of a page and its first paragraph: the
+ * bar's five, the search, the menu button, and then the chapter menu, which is
+ * every section of the manual. On EVERY page. A reader on a keyboard, or with
+ * a screen reader, walked all of it to reach the text they came for.
+ *
+ * The link is the first thing in the body and is invisible until it is
+ * focused, which is what makes it free: it is not a design element, it is the
+ * first Tab doing something useful. `#main-content` carries `tabindex="-1"` so
+ * that focus actually lands there rather than the browser only scrolling. */
+.skip {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 60;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 6px);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top .12s ease;
+}
+.skip:focus { top: 8px; }
+.doc-body:focus { outline: none; }
+
 /* ---- tables ---------------------------------------------------------- */
+/* THE WRAPPER IS THERE TO SCROLL, and had nothing telling it to. The renderer
+   puts every table in a `div.vp-doc-table` for exactly this - a table has a
+   minimum width its columns give it and cannot be made narrower - and the rule
+   that made it scroll lived in the theme, so it went when the theme stopped
+   rendering this site. What was left was a 482px table on a 390px phone
+   pushing the WHOLE PAGE sideways: the api reference scrolled to 675px, and
+   every line of prose on it ran off the screen. Now the table scrolls inside
+   its own box and the page does not move. */
+.vp-doc-table { overflow-x: auto; }
+
+/* AND A NAME IS NOT A WORD, so it may be broken when it has to be. Inline code
+   is one token to the line-breaker - `cl_web_http_utility=>encode_base64`,
+   `npx @abap2ui5/linter src --fix` - and a token wider than the column gives
+   its PARAGRAPH a minimum width wider than the column, which on a phone is the
+   whole page scrolling sideways again for the sake of one identifier. Breaking
+   is allowed only where it is needed: a name that fits is never broken, and a
+   listing (`pre > code`) is left alone, because there the block scrolls and a
+   broken line would be a lie about the source. */
+.vp-doc :not(pre) > code { overflow-wrap: break-word; }
 .vp-doc table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
 .vp-doc th, .vp-doc td { padding: 7px 10px; border: 1px solid var(--line); text-align: left; }
 .vp-doc th { background: var(--bg-sunken); font-weight: 600; }
