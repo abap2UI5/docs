@@ -465,7 +465,7 @@ const tile = (f) => `<a class="tile" href="${esc(linkOf(f.link))}"${f.target ? `
 const home = ({ body, fm }) => {
   const h = fm.hero || {};
   const img = h.image || {};
-  return `<main class="home">
+  return `<main class="home" id="main-content" tabindex="-1">
   <section class="hero">
     <div class="hero-main">
       ${h.name ? `<p class="hero-name">${esc(h.name)}</p>` : ''}
@@ -898,21 +898,57 @@ await bundle({
  * Pages resolves it to - the pages themselves are rewritten to say so, and
  * this is the net under that. */
 const dead = [];
-let checked = 0;
+let checked = 0, anchors = 0;
+/* Every id each built page carries, so that the fragment half of a link can be
+ * checked as well as the path half. A `#section` that names a heading which
+ * has been renamed is a link that RESOLVES - the page opens - and then does
+ * nothing: the reader lands at the top and has to find the section by eye, and
+ * nothing anywhere says the link is stale. It is the failure a manual's
+ * cross-references decay into, and it was the half this sweep did not look
+ * at. */
+const idsOf = new Map();
+const ids = (file) => {
+  if (!idsOf.has(file)) {
+    const html = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+    idsOf.set(file, new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1])));
+  }
+  return idsOf.get(file);
+};
+const resolve = (to) => {
+  const target = path.join(OUT, to);
+  if (fs.existsSync(target) && fs.statSync(target).isFile()) return target;
+  if (fs.existsSync(path.join(target, 'index.html'))) return path.join(target, 'index.html');
+  if (fs.existsSync(`${target}.html`)) return `${target}.html`;
+  return null;
+};
 (function sweep(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const at = path.join(dir, e.name);
     if (e.isDirectory()) { sweep(at); continue; }
     if (!e.name.endsWith('.html')) continue;
     const html = fs.readFileSync(at, 'utf8');
+    /* A link INSIDE the page - `href="#a-section"` - is checked against this
+       page's own ids. It is where a stale anchor is likeliest: a heading is
+       renamed and the sentence pointing at it three screens up is not. */
+    for (const m of html.matchAll(/href="#([^"]+)"/g)) {
+      const fragment = decodeURIComponent(m[1]);
+      checked++; anchors++;
+      if (fragment === 'top' || fragment.startsWith(':~:')) continue;
+      if (!ids(at).has(fragment)) dead.push(`${at.slice(OUT.length)} -> #${m[1]}  (no section by that name on this page)`);
+    }
     for (const m of html.matchAll(/(?:href|src)="(\/[^"]*)"/g)) {
-      const to = m[1].split('#')[0].split('?')[0];
-      if (!to) continue;
+      const [pathPart, fragment] = m[1].split('?')[0].split('#');
+      if (!pathPart) continue;
       checked++;
-      const target = path.join(OUT, to);
-      if (fs.existsSync(target) || fs.existsSync(path.join(target, 'index.html'))
-        || fs.existsSync(`${target}.html`)) continue;
-      dead.push(`${at.slice(OUT.length)} -> ${m[1]}`);
+      const target = resolve(pathPart);
+      if (!target) { dead.push(`${at.slice(OUT.length)} -> ${m[1]}`); continue; }
+      if (!fragment || !target.endsWith('.html')) continue;
+      anchors++;
+      /* `#top` is the browser's own, and a text fragment (`#:~:text=…`) names
+         words rather than an element. */
+      if (fragment === 'top' || fragment.startsWith(':~:')) continue;
+      if (!ids(target).has(decodeURIComponent(fragment)))
+        dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (the page is there, that section is not)`);
     }
   }
 })(OUT);
@@ -924,6 +960,6 @@ if (dead.length) {
 
 const seconds = ((Date.now() - started) / 1000).toFixed(1);
 console.log(`${written} pages, ${headings} sections, ${blocks} code blocks, ${assets} files beside them,`);
-console.log(`   ${checked} internal links, none of them dead — ${seconds}s`);
+console.log(`   ${checked} internal links (${anchors} of them naming a section), none of them dead — ${seconds}s`);
 console.log(`   ${OUT}/docs/`);
 console.log(`   frame from ${frame.from}`);

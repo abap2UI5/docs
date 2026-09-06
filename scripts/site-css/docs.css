@@ -274,6 +274,21 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .vp-doc .custom-block-title { margin: 0 0 4px; font-size: 13px; font-weight: 700; }
 .vp-doc .custom-block p { margin: 4px 0; font-size: 13px; }
 
+/* ---- an anchor lands BELOW the bar ------------------------------------
+ *
+ * The bar is sticky and 46px tall, and the browser scrolls an anchor to the
+ * very top of the viewport - so clicking a row of "On this page", or opening
+ * a link somebody shared to `#a-section`, put the heading you asked for
+ * exactly underneath the bar. Measured: heading at 0, bar to 46. The reader
+ * arrived at their section with its title hidden and the paragraph under it
+ * looking like the start.
+ *
+ * `scroll-padding-top` on the scrolling element is the one rule that covers
+ * all of it: the browser's own anchor navigation, `scrollIntoView`, and the
+ * jump when a page is opened with a hash already in the url. 46 for the bar
+ * and 16 so the heading is not touching it. */
+html { scroll-padding-top: 62px; }
+
 /* ---- skip to content --------------------------------------------------
  *
  * 26 tab stops stand between the top of a page and its first paragraph: the
@@ -301,7 +316,7 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   transition: top .12s ease;
 }
 .skip:focus { top: 8px; }
-.doc-body:focus { outline: none; }
+.doc-body:focus, .home:focus { outline: none; }
 
 /* ---- tables ---------------------------------------------------------- */
 /* THE WRAPPER IS THERE TO SCROLL, and had nothing telling it to. The renderer
