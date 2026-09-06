@@ -16,7 +16,8 @@
 // what a reader clicks.
 //
 // Usage: node scripts/check-cross-site.mjs [--list]
-//   Needs docs/.vitepress/dist, so run it after `npm run docs:build`.
+//   Needs docs/.vitepress/dist, so run it after `npm run docs:build` - see the
+//   note on DIST below for why it is that build and not the published one.
 //   --list prints every cross-site link it found, by destination.
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
@@ -25,7 +26,22 @@ import { fileURLToPath } from 'node:url';
 import { crossSiteLinks, SITE } from './lib/cross-site.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const DIST = join(ROOT, 'docs/.vitepress/dist');
+/* WHICH BUILD THIS JUDGES, and why it is still VitePress's.
+ *
+ * What this gate is about is one specific failure: VitePress's ROUTER taking
+ * over a same-origin link that looks like a page of this site. The published
+ * site is written by scripts/build-site.mjs now and has no router - every link
+ * on it is an ordinary navigation - so the failure cannot happen there, and
+ * pointing this at that build would only have it object to the bar, which is
+ * the catalogue's markup and correct as it stands.
+ *
+ * Both builds render the same markdown, so judging VitePress's output still
+ * judges every link WE write, which is what the gate is for. It stops being
+ * meaningful on the day the VitePress build goes; that is the day to decide
+ * what replaces it, not before. `SITE_OUT` points it at another build. */
+const DIST = process.env.SITE_OUT
+  ? join(ROOT, process.env.SITE_OUT)
+  : join(ROOT, 'docs/.vitepress/dist');
 const LIST = process.argv.includes('--list');
 
 if (!existsSync(DIST)) {

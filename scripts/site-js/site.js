@@ -48,3 +48,16 @@ addEventListener('scroll', () => {
   pending = setTimeout(() => { pending = 0; rememberScroll(); }, 300);
 }, { passive: true });
 addEventListener('pagehide', () => rememberScroll());
+
+/* A code group: the renderer gives every tab a radio and marks the first block
+   `active`. The blocks sit in a container of their own, so no sibling selector
+   reaches from the checked radio to the block it belongs to - this does, once,
+   for every group on the page. */
+for (const group of document.querySelectorAll('.vp-code-group')) {
+  const tabs = [...group.querySelectorAll('.tabs input')];
+  const blocks = [...group.querySelectorAll('.blocks > div')];
+  group.addEventListener('change', () => {
+    const at = tabs.findIndex((t) => t.checked);
+    blocks.forEach((b, i) => b.classList.toggle('active', i === at));
+  });
+}

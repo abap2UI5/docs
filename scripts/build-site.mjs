@@ -18,7 +18,7 @@
  * no Vue, no router and no theme. So this does not reimplement markdown; it
  * replaces the FRAME around it.
  *
- *   node scripts/prototype-site.mjs [out-dir]
+ *   node scripts/build-site.mjs [out-dir]
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -69,28 +69,76 @@ pages.sort();
  * The bar comes from a BUILT sample page rather than from the generator that
  * writes it, because what ships is the thing to copy. */
 const HOMES = ['PLAYGROUND_HOME', '.playground', '../playground'];
-const playground = HOMES
+/* An explicit PLAYGROUND_URL wins over any checkout: it is how the fetched
+   path is exercised without waiting for CI to be the first run of it. */
+const playground = process.env.PLAYGROUND_URL ? null : HOMES
   .map((d) => (d.endsWith('_HOME') ? process.env[d] : path.join(ROOT, d)))
-  .find((at) => at && fs.existsSync(path.join(at, 'src', 'catalogue', 'catalogue.css')));
-if (!playground) {
-  console.error('No playground checkout found (PLAYGROUND_HOME, .playground, ../playground).');
-  console.error('This prototype wears the catalogue\'s frame, so it needs the catalogue.');
-  process.exit(1);
-}
+  .find((at) => at && fs.existsSync(path.join(at, 'dist', 'samples', 'catalogue.css')));
 
-const built = path.join(playground, 'dist', 'samples');
-const anySample = fs.existsSync(built)
-  && fs.readdirSync(built, { withFileTypes: true }).find((e) => e.isDirectory() && e.name.startsWith('z2ui5_'));
-if (!anySample) {
-  console.error(`No built sample pages under ${built} — run \`npm run build\` in the playground first.`);
-  process.exit(1);
-}
+const PUBLISHED = (process.env.PLAYGROUND_URL || 'https://abap2ui5.github.io/playground').replace(/\/$/, '');
+
+/** The four files of the frame, from a built checkout or from the site.
+ *
+ * A checkout is the fast path and the one to use while working: `PLAYGROUND_HOME`,
+ * `.playground`, `../playground`, the same three `check:design` looks in - and
+ * it has to be BUILT, because two of the four (`sample.css`, `search.mjs`) are
+ * build outputs and the bar is lifted from a page the build writes.
+ *
+ * Without one, they come off the published site. That is not a fallback so
+ * much as the arrangement CI uses: cloning and building the playground to
+ * publish a page of this manual would be an hour of UI5 for four files, and
+ * what those four files are is exactly what is deployed. `check:design`
+ * already reaches for the published copy the same way when there is no
+ * checkout, for the same reason.
+ *
+ * The bar comes from a per-sample page rather than the catalogue's index,
+ * because those are written by the build with `../../` in front of every
+ * shared asset - one rewrite turns all of them absolute. Which sample does not
+ * matter and is not hard-coded: the first one the sitemap names.
+ */
+const fetchText = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+  return res.text();
+};
+
+const frame = await (async () => {
+  if (playground) {
+    const built = path.join(playground, 'dist', 'samples');
+    const sample = fs.readdirSync(built, { withFileTypes: true })
+      .find((e) => e.isDirectory() && e.name.startsWith('z2ui5_'));
+    if (!sample) throw new Error(`no built sample pages under ${built} — run \`npm run build\` in the playground`);
+    const file = (n) => fs.readFileSync(path.join(built, n), 'utf8');
+    return {
+      from: built,
+      page: fs.readFileSync(path.join(built, sample.name, 'index.html'), 'utf8'),
+      files: { 'catalogue.css': file('catalogue.css'), 'sample.css': file('sample.css'), 'search.mjs': file('search.mjs') },
+    };
+  }
+  const sitemap = await fetchText(`${PUBLISHED}/sitemap.xml`);
+  /* The PATH out of the sitemap, not the url in it: the sitemap names the
+     published origin, and this may be pointed at a local copy of the same
+     tree (PLAYGROUND_URL) to exercise exactly this path. */
+  const one = sitemap.match(/<loc>[^<]*(\/samples\/z2ui5_[a-z0-9_]+\/)<\/loc>/);
+  if (!one) throw new Error(`no per-sample page in ${PUBLISHED}/sitemap.xml to take the bar from`);
+  const [page, ...files] = await Promise.all([
+    fetchText(PUBLISHED + one[1]),
+    fetchText(`${PUBLISHED}/samples/catalogue.css`),
+    fetchText(`${PUBLISHED}/samples/sample.css`),
+    fetchText(`${PUBLISHED}/samples/search.mjs`),
+  ]);
+  return {
+    from: PUBLISHED,
+    page,
+    files: { 'catalogue.css': files[0], 'sample.css': files[1], 'search.mjs': files[2] },
+  };
+})();
+
 const BAR = (() => {
-  const src = fs.readFileSync(path.join(built, anySample.name, 'index.html'), 'utf8');
-  const m = src.match(/<header class="bar">[\s\S]*?<\/header>/);
-  if (!m) throw new Error('no bar in the built sample page');
+  const m = frame.page.match(/<header class="bar">[\s\S]*?<\/header>/);
+  if (!m) throw new Error(`no bar in the sample page from ${frame.from}`);
   return m[0]
-    .replace(/(?:href|src)="\.\.\/\.\.\//g, (t) => t.slice(0, -6) + 'https://abap2ui5.github.io/playground/')
+    .replace(/(?:href|src)="\.\.\/\.\.\//g, (t) => t.slice(0, -6) + `${PUBLISHED}/`)
     .replace(/ aria-current="page"/g, '');
 })();
 
@@ -157,18 +205,58 @@ function crumbsFor(page) {
     .join('');
 }
 
-const shell = ({ title, main, bar }) => `<!doctype html>
+/* ---- the head ---------------------------------------------------------
+ *
+ * The whole of it, per page, because a link to a chapter that previews as the
+ * site's front page is a link nobody clicks. What is here is what the theme
+ * and `transformPageData` used to put there between them: the title, the
+ * description, the canonical url, and the six og/twitter values that decide
+ * what LinkedIn, Slack and WhatsApp draw. Those four take ABSOLUTE urls - a
+ * relative one is silently dropped and the preview falls back to a grey card -
+ * which is what SITE_URL is for. */
+const SITE_URL = 'https://abap2ui5.github.io/docs';
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+const SITE_DESC = 'Build UI5 Apps Purely in ABAP';
+
+const meta = ({ page, title, description }) => {
+  const url = `${SITE_URL}/${page}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
+  return [
+    ['link', { rel: 'canonical', href: url }],
+    ['meta', { name: 'description', content: description }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'abap2UI5' }],
+    ['meta', { property: 'og:url', content: url }],
+    ['meta', { property: 'og:title', content: title }],
+    ['meta', { property: 'og:description', content: description }],
+    ['meta', { property: 'og:image', content: OG_IMAGE }],
+    ['meta', { property: 'og:image:type', content: 'image/png' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { property: 'og:image:alt', content: 'abap2UI5 — Build UI5 Apps Purely in ABAP' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: OG_IMAGE }],
+    ['meta', { name: 'twitter:title', content: title }],
+    ['meta', { name: 'twitter:description', content: description }],
+  ].map(([tag, attrs]) => `<${tag} ${Object.entries(attrs)
+    .map(([k, v]) => `${k}="${esc(v)}"`).join(' ')}>`).join('\n');
+};
+
+const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(title)} | abap2UI5</title>
+<title>${esc(title)}</title>
+<link rel="shortcut icon" href="${BASE}favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="${BASE}favicon.ico">
+<link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${BASE}catalogue.css">
 <link rel="stylesheet" href="${BASE}sample.css">
 <link rel="stylesheet" href="${BASE}docs.css">
 <script type="module" src="${BASE}site.js"></script>
 <script type="module" src="${BASE}search.mjs"></script>
 <script>try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+${head}
 </head>
 <body>
 ${bar}
@@ -181,6 +269,41 @@ ${main}
 </body>
 </html>
 `;
+
+/* ---- what comes before and after ---------------------------------------
+ *
+ * The sidebar read as one list, in the order it is drawn, with the entries
+ * that only open a section (no link of their own) skipped. A reader working
+ * through the manual front to back has this and the menu; a reader who arrived
+ * from a search has only this. */
+const ORDER = (function flatten(items, out = []) {
+  for (const i of items) {
+    if (i.link) out.push({ text: i.text, link: i.link });
+    if (i.items) flatten(i.items, out);
+  }
+  return out;
+})(config.themeConfig.sidebar)
+  /* A section and its first page name the same link - "Cookbook" and "View"
+     both point at /cookbook/view/definition - and prev/next that walks the
+     same page twice reads as a broken button. First mention wins, which is the
+     section, because that is the name the crumb line uses too. */
+  .filter((row, at, all) => all.findIndex((o) => o.link === row.link) === at);
+
+const linkTo = (link) => BASE.slice(0, -1) + link + (link.endsWith('/') ? 'index.html' : '.html');
+
+function prevNextFor(route) {
+  const at = ORDER.findIndex((r) => r.link.replace(/\/$/, '') === route.replace(/\/$/, ''));
+  if (at < 0) return '';
+  const side = (row, which, arrow) => (row
+    ? `<a class="pn pn-${which}" href="${esc(linkTo(row.link))}">
+         <span class="pn-what">${which === 'prev' ? 'Previous' : 'Next'}</span>
+         <span class="pn-title">${arrow === 'l' ? '← ' : ''}${esc(row.text)}${arrow === 'r' ? ' →' : ''}</span>
+       </a>`
+    : '<span></span>');
+  return `<nav class="prev-next" aria-label="Previous and next page">
+    ${side(ORDER[at - 1], 'prev', 'l')}${side(ORDER[at + 1], 'next', 'r')}
+  </nav>`;
+}
 
 /** A chapter: the menu beside it, the crumb line, the article, the outline. */
 const chapter = ({ body, page, route }) => `<main class="manual">
@@ -196,6 +319,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
          target="_blank" rel="noopener">${esc(config.themeConfig.editLink?.text || 'Edit this page on GitHub')} ↗</a>
       <span class="updated">Last updated: ${new Date(fs.statSync(path.join(DOCS, page)).mtime).toISOString().slice(0, 10)}</span>
     </div>
+    ${prevNextFor(route)}
   </div>
   ${outlineFor(body)}
 </main>`;
@@ -270,11 +394,19 @@ for (const page of pages) {
     if (at.endsWith('/')) return `href="${at}index.html${rest}"`;
     return last.includes('.') ? all : `href="${at}.html${rest}"`;
   });
-  const title = fm.title || (src.match(/^#\s+(.+)$/m) || [, page])[1];
+  const name = fm.title || (src.match(/^#\s+(.+)$/m) || [, page])[1];
   const route = routeOf(page);
   const isHome = fm.layout === 'home';
+  /* The theme's own title template, and its own rule for the preview: a
+     chapter previews as itself, the front door as the project. */
+  const title = `${name} | abap2UI5`;
   const html = shell({
     title,
+    head: meta({
+      page,
+      title: isHome ? 'abap2UI5 — Build UI5 Apps Purely in ABAP' : title,
+      description: fm.description || SITE_DESC,
+    }),
     bar: isHome ? BAR_HOME : BAR_DOCS,
     main: isHome ? home({ body, fm }) : chapter({ body, page, route }),
   });
@@ -286,6 +418,36 @@ for (const page of pages) {
   headings += (body.match(/<h2 id=/g) || []).length;
   blocks += (body.match(/class="language-/g) || []).length;
 }
+
+/* ---- the page for a url that is not a page -----------------------------
+ *
+ * GitHub Pages answers anything it cannot find under this deployment with the
+ * 404.html at the root of the artefact, which is this. It carries the bar, so
+ * a reader who mistyped a chapter is one click from the four sections rather
+ * than on a white page with a sentence on it. */
+fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
+  title: 'Not found | abap2UI5',
+  head: meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC }),
+  bar: BAR_DOCS,
+  main: `<main class="manual">
+  <input class="side-open" type="checkbox" id="side-open">
+  ${sidebarFor('/404')}
+  <label class="side-scrim" for="side-open" aria-hidden="true"></label>
+  <div class="doc-body">
+    <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
+    <p class="crumbs"><a href="${BASE}get_started/about.html">Documentation</a></p>
+    <div class="vp-doc">
+      <h1>This page is not here</h1>
+      <p>The address does not name a page of this manual. It may have been
+         renamed, or the link that brought you here may be old.</p>
+      <p>The menu beside this lists every chapter, the box in the bar searches
+         the manual and all ~770 samples at once, and
+         <a href="${BASE}get_started/about.html">In a Nutshell</a> is where the
+         manual starts.</p>
+    </div>
+  </div>
+</main>`,
+}));
 
 /* ---- what the pages need beside them --------------------------------- */
 const copyInto = (from, to) => {
@@ -307,7 +469,7 @@ const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
    is not a second implementation of that one, it is that one, mounting into
    the `[data-search]` slot the borrowed bar already carries and reading the
    index this repository publishes. */
-for (const f of ['catalogue.css', 'sample.css', 'search.mjs']) fs.copyFileSync(path.join(built, f), path.join(OUT, 'docs', f));
+for (const [name, text] of Object.entries(frame.files)) fs.writeFileSync(path.join(OUT, 'docs', name), text);
 /* One adaptation to the borrowed stylesheet, and it is about DEPTH, not taste.
  * catalogue.css names the type as `../fonts/inter-…woff2`, which is right where
  * it lives: one directory down, in `dist/samples/`, beside `dist/fonts/`. Here
@@ -321,8 +483,8 @@ for (const f of ['catalogue.css', 'sample.css', 'search.mjs']) fs.copyFileSync(p
   if (!css.includes('../fonts/')) throw new Error('catalogue.css no longer names ../fonts/ - check what the type is now');
   fs.writeFileSync(at, css.replace(/\.\.\/fonts\//g, 'fonts/'));
 }
-fs.copyFileSync(path.join(ROOT, 'scripts', 'prototype-css', 'docs.css'), path.join(OUT, 'docs', 'docs.css'));
-fs.copyFileSync(path.join(ROOT, 'scripts', 'prototype-js', 'site.js'), path.join(OUT, 'docs', 'site.js'));
+fs.copyFileSync(path.join(ROOT, 'scripts', 'site-css', 'docs.css'), path.join(OUT, 'docs', 'docs.css'));
+fs.copyFileSync(path.join(ROOT, 'scripts', 'site-js', 'site.js'), path.join(OUT, 'docs', 'site.js'));
 /* The behaviour a page has beyond its markup was already framework-free in
    the theme - the Run button, the line numbers and their addresses, the link
    to a selection, the position memory between the four sites. `index.js` was
@@ -331,9 +493,43 @@ const THEME = path.join(DOCS, '.vitepress', 'theme');
 const modules = ['playground.js', 'code-lines.js', 'link-to-selection.js', 'text-fragment.js', 'site-memory.js'];
 for (const f of modules) fs.copyFileSync(path.join(THEME, f), path.join(OUT, 'docs', f));
 
+/* ---- every internal link, before anything is published -----------------
+ *
+ * The build this replaced had one (VitePress refuses to finish on a dead
+ * link), and a manual whose cross-references rot is a manual nobody trusts
+ * twice. Root-relative only: an external url is somebody else's uptime, and a
+ * relative one does not occur in what this writes.
+ *
+ * `/docs/x` with no extension counts as `/docs/x.html`, which is what GitHub
+ * Pages resolves it to - the pages themselves are rewritten to say so, and
+ * this is the net under that. */
+const dead = [];
+let checked = 0;
+(function sweep(dir) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const at = path.join(dir, e.name);
+    if (e.isDirectory()) { sweep(at); continue; }
+    if (!e.name.endsWith('.html')) continue;
+    const html = fs.readFileSync(at, 'utf8');
+    for (const m of html.matchAll(/(?:href|src)="(\/[^"]*)"/g)) {
+      const to = m[1].split('#')[0].split('?')[0];
+      if (!to) continue;
+      checked++;
+      const target = path.join(OUT, to);
+      if (fs.existsSync(target) || fs.existsSync(path.join(target, 'index.html'))
+        || fs.existsSync(`${target}.html`)) continue;
+      dead.push(`${at.slice(OUT.length)} -> ${m[1]}`);
+    }
+  }
+})(OUT);
+if (dead.length) {
+  console.error(`\n${dead.length} dead link(s) - nothing is published with these:`);
+  for (const d of [...new Set(dead)].slice(0, 25)) console.error(`   ${d}`);
+  process.exit(1);
+}
+
 const seconds = ((Date.now() - started) / 1000).toFixed(1);
-console.log(`${written} pages, ${headings} sections, ${blocks} code blocks, ${assets} files beside them — ${seconds}s`);
+console.log(`${written} pages, ${headings} sections, ${blocks} code blocks, ${assets} files beside them,`);
+console.log(`   ${checked} internal links, none of them dead — ${seconds}s`);
 console.log(`   ${OUT}/docs/`);
-console.log('\nStill missing, on purpose:');
-console.log('   code-group tabs (the renderer emits them, the tabs need a few lines of JS)');
-console.log('   prev/next under an article, and a dead-link check the build does today');
+console.log(`   frame from ${frame.from}`);

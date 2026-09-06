@@ -16,6 +16,12 @@ on:
   # that mattered was never the one connected to the deploy.
   pull_request:
 
+  # ...and by hand, which there was no way to do. A pull request whose run
+  # never got created - GitHub does not always raise the event when a branch
+  # has just been recreated under an open pull request - left the twelve gates
+  # with no way to be asked again short of pushing something. This is that way.
+  workflow_dispatch:
+
 concurrency:
   group: check-${{ github.ref }}
   cancel-in-progress: true
@@ -101,7 +107,20 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:version
 
-      # a page that does not build is a page nobody can read
+      # THE SITE THAT IS PUBLISHED. scripts/build-site.mjs writes all 166 pages
+      # as static HTML - no Vue, no router, no theme - and refuses to finish on
+      # a dead internal link. It takes the bar and the catalogue's two
+      # stylesheets from the published playground when no built checkout is at
+      # hand, which is the case here.
+      - name: build the site
+        if: ${{ !cancelled() }}
+        run: npm run build
+
+      # ...and VitePress's build beside it, which is no longer published. It is
+      # the second opinion the cross-site gate below judges, because that gate
+      # is about VitePress's ROUTER and the published site has none - see the
+      # note on DIST in scripts/check-cross-site.mjs. A page that does not
+      # build is still a page nobody can read.
       - name: vitepress build
         if: ${{ !cancelled() }}
         run: npm run docs:build

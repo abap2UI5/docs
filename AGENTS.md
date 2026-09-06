@@ -45,8 +45,8 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 npm run check          # test + check:version + docs:build + check:cross-site + check:design + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but eleven things in
-it are decidable, and all eleven are decided before a merge:
+A documentation repository has no compiler for its prose, but twelve things in
+it are decidable, and all twelve are decided before a merge:
 
 | | |
 |---|---|
@@ -71,7 +71,7 @@ page layout or the builder name is the likely cause. `check:cross-site` carries
 the same floor twice over: no HTML in `dist` at all, and no cross-site link on
 a site whose bar carries three of them on every page.
 
-The eleven are written out in **three** places, and all three have to name the
+The twelve are written out in **three** places, and all three have to name the
 same set: `package.json`'s `check` script, `.github/workflows/check.yml` for a
 pull request, and `.github/workflows/deploy.yml` before the site is published.
 `check.yml` runs them in the script's order; `deploy.yml` cannot, because it
@@ -358,39 +358,43 @@ deliberately paid above for a first paint that fetches nothing across a
 deployment. If that trade is ever re-opened, re-open it for the four copies of
 the bar, not for the links between the sites; those are one attribute.
 
-## The manual without VitePress, as a prototype
+## The site is written by a script, not rendered by a theme
 
-`scripts/prototype-site.mjs` builds this whole site — all 166 pages, the front
-door included — as static HTML in about six seconds, with no Vue, no router and
-no theme. **Nothing depends on it.** It is wired into no gate, no workflow
-publishes it, and `npm run check` neither runs it nor knows it exists. It is
-here to answer one question with a build rather than an argument: what the
-manual looks like, and what it costs, if its pages are generated the way the
-sample catalogue's are.
+`scripts/build-site.mjs` writes all 166 pages as static HTML in about seven
+seconds — no Vue, no router, no theme — and `npm run build` is what the deploy
+publishes. VitePress is still here and still builds in CI, as a second opinion
+and as the thing `check:cross-site` judges (see the note on `DIST` in that
+script); nothing serves it.
 
-The load-bearing finding is that VitePress's markdown renderer is a plain
-library. `createMarkdownRenderer` produces exactly the HTML the site ships —
-the `:::` blocks, the header anchors, Shiki in both themes, links already
-rewritten to `/docs/x.html` — and `md.render(src, env)` hands back the parsed
-frontmatter in `env`, nested keys and all. So this does not reimplement
-markdown; it replaces the FRAME around it.
+The load-bearing finding is that VitePress's markdown renderer works as a plain
+library. `createMarkdownRenderer` produces exactly the HTML the site used to
+ship — the `:::` blocks, the header anchors, Shiki in both themes, links
+already rewritten to `/docs/x.html` — and `md.render(src, env)` hands back the
+parsed frontmatter in `env`, nested keys and all. So this does not reimplement
+markdown; it replaces the FRAME around it. `docs/.vitepress/config.mjs` is
+still the single source of the sidebar and of the markdown transforms, read by
+both builds.
 
-What it borrows, at build time, from a playground checkout (the same three
-places `check:design` looks — `PLAYGROUND_HOME`, `.playground`, `../playground`):
-the bar, lifted out of a BUILT sample page; `catalogue.css` and `sample.css`;
-and `search.mjs`, which is the same file all 772 sample pages load. The search
-box in this bar is therefore not a second implementation of that one — it is
-that one, mounting into the `[data-search]` slot the borrowed bar already
-carries and reading the index this repository publishes. Measured against a
-sample page with the same index: 12 of 12 panel values identical.
+**What it borrows.** The bar, `catalogue.css`, `sample.css` and `search.mjs`
+come from the playground: from a BUILT checkout when there is one
+(`PLAYGROUND_HOME`, `.playground`, `../playground` — the three `check:design`
+looks in), and otherwise over the network from the published site, which is
+what CI uses. `PLAYGROUND_URL` forces the fetched path, which is how it is
+exercised without waiting for CI to be its first run. The search box is
+therefore not a second implementation of the catalogue's — it is the same file,
+mounting into the `[data-search]` slot the borrowed bar already carries.
 
-What it owns: `scripts/prototype-css/docs.css` (the manual's own layer over the
-catalogue's two) and `scripts/prototype-js/site.js`, which calls the four theme
-modules that were already framework-free — the Run button, the line numbers and
+**What it owns.** `scripts/site-css/docs.css` (the manual's own layer over the
+catalogue's two) and `scripts/site-js/site.js`, which calls the four modules in
+`theme/` that were always framework-free: the Run button, the line numbers and
 their addresses, the link to a selection, the position memory. `theme/index.js`
 was the only Vue in front of them.
 
-Two things to know before touching it:
+**The build is itself a gate.** It refuses to finish on a dead internal link —
+33,275 of them are checked on every run — which is what VitePress's own build
+did for us.
+
+Three things to know before touching it:
 
 - **Borrowing a stylesheet takes its class names with it.** `.brand` is the
   catalogue's mark at the left end of the bar and carries a `::after` divider;
@@ -402,9 +406,15 @@ Two things to know before touching it:
   because a third grid track can only exist by taking width out of the article
   — which is what put the manual's prose on a different vertical from the
   catalogue's.
+- **Every page carries its own head.** Title, description, canonical, and the
+  six og/twitter values, all with absolute urls: a relative `og:url` is
+  silently dropped and the preview falls back to a grey card. That is what
+  `transformPageData` used to do and what `meta( )` does now.
 
-Still missing, and the build says so when it finishes: code-group tabs, and
-prev/next under an article.
+Verified against the VitePress build the day it was switched: 168 pages, ten
+content features each — headings, listings, tables, `:::` blocks, list items,
+Run buttons, code groups, external links — and one difference in 1,680
+comparisons, which is the 404 page gaining the bar.
 
 ## Things that will trip you up
 
