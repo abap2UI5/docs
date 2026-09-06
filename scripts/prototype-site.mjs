@@ -50,20 +50,12 @@ const pages = [];
 })('');
 pages.sort();
 
-/* ---- the frontmatter keys this needs, read line by line --------------
- * No YAML parser is installed and there is no network to fetch one; the two
- * keys read here are scalars on their own line, which a reader of four lines
- * can do. The home page's nested hero is NOT read - see the note at the end. */
-const front = (src) => {
-  const m = src.match(/^---\n([\s\S]*?)\n---\n/);
-  if (!m) return {};
-  const out = {};
-  for (const line of m[1].split('\n')) {
-    const kv = line.match(/^(\w+):\s*(.+?)\s*$/);
-    if (kv) out[kv[1]] = kv[2].replace(/^["']|["']$/g, '');
-  }
-  return out;
-};
+/* ---- the frontmatter ------------------------------------------------
+ * Not parsed here. `md.render(src, env)` fills `env.frontmatter` with the
+ * whole block, nested keys and all - the same @mdit-vue plugin the shipped
+ * site reads it with - and strips it from the HTML on the way. So the home
+ * page's hero, its three tiles and their inline SVGs arrive as objects, which
+ * is what makes the front door buildable here at all. */
 
 /* ---- the frame, borrowed rather than copied --------------------------
  *
@@ -99,11 +91,36 @@ const BAR = (() => {
   if (!m) throw new Error('no bar in the built sample page');
   return m[0]
     .replace(/(?:href|src)="\.\.\/\.\.\//g, (t) => t.slice(0, -6) + 'https://abap2ui5.github.io/playground/')
-    .replace(/ aria-current="page"/g, '')
-    .replace('data-site="docs"', 'data-site="docs" aria-current="page"');
+    .replace(/ aria-current="page"/g, '');
 })();
 
+/* WHICH OF THE FOUR THE READER IS ON. The bar names Home, Documentation,
+ * Samples and Playground, and marks one of them; on this deployment that is
+ * Documentation for every chapter and Home for the front door, which is a
+ * different page of the same site.
+ *
+ * Both marks are made by finding a string in somebody else's markup, so both
+ * throw when it is not there rather than quietly marking nothing: a bar with
+ * nothing in bold reads as a bug in whichever site you came from. */
+const marked = (find) => {
+  if (!BAR.includes(find)) throw new Error(`the borrowed bar has no ${find} to mark`);
+  return BAR.replace(find, `${find} aria-current="page"`);
+};
+const BAR_DOCS = marked('data-site="docs"');
+const BAR_HOME = marked('href="https://abap2ui5.github.io/docs/"');
+
 const urlOf = (page) => BASE + page.replace(/\.md$/, '.html');
+
+/** A link out of the FRONTMATTER, based.
+ *
+ * The renderer rewrites every link in the body and cannot see these: the hero's
+ * three buttons and the three tiles are frontmatter, and `/get_started/about`
+ * arrived in the page as `/get_started/about` - a path that is not on this
+ * deployment at all. An absolute URL is left exactly as written; it is another
+ * site, and one of them carries a `target` that keeps a router off it. */
+const linkOf = (href) => (/^[a-z]+:|^\/\//i.test(href)
+  ? href
+  : BASE + String(href).replace(/^\//, '') + (href.endsWith('/') ? 'index.html' : '.html'));
 const routeOf = (page) => '/' + page.replace(/\.md$/, '').replace(/\/index$/, '');
 
 function sidebarFor(route) {
@@ -140,7 +157,7 @@ function crumbsFor(page) {
     .join('');
 }
 
-const shell = ({ title, body, page, route }) => `<!doctype html>
+const shell = ({ title, main, bar }) => `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -149,11 +166,24 @@ const shell = ({ title, body, page, route }) => `<!doctype html>
 <link rel="stylesheet" href="${BASE}catalogue.css">
 <link rel="stylesheet" href="${BASE}sample.css">
 <link rel="stylesheet" href="${BASE}docs.css">
+<script type="module" src="${BASE}site.js"></script>
+<script type="module" src="${BASE}search.mjs"></script>
 <script>try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 </head>
 <body>
-${BAR}
-<main class="manual">
+${bar}
+${main}
+<footer class="foot"><p>
+  <a href="${BASE}resources/license.html">License</a> |
+  <a href="${BASE}resources/contact.html">Contact</a> —
+  Copyright © 2023-2026 abap2UI5
+</p></footer>
+</body>
+</html>
+`;
+
+/** A chapter: the menu beside it, the crumb line, the article, the outline. */
+const chapter = ({ body, page, route }) => `<main class="manual">
   <input class="side-open" type="checkbox" id="side-open">
   ${sidebarFor(route)}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
@@ -168,35 +198,86 @@ ${BAR}
     </div>
   </div>
   ${outlineFor(body)}
-</main>
-<footer class="foot"><p>
-  <a href="${BASE}resources/license.html">License</a> |
-  <a href="${BASE}resources/contact.html">Contact</a> —
-  Copyright © 2023-2026 abap2UI5
-</p></footer>
-</body>
-</html>
-`;
+</main>`;
+
+/* ---- the front door ---------------------------------------------------
+ *
+ * The one page of this site that is not a chapter: a greeting, the headline,
+ * the tagline, three buttons and three tiles, and then the markdown under the
+ * frontmatter as an ordinary article. Every value it is drawn with - 20/28 for
+ * the greeting, 38/46 for the headline, 17/26 for the tagline, 13 on a 34px
+ * button, a 15/22 tile title over 13/22 of detail - is the one the page
+ * carries today; what changes is the container. It was 1152 wide starting at
+ * 144, which was VitePress's number, and it is the catalogue's 1160-with-20
+ * here, so the front door opens on the same vertical as every chapter behind
+ * it and as every one of the 772 sample pages.
+ *
+ * A link that leaves this deployment keeps `target="_self"` from the
+ * frontmatter, which is what holds a router off a neighbouring site; nothing
+ * here reads it, but the attribute is checked by `check:cross-site` and is
+ * part of what the page means. */
+const tile = (f) => `<a class="tile" href="${esc(linkOf(f.link))}"${f.target ? ` target="${esc(f.target)}"` : ''}>
+      <span class="tile-icon" aria-hidden="true">${f.icon || ''}</span>
+      <span class="tile-title">${esc(f.title)}</span>
+      <span class="tile-details">${esc(f.details)}</span>
+    </a>`;
+
+const home = ({ body, fm }) => {
+  const h = fm.hero || {};
+  const img = h.image || {};
+  return `<main class="home">
+  <section class="hero">
+    <div class="hero-main">
+      ${h.name ? `<p class="hero-name">${esc(h.name)}</p>` : ''}
+      ${h.text ? `<h1 class="hero-text">${esc(h.text)}</h1>` : ''}
+      ${h.tagline ? `<p class="hero-tagline">${esc(h.tagline)}</p>` : ''}
+      <div class="hero-actions">${(h.actions || []).map((a) => `
+        <a class="hero-action ${a.theme === 'brand' ? 'primary' : 'plain'}" href="${esc(linkOf(a.link))}"${a.target ? ` target="${esc(a.target)}"` : ''}>${esc(a.text)}</a>`).join('')}
+      </div>
+    </div>
+    ${img.src ? `<div class="hero-image"><img src="${esc(BASE + String(img.src).replace(/^\//, ''))}"
+         alt="${esc(img.alt || '')}" width="200"></div>` : ''}
+  </section>
+  <section class="tiles">${(fm.features || []).map(tile).join('')}
+  </section>
+  <div class="vp-doc">${body}</div>
+</main>`;
+};
 
 /* ---- run ------------------------------------------------------------- */
 const md = await createMarkdownRenderer(DOCS, config.markdown || {}, BASE);
 fs.rmSync(OUT, { recursive: true, force: true });
 
-let written = 0, headings = 0, blocks = 0, skipped = [];
+let written = 0, headings = 0, blocks = 0;
 for (const page of pages) {
   const src = fs.readFileSync(path.join(DOCS, page), 'utf8');
-  const fm = front(src);
-  if (fm.layout === 'home') { skipped.push(page); continue; }
-
-  let body = md.render(src.replace(/^---\n[\s\S]*?\n---\n/, '')).replace(/ v-pre=""/g, '');
+  const env = {};
+  let body = md.render(src, env).replace(/ v-pre=""/g, '');
+  const fm = env.frontmatter || {};
   /* The renderer puts the base in front of a LINK but not in front of an
      asset: VitePress rewrites those in a Vite step this build does not have,
      so `/get_started/image-2.png` arrives without the `/docs`. One rewrite,
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
+  /* And a page written by hand as `/docs/resources/addons` gets its `.html`.
+     VitePress resolves that in the router, and GitHub Pages happens to resolve
+     it too, by trying `<path>.html` - so it was never broken on the site and
+     is broken everywhere else, which is the kind of link that goes wrong on
+     the day the host changes. A file that exists is named. */
+  body = body.replace(/href="(\/docs\/[^"#?]*)([^"]*)"/g, (all, at, rest) => {
+    const last = at.split('/').pop();
+    if (at.endsWith('/')) return `href="${at}index.html${rest}"`;
+    return last.includes('.') ? all : `href="${at}.html${rest}"`;
+  });
   const title = fm.title || (src.match(/^#\s+(.+)$/m) || [, page])[1];
-  const html = shell({ title, body, page, route: routeOf(page) });
+  const route = routeOf(page);
+  const isHome = fm.layout === 'home';
+  const html = shell({
+    title,
+    bar: isHome ? BAR_HOME : BAR_DOCS,
+    main: isHome ? home({ body, fm }) : chapter({ body, page, route }),
+  });
 
   const to = path.join(OUT, 'docs', page.replace(/\.md$/, '.html'));
   fs.mkdirSync(path.dirname(to), { recursive: true });
@@ -220,19 +301,26 @@ const copyInto = (from, to) => {
 /* publicDir goes to the root of the site, which is where llms.txt points and
    where every <img src="/docs/get_started/image-2.png"> resolves. */
 const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
-/* The catalogue's two stylesheets come from its build; only the manual's own
-   layer lives in this repository. */
-for (const f of ['catalogue.css', 'sample.css']) fs.copyFileSync(path.join(built, f), path.join(OUT, 'docs', f));
+/* The catalogue's two stylesheets and its search box come from its build; only
+   the manual's own layer and its own entry module live in this repository.
+   search.mjs is the SAME FILE the 772 sample pages load - the box in this bar
+   is not a second implementation of that one, it is that one, mounting into
+   the `[data-search]` slot the borrowed bar already carries and reading the
+   index this repository publishes. */
+for (const f of ['catalogue.css', 'sample.css', 'search.mjs']) fs.copyFileSync(path.join(built, f), path.join(OUT, 'docs', f));
 fs.copyFileSync(path.join(ROOT, 'scripts', 'prototype-css', 'docs.css'), path.join(OUT, 'docs', 'docs.css'));
+fs.copyFileSync(path.join(ROOT, 'scripts', 'prototype-js', 'site.js'), path.join(OUT, 'docs', 'site.js'));
+/* The behaviour a page has beyond its markup was already framework-free in
+   the theme - the Run button, the line numbers and their addresses, the link
+   to a selection, the position memory between the four sites. `index.js` was
+   the only Vue in front of them; these are the modules themselves. */
+const THEME = path.join(DOCS, '.vitepress', 'theme');
+const modules = ['playground.js', 'code-lines.js', 'link-to-selection.js', 'text-fragment.js', 'site-memory.js'];
+for (const f of modules) fs.copyFileSync(path.join(THEME, f), path.join(OUT, 'docs', f));
 
 const seconds = ((Date.now() - started) / 1000).toFixed(1);
 console.log(`${written} pages, ${headings} sections, ${blocks} code blocks, ${assets} files beside them — ${seconds}s`);
 console.log(`   ${OUT}/docs/`);
-if (skipped.length) console.log(`\nNOT BUILT: ${skipped.join(', ')} — the home page is a hero and a grid of tiles,`);
-if (skipped.length) console.log('   which is a design of its own and not what this prototype is asking about.');
-console.log('\nAlso still missing, on purpose:');
-console.log('   the search box (the module exists, it is not wired in)');
+console.log('\nStill missing, on purpose:');
 console.log('   code-group tabs (the renderer emits them, the tabs need a few lines of JS)');
-console.log('   line numbers in listings (theme/code-lines.js is standalone and would drop straight in)');
-console.log('   the position memory between the four sites (a plain inline script on catalogue pages)');
 console.log('   prev/next under an article, and a dead-link check the build does today');

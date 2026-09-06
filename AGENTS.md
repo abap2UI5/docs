@@ -337,6 +337,54 @@ deliberately paid above for a first paint that fetches nothing across a
 deployment. If that trade is ever re-opened, re-open it for the four copies of
 the bar, not for the links between the sites; those are one attribute.
 
+## The manual without VitePress, as a prototype
+
+`scripts/prototype-site.mjs` builds this whole site — all 166 pages, the front
+door included — as static HTML in about six seconds, with no Vue, no router and
+no theme. **Nothing depends on it.** It is wired into no gate, no workflow
+publishes it, and `npm run check` neither runs it nor knows it exists. It is
+here to answer one question with a build rather than an argument: what the
+manual looks like, and what it costs, if its pages are generated the way the
+sample catalogue's are.
+
+The load-bearing finding is that VitePress's markdown renderer is a plain
+library. `createMarkdownRenderer` produces exactly the HTML the site ships —
+the `:::` blocks, the header anchors, Shiki in both themes, links already
+rewritten to `/docs/x.html` — and `md.render(src, env)` hands back the parsed
+frontmatter in `env`, nested keys and all. So this does not reimplement
+markdown; it replaces the FRAME around it.
+
+What it borrows, at build time, from a playground checkout (the same three
+places `check:design` looks — `PLAYGROUND_HOME`, `.playground`, `../playground`):
+the bar, lifted out of a BUILT sample page; `catalogue.css` and `sample.css`;
+and `search.mjs`, which is the same file all 772 sample pages load. The search
+box in this bar is therefore not a second implementation of that one — it is
+that one, mounting into the `[data-search]` slot the borrowed bar already
+carries and reading the index this repository publishes. Measured against a
+sample page with the same index: 12 of 12 panel values identical.
+
+What it owns: `scripts/prototype-css/docs.css` (the manual's own layer over the
+catalogue's two) and `scripts/prototype-js/site.js`, which calls the four theme
+modules that were already framework-free — the Run button, the line numbers and
+their addresses, the link to a selection, the position memory. `theme/index.js`
+was the only Vue in front of them.
+
+Two things to know before touching it:
+
+- **Borrowing a stylesheet takes its class names with it.** `.brand` is the
+  catalogue's mark at the left end of the bar and carries a `::after` divider;
+  a hero button that used the same class was 17px too wide until that was
+  found. Check a new class name against `catalogue.css` and `sample.css`.
+- **The columns are the sample page's, and the menu is out of flow.** `.manual`
+  is `.sample`: a 1160 container, an article, 40 of gap, 225 of outline. The
+  chapter menu stands in the margin from 1680px up and is a drawer below it,
+  because a third grid track can only exist by taking width out of the article
+  — which is what put the manual's prose on a different vertical from the
+  catalogue's.
+
+Still missing, and the build says so when it finishes: code-group tabs, and
+prev/next under an article.
+
 ## Things that will trip you up
 
 - **The API gates judge the site against `main`, not against a release.**

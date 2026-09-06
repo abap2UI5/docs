@@ -299,3 +299,189 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   background: currentColor; clip-path: polygon(0 0, 0 100%, 100% 50%);
 }
 .vp-doc .a2ui5-play-run:hover { background: var(--bg); }
+
+/* ---- the front door ---------------------------------------------------
+ *
+ * The home page, drawn with the numbers it already carries. Every one of them
+ * was measured off the running site rather than read out of the theme, because
+ * the theme states them at full size and then restates the whole page at nine
+ * tenths; what a reader sees is the second set, and that is what is below —
+ * 20/28 for the greeting, 38/46 for the headline, 17/26 for the tagline, 13 on
+ * a 34px button, a 15/22 tile title over 13/22 of detail, a 21px mark.
+ *
+ * THE ONE THING THAT CHANGES IS THE CONTAINER. It was VitePress's: 1152 wide,
+ * opening at 144 on a 1440 window. Here it is the catalogue's 1160-with-20,
+ * so the front door opens on the same vertical as every chapter behind it and
+ * as all 772 sample pages — 160 rather than 144, sixteen pixels, and the
+ * reason every other number in this file exists.
+ */
+.home {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 56px 20px 48px;
+
+  /* THIS PAGE IS RED. Everywhere else a link is blue, and the bar above stays
+     blue because four documents wear the same one - but the front door is the
+     mark's page. The mark is a red circle 200px across at the top of it, and a
+     blue headline and a blue button under a red mark are two brands on one
+     screen. Scoped to this element exactly as the theme scopes it to `.VPHome`,
+     so `--accent` keeps its own value everywhere else - the value four bars
+     share and `check:design` holds. The red itself has no name in the
+     catalogue's stylesheet, because the catalogue has no page that wears it. */
+  --a2ui5-red: #d03c4a;
+  --accent: var(--a2ui5-red);
+}
+:root[data-theme="dark"] .home { --a2ui5-red: #e8697a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .home { --a2ui5-red: #e8697a; }
+}
+
+/* The headline's half is 592 and the mark is centred in what is left, which is
+   why the logo lands on the same pixel as it does today: two containers with
+   the same centre put anything centred in the same place. */
+.hero { display: flex; align-items: center; }
+.hero-main { flex: 0 1 592px; min-width: 0; }
+.hero-name,
+.hero-text,
+.hero-tagline { max-width: 576px; }
+.hero-name {
+  margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; color: var(--accent);
+}
+/* The headline is the only thing on the page set past twice the reader's own
+   size, and the tracking rather than the weight holds the line together. */
+.hero-text {
+  margin: 0; font-size: 38px; line-height: 46px; font-weight: 600; letter-spacing: -.02em;
+}
+.hero-tagline {
+  margin: 0; padding-top: 12px;
+  font-size: 17px; line-height: 26px; font-weight: 500; color: var(--fg-dim);
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 29px; }
+.hero-action {
+  padding: 0 18px;
+  border: 1px solid transparent; border-radius: 6px;
+  font-size: 13px; line-height: 34px; font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+}
+/* Only the first of the three is the one the page wants; the other two are a
+   hairline, not a second filled block.
+   NOT `.brand`: that is the catalogue's own class for the mark at the left end
+   of the bar, and it carries a `::after` divider. Borrowing a stylesheet means
+   its class names are taken - this one cost 17px of button before it was
+   found, which is the width of that divider. */
+.hero-action.primary { background: var(--accent); color: var(--accent-fg); }
+.hero-action.plain { border-color: var(--line); color: var(--fg); }
+.hero-action.plain:hover { border-color: var(--accent); color: var(--accent); }
+/* 32px up and 32px left of where centring puts it, which is where the theme
+   has always drawn it. */
+.hero-image { flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; transform: translate(-32px, -32px); }
+.hero-image img { display: block; width: 200px; height: auto; border: 0; border-radius: 0; }
+
+/* The three places the bar names, in the order the bar names them. */
+.tiles {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  /* 44 rather than 36: the theme pads each card by 8 inside the row, so the
+     row opens 8 above the card. */
+  margin-top: 44px;
+}
+.tile {
+  display: block; padding: 22px;
+  border: 1px solid var(--line); border-radius: 6px;
+  color: var(--fg); text-decoration: none;
+}
+.tile:hover { border-color: var(--accent); }
+.tile-icon { display: block; margin-bottom: 12px; color: var(--accent); }
+.tile-icon svg { display: block; width: 21px; height: 21px; }
+.tile-title { display: block; font-size: 15px; line-height: 22px; font-weight: 600; }
+/* Three cards that are links and look like panels are three doors with no
+   handle. One glyph on all of them, the same one the tiles' own row uses. */
+.tile-title::after {
+  content: "↗"; display: inline-block; margin-left: 6px;
+  color: var(--accent); font-size: 14px; font-weight: 400;
+  transition: transform .25s;
+}
+.tile:hover .tile-title::after { transform: translate(2px, -2px); }
+.tile-details {
+  display: block; padding-top: 3px;
+  font-size: 13px; line-height: 22px; font-weight: 500; color: var(--fg-dim);
+}
+
+/* Then the markdown under the frontmatter, as an ordinary article. The first
+   heading keeps its rule and loses its margin: the 24px of air above it is the
+   gap after the cards, not a heading's own. */
+/* 32 from the bottom of the last card, which is the gap the theme leaves; it
+   writes it as 24 under a row that pads its cards by 8. */
+.home .vp-doc { margin-top: 32px; }
+.home .vp-doc > :first-child { margin-top: 0; }
+
+@media (max-width: 860px) {
+  .hero { display: block; }
+  .hero-image { display: none; }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- the two rows of cards the home page writes by hand ---------------
+ *
+ * `<div class="a2ui5-out">` in docs/index.md: the three places around the
+ * framework, and the three ways into the project. It is the manual's own
+ * markup and its own rules - the values here are style.css's, at the nine
+ * tenths that file states for the home page, with its variables read back to
+ * the ones the catalogue's stylesheet declares (`--vp-c-divider` is `--line`,
+ * `--vp-c-text-2` is `--fg-dim`, `--a2ui5-c-link` is `--accent`, which on this
+ * page is the red above).
+ *
+ * A copy while both stylesheets exist. When VitePress goes, style.css goes
+ * with it and this is where the rules live. */
+.a2ui5-out {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  margin: 16px 0 0;
+}
+/* One breakpoint, and it is the tile row's: two rows that changed at different
+   widths spent the widths in between disagreeing - three cards over two. */
+@media (min-width: 768px) {
+  .a2ui5-out { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.a2ui5-out .a2ui5-out-card {
+  display: flex; flex-direction: column; align-items: flex-start; height: 100%;
+  /* Outlined, not tinted. The tint used to mean "this leaves the site", and on
+     a row where two of three cards are pages of this manual a reader reads
+     that as two kinds of thing rather than as one row of places to go. What
+     tells you whether a card leaves is the arrow, which is readable. */
+  padding: 22px;
+  border: 1px solid var(--line); border-radius: 6px;
+  background: none; color: var(--fg); text-decoration: none;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+/* The card is the answer to "is this a link", so the text stays as it is and
+   the card moves instead. */
+.a2ui5-out .a2ui5-out-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
+  color: var(--fg); text-decoration: none;
+}
+.a2ui5-out .a2ui5-out-icon { display: block; margin-bottom: 12px; color: var(--accent); }
+.a2ui5-out .a2ui5-out-icon svg { display: block; width: 20px; height: 20px; }
+.a2ui5-out .a2ui5-out-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 15px; line-height: 22px; font-weight: 600;
+}
+.a2ui5-out .a2ui5-out-title::after {
+  content: "↗"; color: var(--accent); font-size: 14px; font-weight: 400;
+  transition: transform .25s;
+}
+.a2ui5-out .a2ui5-out-card:hover .a2ui5-out-title::after { transform: translate(2px, -2px); }
+.a2ui5-out .a2ui5-out-details {
+  display: block; padding-top: 7px;
+  font-size: 13px; line-height: 22px; font-weight: 500; color: var(--fg-dim);
+}
+
+/* An icon in front of a link, behaving like the glyph it replaced: the size
+   and colour of the text around it, on its baseline. */
+.vp-doc .a2ui5-mark {
+  display: inline-block; width: 1.05em; height: 1.05em;
+  vertical-align: -.16em; color: var(--fg);
+}
