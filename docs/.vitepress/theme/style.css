@@ -486,8 +486,16 @@
  */
 @media (min-width: 1440px) {
   .Layout .VPDoc.has-aside .vp-doc div[class*='language-'] {
-    margin-left: -56px;
-    margin-right: -56px;
+    /* ALL OF IT ON THE RIGHT. It was 56px each side, which centred the box on
+       the column and put its left edge 56px outside the paragraph above it -
+       two left edges down a page that has one column of text, and the tab
+       strip of a `code-group` sitting inboard of the block it belongs to.
+       A listing reads down its left edge, and that edge is the text's.
+       78 rather than 112: the room on the right is what there is between the
+       column and the outline - 94px measured at 1440 - less a cushion, and
+       the left side is no longer there to borrow from. */
+    margin-left: 0;
+    margin-right: -78px;
   }
 }
 

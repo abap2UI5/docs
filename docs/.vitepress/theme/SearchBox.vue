@@ -90,6 +90,14 @@ const counts = computed(() => {
  * are checked against the real index - the smallest of them, `chart`, returns
  * sixteen hits across three of the four areas. */
 const SUGGESTIONS = ['table', 'dialog', 'value help', 'upload', 'chart', 'navigation', 'binding', 'launchpad'];
+
+/* ⌘ on an Apple keyboard and Ctrl on every other one. The key row said ⌘K to
+ * everybody, which is not a shorter way of writing Ctrl - it is an instruction
+ * that does not work, given to the readers who are not on a Mac. The handler
+ * has always taken either (`metaKey || ctrlKey`); only the label was wrong. */
+const APPLE = typeof navigator !== 'undefined'
+  && /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent || '');
+const META = APPLE ? '⌘' : 'Ctrl';
 function suggest(word) {
   query.value = word;
   input.value?.focus();
@@ -130,6 +138,27 @@ function go(hit) {
   location.assign(href);
 }
 
+/**
+ * The arrow keys move the mark AND bring the row into view.
+ *
+ * They moved the mark alone, and the list did not follow: eight rows a group
+ * over four groups is more than a panel holds, so walking down with the
+ * keyboard marked rows nobody could see and the reader was pressing Enter on
+ * something off the bottom of the box.
+ *
+ * `block: 'nearest'` rather than a centring scroll: it moves the list by the
+ * one row that is needed and leaves it alone while the mark is already on
+ * screen, which is what makes a long walk down read as a list scrolling rather
+ * than as a list jumping. Only from HERE - the mouse sets `active` too, and a
+ * list that scrolled under the pointer would move the row out from under it.
+ */
+function move(step) {
+  active.value = Math.min(Math.max(active.value + step, 0), rows.value.length - 1);
+  nextTick(() => {
+    document.querySelector('.a2ui5-search-hit.active')?.scrollIntoView({ block: 'nearest' });
+  });
+}
+
 function onKey(e) {
   if (!open.value) {
     /* Two ways in, both what a reader of technical documentation already has
@@ -141,8 +170,8 @@ function onKey(e) {
     return;
   }
   if (e.key === 'Escape') { e.preventDefault(); hide(); return; }
-  if (e.key === 'ArrowDown') { e.preventDefault(); active.value = Math.min(active.value + 1, rows.value.length - 1); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); active.value = Math.max(active.value - 1, 0); }
+  if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
   else if (e.key === 'Enter') { e.preventDefault(); go(rows.value[active.value]); }
 }
 
@@ -263,7 +292,7 @@ const parts = (text) => highlight(text, query.value);
           <span><kbd>↑</kbd><kbd>↓</kbd> to move</span>
           <span><kbd>↵</kbd> to open</span>
           <span><kbd>esc</kbd> to close</span>
-          <span class="a2ui5-search-keys-end"><kbd>/</kbd> or <kbd>⌘</kbd><kbd>K</kbd> from anywhere</span>
+          <span class="a2ui5-search-keys-end"><kbd>/</kbd> or <kbd>{{ META }}</kbd><kbd>K</kbd> from anywhere</span>
         </div>
       </div>
     </div>
