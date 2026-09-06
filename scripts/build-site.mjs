@@ -137,9 +137,21 @@ const frame = await (async () => {
 const BAR = (() => {
   const m = frame.page.match(/<header class="bar">[\s\S]*?<\/header>/);
   if (!m) throw new Error(`no bar in the sample page from ${frame.from}`);
-  return m[0]
+  const bar = m[0]
     .replace(/(?:href|src)="\.\.\/\.\.\//g, (t) => t.slice(0, -6) + `${PUBLISHED}/`)
     .replace(/ aria-current="page"/g, '');
+  /* THE SAMPLES ITEM HAS TO SAY WHICH SECTION IT RESTORES.
+   *
+   * The bar is lifted from a per-sample page, where Samples is the section the
+   * reader is already IN - so it carries no `data-site`, because there is
+   * nothing to come back to. Here it is one of the three places you leave for,
+   * and without the attribute site.js has nothing to lift: pressing Samples
+   * opened the front of the catalogue however deep the reader had been. The
+   * `data-scope` is what the stored value is checked against, exactly as the
+   * Documentation item over there declares its own. */
+  const samples = `href="${PUBLISHED}/samples/"`;
+  if (!bar.includes(samples)) throw new Error(`the borrowed bar has no ${samples} to point at the catalogue`);
+  return bar.replace(samples, `${samples} data-site="samples" data-scope="${PUBLISHED}/samples/"`);
 })();
 
 /* WHICH OF THE FOUR THE READER IS ON. The bar names Home, Documentation,
@@ -175,24 +187,51 @@ function sidebarFor(route) {
   const same = (link) => link && link.replace(/\/$/, '') === route.replace(/\/$/, '');
   const holds = (i) => same(i.link) || (i.items || []).some(holds);
   const tree = (items, level) => items.map((i) => {
-    const on = same(i.link) ? ' class="here" aria-current="page"' : '';
+    /* ONE ROW IS MARKED, and it is the deepest one that names this page. A
+       section often points at its own first page - Model and Binding are the
+       same link - and marking both painted two rows in the accent, which is
+       one more than the colour means. */
+    const on = same(i.link) && !(i.items || []).some(holds) ? ' class="here" aria-current="page"' : '';
     const href = i.link ? `${BASE.slice(0, -1)}${i.link}${i.link.endsWith('/') ? 'index.html' : '.html'}` : null;
     const label = href ? `<a href="${esc(href)}"${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
     if (!i.items) return `<div class="side-item level-${level}">${label}</div>`;
-    return `<details class="side-group level-${level}"${holds(i) ? ' open' : ''}>`
+    return `<details class="side-group level-${level}" data-key="${esc(i.link || i.text)}"${holds(i) ? ' open' : ''}>`
       + `<summary><span class="side-caret" aria-hidden="true"></span>${label}</summary>`
       + `<div class="side-items">${tree(i.items, level + 1)}</div></details>`;
   }).join('');
   return `<nav class="sidebar" aria-label="Documentation">${tree(config.themeConfig.sidebar, 0)}</nav>`;
 }
 
+/* WHICH HEADINGS THE OUTLINE LISTS is the theme's setting, not a number here:
+ * `themeConfig.outline` is [2, 6] on this site, and a page whose sections are
+ * h3 under one h2 - which several chapters of the cookbook are - had an
+ * outline of one row and therefore none at all. A sample page's outline is one
+ * level deep because its headings are; the manual's is not.
+ *
+ * The rows are flat in the markup, as the catalogue's are, and the depth is a
+ * class the stylesheet indents. */
+const LEVELS = (() => {
+  const o = config.themeConfig.outline;
+  if (o === 'deep') return [2, 6];
+  if (typeof o === 'number') return [o, o];
+  if (Array.isArray(o)) return [o[0], o[1]];
+  return [2, 2];
+})();
+
 function outlineFor(html) {
-  const rows = [...html.matchAll(/<h2 id="([^"]+)"[^>]*>([\s\S]*?)<a class="header-anchor"/g)]
-    .map((m) => ({ id: m[1], text: m[2].replace(/<[^>]*>/g, '').trim() }));
+  const rows = [...html.matchAll(/<h([2-6]) id="([^"]+)"[^>]*>([\s\S]*?)<a class="header-anchor"/g)]
+    .map((m) => ({ level: Number(m[1]), id: m[2], text: m[3].replace(/<[^>]*>/g, '').trim() }))
+    .filter((r) => r.level >= LEVELS[0] && r.level <= LEVELS[1]);
   if (rows.length < 2) return '';
+  /* The indent is relative to the SHALLOWEST heading on this page, not to h2.
+     Several chapters put their sections in h3 under a single h2, and measured
+     against h2 every row of those outlines started 13px in - an indent under
+     nothing, which reads as a mistake rather than as a level. Where nothing is
+     nested, the column is flat and identical to a sample page's. */
+  const top = Math.min(...rows.map((r) => r.level));
   return `<aside class="outline" aria-label="On this page">
     <div class="outline-head">On this page</div>
-    <nav>${rows.map((r) => `<a href="#${r.id}">${esc(r.text)}</a>`).join('')}</nav>
+    <nav>${rows.map((r) => `<a href="#${r.id}"${r.level > top ? ` class="lvl-${r.level - top + 2}"` : ''}>${esc(r.text)}</a>`).join('')}</nav>
   </aside>`;
 }
 
@@ -368,6 +407,56 @@ const home = ({ body, fm }) => {
 </main>`;
 };
 
+/* ---- the listings, in the colours a sample page prints ABAP in ---------
+ *
+ * Shiki hands every token an inline `--shiki-light` / `--shiki-dark` pair from
+ * the github themes, which is a scheme of its own: functions purple, types
+ * blue, seven colours in all. A per-sample page over in the catalogue prints
+ * the SAME ABAP in four - keywords red, literals green, numbers purple,
+ * comments grey and italic, everything else the body colour - written into the
+ * markup at build time by tools/abap-highlight.mjs and coloured by
+ * `catalogue.css`, which this site already loads.
+ *
+ * So the pair is swapped for the class the catalogue styles. The colours then
+ * come from ONE place for both documents, light and dark, and this file states
+ * no hex at all.
+ *
+ * Three of the seven are decided by the token TEXT rather than by its colour,
+ * because github gives `constant` to three things the catalogue tells apart:
+ * `42` is a number, `|` and `{` in a string template are part of the string,
+ * and `string` after TYPE is an ordinary word. Verified against the
+ * catalogue's own highlighter, run over the same lines.
+ *
+ * An unknown colour STOPS THE BUILD. A Shiki release that adds one would
+ * otherwise silently print that token in the body colour, and nobody would
+ * look at a listing again to notice. */
+const INK = {
+  '#D73A49': () => 'code-key',      // keywords
+  '#032F62': () => 'code-string',   // string literals
+  '#6A737D': () => 'code-comment',  // comments
+  '#24292E': () => '',              // the body colour: no class at all
+  '#6F42C1': () => '',              // a class or method NAME is plain over there
+  '#22863A': () => '',              // an XML tag name, likewise
+  '#E36209': () => '',              // a parameter, likewise
+  '#005CC5': (text) => {
+    const t = text.trim();
+    if (!t) return '';
+    if (/^[0-9]+(\.[0-9]+)?$/.test(t)) return 'code-number';
+    if (/^[|{}]+$/.test(t)) return 'code-string';   // a string template's own marks
+    return '';
+  },
+};
+
+const recolour = (html) => html.replace(
+  /<span style="--shiki-light:(#[0-9A-F]{6});--shiki-dark:#[0-9A-F]{6}">([^<]*)<\/span>/g,
+  (all, light, text) => {
+    const of = INK[light];
+    if (!of) throw new Error(`the highlighter used ${light}, which no catalogue colour is named for`);
+    const cls = of(text);
+    return cls ? `<span class="${cls}">${text}</span>` : text;
+  },
+);
+
 /* ---- run ------------------------------------------------------------- */
 const md = await createMarkdownRenderer(DOCS, config.markdown || {}, BASE);
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -384,6 +473,7 @@ for (const page of pages) {
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
+  body = recolour(body);
   /* And a page written by hand as `/docs/resources/addons` gets its `.html`.
      VitePress resolves that in the router, and GitHub Pages happens to resolve
      it too, by trying `<path>.html` - so it was never broken on the site and

@@ -172,7 +172,14 @@
 .sidebar > .side-group > summary,
 .sidebar > .side-item > a,
 .sidebar > .side-item > span { color: var(--fg); font-weight: 600; padding-top: 14px; }
-.sidebar > .side-group > summary a { color: inherit; font-weight: inherit; }
+/* A LINK IN THE MENU IS NOT A LINK-COLOURED LINK. Every row here is one, so
+   colouring them the accent paints the whole column blue and the one you are
+   on stops standing out - which is the only thing the accent is for in this
+   list. The rule used to name only the top level (`.sidebar > .side-group`),
+   so `Cookbook` was quiet and `Model`, `Binding` and every other nested
+   section was not. Any depth now; `a.here` above is the exception. */
+.sidebar summary a,
+.sidebar summary a:hover { color: inherit; font-weight: inherit; }
 
 /* The triangle: 90 degrees when shut, pointing down when open, and it is the
    marker the browser would otherwise draw for us. */
@@ -238,11 +245,15 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   color: var(--fg-dim); font-size: 11px;
 }
 .vp-doc div[class*="language-"] .copy { display: none; }
-.vp-doc .shiki span { color: var(--shiki-light); }
-:root[data-theme="dark"] .vp-doc .shiki span { color: var(--shiki-dark); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .vp-doc .shiki span { color: var(--shiki-dark); }
-}
+/* NOTHING HERE COLOURS A TOKEN. The three rules that used to - reading the
+   `--shiki-light` / `--shiki-dark` pair Shiki writes onto every span - are
+   gone with the pairs themselves: build-site.mjs swaps them for the classes
+   the catalogue styles (`code-key`, `code-string`, `code-number`,
+   `code-comment` in sample.css, over the three values catalogue.css declares).
+   One scheme for the manual and the 772 sample pages, in one place, and this
+   file states no colour at all. They also have to be gone rather than merely
+   unused: `.vp-doc .shiki span` outranks a bare `.code-key`, and with the
+   variable no longer set every listing was drawn in the body colour. */
 
 /* ---- the ::: blocks -------------------------------------------------- */
 .vp-doc .custom-block {
@@ -529,3 +540,29 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .vp-code-group .tabs input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: -2px; }
 .vp-code-group .blocks > div[class*="language-"] { display: none; margin: 0; border-radius: 0 0 8px 8px; }
 .vp-code-group .blocks > div[class*="language-"].active { display: block; }
+
+/* A row of the outline one level deeper than the last. 13px, which is the
+   indent the theme used and which has no counterpart to copy from a sample
+   page: a sample's headings are all h2, so its outline is one level deep and
+   the manual's is not. */
+.manual .outline nav a.lvl-3 { padding-left: 13px; }
+.manual .outline nav a.lvl-4 { padding-left: 26px; }
+.manual .outline nav a.lvl-5 { padding-left: 39px; }
+.manual .outline nav a.lvl-6 { padding-left: 52px; }
+
+/* ---- two things the article's own rules were taking away ---------------
+ *
+ * `code` carries `font-family: monospace` from the browser itself, which
+ * OVERRIDES what it would inherit - so a listing was set in whatever the
+ * browser calls monospace rather than in the stack the four documents share.
+ * `.source-body code { font: inherit }` is how a sample page answers the same
+ * thing, and this is that line.
+ *
+ * And the line numbers: `.vp-doc a` colours every link in the article the
+ * accent, which outranks `.ln > a` in sample.css by nothing at all - the two
+ * are the same weight and this file loads second. A gutter of blue numbers
+ * beside the code is a column of links, which is what they are, but the point
+ * of a line number is to be read past. */
+.vp-doc pre code { font: inherit; background: inherit; }
+.vp-doc .ln > a { color: var(--fg-dim); }
+.vp-doc .ln > a:hover { color: var(--accent); }
