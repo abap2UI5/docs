@@ -480,7 +480,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
     <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
-    <p class="crumbs">${crumbsFor(page)}</p>
+    <nav class="crumbs" aria-label="Breadcrumb">${crumbsFor(page)}</nav>
     <div class="vp-doc">${body}</div>
     <div class="doc-foot">
       <a class="edit" href="${esc((config.themeConfig.editLink?.pattern || '').replace(':path', page))}"
@@ -861,7 +861,7 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
     <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
-    <p class="crumbs"><a href="${BASE}get_started/about.html">Documentation</a></p>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="${BASE}get_started/about.html">Documentation</a></nav>
     <div class="vp-doc">
       <h1>This page is not here</h1>
       <p>The address does not name a page of this manual. It may have been
