@@ -23,7 +23,12 @@ hero:
   # before - the two lines are a welcome and an answer, in that order.
   name: Welcome to abap2UI5
   text: Build UI5 Apps Purely in ABAP
-  tagline: "One ABAP class is one UI5 app. No JavaScript, no OData service, no RAP, no frontend project.\nInstall it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
+  # ONE PARAGRAPH, NO HARD BREAK. The `\n` that used to stand after "no
+  # frontend project." broke the tagline at a point the line length had nothing
+  # to do with, so the first line stopped two words short of the measure and
+  # the second started under a ragged edge. Two sentences that belong together
+  # wrap where the column says they wrap.
+  tagline: "One ABAP class is one UI5 app. No JavaScript, no OData service, no RAP, no frontend project. Install it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
     src: /logo.png
     alt: abap2UI5 Logo

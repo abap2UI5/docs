@@ -271,11 +271,20 @@
  * prose without cutting the code in half.
  */
 
-/* Section headings. The top rule stays: on a long cookbook page it is what
- * lets the eye find the next section while scrolling. Its padding does not. */
+/* Section headings, at the catalogue's h2: 15px, bold, on the 1.55 that
+ * carries everything else there (`h2 { font-size: 15px }` in
+ * tools/sample-pages.mjs). It was 16px/600 here, and 600 against 700 is the
+ * difference a reader stepping between the two documents actually sees - a
+ * heading that looks lighter on one side of the bar than the other.
+ *
+ * WEIGHT IS WHAT SEPARATES THE LEVELS NOW, and it can be, because the top
+ * rule stays: on a long cookbook page that hairline is what lets the eye find
+ * the next section while scrolling, and an h3 has none. Its padding does not
+ * stay. */
 .vp-doc h2 {
-  font-size: 16px;
-  line-height: 22px;
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 700;
   margin: 32px 0 12px;
   padding-top: 12px;
   letter-spacing: -0.01em;
@@ -287,20 +296,29 @@
   top: 12px;
 }
 
+/* The catalogue's pages have two heading levels and this manual has four, so
+ * these two are the ones with no value to copy. They keep the step they had -
+ * h3 at the section heading's size and h4 one below it - and take the 1.55 and
+ * the 600 that now separate them from an h2 which is 700 and ruled. */
 .vp-doc h3 {
   font-size: 15px;
-  line-height: 21px;
+  line-height: 1.55;
+  font-weight: 600;
   margin: 24px 0 0;
 }
 
 .vp-doc h4 {
   font-size: 14px;
-  line-height: 20px;
+  line-height: 1.55;
+  font-weight: 600;
   margin: 20px 0 0;
 }
 
-/* The page title, at the size a sample's own page sets its title in over in
- * the catalogue (26px/1.25, tools/sample-pages.mjs). It went the other way
+/* The page title, exactly as a sample's own page sets its title over in the
+ * catalogue: `26px, line-height 1.25` and the browser's own bold for a
+ * heading, which is 700 (`.sample h1` in tools/sample-pages.mjs). Both of the
+ * other two were off by a hair and the hair showed - VitePress puts every
+ * heading at 600, and 34px is not 32.5. It went the other way
  * from everything else in this pass — 22px up to 26px — and that is the shape
  * of the catalogue's scale rather than an exception to it: the body is tight
  * and the one heading that says WHICH PAGE THIS IS is generous, because those
@@ -313,14 +331,15 @@
  * that quietly stops being true after a dependency bump. */
 .vp-doc h1 {
   font-size: 26px;
-  line-height: 34px;
+  line-height: 1.25;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 
 @media (min-width: 768px) {
   .vp-doc h1 {
     font-size: 26px;
-    line-height: 34px;
+    line-height: 1.25;
   }
 }
 
@@ -395,7 +414,11 @@
 .vp-doc blockquote,
 .vp-doc dd {
   font-size: 14px;
-  line-height: 22px;
+  /* 1.55, the catalogue's body line-height, rather than the 22px this had.
+   * The two are 0.3px apart on one line and a line and a half apart down a
+   * long page, and the whole point of the shared measure is that a paragraph
+   * moved between the two documents occupies the same space. */
+  line-height: 1.55;
 }
 
 /* The chrome around the page — sidebar, outline, nav, the prev/next footer —
@@ -1120,6 +1143,27 @@
  * The selectors carry the block class twice because this sits inside
  * `.vp-doc` — VPHomeContent wraps the markdown that follows the frontmatter —
  * and `.vp-doc a` outranks a single class. */
+/* ------------------------------------------- prose on the front page ---
+ *
+ * The markdown under the hero sits in a 1152px block, and until now its
+ * PARAGRAPHS did too: 1152px of 14px type is about 160 characters a line, and
+ * a reader who reached the end of one had to hunt for the start of the next.
+ * The catalogue never had this - every run of prose over there is capped, at
+ * `74ch` on the masthead and the sample lede and `78ch` on a section's
+ * standfirst - so the two front doors of one site wrapped their text at
+ * completely different points.
+ *
+ * 74ch, which is the catalogue's number and lands at about 640px here: the
+ * same measure the manual's own column is set to, from the other direction.
+ * Only the prose. The card grids, the code blocks and the tables keep the
+ * full 1152px, because a card row IS the width of the page and a listing is
+ * not read a line at a time. */
+.Layout .VPHome .vp-doc p,
+.Layout .VPHome .vp-doc li,
+.Layout .VPHome .vp-doc blockquote {
+  max-width: 74ch;
+}
+
 .a2ui5-out {
   display: grid;
   grid-template-columns: 1fr;
@@ -1205,17 +1249,20 @@
   transform: translate(2px, -2px);
 }
 
-/* EVERY CARD CARRIES AN ARROW, AND THE ARROW SAYS WHICH KIND IT IS.
+/* EVERY CARD CARRIES THE SAME ARROW, AND IT IS `↗`.
  *
- * A card that stayed on this site used to carry none at all, on the argument
- * that the arrow means "this leaves". That left half a row with nothing on it
- * to say it could be pressed - and a card with no affordance at all reads as a
- * panel rather than as a door. So both kinds are arrowed: `↗` leaves this
- * deployment, `→` stays on it. The reader who does not know the convention
- * still sees something that points. */
-.a2ui5-out .a2ui5-out-card.is-inside .a2ui5-out-title::after {
-  content: "→";
-}
+ * Two rounds got here. First a card that stayed on this site carried no arrow
+ * at all, on the argument that an arrow means "this leaves" - which left half
+ * a row with nothing on it to say it could be pressed, and a card with no
+ * affordance reads as a panel rather than as a door. Then both kinds were
+ * arrowed and the arrow was made to say WHICH kind: `↗` out, `→` in.
+ *
+ * That is one distinction too many for a row of nine tiles. The arrow's job on
+ * a signpost is "press me", and a reader comparing two glyph shapes across a
+ * grid to work out which link leaves the deployment is a reader doing the
+ * page's work. One arrow, on everything. Where a card goes is what the card
+ * SAYS - and all nine are one site anyway, which is the whole argument of
+ * *One site in three places*. */
 
 .a2ui5-out .a2ui5-out-details {
   display: block;
@@ -1354,21 +1401,15 @@
 
 /* ...and the same arrow as the row below them, for the same reason: three
    cards that are links and look like panels are three doors with no handle.
-   `↗` when the card leaves this deployment - the two that open the playground
-   are absolute URLs, which is what the attribute selector reads - and `→` for
-   the one that stays in the manual. */
+   One glyph on all of them - see the row below for why it stopped being two. */
 .Layout .VPHome .VPFeature.link .title::after {
-  content: "→";
+  content: "↗";
   margin-left: 6px;
   color: var(--a2ui5-red);
   font-size: 14px;
   font-weight: 400;
   display: inline-block;
   transition: transform 0.25s;
-}
-
-.Layout .VPHome a.VPFeature.link[href^="http"] .title::after {
-  content: "↗";
 }
 
 .Layout .VPHome .VPFeature.link:hover .title::after {

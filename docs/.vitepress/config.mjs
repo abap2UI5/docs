@@ -33,6 +33,19 @@ export default defineConfig({
     },
   },
   base: "/docs/", // Set your base URL here
+  /* `docs/public/` is the raw markdown of this manual — one .md per page, for
+   * an agent following llms.txt — and VitePress copies it to the root of the
+   * site, which is where llms.txt points (/docs/cookbook/model/trees.md).
+   *
+   * It was ALSO being globbed as source, because srcDir is `docs/` and nothing
+   * said otherwise. So every page of the manual was rendered a second time, as
+   * a full themed page at /docs/public/cookbook/model/trees.html: 165 files
+   * nothing links to, nothing indexes (generate-search.mjs walks the real
+   * pages) and no sidebar names — which is how they were found, being the only
+   * pages on the site whose crumb line could say nothing but "Documentation".
+   * The raw markdown is unaffected: publicDir copies the files regardless of
+   * whether they are also treated as pages. */
+  srcExclude: ["public/**"],
   head: [
     ["link", { rel: "shortcut icon", href: "/docs/favicon.ico" }],
     [
