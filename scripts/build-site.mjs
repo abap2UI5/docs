@@ -334,12 +334,17 @@ const SITE_DESC = 'Build UI5 Apps Purely in ABAP';
 
 const canonical = (page) => `${SITE_URL}/${page}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
 
-const meta = ({ page, title, description }) => {
+const meta = ({ page, title, description, kind = 'article' }) => {
   const url = canonical(page);
   return [
     ['link', { rel: 'canonical', href: url }],
     ['meta', { name: 'description', content: description }],
-    ['meta', { property: 'og:type', content: 'website' }],
+    /* A chapter is an `article` and the front door is the `website`. Every page
+       said `website`, which is what a preview card uses to decide whether it is
+       looking at a site or at something published ON one - and it is the same
+       distinction the structured data below draws between the TechArticle and
+       the WebSite it is part of. */
+    ['meta', { property: 'og:type', content: kind }],
     ['meta', { property: 'og:site_name', content: 'abap2UI5' }],
     ['meta', { property: 'og:url', content: url }],
     ['meta', { property: 'og:title', content: title }],
@@ -812,6 +817,7 @@ for (const page of pages) {
     head: meta({
       page,
       title: isHome ? 'abap2UI5 — Build UI5 Apps Purely in ABAP' : title,
+      kind: isHome ? 'website' : 'article',
       /* 151 of the 166 pages declare no description of their own, and every
          one of them was being given the project's slogan. That is the same
          sentence under 151 different results in a search engine, and the same
@@ -853,7 +859,7 @@ const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, '
 
 fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   title: 'Not found | abap2UI5',
-  head: meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC }),
+  head: meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
   bar: BAR_DOCS,
   main: `<main class="manual">
   <input class="side-open" type="checkbox" id="side-open">
