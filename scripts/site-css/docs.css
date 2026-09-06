@@ -134,6 +134,11 @@
     border: 0;
     transform: none;
     transition: none;
+    /* ...AND BACK UNDER THE BAR. The drawer above stands at 40 because it
+       covers the page; standing there while placed in the margin instead put
+       the menu over the bar, which is the catalogue's and sits at 5 - so
+       scrolling drew chapter names across Home and Documentation. */
+    z-index: auto;
   }
 }
 
@@ -245,15 +250,18 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   color: var(--fg-dim); font-size: 11px;
 }
 .vp-doc div[class*="language-"] .copy { display: none; }
-/* NOTHING HERE COLOURS A TOKEN. The three rules that used to - reading the
-   `--shiki-light` / `--shiki-dark` pair Shiki writes onto every span - are
-   gone with the pairs themselves: build-site.mjs swaps them for the classes
-   the catalogue styles (`code-key`, `code-string`, `code-number`,
-   `code-comment` in sample.css, over the three values catalogue.css declares).
-   One scheme for the manual and the 772 sample pages, in one place, and this
-   file states no colour at all. They also have to be gone rather than merely
-   unused: `.vp-doc .shiki span` outranks a bare `.code-key`, and with the
-   variable no longer set every listing was drawn in the body colour. */
+/* NOTHING HERE COLOURS A TOKEN, and nothing here decides which token it is.
+   ABAP is tokenised by the catalogue's own `abap-highlight.mjs`, borrowed at
+   build time - the same program that writes the red and the green into all 772
+   per-sample pages - and every other language keeps Shiki's tokens with its
+   colours mapped onto the same four classes. Either way what arrives here is
+   `code-key`, `code-string`, `code-number`, `code-comment`, which `sample.css`
+   styles over the three values `catalogue.css` declares. One scheme for both
+   documents, in one place, and this file states no colour at all.
+   The three rules that used to read Shiki's `--shiki-light` pair had to GO
+   rather than merely stop matching: `.vp-doc .shiki span` outranks a bare
+   `.code-key`, and with the variable no longer set every listing was drawn in
+   the body colour. */
 
 /* ---- the ::: blocks -------------------------------------------------- */
 .vp-doc .custom-block {
@@ -367,12 +375,28 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   margin: 0; padding-top: 12px;
   font-size: 17px; line-height: 26px; font-weight: 500; color: var(--fg-dim);
 }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 29px; }
+/* THREE BUTTONS, ONE SIZE. Laid out as a row of equal tracks rather than as
+   three boxes that each take the width of their own words: `1fr` columns are
+   equalised, and `width: max-content` then sizes the row to three of the
+   widest - so the three match without any of them being told a number, and
+   the row is no wider than it has to be. A fourth action in the frontmatter
+   would join it without a change here, which `repeat(3, …)` would not allow.
+   The padding is 14 rather than 18: with the widths evened out, the shortest
+   label sets how much air the other two carry, and 18 made them roomy. */
+.hero-actions {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  width: max-content; gap: 12px; padding-top: 29px;
+}
 .hero-action {
-  padding: 0 18px;
+  padding: 0 14px;
   border: 1px solid transparent; border-radius: 6px;
   font-size: 13px; line-height: 34px; font-weight: 600;
-  text-decoration: none; white-space: nowrap;
+  text-align: center; text-decoration: none; white-space: nowrap;
+}
+/* On a phone the row is the width of the column and they stack, because three
+   equal tracks of the longest label do not fit one. */
+@media (max-width: 620px) {
+  .hero-actions { grid-auto-flow: row; width: auto; }
 }
 /* Only the first of the three is the one the page wants; the other two are a
    hairline, not a second filled block.
