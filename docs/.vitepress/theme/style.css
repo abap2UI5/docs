@@ -809,6 +809,62 @@
   padding-bottom: 4px;
 }
 
+/* ------------------------------------------------ where in the manual ---
+ *
+ * The trail above the title — "Documentation › Cookbook › Model" — and the
+ * catalogue's `.crumbs` line written out for this theme (tools/sample-pages.mjs
+ * in abap2UI5/playground). The numbers are that file's: 12px, the dimmed
+ * foreground for the whole line including its links, and 6px down to the
+ * heading. Copied by hand for the same reason the palette and the search box
+ * are, and held to it the same way — see *One site in three places* in
+ * AGENTS.md.
+ *
+ * IT SITS WHERE THE TITLE USED TO. `.VPDoc` already opens 48px under the bar
+ * and the trail is the first thing in the column, so the line lands at exactly
+ * the height the catalogue's does and the outline beside it does not move: a
+ * reader stepping between a manual page and a sample page meets the same two
+ * lines in the same two places. `margin-top: 0` is the whole trick — the 48px
+ * is the theme's padding and adding anything here would push both documents
+ * out of step again.
+ *
+ * The separator is `aria-hidden`: a screen reader announcing "Documentation
+ * single right pointing angle quotation mark Cookbook" is worse than one
+ * announcing two links and a word. */
+.Layout .VPDoc .a2ui5-crumbs {
+  margin: 0 0 6px;
+  font-size: 12px;
+  /* 1.55, which is the catalogue's body line-height and therefore what its
+   * own crumb line inherits. Written out here because this theme's body is a
+   * different number: without it the line is 18px against the catalogue's
+   * 18.6 and the heading underneath starts a pixel higher than the same
+   * heading does over there. It is one pixel, and it is one pixel on the only
+   * two lines a reader sees before they see anything else. */
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+
+/* Underlined, dimmed, in the trail's own colour — the catalogue's crumb links
+ * exactly, and the underline is the point: it is what separates the sections
+ * you can open from the one you are in, which carries no link and is drawn
+ * as plain text. This theme's links are not underlined until hover, so the
+ * rule has to say it. */
+.Layout .VPDoc .a2ui5-crumbs a {
+  color: var(--fg-dim);
+  text-decoration: underline;
+  font-weight: inherit;
+}
+
+.Layout .VPDoc .a2ui5-crumbs a:hover {
+  color: var(--a2ui5-c-link);
+}
+
+/* Air around the separator, and it is padding rather than a space in the
+ * markup: a wrapped trail then breaks between two crumbs instead of leaving a
+ * `›` stranded at the start of the second line. */
+.Layout .VPDoc .a2ui5-crumbs .sep {
+  padding: 0 6px;
+}
+
 /* ------------------------------------------ the filename over a block ---
  *
  * Drawn as the tab a `::: code-group` draws, because that is what it is: the

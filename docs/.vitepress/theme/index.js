@@ -7,6 +7,7 @@ import { setUpCodeLines, watchCodeLines } from './code-lines.js'
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
+import Crumbs from './Crumbs.vue'
 import { rememberHere, rememberScroll, restoreScroll } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
@@ -27,6 +28,12 @@ export default {
     return h(DefaultTheme.Layout, null, {
       'nav-bar-content-before': () => h(TheBar),
       'nav-screen-content-after': () => h(SiteNav),
+      // Where in the manual you are, above the title, on every page that has
+      // one (Crumbs.vue). `doc-before` is the slot immediately in front of the
+      // article inside the doc column, so the trail is the column's first line
+      // - which is where the catalogue's own is - and the home page, which is
+      // not laid out as a document, does not get one.
+      'doc-before': () => h(Crumbs),
     })
   },
 

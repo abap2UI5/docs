@@ -34,6 +34,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/SiteNav.vue` | The four sections, in the bar and again in the phone screen the theme's hamburger opens. Every item that leaves this deployment carries a `target` (`check:cross-site`), and three of the four are lifted to where the reader last was (`site-memory.js`) |
 | `docs/.vitepress/theme/SiteMenu.vue` | The menu behind the bar's last button: the light/dark switch, the project's tools and its repositories, and the version number `check:version` reads (`VERSION`) |
 | `docs/.vitepress/theme/code-lines.js` | A number beside every line of every listing, and an address for it: `#B2L42` is line 42 of the second listing on a page, `#B2L42-L58` a passage of it. The block is part of the address because a page of this manual is a dozen listings and `#L42` would name a line in each; the catalogue's pages print one class, which is why theirs are `#L42`. The number is a CSS counter drawn from an empty link, so the block still copies as a file you can paste |
+| `docs/.vitepress/theme/Crumbs.vue` | The trail above the title on every page of the manual — "Documentation › Cookbook › Model". Rendered into the default theme's `doc-before` slot, so it is the doc column's first line and lands where the sample catalogue's own crumb line lands, to the pixel. `theme/crumbs.js` is the half with no Vue in it: it walks `themeConfig.sidebar` against the page, so the trail cannot drift from the navigation the way the bar's old Guide dropdown did. Pinned by `test/crumbs.test.mjs`, which walks the real sidebar |
 | `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
 | `scripts/check-design.mjs` | The palette, the type and the radii the four bars share, against `abap2UI5/playground`'s copy of them — needs a checkout (`PLAYGROUND_HOME`, `.playground`, `../playground`) or the network, and fails rather than passing without one. The table of what is shared, and both spellings of each value, is `scripts/lib/design.mjs` |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
@@ -49,7 +50,7 @@ it are decidable, and all eleven are decided before a merge:
 
 | | |
 |---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; and the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it |
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it; and the crumb trail above every title, walked against the real sidebar so a restructured section cannot leave the trail passing against a fiction |
 | `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteMenu.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt, and in `SiteBar.vue` until the bar was split), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
@@ -162,6 +163,19 @@ the bar's markup, which exists four times by hand for the same reason, and to
 the bar's **measure**: 20px from either edge at every width, 12px on a phone,
 over the whole width and never centred, which is the catalogue's bar and which
 `style.css` (*the measure*) holds the theme's two nav layouts to.
+
+**A page opens the same way on both documents.** 48px under the bar, a crumb
+trail, then the title — and on the right, level with the trail, *On this page*.
+The catalogue's per-sample pages had all of it and the manual had none of it,
+so the two started in three different places; `theme/Crumbs.vue` and *where in
+the manual* in `style.css` are this side of it, and the numbers there are
+`tools/sample-pages.mjs`'s, down to the 1.55 line-height that puts the heading
+underneath on the same pixel. Copied by hand like the palette and the bar, and
+for the same reason. What is NOT copied is the trail itself: the catalogue's
+comes from the row being rendered, and this one is walked out of
+`themeConfig.sidebar` (`theme/crumbs.js`), because a second list of the manual's
+sections is a second list to keep in step — the bar's old Guide dropdown was
+exactly that and it drifted twice.
 
 **The accent is SAP blue, and the mark is still red.** `#0a6ed1` / `#4aa3ff` is
 what a link, a button and the hero name are set in; `#d03c4a` is the circle in
