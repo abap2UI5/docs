@@ -830,29 +830,46 @@
   }
 }
 
-/* An outline entry that is too long now wraps rather than being cut. The
+/* An outline entry that is too long wraps rather than being cut. The theme's
  * default is `white-space: nowrap` + `text-overflow: ellipsis`, which keeps
- * every entry one line tall at the price of not saying what it points at.
+ * every entry one line tall at the price of not saying what it points at -
+ * and at 627 entries, about 4% of this manual's are long enough to lose their
+ * last word that way.
  *
- * The spacing needs care, and the obvious version was wrong. The default is
- * `line-height: 32px` on a 14px font - generous, because it doubles as the gap
- * BETWEEN entries. The first attempt here dropped it to 20px so the two lines
- * of a wrapped entry would read as one item, which they did - and every
- * single-line entry lost a third of its breathing room, so the list read as a
- * cramped block.
+ * THE REST OF IT IS THE CATALOGUE'S ROW, VALUE FOR VALUE: `1.4` on the line
+ * and `4px 0` of padding, with the 2px between rows that its `.outline nav`
+ * sets as a flex gap (`.outline nav a` in src/catalogue/catalogue.css). An
+ * entry is 26.2px tall and the next one starts 28.2px below it, on both
+ * documents.
  *
- * Splitting the two jobs fixes both: 24px carries the line, 4px of padding
- * above and below carries the gap. A single-line entry still occupies 32px,
- * exactly as before; a wrapped one keeps its two lines close together and
- * still stands apart from its neighbours. Padding is set per side rather than
- * as a shorthand - `.outline-link.nested` sets `padding-left: 13px` for the
- * indent, and a shorthand would quietly flatten it. */
+ * The history is worth keeping, because it argues the other way. The theme
+ * ships `line-height: 32px` on 14px - generous, and doubling as the gap
+ * BETWEEN entries. A first attempt here dropped it to 20px and left the gap to
+ * it, which pulled a wrapped entry's two lines together and took a third of
+ * the air off every single-line one, so the list read as a cramped block.
+ * Splitting the jobs - 24px for the line, 4px of padding for the gap - fixed
+ * both and stood until now. What it did NOT do is match the catalogue: 32px a
+ * row against 28.2 is a rhythm a reader crossing between the two documents
+ * meets in the outline they were just reading. The two jobs stay split; the
+ * numbers are the catalogue's.
+ *
+ * Padding is set per side rather than as a shorthand - `.outline-link.nested`
+ * sets `padding-left: 13px` for the indent, and a shorthand would quietly
+ * flatten it. The indent has no counterpart to copy: a sample page's outline
+ * is one level, because its headings are. */
 .VPDocOutlineItem a.outline-link {
   white-space: normal;
   text-overflow: clip;
-  line-height: 24px;
+  line-height: 1.4;
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+/* The 2px between rows, which over there is a flex gap on the column. The
+ * theme's outline is a nested `<ul>`, so it is stated on the item. */
+.VPDocOutlineItem > li + li,
+.VPDocOutlineItem > li > ul > li {
+  margin-top: 2px;
 }
 
 /* ------------------------------------------------ where in the manual ---
