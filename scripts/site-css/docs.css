@@ -370,12 +370,28 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   margin: 0; padding-top: 12px;
   font-size: 17px; line-height: 26px; font-weight: 500; color: var(--fg-dim);
 }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 29px; }
+/* THREE BUTTONS, ONE SIZE. Laid out as a row of equal tracks rather than as
+   three boxes that each take the width of their own words: `1fr` columns are
+   equalised, and `width: max-content` then sizes the row to three of the
+   widest - so the three match without any of them being told a number, and
+   the row is no wider than it has to be. A fourth action in the frontmatter
+   would join it without a change here, which `repeat(3, …)` would not allow.
+   The padding is 14 rather than 18: with the widths evened out, the shortest
+   label sets how much air the other two carry, and 18 made them roomy. */
+.hero-actions {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  width: max-content; gap: 12px; padding-top: 29px;
+}
 .hero-action {
-  padding: 0 18px;
+  padding: 0 14px;
   border: 1px solid transparent; border-radius: 6px;
   font-size: 13px; line-height: 34px; font-weight: 600;
-  text-decoration: none; white-space: nowrap;
+  text-align: center; text-decoration: none; white-space: nowrap;
+}
+/* On a phone the row is the width of the column and they stack, because three
+   equal tracks of the longest label do not fit one. */
+@media (max-width: 620px) {
+  .hero-actions { grid-auto-flow: row; width: auto; }
 }
 /* Only the first of the three is the one the page wants; the other two are a
    hairline, not a second filled block.
