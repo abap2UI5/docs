@@ -22,6 +22,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { createMarkdownRenderer } from 'vitepress';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
@@ -113,6 +114,7 @@ const frame = await (async () => {
       from: built,
       page: fs.readFileSync(path.join(built, sample.name, 'index.html'), 'utf8'),
       files: { 'catalogue.css': file('catalogue.css'), 'sample.css': file('sample.css'), 'search.mjs': file('search.mjs') },
+      highlighter: file('abap-highlight.mjs'),
     };
   }
   const sitemap = await fetchText(`${PUBLISHED}/sitemap.xml`);
@@ -126,11 +128,13 @@ const frame = await (async () => {
     fetchText(`${PUBLISHED}/samples/catalogue.css`),
     fetchText(`${PUBLISHED}/samples/sample.css`),
     fetchText(`${PUBLISHED}/samples/search.mjs`),
+    fetchText(`${PUBLISHED}/samples/abap-highlight.mjs`),
   ]);
   return {
     from: PUBLISHED,
     page,
     files: { 'catalogue.css': files[0], 'sample.css': files[1], 'search.mjs': files[2] },
+    highlighter: files[3],
   };
 })();
 
@@ -407,7 +411,39 @@ const home = ({ body, fm }) => {
 </main>`;
 };
 
-/* ---- the listings, in the colours a sample page prints ABAP in ---------
+/* ---- the ABAP, tokenised by the file the catalogue tokenises with -------
+ *
+ * Not "the same colours" - the same PROGRAM. `abap-highlight.mjs` is what
+ * writes the red and the green into all 772 per-sample pages, and it is
+ * published beside them for this; the manual runs it over its own listings and
+ * gets the same answer token for token, which "the same palette applied to
+ * somebody else's tokenising" does not: Shiki's ABAP grammar draws the lines
+ * elsewhere, and `DATA name TYPE` came out with the name inside the keyword.
+ *
+ * It replaces the CONTENT of each line and nothing else. The `<span
+ * class="line">` wrappers stay, because code-lines.js numbers them and every
+ * line of every listing on this site has an address (#B2L42); so does the card,
+ * the language label and the Run button under it.
+ *
+ * The text has to be handed over as it was written, which means undoing the
+ * escaping the renderer did - and `&amp;` last, or `&amp;lt;` becomes a tag. */
+const unescape = (s) => s
+  .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  .replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+  .replace(/&amp;/g, '&');
+
+const abapify = (html) => html.replace(
+  /(<div class="language-abap[^"]*">[\s\S]*?<code>)([\s\S]*?)(<\/code>)/g,
+  (all, head, code, tail) => {
+    const lines = [...code.matchAll(/<span class="line">([\s\S]*?)<\/span>\s*(?=<span class="line">|$)/g)]
+      .map((m) => unescape(m[1].replace(/<[^>]*>/g, '')));
+    if (!lines.length) return all;
+    return head + highlightAbapLines(lines.join('\n'))
+      .map((line) => `<span class="line">${line}</span>`).join('\n') + tail;
+  },
+);
+
+/* ---- and every other language, in the colours a sample page prints ABAP in -
  *
  * Shiki hands every token an inline `--shiki-light` / `--shiki-dark` pair from
  * the github themes, which is a scheme of its own: functions purple, types
@@ -461,6 +497,18 @@ const recolour = (html) => html.replace(
 const md = await createMarkdownRenderer(DOCS, config.markdown || {}, BASE);
 fs.rmSync(OUT, { recursive: true, force: true });
 
+/* The borrowed highlighter, made importable. It is a module, not data, and the
+ * only way to run somebody else's module is to have it on disk - so it is
+ * written OUTSIDE `docs/`, one level up from the site: this build uses it, and
+ * nothing on the site loads it. */
+fs.mkdirSync(OUT, { recursive: true });
+const highlighterAt = path.join(OUT, 'abap-highlight.mjs');
+fs.writeFileSync(highlighterAt, frame.highlighter);
+const { highlightAbapLines } = await import(pathToFileURL(highlighterAt).href);
+if (typeof highlightAbapLines !== 'function') {
+  throw new Error(`abap-highlight.mjs from ${frame.from} no longer exports highlightAbapLines( )`);
+}
+
 let written = 0, headings = 0, blocks = 0;
 for (const page of pages) {
   const src = fs.readFileSync(path.join(DOCS, page), 'utf8');
@@ -473,7 +521,7 @@ for (const page of pages) {
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
-  body = recolour(body);
+  body = recolour(abapify(body));
   /* And a page written by hand as `/docs/resources/addons` gets its `.html`.
      VitePress resolves that in the router, and GitHub Pages happens to resolve
      it too, by trying `<path>.html` - so it was never broken on the site and

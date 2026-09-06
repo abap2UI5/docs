@@ -245,15 +245,18 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   color: var(--fg-dim); font-size: 11px;
 }
 .vp-doc div[class*="language-"] .copy { display: none; }
-/* NOTHING HERE COLOURS A TOKEN. The three rules that used to - reading the
-   `--shiki-light` / `--shiki-dark` pair Shiki writes onto every span - are
-   gone with the pairs themselves: build-site.mjs swaps them for the classes
-   the catalogue styles (`code-key`, `code-string`, `code-number`,
-   `code-comment` in sample.css, over the three values catalogue.css declares).
-   One scheme for the manual and the 772 sample pages, in one place, and this
-   file states no colour at all. They also have to be gone rather than merely
-   unused: `.vp-doc .shiki span` outranks a bare `.code-key`, and with the
-   variable no longer set every listing was drawn in the body colour. */
+/* NOTHING HERE COLOURS A TOKEN, and nothing here decides which token it is.
+   ABAP is tokenised by the catalogue's own `abap-highlight.mjs`, borrowed at
+   build time - the same program that writes the red and the green into all 772
+   per-sample pages - and every other language keeps Shiki's tokens with its
+   colours mapped onto the same four classes. Either way what arrives here is
+   `code-key`, `code-string`, `code-number`, `code-comment`, which `sample.css`
+   styles over the three values `catalogue.css` declares. One scheme for both
+   documents, in one place, and this file states no colour at all.
+   The three rules that used to read Shiki's `--shiki-light` pair had to GO
+   rather than merely stop matching: `.vp-doc .shiki span` outranks a bare
+   `.code-key`, and with the variable no longer set every listing was drawn in
+   the body colour. */
 
 /* ---- the ::: blocks -------------------------------------------------- */
 .vp-doc .custom-block {
