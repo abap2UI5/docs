@@ -1,6 +1,21 @@
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
-import DefaultTheme from 'vitepress/theme'
+// ...WITHOUT ITS FONTS. `vitepress/theme` differs from this entry by one line -
+// it imports `styles/fonts.css`, which declares Inter and nothing else. This
+// site does not set anything in Inter: `--vp-font-family-base` is overridden at
+// `:root` below with the stack all four deployments share (system-ui first,
+// i.e. the reader's own face), and `--vp-font-family-mono` with the shared mono
+// one. So the build was emitting 627 kB of Inter in fourteen files and
+// PRELOADING one of them on every page - a download in front of the first
+// paint, for a face the page never drew a letter with. Chromium, asked which
+// font it actually used for the home page headline, answers with the system
+// one.
+//
+// If the four sites ever do adopt one face for every reader rather than each
+// reader's own, this import comes back and the preload is then the right thing
+// to have - and `--font-ui` in the playground's catalogue.css has to name it in
+// the same breath, which is what check:design holds.
+import DefaultTheme from 'vitepress/theme-without-fonts'
 import './style.css'
 import { setUpPlayground } from './playground.js'
 import { setUpCodeLines, watchCodeLines } from './code-lines.js'
