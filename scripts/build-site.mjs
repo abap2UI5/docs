@@ -512,6 +512,34 @@ function prevNextFor(route) {
 }
 
 /** A chapter: the menu beside it, the crumb line, the article, the outline. */
+/* ---- WHEN A PAGE LAST CHANGED --------------------------------------
+ *
+ * The date of the commit that last touched it, not the file's mtime. Git does
+ * not store mtimes, so a fresh clone gives every file the time of the clone -
+ * which is what the foot of every page was printing. On a machine that has
+ * had the repository a while it says the day it was cloned; in CI, where the
+ * checkout is minutes old, all 166 pages would have said the day of the
+ * deploy. A "last updated" that means "last deployed" is worse than none.
+ *
+ * One `git log` for the whole tree rather than one per file, and a checkout
+ * too shallow to know - CI clones a pull request at depth 1 - falls back to
+ * today, which is the only thing it can honestly say then. The sitemap's
+ * `lastmod` is the same answer from the same place. */
+const lastTouched = (() => {
+  const when = new Map();
+  try {
+    const log = execFileSync('git', ['log', '--pretty=format:%cs', '--name-only', '--', 'docs'],
+      { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    let date = '';
+    for (const line of log.split('\n')) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(line)) { date = line; continue; }
+      const f = line.trim();
+      if (f.startsWith('docs/') && f.endsWith('.md') && !when.has(f)) when.set(f, date);
+    }
+  } catch { /* no git, or a checkout with no history in it */ }
+  return (page) => when.get(`docs/${page}`) || new Date().toISOString().slice(0, 10);
+})();
+
 const chapter = ({ body, page, route }) => `<main class="manual">
   <input class="side-open" type="checkbox" id="side-open">
   ${sidebarFor(route)}
@@ -523,7 +551,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
     <div class="doc-foot">
       <a class="edit" href="${esc((config.themeConfig.editLink?.pattern || '').replace(':path', page))}"
          target="_blank" rel="noopener">${esc(config.themeConfig.editLink?.text || 'Edit this page on GitHub')} ↗</a>
-      <span class="updated">Last updated: ${new Date(fs.statSync(path.join(DOCS, page)).mtime).toISOString().slice(0, 10)}</span>
+      <span class="updated">Last updated: <time datetime="${lastTouched(page)}">${lastTouched(page)}</time></span>
     </div>
     ${prevNextFor(route)}
   </div>
@@ -1016,20 +1044,7 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
  * for not writing one either: a crawler reads /robots.txt at the ORIGIN root,
  * and abap2ui5.github.io/ belongs to another repository. This file is
  * discovered by being submitted, or through the links. */
-const lastTouched = (() => {
-  const when = new Map();
-  try {
-    const log = execFileSync('git', ['log', '--pretty=format:%cs', '--name-only', '--', 'docs'],
-      { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
-    let date = '';
-    for (const line of log.split('\n')) {
-      if (/^\d{4}-\d{2}-\d{2}$/.test(line)) { date = line; continue; }
-      const f = line.trim();
-      if (f.startsWith('docs/') && f.endsWith('.md') && !when.has(f)) when.set(f, date);
-    }
-  } catch { /* no git, or a checkout with no history in it */ }
-  return (page) => when.get(`docs/${page}`) || new Date().toISOString().slice(0, 10);
-})();
+
 
 fs.writeFileSync(path.join(OUT, 'docs', 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
