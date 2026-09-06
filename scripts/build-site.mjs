@@ -372,7 +372,11 @@ const meta = ({ page, title, description, kind = 'article' }) => {
     ['meta', { property: 'og:site_name', content: 'abap2UI5' }],
     ['meta', { property: 'og:locale', content: 'en_US' }],
     ['meta', { property: 'og:url', content: url }],
-    ['meta', { property: 'og:title', content: title }],
+    /* Without the site's name on the end: `og:site_name` already carries it,
+       and a card that reads "Frontend · Event | abap2UI5 — abap2UI5" says it
+       twice. The <title> keeps the suffix, because a browser tab has no other
+       way to say which site it is. */
+    ['meta', { property: 'og:title', content: title.replace(/ \| abap2UI5$/, '') }],
     ['meta', { property: 'og:description', content: description }],
     ['meta', { property: 'og:image', content: OG_IMAGE }],
     ['meta', { property: 'og:image:type', content: 'image/png' }],
@@ -381,7 +385,7 @@ const meta = ({ page, title, description, kind = 'article' }) => {
     ['meta', { property: 'og:image:alt', content: 'abap2UI5 — Build UI5 Apps Purely in ABAP' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:image', content: OG_IMAGE }],
-    ['meta', { name: 'twitter:title', content: title }],
+    ['meta', { name: 'twitter:title', content: title.replace(/ \| abap2UI5$/, '') }],
     ['meta', { name: 'twitter:description', content: description }],
   ].map(([tag, attrs]) => `<${tag} ${Object.entries(attrs)
     .map(([k, v]) => `${k}="${esc(v)}"`).join(' ')}>`).join('\n')
@@ -465,7 +469,7 @@ ${main}
 <footer class="foot"><p>
   <a href="${BASE}resources/license.html">License</a> |
   <a href="${BASE}resources/contact.html">Contact</a> —
-  Copyright © 2023-2026 abap2UI5
+  Copyright © 2023-${new Date().getFullYear()} abap2UI5
 </p></footer>
 ${MENU_SCRIPT}
 </body>
@@ -861,12 +865,17 @@ for (const page of pages) {
      chapter previews as itself, the front door as the project. A name two
      chapters share carries the section that tells them apart. */
   const under = shared.has(name) ? trailFor(config.themeConfig.sidebar, page).at(-1)?.text : null;
-  const title = `${name}${under && under !== name ? ` · ${under}` : ''} | abap2UI5`;
+  /* The front door's own title is the project and its claim, not "Home |
+     abap2UI5" - which is what a tab among twenty says, and what a search
+     result offers to be clicked. It is what the preview card has always
+     said; now the tab says it too. */
+  const title = isHome ? 'abap2UI5 — Build UI5 Apps Purely in ABAP'
+    : `${name}${under && under !== name ? ` · ${under}` : ''} | abap2UI5`;
   const html = shell({
     title,
     head: meta({
       page,
-      title: isHome ? 'abap2UI5 — Build UI5 Apps Purely in ABAP' : title,
+      title,
       kind: isHome ? 'website' : 'article',
       /* 151 of the 166 pages declare no description of their own, and every
          one of them was being given the project's slogan. That is the same
