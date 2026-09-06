@@ -267,7 +267,41 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   position: absolute; top: 8px; right: 12px;
   color: var(--fg-dim); font-size: 11px;
 }
-.vp-doc div[class*="language-"] .copy { display: none; }
+/* ---- copy the listing -------------------------------------------------
+ *
+ * The renderer emits this button on every block and it was simply hidden: 369
+ * of them in the markup, none of them doing anything. A manual whose examples
+ * are whole ABAP classes meant to be pasted into a system is the one place
+ * where copying by hand hurts - forty lines dragged across a box that scrolls
+ * sideways - and it is the one thing a sample page does not need, because a
+ * sample page links its class on GitHub and opens it in the playground.
+ *
+ * Quiet at rest: it appears when the block is hovered or something inside it
+ * is focused, which keeps the page looking exactly as it did. It sits opposite
+ * the language label rather than over it. Keyboard reachable, and it says what
+ * it did for a second afterwards. */
+.vp-doc div[class*="language-"] .copy {
+  position: absolute; top: 6px; right: 8px; z-index: 1;
+  padding: 3px 8px;
+  border: 1px solid var(--line); border-radius: var(--radius-control);
+  background: var(--bg-sunken); color: var(--fg-dim);
+  font: inherit; font-size: 11px; line-height: 1.5;
+  cursor: pointer; opacity: 0; transition: opacity .12s ease;
+}
+.vp-doc div[class*="language-"] .copy::after { content: "Copy"; }
+.vp-doc div[class*="language-"] .copy.done::after { content: "Copied"; }
+.vp-doc div[class*="language-"] .copy.done { color: var(--accent); border-color: var(--accent); }
+.vp-doc div[class*="language-"]:hover .copy,
+.vp-doc div[class*="language-"] .copy:focus-visible { opacity: 1; }
+/* A finger cannot hover. On a touch screen the button is simply there - which
+   is also the screen where selecting forty lines by hand is worst. */
+@media (hover: none) {
+  .vp-doc div[class*="language-"] .copy { opacity: 1; }
+  .vp-doc div[class*="language-"] .lang { display: none; }
+}
+/* The label moves out of its way while the button is showing. */
+.vp-doc div[class*="language-"]:hover .lang { opacity: 0; }
+.vp-doc div[class*="language-"] .lang { transition: opacity .12s ease; }
 /* NOTHING HERE COLOURS A TOKEN, and nothing here decides which token it is.
    ABAP is tokenised by the catalogue's own `abap-highlight.mjs`, borrowed at
    build time - the same program that writes the red and the green into all 772
@@ -762,6 +796,28 @@ html { scroll-padding-top: 62px; }
   margin: 0; padding: 7px 14px;
   border: 1px solid var(--line); border-radius: 0 0 8px 8px;
   color: var(--fg-dim); font-size: 13px;
+}
+
+/* ---- for a reader who asked for less movement -------------------------
+ *
+ * The drawer slides, the copy button fades, the outline's mark moves. None of
+ * it carries meaning - it is all decoration on a state change that has already
+ * happened - and for a reader with a vestibular disorder motion on a screen is
+ * not a matter of taste. The operating system already asks them, and the
+ * browser already passes the answer on; nothing here was listening.
+ *
+ * The blanket form rather than a list, because a rule that has to be
+ * remembered every time something new animates is a rule that will be
+ * forgotten. Nothing on this site waits for `transitionend`, so cutting the
+ * durations changes what a page DOES not at all - only how fast it gets
+ * there. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ---- on paper ---------------------------------------------------------

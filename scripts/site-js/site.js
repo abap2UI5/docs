@@ -199,3 +199,31 @@ document.addEventListener('click', (e) => {
   };
   for (const g of groups) g.addEventListener('toggle', write);
 })();
+/* ---- copy a listing ---------------------------------------------------
+ *
+ * The button is the renderer's own, on every code block, and nothing had ever
+ * wired it. What it copies is the code as the file has it - the text of the
+ * <code>, with the line numbers left out, because those are drawn by a CSS
+ * counter off an empty link and are not part of the source.
+ *
+ * `navigator.clipboard` is not there on an insecure origin or in an older
+ * browser, so the button says what happened either way rather than looking
+ * broken: the class it takes for a second is the only feedback, and a refusal
+ * leaves it alone. */
+document.addEventListener('click', async (e) => {
+  const button = e.target.closest?.('div[class*="language-"] .copy');
+  if (!button) return;
+  const code = button.parentElement.querySelector('code');
+  if (!code) return;
+  /* The gutter's links carry no text, so textContent is already the source -
+     but a line is a <span> and they are joined with no newline between them
+     when the markup has none, which is why the lines are read one by one. */
+  const lines = [...code.querySelectorAll('.line')];
+  const text = (lines.length ? lines.map((l) => l.textContent).join('\n') : code.textContent).replace(/\s+$/, '');
+  try {
+    await navigator.clipboard.writeText(text);
+    button.classList.add('done');
+    setTimeout(() => button.classList.remove('done'), 1400);
+  } catch { /* a browser that refuses the clipboard: the text is still selectable */ }
+});
+
