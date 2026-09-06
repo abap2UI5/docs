@@ -10,7 +10,7 @@ samples:
 
 For hierarchical data, abap2UI5 uses nested ABAP structures to represent tree levels. Each level holds a table of child nodes, which UI5 traverses to build the expandable tree control.
 
-### Tree
+## Tree
 Define a type hierarchy where each node contains a child table of the next level:
 ```abap
 CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.

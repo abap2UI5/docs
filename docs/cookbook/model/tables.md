@@ -16,7 +16,7 @@ samples:
 
 This section walks through rendering tabular and nested data in views.
 
-### Basic Table
+## Basic Table
 The example below binds a simple table to a UI5 control:
 ```abap
 CLASS z2ui5_cl_sample_tab DEFINITION PUBLIC.
@@ -90,7 +90,7 @@ CLASS z2ui5_cl_sample_tab IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Editable
+## Editable
 To make a table editable, use editable cell controls (e.g. `input`) — the binding is the same `_bind`:
 ```abap
   METHOD z2ui5_if_app~main.
@@ -146,7 +146,7 @@ To make a table editable, use editable cell controls (e.g. `input`) — the bind
   ENDMETHOD.
 ```
 
-### Nested Structures
+## Nested Structures
 You can also bind nested structures — use `structure/component` as the binding path:
 ```abap
 CLASS z2ui5_cl_sample_nested_struc DEFINITION PUBLIC.

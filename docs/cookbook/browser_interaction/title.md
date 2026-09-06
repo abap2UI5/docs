@@ -13,7 +13,7 @@ always carries `<title>abap2UI5</title>` — that is what the tab says while UI5
 boots, before any app can speak — and from the first roundtrip on it says
 whatever the app last set.
 
-### Standalone
+## Standalone
 
 To change the title after the app is running — for example, to reflect the current record — call the `set_title` frontend event from the backend:
 
@@ -57,7 +57,7 @@ CLASS z2ui5_cl_sample_title IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Launchpad
+## Launchpad
 
 When the app runs inside an SAP Fiori Launchpad shell, use the dedicated `set_title_launchpad` event instead. It forwards the title to the shell's `ShellUIService` rather than setting `document.title`:
 

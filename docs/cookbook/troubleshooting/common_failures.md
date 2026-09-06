@@ -128,7 +128,7 @@ you, in the error view of a failed roundtrip or in the browser console. Every
 message below is one the framework or UI5 actually produces; find yours, and
 the entry says what caused it and where the fix is explained.
 
-#### `The app 'ZCL_...' does not exist in the system.`
+### `The app 'ZCL_...' does not exist in the system.`
 
 The framework could not instantiate the class named in `?app_start=` — a typo
 in the URL, or the class exists but is not activated. The roundtrip answers
@@ -136,27 +136,27 @@ in the URL, or the class exists but is not activated. The roundtrip answers
 [Quickstart's verify step](/get_started/quickstart#_3-first-launch) covers the other
 first-launch failures around it.
 
-#### `BINDING_ERROR - No class attribute for binding found - Please check if the bound values are public attributes of your class`
+### `BINDING_ERROR - No class attribute for binding found - Please check if the bound values are public attributes of your class`
 
 A `_bind( )` on an attribute that is not in the `PUBLIC SECTION`, or on a
 local variable. Covered in full under
 [Bound Attribute Not Public](#bound-attribute-not-public) above.
 
-#### `BINDING_ERROR_TAB_CELL_LEVEL - Row index out of range`
+### `BINDING_ERROR_TAB_CELL_LEVEL - Row index out of range`
 
 A cell binding — `client->_bind( val = … tab = … tab_index = … )` — names a
 row the table does not have: the index is off (it is 1-based, like every ABAP
 index), or the table was refilled or shortened after the index was computed
 and before the view was built. Rebuild the view from the current table state.
 
-#### `Binding Error - component '...' not found in the bound row`
+### `Binding Error - component '...' not found in the bound row`
 
 The same cell binding, but `val` is not a component of `tab`'s row type — the
 classic case is passing a field of a *different* structure (a copy, a work
 area of another type) as the cell value, or a renamed column that the view
 code still names. Bind the field of the row type the table actually has.
 
-#### `APP_SERIALIZATION_ERROR - the app state could not be serialized. Please check if all generic data references are public attributes of your class`
+### `APP_SERIALIZATION_ERROR - the app state could not be serialized. Please check if all generic data references are public attributes of your class`
 
 Between two events the app instance is serialized, and one attribute cannot
 be: typically a `REF TO` a non-serializable object or a generic data
@@ -166,7 +166,7 @@ Move non-serializable resources out of attributes, or see
 [Statefulness](/cookbook/expert_more/statefulness) for resources that must
 live across events.
 
-#### `Dispatch limit of 1000 app navigations in one request reached - check for an endless nav_app_call/nav_app_leave loop in main( )`
+### `Dispatch limit of 1000 app navigations in one request reached - check for an endless nav_app_call/nav_app_leave loop in main( )`
 
 Two apps hand control to each other forever inside a single request — most
 often a `nav_app_call( )` that runs unconditionally in `main( )` instead of
@@ -174,7 +174,7 @@ inside an event or `check_on_navigated( )` branch, so the called app's first
 roundtrip immediately navigates again. Guard the navigation; see
 [Navigation](/cookbook/event_navigation/navigation/inner_app).
 
-#### `failed to load 'sap/m/....js'` — browser console, view does not appear
+### `failed to load 'sap/m/....js'` — browser console, view does not appear
 
 UI5 resolved a tag in your view as a *control class* and requested a file
 that does not exist. Two ways to get there: a control name that is not on the
@@ -185,12 +185,12 @@ public only in newer releases; on an older one, use `buttons`. The
 [linter](/advanced/linter) decides both against the release you target,
 without a system.
 
-#### `Binding "/PATH" was not found in model` — browser console warning, control renders empty
+### `Binding "/PATH" was not found in model` — browser console warning, control renders empty
 
 Not an error — the control simply stays empty. Covered in full under
 [Binding-Path Mismatch](#binding-path-mismatch) above.
 
-#### `"" is of type string, expected <enum type> for property "..."` — browser console, app dies when a table empties
+### `"" is of type string, expected <enum type> for property "..."` — browser console, app dies when a table empties
 
 An enum-typed property (`type`, `state`, `valueState`, …) inside an
 aggregation template is bound to a field that arrives as an empty string —
@@ -201,14 +201,14 @@ row behind it. Keep initial values out of the model with `_bind( )`'s
 `omit_initial_paths` (see the [Client API](/resources/api)), or give the
 binding an explicit fallback to the enum's default value.
 
-#### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — page loads, component does not start
+### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — page loads, component does not start
 
 A hardened CSP without `'unsafe-eval'` meets an old UI5 release: the `1.71`
 ui5loader still evaluates module source as a string. Either bootstrap a
 modern UI5 release, or keep `'unsafe-eval'` in the policy — see
 [Security → Hardening](/configuration/security#hardening-dropping-unsafe-eval).
 
-#### `403 ICFEUCONFORBIDDEN` — separately deployed frontend, every action fails
+### `403 ICFEUCONFORBIDDEN` — separately deployed frontend, every action fails
 
 The deployed UI5 app posts to the HTTP service path written in its
 `manifest.json`, and that service does not exist under this ID on your
@@ -217,7 +217,7 @@ system. The error does not say which URL it tried. Align the
 [S/4 Public Cloud](/configuration/s4_public_cloud) for the paths each
 frontend branch ships with.
 
-#### `Literals across more than one line are not allowed` — abapGit pull, and the app class is empty afterwards
+### `Literals across more than one line are not allowed` — abapGit pull, and the app class is empty afterwards
 
 An import-time failure, not a runtime one: a source line longer than 255
 characters. abapGit reports the error for that object and **carries on**, so
@@ -226,7 +226,7 @@ is gone. Pull again after the line is split (in your own code: break long
 literals into `&&` chunks); check the abapGit log rather than the package
 tree to see which objects really arrived.
 
-#### An icon is simply missing — no message anywhere
+### An icon is simply missing — no message anywhere
 
 An unknown `sap-icon://` name is not an error: the icon pool finds nothing
 and the control renders without an icon, silently. Either the name does not

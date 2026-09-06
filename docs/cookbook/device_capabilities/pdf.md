@@ -7,7 +7,7 @@ samples:
 
 Render a PDF directly in your app — for printouts from Adobe Forms, SmartForms, archived documents from the Content Server, or anything else that produces an `xstring`.
 
-### Show It in Your Own View
+## Show It in Your Own View
 
 `sap.m.PDFViewer` renders the document inline. It takes the PDF as a
 `data:application/pdf;base64,...` URI, so the whole job is: get the bytes,
@@ -78,7 +78,7 @@ roundtrip. Past a few megabytes, offer the
 For a ready-made dialog with a title bar and buttons, the
 [popups add-on](https://github.com/abap2UI5-addons/popups) carries one.
 
-### Download Instead of Display
+## Download Instead of Display
 
 To let the user save the PDF rather than view it inline, use the [file download](./upload_download.md) pattern:
 
