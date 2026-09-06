@@ -133,8 +133,12 @@ document.addEventListener('click', (e) => {
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) last = heads.length - 1;
     }
     if (last === at) return;
-    if (at > -1) links[at].classList.remove('here');
-    if (last > -1) links[last].classList.add('here');
+    /* `aria-current` beside the class, because the mark is information and not
+       only a colour: a reader on a screen reader hears "current location" on
+       the row the class draws in the accent. The bar names its own item the
+       same way, and the menu's row is marked by the build. */
+    if (at > -1) { links[at].classList.remove('here'); links[at].removeAttribute('aria-current'); }
+    if (last > -1) { links[last].classList.add('here'); links[last].setAttribute('aria-current', 'true'); }
     at = last;
   };
   let pending = false;
