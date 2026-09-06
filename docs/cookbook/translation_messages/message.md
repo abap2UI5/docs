@@ -12,7 +12,7 @@ samples:
 
 Showing messages is an everyday task for ABAP developers. The functions below cover the most common cases.
 
-### Message Toast
+## Message Toast
 
 For brief notifications like success confirmations, use the message toast:
 
@@ -22,7 +22,7 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### Message Box
+## Message Box
 
 When the user needs to acknowledge the message, show a message box they must close:
 
@@ -42,10 +42,10 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-### SY, BAPIRET, CX_ROOT
+## SY, BAPIRET, CX_ROOT
 You can pass common message structures, objects, and variables straight to these functions:
 
-#### SY
+### SY
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -54,7 +54,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### BAPIRET
+### BAPIRET
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -68,7 +68,7 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-#### CX_ROOT
+### CX_ROOT
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -82,7 +82,7 @@ ENDMETHOD.
 ```
 The framework accepts other inputs too — pass your message structure and the message box shows it.
 
-### All of Them in One App
+## All of Them in One App
 
 The fragments above are each one call. Press **Run** to see the whole family in
 a single app:
@@ -141,7 +141,7 @@ CLASS z2ui5_cl_sample_message IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### More Than One Message at a Time
+## More Than One Message at a Time
 
 The message box shows one message — but it also takes a whole set of them. Pass
 a BAPI return table, a message log or the result of a validation run and the

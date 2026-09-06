@@ -9,14 +9,14 @@ samples:
 
 Working with URLs is common — reading parameters from the current URL, opening links in new tabs, or managing browser history.
 
-### Read URL Parameters
+## Read URL Parameters
 
 Read query parameters from the current URL via the config object:
 ```abap
 DATA(lv_search) = client->get( )-s_config-search.
 ```
 
-### Open a New Tab
+## Open a New Tab
 Open a URL in a new browser tab via a frontend event:
 ```abap
 DATA(lv_url) = `https://www.abap2UI5.org`.
@@ -25,7 +25,7 @@ client->follow_up_action(
     t_arg = VALUE #( ( lv_url ) ) ).
 ```
 
-### Browser History
+## Browser History
 
 `client->hash_set( )` (UI5's `HashChanger#setHash`) writes a pushed entry into
 the browser history from the backend, so a state inside your app becomes
@@ -51,7 +51,7 @@ round-tripping back into the running app. That is the
 section.
 :::
 
-### All Three in One App
+## All Three in One App
 
 ```abap
 CLASS z2ui5_cl_sample_url DEFINITION PUBLIC.

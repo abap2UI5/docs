@@ -9,7 +9,7 @@ Every UI5 JSON model has a built-in upper limit on the number of items it will e
 
 abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
 
-### Set the Limit
+## Set the Limit
 Trigger the event from your controller with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
 client->follow_up_action(
@@ -20,7 +20,7 @@ client->follow_up_action(
 ```
 After this call, the model bound to the main view accepts up to 1000 entries per binding. The setting is remembered across roundtrips — once raised, it stays in effect until you reset it or leave the app.
 
-### Reset the Limit
+## Reset the Limit
 To restore the default of `100`, omit the limit argument and pass only the view key:
 ```abap
 client->follow_up_action(
@@ -28,7 +28,7 @@ client->follow_up_action(
     t_arg = VALUE #( ( client->cs_view-main ) ) ).
 ```
 
-### Complete Example
+## Complete Example
 The snippet below shows a `ComboBox` filled with 105 entries. Without raising the size limit, the dropdown would stop at item 100. A small form lets the user adjust the limit and the number of entries at runtime:
 ```abap
 CLASS z2ui5_cl_sample_size_limit DEFINITION PUBLIC.
@@ -116,7 +116,7 @@ CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
 ENDCLASS.
 ```
 
-### Other Views
+## Other Views
 The same call applies to nested views, popups and popovers — just swap the view key:
 ```abap
 " Popup

@@ -33,7 +33,7 @@
  */
 import fs from 'node:fs';
 import { entriesOf, loadCatalogue } from './catalogue.mjs';
-import { sidebarPages, fileOf, summarise, title, headings, terms, SITE } from './pages.mjs';
+import { sidebarPages, fileOf, describe, title, headings, terms, SITE } from './pages.mjs';
 
 /** The three sample repositories, and where a reader is sent for a hit. */
 export const CORPORA = [
@@ -56,7 +56,7 @@ export function docEntries(pages = sidebarPages(), read = (link) => fs.readFileS
       area: 'docs',
       group: p.section,
       title: title(body, p.text),
-      text: summarise(body),
+      text: describe(body),
       /* The headings are the difference between finding a PAGE and finding the
        * paragraph somebody meant. They are matched against and shown as the
        * sub-hits under a page, each with its own anchor. */

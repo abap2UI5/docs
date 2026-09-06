@@ -65,7 +65,22 @@
  * -240px is the only number: the container's padding box starts 20px left of
  * the article, so 20 - 40 - 220 puts the menu's right edge 40 short of the
  * article's left one. */
-.side-open { display: none; }
+/* THE CHECKBOX IS THE DRAWER'S STATE, AND IT HAS TO STAY REACHABLE.
+   `display: none` takes it out of the tab order, and a <label> is not
+   focusable on its own - so the chapter menu could not be opened from a
+   keyboard AT ALL below 1680px, which is every phone and most laptops. 40 tab
+   stops on a 390px screen never reached it. Hidden the way a visually-hidden
+   control is hidden instead: one pixel, clipped, still focusable, still
+   toggled by Space. The ring is drawn on the label, because that is the part
+   a reader can see. */
+.side-open {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.side-open:focus-visible ~ .doc-body .side-button {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 .sidebar {
   position: fixed;
@@ -122,6 +137,9 @@
 /* From 1680 up the margin holds it, so it stands there instead: no button, no
    scrim, no drawer - the same nav, placed. */
 @media (min-width: 1680px) {
+  /* No drawer here, so no control for it either - an invisible tab stop that
+     does nothing is worse than none. */
+  .side-open { display: none; }
   .side-button { display: none; }
   .side-scrim { display: none; }
   .sidebar {
@@ -249,7 +267,41 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   position: absolute; top: 8px; right: 12px;
   color: var(--fg-dim); font-size: 11px;
 }
-.vp-doc div[class*="language-"] .copy { display: none; }
+/* ---- copy the listing -------------------------------------------------
+ *
+ * The renderer emits this button on every block and it was simply hidden: 369
+ * of them in the markup, none of them doing anything. A manual whose examples
+ * are whole ABAP classes meant to be pasted into a system is the one place
+ * where copying by hand hurts - forty lines dragged across a box that scrolls
+ * sideways - and it is the one thing a sample page does not need, because a
+ * sample page links its class on GitHub and opens it in the playground.
+ *
+ * Quiet at rest: it appears when the block is hovered or something inside it
+ * is focused, which keeps the page looking exactly as it did. It sits opposite
+ * the language label rather than over it. Keyboard reachable, and it says what
+ * it did for a second afterwards. */
+.vp-doc div[class*="language-"] .copy {
+  position: absolute; top: 6px; right: 8px; z-index: 1;
+  padding: 3px 8px;
+  border: 1px solid var(--line); border-radius: var(--radius-control);
+  background: var(--bg-sunken); color: var(--fg-dim);
+  font: inherit; font-size: 11px; line-height: 1.5;
+  cursor: pointer; opacity: 0; transition: opacity .12s ease;
+}
+.vp-doc div[class*="language-"] .copy::after { content: "Copy"; }
+.vp-doc div[class*="language-"] .copy.done::after { content: "Copied"; }
+.vp-doc div[class*="language-"] .copy.done { color: var(--accent); border-color: var(--accent); }
+.vp-doc div[class*="language-"]:hover .copy,
+.vp-doc div[class*="language-"] .copy:focus-visible { opacity: 1; }
+/* A finger cannot hover. On a touch screen the button is simply there - which
+   is also the screen where selecting forty lines by hand is worst. */
+@media (hover: none) {
+  .vp-doc div[class*="language-"] .copy { opacity: 1; }
+  .vp-doc div[class*="language-"] .lang { display: none; }
+}
+/* The label moves out of its way while the button is showing. */
+.vp-doc div[class*="language-"]:hover .lang { opacity: 0; }
+.vp-doc div[class*="language-"] .lang { transition: opacity .12s ease; }
 /* NOTHING HERE COLOURS A TOKEN, and nothing here decides which token it is.
    ABAP is tokenised by the catalogue's own `abap-highlight.mjs`, borrowed at
    build time - the same program that writes the red and the green into all 772
@@ -274,15 +326,118 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .vp-doc .custom-block-title { margin: 0 0 4px; font-size: 13px; font-weight: 700; }
 .vp-doc .custom-block p { margin: 4px 0; font-size: 13px; }
 
+/* ---- an anchor lands BELOW the bar ------------------------------------
+ *
+ * The bar is sticky and 46px tall, and the browser scrolls an anchor to the
+ * very top of the viewport - so clicking a row of "On this page", or opening
+ * a link somebody shared to `#a-section`, put the heading you asked for
+ * exactly underneath the bar. Measured: heading at 0, bar to 46. The reader
+ * arrived at their section with its title hidden and the paragraph under it
+ * looking like the start.
+ *
+ * `scroll-padding-top` on the scrolling element is the one rule that covers
+ * all of it: the browser's own anchor navigation, `scrollIntoView`, and the
+ * jump when a page is opened with a hash already in the url. 46 for the bar
+ * and 16 so the heading is not touching it. */
+html { scroll-padding-top: 62px; }
+
+/* ---- the release, in the bar ------------------------------------------
+ *
+ * Quiet: it is a fact about the page, not a place to go - the same weight and
+ * colour as the words in the menu behind it, and it only takes the accent when
+ * it is pointed at. It goes before the socials, which is where the eye stops
+ * on the way out of the bar, and it is the first thing to fold away when the
+ * bar is tight: a reader on a phone has the number in the release notes and
+ * needs the four sections more. */
+.bar .release {
+  flex: none;
+  /* The socials group sets no gap of its own - its marks carry their own
+     padding - so the number would sit against the first one. Measured: 0px
+     between them. */
+  margin-right: 10px;
+  color: var(--fg-dim);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.bar .release:hover { color: var(--accent); }
+@media (max-width: 1100px) { .bar .release { display: none; } }
+
+/* ---- skip to content --------------------------------------------------
+ *
+ * 26 tab stops stand between the top of a page and its first paragraph: the
+ * bar's five, the search, the menu button, and then the chapter menu, which is
+ * every section of the manual. On EVERY page. A reader on a keyboard, or with
+ * a screen reader, walked all of it to reach the text they came for.
+ *
+ * The link is the first thing in the body and is invisible until it is
+ * focused, which is what makes it free: it is not a design element, it is the
+ * first Tab doing something useful. `#main-content` carries `tabindex="-1"` so
+ * that focus actually lands there rather than the browser only scrolling. */
+.skip {
+  position: absolute;
+  left: 8px;
+  top: -60px;
+  z-index: 60;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius, 6px);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top .12s ease;
+}
+.skip:focus { top: 8px; }
+.doc-body:focus, .home:focus { outline: none; }
+
 /* ---- tables ---------------------------------------------------------- */
+/* THE WRAPPER IS THERE TO SCROLL, and had nothing telling it to. The renderer
+   puts every table in a `div.vp-doc-table` for exactly this - a table has a
+   minimum width its columns give it and cannot be made narrower - and the rule
+   that made it scroll lived in the theme, so it went when the theme stopped
+   rendering this site. What was left was a 482px table on a 390px phone
+   pushing the WHOLE PAGE sideways: the api reference scrolled to 675px, and
+   every line of prose on it ran off the screen. Now the table scrolls inside
+   its own box and the page does not move. */
+.vp-doc-table { overflow-x: auto; }
+
+/* AND A NAME IS NOT A WORD, so it may be broken when it has to be. Inline code
+   is one token to the line-breaker - `cl_web_http_utility=>encode_base64`,
+   `npx @abap2ui5/linter src --fix` - and a token wider than the column gives
+   its PARAGRAPH a minimum width wider than the column, which on a phone is the
+   whole page scrolling sideways again for the sake of one identifier. Breaking
+   is allowed only where it is needed: a name that fits is never broken, and a
+   listing (`pre > code`) is left alone, because there the block scrolls and a
+   broken line would be a lie about the source. */
+.vp-doc :not(pre) > code { overflow-wrap: break-word; }
 .vp-doc table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
 .vp-doc th, .vp-doc td { padding: 7px 10px; border: 1px solid var(--line); text-align: left; }
 .vp-doc th { background: var(--bg-sunken); font-weight: 600; }
-.vp-doc img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+/* `height: auto` is what makes the build's width/height attributes a RATIO
+   rather than a size: the column caps the width, and the height follows it
+   instead of being taken literally and squashing the picture. */
+.vp-doc img { max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 6px; }
 
 /* The outline column is the sample page's, and it needs its two-column
    breakpoint lifted because this layout is three columns wide. */
-@media (min-width: 1100px) { .manual .outline { display: block; position: sticky; top: 70px; } }
+@media (min-width: 1100px) {
+  .manual .outline {
+    display: block;
+    position: sticky;
+    top: 70px;
+    /* A LONG OUTLINE HAS TO SCROLL, or its bottom is simply gone. It is stuck
+       70px from the top and grows downwards, so a page with 25 sections -
+       common failures has that many - ran past the bottom of the window and
+       the last rows could not be reached at all, by mouse or by keyboard.
+       Sample pages never showed it: theirs are five headings long. The window
+       less the 70 it hangs at, less a little air at the foot. */
+    max-height: calc(100vh - 94px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
 
 .crumbs .sep { padding: 0 6px; }
 .crumbs a { text-decoration: underline; }
@@ -346,8 +501,15 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
      screen. Scoped to this element exactly as the theme scopes it to `.VPHome`,
      so `--accent` keeps its own value everywhere else - the value four bars
      share and `check:design` holds. The red itself has no name in the
-     catalogue's stylesheet, because the catalogue has no page that wears it. */
-  --a2ui5-red: #d03c4a;
+     catalogue's stylesheet, because the catalogue has no page that wears it.
+
+     #d03c4a was the mark's own red and it did not quite clear AA as TEXT:
+     4.35 against the sunken grey the Run bar under a listing is drawn on,
+     where 4.5 is the line. Two steps darker clears it on both grounds - 5.03
+     on the page, 4.61 on the grey - and takes the white on the primary button
+     from 4.74 to 5.03 with it. The hue is the same; the mark in the hero is
+     the file it always was. */
+  --a2ui5-red: #cc3644;
   --accent: var(--a2ui5-red);
 }
 :root[data-theme="dark"] .home { --a2ui5-red: #e8697a; }
@@ -656,4 +818,78 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   margin: 0; padding: 7px 14px;
   border: 1px solid var(--line); border-radius: 0 0 8px 8px;
   color: var(--fg-dim); font-size: 13px;
+}
+
+/* ---- small things a page does with no help ---------------------------- */
+
+/* A SELECTION IS THE SITE'S COLOUR, not the browser's. Dragging over a
+   paragraph turned it the operating system's blue, which is the one moment a
+   carefully kept palette handed the page to somebody else. The accent at a
+   tenth, so the text keeps its own colour and stays readable in both schemes -
+   a selection is a highlight, not a swap. */
+::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+/* THE PAGE DOES NOT JUMP SIDEWAYS between a long chapter and a short one. A
+   scrollbar appears with the content that needs it and takes ~15px off the
+   width, so following a link from a page that scrolls to one that does not
+   shifted every line of the new page. The gutter is reserved either way. (No
+   effect where scrollbars are drawn over the content, which is most phones and
+   every Mac.) */
+html { scrollbar-gutter: stable; }
+
+/* A HEADING DOES NOT END ON ONE WORD, and a paragraph does not end on one
+   either. Both are hints - a browser that does not know them lays the text out
+   exactly as it did - and both are about the same thing: the last line of a
+   block carrying a single word reads as a mistake in a manual that is mostly
+   prose. */
+.vp-doc :is(h1, h2, h3), .hero-text, .hero-tagline { text-wrap: balance; }
+.vp-doc p, .vp-doc li { text-wrap: pretty; }
+
+/* ---- for a reader who asked for less movement -------------------------
+ *
+ * The drawer slides, the copy button fades, the outline's mark moves. None of
+ * it carries meaning - it is all decoration on a state change that has already
+ * happened - and for a reader with a vestibular disorder motion on a screen is
+ * not a matter of taste. The operating system already asks them, and the
+ * browser already passes the answer on; nothing here was listening.
+ *
+ * The blanket form rather than a list, because a rule that has to be
+ * remembered every time something new animates is a rule that will be
+ * forgotten. Nothing on this site waits for `transitionend`, so cutting the
+ * durations changes what a page DOES not at all - only how fast it gets
+ * there. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- on paper ---------------------------------------------------------
+ *
+ * A manual gets printed, and saved as a PDF, and neither this site nor the
+ * catalogue had ever said anything about how. What came out was the bar
+ * across the top of page one, the whole chapter menu down the left of every
+ * page, "On this page" beside it and the article squeezed into what was
+ * left - a third of the paper spent on navigation that cannot be clicked.
+ *
+ * What is kept is the page: the crumb line (which says where it came from),
+ * the title, the article, and the footer's line of links. A listing may not
+ * be broken across two sheets if it fits on one, and a heading may not be
+ * the last thing on a sheet. */
+@media print {
+  .bar, .sidebar, .outline, .prev-next, .skip, .side-button, .side-scrim, .run-panel { display: none !important; }
+  html { scroll-padding-top: 0; }
+  body { background: #fff; }
+  .manual, .doc-body, .home { display: block; max-width: none; margin: 0; padding: 0; }
+  .vp-doc { max-width: none; }
+  a { color: inherit; }
+  pre, table, figure, img { break-inside: avoid; page-break-inside: avoid; }
+  h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
+  pre { white-space: pre-wrap; word-break: break-word; }
+  /* No single line of a paragraph left alone at the top or the foot of a
+     sheet - the one thing paper needs said that a screen does not. */
+  p, li, blockquote { orphans: 3; widows: 3; }
 }

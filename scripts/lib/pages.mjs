@@ -92,6 +92,22 @@ export const stripFrontmatter = (text) => text.replace(/^---\r?\n[\s\S]*?\r?\n--
  *  carries one (`_bind`, `check_on_init`, `s_device`), and an index that
  *  advertises `client->bind( )` is worse than no index: it is a plausible,
  *  citable, wrong API name aimed at the one reader least able to notice. */
+/** What a page says about itself, in one line: the `description` it declares,
+ *  else the first sentence of it.
+ *
+ *  The declared one wins because somebody wrote it FOR this purpose. It was
+ *  not being asked: In a Nutshell opens with the standfirst "Build UI5 Apps
+ *  Purely in ABAP", so that is what stood beside it in llms.txt and under it
+ *  in the search box - the project's slogan, where the page's own frontmatter
+ *  says "What abap2UI5 is, on one page — UI5 apps written purely in ABAP, how
+ *  the framework works, what it runs on, and where it fits." */
+export function describe(body) {
+  const fm = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const declared = fm && fm[1].match(/^description:\s*(.+)$/m);
+  const said = declared && declared[1].trim().replace(/^["']|["']$/g, '');
+  return said || summarise(body);
+}
+
 export function summarise(body) {
   const lines = stripFrontmatter(body).split('\n');
   const para = [];
@@ -117,7 +133,12 @@ export function summarise(body) {
   // cut at the end of the first sentence, but not so early that the note says
   // nothing; a period inside `sap.m.Table` or `1.71` is not a sentence end
   const stop = plain.search(/\.(?=\s|$)|:\s—|\s—\s/);
-  const first = stop > 40 ? plain.slice(0, stop + 1) : plain;
+  /* Trimmed, because two of the three cuts land ON a space: the dash forms
+     match `\s—\s`, and keeping the character at `stop` keeps that space. It
+     showed up as "…control of its own " under a search hit, in the note beside
+     an llms.txt entry, and - since the descriptions started coming from here -
+     in the meta description of two pages. */
+  const first = (stop > 40 ? plain.slice(0, stop + 1) : plain).trim();
   return first.length > 220 ? `${first.slice(0, 217)}...` : first;
 }
 

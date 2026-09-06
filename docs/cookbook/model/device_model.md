@@ -7,7 +7,7 @@ samples:
 
 abap2UI5 offers two ways to access device information: directly in the view via the UI5 device model (frontend), or in ABAP logic via `client->get( )-s_device` (backend).
 
-### Frontend
+## Frontend
 
 By default, the device model binds to the view under the name `device`. Use standard UI5 binding syntax to show device properties directly — no backend roundtrip needed:
 ```abap
@@ -17,7 +17,7 @@ By default, the device model binds to the view under the name `device`. Use stan
 ```
 For all parameters, see the [UI5 docs](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.Device).
 
-### Backend
+## Backend
 When you need device information in your ABAP logic (e.g., to adapt behavior based on the browser or screen size), read it from `client->get( )-s_device` — no custom control, no extra event needed. The value is shipped with every roundtrip:
 
 ```abap
@@ -40,7 +40,7 @@ DATA(pointer)     = device-support-pointer.
 DATA(retina)      = device-support-retina.
 ```
 
-### Both Together
+## Both Together
 
 Press **Run** — the top half reads the device model straight in the view, the
 bottom half is the same information taken from ABAP:

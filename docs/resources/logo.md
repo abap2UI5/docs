@@ -48,17 +48,17 @@ edges the day the page turns grey.
 
 ## Favicon
 
-The mark at tab size, as an `.ico`. The browser tab of this documentation. An
-abap2UI5 app sets its own tab icon from the running app, with the `set_favicon`
-frontend event — see [Title](/cookbook/browser_interaction/title).
+The mark at tab size. The browser tab of this documentation. An abap2UI5 app
+sets its own tab icon from the running app, with the `set_favicon` frontend
+event — see [Title](/cookbook/browser_interaction/title).
 
-![The abap2UI5 favicon](/favicon.ico){width=64}
+![The abap2UI5 favicon](/favicon.png){width=64}
 
 | | |
 | --- | --- |
-| File | <a href="/docs/favicon.ico"><code>favicon.ico</code></a> |
-| Size | 256 × 251, ICO |
-| Used by | `head` in `docs/.vitepress/config.mjs` |
+| File | <a href="/docs/favicon.ico"><code>favicon.ico</code></a>, <a href="/docs/favicon.png"><code>favicon.png</code></a>, <a href="/docs/apple-touch-icon.png"><code>apple-touch-icon.png</code></a> |
+| Size | 16 / 32 / 48 in the `.ico`, 64 as PNG, 180 for a home screen |
+| Used by | the `head` every page carries, from `scripts/build-site.mjs` |
 
 ## Link Preview
 
@@ -75,8 +75,8 @@ those platforms render as a large card rather than a thumbnail.
 | Used by | the `og:image` every page of this site carries |
 
 Every page shares this one image. The title and description under it are
-per-page — `transformPageData` in `docs/.vitepress/config.mjs` fills them in —
-so a shared link names the page it points at, under the project's picture.
+per-page — `scripts/build-site.mjs` writes the head of every page — so a shared
+link names the page it points at, under the project's picture.
 
 ## Code Cover
 
@@ -196,9 +196,9 @@ the top of it is red, and neither is a mistake.
 A link under a cursor still gains an underline rather than a second shade, and
 a button still keeps its colour: that rule was never about which colour it was.
 
-The site's own tokens are set in `docs/.vitepress/theme/style.css`, which takes
-its seven values from the playground's stylesheet so that the three stay one
-palette. Take the hex values from this table rather than picking them out of a
+The site's own tokens come from the playground's own stylesheet, which this
+build borrows whole (`scripts/site-css/docs.css` adds what only the manual
+needs), so that the four stay one palette. Take the hex values from this table rather than picking them out of a
 screenshot with a colour dropper: a PNG scaled in a browser hands you an
 interpolated pixel, which is a colour that appears nowhere in the brand.
 

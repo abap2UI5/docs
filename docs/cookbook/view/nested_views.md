@@ -13,7 +13,7 @@ A **nested view** in abap2UI5 is a separate XML view fragment that you inject in
 
 If you know SAPUI5's [nested views](https://sapui5.hana.ondemand.com/sdk/#/topic/df8c9c3d6f2a4d728ba7d6f4cb6c6d35) (`<mvc:XMLView viewName="..."/>`), the goal is the same — split the UI into independently managed pieces. In abap2UI5 the wiring is done from ABAP at runtime: instead of referencing a static view file, you build the nested view's XML in ABAP and tell the client to plug it into a named slot.
 
-### The Basic Pattern
+## The Basic Pattern
 
 Two ingredients are needed:
 
@@ -91,7 +91,7 @@ Press **Run** and then the button: the main view stays exactly where it is, the 
 
 The full pattern (re-render everything vs. main only vs. nested only) is in `Z2UI5_CL_SMP_APP_065`.
 
-### `nest_view_display` Parameters
+## `nest_view_display` Parameters
 
 | Parameter        | Meaning                                                                                            |
 | ---------------- | -------------------------------------------------------------------------------------------------- |
@@ -111,7 +111,7 @@ The full pattern (re-render everything vs. main only vs. nested only) is in `Z2U
 
 Always pass `method_destroy` when the nested view is going to be replaced over the lifetime of the app; otherwise consecutive calls stack new fragments on top of the old ones.
 
-### Independent Re-rendering
+## Independent Re-rendering
 
 The whole point of nested views is to re-render only what changed. Three calls cover the common needs:
 
@@ -130,7 +130,7 @@ A rule of thumb:
 
 `Z2UI5_CL_SMP_APP_065` shows the difference between the options in a single screen with one button per call.
 
-### Master-Detail with `FlexibleColumnLayout`
+## Master-Detail with `FlexibleColumnLayout`
 
 The most common real-world use: a master list on the left, detail content on the right. `sap.f.FlexibleColumnLayout` is the standard container; abap2UI5 nests the detail view into its middle column.
 
@@ -265,7 +265,7 @@ End-to-end samples:
 - `Z2UI5_CL_SMP_APP_097` — list master, `sap.ui.table.Table` in the detail with sort/filter/row actions.
 - `Z2UI5_CL_SMP_APP_098` — the three-column FCL: list, detail and detail-of-detail, with the navigation that opens each one.
 
-### Refreshing After Data Changes
+## Refreshing After Data Changes
 
 All bound data lives in a **single client-side model**, regardless of which view a binding was built in — `client->_bind( ... )` always writes to that one root model. Nothing has to be pushed by hand: when the ABAP data changes, the framework sends the new values to every rendered view — main, nested, second nested — with the response of the roundtrip that changed them.
 
@@ -276,7 +276,7 @@ DELETE t_tab2 WHERE title = ls_arg-title.
 That is the whole handler. The row is gone from the nested table on the next
 response, and nothing had to ask for it.
 
-### Two Levels of Nesting
+## Two Levels of Nesting
 
 The middle column can itself host another nested view in the end column — useful for master / detail / detail-of-detail flows. abap2UI5 exposes a second method for this level:
 
@@ -304,7 +304,7 @@ ENDMETHOD.
 
 `nest2_view_display` works exactly like `nest_view_display` but targets the second level — typically the FCL's *end* column. `Z2UI5_CL_SMP_APP_098` walks through all three columns: a list selects a row, a row-action navigates to the end column, the layout switches to `ThreeColumnsEndExpanded`.
 
-### When to Use Nested Views (and When Not To)
+## When to Use Nested Views (and When Not To)
 
 | Situation                                                       | Approach                                                                              |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -316,7 +316,7 @@ ENDMETHOD.
 
 Plain composition is the right starting point: keep helper methods that take a parent node and add children to it. Reach for nested views once the UI has clear sub-areas that need to update independently — otherwise you pay for ceremony you don't use.
 
-### Tips
+## Tips
 
 - The anchor id must be unique in the main view. The framework calls `byId` on the rendered view to find it; duplicate ids break the lookup.
 - Always provide `method_destroy` when a nested slot will be replaced more than once. Forgetting it causes nested fragments to accumulate.

@@ -28,8 +28,13 @@ const SITES = [
      * have found the FIRST nav-shaped string in a 700-line file, which is
      * exactly the silent wrong answer the shape checks below exist to
      * prevent. */
+    /* SiteMenu.vue is the theme, which no longer renders this site - but this
+     * constant is still the number that ships: `scripts/build-site.mjs` reads
+     * it through `declaredRelease` and writes "Version x.y.z" into the bar of
+     * every page. The file is where the number LIVES; the bar is where it is
+     * read. Moving it means changing both, and this gate is what says so. */
     file: 'docs/.vitepress/theme/SiteMenu.vue',
-    what: "the version in the bar's menu",
+    what: "the version the bar prints",
     re: /const VERSION = "(\d+\.\d+\.\d+)"/,
   },
   {

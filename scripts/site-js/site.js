@@ -133,8 +133,12 @@ document.addEventListener('click', (e) => {
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) last = heads.length - 1;
     }
     if (last === at) return;
-    if (at > -1) links[at].classList.remove('here');
-    if (last > -1) links[last].classList.add('here');
+    /* `aria-current` beside the class, because the mark is information and not
+       only a colour: a reader on a screen reader hears "current location" on
+       the row the class draws in the accent. The bar names its own item the
+       same way, and the menu's row is marked by the build. */
+    if (at > -1) { links[at].classList.remove('here'); links[at].removeAttribute('aria-current'); }
+    if (last > -1) { links[last].classList.add('here'); links[last].setAttribute('aria-current', 'true'); }
     at = last;
   };
   let pending = false;
@@ -174,6 +178,24 @@ document.addEventListener('click', (e) => {
   const here = document.querySelector('.sidebar a.here');
   if (here) for (let el = here.closest('details'); el; el = el.parentElement?.closest('details')) el.open = true;
 
+  /* ...AND THE MENU IS SCROLLED TO IT. The manual is 166 rows deep and the
+   * menu is its own scrolling box, which every page opened at the top of. A
+   * reader who landed on an Insights page saw Getting Started and had to
+   * scroll 1800px inside the menu to find out where they were - measured on
+   * advanced/insights/36, whose row sits at 1840 in a box 800 tall.
+   *
+   * Only when the row is actually out of view, and set rather than animated:
+   * this runs at load, and a menu that scrolls by itself in front of the
+   * reader is a different kind of wrong. Roughly a third down rather than at
+   * the very top, so the rows above it - its neighbours in the same section -
+   * are on screen too. */
+  const box = document.querySelector('.sidebar');
+  if (here && box && box.scrollHeight > box.clientHeight) {
+    const at = here.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+    if (at < box.scrollTop + 8 || at > box.scrollTop + box.clientHeight - 40)
+      box.scrollTop = Math.max(0, at - box.clientHeight / 3);
+  }
+
   const write = () => {
     try {
       localStorage.setItem(KEY, JSON.stringify(groups.filter((g) => g.open).map((g) => g.dataset.key)));
@@ -181,3 +203,31 @@ document.addEventListener('click', (e) => {
   };
   for (const g of groups) g.addEventListener('toggle', write);
 })();
+/* ---- copy a listing ---------------------------------------------------
+ *
+ * The button is the renderer's own, on every code block, and nothing had ever
+ * wired it. What it copies is the code as the file has it - the text of the
+ * <code>, with the line numbers left out, because those are drawn by a CSS
+ * counter off an empty link and are not part of the source.
+ *
+ * `navigator.clipboard` is not there on an insecure origin or in an older
+ * browser, so the button says what happened either way rather than looking
+ * broken: the class it takes for a second is the only feedback, and a refusal
+ * leaves it alone. */
+document.addEventListener('click', async (e) => {
+  const button = e.target.closest?.('div[class*="language-"] .copy');
+  if (!button) return;
+  const code = button.parentElement.querySelector('code');
+  if (!code) return;
+  /* The gutter's links carry no text, so textContent is already the source -
+     but a line is a <span> and they are joined with no newline between them
+     when the markup has none, which is why the lines are read one by one. */
+  const lines = [...code.querySelectorAll('.line')];
+  const text = (lines.length ? lines.map((l) => l.textContent).join('\n') : code.textContent).replace(/\s+$/, '');
+  try {
+    await navigator.clipboard.writeText(text);
+    button.classList.add('done');
+    setTimeout(() => button.classList.remove('done'), 1400);
+  } catch { /* a browser that refuses the clipboard: the text is still selectable */ }
+});
+

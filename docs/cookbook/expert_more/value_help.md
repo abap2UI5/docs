@@ -8,7 +8,7 @@ samples:
 
 Value help (the classic ABAP **F4** input help) lets users pick a value from a list instead of typing it. abap2UI5 covers the basics with two built-in popups and lets you build anything custom on top.
 
-### Suggestions on the Input
+## Suggestions on the Input
 
 The lightest variant — type-ahead from a bound list, no popup, no roundtrip after the initial render. Bind `suggestionitems` to an internal table and pick the columns via the `suggestion_item` template:
 
@@ -44,7 +44,7 @@ DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
 client->view_display( view->stringify( ) ).
 ```
 
-### Selection Popup
+## Selection Popup
 
 For a *"pick from this list"* dialog, open a popup with the candidates in it
 and let the press event write the chosen value back. No sub-app and no
@@ -142,11 +142,11 @@ For a ready-made picker with sorting, multi-select and a search field, the
 
 Pass `i_multiselect = abap_true` for multi-pick; the result table is then in `ls_res-table`.
 
-### DDIC Search Help
+## DDIC Search Help
 
 For value helps that exist as DDIC search help objects (`SE11` → search help), the [generic search help builder](https://github.com/axelmohnen/a2UI5-generic_search_hlp) wraps the F4 framework so you can fire any standard search help by name and get the picked row back. Install it like any other [add-on](../../resources/addons.md).
 
-### Custom Dialog
+## Custom Dialog
 
 When neither popup fits — e.g. a filter bar with multiple columns, ranges, fuzzy search — build the F4 as a separate app with its own view and call it via `nav_app_call`. See [Popup → Separated App](../popup_popover/popup.md#separated-app) for the pattern.
 

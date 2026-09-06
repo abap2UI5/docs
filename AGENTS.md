@@ -1,8 +1,11 @@
 # AGENTS.md
 
-The abap2UI5 documentation site (VitePress). Every other repository in the
-organisation has one of these; this one did not, which is part of why it drifted
-out of the toolchain bump that reached all the others.
+The abap2UI5 documentation site. `scripts/build-site.mjs` writes every page as
+static HTML and that is what is published (*The site is written by a script,
+not rendered by a theme*, below); VitePress is a markdown renderer and a second
+opinion in CI, not the site. Every other repository in the organisation has one
+of these; this one did not, which is part of why it drifted out of the
+toolchain bump that reached all the others.
 
 **This site is written for people.** Instructions aimed at AI agents were
 deliberately taken out of the pages — an agent reads `llms.txt` (below), a
@@ -27,6 +30,9 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
 | `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
+| `scripts/build-site.mjs` | **What is published.** Writes all 166 pages, the 404, the sitemap and one stylesheet; borrows the bar, its script, `catalogue.css`, `sample.css`, `search.mjs` and `abap-highlight.mjs` from a built playground checkout or from the published site; refuses to finish on a dead internal link |
+| `scripts/site-css/docs.css` | The manual's own layer over the catalogue's stylesheet — the chapter menu, the outline, prev/next, the Run panel, the skip link. Joined with the two borrowed files and minified into one `site.css` at build time |
+| `scripts/site-js/site.js` | The entry point for everything a page does beyond its markup. Bundled with the four modules it imports (below) into one `site.js` by esbuild — six requests three deep became one |
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
 | `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
 | `docs/.vitepress/theme/link-to-selection.js` | **Copy link to selection** — the button under a selection inside the article, and the fallback for a browser too old for `:~:`. `theme/text-fragment.js` is the half with no DOM in it (what to quote, how to spell it), pinned by `test/text-fragment.test.mjs` |
@@ -59,7 +65,9 @@ it are decidable, and all twelve are decided before a merge:
 | `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
 | `check:cross-site` | every link that leaves this deployment for a neighbouring one on the same origin — the playground, the catalogue, the linter's rule pages — carries a `target`. Without it VitePress's router treats the link as a route of THIS site, finds no page behind `/playground/` and renders the 404 *at that URL*, which reads as the other site being broken. Every way out of the manual was in that state at once: both bar items, the Linter rules row in the menu and the Run bar's link. Judges the built HTML, so it runs straight after `docs:build`. What it cannot see is the Run bar's link — built in a browser, in no built page — which is why `test/cross-site.test.mjs` pins that one as source |
-| `check:design` | the values the four bars are made of — the seven palette colours, the two type stacks, the two radii — against the copy [abap2UI5/playground](https://github.com/abap2UI5/playground) keeps, in **both** schemes. They are copied by hand on purpose (a stylesheet fetched across two deployments is a request in front of the first paint), and until this gate nothing compared the copies: they agreed because whoever touched one remembered the other. One had already drifted — two font stacks leading with different families, which is the same face on macOS and Windows and two different ones on Linux, so the same four words in the same bar measured 59/122/78/97px here and 65/141/87/110 there. It compares the EFFECTIVE value (a property the dark block does not redeclare keeps its light one), because the two sides switch schemes differently: `.dark` here, `[data-theme]` over there |
+| `check:design` | the values the four bars are made of — the seven palette colours, the two type stacks, the two radii — against the copy [abap2UI5/playground](https://github.com/abap2UI5/playground) keeps, in **both** schemes. They are copied by hand on purpose (a stylesheet fetched across two deployments is a request in front of the first paint), and until this gate nothing compared the copies: they agreed because whoever touched one remembered the other. One had already drifted — two font stacks leading with different families, which is the same face on macOS and Windows and two different ones on Linux, so the same four words in the same bar measured 59/122/78/97px here and 65/141/87/110 there. It compares the EFFECTIVE value (a property the dark block does not redeclare keeps its light one), because the two sides switch schemes differently: `.dark` here, `[data-theme]` over there.
+
+**What it now guards is the second opinion, not the site.** Since the switch, the published pages link the playground's own `catalogue.css`, borrowed whole at build time — so the palette cannot drift from the playground's there, by construction. `style.css` is VitePress's, and VitePress is no longer served. Keep the gate: it is what says so when somebody edits `style.css` expecting the site to change |
 | `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
 **All four walking gates carry a floor.** A gate that checked nothing reports
@@ -317,7 +325,7 @@ not it is also treated as a page.
 
 | | |
 |---|---|
-| the theme | The key is the playground's (`abap2ui5-playground:theme`). A head script in `config.mjs` reads it before the first paint and hands it to VitePress's own appearance handling; `SiteMenu.vue` writes it back when the button is pressed. A reader crossing from a dark playground gets a dark page, with no flash |
+| the theme | The key is the playground's (`abap2ui5-playground:theme`). The head `build-site.mjs` writes reads it before anything can paint — before the stylesheet is even asked for — so a reader crossing from a dark playground gets a dark page with no flash. What writes it back is the bar's own inline script, **borrowed from the sample page the bar comes from**: the markup was being taken and the behaviour was not, so for a while the switch was drawn in the right place and did nothing at all |
 | where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the section the markup declares: the href it carries, or a wider `scope` the caller names for a link written deeper than what it restores (the other three bars point Documentation at the first page of the manual and still come back to wherever the reader was in it). A poisoned or stale key costs a restored position and nothing else. The cases are `test/site-memory.test.mjs` |
 | where **on** the page you were | `theme/site-memory.js` again, keys `:scroll` (a small map of path → offset, the twelve most recent) and `:returning`. Restored **on arrival by the bar and nowhere else**: a bar item writes one record saying where it is sending the reader, and the page that *is* that, arriving within half a minute and with no hash of its own, honours it. Restoring on every load would fight the browser's own back-and-forward restoration and would drop a reader who followed an ordinary link into the middle of a page with nothing to explain it. A stored offset is checked the same way a stored path is — `scrollTo` takes whatever it is given. `test/scroll-memory.test.mjs` |
 | the last thing you searched for | `theme/search-engine.js`, key `:search`. A hit opens another page, often another deployment, and the box that opens there was empty; the query is written down as a hit is opened and the next box starts with it, selected, so the first keystroke replaces it. Checked (a string, short, and less than half an hour old) rather than used. `test/search.test.mjs` |
@@ -375,20 +383,51 @@ markdown; it replaces the FRAME around it. `docs/.vitepress/config.mjs` is
 still the single source of the sidebar and of the markdown transforms, read by
 both builds.
 
-**What it borrows.** The bar, `catalogue.css`, `sample.css` and `search.mjs`
-come from the playground: from a BUILT checkout when there is one
-(`PLAYGROUND_HOME`, `.playground`, `../playground` — the three `check:design`
-looks in), and otherwise over the network from the published site, which is
-what CI uses. `PLAYGROUND_URL` forces the fetched path, which is how it is
-exercised without waiting for CI to be its first run. The search box is
-therefore not a second implementation of the catalogue's — it is the same file,
-mounting into the `[data-search]` slot the borrowed bar already carries.
+**What it borrows.** The bar, **the bar's own inline script**,
+`catalogue.css`, `sample.css`, `search.mjs` and `abap-highlight.mjs` come from
+the playground: from a BUILT checkout when there is one (`PLAYGROUND_HOME`,
+`.playground`, `../playground` — the three `check:design` looks in), and
+otherwise over the network from the published site, which is what CI uses.
+`PLAYGROUND_URL` forces the fetched path, which is how it is exercised without
+waiting for CI to be its first run. The search box is therefore not a second
+implementation of the catalogue's — it is the same file, mounting into the
+`[data-search]` slot the borrowed bar already carries.
+
+The bar's script is the one to be careful about, and it is the reason
+*behaviour* is in that list rather than only markup. Two of the bar's parts do
+nothing without it: the light/dark switch, and the `<details>` menu behind the
+last button, which has to close on a click elsewhere and on Escape. It sits
+inline at the end of a sample page's body and is found by what it does
+(`getElementById("extra")`), never by position, and the match may not cross a
+`</script>`. The script BESIDE it is deliberately not taken: that one writes
+`last-samples`, which from here would tell the Samples item that the manual is
+a sample page.
 
 **What it owns.** `scripts/site-css/docs.css` (the manual's own layer over the
 catalogue's two) and `scripts/site-js/site.js`, which calls the four modules in
 `theme/` that were always framework-free: the Run button, the line numbers and
 their addresses, the link to a selection, the position memory. `theme/index.js`
 was the only Vue in front of them.
+
+**What it ships is one of each.** The three stylesheets are joined in cascade
+order and minified into `site.css` (72 kB → 30, and 21.6 → 6.5 over the wire,
+because these files are written in the house style and comments are most of
+them); `site.js` and its four modules are bundled by esbuild into one file (six
+requests three deep → one). Both are BUILD steps: the sources stay readable and
+the theme still imports the same modules, so VitePress's build goes on being
+the second opinion. The minified join was checked against the three files
+unminified — 3572 elements, every computed property, light and dark, no
+difference.
+
+**And it measures what it can.** Every `<img>` it writes carries the intrinsic
+size read out of the file's own header, so a picture reserves its box before it
+arrives instead of pushing the paragraph under it down; `.vp-doc img` sets
+`height: auto`, which is what turns the pair into a ratio rather than a size. A
+`sitemap.xml` names all 166 pages with the date of the commit that last touched
+each — not the date of the build, which would tell a crawler that every page
+changed on every deploy. `robots.txt` is deliberately not written, for the
+reason the playground gives: a crawler reads it at the ORIGIN root, and that
+belongs to another repository.
 
 **The build is itself a gate.** It refuses to finish on a dead internal link —
 33,275 of them are checked on every run — which is what VitePress's own build
