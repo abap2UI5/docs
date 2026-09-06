@@ -436,6 +436,29 @@
   font-size: 13px;
 }
 
+/* "On this page", level with the crumb line beside it.
+ *
+ * THE BOX WAS ALREADY RIGHT AND THE LETTERS WERE NOT, which is why this was
+ * called done once already. Both columns open at 94px - the rule above sets
+ * the size and `.VPDoc`\'s padding sets the top - but VitePress gives this
+ * heading `line-height: 32px` on what is now 13px text, and a line box is
+ * taller than its glyphs by half the difference at each end. Measured with a
+ * Range around the text node rather than the element:
+ *
+ *              box top   GLYPH top
+ *   crumbs        94        96
+ *   On this page  94       102      <- six pixels, and the eye sees glyphs
+ *
+ * The catalogue never had it: its `.outline-head` inherits the 1.55 that
+ * carries the whole page, so its letters land at 96 beside a crumb line at 96.
+ * Same ratio here, and the 8px of air the 32px was doing double duty as is
+ * stated instead - a line-height that is also a margin is a number that cannot
+ * be changed for one job without moving the other. */
+.VPDocAside .outline-title {
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+
 /* …and the group headings in the sidebar back ABOVE the pages under them.
  *
  * The previous version of this rule put them at 12px muted, one step BELOW
