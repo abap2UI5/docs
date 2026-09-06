@@ -259,8 +259,14 @@ const RELEASE = declaredRelease(ROOT);
 const withRelease = (bar) => {
   const at = '<div class="socials">';
   if (!bar.includes(at)) throw new Error("the borrowed bar has no socials group to put the release before");
-  return bar.replace(at, `<a class="release" href="${BASE}resources/changelog.html"
-     title="What changed in this release">Version ${esc(RELEASE)}</a>\n  ${at}`);
+  /* INSIDE the socials group, not before it. The search slot is
+     `position: absolute` - the box is centred in the bar rather than laid out
+     in it - so anything placed in the flow after the nav lands underneath it:
+     measured at x=606 with the search box at 603, the same 220px of bar. The
+     socials are the flow's right-hand end, which is where this belongs
+     anyway. */
+  return bar.replace(at, `${at}\n    <a class="release" href="${BASE}resources/changelog.html"
+       title="What changed in this release">Version ${esc(RELEASE)}</a>`);
 };
 
 const marked = (find) => inNav(BAR, (nav) => once(nav, find, ' aria-current="page"'));

@@ -351,6 +351,10 @@ html { scroll-padding-top: 62px; }
  * needs the four sections more. */
 .bar .release {
   flex: none;
+  /* The socials group sets no gap of its own - its marks carry their own
+     padding - so the number would sit against the first one. Measured: 0px
+     between them. */
+  margin-right: 10px;
   color: var(--fg-dim);
   font-size: 12px;
   text-decoration: none;
