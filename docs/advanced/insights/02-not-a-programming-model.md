@@ -16,7 +16,10 @@ INTERFACE z2ui5_if_app PUBLIC.
 ENDINTERFACE.
 ```
 
-The framework calls `main( )` on every roundtrip, your class decides what to
+(The real interface also declares a few attributes the framework manages for
+you — you can ignore them.)
+
+The framework calls `main( )` on every roundtrip; your class decides what to
 display and how to react. That is the whole contract.
 
 ## What Is Not in It
@@ -26,8 +29,8 @@ No BSP application per app, no frontend artefact to transport. You activate the
 class, call the ICF endpoint, and the app is there.
 
 That is about scope, not about size — and it has a pleasant side effect. Since
-abap2UI5 just serves a UI5 screen and never asks where your data comes from, it
-can come from wherever it already lives.
+abap2UI5 just serves a UI5 screen and never asks where your data comes from,
+the data can come from wherever it already lives.
 
 ## The Same Class Around Three Backends
 
@@ -42,6 +45,8 @@ CLASS zcl_travel_edit DEFINITION PUBLIC.
 
     DATA travel_id   TYPE string.
     DATA description TYPE string.
+    DATA order_id    TYPE string.
+    DATA po_number   TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
@@ -57,10 +62,12 @@ CLASS zcl_travel_edit IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->get_event( ) = `SAVE`.
+
+    IF client->check_on_navigated( ).
+      set_view( ).
+    ELSEIF client->check_on_event( `SAVE` ).
       on_save( ).
     ENDIF.
-    set_view( ).
 
   ENDMETHOD.
 
@@ -94,14 +101,17 @@ CLASS zcl_travel_edit IMPLEMENTATION.
     MODIFY ENTITIES OF z_i_travel
       ENTITY travel
         UPDATE FIELDS ( description )
-        WITH VALUE #( ( %key-travel_id = travel_id
+        WITH VALUE #( ( %tky-travel_id = travel_id
                         description    = description ) )
       FAILED DATA(failed).
 
-    IF failed IS INITIAL.
-      COMMIT ENTITIES.
-      client->message_toast_display( `Saved` ).
+    IF failed IS NOT INITIAL.
+      client->message_box_display( text = `Not saved` type = `error` ).
+      RETURN.
     ENDIF.
+
+    COMMIT ENTITIES.
+    client->message_toast_display( `Saved` ).
 
   ENDMETHOD.
 
@@ -109,8 +119,11 @@ ENDCLASS.
 ```
 
 Nothing in the save handler is abap2UI5 except the toast. The business object
-does not notice anything unusual — validations, determinations, authorizations
-and draft handling all still run, because EML does not care who calls it.
+does not notice anything unusual — validations, determinations and
+authorizations all still run, because EML does not care who calls it. Draft
+handling is there for the asking too; it just wants the draft actions rather
+than a plain update, and the
+[cookbook](/cookbook/eml_cds_sql/draft_handling) walks through them.
 
 That handler is also the only place in the class that knows what is behind the
 screen. Straight to a database table:
@@ -123,10 +136,13 @@ screen. Straight to a database table:
 
     MODIFY ztravel FROM @row.
 
-    IF sy-subrc = 0.
-      COMMIT WORK AND WAIT.
-      client->message_toast_display( `Saved` ).
+    IF sy-subrc <> 0.
+      client->message_box_display( text = `Not saved` type = `error` ).
+      RETURN.
     ENDIF.
+
+    COMMIT WORK AND WAIT.
+    client->message_toast_display( `Saved` ).
 
   ENDMETHOD.
 ```
@@ -166,7 +182,7 @@ proxy to another system, or whatever SAP releases next year — none of it has t
 be taught to abap2UI5.
 
 And that is the advantage, a modest one: a framework that asks for one method
-cannot reorganise your architecture. It never learns enough about it to try.
+cannot reorganize your architecture. It never learns enough about it to try.
 What you have already built stays where it is and keeps its rules.
 
 ## And What You Do Not Get

@@ -49,10 +49,13 @@ CLASS zcl_job_monitor IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
+
     IF client->check_on_init( ).
       model_init( ).
+      set_view( ).
+    ELSEIF client->check_on_navigated( ).
+      set_view( ).
     ENDIF.
-    set_view( ).
 
   ENDMETHOD.
 
