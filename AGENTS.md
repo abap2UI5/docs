@@ -194,8 +194,9 @@ the `1.55` on `body` in `src/shell/shell.css`). They were 26/34/600, 16/22/600
 and 14/22 here — close enough to look like the same page and far enough that a
 heading read lighter on one side of the bar than on the other. h3 and h4 have
 no counterpart, because a sample page has two heading levels and the manual
-has four; they keep their step and take the 1.55. **`check:design` does not
-cover these** — it compares custom properties, and neither side declares its
+has four; they keep their step and take the 1.55. The ABAP is the catalogue's
+too - `12.5px` on the same 1.55 (`.source-body`), because the same class often
+appears on both documents. **`check:design` does not cover these** — it compares custom properties, and neither side declares its
 type scale as one. Changing the catalogue's h1 means changing this file's, and
 nothing will tell you.
 

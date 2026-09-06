@@ -348,10 +348,20 @@
  * screen. */
 :root {
   --vp-code-line-height: 1.55;
-  /* 13px flat, not the theme's `.875em`. The relative unit made a listing
-   * inside a callout or a list item shrink with its container, so the same
-   * ABAP was set at three different sizes on one page. */
-  --vp-code-font-size: 13px;
+  /* 12.5px flat, not the theme's `.875em`. Two decisions in one line, and
+   * they are independent.
+   *
+   * FLAT, because the relative unit made a listing inside a callout or a list
+   * item shrink with its container, so the same ABAP was set at three
+   * different sizes on one page.
+   *
+   * 12.5, because that is what the catalogue prints a class at
+   * (`.source-body` in tools/sample-pages.mjs) - and the same ABAP appears on
+   * both documents, often the same class. It was 13 here, half a pixel that
+   * nobody sees on one screen and that shows the moment a reader has the
+   * sample page and the chapter explaining it open in two tabs. The 1.55
+   * above is already the catalogue's, so the whole listing now matches. */
+  --vp-code-font-size: 12.5px;
 }
 
 .vp-doc div[class*='language-'] pre {
