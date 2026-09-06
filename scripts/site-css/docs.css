@@ -134,6 +134,11 @@
     border: 0;
     transform: none;
     transition: none;
+    /* ...AND BACK UNDER THE BAR. The drawer above stands at 40 because it
+       covers the page; standing there while placed in the margin instead put
+       the menu over the bar, which is the catalogue's and sits at 5 - so
+       scrolling drew chapter names across Home and Documentation. */
+    z-index: auto;
   }
 }
 
