@@ -164,6 +164,27 @@ the bar's **measure**: 20px from either edge at every width, 12px on a phone,
 over the whole width and never centred, which is the catalogue's bar and which
 `style.css` (*the measure*) holds the theme's two nav layouts to.
 
+**The type is Inter, and it is one of the copied values.** `--vp-font-family-base`
+here and `--font-ui` in the playground's `catalogue.css` and `shell.css` name
+the same string, which is what `check:design` holds. The two Latin subsets are
+committed — `docs/public/fonts/`, and the same two files in the playground's
+`src/fonts/` — with the old system stack behind Inter as the fallback; the
+`unicode-range` on each face means anything outside Latin never asks for a
+file. `theme/index.js` imports `vitepress/theme-without-fonts`, because the
+theme's own `fonts.css` brings all fourteen subsets (628 kB) and a Google Fonts
+`@import` with them, and `config.mjs` preloads the roman one because it is what
+the first line of every page is set in.
+
+Changing the face means changing three files in two repositories, and **the
+playground has to land first**: this gate reads the playground's `main`, so
+between the two merges the deploy here is red.
+
+Why it is not `system-ui` any more, which it was for a long time: the same page
+was a different page on every desk. The home page's headline sits on one line
+in SF Pro and wraps in whatever a Linux browser picks, and no measurement of
+this site held further than the machine it was taken on. SF Pro itself is
+Apple's and may not be redistributed; Inter is the nearest face that may be.
+
 **A page opens the same way on both documents.** 48px under the bar, a crumb
 trail, then the title — and on the right, level with the trail, *On this page*.
 The catalogue's per-sample pages had all of it and the manual had none of it,

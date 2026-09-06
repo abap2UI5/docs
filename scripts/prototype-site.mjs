@@ -308,6 +308,19 @@ const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
    the `[data-search]` slot the borrowed bar already carries and reading the
    index this repository publishes. */
 for (const f of ['catalogue.css', 'sample.css', 'search.mjs']) fs.copyFileSync(path.join(built, f), path.join(OUT, 'docs', f));
+/* One adaptation to the borrowed stylesheet, and it is about DEPTH, not taste.
+ * catalogue.css names the type as `../fonts/inter-…woff2`, which is right where
+ * it lives: one directory down, in `dist/samples/`, beside `dist/fonts/`. Here
+ * it sits at the root of this deployment, so `../fonts/` would leave the site
+ * altogether - `/fonts/` on the shared origin is nobody's. The same two files
+ * are already in this repository under docs/public/fonts and land beside it,
+ * so the `..` goes and nothing else changes. */
+{
+  const at = path.join(OUT, 'docs', 'catalogue.css');
+  const css = fs.readFileSync(at, 'utf8');
+  if (!css.includes('../fonts/')) throw new Error('catalogue.css no longer names ../fonts/ - check what the type is now');
+  fs.writeFileSync(at, css.replace(/\.\.\/fonts\//g, 'fonts/'));
+}
 fs.copyFileSync(path.join(ROOT, 'scripts', 'prototype-css', 'docs.css'), path.join(OUT, 'docs', 'docs.css'));
 fs.copyFileSync(path.join(ROOT, 'scripts', 'prototype-js', 'site.js'), path.join(OUT, 'docs', 'site.js'));
 /* The behaviour a page has beyond its markup was already framework-free in

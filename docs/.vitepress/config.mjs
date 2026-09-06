@@ -52,12 +52,28 @@ export default defineConfig({
       "link",
       { rel: "apple-touch-icon", sizes: "180x180", href: "/docs/favicon.ico" },
     ],
-    // No third-party stylesheets at all, and none of them render-blocking.
-    // Montserrat and Fira Code were requested here and applied by nothing —
-    // no rule in theme/style.css, or anywhere else, ever named either one —
-    // so the site paid for two stylesheets and four font files it never
-    // showed a glyph from. The type is the system stack, set in
-    // theme/style.css.
+    // THE TYPE. One file, from this origin, and preloaded because it is what
+    // the first line of every page is set in — a `@font-face` is only
+    // discovered once the stylesheet has been parsed, which is a round trip
+    // later than it needs to be. The italic is not preloaded: it is fetched by
+    // the pages that have any, and most have none.
+    //
+    // Self-hosted, not requested from a font CDN. Montserrat and Fira Code
+    // used to be asked for here and were applied by nothing — no rule in
+    // theme/style.css, or anywhere else, ever named either one — so the site
+    // paid for two stylesheets and four font files it never showed a glyph
+    // from. What is below is the opposite case: one face, named by every rule
+    // on the site, and the reader's own stack behind it if it never arrives.
+    [
+      "link",
+      {
+        rel: "preload",
+        href: "/docs/fonts/inter-roman-latin.woff2",
+        as: "font",
+        type: "font/woff2",
+        crossorigin: "",
+      },
+    ],
     //
     // Font Awesome went the same way, one release later. It was loaded on
     // EVERY page of the site — a render-blocking stylesheet plus the webfont
