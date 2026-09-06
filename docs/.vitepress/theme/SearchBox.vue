@@ -97,7 +97,13 @@ const SUGGESTIONS = ['table', 'dialog', 'value help', 'upload', 'chart', 'naviga
  * has always taken either (`metaKey || ctrlKey`); only the label was wrong. */
 const APPLE = typeof navigator !== 'undefined'
   && /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent || '');
-const META = APPLE ? '⌘' : 'Ctrl';
+/* ONE KEY CAP, NOT TWO PUSHED TOGETHER. This was `⌘`/`Ctrl` and `K` as two
+ * adjacent <kbd>s with nothing between them, which renders as "CtrlK" - a key
+ * nobody has. The catalogue's row has been one cap reading "Ctrl K" since it
+ * was written (`hint(" from anywhere", ["/", apple ? "⌘K" : "Ctrl K"], true)`
+ * in src/shell/search-box.mjs); this is that, and the " or " before it is
+ * already in the markup. */
+const META = APPLE ? '⌘K' : 'Ctrl K';
 function suggest(word) {
   query.value = word;
   input.value?.focus();
@@ -292,7 +298,7 @@ const parts = (text) => highlight(text, query.value);
           <span><kbd>↑</kbd><kbd>↓</kbd> to move</span>
           <span><kbd>↵</kbd> to open</span>
           <span><kbd>esc</kbd> to close</span>
-          <span class="a2ui5-search-keys-end"><kbd>/</kbd> or <kbd>{{ META }}</kbd><kbd>K</kbd> from anywhere</span>
+          <span class="a2ui5-search-keys-end"><kbd>/</kbd> or <kbd>{{ META }}</kbd> from anywhere</span>
         </div>
       </div>
     </div>
