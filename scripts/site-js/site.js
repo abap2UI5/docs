@@ -174,6 +174,24 @@ document.addEventListener('click', (e) => {
   const here = document.querySelector('.sidebar a.here');
   if (here) for (let el = here.closest('details'); el; el = el.parentElement?.closest('details')) el.open = true;
 
+  /* ...AND THE MENU IS SCROLLED TO IT. The manual is 166 rows deep and the
+   * menu is its own scrolling box, which every page opened at the top of. A
+   * reader who landed on an Insights page saw Getting Started and had to
+   * scroll 1800px inside the menu to find out where they were - measured on
+   * advanced/insights/36, whose row sits at 1840 in a box 800 tall.
+   *
+   * Only when the row is actually out of view, and set rather than animated:
+   * this runs at load, and a menu that scrolls by itself in front of the
+   * reader is a different kind of wrong. Roughly a third down rather than at
+   * the very top, so the rows above it - its neighbours in the same section -
+   * are on screen too. */
+  const box = document.querySelector('.sidebar');
+  if (here && box && box.scrollHeight > box.clientHeight) {
+    const at = here.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
+    if (at < box.scrollTop + 8 || at > box.scrollTop + box.clientHeight - 40)
+      box.scrollTop = Math.max(0, at - box.clientHeight / 3);
+  }
+
   const write = () => {
     try {
       localStorage.setItem(KEY, JSON.stringify(groups.filter((g) => g.open).map((g) => g.dataset.key)));

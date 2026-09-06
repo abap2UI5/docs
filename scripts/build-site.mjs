@@ -841,6 +841,12 @@ for (const page of pages) {
  * 404.html at the root of the artefact, which is this. It carries the bar, so
  * a reader who mistyped a chapter is one click from the four sections rather
  * than on a white page with a sentence on it. */
+/* Every page as [path, name], for the suggestions at the foot of the 404 - the
+   one place that wants the whole list inside one page. `<` is escaped, so no
+   chapter title can end the script block early. */
+const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, ''), nameOf(f)]))
+  .replace(/</g, '\\u003c');
+
 fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   title: 'Not found | abap2UI5',
   head: meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC }),
@@ -856,13 +862,66 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
       <h1>This page is not here</h1>
       <p>The address does not name a page of this manual. It may have been
          renamed, or the link that brought you here may be old.</p>
-      <p>The menu beside this lists every chapter, the box in the bar searches
-         the manual and all ~770 samples at once, and
+      <p>Chapters lists every page of the manual, the box in the bar searches
+         it and all ~770 samples at once, and
          <a href="${BASE}get_started/about.html">In a Nutshell</a> is where the
          manual starts.</p>
+      <div id="near" hidden><h2>Did you mean</h2><ul></ul></div>
     </div>
   </div>
-</main>`,
+</main>
+<script>
+/* WHAT THE ADDRESS ALMOST SAID. Chapters get renamed - two dozen urls that
+   once worked are 404s now - and every link to one of them out in a blog post,
+   an issue or a Slack message lands here. A page that only says "not here" and
+   points at the front of the manual makes the reader search for something they
+   had already named.
+   The whole index is IN this page: 166 titles and paths, about 12 kB, so
+   nothing is fetched to answer and it works with the network already gone.
+   Matching is on the words of the path, which is what an old url still carries
+   - /technical/how_it_all_works still says "how it all works" - scored by how
+   many of them a page's own path and title contain.
+   (No backticks and no backslashes anywhere in here: this whole block is
+   inside a template literal, which eats both - a backtick ends the string
+   mid-sentence, and a backslash is stripped before the browser ever sees it,
+   which turned /^\// into /^// and made the rest of the line a comment. Both
+   happened. The character classes below say the same thing without one.) */
+(function () {
+  var pages = ${nearby};
+  var words = decodeURIComponent(location.pathname)
+    .replace(/[.]html?$/, "").split(/[^a-zA-Z0-9]+/).filter(function (w) { return w.length > 2; })
+    .map(function (w) { return w.toLowerCase(); });
+  if (!words.length) return;
+  /* A WHOLE WORD IS WORTH MORE THAN A SUBSTRING, or "all" in an old address
+     matches "installation" and the suggestions are noise. Both are counted,
+     the whole word at three times the weight, and a substring only from four
+     letters up. */
+  var scored = pages.map(function (p) {
+    var tokens = (p[0] + " " + p[1]).toLowerCase().split(/[^a-z0-9]+/);
+    var hay = tokens.join(" ");
+    var n = 0;
+    for (var i = 0; i < words.length; i++) {
+      if (tokens.indexOf(words[i]) >= 0) n += 3;
+      else if (words[i].length > 3 && hay.indexOf(words[i]) >= 0) n += 1;
+    }
+    return [n, p];
+  }).filter(function (s) { return s[0] >= 3; })
+    .sort(function (a, b) { return b[0] - a[0] || a[1][1].length - b[1][1].length; })
+    .slice(0, 5);
+  if (!scored.length) return;
+  var box = document.getElementById("near");
+  var ul = box.querySelector("ul");
+  scored.forEach(function (s) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = "${BASE}" + s[1][0].replace(/^[/]/, "") + ".html";
+    a.textContent = s[1][1];
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+  box.hidden = false;
+})();
+</script>`,
 }));
 
 /* ---- WHAT IS HERE, FOR A CRAWLER --------------------------------------

@@ -366,7 +366,22 @@ html { scroll-padding-top: 62px; }
 
 /* The outline column is the sample page's, and it needs its two-column
    breakpoint lifted because this layout is three columns wide. */
-@media (min-width: 1100px) { .manual .outline { display: block; position: sticky; top: 70px; } }
+@media (min-width: 1100px) {
+  .manual .outline {
+    display: block;
+    position: sticky;
+    top: 70px;
+    /* A LONG OUTLINE HAS TO SCROLL, or its bottom is simply gone. It is stuck
+       70px from the top and grows downwards, so a page with 25 sections -
+       common failures has that many - ran past the bottom of the window and
+       the last rows could not be reached at all, by mouse or by keyboard.
+       Sample pages never showed it: theirs are five headings long. The window
+       less the 70 it hangs at, less a little air at the foot. */
+    max-height: calc(100vh - 94px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
 
 .crumbs .sep { padding: 0 6px; }
 .crumbs a { text-decoration: underline; }
