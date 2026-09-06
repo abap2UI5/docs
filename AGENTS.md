@@ -177,6 +177,15 @@ comes from the row being rendered, and this one is walked out of
 sections is a second list to keep in step — the bar's old Guide dropdown was
 exactly that and it drifted twice.
 
+**So is the outline column.** *On this page* is the catalogue's row for row:
+13px on `1.4` with `4px 0` of padding and 2px between rows, and its heading
+level with the crumb line beside it. Two of those were wrong for a while in a
+way a measurement of the ELEMENT could not see - VitePress sets
+`line-height: 32px` on `.outline-title`, and a line box is taller than its
+glyphs, so the words sat 6px low in a box that started in the right place.
+**Measure the glyphs** (a `Range` over the text node), not the element, when
+checking that two documents line up.
+
 **The type scale is the catalogue's too, and by hand.** The page title, the
 section heading and the body are the catalogue's numbers written into
 `theme/style.css`: `26px/1.25` bold for h1, `15px/1.55` bold for h2 and
