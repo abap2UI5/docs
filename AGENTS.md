@@ -177,6 +177,19 @@ comes from the row being rendered, and this one is walked out of
 sections is a second list to keep in step — the bar's old Guide dropdown was
 exactly that and it drifted twice.
 
+**The type scale is the catalogue's too, and by hand.** The page title, the
+section heading and the body are the catalogue's numbers written into
+`theme/style.css`: `26px/1.25` bold for h1, `15px/1.55` bold for h2 and
+`14px/1.55` for prose (`.sample h1` and `h2` in `tools/sample-pages.mjs`, and
+the `1.55` on `body` in `src/shell/shell.css`). They were 26/34/600, 16/22/600
+and 14/22 here — close enough to look like the same page and far enough that a
+heading read lighter on one side of the bar than on the other. h3 and h4 have
+no counterpart, because a sample page has two heading levels and the manual
+has four; they keep their step and take the 1.55. **`check:design` does not
+cover these** — it compares custom properties, and neither side declares its
+type scale as one. Changing the catalogue's h1 means changing this file's, and
+nothing will tell you.
+
 **The accent is SAP blue, and the mark is still red.** `#0a6ed1` / `#4aa3ff` is
 what a link, a button and the hero name are set in; `#d03c4a` is the circle in
 the wordmark and belongs to the mark alone. `resources/logo.md` is the page
@@ -239,6 +252,16 @@ router never looks at it, and VitePress gives external links in a page a
 menu ever got this wrong. `check:cross-site` now holds the whole built site to
 it, and the direction back needs nothing: the other three documents are static
 pages with no router in front of them.
+
+**The raw markdown is a copy, not a second site.** `generate-llms.mjs` writes
+one `.md` per page into `docs/public/`, VitePress copies that directory to the
+root of the site, and `llms.txt` points an agent at
+`/docs/cookbook/model/trees.md`. `srcDir` is `docs/`, so those files were ALSO
+globbed as pages: every chapter of the manual was rendered a second time, at
+`/docs/public/cookbook/model/trees.html` — 165 files no sidebar names, no
+search index carries and nothing links to. `srcExclude` in `config.mjs` stops
+it; the raw markdown is unaffected, because publicDir copies a file whether or
+not it is also treated as a page.
 
 **One origin means one localStorage**, which is what four things here rely on:
 
