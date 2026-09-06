@@ -798,6 +798,31 @@ html { scroll-padding-top: 62px; }
   color: var(--fg-dim); font-size: 13px;
 }
 
+/* ---- small things a page does with no help ---------------------------- */
+
+/* A SELECTION IS THE SITE'S COLOUR, not the browser's. Dragging over a
+   paragraph turned it the operating system's blue, which is the one moment a
+   carefully kept palette handed the page to somebody else. The accent at a
+   tenth, so the text keeps its own colour and stays readable in both schemes -
+   a selection is a highlight, not a swap. */
+::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+/* THE PAGE DOES NOT JUMP SIDEWAYS between a long chapter and a short one. A
+   scrollbar appears with the content that needs it and takes ~15px off the
+   width, so following a link from a page that scrolls to one that does not
+   shifted every line of the new page. The gutter is reserved either way. (No
+   effect where scrollbars are drawn over the content, which is most phones and
+   every Mac.) */
+html { scrollbar-gutter: stable; }
+
+/* A HEADING DOES NOT END ON ONE WORD, and a paragraph does not end on one
+   either. Both are hints - a browser that does not know them lays the text out
+   exactly as it did - and both are about the same thing: the last line of a
+   block carrying a single word reads as a mistake in a manual that is mostly
+   prose. */
+.vp-doc :is(h1, h2, h3), .hero-text, .hero-tagline { text-wrap: balance; }
+.vp-doc p, .vp-doc li { text-wrap: pretty; }
+
 /* ---- for a reader who asked for less movement -------------------------
  *
  * The drawer slides, the copy button fades, the outline's mark moves. None of
@@ -842,4 +867,7 @@ html { scroll-padding-top: 62px; }
   pre, table, figure, img { break-inside: avoid; page-break-inside: avoid; }
   h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
   pre { white-space: pre-wrap; word-break: break-word; }
+  /* No single line of a paragraph left alone at the top or the foot of a
+     sheet - the one thing paper needs said that a screen does not. */
+  p, li, blockquote { orphans: 3; widows: 3; }
 }

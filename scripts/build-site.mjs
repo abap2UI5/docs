@@ -36,7 +36,15 @@ const OUT = process.argv[2] || path.join(ROOT, '.prototype');
 const BASE = '/docs/';
 const started = Date.now();
 
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+/* Three characters were not enough: this is used inside ATTRIBUTES in nine
+ * places - a canonical url, a description, an alt text, the menu's data-key -
+ * and a double quote in any of them ends the attribute and starts writing
+ * markup. No page carries one today, which is exactly the kind of "today" that
+ * changes the day somebody writes `description: The "client" object`. In text
+ * a `&quot;` is drawn as a quote, so nothing looks different for it. */
+const esc = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
 /* ---- which files are pages ------------------------------------------ */
 const pages = [];
@@ -332,12 +340,28 @@ const SITE_URL = 'https://abap2ui5.github.io/docs';
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
 const SITE_DESC = 'Build UI5 Apps Purely in ABAP';
 
+/* The published markdown of a page, when there is one. `generate-llms.mjs`
+ * writes one per SIDEBAR page - the front door and the 404 are not in the
+ * sidebar and have none - and a head that names a file nobody wrote is a
+ * 404 advertised in every preview and every crawler's queue. Asked of the
+ * filesystem rather than assumed. */
+const markdownTwin = (page) => {
+  const at = page.replace(/\.md$/, '.md');
+  return fs.existsSync(path.join(DOCS, 'public', at)) ? `${SITE_URL}/${at}` : null;
+};
+
 const canonical = (page) => `${SITE_URL}/${page}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
 
 const meta = ({ page, title, description, kind = 'article' }) => {
   const url = canonical(page);
   return [
     ['link', { rel: 'canonical', href: url }],
+    /* THE SAME PAGE AS MARKDOWN. `generate-llms.mjs` publishes one per page
+       under docs/public and llms.txt tells a reader to "drop the .md for the
+       rendered version" - but nothing on the page itself said the twin
+       existed, so it could only be found by reading the index first. This is
+       the standard way to say it, and it is one line. */
+    ...(markdownTwin(page) ? [['link', { rel: 'alternate', type: 'text/markdown', href: markdownTwin(page) }]] : []),
     ['meta', { name: 'description', content: description }],
     /* A chapter is an `article` and the front door is the `website`. Every page
        said `website`, which is what a preview card uses to decide whether it is
@@ -346,6 +370,7 @@ const meta = ({ page, title, description, kind = 'article' }) => {
        the WebSite it is part of. */
     ['meta', { property: 'og:type', content: kind }],
     ['meta', { property: 'og:site_name', content: 'abap2UI5' }],
+    ['meta', { property: 'og:locale', content: 'en_US' }],
     ['meta', { property: 'og:url', content: url }],
     ['meta', { property: 'og:title', content: title }],
     ['meta', { property: 'og:description', content: description }],
@@ -416,6 +441,10 @@ const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 7.02, 1.71, 1.143.0: iOS reads a run of digits and dots as a telephone
+     number and draws it as a link that dials. This manual is full of release
+     numbers and of none that anybody can call. -->
+<meta name="format-detection" content="telephone=no">
 <title>${esc(title)}</title>
 <script>try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="icon" href="${BASE}favicon.ico" sizes="16x16 32x32 48x48">
@@ -484,7 +513,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
   ${sidebarFor(route)}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
-    <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
+    <label class="side-button" for="side-open" title="Chapters" aria-label="Chapters"><span>Chapters</span></label>
     <nav class="crumbs" aria-label="Breadcrumb">${crumbsFor(page)}</nav>
     <div class="vp-doc">${body}</div>
     <div class="doc-foot">
@@ -585,6 +614,27 @@ const unescape = (s) => s.replace(/&(#x[0-9a-fA-F]+|#\d+|[a-zA-Z][a-zA-Z0-9]*);/
   const code = what[1] === 'x' || what[1] === 'X' ? parseInt(what.slice(2), 16) : Number(what.slice(1));
   return Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : all;
 });
+
+/* CODE IS NOT PROSE, and a browser that offers to translate the page will
+ * happily rewrite it: Chrome translates the text inside a <pre> like any
+ * other, so a reader who has translation on gets `CLASS` as `KLASSE` and
+ * `client->view_display( )` with its identifier rewritten - source that no
+ * longer compiles, in a manual whose whole point is source that does. The
+ * attribute is the standard way to say so, and it costs nothing.
+ * `.line` rather than the block, because the language label above it is prose
+ * and may be translated. */
+const notProse = (html) => html.replace(/<code>/g, '<code translate="no">');
+
+/* ...AND A BLOCK YOU CAN TAB TO SAYS WHAT IT IS. The renderer gives every
+ * listing `tabindex="0"` so that a reader on a keyboard can scroll one that is
+ * wider than the column - and a focusable region with no accessible name is
+ * announced as nothing at all. The language is already written above the block
+ * for everybody else; this is the same word, for a reader who cannot see it. */
+const named = (html) => html.replace(
+  /<div class="language-([\w-]*)([^"]*)">([\s\S]*?)<pre ([^>]*?)tabindex="0"/g,
+  (all, lang, rest, between, attrs) =>
+    `<div class="language-${lang}${rest}">${between}<pre ${attrs}tabindex="0" role="region" aria-label="${lang ? `${esc(lang)} code` : 'Code'}"`,
+);
 
 const abapify = (html) => html.replace(
   /(<div class="language-abap[^"]*">[\s\S]*?<code>)([\s\S]*?)(<\/code>)/g,
@@ -785,7 +835,7 @@ for (const page of pages) {
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
   seenImages = 0;
-  body = sized(recolour(abapify(body)));
+  body = named(notProse(sized(recolour(abapify(body)))));
   /* A link that opens a new tab hands that tab a `window.opener` pointing at
      this one unless it says otherwise. Every current browser implies
      `noopener` for `target="_blank"` and has since 2020 - this is for the ones
@@ -859,14 +909,18 @@ const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, '
 
 fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   title: 'Not found | abap2UI5',
-  head: meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
+  /* Served with a 404 status, which is what a crawler goes by - and said in
+     the head as well, for the case where it is not (a preview, a mirror, a
+     proxy that rewrites the status). */
+  head: `<meta name="robots" content="noindex">\n`
+    + meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
   bar: BAR_DOCS,
   main: `<main class="manual">
   <input class="side-open" type="checkbox" id="side-open">
   ${sidebarFor('/404')}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
-    <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
+    <label class="side-button" for="side-open" title="Chapters" aria-label="Chapters"><span>Chapters</span></label>
     <nav class="crumbs" aria-label="Breadcrumb"><a href="${BASE}get_started/about.html">Documentation</a></nav>
     <div class="vp-doc">
       <h1>This page is not here</h1>
@@ -1128,9 +1182,19 @@ const resolve = (to) => {
       if (fragment === 'top' || fragment.startsWith(':~:')) continue;
       if (!ids(at).has(fragment)) dead.push(`${at.slice(OUT.length)} -> #${m[1]}  (no section by that name on this page)`);
     }
-    for (const m of html.matchAll(/(?:href|src)="(\/[^"]*)"/g)) {
+    /* An absolute url into THIS deployment is an internal link written the
+       long way - the head is full of them, because a canonical and an
+       `og:` value have to be absolute - and the sweep only ever read the
+       root-relative ones. The markdown twin above was advertised on two
+       pages that have none, and nothing said so. */
+    for (const m of html.matchAll(/(?:href|src)="(?:https:\/\/abap2ui5\.github\.io)?(\/[^"]*)"/g)) {
       const [pathPart, fragment] = m[1].split('?')[0].split('#');
-      if (!pathPart) continue;
+      /* ...but only what is INSIDE this deployment. The bar leads to three
+         neighbours on the same origin - /playground/, /playground/samples/,
+         /linter/ - and those are somebody else's artefact: this build has no
+         file to check them against, which is what `check:cross-site` and the
+         published site are for. */
+      if (!pathPart || !pathPart.startsWith(BASE.slice(0, -1))) continue;
       checked++;
       const target = resolve(pathPart);
       if (!target) { dead.push(`${at.slice(OUT.length)} -> ${m[1]}`); continue; }
