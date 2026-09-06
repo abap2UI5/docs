@@ -29,6 +29,7 @@ import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
 import { describe } from './lib/pages.mjs';
+import { declaredRelease } from './lib/release.mjs';
 
 const ROOT = process.cwd();
 const DOCS = path.join(ROOT, 'docs');
@@ -236,9 +237,35 @@ const MENU_SCRIPT = (() => {
   return m[0];
 })();
 
+/* ---- THE RELEASE, IN THE BAR ------------------------------------------
+ *
+ * The number used to stand at the top of the menu behind the bar's last
+ * button - `VERSION` in SiteMenu.vue - and that file is the theme, which has
+ * not rendered this site since the switch. So the manual stopped saying
+ * anywhere in its frame which release it describes, while three gates went on
+ * holding that number against the newest tag of abap2UI5/abap2UI5. A checked
+ * fact nobody can see.
+ *
+ * It is read from the one place `check:version` and `check:examples` already
+ * read it from, so there is still one number; and it links to the release
+ * notes, because "which version is this" and "what changed in it" are the same
+ * question two seconds apart.
+ *
+ * Written into the borrowed bar rather than into a page, so it is on all 166
+ * of them and on the 404 - and, like everything else done to that bar, by
+ * finding a string in somebody else's markup and failing loudly when it is not
+ * there. */
+const RELEASE = declaredRelease(ROOT);
+const withRelease = (bar) => {
+  const at = '<div class="socials">';
+  if (!bar.includes(at)) throw new Error("the borrowed bar has no socials group to put the release before");
+  return bar.replace(at, `<a class="release" href="${BASE}resources/changelog.html"
+     title="What changed in this release">Version ${esc(RELEASE)}</a>\n  ${at}`);
+};
+
 const marked = (find) => inNav(BAR, (nav) => once(nav, find, ' aria-current="page"'));
-const BAR_DOCS = marked('data-site="docs"');
-const BAR_HOME = marked(`href="${HOME}"`);
+const BAR_DOCS = withRelease(marked('data-site="docs"'));
+const BAR_HOME = withRelease(marked(`href="${HOME}"`));
 
 /* THE OTHER HALF OF THE PAIR IS THE BORROWED MARKUP'S, so it is checked rather
  * than assumed. `data-site` above says which page to come back to; `data-back`,
