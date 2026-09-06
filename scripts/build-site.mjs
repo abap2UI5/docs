@@ -28,7 +28,7 @@ import { createMarkdownRenderer } from 'vitepress';
 import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
-import { summarise } from './lib/pages.mjs';
+import { describe } from './lib/pages.mjs';
 
 const ROOT = process.cwd();
 const DOCS = path.join(ROOT, 'docs');
@@ -758,9 +758,12 @@ const nameOf = (page) => {
   if (declared) return declared[1].trim().replace(/^["']|["']$/g, '');
   return (src.match(/^#\s+(.+)$/m) || [, page])[1].trim();
 };
+/* Read once. `nameOf` opens the file, and this used to call it twice per page
+   inside the same expression - 332 reads to count 166 names. */
+const names = new Map(pages.map((page) => [page, nameOf(page)]));
 const shared = (() => {
   const seen = new Map();
-  for (const page of pages) seen.set(nameOf(page), (seen.get(nameOf(page)) || 0) + 1);
+  for (const name of names.values()) seen.set(name, (seen.get(name) || 0) + 1);
   return new Set([...seen].filter(([, n]) => n > 1).map(([name]) => name));
 })();
 
@@ -815,13 +818,14 @@ for (const page of pages) {
          card in Slack and LinkedIn whichever chapter was shared - a preview
          that says nothing about the page it previews.
          The page's own opening sentence is a better description than a
-         constant, and the site already knows how to take one: `summarise` is
+         constant, and the site already knows how to take one: `describe` is
          what writes the one-line note beside every entry of llms.txt and the
-         line under every hit in the search box. Same sentence, one
-         implementation. The slogan stays for the front door, whose subject
+         line under every hit in the search box - the page's declared
+         description when it has one, its opening sentence when it has not.
+         Same sentence in all three places, one implementation. The slogan stays for the front door, whose subject
          really is the project, and for a page that opens with something a
          sentence cannot be taken from. */
-      description: fm.description || (isHome ? SITE_DESC : summarise(src) || SITE_DESC),
+      description: isHome ? (fm.description || SITE_DESC) : (describe(src) || SITE_DESC),
     }),
     bar: isHome ? BAR_HOME : BAR_DOCS,
     main: isHome ? home({ body, fm }) : chapter({ body, page, route }),
@@ -844,7 +848,7 @@ for (const page of pages) {
 /* Every page as [path, name], for the suggestions at the foot of the 404 - the
    one place that wants the whole list inside one page. `<` is escaped, so no
    chapter title can end the script block early. */
-const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, ''), nameOf(f)]))
+const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, ''), names.get(f)]))
   .replace(/</g, '\\u003c');
 
 fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({

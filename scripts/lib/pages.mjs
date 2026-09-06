@@ -92,6 +92,22 @@ export const stripFrontmatter = (text) => text.replace(/^---\r?\n[\s\S]*?\r?\n--
  *  carries one (`_bind`, `check_on_init`, `s_device`), and an index that
  *  advertises `client->bind( )` is worse than no index: it is a plausible,
  *  citable, wrong API name aimed at the one reader least able to notice. */
+/** What a page says about itself, in one line: the `description` it declares,
+ *  else the first sentence of it.
+ *
+ *  The declared one wins because somebody wrote it FOR this purpose. It was
+ *  not being asked: In a Nutshell opens with the standfirst "Build UI5 Apps
+ *  Purely in ABAP", so that is what stood beside it in llms.txt and under it
+ *  in the search box - the project's slogan, where the page's own frontmatter
+ *  says "What abap2UI5 is, on one page — UI5 apps written purely in ABAP, how
+ *  the framework works, what it runs on, and where it fits." */
+export function describe(body) {
+  const fm = body.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  const declared = fm && fm[1].match(/^description:\s*(.+)$/m);
+  const said = declared && declared[1].trim().replace(/^["']|["']$/g, '');
+  return said || summarise(body);
+}
+
 export function summarise(body) {
   const lines = stripFrontmatter(body).split('\n');
   const para = [];

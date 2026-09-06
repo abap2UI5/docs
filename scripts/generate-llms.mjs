@@ -47,7 +47,7 @@ import { countCatalogue } from './lib/catalogue.mjs';
 import {
   ROOT, DOCS, SITE,
   sidebarPages, markdownFiles, mdSuffix, linkOf, fileOf,
-  stripFrontmatter, summarise, title,
+  stripFrontmatter, describe, title,
 } from './lib/pages.mjs';
 
 const PUBLIC = path.join(DOCS, 'public');
@@ -110,7 +110,7 @@ for (const p of pages) {
 
 const entry = (p) => {
   const body = read.get(p.link);
-  const note = summarise(body);
+  const note = describe(body);
   return `- [${title(body, p.text)}](${SITE}${mdSuffix(p.link)})${note ? `: ${note}` : ''}`;
 };
 
