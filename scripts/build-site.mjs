@@ -460,6 +460,13 @@ const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 <link rel="stylesheet" href="${BASE}site.css">
 <script type="module" src="${BASE}site.js"></script>
 <script type="module" src="${BASE}search.mjs"></script>
+<!-- TWO BUTTONS THAT ARE ONLY BUTTONS WITH JAVASCRIPT. The Run bar under a
+     runnable example and the copy button on a listing are written into the
+     page by the build, and both do their work in the browser - so with
+     scripting off they are controls that look pressable and answer nothing.
+     Everything else on this site works without it: the pages are static, the
+     menu is a checkbox, the listings are already coloured. -->
+<noscript><style>.vp-doc .a2ui5-play-run, .vp-doc div[class*="language-"] .copy { display: none; }</style></noscript>
 ${head}
 </head>
 <body>
@@ -662,10 +669,18 @@ const notProse = (html) => html.replace(/<code>/g, '<code translate="no">');
  * wider than the column - and a focusable region with no accessible name is
  * announced as nothing at all. The language is already written above the block
  * for everybody else; this is the same word, for a reader who cannot see it. */
+let seenBlocks = 0;
 const named = (html) => html.replace(
   /<div class="language-([\w-]*)([^"]*)">([\s\S]*?)<pre ([^>]*?)tabindex="0"/g,
-  (all, lang, rest, between, attrs) =>
-    `<div class="language-${lang}${rest}">${between}<pre ${attrs}tabindex="0" role="region" aria-label="${lang ? `${esc(lang)} code` : 'Code'}"`,
+  (all, lang, rest, between, attrs) => {
+    /* Numbered, because the name is what a reader hears in a list of the
+       page's regions and "abap code" ten times over is a list of ten things
+       that cannot be told apart. The number is the one this site already
+       addresses a listing by: `#B2L42` is line 42 of the second listing. */
+    const n = ++seenBlocks;
+    const what = lang ? `Listing ${n}, ${esc(lang)}` : `Listing ${n}`;
+    return `<div class="language-${lang}${rest}">${between}<pre ${attrs}tabindex="0" role="region" aria-label="${what}"`;
+  },
 );
 
 const abapify = (html) => html.replace(
@@ -867,6 +882,7 @@ for (const page of pages) {
      is what the theme was quietly doing for us. */
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
   seenImages = 0;
+  seenBlocks = 0;
   body = named(notProse(sized(recolour(abapify(body)))));
   /* A link that opens a new tab hands that tab a `window.opener` pointing at
      this one unless it says otherwise. Every current browser implies
