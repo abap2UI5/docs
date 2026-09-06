@@ -566,3 +566,70 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .vp-doc pre code { font: inherit; background: inherit; }
 .vp-doc .ln > a { color: var(--fg-dim); }
 .vp-doc .ln > a:hover { color: var(--accent); }
+
+/* ---- the menu, one indent for every row -------------------------------
+ *
+ * A row that opens a section carries the caret; a row that only opens a page
+ * does not - so the two started 16px apart, and a list where the leaves sit
+ * left of their siblings reads as two lists. The leaf reserves the caret's
+ * place instead: 10px of glyph, its 2px margin and the row's 4px gap. */
+.sidebar .side-item > a,
+.sidebar .side-item > span { padding-left: 16px; }
+
+/* ---- once an example is running ---------------------------------------
+ *
+ * The bar under the listing is no longer the bottom of anything: the app is
+ * beneath it. Close puts the listing back, and the link switches to the
+ * playground with this code IN THIS TAB - the way back is the Documentation
+ * item in its bar, which returns to this page. */
+.vp-doc .a2ui5-play-bar {
+  display: flex; align-items: center; gap: 16px;
+  width: 100%; padding: 7px 14px;
+  border: 1px solid var(--line); border-radius: 0;
+  background: var(--bg-sunken); color: var(--fg-dim);
+  font-size: 13px; font-weight: 600; line-height: 20px; text-align: left;
+}
+.vp-doc .a2ui5-play-close {
+  padding: 0; border: 0; background: none;
+  color: inherit; font: inherit; cursor: pointer;
+}
+.vp-doc .a2ui5-play-open {
+  margin-left: auto; color: inherit; font-weight: inherit; text-decoration: none;
+}
+/* A chevron rather than the ↗ the tiles carry: this link stays in this tab,
+   and the arrow said otherwise. */
+.vp-doc .a2ui5-play-open::after { content: " ›"; }
+.vp-doc .a2ui5-play-close:hover,
+.vp-doc .a2ui5-play-open:hover { color: var(--accent); }
+
+/* The frame the app runs in, continuing the listing's own edges downwards so
+   that the example and what it produces read as one thing. */
+.vp-doc .a2ui5-play .abap2ui5-demo {
+  border: 1px solid var(--line); border-top: 0; border-radius: 0 0 8px 8px;
+  background: var(--bg); overflow: hidden;
+}
+
+/* A FLOOR under the frame, and the one piece of this that is not decoration.
+ *
+ * The embed loader starts an app-only demo at 320px and grows it to the height
+ * the app reports, measured from its `scrollHeight`. That works for a document
+ * that FLOWS, and an abap2UI5 app is the other kind: almost every example here
+ * is a Shell around a Page laid out at 100% of whatever box it was given, so
+ * its scrollHeight is that box and the measurement can only confirm the height
+ * the frame already has. Every example was read through a slot the size of a
+ * thumbnail. `min-height` in a stylesheet still wins against the inline height
+ * the loader sets, so the floor holds whatever the published playground
+ * decides; an app that genuinely overflows still grows past it. 520 is the
+ * loader's own default for the editor-and-app layout. */
+.vp-doc .a2ui5-play .abap2ui5-demo iframe { min-height: 520px; }
+@media (max-width: 640px) {
+  .vp-doc .a2ui5-play .abap2ui5-demo iframe { min-height: min(520px, 70vh); }
+}
+
+/* The loader could not be reached - an offline reader, or a blocked
+   third-party request. Say so where the button was. */
+.vp-doc .a2ui5-play-failed {
+  margin: 0; padding: 7px 14px;
+  border: 1px solid var(--line); border-radius: 0 0 8px 8px;
+  color: var(--fg-dim); font-size: 13px;
+}
