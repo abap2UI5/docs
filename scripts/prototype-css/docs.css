@@ -9,31 +9,34 @@
  * on the VitePress site; this file only states them in one place instead of
  * overriding a theme that supplied different ones. */
 
-/* ---- three columns, all starting at the same line -------------------- */
-/* THE OUTLINE SITS WHERE THE CATALOGUE'S SITS, TO THE PIXEL.
+/* ---- the sample page's two columns, and the menu beside them ---------
  *
- * The catalogue's container is 1160 - 1120 of content - and it spends all of
- * it on two columns: an article of 855, 40 of gap, an outline of 225, ending
- * at 1316. A manual page has a third column, and there is no room inside 1120
- * for it. So one of two things has to give, and they cannot both hold at this
- * window width:
+ * THE ARTICLE AND THE OUTLINE ARE THE SAMPLE PAGE'S, not something measured
+ * against it. `.manual` is `.sample`: the same 1160 container with 20 of
+ * padding, an article, 40 of gap and 225 of outline. So the crumb line, the
+ * title, the prose, every listing and "On this page" open on exactly the
+ * verticals a sample page uses, at every width, with no number restated here -
+ * 1120 of content is 855 + 40 + 225 whether the page is a data sheet or a
+ * chapter of the manual.
  *
- *   the outline in the same PLACE   -> sidebar and article share the 855,
- *                                      so the article is narrower than 855
- *   the article the same WIDTH      -> 855 + a sidebar pushes the outline
- *                                      176px right of the catalogue's
+ * That leaves nowhere INSIDE the container for a third column, and a manual
+ * needs one. So it goes in the margin BESIDE the container, out of flow: 220
+ * wide, ending 40 short of the article. There is room for that from 1680 up -
+ * (1680 - 1160) / 2 + 20 = 280 of margin, and the menu wants 260 of it - and
+ * below that the same nav becomes a drawer over the page, opened by the button
+ * in the crumb line. Out of flow either way, which is the point: a menu that
+ * is not a grid track cannot push the two columns off the line they share with
+ * the catalogue.
  *
- * This is the first: the outline lands at 1091 and ends at 1316, exactly
- * where a sample page puts it, and the sidebar is 220 rather than 272 so the
- * article keeps as much of the rest as it can (595). Swapping to the other is
- * two numbers - 855 for the article and 1432 for the container.
- *
- * The prose measure and the code stay tied to the column: whatever the column
- * is, a listing is the full width of it and prose is capped at 74ch, which is
- * what the catalogue does with its own listing and lede. */
+ * What this costs, said plainly: the menu is no longer always in view. It was,
+ * when it had a column of its own - and it had that column by taking 260px out
+ * of the article, which is what put the manual's text 332px right of the
+ * catalogue's.
+ */
 .manual {
+  position: relative;
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr) 225px;
+  grid-template-columns: minmax(0, 1fr) 225px;
   gap: 0 40px;
   align-items: start;
   max-width: var(--width);
@@ -41,27 +44,105 @@
   padding: 0 20px 40px;
 }
 
-/* Below the width that fits all three, the article takes what is left and the
-   outline goes; below 1100 the sidebar goes too. */
-@media (max-width: 1500px) {
-  .manual { grid-template-columns: 272px minmax(0, 1fr) 225px; max-width: var(--width); }
-}
-
 /* 48px under the 46px bar, which is where the crumb line and the outline
-   start on a sample page. All three columns, one number. */
-.sidebar, .manual .outline { padding-top: 48px; }
+   start on a sample page. */
+.sidebar { padding-top: 48px; }
 /* The crumb line keeps the 22px margin sample.css gives it, so the column it
    sits in opens at 26 - the same arithmetic a sample page uses, and the same
    48px in the end. */
 .doc-body { padding-top: 26px; }
-/* The prose keeps the catalogue's measure inside the wider column - 74ch, the
-   number the sample lede is capped at - while headings, code, tables and
-   figures use the whole 855. Two things, two jobs, one column. */
+/* The prose keeps the catalogue's measure inside the column - 74ch, the number
+   the sample lede is capped at - while headings, code, tables and figures use
+   the whole 855. Two things, two jobs, one column. */
 .vp-doc > p, .vp-doc > ul, .vp-doc > ol, .vp-doc > blockquote { max-width: 74ch; }
 
+/* ---- where the menu goes ---------------------------------------------
+ *
+ * A checkbox and two labels, no script: the button opens it, the scrim behind
+ * it closes it. Both labels are hidden at the width where the menu has a
+ * margin to stand in, and the drawer is then simply a box placed there.
+ *
+ * -240px is the only number: the container's padding box starts 20px left of
+ * the article, so 20 - 40 - 220 puts the menu's right edge 40 short of the
+ * article's left one. */
+.side-open { display: none; }
+
+.sidebar {
+  position: fixed;
+  top: 46px;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  width: 264px;
+  padding: 20px 20px 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  border-right: 1px solid var(--line);
+  transform: translateX(-100%);
+  transition: transform .18s ease;
+}
+.side-open:checked ~ .sidebar { transform: none; }
+
+.side-scrim {
+  position: fixed;
+  inset: 46px 0 0;
+  z-index: 39;
+  background: rgba(0, 0, 0, .18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+.side-open:checked ~ .side-scrim { opacity: 1; pointer-events: auto; }
+
+/* The button that opens it, on the crumb line so it is the first thing in the
+   column and never over the text. */
+.side-button {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 0 0 6px; padding: 3px 9px 3px 7px;
+  border: 1px solid var(--line); border-radius: var(--radius-control);
+  background: var(--bg-sunken); color: var(--fg-dim);
+  font-size: 12px; line-height: 1.55; cursor: pointer;
+}
+.side-button:hover { color: var(--accent); border-color: var(--accent); }
+/* From 1250 up there is margin to hang it in, so it hangs there and the crumb
+   line keeps its own height - and with it the 96 the three columns share.
+   Narrower than that it goes back into the flow above the crumbs, where it
+   costs a line; at that width a sample page has stopped being two columns
+   too. */
+@media (min-width: 1250px) {
+  .side-button { position: absolute; top: 48px; left: -44px; margin: 0; padding: 4px 6px; }
+  .side-button span { display: none; }
+}
+.side-button::before {
+  content: ""; width: 11px; height: 9px; background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 100% 1.5px, 0 1.5px, 0 3.75px, 100% 3.75px, 100% 5.25px, 0 5.25px, 0 7.5px, 100% 7.5px, 100% 9px, 0 9px);
+}
+
+/* From 1680 up the margin holds it, so it stands there instead: no button, no
+   scrim, no drawer - the same nav, placed. */
+@media (min-width: 1680px) {
+  .side-button { display: none; }
+  .side-scrim { display: none; }
+  .sidebar {
+    position: absolute;
+    top: 0; bottom: auto; left: -240px;
+    width: 220px;
+    padding: 48px 0 0;
+    overflow: visible;
+    background: none;
+    border: 0;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Below 1100 the outline goes, exactly as it does on a sample page. The menu
+   stays: it is a drawer at this width already, and a manual with no way into
+   its other chapters is not one. */
 @media (max-width: 1100px) {
   .manual { grid-template-columns: minmax(0, 1fr); }
-  .sidebar, .manual .outline { display: none; }
+  .manual .outline { display: none; }
 }
 
 /* ---- the sidebar, collapsible with no script ------------------------
@@ -187,10 +268,10 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 .crumbs .sep { padding: 0 6px; }
 .crumbs a { text-decoration: underline; }
 
-/* The three columns, made to open on one line - the arithmetic is per column
-   because each carries something of its own: the sidebar's first section adds
-   its 14px of section air, and the outline is sticky at 70px which sample.css
-   then pads. Measured, not reasoned: all three read 96. */
+/* The columns open on one line, and the arithmetic is per column because each
+   carries something of its own: the menu's first section adds its 14px of
+   section air, and the outline is sticky at 70px which sample.css then pads.
+   Measured, not reasoned: all three read 96. */
 .sidebar > :first-child > summary,
 .sidebar > .side-item:first-child > a,
 .sidebar > .side-item:first-child > span { padding-top: 0; }

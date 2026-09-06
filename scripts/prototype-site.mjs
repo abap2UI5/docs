@@ -154,8 +154,11 @@ const shell = ({ title, body, page, route }) => `<!doctype html>
 <body>
 ${BAR}
 <main class="manual">
+  <input class="side-open" type="checkbox" id="side-open">
   ${sidebarFor(route)}
+  <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body">
+    <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
     <p class="crumbs">${crumbsFor(page)}</p>
     <div class="vp-doc">${body}</div>
     <div class="doc-foot">
