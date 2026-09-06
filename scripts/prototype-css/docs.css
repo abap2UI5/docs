@@ -1,0 +1,487 @@
+/* THE MANUAL'S OWN LAYER, on top of the catalogue's.
+ *
+ * Everything the two documents share already comes from catalogue.css and
+ * sample.css: the palette, the bar, the crumb line, the outline column, the
+ * type ratio. What is left here is what a manual has and a data sheet does
+ * not - a sidebar, and prose.
+ *
+ * Every number below was decided earlier in this session and is already live
+ * on the VitePress site; this file only states them in one place instead of
+ * overriding a theme that supplied different ones. */
+
+/* ---- the sample page's two columns, and the menu beside them ---------
+ *
+ * THE ARTICLE AND THE OUTLINE ARE THE SAMPLE PAGE'S, not something measured
+ * against it. `.manual` is `.sample`: the same 1160 container with 20 of
+ * padding, an article, 40 of gap and 225 of outline. So the crumb line, the
+ * title, the prose, every listing and "On this page" open on exactly the
+ * verticals a sample page uses, at every width, with no number restated here -
+ * 1120 of content is 855 + 40 + 225 whether the page is a data sheet or a
+ * chapter of the manual.
+ *
+ * That leaves nowhere INSIDE the container for a third column, and a manual
+ * needs one. So it goes in the margin BESIDE the container, out of flow: 220
+ * wide, ending 40 short of the article. There is room for that from 1680 up -
+ * (1680 - 1160) / 2 + 20 = 280 of margin, and the menu wants 260 of it - and
+ * below that the same nav becomes a drawer over the page, opened by the button
+ * in the crumb line. Out of flow either way, which is the point: a menu that
+ * is not a grid track cannot push the two columns off the line they share with
+ * the catalogue.
+ *
+ * What this costs, said plainly: the menu is no longer always in view. It was,
+ * when it had a column of its own - and it had that column by taking 260px out
+ * of the article, which is what put the manual's text 332px right of the
+ * catalogue's.
+ */
+.manual {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 225px;
+  gap: 0 40px;
+  align-items: start;
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 0 20px 40px;
+}
+
+/* 48px under the 46px bar, which is where the crumb line and the outline
+   start on a sample page. */
+.sidebar { padding-top: 48px; }
+/* The crumb line keeps the 22px margin sample.css gives it, so the column it
+   sits in opens at 26 - the same arithmetic a sample page uses, and the same
+   48px in the end. */
+.doc-body { padding-top: 26px; }
+/* The prose keeps the catalogue's measure inside the column - 74ch, the number
+   the sample lede is capped at - while headings, code, tables and figures use
+   the whole 855. Two things, two jobs, one column. */
+.vp-doc > p, .vp-doc > ul, .vp-doc > ol, .vp-doc > blockquote { max-width: 74ch; }
+
+/* ---- where the menu goes ---------------------------------------------
+ *
+ * A checkbox and two labels, no script: the button opens it, the scrim behind
+ * it closes it. Both labels are hidden at the width where the menu has a
+ * margin to stand in, and the drawer is then simply a box placed there.
+ *
+ * -240px is the only number: the container's padding box starts 20px left of
+ * the article, so 20 - 40 - 220 puts the menu's right edge 40 short of the
+ * article's left one. */
+.side-open { display: none; }
+
+.sidebar {
+  position: fixed;
+  top: 46px;
+  bottom: 0;
+  left: 0;
+  z-index: 40;
+  width: 264px;
+  padding: 20px 20px 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg);
+  border-right: 1px solid var(--line);
+  transform: translateX(-100%);
+  transition: transform .18s ease;
+}
+.side-open:checked ~ .sidebar { transform: none; }
+
+.side-scrim {
+  position: fixed;
+  inset: 46px 0 0;
+  z-index: 39;
+  background: rgba(0, 0, 0, .18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+}
+.side-open:checked ~ .side-scrim { opacity: 1; pointer-events: auto; }
+
+/* The button that opens it, on the crumb line so it is the first thing in the
+   column and never over the text. */
+.side-button {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 0 0 6px; padding: 3px 9px 3px 7px;
+  border: 1px solid var(--line); border-radius: var(--radius-control);
+  background: var(--bg-sunken); color: var(--fg-dim);
+  font-size: 12px; line-height: 1.55; cursor: pointer;
+}
+.side-button:hover { color: var(--accent); border-color: var(--accent); }
+/* From 1250 up there is margin to hang it in, so it hangs there and the crumb
+   line keeps its own height - and with it the 96 the three columns share.
+   Narrower than that it goes back into the flow above the crumbs, where it
+   costs a line; at that width a sample page has stopped being two columns
+   too. */
+@media (min-width: 1250px) {
+  .side-button { position: absolute; top: 48px; left: -44px; margin: 0; padding: 4px 6px; }
+  .side-button span { display: none; }
+}
+.side-button::before {
+  content: ""; width: 11px; height: 9px; background: currentColor;
+  clip-path: polygon(0 0, 100% 0, 100% 1.5px, 0 1.5px, 0 3.75px, 100% 3.75px, 100% 5.25px, 0 5.25px, 0 7.5px, 100% 7.5px, 100% 9px, 0 9px);
+}
+
+/* From 1680 up the margin holds it, so it stands there instead: no button, no
+   scrim, no drawer - the same nav, placed. */
+@media (min-width: 1680px) {
+  .side-button { display: none; }
+  .side-scrim { display: none; }
+  .sidebar {
+    position: absolute;
+    top: 0; bottom: auto; left: -240px;
+    width: 220px;
+    padding: 48px 0 0;
+    overflow: visible;
+    background: none;
+    border: 0;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Below 1100 the outline goes, exactly as it does on a sample page. The menu
+   stays: it is a drawer at this width already, and a manual with no way into
+   its other chapters is not one. */
+@media (max-width: 1100px) {
+  .manual { grid-template-columns: minmax(0, 1fr); }
+  .manual .outline { display: none; }
+}
+
+/* ---- the sidebar, collapsible with no script ------------------------
+ *
+ * A section is a <details> and its label the <summary>, so the browser does
+ * the opening and closing. The marker is our own triangle - the native one is
+ * a different glyph on every platform and sits outside the row. */
+.sidebar { font-size: 13px; line-height: 1.55; }
+.sidebar a, .sidebar summary span:not(.side-caret) { text-decoration: none; }
+
+.sidebar .side-item > a,
+.sidebar .side-item > span,
+.sidebar summary {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  color: var(--fg-dim);
+  cursor: pointer;
+}
+.sidebar .side-item > a { color: var(--fg-dim); }
+.sidebar .side-item > a:hover,
+.sidebar summary:hover { color: var(--accent); }
+.sidebar a.here { color: var(--accent); font-weight: 600; }
+
+/* A section heading reads as one, whether it opens a page or only a list. */
+.sidebar > .side-group > summary,
+.sidebar > .side-item > a,
+.sidebar > .side-item > span { color: var(--fg); font-weight: 600; padding-top: 14px; }
+.sidebar > .side-group > summary a { color: inherit; font-weight: inherit; }
+
+/* The triangle: 90 degrees when shut, pointing down when open, and it is the
+   marker the browser would otherwise draw for us. */
+.sidebar summary { list-style: none; }
+.sidebar summary::-webkit-details-marker { display: none; }
+.side-caret {
+  flex: none; width: 10px; height: 10px; margin-right: 2px;
+  background: currentColor; opacity: .55;
+  clip-path: polygon(30% 12%, 30% 88%, 78% 50%);
+  transition: transform .15s;
+}
+details[open] > summary > .side-caret { transform: rotate(90deg); }
+
+/* Each level steps in by the width of that triangle, so a row lines up under
+   its parent's WORD rather than under its marker. */
+.sidebar .side-items { padding-left: 14px; }
+
+/* ---- under the article: where to change it -------------------------- */
+.doc-foot {
+  display: flex; flex-wrap: wrap; gap: 4px 16px;
+  justify-content: space-between; align-items: baseline;
+  margin-top: 40px; padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--fg-dim);
+}
+.doc-foot .edit { color: var(--accent); text-decoration: none; }
+.doc-foot .edit:hover { text-decoration: underline; }
+
+/* ---- the article ---------------------------------------------------- */
+.vp-doc h1 { font-size: 26px; line-height: 1.25; margin: 0 0 16px; }
+.vp-doc h2 {
+  font-size: 15px; line-height: 1.55; font-weight: 700;
+  margin: 32px 0 12px; padding-top: 12px;
+  border-top: 1px solid var(--line); letter-spacing: -.01em;
+}
+.vp-doc h3 { font-size: 15px; line-height: 1.55; font-weight: 600; margin: 24px 0 0; }
+.vp-doc h4 { font-size: 14px; line-height: 1.55; font-weight: 600; margin: 20px 0 0; }
+.vp-doc p, .vp-doc li { font-size: 14px; line-height: 1.55; }
+.vp-doc p { margin: 12px 0; }
+.vp-doc ul, .vp-doc ol { margin: 12px 0; padding-left: 22px; }
+.vp-doc a { color: var(--accent); text-decoration: none; }
+.vp-doc a:hover { text-decoration: underline; }
+.vp-doc .header-anchor { display: none; }
+
+/* Inline code is neutral: an identifier is not a link. */
+.vp-doc :not(pre) > code {
+  font-family: var(--font-mono); font-size: 12.5px;
+  background: var(--bg-sunken); border-radius: 4px; padding: 2px 5px;
+}
+
+/* ---- code blocks, drawn as the catalogue draws a listing ------------- */
+.vp-doc div[class*="language-"] {
+  position: relative; margin: 16px 0;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); overflow: hidden;
+}
+.vp-doc div[class*="language-"] pre {
+  margin: 0; padding: 14px; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; tab-size: 2;
+}
+.vp-doc div[class*="language-"] .lang {
+  position: absolute; top: 8px; right: 12px;
+  color: var(--fg-dim); font-size: 11px;
+}
+.vp-doc div[class*="language-"] .copy { display: none; }
+.vp-doc .shiki span { color: var(--shiki-light); }
+:root[data-theme="dark"] .vp-doc .shiki span { color: var(--shiki-dark); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .vp-doc .shiki span { color: var(--shiki-dark); }
+}
+
+/* ---- the ::: blocks -------------------------------------------------- */
+.vp-doc .custom-block {
+  margin: 16px 0; padding: 10px 14px;
+  border-left: 3px solid var(--line); border-radius: 0 6px 6px 0;
+  background: var(--bg-sunken);
+}
+.vp-doc .custom-block.warning { border-left-color: #bf8700; }
+.vp-doc .custom-block.danger { border-left-color: #cf222e; }
+.vp-doc .custom-block-title { margin: 0 0 4px; font-size: 13px; font-weight: 700; }
+.vp-doc .custom-block p { margin: 4px 0; font-size: 13px; }
+
+/* ---- tables ---------------------------------------------------------- */
+.vp-doc table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 13px; }
+.vp-doc th, .vp-doc td { padding: 7px 10px; border: 1px solid var(--line); text-align: left; }
+.vp-doc th { background: var(--bg-sunken); font-weight: 600; }
+.vp-doc img { max-width: 100%; border: 1px solid var(--line); border-radius: 6px; }
+
+/* The outline column is the sample page's, and it needs its two-column
+   breakpoint lifted because this layout is three columns wide. */
+@media (min-width: 1100px) { .manual .outline { display: block; position: sticky; top: 70px; } }
+
+.crumbs .sep { padding: 0 6px; }
+.crumbs a { text-decoration: underline; }
+
+/* The columns open on one line, and the arithmetic is per column because each
+   carries something of its own: the menu's first section adds its 14px of
+   section air, and the outline is sticky at 70px which sample.css then pads.
+   Measured, not reasoned: all three read 96. */
+.sidebar > :first-child > summary,
+.sidebar > .side-item:first-child > a,
+.sidebar > .side-item:first-child > span { padding-top: 0; }
+.manual .outline { padding-top: 24px; }
+
+/* ---- the Run bar under a runnable example ---------------------------
+ *
+ * The catalogue draws exactly this shape under its demo (`.demo-head` and
+ * `.abap2ui5-demo-start` in sample.css): a band the full width of the block,
+ * the same hairline, the accent for the words. The wrapper the markdown
+ * transform emits puts the button under the listing, so the two share one
+ * card - the listing's bottom corners go square and the bar takes them. */
+.vp-doc .a2ui5-play { margin: 16px 0; }
+.vp-doc .a2ui5-play div[class*="language-"] { margin: 0; border-radius: 8px 8px 0 0; border-bottom: 0; }
+.vp-doc .a2ui5-play-run {
+  display: flex; align-items: center; gap: 9px;
+  width: 100%; padding: 7px 14px;
+  border: 1px solid var(--line); border-radius: 0 0 8px 8px;
+  background: var(--bg-sunken); color: var(--accent);
+  font: inherit; font-size: 13px; font-weight: 600;
+  text-align: left; cursor: pointer;
+}
+.vp-doc .a2ui5-play-run::before {
+  content: ""; flex: none; width: 9px; height: 11px;
+  background: currentColor; clip-path: polygon(0 0, 0 100%, 100% 50%);
+}
+.vp-doc .a2ui5-play-run:hover { background: var(--bg); }
+
+/* ---- the front door ---------------------------------------------------
+ *
+ * The home page, drawn with the numbers it already carries. Every one of them
+ * was measured off the running site rather than read out of the theme, because
+ * the theme states them at full size and then restates the whole page at nine
+ * tenths; what a reader sees is the second set, and that is what is below —
+ * 20/28 for the greeting, 38/46 for the headline, 17/26 for the tagline, 13 on
+ * a 34px button, a 15/22 tile title over 13/22 of detail, a 21px mark.
+ *
+ * THE ONE THING THAT CHANGES IS THE CONTAINER. It was VitePress's: 1152 wide,
+ * opening at 144 on a 1440 window. Here it is the catalogue's 1160-with-20,
+ * so the front door opens on the same vertical as every chapter behind it and
+ * as all 772 sample pages — 160 rather than 144, sixteen pixels, and the
+ * reason every other number in this file exists.
+ */
+.home {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 56px 20px 48px;
+
+  /* THIS PAGE IS RED. Everywhere else a link is blue, and the bar above stays
+     blue because four documents wear the same one - but the front door is the
+     mark's page. The mark is a red circle 200px across at the top of it, and a
+     blue headline and a blue button under a red mark are two brands on one
+     screen. Scoped to this element exactly as the theme scopes it to `.VPHome`,
+     so `--accent` keeps its own value everywhere else - the value four bars
+     share and `check:design` holds. The red itself has no name in the
+     catalogue's stylesheet, because the catalogue has no page that wears it. */
+  --a2ui5-red: #d03c4a;
+  --accent: var(--a2ui5-red);
+}
+:root[data-theme="dark"] .home { --a2ui5-red: #e8697a; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .home { --a2ui5-red: #e8697a; }
+}
+
+/* The headline's half is 592 and the mark is centred in what is left, which is
+   why the logo lands on the same pixel as it does today: two containers with
+   the same centre put anything centred in the same place. */
+.hero { display: flex; align-items: center; }
+.hero-main { flex: 0 1 592px; min-width: 0; }
+.hero-name,
+.hero-text,
+.hero-tagline { max-width: 576px; }
+.hero-name {
+  margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; color: var(--accent);
+}
+/* The headline is the only thing on the page set past twice the reader's own
+   size, and the tracking rather than the weight holds the line together. */
+.hero-text {
+  margin: 0; font-size: 38px; line-height: 46px; font-weight: 600; letter-spacing: -.02em;
+}
+.hero-tagline {
+  margin: 0; padding-top: 12px;
+  font-size: 17px; line-height: 26px; font-weight: 500; color: var(--fg-dim);
+}
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 29px; }
+.hero-action {
+  padding: 0 18px;
+  border: 1px solid transparent; border-radius: 6px;
+  font-size: 13px; line-height: 34px; font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+}
+/* Only the first of the three is the one the page wants; the other two are a
+   hairline, not a second filled block.
+   NOT `.brand`: that is the catalogue's own class for the mark at the left end
+   of the bar, and it carries a `::after` divider. Borrowing a stylesheet means
+   its class names are taken - this one cost 17px of button before it was
+   found, which is the width of that divider. */
+.hero-action.primary { background: var(--accent); color: var(--accent-fg); }
+.hero-action.plain { border-color: var(--line); color: var(--fg); }
+.hero-action.plain:hover { border-color: var(--accent); color: var(--accent); }
+/* 32px up and 32px left of where centring puts it, which is where the theme
+   has always drawn it. */
+.hero-image { flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; transform: translate(-32px, -32px); }
+.hero-image img { display: block; width: 200px; height: auto; border: 0; border-radius: 0; }
+
+/* The three places the bar names, in the order the bar names them. */
+.tiles {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  /* 44 rather than 36: the theme pads each card by 8 inside the row, so the
+     row opens 8 above the card. */
+  margin-top: 44px;
+}
+.tile {
+  display: block; padding: 22px;
+  border: 1px solid var(--line); border-radius: 6px;
+  color: var(--fg); text-decoration: none;
+}
+.tile:hover { border-color: var(--accent); }
+.tile-icon { display: block; margin-bottom: 12px; color: var(--accent); }
+.tile-icon svg { display: block; width: 21px; height: 21px; }
+.tile-title { display: block; font-size: 15px; line-height: 22px; font-weight: 600; }
+/* Three cards that are links and look like panels are three doors with no
+   handle. One glyph on all of them, the same one the tiles' own row uses. */
+.tile-title::after {
+  content: "↗"; display: inline-block; margin-left: 6px;
+  color: var(--accent); font-size: 14px; font-weight: 400;
+  transition: transform .25s;
+}
+.tile:hover .tile-title::after { transform: translate(2px, -2px); }
+.tile-details {
+  display: block; padding-top: 3px;
+  font-size: 13px; line-height: 22px; font-weight: 500; color: var(--fg-dim);
+}
+
+/* Then the markdown under the frontmatter, as an ordinary article. The first
+   heading keeps its rule and loses its margin: the 24px of air above it is the
+   gap after the cards, not a heading's own. */
+/* 32 from the bottom of the last card, which is the gap the theme leaves; it
+   writes it as 24 under a row that pads its cards by 8. */
+.home .vp-doc { margin-top: 32px; }
+.home .vp-doc > :first-child { margin-top: 0; }
+
+@media (max-width: 860px) {
+  .hero { display: block; }
+  .hero-image { display: none; }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- the two rows of cards the home page writes by hand ---------------
+ *
+ * `<div class="a2ui5-out">` in docs/index.md: the three places around the
+ * framework, and the three ways into the project. It is the manual's own
+ * markup and its own rules - the values here are style.css's, at the nine
+ * tenths that file states for the home page, with its variables read back to
+ * the ones the catalogue's stylesheet declares (`--vp-c-divider` is `--line`,
+ * `--vp-c-text-2` is `--fg-dim`, `--a2ui5-c-link` is `--accent`, which on this
+ * page is the red above).
+ *
+ * A copy while both stylesheets exist. When VitePress goes, style.css goes
+ * with it and this is where the rules live. */
+.a2ui5-out {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  margin: 16px 0 0;
+}
+/* One breakpoint, and it is the tile row's: two rows that changed at different
+   widths spent the widths in between disagreeing - three cards over two. */
+@media (min-width: 768px) {
+  .a2ui5-out { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.a2ui5-out .a2ui5-out-card {
+  display: flex; flex-direction: column; align-items: flex-start; height: 100%;
+  /* Outlined, not tinted. The tint used to mean "this leaves the site", and on
+     a row where two of three cards are pages of this manual a reader reads
+     that as two kinds of thing rather than as one row of places to go. What
+     tells you whether a card leaves is the arrow, which is readable. */
+  padding: 22px;
+  border: 1px solid var(--line); border-radius: 6px;
+  background: none; color: var(--fg); text-decoration: none;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+/* The card is the answer to "is this a link", so the text stays as it is and
+   the card moves instead. */
+.a2ui5-out .a2ui5-out-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
+  color: var(--fg); text-decoration: none;
+}
+.a2ui5-out .a2ui5-out-icon { display: block; margin-bottom: 12px; color: var(--accent); }
+.a2ui5-out .a2ui5-out-icon svg { display: block; width: 20px; height: 20px; }
+.a2ui5-out .a2ui5-out-title {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 15px; line-height: 22px; font-weight: 600;
+}
+.a2ui5-out .a2ui5-out-title::after {
+  content: "↗"; color: var(--accent); font-size: 14px; font-weight: 400;
+  transition: transform .25s;
+}
+.a2ui5-out .a2ui5-out-card:hover .a2ui5-out-title::after { transform: translate(2px, -2px); }
+.a2ui5-out .a2ui5-out-details {
+  display: block; padding-top: 7px;
+  font-size: 13px; line-height: 22px; font-weight: 500; color: var(--fg-dim);
+}
+
+/* An icon in front of a link, behaving like the glyph it replaced: the size
+   and colour of the text around it, on its baseline. */
+.vp-doc .a2ui5-mark {
+  display: inline-block; width: 1.05em; height: 1.05em;
+  vertical-align: -.16em; color: var(--fg);
+}

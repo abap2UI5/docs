@@ -24,6 +24,44 @@
  * 6.81:1, so both clear AA for body text - the red cleared it on white at
  * 4.74:1 and FAILED in dark at 3.62:1, which is why it needed a second, lifted
  * value there. One value per theme now does the whole job. */
+/* ---- the type ---------------------------------------------------------
+ *
+ * Inter, self-hosted out of docs/public/fonts, Latin only. The two files are
+ * the ones the playground carries as well - same subsets, same declaration,
+ * see docs/public/fonts/NOTICE.md for the licence and for why they are
+ * committed rather than fetched from a font CDN.
+ *
+ * Not VitePress's own: theme/index.js imports `vitepress/theme-without-fonts`,
+ * because the theme's `fonts.css` brings all fourteen subsets - 628 kB of
+ * Greek, Cyrillic and Vietnamese this site has no glyph in - and an `@import`
+ * from Google Fonts with it. Two files, listed here, and the `unicode-range`
+ * below means anything outside Latin falls through to the stack instead of
+ * being fetched.
+ *
+ * `font-display: swap`: the first paint is in the fallback face and swaps when
+ * the file lands, which is the right way round for a manual. The preload in
+ * config.mjs makes that window small. */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-roman-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Inter;
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --bg: #ffffff;
   --bg-sunken: #f4f5f7;
@@ -172,7 +210,21 @@
   --radius-control: 5px;
   --radius-surface: 8px;
 
-  --vp-font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  /* ONE FACE FOR EVERY READER, and the old stack behind it as the fallback.
+   *
+   * This led with `system-ui` - each reader's own face - which is defensible
+   * and was ours for a long time. What it cost is that the same page is a
+   * different page on every desk: the home page's headline sits on one line in
+   * SF Pro and wraps in the face a Linux browser picks, and nothing about the
+   * design could be relied on further than the machine it was drawn on.
+   *
+   * Not SF Pro, which is what a Mac would have given us and is Apple's to
+   * license; Inter is the nearest face that may be redistributed. The
+   * @font-face pair is at the top of this file, and the same two files and the
+   * same declaration are in the playground's catalogue.css and shell.css -
+   * check:design holds this value and `--font-ui` equal, which is what stops
+   * the four bars from drifting apart. */
+  --vp-font-family-base: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
                          Roboto, "Noto Sans", Helvetica, Arial, sans-serif,
                          "Apple Color Emoji", "Segoe UI Emoji";
   --vp-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", "Cascadia Mono",

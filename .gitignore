@@ -19,3 +19,7 @@ docs/public/**/*.md
 # would be stale on every commit that touches a page, and a stale index answers
 # a search with a page that has moved.
 docs/public/search-index.json
+
+# Where scripts/prototype-site.mjs writes. A prototype's output is not a build
+# and is never committed; the generator rewrites it from scratch each run.
+.prototype/
