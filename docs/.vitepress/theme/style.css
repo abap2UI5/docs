@@ -809,6 +809,62 @@
   padding-bottom: 4px;
 }
 
+/* ------------------------------------------------ where in the manual ---
+ *
+ * The trail above the title — "Documentation › Cookbook › Model" — and the
+ * catalogue's `.crumbs` line written out for this theme (tools/sample-pages.mjs
+ * in abap2UI5/playground). The numbers are that file's: 12px, the dimmed
+ * foreground for the whole line including its links, and 6px down to the
+ * heading. Copied by hand for the same reason the palette and the search box
+ * are, and held to it the same way — see *One site in three places* in
+ * AGENTS.md.
+ *
+ * IT SITS WHERE THE TITLE USED TO. `.VPDoc` already opens 48px under the bar
+ * and the trail is the first thing in the column, so the line lands at exactly
+ * the height the catalogue's does and the outline beside it does not move: a
+ * reader stepping between a manual page and a sample page meets the same two
+ * lines in the same two places. `margin-top: 0` is the whole trick — the 48px
+ * is the theme's padding and adding anything here would push both documents
+ * out of step again.
+ *
+ * The separator is `aria-hidden`: a screen reader announcing "Documentation
+ * single right pointing angle quotation mark Cookbook" is worse than one
+ * announcing two links and a word. */
+.Layout .VPDoc .a2ui5-crumbs {
+  margin: 0 0 6px;
+  font-size: 12px;
+  /* 1.55, which is the catalogue's body line-height and therefore what its
+   * own crumb line inherits. Written out here because this theme's body is a
+   * different number: without it the line is 18px against the catalogue's
+   * 18.6 and the heading underneath starts a pixel higher than the same
+   * heading does over there. It is one pixel, and it is one pixel on the only
+   * two lines a reader sees before they see anything else. */
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+
+/* Underlined, dimmed, in the trail's own colour — the catalogue's crumb links
+ * exactly, and the underline is the point: it is what separates the sections
+ * you can open from the one you are in, which carries no link and is drawn
+ * as plain text. This theme's links are not underlined until hover, so the
+ * rule has to say it. */
+.Layout .VPDoc .a2ui5-crumbs a {
+  color: var(--fg-dim);
+  text-decoration: underline;
+  font-weight: inherit;
+}
+
+.Layout .VPDoc .a2ui5-crumbs a:hover {
+  color: var(--a2ui5-c-link);
+}
+
+/* Air around the separator, and it is padding rather than a space in the
+ * markup: a wrapped trail then breaks between two crumbs instead of leaving a
+ * `›` stranded at the start of the second line. */
+.Layout .VPDoc .a2ui5-crumbs .sep {
+  padding: 0 6px;
+}
+
 /* ------------------------------------------ the filename over a block ---
  *
  * Drawn as the tab a `::: code-group` draws, because that is what it is: the
@@ -1088,10 +1144,18 @@
   flex-direction: column;
   align-items: flex-start;
   height: 100%;
-  border: 1px solid transparent;
+  /* ONE CARD, DRAWN ONE WAY. Half of these were tinted and half outlined,
+     because the tint used to mean "this leaves the site" - and on a row where
+     two of three cards are pages of this manual, a reader reads that as two
+     kinds of thing rather than as one row of six places to go. The outline is
+     the one that survives: it is what the three feature cards above wear, and
+     what this file's own "edges, not surfaces" section argues for. What tells
+     you whether a card leaves is the arrow on it, which is a thing you can
+     read rather than a shade you have to compare. */
+  border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   padding: 24px;
-  background-color: var(--a2ui5-c-out-tint);
+  background-color: transparent;
   color: var(--vp-c-text-1);
   text-decoration: none;
   transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
@@ -1141,26 +1205,16 @@
   transform: translate(2px, -2px);
 }
 
-/* A CARD THAT STAYS ON THIS SITE SAYS SO BY NOT SAYING THE OPPOSITE.
+/* EVERY CARD CARRIES AN ARROW, AND THE ARROW SAYS WHICH KIND IT IS.
  *
- * The tint and the arrow are this row's whole signal: it is drawn differently
- * from the feature cards above it so that a card which LEAVES is recognisable
- * as one before it is clicked. The home page now has a row mixing both - two
- * of its three "around the framework" cards are pages of this manual - and a
- * card that is tinted and arrowed and then lands on /docs/resources/addons
- * spends that signal on nothing. So a card that stays takes the outline the
- * feature cards have, and drops the arrow. */
-.a2ui5-out .a2ui5-out-card.is-inside {
-  background-color: transparent;
-  border-color: var(--vp-c-divider);
-}
-
-.a2ui5-out .a2ui5-out-card.is-inside:hover {
-  border-color: var(--a2ui5-c-link);
-}
-
+ * A card that stayed on this site used to carry none at all, on the argument
+ * that the arrow means "this leaves". That left half a row with nothing on it
+ * to say it could be pressed - and a card with no affordance at all reads as a
+ * panel rather than as a door. So both kinds are arrowed: `↗` leaves this
+ * deployment, `→` stays on it. The reader who does not know the convention
+ * still sees something that points. */
 .a2ui5-out .a2ui5-out-card.is-inside .a2ui5-out-title::after {
-  content: none;
+  content: "→";
 }
 
 .a2ui5-out .a2ui5-out-details {
@@ -1296,6 +1350,29 @@
    headline above them carries. */
 .Layout .VPHome .VPFeature .icon {
   color: var(--a2ui5-red);
+}
+
+/* ...and the same arrow as the row below them, for the same reason: three
+   cards that are links and look like panels are three doors with no handle.
+   `↗` when the card leaves this deployment - the two that open the playground
+   are absolute URLs, which is what the attribute selector reads - and `→` for
+   the one that stays in the manual. */
+.Layout .VPHome .VPFeature.link .title::after {
+  content: "→";
+  margin-left: 6px;
+  color: var(--a2ui5-red);
+  font-size: 14px;
+  font-weight: 400;
+  display: inline-block;
+  transition: transform 0.25s;
+}
+
+.Layout .VPHome a.VPFeature.link[href^="http"] .title::after {
+  content: "↗";
+}
+
+.Layout .VPHome .VPFeature.link:hover .title::after {
+  transform: translate(2px, -2px);
 }
 
 /* ================================================ the home page, at 90% ===
@@ -2238,9 +2315,13 @@
   left: 0;
   z-index: 1;
   display: inline-block;
+  /* The catalogue's gutter, to the pixel: three characters of number with
+     14px either side. Its own padding rather than a margin, because the
+     column has to be opaque all the way to the edge it sticks to - a gap
+     there is a stripe of code showing through the number as a wide chain
+     scrolls under it. */
   min-width: 3ch;
-  margin-right: 14px;
-  padding-right: 8px;
+  padding: 0 14px;
   text-align: right;
   background: var(--vp-code-block-bg);
   color: var(--vp-c-text-3);
@@ -2261,8 +2342,13 @@
   background: var(--a2ui5-c-mark);
 }
 
-/* The block's own left padding goes: the gutter is the left edge now. */
-.vp-doc div[class*='language-'] pre:has(.ln) {
+/* The block's own left padding goes: the gutter IS the left edge now, and it
+   carries its own. The theme puts 24px on the `code` element rather than on
+   the `pre`, which is what made the numbers sit 24px inboard of the box while
+   sticking to the box - so a chain scrolled sideways moved the number 24px and
+   left a stripe of code down the outside of it. */
+.vp-doc div[class*='language-'] pre:has(.ln),
+.vp-doc div[class*='language-'] code:has(.ln) {
   padding-left: 0;
 }
 
