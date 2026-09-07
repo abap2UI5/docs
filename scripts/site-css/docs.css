@@ -195,6 +195,36 @@
 .sidebar > .side-group > summary,
 .sidebar > .side-item > a,
 .sidebar > .side-item > span { color: var(--fg); font-weight: 600; padding-top: 14px; }
+
+/* A ROW OF THIS MENU IS 20px TALL, AND ON A PHONE IT IS THE NAVIGATION. Below
+   1680 this list is the drawer, and the drawer is the only way from one chapter
+   to another on a screen with no room for the menu beside the page - 35 rows
+   of it visible at once on a 393px phone, 20px each, with 0 to 4px between
+   them. That is half the height a target is asked to be and none of the
+   spacing, so a thumb aiming at Cookbook got View.
+
+   `min-height` rather than padding, because the paddings here carry the
+   rhythm of the sections - a group heading stands 14px clear of the list above
+   it - and a row that is centred in a taller box keeps every one of them. It
+   costs the drawer its scrollbar, which it already knew how to use: the script
+   scrolls it to the row you are on. */
+@media (pointer: coarse) {
+  .sidebar .side-item > a,
+  .sidebar .side-item > span,
+  .sidebar summary { min-height: 36px; }
+  /* A section heading is a summary with a LINK inside it - the caret opens the
+     list, the words open the page - and a taller row leaves that link its own
+     20px in the middle of it unless it is told to fill the row. Stretched, the
+     words are the target and the rest of the row is still the caret's. */
+  .sidebar summary > a { align-self: stretch; display: flex; align-items: center; }
+  /* ...and a top-level heading stands 14px clear of the list above it, which it
+     did with padding - and padding is the one part of a row a child cannot
+     stretch into, so the link stayed 20px inside a 38px row and the 14 above it
+     toggled the section instead of opening the page. The same 14px as margin:
+     the same gap, outside the row, with the whole row left for the link. */
+  .sidebar > .side-group > summary { padding-top: 0; margin-top: 14px; }
+}
+
 /* A LINK IN THE MENU IS NOT A LINK-COLOURED LINK. Every row here is one, so
    colouring them the accent paints the whole column blue and the one you are
    on stops standing out - which is the only thing the accent is for in this
@@ -230,6 +260,12 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 }
 .doc-foot .edit { color: var(--accent); text-decoration: none; }
 .doc-foot .edit:hover { text-decoration: underline; }
+/* 19px of link at the foot of a chapter, with the date beside it: right under a
+   mouse, half a target under a thumb. The height is padding, so nothing moves
+   for a reader with a pointer. */
+@media (pointer: coarse) {
+  .doc-foot .edit { display: inline-block; padding: 4px 0; }
+}
 
 /* ---- the article ---------------------------------------------------- */
 .vp-doc h1 { font-size: 26px; line-height: 1.25; margin: 0 0 16px; }
