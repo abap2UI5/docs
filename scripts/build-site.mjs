@@ -351,10 +351,17 @@ function outlineFor(html) {
      nothing, which reads as a mistake rather than as a level. Where nothing is
      nested, the column is flat and identical to a sample page's. */
   const top = Math.min(...rows.map((r) => r.level));
-  return `<aside class="outline" aria-label="On this page">
+  /* A DIV AROUND A NAMED NAV, not an <aside> around one. Both are landmarks,
+     so naming the nav - which is the one a reader jumps between - left every
+     chapter announcing "On this page" twice: once as a complementary region,
+     once as the navigation inside it. The nav is what is worth landing on and
+     the box around it is layout; `.outline` is what every rule addresses, here
+     and in the borrowed stylesheet, so nothing else changes. The sample pages
+     do the same (tools/sample-pages.mjs over there). */
+  return `<div class="outline">
     <div class="outline-head">On this page</div>
     <nav aria-label="On this page">${rows.map((r) => `<a href="#${r.id}"${r.level > top ? ` class="lvl-${r.level - top + 2}"` : ''}>${esc(r.text)}</a>`).join('')}</nav>
-  </aside>`;
+  </div>`;
 }
 
 function crumbsFor(page) {
