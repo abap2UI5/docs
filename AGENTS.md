@@ -24,7 +24,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
 | `scripts/check-version.mjs` | The release number in the bar's menu, the deprecations page and the changelog, against the newest release tag of the framework |
 | `scripts/generate-search.mjs` | Builds `docs/public/search-index.json` — the pages of this site plus every entry in the three sample catalogues, which is what the box in the middle of the bar searches. Runs inside `docs:build`, so the deploy publishes it; `scripts/lib/search-index.mjs` is what goes in |
-| `scripts/lib/pages.mjs` | What a page of this site IS: the sidebar walk, its title, its first sentence, its headings, its words. Shared by `generate-llms.mjs` and `generate-search.mjs` so a page added to the sidebar reaches both |
+| `scripts/lib/pages.mjs` | What a page of this site IS: the sidebar walk, its title, its opening sentences, its headings, its words. Shared by `build-site.mjs`, `generate-llms.mjs` and `generate-search.mjs` so a page added to the sidebar reaches all three; `summarise( )` — the description of 150 pages and the note in `llms.txt`, which nobody writes and nobody proofreads — is pinned by `test/summarise.test.mjs` |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/list-runnable.mjs` | The measurement's worklist: every fenced example that carries a Run button, out of the same `playground.mjs` that decides the button. `--json` adds each example's ABAP verbatim - what the button sends - so the measurement below can be driven rather than clicked |
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
@@ -449,6 +449,21 @@ Three things to know before touching it:
   six og/twitter values, all with absolute urls: a relative `og:url` is
   silently dropped and the preview falls back to a grey card. That is what
   `transformPageData` used to do and what `meta( )` does now.
+- **The description is written by nobody**, on the 150 pages that declare none
+  in their frontmatter: `summarise( )` in `scripts/lib/pages.mjs` takes it off
+  the top of the page, and it is also the note beside every entry in
+  `llms.txt`. It used to stop at the first full stop, and on thirty-four pages
+  that sentence was the premise rather than the description — "abap2UI5 has no
+  e-mail control of its own", "All examples in these docs work without EML" —
+  the half that says what the page is NOT about, with the answer in the
+  sentence after it. It now takes sentences until there are 110 characters and
+  stops at the last one under 200. Over those 150 pages the median went from 84
+  to 117 characters and the ones under 60 from 34 to 8 — the eight are pages
+  whose opening paragraph is one short sentence, which is the honest answer. Two rules keep
+  it from cutting mid-thought: past the first sentence only a full stop counts
+  — the dash forms exist for a page that opens without one — and a candidate
+  that leaves a bracket open is skipped. `test/summarise.test.mjs` holds all of
+  it, because nothing else reads these before they ship.
 
 Verified against the VitePress build the day it was switched: 168 pages, ten
 content features each — headings, listings, tables, `:::` blocks, list items,

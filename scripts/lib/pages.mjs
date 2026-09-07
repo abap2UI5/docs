@@ -130,15 +130,51 @@ export function summarise(body) {
     .replace(/\s+/g, ' ')
     .trim();
   if (!plain) return '';
-  // cut at the end of the first sentence, but not so early that the note says
-  // nothing; a period inside `sap.m.Table` or `1.71` is not a sentence end
-  const stop = plain.search(/\.(?=\s|$)|:\s—|\s—\s/);
-  /* Trimmed, because two of the three cuts land ON a space: the dash forms
-     match `\s—\s`, and keeping the character at `stop` keeps that space. It
-     showed up as "…control of its own " under a search hit, in the note beside
-     an llms.txt entry, and - since the descriptions started coming from here -
-     in the meta description of two pages. */
-  const first = (stop > 40 ? plain.slice(0, stop + 1) : plain).trim();
+  /* SENTENCES UNTIL IT SAYS SOMETHING, then stop.
+   *
+   * This used to cut at the FIRST sentence end, and a page whose first
+   * sentence is short then went out into the world described by it: "abap2UI5
+   * has no e-mail control of its own", "All examples in these docs work
+   * without EML", "Barcode scanning is common in enterprise apps". That is a
+   * premise, not a description - it is the half of the paragraph that says
+   * what the page is NOT about, and the sentence after it is the one that says
+   * what it is. Thirty-four of the hundred and fifty pages that declare no
+   * description of their own were under sixty characters, and the median was
+   * 84. A snippet has room for about 155.
+   *
+   * So: take sentence ends until there are at least 110 characters, and stop
+   * at the last one that stays under 200 - a description is a paragraph's
+   * opening, not the paragraph. The cut itself is unchanged, and a period
+   * inside `sap.m.Table` or `1.71` is still not a sentence end. One sentence
+   * that is already long enough is still one sentence, and a paragraph with
+   * nothing more in it stays as short as it is.
+   *
+   * Trimmed, because two of the three cuts land ON a space: the dash forms
+   * match `\s—\s`, and keeping the character at the cut keeps that space. It
+   * showed up as "…control of its own " under a search hit, in the note beside
+   * an llms.txt entry, and in the meta description of two pages. */
+  let first = '';
+  for (const end of plain.matchAll(/\.(?=\s|$)|:\s—|\s—\s/g)) {
+    if (end.index <= 40) continue;
+    /* A DASH ENDS A FIRST SENTENCE AND NEVER EXTENDS ONE. The two dash forms
+       are here because a page can open with a sentence that never reaches a
+       full stop; cutting a LATER one at a dash stops mid-clause, and it did:
+       "...two additional database tables (z2ui5_t_99 and z2ui5_t_98", with the
+       bracket still open, and "What it cannot do is find out whether the app
+       works". Past the first sentence, only a full stop will do. */
+    if (first && !end[0].startsWith('.')) continue;
+    const candidate = plain.slice(0, end.index + 1).trim();
+    /* AND NOT INSIDE A BRACKET. The quickstart opens "Pull abap2UI5 with
+       abapGit. (New to abapGit? Install it first — see ...)", and the cut at
+       that dash ends the description four words into an aside, with the
+       bracket still open. A candidate that opened something it did not close
+       is not a sentence; the next one is tried instead. */
+    if ((candidate.match(/\(/g) || []).length !== (candidate.match(/\)/g) || []).length) continue;
+    if (first && candidate.length > 200) break;
+    first = candidate;
+    if (first.length >= 110) break;
+  }
+  if (!first) first = plain.trim();
   return first.length > 220 ? `${first.slice(0, 217)}...` : first;
 }
 
