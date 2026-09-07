@@ -385,6 +385,10 @@ html { scroll-padding-top: 62px; }
  * needs the four sections more. */
 .bar .release {
   flex: none;
+  /* 86x19 of link, where a target is asked to be 24 in both directions. The
+     three pixels go on as padding, which nothing can see: the group centres
+     what it holds and the number does not move. */
+  padding: 3px 0;
   /* The socials group sets no gap of its own - its marks carry their own
      padding - so the number would sit against the first one. Measured: 0px
      between them. */

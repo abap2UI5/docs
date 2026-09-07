@@ -163,7 +163,13 @@ const HOME = 'https://abap2ui5.github.io/docs/';
  * carried nothing for site.js to lift. It opened the front of the catalogue
  * however deep the reader had been, which is the memory not working at all
  * for the half of the bar most people use. */
-const NAV = /<nav class="bar-nav">[\s\S]*?<\/nav>/;
+/* `[^>]*` rather than `>`: the nav over there carries `aria-label="Main"`
+ * since the day a landmark with no name was noticed, and a borrow that only
+ * knows the tag as it was on the day it was written breaks on the next
+ * attribute somebody adds to it. What must be exact is the CLASS - that is
+ * what says this is the right nav - and `once()` below is what says the edit
+ * landed where it was meant to. */
+const NAV = /<nav class="bar-nav"[^>]*>[\s\S]*?<\/nav>/;
 const inNav = (bar, edit) => {
   const nav = bar.match(NAV);
   if (!nav) throw new Error(`no <nav class="bar-nav"> in the bar from ${frame.from}`);
@@ -347,7 +353,7 @@ function outlineFor(html) {
   const top = Math.min(...rows.map((r) => r.level));
   return `<aside class="outline" aria-label="On this page">
     <div class="outline-head">On this page</div>
-    <nav>${rows.map((r) => `<a href="#${r.id}"${r.level > top ? ` class="lvl-${r.level - top + 2}"` : ''}>${esc(r.text)}</a>`).join('')}</nav>
+    <nav aria-label="On this page">${rows.map((r) => `<a href="#${r.id}"${r.level > top ? ` class="lvl-${r.level - top + 2}"` : ''}>${esc(r.text)}</a>`).join('')}</nav>
   </aside>`;
 }
 
@@ -716,6 +722,19 @@ const named = (html) => html.replace(
   },
 );
 
+/* AND A TABLE IS A REGION TOO, for the same reason and with the same words.
+ * The renderer wraps every table in `div.vp-doc-table tabindex="0"` so that a
+ * keyboard can scroll one wider than the column - the api reference alone has
+ * 28 of them, 14 of which do scroll on a 390px screen - and every one of them
+ * was a tab stop that announced nothing at all. Numbered, because "table"
+ * twenty-eight times over is twenty-eight things that cannot be told apart,
+ * and the number is the one a reader counts down the page. */
+let seenTables = 0;
+const tabled = (html) => html.replace(
+  /<div class="vp-doc-table"([^>]*)tabindex="0"([^>]*)>/g,
+  (all, before, after) => `<div class="vp-doc-table"${before}tabindex="0"${after} role="region" aria-label="Table ${++seenTables}">`,
+);
+
 const abapify = (html) => html.replace(
   /(<div class="language-abap[^"]*">[\s\S]*?<code>)([\s\S]*?)(<\/code>)/g,
   (all, head, code, tail) => {
@@ -916,7 +935,8 @@ for (const page of pages) {
   body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
   seenImages = 0;
   seenBlocks = 0;
-  body = named(notProse(sized(recolour(abapify(body)))));
+  seenTables = 0;
+  body = tabled(named(notProse(sized(recolour(abapify(body))))));
   /* A link that opens a new tab hands that tab a `window.opener` pointing at
      this one unless it says otherwise. Every current browser implies
      `noopener` for `target="_blank"` and has since 2020 - this is for the ones
