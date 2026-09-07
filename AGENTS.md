@@ -18,7 +18,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs` |
 | `docs/public/` | Static assets — **and** the generated `llms.txt`, `llms-full.txt` and per-page `.md`, which are gitignored |
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
-| `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, and checks the link in both directions |
+| `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, checks the link in both directions, and resolves the source links a page writes by hand against the same checkout |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
@@ -68,7 +68,7 @@ it are decidable, and all twelve are decided before a merge:
 | `check:design` | the values the four bars are made of — the seven palette colours, the two type stacks, the two radii — against the copy [abap2UI5/playground](https://github.com/abap2UI5/playground) keeps, in **both** schemes. They are copied by hand on purpose (a stylesheet fetched across two deployments is a request in front of the first paint), and until this gate nothing compared the copies: they agreed because whoever touched one remembered the other. One had already drifted — two font stacks leading with different families, which is the same face on macOS and Windows and two different ones on Linux, so the same four words in the same bar measured 59/122/78/97px here and 65/141/87/110 there. It compares the EFFECTIVE value (a property the dark block does not redeclare keeps its light one), because the two sides switch schemes differently: `.dark` here, `[data-theme]` over there.
 
 **What it now guards is the second opinion, not the site.** Since the switch, the published pages link the playground's own `catalogue.css`, borrowed whole at build time — so the palette cannot drift from the playground's there, by construction. `style.css` is VitePress's, and VitePress is no longer served. Keep the gate: it is what says so when somebody edits `style.css` expecting the site to change |
-| `check:samples` | the **Working Samples** blocks, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
+| `check:samples` | the **Working Samples** blocks and the source links a page writes by hand, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
 **All four walking gates carry a floor.** A gate that checked nothing reports
 the same shape as a gate that found nothing wrong — which is precisely how
@@ -587,7 +587,15 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
 - **A generated block in a page is committed.** The *Working Samples* blocks are
   written into the markdown so the site builds without a samples checkout. Run
   `npm run link:samples` after changing a page's `samples:` frontmatter;
-  `check:samples` fails if a rewrite would change anything. The client API
+  `check:samples` fails if a rewrite would change anything. It also resolves
+  every source link a page writes **by hand** — `github.com/abap2UI5/samples/blob/main/…`
+  in the prose rather than in a generated block — against that same checkout.
+  The 37 essay pages under `advanced/insights/` link a sample that way on
+  purpose (none of them carries a block: a "Full source:" sentence is the shape
+  an essay wants, not a see-also list at the end), and the samples repository
+  renumbers, so such a link is one renumber away from a 404 with nothing
+  watching it. Now something is, and it costs no request: CI clones
+  `abap2UI5/samples` in full for the catalogue, so the answer is a file lookup. The client API
   reference on `resources/api.md` works the same way: everything between its
   markers, plus `docs/public/api/client-api.json` next to it, comes from
   `npm run generate:api` — edit the intro around the block by hand, never the

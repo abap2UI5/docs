@@ -168,6 +168,8 @@ const problems = [];
 let pages = 0;
 let links = 0;
 let written = 0;
+let handwritten = 0;
+let handwrittenGone = 0;
 
 for (const file of markdownFiles(DOCS)) {
   const text = fs.readFileSync(file, 'utf8');
@@ -209,6 +211,54 @@ for (const file of markdownFiles(DOCS)) {
   }
 }
 
+/* And the links a page writes BY HAND, which are the hole in the promise this
+ * script's header makes. The generated block exists so that "a sample that is
+ * DELETED fails this script instead of leaving a 404 on the documentation
+ * site" - but that only covers the classes a page DECLARES. A sentence in the
+ * prose can name a sample the same way, straight at its source file:
+ *
+ *     see [sample 009](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_009.clas.abap)
+ *
+ * and 97 distinct paths across 164 links are written that way. Nothing looked
+ * at them. The samples repository RENUMBERS - its classes are named by number
+ * and the generators close gaps - so a link like that is one renumber away
+ * from a 404, and the reader is the one who finds out.
+ *
+ * check-api-names asks exactly this question for abap2UI5/abap2UI5, and it
+ * asks it over the network, one HEAD per path. Here the whole checkout is
+ * already open (CI clones it in full for the catalogue), so the answer is a
+ * file lookup: no request, and it fails on a path that moved as readily as on
+ * one that was deleted.
+ *
+ * The generated blocks are skipped - they are written FROM the catalogue, so
+ * checking them would only be checking this script against itself, and the
+ * declared-samples loop above already fails on a class the catalogue lost. */
+{
+  const seen = new Map();   // path in the samples repo -> pages that link it
+  for (const file of markdownFiles(DOCS)) {
+    let text = fs.readFileSync(file, 'utf8');
+    const from = text.indexOf(START);
+    if (from !== -1) {
+      const to = text.indexOf(END, from);
+      text = to === -1 ? text.slice(0, from) : text.slice(0, from) + text.slice(to);
+    }
+    for (const m of text.matchAll(/https:\/\/github\.com\/abap2UI5\/samples\/blob\/main\/([^)`"\s>]+)/g)) {
+      const target = m[1].split('#')[0].replace(/[.,;:)]+$/, '');
+      if (!seen.has(target)) seen.set(target, new Set());
+      seen.get(target).add(docsPath(file));
+    }
+  }
+  handwritten = seen.size;
+  for (const [target, onPages] of seen) {
+    if (fs.existsSync(path.join(samplesHome, target))) continue;
+    handwrittenGone += 1;
+    problems.push(
+      `${[...onPages].sort().join(', ')}: links ${target} in abap2UI5/samples, which is not there on main\n`
+      + '    renumbered, moved or deleted - a link every reader who clicks it gets a 404 from',
+    );
+  }
+}
+
 /* And the sweep the other way round, over the WHOLE catalogue rather than only
  * the classes some page happens to declare. Without it, renaming a page here
  * leaves the samples repository pointing at a 404 and nothing notices: the page
@@ -226,6 +276,8 @@ for (const [cls, hit] of catalogue) {
 
 console.log(`${catalogue.size} samples in the catalogue (${path.relative(ROOT, samplesHome) || samplesHome})`);
 console.log(`${pages} page(s) declare ${links} sample link(s)${CHECK ? '' : `, ${written} rewritten`}`);
+console.log(`${handwritten} source path(s) linked by hand in the prose`
+  + (handwrittenGone ? `, ${handwrittenGone} of them gone` : ', all present in the checkout'));
 
 if (problems.length) {
   console.error(`\n${problems.length} problem(s):`);
