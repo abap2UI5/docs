@@ -13,7 +13,7 @@ versioned on its own rather than riding along with a framework release.
 
 | Add-on | What it is | Covered here |
 | --- | --- | --- |
-| [popups](https://github.com/abap2UI5-addons/popups) | Value help, search help, transport selection — and the successor to the framework's frozen `z2ui5_cl_pop_*` built-ins | [Popup](/cookbook/popup_popover/popup), [Value Help](/cookbook/expert_more/value_help) |
+| [popups](https://github.com/abap2UI5-addons/popups) | Value help, search help, transport selection — and what the framework's built-in popups [moved to](/resources/deprecations#built-in-popups-%E2%86%92-popups-add-on) | [Popup](/cookbook/popup_popover/popup), [Value Help](/cookbook/expert_more/value_help) |
 | [selection-screen](https://github.com/abap2UI5-addons/selection-screen) | Selection screens and variants | |
 | [layout-management](https://github.com/abap2UI5-addons/layout-management) | Customizable table and form layouts with persistent variant management | |
 | [table-maintenance](https://github.com/abap2UI5-addons/table-maintenance) | Table maintenance in your browser | |
