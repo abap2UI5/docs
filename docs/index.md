@@ -17,10 +17,17 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData service, no
 # for somebody who arrived from a conference talk, a LinkedIn post or a
 # colleague's link, and who has not decided to read a manual yet.
 #
-# So the page answers, in this order: what it is, what one app looks like (with
-# a button that RUNS it, right here), where to go next, what it runs on, and
-# what is built around it. A reader who wants the manual is one word away in
-# the bar; this page does not compete with it.
+# So the page answers, in this order: what it is (the hero), where to go next
+# (the three cards), what it runs on and what it does NOT need, what one app
+# looks like — with a button that RUNS it, right here — what it costs, what an
+# agent makes of it, and what is built around it. A reader who wants the manual
+# is one word away in the bar; this page does not compete with it.
+#
+# KEEP IT SHORT. Every claim on this page is made once. The tagline, the fact
+# table, the example's bullets and the AI section each used to carry their own
+# copy of "no JavaScript, no OData service, no frontend project" - four times on
+# one page, and the reader who needed it had it after the first. It lives in the
+# tagline and in the table's "Needs no" row now, and nowhere else.
 hero:
   # The greeting, because this is the front door and a reader who arrives from
   # a talk or a colleague's link should be met rather than pitched at. The
@@ -33,7 +40,7 @@ hero:
   # to do with, so the first line stopped two words short of the measure and
   # the second started under a ragged edge. Two sentences that belong together
   # wrap where the column says they wrap.
-  tagline: "One ABAP class is one UI5 app. No JavaScript, no OData service, no RAP, no frontend project. Install it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
+  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData service, no RAP, no frontend project. Install it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
     src: /logo-hero.png
     alt: abap2UI5 Logo
@@ -87,15 +94,13 @@ features:
 | **Speaks** | UI5, over stateless HTTP roundtrips against the framework's own service |
 | **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
 
-Old releases matter here: apps written on 7.02 use the same API as apps on ABAP
-Cloud, and [Downporting](/advanced/downporting) explains what the framework
-does so that they can.
+Old releases are not second-class: an app written on 7.02 uses the same API as
+one on ABAP Cloud. [Downporting](/advanced/downporting) explains how.
 
 ## One class, one app
 
-This is a complete abap2UI5 application. It has a public attribute the view
-binds to, a view built in ABAP, and an event handler — nothing else. Press
-**Run this example** and it starts in your browser, on the real framework.
+Here is a whole abap2UI5 app. Press **Run this example** — it starts in your
+browser, on the real framework, with nothing to install.
 
 ```abap
 CLASS zcl_app_hello DEFINITION PUBLIC.
@@ -141,48 +146,45 @@ CLASS zcl_app_hello IMPLEMENTATION.
 ENDCLASS.
 ```
 
-- **The attribute is the model.** `recipient` travels to the browser, comes
-  back edited, and is a plain ABAP string on both sides. The framework
-  serializes your instance between roundtrips, so the class keeps its state
-  without any session handling of your own.
-- **The view is ABAP.** No XML file in a repository, no frontend project, no
-  build step — the view is built at runtime and sent as data.
-- **Events come back as ABAP.** `check_on_event( )` is where the button press
-  arrives, in the same class, with the model already updated.
+- **The attribute is the model.** `recipient` goes to the browser, comes back
+  edited, and is a plain ABAP string on both sides — the framework carries your
+  instance between roundtrips, so the class keeps its state with no session
+  handling of your own.
+- **The view is ABAP.** Built at runtime and sent as data: no XML file in a
+  repository, no build step.
+- **Events come back as ABAP.** The button press arrives in `check_on_event( )`,
+  in the same class, with the model already updated.
 
 ## What it costs
 
-Nothing, and there is nothing to buy. abap2UI5 is [MIT licensed](/resources/license)
-and free for commercial use: no licence key, no subscription, no per-user and no
-per-app fee, no runtime to activate, no usage anybody meters.
+Nothing. [MIT licensed](/resources/license) and free commercially — no licence
+key, no subscription, no per-user fee, nothing to activate.
 
-**Nobody counts your users, because nothing is counting.** An abap2UI5 app is a
-standard UI5 freestyle application served by your own ABAP stack — ten users and
-ten thousand are the same to the framework, and the SAP licensing you already have
-is the licensing you keep. Nothing new to operate either: the app is an ABAP class
-in the system it runs on, installed like any other abapGit repository.
+**Nobody counts your users, because nothing is counting.** An abap2UI5 app is
+a standard UI5 freestyle application served by your own ABAP stack: ten users and
+ten thousand are the same to it, and the SAP licensing you have is the licensing
+you keep. Nothing new to operate either — the app is an ABAP class in the system
+it already runs on.
 
 **And you are not on your own with it.** [Support](/resources/support) is the
 community on GitHub and in the abapGit Slack channel, plus companies and
-freelancers offering implementation, training and support agreements — and it is
-already carrying customer work, [on their own account](/resources/who_uses): EWM
-and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile.
+freelancers offering implementation, training and support agreements. It is
+already carrying customer work [on their own account](/resources/who_uses) — EWM
+and PP apps on 7.57 and 7.55, on desktop and on mobile.
 
-## Written with an AI assistant
+## Developing with AI
 
-An abap2UI5 app is one ABAP class — source code, and nothing else. No service to
-generate, no OData artefact, no frontend project, no manifest: there is one file
-for an agent to write, and no second half that can drift out of step with it.
+One class is one file for an agent to write — and no second half that can drift
+out of step with it.
 
 **And it can check its own work without an SAP system.** The
-[linter](/advanced/linter) reconstructs the UI5 view out of the ABAP that builds it
-and reports the names UI5 does not have; the [MCP server](/advanced/mcp_server)
-turns that into a loop for any MCP client — search the sample catalogues for an app
-that already does it, validate the view just written, and one level further boot
-the app headless and get the errors and a screenshot back.
-[Developing with AI](/get_started/ai) has the whole ladder, from a paragraph you
-paste ahead of a task to the editor extension that registers the loop for every
-client in the window.
+[linter](/advanced/linter) rebuilds the UI5 view out of the ABAP that builds it and
+reports the names UI5 does not have; the [MCP server](/advanced/mcp_server) turns
+that into a loop for any MCP client — search the catalogues for an app that already
+does it, validate the view just written, and one step further boot the app headless
+and get the errors and a screenshot back. [The whole ladder](/get_started/ai) runs
+from a paragraph you paste ahead of a task to the editor extension that registers
+the loop for every client in the window.
 
 ## Around the project
 
