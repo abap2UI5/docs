@@ -263,10 +263,35 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
   margin: 0; padding: 14px; overflow-x: auto;
   font-family: var(--font-mono); font-size: 12.5px; line-height: 1.55; tab-size: 2;
 }
+/* THE LABEL WAS DRAWN THROUGH THE FIRST LINE. It is absolute and had no
+ * background, and a listing scrolls sideways - so wherever the first line is
+ * longer than the box, the word `abap` and the code were in the same pixels:
+ * three of three listings at 400px, two of three at 500, none from 600 up. A
+ * phone never showed it, because there the label is hidden and the button
+ * below is the one in that corner; a window under about 560px did.
+ *
+ * It carries the block's own background now, so a line passes BEHIND it rather
+ * than through it. The padding is the whole point and none of it is ever seen:
+ * the chip is the colour of what it sits on, so all that matters is that it
+ * covers the line it overlaps - 15 below the word, which is what reaches past
+ * a 19.4px line, and 10 to the left so a glyph does not touch it. The word has
+ * not moved: 8 from the top, 12 from the right, as before.
+ *
+ * It starts AT 8 rather than above it because the block is rounded and clips
+ * its content: a chip reaching into that corner painted over the antialiasing
+ * of the border's own curve. Six pixels, and the reason the page now compares
+ * identical to the one it replaces - 1440x900, zero differences. */
 .vp-doc div[class*="language-"] .lang {
-  position: absolute; top: 8px; right: 12px;
+  position: absolute; top: 8px; right: 0;
+  padding: 0 12px 15px 10px;
+  background: var(--bg);
   color: var(--fg-dim); font-size: 11px;
 }
+/* A fence with no language after it - the error messages on Common Failures
+   are written that way - still gets this element, empty. Transparent and
+   empty it was nothing; with a background it would be a small blank patch
+   over the code, which is the one way this rule could make a page worse. */
+.vp-doc div[class*="language-"] .lang:empty { display: none; }
 /* ---- copy the listing -------------------------------------------------
  *
  * The renderer emits this button on every block and it was simply hidden: 369
@@ -298,6 +323,15 @@ details[open] > summary > .side-caret { transform: rotate(90deg); }
 @media (hover: none) {
   .vp-doc div[class*="language-"] .copy { opacity: 1; }
   .vp-doc div[class*="language-"] .lang { display: none; }
+  /* And because it cannot be got out of the way there, the listing keeps the
+     button's width free at the END of what can be scrolled to: 47px of button,
+     8px to the edge, and air. A scroll container counts its end padding into
+     the overflow, so the last characters of the longest line can be brought
+     out from under the button - without it they are the one part of a listing
+     a reader on a phone cannot read at all. A listing whose lines all fit is
+     unaffected: the padding is inside the width, so nothing starts to
+     scroll. */
+  .vp-doc div[class*="language-"] pre { padding-right: 64px; }
 }
 /* The label moves out of its way while the button is showing. */
 .vp-doc div[class*="language-"]:hover .lang { opacity: 0; }
