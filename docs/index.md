@@ -77,39 +77,19 @@ features:
     target: _self
 ---
 
-## What it costs
+## What it needs, and what it does not
 
-Nothing, and there is nothing to buy. abap2UI5 is [MIT licensed](/resources/license)
-and free for commercial use: no licence key, no subscription, no per-user and no
-per-app fee, no runtime to activate, no usage anybody meters.
+| | |
+|---|---|
+| **Runs on** | NetWeaver 7.02 and up, S/4HANA, ABAP Cloud, on-premise, private and public cloud, and the trial systems |
+| **Installed with** | [abapGit](/get_started/quickstart) — one repository, no transport of frontend artefacts, no BSP application to maintain |
+| **Needs no** | JavaScript, OData service, RAP business object, CDS view, frontend project or Node toolchain |
+| **Speaks** | UI5, over stateless HTTP roundtrips against the framework's own service |
+| **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
 
-**Nobody counts your users, because nothing is counting.** An abap2UI5 app is a
-standard UI5 freestyle application served by your own ABAP stack — ten users and
-ten thousand are the same to the framework, and the SAP licensing you already have
-is the licensing you keep. Nothing new to operate either: the app is an ABAP class
-in the system it runs on, installed like any other abapGit repository.
-
-**And you are not on your own with it.** [Support](/resources/support) is the
-community on GitHub and in the abapGit Slack channel, plus companies and
-freelancers offering implementation, training and support agreements — and it is
-already carrying customer work, [on their own account](/resources/who_uses): EWM
-and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile.
-
-## Written with an AI assistant
-
-An abap2UI5 app is one ABAP class — source code, and nothing else. No service to
-generate, no OData artefact, no frontend project, no manifest: there is one file
-for an agent to write, and no second half that can drift out of step with it.
-
-**And it can check its own work without an SAP system.** The
-[linter](/advanced/linter) reconstructs the UI5 view out of the ABAP that builds it
-and reports the names UI5 does not have; the [MCP server](/advanced/mcp_server)
-turns that into a loop for any MCP client — search the sample catalogues for an app
-that already does it, validate the view just written, and one level further boot
-the app headless and get the errors and a screenshot back.
-[Developing with AI](/get_started/ai) has the whole ladder, from a paragraph you
-paste ahead of a task to the editor extension that registers the loop for every
-client in the window.
+Old releases matter here: apps written on 7.02 use the same API as apps on ABAP
+Cloud, and [Downporting](/advanced/downporting) explains what the framework
+does so that they can.
 
 ## One class, one app
 
@@ -170,19 +150,39 @@ ENDCLASS.
 - **Events come back as ABAP.** `check_on_event( )` is where the button press
   arrives, in the same class, with the model already updated.
 
-## What it needs, and what it does not
+## What it costs
 
-| | |
-|---|---|
-| **Runs on** | NetWeaver 7.02 and up, S/4HANA, ABAP Cloud, on-premise, private and public cloud, and the trial systems |
-| **Installed with** | [abapGit](/get_started/quickstart) — one repository, no transport of frontend artefacts, no BSP application to maintain |
-| **Needs no** | JavaScript, OData service, RAP business object, CDS view, frontend project or Node toolchain |
-| **Speaks** | UI5, over stateless HTTP roundtrips against the framework's own service |
-| **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
+Nothing, and there is nothing to buy. abap2UI5 is [MIT licensed](/resources/license)
+and free for commercial use: no licence key, no subscription, no per-user and no
+per-app fee, no runtime to activate, no usage anybody meters.
 
-Old releases matter here: apps written on 7.02 use the same API as apps on ABAP
-Cloud, and [Downporting](/advanced/downporting) explains what the framework
-does so that they can.
+**Nobody counts your users, because nothing is counting.** An abap2UI5 app is a
+standard UI5 freestyle application served by your own ABAP stack — ten users and
+ten thousand are the same to the framework, and the SAP licensing you already have
+is the licensing you keep. Nothing new to operate either: the app is an ABAP class
+in the system it runs on, installed like any other abapGit repository.
+
+**And you are not on your own with it.** [Support](/resources/support) is the
+community on GitHub and in the abapGit Slack channel, plus companies and
+freelancers offering implementation, training and support agreements — and it is
+already carrying customer work, [on their own account](/resources/who_uses): EWM
+and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile.
+
+## Written with an AI assistant
+
+An abap2UI5 app is one ABAP class — source code, and nothing else. No service to
+generate, no OData artefact, no frontend project, no manifest: there is one file
+for an agent to write, and no second half that can drift out of step with it.
+
+**And it can check its own work without an SAP system.** The
+[linter](/advanced/linter) reconstructs the UI5 view out of the ABAP that builds it
+and reports the names UI5 does not have; the [MCP server](/advanced/mcp_server)
+turns that into a loop for any MCP client — search the sample catalogues for an app
+that already does it, validate the view just written, and one level further boot
+the app headless and get the errors and a screenshot back.
+[Developing with AI](/get_started/ai) has the whole ladder, from a paragraph you
+paste ahead of a task to the editor extension that registers the loop for every
+client in the window.
 
 ## Around the project
 
