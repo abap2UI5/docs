@@ -99,8 +99,8 @@ explicitly for this reason.
 
 There used to be one more, `check:counts`, holding four figures on a
 `resources/samples.md` page against the catalogues themselves. That page is
-gone — the cookbook links [the samples page](https://abap2ui5.github.io/samples/)
-and each catalogue introduces itself — and with it the only prose
+gone — the cookbook links [the sample catalogue](https://abap2ui5.github.io/playground/samples/),
+which introduces itself and counts itself — and with it the only prose
 copy of a number this repository does not own. `generate-llms.mjs` still counts
 the sample catalogues into `llms.txt`, which is why CI sparse-checks out
 `SAMPLES.md` from `samples-controls` and `samples-stack`; both are
@@ -469,6 +469,38 @@ Verified against the VitePress build the day it was switched: 168 pages, ten
 content features each — headings, listings, tables, `:::` blocks, list items,
 Run buttons, code groups, external links — and one difference in 1,680
 comparisons, which is the 404 page gaining the bar.
+
+## Addresses that have moved
+
+**A URL this project published is a URL it keeps answering.** VitePress has no
+redirect mechanism and neither does `build-site.mjs`; what both do is copy
+`docs/public/` into the build verbatim, so a moved page leaves a small
+hand-written HTML file behind at its old address — a canonical link, a
+`meta refresh`, `noindex`, and one sentence with a link for a reader whose
+browser does not follow it. `docs/public/configuration/troubleshooting.html`
+is the worked example.
+
+There are nine of them. Eight are `/technical/*`: that whole section became
+the Know-How series under `/advanced/insights/` in one commit, and eight
+addresses that had been public for years stopped existing with it — one of
+them, `/technical/concept`, is linked from the framework's README, which is
+the project's front page on GitHub. The ninth is the troubleshooting page,
+renamed in 2023.
+
+Two things make this safe rather than a second set of pages to maintain:
+
+- **A stub is a page like any other**, so the dead-link sweep at the end of
+  `build-site.mjs` walks it. A stub whose target is renamed later fails the
+  build, naming the stub and the address it points at. Write the `<a href>`
+  and the `meta refresh` with the same URL and the sweep covers both.
+- **The 404 is the net under the rest.** Not every renamed address gets a
+  stub: the bar is "public, and linked from outside this organisation, where
+  we cannot fix it". Everything else lands on `404.html`, which carries the
+  whole page index and guesses from the words of the address — see the
+  scoring note there, and in particular why a word is worth what it narrows
+  down rather than one point per hit.
+
+Delete a stub when the old URL has stopped receiving traffic, not before.
 
 ## Things that will trip you up
 

@@ -1110,17 +1110,40 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   /* A WHOLE WORD IS WORTH MORE THAN A SUBSTRING, or "all" in an old address
      matches "installation" and the suggestions are noise. Both are counted,
      the whole word at three times the weight, and a substring only from four
-     letters up. */
+     letters up.
+     AND A WORD IS WORTH WHAT IT NARROWS DOWN. Eight addresses under
+     /technical/ were retired at once - the section became the Know-How series
+     - and every one of them was answered with "ajson, S-RTTI, abapGit,
+     abaplint": the only word those four share with the address is
+     "technical", which is in the path of all seven toolchain pages and says
+     nothing about which page anybody wanted. /technical/technology/rap did
+     find the RAP chapter, and then sorted it BELOW ajson on a tie. So a hit
+     is divided by how many pages carry that word: a word in eight pages is
+     worth an eighth of a word in one. The floor of a half is then "a whole
+     word carried by at most five pages, or several weaker hits adding up" -
+     measured against the eight retired addresses, it is what separates "rap"
+     (four pages, and the RAP chapter is the answer) from "technical" (eight,
+     and the answer is none of them) and from "ui5" (twelve, which in this
+     manual says nothing at all). Below it the page says it has no idea, which
+     is worth more than four wrong guesses. */
+  var carriers = {};
+  for (var w = 0; w < words.length; w++) {
+    var seen = 0;
+    for (var q = 0; q < pages.length; q++) {
+      if ((pages[q][0] + " " + pages[q][1]).toLowerCase().indexOf(words[w]) >= 0) seen++;
+    }
+    carriers[words[w]] = seen || 1;
+  }
   var scored = pages.map(function (p) {
     var tokens = (p[0] + " " + p[1]).toLowerCase().split(/[^a-z0-9]+/);
     var hay = tokens.join(" ");
     var n = 0;
     for (var i = 0; i < words.length; i++) {
-      if (tokens.indexOf(words[i]) >= 0) n += 3;
-      else if (words[i].length > 3 && hay.indexOf(words[i]) >= 0) n += 1;
+      if (tokens.indexOf(words[i]) >= 0) n += 3 / carriers[words[i]];
+      else if (words[i].length > 3 && hay.indexOf(words[i]) >= 0) n += 1 / carriers[words[i]];
     }
     return [n, p];
-  }).filter(function (s) { return s[0] >= 3; })
+  }).filter(function (s) { return s[0] >= 0.5; })
     .sort(function (a, b) { return b[0] - a[0] || a[1][1].length - b[1][1].length; })
     .slice(0, 5);
   if (!scored.length) return;

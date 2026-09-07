@@ -87,13 +87,15 @@ cd abap2UI5 && npm ci && cd ../samples-controls && npm ci
 
 `examples` needs only the clones — no install — and it is the cheapest useful
 thing here. It answers *"has somebody already built a value help, a tree,
-navigation between two apps?"* out of **614 working apps in three
-repositories**, and hands back a class to read rather than a snippet to trust.
-Any one of the three catalogues is enough to start; a missing clone is reported
-in the answer, not fatal. Each catalogue says what it covers on its own page —
-[Learn](https://abap2ui5.github.io/samples/),
-[Controls](https://abap2ui5.github.io/samples-controls/),
-[Stack](https://abap2ui5.github.io/samples-stack/).
+navigation between two apps?"* out of **every app the three repositories
+hold** — several hundred of them, and the catalogue below says how many
+today — and hands back a class to read rather than a snippet to trust.
+Any one of the three is enough to start; a missing clone is reported in the
+answer, not fatal. All three are sources of the one
+[sample catalogue](https://abap2ui5.github.io/playground/samples/), which is where to read what each covers —
+[Learn](https://abap2ui5.github.io/playground/samples/?src=learn),
+[Controls](https://abap2ui5.github.io/playground/samples/?src=controls),
+[Stack](https://abap2ui5.github.io/playground/samples/?src=stack).
 
 ### Level 3 — see the running app (a browser, and time)
 

@@ -20,7 +20,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { leavesTheSite, crossSiteLinks } from '../scripts/lib/cross-site.mjs';
+import { leavesTheSite, crossSiteLinks, unreachable } from '../scripts/lib/cross-site.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -118,4 +118,27 @@ test('the Run bar\'s link into the playground carries the attribute too', () => 
     /open\.target\s*=\s*'_self'/,
     'the link into the playground must opt out of the router, or it lands on this site\'s 404',
   );
+});
+
+test('a cross-site link that points at a deployment which is gone is named as gone', () => {
+  /* The gate this backs decides whether a cross-site link WORKS, and its last
+     line has always claimed the destinations "lead somewhere" without looking.
+     They did not: /samples/, /samples-controls/ and /samples-stack/ were three
+     separate sites, replaced by the one catalogue under /playground/samples/,
+     and the manual went on naming all three in thirteen places. An internal
+     link that dies fails the build; a link to the site next door just quietly
+     stops being true. */
+  assert.equal(unreachable('/playground/'), null);
+  assert.equal(unreachable('/playground/samples/'), null);
+  assert.equal(unreachable('/linter/'), null);
+
+  // Retired, and the message says what to use instead - the whole point of it.
+  assert.match(unreachable('/samples/'), /retired.*\/playground\/samples\/\?src=learn/);
+  assert.match(unreachable('/samples-controls/'), /retired.*src=controls/);
+  assert.match(unreachable('/samples-stack/'), /retired.*src=stack/);
+  // ...including a page under one of them, which is how they were linked.
+  assert.match(unreachable('/samples-controls/index.html'), /retired/);
+
+  // And anything nobody has named is not waved through.
+  assert.equal(unreachable('/somewhere-else/'), 'not a deployment this origin serves');
 });
