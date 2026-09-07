@@ -61,13 +61,13 @@ ENDCLASS.
 
 Next, use transaction `SICF` to create an HTTP service and enter your handler class in the service's **Handler List** tab, then activate the node:
 
-![SICF service creation dialog in transaction SICF](https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4) <br>
+<img width="743" height="697" alt="SICF service creation dialog in transaction SICF" src="https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4" /> <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
 
 ::: details ABAP Cloud
 For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).
 
-<img width="846" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
+<img width="846" height="414" alt="Creating an HTTP service in the ABAP Cloud environment" src="https://github.com/user-attachments/assets/ecbd1505-1412-47e4-9427-504fa91c8162">
 :::
 
 ::: tip **Security**
@@ -82,7 +82,7 @@ Cloud compatibility, whichever handler this system runs.
 
 ## 3. First Launch
 Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
-<img width="800" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+<img width="800" height="429" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
 Press `check` to verify your installation, then launch the bundled test app to confirm everything works.
 
 You should now see the page of the startup app. That is the whole install verified: abapGit pull,

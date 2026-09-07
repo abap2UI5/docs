@@ -23,7 +23,7 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { crossSiteLinks, SITE } from './lib/cross-site.mjs';
+import { crossSiteLinks, SITE, unreachable } from './lib/cross-site.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 /* WHICH BUILD THIS JUDGES, and why it is still VitePress's.
@@ -95,6 +95,30 @@ console.log(
 
 if (LIST) {
   for (const [url, count] of [...destinations].sort()) console.log(`  ${String(count).padStart(5)}  ${url}`);
+}
+
+/* WHERE THEY GO, not only whether they work. The line this gate ends on has
+ * always said "All of them lead somewhere" and never checked it: three of the
+ * destinations - /samples/, /samples-controls/, /samples-stack/ - had been
+ * retired and replaced by the one catalogue under /playground/samples/, and
+ * thirteen links across seven pages went on naming them. An internal link that
+ * dies fails the build; a link to the site next door just quietly stops being
+ * true. scripts/lib/cross-site.mjs holds the list. */
+const gone = [];
+for (const [url, count] of destinations) {
+  const why = unreachable(new URL(url).pathname);
+  if (why) gone.push({ url, count, why });
+}
+if (gone.length) {
+  console.error(`\n${gone.length} cross-site destination(s) are not deployments of this origin:\n`);
+  for (const one of gone.sort((a, b) => b.count - a.count)) {
+    console.error(`  - ${one.url}`);
+    console.error(`      ${one.count} link(s) — ${one.why}`);
+  }
+  console.error('\nIf one of these IS a deployment now, name it in NEIGHBOURS in');
+  console.error('scripts/lib/cross-site.mjs - one line, and a decision somebody makes rather');
+  console.error('than a URL nobody rereads.');
+  process.exit(1);
 }
 
 if (broken.length) {

@@ -69,13 +69,15 @@ extension for the system connection.
 
 ## Where the samples live
 
-Three repositories, each with a searchable page of its own:
-[**Learn**](https://abap2ui5.github.io/samples/) for *“Where do I start?”*,
-[**Controls**](https://abap2ui5.github.io/samples-controls/) for *“Which
-control does what?”*, and [**Stack**](https://abap2ui5.github.io/samples-stack/)
-for *“Will my system run it?”*.
+Three repositories, **one catalogue**: every sample from all of them is at
+[abap2ui5.github.io/playground/samples](https://abap2ui5.github.io/playground/samples/), searchable in one box by what
+an app does, by the control it builds and by the release your system runs.
+Each is a page of its own, with the ABAP printed in full and — where it needs
+no system — a button that runs it in the browser.
 
-Each page says what its own corpus holds, how many apps that is, and carries
-the search and the filters for it — and links the other two in the bar at its
-top, so any one of the three is a way in to all of them. All three install with
-abapGit and carry an overview app that lists everything they contain.
+The three are the catalogue's three sources, and each is one click:
+[**Learn**](https://abap2ui5.github.io/playground/samples/?src=learn) for *“Where do I start?”*,
+[**Controls**](https://abap2ui5.github.io/playground/samples/?src=controls) for *“Which control does what?”*, and
+[**Stack**](https://abap2ui5.github.io/playground/samples/?src=stack) for *“Will my system run it?”*. All three also
+install with abapGit and carry an overview app that lists everything they
+contain.

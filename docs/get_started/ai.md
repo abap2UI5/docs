@@ -13,10 +13,12 @@ reason is structural:
 - **The whole app is text.** View, logic, state and data flow live in the same
   class, in one language. An agent never has to keep an ABAP backend and a
   JavaScript frontend in step, because there is no second half to drift.
-- **There are hundreds of working examples to learn from.** The three sample
-  catalogues hold complete, tested apps — one per pattern, every one linted and
-  rendered — so "has somebody already built a value help, a tree, navigation
-  between two apps?" is a question with a real answer instead of a guess.
+- **There are hundreds of working examples to learn from.** The
+  [sample catalogue](https://abap2ui5.github.io/playground/samples/) holds
+  complete, tested apps from all three repositories — one per pattern, every
+  one linted and rendered, each with the ABAP printed in full — so "has
+  somebody already built a value help, a tree, navigation between two apps?"
+  is a question with a real answer instead of a guess.
 - **The result can be checked without an SAP system.** The
   [abap2UI5 linter](/advanced/linter) reconstructs the UI5 view out of the ABAP
   that builds it and reports what UI5 does not have. An agent that can verify

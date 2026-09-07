@@ -61,6 +61,9 @@ The [Cookbook](/cookbook/view/definition) covers each topic again as a
 reference chapter, and three catalogues of complete, tested apps continue from
 there:
 
-- [Samples](https://abap2ui5.github.io/samples/) — one app per pattern, along a guided learning path
-- [Controls](https://abap2ui5.github.io/samples-controls/) — UI5 demo kit samples rebuilt as abap2UI5 apps, searchable by control
-- [Stack](https://abap2ui5.github.io/samples-stack/) — integration samples per technology, from RAP to WebSocket
+- [Learn](https://abap2ui5.github.io/playground/samples/?src=learn) — one app per pattern, along a guided learning path
+- [Controls](https://abap2ui5.github.io/playground/samples/?src=controls) — UI5 demo kit samples rebuilt as abap2UI5 apps, searchable by control
+- [Stack](https://abap2ui5.github.io/playground/samples/?src=stack) — integration samples per technology, from RAP to WebSocket
+
+All three are sources of the one [sample catalogue](https://abap2ui5.github.io/playground/samples/), so a search covers
+every one of them at once.

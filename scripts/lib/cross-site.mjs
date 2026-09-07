@@ -43,6 +43,48 @@ export const SITE = {
 };
 
 /*
+ * ...AND WHICH OTHER DEPLOYMENTS THIS ORIGIN ACTUALLY SERVES.
+ *
+ * The gate above decides whether a cross-site link WORKS. It said nothing
+ * about where it goes, and for months it went nowhere: /samples/,
+ * /samples-controls/ and /samples-stack/ were three separate sites, each with
+ * its own search page, and they were replaced by the one catalogue under
+ * /playground/samples/. The manual went on naming all three - thirteen links
+ * across seven pages, in What's Next, in Tooling, in the walkthrough, in the
+ * VS Code and MCP chapters - because nothing looks at a link that leaves the
+ * site and no build fails on one. An internal link that dies fails the build;
+ * a link to the site next door just quietly stops being true.
+ *
+ * So: a cross-site link may name one of these paths and nothing else. Adding a
+ * deployment here is one line; the point is that adding it is a decision
+ * somebody makes rather than a URL nobody rereads.
+ */
+export const NEIGHBOURS = [
+  '/playground/',           // the playground, and the sample catalogue under it
+  '/linter/',               // the linter's rule reference
+  '/web-abap2UI5-build/',   // a live build of the frontend, credited on Sponsor
+];
+
+/** What a retired deployment was replaced BY, so the error can say it. */
+export const RETIRED = new Map([
+  ['/samples/', 'the sample catalogue: /playground/samples/?src=learn'],
+  ['/samples-controls/', 'the sample catalogue: /playground/samples/?src=controls'],
+  ['/samples-stack/', 'the sample catalogue: /playground/samples/?src=stack'],
+]);
+
+/**
+ * Is this a deployment that is still there? Takes the pathname of a URL that
+ * `leavesTheSite` already accepted, and answers with the reason it is not.
+ */
+export function unreachable(pathname) {
+  for (const at of NEIGHBOURS) if (pathname.startsWith(at)) return null;
+  for (const [at, instead] of RETIRED) {
+    if (pathname === at || pathname.startsWith(at)) return `retired — use ${instead}`;
+  }
+  return 'not a deployment this origin serves';
+}
+
+/*
  * VitePress's own extension list, copied out of
  * vitepress/dist/client/shared.js rather than imported: this runs in Node
  * against built HTML, that ships to a browser, and a gate that silently
