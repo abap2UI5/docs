@@ -138,6 +138,20 @@ const index = [
   '  idea for the framework source - the package layering, the public API and',
   '  where each concept lives. This file maps the prose, that one maps the code',
   '',
+  /* THE TWO ANSWERS THIS FILE COULD NOT GIVE. An assistant writing abap2UI5
+     asks "has somebody already built this?" and "what exactly does the client
+     interface offer?", and the answer to both is published - 771 sample
+     classes with an index of their own, and the interface generated from the
+     source - and neither was named here. Both are one fetch. */
+  '- [the sample catalogue](https://abap2ui5.github.io/playground/samples/llms.txt): 771',
+  '  complete apps from three repositories, each with a page of its own and the',
+  '  class in full. That file describes `apps.json`, the whole index as data:',
+  '  what each sample builds, the controls and libraries it needs, the oldest',
+  '  UI5 release it runs on, and whether it runs in a browser with no system',
+  '- [client-api.json](' + SITE + '/api/client-api.json): every method, parameter and',
+  '  constant of `z2ui5_if_client` at this release, generated from the source -',
+  '  the same reference as the API page, as data',
+  '',
   ...[...bySection].flatMap(([section, list]) => [
     `## ${section}`,
     '',

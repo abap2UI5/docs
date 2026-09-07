@@ -398,7 +398,7 @@ const markdownTwin = (page) => {
 
 const canonical = (page) => `${SITE_URL}/${page}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
 
-const meta = ({ page, title, description, kind = 'article' }) => {
+const meta = ({ page, title, description, kind = 'article', isHome = false }) => {
   const url = canonical(page);
   return [
     ['link', { rel: 'canonical', href: url }],
@@ -435,7 +435,7 @@ const meta = ({ page, title, description, kind = 'article' }) => {
     ['meta', { name: 'twitter:description', content: description }],
   ].map(([tag, attrs]) => `<${tag} ${Object.entries(attrs)
     .map(([k, v]) => `${k}="${esc(v)}"`).join(' ')}>`).join('\n')
-  + '\n' + linkedData({ page, title, description, url });
+  + '\n' + linkedData({ page, title, description, url, isHome });
 };
 
 /* ---- what a machine reads instead of the page ------------------------
@@ -454,7 +454,44 @@ const meta = ({ page, title, description, kind = 'article' }) => {
  * `</script>` cannot be written by any of this: JSON.stringify escapes the
  * quotes, and `<` is escaped as `\u003c` afterwards, which is the one
  * character that could end the block early. */
-const linkedData = ({ page, title, description, url }) => {
+const linkedData = ({ page, title, description, url, isHome }) => {
+  /* THE FRONT DOOR IS NOT AN ARTICLE, and it has no trail to print. It is the
+     site itself and the thing the site is about, so it says both: a WebSite,
+     and the SoftwareApplication a search engine can show as what it is - a
+     developer tool, free, MIT, at this release, for these systems. Every value
+     is one this build or this page already states out loud; `price: 0` is the
+     section above it, in the vocabulary a machine reads. */
+  if (isHome) {
+    const json = JSON.stringify([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'abap2UI5',
+        url: `${SITE_URL}/`,
+        description,
+        inLanguage: 'en',
+        publisher: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5' },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'abap2UI5',
+        description,
+        url: `${SITE_URL}/`,
+        applicationCategory: 'DeveloperApplication',
+        applicationSubCategory: 'SAP ABAP UI framework',
+        operatingSystem: 'SAP NetWeaver AS ABAP 7.02 and up, S/4HANA, ABAP Cloud',
+        softwareVersion: RELEASE,
+        programmingLanguage: 'ABAP',
+        codeRepository: 'https://github.com/abap2UI5/abap2UI5',
+        license: `${SITE_URL}/resources/license.html`,
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        author: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5' },
+      },
+    ]);
+    return `<script type="application/ld+json">${json.replace(/</g, '\\u003c')}</script>`;
+  }
   const trail = trailFor(config.themeConfig.sidebar, page);
   const json = JSON.stringify([
     {
@@ -981,6 +1018,7 @@ for (const page of pages) {
       page,
       title,
       kind: isHome ? 'website' : 'article',
+      isHome,
       /* 151 of the 166 pages declare no description of their own, and every
          one of them was being given the project's slogan. That is the same
          sentence under 151 different results in a search engine, and the same

@@ -2,6 +2,11 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 title: Home
+# The one sentence a search result shows under the title, and the one a
+# preview card carries. It used to be the slogan alone - four words for the
+# most important page on the site, where every chapter has a sentence of its
+# own. What it is, what it needs, what it costs, where it runs.
+description: One ABAP class is one UI5 app - no JavaScript, no OData service, no RAP. Free and MIT licensed, installed with abapGit, from NetWeaver 7.02 to ABAP Cloud.
 
 # THIS PAGE IS THE PROJECT'S FRONT DOOR, NOT THE MANUAL'S.
 #
@@ -72,6 +77,40 @@ features:
     target: _self
 ---
 
+## What it costs
+
+Nothing, and there is nothing to buy. abap2UI5 is [MIT licensed](/resources/license)
+and free for commercial use: no licence key, no subscription, no per-user and no
+per-app fee, no runtime to activate, no usage anybody meters.
+
+**Nobody counts your users, because nothing is counting.** An abap2UI5 app is a
+standard UI5 freestyle application served by your own ABAP stack — ten users and
+ten thousand are the same to the framework, and the SAP licensing you already have
+is the licensing you keep. Nothing new to operate either: the app is an ABAP class
+in the system it runs on, installed like any other abapGit repository.
+
+**And you are not on your own with it.** [Support](/resources/support) is the
+community on GitHub and in the abapGit Slack channel, plus companies and
+freelancers offering implementation, training and support agreements — and it is
+already carrying customer work, [on their own account](/resources/who_uses): EWM
+and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile.
+
+## Written with an AI assistant
+
+An abap2UI5 app is one ABAP class — source code, and nothing else. No service to
+generate, no OData artefact, no frontend project, no manifest: there is one file
+for an agent to write, and no second half that can drift out of step with it.
+
+**And it can check its own work without an SAP system.** The
+[linter](/advanced/linter) reconstructs the UI5 view out of the ABAP that builds it
+and reports the names UI5 does not have; the [MCP server](/advanced/mcp_server)
+turns that into a loop for any MCP client — search the sample catalogues for an app
+that already does it, validate the view just written, and one level further boot
+the app headless and get the errors and a screenshot back.
+[Developing with AI](/get_started/ai) has the whole ladder, from a paragraph you
+paste ahead of a task to the editor extension that registers the loop for every
+client in the window.
+
 ## One class, one app
 
 This is a complete abap2UI5 application. It has a public attribute the view
@@ -131,73 +170,6 @@ ENDCLASS.
 - **Events come back as ABAP.** `check_on_event( )` is where the button press
   arrives, in the same class, with the model already updated.
 
-## What it costs
-
-Nothing, and there is nothing to buy. abap2UI5 is [MIT licensed](/resources/license)
-and free for commercial use: no licence key, no subscription, no per-user and no
-per-app fee, no runtime to activate, no usage anybody meters. You install it from
-GitHub with abapGit, and it sits in your own system as one repository whose source
-you can read, fork and keep.
-
-**Nobody counts your users, because nothing is counting.** An abap2UI5 app is a
-standard UI5 freestyle application served by your own ABAP stack: ten users and ten
-thousand are the same to the framework, and the SAP licensing you already have is
-the licensing you keep — [License](/resources/license) says it in one line, and it
-is the same line every UI5 app in your organization is licensed by.
-
-**Nothing new to operate.** No extra server, no middleware, no service to
-subscribe to: an app is an ABAP class in the system it runs on, installed like any
-other abapGit repository, and a roundtrip goes from the browser to that system and
-back.
-
-<div class="a2ui5-out">
-  <a class="a2ui5-out-card is-inside" href="/docs/resources/license">
-    <span class="a2ui5-out-title">MIT, in full</span>
-    <span class="a2ui5-out-details">The whole licence is one short page. Free for commercial use, and your apps stay yours — plain ABAP classes and standard UI5.</span>
-  </a>
-  <a class="a2ui5-out-card is-inside" href="/docs/resources/support">
-    <span class="a2ui5-out-title">Support</span>
-    <span class="a2ui5-out-details">Issues and the abapGit Slack channel for the community, and companies and freelancers offering implementation, training and support agreements.</span>
-  </a>
-  <a class="a2ui5-out-card is-inside" href="/docs/resources/who_uses">
-    <span class="a2ui5-out-title">In production</span>
-    <span class="a2ui5-out-details">Running in customer projects today — EWM and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile devices.</span>
-  </a>
-</div>
-
-
-## Written with an AI assistant
-
-An abap2UI5 app is one ABAP class — source code, and nothing else. No service to
-generate, no OData artefact, no frontend project, no manifest, no deployment
-pipeline: there is exactly one file for an agent to write, and the thing it writes
-is the thing that runs. Nothing drifts out of step, because there is no second half
-to keep in step with.
-
-**And it can check its own work without an SAP system.** The
-[linter](/advanced/linter) reconstructs the UI5 view out of the ABAP that builds it
-and reports the names UI5 does not have; the [MCP server](/advanced/mcp_server)
-turns that into a development loop for any MCP client — Claude Code, Cursor, VS
-Code:
-
-```sh
-claude mcp add abap2ui5 -- npx --yes @abap2ui5/mcp-server
-```
-
-An agent then searches the three sample catalogues for an app that already does
-what you asked for, asks whether abap2UI5 can express a UI5 feature at all,
-validates the view it just wrote — and, one level further, transpiles the framework
-to Node, boots the app headless and hands back the errors and a screenshot. Two
-files describe this project to a machine on their own:
-[`llms.txt`](https://abap2ui5.github.io/docs/llms.txt) maps every chapter of this
-manual, and [`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) is all
-of it in one fetch.
-
-[Developing with AI](/get_started/ai) has the whole ladder, from one paragraph you
-paste ahead of a task to the editor extension that registers the loop for every
-client in the window.
-
-
 ## What it needs, and what it does not
 
 | | |
@@ -212,7 +184,7 @@ Old releases matter here: apps written on 7.02 use the same API as apps on ABAP
 Cloud, and [Downporting](/advanced/downporting) explains what the framework
 does so that they can.
 
-## Around the framework
+## Around the project
 
 <div class="a2ui5-out">
   <a class="a2ui5-out-card is-inside" href="/docs/resources/addons">
@@ -227,11 +199,7 @@ does so that they can.
     <span class="a2ui5-out-title">Tooling</span>
     <span class="a2ui5-out-details">A VS Code extension, an MCP server so an AI assistant answers from the real API, and an app template to start from.</span>
   </a>
-</div>
 
-## Built in the open
-
-<div class="a2ui5-out">
   <a class="a2ui5-out-card" href="https://github.com/abap2UI5/abap2UI5/" target="_blank" rel="noreferrer">
     <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
     <span class="a2ui5-out-title">Community</span>
