@@ -131,6 +131,73 @@ ENDCLASS.
 - **Events come back as ABAP.** `check_on_event( )` is where the button press
   arrives, in the same class, with the model already updated.
 
+## What it costs
+
+Nothing, and there is nothing to buy. abap2UI5 is [MIT licensed](/resources/license)
+and free for commercial use: no licence key, no subscription, no per-user and no
+per-app fee, no runtime to activate, no usage anybody meters. You install it from
+GitHub with abapGit, and it sits in your own system as one repository whose source
+you can read, fork and keep.
+
+**Nobody counts your users, because nothing is counting.** An abap2UI5 app is a
+standard UI5 freestyle application served by your own ABAP stack: ten users and ten
+thousand are the same to the framework, and the SAP licensing you already have is
+the licensing you keep — [License](/resources/license) says it in one line, and it
+is the same line every UI5 app in your organization is licensed by.
+
+**Nothing new to operate.** No extra server, no middleware, no service to
+subscribe to: an app is an ABAP class in the system it runs on, installed like any
+other abapGit repository, and a roundtrip goes from the browser to that system and
+back.
+
+<div class="a2ui5-out">
+  <a class="a2ui5-out-card is-inside" href="/docs/resources/license">
+    <span class="a2ui5-out-title">MIT, in full</span>
+    <span class="a2ui5-out-details">The whole licence is one short page. Free for commercial use, and your apps stay yours — plain ABAP classes and standard UI5.</span>
+  </a>
+  <a class="a2ui5-out-card is-inside" href="/docs/resources/support">
+    <span class="a2ui5-out-title">Support</span>
+    <span class="a2ui5-out-details">Issues and the abapGit Slack channel for the community, and companies and freelancers offering implementation, training and support agreements.</span>
+  </a>
+  <a class="a2ui5-out-card is-inside" href="/docs/resources/who_uses">
+    <span class="a2ui5-out-title">In production</span>
+    <span class="a2ui5-out-details">Running in customer projects today — EWM and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile devices.</span>
+  </a>
+</div>
+
+
+## Written with an AI assistant
+
+An abap2UI5 app is one ABAP class — source code, and nothing else. No service to
+generate, no OData artefact, no frontend project, no manifest, no deployment
+pipeline: there is exactly one file for an agent to write, and the thing it writes
+is the thing that runs. Nothing drifts out of step, because there is no second half
+to keep in step with.
+
+**And it can check its own work without an SAP system.** The
+[linter](/advanced/linter) reconstructs the UI5 view out of the ABAP that builds it
+and reports the names UI5 does not have; the [MCP server](/advanced/mcp_server)
+turns that into a development loop for any MCP client — Claude Code, Cursor, VS
+Code:
+
+```sh
+claude mcp add abap2ui5 -- npx --yes @abap2ui5/mcp-server
+```
+
+An agent then searches the three sample catalogues for an app that already does
+what you asked for, asks whether abap2UI5 can express a UI5 feature at all,
+validates the view it just wrote — and, one level further, transpiles the framework
+to Node, boots the app headless and hands back the errors and a screenshot. Two
+files describe this project to a machine on their own:
+[`llms.txt`](https://abap2ui5.github.io/docs/llms.txt) maps every chapter of this
+manual, and [`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) is all
+of it in one fetch.
+
+[Developing with AI](/get_started/ai) has the whole ladder, from one paragraph you
+paste ahead of a task to the editor extension that registers the loop for every
+client in the window.
+
+
 ## What it needs, and what it does not
 
 | | |
@@ -139,7 +206,7 @@ ENDCLASS.
 | **Installed with** | [abapGit](/get_started/quickstart) — one repository, no transport of frontend artefacts, no BSP application to maintain |
 | **Needs no** | JavaScript, OData service, RAP business object, CDS view, frontend project or Node toolchain |
 | **Speaks** | UI5, over stateless HTTP roundtrips against the framework's own service |
-| **Licence** | MIT, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
+| **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
 
 Old releases matter here: apps written on 7.02 use the same API as apps on ABAP
 Cloud, and [Downporting](/advanced/downporting) explains what the framework
