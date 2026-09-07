@@ -76,6 +76,15 @@ function number(code, bi) {
      * The number itself is the stylesheet's, so that it stays out of what a
      * reader copies. */
     a.setAttribute('aria-label', `Line ${n}`);
+    /* And out of the tab order: a chapter has 55 of these against 69 of
+     * everything else, so a reader on a keyboard pressed Tab two dozen times
+     * to get past ONE listing. The gutter is a pointer affordance - the number
+     * is drawn by the stylesheet and the link under it is how a mouse picks a
+     * line up - and nothing is lost by it: the link still answers a click,
+     * `#B1L42` still opens where it always did, and a screen reader still
+     * meets the link in the page, because a browse cursor is not the tab
+     * order. The listing itself stays a stop, named and scrollable. */
+    a.tabIndex = -1;
     line.prepend(a);
   });
   code.dataset.lines = String(lines.length);
