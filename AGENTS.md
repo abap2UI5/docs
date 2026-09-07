@@ -658,6 +658,17 @@ Playwright to run something once a quarter. It is not part of that repository's
 `npm test`: with no worklist it contributes no tests. One example is one test,
 named for its page and its class, so a failure names the page to open.
 
+**Last measured 2026-09-07: 64 examples, 61 starting.** The three that did not
+were `url_handling`'s `z2ui5_cl_sample_url` and both classes on
+`navigation/app_state`, and they had one cause between them: all three teach the
+`hash_*` / `app_state_*` API, which landed in abap2UI5#2693 on 2026-08-31, one
+day after the commit the playground pinned. abaplint refused the method and the
+run stopped before the app started — "1 error in the ABAP". Nothing here was
+wrong: `check:api-names` resolves every `client->` name against abap2UI5 main,
+where the method exists. It is exactly the case named above, the pin moved in
+abap2UI5/playground, and the measurement is **64 of 64** on the pin that carries
+it. Read a failure here in that order: this site first, then the pin.
+
 The class in the example has to match the file it goes into: the playground
 refuses the pair when they disagree, exactly as a system does. Renaming the
 class to the open file's is enough — nothing in these examples depends on
