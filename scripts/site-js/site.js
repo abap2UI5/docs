@@ -152,28 +152,50 @@ document.addEventListener('click', (e) => {
   addEventListener('resize', schedule, { passive: true });
 })();
 
-/* ---- the chapter menu keeps the shape you left it in -------------------
+/* ---- the chapter menu keeps the shape YOU left it in --------------------
  *
  * Every page is a fresh document here, so the sections the build opened - the
  * one holding this page - were the only ones open, and every other section a
- * reader had unfolded shut itself on the next click. What is written down is
- * the set of sections that are OPEN, by the key the build gives each one.
+ * reader had unfolded shut itself on the next click. So the menu is written
+ * down and put back.
+ *
+ * WHAT IS WRITTEN DOWN IS WHAT THE READER DID, and nothing else. The first
+ * version wrote the whole visible menu on every `toggle` event, which sounds
+ * the same and is not: `toggle` is queued, so the events fired by putting the
+ * menu BACK arrive after this listener is attached, and every navigation wrote
+ * the path to wherever the reader had landed as though they had opened it by
+ * hand. Measured over five pages with the menu never touched once: the store
+ * grew from 1 entry to 8, and the reader's own choices were buried under a
+ * trail of rooms they had merely walked through. The menu remembered a shape;
+ * it just was not theirs.
+ *
+ * So a decision is recorded per section, on the click that makes it - one
+ * section, the state it now has - and the store holds only sections somebody
+ * actually opened or closed. Nothing a navigation does can reach it.
  *
  * The section holding the current page is opened regardless of what is
  * stored: it is where the reader is, and a menu that hid it would be worse
- * than one that forgets. */
+ * than one that forgets. Opened, and NOT written down - that was the bug. */
 (function tree() {
-  const KEY = 'abap2ui5-playground:docs-tree';
+  /* A second name, because every value under the first one was written by the
+     navigation bug above and none of it is the reader's. A store that cannot
+     be trusted is worse than an empty one. */
+  const KEY = 'abap2ui5-playground:docs-sections';
   const groups = [...document.querySelectorAll('.sidebar details[data-key]')];
   if (!groups.length) return;
+  /* key -> true when the reader opened that section, false when they closed
+     it. A section they never touched is simply absent, and keeps whatever
+     shape the build gave it. */
   const read = () => {
     try {
-      const v = JSON.parse(localStorage.getItem(KEY) || '[]');
-      return Array.isArray(v) ? new Set(v.filter((k) => typeof k === 'string')) : null;
-    } catch { return null; }
+      const v = JSON.parse(localStorage.getItem(KEY) || 'null');
+      return v && typeof v === 'object' && !Array.isArray(v) ? v : {};
+    } catch { return {}; }
   };
-  const open = read();
-  if (open) for (const g of groups) g.open = open.has(g.dataset.key);
+  const chosen = read();
+  for (const g of groups) {
+    if (Object.prototype.hasOwnProperty.call(chosen, g.dataset.key)) g.open = !!chosen[g.dataset.key];
+  }
   /* ...and the way to where you are, whatever was stored. */
   const here = document.querySelector('.sidebar a.here');
   if (here) for (let el = here.closest('details'); el; el = el.parentElement?.closest('details')) el.open = true;
@@ -198,10 +220,18 @@ document.addEventListener('click', (e) => {
 
   const write = () => {
     try {
-      localStorage.setItem(KEY, JSON.stringify(groups.filter((g) => g.open).map((g) => g.dataset.key)));
+      localStorage.setItem(KEY, JSON.stringify(chosen));
     } catch { /* a browser that refuses storage keeps the build's own shape */ }
   };
-  for (const g of groups) g.addEventListener('toggle', write);
+  /* The CLICK, not the toggle: a click on a summary is the reader, and it is
+     the only thing that is. Reading the state on the next task, once the
+     browser has done the opening the click asked for - and a keyboard reaches
+     a summary through a click too, so Enter and Space are the same path. */
+  box?.addEventListener('click', (e) => {
+    const group = e.target.closest?.('summary')?.parentElement;
+    if (!group || !groups.includes(group)) return;
+    setTimeout(() => { chosen[group.dataset.key] = group.open; write(); }, 0);
+  });
 })();
 /* ---- copy a listing ---------------------------------------------------
  *
