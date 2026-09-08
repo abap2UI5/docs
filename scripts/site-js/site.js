@@ -14,7 +14,7 @@
 import { setUpPlayground } from './playground.js';
 import { setUpCodeLines, watchCodeLines } from './code-lines.js';
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js';
-import { handOff, lastVisited, rememberHere, rememberScroll, restoreScroll } from './site-memory.js';
+import { entryOf, handOff, lastVisited, rememberHere, rememberScroll, restoreScroll } from './site-memory.js';
 
 /* The Run button under a runnable ABAP example, and "copy link to selection":
    one delegated listener each, for the whole document. */
@@ -108,50 +108,66 @@ document.addEventListener('click', (e) => {
  * app's own state, a half-filled form or a table scrolled to row 200, is gone
  * with the document that held it. No browser preserves a running page across a
  * forward navigation. Exactly one mechanism preserves it at all, and it is the
- * back/forward cache, which applies to going BACK.
+ * back/forward cache, which applies to a page the reader has BEEN on.
  *
- * So when going back is what the reader means, this goes back. The condition
- * is narrow and checkable: this document was opened FROM the playground itself
- * (not from a sample page under it, which is a different page), the history has
- * not grown since - a text fragment or an anchor pushed onto it would make one
- * step back something else - and there is an entry to go back to at all, which
- * a tab the playground opened with target=_blank does not have.
+ * So when the page the item opens is still in this tab's history, the press
+ * goes to it there. Two ways of knowing which entry that is:
  *
- * It can only ever match the link: the item's href is lifted to the last
- * playground URL, and that is the entry this steps back to. What it adds is the
+ *   - The Navigation API: navigation.entries() is the tab's same-origin
+ *     history, and entryOf( ) (theme/site-memory.js) finds the nearest entry
+ *     that IS the item's page - same path, same query. Any distance, either
+ *     direction: a reader who read two chapters since is two steps behind
+ *     it, and one who left it with the Back button is one step in front.
+ *   - Without it, the one case that can be known: this document was opened
+ *     FROM the playground itself (not from a sample page under it, which is a
+ *     different page), and the history has not grown since - an anchor or a
+ *     text fragment pushed onto it would make one step back something else.
+ *     A tab the playground opened with target=_blank has nothing behind it
+ *     at all.
+ *
+ * It can only ever land on the link: the item's href is lifted to the last
+ * playground URL, and that is the page this looks for. What it adds is the
  * browser's option to hand the page back alive instead of rebuilding it - and
- * where the browser declines, a reload is what the link would have done anyway.
+ * where the browser declines, a reload is what the link would have done
+ * anyway (the playground says why in its console, main.mjs over there).
  *
- * The fallback is for the one case that would be worse than today: a back that
- * does not navigate would be a dead press. If this document is still here 400ms
- * later, the link is followed after all - and the timer is dropped on pagehide,
- * so a document that WAS cached does not fire it on the way back in and bounce
- * the reader out of the page they returned to. */
+ * The fallback is for the one case that would be worse than today: a press
+ * that does not navigate would be a dead press. A traversal the browser cannot
+ * make rejects, and if this document is still here after a moment the link is
+ * followed after all - and the timer is dropped on pagehide, so a document
+ * that WAS cached does not fire it on the way back in and bounce the reader
+ * out of the page they returned to. */
 (function playgroundBehindYou() {
-  const item = document.querySelector('a[data-site="playground"]');
-  if (!item || history.length < 2) return;
-  const bare = (u) => u.pathname.replace(/index\.html$/, '');
-  let home;
-  let came;
-  try {
-    home = new URL(item.getAttribute('href'), location.href);
-    came = new URL(document.referrer);
-  } catch { return; }
-  /* The playground itself, not the catalogue and not a sample page - both of
-     those live under the same path and are not what the item opens. */
-  if (came.origin !== home.origin || bare(came) !== bare(home)) return;
+  if (!document.querySelector('a[data-site="playground"]')) return;
+  const bare = (u) => u.origin + u.pathname.replace(/index\.html$/, '') + u.search;
   const behind = history.length;
+  const cameFromIt = (href) => {
+    if (history.length < 2 || history.length !== behind) return false;
+    try {
+      return bare(new URL(document.referrer)) === bare(new URL(href, location.href));
+    } catch { return false; }
+  };
   document.addEventListener('click', (e) => {
     const a = e.target.closest?.('a[data-site="playground"]');
     if (!a || e.defaultPrevented) return;
     /* A press that means "in a new tab" still means that. */
     if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    if (history.length !== behind) return;
-    e.preventDefault();
     const href = a.href;
-    const fallback = setTimeout(() => { location.href = href; }, 400);
+    const nav = globalThis.navigation;
+    let step;
+    if (nav?.entries && nav.traverseTo) {
+      const key = entryOf(nav.entries(), nav.currentEntry?.index ?? -1, href);
+      if (key === null) return;
+      step = () => nav.traverseTo(key).committed;
+    } else if (cameFromIt(href)) {
+      step = () => history.back();
+    } else {
+      return;
+    }
+    e.preventDefault();
+    const fallback = setTimeout(() => { location.href = href; }, 1500);
     addEventListener('pagehide', () => clearTimeout(fallback), { once: true });
-    history.back();
+    Promise.resolve().then(step).catch(() => { clearTimeout(fallback); location.href = href; });
   }, true);
 })();
 
