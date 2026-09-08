@@ -34,7 +34,13 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # four used to share a formula - bold lead, explanation, "**And it ...**",
 # explanation - which reads as a template by the third card. The headings
 # are claims too, not labels: "Plays well with what you have" promises
-# something, where "Integration" only named a topic.
+# something, where "Integration" only named a topic. The last card asks
+# instead, and its bold lead is the one-word answer - so the reader who
+# scans only the headings still leaves with the price.
+#
+# THE ORDER IS AN ARGUMENT: it is safe here, it fits what you run, an agent
+# can write it - and only then, to somebody already persuaded, what it costs.
+# The price is the last card because it is the last question, not the first.
 hero:
   # The greeting, because this is the front door and a reader who arrives from
   # a talk or a colleague's link should be met rather than pitched at. The
@@ -93,7 +99,7 @@ features:
     target: _self
 ---
 
-## Ready for the enterprise
+## Ready for Your Enterprise
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon — your [authorizations](/configuration/authorization) and
@@ -112,15 +118,6 @@ It runs where your users already are: a browser tab, a
 Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
 rendering with the UI5 your system already ships.
 
-## Free. Really.
-
-[MIT licensed](/resources/license), commercial use included — no licence key,
-no subscription, no per-user fee.
-
-**Nobody counts your users, because nothing is counting.** It is a standard UI5
-app served by your own ABAP stack — ten users or ten thousand, the SAP licence
-you have is the one you keep.
-
 ## Made for AI agents
 
 **One class is one file — the whole app, for an agent to write.** It can check
@@ -128,6 +125,15 @@ its own work without an SAP system: the [linter](/advanced/linter) validates the
 view, the [MCP server](/advanced/mcp_server) boots the app headless and returns
 the errors and a screenshot. [The AI guide](/get_started/ai) starts with one
 paragraph you paste ahead of a task.
+
+## And what does it cost?
+
+**Nothing.** [MIT licensed](/resources/license), commercial use included — no
+licence key, no subscription, no per-user fee.
+
+Nobody counts your users, because nothing is counting: it is a standard UI5 app
+served by your own ABAP stack — ten users or ten thousand, the SAP licence you
+have is the one you keep.
 
 ## Try it out now
 
