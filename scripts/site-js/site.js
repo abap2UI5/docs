@@ -97,6 +97,64 @@ document.addEventListener('click', (e) => {
   if (e.target.closest?.('a[data-site]')) lift();
 }, true);
 
+/* ---- and the Playground item goes BACK when the playground is behind you --
+ *
+ * Reported: "the Playground tab - when I go to it the app is always run again,
+ * although it had already run before."
+ *
+ * It is a link, so a press builds a NEW document: the whole ABAP runtime boots
+ * and the app starts from the top. Measured against a local copy with no
+ * network in the way, that is 2.4 to 2.8 seconds every single time - and the
+ * app's own state, a half-filled form or a table scrolled to row 200, is gone
+ * with the document that held it. No browser preserves a running page across a
+ * forward navigation. Exactly one mechanism preserves it at all, and it is the
+ * back/forward cache, which applies to going BACK.
+ *
+ * So when going back is what the reader means, this goes back. The condition
+ * is narrow and checkable: this document was opened FROM the playground itself
+ * (not from a sample page under it, which is a different page), the history has
+ * not grown since - a text fragment or an anchor pushed onto it would make one
+ * step back something else - and there is an entry to go back to at all, which
+ * a tab the playground opened with target=_blank does not have.
+ *
+ * It can only ever match the link: the item's href is lifted to the last
+ * playground URL, and that is the entry this steps back to. What it adds is the
+ * browser's option to hand the page back alive instead of rebuilding it - and
+ * where the browser declines, a reload is what the link would have done anyway.
+ *
+ * The fallback is for the one case that would be worse than today: a back that
+ * does not navigate would be a dead press. If this document is still here 400ms
+ * later, the link is followed after all - and the timer is dropped on pagehide,
+ * so a document that WAS cached does not fire it on the way back in and bounce
+ * the reader out of the page they returned to. */
+(function playgroundBehindYou() {
+  const item = document.querySelector('a[data-site="playground"]');
+  if (!item || history.length < 2) return;
+  const bare = (u) => u.pathname.replace(/index\.html$/, '');
+  let home;
+  let came;
+  try {
+    home = new URL(item.getAttribute('href'), location.href);
+    came = new URL(document.referrer);
+  } catch { return; }
+  /* The playground itself, not the catalogue and not a sample page - both of
+     those live under the same path and are not what the item opens. */
+  if (came.origin !== home.origin || bare(came) !== bare(home)) return;
+  const behind = history.length;
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[data-site="playground"]');
+    if (!a || e.defaultPrevented) return;
+    /* A press that means "in a new tab" still means that. */
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (history.length !== behind) return;
+    e.preventDefault();
+    const href = a.href;
+    const fallback = setTimeout(() => { location.href = href; }, 400);
+    addEventListener('pagehide', () => clearTimeout(fallback), { once: true });
+    history.back();
+  }, true);
+})();
+
 /* Where on the page, not only which page. A bar link writes down how far down
    this page the reader is AND where they are being sent; the page that arrives
    within seconds, and only that page, puts them back (restoreScroll above). */
