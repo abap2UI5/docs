@@ -1,23 +1,24 @@
 /*
- * The bar's Playground item, and when it goes back instead.
+ * The bar, and when an item in it goes back instead.
  *
  * Reported as "the Playground tab — when I go to it the app is always run
- * again, although it had already run before". It is a link, so a press builds
- * a new document: the ABAP runtime boots and the app starts from the top.
- * Measured against a local copy with no network in the way, 2.4 to 2.8 seconds
- * every time, and the app's own state gone with the document. No browser keeps
- * a running page across a FORWARD navigation; the back/forward cache is the
- * only mechanism that keeps one at all, and it applies to a page the reader
- * has been on.
+ * again, although it had already run before" - and then again for the front
+ * door, whose Try it out now example is a playground in a frame. An item is a
+ * link, so a press builds a new document: the ABAP runtime boots and the app
+ * starts from the top. Measured against a local copy with no network in the
+ * way, 2.4 to 2.8 seconds every time, and the app's own state gone with the
+ * document. No browser keeps a running page across a FORWARD navigation; the
+ * back/forward cache is the only mechanism that keeps one at all, and it
+ * applies to a page the reader has been on.
  *
- * So when the playground is still in the tab's history, the item goes to it
- * there. Which entry that is comes out of `entryOf` (theme/site-memory.js),
+ * So when the page an item opens is still in the tab's history, the item goes
+ * to it there. Which entry that is comes out of `entryOf` (theme/site-memory.js),
  * over what navigation.entries() answers - the half with no DOM in it, checked
  * here against histories of every shape. The click itself is source read as
- * text, the way test/cross-site.test.mjs reads the Run bar's link: the
- * Navigation API first, the one case a page can know without it (opened from
- * the playground, history not grown since) as the fallback, and a way out if
- * the step goes nowhere.
+ * text, the way test/cross-site.test.mjs reads the Run bar's link: every item
+ * of the bar, the Navigation API first, the one case a page can know without
+ * it (opened from that page, history not grown since) as the fallback, and a
+ * way out if the step goes nowhere.
  *
  * Whether the browser then hands the page back alive is the browser's call and
  * cannot be measured here at all - this sandbox's headless Chromium has the
@@ -104,13 +105,27 @@ test('an entry the API will not describe, and a link that is not a URL, are simp
 /* ---- the click, as written --------------------------------------------- */
 const SRC = readFileSync(join(ROOT, 'scripts/site-js/site.js'), 'utf8');
 const shortcut = SRC.slice(
-  SRC.indexOf('(function playgroundBehindYou()'),
+  SRC.indexOf('(function barBehindYou()'),
   SRC.indexOf('/* Where on the page, not only which page.'),
 );
 
-test('the shortcut exists and is about the Playground item', () => {
+test('the shortcut exists and is about every item of the bar', () => {
   assert.ok(shortcut.length > 200, 'the block should still be there to reason about');
-  assert.match(shortcut, /a\[data-site="playground"\]/);
+  assert.match(shortcut, /closest\?\.\('\.bar-nav a\[href\]'\)/, 'one rule for the four items, not four');
+  assert.doesNotMatch(shortcut, /data-site="playground"/, 'the Playground item is not a special case any more');
+});
+
+test('the item for the page the reader is on is left to the browser', () => {
+  assert.match(shortcut, /if \(want === bare\(new URL\(location\.href\)\)\) return;/,
+    'Documentation on every page of the manual points at this page; stepping back to an older copy of it would be a surprise');
+  assert.match(shortcut, /if \(a\.target && a\.target !== '_self'\) return;/,
+    'a link that opens elsewhere has nothing to go back to');
+});
+
+test('a page handed back alive spends the scroll record written on the way out', () => {
+  assert.match(shortcut, /addEventListener\('pageshow', \(e\) => \{ if \(e\.persisted\) takeHandoff\(\); \}\)/,
+    'a restored page is where the reader left it; the record must not reach the next arrival');
+  assert.match(SRC, /import \{ entryOf, [^}]*takeHandoff \} from '\.\/site-memory\.js'/);
 });
 
 test('it asks the Navigation API first, over the whole same-origin history', () => {
@@ -121,7 +136,7 @@ test('it asks the Navigation API first, over the whole same-origin history', () 
   assert.match(SRC, /import \{ entryOf, /, 'entryOf comes from theme/site-memory.js like the rest of the memory');
 });
 
-test('without it, only a reader who came from the playground itself steps back', () => {
+test('without it, only a reader who came from that page itself steps back', () => {
   assert.match(shortcut, /document\.referrer/, 'where this document was opened from is the whole condition');
   assert.match(shortcut, /bare\(new URL\(document\.referrer\)\) === bare\(new URL\(href, location\.href\)\)/,
     'the whole page - a sample page lives under the same path and is a different page');
