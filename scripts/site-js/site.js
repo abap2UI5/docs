@@ -161,6 +161,18 @@ document.addEventListener('click', (e) => {
     } catch { return false; }
   };
   addEventListener('pageshow', (e) => { if (e.persisted) takeHandoff(); });
+  /* And when THIS page arrived by Back or Forward - a bar item on one of the
+     other three sites stepping back to it, or the browser's own button - and
+     was built again rather than handed back, the one place the browser says
+     why is notRestoredReasons on the arrival. The only console line on this
+     site, for the same reason the playground has one: nothing a reader can do
+     about it, nothing on the page to say it in, and the person who needs it
+     is reading the console anyway. On the front door it is the running
+     example that was lost; on a chapter, only the offset and a Run panel. */
+  const arrival = performance.getEntriesByType?.('navigation')?.[0];
+  if (arrival?.type === 'back_forward' && arrival.notRestoredReasons) {
+    console.info('docs: rebuilt rather than restored from the back/forward cache', arrival.notRestoredReasons);
+  }
   document.addEventListener('click', (e) => {
     const a = e.target.closest?.('.bar-nav a[href]');
     if (!a || e.defaultPrevented) return;
