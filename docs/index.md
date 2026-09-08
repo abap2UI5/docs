@@ -110,8 +110,7 @@ you keep. Nothing new to operate either — the app is an ABAP class in the syst
 it already runs on.
 
 **And you are not on your own with it.** [Support](/resources/support) is the
-community on GitHub and in the abapGit Slack channel, plus companies and
-freelancers offering implementation, training and support agreements.
+community on GitHub and in the abapGit Slack channel.
 
 ## Developing with AI
 
