@@ -63,14 +63,6 @@ hero:
     - theme: alt
       text: What it is
       link: /get_started/about
-  # The one thing a stranger checks before anything else: does somebody
-  # actually run this? It was the third paragraph of "What it costs", 2400px
-  # down the page, which is nowhere. One line, under the buttons that answer
-  # "what do I do", saying it is not a demo.
-  proof: In productive use today — EWM and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile.
-  proofLink:
-    text: who is building with it
-    link: /resources/who_uses
 
 # The other three places the bar names, in the order the bar names them. Not
 # three sections of this site any more: a reader on this page is choosing
