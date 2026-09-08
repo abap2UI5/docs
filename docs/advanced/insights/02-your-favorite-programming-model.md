@@ -28,13 +28,14 @@ Beyond that, there are no rules. No service to define, no binding to maintain,
 no annotations, nothing to transport but the class itself. And it is entirely up
 to you whether you build one huge app of 10,000 lines, split it across several
 apps, or design an architecture of your own out of parent and child classes.
+
 abap2UI5 makes no demands on how you write your code or design your model — use
 whichever programming model you like behind it.
 
 This has a pleasant side effect. Since abap2UI5 just serves a UI and never asks
 where your data comes from, the data can come from wherever it already lives.
 
-## The Same Class Around Three Backends
+## The Same Class, Three Programming Models
 
 Here is a small edit screen writing through a RAP business object:
 
@@ -122,7 +123,8 @@ authorizations all still run. EML does not care who calls it.
 That handler belongs to the consuming app, and it is the only place in the class
 that knows what is behind the screen. abap2UI5 does not.
 
-So the same class can write straight to a database table instead:
+So the same class can leave RAP out of it and write straight to a database
+table, the classic way:
 
 ```abap
   METHOD on_save.
@@ -173,9 +175,10 @@ different object, different decade, same UI around it:
 
 *The BAPI is just an example — use your favorite BAPI instead.*
 
-abap2UI5 sees the same thing in all three: a method that ran and returned. It
-never looks inside. The same app could call your EWM delivery classes, a proxy
-to another system, or whatever SAP releases next year.
+Three programming models, one unchanged UI class. abap2UI5 sees the same thing
+in all three: a method that ran and returned. It never looks inside. The same
+app could call your EWM delivery classes, a proxy to another system, or whatever
+SAP releases next year.
 
 ## Conclusion
 
