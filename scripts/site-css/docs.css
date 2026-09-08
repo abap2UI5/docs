@@ -717,22 +717,25 @@ html { scroll-padding-top: 62px; }
    than 74ch, and capping it again would leave a gutter inside a gutter. */
 .home .band > p, .home .band > ul, .home .band > ol { max-width: 74ch; }
 
-/* The right column stacks: the fact table is the tall one, so it spans both
-   rows and the two short sections sit beside it, one under the other. Placed
-   explicitly rather than left to auto-flow, which would have started the AI
-   section on a new row BELOW the table and left a hole under the costs. Source
-   order is glance -> costs -> AI, which is the order they are read in, so the
-   reading order and the visual order still agree. */
+/* The right column stacks: the fact table is the tall one, so it spans all
+   three rows and the three short sections sit beside it, one under the other.
+   Placed explicitly rather than left to auto-flow, which would have started
+   the last of them on a new row BELOW the table and left a hole above it.
+   Source order is glance -> enterprise -> costs -> AI, which is the order they
+   are read in, so the reading order and the visual order still agree. */
 .home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; grid-row: 1 / span 3; }
-.home .band[data-band="what-it-costs"] { grid-column: 2; grid-row: 1; }
-.home .band[data-band="enterprise-ready"] { grid-column: 2; grid-row: 2; }
+.home .band[data-band="enterprise-ready"] { grid-column: 2; grid-row: 1; }
+.home .band[data-band="what-it-costs"] { grid-column: 2; grid-row: 2; }
 .home .band[data-band="developing-with-ai"] { grid-column: 2; grid-row: 3; }
-/* The two lower ones keep their rules: inside a column a rule reads as a
-   divider between the sections, which is what it is. Only the topmost of the
-   two columns loses it, below. */
-/* Two columns of one row: the rule over the second would cut the first in
-   half, and its heading sits on the same line as the other's. */
-.home .band[data-band="what-it-costs"] > h2 { border-top-color: transparent; }
+/* AND THE COLUMN READS AS ONE CHAPTER. Every h2 on this site carries a rule
+   over it, which is right for a page of sections and wrong for three answers
+   to one question standing in a column beside a table: two hairlines cut the
+   column into three boxes and made it look like three unrelated things. The
+   band's own top rule, drawn over the table on the left, is the top of the
+   whole chapter and stays. The ones between go. */
+.home .band[data-band="enterprise-ready"] > h2,
+.home .band[data-band="what-it-costs"] > h2,
+.home .band[data-band="developing-with-ai"] > h2 { border-top-color: transparent; }
 
 /* The example is the widest thing on the page because what it opens is two
    panes - the ABAP on the left, the app it renders on the right. Held to a
@@ -743,7 +746,11 @@ html { scroll-padding-top: 62px; }
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
-  .home .band[data-band="what-it-costs"] > h2 { border-top-color: var(--line); }
+  /* One after another under the table now, which is what a rule over a heading
+     is for - so they come back. */
+  .home .band[data-band="enterprise-ready"] > h2,
+  .home .band[data-band="what-it-costs"] > h2,
+  .home .band[data-band="developing-with-ai"] > h2 { border-top-color: var(--line); }
   /* the explicit placement goes with the grid */
   .home .band[data-band="abap2ui5-at-a-glance"],
   .home .band[data-band="what-it-costs"],

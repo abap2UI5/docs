@@ -98,15 +98,6 @@ features:
 | **Reaches users in** | A browser tab, a [Fiori launchpad](/configuration/launchpad) tile, or [SAP Mobile Start](/configuration/mobile_start) on iOS and Android |
 | **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
 
-## What it costs
-
-Nothing. [MIT licensed](/resources/license) and free commercially — no licence
-key, no subscription, no per-user fee.
-
-**Nobody counts your users, because nothing is counting.** The app is a standard
-UI5 application served by your own ABAP stack: ten users and ten thousand are the
-same to it, and the SAP licensing you have is the licensing you keep.
-
 ## Enterprise ready
 
 **It runs inside the security you already have.** One HTTP endpoint, standard SAP
@@ -118,6 +109,15 @@ logon, no second user store — your
 Cloud, then [downported](/advanced/downporting) and linted against 7.02 before the
 `702` branch ships. [Support](/resources/support) is GitHub and Slack, with
 commercial options listed beside them.
+
+## What it costs
+
+Nothing. [MIT licensed](/resources/license) and free commercially — no licence
+key, no subscription, no per-user fee.
+
+**Nobody counts your users, because nothing is counting.** The app is a standard
+UI5 application served by your own ABAP stack: ten users and ten thousand are the
+same to it, and the SAP licensing you have is the licensing you keep.
 
 ## Developing with AI
 
