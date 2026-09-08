@@ -683,6 +683,21 @@ html { scroll-padding-top: 62px; }
 /* 32 from the bottom of the last card, which is the gap the theme leaves; it
    writes it as 24 under a row that pads its cards by 8. */
 .home .vp-doc { margin-top: 32px; }
+/* The fact sheet is a two-column list, not a spreadsheet: its right-hand cells
+   are sentences, and a sentence set across the full 1160 is a line nobody
+   tracks back. `.vp-doc > p` is already held to 74ch for that reason, and the
+   table ran to twice the width of the paragraph under it. It gets the same
+   measure, and the label column takes only what its longest label needs. */
+.home .vp-doc table { max-width: 74ch; }
+/* Its header row is empty - the left column is labels, not a heading - and an
+   empty grey band over the first label is furniture with nothing in it. */
+.home .vp-doc table thead { display: none; }
+.home .vp-doc table td:first-child { width: 1%; white-space: nowrap; }
+@media (max-width: 620px) {
+  /* …except on a phone, where "Reaches users in" on one line is what pushes
+     the page sideways. Below the fold the labels wrap like everything else. */
+  .home .vp-doc table td:first-child { white-space: normal; }
+}
 .home .vp-doc > :first-child { margin-top: 0; }
 
 @media (max-width: 860px) {

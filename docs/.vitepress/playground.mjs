@@ -290,12 +290,23 @@ export function playgroundButton(md) {
   md.renderer.rules.fence = (tokens, idx, options, env, self) => {
     const html = fence(tokens, idx, options, env, self);
     const token = tokens[idx];
-    if (token.info.trim().split(/\s+/)[0] !== 'abap') return html;
+    const info = token.info.trim().split(/\s+/);
+    if (info[0] !== 'abap') return html;
     if (!isRunnable(token.content)) return html;
+    /* ```abap edit — the example the reader may CHANGE, not only start.
+     * The word rides in the fence's info string, which markdown-it hands over
+     * untouched and Shiki ignores: the block is still highlighted as abap and
+     * still says `abap` on its label. Being per-fence rather than per-page is
+     * the point - a page can carry one example to play with among several to
+     * read, and the flag sits on the example it belongs to. What it does to
+     * the frame is in theme/playground.js. */
+    const edit = info.includes('edit');
     return (
-      '<div class="a2ui5-play">' +
+      `<div class="a2ui5-play"${edit ? ' data-play="edit"' : ''}>` +
       html +
-      '<button class="a2ui5-play-run" type="button">Run this example</button>' +
+      '<button class="a2ui5-play-run" type="button">'
+      + (edit ? 'Run and edit this example' : 'Run this example') +
+      '</button>' +
       '</div>'
     );
   };

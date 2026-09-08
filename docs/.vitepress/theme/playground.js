@@ -19,13 +19,18 @@
  * example that runs cannot be a different one from the example that is
  * printed — there is only one copy of it, and it is the one on the page.
  *
- * **The app is shown, not the editor.** The code is already above it, in this
- * site's own font and highlighting; a second copy in an editor beside it would
- * be the same thing twice. What the page cannot show is the running app, so
- * that is what the frame shows. "Switch to Playground with this code" is one
- * link away for a reader who wants to change it — and it goes to the full
- * playground, editor and the Problems / abaplint panel included, in this tab,
- * not to another embedded frame.
+ * **The app is shown, not the editor — unless the example is one to play
+ * with.** The code is already above the frame, in this site's own font and
+ * highlighting, so an editor BESIDE it would be the same thing twice. That is
+ * still true, and it is why 63 of the 64 examples on this site mount the app
+ * on its own. The one that does not is the front door's, marked ```abap edit:
+ * there the frame carries the editor and the app, and the printed block is
+ * hidden while it runs — so there is still exactly one copy of the code, and
+ * that copy is the one you can type in. Close puts the listing back.
+ *
+ * "Switch to Playground with this code" stays either way, and goes to the full
+ * playground — the examples menu, Share, and the Problems / abaplint panel —
+ * in this tab, not to another embedded frame.
  */
 
 /* The published playground. Absolute rather than site-relative on purpose: it
@@ -79,14 +84,26 @@ async function start(button) {
   }
 
   const source = sourceOf(container);
+  const editable = container.dataset.play === 'edit';
   const demo = document.createElement('div');
   demo.className = 'abap2ui5-demo';
-  demo.dataset.view = 'app';
+  /* `view=app` is what takes the editor out of the frame; leaving it off is
+   * the embed's own default, which is the editor and the running app side by
+   * side with the rest of the playground's furniture tucked away. */
+  if (!editable) demo.dataset.view = 'app';
+  /* An app alone is content-sized and grows; a split needs room for two panes
+   * before either is worth looking at. */
+  if (editable) demo.dataset.height = '620';
   /* Already clicked — the loader's own button would be a second one. */
   demo.dataset.auto = '1';
   demo.dataset.code = source;
   container.append(demo);
   embed.setUp(container);
+  /* The printed listing steps aside for the editable one: the frame now shows
+   * the same source in a place the reader can type. It is hidden rather than
+   * removed - `sourceOf` reads it, Close brings it back, and a reader who
+   * copies is copying the block that was always there. */
+  if (editable) listing(container)?.toggleAttribute('hidden', true);
 
   button.replaceWith(bar(container, demo, embed, source));
 }
@@ -105,8 +122,9 @@ function bar(container, demo, embed, source) {
     /* The frame is a whole ABAP runtime; removing the element is what frees
      * it. Then the block is back to what it was, button and all. */
     demo.remove();
+    listing(container)?.toggleAttribute('hidden', false);
     delete container.dataset.running;
-    bar.replaceWith(runButton());
+    bar.replaceWith(runButton(container));
   });
 
   /* In THIS tab, and the label says so: a switch to the playground with the
@@ -157,11 +175,15 @@ function standalone(href) {
   return url.href;
 }
 
-const runButton = () => {
+/** The printed block this container was built around. */
+const listing = (container) => container.querySelector('div[class*="language-"]');
+
+const runButton = (container) => {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'a2ui5-play-run';
-  button.textContent = 'Run this example';
+  button.textContent = container?.dataset.play === 'edit'
+    ? 'Run and edit this example' : 'Run this example';
   return button;
 };
 

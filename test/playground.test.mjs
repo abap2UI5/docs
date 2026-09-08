@@ -19,6 +19,16 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { abapOnly, playgroundExample } from '../docs/.vitepress/playground.mjs';
+import { playgroundButton } from '../docs/.vitepress/playground.mjs';
+
+/** The fence as markdown-it renders it once `playgroundButton` is installed —
+ *  a stub renderer, because what is under test is the wrapper this adds and
+ *  not Shiki's highlighting. */
+function renderFence(info, code) {
+  const md = { renderer: { rules: { fence: () => '<div class="language-abap"><pre><code/></pre></div>' } } };
+  playgroundButton(md);
+  return md.renderer.rules.fence([{ info, content: code }], 0, {}, {}, {});
+}
 
 /** A complete app class, with `body` as the whole of `main`. */
 const app = (name, body) => `CLASS ${name} DEFINITION PUBLIC.
@@ -224,4 +234,43 @@ test('comments go, string templates keep their braces', () => {
   // The delimiters stay so nothing shifts; a double quote inside a literal is
   // not the start of a comment.
   assert.match(stripped, /DATA\(z\) = ` {5}`\./);
+});
+
+/* ---------------------------------------------------------------------------
+ * ```abap edit — the example a reader may CHANGE.
+ *
+ * Everywhere else on this site the frame shows the running app alone: the code
+ * is printed right above it, so an editor beside that would be the same text
+ * twice. The front door is the exception. There the point IS to type in it, so
+ * the frame carries the editor and the app, and the printed block is hidden
+ * while it runs — one copy of the code, and it is the editable one.
+ *
+ * The flag rides in the fence's info string. That is the half these tests can
+ * reach: whether the marker survives markdown-it and reaches the container as
+ * `data-play="edit"`, which is what theme/playground.js reads to decide the
+ * frame. The frame itself is the playground's, and not in this repository.
+ */
+test('a plain runnable fence is a Run button and nothing else', () => {
+  const html = renderFence('abap', app('z2ui5_cl_sample_x', DISPLAY));
+  assert.match(html, /class="a2ui5-play"/);
+  assert.equal(html.includes('data-play'), false);
+  assert.match(html, />Run this example</);
+});
+
+test('`edit` marks the container and says so on the button', () => {
+  const html = renderFence('abap edit', app('z2ui5_cl_sample_x', DISPLAY));
+  assert.match(html, /class="a2ui5-play" data-play="edit"/);
+  assert.match(html, />Run and edit this example</);
+});
+
+test('`edit` on a fence that cannot run is still no button', () => {
+  // The flag says what KIND of frame, never whether there is one: an example
+  // the playground would refuse must not gain a button by asking to be edited.
+  const html = renderFence('abap edit', 'DATA(x) = 1.');
+  assert.equal(html.includes('a2ui5-play'), false);
+});
+
+test('the marker only counts on an abap fence', () => {
+  const html = renderFence('json edit', app('z2ui5_cl_sample_x', DISPLAY));
+  assert.equal(html.includes('a2ui5-play'), false);
 });
