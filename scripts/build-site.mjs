@@ -296,7 +296,7 @@ const urlOf = (page) => BASE + page.replace(/\.md$/, '.html');
 /** A link out of the FRONTMATTER, based.
  *
  * The renderer rewrites every link in the body and cannot see these: the hero's
- * three buttons and the three tiles are frontmatter, and `/get_started/about`
+ * two buttons and the three tiles are frontmatter, and `/get_started/about`
  * arrived in the page as `/get_started/about` - a path that is not on this
  * deployment at all. An absolute URL is left exactly as written; it is another
  * site, and one of them carries a `target` that keeps a router off it. */
@@ -661,7 +661,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
 /* ---- the front door ---------------------------------------------------
  *
  * The one page of this site that is not a chapter: a greeting, the headline,
- * the tagline, three buttons and three tiles, and then the markdown under the
+ * the tagline, two buttons and three tiles, and then the markdown under the
  * frontmatter as an ordinary article. Every value it is drawn with - 20/28 for
  * the greeting, 38/46 for the headline, 17/26 for the tagline, 13 on a 34px
  * button, a 15/22 tile title over 13/22 of detail - is the one the page
