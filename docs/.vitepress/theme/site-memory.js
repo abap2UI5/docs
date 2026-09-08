@@ -98,16 +98,17 @@ export function lastVisited(site, fallback, scope = fallback) {
   }
 }
 
-/* ── THE PLAYGROUND ITEM GOES BACK when the playground is behind you ────────
+/* ── THE BAR GOES BACK to a page that is still behind you ───────────────────
  *
- * The item is a link, a link makes a NEW document, and a new playground boots
- * the whole ABAP runtime and runs the app from the top - two to three seconds,
- * and the app's own state gone with the document that held it. The one
- * mechanism that hands a running page back alive is the back/forward cache,
- * and it applies to a page the reader has BEEN on. So when the page the item
- * opens is still in this tab's history, the click (scripts/site-js/site.js)
- * traverses to it there instead. This is the half with no DOM in it: which
- * entry that is. The counterpart is src/shell/site-memory.mjs in
+ * An item in the bar is a link, a link makes a NEW document, and a new
+ * playground - the page itself, or the runnable example on the front door -
+ * boots the whole ABAP runtime and runs the app from the top: two to three
+ * seconds, and the app's own state gone with the document that held it. The
+ * one mechanism that hands a running page back alive is the back/forward
+ * cache, and it applies to a page the reader has BEEN on. So when the page an
+ * item opens is still in this tab's history, the click (scripts/site-js/
+ * site.js) traverses to it there instead. This is the half with no DOM in it:
+ * which entry that is. The counterpart is src/shell/site-memory.mjs in
  * abap2UI5/playground, and the sample pages' inline copy - change one, change
  * the others.
  */

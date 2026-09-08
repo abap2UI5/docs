@@ -14,7 +14,7 @@
 import { setUpPlayground } from './playground.js';
 import { setUpCodeLines, watchCodeLines } from './code-lines.js';
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js';
-import { entryOf, handOff, lastVisited, rememberHere, rememberScroll, restoreScroll } from './site-memory.js';
+import { entryOf, handOff, lastVisited, rememberHere, rememberScroll, restoreScroll, takeHandoff } from './site-memory.js';
 
 /* The Run button under a runnable ABAP example, and "copy link to selection":
    one delegated listener each, for the whole document. */
@@ -97,39 +97,52 @@ document.addEventListener('click', (e) => {
   if (e.target.closest?.('a[data-site]')) lift();
 }, true);
 
-/* ---- and the Playground item goes BACK when the playground is behind you --
+/* ---- and the bar goes BACK to a page that is still behind you -----------
  *
- * Reported: "the Playground tab - when I go to it the app is always run again,
- * although it had already run before."
+ * Reported twice. First: "the Playground tab - when I go to it the app is
+ * always run again, although it had already run before." Then, once that
+ * item went back: the front door, with the example under Try it out now
+ * running in it, loaded fresh every time as well - and the runnable example
+ * is a whole ABAP runtime in a frame, exactly what the playground is.
  *
- * It is a link, so a press builds a NEW document: the whole ABAP runtime boots
- * and the app starts from the top. Measured against a local copy with no
- * network in the way, that is 2.4 to 2.8 seconds every single time - and the
- * app's own state, a half-filled form or a table scrolled to row 200, is gone
- * with the document that held it. No browser preserves a running page across a
- * forward navigation. Exactly one mechanism preserves it at all, and it is the
- * back/forward cache, which applies to a page the reader has BEEN on.
+ * Every item in the bar is a link, so a press builds a NEW document: the
+ * runtime boots and the app starts from the top. Measured against a local
+ * copy with no network in the way, that is 2.4 to 2.8 seconds every single
+ * time - and the app's own state, a half-filled form or a table scrolled to
+ * row 200, is gone with the document that held it. No browser preserves a
+ * running page across a forward navigation. Exactly one mechanism preserves
+ * it at all, and it is the back/forward cache, which applies to a page the
+ * reader has BEEN on.
  *
- * So when the page the item opens is still in this tab's history, the press
- * goes to it there. Two ways of knowing which entry that is:
+ * So when the page an item opens is still in this tab's history, the press
+ * goes to it there - Home, Documentation, Samples and Playground alike, which
+ * is also why this is one rule and not four. Two ways of knowing which entry:
  *
  *   - The Navigation API: navigation.entries() is the tab's same-origin
  *     history, and entryOf( ) (theme/site-memory.js) finds the nearest entry
- *     that IS the item's page - same path, same query. Any distance, either
- *     direction: a reader who read two chapters since is two steps behind
- *     it, and one who left it with the Back button is one step in front.
+ *     that IS the item's page - same origin, path and query. Any distance,
+ *     either direction: a reader who read two chapters since is two steps
+ *     behind it, and one who left it with the Back button is one step in
+ *     front.
  *   - Without it, the one case that can be known: this document was opened
- *     FROM the playground itself (not from a sample page under it, which is a
- *     different page), and the history has not grown since - an anchor or a
- *     text fragment pushed onto it would make one step back something else.
- *     A tab the playground opened with target=_blank has nothing behind it
- *     at all.
+ *     FROM that page (a sample page lives under the playground's path and is
+ *     a different page, which is why the whole URL is compared), and the
+ *     history has not grown since - an anchor or a text fragment pushed onto
+ *     it would make one step back something else. A tab the playground
+ *     opened with target=_blank has nothing behind it at all.
  *
- * It can only ever land on the link: the item's href is lifted to the last
- * playground URL, and that is the page this looks for. What it adds is the
- * browser's option to hand the page back alive instead of rebuilding it - and
- * where the browser declines, a reload is what the link would have done
- * anyway (the playground says why in its console, main.mjs over there).
+ * It can only ever land on the link: the item's href is what is looked for,
+ * lifted or not. The item for the page the reader is ON - Documentation on
+ * every page of the manual - is the browser's to handle, as it always was.
+ * What this adds is the browser's option to hand the page back alive instead
+ * of rebuilding it - and where the browser declines, a reload is what the
+ * link would have done anyway (the playground says why in its console,
+ * main.mjs over there).
+ *
+ * A page handed back alive is where the reader left it, offset and all, so
+ * the record a data-back link wrote on the way out is spent: it is taken on
+ * pageshow, or the next arrival at that page within the half minute would
+ * inherit it.
  *
  * The fallback is for the one case that would be worse than today: a press
  * that does not navigate would be a dead press. A traversal the browser cannot
@@ -137,8 +150,8 @@ document.addEventListener('click', (e) => {
  * followed after all - and the timer is dropped on pagehide, so a document
  * that WAS cached does not fire it on the way back in and bounce the reader
  * out of the page they returned to. */
-(function playgroundBehindYou() {
-  if (!document.querySelector('a[data-site="playground"]')) return;
+(function barBehindYou() {
+  if (!document.querySelector('.bar-nav a[href]')) return;
   const bare = (u) => u.origin + u.pathname.replace(/index\.html$/, '') + u.search;
   const behind = history.length;
   const cameFromIt = (href) => {
@@ -147,12 +160,17 @@ document.addEventListener('click', (e) => {
       return bare(new URL(document.referrer)) === bare(new URL(href, location.href));
     } catch { return false; }
   };
+  addEventListener('pageshow', (e) => { if (e.persisted) takeHandoff(); });
   document.addEventListener('click', (e) => {
-    const a = e.target.closest?.('a[data-site="playground"]');
+    const a = e.target.closest?.('.bar-nav a[href]');
     if (!a || e.defaultPrevented) return;
     /* A press that means "in a new tab" still means that. */
     if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target && a.target !== '_self') return;
     const href = a.href;
+    let want;
+    try { want = bare(new URL(href, location.href)); } catch { return; }
+    if (want === bare(new URL(location.href))) return;
     const nav = globalThis.navigation;
     let step;
     if (nav?.entries && nav.traverseTo) {
