@@ -110,8 +110,7 @@ that would otherwise need a frontend project of its own.
 It runs where your users already are: a browser tab, a
 [Fiori launchpad](/configuration/launchpad) tile, [SAP Build Work
 Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
-rendering with [OpenUI5 from its CDN](/configuration/ui5_versions) or the UI5
-your system already ships.
+rendering with the UI5 your system already ships.
 
 ## Free. Really.
 
