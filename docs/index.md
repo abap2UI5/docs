@@ -74,12 +74,12 @@ features:
     link: /get_started/about
   - title: Samples
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.2" width="18.8" height="15.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M2.6 9.1h18.8M8.2 9.1v10.7"/></svg>
-    details: Over 700 working apps, searchable by control, by library and by what your system can run — the UI5 demo kit rebuilt in ABAP, plus everything that needs OData, RAP or a launchpad.
+    details: Over 700 working apps, searchable by control, by library and by what your system can run.
     link: https://abap2ui5.github.io/playground/samples/
     target: _self
   - title: Playground
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 7.9v8.2a.5.5 0 0 0 .76.43l6.6-4.1a.5.5 0 0 0 0-.86l-6.6-4.1a.5.5 0 0 0-.76.43z" fill="currentColor"/></svg>
-    details: Write ABAP in the browser and watch the app run beside it. The whole framework compiled into a page — no server, no system, nothing to install.
+    details: Write ABAP in the browser and watch the app run beside it.
     link: https://abap2ui5.github.io/playground/
     target: _self
 ---
@@ -92,8 +92,6 @@ SAP logon, no second user store — your
 [session handling](/configuration/security) apply unchanged.
 
 **And it is kept that way.** Every merge is tested against Standard ABAP and
-ABAP Cloud, then [downported](/advanced/downporting) and linted against 7.02
-before the `702` branch ships, so one app runs unchanged from NetWeaver 7.02 to
 ABAP Cloud. [Support](/resources/support) is GitHub and Slack.
 
 ## Integration
@@ -110,7 +108,7 @@ iOS and Android — rendering with
 [OpenUI5 from its CDN](/configuration/ui5_versions) or the UI5 your system
 already ships.
 
-## What it costs
+## Licensing & What it costs
 
 Nothing. [MIT licensed](/resources/license) and free commercially — no licence
 key, no subscription, no per-user fee.
