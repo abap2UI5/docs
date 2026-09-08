@@ -301,12 +301,18 @@ export function playgroundButton(md) {
      * read, and the flag sits on the example it belongs to. What it does to
      * the frame is in theme/playground.js. */
     const edit = info.includes('edit');
+    const button = '<button class="a2ui5-play-run" type="button">'
+      + (edit ? 'Run and edit this example' : 'Run this example')
+      + '</button>';
+    /* Under the code everywhere else - the reader has just read the example and
+     * the button is the next thing. ABOVE it for an editable one: the offer is
+     * the point there, and 41 lines of ABAP between the sentence that makes it
+     * and the button that takes it up is a scroll nobody should need. What
+     * replaces the button when it is pressed - Close, and the link into the
+     * full playground - lands in the same place. */
     return (
       `<div class="a2ui5-play"${edit ? ' data-play="edit"' : ''}>` +
-      html +
-      '<button class="a2ui5-play-run" type="button">'
-      + (edit ? 'Run and edit this example' : 'Run this example') +
-      '</button>' +
+      (edit ? button + html : html + button) +
       '</div>'
     );
   };

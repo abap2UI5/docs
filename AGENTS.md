@@ -609,6 +609,18 @@ The code travels in the playground's URL fragment, read out of the rendered
 block at click time — so nothing is hosted here, and the example that runs is
 the text on the page rather than a copy of it.
 
+**The front door's example starts itself.** Everywhere else nothing is fetched
+until a click — a chapter with seven Run buttons must not pull seven ABAP
+runtimes. The one marked `edit` is watched by an `IntersectionObserver` and
+mounts when it scrolls within 400px of the viewport, because "one ABAP class is
+one UI5 app" is a claim while it is printed and a fact once it runs beside its
+own source. A reader who never scrolls past the tiles still fetches nothing; one
+who asks for less data (`prefers-reduced-data`, or `navigator.connection
+.saveData`) is never sent it and keeps the button. **A self-start that fails is
+silent** — the button comes back and no error is printed, because a message
+about something nobody asked for reads as a broken front door when what is
+broken is the network.
+
 **One example is editable, and it is marked in the fence.** ```abap edit gives
 the container `data-play="edit"`, and `theme/playground.js` then mounts the
 playground WITHOUT `view=app` — the editor and the running app side by side —

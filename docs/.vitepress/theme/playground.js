@@ -67,10 +67,11 @@ function fail(container, message) {
   container.append(note);
 }
 
-async function start(button) {
+async function start(button, { unasked = false } = {}) {
   const container = button.closest('.a2ui5-play');
   if (!container || container.dataset.running) return;
   container.dataset.running = '1';
+  const label = button.textContent;
   button.disabled = true;
   button.textContent = 'Starting the ABAP runtime…';
 
@@ -78,6 +79,16 @@ async function start(button) {
   try {
     embed = await loader();
   } catch (e) {
+    /* A reader who PRESSED the button is owed an explanation. A reader who did
+     * not - the front door's example starts itself - is owed silence and the
+     * button back: an error message for something nobody asked for is a broken
+     * front door, and the page is not broken, the network is. */
+    if (unasked) {
+      delete container.dataset.running;
+      button.disabled = false;
+      button.textContent = label;
+      return;
+    }
     button.remove();
     fail(container, String(e.message || e));
     return;
@@ -187,12 +198,54 @@ const runButton = (container) => {
   return button;
 };
 
+/* Has the reader asked not to be sent three megabytes? Two ways to say it -
+ * the media query and the Save-Data header's client-side twin - and either is
+ * enough. Neither takes the example away: the button is still there, and it
+ * still starts on a press. */
+const wantsLessData = () =>
+  matchMedia?.('(prefers-reduced-data: reduce)').matches
+  || navigator.connection?.saveData === true;
+
+/* The editable example starts ITSELF, once, when it comes into view.
+ *
+ * "Nothing is fetched until somebody clicks" is why every other example on
+ * this site waits, and it still holds for them: a chapter with seven Run
+ * buttons must not pull seven runtimes. The front door is one example, and it
+ * is the whole argument the page makes - "one ABAP class is one UI5 app" is a
+ * claim while it is printed and a fact once it is running beside its own
+ * source. A reader who never scrolls past the tiles still fetches nothing, and
+ * a reader who asked for less data is never sent it.
+ *
+ * `rootMargin` starts it a screen early so it is already up by the time it is
+ * read, and the observer lets go after the first hit - this happens once. */
+function armSelfStart() {
+  if (!window.IntersectionObserver || wantsLessData()) return;
+  const seen = new WeakSet();
+  const watch = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      watch.unobserve(entry.target);
+      const button = entry.target.querySelector('.a2ui5-play-run');
+      if (button) start(button, { unasked: true });
+    }
+  }, { rootMargin: '400px 0px' });
+  for (const el of document.querySelectorAll('.a2ui5-play[data-play="edit"]')) {
+    if (seen.has(el)) continue;
+    seen.add(el);
+    watch.observe(el);
+  }
+}
+
 /* One listener for the whole site, installed once. VitePress swaps pages
  * without reloading, so anything bound per page has to be re-bound on every
- * navigation; a delegated listener never notices. */
+ * navigation; a delegated listener never notices. The observer does, so it is
+ * armed again after a navigation - and on the published site, where every
+ * navigation is a load, the second call never happens. */
 export function setUpPlayground() {
   document.addEventListener('click', (e) => {
     const button = e.target.closest?.('.a2ui5-play-run');
     if (button) start(button);
   });
+  armSelfStart();
+  return armSelfStart;
 }

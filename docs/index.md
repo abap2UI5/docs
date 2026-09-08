@@ -63,6 +63,14 @@ hero:
     - theme: alt
       text: What it is
       link: /get_started/about
+  # The one thing a stranger checks before anything else: does somebody
+  # actually run this? It was the third paragraph of "What it costs", 2400px
+  # down the page, which is nowhere. One line, under the buttons that answer
+  # "what do I do", saying it is not a demo.
+  proof: In productive use today — EWM and PP apps on ABAP 7.57 and 7.55, on desktop and on mobile.
+  proofLink:
+    text: who is building with it
+    link: /resources/who_uses
 
 # The other three places the bar names, in the order the bar names them. Not
 # three sections of this site any more: a reader on this page is choosing
@@ -97,6 +105,21 @@ features:
 | **Renders with** | [OpenUI5 from its CDN](/configuration/ui5_versions) by default; one exit points it at SAPUI5, a pinned version, or the UI5 your system already ships |
 | **Reaches users in** | A browser tab, a [Fiori launchpad](/configuration/launchpad) tile, or [SAP Mobile Start](/configuration/mobile_start) on iOS and Android |
 | **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
+
+## What it costs
+
+Nothing. [MIT licensed](/resources/license) and free commercially — no licence
+key, no subscription, no per-user fee, nothing to activate.
+
+**Nobody counts your users, because nothing is counting.** An abap2UI5 app is
+a standard UI5 freestyle application served by your own ABAP stack: ten users and
+ten thousand are the same to it, and the SAP licensing you have is the licensing
+you keep. Nothing new to operate either — the app is an ABAP class in the system
+it already runs on.
+
+**And you are not on your own with it.** [Support](/resources/support) is the
+community on GitHub and in the abapGit Slack channel, plus companies and
+freelancers offering implementation, training and support agreements.
 
 ## One class, one app
 
@@ -156,23 +179,6 @@ ENDCLASS.
   repository, no build step.
 - **Events come back as ABAP.** The button press arrives in `check_on_event( )`,
   in the same class, with the model already updated.
-
-## What it costs
-
-Nothing. [MIT licensed](/resources/license) and free commercially — no licence
-key, no subscription, no per-user fee, nothing to activate.
-
-**Nobody counts your users, because nothing is counting.** An abap2UI5 app is
-a standard UI5 freestyle application served by your own ABAP stack: ten users and
-ten thousand are the same to it, and the SAP licensing you have is the licensing
-you keep. Nothing new to operate either — the app is an ABAP class in the system
-it already runs on.
-
-**And you are not on your own with it.** [Support](/resources/support) is the
-community on GitHub and in the abapGit Slack channel, plus companies and
-freelancers offering implementation, training and support agreements. It is
-already carrying customer work [on their own account](/resources/who_uses) — EWM
-and PP apps on 7.57 and 7.55, on desktop and on mobile.
 
 ## Developing with AI
 
