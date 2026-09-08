@@ -670,6 +670,33 @@ const tile = (f) => `<a class="tile" href="${esc(linkOf(f.link))}"${f.target ? `
       <span class="tile-details">${esc(f.details)}</span>
     </a>`;
 
+/* ---- the front door's bands ------------------------------------------
+ *
+ * Every chapter is one column of prose with a sidebar and an outline beside
+ * it; the front door has neither, so under the tiles it was 654px of text in
+ * a 1160px container and the right half of the page was empty from the fact
+ * sheet down. That reads as a page that ran out of material.
+ *
+ * So the markdown's H2 sections become BANDS, and the stylesheet decides which
+ * of them share a row and which take the width. Nothing is written twice and
+ * the markdown stays flat markdown - the only thing this adds is a wrapper per
+ * section, carrying the id VitePress already put on the heading, which is what
+ * the CSS keys on. A section nobody has styled is simply a band on its own,
+ * which is what every one of them was before.
+ *
+ * Split on the H2s rather than on a marker in the source: the heading is what
+ * a section IS here, and a marker would be a second thing to keep in step. */
+const bands = (body) => {
+  const parts = body.split(/(?=<h2\b)/);
+  /* Anything before the first heading - there is none today - stays as it is
+   * rather than being given a band it did not ask for. */
+  const lead = parts[0].startsWith('<h2') ? '' : parts.shift();
+  return lead + parts.map((part) => {
+    const id = (part.match(/^<h2 id="([^"]+)"/) || [, ''])[1];
+    return `<section class="band"${id ? ` data-band="${esc(id)}"` : ''}>${part}</section>`;
+  }).join('');
+};
+
 const home = ({ body, fm, page }) => {
   const h = fm.hero || {};
   const img = h.image || {};
@@ -682,6 +709,8 @@ const home = ({ body, fm, page }) => {
       <div class="hero-actions">${(h.actions || []).map((a) => `
         <a class="hero-action ${a.theme === 'brand' ? 'primary' : 'plain'}" href="${esc(linkOf(a.link))}"${a.target ? ` target="${esc(a.target)}"` : ''}>${esc(a.text)}</a>`).join('')}
       </div>
+      ${h.proof ? `<p class="hero-proof">${esc(h.proof)}${h.proofLink
+        ? ` <a href="${esc(linkOf(h.proofLink.link))}">${esc(h.proofLink.text)} &rsaquo;</a>` : ''}</p>` : ''}
     </div>
     ${img.src ? (() => {
       /* The one image on this site that is NOT lazy - it is the first thing on
@@ -697,7 +726,7 @@ const home = ({ body, fm, page }) => {
   </section>
   <section class="tiles">${(fm.features || []).map(tile).join('')}
   </section>
-  <div class="vp-doc">${body}</div>
+  <div class="vp-doc bands">${bands(body)}</div>
   <!-- The front door is a page of this repository like any other, and it was
        the only one that did not say so: the home layout has no doc-foot, so the
        one page most likely to want a correction was the one page with no way

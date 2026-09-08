@@ -683,6 +683,65 @@ html { scroll-padding-top: 62px; }
 /* 32 from the bottom of the last card, which is the gap the theme leaves; it
    writes it as 24 under a row that pads its cards by 8. */
 .home .vp-doc { margin-top: 32px; }
+
+/* ---- the front door uses its whole width ----------------------------
+ *
+ * Under the tiles the page was one 654px column in a 1160px container, and
+ * everything right of it was empty from the fact sheet down. The bands are
+ * one grid row each by default - which is what every section was - and two of
+ * them are told otherwise:
+ *
+ *   at a glance | what it costs   two short, scannable sections, side by side
+ *   one class, one app            the whole width, because the live editor in
+ *                                 it is a code pane AND a running app
+ *
+ * Everything else keeps the 74ch measure prose is set in. A narrow section
+ * between two wide ones reads as rhythm; a narrow PAGE reads as an empty one.
+ *
+ * The pair is ADJACENT IN THE MARKDOWN, and has to be. Placing them on one row
+ * with grid-row while a full-width band sat between them in the source would
+ * have put the visual order and the reading order out of step - a keyboard
+ * moving down the page would have jumped from the left column to something two
+ * screens below and back. So the source says what the eye sees. It costs
+ * nothing to read either: "what it runs on" and "what it costs" are the two
+ * questions asked before anybody looks at code, and the example now starts
+ * ~300px higher for being under one row instead of two. */
+.home .vp-doc.bands {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+}
+.home .band { grid-column: 1 / -1; min-width: 0; }
+.home .band > :first-child { margin-top: 0; }
+/* The prose measure is per band now: a half-width band is already narrower
+   than 74ch, and capping it again would leave a gutter inside a gutter. */
+.home .band > p, .home .band > ul, .home .band > ol { max-width: 74ch; }
+
+.home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; }
+.home .band[data-band="what-it-costs"] { grid-column: 2; }
+/* Two columns of one row: the rule over the second would cut the first in
+   half, and its heading sits on the same line as the other's. */
+.home .band[data-band="what-it-costs"] > h2 { border-top-color: transparent; }
+
+/* The example is the widest thing on the page because what it opens is two
+   panes - the ABAP on the left, the app it renders on the right. Held to a
+   column, neither is worth looking at. */
+.home .band[data-band="one-class-one-app"] .a2ui5-play,
+.home .band[data-band="one-class-one-app"] > p { max-width: none; }
+
+@media (max-width: 860px) {
+  /* One column again: two 300px columns of prose are worse than a long page. */
+  .home .vp-doc.bands { display: block; }
+  .home .band[data-band="what-it-costs"] > h2 { border-top-color: var(--line); }
+}
+
+/* ---- what a stranger checks first ----------------------------------- */
+.hero-proof {
+  margin: 14px 0 0; font-size: 13px; line-height: 20px; color: var(--fg-dim);
+  max-width: 46ch;
+}
+.hero-proof a { color: var(--a2ui5-red); text-decoration: none; white-space: nowrap; }
+.hero-proof a:hover { text-decoration: underline; }
 /* The fact sheet is a two-column list, not a spreadsheet: its right-hand cells
    are sentences, and a sentence set across the full 1160 is a line nobody
    tracks back. `.vp-doc > p` is already held to 74ch for that reason, and the

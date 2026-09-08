@@ -274,3 +274,13 @@ test('the marker only counts on an abap fence', () => {
   const html = renderFence('json edit', app('z2ui5_cl_sample_x', DISPLAY));
   assert.equal(html.includes('a2ui5-play'), false);
 });
+
+test('the editable example puts its button ABOVE the code', () => {
+  // 41 lines of ABAP between the sentence that offers the example and the
+  // button that takes it up is a scroll nobody should need. Everywhere else
+  // the button stays under the code, where the reader arrives having read it.
+  const plain = renderFence('abap', app('z2ui5_cl_sample_x', DISPLAY));
+  const edit = renderFence('abap edit', app('z2ui5_cl_sample_x', DISPLAY));
+  assert.ok(plain.indexOf('<button') > plain.indexOf('language-abap'));
+  assert.ok(edit.indexOf('<button') < edit.indexOf('language-abap'));
+});
