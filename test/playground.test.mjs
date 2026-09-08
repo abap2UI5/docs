@@ -345,3 +345,32 @@ test('the guard lets go the moment the reader does anything', () => {
   assert.match(guard, /setTimeout\(release,/,
     'and it stands down anyway, for a reader who never touches the page');
 });
+
+/*
+ * WHICH BANDS ARE CARDS IS A QUESTION OF POSITION, NOT OF NAME.
+ *
+ * The four answers on the front door were styled by their heading slugs -
+ * `[data-band="what-it-costs"]` and three more. Then that heading was renamed
+ * to "Licensing & What it costs" from the page's own Edit-on-GitHub link, the
+ * slug became something else, and the card silently stopped being one: out of
+ * the grid, a rule nobody wanted, and the fourth card alone on a row.
+ *
+ * A wording change is the one edit that page invites. It must not be able to
+ * break the layout, so nothing in the stylesheet may name a heading.
+ */
+const CSS = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'scripts/site-css/docs.css'), 'utf8');
+const BUILD = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'scripts/build-site.mjs'), 'utf8');
+
+test('the home page stylesheet names no heading of the home page', () => {
+  const named = [...CSS.matchAll(/\.home[^{]*\[data-band="([^"]+)"\]/g)].map((m) => m[1]);
+  assert.deepEqual(named, [],
+    'a slug in a selector is a layout that breaks when somebody rewords a heading');
+});
+
+test('the build marks the cards and the demo by where they are', () => {
+  const fn = BUILD.slice(BUILD.indexOf('const bands = (body)'), BUILD.indexOf('const home = ('));
+  assert.match(fn, /includes\('a2ui5-play'\)/,
+    'the runnable example is the hinge, and it is found by its markup');
+  assert.match(fn, /i < hinge \? ' data-card'/, 'everything above the hinge is an answer');
+  assert.match(fn, /i === hinge \? ' data-demo'/, 'the hinge itself is the one that wants the full width');
+});

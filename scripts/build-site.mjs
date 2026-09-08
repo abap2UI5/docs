@@ -696,14 +696,34 @@ const tile = (f) => `<a class="tile" href="${esc(linkOf(f.link))}"${f.target ? `
  *
  * Split on the H2s rather than on a marker in the source: the heading is what
  * a section IS here, and a marker would be a second thing to keep in step. */
+/* WHICH BANDS ARE THE CARDS IS A QUESTION OF POSITION, NOT OF NAME.
+ *
+ * The four answers used to be styled by their heading slugs -
+ * `[data-band="what-it-costs"]` and three more. Then that heading was renamed
+ * to "Licensing & What it costs" from the Edit-on-GitHub link, the slug became
+ * something else, and the card silently stopped being one: it fell out of the
+ * grid, drew a rule nobody wanted and left the fourth card alone on a row. The
+ * page broke on a wording change, which is the one edit that page invites.
+ *
+ * So the rule reads off the shape instead. The bands before the runnable
+ * example are the answers - the example is the page's hinge, everything above
+ * it is the case being made and everything below it is where to go next - and
+ * the example is found by the markup the fence generator writes, not by a name
+ * anybody can retype. Rename all four, reorder them, add a fifth: they stay
+ * cards, and the grid follows. */
 const bands = (body) => {
   const parts = body.split(/(?=<h2\b)/);
   /* Anything before the first heading - there is none today - stays as it is
    * rather than being given a band it did not ask for. */
   const lead = parts[0].startsWith('<h2') ? '' : parts.shift();
-  return lead + parts.map((part) => {
+  const hinge = parts.findIndex((part) => part.includes('a2ui5-play'));
+  return lead + parts.map((part, i) => {
     const id = (part.match(/^<h2 id="([^"]+)"/) || [, ''])[1];
-    return `<section class="band"${id ? ` data-band="${esc(id)}"` : ''}>${part}</section>`;
+    const card = hinge > 0 && i < hinge ? ' data-card' : '';
+    /* ...and the hinge marks itself, for the same reason: what needs the full
+       width is the band the example is IN, whatever it ends up being called. */
+    const demo = i === hinge ? ' data-demo' : '';
+    return `<section class="band"${id ? ` data-band="${esc(id)}"` : ''}${card}${demo}>${part}</section>`;
   }).join('');
 };
 
