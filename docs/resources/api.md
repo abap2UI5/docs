@@ -52,7 +52,7 @@ The first start is included ON PURPOSE and is part of the contract, not an accid
 
 IF client->check_on_navigated( ). view_display( ). ENDIF.
 
-the complete display condition on its own - no OR with check_on_init( ) is needed, and the samples and documentation are written that way. Whoever changes the factory keeps this true, or 530 apps stop rendering on their first start with nothing raised anywhere.
+the complete display condition on its own - no OR with check_on_init( ) is needed, and the samples and documentation are written that way. Whoever changes the factory keeps this true, or every sample in the three catalogues stops rendering on its first start with nothing raised anywhere.
 
 Returns `abap_bool`.
 
