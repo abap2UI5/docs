@@ -2723,3 +2723,43 @@
 @media print {
   .a2ui5-quote { display: none; }
 }
+
+/* ---- the cost calculator ----------------------------------------------
+ *
+ * resources/cost_calculator: a sheet of sliders whose every line comes to
+ * the same number. Plain form controls in the page's own type, the accent
+ * on the slider's thumb and on the total, and nothing that needs the
+ * script - the page reads the same with the sliders dead. */
+.cost { margin: 20px 0; }
+.cost-row {
+  display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr) minmax(0, 13em);
+  gap: 6px 16px; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
+}
+.cost-row label { font-weight: 600; }
+.cost-row input[type="range"] { width: 100%; margin: 0; accent-color: var(--accent); }
+.cost-row output { text-align: right; font-variant-numeric: tabular-nums; color: var(--fg-dim); }
+.cost-row select {
+  grid-column: 2 / -1; justify-self: end; font: inherit; padding: 4px 8px;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: inherit;
+}
+@media (max-width: 620px) {
+  .cost-row { grid-template-columns: 1fr auto; }
+  .cost-row input[type="range"] { grid-column: 1 / -1; }
+}
+.cost-sheet { margin: 20px 0 0; padding: 0 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-sunken); }
+.cost-line {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
+}
+.cost-line:last-child { border-bottom: 0; }
+.cost-line small { display: block; font-size: 13px; color: var(--fg-dim); }
+.cost-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cost-total {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  margin: 16px 0 24px; padding: 16px 20px; border: 1px solid var(--accent); border-radius: 8px;
+}
+.cost-total > div { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--fg-dim); }
+.cost-total output { font-size: 28px; line-height: 1.15; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cost-total > div:first-child output { font-size: 40px; }
+@media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }

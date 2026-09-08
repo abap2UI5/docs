@@ -151,6 +151,8 @@ Nobody counts your users, because nothing is counting. It is a standard UI5 app
 served by your own ABAP stack: ten users or ten thousand, the SAP license you
 have is the one you keep.
 
+→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
+
 ## Try it out now
 
 ```abap edit
