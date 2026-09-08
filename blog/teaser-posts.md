@@ -31,25 +31,24 @@ attached article preview, so the post carries no inline URL. 744 characters.
 
 Plain text — LinkedIn renders no markdown.
 
-> Before you use a framework, you want to know what it expects from you: a
-> structure to follow, a lifecycle to fit into, layers to fill in.
+> With abap2UI5 you start by writing an ABAP class, the way you used to start a
+> report with a selection screen. One interface, one method — that is the whole
+> contract.
 >
-> For abap2UI5 it is one interface with one method. No data model, no service,
-> no binding, no annotations, no BSP per app, no frontend artefact to transport.
+> Beyond that there are no rules. No service, no binding, no annotations,
+> nothing to transport but the class — and no demands on how you design your
+> model.
 >
-> Which is why it composes instead of competing. The new article shows one app
-> and three save handlers: EML against a business object, MODIFY against a
-> table, a BAPI call. The framework never learns which — it could just as well
-> be the EWM classes, or whatever SAP releases next.
+> The new article shows the same edit screen three times: through a RAP business
+> object, straight to a database table, and against a BAPI from twenty years
+> ago. Three programming models, one unchanged UI class.
 >
-> And what it does not give you: no data model, no transactional buffer, no
-> generated UI. That is what RAP is for, and for a straightforward use case done
-> the standard way that is where you want to be. abap2UI5 sits next to it, for
-> the screen that would otherwise not get built at all.
+> Where a strict programming model fits, use it. This is one more option next to
+> it, for the screen that would otherwise not get built at all.
 >
 > New article 🎉
 >
-> What does your UI framework ask of your architecture?
+> Which programming model would sit behind your screen?
 >
 > #ABAP #SAP #UI5
 
