@@ -121,11 +121,21 @@ it already runs on.
 community on GitHub and in the abapGit Slack channel, plus companies and
 freelancers offering implementation, training and support agreements.
 
-## One class, one app
+## Developing with AI
 
-Here is a whole abap2UI5 app. Press **Run and edit this example** — it opens in
-your browser on the real framework, with nothing to install, and the code is
-yours to change: edit it, run it again, break it.
+One class is one file for an agent to write — and no second half that can drift
+out of step with it.
+
+**And it can check its own work without an SAP system.** The
+[linter](/advanced/linter) rebuilds the UI5 view out of the ABAP that builds it and
+reports the names UI5 does not have; the [MCP server](/advanced/mcp_server) turns
+that into a loop for any MCP client — search the catalogues for an app that already
+does it, validate the view just written, and one step further boot the app headless
+and get the errors and a screenshot back. [The whole ladder](/get_started/ai) runs
+from a paragraph you paste ahead of a task to the editor extension that registers
+the loop for every client in the window.
+
+## Try it out now
 
 ```abap edit
 CLASS zcl_app_hello DEFINITION PUBLIC.
@@ -170,29 +180,6 @@ CLASS zcl_app_hello IMPLEMENTATION.
   ENDMETHOD.
 ENDCLASS.
 ```
-
-- **The attribute is the model.** `recipient` goes to the browser, comes back
-  edited, and is a plain ABAP string on both sides — the framework carries your
-  instance between roundtrips, so the class keeps its state with no session
-  handling of your own.
-- **The view is ABAP.** Built at runtime and sent as data: no XML file in a
-  repository, no build step.
-- **Events come back as ABAP.** The button press arrives in `check_on_event( )`,
-  in the same class, with the model already updated.
-
-## Developing with AI
-
-One class is one file for an agent to write — and no second half that can drift
-out of step with it.
-
-**And it can check its own work without an SAP system.** The
-[linter](/advanced/linter) rebuilds the UI5 view out of the ABAP that builds it and
-reports the names UI5 does not have; the [MCP server](/advanced/mcp_server) turns
-that into a loop for any MCP client — search the catalogues for an app that already
-does it, validate the view just written, and one step further boot the app headless
-and get the errors and a screenshot back. [The whole ladder](/get_started/ai) runs
-from a paragraph you paste ahead of a task to the editor extension that registers
-the loop for every client in the window.
 
 ## Around the project
 
