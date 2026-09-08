@@ -1,4 +1,4 @@
-# #2 abap2UI5 Is Not a Programming Model
+# #2 abap2UI5 in Your Favourite Programming Model
 
 Before you use a framework, you want to know what it expects from you: a
 structure to follow, a lifecycle to fit into, layers to fill in.
@@ -18,6 +18,9 @@ ENDINTERFACE.
 
 The framework calls `main( )` on every roundtrip, your class decides what to
 display and how to react. That is the whole contract.
+
+So abap2UI5 is not a programming model and does not bring one. Whichever one you
+already work in stays in charge.
 
 ## What Is Not in It
 

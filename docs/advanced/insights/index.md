@@ -29,7 +29,7 @@ What the framework is for, before how it works.
 | | |
 |---|---|
 | [#1 Somewhere on the Way to UI5, We Lost RTTS](/advanced/insights/01-somewhere-on-the-way-to-ui5) | a table whose structure is only known at runtime, drawn in UI5 |
-| [#2 abap2UI5 Is Not a Programming Model](/advanced/insights/02-not-a-programming-model) | one interface, one method, and no opinion about what is behind the screen |
+| [#2 abap2UI5 in Your Favourite Programming Model](/advanced/insights/02-your-favourite-programming-model) | one interface, one method, and no opinion about what is behind the screen |
 | [#3 The Cost of a Screen](/advanced/insights/03-the-cost-of-a-screen) | why the thirty-line screen never gets built, and a whole one as a class |
 | [#4 No Annotation in Between](/advanced/insights/04-no-annotation-in-between) | the vocabulary is the UI5 control library, all of it |
 

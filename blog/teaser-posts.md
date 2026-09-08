@@ -27,7 +27,7 @@ attached article preview, so the post carries no inline URL. 744 characters.
 >
 > #ABAP #SAP #UI5
 
-## abap2UI5 Is Not a Programming Model
+## abap2UI5 in Your Favourite Programming Model
 
 Plain text — LinkedIn renders no markdown.
 
