@@ -33,8 +33,8 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # AND EVERY CARD MAKES ONE BOLD CLAIM, with plain sentences around it. The
 # four used to share a formula - bold lead, explanation, "**And it ...**",
 # explanation - which reads as a template by the third card. The headings
-# are claims too, not labels: "Fits right in" promises something, where
-# "Integration" only named a topic.
+# are claims too, not labels: "Plays well with what you have" promises
+# something, where "Integration" only named a topic.
 hero:
   # The greeting, because this is the front door and a reader who arrives from
   # a talk or a colleague's link should be met rather than pitched at. The
@@ -93,7 +93,7 @@ features:
     target: _self
 ---
 
-## Enterprise ready from day one
+## Ready for the enterprise
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon — your [authorizations](/configuration/authorization) and
@@ -101,7 +101,7 @@ logon — your [authorizations](/configuration/authorization) and
 tested against Standard ABAP and ABAP Cloud. [Support](/resources/support) is on
 GitHub and Slack.
 
-## Fits right in
+## Plays well with what you have
 
 **Complements UI5 freestyle and RAP — it does not replace them.** Your RAP
 business objects and OData services stay where they are; abap2UI5 covers the app
@@ -113,10 +113,10 @@ Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
 rendering with [OpenUI5 from its CDN](/configuration/ui5_versions) or the UI5
 your system already ships.
 
-## Free, no strings attached
+## Free. Really.
 
-[MIT licensed](/resources/license) and free commercially — no licence key, no
-subscription, no per-user fee.
+[MIT licensed](/resources/license), commercial use included — no licence key,
+no subscription, no per-user fee.
 
 **Nobody counts your users, because nothing is counting.** It is a standard UI5
 app served by your own ABAP stack — ten users or ten thousand, the SAP licence
