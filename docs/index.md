@@ -84,25 +84,27 @@ features:
     target: _self
 ---
 
-## What it needs, and what it does not
+## abap2UI5 at a glance
 
 | | |
 |---|---|
-| **Runs on** | NetWeaver 7.02 and up, S/4HANA, ABAP Cloud, on-premise, private and public cloud, and the trial systems |
-| **Installed with** | [abapGit](/get_started/quickstart) — one repository, no transport of frontend artefacts, no BSP application to maintain |
+| **Runs on** | NetWeaver 7.02 and up, S/4HANA, ABAP Cloud — on-premise, private and public cloud, and the trial systems |
+| **Same everywhere** | An app written on 7.02 runs unchanged on ABAP Cloud; [Downporting](/advanced/downporting) is how |
+| **Installed with** | [abapGit](/get_started/quickstart) — one repository, no transport of frontend artefacts, no BSP application |
 | **Needs no** | JavaScript, OData service, RAP business object, CDS view, frontend project or Node toolchain |
+| **You write** | One ABAP class per app — the view, the model and the event handling in it |
 | **Speaks** | UI5, over stateless HTTP roundtrips against the framework's own service |
+| **Renders with** | [OpenUI5 from its CDN](/configuration/ui5_versions) by default; one exit points it at SAPUI5, a pinned version, or the UI5 your system already ships |
+| **Reaches users in** | A browser tab, a [Fiori launchpad](/configuration/launchpad) tile, or [SAP Mobile Start](/configuration/mobile_start) on iOS and Android |
 | **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
-
-Old releases are not second-class: an app written on 7.02 uses the same API as
-one on ABAP Cloud. [Downporting](/advanced/downporting) explains how.
 
 ## One class, one app
 
-Here is a whole abap2UI5 app. Press **Run this example** — it starts in your
-browser, on the real framework, with nothing to install.
+Here is a whole abap2UI5 app. Press **Run and edit this example** — it opens in
+your browser on the real framework, with nothing to install, and the code is
+yours to change: edit it, run it again, break it.
 
-```abap
+```abap edit
 CLASS zcl_app_hello DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.

@@ -670,7 +670,7 @@ const tile = (f) => `<a class="tile" href="${esc(linkOf(f.link))}"${f.target ? `
       <span class="tile-details">${esc(f.details)}</span>
     </a>`;
 
-const home = ({ body, fm }) => {
+const home = ({ body, fm, page }) => {
   const h = fm.hero || {};
   const img = h.image || {};
   return `<main class="home" id="main-content" tabindex="-1">
@@ -698,6 +698,17 @@ const home = ({ body, fm }) => {
   <section class="tiles">${(fm.features || []).map(tile).join('')}
   </section>
   <div class="vp-doc">${body}</div>
+  <!-- The front door is a page of this repository like any other, and it was
+       the only one that did not say so: the home layout has no doc-foot, so the
+       one page most likely to want a correction was the one page with no way
+       to offer it. Same markup and same class as a chapter's, so it is the
+       same footer a reader has already met 165 times. (No backticks in here -
+       this comment is inside a template literal, and one would end it.) -->
+  <div class="doc-foot">
+    <a class="edit" href="${esc((config.themeConfig.editLink?.pattern || '').replace(':path', page))}"
+       target="_blank" rel="noopener">${esc(config.themeConfig.editLink?.text || 'Edit this page on GitHub')} ↗</a>
+    <span class="updated">Last updated: <time datetime="${lastTouched(page)}">${lastTouched(page)}</time></span>
+  </div>
 </main>`;
 };
 
@@ -1035,7 +1046,7 @@ for (const page of pages) {
       description: isHome ? (fm.description || SITE_DESC) : (describe(src) || SITE_DESC),
     }),
     bar: isHome ? BAR_HOME : BAR_DOCS,
-    main: isHome ? home({ body, fm }) : chapter({ body, page, route }),
+    main: isHome ? home({ body, fm, page }) : chapter({ body, page, route }),
   });
 
   const to = path.join(OUT, 'docs', page.replace(/\.md$/, '.html'));

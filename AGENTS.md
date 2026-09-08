@@ -609,6 +609,17 @@ The code travels in the playground's URL fragment, read out of the rendered
 block at click time — so nothing is hosted here, and the example that runs is
 the text on the page rather than a copy of it.
 
+**One example is editable, and it is marked in the fence.** ```abap edit gives
+the container `data-play="edit"`, and `theme/playground.js` then mounts the
+playground WITHOUT `view=app` — the editor and the running app side by side —
+and hides the printed listing while the frame is open, so the reader sees one
+copy of the code and it is the one they can type in. Close puts the listing
+back. Only the front door carries it: everywhere else the code is printed right
+above the frame and an editor beside that would be the same text twice. The
+flag never decides WHETHER there is a button, only what kind of frame it opens;
+an example the playground would refuse gains nothing by asking to be edited.
+`test/playground.test.mjs` pins all four cases.
+
 **Whether an example runs is the one question CI cannot answer** — only a
 playground can, and a playground is a three-minute build of another repository.
 So the rules in `docs/.vitepress/playground.mjs` are an approximation, they
