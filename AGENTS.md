@@ -45,6 +45,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-design.mjs` | The palette, the type and the radii the four bars share, against `abap2UI5/playground`'s copy of them — needs a checkout (`PLAYGROUND_HOME`, `.playground`, `../playground`) or the network, and fails rather than passing without one. The table of what is shared, and both spellings of each value, is `scripts/lib/design.mjs` |
 | `scripts/check-images.mjs` | Every image under `docs/public`: a screenshot is WebP, a deliverable is one of the PNGs the logo page hands out, none is over its budget, and the build can measure each of them - `scripts/lib/images.mjs` is the one reader both this gate and `build-site.mjs` use, so a format the build cannot size fails here rather than shifting the page there |
 | `scripts/lib/html.mjs` | `stripComments( )`: every finished page leaves the build without the HTML comments its sources are written with - 418 kB across the site, a tenth of every page's compressed weight, read by nobody - outside `<script>`, because a script's text is what its hash in the policy is taken from |
+| `scripts/lib/prose.mjs` | What on a page is PROSE - not fenced or inline code, not a link target, a tag, a comment, a URL, a generated block or a frontmatter setting - and the house spelling of it, which is American: the British forms as patterns, each with the American form it becomes. `test/spelling.test.mjs` is the gate; `scripts/fix-spelling.mjs` (`npm run fix:spelling`) rewrites exactly the words the gate names |
 | `scripts/lib/csp.mjs` | The Content-Security-Policy every page is published under, as a `<meta>` because GitHub Pages sets no headers of ours: this origin, the playground beside it for the Run panel, and the two inline scripts by hash - the theme line and the borrowed menu script, hashed from the very string the build writes. `build-site.mjs` reads every finished page back for an inline script that is neither, and refuses to publish it |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
@@ -544,6 +545,19 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   went. The `// nav` / `// sidebar` markers left in the sidebar are the scar of
   the duplication that dropdown cost: two of its entries stood twice in one
   file, and a replace-first edit hit the wrong one and looked like it worked.
+- **The prose is American English, and a test holds it to that.** Behavior,
+  color, license, catalog, optimize - because SAP writes "authorization",
+  "Customizing" and "behavior definition", and a manual spelled the other way
+  teaches a reader to search for words their system does not use. The pages
+  were mixed for years; `test/spelling.test.mjs` now names every British form
+  in the PROSE of every page, and `npm run fix:spelling` rewrites exactly
+  those words. Prose only: fenced and inline code, link targets, tags,
+  comments, URLs, the generated blocks and the frontmatter's settings are
+  invisible to both (`scripts/lib/prose.mjs`), so `src/catalogue/` stays the
+  path it is while "the sample catalog" is the words. A word that is `-ise`
+  in American English too and is not yet on the list there - the test will
+  name it - goes on the list, not in the page. This file and the code are not
+  the manual, and stay as they are written.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
   frozen builder — unless the page carries the migration banner, and refuses a

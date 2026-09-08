@@ -9,21 +9,21 @@ START-OF-SELECTION.
   MESSAGE |Input: { pa_arbgb }| TYPE `I`.
 ```
 
-Four lines, and every layer is present. A screen exists. It has a labelled,
+Four lines, and every layer is present. A screen exists. It has a labeled,
 typed input field with a default and value help. It validates. It handles the
 event. Nobody wrote a frontend, because declaring the variable *was* writing the
 frontend.
 
 That trade — you name the data, the system draws the screen — is what made ABAP
 productive for thirty years, and it is what disappeared on the way to the
-browser. The variable and the field it appears in became two artefacts in two
+browser. The variable and the field it appears in became two artifacts in two
 places, maintained by two people, kept in step by a service in between.
 
 abap2UI5 puts them back together with `_bind`:
 
-![PARAMETERS: one declaration is the variable and the field. OData: variable and field are two artefacts with a service between. _bind: the field is the variable again.](/insights/15-parameters-bind.svg)
+![PARAMETERS: one declaration is the variable and the field. OData: variable and field are two artifacts with a service between. _bind: the field is the variable again.](/insights/15-parameters-bind.svg)
 
-*PARAMETERS: one declaration is the variable and the field. OData: variable and field are two artefacts with a service between. _bind: the field is the variable again.*
+*PARAMETERS: one declaration is the variable and the field. OData: variable and field are two artifacts with a service between. _bind: the field is the variable again.*
 
 ```abap
     )->tag( `Input`

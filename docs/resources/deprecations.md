@@ -133,7 +133,7 @@ Arguments stay untouched, so this is a pure rename — which is why
 
 Earlier releases split binding into a display-only `_bind` and a writable
 `_bind_edit`. That split is gone: there is only **one** binding left, and
-`_bind_edit` is an alias of `_bind` with identical behaviour.
+`_bind_edit` is an alias of `_bind` with identical behavior.
 
 ```abap
 " old
@@ -398,7 +398,7 @@ any app can speak. Inside a Fiori Launchpad shell the title is
 
 The user-exit interface follows the framework's naming: everything that is the
 engine rather than the contract carries the `ui5` segment. The two methods, the
-three types and the behaviour are unchanged.
+three types and the behavior are unchanged.
 
 ```abap
 " old

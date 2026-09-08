@@ -18,7 +18,7 @@ right question is asked.
 | **Exit path** | apps exist in the platform's format | apps stay plain ABAP classes in your system |
 
 **Reach for a low-code platform when the requirement is outside code.**
-Offline-capable native mobile apps, where local storage and synchronisation
+Offline-capable native mobile apps, where local storage and synchronization
 are the whole point. A bundled suite — workflow, API management, a portal —
 rather than a UI layer alone. Contractual support with an SLA and somebody to
 hold accountable. Or app building by people who are not developers: a designer
@@ -27,7 +27,7 @@ code-first framework replaces that.
 
 **Reach for abap2UI5 when apps should be code in your own system.** Every app
 is an ABAP class: diffable, transportable, unit-testable, reviewable in a pull
-request. There is no second format to govern and no designer artefact drifting
+request. There is no second format to govern and no designer artifact drifting
 from the system it describes. Nothing recurs per seat — ten users and ten
 thousand cost the same. And if the project vanished tomorrow, the apps would
 keep running from your own repository, because MIT means the code is

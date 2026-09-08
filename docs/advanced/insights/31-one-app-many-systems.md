@@ -18,7 +18,7 @@ once.
 It works because of what the earlier articles already established rather than
 because of anything added for it. The frontend is a shell that renders whatever
 arrives, so it does not care which system produced it. The app is one class with
-no artefacts beside it, so there is nothing per-tenant to deploy. And the state
+no artifacts beside it, so there is nothing per-tenant to deploy. And the state
 that makes a roundtrip work travels in the request, so no server holds a session
 belonging to one customer.
 

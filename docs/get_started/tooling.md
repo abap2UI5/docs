@@ -69,13 +69,13 @@ extension for the system connection.
 
 ## Where the samples live
 
-Three repositories, **one catalogue**: every sample from all of them is at
+Three repositories, **one catalog**: every sample from all of them is at
 [abap2ui5.github.io/playground/samples](https://abap2ui5.github.io/playground/samples/), searchable in one box by what
 an app does, by the control it builds and by the release your system runs.
 Each is a page of its own, with the ABAP printed in full and — where it needs
 no system — a button that runs it in the browser.
 
-The three are the catalogue's three sources, and each is one click:
+The three are the catalog's three sources, and each is one click:
 [**Learn**](https://abap2ui5.github.io/playground/samples/?src=learn) for *“Where do I start?”*,
 [**Controls**](https://abap2ui5.github.io/playground/samples/?src=controls) for *“Which control does what?”*, and
 [**Stack**](https://abap2ui5.github.io/playground/samples/?src=stack) for *“Will my system run it?”*. All three also

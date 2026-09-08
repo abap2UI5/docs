@@ -15,10 +15,10 @@ never "which framework" but "which one for this screen".
 
 Here is the split that holds up in practice.
 
-**Reach for RAP when the behaviour matters more than the screen.** A
+**Reach for RAP when the behavior matters more than the screen.** A
 transactional object with validations, determinations, authorizations and draft
 handling — and more than one consumer for it. The moment a second client exists,
-or is likely to, the behaviour needs to live somewhere that is not a UI, and RAP
+or is likely to, the behavior needs to live somewhere that is not a UI, and RAP
 is where SAP put it. Standard CRUD over a stable model, close to what a list
 report or an object page already does, is the case it was built for and the case
 where it costs the least.
@@ -37,7 +37,7 @@ apply. So a screen that RAP cannot shape the way it needs to be shaped is not a
 reason to abandon the business object — only a reason to put a different UI in
 front of it.
 
-Rule of thumb: model the behaviour once, in RAP, if more than one thing will
+Rule of thumb: model the behavior once, in RAP, if more than one thing will
 use it. Build the screen wherever it is cheapest.
 
 Happy ABAPing! 🦖🦕🦣

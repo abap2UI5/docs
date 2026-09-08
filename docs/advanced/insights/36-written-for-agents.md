@@ -27,7 +27,7 @@ the UI5 view out of the ABAP that builds it and reports what UI5 does not have.
 An agent that can verify its own work stops handing over apps that do not
 render, and the same linter gates the sample repositories.
 
-**Several hundred worked examples.** The sample catalogues hold a complete,
+**Several hundred worked examples.** The sample catalogs hold a complete,
 tested app per pattern — value help, tree, navigation, upload — so *has
 somebody already built this?* has an answer. Several hundred of those samples
 were themselves ported by agents that way: write the class, lint the view, run

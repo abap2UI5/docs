@@ -10,7 +10,7 @@ An exception that escapes your `main` method is **not** caught anywhere near
 your app. abap2UI5 lets it travel: there is exactly one top-level catch, in
 `z2ui5_cl_ui5_http_handler`, and everything the framework does about errors
 happens there. Knowing that one path is most of what this page is for — the
-behaviour is the same whether the exception came out of your code, out of the
+behavior is the same whether the exception came out of your code, out of the
 framework, or out of a wrong app name in the URL.
 
 ## What Happens When One Escapes
@@ -135,7 +135,7 @@ patterns), see the [EML](/cookbook/eml_cds_sql/eml) page.
 
 ## Working Samples
 
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
 that use what this page describes. Each is a single class — pull the repository with
 [abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
 

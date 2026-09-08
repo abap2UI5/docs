@@ -23,7 +23,7 @@ versioned on its own rather than riding along with a framework release.
 | [lock-manager](https://github.com/abap2UI5-addons/lock-manager) | The lock logic as a reusable class — stale-lock cleanup and a "locked by X since…" message included | [Lock](/cookbook/expert_more/lock) |
 | [config-management](https://github.com/abap2UI5-addons/config-management) | Runtime customization of UI5 application settings | |
 | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) | Custom controls for abap2UI5, delivered in their own BSP | [Custom Controls](/advanced/extensibility/custom_control) |
-| [custom-controls-customer](https://github.com/abap2UI5-addons/custom-controls-customer) | Your own UI5 artefacts — icon fonts, CSS and custom controls — without touching the framework | [Frontend](/advanced/extensibility/frontend) |
+| [custom-controls-customer](https://github.com/abap2UI5-addons/custom-controls-customer) | Your own UI5 artifacts — icon fonts, CSS and custom controls — without touching the framework | [Frontend](/advanced/extensibility/frontend) |
 | [http-connector](https://github.com/abap2UI5-addons/http-connector) | Call abap2UI5 apps remotely over HTTP | [HTTP Connector](/advanced/http) |
 | [rfc-connector](https://github.com/abap2UI5-addons/rfc-connector) | Call abap2UI5 apps remotely over RFC | [RFC Connector](/advanced/rfc) |
 | [launchpad-kpi](https://github.com/abap2UI5-addons/launchpad-kpi) | Show KPIs of abap2UI5 apps on the Fiori Launchpad | [Fiori Launchpad](/configuration/launchpad) |

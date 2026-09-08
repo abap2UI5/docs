@@ -109,7 +109,7 @@ one of the abap2UI5 samples, so it is compiled and linted on every commit.
 A table nobody described, drawn from whatever the data turned out to be.
 Doesn't that look a bit like `cl_salv_table` in a UI5 view? 😉
 
-You can go further and build a full SE16-flavoured app — have a look at the
+You can go further and build a full SE16-flavored app — have a look at the
 [se16n addon](https://github.com/abap2UI5-addons/se16n).
 
 ## Nothing Here Is Exotic
@@ -120,7 +120,7 @@ makes this cheap to adopt and cheap to hand over.
 The frontend is a freestyle UI5 app using `sap.m` controls, XML views, a
 `JSONModel` and two-way binding — nothing proprietary, and nothing you have not
 written before. The backend is a global ABAP class: one interface, in a
-package, travelling in a transport, compiling on ABAP Standard and ABAP Cloud
+package, traveling in a transport, compiling on ABAP Standard and ABAP Cloud
 alike.
 
 ## What It Costs

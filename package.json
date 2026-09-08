@@ -33,7 +33,8 @@
     "search": "node scripts/generate-search.mjs",
     "check:version": "node scripts/check-version.mjs",
     "build": "node scripts/generate-llms.mjs && node scripts/generate-search.mjs && node scripts/build-site.mjs .site",
-    "check:images": "node scripts/check-images.mjs"
+    "check:images": "node scripts/check-images.mjs",
+    "fix:spelling": "node scripts/fix-spelling.mjs"
   },
   "devDependencies": {
     "@abap2ui5/linter": "^0.6.1",

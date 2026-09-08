@@ -36,7 +36,7 @@ shipping, and for the full removal list with migration notes.
 - Added `setP13nData` to `CONTROL_METHODS`, so seeding a `sap.m.p13n` panel no longer needs hand-written JavaScript
 - `message_toast_display( )` / `message_box_display( )` queue follow-up actions: several calls in one roundtrip all show, in call order, after the view rendered
 - The startup page was rebuilt — the five quickstart steps top to bottom, then one row per sample repository with its install status, and the system information as a popup
-- Developer Tools: the POPUP/POPOVER tabs now follow a dialog closed without a roundtrip; empty tabs grey out instead of opening blank; the NEST/NEST2 and System tabs are gone
+- Developer Tools: the POPUP/POPOVER tabs now follow a dialog closed without a roundtrip; empty tabs gray out instead of opening blank; the NEST/NEST2 and System tabs are gone
 - The wire got leaner throughout (internal): action lists travel as real JSON arrays, session-constant browser data travels once per page load, a display action implies the slot teardown, and the routing mode is only re-sent when the frontend may not hold it
 - Fixes: a pending backend timer no longer fires into a destroyed controller; an app switch clears the previous app's keyboard shortcuts; a nested view re-displayed without its MAIN view gets the model too; `cc/Storage` compares by value, so a structure can be stored and read back; the `MessageToast` `Popup.Dock` warning is gone; the default CSP no longer names `frame-ancestors` in the `<meta>` tag
 - `src/99` test classes are back in CI: all 27 restored, the two disabled `xml_view` suites re-enabled, and the freeze now covers production code only

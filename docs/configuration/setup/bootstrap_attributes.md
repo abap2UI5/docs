@@ -40,7 +40,7 @@ ENDMETHOD.
 |---------------------------------|---------|
 | `data-sap-ui-libs`              | Comma-separated list of UI5 libraries to preload (e.g. `sap.m,sap.ui.table`). Trade load time against startup speed. |
 | `data-sap-ui-language`          | UI5 locale; overrides the browser language. See [Language](/configuration/setup/logon_language). |
-| `data-sap-ui-compatVersion`     | Compatibility version, controls UI5 behaviour for deprecated APIs. abap2UI5 defaults to `edge`. |
+| `data-sap-ui-compatVersion`     | Compatibility version, controls UI5 behavior for deprecated APIs. abap2UI5 defaults to `edge`. |
 | `data-sap-ui-async`             | Asynchronous module loading. Default `true` — only change for legacy reasons. |
 | `data-sap-ui-preload`           | Module preloading strategy: `async`, `sync` or empty (off). |
 | `data-sap-ui-frameOptions`      | Clickjacking protection: `trusted`, `allow`, `deny`. Default `trusted`. |

@@ -38,8 +38,8 @@ an open cursor, an acquired lock, a reference to a class that is not
 serializable. The `client` reference above is set again on every call, which
 is why `me->client = client` is the first line of every `main( )`.
 
-And that single fact is the convention that catches people: a catalogue read
-once and parked in an attribute is not a cached catalogue. It is a payload that
+And that single fact is the convention that catches people: a catalog read
+once and parked in an attribute is not a cached catalog. It is a payload that
 is written to the database and read back after every single click, in either
 section, and it makes every click slower for as long as the app runs. The fix
 is not a keyword. Anything large is re-read per request instead of carried, and

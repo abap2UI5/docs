@@ -35,7 +35,7 @@ and the model that fills it:
 Nothing there is a protocol abap2UI5 invented. The XML is UI5's own view
 format, the JSON is an ordinary UI5 JSON model, and the frontend does what it
 has always done — build HTML from a view and its data. What changes is who owns
-the view. It is no longer an artefact deployed beside the app; it is a string an
+the view. It is no longer an artifact deployed beside the app; it is a string an
 ABAP class produced for this request, and the next request may produce a
 different one.
 

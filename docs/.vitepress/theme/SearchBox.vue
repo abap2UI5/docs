@@ -224,7 +224,7 @@ const parts = (text) => highlight(text, query.value);
           <p v-if="failed" class="a2ui5-search-note">
             The search index could not be loaded. The
             <a href="/docs/">documentation</a> and the
-            <a href="https://abap2ui5.github.io/playground/samples/" target="_self">sample catalogue</a>
+            <a href="https://abap2ui5.github.io/playground/samples/" target="_self">sample catalog</a>
             are both browsable without it.
           </p>
           <div v-else-if="!query" class="a2ui5-search-empty">

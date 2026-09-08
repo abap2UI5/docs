@@ -46,7 +46,7 @@ Traditional UI5 development needs JavaScript expertise, frontend deployment, and
 - **Use your existing ABAP skills** — do what you do best; no frontend expertise needed
 - **Broad compatibility** — build apps that run on legacy R/3 systems and modern S/4 Cloud environments
 - **Extend beyond RAP** — build UIs for cases RAP does not cover, such as free-style screens, custom flows, or non-CDS data
-- **Prototype fast** — iterate rapidly on business apps
+- **Prototype fast** — a screen is one class, and a change is one activation
 
 Each app ships as an [abapGit](https://abapgit.org) project, so installation across systems needs no separate frontend deployment.
 
@@ -54,24 +54,23 @@ Each app ships as an [abapGit](https://abapgit.org) project, so installation acr
 
 The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view, the framework sends it to the browser with the data already embedded in it, and every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
 
-Nothing survives on the server between two clicks, and that is deliberate: `z2ui5_if_app` inherits `if_serializable_object`, so the app's state travels with the roundtrip and is restored before `main( )` runs again. Each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session — a classic enqueue, an open RFC connection — a [stateful mode](/cookbook/expert_more/statefulness) exists.
+Nothing survives on the server between two clicks, and that is deliberate: the app's state travels with the roundtrip and is restored before `main( )` runs again, so each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
 
 Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea behind htmx, Hotwire and Phoenix LiveView. abap2UI5 applies it to UI5.
 
 
 ## Overview
-<br>
 
 ### Architecture
-abap2UI5 takes a "thin frontend" approach — all processing, logic, and data handling stay in the backend. This design simplifies configuration, cuts client-side complexity (no more cache-clearing headaches), and keeps business logic and sensitive data safely on the server.
+A thin frontend: the browser renders, and everything else — logic, data, state — stays in the backend. There is nothing to configure on the client and nothing to clear from its cache, and business data never leaves the server except as the view the user is looking at.
 
 ### Performance
-abap2UI5 is fast. The frontend focuses only on UI rendering via the UI5 framework, while the ABAP backend handles all processing. Unlike traditional UI5 apps that need separate OData calls for each view, abap2UI5 embeds data directly in XML views — cutting network roundtrips and speeding up the response.
+One roundtrip per interaction, with the data already in the view — no OData call per control, no second request to fill what the first one drew. That is fewer round trips than a freestyle UI5 app makes for the same screen, and it is where the speed comes from.
 
 → *See [Performance](/configuration/performance) for what to measure and what to tune*
 
 ### Security
-abap2UI5 is secure by design. All business logic stays in the ABAP backend. The frontend receives only the data the backend embeds directly in XML views. Unlike traditional UI5 apps that expose OData endpoints, abap2UI5 delivers only what users need — no access to raw services or database queries from external tools.
+The frontend gets only what the backend puts into the view. There is no OData endpoint to query from outside, so an external tool sees no service and no table — only the screens a user is authorized to open.
 
 Authentication is the ICF node's job, exactly as for any other service on your system, and the framework ships a Content-Security-Policy by default. Authorization stays yours: whatever the user sends still arrives from a browser, so check it in the app or on the service node, as you would in any other program.
 
@@ -92,7 +91,7 @@ abap2UI5 is built for business apps: worklists, forms, CRUD, dashboards, selecti
 It is deliberately not built for everything. Three cases are a poor fit, and knowing them up front saves a prototype:
 
 - **Heavily interactive or real-time collaborative apps.** Every interaction that needs the server is a roundtrip.
-- **Offline use and complex client-side behaviour.** The browser renders; it does not hold the application.
+- **Offline use and complex client-side behavior.** The browser renders; it does not hold the application.
 - **Teams that work strictly separately.** The app is one ABAP class — that is the point, and it means there is no frontend project for a frontend team to own.
 
 → *See [On-Stack or Side-by-Side](/advanced/insights/30-on-stack-or-side-by-side) and [One App, Many Systems](/advanced/insights/31-one-app-many-systems) for the deployment scenarios*

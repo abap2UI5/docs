@@ -4,7 +4,7 @@ The loop is: change the class, activate, refresh the browser.
 
 That is the whole article, and it is worth spelling out what is missing from it,
 starting with the first page. Somebody has to deliver the initial HTML. In the
-SAP world that normally means a BSP application: a frontend artefact, built
+SAP world that normally means a BSP application: a frontend artifact, built
 somewhere, deployed to the ABAP stack, transported on its own path, and
 invalidated from its own caches when it changes.
 

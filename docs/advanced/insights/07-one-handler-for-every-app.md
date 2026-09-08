@@ -1,6 +1,6 @@
 # #7 One Handler for Every App
 
-Count what a screen usually costs in backend artefacts. A CDS view or two, a
+Count what a screen usually costs in backend artifacts. A CDS view or two, a
 service definition, a service binding, a behavior definition and its
 implementation, a projection — each one named, transported, reviewed, and each
 one belonging to exactly one application.
@@ -40,11 +40,11 @@ That has a practical consequence. A framework in the request path of a business
 application sees every input, every response and every user, and a dependency
 that cannot be read cannot really be reviewed. Here one class holds the logic,
 and reading it is an afternoon. The audit answers are short for the same
-reason: no CDS artefacts, no RAP objects, no generated code, no build step, no
+reason: no CDS artifacts, no RAP objects, no generated code, no build step, no
 transitive package tree. The system footprint is the source in the repository.
 
 What that removes is not effort — the app still decides everything — but
-artefacts. A screen stops being a set of objects to create, name, transport and
+artifacts. A screen stops being a set of objects to create, name, transport and
 govern, and becomes a class.
 
 A handler that knows nothing about the application never has to be written

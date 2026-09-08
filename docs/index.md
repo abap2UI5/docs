@@ -42,14 +42,15 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # can write it - and only then, to somebody already persuaded, what it costs.
 # The price is the last card because it is the last question, not the first.
 #
-# THREE CARDS END WITH A WAY OUT, and the link sits on the topic, never on the
+# EVERY CARD ENDS WITH A WAY OUT, and the link sits on the topic, never on the
 # word "here" - a reader scanning the links has to be able to tell where each
-# one goes. The cost card has none on purpose: its answer is complete on the
-# card, and its one destination (the licence) is already linked in the line
-# above, where "MIT licensed" stands. A second link to the same page inside
-# one card is the "every claim once" rule broken with a hyperlink - which is
-# also why the AI card's "The AI guide" is no longer a link: it and the card's
-# closer pointed at the same page, one line apart.
+# one goes. The cost card's is the calculator - a page of sliders for users,
+# systems, apps and support tiers whose every line comes to zero - and not
+# the license, which is already linked in the line above where "MIT licensed"
+# stands. A second link to the same page inside one card is the "every claim
+# once" rule broken with a hyperlink - which is also why the AI card's "The
+# AI guide" is no longer a link: it and the card's closer pointed at the same
+# page, one line apart.
 hero:
   # The greeting, because this is the front door and a reader who arrives from
   # a talk or a colleague's link should be met rather than pitched at. The
@@ -108,7 +109,7 @@ features:
     target: _self
 ---
 
-## Ready for Your Enterprise
+## Ready for your enterprise
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon — your [authorizations](/configuration/authorization) and
@@ -116,8 +117,7 @@ logon — your [authorizations](/configuration/authorization) and
 tested against Standard ABAP and ABAP Cloud. [Support](/resources/support) is on
 GitHub and Slack.
 
-Learn more about [Enterprise Readiness](/get_started/about#enterprise-ready)
-here.
+→ *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
 ## Plays well with what you have
 
@@ -128,27 +128,27 @@ that would otherwise need a frontend project of its own.
 It runs where your users already are: a browser tab, a
 [Fiori launchpad](/configuration/launchpad) tile, [SAP Build Work
 Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
-rendering with the UI5 your system already ships.
+rendering with the UI5 your system ships.
 
-Learn more about [Integration](/get_started/about#where-it-fits) here.
+→ *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
-**One class is one file — the whole app, for an agent to write.** It can check
-its own work without an SAP system: the [linter](/advanced/linter) validates the
-view, the [MCP server](/advanced/mcp_server) boots the app headless and returns
-the errors and a screenshot. The AI guide starts with one paragraph you paste
-ahead of a task.
+**One class is one file — the whole app, for an agent to write.** An agent can
+check its own work without an SAP system: the [linter](/advanced/linter)
+validates the view, the [MCP server](/advanced/mcp_server) boots the app
+headless and returns the errors and a screenshot. The AI guide starts with one
+paragraph to paste at the top of a prompt.
 
-Learn more about [Developing with AI](/get_started/ai) here.
+→ *More on [Developing with AI](/get_started/ai)*
 
 ## And what does it cost?
 
 **Nothing.** [MIT licensed](/resources/license), commercial use included — no
-licence key, no subscription, no per-user fee.
+license key, no subscription, no per-user fee.
 
-Nobody counts your users, because nothing is counting: it is a standard UI5 app
-served by your own ABAP stack — ten users or ten thousand, the SAP licence you
+Nobody counts your users, because nothing is counting. It is a standard UI5 app
+served by your own ABAP stack: ten users or ten thousand, the SAP license you
 have is the one you keep.
 
 ## Try it out now

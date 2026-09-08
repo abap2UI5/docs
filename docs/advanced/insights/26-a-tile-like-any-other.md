@@ -20,7 +20,7 @@ parameter:
 | URL | `/sap/bc/ui5_ui5/sap/z2ui5` |
 | Parameter | `app_start` / `Z2UI5_CL_MY_APP` |
 
-A tile, a catalogue, a role — the Fiori administration the system already does,
+A tile, a catalog, a role — the Fiori administration the system already does,
 with nothing abap2UI5-specific in it except the parameter.
 
 **What the app can do inside.** It knows where it is:

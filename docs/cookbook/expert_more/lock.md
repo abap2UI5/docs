@@ -664,7 +664,7 @@ ENDCLASS.
 </details>
 
 ## 5. Stateful Session
-For classic SAP GUI-like behaviour, switch the session to stateful and call the lock function module on init. The lock survives subsequent roundtrips as long as the session stays alive:
+For classic SAP GUI-like behavior, switch the session to stateful and call the lock function module on init. The lock survives subsequent roundtrips as long as the session stays alive:
 ```abap
 IF client->check_on_navigated( ).
 

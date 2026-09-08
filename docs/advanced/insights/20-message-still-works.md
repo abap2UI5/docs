@@ -3,7 +3,7 @@
 An ABAP developer has thirty years of habits around messages, and most of them
 carry over unchanged. What changes is where the message ends up.
 
-**A toast for what needs no acknowledgement**, a box for what does:
+**A toast for what needs no acknowledgment**, a box for what does:
 
 ```abap
     client->message_toast_display( `Saved` ).

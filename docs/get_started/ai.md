@@ -14,7 +14,7 @@ reason is structural:
   class, in one language. An agent never has to keep an ABAP backend and a
   JavaScript frontend in step, because there is no second half to drift.
 - **There are hundreds of working examples to learn from.** The
-  [sample catalogue](https://abap2ui5.github.io/playground/samples/) holds
+  [sample catalog](https://abap2ui5.github.io/playground/samples/) holds
   complete, tested apps from all three repositories — one per pattern, every
   one linted and rendered, each with the ABAP printed in full — so "has
   somebody already built a value help, a tree, navigation between two apps?"
@@ -111,14 +111,14 @@ The tools an agent then has:
 
 | | |
 | --- | --- |
-| `examples` | search the three sample catalogues — *has somebody already built a value help, a tree, navigation between two apps?* Answers with a class to read, never with a snippet to trust |
+| `examples` | search the three sample catalogs — *has somebody already built a value help, a tree, navigation between two apps?* Answers with a class to read, never with a snippet to trust |
 | `capabilities` | whether abap2UI5 can express a UI5 feature at all, from the verified capability map |
 | `validate_view` | the linter's gates, in seconds, against your project's own config |
 | `deploy_app` | write the class into a local sandbox and compile it |
 | `build_backend` / `run_app` | transpile the framework and the app to Node, boot it headless, and hand back the errors **and a screenshot** |
 | `pitfalls` | the defects a green run still does not catch — abapGit import, activation, the oldest UI5 release |
 
-Set-up is levelled: validating views needs one small checkout and a minute;
+Set-up is leveled: validating views needs one small checkout and a minute;
 the screenshot loop needs a browser and a first build measured in tens of
 minutes. Stop where the value stops for you — the
 [MCP Server page](/advanced/mcp_server) has the three levels, every tool and

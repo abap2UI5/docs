@@ -25,7 +25,9 @@ later.
 :::
 
 The framework is everything you need: the HTTP endpoint you create next serves
-the UI5 frontend itself, so there is no separate frontend to deploy. In some scenarios an additional frontend app is needed, check out more information here(link).
+the UI5 frontend itself, so there is no separate frontend to deploy. For a
+launchpad or a Fiori Elements host, the frontend can also be deployed as an app
+of its own — see [Frontend](/advanced/extensibility/frontend).
 
 ## 2. Set Up HTTP Handler and Service
 Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
