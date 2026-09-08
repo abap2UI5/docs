@@ -108,6 +108,10 @@ async function start(button, { unasked = false } = {}) {
   /* Already clicked — the loader's own button would be a second one. */
   demo.dataset.auto = '1';
   demo.dataset.code = source;
+  /* Before the frame exists: an unasked start holds the page still while it
+   * boots (holdStill above). A reader who pressed the button asked to be
+   * taken to what they started, so that one is left alone. */
+  if (unasked) holdStill(container);
   container.append(demo);
   embed.setUp(container);
   /* The printed listing steps aside for the editable one: the frame now shows
@@ -205,6 +209,62 @@ const runButton = (container) => {
 const wantsLessData = () =>
   matchMedia?.('(prefers-reduced-data: reduce)').matches
   || navigator.connection?.saveData === true;
+
+/* An example nobody asked for must not move the page under the reader.
+ *
+ * Three documents down, the frame boots a real UI5 app, and a UI5 app focuses
+ * a control when it renders. That focus travels outwards - the app's iframe
+ * inside the playground, the playground's iframe inside this page - and the
+ * browser scrolls the last one into view. Measured on the front door: 4.4s
+ * after load, scrollY 0 to 911, with nothing on the page touched.
+ *
+ * There is no focus event here to intercept. A subframe taking the focus
+ * dispatches nothing at this level - no focus, no focusin, not on the iframe
+ * and not on the document. All that arrives is a `blur` whose target is the
+ * window, and then the scroll. So the signal this reads is the one the browser
+ * does give: the page moved AND what now holds the focus is inside the frame
+ * this page mounted. Anything else that scrolls - a wheel, a key, a hand on
+ * the scrollbar - leaves the focus where it was and is none of this
+ * function's business.
+ *
+ * Both halves are put back, because both were taken: the position, and the
+ * focus itself. A reader whose next keypress goes to an app they never opened
+ * has lost their page just as surely as one who was scrolled away from it.
+ *
+ * It lets go the moment the reader does anything at all - a press, a key, a
+ * wheel, a touch - so somebody who deliberately clicks into the editor, or
+ * tabs to it, keeps the focus they asked for. The timeout is the other way
+ * out, for a reader who never touches this page: booting is over long before
+ * it, and a guard that outlived the boot would be a guard fighting nobody.
+ */
+function holdStill(container) {
+  const home = window.scrollY;
+  const asked = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+  let live = true;
+  const release = () => {
+    if (!live) return;
+    live = false;
+    removeEventListener('scroll', putBack);
+    removeEventListener('blur', putBack, true);
+    for (const ev of asked) removeEventListener(ev, release, true);
+    clearTimeout(timer);
+  };
+  const putBack = () => {
+    if (!live) return;
+    /* The frame is what holds the focus, and nobody here asked it to. */
+    if (!container.contains(document.activeElement)) return;
+    document.activeElement.blur?.();
+    if (Math.abs(window.scrollY - home) > 1) {
+      /* `instant` rather than the site's own scrolling: this is an undo, and
+       * an undo that animates is a second thing the reader did not ask for. */
+      window.scrollTo({ top: home, left: 0, behavior: 'instant' });
+    }
+  };
+  addEventListener('scroll', putBack, { passive: true });
+  addEventListener('blur', putBack, true);
+  for (const ev of asked) addEventListener(ev, release, { capture: true, passive: true });
+  const timer = setTimeout(release, 30000);
+}
 
 /* The editable example starts ITSELF, once, when it comes into view.
  *
