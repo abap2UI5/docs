@@ -18,7 +18,12 @@
  *   style-src    'unsafe-inline' has to stay: the highlighter puts a colour
  *                pair on every token as a style attribute, and <noscript>
  *                carries a <style>.
- *   img-src      this origin and data: URIs.
+ *   img-src      this origin, data: URIs, and the two hosts the pages still
+ *                take screenshots from: github.com, whose user-attachments
+ *                URLs answer with a redirect to *.githubusercontent.com. A
+ *                host missing here is a picture the page silently loses, so
+ *                test/csp.test.mjs walks every page for the hosts its images
+ *                name and holds them against this list.
  *   connect-src  this origin (the search index) and the playground.
  *   frame-src    this origin and the playground (the Run panel's frame).
  *   object-src   none. base-uri and form-action: this origin.
@@ -30,6 +35,19 @@ import { createHash } from 'node:crypto';
 /** The neighbouring deployments, which on the published site are 'self'. */
 export const NEIGHBOUR = 'https://abap2ui5.github.io';
 
+/** Where a page may still load a picture from besides this origin. */
+export const IMAGE_HOSTS = ['https://github.com', 'https://*.githubusercontent.com'];
+
+/** Whether `url` is a picture the policy lets a page load. */
+export function imageAllowed(url, origin = NEIGHBOUR) {
+  let u;
+  try { u = new URL(url); } catch { return false; }
+  if (u.origin === origin || u.protocol === 'data:') return true;
+  return IMAGE_HOSTS.some((host) => host.startsWith('https://*.')
+    ? u.protocol === 'https:' && u.hostname.endsWith(host.slice('https://*'.length))
+    : u.origin === host);
+}
+
 /** An inline script's text, as CSP names it: sha256, base64, quoted. */
 export const hashOf = (script) => `'sha256-${createHash('sha256').update(script, 'utf8').digest('base64')}'`;
 
@@ -40,7 +58,7 @@ export function contentSecurityPolicy(inlineScripts) {
     "default-src 'self'",
     ['script-src', "'self'", NEIGHBOUR, ...hashes].join(' '),
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data:",
+    ['img-src', "'self'", 'data:', ...IMAGE_HOSTS].join(' '),
     "font-src 'self'",
     `connect-src 'self' ${NEIGHBOUR}`,
     `frame-src 'self' ${NEIGHBOUR}`,

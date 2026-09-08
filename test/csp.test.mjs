@@ -18,7 +18,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { contentSecurityPolicy, hashOf, inlineScriptsIn, NEIGHBOUR } from '../scripts/lib/csp.mjs';
+import { readdirSync } from 'node:fs';
+import { contentSecurityPolicy, hashOf, imageAllowed, inlineScriptsIn, NEIGHBOUR } from '../scripts/lib/csp.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -39,7 +40,7 @@ test('only the hashed scripts are allowed inline, and nothing else is', () => {
 test('the rest of the policy: no objects, no foreign base, styles inline for the highlighter', () => {
   const policy = contentSecurityPolicy([]);
   for (const d of ["default-src 'self'", "object-src 'none'", "base-uri 'self'", "form-action 'self'",
-    "style-src 'self' 'unsafe-inline'", "img-src 'self' data:", "font-src 'self'",
+    "style-src 'self' 'unsafe-inline'", "img-src 'self' data: https://github.com https://*.githubusercontent.com", "font-src 'self'",
     `frame-src 'self' ${NEIGHBOUR}`, `connect-src 'self' ${NEIGHBOUR}`]) {
     assert.ok(policy.includes(d), d);
   }
@@ -73,4 +74,38 @@ test('a page carrying an inline script the policy would kill is refused, not pub
      string it writes, so the hash and the script cannot drift apart. */
   assert.match(BUILD, /<script>\$\{NOT_FOUND_SCRIPT\}<\/script>/);
   assert.match(BUILD, /inline: \[NOT_FOUND_SCRIPT\],/);
+});
+
+/* ---- every picture a page loads is one the policy lets it load ---------- */
+const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+  e.isDirectory() ? (e.name === 'public' || e.name.startsWith('.') ? [] : walk(join(dir, e.name)))
+    : e.name.endsWith('.md') ? [join(dir, e.name)] : []);
+const PAGES = walk(join(ROOT, 'docs'));
+
+test('every picture a page takes from another host is a host the policy allows', () => {
+  /* A host missing from img-src is a picture the page silently loses - no
+   * error a reader sees, a grey box where a screenshot was. So the pages are
+   * walked for the hosts their images name, in both spellings an image has
+   * in markdown. */
+  assert.ok(PAGES.length > 100, 'the walk found the manual');
+  const outside = [];
+  for (const page of PAGES) {
+    const md = readFileSync(page, 'utf8');
+    for (const m of md.matchAll(/<img[^>]*\bsrc="(https?:\/\/[^"]+)"|!\[[^\]]*\]\((https?:\/\/[^)\s]+)/g)) {
+      const url = m[1] || m[2];
+      if (!imageAllowed(url)) outside.push(`${page.slice(ROOT.length + 1)}: ${url}`);
+    }
+  }
+  assert.deepEqual(outside, [], 'pictures the policy would block');
+});
+
+test('imageAllowed reads the list the way a browser reads it', () => {
+  assert.ok(imageAllowed('https://github.com/user-attachments/assets/x'));
+  assert.ok(imageAllowed('https://private-user-images.githubusercontent.com/x.png'));
+  assert.ok(imageAllowed('https://raw.githubusercontent.com/abap2UI5/x/main/y.png'));
+  assert.ok(imageAllowed('https://abap2ui5.github.io/docs/logo.webp'), 'this origin');
+  assert.ok(imageAllowed('data:image/png;base64,AAAA'));
+  assert.ok(!imageAllowed('https://githubusercontent.com.evil.example/x.png'), 'a wildcard is a suffix of the host, not of the string');
+  assert.ok(!imageAllowed('https://i.imgur.com/x.png'));
+  assert.ok(!imageAllowed('http://github.com/x.png'), 'https only');
 });
