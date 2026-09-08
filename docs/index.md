@@ -32,7 +32,9 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 #
 # AND EVERY CARD MAKES ONE BOLD CLAIM, with plain sentences around it. The
 # four used to share a formula - bold lead, explanation, "**And it ...**",
-# explanation - which reads as a template by the third card.
+# explanation - which reads as a template by the third card. The headings
+# are claims too, not labels: "Plays well with what you have" promises
+# something, where "Integration" only named a topic.
 hero:
   # The greeting, because this is the front door and a reader who arrives from
   # a talk or a colleague's link should be met rather than pitched at. The
@@ -91,7 +93,7 @@ features:
     target: _self
 ---
 
-## Enterprise ready
+## Ready for the enterprise
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon — your [authorizations](/configuration/authorization) and
@@ -99,7 +101,7 @@ logon — your [authorizations](/configuration/authorization) and
 tested against Standard ABAP and ABAP Cloud. [Support](/resources/support) is on
 GitHub and Slack.
 
-## Integration
+## Plays well with what you have
 
 **Complements UI5 freestyle and RAP — it does not replace them.** Your RAP
 business objects and OData services stay where they are; abap2UI5 covers the app
@@ -111,16 +113,16 @@ Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
 rendering with [OpenUI5 from its CDN](/configuration/ui5_versions) or the UI5
 your system already ships.
 
-## What it costs
+## Free. Really.
 
-Nothing. [MIT licensed](/resources/license) and free commercially — no licence
-key, no subscription, no per-user fee.
+[MIT licensed](/resources/license), commercial use included — no licence key,
+no subscription, no per-user fee.
 
 **Nobody counts your users, because nothing is counting.** It is a standard UI5
 app served by your own ABAP stack — ten users or ten thousand, the SAP licence
 you have is the one you keep.
 
-## Developing with AI
+## Made for AI agents
 
 **One class is one file — the whole app, for an agent to write.** It can check
 its own work without an SAP system: the [linter](/advanced/linter) validates the
