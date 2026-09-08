@@ -84,19 +84,31 @@ features:
     target: _self
 ---
 
-## abap2UI5 at a glance
+## Enterprise ready
 
-| | |
-|---|---|
-| **Runs on** | NetWeaver 7.02 and up, S/4HANA, ABAP Cloud — on-premise, private and public cloud, and the trial systems |
-| **Same everywhere** | An app written on 7.02 runs unchanged on ABAP Cloud; [Downporting](/advanced/downporting) is how |
-| **Installed with** | [abapGit](/get_started/quickstart) — one repository, no transport of frontend artefacts, no BSP application |
-| **Needs no** | JavaScript, OData service, RAP business object, CDS view, frontend project or Node toolchain |
-| **You write** | One ABAP class per app — the view, the model and the event handling in it |
-| **Speaks** | UI5, over stateless HTTP roundtrips against the framework's own service |
-| **Renders with** | [OpenUI5 from its CDN](/configuration/ui5_versions) by default; one exit points it at SAPUI5, a pinned version, or the UI5 your system already ships |
-| **Reaches users in** | A browser tab, a [Fiori launchpad](/configuration/launchpad) tile, or [SAP Mobile Start](/configuration/mobile_start) on iOS and Android |
-| **Licence** | MIT — free for commercial use, no per-user fee, and the code is [on GitHub](https://github.com/abap2UI5/abap2UI5) |
+**It runs inside the security you already have.** One HTTP endpoint, standard
+SAP logon, no second user store — your
+[authorizations](/configuration/authorization) and
+[session handling](/configuration/security) apply unchanged.
+
+**And it is kept that way.** Every merge is tested against Standard ABAP and
+ABAP Cloud, then [downported](/advanced/downporting) and linted against 7.02
+before the `702` branch ships, so one app runs unchanged from NetWeaver 7.02 to
+ABAP Cloud. [Support](/resources/support) is GitHub and Slack.
+
+## Integration
+
+**It complements UI5 freestyle and RAP — it does not replace them.** Your RAP
+business objects and OData services stay where they are; this is for the app
+that would otherwise need a frontend project of its own. One ABAP class, in the
+same system, [installed with abapGit](/get_started/quickstart).
+
+**And it reaches users where they already are.** A browser tab, a
+[Fiori launchpad](/configuration/launchpad) tile, [SAP Build Work
+Zone](/configuration/btp), or [SAP Mobile Start](/configuration/mobile_start) on
+iOS and Android — rendering with
+[OpenUI5 from its CDN](/configuration/ui5_versions) or the UI5 your system
+already ships.
 
 ## What it costs
 
@@ -106,18 +118,6 @@ key, no subscription, no per-user fee.
 **Nobody counts your users, because nothing is counting.** The app is a standard
 UI5 application served by your own ABAP stack: ten users and ten thousand are the
 same to it, and the SAP licensing you have is the licensing you keep.
-
-## Enterprise ready
-
-**It runs inside the security you already have.** One HTTP endpoint, standard SAP
-logon, no second user store — your
-[authorizations](/configuration/authorization) and
-[session handling](/configuration/security) apply unchanged.
-
-**And it is kept that way.** Every merge is tested against Standard ABAP and ABAP
-Cloud, then [downported](/advanced/downporting) and linted against 7.02 before the
-`702` branch ships. [Support](/resources/support) is GitHub and Slack, with
-commercial options listed beside them.
 
 ## Developing with AI
 

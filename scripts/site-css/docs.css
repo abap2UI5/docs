@@ -709,7 +709,11 @@ html { scroll-padding-top: 62px; }
 .home .vp-doc.bands {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 48px;
+  column-gap: 24px;
+  row-gap: 24px;
+  /* Two cards on a row are two panels, and two panels of different heights
+     read as one of them being unfinished. */
+  align-items: stretch;
 }
 .home .band { grid-column: 1 / -1; min-width: 0; }
 .home .band > :first-child { margin-top: 0; }
@@ -717,22 +721,56 @@ html { scroll-padding-top: 62px; }
    than 74ch, and capping it again would leave a gutter inside a gutter. */
 .home .band > p, .home .band > ul, .home .band > ol { max-width: 74ch; }
 
-/* The right column stacks: the fact table is the tall one, so it spans both
-   rows and the two short sections sit beside it, one under the other. Placed
-   explicitly rather than left to auto-flow, which would have started the AI
-   section on a new row BELOW the table and left a hole under the costs. Source
-   order is glance -> costs -> AI, which is the order they are read in, so the
-   reading order and the visual order still agree. */
-.home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; grid-row: 1 / span 3; }
-.home .band[data-band="what-it-costs"] { grid-column: 2; grid-row: 1; }
-.home .band[data-band="enterprise-ready"] { grid-column: 2; grid-row: 2; }
-.home .band[data-band="developing-with-ai"] { grid-column: 2; grid-row: 3; }
-/* The two lower ones keep their rules: inside a column a rule reads as a
-   divider between the sections, which is what it is. Only the topmost of the
-   two columns loses it, below. */
-/* Two columns of one row: the rule over the second would cut the first in
-   half, and its heading sits on the same line as the other's. */
-.home .band[data-band="what-it-costs"] > h2 { border-top-color: transparent; }
+/* THE FOUR ANSWERS, AS FOUR CARDS.
+ *
+ * They used to be three sections in a column beside a nine-row fact table, and
+ * the table was the problem: a stranger who has read the tagline already knows
+ * what it runs on and what it does not need, and reading it again as a grid of
+ * label/value pairs is homework, not an answer. What was load-bearing in it
+ * went into the four - the 7.02-to-Cloud claim into Enterprise ready, the
+ * launchpads and the UI5 source into Integration, the licence into What it
+ * costs - and the rest was the tagline said twice.
+ *
+ * Four is what makes the shape: two by two, every card the same width and, by
+ * `align-items: stretch`, the same height as the one beside it. Three never
+ * balanced against anything; four balance against each other.
+ *
+ * Raised rather than ruled. A hairline over a heading separates sections read
+ * in order; these four are read in any order, so each is a panel of its own -
+ * the border and radius the tiles above already use, on the sunken ground,
+ * with the heading in the accent so the four titles carry the page at a
+ * glance. */
+.home .band[data-band="enterprise-ready"],
+.home .band[data-band="integration"],
+.home .band[data-band="what-it-costs"],
+.home .band[data-band="developing-with-ai"] {
+  grid-column: auto;
+  padding: 22px 24px 24px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--bg-sunken);
+}
+.home .band[data-band="enterprise-ready"] > h2,
+.home .band[data-band="integration"] > h2,
+.home .band[data-band="what-it-costs"] > h2,
+.home .band[data-band="developing-with-ai"] > h2 {
+  margin: 0 0 4px;
+  padding-top: 0;
+  border-top: 0;
+  color: var(--accent);
+  font-size: 15px;
+}
+/* The card is already the measure; capping the paragraphs again would leave a
+   gutter inside a gutter. */
+.home .band[data-band="enterprise-ready"] > p,
+.home .band[data-band="integration"] > p,
+.home .band[data-band="what-it-costs"] > p,
+.home .band[data-band="developing-with-ai"] > p { max-width: none; }
+/* A card is a box with a floor: the last paragraph must not push against it. */
+.home .band[data-band="enterprise-ready"] > p:last-child,
+.home .band[data-band="integration"] > p:last-child,
+.home .band[data-band="what-it-costs"] > p:last-child,
+.home .band[data-band="developing-with-ai"] > p:last-child { margin-bottom: 0; }
 
 /* The example is the widest thing on the page because what it opens is two
    panes - the ABAP on the left, the app it renders on the right. Held to a
@@ -743,12 +781,14 @@ html { scroll-padding-top: 62px; }
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
-  .home .band[data-band="what-it-costs"] > h2 { border-top-color: var(--line); }
-  /* the explicit placement goes with the grid */
-  .home .band[data-band="abap2ui5-at-a-glance"],
-  .home .band[data-band="what-it-costs"],
+  /* One card per row, and they stay cards: what a card says here is "this is
+     one of four answers, read them in any order", which is as true on a phone
+     as on a desk. `display: block` drops the row gap with the grid, so the
+     card carries its own. */
   .home .band[data-band="enterprise-ready"],
-  .home .band[data-band="developing-with-ai"] { grid-column: auto; grid-row: auto; }
+  .home .band[data-band="integration"],
+  .home .band[data-band="what-it-costs"],
+  .home .band[data-band="developing-with-ai"] { margin-top: 24px; }
 }
 
 /* ---- what a stranger checks first ----------------------------------- */
