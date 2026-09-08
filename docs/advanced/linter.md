@@ -104,8 +104,8 @@ Two gates run over every file, and they answer different questions.
 ### The property gate
 
 Everything the view writes is resolved against a **UI5 metadata snapshot** —
-988 controls with their full member lists and types, 219 enums, generated from
-the OpenUI5 sources. It is instant, needs no browser, and catches the whole
+every control OpenUI5 ships, with its full member list and types, and every
+enum, generated from the OpenUI5 sources. It is instant, needs no browser, and catches the whole
 family of *this name does not exist* defects:
 
 | | |
@@ -383,7 +383,7 @@ A run can write two [shields.io](https://shields.io/badges/endpoint-badge)
 endpoint files, because a repository has two different things to say:
 `--badge-corpus` says what the repository **is** (`148 apps · 172 views · 2,176
 controls`, blue, a fact), and `--badge` says what the gate **said**
-(`83 rules passed`, green/yellow/red, a verdict). Both are written on every
+(`124 rules passed`, green/yellow/red, a verdict). Both are written on every
 run, the failing one included.
 
 ### What a clean run still tells you
