@@ -98,6 +98,57 @@ export function lastVisited(site, fallback, scope = fallback) {
   }
 }
 
+/* ── THE PLAYGROUND ITEM GOES BACK when the playground is behind you ────────
+ *
+ * The item is a link, a link makes a NEW document, and a new playground boots
+ * the whole ABAP runtime and runs the app from the top - two to three seconds,
+ * and the app's own state gone with the document that held it. The one
+ * mechanism that hands a running page back alive is the back/forward cache,
+ * and it applies to a page the reader has BEEN on. So when the page the item
+ * opens is still in this tab's history, the click (scripts/site-js/site.js)
+ * traverses to it there instead. This is the half with no DOM in it: which
+ * entry that is. The counterpart is src/shell/site-memory.mjs in
+ * abap2UI5/playground, and the sample pages' inline copy - change one, change
+ * the others.
+ */
+
+/** A page, as two history entries are compared: origin, path and query, a
+ *  trailing index.html taken off. The fragment is left out - it carries the
+ *  code, and the playground drops it from its own URL once the code has been
+ *  read, so the entry and the remembered URL can differ in it and still be
+ *  one page. */
+const pageOf = (url) => url.origin + url.pathname.replace(/index\.html$/, '') + url.search;
+
+/**
+ * The key of the history entry nearest to `current` that is the page `href`
+ * opens, or null. `entries` is what navigation.entries() answers - the tab's
+ * same-origin history - and `current` the index of the entry the reader is
+ * on. Nearest first, because the newer of two playgrounds is the one the href
+ * was lifted to; either direction, because the reader may have LEFT the
+ * playground with the Back button.
+ */
+export function entryOf(entries, current, href, base = location.href) {
+  let want;
+  try {
+    want = pageOf(new URL(href, base));
+  } catch {
+    return null;
+  }
+  const is = (entry) => {
+    try {
+      return typeof entry?.url === 'string' && pageOf(new URL(entry.url)) === want;
+    } catch {
+      return false;
+    }
+  };
+  for (let d = 1; d < entries.length; d++) {
+    for (const i of [current - d, current + d]) {
+      if (i >= 0 && i < entries.length && is(entries[i])) return entries[i].key ?? null;
+    }
+  }
+  return null;
+}
+
 /* ── WHERE ON THE PAGE, not only which page ─────────────────────────────────
  *
  * The item above comes back to the page you left. It came back to the TOP of
