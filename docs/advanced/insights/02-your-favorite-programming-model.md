@@ -187,10 +187,11 @@ you want. But there are also the ones where a developer needs more freedom —
 customers who are not on the newest release, and logic that never quite fits the
 shape a programming model has in mind.
 
-So this is not an either-or. abap2UI5 runs in the same system, under the same
-authorizations, in the same launchpad, and it reaches your business logic
-however you like. It is one more option next to what you already run, for the
-screen that would otherwise not get built at all.
+abap2UI5 runs in the same system, under the same authorizations, in the same
+launchpad as all your other UI5 and RAP apps. It reaches your business logic
+however you like, with the programming model of your choice. One more option
+next to what you already run, for the screen that would otherwise not get built
+at all.
 
 One interface, one method, and no opinion about what is behind the screen.
 
