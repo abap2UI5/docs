@@ -122,6 +122,14 @@ test('the item for the page the reader is on is left to the browser', () => {
     'a link that opens elsewhere has nothing to go back to');
 });
 
+test('a page built again after a step back says why, in the console', () => {
+  assert.match(shortcut, /arrival\?\.type === 'back_forward' && arrival\.notRestoredReasons/,
+    'only an arrival by Back or Forward that the browser did not restore has reasons to print');
+  assert.match(shortcut, /console\.info\('docs: rebuilt rather than restored from the back\/forward cache', arrival\.notRestoredReasons\)/,
+    'the reasons themselves, which is the one place the browser says what blocked the cache');
+  assert.equal((SRC.match(/console\./g) || []).length, 1, 'and it is the only console line on the site');
+});
+
 test('a page handed back alive spends the scroll record written on the way out', () => {
   assert.match(shortcut, /addEventListener\('pageshow', \(e\) => \{ if \(e\.persisted\) takeHandoff\(\); \}\)/,
     'a restored page is where the reader left it; the record must not reach the next arrival');
