@@ -721,39 +721,36 @@ html { scroll-padding-top: 62px; }
    than 74ch, and capping it again would leave a gutter inside a gutter. */
 .home .band > p, .home .band > ul, .home .band > ol { max-width: 74ch; }
 
-/* THE FOUR ANSWERS, AS FOUR CARDS.
+/* THE ANSWERS, AS CARDS.
  *
  * They used to be three sections in a column beside a nine-row fact table, and
  * the table was the problem: a stranger who has read the tagline already knows
  * what it runs on and what it does not need, and reading it again as a grid of
  * label/value pairs is homework, not an answer. What was load-bearing in it
- * went into the four - the 7.02-to-Cloud claim into Enterprise ready, the
- * launchpads and the UI5 source into Integration, the licence into What it
- * costs - and the rest was the tagline said twice.
+ * went into the answers themselves.
  *
- * Four is what makes the shape: two by two, every card the same width and, by
- * `align-items: stretch`, the same height as the one beside it. Three never
- * balanced against anything; four balance against each other.
+ * Two by two, every card the same width and, by `align-items: stretch`, the
+ * same height as the one beside it. Three sections in a column beside a table
+ * never balanced against anything; four balance against each other.
  *
- * Raised rather than ruled. A hairline over a heading separates sections read
- * in order; these four are read in any order, so each is a panel of its own -
- * the border and radius the tiles above already use, on the sunken ground,
- * with the heading in the accent so the four titles carry the page at a
- * glance. */
-.home .band[data-band="enterprise-ready"],
-.home .band[data-band="integration"],
-.home .band[data-band="what-it-costs"],
-.home .band[data-band="developing-with-ai"] {
+ * Raised rather than ruled. A hairline over a heading separates bands read in
+ * order; these are read in any order, so each is a panel of its own - the
+ * border and radius the tiles above already use, on the sunken ground, with
+ * the heading in the accent so the titles carry the page at a glance.
+ *
+ * KEYED ON `data-card`, WHICH THE BUILD PUTS THERE BY POSITION. It used to be
+ * keyed on each heading's slug, and renaming one heading from the
+ * Edit-on-GitHub link dropped that card out of the grid without a word. A
+ * wording change is the one edit this page invites; it must not be able to
+ * break the layout. See bands( ) in build-site.mjs. */
+.home .band[data-card] {
   grid-column: auto;
   padding: 22px 24px 24px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--bg-sunken);
 }
-.home .band[data-band="enterprise-ready"] > h2,
-.home .band[data-band="integration"] > h2,
-.home .band[data-band="what-it-costs"] > h2,
-.home .band[data-band="developing-with-ai"] > h2 {
+.home .band[data-card] > h2 {
   margin: 0 0 4px;
   padding-top: 0;
   border-top: 0;
@@ -762,33 +759,24 @@ html { scroll-padding-top: 62px; }
 }
 /* The card is already the measure; capping the paragraphs again would leave a
    gutter inside a gutter. */
-.home .band[data-band="enterprise-ready"] > p,
-.home .band[data-band="integration"] > p,
-.home .band[data-band="what-it-costs"] > p,
-.home .band[data-band="developing-with-ai"] > p { max-width: none; }
+.home .band[data-card] > p { max-width: none; }
 /* A card is a box with a floor: the last paragraph must not push against it. */
-.home .band[data-band="enterprise-ready"] > p:last-child,
-.home .band[data-band="integration"] > p:last-child,
-.home .band[data-band="what-it-costs"] > p:last-child,
-.home .band[data-band="developing-with-ai"] > p:last-child { margin-bottom: 0; }
+.home .band[data-card] > p:last-child { margin-bottom: 0; }
 
 /* The example is the widest thing on the page because what it opens is two
    panes - the ABAP on the left, the app it renders on the right. Held to a
    column, neither is worth looking at. */
-.home .band[data-band="try-it-out-now"] .a2ui5-play,
-.home .band[data-band="try-it-out-now"] > p { max-width: none; }
+.home .band[data-demo] .a2ui5-play,
+.home .band[data-demo] > p { max-width: none; }
 
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
   /* One card per row, and they stay cards: what a card says here is "this is
-     one of four answers, read them in any order", which is as true on a phone
+     one of the answers, read them in any order", which is as true on a phone
      as on a desk. `display: block` drops the row gap with the grid, so the
      card carries its own. */
-  .home .band[data-band="enterprise-ready"],
-  .home .band[data-band="integration"],
-  .home .band[data-band="what-it-costs"],
-  .home .band[data-band="developing-with-ai"] { margin-top: 24px; }
+  .home .band[data-card] { margin-top: 24px; }
 }
 
 /* ---- what a stranger checks first ----------------------------------- */
