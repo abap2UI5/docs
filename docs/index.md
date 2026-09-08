@@ -101,30 +101,35 @@ features:
 ## What it costs
 
 Nothing. [MIT licensed](/resources/license) and free commercially — no licence
-key, no subscription, no per-user fee, nothing to activate.
+key, no subscription, no per-user fee.
 
-**Nobody counts your users, because nothing is counting.** An abap2UI5 app is
-a standard UI5 freestyle application served by your own ABAP stack: ten users and
-ten thousand are the same to it, and the SAP licensing you have is the licensing
-you keep. Nothing new to operate either — the app is an ABAP class in the system
-it already runs on.
+**Nobody counts your users, because nothing is counting.** The app is a standard
+UI5 application served by your own ABAP stack: ten users and ten thousand are the
+same to it, and the SAP licensing you have is the licensing you keep.
 
-**And you are not on your own with it.** [Support](/resources/support) is the
-community on GitHub and in the abapGit Slack channel.
+## Enterprise ready
+
+**It runs inside the security you already have.** One HTTP endpoint, standard SAP
+logon, no second user store — your
+[authorizations](/configuration/authorization) and
+[session handling](/configuration/security) apply unchanged.
+
+**And it is kept that way.** Every merge is tested against Standard ABAP and ABAP
+Cloud, then [downported](/advanced/downporting) and linted against 7.02 before the
+`702` branch ships. [Support](/resources/support) is GitHub and Slack, with
+commercial options listed beside them.
 
 ## Developing with AI
 
-One class is one file for an agent to write — and no second half that can drift
-out of step with it.
+One class is one file for an agent to write — no second half that can drift out
+of step with it.
 
 **And it can check its own work without an SAP system.** The
-[linter](/advanced/linter) rebuilds the UI5 view out of the ABAP that builds it and
-reports the names UI5 does not have; the [MCP server](/advanced/mcp_server) turns
-that into a loop for any MCP client — search the catalogues for an app that already
-does it, validate the view just written, and one step further boot the app headless
-and get the errors and a screenshot back. [The whole ladder](/get_started/ai) runs
-from a paragraph you paste ahead of a task to the editor extension that registers
-the loop for every client in the window.
+[linter](/advanced/linter) rebuilds the UI5 view out of the ABAP and reports the
+names UI5 does not have; the [MCP server](/advanced/mcp_server) turns that into a
+loop — validate the view just written, boot the app headless, get the errors and
+a screenshot back. [The whole ladder](/get_started/ai) starts with a paragraph you
+paste ahead of a task.
 
 ## Try it out now
 
