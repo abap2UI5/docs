@@ -692,7 +692,7 @@ html { scroll-padding-top: 62px; }
  * them are told otherwise:
  *
  *   at a glance | what it costs   two short, scannable sections, side by side
- *   one class, one app            the whole width, because the live editor in
+ *   try it out now                the whole width, because the live editor in
  *                                 it is a code pane AND a running app
  *
  * Everything else keeps the 74ch measure prose is set in. A narrow section
@@ -717,8 +717,16 @@ html { scroll-padding-top: 62px; }
    than 74ch, and capping it again would leave a gutter inside a gutter. */
 .home .band > p, .home .band > ul, .home .band > ol { max-width: 74ch; }
 
-.home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; }
-.home .band[data-band="what-it-costs"] { grid-column: 2; }
+/* The right column stacks: the fact table is the tall one, so it spans both
+   rows and the two short sections sit beside it, one under the other. Placed
+   explicitly rather than left to auto-flow, which would have started the AI
+   section on a new row BELOW the table and left a hole under the costs. Source
+   order is glance -> costs -> AI, which is the order they are read in, so the
+   reading order and the visual order still agree. */
+.home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; grid-row: 1 / span 2; }
+.home .band[data-band="what-it-costs"] { grid-column: 2; grid-row: 1; }
+.home .band[data-band="developing-with-ai"] { grid-column: 2; grid-row: 2; }
+.home .band[data-band="developing-with-ai"] > h2 { border-top-color: transparent; }
 /* Two columns of one row: the rule over the second would cut the first in
    half, and its heading sits on the same line as the other's. */
 .home .band[data-band="what-it-costs"] > h2 { border-top-color: transparent; }
@@ -726,13 +734,18 @@ html { scroll-padding-top: 62px; }
 /* The example is the widest thing on the page because what it opens is two
    panes - the ABAP on the left, the app it renders on the right. Held to a
    column, neither is worth looking at. */
-.home .band[data-band="one-class-one-app"] .a2ui5-play,
-.home .band[data-band="one-class-one-app"] > p { max-width: none; }
+.home .band[data-band="try-it-out-now"] .a2ui5-play,
+.home .band[data-band="try-it-out-now"] > p { max-width: none; }
 
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
   .home .band[data-band="what-it-costs"] > h2 { border-top-color: var(--line); }
+  .home .band[data-band="developing-with-ai"] > h2 { border-top-color: var(--line); }
+  /* the explicit placement goes with the grid */
+  .home .band[data-band="abap2ui5-at-a-glance"],
+  .home .band[data-band="what-it-costs"],
+  .home .band[data-band="developing-with-ai"] { grid-column: auto; grid-row: auto; }
 }
 
 /* ---- what a stranger checks first ----------------------------------- */
