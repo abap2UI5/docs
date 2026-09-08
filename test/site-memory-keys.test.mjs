@@ -54,12 +54,22 @@ test('the playground spells them the same way', { skip: playground ? false : 'no
     'the two copies of the cross-site memory no longer agree on which keys they use');
 });
 
-/* The third copy: a per-sample page cannot import a module, so sample-pages.mjs
- * writes the same behaviour inline. It builds the per-site key from a prefix
- * and the link's `data-site`, so what can be compared is the prefix and the two
- * whole names. */
+/* The third reader: the per-sample pages. They used to carry the memory as an
+ * inline copy in sample-pages.mjs, a page that could not import a module;
+ * they import it now, through samples/page.mjs (src/catalogue/page-entry.mjs),
+ * so the keys are the one file's. Both shapes are accepted here, because the
+ * checkout CI clones is the playground's main and the two repositories do not
+ * land on the same day. What must hold either way: a sample page reaches the
+ * same five names, through the module or through the copy. */
 test('a sample page writes to the same places', { skip: playground ? false : 'no playground checkout' }, () => {
-  const inline = fs.readFileSync(path.join(playground, 'tools', 'sample-pages.mjs'), 'utf8');
+  const entry = path.join(playground, 'src', 'catalogue', 'page-entry.mjs');
+  const pages = fs.readFileSync(path.join(playground, 'tools', 'sample-pages.mjs'), 'utf8');
+  if (fs.existsSync(entry)) {
+    assert.match(fs.readFileSync(entry, 'utf8'), /from "\.\.\/shell\/site-memory\.mjs"/,
+      'the sample pages import the memory rather than copying it');
+    assert.ok(pages.includes('samples/page.mjs'), 'a per-sample page loads samples/page.mjs');
+    return;
+  }
   for (const key of ['abap2ui5-playground:last-', 'abap2ui5-playground:scroll', 'abap2ui5-playground:returning'])
-    assert.ok(inline.includes(key), `a per-sample page no longer names ${key}`);
+    assert.ok(pages.includes(key), `a per-sample page no longer names ${key}`);
 });

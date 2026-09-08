@@ -22,6 +22,7 @@
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createMarkdownRenderer } from 'vitepress';
@@ -31,6 +32,7 @@ import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
 import { describe } from './lib/pages.mjs';
 import { measureImage } from './lib/images.mjs';
 import { contentSecurityPolicy, inlineScriptsIn } from './lib/csp.mjs';
+import { stripComments } from './lib/html.mjs';
 import { declaredRelease } from './lib/release.mjs';
 
 const ROOT = process.cwd();
@@ -327,7 +329,13 @@ function sidebarFor(route) {
     const on = same(i.link) && !(i.items || []).some(holds) ? ' class="here" aria-current="page"' : '';
     const href = i.link ? `${BASE.slice(0, -1)}${i.link}${i.link.endsWith('/') ? 'index.html' : '.html'}` : null;
     const label = href ? `<a href="${esc(href)}"${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
-    if (!i.items) return `<div class="side-item level-${level}">${label}</div>`;
+    /* A ROW IS THE LINK. It was a div with the row's classes around an anchor,
+       on every one of 183 rows on every one of 166 pages - 139 bytes a row,
+       half of a page's markup. The link is the row now, with the classes the
+       box carried; the stylesheet addresses it as a.side-item. */
+    if (!i.items) return href
+      ? `<a class="side-item level-${level}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
+      : `<span class="side-item level-${level}">${esc(i.text)}</span>`;
     const key = [...trail, i.text].join(' / ');
     return `<details class="side-group level-${level}" data-key="${esc(key)}"${holds(i) ? ' open' : ''}>`
       + `<summary><span class="side-caret" aria-hidden="true"></span>${label}</summary>`
@@ -555,7 +563,11 @@ const linkedData = ({ page, title, description, url, isHome }) => {
 const THEME_SCRIPT = 'try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}';
 const MENU_SCRIPT_BODY = MENU_SCRIPT.replace(/^<script>/, '').replace(/<\/script>$/, '');
 const INLINE = [THEME_SCRIPT, MENU_SCRIPT_BODY];
-const announced = (page, allowed) => {
+const announced = (raw, allowed) => {
+  /* Without the comments the sources are written with (scripts/lib/html.mjs),
+     and read back for its scripts AFTER that, so what is checked is what is
+     published. */
+  const page = stripComments(raw);
   for (const script of inlineScriptsIn(page)) {
     if (!allowed.includes(script)) throw new Error(`an inline script the policy would kill: ${JSON.stringify(script.slice(0, 80))}`);
   }
@@ -588,7 +600,6 @@ const shell = ({ title, main, bar, head = '', inline = [] }) => {
 <link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${BASE}site.css">
 <script type="module" src="${BASE}site.js"></script>
-<script type="module" src="${BASE}search.mjs"></script>
 <!-- TWO BUTTONS THAT ARE ONLY BUTTONS WITH JAVASCRIPT. The Run bar under a
      runnable example and the copy button on a listing are written into the
      page by the build, and both do their work in the browser - so with
@@ -787,8 +798,11 @@ const home = ({ body, fm, page }) => {
       const at = BASE + String(img.src).replace(/^\//, '');
       const box = measure(path.join(DOCS, 'public', at.slice(BASE.length)));
       const h = box && box.w ? ` height="${Math.round(box.h * 200 / box.w)}"` : '';
+      /* fetchpriority="high": it is the largest thing in the first screen and
+         the browser's default priority for an image is low until layout has
+         found it. Named, it goes out with the stylesheet. */
       return `<div class="hero-image"><img src="${esc(at)}"
-         alt="${esc(img.alt || '')}" width="200"${h} decoding="async"></div>`;
+         alt="${esc(img.alt || '')}" width="200"${h} decoding="async" fetchpriority="high"></div>`;
     })() : ''}
   </section>
   <section class="tiles">${(fm.features || []).map(tile).join('')}
@@ -1300,12 +1314,13 @@ const copyInto = (from, to) => {
 const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
 /* The catalogue's two stylesheets and its search box come from its build; only
    the manual's own layer and its own entry module live in this repository.
-   search.mjs is the SAME FILE the 772 sample pages load - the box in this bar
+   search.mjs is the SAME CODE the 772 sample pages load - the box in this bar
    is not a second implementation of that one, it is that one, mounting into
    the `[data-search]` slot the borrowed bar already carries and reading the
    index this repository publishes. */
-for (const [name, text] of Object.entries(frame.files))
-  if (!name.endsWith('.css')) fs.writeFileSync(path.join(OUT, 'docs', name), text);
+/* search.mjs is not written beside the pages any more: it is bundled INTO
+   site.js below, one request instead of two on every page. Its text still
+   comes from the catalogue's build, so the box is still that box. */
 
 /* ---- ONE STYLESHEET ---------------------------------------------------
  *
@@ -1367,8 +1382,18 @@ for (const [name, text] of Object.entries(frame.files))
  * is that copy, done at build time and only for a name the theme actually
  * has. */
 const THEME = path.join(DOCS, '.vitepress', 'theme');
+/* THE SEARCH BOX RIDES IN THE SAME BUNDLE. search.mjs is the catalogue's
+   built module, borrowed as text above; it used to be written beside the
+   pages and loaded as a second module script on every one of them. A page
+   is one HTML, one stylesheet, one font and one script now. The module is
+   written to a scratch file and imported from a one-line entry, because
+   esbuild bundles files and the text arrived over the wire. */
+const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'site-js-'));
+fs.writeFileSync(path.join(scratch, 'search.mjs'), frame.files['search.mjs']);
+fs.writeFileSync(path.join(scratch, 'entry.mjs'),
+  `import ${JSON.stringify(path.join(ROOT, 'scripts', 'site-js', 'site.js'))};\nimport ${JSON.stringify(path.join(scratch, 'search.mjs'))};\n`);
 await bundle({
-  entryPoints: [path.join(ROOT, 'scripts', 'site-js', 'site.js')],
+  entryPoints: [path.join(scratch, 'entry.mjs')],
   outfile: path.join(OUT, 'docs', 'site.js'),
   bundle: true,
   format: 'esm',

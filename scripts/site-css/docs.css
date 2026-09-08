@@ -176,8 +176,8 @@
 .sidebar { font-size: 13px; line-height: 1.55; }
 .sidebar a, .sidebar summary span:not(.side-caret) { text-decoration: none; }
 
-.sidebar .side-item > a,
-.sidebar .side-item > span,
+.sidebar a.side-item,
+.sidebar span.side-item,
 .sidebar summary {
   display: flex;
   align-items: center;
@@ -186,15 +186,15 @@
   color: var(--fg-dim);
   cursor: pointer;
 }
-.sidebar .side-item > a { color: var(--fg-dim); }
-.sidebar .side-item > a:hover,
+.sidebar a.side-item { color: var(--fg-dim); }
+.sidebar a.side-item:hover,
 .sidebar summary:hover { color: var(--accent); }
 .sidebar a.here { color: var(--accent); font-weight: 600; }
 
 /* A section heading reads as one, whether it opens a page or only a list. */
 .sidebar > .side-group > summary,
-.sidebar > .side-item > a,
-.sidebar > .side-item > span { color: var(--fg); font-weight: 600; padding-top: 14px; }
+.sidebar > a.side-item,
+.sidebar > span.side-item { color: var(--fg); font-weight: 600; padding-top: 14px; }
 
 /* A ROW OF THIS MENU IS 20px TALL, AND ON A PHONE IT IS THE NAVIGATION. Below
    1680 this list is the drawer, and the drawer is the only way from one chapter
@@ -209,8 +209,8 @@
    costs the drawer its scrollbar, which it already knew how to use: the script
    scrolls it to the row you are on. */
 @media (pointer: coarse) {
-  .sidebar .side-item > a,
-  .sidebar .side-item > span,
+  .sidebar a.side-item,
+  .sidebar span.side-item,
   .sidebar summary { min-height: 36px; }
   /* A section heading is a summary with a LINK inside it - the caret opens the
      list, the words open the page - and a taller row leaves that link its own
@@ -521,8 +521,8 @@ html { scroll-padding-top: 62px; }
    section air, and the outline is sticky at 70px which sample.css then pads.
    Measured, not reasoned: all three read 96. */
 .sidebar > :first-child > summary,
-.sidebar > .side-item:first-child > a,
-.sidebar > .side-item:first-child > span { padding-top: 0; }
+.sidebar > a.side-item:first-child,
+.sidebar > span.side-item:first-child { padding-top: 0; }
 .manual .outline { padding-top: 24px; }
 
 /* ---- the Run bar under a runnable example ---------------------------
@@ -951,8 +951,8 @@ html { scroll-padding-top: 62px; }
  * does not - so the two started 16px apart, and a list where the leaves sit
  * left of their siblings reads as two lists. The leaf reserves the caret's
  * place instead: 10px of glyph, its 2px margin and the row's 4px gap. */
-.sidebar .side-item > a,
-.sidebar .side-item > span { padding-left: 16px; }
+.sidebar a.side-item,
+.sidebar span.side-item { padding-left: 16px; }
 
 /* ---- once an example is running ---------------------------------------
  *
