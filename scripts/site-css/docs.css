@@ -723,10 +723,13 @@ html { scroll-padding-top: 62px; }
    section on a new row BELOW the table and left a hole under the costs. Source
    order is glance -> costs -> AI, which is the order they are read in, so the
    reading order and the visual order still agree. */
-.home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; grid-row: 1 / span 2; }
+.home .band[data-band="abap2ui5-at-a-glance"] { grid-column: 1; grid-row: 1 / span 3; }
 .home .band[data-band="what-it-costs"] { grid-column: 2; grid-row: 1; }
-.home .band[data-band="developing-with-ai"] { grid-column: 2; grid-row: 2; }
-.home .band[data-band="developing-with-ai"] > h2 { border-top-color: transparent; }
+.home .band[data-band="enterprise-ready"] { grid-column: 2; grid-row: 2; }
+.home .band[data-band="developing-with-ai"] { grid-column: 2; grid-row: 3; }
+/* The two lower ones keep their rules: inside a column a rule reads as a
+   divider between the sections, which is what it is. Only the topmost of the
+   two columns loses it, below. */
 /* Two columns of one row: the rule over the second would cut the first in
    half, and its heading sits on the same line as the other's. */
 .home .band[data-band="what-it-costs"] > h2 { border-top-color: transparent; }
@@ -741,10 +744,10 @@ html { scroll-padding-top: 62px; }
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
   .home .band[data-band="what-it-costs"] > h2 { border-top-color: var(--line); }
-  .home .band[data-band="developing-with-ai"] > h2 { border-top-color: var(--line); }
   /* the explicit placement goes with the grid */
   .home .band[data-band="abap2ui5-at-a-glance"],
   .home .band[data-band="what-it-costs"],
+  .home .band[data-band="enterprise-ready"],
   .home .band[data-band="developing-with-ai"] { grid-column: auto; grid-row: auto; }
 }
 

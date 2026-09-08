@@ -97,6 +97,64 @@ document.addEventListener('click', (e) => {
   if (e.target.closest?.('a[data-site]')) lift();
 }, true);
 
+/* ---- and the Playground item goes BACK when the playground is behind you --
+ *
+ * Reported: "the Playground tab - when I go to it the app is always run again,
+ * although it had already run before."
+ *
+ * It is a link, so a press builds a NEW document: the whole ABAP runtime boots
+ * and the app starts from the top. Measured against a local copy with no
+ * network in the way, that is 2.4 to 2.8 seconds every single time - and the
+ * app's own state, a half-filled form or a table scrolled to row 200, is gone
+ * with the document that held it. No browser preserves a running page across a
+ * forward navigation. Exactly one mechanism preserves it at all, and it is the
+ * back/forward cache, which applies to going BACK.
+ *
+ * So when going back is what the reader means, this goes back. The condition
+ * is narrow and checkable: this document was opened FROM the playground itself
+ * (not from a sample page under it, which is a different page), the history has
+ * not grown since - a text fragment or an anchor pushed onto it would make one
+ * step back something else - and there is an entry to go back to at all, which
+ * a tab the playground opened with target=_blank does not have.
+ *
+ * It can only ever match the link: the item's href is lifted to the last
+ * playground URL, and that is the entry this steps back to. What it adds is the
+ * browser's option to hand the page back alive instead of rebuilding it - and
+ * where the browser declines, a reload is what the link would have done anyway.
+ *
+ * The fallback is for the one case that would be worse than today: a back that
+ * does not navigate would be a dead press. If this document is still here 400ms
+ * later, the link is followed after all - and the timer is dropped on pagehide,
+ * so a document that WAS cached does not fire it on the way back in and bounce
+ * the reader out of the page they returned to. */
+(function playgroundBehindYou() {
+  const item = document.querySelector('a[data-site="playground"]');
+  if (!item || history.length < 2) return;
+  const bare = (u) => u.pathname.replace(/index\.html$/, '');
+  let home;
+  let came;
+  try {
+    home = new URL(item.getAttribute('href'), location.href);
+    came = new URL(document.referrer);
+  } catch { return; }
+  /* The playground itself, not the catalogue and not a sample page - both of
+     those live under the same path and are not what the item opens. */
+  if (came.origin !== home.origin || bare(came) !== bare(home)) return;
+  const behind = history.length;
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest?.('a[data-site="playground"]');
+    if (!a || e.defaultPrevented) return;
+    /* A press that means "in a new tab" still means that. */
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (history.length !== behind) return;
+    e.preventDefault();
+    const href = a.href;
+    const fallback = setTimeout(() => { location.href = href; }, 400);
+    addEventListener('pagehide', () => clearTimeout(fallback), { once: true });
+    history.back();
+  }, true);
+})();
+
 /* Where on the page, not only which page. A bar link writes down how far down
    this page the reader is AND where they are being sent; the page that arrives
    within seconds, and only that page, puts them back (restoreScroll above). */
@@ -152,28 +210,50 @@ document.addEventListener('click', (e) => {
   addEventListener('resize', schedule, { passive: true });
 })();
 
-/* ---- the chapter menu keeps the shape you left it in -------------------
+/* ---- the chapter menu keeps the shape YOU left it in --------------------
  *
  * Every page is a fresh document here, so the sections the build opened - the
  * one holding this page - were the only ones open, and every other section a
- * reader had unfolded shut itself on the next click. What is written down is
- * the set of sections that are OPEN, by the key the build gives each one.
+ * reader had unfolded shut itself on the next click. So the menu is written
+ * down and put back.
+ *
+ * WHAT IS WRITTEN DOWN IS WHAT THE READER DID, and nothing else. The first
+ * version wrote the whole visible menu on every `toggle` event, which sounds
+ * the same and is not: `toggle` is queued, so the events fired by putting the
+ * menu BACK arrive after this listener is attached, and every navigation wrote
+ * the path to wherever the reader had landed as though they had opened it by
+ * hand. Measured over five pages with the menu never touched once: the store
+ * grew from 1 entry to 8, and the reader's own choices were buried under a
+ * trail of rooms they had merely walked through. The menu remembered a shape;
+ * it just was not theirs.
+ *
+ * So a decision is recorded per section, on the click that makes it - one
+ * section, the state it now has - and the store holds only sections somebody
+ * actually opened or closed. Nothing a navigation does can reach it.
  *
  * The section holding the current page is opened regardless of what is
  * stored: it is where the reader is, and a menu that hid it would be worse
- * than one that forgets. */
+ * than one that forgets. Opened, and NOT written down - that was the bug. */
 (function tree() {
-  const KEY = 'abap2ui5-playground:docs-tree';
+  /* A second name, because every value under the first one was written by the
+     navigation bug above and none of it is the reader's. A store that cannot
+     be trusted is worse than an empty one. */
+  const KEY = 'abap2ui5-playground:docs-sections';
   const groups = [...document.querySelectorAll('.sidebar details[data-key]')];
   if (!groups.length) return;
+  /* key -> true when the reader opened that section, false when they closed
+     it. A section they never touched is simply absent, and keeps whatever
+     shape the build gave it. */
   const read = () => {
     try {
-      const v = JSON.parse(localStorage.getItem(KEY) || '[]');
-      return Array.isArray(v) ? new Set(v.filter((k) => typeof k === 'string')) : null;
-    } catch { return null; }
+      const v = JSON.parse(localStorage.getItem(KEY) || 'null');
+      return v && typeof v === 'object' && !Array.isArray(v) ? v : {};
+    } catch { return {}; }
   };
-  const open = read();
-  if (open) for (const g of groups) g.open = open.has(g.dataset.key);
+  const chosen = read();
+  for (const g of groups) {
+    if (Object.prototype.hasOwnProperty.call(chosen, g.dataset.key)) g.open = !!chosen[g.dataset.key];
+  }
   /* ...and the way to where you are, whatever was stored. */
   const here = document.querySelector('.sidebar a.here');
   if (here) for (let el = here.closest('details'); el; el = el.parentElement?.closest('details')) el.open = true;
@@ -198,10 +278,18 @@ document.addEventListener('click', (e) => {
 
   const write = () => {
     try {
-      localStorage.setItem(KEY, JSON.stringify(groups.filter((g) => g.open).map((g) => g.dataset.key)));
+      localStorage.setItem(KEY, JSON.stringify(chosen));
     } catch { /* a browser that refuses storage keeps the build's own shape */ }
   };
-  for (const g of groups) g.addEventListener('toggle', write);
+  /* The CLICK, not the toggle: a click on a summary is the reader, and it is
+     the only thing that is. Reading the state on the next task, once the
+     browser has done the opening the click asked for - and a keyboard reaches
+     a summary through a click too, so Enter and Space are the same path. */
+  box?.addEventListener('click', (e) => {
+    const group = e.target.closest?.('summary')?.parentElement;
+    if (!group || !groups.includes(group)) return;
+    setTimeout(() => { chosen[group.dataset.key] = group.open; write(); }, 0);
+  });
 })();
 /* ---- copy a listing ---------------------------------------------------
  *

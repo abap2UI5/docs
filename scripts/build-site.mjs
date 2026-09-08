@@ -308,7 +308,16 @@ const routeOf = (page) => '/' + page.replace(/\.md$/, '').replace(/\/index$/, ''
 function sidebarFor(route) {
   const same = (link) => link && link.replace(/\/$/, '') === route.replace(/\/$/, '');
   const holds = (i) => same(i.link) || (i.items || []).some(holds);
-  const tree = (items, level) => items.map((i) => {
+  /* THE KEY A SECTION IS REMEMBERED BY, and it has to be its own. It used to
+     be the section's link, falling back to its text - and four sections in
+     this menu share a link with another one (Walkthrough, View / Definition,
+     Model / Binding, Configuration / Setup all point at their own first page,
+     which is also a section). Two <details> with one key are one entry in the
+     reader's stored menu: opening either wrote both, and the store came back
+     with the same key twice. The trail of headings down to it is unique, and
+     it stays the same when the menu is reordered - which a position would
+     not. */
+  const tree = (items, level, trail = []) => items.map((i) => {
     /* ONE ROW IS MARKED, and it is the deepest one that names this page. A
        section often points at its own first page - Model and Binding are the
        same link - and marking both painted two rows in the accent, which is
@@ -317,9 +326,10 @@ function sidebarFor(route) {
     const href = i.link ? `${BASE.slice(0, -1)}${i.link}${i.link.endsWith('/') ? 'index.html' : '.html'}` : null;
     const label = href ? `<a href="${esc(href)}"${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
     if (!i.items) return `<div class="side-item level-${level}">${label}</div>`;
-    return `<details class="side-group level-${level}" data-key="${esc(i.link || i.text)}"${holds(i) ? ' open' : ''}>`
+    const key = [...trail, i.text].join(' / ');
+    return `<details class="side-group level-${level}" data-key="${esc(key)}"${holds(i) ? ' open' : ''}>`
       + `<summary><span class="side-caret" aria-hidden="true"></span>${label}</summary>`
-      + `<div class="side-items">${tree(i.items, level + 1)}</div></details>`;
+      + `<div class="side-items">${tree(i.items, level + 1, [...trail, i.text])}</div></details>`;
   }).join('');
   return `<nav class="sidebar" aria-label="Documentation">${tree(config.themeConfig.sidebar, 0)}</nav>`;
 }

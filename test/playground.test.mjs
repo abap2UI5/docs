@@ -18,6 +18,9 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { abapOnly, playgroundExample } from '../docs/.vitepress/playground.mjs';
 import { playgroundButton } from '../docs/.vitepress/playground.mjs';
 
@@ -283,4 +286,62 @@ test('the editable example puts its button ABOVE the code', () => {
   const edit = renderFence('abap edit', app('z2ui5_cl_sample_x', DISPLAY));
   assert.ok(plain.indexOf('<button') > plain.indexOf('language-abap'));
   assert.ok(edit.indexOf('<button') < edit.indexOf('language-abap'));
+});
+
+/*
+ * The one example that starts itself must not move the page.
+ *
+ * Measured on the front door before this was here: 4.4s after load, with
+ * nothing on the page touched, scrollY went 0 -> 911 and the focus was inside
+ * the frame. The frame boots a real UI5 app, an app focuses a control when it
+ * renders, and that focus climbs out through two iframes until the browser
+ * scrolls the outermost one into view.
+ *
+ * No browser runs in this suite, so what is checked is the wiring that was
+ * measured working - the same arrangement as the Run bar's link in
+ * cross-site.test.mjs, and for the same reason: the behaviour lives in a
+ * browser, the decision lives in this text.
+ */
+const THEME = readFileSync(
+  join(dirname(fileURLToPath(import.meta.url)), '..', 'docs/.vitepress/theme/playground.js'),
+  'utf8',
+);
+
+test('the unasked start holds the page still, and only the unasked one', () => {
+  assert.match(THEME, /if \(unasked\) holdStill\(container\);/,
+    'a start nobody asked for must guard the scroll position');
+  const started = THEME.slice(THEME.indexOf('async function start('));
+  /* The prose in there names the function too; what is under test is the code
+   * that calls it. */
+  const guarded = started.slice(0, started.indexOf('container.append(demo)'))
+    .replace(/\/\*[\s\S]*?\*\//g, '');
+  assert.deepEqual(guarded.match(/holdStill\(/g), ['holdStill('],
+    'a reader who PRESSED the button asked to be taken to what they started, so it is called once and only under `unasked`');
+});
+
+test('the guard reads blur and scroll, because no focus event reaches this page', () => {
+  const guard = THEME.slice(THEME.indexOf('function holdStill('), THEME.indexOf('function armSelfStart('));
+  assert.match(guard, /addEventListener\('scroll'/, 'the scroll is the harm');
+  assert.match(guard, /addEventListener\('blur', [^,]+, true\)/,
+    'a subframe taking the focus dispatches nothing but a window blur here');
+  assert.equal(/addEventListener\('focus(in)?'/.test(guard), false,
+    'there is no focus event at this level - listening for one is a guard that never fires');
+});
+
+test('the guard puts back the focus as well as the position', () => {
+  const guard = THEME.slice(THEME.indexOf('function holdStill('), THEME.indexOf('function armSelfStart('));
+  assert.match(guard, /container\.contains\(document\.activeElement\)/,
+    'only a scroll that came WITH the frame taking the focus is undone - a wheel or a scrollbar is the reader');
+  assert.match(guard, /document\.activeElement\.blur\?\.\(\)/,
+    'a reader whose next keypress goes into an app they never opened has lost the page too');
+  assert.match(guard, /behavior: 'instant'/, 'an undo that animates is a second thing nobody asked for');
+});
+
+test('the guard lets go the moment the reader does anything', () => {
+  const guard = THEME.slice(THEME.indexOf('function holdStill('), THEME.indexOf('function armSelfStart('));
+  for (const gesture of ['pointerdown', 'keydown', 'wheel', 'touchstart']) {
+    assert.ok(guard.includes(`'${gesture}'`), `${gesture} is the reader speaking; the guard stands down`);
+  }
+  assert.match(guard, /setTimeout\(release,/,
+    'and it stands down anyway, for a reader who never touches the page');
 });
