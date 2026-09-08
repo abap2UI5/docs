@@ -67,7 +67,7 @@ hero:
   # Integration card, where the point is that the two work side by side.
   tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Install it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
-    src: /logo-hero.png
+    src: /logo-hero.webp
     alt: abap2UI5 Logo
     width: 200px
     height: 200px

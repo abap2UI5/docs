@@ -12,7 +12,7 @@ abap2UI5 into your system.) For anything beyond a first look, pull a
 [release](https://github.com/abap2UI5/abap2UI5/releases/) rather than `main` —
 see [Productive Usage](/configuration/productive_usage) for why.
 
-![abapGit repository installation screen for abap2UI5](/get_started/image.png)
+![abapGit repository installation screen for abap2UI5](/get_started/image.webp)
 
 ::: details ABAP Cloud
 On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT) and
@@ -21,7 +21,7 @@ mass-activate the pulled objects afterwards — the
 screenshot by screenshot, including the two link choices that cannot be changed
 later.
 
-![abapGit installation for ABAP Cloud environments](/get_started/image-4.png)
+![abapGit installation for ABAP Cloud environments](/get_started/image-4.webp)
 :::
 
 The framework is everything you need: the HTTP endpoint you create next serves
@@ -62,7 +62,7 @@ ENDCLASS.
 Next, use transaction `SICF` to create an HTTP service and enter your handler class in the service's **Handler List** tab, then activate the node:
 
 <img width="743" height="697" alt="SICF service creation dialog in transaction SICF" src="https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4" /> <br>
-![HTTP handler class assignment in SICF service configuration](/get_started/image-5.png)
+![HTTP handler class assignment in SICF service configuration](/get_started/image-5.webp)
 
 ::: details ABAP Cloud
 For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://developers.sap.com/tutorials/abap-environment-create-http-service.html).

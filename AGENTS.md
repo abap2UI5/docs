@@ -43,16 +43,18 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/Crumbs.vue` | The trail above the title on every page of the manual — "Documentation › Cookbook › Model". Rendered into the default theme's `doc-before` slot, so it is the doc column's first line and lands where the sample catalogue's own crumb line lands, to the pixel. `theme/crumbs.js` is the half with no Vue in it: it walks `themeConfig.sidebar` against the page, so the trail cannot drift from the navigation the way the bar's old Guide dropdown did. Pinned by `test/crumbs.test.mjs`, which walks the real sidebar |
 | `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
 | `scripts/check-design.mjs` | The palette, the type and the radii the four bars share, against `abap2UI5/playground`'s copy of them — needs a checkout (`PLAYGROUND_HOME`, `.playground`, `../playground`) or the network, and fails rather than passing without one. The table of what is shared, and both spellings of each value, is `scripts/lib/design.mjs` |
+| `scripts/check-images.mjs` | Every image under `docs/public`: a screenshot is WebP, a deliverable is one of the PNGs the logo page hands out, none is over its budget, and the build can measure each of them - `scripts/lib/images.mjs` is the one reader both this gate and `build-site.mjs` use, so a format the build cannot size fails here rather than shifting the page there |
+| `scripts/lib/csp.mjs` | The Content-Security-Policy every page is published under, as a `<meta>` because GitHub Pages sets no headers of ours: this origin, the playground beside it for the Run panel, and the two inline scripts by hash - the theme line and the borrowed menu script, hashed from the very string the build writes. `build-site.mjs` reads every finished page back for an inline script that is neither, and refuses to publish it |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:cross-site + check:design + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:cross-site + check:design + check:images + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but twelve things in
-it are decidable, and all twelve are decided before a merge:
+A documentation repository has no compiler for its prose, but thirteen things
+in it are decidable, and all thirteen are decided before a merge:
 
 | | |
 |---|---|
@@ -68,6 +70,7 @@ it are decidable, and all twelve are decided before a merge:
 | `check:design` | the values the four bars are made of — the seven palette colours, the two type stacks, the two radii — against the copy [abap2UI5/playground](https://github.com/abap2UI5/playground) keeps, in **both** schemes. They are copied by hand on purpose (a stylesheet fetched across two deployments is a request in front of the first paint), and until this gate nothing compared the copies: they agreed because whoever touched one remembered the other. One had already drifted — two font stacks leading with different families, which is the same face on macOS and Windows and two different ones on Linux, so the same four words in the same bar measured 59/122/78/97px here and 65/141/87/110 there. It compares the EFFECTIVE value (a property the dark block does not redeclare keeps its light one), because the two sides switch schemes differently: `.dark` here, `[data-theme]` over there.
 
 **What it now guards is the second opinion, not the site.** Since the switch, the published pages link the playground's own `catalogue.css`, borrowed whole at build time — so the palette cannot drift from the playground's there, by construction. `style.css` is VitePress's, and VitePress is no longer served. Keep the gate: it is what says so when somebody edits `style.css` expecting the site to change |
+| `check:images` | every image under `docs/public`, against the three things a page can afford and the one it cannot: a screenshot is WebP (the PNG captures were 200 to 335 kB each, 2.9 MB across the manual, on pages of 20 kB of text; the same captures as WebP are a fifth of that), a deliverable is one of the PNGs the logo page hands out, nothing is over its budget, and the build can measure every one - an image it cannot size gets no width and height and moves the page when it lands |
 | `check:samples` | the **Working Samples** blocks and the source links a page writes by hand, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
 **All four walking gates carry a floor.** A gate that checked nothing reports
@@ -79,7 +82,7 @@ page layout or the builder name is the likely cause. `check:cross-site` carries
 the same floor twice over: no HTML in `dist` at all, and no cross-site link on
 a site whose bar carries three of them on every page.
 
-The twelve are written out in **three** places, and all three have to name the
+The thirteen are written out in **three** places, and all three have to name the
 same set: `package.json`'s `check` script, `.github/workflows/check.yml` for a
 pull request, and `.github/workflows/deploy.yml` before the site is published.
 `check.yml` runs them in the script's order; `deploy.yml` cannot, because it

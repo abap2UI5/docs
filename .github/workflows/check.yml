@@ -154,6 +154,14 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:design
 
+      # every image under docs/public: a screenshot is WebP, a deliverable is
+      # one of the PNGs the logo page hands out, none is over its budget, and
+      # the build can measure each - a page reserves an image's box before it
+      # arrives, and one nothing can measure moves the page when it does
+      - name: images
+        if: ${{ !cancelled() }}
+        run: npm run check:images
+
       # the ABAP in the fenced blocks, against the real framework: does it
       # compile, and does the view it builds name controls and properties that
       # exist on the UI5 floor this documentation targets

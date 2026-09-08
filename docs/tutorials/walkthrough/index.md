@@ -20,7 +20,7 @@ step you are interested in.
 
 ## Preview
 
-![The finished walkthrough app: a table of invoices with a selection form above it, and a dialog editing one row](/tutorials/walkthrough-preview.png)
+![The finished walkthrough app: a table of invoices with a selection form above it, and a dialog editing one row](/tutorials/walkthrough-preview.webp)
 
 This is the app after the last building step — a few hundred lines of ABAP,
 no frontend project, no OData service.

@@ -28,7 +28,7 @@ That's it — your first UI5 app is ready. (`client` is the single parameter of 
 
 A finished app looks like any other UI5 app, because it is one — a selection screen, a table, a dialog, all of it built from the same single class:
 
-![An abap2UI5 app: a selection form above a table of invoices, with a dialog editing one row](/tutorials/walkthrough-preview.png)
+![An abap2UI5 app: a selection form above a table of invoices, with a dialog editing one row](/tutorials/walkthrough-preview.webp)
 
 → *The [Tutorial](/tutorials/walkthrough/) grows exactly this app in ten steps, each one a complete class you can run in the browser — then takes it to production, and under unit tests*
 

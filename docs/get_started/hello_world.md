@@ -118,7 +118,7 @@ the app's source code, the rendered view XML, the model data, the
 request/response pair and the error log. It is the first place to look when
 something does not render the way you expected:
 
-![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
+![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.webp)
 
 ## Next: Build Something
 
