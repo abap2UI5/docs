@@ -41,6 +41,15 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # THE ORDER IS AN ARGUMENT: it is safe here, it fits what you run, an agent
 # can write it - and only then, to somebody already persuaded, what it costs.
 # The price is the last card because it is the last question, not the first.
+#
+# THREE CARDS END WITH A WAY OUT, and the link sits on the topic, never on the
+# word "here" - a reader scanning the links has to be able to tell where each
+# one goes. The cost card has none on purpose: its answer is complete on the
+# card, and its one destination (the licence) is already linked in the line
+# above, where "MIT licensed" stands. A second link to the same page inside
+# one card is the "every claim once" rule broken with a hyperlink - which is
+# also why the AI card's "The AI guide" is no longer a link: it and the card's
+# closer pointed at the same page, one line apart.
 hero:
   # The greeting, because this is the front door and a reader who arrives from
   # a talk or a colleague's link should be met rather than pitched at. The
@@ -107,6 +116,9 @@ logon — your [authorizations](/configuration/authorization) and
 tested against Standard ABAP and ABAP Cloud. [Support](/resources/support) is on
 GitHub and Slack.
 
+Learn more about [Enterprise Readiness](/get_started/about#enterprise-ready)
+here.
+
 ## Plays well with what you have
 
 **Complements UI5 freestyle and RAP — it does not replace them.** Your RAP
@@ -118,13 +130,17 @@ It runs where your users already are: a browser tab, a
 Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
 rendering with the UI5 your system already ships.
 
+Learn more about [Integration](/get_started/about#where-it-fits) here.
+
 ## Made for AI agents
 
 **One class is one file — the whole app, for an agent to write.** It can check
 its own work without an SAP system: the [linter](/advanced/linter) validates the
 view, the [MCP server](/advanced/mcp_server) boots the app headless and returns
-the errors and a screenshot. [The AI guide](/get_started/ai) starts with one
-paragraph you paste ahead of a task.
+the errors and a screenshot. The AI guide starts with one paragraph you paste
+ahead of a task.
+
+Learn more about [Developing with AI](/get_started/ai) here.
 
 ## And what does it cost?
 
