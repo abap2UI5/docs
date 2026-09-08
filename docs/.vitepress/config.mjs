@@ -632,7 +632,7 @@ export default defineConfig({
               // numbers are part of each title on purpose: the articles are
               // posted one at a time, and "#21" is how a reader refers to one.
               { text: "#1 Somewhere on the Way to UI5, We Lost RTTS", link: "/advanced/insights/01-somewhere-on-the-way-to-ui5" },
-              { text: "#2 abap2UI5 in Your Favourite Programming Model", link: "/advanced/insights/02-your-favourite-programming-model" },
+              { text: "#2 abap2UI5 in Your Favorite Programming Model", link: "/advanced/insights/02-your-favorite-programming-model" },
               { text: "#3 The Cost of a Screen", link: "/advanced/insights/03-the-cost-of-a-screen" },
               { text: "#4 No Annotation in Between", link: "/advanced/insights/04-no-annotation-in-between" },
               { text: "#5 UI5 Over-the-Wire", link: "/advanced/insights/05-ui5-over-the-wire" },
