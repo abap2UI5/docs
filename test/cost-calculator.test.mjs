@@ -132,3 +132,34 @@ test('the front door\'s cost card leads here, and the page ends at the sponsors'
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
 });
+
+/* The stylesheet is written twice - scripts/site-css/docs.css for the site the
+   build renders, docs/.vitepress/theme/style.css for VitePress's second
+   opinion - and the calculator's rules are the same text in both, from the
+   grid a row is down to the two lines it becomes on a phone. One edited
+   without the other is a page that is right in one build and wrong in the
+   other. */
+test('the two stylesheets carry one calculator, its phone rules included', () => {
+  const block = (file) => {
+    const css = readFileSync(join(ROOT, file), 'utf8');
+    const from = css.indexOf('.cost { margin: 20px 0; }');
+    const to = css.indexOf('.cost-total { grid-template-columns: 1fr; } }', from);
+    assert.ok(from > 0 && to > from, `${file} carries the calculator`);
+    return css.slice(from, to);
+  };
+  const site = block('scripts/site-css/docs.css');
+  assert.equal(block('docs/.vitepress/theme/style.css'), site, 'the theme carries the same calculator');
+  /* On a phone a row is the label with its readout, then the slider across the
+     whole width; a choice's boxes go under their label; the button is the
+     width of the row and the height of a finger. */
+  const phone = site.slice(site.indexOf('@media (max-width: 620px) {'));
+  assert.match(phone, /\.cost-row output \{ grid-column: 2; grid-row: 1; \}/);
+  assert.match(phone, /\.cost-row input\[type="range"\] \{ grid-column: 1 \/ -1; grid-row: 2; \}/);
+  assert.match(phone, /\.cost-row \.cost-choices \{ grid-column: 1 \/ -1; \}/);
+  assert.match(phone, /\.cost-calculate \{ width: 100%; line-height: 44px; \}/);
+  /* Under a thumb the boxes are the size of a target, and the currency list is
+     the one size iOS does not zoom the page in on. */
+  const thumb = site.slice(site.indexOf('@media (pointer: coarse) {'));
+  assert.match(thumb, /input\[type="checkbox"\] \{ width: 18px; height: 18px; \}/);
+  assert.match(thumb, /\.cost-row select \{ font-size: 16px; \}/);
+});
