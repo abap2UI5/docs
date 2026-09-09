@@ -827,10 +827,13 @@ html { scroll-padding-top: 62px; }
   .tiles { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---- the two rows of cards the home page writes by hand ---------------
+/* ---- the cards the home page writes by hand ---------------------------
  *
- * `<div class="a2ui5-out">` in docs/index.md: the three places around the
- * framework, and the three ways into the project. It is the manual's own
+ * `<div class="a2ui5-out">` in docs/index.md: the two places around the
+ * framework, and the three ways into the project. Five cards on one grid -
+ * three across and two under them - since the linter stopped being a card of
+ * its own: it is one of the tools the Tooling card names, and a reader who
+ * has to decide between two cards to find it was deciding about nothing. It is the manual's own
  * markup and its own rules - the values here are style.css's, at the nine
  * tenths that file states for the home page, with its variables read back to
  * the ones the catalogue's stylesheet declares (`--vp-c-divider` is `--line`,
@@ -845,7 +848,7 @@ html { scroll-padding-top: 62px; }
   gap: 16px;
   margin: 16px 0 0;
 }
-/* One breakpoint, and it is the tile row's: two rows that changed at different
+/* One breakpoint, and it is the tile row's: rows that changed at different
    widths spent the widths in between disagreeing - three cards over two. */
 @media (min-width: 768px) {
   .a2ui5-out { grid-template-columns: repeat(3, minmax(0, 1fr)); }
