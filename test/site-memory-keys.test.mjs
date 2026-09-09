@@ -60,14 +60,23 @@ test('the playground spells them the same way', { skip: playground ? false : 'no
  * so the keys are the one file's. Both shapes are accepted here, because the
  * checkout CI clones is the playground's main and the two repositories do not
  * land on the same day. What must hold either way: a sample page reaches the
- * same five names, through the module or through the copy. */
+ * same five names, through the module or through the copy.
+ *
+ * WHICH SHAPE IS READ OFF sample-pages.mjs, the one file every checkout has -
+ * not off whether page-entry.mjs is there. CI clones the playground SPARSELY
+ * (check.yml, deploy.yml: three files), and the day the playground switched
+ * shapes the entry file was simply not in the checkout: this test took that
+ * for the old shape, looked for the inline keys, and failed the deploy of a
+ * commit that had nothing to do with it. Now a page that loads samples/page.mjs
+ * says the shape, and a checkout without the entry file is named as such. */
 test('a sample page writes to the same places', { skip: playground ? false : 'no playground checkout' }, () => {
   const entry = path.join(playground, 'src', 'catalogue', 'page-entry.mjs');
   const pages = fs.readFileSync(path.join(playground, 'tools', 'sample-pages.mjs'), 'utf8');
-  if (fs.existsSync(entry)) {
+  if (pages.includes('samples/page.mjs')) {
+    assert.ok(fs.existsSync(entry),
+      'the sample pages load samples/page.mjs, so the checkout has to carry src/catalogue/page-entry.mjs - the sparse checkout in check.yml and deploy.yml names it');
     assert.match(fs.readFileSync(entry, 'utf8'), /from "\.\.\/shell\/site-memory\.mjs"/,
       'the sample pages import the memory rather than copying it');
-    assert.ok(pages.includes('samples/page.mjs'), 'a per-sample page loads samples/page.mjs');
     return;
   }
   for (const key of ['abap2ui5-playground:last-', 'abap2ui5-playground:scroll', 'abap2ui5-playground:returning'])

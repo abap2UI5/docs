@@ -87,6 +87,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout: |
             src/catalogue/catalogue.css
+            src/catalogue/page-entry.mjs
             src/shell/site-memory.mjs
             tools/sample-pages.mjs
           sparse-checkout-cone-mode: false
