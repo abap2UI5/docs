@@ -2,8 +2,9 @@
  * The cost calculator, once it is in a browser.
  *
  * The page carries everything: sliders with their stops, a readout beside
- * each, choices made with checkboxes and radio buttons, a button, and - hidden until the
- * button is pressed - a sheet whose lines echo the readings, and the total.
+ * each, choices made with checkboxes and radio buttons, a button, and - hidden
+ * until the button is pressed - a sheet whose lines echo the readings, the
+ * total, and the words under it.
  * All of it is written into the HTML with its answer already on it. What
  * this adds is the readout following its slider, the echoes following the
  * readout, every amount rewritten in the currency chosen, and the button.
@@ -57,11 +58,14 @@ export function syncCostCalculator(root = document) {
 function calculate(button) {
   const calc = button.closest(CALCULATOR);
   const inputs = calc?.querySelector('.cost-inputs');
-  const result = calc?.querySelector('[data-result]');
-  if (!inputs || !result) return;
+  /* What the button hands out: the sheet inside the calculator, and the words
+     under it - the formula, and the one line that is not zero - which are
+     markdown outside it and carry the same mark. */
+  const results = calc ? [...calc.ownerDocument.querySelectorAll('[data-result]')] : [];
+  if (!inputs || !results.length) return;
   const controls = inputs.querySelectorAll('input, select');
   if (calc.dataset.state === 'calculated') {
-    result.hidden = true;
+    for (const result of results) result.hidden = true;
     delete inputs.dataset.locked;
     for (const control of controls) control.disabled = false;
     delete calc.dataset.state;
@@ -74,11 +78,11 @@ function calculate(button) {
   button.disabled = true;
   button.textContent = 'Calculating\u2026';
   setTimeout(() => {
-    result.hidden = false;
+    for (const result of results) result.hidden = false;
     calc.dataset.state = 'calculated';
     button.disabled = false;
     button.textContent = button.dataset.again;
-    result.scrollIntoView?.({ block: 'nearest' });
+    results[0].scrollIntoView?.({ block: 'nearest' });
   }, 700);
 }
 

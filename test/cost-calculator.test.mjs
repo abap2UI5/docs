@@ -117,6 +117,13 @@ test('the sheet waits for the button', () => {
   assert.match(PAGE, /<div class="cost-result" data-result hidden>/, 'the sheet is hidden until Calculate is pressed');
   assert.ok(PAGE.indexOf('<div class="cost-inputs">') < PAGE.indexOf('data-calculate='), 'the inputs come first');
   assert.ok(PAGE.indexOf('data-calculate=') < PAGE.indexOf('data-result'), 'then the button, then the sheet');
+  /* The words under the calculator wait with it: the formula and the one line
+     that is not zero are markdown inside a wrapper that carries the same mark,
+     with blank lines around the markdown so the renderer still renders it. */
+  const after = PAGE.indexOf('<div class="cost-after" data-result hidden>\n\n');
+  assert.ok(after > PAGE.lastIndexOf('<div class="cost-result"'), 'the words under the sheet wait for the button too');
+  assert.ok(PAGE.trimEnd().endsWith('\n\n</div>'), 'and the wrapper closes after the last of them');
+  assert.ok(PAGE.indexOf('\n## The one line', after) > after, 'the section is markdown inside it, heading and all');
 });
 
 test('the front door\'s cost card leads here, and the page ends at the sponsors', () => {
