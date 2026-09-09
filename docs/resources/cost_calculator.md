@@ -40,8 +40,12 @@ Every SAP project has a sheet like this one. Set the sliders to your landscape, 
 </div>
 </div>
 
+<div class="cost-after" data-result hidden>
+
 The formula is short: every line is zero, and a sum of zeros is zero. Slide the users to 250,000 and the systems to 50 and calculate again - the sheet does not move, because nothing is counting. abap2UI5 is [MIT licensed](/resources/license), commercial use included, and an app built with it is a standard UI5 app served by the ABAP stack you already run.
 
 ## The one line that is not zero
 
 abap2UI5 is open-source work. The people who build and maintain it do so in their free time, and the zero above is what they give away. If this page just took a budget line off your project, consider giving a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 is built on.
+
+</div>

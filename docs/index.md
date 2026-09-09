@@ -47,13 +47,24 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # behind this, what happens when nobody is, how an app is governed, what it is
 # not for. So the enterprise card says lifecycle (transports, ATC, ABAP Unit),
 # exit path (a handful of classes and one table, nothing to migrate away
-# from), versioned releases with every change listed, support as it is (the community's,
-# partners for training, no vendor SLA - and nothing that ends with a
-# contract) and who runs it in production, by name and linked. The
-# integration card says what comes with UI5 itself, that a system without
-# internet access is fine, and what this is NOT for - offline, real-time
-# collaboration, a visual designer - with the three comparisons linked. An
-# evaluator who finds the limits on page three trusts nothing on page one.
+# from), versioned releases with every change listed, and support as it is
+# (the community's, no vendor SLA - and nothing that ends with a contract).
+# The integration card says what comes with UI5 itself, 1.71 to 2.x, and
+# that a system without internet access is fine. References by name and a
+# list of what this is NOT for were tried here and taken out again by the
+# maintainer: the limits stay on the About page, the references on Who Uses
+# abap2UI5.
+#
+# THIS PAGE IS FOR THE MANAGER. A developer has usually found the project by
+# another path - a talk, a sample, the playground - and the person this page
+# has to convince is the one who decides whether it may be used. So nothing
+# here is arranged for a developer's reading order: the cards come before the
+# code. What a developer gets anyway, because it costs the manager nothing,
+# is two sentences in front of the example (what you are looking at, how to
+# play with it), one way out behind it (the tutorial, through to transport
+# and unit tests), the UI5 releases in the integration card, and a Tooling
+# card that names the daily tools - ADT, the ABAP debugger, ABAP Unit -
+# before the extras.
 #
 # THE EXAMPLE IS A REAL APP, not a greeting: the tutorial's finished class - a
 # table of invoices with an edit dialog, a date picker, save and a toast - so
@@ -114,7 +125,7 @@ hero:
 features:
   - title: Documentation
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 6.9C10.4 5.5 8.2 4.8 5.4 4.8H2.4v12.6h3c2.8 0 5 .7 6.6 2.1 1.6-1.4 3.8-2.1 6.6-2.1h3V4.8h-3c-2.8 0-5 .7-6.6 2.1z"/><path fill="none" stroke="currentColor" stroke-width="1.7" d="M12 6.9v12.6"/></svg>
-    details: Tutorial, cookbook and reference — everything from your first app to production.
+    details: A twelve-step tutorial, a cookbook and the client API reference — from your first class to production.
     link: /get_started/about
   - title: Samples
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.2" width="18.8" height="15.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M2.6 9.1h18.8M8.2 9.1v10.7"/></svg>
@@ -155,9 +166,9 @@ that would otherwise need a frontend project of its own.
 It runs where your users already are: a browser tab, a
 [Fiori launchpad](/configuration/launchpad) tile, [SAP Build Work
 Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start).
-Because it is UI5 itself, Fiori design, themes, accessibility and translation
-come with it — and rendering with the UI5 your system ships, it works without
-internet access.
+Because it is UI5 itself — 1.71 to 2.x — Fiori design, themes, accessibility
+and translation come with it, and rendering with the UI5 your system ships, it
+works without internet access.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
@@ -183,6 +194,12 @@ have is the one you keep.
 → *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
+
+This is the whole app: one ABAP class on the left, running on the right. Press
+the pencil on a row, change the date, save — every click is one roundtrip into
+the class, which builds the view and hands it back with the data
+([how it works](/get_started/about#how-it-works)). Change a line of the code
+and run it again.
 
 ```abap edit
 CLASS zcl_app_invoices DEFINITION PUBLIC.
@@ -324,6 +341,8 @@ CLASS zcl_app_invoices IMPLEMENTATION.
 ENDCLASS.
 ```
 
+→ *The [Tutorial](/tutorials/walkthrough/) builds this app in twelve steps, through to transport and unit tests*
+
 ## Around the project
 
 <div class="a2ui5-out">
@@ -337,7 +356,7 @@ ENDCLASS.
   </a>
   <a class="a2ui5-out-card is-inside" href="/docs/advanced/mcp_server">
     <span class="a2ui5-out-title">Tooling</span>
-    <span class="a2ui5-out-details">A VS Code extension, an MCP server for AI assistants, and an app template to start from.</span>
+    <span class="a2ui5-out-details">Write it in ADT, debug it in the ABAP debugger, test it with ABAP Unit. On top: a VS Code extension that runs the app on F9, an MCP server for AI assistants, and an app template to start from.</span>
   </a>
 
   <a class="a2ui5-out-card" href="https://github.com/abap2UI5/abap2UI5/" target="_blank" rel="noreferrer">
