@@ -5,13 +5,12 @@ for a customizing table nobody wants to explain in SM30 again. A cockpit
 showing what last night's job actually did. An approval step for one
 department, used by four people, twice a week.
 
-The logic behind such a screen is often thirty lines. The cost of putting a
-user interface in front of those thirty lines is not, and — this is the part
-that hurts — it does not scale down with them: a data model to declare, a
-service to define, a binding, an annotation model, a frontend artifact, a
-deployment. And at the end of it an object that now exists forever, has to be
-transported, has to survive an upgrade, and one day has to be deprecated by
-someone who never met the department that asked for it.
+The logic behind such a screen is thirty lines. The user interface in front of
+it is not, and — this is the part that hurts — it does not scale down with the
+logic: a data model, a service, a binding, an annotation model, a frontend
+artifact, a deployment. And at the end an object that now exists forever, has
+to be transported, has to survive an upgrade, and one day has to be deprecated
+by someone who never met the department that asked for it.
 
 None of that is waste. It is what makes a real application dependable. It is
 simply a *fixed* cost, and a fixed cost is brutal to a small thing.
@@ -21,8 +20,7 @@ grid, and everyone agrees to stop thinking about it. Every system has a `Z`
 package full of those, and every one of them was a reasonable decision at the
 time.
 
-That is the gap this whole series is about. Here is the job monitor instead —
-not an excerpt, not a snippet, the whole application:
+Here is the job monitor instead — not an excerpt, the whole application:
 
 ```abap
 CLASS zcl_job_monitor DEFINITION PUBLIC.
@@ -123,12 +121,8 @@ generosity.** You write the view by hand. Nothing generates it from
 annotations, nothing hands you filter bars, variants or export for free. For
 the screens above that is a rounding error — a table and two buttons. For a
 list report with fifteen filters, sorting, personalization and an Excel export,
-it is the wrong trade by a wide margin, and Fiori Elements will beat this by a
-distance.
+Fiori Elements beats this by a distance.
 
-Knowing which of the two you are looking at is most of the skill. The rest of
-this series is mostly about sharpening that judgment — starting with what is
-actually behind such a screen, which the framework
-[has no opinion about at all](/advanced/insights/03-your-favorite-programming-model).
+Knowing which of the two you are looking at is most of the skill.
 
 Happy ABAPing! 🦖🦕🦣
