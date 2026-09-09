@@ -47,13 +47,13 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # behind this, what happens when nobody is, how an app is governed, what it is
 # not for. So the enterprise card says lifecycle (transports, ATC, ABAP Unit),
 # exit path (a handful of classes and one table, nothing to migrate away
-# from), versioned releases with every change listed, support as it is (the community's,
-# partners for training, no vendor SLA - and nothing that ends with a
-# contract) and who runs it in production, by name and linked. The
-# integration card says what comes with UI5 itself, that a system without
-# internet access is fine, and what this is NOT for - offline, real-time
-# collaboration, a visual designer - with the three comparisons linked. An
-# evaluator who finds the limits on page three trusts nothing on page one.
+# from), versioned releases with every change listed, and support as it is
+# (the community's, no vendor SLA - and nothing that ends with a contract).
+# The integration card says what comes with UI5 itself, 1.71 to 2.x, and
+# that a system without internet access is fine. References by name and a
+# list of what this is NOT for were tried here and taken out again by the
+# maintainer: the limits stay on the About page, the references on Who Uses
+# abap2UI5.
 #
 # THIS PAGE IS FOR THE MANAGER. A developer has usually found the project by
 # another path - a talk, a sample, the playground - and the person this page
