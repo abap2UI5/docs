@@ -1,9 +1,13 @@
 # #24 ABAP Unit for a Screen
 
+Testing a screen is usually where enthusiasm goes to die. You either drive a
+browser, or you mock a framework, or you decide — silently, in a meeting nobody
+minuted — that this part is tested by the users.
+
 An abap2UI5 app is a global class, and a global class has a *Test Classes*
-include. That is the whole story of testing here, and the reason it stays short
-is a decision in the app rather than in the framework: **the logic does not
-touch `client`.**
+include. That is the whole story here, and the reason it stays that short is a
+decision in the app rather than in the framework: **the logic does not touch
+`client`.**
 
 `main( )` dispatches. The methods it dispatches to read data, decide, and
 change attributes. Only `view_display( )` and the message calls need the
@@ -102,7 +106,8 @@ CLASS zcl_app_overdue IMPLEMENTATION.
 ENDCLASS.
 ```
 
-The test lives in the include, and nothing in it is abap2UI5:
+The test lives in the include, and the striking thing about it is that nothing
+in it is abap2UI5:
 
 ```abap
 CLASS ltcl_overdue DEFINITION FINAL
@@ -134,21 +139,24 @@ CLASS ltcl_overdue IMPLEMENTATION.
 ENDCLASS.
 ```
 
-No client, no HTTP, no browser. The test sets attributes, calls a method,
-reads attributes — the same test it would be for a class with no screen at all,
-because up to `view_display( )` it *is* a class with no screen at all.
+No client, no HTTP, no browser, no test double for a framework. The test sets
+attributes, calls a method, reads attributes — the same test it would be for a
+class with no screen at all, because up to `view_display( )` it *is* a class
+with no screen at all.
 
-Two things are worth keeping that way on purpose. Handler methods take their
-input from attributes rather than from `client->get( )`, so a test can set the
-input. And `data_read( )` is its own method, so a test can either run the real
-`SELECT` against test data or fill the table by hand and test the logic alone.
+Two habits are worth keeping on purpose, and both are free if you start with
+them. Handler methods take their input from attributes rather than from
+`client->get( )`, so a test can set the input. And `data_read( )` is its own
+method, so a test can either run the real `SELECT` against test data or fill
+the table by hand and test the logic alone.
 
 The view itself has a different kind of check. The [linter](/advanced/linter)
 reconstructs the XML the chain builds and holds it against the UI5 metadata —
-unknown control, misspelled property, wrong type — without a system. Logic in
-ABAP Unit, view in the linter, and the roundtrip in a browser.
+unknown control, misspelled property, wrong type — without a system, in a
+pipeline, in seconds.
 
-Keep the client out of the logic, and the logic is testable the way any
-ABAP class is.
+Logic in ABAP Unit, view in the linter, and the roundtrip in a browser. Keep
+the client out of the logic, and the logic is testable the way any ABAP class
+is.
 
 Happy ABAPing! 🦖🦕🦣

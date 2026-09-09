@@ -5,8 +5,10 @@ library. A control nobody has wrapped. A UI5 method that exists only as a
 method — `sap.m.Carousel` moves through `setActivePage( )` and through nothing
 else, and no property will do it for you.
 
-abap2UI5 has no plugin system for this, and that is deliberate. It has three
-seams, each one a declared place rather than an escape hatch.
+This is the moment where frameworks usually grow a plugin system, and then a
+plugin registry, and then a page of documentation about lifecycle hooks.
+abap2UI5 has none of that, deliberately. It has three seams, each one a
+declared place rather than an escape hatch.
 
 ![Three seams, from the cheapest to the widest: a method call by control id, an expression in the view, a custom control in its own BSP.](/insights/12-three-seams.svg)
 
@@ -25,7 +27,8 @@ a control by id:
 
 The whitelist decides what is reachable. Check it before writing anything —
 a method it already declares costs one call, and an argument it does not
-declare is dropped in silence.
+declare is dropped in silence — a debugging session you can skip by reading a
+list first.
 
 **A custom control lives in its own BSP.** The frontend resolves two reserved
 resource roots — `z2ui5_cci` for the custom-controls addon, `z2ui5_ccc` for a
@@ -37,7 +40,7 @@ app view — `{= ${STATUS} === 'E' ? 'Error' : 'None' }` — evaluated in the
 browser against the model that just arrived, with no roundtrip and no module to
 load. Write it as a backtick literal rather than a string template: a template
 has to escape every brace, and one missed escape is a parser error on the whole
-statement instead of a wrong string.
+statement instead of a wrong string. Ask how we know.
 
 **Everything else is a system decision, not an app decision.** Extra JavaScript
 for the initial page is `custom_js` in the HTTP GET configuration, set in the

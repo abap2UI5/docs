@@ -16,9 +16,10 @@ ENDCLASS.
 ```
 
 One interface, one method, F9. No transaction, no program, no repository object
-beside it. It runs where it was written.
+beside it. It runs where it was written, and every ABAP developer has used it
+to answer a question in thirty seconds.
 
-That is the shape abap2UI5 copied:
+That is the shape abap2UI5 copied — and yes, the resemblance is on purpose:
 
 ```abap
 CLASS zcl_app_ui5 DEFINITION PUBLIC.
@@ -39,13 +40,16 @@ ENDCLASS.
 Same silhouette, different `out`. What the second one adds is only the
 destination: it runs in a browser instead of the console, follows the Fiori
 design guidelines, and can be sent to a colleague as a URL rather than as an
-instruction to open ADT and press F9.
+instruction to open ADT and press F9. That last difference is smaller than it
+sounds and matters more than it should — a link gets opened, an instruction
+gets postponed.
 
-There is a property here worth mentioning. A small application is one
-class, and a class is one thing to read: state, screen and logic in the same
-place, top to bottom. A reviewer, a colleague inheriting it, a search across the
-system, an agent asked to change something — each can hold the whole thing.
-Code that is understood in one piece is code that is changed confidently.
+There is a property here worth mentioning, and it is not about convenience. A
+small application is one class, and a class is one thing to read: state, screen
+and logic in the same place, top to bottom. A reviewer, a colleague inheriting
+it, a search across the system, an agent asked to change something — each can
+hold the whole thing at once. Code that is understood in one piece is code that
+gets changed confidently.
 
 That holds for the small screens this series keeps coming back to. A larger app
 splits into several classes like any other ABAP program does, and how is

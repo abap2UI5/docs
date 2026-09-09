@@ -3,7 +3,8 @@
 Count what a screen usually costs in backend artifacts. A CDS view or two, a
 service definition, a service binding, a behavior definition and its
 implementation, a projection — each one named, transported, reviewed, and each
-one belonging to exactly one application.
+one belonging to exactly one application. Then multiply by the number of
+screens your team ships in a year.
 
 An abap2UI5 app adds none of them — and there is no SEGW project underneath
 either. Every app in the system is served by the same generic HTTP handler, and
@@ -14,9 +15,10 @@ model. It moves two strings.
 
 *A service per screen, against one handler that knows none of them.*
 
-That is visible from inside. Set a breakpoint in an app class and look at the
-call stack — there is one frame between the app and the handler. No OData
-runtime, no SADL, no Gateway.
+That is visible from inside, and it is the first thing worth trying in a
+debugger. Set a breakpoint in an app class and look at the call stack — there
+is one frame between the app and the handler. No OData runtime, no SADL, no
+Gateway. The stack fits on a screenshot.
 
 The reason it can be generic is that nothing about the data is agreed in
 advance. In an OData conversation the metadata comes first and fixes the shape;
@@ -36,12 +38,14 @@ views; apps do. It does not decide program flow; apps do. It does not wrap UI5
 controls, so it does not grow when UI5 does. It does not implement a protocol,
 because the protocol is a POST with two strings.
 
-That has a practical consequence. A framework in the request path of a business
-application sees every input, every response and every user, and a dependency
-that cannot be read cannot really be reviewed. Here one class holds the logic,
-and reading it is an afternoon. The audit answers are short for the same
-reason: no CDS artifacts, no RAP objects, no generated code, no build step, no
-transitive package tree. The system footprint is the source in the repository.
+That has a practical consequence, and it is the one that decides whether a
+framework gets through a review at all. Something sitting in the request path
+of a business application sees every input, every response and every user, and
+a dependency that cannot be read cannot really be reviewed. Here one class
+holds the logic, and reading it is an afternoon. The audit answers are short
+for the same reason: no CDS artifacts, no RAP objects, no generated code, no
+build step, no transitive package tree. The system footprint is the source in
+the repository.
 
 What that removes is not effort — the app still decides everything — but
 artifacts. A screen stops being a set of objects to create, name, transport and

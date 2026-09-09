@@ -2,13 +2,16 @@
 
 Module pools had a call stack of screens. `CALL SCREEN 200` pushed one,
 `LEAVE TO SCREEN 0` popped it, and the screen underneath came back with its
-fields intact. abap2UI5 has the same stack — the elements on it are app
-instances.
+fields intact. It was one of those mechanisms nobody praised because nobody
+noticed it working.
+
+abap2UI5 has the same stack. The elements on it are app instances.
 
 **Within one class** there is no stack to speak of. A flag or a step number
 decides which view `view_display( )` builds, and the event handlers move it
 along. Two views over the same internal table are two branches of one class,
-and that is the right shape whenever the screens share their data.
+and that is the right shape whenever the screens share their data — no
+navigation, no handover, nothing to serialize twice.
 
 **Between classes** the framework keeps the stack:
 
@@ -36,6 +39,10 @@ displaying the sub-app's. And it can read what the sub-app left behind:
       view_display( ).
 ```
 
+Note what that `CAST` implies: the result is not a string in a parameter table,
+it is the sub-app instance itself, with all its typed attributes. Returning a
+whole object from a screen is a luxury `CALL SCREEN` never had.
+
 `nav_app_leave( )` called *with* an app instance is `LEAVE TO TRANSACTION`:
 it starts the given app without pushing the current one, so there is nothing to
 return to.
@@ -48,10 +55,11 @@ an ordinary `z2ui5_if_app` that displays into the popup slot, and ends with
 `nav_app_leave( )`. The caller reads the result through `get_app_prev( )`, as
 above.
 
-What is not on the stack: the Fiori Launchpad. Navigating between *Fiori* apps
-goes through the launchpad's cross-app navigation, so that the shell's history
-and back button keep working — that is a `cs_event` constant rather than a
-`nav_app_call( )`, and [its own page](/cookbook/event_navigation/navigation/cross_app).
+What is *not* on the stack: the Fiori Launchpad. Navigating between *Fiori*
+apps goes through the launchpad's cross-app navigation, so that the shell's
+history and back button keep working — that is a `cs_event` constant rather
+than a `nav_app_call( )`, and
+[its own page](/cookbook/event_navigation/navigation/cross_app).
 
 The stack came along. Its elements are instances now, not screen numbers.
 

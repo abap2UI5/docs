@@ -2,13 +2,14 @@
 
 An app that is reached by pasting a URL is a demo. It becomes an application
 when it has a tile — and in the launchpad an abap2UI5 app is indistinguishable
-from the RAP and freestyle tiles beside it.
+from the RAP and freestyle tiles beside it. Same shell, same theme, same back
+button, same "who built this one again?" from the person supporting it.
 
 **What is installed once.** The launchpad loads a UI5 app from the system's
 UI5 repository, so the abap2UI5 shell has to exist there as one: the
 [launchpad connector](https://github.com/abap2UI5-addons) ships it through
 abapGit, as app `z2ui5`. That is one deployment for the whole system, not one
-per app — every abap2UI5 tile points at the same shell.
+per app — every abap2UI5 tile you ever create points at the same shell.
 
 **What is configured per app.** A target mapping, with the app class as the
 parameter:
@@ -21,7 +22,7 @@ parameter:
 | Parameter | `app_start` / `Z2UI5_CL_MY_APP` |
 
 A tile, a catalog, a role — the Fiori administration the system already does,
-with nothing abap2UI5-specific in it except the parameter.
+with nothing abap2UI5-specific in it except that last parameter.
 
 **What the app can do inside.** It knows where it is:
 
@@ -37,10 +38,11 @@ Startup parameters from the target mapping arrive in
 through the launchpad's own cross-app navigation, so the shell's back button
 keeps working.
 
-**What to do when the tile is blank.** The one recurring trouble is not the
-app but the UI5 app index after an abapGit import: run
-`/UI5/APP_INDEX_CALCULATE`, clear the HTTP cache in `SMICM`, hard-reload. The
-[launchpad page](/configuration/launchpad) walks through it with screenshots.
+**What to do when the tile is blank.** Because it will be, once. The one
+recurring trouble is not the app but the UI5 app index after an abapGit import:
+run `/UI5/APP_INDEX_CALCULATE`, clear the HTTP cache in `SMICM`, hard-reload.
+The [launchpad page](/configuration/launchpad) walks through it with
+screenshots. Bookmark it now and save yourself the twenty minutes.
 
 Public Cloud is a different door: there the launchpad is Build Work Zone, and
 the [ABAP Cloud pages](/configuration/btp) describe the setup.
