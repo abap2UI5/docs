@@ -123,7 +123,38 @@ test('the sheet waits for the button', () => {
   const after = PAGE.indexOf('<div class="cost-after" data-result hidden>\n\n');
   assert.ok(after > PAGE.lastIndexOf('<div class="cost-result"'), 'the words under the sheet wait for the button too');
   assert.ok(PAGE.trimEnd().endsWith('\n\n</div>'), 'and the wrapper closes after the last of them');
-  assert.ok(PAGE.indexOf('\n## The one line', after) > after, 'the section is markdown inside it, heading and all');
+  assert.ok(PAGE.indexOf('\n## The invoice nobody sends you', after) > after, 'the section is markdown inside it, heading and all');
+});
+
+/* Two things the sheet carries that the inputs deliberately do not. The links
+   to the issue tracker and to Slack: they sat in the support row, which is a
+   way out of the page in the middle of filling it in, and they belong on the
+   Support line of the answer instead. And what the zeros get you - the sheet
+   is ten times the same character, and on its own that is a thin reward for
+   working through nine sliders. */
+test('the links wait for the sheet, and the sheet ends on what the zeros get you', () => {
+  const inputs = PAGE.slice(PAGE.indexOf('<div class="cost-inputs">'), PAGE.indexOf('data-calculate='));
+  assert.doesNotMatch(inputs, /<a /, 'nothing leads out of the page while it is being filled in');
+  const sheet = PAGE.slice(PAGE.indexOf('<div class="cost-result"'), PAGE.indexOf('<div class="cost-after"'));
+  assert.match(sheet, /Support<small>[^<]*<span data-echo="cost-support">/, 'the sheet has a support line');
+  assert.match(sheet, /github\.com\/abap2UI5\/abap2UI5\/issues/, 'and the issue tracker is on it');
+  assert.match(sheet, /communityinviter\.com/, 'and Slack');
+  assert.ok(sheet.indexOf('<div class="cost-total">') < sheet.indexOf('<div class="cost-perks">'), 'the features come after the total');
+  const perks = sheet.slice(sheet.indexOf('<div class="cost-perks">'));
+  assert.ok((perks.match(/<li>/g) || []).length >= 5, 'a handful of them');
+  assert.match(perks, /<li><strong>[^<]+<\/strong>/, 'each one led by what it is');
+});
+
+/* The words under the sheet are the punchline: the total is zero because
+   somebody else paid, in hours. The bill that says so is on the page, and the
+   section it is in is the one that asks. */
+test('the invoice nobody sends is under the sheet, and it is not written in money', () => {
+  const after = PAGE.slice(PAGE.indexOf('<div class="cost-after"'));
+  assert.match(after, /<div class="cost-bill">/);
+  const bill = after.slice(after.indexOf('<div class="cost-bill">'), after.indexOf('</div>\n\nThat bill'));
+  assert.ok((bill.match(/cost-bill-line/g) || []).length >= 3, 'a few lines of it');
+  assert.match(bill, /<div class="cost-bill-total">/, 'and a total');
+  assert.doesNotMatch(bill, /data-(?:amount|total)/, 'no line of it is written in a currency the sliders can change');
 });
 
 test('the front door\'s cost card leads here, and the page ends at the sponsors', () => {
