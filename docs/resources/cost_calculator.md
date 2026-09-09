@@ -38,14 +38,12 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 <div><span class="cost-total-what">Per user, per month</span><output data-total>€0</output></div>
 </div>
 <div class="cost-perks">
-<p class="cost-perks-head">Ten lines, ten zeros. Here is what they get you:</p>
+<p class="cost-perks-head">And what the zeros get you:</p>
 <ul class="cost-perks-list">
-<li><strong>No frontend project</strong>One ABAP class is the whole app - no JavaScript, no build step, nothing to deploy to a second place and keep in sync with the first.</li>
-<li><strong>Every system you ticked</strong>The same class runs from NetWeaver 7.02 up to S/4HANA Public Cloud, <a href="/docs/get_started/about#compatibility">Standard ABAP and ABAP Cloud</a> alike.</li>
-<li><strong>Installed with abapGit</strong>One <a href="/docs/configuration/installation">pull per system</a>, and the next release is the next pull. No transport of a frontend, no cache to invalidate.</li>
-<li><strong>It is UI5</strong>Fiori design, themes, accessibility and translation come with it, rendered by the UI5 your system already ships - so it works without internet access.</li>
-<li><strong>Nothing leaves your stack</strong>Every roundtrip is served by the system that holds the data. No middleware in between, no service to subscribe to, no second place your data has to be.</li>
-<li><strong>An agent can write it</strong>The <a href="/docs/advanced/linter">linter</a> checks a view without a system, and the <a href="/docs/advanced/mcp_server">MCP server</a> boots the app headless and hands back the errors and a screenshot.</li>
+<li><strong>One class is the whole app.</strong> No JavaScript, no build step, nothing to deploy to a second place and keep in sync with the first.</li>
+<li><strong>Every system you ticked.</strong> The same class runs from NetWeaver 7.02 up to S/4HANA Public Cloud, <a href="/docs/get_started/about#compatibility">Standard ABAP and ABAP Cloud</a> alike.</li>
+<li><strong>Installed with abapGit.</strong> One <a href="/docs/configuration/installation">pull per system</a>, and the next release is the next pull.</li>
+<li><strong>It is UI5, on your own stack.</strong> Fiori design, themes and translation come with it, and every roundtrip stays in the system that holds the data.</li>
 </ul>
 </div>
 </div>
@@ -55,18 +53,10 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 The formula is short: every line is zero, and a sum of zeros is zero. Put the users at 250,000, tick every system on the list, ask for ten years of it and press Calculate again - the sheet will not move, because nothing is counting. abap2UI5 is [MIT licensed](/resources/license), commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.
 
-## The invoice nobody sends you
+## The line that is not zero
 
-Free, then. Except that none of it was free to *make*. Somebody wrote those ten zeros, and they paid for them in the one currency an open-source project actually runs on:
+Free to use is not the same as free to make. Those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-<div class="cost-bill">
-<div class="cost-bill-line"><span>The framework you just priced</span><span class="cost-paid">evenings</span></div>
-<div class="cost-bill-line"><span>The release you will pull next month</span><span class="cost-paid">a weekend</span></div>
-<div class="cost-bill-line"><span>The answer under your issue, written on a Sunday</span><span class="cost-paid">an afternoon</span></div>
-<div class="cost-bill-line"><span>The 7.02 downport nobody asked them for</span><span class="cost-paid">years of evenings</span></div>
-<div class="cost-bill-total"><span>Your share of it</span><span class="cost-paid">nothing</span></div>
-</div>
-
-That bill is real. It is just not addressed to you - which is the whole point of the page above, and the reason it can be as silly as it is. So if this calculator took a line out of somebody's budget, put a little of it back where it came from: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question in [Slack](https://communityinviter.com/apps/abapgit/abap), is legal tender here too.
+So if this page took a line out of a budget, put a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question in [Slack](https://communityinviter.com/apps/abapgit/abap), counts too.
 
 </div>

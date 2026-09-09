@@ -123,7 +123,7 @@ test('the sheet waits for the button', () => {
   const after = PAGE.indexOf('<div class="cost-after" data-result hidden>\n\n');
   assert.ok(after > PAGE.lastIndexOf('<div class="cost-result"'), 'the words under the sheet wait for the button too');
   assert.ok(PAGE.trimEnd().endsWith('\n\n</div>'), 'and the wrapper closes after the last of them');
-  assert.ok(PAGE.indexOf('\n## The invoice nobody sends you', after) > after, 'the section is markdown inside it, heading and all');
+  assert.ok(PAGE.indexOf('\n## The line that is not zero', after) > after, 'the section is markdown inside it, heading and all');
 });
 
 /* Two things the sheet carries that the inputs deliberately do not. The links
@@ -141,20 +141,8 @@ test('the links wait for the sheet, and the sheet ends on what the zeros get you
   assert.match(sheet, /communityinviter\.com/, 'and Slack');
   assert.ok(sheet.indexOf('<div class="cost-total">') < sheet.indexOf('<div class="cost-perks">'), 'the features come after the total');
   const perks = sheet.slice(sheet.indexOf('<div class="cost-perks">'));
-  assert.ok((perks.match(/<li>/g) || []).length >= 5, 'a handful of them');
-  assert.match(perks, /<li><strong>[^<]+<\/strong>/, 'each one led by what it is');
-});
-
-/* The words under the sheet are the punchline: the total is zero because
-   somebody else paid, in hours. The bill that says so is on the page, and the
-   section it is in is the one that asks. */
-test('the invoice nobody sends is under the sheet, and it is not written in money', () => {
-  const after = PAGE.slice(PAGE.indexOf('<div class="cost-after"'));
-  assert.match(after, /<div class="cost-bill">/);
-  const bill = after.slice(after.indexOf('<div class="cost-bill">'), after.indexOf('</div>\n\nThat bill'));
-  assert.ok((bill.match(/cost-bill-line/g) || []).length >= 3, 'a few lines of it');
-  assert.match(bill, /<div class="cost-bill-total">/, 'and a total');
-  assert.doesNotMatch(bill, /data-(?:amount|total)/, 'no line of it is written in a currency the sliders can change');
+  assert.ok((perks.match(/<li>/g) || []).length >= 3, 'a handful of them');
+  assert.match(perks, /<li><strong>[^<]+<\/strong> /, 'each one led by what it is');
 });
 
 test('the front door\'s cost card leads here, and the page ends at the sponsors', () => {

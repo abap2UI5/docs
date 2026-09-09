@@ -1174,35 +1174,20 @@ html { scrollbar-gutter: stable; }
 .cost-total > div { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--fg-dim); }
 .cost-total output { font-size: 28px; line-height: 1.15; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
 .cost-total > div:first-child output { font-size: 40px; }
-/* WHAT THE ZEROS GET YOU. The sheet answers the question the page asks in one
+/* What the zeros get you. The sheet answers the question the page asks in one
    character, ten times over, which is a thin thing to hand somebody who just
-   worked through nine sliders - so under the total the same reveal carries the
-   other half of the answer: what comes with the number. Cards rather than a
-   list, two across where there is room for two, because they are read by
-   glancing rather than by reading. */
-.cost-perks { margin: 24px 0 0; }
-.cost-perks-head { margin: 0 0 12px; font-size: 14px; font-weight: 600; }
+   worked through nine sliders - so the same reveal carries a short list of
+   what comes with the number. Plain lines, two columns where there is room:
+   it is a note under the total, not a second headline. */
+.cost-perks { margin: 20px 0 0; font-size: 13px; line-height: 1.6; color: var(--fg-dim); }
+.cost-perks-head { margin: 0 0 8px; font-weight: 600; color: var(--fg); }
 /* Named down to the element, because both themes give a list in an article a
-   marker and an indent of its own, and a card with a bullet outside it reads
-   as a list that lost its way. */
+   marker and an indent of its own. */
 .cost-perks ul.cost-perks-list {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px;
   margin: 0; padding: 0; list-style: none;
 }
-.cost-perks ul.cost-perks-list li {
-  margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px;
-  font-size: 13px; line-height: 1.55; color: var(--fg-dim);
-}
-.cost-perks ul.cost-perks-list li strong { display: block; margin-bottom: 2px; color: var(--fg); }
-/* The invoice nobody sends: the sheet's own shape a second time, under the
-   words, with what somebody paid in the column the currency was in. Dashed,
-   because it is not a bill anybody is going to receive. */
-.cost-bill { margin: 20px 0; padding: 0 16px; border: 1px dashed var(--line); border-radius: 8px; background: var(--bg-sunken); }
-.cost-bill-line, .cost-bill-total {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
-}
-.cost-bill-total { border-bottom: 0; font-weight: 600; }
-.cost-paid { text-align: right; font-weight: 600; color: var(--accent); white-space: nowrap; }
+.cost-perks ul.cost-perks-list li { margin: 0; }
+.cost-perks ul.cost-perks-list li strong { color: var(--fg); font-weight: 600; }
 @media (max-width: 620px) { .cost-perks ul.cost-perks-list { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
