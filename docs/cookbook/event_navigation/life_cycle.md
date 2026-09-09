@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_495
   - z2ui5_cl_smp_app_004
+description: The abap2UI5 app life cycle - every request enters main( ), and check_on_init, check_on_navigated and check_on_event tell you which case it is, pitfalls included.
 ---
 # Life Cycle
 

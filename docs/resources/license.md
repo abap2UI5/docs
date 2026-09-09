@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: abap2UI5 is MIT licensed, free for commercial use; the apps built with it are standard UI5 freestyle apps, licensed like any other UI5 app in your organization.
 ---
 # License
 

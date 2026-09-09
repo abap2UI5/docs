@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: How abap2UI5 keeps data on the server - one HTTP endpoint, SAP authentication and authorization, the Content-Security-Policy, response headers and CSRF.
 ---
 # Security
 abap2UI5 is a backend-centric framework. All logic and business data stay on the server; the frontend gets only the data it needs to render the view.

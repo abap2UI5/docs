@@ -4,6 +4,7 @@ samples:
   - z2ui5_cl_smp_app_493
   - z2ui5_cl_smp_app_050
   - z2ui5_cl_smp_app_255
+description: How an abap2UI5 view is defined - a standard UI5 XML view sent from ABAP, built with the view builder control by control, and where to look for controls.
 ---
 # Definition
 

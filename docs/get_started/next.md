@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Where to go after your first abap2UI5 app - the sample apps, the tooling, development and configuration topics, add-ons and real-world use.
 ---
 # What's Next?
 

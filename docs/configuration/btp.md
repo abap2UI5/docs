@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Run abap2UI5 apps in SAP Build Work Zone and other BTP services through the connector app, with an on-premise or cloud ABAP backend.
 ---
 # BTP Build Work Zone
 

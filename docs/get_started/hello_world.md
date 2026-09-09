@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_493
+description: Your first abap2UI5 app - one ABAP class with a view, two-way data binding and an event, explained line by line.
 ---
 # Hello World
 

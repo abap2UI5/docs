@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Install abap2UI5 with abapGit and start your first app, or try it first in the browser playground and the live demo with no system at all.
 ---
 # Quickstart
 

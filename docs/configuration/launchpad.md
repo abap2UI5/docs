@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Embed abap2UI5 apps as tiles in the SAP Fiori Launchpad on S/4HANA on-premise or private cloud - installation, target mapping, launchpad features, KPIs and troubleshooting.
 ---
 # Fiori Launchpad
 

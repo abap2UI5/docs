@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: abap2UI5 apps run stateless by default, one fresh ABAP session per roundtrip; stateful sessions exist for the few cases that need them, with their trade-offs.
 ---
 # Statefulness
 

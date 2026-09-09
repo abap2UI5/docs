@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The abap2UI5 VS Code extension - run the app from the editor on F9, check views while you type, write views with the linter's help, in VS Code and vscode.dev.
 ---
 # VS Code Extension
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: How to contribute to abap2UI5 - code, samples and documentation, turning answers into pages, and where to ask for help.
 ---
 # Contribution
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The abap2UI5 MCP server - the tools an AI coding agent gets to boot an app headless, read the errors and a screenshot, and search the samples; setup and the intended loop.
 ---
 # MCP Server
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Companies, workshops and integrations that use abap2UI5, with the system release and the use case, and how to add your own.
 ---
 # Who Uses abap2UI5?
 
