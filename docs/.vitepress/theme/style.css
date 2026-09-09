@@ -2743,8 +2743,10 @@
   grid-column: 2 / -1; justify-self: end; font: inherit; padding: 4px 8px;
   border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: inherit;
 }
-/* A choice rather than a scale: two radio buttons, their links beside them,
-   across the columns the slider and its readout would take. */
+/* A choice rather than a scale: radio buttons or checkboxes, across the
+   columns the slider and its readout would take. The links that used to sit
+   beside them are down in the sheet now - an input row is for choosing, and a
+   link in one is a way out of the page before it has said anything. */
 .cost-row .cost-label { font-weight: 600; }
 .cost-row .cost-choices { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
 .cost-row .cost-choices label { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; font-weight: 400; }
@@ -2802,4 +2804,20 @@
 .cost-total > div { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--fg-dim); }
 .cost-total output { font-size: 28px; line-height: 1.15; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
 .cost-total > div:first-child output { font-size: 40px; }
+/* What the zeros get you. The sheet answers the question the page asks in one
+   character, ten times over, which is a thin thing to hand somebody who just
+   worked through nine sliders - so the same reveal carries a short list of
+   what comes with the number. Plain lines, two columns where there is room:
+   it is a note under the total, not a second headline. */
+.cost-perks { margin: 20px 0 0; font-size: 13px; line-height: 1.6; color: var(--fg-dim); }
+.cost-perks-head { margin: 0 0 8px; font-weight: 600; color: var(--fg); }
+/* Named down to the element, because both themes give a list in an article a
+   marker and an indent of its own. */
+.cost-perks ul.cost-perks-list {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px;
+  margin: 0; padding: 0; list-style: none;
+}
+.cost-perks ul.cost-perks-list li { margin: 0; }
+.cost-perks ul.cost-perks-list li strong { color: var(--fg); font-weight: 600; }
+@media (max-width: 620px) { .cost-perks ul.cost-perks-list { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
