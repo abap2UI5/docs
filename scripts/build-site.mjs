@@ -326,15 +326,21 @@ function sidebarFor(route) {
        section often points at its own first page - Model and Binding are the
        same link - and marking both painted two rows in the accent, which is
        one more than the colour means. */
-    const on = same(i.link) && !(i.items || []).some(holds) ? ' class="here" aria-current="page"' : '';
+    const here = same(i.link) && !(i.items || []).some(holds);
+    const on = here ? ' aria-current="page"' : '';
     const href = i.link ? `${BASE.slice(0, -1)}${i.link}${i.link.endsWith('/') ? 'index.html' : '.html'}` : null;
-    const label = href ? `<a href="${esc(href)}"${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
+    const label = href ? `<a href="${esc(href)}"${here ? ' class="here"' : ''}${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
     /* A ROW IS THE LINK. It was a div with the row's classes around an anchor,
        on every one of 183 rows on every one of 166 pages - 139 bytes a row,
        half of a page's markup. The link is the row now, with the classes the
-       box carried; the stylesheet addresses it as a.side-item. */
+       box carried; the stylesheet addresses it as a.side-item.
+       AND THE MARK IS IN THAT ONE CLASS ATTRIBUTE. The first cut of this
+       appended the mark as it had been appended to the anchor inside the
+       box - a second class="here" after the row's own - and a browser keeps
+       the first class attribute it meets: no page was marked in its menu,
+       and site.js, looking for a.here to scroll the menu to, found nothing. */
     if (!i.items) return href
-      ? `<a class="side-item level-${level}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
+      ? `<a class="side-item level-${level}${here ? ' here' : ''}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
       : `<span class="side-item level-${level}">${esc(i.text)}</span>`;
     const key = [...trail, i.text].join(' / ');
     return `<details class="side-group level-${level}" data-key="${esc(key)}"${holds(i) ? ' open' : ''}>`

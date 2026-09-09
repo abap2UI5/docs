@@ -1105,6 +1105,24 @@ html { scrollbar-gutter: stable; }
   grid-column: 2 / -1; justify-self: end; font: inherit; padding: 4px 8px;
   border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: inherit;
 }
+/* A choice rather than a scale: two radio buttons, their links beside them,
+   across the columns the slider and its readout would take. */
+.cost-row .cost-label { font-weight: 600; }
+.cost-row .cost-choices { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.cost-row .cost-choices label { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; font-weight: 400; }
+.cost-row .cost-choices input[type="radio"],
+.cost-row .cost-choices input[type="checkbox"] { margin: 0; accent-color: var(--accent); }
+/* The sheet is what the button hands out: hidden until Calculate is pressed,
+   the inputs greyed while it shows, and the button then offers a new round. */
+.cost-actions { margin: 16px 0; }
+.cost-calculate {
+  font: inherit; font-size: 13px; font-weight: 600; line-height: 34px; padding: 0 16px;
+  border: 1px solid transparent; border-radius: 6px; cursor: pointer;
+  background: var(--accent); color: var(--accent-fg, #fff);
+}
+.cost-calculate:hover { filter: brightness(1.08); }
+.cost-calculate:disabled { cursor: progress; opacity: .7; }
+.cost-inputs[data-locked] .cost-row { opacity: .5; }
 @media (max-width: 620px) {
   .cost-row { grid-template-columns: 1fr auto; }
   .cost-row input[type="range"] { grid-column: 1 / -1; }

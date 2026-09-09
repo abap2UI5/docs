@@ -35,6 +35,14 @@ export function reading(stops, position, unit = '') {
   return word ? `${n.toLocaleString('en-US')} ${word}` : n.toLocaleString('en-US');
 }
 
+/** Choices read out as a list - "A", "A and B", "A, B and C" - or `none`
+ *  when nothing is ticked. */
+export function listed(choices, none = 'none') {
+  if (!choices.length) return none;
+  if (choices.length === 1) return choices[0];
+  return `${choices.slice(0, -1).join(', ')} and ${choices[choices.length - 1]}`;
+}
+
 /** What one line of the sheet comes to, for any setting of its slider. */
 export const line = () => 0;
 
