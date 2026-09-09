@@ -88,7 +88,7 @@ Both classes produce the exact same view — press **Run** on either one and the
 same page comes up. Use whichever you prefer: raw strings are fine for a
 handful of lines, the builder scales better for real apps.
 
-Four verbs, and no catalogue of controls behind them:
+Four verbs, and no catalog of controls behind them:
 
 | | |
 | --- | --- |
@@ -209,7 +209,7 @@ This produces a static view. The next section walks through binding and sharing 
 
 ## Working Samples
 
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
 that use what this page describes. Each is a single class — pull the repository with
 [abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
 

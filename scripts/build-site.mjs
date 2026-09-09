@@ -22,6 +22,7 @@
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createMarkdownRenderer } from 'vitepress';
@@ -29,6 +30,9 @@ import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
 import { describe } from './lib/pages.mjs';
+import { measureImage } from './lib/images.mjs';
+import { contentSecurityPolicy, inlineScriptsIn } from './lib/csp.mjs';
+import { stripComments } from './lib/html.mjs';
 import { declaredRelease } from './lib/release.mjs';
 
 const ROOT = process.cwd();
@@ -325,7 +329,13 @@ function sidebarFor(route) {
     const on = same(i.link) && !(i.items || []).some(holds) ? ' class="here" aria-current="page"' : '';
     const href = i.link ? `${BASE.slice(0, -1)}${i.link}${i.link.endsWith('/') ? 'index.html' : '.html'}` : null;
     const label = href ? `<a href="${esc(href)}"${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
-    if (!i.items) return `<div class="side-item level-${level}">${label}</div>`;
+    /* A ROW IS THE LINK. It was a div with the row's classes around an anchor,
+       on every one of 183 rows on every one of 166 pages - 139 bytes a row,
+       half of a page's markup. The link is the row now, with the classes the
+       box carried; the stylesheet addresses it as a.side-item. */
+    if (!i.items) return href
+      ? `<a class="side-item level-${level}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
+      : `<span class="side-item level-${level}">${esc(i.text)}</span>`;
     const key = [...trail, i.text].join(' / ');
     return `<details class="side-group level-${level}" data-key="${esc(key)}"${holds(i) ? ' open' : ''}>`
       + `<summary><span class="side-caret" aria-hidden="true"></span>${label}</summary>`
@@ -533,17 +543,55 @@ const linkedData = ({ page, title, description, url, isHome }) => {
   return `<script type="application/ld+json">${json.replace(/</g, '\\u003c')}</script>`;
 };
 
-const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
+/* ---- WHAT A PAGE MAY LOAD ----------------------------------------------
+ *
+ * Three deployments share this origin, and one of them runs whatever ABAP a
+ * shared link carries. A page of the manual runs nothing of the kind, so it
+ * says so: scripts from this origin and the two it writes into the page, the
+ * playground beside it for the Run panel's loader and frame, and nothing
+ * else - no inline handler, no script from a third host, no object. GitHub
+ * Pages sets no headers of ours, so it is a <meta>, which cannot carry
+ * frame-ancestors and does not need to.
+ *
+ * The two inline scripts are the exception a hash makes: the theme line,
+ * which has to run before the first paint, and the menu script the bar
+ * brings with it from the playground. Both are hashed at build time from
+ * the very string that is written, so they cannot drift - and every page
+ * is read back for an inline script that is neither, which would be a
+ * script the policy silently kills (scripts/lib/csp.mjs). Styles stay
+ * 'unsafe-inline': the highlighter writes a colour pair on every token. */
+const THEME_SCRIPT = 'try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}';
+const MENU_SCRIPT_BODY = MENU_SCRIPT.replace(/^<script>/, '').replace(/<\/script>$/, '');
+const INLINE = [THEME_SCRIPT, MENU_SCRIPT_BODY];
+const announced = (raw, allowed) => {
+  /* Without the comments the sources are written with (scripts/lib/html.mjs),
+     and read back for its scripts AFTER that, so what is checked is what is
+     published. */
+  const page = stripComments(raw);
+  for (const script of inlineScriptsIn(page)) {
+    if (!allowed.includes(script)) throw new Error(`an inline script the policy would kill: ${JSON.stringify(script.slice(0, 80))}`);
+  }
+  return page;
+};
+
+/* `inline`: the scripts THIS page brings beyond the two every page carries -
+   the 404's suggestions are the one case - each hashed into the policy of the
+   page that carries it, and only that page. */
+const shell = ({ title, main, bar, head = '', inline = [] }) => {
+  const allowed = [...INLINE, ...inline];
+  const csp = contentSecurityPolicy(allowed);
+  return announced(`<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="${csp}">
 <!-- 7.02, 1.71, 1.143.0: iOS reads a run of digits and dots as a telephone
      number and draws it as a link that dials. This manual is full of release
      numbers and of none that anybody can call. -->
 <meta name="format-detection" content="telephone=no">
 <title>${esc(title)}</title>
-<script>try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>${THEME_SCRIPT}</script>
 <link rel="icon" href="${BASE}favicon.ico" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" href="${BASE}favicon.png" sizes="64x64">
 <link rel="apple-touch-icon" sizes="180x180" href="${BASE}apple-touch-icon.png">
@@ -552,7 +600,6 @@ const shell = ({ title, main, bar, head = '' }) => `<!doctype html>
 <link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${BASE}site.css">
 <script type="module" src="${BASE}site.js"></script>
-<script type="module" src="${BASE}search.mjs"></script>
 <!-- TWO BUTTONS THAT ARE ONLY BUTTONS WITH JAVASCRIPT. The Run bar under a
      runnable example and the copy button on a listing are written into the
      page by the build, and both do their work in the browser - so with
@@ -574,7 +621,8 @@ ${main}
 ${MENU_SCRIPT}
 </body>
 </html>
-`;
+`, allowed);
+};
 
 /* ---- what comes before and after ---------------------------------------
  *
@@ -750,8 +798,11 @@ const home = ({ body, fm, page }) => {
       const at = BASE + String(img.src).replace(/^\//, '');
       const box = measure(path.join(DOCS, 'public', at.slice(BASE.length)));
       const h = box && box.w ? ` height="${Math.round(box.h * 200 / box.w)}"` : '';
+      /* fetchpriority="high": it is the largest thing in the first screen and
+         the browser's default priority for an image is low until layout has
+         found it. Named, it goes out with the stylesheet. */
       return `<div class="hero-image"><img src="${esc(at)}"
-         alt="${esc(img.alt || '')}" width="200"${h} decoding="async"></div>`;
+         alt="${esc(img.alt || '')}" width="200"${h} decoding="async" fetchpriority="high"></div>`;
     })() : ''}
   </section>
   <section class="tiles">${(fm.features || []).map(tile).join('')}
@@ -941,26 +992,9 @@ const INK = {
  * and is given the height that width implies, so it reserves its box too. A
  * percentage width, or a file this cannot measure - an external one, above
  * all - is left exactly as it was. */
-const measure = (file) => {
-  let b;
-  try { b = fs.readFileSync(file); } catch { return null; }
-  if (b.length > 24 && b.readUInt32BE(0) === 0x89504e47 && b.toString('latin1', 12, 16) === 'IHDR')
-    return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
-  if (b.length > 4 && b[0] === 0xff && b[1] === 0xd8) {
-    for (let i = 2; i + 9 < b.length;) {
-      if (b[i] !== 0xff) { i++; continue; }
-      const marker = b[i + 1];
-      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker))
-        return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
-      i += 2 + b.readUInt16BE(i + 2);
-    }
-    return null;
-  }
-  const svg = b.toString('utf8', 0, 2000);
-  const box = svg.match(/viewBox="[\d.+-]+\s+[\d.+-]+\s+([\d.]+)\s+([\d.]+)"/);
-  if (box) return { w: Math.round(+box[1]), h: Math.round(+box[2]) };
-  return null;
-};
+/* The reader lives in scripts/lib/images.mjs, because check:images has to
+   refuse exactly what this cannot size - PNG, JPEG, WebP and SVG today. */
+const measure = measureImage;
 
 /* ...and one that is not on the screen yet is not fetched yet. A chapter with
  * four screenshots fetched all four before the reader had scrolled past the
@@ -1128,34 +1162,10 @@ for (const page of pages) {
 const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, ''), names.get(f)]))
   .replace(/</g, '\\u003c');
 
-fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
-  title: 'Not found | abap2UI5',
-  /* Served with a 404 status, which is what a crawler goes by - and said in
-     the head as well, for the case where it is not (a preview, a mirror, a
-     proxy that rewrites the status). */
-  head: `<meta name="robots" content="noindex">\n`
-    + meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
-  bar: BAR_DOCS,
-  main: `<main class="manual">
-  <input class="side-open" type="checkbox" id="side-open">
-  ${sidebarFor('/404')}
-  <label class="side-scrim" for="side-open" aria-hidden="true"></label>
-  <div class="doc-body" id="main-content" tabindex="-1">
-    <label class="side-button" for="side-open" title="Chapters" aria-label="Chapters"><span>Chapters</span></label>
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="${BASE}get_started/about.html">Documentation</a></nav>
-    <div class="vp-doc">
-      <h1>This page is not here</h1>
-      <p>The address does not name a page of this manual. It may have been
-         renamed, or the link that brought you here may be old.</p>
-      <p>Chapters lists every page of the manual, the box in the bar searches
-         it and all ~770 samples at once, and
-         <a href="${BASE}get_started/about.html">In a Nutshell</a> is where the
-         manual starts.</p>
-      <div id="near" hidden><h2>Did you mean</h2><ul></ul></div>
-    </div>
-  </div>
-</main>
-<script>
+/* The page's own script, in a constant so the page can WRITE it and ANNOUNCE
+   it to its policy from one string (shell( ), `inline`) - the hash is of
+   exactly what is written, interpolation and all. */
+const NOT_FOUND_SCRIPT = `
 /* WHAT THE ADDRESS ALMOST SAID. Chapters get renamed - two dozen urls that
    once worked are 404s now - and every link to one of them out in a blog post,
    an issue or a Slack message lands here. A page that only says "not here" and
@@ -1229,7 +1239,37 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   });
   box.hidden = false;
 })();
-</script>`,
+`;
+
+fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
+  title: 'Not found | abap2UI5',
+  /* Served with a 404 status, which is what a crawler goes by - and said in
+     the head as well, for the case where it is not (a preview, a mirror, a
+     proxy that rewrites the status). */
+  head: `<meta name="robots" content="noindex">\n`
+    + meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
+  bar: BAR_DOCS,
+  inline: [NOT_FOUND_SCRIPT],
+  main: `<main class="manual">
+  <input class="side-open" type="checkbox" id="side-open">
+  ${sidebarFor('/404')}
+  <label class="side-scrim" for="side-open" aria-hidden="true"></label>
+  <div class="doc-body" id="main-content" tabindex="-1">
+    <label class="side-button" for="side-open" title="Chapters" aria-label="Chapters"><span>Chapters</span></label>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="${BASE}get_started/about.html">Documentation</a></nav>
+    <div class="vp-doc">
+      <h1>This page is not here</h1>
+      <p>The address does not name a page of this manual. It may have been
+         renamed, or the link that brought you here may be old.</p>
+      <p>Chapters lists every page of the manual, the box in the bar searches
+         it and all ~770 samples at once, and
+         <a href="${BASE}get_started/about.html">In a Nutshell</a> is where the
+         manual starts.</p>
+      <div id="near" hidden><h2>Did you mean</h2><ul></ul></div>
+    </div>
+  </div>
+</main>
+<script>${NOT_FOUND_SCRIPT}</script>`,
 }));
 
 /* ---- WHAT IS HERE, FOR A CRAWLER --------------------------------------
@@ -1274,12 +1314,13 @@ const copyInto = (from, to) => {
 const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
 /* The catalogue's two stylesheets and its search box come from its build; only
    the manual's own layer and its own entry module live in this repository.
-   search.mjs is the SAME FILE the 772 sample pages load - the box in this bar
+   search.mjs is the SAME CODE the 772 sample pages load - the box in this bar
    is not a second implementation of that one, it is that one, mounting into
    the `[data-search]` slot the borrowed bar already carries and reading the
    index this repository publishes. */
-for (const [name, text] of Object.entries(frame.files))
-  if (!name.endsWith('.css')) fs.writeFileSync(path.join(OUT, 'docs', name), text);
+/* search.mjs is not written beside the pages any more: it is bundled INTO
+   site.js below, one request instead of two on every page. Its text still
+   comes from the catalogue's build, so the box is still that box. */
 
 /* ---- ONE STYLESHEET ---------------------------------------------------
  *
@@ -1341,8 +1382,18 @@ for (const [name, text] of Object.entries(frame.files))
  * is that copy, done at build time and only for a name the theme actually
  * has. */
 const THEME = path.join(DOCS, '.vitepress', 'theme');
+/* THE SEARCH BOX RIDES IN THE SAME BUNDLE. search.mjs is the catalogue's
+   built module, borrowed as text above; it used to be written beside the
+   pages and loaded as a second module script on every one of them. A page
+   is one HTML, one stylesheet, one font and one script now. The module is
+   written to a scratch file and imported from a one-line entry, because
+   esbuild bundles files and the text arrived over the wire. */
+const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'site-js-'));
+fs.writeFileSync(path.join(scratch, 'search.mjs'), frame.files['search.mjs']);
+fs.writeFileSync(path.join(scratch, 'entry.mjs'),
+  `import ${JSON.stringify(path.join(ROOT, 'scripts', 'site-js', 'site.js'))};\nimport ${JSON.stringify(path.join(scratch, 'search.mjs'))};\n`);
 await bundle({
-  entryPoints: [path.join(ROOT, 'scripts', 'site-js', 'site.js')],
+  entryPoints: [path.join(scratch, 'entry.mjs')],
   outfile: path.join(OUT, 'docs', 'site.js'),
   bundle: true,
   format: 'esm',

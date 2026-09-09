@@ -28,11 +28,13 @@
     "link:samples": "node scripts/link-samples.mjs",
     "check:samples": "node scripts/link-samples.mjs --check",
     "test": "node --test test/*.test.mjs",
-    "check": "npm run test && npm run check:version && npm run build && npm run docs:build && npm run check:cross-site && npm run check:design && npm run check:examples && npm run check:conventions && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
+    "check": "npm run test && npm run check:version && npm run build && npm run docs:build && npm run check:cross-site && npm run check:design && npm run check:images && npm run check:examples && npm run check:conventions && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
     "llms": "node scripts/generate-llms.mjs",
     "search": "node scripts/generate-search.mjs",
     "check:version": "node scripts/check-version.mjs",
-    "build": "node scripts/generate-llms.mjs && node scripts/generate-search.mjs && node scripts/build-site.mjs .site"
+    "build": "node scripts/generate-llms.mjs && node scripts/generate-search.mjs && node scripts/build-site.mjs .site",
+    "check:images": "node scripts/check-images.mjs",
+    "fix:spelling": "node scripts/fix-spelling.mjs"
   },
   "devDependencies": {
     "@abap2ui5/linter": "^0.6.1",

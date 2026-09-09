@@ -104,7 +104,7 @@ diagnosis step of the [Quickstart](/get_started/quickstart#_3-first-launch).
 Saving an ABAP class does not change what the server runs — only **activation**
 does. So the preview reloads on activation:
 
-| `abap2ui5.reloadOn` | Behaviour |
+| `abap2ui5.reloadOn` | Behavior |
 | --- | --- |
 | `activation` (default) | **Ctrl+F3** saves, activates through your ABAP tooling and reloads. Activations done any other way are noticed on the server and reload too. A plain save only marks the preview *not activated* |
 | `save` | Reload on every save — for setups where saving already publishes the change |
@@ -260,8 +260,8 @@ can help while the chain is being written rather than after it:
   with run, preview and check on it: the list that says which thirty apps a
   repository has.
 - **Show Examples for this Control** — put the cursor on an `ele( )` call and
-  the [sample catalogue](https://abap2ui5.github.io/playground/samples/) is searched for
-  working uses of that control, richest first, opening at the line. It reads the catalogues
+  the [sample catalog](https://abap2ui5.github.io/playground/samples/) is searched for
+  working uses of that control, richest first, opening at the line. It reads the catalogs
   from `abap2ui5.mcp.reposRoot`, so it needs those checkouts.
 
 ### Starting from a template
@@ -303,7 +303,7 @@ Application Studio. Everything that needs no process and no socket works there:
 completion and hover, the property gate live while typing, the reconstructed
 XML view, the outline and event navigation, *Convert XML View to Builder
 Chain*, the snippets and the whole template gallery. The repository's
-`abap2ui5lint.jsonc` is honoured there too, so vscode.dev agrees with CI.
+`abap2ui5lint.jsonc` is honored there too, so vscode.dev agrees with CI.
 
 Desktop-only, and hidden from the palette on the web: the embedded preview with
 its proxy, traffic log, screenshot and pin; Ctrl+F3 activation and the ADT

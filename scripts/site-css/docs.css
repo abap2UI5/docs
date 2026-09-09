@@ -176,8 +176,8 @@
 .sidebar { font-size: 13px; line-height: 1.55; }
 .sidebar a, .sidebar summary span:not(.side-caret) { text-decoration: none; }
 
-.sidebar .side-item > a,
-.sidebar .side-item > span,
+.sidebar a.side-item,
+.sidebar span.side-item,
 .sidebar summary {
   display: flex;
   align-items: center;
@@ -186,15 +186,15 @@
   color: var(--fg-dim);
   cursor: pointer;
 }
-.sidebar .side-item > a { color: var(--fg-dim); }
-.sidebar .side-item > a:hover,
+.sidebar a.side-item { color: var(--fg-dim); }
+.sidebar a.side-item:hover,
 .sidebar summary:hover { color: var(--accent); }
 .sidebar a.here { color: var(--accent); font-weight: 600; }
 
 /* A section heading reads as one, whether it opens a page or only a list. */
 .sidebar > .side-group > summary,
-.sidebar > .side-item > a,
-.sidebar > .side-item > span { color: var(--fg); font-weight: 600; padding-top: 14px; }
+.sidebar > a.side-item,
+.sidebar > span.side-item { color: var(--fg); font-weight: 600; padding-top: 14px; }
 
 /* A ROW OF THIS MENU IS 20px TALL, AND ON A PHONE IT IS THE NAVIGATION. Below
    1680 this list is the drawer, and the drawer is the only way from one chapter
@@ -209,8 +209,8 @@
    costs the drawer its scrollbar, which it already knew how to use: the script
    scrolls it to the row you are on. */
 @media (pointer: coarse) {
-  .sidebar .side-item > a,
-  .sidebar .side-item > span,
+  .sidebar a.side-item,
+  .sidebar span.side-item,
   .sidebar summary { min-height: 36px; }
   /* A section heading is a summary with a LINK inside it - the caret opens the
      list, the words open the page - and a taller row leaves that link its own
@@ -521,8 +521,8 @@ html { scroll-padding-top: 62px; }
    section air, and the outline is sticky at 70px which sample.css then pads.
    Measured, not reasoned: all three read 96. */
 .sidebar > :first-child > summary,
-.sidebar > .side-item:first-child > a,
-.sidebar > .side-item:first-child > span { padding-top: 0; }
+.sidebar > a.side-item:first-child,
+.sidebar > span.side-item:first-child { padding-top: 0; }
 .manual .outline { padding-top: 24px; }
 
 /* ---- the Run bar under a runnable example ---------------------------
@@ -951,8 +951,8 @@ html { scroll-padding-top: 62px; }
  * does not - so the two started 16px apart, and a list where the leaves sit
  * left of their siblings reads as two lists. The leaf reserves the caret's
  * place instead: 10px of glyph, its 2px margin and the row's 4px gap. */
-.sidebar .side-item > a,
-.sidebar .side-item > span { padding-left: 16px; }
+.sidebar a.side-item,
+.sidebar span.side-item { padding-left: 16px; }
 
 /* ---- once an example is running ---------------------------------------
  *
@@ -1085,3 +1085,43 @@ html { scrollbar-gutter: stable; }
      sheet - the one thing paper needs said that a screen does not. */
   p, li, blockquote { orphans: 3; widows: 3; }
 }
+
+/* ---- the cost calculator ----------------------------------------------
+ *
+ * resources/cost_calculator: a sheet of sliders whose every line comes to
+ * the same number. Plain form controls in the page's own type, the accent
+ * on the slider's thumb and on the total, and nothing that needs the
+ * script - the page reads the same with the sliders dead. */
+.cost { margin: 20px 0; }
+.cost-row {
+  display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr) minmax(0, 13em);
+  gap: 6px 16px; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
+}
+.cost-row label { font-weight: 600; }
+.cost-row input[type="range"] { width: 100%; margin: 0; accent-color: var(--accent); }
+.cost-row output { text-align: right; font-variant-numeric: tabular-nums; color: var(--fg-dim); }
+.cost-row select {
+  grid-column: 2 / -1; justify-self: end; font: inherit; padding: 4px 8px;
+  border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: inherit;
+}
+@media (max-width: 620px) {
+  .cost-row { grid-template-columns: 1fr auto; }
+  .cost-row input[type="range"] { grid-column: 1 / -1; }
+}
+.cost-sheet { margin: 20px 0 0; padding: 0 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-sunken); }
+.cost-line {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
+}
+.cost-line:last-child { border-bottom: 0; }
+.cost-line small { display: block; font-size: 13px; color: var(--fg-dim); }
+.cost-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cost-total {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  margin: 16px 0 24px; padding: 16px 20px; border: 1px solid var(--accent); border-radius: 8px;
+}
+.cost-total > div { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--fg-dim); }
+.cost-total output { font-size: 28px; line-height: 1.15; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cost-total > div:first-child output { font-size: 40px; }
+@media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }

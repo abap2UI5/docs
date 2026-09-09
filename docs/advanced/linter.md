@@ -363,7 +363,7 @@ jobs:
 
 Findings are annotated onto the pull-request diff by default. Ask for
 `screenshots: build/screenshots` and the job also **photographs every checked
-view** — the review artefact CI could not produce before, and it runs whether
+view** — the review artifact CI could not produce before, and it runs whether
 the check passed or failed, because the failing run is where a reviewer most
 wants to see the view.
 

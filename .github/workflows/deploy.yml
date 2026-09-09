@@ -132,6 +132,9 @@ jobs:
       - name: shared design values
         if: ${{ !cancelled() }}
         run: npm run check:design
+      - name: images
+        if: ${{ !cancelled() }}
+        run: npm run check:images
       - name: ABAP examples
         if: ${{ !cancelled() }}
         run: npm run check:examples

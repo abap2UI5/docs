@@ -708,6 +708,10 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "License", link: "/resources/license" },
+              // What the license comes to for YOUR landscape: sliders for
+              // users, systems, apps and support tiers, and a sheet whose
+              // every line is zero. The front door's cost card opens it.
+              { text: "Cost Calculator", link: "/resources/cost_calculator" },
               { text: "Support", link: "/resources/support" },
               { text: "Contact", link: "/resources/contact" },
               // SIDEBAR copy — the nav bar has the same two entries verbatim,

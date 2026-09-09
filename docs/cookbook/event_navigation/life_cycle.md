@@ -95,7 +95,7 @@ abap2UI5 does not re-render the view automatically. After an event, if you do **
 Call `view_display( )` again only when the **structure** of the view needs to change: different controls, different bindings, a new dialog, navigation to a different screen. Rebuilding and re-sending the view on every event is wasteful and can cause visible flicker, lost scroll position, and lost focus.
 
 ### Returning From a Sub-App Hits `check_on_navigated`, Not `check_on_init`
-`check_on_init( )` is `abap_true` **exactly once** — on the very first call of an app instance. It does *not* fire again when control comes back to the app after a `nav_app_call( )` (a popup or a fullscreen sub-app) is closed with `nav_app_leave( )`. That return is signalled by `check_on_navigated( )`.
+`check_on_init( )` is `abap_true` **exactly once** — on the very first call of an app instance. It does *not* fire again when control comes back to the app after a `nav_app_call( )` (a popup or a fullscreen sub-app) is closed with `nav_app_leave( )`. That return is signaled by `check_on_navigated( )`.
 
 This trips up apps that build their view only under `check_on_init`:
 
@@ -140,7 +140,7 @@ Two consequences follow:
 
 ## Working Samples
 
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
 that use what this page describes. Each is a single class — pull the repository with
 [abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
 

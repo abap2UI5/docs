@@ -109,8 +109,8 @@ export function lastVisited(site, fallback, scope = fallback) {
  * item opens is still in this tab's history, the click (scripts/site-js/
  * site.js) traverses to it there instead. This is the half with no DOM in it:
  * which entry that is. The counterpart is src/shell/site-memory.mjs in
- * abap2UI5/playground, and the sample pages' inline copy - change one, change
- * the others.
+ * abap2UI5/playground, which the sample pages import as well - change one,
+ * change the other.
  */
 
 /** A page, as two history entries are compared: origin, path and query, a

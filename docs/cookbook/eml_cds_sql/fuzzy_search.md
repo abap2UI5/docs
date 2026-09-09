@@ -123,7 +123,7 @@ Typing `Muller` matches `Müller`, `Hambrug` matches `Hamburg` — the lower the
 
 ## Tuning the Threshold
 
-| Threshold | Behaviour                                              |
+| Threshold | Behavior                                              |
 | --------- | ------------------------------------------------------ |
 | `1.0`     | Exact match only — same as `LIKE` without wildcards    |
 | `0.9`     | Very strict — only tiny variations                     |

@@ -137,7 +137,7 @@ CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
 ENDCLASS.
 ```
 
-`check_app_prev_stack( )` is what greys out *leave* at the bottom of the stack —
+`check_app_prev_stack( )` is what grays out *leave* at the bottom of the stack —
 calling `nav_app_leave( )` with nothing to return to drops the user out of the
 app.
 
@@ -149,7 +149,7 @@ By default, the browser's Back button leaves the abap2UI5 page — it does not s
 
 ## Working Samples
 
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
 that use what this page describes. Each is a single class — pull the repository with
 [abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
 

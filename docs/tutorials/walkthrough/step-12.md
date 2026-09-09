@@ -379,4 +379,4 @@ these tests.
 That is the end of the walkthrough: one class, grown from a message box to a
 tested app in production. The [Cookbook](/cookbook/view/definition) covers
 every topic again as a reference chapter, and the
-[sample catalogue](https://abap2ui5.github.io/playground/samples/) continues from here.
+[sample catalog](https://abap2ui5.github.io/playground/samples/) continues from here.

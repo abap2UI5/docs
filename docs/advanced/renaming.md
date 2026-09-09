@@ -67,7 +67,7 @@ alone would let them collide; the segment is what keeps them apart.
 | `smpc` | [samples-controls](https://github.com/abap2UI5/samples-controls) — control samples |
 | `popup` | [popups](https://github.com/abap2UI5-addons/popups) — the popups [add-on](/resources/addons) |
 | `cci` | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) — custom controls shared with the community |
-| `ccc` | [custom-controls-customer](https://github.com/abap2UI5/custom-controls-customer) — the template for **your own** frontend artefacts |
+| `ccc` | [custom-controls-customer](https://github.com/abap2UI5/custom-controls-customer) — the template for **your own** frontend artifacts |
 
 The two tables share one rule and one exception. The rule: an object's segment
 tells you which repository it was pulled from. The exception: frozen code keeps

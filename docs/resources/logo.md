@@ -6,11 +6,11 @@ outline: [2, 4]
 Everything the project signs — the documentation, the repositories, a talk
 slide, a link shared on LinkedIn — uses the same red mark, and the same three
 animals turn up around it. This page is the collection: every asset the project
-puts its name on, the colours behind them, and what may be done with them.
+puts its name on, the colors behind them, and what may be done with them.
 
 The files are the originals. Download them from the links, and prefer them over
 a screenshot of one, a copy pasted out of a slide deck, or a copy re-uploaded
-somewhere else — those drift in colour and lose their transparency.
+somewhere else — those drift in color and lose their transparency.
 
 ## The Mark
 
@@ -44,7 +44,7 @@ that flattens a PNG onto black.
 
 If the surface behind it is white anyway, use [the mark](#the-mark) — a
 transparent file cannot go wrong on a white page, and an opaque one shows its
-edges the day the page turns grey.
+edges the day the page turns gray.
 
 ## Favicon
 
@@ -117,8 +117,8 @@ The transparent copies are cut out along the drawing, not along its white. The
 white behind the sheep and the white of its wool are the same white, so the
 background was found by flooding in from the border — white that no path from
 the edge reaches is inside the animal and stays: the wool, the monitor, the
-keyboard. The soft grey edge these drawings carry is dropped rather than kept
-half-transparent, which is what would otherwise show as a grey halo on every
+keyboard. The soft gray edge these drawings carry is dropped rather than kept
+half-transparent, which is what would otherwise show as a gray halo on every
 background that is not white.
 
 ### Sloth
@@ -134,7 +134,7 @@ description of how a framework like this comes about.
 | --- | --- |
 | Use | [`sloth_brand.png`](/mascots/sloth_brand.png) — 400 × 400, PNG, transparent |
 | On white | [`sloth_brand_white_back.png`](/mascots/sloth_brand_white_back.png) |
-| As drawn | [`sloth.jpg`](/mascots/sloth.jpg) — a JPEG, so it carries compression artefacts along the outline; the copies above are PNGs and add none of their own |
+| As drawn | [`sloth.jpg`](/mascots/sloth.jpg) — a JPEG, so it carries compression artifacts along the outline; the copies above are PNGs and add none of their own |
 | Red | ≈ `#F5011D` → `#D03C4A` |
 
 ### Dinosaur
@@ -171,18 +171,18 @@ What is white inside an animal stays white — the wool, the screen, the keys.
 On a dark background that white is what you see, because it is part of the
 drawing and not the surface behind it.
 
-## Colours
+## Colors
 
 **One red, and it is the mark's.** The circle in the wordmark, the red ink of
 every mascot above — one value, and no second shade for a hover or a pressed
 state anywhere it is used.
 
 The mark is not the same thing as the interface around it, and the two carry
-different colours on purpose. The three sites this project publishes — this
+different colors on purpose. The three sites this project publishes — this
 documentation, the [playground](https://abap2ui5.github.io/playground/) and the
-[sample catalogue](https://abap2ui5.github.io/playground/samples/) — share one
+[sample catalog](https://abap2ui5.github.io/playground/samples/) — share one
 bar, one palette and one accent, and that accent is **SAP blue**: it is the
-colour of the platform these apps run on, it is what the playground fills its
+color of the platform these apps run on, it is what the playground fills its
 Run button with, and it clears AA for body text in both themes, which the red
 does not do on a dark ground. So a link on this page is blue and the mark at
 the top of it is red, and neither is a mistake.
@@ -194,23 +194,23 @@ the top of it is red, and neither is a mistake.
 | <span style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.2em;border-radius:3px;background:#0A6ED1"></span> Blue | `#0A6ED1` | the accent of all three sites — links, buttons, the hero name; `#4AA3FF` in dark |
 
 A link under a cursor still gains an underline rather than a second shade, and
-a button still keeps its colour: that rule was never about which colour it was.
+a button still keeps its color: that rule was never about which color it was.
 
 The site's own tokens come from the playground's own stylesheet, which this
 build borrows whole (`scripts/site-css/docs.css` adds what only the manual
 needs), so that the four stay one palette. Take the hex values from this table rather than picking them out of a
-screenshot with a colour dropper: a PNG scaled in a browser hands you an
-interpolated pixel, which is a colour that appears nowhere in the brand.
+screenshot with a color dropper: a PNG scaled in a browser hands you an
+interpolated pixel, which is a color that appears nowhere in the brand.
 
 ## Using the Mark
 
 abap2UI5 is [MIT licensed](/resources/license), and that covers these files
 along with the rest of the repository. The rules below are therefore a request,
-not a licence term — but they are what keeps the mark recognisable:
+not a license term — but they are what keeps the mark recognizable:
 
 - **Use it to refer to the project.** A talk, a blog post, a slide about your
   integration, a badge in your readme — no permission needed.
-- **Do not redraw or recolour it.** The red is `#D03C4A`, the circle is a
+- **Do not redraw or recolor it.** The red is `#D03C4A`, the circle is a
   circle, the wordmark is not retyped in another font. Scale it; that is all.
 - **Do not stretch it.** Both files are close to square but not exactly square.
   Set one dimension and let the other follow.

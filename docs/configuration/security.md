@@ -103,7 +103,7 @@ abap2UI5 sets these on every response, out of the box:
 | Header | Value | What it does |
 |---|---|---|
 | `X-Frame-Options` | `SAMEORIGIN` | forbids cross-origin framing. This, not the CSP, is where clickjacking protection lives: `frame-ancestors` in a `<meta>` CSP is ignored by browsers |
-| `X-Content-Type-Options` | `nosniff` | the browser honours the declared content type instead of guessing one |
+| `X-Content-Type-Options` | `nosniff` | the browser honors the declared content type instead of guessing one |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | a cross-origin request leaks the origin, never the path or query |
 | `Permissions-Policy` | `geolocation=(self), microphone=(self), camera=(self), payment=(), usb=()` | the device APIs abap2UI5 offers stay available to the app itself; payment and USB are off |
 | `cache-control` / `Pragma` / `Expires` | `no-cache, no-store, must-revalidate` / `no-cache` / `0` | the roundtrip responses carry application state — nothing about them may be cached |
@@ -131,7 +131,7 @@ TLS, and abap2UI5 cannot see from inside the ICF node whether TLS terminated in
 front of it — the request hands out the path, the parameters and the `Host`,
 never the scheme.
 
-COOP is the one with a visible symptom. A browser honours it on a
+COOP is the one with a visible symptom. A browser honors it on a
 **trustworthy origin** only (`https://…`, or a `localhost` host), so on a
 plain-HTTP system it is dropped and the console shows a red entry on every app
 start:

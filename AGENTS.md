@@ -30,7 +30,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-playground.mjs` | The Run-button bookkeeping: every complete app class either gets a button from `playground.mjs` or carries a `<!-- playground: no Run button — … -->` marker above its fence saying why it cannot run; a stale marker fails as loudly as a missing one. `--list` prints the deliberate exclusions with both reasons |
 | `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
-| `scripts/build-site.mjs` | **What is published.** Writes all 166 pages, the 404, the sitemap and one stylesheet; borrows the bar, its script, `catalogue.css`, `sample.css`, `search.mjs` and `abap-highlight.mjs` from a built playground checkout or from the published site; refuses to finish on a dead internal link |
+| `scripts/build-site.mjs` | **What is published.** Writes all 167 pages, the 404, the sitemap and one stylesheet; borrows the bar, its script, `catalogue.css`, `sample.css`, `search.mjs` (bundled INTO `site.js`, so a page loads one module rather than two) and `abap-highlight.mjs` from a built playground checkout or from the published site; refuses to finish on a dead internal link |
 | `scripts/site-css/docs.css` | The manual's own layer over the catalogue's stylesheet — the chapter menu, the outline, prev/next, the Run panel, the skip link. Joined with the two borrowed files and minified into one `site.css` at build time |
 | `scripts/site-js/site.js` | The entry point for everything a page does beyond its markup. Bundled with the four modules it imports (below) into one `site.js` by esbuild — six requests three deep became one |
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
@@ -43,16 +43,21 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/.vitepress/theme/Crumbs.vue` | The trail above the title on every page of the manual — "Documentation › Cookbook › Model". Rendered into the default theme's `doc-before` slot, so it is the doc column's first line and lands where the sample catalogue's own crumb line lands, to the pixel. `theme/crumbs.js` is the half with no Vue in it: it walks `themeConfig.sidebar` against the page, so the trail cannot drift from the navigation the way the bar's old Guide dropdown did. Pinned by `test/crumbs.test.mjs`, which walks the real sidebar |
 | `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
 | `scripts/check-design.mjs` | The palette, the type and the radii the four bars share, against `abap2UI5/playground`'s copy of them — needs a checkout (`PLAYGROUND_HOME`, `.playground`, `../playground`) or the network, and fails rather than passing without one. The table of what is shared, and both spellings of each value, is `scripts/lib/design.mjs` |
+| `scripts/check-images.mjs` | Every image under `docs/public`: a screenshot is WebP, a deliverable is one of the PNGs the logo page hands out, none is over its budget, and the build can measure each of them - `scripts/lib/images.mjs` is the one reader both this gate and `build-site.mjs` use, so a format the build cannot size fails here rather than shifting the page there |
+| `scripts/lib/html.mjs` | `stripComments( )`: every finished page leaves the build without the HTML comments its sources are written with - 418 kB across the site, a tenth of every page's compressed weight, read by nobody - outside `<script>`, because a script's text is what its hash in the policy is taken from |
+| `scripts/lib/prose.mjs` | What on a page is PROSE - not fenced or inline code, not a link target, a tag, a comment, a URL, a generated block or a frontmatter setting - and the house spelling of it, which is American: the British forms as patterns, each with the American form it becomes. `test/spelling.test.mjs` is the gate; `scripts/fix-spelling.mjs` (`npm run fix:spelling`) rewrites exactly the words the gate names |
+| `docs/.vitepress/theme/cost-calculator.js` | The cost calculator (`resources/cost_calculator`): sliders whose readouts follow them, a sheet that echoes the readouts, amounts in the currency chosen. `theme/cost-model.js` is the half with no DOM in it - the reading of a position, and the total, which is zero for any input; `test/cost-calculator.test.mjs` pins the arithmetic and holds the page's written readouts to what the script would write |
+| `scripts/lib/csp.mjs` | The Content-Security-Policy every page is published under, as a `<meta>` because GitHub Pages sets no headers of ours: this origin, the playground beside it for the Run panel, and the two inline scripts by hash - the theme line and the borrowed menu script, hashed from the very string the build writes. `build-site.mjs` reads every finished page back for an inline script that is neither, and refuses to publish it |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:cross-site + check:design + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:cross-site + check:design + check:images + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but twelve things in
-it are decidable, and all twelve are decided before a merge:
+A documentation repository has no compiler for its prose, but thirteen things
+in it are decidable, and all thirteen are decided before a merge:
 
 | | |
 |---|---|
@@ -68,6 +73,7 @@ it are decidable, and all twelve are decided before a merge:
 | `check:design` | the values the four bars are made of — the seven palette colours, the two type stacks, the two radii — against the copy [abap2UI5/playground](https://github.com/abap2UI5/playground) keeps, in **both** schemes. They are copied by hand on purpose (a stylesheet fetched across two deployments is a request in front of the first paint), and until this gate nothing compared the copies: they agreed because whoever touched one remembered the other. One had already drifted — two font stacks leading with different families, which is the same face on macOS and Windows and two different ones on Linux, so the same four words in the same bar measured 59/122/78/97px here and 65/141/87/110 there. It compares the EFFECTIVE value (a property the dark block does not redeclare keeps its light one), because the two sides switch schemes differently: `.dark` here, `[data-theme]` over there.
 
 **What it now guards is the second opinion, not the site.** Since the switch, the published pages link the playground's own `catalogue.css`, borrowed whole at build time — so the palette cannot drift from the playground's there, by construction. `style.css` is VitePress's, and VitePress is no longer served. Keep the gate: it is what says so when somebody edits `style.css` expecting the site to change |
+| `check:images` | every image under `docs/public`, against the three things a page can afford and the one it cannot: a screenshot is WebP (the PNG captures were 200 to 335 kB each, 2.9 MB across the manual, on pages of 20 kB of text; the same captures as WebP are a fifth of that), a deliverable is one of the PNGs the logo page hands out, nothing is over its budget, and the build can measure every one - an image it cannot size gets no width and height and moves the page when it lands |
 | `check:samples` | the **Working Samples** blocks and the source links a page writes by hand, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
 
 **All four walking gates carry a floor.** A gate that checked nothing reports
@@ -79,7 +85,7 @@ page layout or the builder name is the likely cause. `check:cross-site` carries
 the same floor twice over: no HTML in `dist` at all, and no cross-site link on
 a site whose bar carries three of them on every page.
 
-The twelve are written out in **three** places, and all three have to name the
+The thirteen are written out in **three** places, and all three have to name the
 same set: `package.json`'s `check` script, `.github/workflows/check.yml` for a
 pull request, and `.github/workflows/deploy.yml` before the site is published.
 `check.yml` runs them in the script's order; `deploy.yml` cannot, because it
@@ -540,6 +546,19 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   went. The `// nav` / `// sidebar` markers left in the sidebar are the scar of
   the duplication that dropdown cost: two of its entries stood twice in one
   file, and a replace-first edit hit the wrong one and looked like it worked.
+- **The prose is American English, and a test holds it to that.** Behavior,
+  color, license, catalog, optimize - because SAP writes "authorization",
+  "Customizing" and "behavior definition", and a manual spelled the other way
+  teaches a reader to search for words their system does not use. The pages
+  were mixed for years; `test/spelling.test.mjs` now names every British form
+  in the PROSE of every page, and `npm run fix:spelling` rewrites exactly
+  those words. Prose only: fenced and inline code, link targets, tags,
+  comments, URLs, the generated blocks and the frontmatter's settings are
+  invisible to both (`scripts/lib/prose.mjs`), so `src/catalogue/` stays the
+  path it is while "the sample catalog" is the words. A word that is `-ise`
+  in American English too and is not yet on the list there - the test will
+  name it - goes on the list, not in the page. This file and the code are not
+  the manual, and stay as they are written.
 - **A fenced ABAP example is code, and it is checked.** `check:examples`
   compiles it and lints the view. It also refuses `z2ui5_cl_xml_view=>` — the
   frozen builder — unless the page carries the migration banner, and refuses a

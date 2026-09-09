@@ -14,4 +14,4 @@ For a smooth rollout, follow these steps:
 
 ## Transport
 Install the project via abapGit on your development system. Then use the standard transport process to deploy to production:
-![Transport process from development to production via abapGit](/configuration/image-3.png){ width=80% }
+![Transport process from development to production via abapGit](/configuration/image-3.webp){ width=80% }

@@ -19,7 +19,7 @@ Elements** fixes it at activation time, as annotations on CDS. **abap2UI5**
 fixes it when the request is answered, as a string an ABAP class produced for
 this request — and the next request may answer differently. Everything else
 follows from where the view sits: what is deployed per app, what a screen
-costs in artefacts, what can still change at runtime, and which language it is
+costs in artifacts, what can still change at runtime, and which language it is
 all written in.
 
 ## Why
@@ -81,7 +81,7 @@ Releases, clean core, deployment shapes, and the choice against the alternatives
 | [#30 On-Stack or Side-by-Side](/advanced/insights/30-on-stack-or-side-by-side) | two places to run, one class |
 | [#31 One App, Many Systems](/advanced/insights/31-one-app-many-systems) | a SaaS shape in ABAP |
 | [#32 From ITS to abap2UI5](/advanced/insights/32-from-its-to-abap2ui5) | twenty-seven years in one line |
-| [#33 RAP or abap2UI5?](/advanced/insights/33-rap-or-abap2ui5) | behaviour against screen |
+| [#33 RAP or abap2UI5?](/advanced/insights/33-rap-or-abap2ui5) | behavior against screen |
 | [#34 UI5 Freestyle or abap2UI5?](/advanced/insights/34-freestyle-or-abap2ui5) | where the browser has to be smart |
 | [#35 Low-Code or abap2UI5?](/advanced/insights/35-low-code-or-abap2ui5) | designer against code |
 | [#36 Written for Agents](/advanced/insights/36-written-for-agents) | the consequence nobody designed |

@@ -7,7 +7,7 @@ usually written again for the other.
 
 abap2UI5 asks very little of the release it runs on, and that is not an
 accident of design — it follows from what the framework actually does. It
-produces two strings and moves them over HTTP. There is no CDS artefact, no RAP
+produces two strings and moves them over HTTP. There is no CDS artifact, no RAP
 object, no OData service in the middle, so there is almost nothing that a given
 release has to support.
 

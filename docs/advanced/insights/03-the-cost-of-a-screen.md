@@ -1,13 +1,13 @@
 # #3 The Cost of a Screen
 
 An ABAP team needs a screen. Not an application — a screen. A maintenance view
-for a customising table nobody wants to explain in SM30. A cockpit showing what
+for a customizing table nobody wants to explain in SM30. A cockpit showing what
 last night's job actually did. An approval step for one department.
 
 The logic behind such a screen is often thirty lines. The cost of putting a
 user interface in front of those thirty lines is not, and it does not scale
 down with them: a data model to declare, a service to define, a binding, an
-annotation model, a frontend artefact, a deployment — and an object that now
+annotation model, a frontend artifact, a deployment — and an object that now
 exists forever, has to be transported, has to survive an upgrade, and one day
 has to be deprecated by someone who never met the department that asked for it.
 

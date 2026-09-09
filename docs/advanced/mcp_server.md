@@ -41,7 +41,7 @@ mode), Claude Desktop.
 
 ## Setting it up
 
-The tools need different things, so the setup is **levelled**: stop at the
+The tools need different things, so the setup is **leveled**: stop at the
 level whose tools you want. Each level adds the ones below it, and a tool whose
 prerequisites are missing answers with a message naming what it needs rather
 than failing — the server starts either way.
@@ -72,7 +72,7 @@ That install is about 45 MB, and 19 MB of it is a Playwright driver only
 — `npm i -D @abap2ui5/render-runtime && npx playwright install chromium` in the
 linter checkout. `validate_view`'s property gate needs neither.
 
-### Level 2 — the sample catalogues and deploying (about 110 MB)
+### Level 2 — the sample catalogs and deploying (about 110 MB)
 
 Adds `examples`, `capabilities`, `app_guide`, `scaffold_app`,
 `generation_rules`, `pitfalls`, `scope_of` and `deploy_app`.
@@ -88,11 +88,11 @@ cd abap2UI5 && npm ci && cd ../samples-controls && npm ci
 `examples` needs only the clones — no install — and it is the cheapest useful
 thing here. It answers *"has somebody already built a value help, a tree,
 navigation between two apps?"* out of **every app the three repositories
-hold** — several hundred of them, and the catalogue below says how many
+hold** — several hundred of them, and the catalog below says how many
 today — and hands back a class to read rather than a snippet to trust.
 Any one of the three is enough to start; a missing clone is reported in the
 answer, not fatal. All three are sources of the one
-[sample catalogue](https://abap2ui5.github.io/playground/samples/), which is where to read what each covers —
+[sample catalog](https://abap2ui5.github.io/playground/samples/), which is where to read what each covers —
 [Learn](https://abap2ui5.github.io/playground/samples/?src=learn),
 [Controls](https://abap2ui5.github.io/playground/samples/?src=controls),
 [Stack](https://abap2ui5.github.io/playground/samples/?src=stack).
@@ -162,9 +162,9 @@ deliberately does not have: your real systems.
 | `capabilities` | Whether abap2UI5 can express a UI5 feature **at all**, from the verified capability map. The question to ask before writing a line of ABAP |
 | `app_guide` | **How to build an app**, live from the framework checkout: the app class template, lifecycle, the view-builder chain, binding, events, popups, navigation, portability |
 | `scaffold_app` | The files a new project starts from, live from app-template — both gate configs, the CI workflow, the abapGit metadata, an `AGENTS.md` and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
-| `examples` | Search the three sample catalogues for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
+| `examples` | Search the three sample catalogs for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
 | `generation_rules` | The rulebook for porting a UI5 demo-kit sample into the samples-controls corpus — a different job from `app_guide` |
-| `pitfalls` | The catalogues of defects **a green run does not catch**: `{ area: "abap" }` for abapGit import, activation, extended check, downport and runtime; `{ area: "view" }` for the oldest UI5 release. Every entry is a defect that actually shipped |
+| `pitfalls` | The catalogs of defects **a green run does not catch**: `{ area: "abap" }` for abapGit import, activation, extended check, downport and runtime; `{ area: "view" }` for the oldest UI5 release. Every entry is a defect that actually shipped |
 | `scope_of` | In/out-of-scope verdict for a UI5 control (since ≤ 1.71, not deprecated) |
 | `validate_view` | **Seconds, not minutes**: the [linter](/advanced/linter)'s gates, from ABAP source or raw XML, judged by your project's own `abap2ui5lint.jsonc`. Findings come with severity, message, line and column — and what each rule that fired *means*, so interpreting one needs no web search |
 | `screenshot_view` | **See the view in seconds**, with no build and no backend: reconstructed, rendered and returned as an image. Several viewports in one session, any theme, and preview data for the tables a `SELECT` would fill |
@@ -176,7 +176,7 @@ deliberately does not have: your real systems.
 
 Two of these look similar and are not: `screenshot_view` photographs the
 **view** (seconds, no backend, mock data), `run_app` photographs the **running
-app** (a build, a real roundtrip, real behaviour). They cost three orders of
+app** (a build, a real roundtrip, real behavior). They cost three orders of
 magnitude apart, and most iterations should end at the first.
 
 ## The intended loop
@@ -209,7 +209,7 @@ magnitude apart, and most iterations should end at the first.
   booting needs no network. Theme CSS is the exception: with network access it
   loads from the CDN and screenshots come out styled; without, apps render
   unstyled but structurally complete. `A2UI5_MCP_OFFLINE=1` forces the
-  hermetic behaviour.
+  hermetic behavior.
 - **Deployment to a real system** stays what it always was: abapGit. This
   server is the inner development loop.
 

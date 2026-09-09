@@ -97,7 +97,7 @@ On older ABAP releases without `cl_web_http_utility`, use `cl_http_utility=>if_h
 
 ## Working Samples
 
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
 that use what this page describes. Each is a single class — pull the repository with
 [abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
 

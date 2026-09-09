@@ -12,7 +12,7 @@ On the frontend, abap2UI5 behaves like a standard UI5 app, so the usual tools an
 
 ### Developer Tools
 Press `Ctrl+F12` to open the built-in **Developer Tools** of abap2UI5:
-![Developer Tools showing XML View and Data Model inspection](/configuration/debug.png)
+![Developer Tools showing XML View and Data Model inspection](/configuration/debug.webp)
 Tabs cover the whole roundtrip: **Error** and **Log**, the **System** info, the **Previous Request** and **Response**, the app's **Source Code**, and for every view slot (main, popup, popover, nested) the rendered **View** XML and its **Model** data.
 
 The footer offers **Logout**, **Restart**, a jump to **ADT**, and an **Export** that bundles everything — including the running app's ABAP class source — into one blob you can attach to a bug report. Error popups also carry a copy-to-clipboard button for the same purpose.

@@ -23,7 +23,7 @@ Hotwire and LiveView all sit.
 
 *Multi-page, single-page, hypermedia-driven — and what each has to rebuild.*
 
-That is the same division of labour SAP GUI had. PBO builds the screen, the
+That is the same division of labor SAP GUI had. PBO builds the screen, the
 user acts, PAI receives the event and decides what happens next. The dialog
 step moved to AJAX and the screen became an XML view, but the shape of the
 conversation did not change — which is why the flow reads as familiar to
@@ -33,7 +33,7 @@ written SPAs.
 The consequence is what matters here. There is **one** shell, and every
 app in the system shares it. Not one deployed frontend per app, drifting to a
 different UI5 version, a different bootstrap, a different set of libraries,
-each pinned to whenever someone last had time to touch it. One artefact to
+each pinned to whenever someone last had time to touch it. One artifact to
 keep current, and every app is current with it.
 
 A frontend that knows nothing about the app is a frontend that never needs

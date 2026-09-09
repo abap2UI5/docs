@@ -5,7 +5,7 @@ samples:
 ---
 # Hello World
 
-Just copy the following class into your system:
+Copy this class into your system:
 
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
@@ -39,14 +39,14 @@ https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_app_hello_world
 ```
 
 That is the form a browser bookmark, a Launchpad tile and every sample
-catalogue use — the sample pages all say "start it with `?app_start=<class>`"
+catalog use — the sample pages all say "start it with `?app_start=<class>`"
 and mean exactly this.
 
 If launching reports `The app 'ZCL_APP_HELLO_WORLD' does not exist in the
 system.`, the framework could not instantiate the class: a typo in the name, or
 the class is not activated yet. Anything that goes wrong *after* this point —
 an app that renders empty, a binding that does not update, an error view on a
-roundtrip — is catalogued with symptom, cause and fix in
+roundtrip — is cataloged with symptom, cause and fix in
 [Common Failures](/cookbook/troubleshooting/common_failures).
 
 ::: tip **Naming**
@@ -56,7 +56,7 @@ Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` pref
 ## A Real Screen, an Event and Data Exchange
 
 A message box is not an app. This second class is still one class, and it has
-everything a real one has — a view, data travelling both ways, and an event:
+everything a real one has — a view, data traveling both ways, and an event:
 
 ```abap
 CLASS zcl_app_hello_screen DEFINITION PUBLIC.
@@ -118,7 +118,7 @@ the app's source code, the rendered view XML, the model data, the
 request/response pair and the error log. It is the first place to look when
 something does not render the way you expected:
 
-![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.png)
+![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.webp)
 
 ## Next: Build Something
 
@@ -132,7 +132,7 @@ run in the browser.
 
 ## Working Samples
 
-Complete apps from the [sample catalogue](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
+Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
 that use what this page describes. Each is a single class — pull the repository with
 [abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
 

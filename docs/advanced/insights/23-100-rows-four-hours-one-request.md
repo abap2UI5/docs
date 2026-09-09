@@ -31,7 +31,7 @@ any other table.
 **One request.** Every click is one HTTP roundtrip plus one read and one write
 of the draft. The cost of a click is therefore the size of the instance and the
 size of the model, and the two are the same attributes. An app that carries a
-catalogue of ten thousand rows in an attribute pays for it on every click, in
+catalog of ten thousand rows in an attribute pays for it on every click, in
 either section. An app that re-reads what it needs pays a `SELECT`, which the
 database was built for.
 
