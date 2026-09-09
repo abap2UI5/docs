@@ -3,7 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_498
 ---
-# App State
+# App State, Share, Bookmark
 
 A link that restores an app **exactly as it stands** — every value the user has
 typed, the row they selected, the tab they opened — not just the app it was.

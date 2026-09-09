@@ -290,7 +290,10 @@ document.addEventListener('click', (e) => {
      navigation bug above and none of it is the reader's. A store that cannot
      be trusted is worse than an empty one. */
   const KEY = 'abap2ui5-playground:docs-sections';
-  const groups = [...document.querySelectorAll('.sidebar details[data-key]')];
+  /* A section is a checkbox followed by its group (build-site.mjs): the box
+     is what opens it, the group carries the key it is remembered by. */
+  const groups = [...document.querySelectorAll('.sidebar .side-group[data-key]')];
+  const boxOf = (g) => g.previousElementSibling;
   if (!groups.length) return;
   /* key -> true when the reader opened that section, false when they closed
      it. A section they never touched is simply absent, and keeps whatever
@@ -303,11 +306,11 @@ document.addEventListener('click', (e) => {
   };
   const chosen = read();
   for (const g of groups) {
-    if (Object.prototype.hasOwnProperty.call(chosen, g.dataset.key)) g.open = !!chosen[g.dataset.key];
+    if (Object.prototype.hasOwnProperty.call(chosen, g.dataset.key)) boxOf(g).checked = !!chosen[g.dataset.key];
   }
   /* ...and the way to where you are, whatever was stored. */
-  const here = document.querySelector('.sidebar a.here');
-  if (here) for (let el = here.closest('details'); el; el = el.parentElement?.closest('details')) el.open = true;
+  const here = document.querySelector('.sidebar .here');
+  if (here) for (let el = here.closest('.side-group'); el; el = el.parentElement?.closest('.side-group')) boxOf(el).checked = true;
 
   /* ...AND THE MENU IS SCROLLED TO IT. The manual is 166 rows deep and the
    * menu is its own scrolling box, which every page opened at the top of. A
@@ -332,14 +335,16 @@ document.addEventListener('click', (e) => {
       localStorage.setItem(KEY, JSON.stringify(chosen));
     } catch { /* a browser that refuses storage keeps the build's own shape */ }
   };
-  /* The CLICK, not the toggle: a click on a summary is the reader, and it is
-     the only thing that is. Reading the state on the next task, once the
-     browser has done the opening the click asked for - and a keyboard reaches
-     a summary through a click too, so Enter and Space are the same path. */
-  box?.addEventListener('click', (e) => {
-    const group = e.target.closest?.('summary')?.parentElement;
+  /* THE CHANGE, not the state: a box that changes is the reader, and it is
+     the only thing that is - nothing above writes through `change`, and a
+     keyboard reaches the box the same way a click on its caret does. */
+  box?.addEventListener('change', (e) => {
+    const toggle = e.target;
+    if (!toggle.matches?.('.side-toggle')) return;
+    const group = toggle.nextElementSibling;
     if (!group || !groups.includes(group)) return;
-    setTimeout(() => { chosen[group.dataset.key] = group.open; write(); }, 0);
+    chosen[group.dataset.key] = toggle.checked;
+    write();
   });
 })();
 /* ---- copy a listing ---------------------------------------------------
@@ -370,3 +375,33 @@ document.addEventListener('click', async (e) => {
   } catch { /* a browser that refuses the clipboard: the text is still selectable */ }
 });
 
+/* ---- the front door's example folds on a phone --------------------------
+ *
+ * 137 lines of ABAP under a thumb are three screens of scrolling before
+ * anything else on the page; on a desk the running frame replaces the
+ * listing (playground.js), and on a phone the example does not start
+ * itself, so the listing is what a phone sees. Folded to its first screen,
+ * with a button that says how much is behind it. Coarse pointer only - a
+ * desk never sees the fold, and a reader who presses Run gets the frame
+ * over the whole thing either way. */
+(function foldOnPhone() {
+  if (!matchMedia?.('(pointer: coarse)').matches) return;
+  for (const play of document.querySelectorAll('.a2ui5-play[data-play="edit"]')) {
+    const block = play.querySelector('div[class*="language-"]');
+    if (!block) continue;
+    const lines = block.querySelectorAll('.line').length;
+    if (lines < 40) continue;
+    play.classList.add('is-folded');
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'a2ui5-play-fold';
+    const say = () => { button.textContent = play.classList.contains('is-folded') ? `Show all ${lines} lines` : 'Show less'; };
+    say();
+    button.addEventListener('click', () => {
+      play.classList.toggle('is-folded');
+      say();
+      if (play.classList.contains('is-folded')) block.scrollIntoView({ block: 'start' });
+    });
+    block.after(button);
+  }
+})();

@@ -30,14 +30,14 @@ A finished app looks like any other UI5 app, because it is one — a selection s
 
 ![An abap2UI5 app: a selection form above a table of invoices, with a dialog editing one row](/tutorials/walkthrough-preview.webp)
 
-→ *The [Tutorial](/tutorials/walkthrough/) grows exactly this app in ten steps, each one a complete class you can run in the browser — then takes it to production, and under unit tests*
+→ *The [Tutorial](/tutorials/walkthrough/) grows exactly this app in twelve steps, each one a complete class you can run in the browser — then takes it to production, and under unit tests*
 
 ## Background
 Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework used by ABAP developers worldwide. The framework absorbs frontend complexity, so you can focus on business logic with your existing ABAP skills.
 
 → *See the [Getting Started Guide](/get_started/quickstart) for step-by-step setup*
 
-→ *See [Sample Apps](/get_started/next#sample-apps) to watch abap2UI5 in action*
+→ *See [Sample Apps](https://abap2ui5.github.io/playground/samples/) to watch abap2UI5 in action*
 
 ## Why abap2UI5?
 
@@ -135,44 +135,21 @@ Embed your apps into:
 - Tiles on S/4 Public Cloud
 - Build Work Zone Websites on BTP
 
-### Installation
-Getting started is easy:
-1. Import the project via abapGit
-2. Set up an HTTP service for browser communication
-3. Start building!
+## Tooling, Community
 
-No system at hand? The Quickstart opens with two ways to try abap2UI5 in the
-browser — the playground and the live demo — before anything is installed.
+None of the tooling is required — an app is one class in your system, and ADT
+is enough. What exists is worth the ten minutes: a [linter](/advanced/linter)
+that checks a view without a system, an [MCP server](/advanced/mcp_server) that
+lets an assistant build and *look at* the app, and a
+[VS Code extension](/advanced/vscode) that runs it on `F9`. An app is a single
+ABAP class, in one language, that an assistant can also verify — which makes
+abap2UI5 unusually well suited to being written with one.
 
-→ *See the [Quickstart Guide](/get_started/quickstart) for full instructions*
+→ *See [Tooling](/advanced/tooling) for the setup, and [Developing with AI](/get_started/ai) for the assistant workflow*
 
-## Tooling
-
-None of it is required — an app is one class in your system, and ADT is enough. What exists is worth the ten minutes: a [linter](/advanced/linter) that reconstructs the UI5 view out of the ABAP that builds it and reports what UI5 does not have, without an SAP system; a [VS Code extension](/advanced/vscode) that runs the app next to the code on `F9`; and an [MCP server](/advanced/mcp_server) that lets an AI assistant build an app *and look at the result*.
-
-That last point is not a novelty: an app is a single ABAP class, in one language, that an assistant can also verify — which makes abap2UI5 unusually well suited to being written with one.
-
-→ *See [Tooling](/get_started/tooling) for the setup, and [Developing with AI](/get_started/ai) for the assistant workflow*
-
-## Community
-<br>
-
-### Support
-The community offers support. Open an issue on GitHub or join the abap2UI5 Slack channel to get help.
-
-→ *See the [Support page](/resources/support) for more options*
-
-### Contribution
-Contributions are always welcome. Whether you fix bugs, build features, or improve the docs, every contribution helps the project thrive.
-
-→ *See the [Contribution Guide](/resources/contribution) to learn how to get involved*
-
-### Sponsor
-Volunteers maintain abap2UI5. If you or your company benefits from the project, please consider sponsoring it.
-
-→ *Read more about [sponsorship opportunities](/resources/sponsor)*
-
-### In Production Elsewhere
-Companies, workshops and open-source projects already run on abap2UI5, with the system release and the use case named.
-
-→ *See [Who Uses abap2UI5?](/resources/who_uses) — and add your own scenario*
+Volunteers maintain abap2UI5, and the community is where help comes from:
+[Support](/resources/support) on GitHub and Slack, the
+[Contribution Guide](/resources/contribution) for fixing and building, and
+[sponsorship](/resources/sponsor) if the project saves yours time. Companies,
+workshops and open-source projects already running on it are listed on
+[Who Uses abap2UI5?](/resources/who_uses) — add your own scenario there.

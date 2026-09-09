@@ -132,7 +132,7 @@ Tips for working with views:
 - The [abap2UI5 linter](/advanced/linter) rebuilds the view
   from your chain and reports unknown controls, properties, enum values and
   `@since` violations — no SAP system involved.
-- See the [samples repository](/get_started/next#sample-apps) for ready-made
+- See the [samples repository](https://abap2ui5.github.io/playground/samples/) for ready-made
   examples to copy and adapt.
 
 ::: warning Respect the UI5 Control Aggregation Rules

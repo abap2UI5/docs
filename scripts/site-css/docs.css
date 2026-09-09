@@ -178,29 +178,32 @@
 
 /* ---- the sidebar, collapsible with no script ------------------------
  *
- * A section is a <details> and its label the <summary>, so the browser does
- * the opening and closing. The marker is our own triangle - the native one is
- * a different glyph on every platform and sits outside the row. */
+ * A section is a checkbox, a row and a list (build-site.mjs, sidebarFor): the
+ * caret is a label for the box, the words are the section's own link, and
+ * the list under them shows while the box is checked. It was a <details>
+ * with the link inside its <summary> - a control inside a control - and
+ * this keeps what that had, the browser doing the opening and closing with
+ * no script, without the two controls in one row. The marker is our own
+ * triangle. */
 .sidebar { font-size: 13px; line-height: 1.55; }
-.sidebar a, .sidebar summary span:not(.side-caret) { text-decoration: none; }
+.sidebar a { text-decoration: none; }
 
 .sidebar a.side-item,
 .sidebar span.side-item,
-.sidebar summary {
+.sidebar .side-row {
   display: flex;
   align-items: center;
   gap: 4px;
   padding: 4px 0;
   color: var(--fg-dim);
-  cursor: pointer;
 }
 .sidebar a.side-item { color: var(--fg-dim); }
 .sidebar a.side-item:hover,
-.sidebar summary:hover { color: var(--accent); }
+.sidebar .side-row:hover { color: var(--accent); }
 .sidebar a.here { color: var(--accent); font-weight: 600; }
 
 /* A section heading reads as one, whether it opens a page or only a list. */
-.sidebar > .side-group > summary,
+.sidebar > .side-group > .side-row,
 .sidebar > a.side-item,
 .sidebar > span.side-item { color: var(--fg); font-weight: 600; padding-top: 14px; }
 
@@ -219,40 +222,53 @@
 @media (pointer: coarse) {
   .sidebar a.side-item,
   .sidebar span.side-item,
-  .sidebar summary { min-height: 36px; }
-  /* A section heading is a summary with a LINK inside it - the caret opens the
-     list, the words open the page - and a taller row leaves that link its own
-     20px in the middle of it unless it is told to fill the row. Stretched, the
-     words are the target and the rest of the row is still the caret's. */
-  .sidebar summary > a { align-self: stretch; display: flex; align-items: center; }
+  .sidebar .side-row { min-height: 36px; }
+  /* The words fill the row, so the whole height is the link's; the caret
+     keeps its own 36px square beside them. */
+  .sidebar .side-label { align-self: stretch; display: flex; align-items: center; flex: 1; }
+  .sidebar .side-caret { width: 24px; height: 36px; margin-right: 0; }
   /* ...and a top-level heading stands 14px clear of the list above it, which it
      did with padding - and padding is the one part of a row a child cannot
-     stretch into, so the link stayed 20px inside a 38px row and the 14 above it
-     toggled the section instead of opening the page. The same 14px as margin:
-     the same gap, outside the row, with the whole row left for the link. */
-  .sidebar > .side-group > summary { padding-top: 0; margin-top: 14px; }
+     stretch into. The same 14px as margin: the same gap, outside the row, with
+     the whole row left for the link. */
+  .sidebar > .side-group > .side-row { padding-top: 0; margin-top: 14px; }
 }
 
 /* A LINK IN THE MENU IS NOT A LINK-COLOURED LINK. Every row here is one, so
    colouring them the accent paints the whole column blue and the one you are
    on stops standing out - which is the only thing the accent is for in this
-   list. The rule used to name only the top level (`.sidebar > .side-group`),
-   so `Cookbook` was quiet and `Model`, `Binding` and every other nested
-   section was not. Any depth now; `a.here` above is the exception. */
-.sidebar summary a,
-.sidebar summary a:hover { color: inherit; font-weight: inherit; }
+   list. Any depth; `.here` above is the exception. */
+.sidebar .side-label,
+.sidebar .side-label:hover { color: inherit; font-weight: inherit; cursor: pointer; }
+.sidebar a.side-label.here { color: var(--accent); font-weight: 600; }
+
+/* The box is reached by the keyboard and never seen; the caret beside it is
+   what shows its state, and the ring the box would draw is drawn on the
+   caret instead. */
+.side-toggle {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: 0; opacity: 0;
+  pointer-events: none;
+}
+.side-toggle:focus-visible + .side-group > .side-row > .side-caret {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+.side-toggle:not(:checked) + .side-group > .side-items { display: none; }
 
 /* The triangle: 90 degrees when shut, pointing down when open, and it is the
-   marker the browser would otherwise draw for us. */
-.sidebar summary { list-style: none; }
-.sidebar summary::-webkit-details-marker { display: none; }
+   marker a <details> would otherwise draw for us. Drawn on a label, so the
+   click reaches the box. */
 .side-caret {
   flex: none; width: 10px; height: 10px; margin-right: 2px;
   background: currentColor; opacity: .55;
   clip-path: polygon(30% 12%, 30% 88%, 78% 50%);
   transition: transform .15s;
+  cursor: pointer;
 }
-details[open] > summary > .side-caret { transform: rotate(90deg); }
+.side-toggle:checked + .side-group > .side-row > .side-caret { transform: rotate(90deg); }
 
 /* Each level steps in by the width of that triangle, so a row lines up under
    its parent's WORD rather than under its marker. */
@@ -528,9 +544,9 @@ html { scroll-padding-top: 62px; }
    carries something of its own: the menu's first section adds its 14px of
    section air, and the outline is sticky at 70px which sample.css then pads.
    Measured, not reasoned: all three read 96. */
-.sidebar > :first-child > summary,
+.sidebar > .side-toggle:first-child + .side-group > .side-row,
 .sidebar > a.side-item:first-child,
-.sidebar > span.side-item:first-child { padding-top: 0; }
+.sidebar > span.side-item:first-child { padding-top: 0; margin-top: 0; }
 .manual .outline { padding-top: 24px; }
 
 /* ---- the Run bar under a runnable example ---------------------------
@@ -788,12 +804,6 @@ html { scroll-padding-top: 62px; }
 }
 
 /* ---- what a stranger checks first ----------------------------------- */
-.hero-proof {
-  margin: 14px 0 0; font-size: 13px; line-height: 20px; color: var(--fg-dim);
-  max-width: 46ch;
-}
-.hero-proof a { color: var(--a2ui5-red); text-decoration: none; white-space: nowrap; }
-.hero-proof a:hover { text-decoration: underline; }
 /* The fact sheet is a two-column list, not a spreadsheet: its right-hand cells
    are sentences, and a sentence set across the full 1160 is a line nobody
    tracks back. `.vp-doc > p` is already held to 74ch for that reason, and the
@@ -1191,3 +1201,42 @@ html { scrollbar-gutter: stable; }
 .cost-perks ul.cost-perks-list li strong { color: var(--fg); font-weight: 600; }
 @media (max-width: 620px) { .cost-perks ul.cost-perks-list { grid-template-columns: 1fr; } }
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
+
+/* ---- the front door's example folds on a phone --------------------------
+ *
+ * The example is 137 lines, and on 390px of width that was 4,000 of the
+ * front door's 6,900px - three screens of column definitions between the
+ * cards and where to go next. On a desk the frame that runs the example
+ * hides the listing anyway (theme/playground.js); on a phone the example
+ * does not start itself, so the listing stays, and it stays folded to its
+ * first screen until it is asked for. site.js adds the class and the
+ * button, and only under a coarse pointer, so nothing here applies on a
+ * desk. */
+.a2ui5-play.is-folded div[class*="language-"] {
+  max-height: 440px;
+  overflow: hidden;
+  position: relative;
+}
+.a2ui5-play.is-folded div[class*="language-"]::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent, var(--bg-sunken, var(--bg)));
+  pointer-events: none;
+}
+.a2ui5-play-fold {
+  display: block;
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 9px 12px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--bg-sunken, var(--bg));
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.a2ui5-play-fold:hover { border-color: var(--accent); }

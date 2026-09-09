@@ -61,7 +61,7 @@ in it are decidable, and all thirteen are decided before a merge:
 
 | | |
 |---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it; and the crumb trail above every title, walked against the real sidebar so a restructured section cannot leave the trail passing against a fiction |
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it; and the crumb trail above every title, walked against the real sidebar so a restructured section cannot leave the trail passing against a fiction; and **the sidebar against the pages** (`test/sidebar-titles.test.mjs`): every entry's label is its page's own H1 (a search result shows the H1, the menu the label, and fourteen pages had two names a reader could not connect), every section's link is either its own page or the first page in its list (Configuration opened Setup while Installation stood first), and every page under `docs/` has an entry |
 | `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteMenu.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt, and in `SiteBar.vue` until the bar was split), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
@@ -255,7 +255,13 @@ sections of the project — **Home**, **Documentation**, **Samples**,
 last button. One row at every width, which is the whole bar: the sections are
 hard against the brand because that is where a reader's eye already is, and the
 search sits on auto margins so it is centred in whatever the row has left
-rather than at a number that is right on one screen.
+rather than at a number that is right on one screen. On a phone each section
+is its mark with a short name under it — Home, Docs, Samples, Play, from
+`data-short` on the same span the full word is on — because four marks with
+no word were four guesses for a reader who arrived from a link, and a
+tooltip does not exist under a thumb. The full word stays for the screen
+reader. That is the playground's stylesheet and markup (borrowed, see below),
+held by `tests/catalogue.spec.js` over there.
 
 Two of the four sections are pages of THIS deployment (Home is
 `docs/index.md`, which the brand alone used to open and nothing named;
@@ -286,7 +292,12 @@ drawn for what you TAB to and not for the field, which is focused on every
 open. One box on four documents cannot depend on which document it opened over.
 
 The index is generated, gitignored and fetched lazily — nothing is loaded until
-somebody types. The matching is `theme/search-engine.js`, deliberately
+somebody opens the box (on open, not on the first keystroke, so the first
+character has something to match). A page's `terms` — every distinct word on
+it — leave out what its title, description and headings already carry and
+any word on more than a third of the pages (`trimTerms( )` in
+`scripts/lib/search-index.mjs`): "client" and "view" decide nothing, and the
+field was 281 kB of a 630 kB index. The matching is `theme/search-engine.js`, deliberately
 framework-free: the other three bars are static HTML and carry a copy of it,
 the same arrangement as the palette and the position memory. **The index is not
 copied.** It is one document on the shared origin, fetched by whichever site
@@ -439,6 +450,30 @@ belongs to another repository.
 33,275 of them are checked on every run — which is what VitePress's own build
 did for us.
 
+**The menu beside a chapter is a checkbox, a row and a list per section.**
+It was a `<details>` with the section's link inside its `<summary>` — the
+caret opened the list and the words opened a page, a control inside a
+control, which axe reports as nested-interactive sixteen times a page, and a
+reader who pressed the words to see what was under them was navigated away
+from the list they were opening. Now `sidebarFor( )` writes, per section, a
+visually hidden checkbox, then the group: a row with a caret that is a
+`<label>` for the box and the words as a plain link (or a label, for a
+section with no page of its own), then the list, shown while the box is
+checked (`.side-toggle:not(:checked) + .side-group > .side-items`). The
+browser still opens and closes it with no script, the keyboard reaches the
+box, and `site.js` writes down what the reader toggled on `change` — the
+same store, the same rule that only the reader's own decisions are kept.
+Every section's link is its own page or the first page in its list
+(`test/sidebar-titles.test.mjs`), so the words never land somewhere the list
+did not say.
+
+**When it is built.** On every push to `main`, every night at 05:00 UTC, and
+whenever abap2UI5/playground says it has published (`repository_dispatch`,
+type `playground-published`, sent by that repository's `pages.yml` when it
+holds a `DOCS_DISPATCH_TOKEN`). The last two exist because of what the build
+borrows: a bar change over there reached these 167 pages only with the next
+push here, and until then there were two bars.
+
 Three things to know before touching it:
 
 - **Borrowing a stylesheet takes its class names with it.** `.brand` is the
@@ -486,12 +521,18 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are nine of them. Eight are `/technical/*`: that whole section became
+There are eighteen of them. Eight are `/technical/*`: that whole section became
 the Know-How series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
 the project's front page on GitHub. The ninth is the troubleshooting page,
-renamed in 2023.
+renamed in 2023. The other nine are the pages folded into a neighbour on
+2026-09-09, each pointing at the section that now carries it: `get_started/next`
+(the end of Hello World), `get_started/tooling` (moved under `advanced/`, where
+its sidebar entry already was), the three one-paragraph toolchain pages and
+`advanced/local` (sections of `technical/tools/`), `configuration/btp_abap_env`
+(S/4 Public Cloud, which says it covers both), `configuration/transport`
+(Productive Usage) and `resources/contact` (Support).
 
 Two things make this safe rather than a second set of pages to maintain:
 
@@ -635,7 +676,12 @@ mounts when it scrolls within 400px of the viewport, because "one ABAP class is
 one UI5 app" is a claim while it is printed and a fact once it runs beside its
 own source. A reader who never scrolls past the tiles still fetches nothing; one
 who asks for less data (`prefers-reduced-data`, or `navigator.connection
-.saveData`) is never sent it and keeps the button. **A self-start that fails is
+.saveData`) is never sent it and keeps the button. Nor is a reader on a phone
+(`pointer: coarse`, or a column under 860px): the start was measured at 33 MB
+before compression, and `saveData` is a flag most phones never set. There the
+button stays, and the 137-line listing folds to its first screen with a *Show
+all* button under it (`site.js`, `foldOnPhone`) — it was 4,000 of the front
+door's 6,900px on a 390px screen. **A self-start that fails is
 silent** — the button comes back and no error is printed, because a message
 about something nobody asked for reads as a broken front door when what is
 broken is the network.

@@ -1,6 +1,7 @@
 {
   "name": "abap2ui5-docs",
   "private": true,
+  "type": "module",
   "description": "Documentation site for abap2UI5 (VitePress).",
   "license": "MIT",
   "repository": {

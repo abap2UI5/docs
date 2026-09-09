@@ -278,8 +278,15 @@ function holdStill(container) {
  *
  * `rootMargin` starts it a screen early so it is already up by the time it is
  * read, and the observer lets go after the first hit - this happens once. */
+/* ...AND ONLY ON A DESK. Scrolling to the example pulls the whole playground
+ * - measured at 33 MB before compression, six to eight over the wire - and
+ * `saveData` is a flag most phones never set. Under a coarse pointer, or on
+ * a column too narrow for the editor and the app side by side, the button
+ * stays and the reader decides; the listing folds instead (site.js). */
+const onADesk = () => matchMedia?.('(pointer: fine)').matches && window.innerWidth >= 860;
+
 function armSelfStart() {
-  if (!window.IntersectionObserver || wantsLessData()) return;
+  if (!window.IntersectionObserver || wantsLessData() || !onADesk()) return;
   const seen = new WeakSet();
   const watch = new IntersectionObserver((entries) => {
     for (const entry of entries) {

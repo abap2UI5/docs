@@ -67,7 +67,7 @@ test('the build hashes the very strings it writes, and writes the policy before 
 });
 
 test('a page carrying an inline script the policy would kill is refused, not published', () => {
-  assert.match(BUILD, /const shell = \(\{ title, main, bar, head = '', inline = \[\] \}\) => \{/);
+  assert.match(BUILD, /const shell = \(\{ title, main, bar, head = '', inline = \[\], italic = false \}\) => \{/);
   assert.match(BUILD, /return announced\(`<!doctype html>/);
   assert.match(BUILD, /for \(const script of inlineScriptsIn\(page\)\) \{\s*if \(!allowed\.includes\(script\)\) throw new Error/);
   /* The one page that brings a script of its own says so from the same

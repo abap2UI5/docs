@@ -19,6 +19,23 @@ on:
   push:
     branches: [main]
 
+  # AND WHEN THE PLAYGROUND HAS BEEN PUBLISHED, and every night regardless.
+  # scripts/build-site.mjs borrows the bar, the bar's script and two
+  # stylesheets from the published playground at build time - so a change to
+  # the bar over there reached the manual's 167 pages only with the manual's
+  # next push, and until then there were two bars. abap2UI5/playground's
+  # pages.yml sends `playground-published` after each deploy (it needs a
+  # token over there, DOCS_DISPATCH_TOKEN; without one it says so and does
+  # nothing), and the schedule is the net under that: the playground itself
+  # publishes nightly at 04:00 for the sample catalogue, and this runs an
+  # hour later so the manual is never more than a day behind it. A deploy
+  # that finds nothing changed publishes the same site again, which is what
+  # a static site costs.
+  repository_dispatch:
+    types: [playground-published]
+  schedule:
+    - cron: '0 5 * * *'
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 

@@ -17,7 +17,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { sampleEntries, docEntries } from '../scripts/lib/search-index.mjs';
+import { sampleEntries, docEntries, trimTerms } from '../scripts/lib/search-index.mjs';
 import { search, grouped, highlight } from '../docs/.vitepress/theme/search-engine.js';
 import { terms, headings } from '../scripts/lib/pages.mjs';
 
@@ -280,4 +280,25 @@ test('no storage at all is an empty box, not a broken one', () => {
   } finally {
     globalThis.localStorage = before;
   }
+});
+
+test('a page\'s terms leave out what its title and headings carry, and what every page carries', () => {
+  const page = (title, headings, terms) => ({ area: 'docs', title, text: '', headings: headings.map((h) => [h, h]), terms });
+  const entries = [
+    page('Carousel', ['Adding pages'], 'carousel adding pages client framework builder'),
+    page('Table', ['Sorting'], 'table sorting client framework rows'),
+    page('Tree', ['Nodes'], 'tree nodes client framework'),
+    page('Popups', [], 'popup client dialog'),
+  ];
+  trimTerms(entries);
+  /* "client" is on all four pages and "framework" on three of four: neither
+   * narrows anything down. "builder" is on one and stays. */
+  assert.equal(entries[0].terms, 'builder');
+  assert.equal(entries[1].terms, 'rows');
+  /* A word the title or a heading carries is matched there already. */
+  assert.doesNotMatch(entries[0].terms, /carousel|adding|pages/);
+  /* A sample's terms are not touched: the rule is about the manual's pages. */
+  const sample = { area: 'samples', terms: 'client framework' };
+  trimTerms([sample, ...entries]);
+  assert.equal(sample.terms, 'client framework');
 });

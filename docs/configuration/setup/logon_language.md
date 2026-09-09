@@ -1,7 +1,7 @@
 ---
 outline: [2, 4]
 ---
-# Language
+# Logon Language
 
 abap2UI5 picks the user's logon language automatically from the SAP session — every text element, every OData/CDS label, every message class is returned in that language. For most applications no extra configuration is required.
 

@@ -47,7 +47,7 @@ installation of the framework.
 
 abap2UI5 ships as ABAP objects, so the way to production is the transport
 process you already have — with one ordering rule, spelled out on the
-[Transport](/configuration/transport) page:
+[Transport](/configuration/productive_usage#transport) page:
 
 1. Transport the framework and the HTTP service first.
 2. On the target system, activate the service if needed, and adjust the
