@@ -6,9 +6,9 @@
  * half with no DOM in it - so that the joke stays true in code: every line
  * is zero and so is the sum, for any setting of any slider. And the page
  * against the script: the readouts and the amounts are written into the
- * markup, so the page says the same thing with the script and without it,
- * and a slider whose written readout is not what the script would write for
- * its starting position would flicker to the truth on load.
+ * markup, so what the button reveals is what the page already says, and a
+ * slider whose written readout is not what the script would write for its
+ * starting position would flicker to the truth on load.
  *
  *   npm test
  */
@@ -17,7 +17,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { amount, line, reading, stopsOf, total } from '../docs/.vitepress/theme/cost-model.js';
+import { amount, line, listed, reading, stopsOf, total } from '../docs/.vitepress/theme/cost-model.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = readFileSync(join(ROOT, 'docs', 'resources', 'cost_calculator.md'), 'utf8');
@@ -32,6 +32,13 @@ test('a reading is the stop at the position, with its unit', () => {
   assert.equal(reading(stopsOf('1|5'), -1, 'year|years'), '1 year');
   assert.equal(reading(stopsOf('1|5'), 'x'), '1');
   assert.equal(reading(stopsOf(''), 3), '');
+});
+
+test('choices read out as a list', () => {
+  assert.equal(listed([], 'no system at all'), 'no system at all');
+  assert.equal(listed(['S/4HANA on-premise']), 'S/4HANA on-premise');
+  assert.equal(listed(['NetWeaver 7.50', 'BTP ABAP Environment']), 'NetWeaver 7.50 and BTP ABAP Environment');
+  assert.equal(listed(['A', 'B', 'C']), 'A, B and C');
 });
 
 test('an amount is the currency\'s own zero', () => {
@@ -58,7 +65,7 @@ test('the page and the script agree on what every slider says at load', () => {
   const sliders = [...PAGE.matchAll(
     /<input id="([^"]+)" type="range" min="(\d+)" max="(\d+)" value="(\d+)" data-stops="([^"]+)"(?: data-unit="([^"]*)")?>/g,
   )];
-  assert.ok(sliders.length >= 8, `${sliders.length} sliders`);
+  assert.ok(sliders.length >= 6, `${sliders.length} sliders`);
   const ids = new Set();
   for (const [, id, min, max, value, stops, unit] of sliders) {
     ids.add(id);
@@ -74,7 +81,25 @@ test('the page and the script agree on what every slider says at load', () => {
       assert.equal(echo[1], said, `${id}: an echo at load is what the script would write`);
     }
   }
-  for (const [, id] of PAGE.matchAll(/data-echo="([^"]+)"/g)) assert.ok(ids.has(id), `an echo of ${id} has a slider`);
+  /* A choice made with radio buttons or checkboxes: what is ticked at load,
+     read out as a list, is what the sheet echoes - and the group's name is an
+     echo target like a slider's id. */
+  const groups = new Map();
+  for (const [, kind, name, choice, on] of PAGE.matchAll(/<input type="(radio|checkbox)" name="([^"]+)" value="[^"]+" data-choice="([^"]+)"( checked)?>/g)) {
+    if (!groups.has(name)) groups.set(name, { kind, chosen: [] });
+    assert.equal(groups.get(name).kind, kind, `${name} is one kind of choice`);
+    if (on) groups.get(name).chosen.push(choice);
+  }
+  assert.ok(groups.size >= 2, `${groups.size} groups`);
+  for (const [name, { kind, chosen }] of groups) {
+    ids.add(name);
+    if (kind === 'radio') assert.equal(chosen.length, 1, `${name}: exactly one choice is made at load`);
+    const none = PAGE.match(new RegExp(`aria-labelledby="${name}-label" data-none="([^"]*)"`))?.[1];
+    for (const echo of PAGE.matchAll(new RegExp(`<span data-echo="${name}">([^<]*)</span>`, 'g'))) {
+      assert.equal(echo[1], listed(chosen, none), `${name}: the echo at load is what is ticked at load`);
+    }
+  }
+  for (const [, id] of PAGE.matchAll(/data-echo="([^"]+)"/g)) assert.ok(ids.has(id), `an echo of ${id} has a slider or a choice`);
   for (const [, id] of PAGE.matchAll(/<label for="([^"]+)"/g)) {
     assert.match(PAGE, new RegExp(`<(?:input|select) id="${id}"`), `the label ${id} names a control`);
   }
@@ -85,6 +110,13 @@ test('every amount on the page is the chosen currency\'s zero', () => {
   assert.ok(amounts.length >= 10, `${amounts.length} amounts`);
   const currency = PAGE.match(/<option value="([A-Z]{3})" selected>/)[1];
   for (const a of amounts) assert.equal(a, amount(0, currency));
+});
+
+test('the sheet waits for the button', () => {
+  assert.match(PAGE, /<button type="button" class="cost-calculate" data-calculate="Calculate" data-again="[^"]+">Calculate<\/button>/);
+  assert.match(PAGE, /<div class="cost-result" data-result hidden>/, 'the sheet is hidden until Calculate is pressed');
+  assert.ok(PAGE.indexOf('<div class="cost-inputs">') < PAGE.indexOf('data-calculate='), 'the inputs come first');
+  assert.ok(PAGE.indexOf('data-calculate=') < PAGE.indexOf('data-result'), 'then the button, then the sheet');
 });
 
 test('the front door\'s cost card leads here, and the page ends at the sponsors', () => {
