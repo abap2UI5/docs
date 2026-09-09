@@ -42,6 +42,25 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # can write it - and only then, to somebody already persuaded, what it costs.
 # The price is the last card because it is the last question, not the first.
 #
+# THE CARDS ANSWER A BUYER, not only a developer - somebody who would otherwise
+# license a low-code platform, and who asks what a developer does not: who is
+# behind this, what happens when nobody is, how an app is governed, what it is
+# not for. So the enterprise card says lifecycle (transports, ATC, ABAP Unit),
+# exit path (a handful of classes and one table, nothing to migrate away
+# from), versioned releases with every change listed, support as it is (the community's,
+# partners for training, no vendor SLA - and nothing that ends with a
+# contract) and who runs it in production, by name and linked. The
+# integration card says what comes with UI5 itself, that a system without
+# internet access is fine, and what this is NOT for - offline, real-time
+# collaboration, a visual designer - with the three comparisons linked. An
+# evaluator who finds the limits on page three trusts nothing on page one.
+#
+# THE EXAMPLE IS A REAL APP, not a greeting: the tutorial's finished class - a
+# table of invoices with an edit dialog, a date picker, save and a toast - so
+# that the first thing that runs on this page looks like the thing a reader
+# would build. There is deliberately NO screenshot: the app itself runs here,
+# and a picture of one beside it would be the same thing twice.
+#
 # EVERY CARD ENDS WITH A WAY OUT, and the link sits on the topic, never on the
 # word "here" - a reader scanning the links has to be able to tell where each
 # one goes. The cost card's is the calculator - a page of sliders for users,
@@ -113,9 +132,19 @@ features:
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon — your [authorizations](/configuration/authorization) and
-[session handling](/configuration/security) apply unchanged. Every merge is
-tested against Standard ABAP and ABAP Cloud. [Support](/resources/support) is on
-GitHub and Slack.
+[session handling](/configuration/security) apply unchanged, and your data never
+leaves your system.
+
+An app is an ABAP class: transports, ATC, ABAP Unit and code review, as for
+everything else you ship. The framework itself is a handful of classes and one
+table in your own system — nothing to renew, and nothing to migrate away from.
+Every merge is tested against Standard ABAP and ABAP Cloud, and every release
+lists its changes in the [release notes](/resources/changelog).
+
+[Support](/resources/support) is the community's, on GitHub and Slack, with
+training and certification from partners. There is no vendor and no SLA — and
+nothing that stops working when a contract ends. In production at
+[Emineo and Swiss Krono](/resources/who_uses), for example.
 
 → *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
@@ -127,8 +156,15 @@ that would otherwise need a frontend project of its own.
 
 It runs where your users already are: a browser tab, a
 [Fiori launchpad](/configuration/launchpad) tile, [SAP Build Work
-Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start) —
-rendering with the UI5 your system ships.
+Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start).
+Because it is UI5 itself, Fiori design, themes, accessibility and translation
+come with it — and rendering with the UI5 your system ships, it works without
+internet access.
+
+It is not for offline apps or real-time collaboration, and there is no visual
+designer. How it compares with [RAP](/advanced/insights/33-rap-or-abap2ui5),
+[freestyle UI5](/advanced/insights/34-freestyle-or-abap2ui5) and a
+[low-code platform](/advanced/insights/35-low-code-or-abap2ui5).
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
@@ -145,7 +181,7 @@ paragraph to paste at the top of a prompt.
 ## And what does it cost?
 
 **Nothing.** [MIT licensed](/resources/license), commercial use included — no
-license key, no subscription, no per-user fee.
+license key, no subscription, no per-user fee, and no BTP required.
 
 Nobody counts your users, because nothing is counting. It is a standard UI5 app
 served by your own ABAP stack: ten users or ten thousand, the SAP license you
@@ -156,42 +192,138 @@ have is the one you keep.
 ## Try it out now
 
 ```abap edit
-CLASS zcl_app_hello DEFINITION PUBLIC.
+CLASS zcl_app_invoices DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA recipient TYPE string.
+
+    TYPES:
+      BEGIN OF ty_s_invoice,
+        product       TYPE string,
+        supplier      TYPE string,
+        quantity      TYPE string,
+        delivery_date TYPE string,
+      END OF ty_s_invoice.
+
+    DATA t_invoices TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
+    DATA s_edit     TYPE ty_s_invoice.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_app_hello IMPLEMENTATION.
+CLASS zcl_app_invoices IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
 
-      recipient = `World`.
+      t_invoices = VALUE #(
+          ( product = `Pineapple`    supplier = `ACME`          quantity = `21` delivery_date = `2026-07-15` )
+          ( product = `Milk`         supplier = `Green Growers` quantity = `4`  delivery_date = `2026-07-20` )
+          ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  delivery_date = `2026-08-01` )
+          ( product = `Salad`        supplier = `Green Growers` quantity = `2`  delivery_date = `2026-08-10` )
+          ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  delivery_date = `2026-08-12` ) ).
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
               )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc` ).
 
-              )->ele( `Shell`
-                  )->ele( `Page`
-                      )->a( n = `title` v = `Hello abap2UI5`
+      DATA(tab) = view->ele( `Shell`
+          )->ele( `Page`
+              )->a( n = `title` v = `Invoices`
 
-                      )->tag( `Input`
-                          )->a( n = `value` v = client->_bind( recipient )
-                      )->tag( `Button`
-                          )->a( n = `text`  v = `Say Hello`
-                          )->a( n = `press` v = client->_event( `SAY_HELLO` ) ).
+              )->ele( `Table`
+                  )->a( n = `headerText` v = `Invoices`
+                  )->a( n = `items`      v = client->_bind( t_invoices ) ).
+
+      tab->ele( `columns`
+
+          )->ele( `Column`
+              )->tag( `Text`
+                  )->a( n = `text` v = `Product`
+
+          )->end(
+          )->ele( `Column`
+              )->tag( `Text`
+                  )->a( n = `text` v = `Supplier`
+
+          )->end(
+          )->ele( `Column`
+              )->tag( `Text`
+                  )->a( n = `text` v = `Quantity`
+
+          )->end(
+          )->ele( `Column`
+              )->tag( `Text`
+                  )->a( n = `text` v = `Delivery Date`
+
+          )->end(
+          )->ele( `Column`
+              )->a( n = `width` v = `10%` ).
+
+      tab->ele( `items`
+          )->ele( `ColumnListItem`
+              )->ele( `cells`
+
+                  )->tag( `Text`
+                      )->a( n = `text` v = `{PRODUCT}`
+                  )->tag( `Text`
+                      )->a( n = `text` v = `{SUPPLIER}`
+                  )->tag( `Text`
+                      )->a( n = `text` v = `{QUANTITY}`
+                  )->tag( `Text`
+                      )->a( n = `text` v = `{DELIVERY_DATE}`
+                  )->tag( `Button`
+                      )->a( n = `icon`    v = `sap-icon://edit`
+                      )->a( n = `tooltip` v = `Edit delivery date`
+                      )->a( n = `press`   v = client->_event( val   = `EDIT`
+                                                              t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
 
       client->view_display( view->stringify( ) ).
 
-    ELSEIF client->check_on_event( `SAY_HELLO` ).
+    ELSEIF client->check_on_event( `EDIT` ).
 
-      client->message_toast_display( |Hello { recipient }!| ).
+      s_edit = VALUE #( t_invoices[ product = client->get_event_arg( ) ] OPTIONAL ).
+
+      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+
+              )->ele( `Dialog`
+                  )->a( n = `title` v = |Edit { s_edit-product }|
+
+                  )->ele( `content`
+
+                      )->tag( `Label`
+                          )->a( n = `text` v = `Delivery Date`
+                      )->tag( `DatePicker`
+                          )->a( n = `value`       v = client->_bind( s_edit-delivery_date )
+                          )->a( n = `valueFormat` v = `yyyy-MM-dd`
+
+                  )->end(
+
+                  )->ele( `buttons`
+
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `Cancel`
+                          )->a( n = `press` v = client->_event( `CANCEL` )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `Save`
+                          )->a( n = `press` v = client->_event( `SAVE` )
+                          )->a( n = `type`  v = `Emphasized` ).
+
+      client->popup_display( popup->stringify( ) ).
+
+    ELSEIF client->check_on_event( `SAVE` ).
+
+      t_invoices[ product = s_edit-product ]-delivery_date = s_edit-delivery_date.
+      client->popup_destroy( ).
+      client->message_toast_display( |{ s_edit-product } updated.| ).
+
+    ELSEIF client->check_on_event( `CANCEL` ).
+
+      client->popup_destroy( ).
 
     ENDIF.
 
