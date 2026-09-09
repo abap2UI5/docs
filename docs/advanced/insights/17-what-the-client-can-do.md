@@ -1,9 +1,9 @@
 # #17 What the Client Can Do
 
-The app implements one interface with one method. The one parameter of that
+The app implements one interface with one method. The single parameter of that
 method is the other interface — `z2ui5_if_client` — and it is the whole of what
-an app can ask the framework for. It is worth knowing by shape before knowing
-it by name, because the shape is small:
+an app can ask the framework for. Worth knowing by shape before knowing it by
+name, because the shape is refreshingly small:
 
 | The app wants to… | …and calls |
 |---|---|
@@ -16,10 +16,12 @@ it by name, because the shape is small:
 | ask the browser to do something | `follow_up_action( )` with a `cs_event` constant |
 | know where it runs | `get( )` — device, launchpad, URL parameters, the raw event |
 
-The two that carry the most weight are the smallest. `_bind( )` takes an ABAP
-variable and returns the binding path the view needs; the framework builds the
-model around whatever was bound, ships it, and writes the user's changes back
-into the same variable:
+That is a framework you can hold in your head. A design goal, not an accident.
+
+The two rows that carry the most weight are the smallest. `_bind( )` takes an
+ABAP variable and returns the binding path the view needs; the framework builds
+the model around whatever was bound, ships it, and writes the user's changes
+back into the same variable:
 
 ```abap
     )->tag( `Input`
@@ -34,9 +36,9 @@ And `_event( )` names what the frontend should send when a control fires:
         )->a( n = `press` v = client->_event( `SAVE` ) ).
 ```
 
-Both are string generators. Nothing is registered, nothing is declared: the
-attribute name and the event name are written into the view, and read back
-out of the request.
+Both are string generators, and that is all they are. Nothing is registered,
+nothing is declared: the attribute name and the event name are written into the
+view, and read back out of the request.
 
 The last row is the escape hatch for everything that is a browser matter rather
 than an ABAP matter — focus a field, scroll, copy to the clipboard, download a
@@ -50,7 +52,7 @@ file, set the tab title, raise the model size limit. Each is a constant in
 
 That is the whole API surface an app ever touches. The full list with every
 parameter is on the [Client API](/resources/api) page, generated from the
-interface itself.
+interface itself, so it cannot drift from what the framework actually offers.
 
 One method in, one interface out. Everything an app can do is a method on
 `client`.

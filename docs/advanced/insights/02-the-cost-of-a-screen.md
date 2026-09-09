@@ -1,24 +1,28 @@
-# #3 The Cost of a Screen
+# #2 The Cost of a Screen
 
 An ABAP team needs a screen. Not an application — a screen. A maintenance view
-for a customizing table nobody wants to explain in SM30. A cockpit showing what
-last night's job actually did. An approval step for one department.
+for a customizing table nobody wants to explain in SM30 again. A cockpit
+showing what last night's job actually did. An approval step for one
+department, used by four people, twice a week.
 
 The logic behind such a screen is often thirty lines. The cost of putting a
-user interface in front of those thirty lines is not, and it does not scale
-down with them: a data model to declare, a service to define, a binding, an
-annotation model, a frontend artifact, a deployment — and an object that now
-exists forever, has to be transported, has to survive an upgrade, and one day
-has to be deprecated by someone who never met the department that asked for it.
+user interface in front of those thirty lines is not, and — this is the part
+that hurts — it does not scale down with them: a data model to declare, a
+service to define, a binding, an annotation model, a frontend artifact, a
+deployment. And at the end of it an object that now exists forever, has to be
+transported, has to survive an upgrade, and one day has to be deprecated by
+someone who never met the department that asked for it.
 
 None of that is waste. It is what makes a real application dependable. It is
-simply a fixed cost, and a fixed cost is brutal to a small thing.
+simply a *fixed* cost, and a fixed cost is brutal to a small thing.
 
 So the screen does not get built. Or it becomes a selection screen and an ALV
 grid, and everyone agrees to stop thinking about it. Every system has a `Z`
-package full of those.
+package full of those, and every one of them was a reasonable decision at the
+time.
 
-Here is the job monitor instead. Not an excerpt — the whole application:
+That is the gap this whole series is about. Here is the job monitor instead —
+not an excerpt, not a snippet, the whole application:
 
 ```abap
 CLASS zcl_job_monitor DEFINITION PUBLIC.
@@ -109,15 +113,22 @@ ENDCLASS.
 ```
 
 Activate it, call the ICF endpoint with `?app_start=zcl_job_monitor`, and it is
-on screen. Replace `model_init( )` with the `SELECT` that reads your job log and
-it is finished. Nothing published, nothing to deprecate.
+on screen — a Fiori-styled table with colored status, in the launchpad theme,
+on a phone if that is where you open it. Replace `model_init( )` with the
+`SELECT` that reads your job log and it is finished. Nothing published, nothing
+to deprecate, nothing anybody has to un-build in three years.
 
-What you pay instead: you write the view by hand. Nothing generates it from
-annotations, nothing gives you filter bars, variants or export for free. For
+That is the trade in one sentence: **the ceremony is gone, and so is the
+generosity.** You write the view by hand. Nothing generates it from
+annotations, nothing hands you filter bars, variants or export for free. For
 the screens above that is a rounding error — a table and two buttons. For a
-list report with fifteen filters it is the wrong trade by a wide margin, and
-Fiori Elements will beat this by a distance.
+list report with fifteen filters, sorting, personalization and an Excel export,
+it is the wrong trade by a wide margin, and Fiori Elements will beat this by a
+distance.
 
-Knowing which of the two you are looking at is most of the skill.
+Knowing which of the two you are looking at is most of the skill. The rest of
+this series is mostly about sharpening that judgment — starting with what is
+actually behind such a screen, which the framework
+[has no opinion about at all](/advanced/insights/03-your-favorite-programming-model).
 
 Happy ABAPing! 🦖🦕🦣

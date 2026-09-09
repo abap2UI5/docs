@@ -2,11 +2,12 @@
 
 The loop is: change the class, activate, refresh the browser.
 
-That is the whole article, and it is worth spelling out what is missing from it,
-starting with the first page. Somebody has to deliver the initial HTML. In the
-SAP world that normally means a BSP application: a frontend artifact, built
-somewhere, deployed to the ABAP stack, transported on its own path, and
-invalidated from its own caches when it changes.
+That is the whole article. What is interesting is everything that is *missing*
+from that sentence, so let us go looking for it, starting with the first page.
+Somebody has to deliver the initial HTML. In the SAP world that normally means
+a BSP application: a frontend artifact, built somewhere, deployed to the ABAP
+stack, transported on its own path, and invalidated from its own caches when it
+changes.
 
 abap2UI5 does not have one. The initial GET is answered from ABAP source code —
 the page and the frontend files it needs are strings inside the handler, and
@@ -21,11 +22,13 @@ follows from it.
 
 **No build.** Pull the repository with abapGit, activate, call the ICF node. No
 npm install, no bundler, no dist folder, no separate deployment path that has
-to succeed for the app to exist.
+to succeed for the app to exist. Nothing that can be broken by a transitive
+dependency you have never heard of releasing a patch on a Friday.
 
 **No deployment.** The app is a class. Activating it is the deployment, and the
 standard transport system moves it to production like any other ABAP object.
-There is no state in which the backend is live and the frontend is not.
+There is no state in which the backend is live and the frontend is not — which
+is the state most Fiori incidents are actually about.
 
 **No cache to invalidate.** The UI is built on every request, so there is no
 build output that can be stale. Nobody runs a cache transaction, nobody asks a
@@ -46,10 +49,11 @@ A project whose frontend ships as ABAP source has one thing to review: the
 source. Every file that reaches the browser is in the repository, readable,
 diffable, and transported by the system that already governs everything else.
 
-Individually these are conveniences. Together they are the reason a screen gets
-tried at all: when an experiment costs a class and a refresh, the answer to
-"could we just show this on a screen?" stops being a project.
+Individually these are conveniences. Together they change which questions get
+asked out loud: when an experiment costs a class and a refresh, "could we just
+show this on a screen?" stops being the opening of a project and becomes
+something you try before lunch.
 
-Iteration speed is not a nice-to-have. It decides which ideas get built.
+Iteration speed is not a nice-to-have. It decides which ideas get built at all.
 
 Happy ABAPing! 🦖🦕🦣

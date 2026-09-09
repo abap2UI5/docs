@@ -3,9 +3,11 @@
 If the backend sends the view on every request, does the screen rebuild itself
 on every click?
 
-It would, and the user would notice. A rebuilt view is a new set of controls:
-the cursor leaves the field, a half-typed entry is gone, the table scrolls back
-to the top. Nobody wants to type into that.
+It would, and the user would notice within about two seconds. A rebuilt view is
+a new set of controls: the cursor leaves the field, a half-typed entry is gone,
+the table scrolls back to the top. Nobody wants to type into that, and no
+amount of "but the architecture is elegant" survives a user typing a customer
+name three times.
 
 So the view is not sent every time. Sending it is a decision the app makes:
 
@@ -43,9 +45,11 @@ The value the user is halfway through typing survives, because the input
 control was never replaced — only its bound value was.
 
 This is what the Over-the-Wire frameworks outside SAP do with HTML fragments,
-and UI5 gives it for free through a mechanism that was in the framework long
-before this one existed. No diffing algorithm, no virtual DOM, no reconciler —
-just a model that changed and a binding that noticed.
+and the pleasant part is that UI5 gives it away for free, through a mechanism
+that was in the framework long before this one existed. No diffing algorithm,
+no virtual DOM, no reconciler — just a model that changed and a binding that
+noticed. Data binding was doing this while the JavaScript world was still
+inventing names for it.
 
 Sending the whole view is the exception, not the rhythm.
 

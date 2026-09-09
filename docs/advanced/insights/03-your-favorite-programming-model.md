@@ -1,12 +1,13 @@
-# #2 abap2UI5 in Your Favorite Programming Model
+# #3 abap2UI5 in Your Favorite Programming Model
 
 Before you use a framework, you want to know what it expects from you: a
-structure to follow, a lifecycle to fit into, layers to fill in. Usually that
-list is long, and most of it exists before anything shows up on a screen.
+structure to follow, a lifecycle to fit into, layers to fill in, names to get
+right. Usually that list is long, and most of it has to exist before anything
+shows up on a screen.
 
-With abap2UI5 you start by writing an ABAP class, the way you used to start a
-report with a selection screen. The only thing asked of you is to implement one
-interface with one method:
+Here is the whole list for abap2UI5. You write an ABAP class — the way you used
+to start a report with a selection screen — and implement one interface with
+one method:
 
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
@@ -19,21 +20,20 @@ INTERFACE z2ui5_if_app PUBLIC.
 ENDINTERFACE.
 ```
 
-abap2UI5 calls `main( )` on every roundtrip; your class decides what to display
-and how to react. That is the whole contract. And getting it on the screen is
-about as short as pressing F8: activate the class, append `?app_start=zcl_my_app`
-to your service URL, and there it is.
+That is it. That is the contract. abap2UI5 calls `main( )` on every roundtrip,
+and your class decides what to display and how to react. Getting it on screen
+is about as ceremonious as pressing F8: activate the class, append
+`?app_start=zcl_my_app` to your service URL, and there it is.
 
 Beyond that, there are no rules. No service to define, no binding to maintain,
-no annotations, nothing to transport but the class itself. And it is entirely up
-to you whether you build one huge app of 10,000 lines, split it across several
-apps, or design an architecture of your own out of parent and child classes.
+no annotations, nothing to transport but the class itself. Whether you build
+one huge app of 10,000 lines, split it across several apps, or design an
+architecture of your own out of parent and child classes is entirely your
+business — the framework never asks.
 
-abap2UI5 makes no demands on how you write your code or design your model — use
-whichever programming model you like behind it.
-
-This has a pleasant side effect. Since abap2UI5 just serves a UI and never asks
+This has a pleasant side effect. Since abap2UI5 serves a UI and never asks
 where your data comes from, the data can come from wherever it already lives.
+Which is worth showing rather than claiming.
 
 ## The Same Class, Three Programming Models
 
@@ -116,15 +116,13 @@ ENDCLASS.
 
 *The entity is invented — use your favorite RAP object instead.*
 
-Nothing in the save handler is abap2UI5's responsibility, and the RAP object
+Nothing in that save handler is abap2UI5's responsibility, and the RAP object
 does not notice anything unusual — validations, determinations and
 authorizations all still run. EML does not care who calls it.
 
-That handler belongs to the consuming app, and it is the only place in the class
-that knows what is behind the screen. abap2UI5 does not.
-
-So the same class can leave RAP out of it and write straight to a database
-table, the classic way:
+`on_save( )` is also the only place in the class that knows what is behind the
+screen. So let it know something else. Straight to a database table, the
+classic way:
 
 ```abap
   METHOD on_save.
@@ -144,8 +142,8 @@ table, the classic way:
 
 *The table is invented — use your favorite database table instead.*
 
-Or a classic BAPI you have been using in the system for the last twenty years —
-different object, different decade, same UI around it:
+Or a classic BAPI you have been calling in that system since before the phone
+in your pocket existed — different object, different decade, same UI around it:
 
 ```abap
   METHOD on_save.
@@ -177,21 +175,22 @@ different object, different decade, same UI around it:
 
 Three programming models, one unchanged UI class. abap2UI5 sees the same thing
 in all three: a method that ran and returned. It never looks inside. The same
-app could call your EWM delivery classes, a proxy to another system, or whatever
-SAP releases next year.
+app could call your EWM delivery classes, a proxy to another system, or
+whatever SAP releases next year and calls the future.
 
 ## Conclusion
 
 There are plenty of use cases where a strict programming model is exactly what
-you want. But there are also the ones where a developer needs more freedom —
-customers who are not on the newest release, and logic that never quite fits the
-shape a programming model has in mind.
+you want, and picking one deliberately is good engineering. But there are also
+the ones where a developer needs more freedom — customers who are not on the
+newest release, logic that never quite fits the shape a programming model has
+in mind, and the screen from
+[the last article](/advanced/insights/02-the-cost-of-a-screen) that would
+otherwise not get built at all.
 
 abap2UI5 runs in the same system, under the same authorizations, in the same
 launchpad as all your other UI5 and RAP apps. It reaches your business logic
-however you like, with the programming model of your choice. One more option
-next to what you already run, for the screen that would otherwise not get built
-at all.
+however you like, with the programming model of your choice.
 
 One interface, one method, and no opinion about what is behind the screen.
 

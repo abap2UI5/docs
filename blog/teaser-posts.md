@@ -4,6 +4,10 @@ The posts that introduce each article. Plain text — LinkedIn renders no
 markdown. Kept here rather than on the published pages: they are publishing
 material, not documentation.
 
+The sections stand in the order the articles are numbered in
+`docs/advanced/insights/`, so this file is also the publishing order. Move a
+post here when an article moves there.
+
 ## Somewhere on the Way to UI5, We Lost RTTS
 
 Plain text — LinkedIn renders no markdown. The article link comes from the
@@ -24,6 +28,30 @@ attached article preview, so the post carries no inline URL. 744 characters.
 >
 > Where do you still use RTTS in UIs today? And how do you get around the
 > design-time bottleneck?
+>
+> #ABAP #SAP #UI5
+
+## The Cost of a Screen
+
+Plain text — LinkedIn renders no markdown.
+
+> A maintenance view for a customizing table. A cockpit showing what last
+> night's job did. An approval step for one department.
+>
+> The logic behind each is about thirty lines. The cost of putting a UI in front
+> of thirty lines is not thirty lines, and it does not scale down: a data model,
+> a service, a binding, a frontend artifact, a deployment — and an object that
+> has to be transported, survive upgrades, and one day be deprecated by someone
+> who never met the department that asked for it.
+>
+> So the screen never gets built. Every system has a Z package full of the ones
+> that became a selection screen and an ALV grid instead.
+>
+> New article 🎉 with a job monitor as a complete abap2UI5 app — and an honest
+> note on where this is the wrong trade.
+>
+> Which screen in your system stayed an ALV grid because a proper UI was never
+> worth the effort?
 >
 > #ABAP #SAP #UI5
 
@@ -49,30 +77,6 @@ Plain text — LinkedIn renders no markdown.
 > New article 🎉
 >
 > Which programming model would sit behind your screen?
->
-> #ABAP #SAP #UI5
-
-## The Cost of a Screen
-
-Plain text — LinkedIn renders no markdown.
-
-> A maintenance view for a customising table. A cockpit showing what last
-> night's job did. An approval step for one department.
->
-> The logic behind each is about thirty lines. The cost of putting a UI in front
-> of thirty lines is not thirty lines, and it does not scale down: a data model,
-> a service, a binding, a frontend artefact, a deployment — and an object that
-> has to be transported, survive upgrades, and one day be deprecated by someone
-> who never met the department that asked for it.
->
-> So the screen never gets built. Every system has a Z package full of the ones
-> that became a selection screen and an ALV grid instead.
->
-> New article 🎉 with a job monitor as a complete abap2UI5 app — and an honest
-> note on where this is the wrong trade.
->
-> Which screen in your system stayed an ALV grid because a proper UI was never
-> worth the effort?
 >
 > #ABAP #SAP #UI5
 
@@ -109,7 +113,7 @@ Plain text — LinkedIn renders no markdown.
 > Neither is a protocol the framework invented, and the frontend does what it
 > always did.
 >
-> What changes is who owns the view. Not an artefact deployed beside the app —
+> What changes is who owns the view. Not an artifact deployed beside the app —
 > a string an ABAP class produced for this request.
 >
 > New article 🎉
@@ -145,7 +149,7 @@ Plain text — LinkedIn renders no markdown.
 
 Plain text — LinkedIn renders no markdown.
 
-> Count what one screen usually costs in backend artefacts: a CDS view or two, a
+> Count what one screen usually costs in backend artifacts: a CDS view or two, a
 > service definition, a service binding, a behavior definition and its
 > implementation — each named, transported, reviewed, and each belonging to
 > exactly one app.
@@ -234,7 +238,7 @@ Plain text — LinkedIn renders no markdown.
 Plain text — LinkedIn renders no markdown.
 
 > Somebody has to deliver the first HTML page. In the SAP world that normally
-> means a BSP: a frontend artefact, built somewhere, deployed, transported on
+> means a BSP: a frontend artifact, built somewhere, deployed, transported on
 > its own path, invalidated from its own caches.
 >
 > abap2UI5 does not have one. The initial GET is answered from ABAP source —
@@ -321,12 +325,12 @@ Plain text — LinkedIn renders no markdown.
 Plain text — LinkedIn renders no markdown.
 
 > Before anyone called it full-stack, ABAP had PARAMETERS. Four lines and every
-> layer is there: a typed, labelled input with a default and value help, plus
+> layer is there: a typed, labeled input with a default and value help, plus
 > validation and event handling. Nobody wrote a frontend, because declaring the
 > variable was writing the frontend.
 >
 > That trade is what disappeared on the way to the browser: the variable and the
-> field became two artefacts in two places, kept in step by a service in between.
+> field became two artifacts in two places, kept in step by a service in between.
 >
 > _bind puts them back together. The attribute is not a field name in a string —
 > it is the ABAP variable.
@@ -449,10 +453,10 @@ Plain text — LinkedIn renders no markdown.
 
 Plain text — LinkedIn renders no markdown.
 
-> ITS 2000. BSP 2001. Web Dynpro 2003. UI5 Freestyle 2010. RAP and Fiori
+> ITS 1996. BSP 2001. Web Dynpro ABAP 2006. UI5 Freestyle 2012. RAP and Fiori
 > Elements 2019. abap2UI5 2023.
 >
-> Read as a line, it is not a march away from the server. For the first ten
+> Read as a line, it is not a march away from the server. For the first fifteen
 > years ABAP built the HTML. Then rendering left for the browser — and it stays
 > there, because that is where a modern UI belongs.
 >
@@ -478,7 +482,7 @@ Plain text — LinkedIn renders no markdown.
 > abap2UI5: an XML string an ABAP class produced for this request.
 >
 > Everything else follows from that axis — what gets deployed per app, what a
-> screen costs in artefacts, what can still change at runtime. Not a ranking:
+> screen costs in artifacts, what can still change at runtime. Not a ranking:
 > fixed early standardises well, fixed late adapts well.
 >
 > New article 🎉
@@ -494,7 +498,7 @@ Plain text — LinkedIn renders no markdown.
 > RAP or abap2UI5? Most systems end up with both, so the real question is never
 > "which framework" but "which one for this screen".
 >
-> RAP when the behaviour matters more than the screen: a transactional object
+> RAP when the behavior matters more than the screen: a transactional object
 > with validations, drafts and authorizations, and more than one consumer for it.
 >
 > abap2UI5 when the screen is the deliverable: one consumer, one purpose, often a
@@ -506,7 +510,7 @@ Plain text — LinkedIn renders no markdown.
 >
 > New article 🎉
 >
-> Which of your screens is really a behaviour, and which is really just a screen?
+> Which of your screens is really a behavior, and which is really just a screen?
 >
 > #ABAP #SAP #UI5
 
