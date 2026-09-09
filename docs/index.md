@@ -141,10 +141,8 @@ table in your own system — nothing to renew, and nothing to migrate away from.
 Every merge is tested against Standard ABAP and ABAP Cloud, and every release
 lists its changes in the [release notes](/resources/changelog).
 
-[Support](/resources/support) is the community's, on GitHub and Slack, with
-training and certification from partners. There is no vendor and no SLA — and
-nothing that stops working when a contract ends. In production at
-[Emineo and Swiss Krono](/resources/who_uses), for example.
+[Support](/resources/support) is the community's, on GitHub and Slack. There is no vendor and no SLA — and
+nothing that stops working when a contract ends.
 
 → *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
@@ -160,11 +158,6 @@ Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start).
 Because it is UI5 itself, Fiori design, themes, accessibility and translation
 come with it — and rendering with the UI5 your system ships, it works without
 internet access.
-
-It is not for offline apps or real-time collaboration, and there is no visual
-designer. How it compares with [RAP](/advanced/insights/33-rap-or-abap2ui5),
-[freestyle UI5](/advanced/insights/34-freestyle-or-abap2ui5) and a
-[low-code platform](/advanced/insights/35-low-code-or-abap2ui5).
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
