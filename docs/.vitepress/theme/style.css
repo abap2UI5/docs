@@ -1306,8 +1306,8 @@
 /* One breakpoint, and it is `grid-3`'s: the row above goes from stacked to
  * three-across at 768px, and a second row that broke to two columns at 640px
  * and to three at 960px spent the two widths in between disagreeing with it
- * — three cards over two, then two over three. Two rows of three, changing
- * together, is the whole point of drawing them on one grid. */
+ * — three cards over two, then two over three. One grid for all five cards,
+ * changing at one width, is the whole point of drawing them together. */
 @media (min-width: 768px) {
   .a2ui5-out {
     grid-template-columns: repeat(3, 1fr);

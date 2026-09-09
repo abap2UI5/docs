@@ -76,7 +76,7 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # the row above it is a second copy to keep in step, which is the reason the
 # old Guide dropdown was taken out of the bar. What a reader on this page is
 # choosing between is what to DO next: build a first app, find a sample for
-# the control in front of them, take an app to production. Each tile names
+# the use case in front of them, take an app to production. Each tile names
 # the task and lands on the page for it; the bar goes on naming the places.
 #
 # THE EXAMPLE IS A REAL APP, not a greeting: the tutorial's finished class - a
@@ -84,6 +84,15 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # that the first thing that runs on this page looks like the thing a reader
 # would build. There is deliberately NO screenshot: the app itself runs here,
 # and a picture of one beside it would be the same thing twice.
+#
+# TWO COLUMNS, not the tutorial's four. Product, supplier, quantity and
+# delivery date fit a page; the panel the app runs in on THIS page is half of
+# one, and at that width every heading wrapped to two lines and each row read
+# as a grid of fragments - the example that is here to look like a real app
+# looked like a broken one. What the paragraph above asks the reader to do
+# needs the product and the date it edits, so the other two are out of the
+# table and out of the class with it: a field a reader sees typed and filled
+# but never displayed is a question this example is not here to answer.
 #
 # EVERY CARD ENDS WITH A WAY OUT, and the link sits on the topic, never on the
 # word "here" - a reader scanning the links has to be able to tell where each
@@ -143,7 +152,7 @@ features:
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M8 7.5 3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M13.6 4.8 10.4 19.2"/></svg>
     details: Install with abapGit, run Hello World, then the twelve-step tutorial — through to transport and unit tests.
     link: /get_started/quickstart
-  - title: Find a sample for your control
+  - title: Find a sample for your use case
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.2" width="18.8" height="15.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M2.6 9.1h18.8M8.2 9.1v10.7"/></svg>
     details: Over 700 working apps, searchable by control, by library and by the UI5 release your system runs.
     link: https://abap2ui5.github.io/playground/samples/
@@ -224,8 +233,6 @@ CLASS zcl_app_invoices DEFINITION PUBLIC.
     TYPES:
       BEGIN OF ty_s_invoice,
         product       TYPE string,
-        supplier      TYPE string,
-        quantity      TYPE string,
         delivery_date TYPE string,
       END OF ty_s_invoice.
 
@@ -242,11 +249,11 @@ CLASS zcl_app_invoices IMPLEMENTATION.
     IF client->check_on_navigated( ).
 
       t_invoices = VALUE #(
-          ( product = `Pineapple`    supplier = `ACME`          quantity = `21` delivery_date = `2026-07-15` )
-          ( product = `Milk`         supplier = `Green Growers` quantity = `4`  delivery_date = `2026-07-20` )
-          ( product = `Canned Beans` supplier = `Corner Deli`   quantity = `3`  delivery_date = `2026-08-01` )
-          ( product = `Salad`        supplier = `Green Growers` quantity = `2`  delivery_date = `2026-08-10` )
-          ( product = `Bread`        supplier = `Corner Deli`   quantity = `1`  delivery_date = `2026-08-12` ) ).
+          ( product = `Pineapple`    delivery_date = `2026-07-15` )
+          ( product = `Milk`         delivery_date = `2026-07-20` )
+          ( product = `Canned Beans` delivery_date = `2026-08-01` )
+          ( product = `Salad`        delivery_date = `2026-08-10` )
+          ( product = `Bread`        delivery_date = `2026-08-12` ) ).
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
@@ -270,16 +277,6 @@ CLASS zcl_app_invoices IMPLEMENTATION.
           )->end(
           )->ele( `Column`
               )->tag( `Text`
-                  )->a( n = `text` v = `Supplier`
-
-          )->end(
-          )->ele( `Column`
-              )->tag( `Text`
-                  )->a( n = `text` v = `Quantity`
-
-          )->end(
-          )->ele( `Column`
-              )->tag( `Text`
                   )->a( n = `text` v = `Delivery Date`
 
           )->end(
@@ -292,10 +289,6 @@ CLASS zcl_app_invoices IMPLEMENTATION.
 
                   )->tag( `Text`
                       )->a( n = `text` v = `{PRODUCT}`
-                  )->tag( `Text`
-                      )->a( n = `text` v = `{SUPPLIER}`
-                  )->tag( `Text`
-                      )->a( n = `text` v = `{QUANTITY}`
                   )->tag( `Text`
                       )->a( n = `text` v = `{DELIVERY_DATE}`
                   )->tag( `Button`
@@ -366,15 +359,10 @@ ENDCLASS.
     <span class="a2ui5-out-title">Add-ons</span>
     <span class="a2ui5-out-details">Optional repositories for the things not every app needs: popups, HTTP and RFC connectors, a lock manager, table maintenance, launchpad KPIs.</span>
   </a>
-  <a class="a2ui5-out-card" href="https://abap2ui5.github.io/linter/" target="_self">
-    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" d="M4 6.5h9M4 12h6M4 17.5h8M13.5 15.5l2.5 2.5 4.5-5"/></svg></span>
-    <span class="a2ui5-out-title">Linter</span>
-    <span class="a2ui5-out-details">Rules that understand abap2UI5 code — view chains, bindings, events — with a rule reference you can read on its own.</span>
-  </a>
   <a class="a2ui5-out-card is-inside" href="/docs/advanced/tooling">
     <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" d="M14.5 6.2a4 4 0 0 1 5 5l-8.2 8.2a2 2 0 0 1-2.8 0l-.9-.9a2 2 0 0 1 0-2.8zM4.5 4.5l4 4"/></svg></span>
     <span class="a2ui5-out-title">Tooling</span>
-    <span class="a2ui5-out-details">Write it in ADT, debug it in the ABAP debugger, test it with ABAP Unit. On top: a VS Code extension that runs the app on F9, an MCP server for AI assistants, and an app template to start from.</span>
+    <span class="a2ui5-out-details">Write it in ADT, debug it in the ABAP debugger, test it with ABAP Unit. On top: a linter that catches a broken view before it reaches a system, a VS Code extension that runs the app on F9, an MCP server for AI assistants, and an app template to start from.</span>
   </a>
 
   <a class="a2ui5-out-card" href="https://github.com/abap2UI5/abap2UI5/" target="_blank" rel="noreferrer">
