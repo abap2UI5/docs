@@ -1,7 +1,8 @@
 # #20 MESSAGE Still Works
 
-An ABAP developer has thirty years of habits around messages, and most of them
-carry over unchanged. What changes is where the message ends up.
+An ABAP developer has thirty years of habits around messages, and the good news
+is that most of them carry over unchanged. What changes is where the message
+ends up.
 
 **A toast for what needs no acknowledgment**, a box for what does:
 
@@ -29,28 +30,31 @@ framework reads the text, the type and the details out of each:
     ENDTRY.
 ```
 
-Which means the message class, the T100 text and the translation tooling
-around them are exactly as useful as before. A text element or a message class
-is still the way a string gets translated, because the app is an ABAP class
-and there is no i18n file beside it.
+Which means the message class, the T100 text and the translation tooling around
+them are exactly as useful as they were before. A text element or a message
+class is still the way a string gets translated, because the app is an ABAP
+class and there is no i18n file beside it. Your translators keep their
+transaction; nobody exports a properties file to anybody.
 
 **What is different is the exception that gets away.** There is one catch in
 the framework, in the HTTP handler, and an exception that escapes `main( )`
 travels all the way up to it. The roundtrip ends with HTTP 500, the database
 work of that roundtrip is rolled back, and the browser shows an *Application
 Error, please restart* overlay with the exception chain behind a *Details*
-button. There is no *continue*: the roundtrip that would have carried the
-app's next state is the one that failed, so the user restarts, and the draft
-brings them back to where they were.
+button. There is no *continue*: the roundtrip that would have carried the app's
+next state is the one that failed, so the user restarts, and the draft brings
+them back to where they were.
 
 That is the fallback, and reaching it means the user has lost the screen.
 Anything predictable — a failed conversion, a locked object, a service that is
-not there — is caught where it happens and shown as a box, which costs the
-user one click.
+not there — is caught where it happens and shown as a box, which costs the user
+one click instead of one restart.
 
-One setting belongs in every production system. The 500 body carries source
-positions, RTTI names and system context — everything a developer wants and
-more than a browser should get. `check_hide_error_details` in the
+One setting belongs in every production system, and it is the sort of thing
+that is embarrassing to discover during a penetration test. The 500 body
+carries source positions, RTTI names and system context — everything a
+developer wants and considerably more than a browser should get.
+`check_hide_error_details` in the
 [user exit](/advanced/extensibility/user_exits) turns the body into a bare
 *Internal Server Error* and leaves everything else as it is.
 

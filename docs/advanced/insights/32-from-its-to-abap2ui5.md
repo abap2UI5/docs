@@ -1,9 +1,12 @@
 # #32 From ITS to abap2UI5
 
-Worth laying out end to end, because the shape of it is easy to misremember.
+Twenty-seven years of SAP user interfaces, laid out end to end — because the
+shape of this line is easy to misremember, and the misremembering is usually
+"everything moved to the browser and stayed there".
 
 **ITS, 1996.** Dynpro screens rendered as HTML by the server. Every interaction
-a full page from the server. Still in warehouses today, on scanners.
+a full page from the server. Still in warehouses today, on scanners,
+outliving several of its successors without any fuss about it.
 
 **BSP, 2001.** HTML and JavaScript written inside the ABAP stack, with ABAP
 embedded for logic. Server-side rendering again, with real control over the
@@ -28,13 +31,13 @@ renders it.
 *Twenty-seven years, and the one move that did not reverse.*
 
 Read as a line, it is not a march away from the server. For the first fifteen
-years ABAP built the HTML. Then rendering left for the browser, where it stays —
-because that is where a modern UI belongs, and nobody is proposing otherwise.
-What has been moving back ever since is not the rendering but the **definition**
-of the screen: first as annotations, then as the view itself.
+years ABAP built the HTML. Then rendering left for the browser, where it stays
+— because that is where a modern UI belongs, and nobody is seriously proposing
+otherwise. What has been moving back ever since is not the rendering but the
+**definition** of the screen: first as annotations, then as the view itself.
 
-Which makes Over-the-Wire less of a new idea than a returning one, arriving with
-the part the old server-rendered world never had — a real control library in the
-browser.
+Which makes Over-the-Wire less of a new idea than a returning one, arriving
+with the part the old server-rendered world never had — a real control library
+in the browser.
 
 Happy ABAPing! 🦖🦕🦣

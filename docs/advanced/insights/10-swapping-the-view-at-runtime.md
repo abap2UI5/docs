@@ -4,7 +4,7 @@ The view is a string the app produced for this request. Which raises an
 obvious question: what stops the next request from producing a different
 one?
 
-Nothing does.
+Nothing does. That is not a loophole — it is the feature.
 
 ```abap
   METHOD z2ui5_if_app~main.
@@ -46,20 +46,24 @@ Nothing does.
 
 *Same data, same class — the control is chosen in an IF.*
 
-Same data, same class, same request handler. One click and the table is a list —
-not a table with its columns hidden, and not a second app behind a navigation
-step. A different control, chosen in ABAP, in an `IF`.
+Same data, same class, same request handler. One click and the table is a list
+— not a table with its columns hidden, and not a second app behind a navigation
+step. A different control, chosen in ABAP, in an `IF`. The kind of `IF` you
+would write without thinking twice in a report.
 
 It is written like ordinary ABAP, and what it implies is the interesting part.
 A screen assembled at design time can vary only where somebody anticipated
 variation and left a switch. A screen assembled per request varies wherever the
-code branches, which is everywhere.
+code branches, which is everywhere. Role-dependent layouts, a field that only
+exists for one plant, a table that turns into a chart when the data is small
+enough — none of these need a mechanism, because they are just code.
 
-It is the same freedom the first article in this series claimed for the model — a structure
-described at runtime rather than declared up front — arriving now on the view
-side. The two together are the point: if both the shape of the data
-and the shape of the screen are decided while the request is running, then the
-things a screen can adapt to are no longer fixed on the day it was designed.
+It is the same freedom the [first article](/advanced/insights/01-somewhere-on-the-way-to-ui5)
+claimed for the model — a structure described at runtime rather than declared
+up front — arriving now on the view side. The two together are the point: if
+both the shape of the data and the shape of the screen are decided while the
+request is running, then what a screen can adapt to is no longer fixed on the
+day it was designed.
 
 A view that is built is a view that can be built differently.
 

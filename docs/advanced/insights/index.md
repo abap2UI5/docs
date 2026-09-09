@@ -3,13 +3,21 @@ description: The Insights series - the ideas behind abap2UI5 in pieces one coffe
 ---
 # Technical Insights
 
-The knowledge behind abap2UI5, cut into pieces that each fit one coffee. Every
-article makes one claim, shows it in code where code can show it, and can be
-read on its own — but read in order, the four blocks add up to the whole
-picture: why the framework exists, how it works under the app, what a working
-day with it looks like, and where it belongs next to what SAP ships.
+Thirty-six short articles about one idea: what happens when the ABAP server
+sends the *screen* instead of only the data.
 
-The axis the whole series turns on is this one:
+Each one is about a coffee long, makes a single claim, and shows it in code
+wherever code can show it. Read one on its own and it stands. Read them in
+order and the four blocks add up to the whole picture — why the framework
+exists, how it works under the app, what a working day with it looks like, and
+where it belongs next to what SAP ships.
+
+There is a good chance you will also pick up a few things about ABAP along the
+way. RTTS, the dialog step, `ENQUEUE`, the selection screen, the ICF node, the
+launchpad: this framework did not invent much, it just moved a lot of familiar
+furniture into a browser, and half the fun is recognizing the room.
+
+Everything turns on one axis:
 
 ![One axis: when the definition of the screen stops being changeable.](/insights/00-where-the-view-lives.svg)
 
@@ -20,10 +28,14 @@ rendering in the browser with the same control library. **UI5 Freestyle** fixes
 the view at build time, as a file in a frontend project. **RAP with Fiori
 Elements** fixes it at activation time, as annotations on CDS. **abap2UI5**
 fixes it when the request is answered, as a string an ABAP class produced for
-this request — and the next request may answer differently. Everything else
-follows from where the view sits: what is deployed per app, what a screen
-costs in artifacts, what can still change at runtime, and which language it is
-all written in.
+this request — and the next request may answer differently.
+
+Everything else follows from where the view sits: what is deployed per app,
+what a screen costs in artifacts, what can still change at runtime, and which
+language it is all written in.
+
+New here? Start with [#2 The Cost of a Screen](/advanced/insights/02-the-cost-of-a-screen) —
+it is the one that explains why anybody wrote this thing.
 
 ## Why
 
@@ -32,13 +44,14 @@ What the framework is for, before how it works.
 | | |
 |---|---|
 | [#1 Somewhere on the Way to UI5, We Lost RTTS](/advanced/insights/01-somewhere-on-the-way-to-ui5) | a table whose structure is only known at runtime, drawn in UI5 |
-| [#2 abap2UI5 in Your Favorite Programming Model](/advanced/insights/02-your-favorite-programming-model) | one interface, one method, and no opinion about what is behind the screen |
-| [#3 The Cost of a Screen](/advanced/insights/03-the-cost-of-a-screen) | why the thirty-line screen never gets built, and a whole one as a class |
+| [#2 The Cost of a Screen](/advanced/insights/02-the-cost-of-a-screen) | why the thirty-line screen never gets built, and a whole one as a class |
+| [#3 abap2UI5 in Your Favorite Programming Model](/advanced/insights/03-your-favorite-programming-model) | one interface, one method, and no opinion about what is behind the screen |
 | [#4 No Annotation in Between](/advanced/insights/04-no-annotation-in-between) | the vocabulary is the UI5 control library, all of it |
 
 ## How It Works
 
-The mechanism under the app, one piece per article.
+The mechanism under the app, one piece per article. This is the block to read
+end to end if you like knowing why something works before you use it.
 
 | | |
 |---|---|
@@ -56,7 +69,8 @@ The mechanism under the app, one piece per article.
 
 ## A Working Day
 
-What an ABAP developer meets in the first week, and how each habit carries over.
+What an ABAP developer meets in the first week, and how each old habit carries
+over — messages, locks, F4, authorizations, the launchpad tile.
 
 | | |
 |---|---|
@@ -74,7 +88,8 @@ What an ABAP developer meets in the first week, and how each habit carries over.
 
 ## Where It Belongs
 
-Releases, clean core, deployment shapes, and the choice against the alternatives.
+Releases, clean core, deployment shapes, and the honest comparison against the
+alternatives — including the cases where you should pick something else.
 
 | | |
 |---|---|

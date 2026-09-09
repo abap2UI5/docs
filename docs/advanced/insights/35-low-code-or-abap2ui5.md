@@ -21,22 +21,25 @@ right question is asked.
 Offline-capable native mobile apps, where local storage and synchronization
 are the whole point. A bundled suite — workflow, API management, a portal —
 rather than a UI layer alone. Contractual support with an SLA and somebody to
-hold accountable. Or app building by people who are not developers: a designer
-exists precisely so that a non-developer can produce something, and no
-code-first framework replaces that.
+hold accountable at 3 a.m. Or app building by people who are not developers: a
+designer exists precisely so that a non-developer can produce something, and no
+code-first framework replaces that. If your department's power users are the
+builders, this is not a close call.
 
 **Reach for abap2UI5 when apps should be code in your own system.** Every app
 is an ABAP class: diffable, transportable, unit-testable, reviewable in a pull
-request. There is no second format to govern and no designer artifact drifting
-from the system it describes. Nothing recurs per seat — ten users and ten
-thousand cost the same. And if the project vanished tomorrow, the apps would
-keep running from your own repository, because MIT means the code is
-permanently yours to fork.
+request, greppable in five years when nobody remembers who wrote it. There is
+no second format to govern and no designer artifact drifting from the system it
+describes. Nothing recurs per seat — ten users and ten thousand cost the same.
+And if the project vanished tomorrow, the apps would keep running from your own
+repository, because MIT means the code is permanently yours to fork.
 
-One asymmetry is worth naming because it is new. A visual designer needs a
-human in front of it. Code-first is what AI coding agents are actually good at
-— write the class, validate the view, run it, read the screenshot — and several
-hundred UI5 sample ports were produced that way and are guarded by CI.
+One asymmetry is worth naming because it is genuinely new. A visual designer
+needs a human in front of it. Code-first is what AI coding agents are actually
+good at — write the class, validate the view, run it, read the screenshot — and
+several hundred UI5 sample ports were produced exactly that way and are guarded
+by CI. [#36](/advanced/insights/36-written-for-agents) is about what follows
+from that.
 
 Neither is a migration. abap2UI5 is adopted one app at a time, and the first
 one costs an abapGit pull and an afternoon.

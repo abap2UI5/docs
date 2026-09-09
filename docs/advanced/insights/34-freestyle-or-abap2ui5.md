@@ -1,8 +1,8 @@
 # #34 UI5 Freestyle or abap2UI5?
 
 Both give full access to the UI5 control library. Neither limits what a screen
-can contain. So the choice is not about what is possible — it is about where the
-work happens and who does it.
+can contain. So the choice is not about what is possible — it is about where
+the work happens and who does it.
 
 | | UI5 Freestyle | abap2UI5 |
 |---|---|---|
@@ -15,11 +15,11 @@ work happens and who does it.
 | **Deployment** | build and deploy the frontend, plus the backend | activating the class |
 
 **Reach for UI5 Freestyle when the browser has to be smart.** This is where the
-edges of abap2UI5 are, so they are worth listing plainly:
+edges of abap2UI5 are, and an article that hid them would not be worth reading:
 
 - **Offline is out.** Every event asks the server what happens next. Take the
   server away and there is no app left — not a degraded one, none. An app for
-  a warehouse with no signal is a different architecture.
+  a warehouse with no signal is a different architecture, full stop.
 - **Real-time and heavily interactive UIs are the wrong shape.** Drag and drop
   across a board, a canvas, live collaboration, anything where the interesting
   state lives in the browser between roundtrips. A request per event does not
@@ -37,16 +37,17 @@ edges of abap2UI5 are, so they are worth listing plainly:
 rules and the decisions are in ABAP, the screen mostly shows them and sends
 events back, and the team writing it writes ABAP. Then a separate frontend
 project is a second place to maintain, a second thing to deploy and a second
-release to coordinate, for a screen whose logic never left the server.
+release to coordinate — for a screen whose logic never left the server in the
+first place.
 
 The practical tiebreaker is usually iteration speed against client richness.
-Change a class, activate, refresh — no build, no cache, no deployment — is worth
-a great deal for internal applications, and worth nothing for an app that has to
-work on a tablet with no signal.
+Change a class, activate, refresh — no build, no cache, no deployment — is
+worth a great deal for internal applications, and worth exactly nothing for an
+app that has to work on a tablet in a warehouse with no signal.
 
 What is left after the edges is still most business software: forms, tables,
-dashboards, approvals, admin tools, the small screens nobody funds a project
-for.
+dashboards, approvals, admin tools, and the small screens nobody funds a
+project for.
 
 Nothing about picking one rules out the other later. The view is a string
 either way, and the controls are the same controls.
