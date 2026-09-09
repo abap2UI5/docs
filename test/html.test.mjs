@@ -47,11 +47,20 @@ test('the page is stripped before its scripts are read back for the policy', () 
 });
 
 test('a row of the menu is the link, and the stylesheet addresses it as one', () => {
-  assert.match(BUILD, /<a class="side-item level-\$\{level\}" href=/);
+  assert.match(BUILD, /<a class="side-item level-\$\{level\}[^"]*" href=/);
   assert.match(BUILD, /<span class="side-item level-\$\{level\}">/);
   assert.doesNotMatch(BUILD, /<div class="side-item\b(?!s)/, 'the box around the link is what cost half a page');
   assert.doesNotMatch(CSS, /\.side-item > (?:a|span)\b/, 'a rule that still reaches into the box matches nothing now');
   assert.match(CSS, /\.sidebar a\.side-item,\s*\.sidebar span\.side-item,\s*\.sidebar summary \{/);
+});
+
+test('the current page\'s row is marked inside its one class attribute', () => {
+  /* The first cut appended ` class="here"` after the row's own class - two
+     class attributes on one tag, and a browser keeps the first: no page was
+     marked in its menu, and site.js found no a.here to scroll the menu to. */
+  assert.doesNotMatch(BUILD, /const on = [^\n]*class="here"/, 'the mark is not a second class attribute');
+  assert.match(BUILD, /<a class="side-item level-\$\{level\}\$\{here \? ' here' : ''\}" href=/, 'the mark is a class among the row\'s own');
+  assert.match(BUILD, /const on = here \? ' aria-current="page"' : '';/, 'and the attribute stays beside it');
 });
 
 test('the hero mark is fetched first, and the search box rides in site.js', () => {
