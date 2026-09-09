@@ -6,6 +6,7 @@ samples:
   - z2ui5_cl_smp_app_161
   - z2ui5_cl_smp_app_170
   - z2ui5_cl_smp_app_470
+description: Popups in abap2UI5 - a dialog built as a UI5 fragment in ABAP, the flow logic behind opening and closing it, and popups as separate apps.
 ---
 # Popup
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Developing abap2UI5 apps with an AI assistant - one paragraph to paste into a prompt, and the linter and MCP server that let an agent check its own work without a system.
 ---
 # Developing with AI
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Authorization for abap2UI5 apps at the service level or in the app class, with the authorization objects and checks you already use in ABAP.
 ---
 # Authorization
 

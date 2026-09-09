@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Sponsor abap2UI5 and the open-source projects it is built on; the framework is maintained by volunteers in their free time.
 ---
 # Sponsor
 

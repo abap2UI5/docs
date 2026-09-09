@@ -2761,9 +2761,31 @@
 .cost-calculate:hover { filter: brightness(1.08); }
 .cost-calculate:disabled { cursor: progress; opacity: .7; }
 .cost-inputs[data-locked] .cost-row { opacity: .5; }
+/* ON A PHONE A ROW IS TWO LINES: the label with its readout on the first and
+   the slider the whole width of the second - the shape a phone's own settings
+   give a slider - where the readout used to take a third line of its own. A
+   choice's boxes go under their label rather than beside it: nine systems in
+   the column beside "Your systems" left the label wrapped to a word a line and
+   the boxes to a two-word column. The button is the row's whole width, and
+   the height of a finger. */
 @media (max-width: 620px) {
-  .cost-row { grid-template-columns: 1fr auto; }
-  .cost-row input[type="range"] { grid-column: 1 / -1; }
+  .cost-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .cost-row output { grid-column: 2; grid-row: 1; }
+  .cost-row input[type="range"] { grid-column: 1 / -1; grid-row: 2; }
+  .cost-row .cost-choices { grid-column: 1 / -1; }
+  .cost-calculate { width: 100%; line-height: 44px; }
+}
+/* A thumb rather than a pointer: each box the size of a target and the word
+   beside it a row the height of one, the slider a band a finger can land on,
+   and the currency list a size iOS does not zoom the page in on - a control
+   set under 16px is one it magnifies on focus and leaves magnified. Nothing
+   here moves under a mouse. */
+@media (pointer: coarse) {
+  .cost-row .cost-choices label { min-height: 32px; }
+  .cost-row .cost-choices input[type="radio"],
+  .cost-row .cost-choices input[type="checkbox"] { width: 18px; height: 18px; }
+  .cost-row input[type="range"] { height: 32px; }
+  .cost-row select { font-size: 16px; }
 }
 .cost-sheet { margin: 20px 0 0; padding: 0 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-sunken); }
 .cost-line {

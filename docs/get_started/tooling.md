@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The optional tooling around abap2UI5 - the app template, checking a view without a system, running the app from the editor, and where the samples live.
 ---
 # Tooling
 

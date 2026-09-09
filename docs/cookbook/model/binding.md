@@ -6,6 +6,7 @@ samples:
   - z2ui5_cl_smp_app_166
   - z2ui5_cl_smp_app_144
   - z2ui5_cl_smp_app_061
+description: Data binding in abap2UI5 - client->_bind( ) shares ABAP variables with the UI5 view, for displaying and editing data, binding to structures, and the data-type mapping.
 ---
 # Binding
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The abap2UI5 release notes - every release with its changes, newest first.
 ---
 # Release Notes
 

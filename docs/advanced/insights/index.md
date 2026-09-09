@@ -1,3 +1,6 @@
+---
+description: The Insights series - the ideas behind abap2UI5 in pieces one coffee long, from why it exists and how it works to a working day and where it belongs.
+---
 # Technical Insights
 
 The knowledge behind abap2UI5, cut into pieces that each fit one coffee. Every

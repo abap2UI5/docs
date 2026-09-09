@@ -49,6 +49,7 @@ import {
   sidebarPages, markdownFiles, mdSuffix, linkOf, fileOf,
   stripFrontmatter, describe, title,
 } from './lib/pages.mjs';
+import { declaredRelease } from './lib/release.mjs';
 
 const PUBLIC = path.join(DOCS, 'public');
 
@@ -126,6 +127,26 @@ const index = [
   'markdown so a machine can read the same thing. Every link below is the raw',
   'source of a page; drop the `.md` for the rendered version.',
   '',
+  /* The answers a question needs no page for, in one place: what a model is
+   * asked first - is it free, what does it run on, how is it installed - and
+   * what it would otherwise have to assemble from six pages, with the risk of
+   * assembling it wrong. Every line is a fact a page states; the release
+   * number is the one the bar prints, held by check:version. */
+  'The facts, for a question that needs no page:',
+  '',
+  `- Latest release: ${declaredRelease(ROOT)} - every release lists its changes in the [release notes](${SITE}/resources/changelog.md)`,
+  '- License: MIT, commercial use included - no license key, no per-user fee, no subscription, no BTP required',
+  '- Runs on: SAP NetWeaver AS ABAP 7.02 and later, S/4HANA on-premise and private cloud, BTP ABAP Environment and',
+  '  S/4HANA Public Cloud (ABAP Cloud, released APIs only); the frontend is SAPUI5 or OpenUI5, 1.71 to 2.x, from a CDN',
+  '  or the UI5 the system ships - a system without internet access is fine',
+  '- Install: one abapGit pull of https://github.com/abap2UI5/abap2UI5 (the `702` branch below 7.50), then one HTTP service',
+  '- An app: one ABAP class implementing `z2ui5_if_app`; `main( )` runs on every roundtrip, the view is UI5 XML built in',
+  '  ABAP, data is bound both ways, and the app is stateless like any other UI5 app',
+  '- Not for: offline apps or real-time collaboration; there is no visual designer',
+  '- Support: the community, on GitHub issues and Slack; no vendor and no SLA',
+  '- Tooling: a linter (`@abap2ui5/linter` on npm), an MCP server, a VS Code extension, and a browser playground',
+  '  at https://abap2ui5.github.io/playground/ that runs an app with no SAP system',
+  '',
   '- [llms-full.txt](' + SITE + '/llms-full.txt): the whole documentation as one',
   '  document, if you would rather fetch it once than page by page',
   '',
@@ -143,6 +164,9 @@ const index = [
      interface offer?", and the answer to both is published - 771 sample
      classes with an index of their own, and the interface generated from the
      source - and neither was named here. Both are one fetch. */
+  '- [the playground](https://abap2ui5.github.io/playground/llms.txt): how to open a class in the',
+  '  browser by URL, how to embed a running example in a page of your own, and',
+  '  where the samples are as data',
   '- [the sample catalogue](https://abap2ui5.github.io/playground/samples/llms.txt): 771',
   '  complete apps from three repositories, each with a page of its own and the',
   '  class in full. That file describes `apps.json`, the whole index as data:',

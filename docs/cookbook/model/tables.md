@@ -11,6 +11,7 @@ samples:
   - z2ui5_cl_smp_app_160
   - z2ui5_cl_smp_app_143
   - z2ui5_cl_smp_app_459
+description: Tables in abap2UI5 - binding an internal table to a UI5 table, editable cells, nested structures, and the working samples for each.
 ---
 # Tables
 

@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Where to get help with abap2UI5 - community support on GitHub issues and Slack, and the options for commercial support.
 ---
 # Support
 

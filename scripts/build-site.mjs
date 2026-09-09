@@ -428,6 +428,10 @@ const meta = ({ page, title, description, kind = 'article', isHome = false }) =>
   const url = canonical(page);
   return [
     ['link', { rel: 'canonical', href: url }],
+    /* Not a standard a crawler is obliged to read - robots.txt is, and it can
+       only live at the origin's root, which is not this deployment's to write
+       - but a hint some of them do read, and it costs one line. */
+    ['link', { rel: 'sitemap', type: 'application/xml', href: `${SITE_URL}/sitemap.xml` }],
     /* THE SAME PAGE AS MARKDOWN. `generate-llms.mjs` publishes one per page
        under docs/public and llms.txt tells a reader to "drop the .md for the
        rendered version" - but nothing on the page itself said the twin
@@ -508,12 +512,19 @@ const linkedData = ({ page, title, description, url, isHome }) => {
         applicationSubCategory: 'SAP ABAP UI framework',
         operatingSystem: 'SAP NetWeaver AS ABAP 7.02 and up, S/4HANA, ABAP Cloud',
         softwareVersion: RELEASE,
+        releaseNotes: `${SITE_URL}/resources/changelog.html`,
         programmingLanguage: 'ABAP',
+        runtimePlatform: 'SAP NetWeaver AS ABAP',
+        softwareRequirements: 'SAP NetWeaver AS ABAP 7.02 or later, or ABAP Cloud; SAPUI5 or OpenUI5 1.71 or later',
         codeRepository: 'https://github.com/abap2UI5/abap2UI5',
+        downloadUrl: 'https://github.com/abap2UI5/abap2UI5',
+        softwareHelp: { '@type': 'CreativeWork', name: 'abap2UI5 documentation', url: `${SITE_URL}/` },
         license: `${SITE_URL}/resources/license.html`,
         isAccessibleForFree: true,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        author: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5' },
+        keywords: 'ABAP, SAPUI5, OpenUI5, SAP Fiori, ABAP Cloud, S/4HANA, abapGit, UI5 apps in ABAP',
+        sameAs: ['https://github.com/abap2UI5/abap2UI5', 'https://www.linkedin.com/company/abap2ui5/'],
+        author: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5', sameAs: ['https://github.com/abap2UI5', 'https://www.linkedin.com/company/abap2ui5/'] },
       },
     ]);
     return `<script type="application/ld+json">${json.replace(/</g, '\\u003c')}</script>`;
@@ -526,8 +537,14 @@ const linkedData = ({ page, title, description, url, isHome }) => {
       headline: title.replace(/ \| abap2UI5$/, ''),
       description,
       url,
+      mainEntityOfPage: url,
       inLanguage: 'en',
+      /* The date the footer prints, in the vocabulary a machine reads: the
+         last commit that touched this page's markdown. */
+      dateModified: lastTouched(page),
+      about: { '@type': 'SoftwareApplication', name: 'abap2UI5', url: `${SITE_URL}/` },
       isPartOf: { '@type': 'WebSite', name: 'abap2UI5', url: `${SITE_URL}/` },
+      author: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5' },
       publisher: { '@type': 'Organization', name: 'abap2UI5', url: 'https://github.com/abap2UI5' },
     },
     {

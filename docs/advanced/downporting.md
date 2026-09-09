@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: abap2UI5 below ABAP 7.50 - the downported branch supports NetWeaver 7.02 and later, generated from main automatically; how it works and why the framework is downportable.
 ---
 # Downporting
 

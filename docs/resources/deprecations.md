@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: What in abap2UI5 has a successor - each deprecated call with what to write instead, old and new code side by side.
 ---
 # Deprecations
 

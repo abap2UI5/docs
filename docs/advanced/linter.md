@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The abap2UI5 linter reconstructs the UI5 view out of the ABAP that builds it and reports what UI5 does not have, without an SAP system - findings, rules, the pipeline, the library.
 ---
 # abap2UI5 linter
 

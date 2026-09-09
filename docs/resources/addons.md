@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The optional add-ons around abap2UI5 - popups, HTTP and RFC connectors, a lock manager, table maintenance, launchpad KPIs - and the open-source projects it builds on.
 ---
 # Add-ons
 

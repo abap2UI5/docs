@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: abap2UI5 apps as tiles in SAP Mobile Start on iOS and Android, mirrored from the Fiori Launchpad with no extra development.
 ---
 # Mobile Start
 
