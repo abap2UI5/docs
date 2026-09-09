@@ -51,7 +51,7 @@ test('a row of the menu is the link, and the stylesheet addresses it as one', ()
   assert.match(BUILD, /<span class="side-item level-\$\{level\}">/);
   assert.doesNotMatch(BUILD, /<div class="side-item\b(?!s)/, 'the box around the link is what cost half a page');
   assert.doesNotMatch(CSS, /\.side-item > (?:a|span)\b/, 'a rule that still reaches into the box matches nothing now');
-  assert.match(CSS, /\.sidebar a\.side-item,\s*\.sidebar span\.side-item,\s*\.sidebar summary \{/);
+  assert.match(CSS, /\.sidebar a\.side-item,\s*\.sidebar span\.side-item,\s*\.sidebar \.side-row \{/);
 });
 
 test('the current page\'s row is marked inside its one class attribute', () => {

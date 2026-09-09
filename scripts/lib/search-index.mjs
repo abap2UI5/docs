@@ -114,8 +114,38 @@ export function sampleEntries(catalogue, label) {
  * once when a corpus is missing from a build rather than wondering why their
  * sample is not there.
  */
+/**
+ * The words of a page that are worth carrying: not the ones its title, its
+ * description or its headings already carry (the matcher reads all of them),
+ * and not the ones that stand on more than a third of all pages.
+ *
+ * `terms` was 281 kB of a 630 kB index - the largest single field, and most
+ * of it words like "client", "view", "class" and "framework", which are on
+ * nearly every page and therefore decide nothing: a query for one of them
+ * matches the manual wholesale and the ranking falls back on the title
+ * anyway. A word on more than a third of the pages is left out; a word on a
+ * hundredth of them - "carousel", "geolocation", "websocket" - is exactly
+ * what this field exists for and stays. Measured on the pages as they are:
+ * 281 kB became 96, and the index over the wire 180 kB gzip became about
+ * 110, on the first request every reader who opens the search box makes.
+ */
+export function trimTerms(entries, { ceiling = 1 / 3 } = {}) {
+  const docs = entries.filter((e) => e.area === 'docs' && typeof e.terms === 'string');
+  const on = new Map();
+  for (const e of docs) for (const w of new Set(e.terms.split(' '))) if (w) on.set(w, (on.get(w) || 0) + 1);
+  const limit = Math.ceil(docs.length * ceiling);
+  for (const e of docs) {
+    const carried = new Set(
+      `${e.title} ${e.text} ${(e.headings || []).map((h) => h[0]).join(' ')}`
+        .toLowerCase().split(/[^\p{L}\p{N}._]+/u).map((w) => w.replace(/^[._]+|[._]+$/g, '')),
+    );
+    e.terms = e.terms.split(' ').filter((w) => w && !carried.has(w) && (on.get(w) || 0) <= limit).join(' ');
+  }
+  return entries;
+}
+
 export async function buildIndex(root, { fetchFn = globalThis.fetch, log = () => {} } = {}) {
-  const entries = docEntries();
+  const entries = trimTerms(docEntries());
   const areas = [{ area: 'docs', label: 'Documentation', count: entries.length }];
 
   for (const { repo, label } of CORPORA) {

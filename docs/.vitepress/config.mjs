@@ -173,7 +173,7 @@ export default defineConfig({
     footer: {
       message: `
       <a href="/docs/resources/license">License</a> |
-      <a href="/docs/resources/contact">Contact</a>`,
+      <a href="/docs/resources/support#contact">Contact</a>`,
       copyright: `Copyright © 2023-${new Date().getFullYear()} abap2UI5`,
     },
     editLink: {
@@ -216,23 +216,23 @@ export default defineConfig({
     nav: [],
     sidebar: [
       {
+        // A SEQUENCE, AND IT READS AS ONE. What it is, install it, see one app
+        // run, then the assistant - in the order a newcomer meets them. It
+        // used to be five entries with a "Quickstart" group in the middle and
+        // a "What's Next?" page at the end that repeated this sidebar; the
+        // group is gone (its two pages stand in the row) and so is the page
+        // (its links live at the end of Hello World, where a reader who has
+        // just seen an app run is actually asking the question). The label
+        // of every entry is the page's own H1, which
+        // test/sidebar-titles.test.mjs holds for the whole menu.
         text: "Getting Started",
         link: "/get_started/about",
         collapsed: true,
         items: [
           { text: "In a Nutshell", link: "/get_started/about" }, // sidebar
-          {
-            // Install it, and see one app run. The step-by-step tutorials -
-            // Full Example among them - are a section of their own now; what
-            // stays here is the shortest path from nothing to a running app.
-            text: "Quickstart",
-            items: [
-              { text: "Install with abapGit", link: "/get_started/quickstart" },
-              { text: "Hello World", link: "/get_started/hello_world" },
-            ],
-          },
+          { text: "Quickstart", link: "/get_started/quickstart" },
+          { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Developing with AI", link: "/get_started/ai" },
-          { text: `What's Next?`, link: "/get_started/next" },
         ],
       },
       {
@@ -273,12 +273,6 @@ export default defineConfig({
               { text: "12. Unit Tests", link: "/tutorials/walkthrough/step-12" },
             ],
           },
-          // The sheet you keep open WHILE working through the steps. It keeps
-          // the URL it was published under - only the entry that navigates to
-          // it moved out of the Cookbook, and it is not listed twice: an entry
-          // standing in two sidebar sections makes its own search results
-          // ambiguous.
-          { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
         ],
       },
       {
@@ -288,9 +282,15 @@ export default defineConfig({
         // they were already looking at. The section opens on the first
         // chapter instead.
         text: "Cookbook",
-        link: "/cookbook/view/definition",
+        link: "/cookbook/cheat_sheet",
         collapsed: true,
         items: [
+          // The sheet you keep open while working - first, because this is
+          // the section a reader who is looking something up opens, and the
+          // sheet is the shortest answer to most of what they look up. It
+          // stood under Tutorial for a while; its URL always said cookbook,
+          // and the tutorial's index links it.
+          { text: "Cheat Sheet", link: "/cookbook/cheat_sheet" },
           {
             text: "View",
             link: "/cookbook/view/definition",
@@ -415,7 +415,6 @@ export default defineConfig({
               { text: "Lock", link: "/cookbook/expert_more/lock" },
               { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
               { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
-              { text: "Logout", link: "/configuration/logout" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
               { text: "Smart Controls", link: "/cookbook/expert_more/smart_controls" },
             ],
@@ -450,19 +449,20 @@ export default defineConfig({
               { text: "Fuzzy Search", link: "/cookbook/eml_cds_sql/fuzzy_search" },
             ],
           },
-          {
-            text: "Troubleshooting",
-            collapsed: true,
-            items: [
-              { text: "Debugging", link: "/configuration/debugging" },
-              { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
-            ],
-          },
+          // Troubleshooting is one page now that Debugging stands where its
+          // URL says it lives (Configuration), so the page stands in the row
+          // rather than alone in a group of one.
+          { text: "Common Failures", link: "/cookbook/troubleshooting/common_failures" },
         ],
       },
       {
+        // A SECTION OPENS ON ITS FIRST ENTRY. This one opened on Setup while
+        // Installation stood first in the list, Advanced opened on
+        // Downporting, and a reader who pressed a heading landed somewhere
+        // the list under it did not say. Every section link is now the first
+        // page under it, and test/sidebar-titles.test.mjs holds it.
         text: "Configuration",
-        link: "/configuration/setup",
+        link: "/configuration/installation",
         collapsed: true,
         items: [
           { text: "Installation", link: "/configuration/installation" },
@@ -482,8 +482,9 @@ export default defineConfig({
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
-          { text: "Production Use", link: "/configuration/productive_usage" },
-          { text: "Transport", link: "/configuration/transport" },
+          { text: "Productive Usage", link: "/configuration/productive_usage" },
+          { text: "Logout", link: "/configuration/logout" },
+          { text: "Debugging", link: "/configuration/debugging" },
           { text: "Fiori Launchpad", link: "/configuration/launchpad" },
           {
             text: "ABAP Cloud, BTP",
@@ -493,7 +494,6 @@ export default defineConfig({
                 text: "S/4 Public Cloud",
                 link: "/configuration/s4_public_cloud",
               },
-              { text: "BTP ABAP Environment", link: "/configuration/btp_abap_env" },
               { text: "Build Work Zone", link: "/configuration/btp" },
               { text: "Mobile Start", link: "/configuration/mobile_start" },
             ],
@@ -502,7 +502,7 @@ export default defineConfig({
       },
       {
         text: "Advanced Topics",
-        link: "/advanced/downporting",
+        link: "/advanced/extensibility/user_exits",
         collapsed: true,
         items: [
           // Twelve entries in a flat list until now, of four different kinds:
@@ -566,66 +566,56 @@ export default defineConfig({
             // The machine you develop on, and the three tools the project
             // ships for it - each documented in full here, so their READMEs
             // can stay short and point at a page instead of growing a second
-            // copy that drifts.
+            // copy that drifts. Tooling moved here from Getting Started
+            // (which editor, transpiler and client tools you develop WITH is
+            // a question a newcomer does not have yet), and its file moved
+            // with it, so the crumb line and the URL say the same thing.
             text: "Developer Setup",
             collapsed: true,
             items: [
-              // Moved out of Getting Started: which editor, transpiler and
-              // client tools you develop WITH is a question a newcomer does
-              // not have yet, and on the entry path it read as a required
-              // step. It belongs next to the local setup it describes.
-              { text: "Tooling", link: "/get_started/tooling" },
-              { text: "Local Setup", link: "/advanced/local" },
-              {
-                text: "Project Tools",
-                link: "/advanced/linter",
-                collapsed: true,
-                items: [
-                  { text: "abap2UI5 linter", link: "/advanced/linter" },
-                  { text: "MCP Server", link: "/advanced/mcp_server" },
-                  { text: "VS Code Extension", link: "/advanced/vscode" },
-                ],
-              },
+              { text: "Tooling", link: "/advanced/tooling" },
+              { text: "abap2UI5 linter", link: "/advanced/linter" },
+              { text: "MCP Server", link: "/advanced/mcp_server" },
+              { text: "VS Code Extension", link: "/advanced/vscode" },
+              { text: "Agent Setup", link: "/advanced/agent_setup" },
             ],
           },
           {
             // Every one of these is somebody else's project, which is what
-            // this group is: the toolchain abap2UI5 stands on. It used to be
-            // the last entry INSIDE Technical Insight, one level further
-            // down, where a reader looking for "how does abapGit fit in" had
-            // to open a group about the framework's internals first. Next to
-            // Developer Setup - the tools you develop WITH - and Technical
-            // Insight - what the framework does under the app - it is one of
-            // the things this section is for, and reachable in one click.
-            //
-            // The project's own linter used to head the list, pointing at
-            // the same page as Developer Setup > Project Tools above. One
-            // entry standing twice in one sidebar makes its own search
-            // results ambiguous, and here it also made the group claim
-            // something it no longer holds.
+            // this group is: the toolchain abap2UI5 stands on. Four have a
+            // page of their own; abap-cleaner, open-abap, abapmerge and
+            // abap2UI5-local were one paragraph each and are sections of the
+            // overview, which is also where the group opens.
             text: "Toolchain",
+            link: "/technical/tools/",
             collapsed: true,
             items: [
               { text: "abapGit", link: "/technical/tools/abapgit" },
               { text: "ajson", link: "/technical/tools/ajson" },
               { text: "S-RTTI", link: "/technical/tools/srtti" },
               { text: "abaplint", link: "/technical/tools/abaplint" },
-              { text: "open-abap", link: "/technical/tools/open_abap" },
-              { text: "abap-cleaner", link: "/technical/tools/abap_cleaner" },
-              { text: "abapmerge", link: "/technical/tools/abapmerge" },
             ],
           },
+        ],
+      },
+      {
+        // A SECTION OF ITS OWN. Thirty-six essays stood three levels deep
+        // under "Advanced Topics", a label that says "later" - and among
+        // them are the pages a reader deciding whether to adopt the framework
+        // is looking for: the cost of a screen, RAP or abap2UI5, low-code or
+        // abap2UI5. Sixty per cent of that section was this, and none of it
+        // was advanced. The URLs stay where they were published.
+        text: "Know-How",
+        link: "/advanced/insights/",
+        collapsed: true,
+        items: [
           {
-            // The article series. It replaced eight narrative pages that used
-            // to stand here as "Technical Insight" - the same reading, cut
-            // into one claim per article so each can be read on its own and
-            // posted on its own. Last in this section on purpose: it is the
-            // part read after the app runs, not on the way in, and a reader
-            // who opens Advanced Topics for a how-to should meet the how-tos
-            // first.
+            // The series itself, as a group under the section - the shape
+            // Tutorial › Walkthrough has, and for the same reason: the
+            // series' own index page gets a crumb trail this way (the
+            // section is the trail, the group is the page).
             text: "Technical Insights",
             link: "/advanced/insights/",
-            collapsed: true,
             items: [
               // Four blocks - why, how it works, a working day, where it
               // belongs - and the index page at the link above names them. The
@@ -713,7 +703,6 @@ export default defineConfig({
               // every line is zero. The front door's cost card opens it.
               { text: "Cost Calculator", link: "/resources/cost_calculator" },
               { text: "Support", link: "/resources/support" },
-              { text: "Contact", link: "/resources/contact" },
               // SIDEBAR copy — the nav bar has the same two entries verbatim,
               // further up under the version number. Search for this marker,
               // not for the text.
@@ -724,7 +713,7 @@ export default defineConfig({
               // the only way in was knowing the URL - which nobody looking for
               // a logo does. Found by scripts/generate-llms.mjs, which reports
               // a page in the tree that no sidebar navigates to.
-              { text: "Logo, Press Kit", link: "/resources/logo" },
+              { text: "Logo & Brand", link: "/resources/logo" },
             ],
           },
         ],

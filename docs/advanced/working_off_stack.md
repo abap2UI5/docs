@@ -76,6 +76,6 @@ checks just passed.
 
 ## Next Steps
 
-- [Tooling](/get_started/tooling) — the editor and agent side of the same loop
+- [Tooling](/advanced/tooling) — the editor and agent side of the same loop
 - [abap2UI5 linter](/advanced/linter) — what the view gate actually
   checks, and how to adopt it on a codebase that already exists

@@ -1,15 +1,16 @@
 /*
- * THE WHOLE MANUAL, WITHOUT THE THEME - the prototype from
- * scripts/prototype-page.mjs, run over every page.
+ * THE WHOLE MANUAL, WITHOUT THE THEME. This is what is published: every page
+ * of the site as static HTML, written the way the sample catalogue's pages
+ * are - a Node script that writes HTML - instead of by a Vue application
+ * with a theme. `npm run build` runs it, deploy.yml uploads its output, and
+ * it refuses to finish on a dead internal link (the sweep at the end).
  *
- * This exists to answer one question with a build rather than an argument:
- * what does the manual look like, and what does it cost, if the pages are
- * generated the way the sample catalogue's are - a Node script that writes
- * HTML - instead of by a Vue application with a theme?
- *
- * It is a PROTOTYPE. It is not wired into any gate, nothing depends on it,
- * and it deliberately leaves things out (they are listed at the end of the
- * run, so the report is the program's rather than mine).
+ * It began as a prototype beside the VitePress build, to answer with a
+ * build rather than an argument what the manual would look like and cost
+ * generated this way; the answer was 167 pages in seven seconds and one
+ * request of everything, and it replaced the theme on 2026-09-05. VitePress
+ * is still built in CI as a second opinion (AGENTS.md, *The site is written
+ * by a script*).
  *
  * The load-bearing finding, worth repeating here: VitePress's markdown
  * renderer works as a plain library. `createMarkdownRenderer` produces the
@@ -304,9 +305,13 @@ const urlOf = (page) => BASE + page.replace(/\.md$/, '.html');
  * arrived in the page as `/get_started/about` - a path that is not on this
  * deployment at all. An absolute URL is left exactly as written; it is another
  * site, and one of them carries a `target` that keeps a router off it. */
-const linkOf = (href) => (/^[a-z]+:|^\/\//i.test(href)
-  ? href
-  : BASE + String(href).replace(/^\//, '') + (href.endsWith('/') ? 'index.html' : '.html'));
+const linkOf = (href) => {
+  if (/^[a-z]+:|^\/\//i.test(href)) return href;
+  /* The fragment stays a fragment: `/get_started/about#how-it-works` is a
+     page and a section of it, and the extension goes on the page. */
+  const [at, hash] = String(href).split('#');
+  return BASE + at.replace(/^\//, '') + (at.endsWith('/') ? 'index.html' : '.html') + (hash ? `#${hash}` : '');
+};
 const routeOf = (page) => '/' + page.replace(/\.md$/, '').replace(/\/index$/, '');
 
 function sidebarFor(route) {
@@ -321,6 +326,19 @@ function sidebarFor(route) {
      with the same key twice. The trail of headings down to it is unique, and
      it stays the same when the menu is reordered - which a position would
      not. */
+  /* A SECTION IS A CHECKBOX, A ROW AND A LIST. It was a <details> with the
+     label inside its <summary> - the caret opened the list and the words
+     opened the page, which is a control inside a control: axe names it
+     nested-interactive, sixteen times a page, and a reader who pressed the
+     words to see what was under them was navigated away from the list they
+     were opening. Now the words are a plain link (or, for a section with no
+     page of its own, a label that toggles) and the caret is a label for a
+     checkbox written just before the row; the stylesheet shows the list when
+     the box is checked and turns the caret with it. The browser still does
+     the opening and closing with no script, the keyboard reaches the box,
+     and site.js writes down what the reader toggled (`change`). The box
+     precedes the group because that is what a sibling selector can see. */
+  let boxes = 0;
   const tree = (items, level, trail = []) => items.map((i) => {
     /* ONE ROW IS MARKED, and it is the deepest one that names this page. A
        section often points at its own first page - Model and Binding are the
@@ -329,7 +347,6 @@ function sidebarFor(route) {
     const here = same(i.link) && !(i.items || []).some(holds);
     const on = here ? ' aria-current="page"' : '';
     const href = i.link ? `${BASE.slice(0, -1)}${i.link}${i.link.endsWith('/') ? 'index.html' : '.html'}` : null;
-    const label = href ? `<a href="${esc(href)}"${here ? ' class="here"' : ''}${on}>${esc(i.text)}</a>` : `<span>${esc(i.text)}</span>`;
     /* A ROW IS THE LINK. It was a div with the row's classes around an anchor,
        on every one of 183 rows on every one of 166 pages - 139 bytes a row,
        half of a page's markup. The link is the row now, with the classes the
@@ -343,9 +360,14 @@ function sidebarFor(route) {
       ? `<a class="side-item level-${level}${here ? ' here' : ''}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
       : `<span class="side-item level-${level}">${esc(i.text)}</span>`;
     const key = [...trail, i.text].join(' / ');
-    return `<details class="side-group level-${level}" data-key="${esc(key)}"${holds(i) ? ' open' : ''}>`
-      + `<summary><span class="side-caret" aria-hidden="true"></span>${label}</summary>`
-      + `<div class="side-items">${tree(i.items, level + 1, [...trail, i.text])}</div></details>`;
+    const id = `side-box-${++boxes}`;
+    const label = href
+      ? `<a class="side-label${here ? ' here' : ''}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
+      : `<label class="side-label" for="${id}">${esc(i.text)}</label>`;
+    return `<input class="side-toggle" type="checkbox" id="${id}"${holds(i) ? ' checked' : ''} aria-label="${esc(i.text)}: open the section">`
+      + `<div class="side-group level-${level}" data-key="${esc(key)}">`
+      + `<div class="side-row"><label class="side-caret" for="${id}" aria-hidden="true"></label>${label}</div>`
+      + `<div class="side-items">${tree(i.items, level + 1, [...trail, i.text])}</div></div>`;
   }).join('');
   return `<nav class="sidebar" aria-label="Documentation">${tree(config.themeConfig.sidebar, 0)}</nav>`;
 }
@@ -600,7 +622,7 @@ const announced = (raw, allowed) => {
 /* `inline`: the scripts THIS page brings beyond the two every page carries -
    the 404's suggestions are the one case - each hashed into the policy of the
    page that carries it, and only that page. */
-const shell = ({ title, main, bar, head = '', inline = [] }) => {
+const shell = ({ title, main, bar, head = '', inline = [], italic = false }) => {
   const allowed = [...INLINE, ...inline];
   const csp = contentSecurityPolicy(allowed);
   return announced(`<!doctype html>
@@ -621,7 +643,7 @@ const shell = ({ title, main, bar, head = '', inline = [] }) => {
 <meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1e2024" media="(prefers-color-scheme: dark)">
 <link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${BASE}site.css">
+${italic ? `<link rel="preload" href="${BASE}fonts/inter-italic-latin.woff2" as="font" type="font/woff2" crossorigin>\n` : ''}<link rel="stylesheet" href="${BASE}site.css">
 <script type="module" src="${BASE}site.js"></script>
 <!-- TWO BUTTONS THAT ARE ONLY BUTTONS WITH JAVASCRIPT. The Run bar under a
      runnable example and the copy button on a listing are written into the
@@ -638,7 +660,7 @@ ${bar}
 ${main}
 <footer class="foot"><p>
   <a href="${BASE}resources/license.html">License</a> |
-  <a href="${BASE}resources/contact.html">Contact</a> —
+  <a href="${BASE}resources/support.html#contact">Contact</a> —
   Copyright © 2023-${new Date().getFullYear()} abap2UI5
 </p></footer>
 ${MENU_SCRIPT}
@@ -716,7 +738,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
   ${sidebarFor(route)}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
-    <label class="side-button" for="side-open" title="Chapters" aria-label="Chapters"><span>Chapters</span></label>
+    <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
     <nav class="crumbs" aria-label="Breadcrumb">${crumbsFor(page)}</nav>
     <div class="vp-doc">${body}</div>
     <div class="doc-foot">
@@ -810,8 +832,6 @@ const home = ({ body, fm, page }) => {
       <div class="hero-actions">${(h.actions || []).map((a) => `
         <a class="hero-action ${a.theme === 'brand' ? 'primary' : 'plain'}" href="${esc(linkOf(a.link))}"${a.target ? ` target="${esc(a.target)}"` : ''}>${esc(a.text)}</a>`).join('')}
       </div>
-      ${h.proof ? `<p class="hero-proof">${esc(h.proof)}${h.proofLink
-        ? ` <a href="${esc(linkOf(h.proofLink.link))}">${esc(h.proofLink.text)} &rsaquo;</a>` : ''}</p>` : ''}
     </div>
     ${img.src ? (() => {
       /* The one image on this site that is NOT lazy - it is the first thing on
@@ -1163,6 +1183,11 @@ for (const page of pages) {
     }),
     bar: isHome ? BAR_HOME : BAR_DOCS,
     main: isHome ? home({ body, fm, page }) : chapter({ body, page, route }),
+    /* The front door sets its "More on …" lines in italic, in the first
+       screen; unpreloaded, the italic arrived a round trip after the roman
+       and those four lines were drawn twice. A chapter has italic here and
+       there and fetches it when it needs it. */
+    italic: isHome,
   });
 
   const to = path.join(OUT, 'docs', page.replace(/\.md$/, '.html'));
@@ -1278,7 +1303,7 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   ${sidebarFor('/404')}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
-    <label class="side-button" for="side-open" title="Chapters" aria-label="Chapters"><span>Chapters</span></label>
+    <label class="side-button" for="side-open" title="Chapters"><span>Chapters</span></label>
     <nav class="crumbs" aria-label="Breadcrumb"><a href="${BASE}get_started/about.html">Documentation</a></nav>
     <div class="vp-doc">
       <h1>This page is not here</h1>

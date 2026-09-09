@@ -74,17 +74,17 @@ test('the old key would NOT have been its own — this is what was fixed', () =>
 const SITE = readFileSync(join(ROOT, 'scripts/site-js/site.js'), 'utf8');
 const menu = SITE.slice(SITE.indexOf('(function tree()'), SITE.indexOf('---- copy a listing'));
 
-test('only a click writes the menu down, never a toggle', () => {
+test('only the reader writes the menu down, never the page', () => {
   assert.equal(/addEventListener\('toggle'/.test(menu), false,
     'toggle is queued, so it also fires for the sections the page itself opened');
-  assert.match(menu, /addEventListener\('click'/,
-    'a click on a summary is the reader, and it is the only thing that is');
-  assert.match(menu, /closest\?\.\('summary'\)/, 'and only a click on a section heading');
+  assert.match(menu, /addEventListener\('change'/,
+    'a box that changes is the reader, and it is the only thing that is');
+  assert.match(menu, /matches\?\.\('\.side-toggle'\)/, 'and only a section\'s own box');
 });
 
 test('what is written is one decision, not the whole visible menu', () => {
-  assert.match(menu, /chosen\[group\.dataset\.key\] = group\.open/,
-    'the section that was clicked, and the state it now has');
+  assert.match(menu, /chosen\[group\.dataset\.key\] = toggle\.checked/,
+    'the section that was toggled, and the state it now has');
   assert.match(menu, /JSON\.stringify\(chosen\)/, 'the store is those decisions and nothing else');
   assert.equal(/groups\.filter\(\(g\) => g\.open\)/.test(menu), false,
     'writing every open section is what let a navigation pass for a reader');
@@ -98,6 +98,6 @@ test('a section nobody touched keeps the shape the build gave it', () => {
 test('the way to the current page is opened, and never written down', () => {
   const here = menu.slice(menu.indexOf('const here ='));
   const untilWrite = here.slice(0, here.indexOf('const write ='));
-  assert.match(untilWrite, /el\.open = true/, 'a menu that hid the page you are on would be worse');
+  assert.match(untilWrite, /boxOf\(el\)\.checked = true/, 'a menu that hid the page you are on would be worse');
   assert.equal(/chosen\[/.test(untilWrite), false, 'walking somewhere is not choosing it');
 });

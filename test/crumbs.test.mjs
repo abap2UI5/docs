@@ -94,7 +94,7 @@ test('the real sidebar files the pages where a reader would look for them', () =
   const sidebar = config.themeConfig.sidebar;
   const cases = [
     ['get_started/about.md', ['Documentation', 'Getting Started']],
-    ['get_started/hello_world.md', ['Documentation', 'Getting Started', 'Quickstart']],
+    ['get_started/hello_world.md', ['Documentation', 'Getting Started']],
     ['tutorials/walkthrough/step-4.md', ['Documentation', 'Tutorial', 'Walkthrough']],
     ['cookbook/model/trees.md', ['Documentation', 'Cookbook', 'Model']],
     ['cookbook/model/expression_binding.md', ['Documentation', 'Cookbook', 'Model', 'Binding']],

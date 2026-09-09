@@ -5,7 +5,9 @@ outline: [2, 4]
 
 Use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only released APIs and is fully compatible with the ABAP Cloud language version, satisfying SAP's "clean core" cloud extension requirements.
 
-To install abap2UI5 on S/4 Public Cloud, follow these steps:
+The setup in the **BTP ABAP Environment** is the same as in S/4 Public Cloud -
+both are ABAP for Cloud, both install through the ADT abapGit - so this page
+covers both. To install abap2UI5, follow these steps:
 
 ## 1. Install abap2UI5 with abapGit
 

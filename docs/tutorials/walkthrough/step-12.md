@@ -362,7 +362,7 @@ What the unit tests deliberately do not cover is the view: whether `Table`
 has an `items` aggregation is not a question ABAP can answer. That check
 exists too, without a system — the [abap2UI5 linter](/advanced/linter)
 reconstructs the view from the builder chain and validates it against UI5,
-and the [tooling page](/get_started/tooling) shows how it runs in CI next to
+and the [tooling page](/advanced/tooling) shows how it runs in CI next to
 these tests.
 
 ## What to Take Away

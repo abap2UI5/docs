@@ -38,9 +38,13 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # instead, and its bold lead is the one-word answer - so the reader who
 # scans only the headings still leaves with the price.
 #
-# THE ORDER IS AN ARGUMENT: it is safe here, it fits what you run, an agent
-# can write it - and only then, to somebody already persuaded, what it costs.
-# The price is the last card because it is the last question, not the first.
+# THE ORDER IS AN ARGUMENT: it is safe here, and it costs nothing - then it
+# fits what you run, and an agent can write it. The price used to be the last
+# card, on the reasoning that it is the last question; measured, the last
+# card sat at 1,000px on a desk and 2,900 on a phone, under the fold on both,
+# and for the manager this page is written for it is usually the FIRST
+# question. So the tagline now says "free, MIT licensed" in the first screen
+# and the cost card stands second, where "Nothing." is read.
 #
 # THE CARDS ANSWER A BUYER, not only a developer - somebody who would otherwise
 # license a low-code platform, and who asks what a developer does not: who is
@@ -66,6 +70,15 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # card that names the daily tools - ADT, the ABAP debugger, ABAP Unit -
 # before the extras.
 #
+# THE THREE TILES ARE TASKS, NOT PLACES. They used to say Documentation,
+# Samples, Playground - the same three words, in the same order, with the
+# same marks, 44px under the bar that already says them. A tile that repeats
+# the row above it is a second copy to keep in step, which is the reason the
+# old Guide dropdown was taken out of the bar. What a reader on this page is
+# choosing between is what to DO next: build a first app, find a sample for
+# the control in front of them, take an app to production. Each tile names
+# the task and lands on the page for it; the bar goes on naming the places.
+#
 # THE EXAMPLE IS A REAL APP, not a greeting: the tutorial's finished class - a
 # table of invoices with an edit dialog, a date picker, save and a toast - so
 # that the first thing that runs on this page looks like the thing a reader
@@ -82,11 +95,11 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # AI guide" is no longer a link: it and the card's closer pointed at the same
 # page, one line apart.
 hero:
-  # The greeting, because this is the front door and a reader who arrives from
-  # a talk or a colleague's link should be met rather than pitched at. The
-  # headline under it still says what the project IS, in the same words as
-  # before - the two lines are a welcome and an answer, in that order.
-  name: Welcome to abap2UI5
+  # No greeting line. "Welcome to abap2UI5" stood over the headline in the
+  # accent at 20px, and read as a second headline - two lines to take in
+  # before the one that says what the project is, and a welcome tells a
+  # stranger nothing they came for. The tab and the preview card still carry
+  # the name; the first thing on the page is the claim.
   text: Build UI5 Apps Purely in ABAP
   # ONE PARAGRAPH, NO HARD BREAK. The `\n` that used to stand after "no
   # frontend project." broke the tagline at a point the line length had nothing
@@ -96,47 +109,49 @@ hero:
   # THREE "no"s. There were four - "no RAP" stood between them - and a list of
   # negatives stops being read at the third. RAP has its own sentence in the
   # Integration card, where the point is that the two work side by side.
-  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Install it with abapGit and run it on anything from NetWeaver 7.02 to ABAP Cloud."
+  # THE PRICE IS IN THE FIRST SCREEN. "Free, MIT licensed" replaced "Install it
+  # with abapGit" here: abapGit stood three times in the first screen (the
+  # tagline, the second button, the Documentation tile), and the price stood
+  # nowhere above the fold. The install path is the first tile now.
+  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Free and MIT licensed, and it runs on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
     src: /logo-hero.webp
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
   # Two buttons, in the order a stranger needs them: try it without installing
-  # anything, then install it. There was a third, "What it is", and it opened
-  # the same page as the Documentation tile directly under it - two doors into
-  # one room, and a reader cannot tell them apart. The playground is first on
-  # purpose — it is the one claim on this page a reader can check in ten
-  # seconds, and it costs them nothing. It is an absolute URL, so VitePress
-  # draws it as an external link and gives it a `target` of its own, which is
-  # also what keeps this site's router off a neighbouring deployment
-  # (scripts/lib/cross-site.mjs).
+  # anything, then read how it works. The second used to be "Install with
+  # abapGit" - the third mention of abapGit in the first screen, and a step
+  # the manager this page addresses is not taking; installing is the first
+  # tile below. The playground is first on purpose — it is the one claim on
+  # this page a reader can check in ten seconds, and it costs them nothing.
+  # It is an absolute URL, so VitePress draws it as an external link and
+  # gives it a `target` of its own, which is also what keeps this site's
+  # router off a neighbouring deployment (scripts/lib/cross-site.mjs).
   actions:
     - theme: brand
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
     - theme: alt
-      text: Install with abapGit
-      link: /get_started/quickstart
+      text: How it works
+      link: /get_started/about#how-it-works
 
-# The other three places the bar names, in the order the bar names them. Not
-# three sections of this site any more: a reader on this page is choosing
-# between reading, browsing and trying, and two of those are somewhere else.
+# Three things to do next, each on the page for it. The bar above names the
+# places; these name the tasks (see THE THREE TILES ARE TASKS above).
 features:
-  - title: Documentation
-    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M12 6.9C10.4 5.5 8.2 4.8 5.4 4.8H2.4v12.6h3c2.8 0 5 .7 6.6 2.1 1.6-1.4 3.8-2.1 6.6-2.1h3V4.8h-3c-2.8 0-5 .7-6.6 2.1z"/><path fill="none" stroke="currentColor" stroke-width="1.7" d="M12 6.9v12.6"/></svg>
-    details: A twelve-step tutorial, a cookbook and the client API reference — from your first class to production.
-    link: /get_started/about
-  - title: Samples
+  - title: Build your first app
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M8 7.5 3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M13.6 4.8 10.4 19.2"/></svg>
+    details: Install with abapGit, run Hello World, then the twelve-step tutorial — through to transport and unit tests.
+    link: /get_started/quickstart
+  - title: Find a sample for your control
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.2" width="18.8" height="15.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M2.6 9.1h18.8M8.2 9.1v10.7"/></svg>
-    details: Over 700 working apps, searchable by control, by library and by what your system can run.
+    details: Over 700 working apps, searchable by control, by library and by the UI5 release your system runs.
     link: https://abap2ui5.github.io/playground/samples/
     target: _self
-  - title: Playground
-    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 7.9v8.2a.5.5 0 0 0 .76.43l6.6-4.1a.5.5 0 0 0 0-.86l-6.6-4.1a.5.5 0 0 0-.76.43z" fill="currentColor"/></svg>
-    details: Write ABAP in the browser and watch the app run beside it.
-    link: https://abap2ui5.github.io/playground/
-    target: _self
+  - title: Take an app to production
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 17.5h16M6.5 17.5V9.8l5.5-4.3 5.5 4.3v7.7M10 17.5v-4.2h4v4.2"/></svg>
+    details: Security, authorizations, the launchpad tile, the transport — what a go-live needs, on one page.
+    link: /configuration/productive_usage
 ---
 
 ## Ready for your enterprise
@@ -156,6 +171,17 @@ lists its changes in the [release notes](/resources/changelog).
 nothing that stops working when a contract ends.
 
 → *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
+
+## And what does it cost?
+
+**Nothing.** [MIT licensed](/resources/license), commercial use included — no
+license key, no subscription, no per-user fee, and no BTP required.
+
+Nobody counts your users, because nothing is counting. It is a standard UI5 app
+served by your own ABAP stack: ten users or ten thousand, the SAP license you
+have is the one you keep.
+
+→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
 ## Plays well with what you have
 
@@ -181,17 +207,6 @@ headless and returns the errors and a screenshot. The AI guide starts with one
 paragraph to paste at the top of a prompt.
 
 → *More on [Developing with AI](/get_started/ai)*
-
-## And what does it cost?
-
-**Nothing.** [MIT licensed](/resources/license), commercial use included — no
-license key, no subscription, no per-user fee, and no BTP required.
-
-Nobody counts your users, because nothing is counting. It is a standard UI5 app
-served by your own ABAP stack: ten users or ten thousand, the SAP license you
-have is the one you keep.
-
-→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
 
@@ -347,14 +362,17 @@ ENDCLASS.
 
 <div class="a2ui5-out">
   <a class="a2ui5-out-card is-inside" href="/docs/resources/addons">
+    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>
     <span class="a2ui5-out-title">Add-ons</span>
     <span class="a2ui5-out-details">Optional repositories for the things not every app needs: popups, HTTP and RFC connectors, a lock manager, table maintenance, launchpad KPIs.</span>
   </a>
   <a class="a2ui5-out-card" href="https://abap2ui5.github.io/linter/" target="_self">
+    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" d="M4 6.5h9M4 12h6M4 17.5h8M13.5 15.5l2.5 2.5 4.5-5"/></svg></span>
     <span class="a2ui5-out-title">Linter</span>
     <span class="a2ui5-out-details">Rules that understand abap2UI5 code — view chains, bindings, events — with a rule reference you can read on its own.</span>
   </a>
-  <a class="a2ui5-out-card is-inside" href="/docs/advanced/mcp_server">
+  <a class="a2ui5-out-card is-inside" href="/docs/advanced/tooling">
+    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" d="M14.5 6.2a4 4 0 0 1 5 5l-8.2 8.2a2 2 0 0 1-2.8 0l-.9-.9a2 2 0 0 1 0-2.8zM4.5 4.5l4 4"/></svg></span>
     <span class="a2ui5-out-title">Tooling</span>
     <span class="a2ui5-out-details">Write it in ADT, debug it in the ABAP debugger, test it with ABAP Unit. On top: a VS Code extension that runs the app on F9, an MCP server for AI assistants, and an app template to start from.</span>
   </a>
