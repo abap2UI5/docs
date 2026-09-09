@@ -4,7 +4,7 @@ description: What abap2UI5 costs for your users, systems, apps and support, work
 ---
 # Cost Calculator
 
-Every SAP project has a sheet like this one. Set the sliders to your landscape, tick your systems and your support, pick a currency, press Calculate, and read off what abap2UI5 will cost you.
+Set the sliders to your landscape, tick your systems and your support, pick a currency, press Calculate, and read off what abap2UI5 will cost you.
 
 <div class="cost" data-cost>
 <div class="cost-inputs">
