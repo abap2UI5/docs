@@ -20,7 +20,8 @@ grid, and everyone agrees to stop thinking about it. Every system has a `Z`
 package full of those, and every one of them was a reasonable decision at the
 time.
 
-Here is the job monitor instead as a UI5 app — not an excerpt, the whole application:
+Here is the job monitor as a UI5 app instead — not an excerpt, the whole
+application:
 
 ```abap
 CLASS zcl_job_monitor DEFINITION PUBLIC.
@@ -111,16 +112,20 @@ ENDCLASS.
 ```
 
 Activate it, call the ICF endpoint with `?app_start=zcl_job_monitor`, and it is
-on screen — just as easy an an ALV, but this one you can also start from your phone. You get a UI5 app, following all fiori design principles and sap ui5 development guidelines. That means you can also integrate it on luanchpads.  
+on screen. About as much work as an ALV — except this one also starts on your
+phone. What you get is a UI5 app like any other: the Fiori design guidelines,
+the SAP UI5 development guidelines, and a tile in the launchpad whenever you
+want one.
 
-Finally just replace `model_init( )` with the
-`SELECT` that reads your job log and it is finished. Nothing published, nothing
-to deprecate, nothing anybody has to un-build in three years.
+Then replace `model_init( )` with the `SELECT` that reads your job log, and it
+is finished. Nothing published, nothing to deprecate, nothing anybody has to
+un-build in three years.
 
 abap2UI5 is not a replacement for your RAP or UI5 apps. It is a nice addition
 to the UI solutions you already run — especially for small programs, and for
-the screen somebody needs exactly once. 
+the screen somebody needs exactly once.
 
-abap2UI5 just uses your UI5 and ABAP which is already on your system, install it with abapGit and give abap2UI5 a try today!
+And it runs on the UI5 and the ABAP your system already has. Install it with
+abapGit and give it a try today!
 
 Happy ABAPing! 🦖🦕🦣
