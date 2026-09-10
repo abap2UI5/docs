@@ -37,8 +37,6 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 <div><span class="cost-total-what">Per year</span><output data-total>€0</output></div>
 <div><span class="cost-total-what">Per user, per month</span><output data-total>€0</output></div>
 </div>
-</ul>
-</div>
 </div>
 </div>
 
@@ -48,8 +46,8 @@ The formula is short: every line is zero, and a sum of zeros is zero. Put the us
 
 ## Free to use is not the same as free to make
 
-Keep in mind, those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
+Keep in mind that those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-So if this page took a line out of a budget, put a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question on github or in [Slack](https://communityinviter.com/apps/abapgit/abap), counts too.
+So if this page took a line out of a budget, put a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question on GitHub or in [Slack](https://communityinviter.com/apps/abapgit/abap), counts too.
 
 </div>
