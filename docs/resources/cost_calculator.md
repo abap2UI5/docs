@@ -42,7 +42,7 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 <div class="cost-after" data-result hidden>
 
-The formula is short: every line is zero, and a sum of zeros is zero. Put the users at 250,000, tick every system on the list, ask for ten years of it and press Calculate again - the sheet will not move, because nothing is counting. abap2UI5 is [MIT licensed](/resources/license), commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.
+The formula is short: every line is zero, and a sum of zeros is zero, no matter what you cloicked before ;) . abap2UI5 is [MIT licensed](/resources/license), commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.
 
 <div class="cost-give">
 
@@ -52,7 +52,7 @@ Keep in mind that those zeros were written in somebody's evenings - the release 
 
 And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back:
 
-- **Sponsor an evening.** [The contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. This is the one line that takes money, and the smallest amount is a real one.
+- **Sponsor some money.** [The contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. This is the one line that takes money, and the smallest amount is a real one.
 - **Answer somebody.** A question in [Slack](https://communityinviter.com/apps/abapgit/abap) or under a [GitHub issue](https://github.com/abap2UI5/abap2UI5/issues) can save the next person an afternoon of searching.
 - **Send what you built.** A bug report with a reproducer, a sample worth copying, a pull request - the feature you needed and wrote yourself is a feature everybody gets.
 - **Say that it exists.** A blog post, a talk, a screenshot of your app in the launchpad, a word in the SAP Community. There is no marketing department; there is you.
