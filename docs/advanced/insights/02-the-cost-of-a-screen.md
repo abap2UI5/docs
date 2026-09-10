@@ -1,16 +1,16 @@
 # #2 The Cost of a Screen
 
-An ABAP team needs a screen. Not an application — a screen. A maintenance view
-for a customizing table nobody wants to explain in SM30 again. A cockpit
-showing what last night's job actually did. An approval step for one
-department, used by four people, twice a week.
+An ABAP team needs a screen. A maintenance view for a customizing table nobody
+wants to explain in SM30 again. A cockpit showing what last night's job
+actually did. An approval step for one department. Some of these are used by
+four people, twice a year. Some run during a go-live or a migration and are
+never started again after that.
 
-The logic behind such a screen is thirty lines. The user interface in front of
-it is not, and — this is the part that hurts — it does not scale down with the
-logic: a data model, a service, a binding, an annotation model, a frontend
-artifact, a deployment. And at the end an object that now exists forever, has
-to be transported, has to survive an upgrade, and one day has to be deprecated
-by someone who never met the department that asked for it.
+The logic behind such a screen might be thirty lines. The user interface in
+front of it is not, and — this is the part that hurts — it does not scale down
+with the logic: a data model, a service, a binding, an annotation model, a
+frontend artifact, a deployment. Every one of those objects then exists
+forever, unless somebody remembers to delete it.
 
 None of that is waste. It is what makes a real application dependable. It is
 simply a *fixed* cost, and a fixed cost is brutal to a small thing.
@@ -20,7 +20,7 @@ grid, and everyone agrees to stop thinking about it. Every system has a `Z`
 package full of those, and every one of them was a reasonable decision at the
 time.
 
-Here is the job monitor instead — not an excerpt, the whole application:
+Here is the job monitor instead as a UI5 app — not an excerpt, the whole application:
 
 ```abap
 CLASS zcl_job_monitor DEFINITION PUBLIC.
@@ -111,18 +111,16 @@ ENDCLASS.
 ```
 
 Activate it, call the ICF endpoint with `?app_start=zcl_job_monitor`, and it is
-on screen — a Fiori-styled table with colored status, in the launchpad theme,
-on a phone if that is where you open it. Replace `model_init( )` with the
+on screen — just as easy an an ALV, but this one you can also start from your phone. You get a UI5 app, following all fiori design principles and sap ui5 development guidelines. That means you can also integrate it on luanchpads.  
+
+Finally just replace `model_init( )` with the
 `SELECT` that reads your job log and it is finished. Nothing published, nothing
 to deprecate, nothing anybody has to un-build in three years.
 
-That is the trade in one sentence: **the ceremony is gone, and so is the
-generosity.** You write the view by hand. Nothing generates it from
-annotations, nothing hands you filter bars, variants or export for free. For
-the screens above that is a rounding error — a table and two buttons. For a
-list report with fifteen filters, sorting, personalization and an Excel export,
-Fiori Elements beats this by a distance.
+abap2UI5 is not a replacement for your RAP or UI5 apps. It is a nice addition
+to the UI solutions you already run — especially for small programs, and for
+the screen somebody needs exactly once. 
 
-Knowing which of the two you are looking at is most of the skill.
+abap2UI5 just uses your UI5 and ABAP which is already on your system, install it with abapGit and give abap2UI5 a try today!
 
 Happy ABAPing! 🦖🦕🦣
