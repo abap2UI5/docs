@@ -1,14 +1,16 @@
 # #2 The Cost of a Screen
 
-An ABAP team needs a screen. A maintenance view
-for a customizing table nobody wants to explain in SM30 again. A cockpit
-showing what last night's job actually did. An approval step for one
-department. Sometimes theses are tasked used by four people, twice a year. Sometimes these program are only used in a go live or migration phase and will neveer started again after that.
+An ABAP team needs a screen. A maintenance view for a customizing table nobody
+wants to explain in SM30 again. A cockpit showing what last night's job
+actually did. An approval step for one department. Some of these are used by
+four people, twice a year. Some run during a go-live or a migration and are
+never started again after that.
 
-The logic behind such a screen might be thirty lines. And if the user interface in front of
-it is not, and — this is the part that hurts — it does not scale down with the
-logic: a data model, a service, a binding, an annotation model, a frontend
-artifact, a deployment. And all of these objects will now exist forever if you don't delete it.f 
+The logic behind such a screen might be thirty lines. The user interface in
+front of it is not, and — this is the part that hurts — it does not scale down
+with the logic: a data model, a service, a binding, an annotation model, a
+frontend artifact, a deployment. Every one of those objects then exists
+forever, unless somebody remembers to delete it.
 
 None of that is waste. It is what makes a real application dependable. It is
 simply a *fixed* cost, and a fixed cost is brutal to a small thing.
@@ -114,7 +116,10 @@ on a phone if that is where you open it. Replace `model_init( )` with the
 `SELECT` that reads your job log and it is finished. Nothing published, nothing
 to deprecate, nothing anybody has to un-build in three years.
 
-abap2UI5 is not a replacement your RAP or UI5 apps, it can be a nice addidtion to your existing UI soultion. Especially fpr small programs or when you need a UI for a single time task.
+abap2UI5 is not a replacement for your RAP or UI5 apps. It is a nice addition
+to the UI solutions you already run — especially for small programs, and for
+the screen somebody needs exactly once. What you pay for that is the layout:
+you write the view by hand, and nothing generates it from annotations.
 
 Give abap2UI5 a try!
 
