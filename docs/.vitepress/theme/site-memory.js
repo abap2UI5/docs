@@ -369,9 +369,11 @@ export function restoreScroll() {
  * The keys are shared with the two deployments beside this one, so a refresh
  * here also drops what the catalogue and the playground wrote about
  * themselves - which is the point: after it, all four items in the bar open
- * their section's front page again. Their own copy of this module does not
- * reset on ITS reloads yet; when it does, this comment and that one are the
- * pair to keep in step.
+ * their section's front page again. Their own copy of this module does the
+ * same on ITS reloads - forgetOnReload( ) in src/shell/site-memory.mjs over
+ * there, called from keepSiteLinksCurrent( ) and from rememberHere( ) and
+ * acting once per document, because the three documents call those two in
+ * either order. Change one, change the other.
  */
 
 /** The places this file remembers a reader in, all five of them. */

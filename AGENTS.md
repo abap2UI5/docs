@@ -362,7 +362,10 @@ list**: a colour scheme is a choice about every page there will ever be, not a
 place, and nothing here clears by prefix. The keys being shared means a refresh
 here also drops what the catalogue and the playground wrote about themselves,
 which is the point — afterwards all four items in the bar open their section's
-front page. Their copy of the module does not reset on its own reloads yet.
+front page. Their copy of the module does the same on its own reloads
+(`forgetOnReload( )` in `src/shell/site-memory.mjs` over there, called from
+`keepSiteLinksCurrent( )` and `rememberHere( )`; the search box forgets its own
+key in `setUpSearch( )`).
 
 **The playground is remembered too** (`:last-playground`), and it did not use
 to be. The argument against was that its URL carries the code in the editor
