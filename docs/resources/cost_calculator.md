@@ -49,15 +49,15 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 Keep in mind that those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back - eleven that cost an evening, and one that costs money:
+And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back - eight that cost an evening, and one that costs money:
 
 - **Star the repository.** One click on [GitHub](https://github.com/abap2UI5/abap2UI5), and the next visitor sees a project rather than an experiment.
-- **Answer somebody.** One reply on an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://communityinviter.com/apps/abapgit/abap) can save the next person an afternoon of searching for it.
+- **Answer somebody.** One reply under an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://communityinviter.com/apps/abapgit/abap) saves the next person an afternoon of searching.
 - **Show it to somebody.** The [playground](https://abap2ui5.github.io/playground/) runs a class in a browser - no system, no install, one link.
 - **Report what broke.** An [issue](https://github.com/abap2UI5/abap2UI5/issues) with a class that reproduces the problem is half of the fix already.
 - **Fix a line in these docs.** Every page carries an *Edit this page* link into [the repository](https://github.com/abap2UI5/docs), and typos count.
-- **Post about it.** Mention [the page](https://www.linkedin.com/company/abap2ui5) on LinkedIn, tag it **#abap2UI5**, and it lands in the [references](/resources/references).
-- **Write it up.** One article in the [SAP Community](https://community.sap.com/) or on [LinkedIn](https://www.linkedin.com/company/abap2ui5) reaches everybody who has the problem you just solved.
+- **Post about it.** A short post that mentions [the page](https://www.linkedin.com/company/abap2ui5) and carries **#abap2UI5** lands in the [references](/resources/references).
+- **Write it up.** A full article, in the [SAP Community](https://community.sap.com/) or on [LinkedIn](https://www.linkedin.com/company/abap2ui5), reaches everybody who had your problem.
 - **Add your company.** One row in [Who Uses abap2UI5?](/resources/who_uses) is what answers *is anybody actually running this?*
 - **Sponsor the work.** [The contributors](/resources/sponsor), and the open-source projects it stands on - the smallest amount is a real one.
 

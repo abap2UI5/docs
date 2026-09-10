@@ -158,7 +158,7 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
   const ways = (last.match(/^- \*\*/gm) || []);
-  assert.equal(ways.length, 12, 'twelve ways, each led by what it is and each one thing to do');
+  assert.equal(ways.length, 9, 'nine ways, each led by what it is and each one thing to do');
   for (const way of last.split('\n').filter((l) => l.startsWith('- **'))) {
     assert.match(way, /\]\(/, `${way.slice(0, 28)}… says where to do it`);
   }
@@ -172,6 +172,14 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   assert.match(last, /#abap2UI5/, 'and the tag that collects those posts');
   assert.match(last, /\]\(\/resources\/references\)/, 'where what is written about it lands');
   assert.match(last, /\]\(\/resources\/who_uses\)/, 'and the list a company can put itself on');
+  /* The intro counts the ways, so it goes stale the moment one is added or
+     taken out - which is exactly how it went stale. All but one cost an
+     evening; that one is the money. */
+  const said = last.match(/- (\w+) that cost an evening, and one that costs money/);
+  const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
+                 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+  assert.ok(said, 'the intro says how many ways there are');
+  assert.equal(said[1], words[ways.length - 1], `${ways.length} ways, so the intro says ${words[ways.length - 1]} plus the one that costs money`);
 });
 
 /* The stylesheet is written twice - scripts/site-css/docs.css for the site the

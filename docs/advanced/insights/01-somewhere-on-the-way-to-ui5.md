@@ -14,58 +14,51 @@ cl_salv_table=>factory( IMPORTING r_salv_table = DATA(lo_alv)
 lo_alv->display( ).
 ```
 
-Two statements, any internal table, no type known at design time. RTTS reads
-the structure at runtime, the field catalog follows from it, DDIC labels come
-along for free.
+Two statements, any internal table, no type known at design time: RTTS reads
+the structure at runtime, the field catalog follows, DDIC labels come along for
+free.
 
-Data browsers, table maintenance, migration cockpits, generic reports — a whole
-category of tooling was built that way, and the generality was the requirement,
-not a trick. Then the screens moved to the browser, and that trick quietly
-stopped working.
+Data browsers, table maintenance, migration cockpits, generic reports — a
+whole category of tooling was built that way, and the generality was the
+requirement, not a trick. Then the screens moved to the browser.
 
 ## Model Definition at Design Time — OData
 
-When you build a UI5 app today, the path from backend to frontend goes through
-a typed OData service. That holds for freestyle UI5, for Fiori Elements, and
-for a fully backend-driven RAP application with a consumption view. The shape
-of the model is decided when the code is written and baked into the contract.
+Build a UI5 app today and the path from backend to frontend goes through a
+typed OData service — in freestyle UI5, in Fiori Elements, in a RAP
+application with a consumption view. The shape of the model is decided when
+the code is written, and baked into the contract.
 
-And that is powerful! The point of OData is that a client can trust the API and
-discover everything it needs from the metadata document — it does not have to
-know SAP at all. Whenever you do not know the client, or the client does not
-know your backend, that contract is exactly what you want.
+And that is powerful: a client can trust the API and discover everything it
+needs from the metadata document, without knowing SAP at all. Whenever you do
+not know the client, that is exactly what you want.
 
-But it does mean the entity type has to exist before the data does. Which is
+It does mean the entity type has to exist before the data does — which is
 awkward when the entity type *is* the question.
 
 ## Model Definition at Runtime — RTTS
 
-Because some use cases do not know the model at design time either. Think of
-SE16 or SE16N again: the whole point is to display any table.
+SE16 is exactly that case: the whole point is to display any table, so the
+contract buys nothing. Backend and frontend are tightly coupled, one team
+builds both, and anything resting on design-time metadata is aimed at a
+different problem.
 
-There the contract buys nothing. Backend and frontend are tightly coupled, one
-team builds both, and the client knows the system intimately — anything resting
-on design-time metadata is aimed at a different problem.
-
-The model is assembled at runtime, and in ABAP that has always been RTTS, a
-service nearly every ABAP developer already knows without necessarily knowing
-the acronym (the reading half is RTTI):
+The model is assembled at runtime instead, and in ABAP that has always been
+RTTS — a service nearly every ABAP developer already uses without necessarily
+knowing the acronym (the reading half is RTTI):
 
 ![Design time: the entity type is declared before any data exists. Runtime: RTTS reads the shape from the data that is there.](/insights/01-runtime-model.svg)
 
 *Design time: the entity type is declared before any data exists. Runtime: RTTS reads the shape from the data that is there.*
 
-So the structure is available. The question is how it gets into a UI5 app.
-
-Luckily, UI5 apps do not actually require OData — a `JSONModel` can be filled
+So the structure is there — and reaching a UI5 app with it is easier than it
+looks, because UI5 does not require OData at all. A `JSONModel` can be filled
 from any plain HTTP endpoint, so nothing stops a request from carrying a
 different model shape every time.
 
-And that is one of the use cases abap2UI5 is built for.
-
 ## Data Binding at Runtime with abap2UI5
 
-In abap2UI5, views are just strings the application builds, and the model is
+In abap2UI5 the view is a string the application builds, and the model is
 bound from ABAP data — including data whose type only exists at runtime. A view
 that draws any table looks like this:
 
@@ -103,34 +96,24 @@ METHOD render_any.
 ENDMETHOD.
 ```
 
-Read it once more and notice what is missing: no entity type, no CDS view, no
-service binding — and not a single field name anywhere in the view. The columns
-are whatever the table happens to have, and the binding paths are the component
-names RTTI just handed back. Go one step further and `comp-type` will tell you
-whether a component is a DDIC type, which is where the real labels come from —
-the field catalog, rebuilt from the same source it always came from.
+Notice what is missing: no entity type, no CDS view, no service binding — and
+not a single field name anywhere in the view. The columns are whatever the
+table happens to have, and the binding paths are the component names RTTI
+handed back. `comp-type` says whether a component is a DDIC type, which is
+where the real labels live — the field catalog, rebuilt from its own source.
 
 Full source:
 [`Z2UI5_CL_SMP_APP_497`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_497.clas.abap),
 one of the abap2UI5 samples, so it is compiled and linted on every commit.
 
 A table nobody described, drawn from whatever the data turned out to be.
-Doesn't that look a bit like `cl_salv_table` in a UI5 view? 😉
+Doesn't that look a bit like `cl_salv_table` in a UI5 view? 😉 How far it goes
+is the [se16n addon](https://github.com/abap2UI5-addons/se16n), a full
+SE16-flavored app built on exactly this.
 
-If you want to see how far this goes, there is a full SE16-flavored app built
-on it — the [se16n addon](https://github.com/abap2UI5-addons/se16n).
-
-## Nothing Here Is Exotic
-
-That is the part worth dwelling on, because "generic UI" usually sounds like a
-warning. Both halves stay inside the conventions you already work in, which is
-what makes this cheap to adopt and cheap to hand over.
-
-The frontend is a freestyle UI5 app using `sap.m` controls, XML views, a
-`JSONModel` and two-way binding — nothing proprietary, and nothing you have not
-written before. The backend is a global ABAP class: one interface, in a
-package, traveling in a transport, compiling on ABAP Standard and ABAP Cloud
-alike.
+Nothing in either half is exotic, which is what makes it cheap to hand over:
+the frontend is a freestyle UI5 app with `sap.m` controls and a `JSONModel`,
+and the backend is a global ABAP class in a package, traveling in a transport.
 
 ## What It Costs
 
@@ -140,23 +123,17 @@ locally defined structure gets technical names instead of labels.
 
 So this is not an upgrade over a typed service. One answers what a foreign
 system can depend on for the next five years; the other, what an internal tool
-should show a user right now, given a structure it was handed a millisecond
-ago. Different questions, and it is worth being clear about which one you have.
+should show right now, given a structure it was handed a millisecond ago.
 
 ## Conclusion
 
 RTTS never went away. `cl_abap_structdescr` is still there, and it is released
 in ABAP Cloud too. Only the screen in front of it went missing.
 
-abap2UI5 gives runtime-typed ABAP a UI5 face again by binding ABAP data
-directly, so data typed at runtime stops being a special case. It is just data
-— the way it was in the old SALV and field-catalog days.
+abap2UI5 gives runtime-typed ABAP a UI5 face again by binding the data
+directly, so a structure that exists only at runtime stops being a special
+case. It is just data — the way it was in the old SALV and field-catalog days.
 
-abap2UI5 is open source, runs on-premise and in the cloud, and sits beside what
-you already operate. Put an abap2UI5 app into the launchpad and no user can
-tell it from the RAP and freestyle UI5 tiles next to it.
-
-So next time you reach for RTTS and need a UI, give abap2UI5 a try. It may be
-a good complement to the UI5 solutions you already run.
+So next time you reach for RTTS and need a screen, give abap2UI5 a try.
 
 Happy ABAPing! 🦖🦕🦣
