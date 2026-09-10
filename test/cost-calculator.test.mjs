@@ -123,33 +123,45 @@ test('the sheet waits for the button', () => {
   const after = PAGE.indexOf('<div class="cost-after" data-result hidden>\n\n');
   assert.ok(after > PAGE.lastIndexOf('<div class="cost-result"'), 'the words under the sheet wait for the button too');
   assert.ok(PAGE.trimEnd().endsWith('\n\n</div>'), 'and the wrapper closes after the last of them');
-  assert.ok(PAGE.indexOf('\n## The line that is not zero', after) > after, 'the section is markdown inside it, heading and all');
+  assert.ok(PAGE.indexOf('\n## Free to use is not the same as free to make', after) > after, 'the section is markdown inside it, heading and all');
 });
 
-/* Two things the sheet carries that the inputs deliberately do not. The links
-   to the issue tracker and to Slack: they sat in the support row, which is a
-   way out of the page in the middle of filling it in, and they belong on the
-   Support line of the answer instead. And what the zeros get you - the sheet
-   is ten times the same character, and on its own that is a thin reward for
-   working through nine sliders. */
-test('the links wait for the sheet, and the sheet ends on what the zeros get you', () => {
+/* What the sheet carries that the inputs deliberately do not: the links to the
+   issue tracker and to Slack. They sat in the support row, which is a way out
+   of the page in the middle of filling it in, and they belong on the Support
+   line of the answer instead.
+
+   There was a list under the total here too - what the zeros get you - on the
+   grounds that ten identical characters are a thin reward for nine sliders.
+   It was taken out again: the sentences under the sheet say the same thing in
+   the page's own voice, and the list said it twice. Its rules went out of both
+   stylesheets with it. */
+test('the links wait for the sheet, and lead out of it only there', () => {
   const inputs = PAGE.slice(PAGE.indexOf('<div class="cost-inputs">'), PAGE.indexOf('data-calculate='));
   assert.doesNotMatch(inputs, /<a /, 'nothing leads out of the page while it is being filled in');
   const sheet = PAGE.slice(PAGE.indexOf('<div class="cost-result"'), PAGE.indexOf('<div class="cost-after"'));
   assert.match(sheet, /Support<small>[^<]*<span data-echo="cost-support">/, 'the sheet has a support line');
   assert.match(sheet, /github\.com\/abap2UI5\/abap2UI5\/issues/, 'and the issue tracker is on it');
   assert.match(sheet, /communityinviter\.com/, 'and Slack');
-  assert.ok(sheet.indexOf('<div class="cost-total">') < sheet.indexOf('<div class="cost-perks">'), 'the features come after the total');
-  const perks = sheet.slice(sheet.indexOf('<div class="cost-perks">'));
-  assert.ok((perks.match(/<li>/g) || []).length >= 3, 'a handful of them');
-  assert.match(perks, /<li><strong>[^<]+<\/strong> /, 'each one led by what it is');
+  assert.doesNotMatch(sheet, /cost-perks|<\/ul>/, 'and nothing is left of the list that used to close the sheet');
 });
 
-test('the front door\'s cost card leads here, and the page ends at the sponsors', () => {
+/* The page answers in zeros, so the section that says somebody still paid for
+   them is a panel rather than a paragraph after the sheet - and what it asks
+   for is mostly not money: four ways, three of which cost an evening. The
+   ways are pinned because the ONE that takes money is the one a page like
+   this drifts towards over time, and the other three are the point. */
+test('the front door\'s cost card leads here, and the page ends on the four ways', () => {
   assert.match(HOME, /\]\(\/resources\/cost_calculator\)/, 'the cost card links the calculator');
   const last = PAGE.slice(PAGE.lastIndexOf('\n## '));
+  assert.ok(PAGE.indexOf('<div class="cost-give">') < PAGE.lastIndexOf('\n## '), 'the section stands in a panel of its own');
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
+  const ways = (last.match(/^- \*\*/gm) || []);
+  assert.equal(ways.length, 4, 'four ways, each led by what it is');
+  assert.equal((last.match(/\]\(https?:/g) || []).length, 2, 'two of them lead somewhere to do it: Slack and the issue tracker');
+  assert.match(last, /github\.com\/abap2UI5\/abap2UI5\/issues/);
+  assert.match(last, /communityinviter\.com/);
 });
 
 /* The stylesheet is written twice - scripts/site-css/docs.css for the site the
