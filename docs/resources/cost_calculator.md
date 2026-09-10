@@ -44,10 +44,21 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 The formula is short: every line is zero, and a sum of zeros is zero. Put the users at 250,000, tick every system on the list, ask for ten years of it and press Calculate again - the sheet will not move, because nothing is counting. abap2UI5 is [MIT licensed](/resources/license), commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.
 
+<div class="cost-give">
+
 ## Free to use is not the same as free to make
 
 Keep in mind that those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-So if this page took a line out of a budget, put a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question on GitHub or in [Slack](https://communityinviter.com/apps/abapgit/abap), counts too.
+And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back:
+
+- **Sponsor an evening.** [The contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. This is the one line that takes money, and the smallest amount is a real one.
+- **Answer somebody.** A question in [Slack](https://communityinviter.com/apps/abapgit/abap) or under a [GitHub issue](https://github.com/abap2UI5/abap2UI5/issues) can save the next person an afternoon of searching.
+- **Send what you built.** A bug report with a reproducer, a sample worth copying, a pull request - the feature you needed and wrote yourself is a feature everybody gets.
+- **Say that it exists.** A blog post, a talk, a screenshot of your app in the launchpad, a word in the SAP Community. There is no marketing department; there is you.
+
+Pick whichever is easiest this week. None of it comes with an invoice, and all of it counts.
+
+</div>
 
 </div>

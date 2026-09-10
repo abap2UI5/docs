@@ -146,11 +146,22 @@ test('the links wait for the sheet, and lead out of it only there', () => {
   assert.doesNotMatch(sheet, /cost-perks|<\/ul>/, 'and nothing is left of the list that used to close the sheet');
 });
 
-test('the front door\'s cost card leads here, and the page ends at the sponsors', () => {
+/* The page answers in zeros, so the section that says somebody still paid for
+   them is a panel rather than a paragraph after the sheet - and what it asks
+   for is mostly not money: four ways, three of which cost an evening. The
+   ways are pinned because the ONE that takes money is the one a page like
+   this drifts towards over time, and the other three are the point. */
+test('the front door\'s cost card leads here, and the page ends on the four ways', () => {
   assert.match(HOME, /\]\(\/resources\/cost_calculator\)/, 'the cost card links the calculator');
   const last = PAGE.slice(PAGE.lastIndexOf('\n## '));
+  assert.ok(PAGE.indexOf('<div class="cost-give">') < PAGE.lastIndexOf('\n## '), 'the section stands in a panel of its own');
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
+  const ways = (last.match(/^- \*\*/gm) || []);
+  assert.equal(ways.length, 4, 'four ways, each led by what it is');
+  assert.equal((last.match(/\]\(https?:/g) || []).length, 2, 'two of them lead somewhere to do it: Slack and the issue tracker');
+  assert.match(last, /github\.com\/abap2UI5\/abap2UI5\/issues/);
+  assert.match(last, /communityinviter\.com/);
 });
 
 /* The stylesheet is written twice - scripts/site-css/docs.css for the site the
