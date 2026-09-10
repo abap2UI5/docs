@@ -158,9 +158,13 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
   const ways = (last.match(/^- \*\*/gm) || []);
-  assert.equal(ways.length, 5, 'five ways, each led by what it is');
+  assert.equal(ways.length, 10, 'ten ways, each led by what it is and each one thing to do');
+  for (const way of last.split('\n').filter((l) => l.startsWith('- **'))) {
+    assert.match(way, /\]\(/, `${way.slice(0, 28)}… says where to do it`);
+  }
   /* Every way says where to do it, and the four places are not
-     interchangeable: two to answer somebody in, two to say it out loud. */
+     interchangeable: two to answer somebody in, two to say it out loud. And
+     every way carries a link, because a way without one is a wish. */
   assert.match(last, /communityinviter\.com/, 'Slack');
   assert.match(last, /github\.com\/abap2UI5\/abap2UI5\/issues/, 'the issue tracker');
   assert.match(last, /linkedin\.com\/company\/abap2ui5/, 'the project page a post can mention');

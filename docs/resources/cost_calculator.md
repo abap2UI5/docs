@@ -49,15 +49,20 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 Keep in mind that those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back:
+And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back - nine that cost an evening, and one that costs money:
 
-- **Sponsor the work.** [The contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. This is the one line that takes money, and the smallest amount is a real one.
-- **Answer somebody.** A question in [Slack](https://communityinviter.com/apps/abapgit/abap) or under a [GitHub issue](https://github.com/abap2UI5/abap2UI5/issues) can save the next person an afternoon of searching.
-- **Send what you built.** A bug report with a reproducer, a sample worth copying, a pull request - the feature you needed and wrote yourself is a feature everybody gets.
-- **Say that it exists.** A blog post, a talk, a screenshot of your app in the launchpad. On [LinkedIn](https://www.linkedin.com/company/abap2ui5) you can mention the project's page and tag the post **#abap2UI5**, and a post in the [SAP Community](https://community.sap.com/) reaches the people who have the same problem you had last month. Everything written about abap2UI5 is collected on the [references page](/resources/references). There is no marketing department; there is you.
-- **Put your company on the list.** [Who Uses abap2UI5?](/resources/who_uses) collects the customer projects, integrations and workshops that run on it. Adding yours is one row in a table, and it is what tells the next team asking *is anybody actually using this?* that the answer is yes.
+- **Star the repository.** One click on [GitHub](https://github.com/abap2UI5/abap2UI5), and the next visitor sees a project rather than an experiment.
+- **Answer somebody.** One reply in [Slack](https://communityinviter.com/apps/abapgit/abap) can save the next person an afternoon of searching for it.
+- **Report what broke.** An [issue](https://github.com/abap2UI5/abap2UI5/issues) with a class that reproduces the problem is half of the fix already.
+- **Send a screen you built.** A class in [samples](https://github.com/abap2UI5/samples) is what the next developer copies instead of inventing it.
+- **Fix a line in these docs.** Every page carries an *Edit this page* link into [the repository](https://github.com/abap2UI5/docs), and typos count.
+- **Pick up something small.** The [contribution list](/resources/contribution) starts at *a missing property on a control* - no project required.
+- **Post about it.** Mention [the page](https://www.linkedin.com/company/abap2ui5) on LinkedIn, tag it **#abap2UI5**, and it lands in the [references](/resources/references).
+- **Write it up.** One article in the [SAP Community](https://community.sap.com/) reaches everybody who has the problem you just solved.
+- **Add your company.** One row in [Who Uses abap2UI5?](/resources/who_uses) is what answers *is anybody actually running this?*
+- **Sponsor the work.** [The contributors](/resources/sponsor), and the open-source projects it stands on - the smallest amount is a real one.
 
-Pick whichever is easiest this week. None of it comes with an invoice, and all of it counts.
+Pick the one that is easiest this week. None of it comes with an invoice, and all of it counts.
 
 </div>
 
