@@ -37,13 +37,6 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 <div><span class="cost-total-what">Per year</span><output data-total>€0</output></div>
 <div><span class="cost-total-what">Per user, per month</span><output data-total>€0</output></div>
 </div>
-<div class="cost-perks">
-<p class="cost-perks-head">And what the zeros get you:</p>
-<ul class="cost-perks-list">
-<li><strong>One class is the whole app.</strong> No JavaScript, no build step, nothing to deploy to a second place and keep in sync with the first.</li>
-<li><strong>Every system you ticked.</strong> The same class runs from NetWeaver 7.02 up to S/4HANA Public Cloud, <a href="/docs/get_started/about#compatibility">Standard ABAP and ABAP Cloud</a> alike.</li>
-<li><strong>Installed with abapGit.</strong> One <a href="/docs/configuration/installation">pull per system</a>, and the next release is the next pull.</li>
-<li><strong>It is UI5, on your own stack.</strong> Fiori design, themes and translation come with it, and every roundtrip stays in the system that holds the data.</li>
 </ul>
 </div>
 </div>
@@ -53,10 +46,10 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 The formula is short: every line is zero, and a sum of zeros is zero. Put the users at 250,000, tick every system on the list, ask for ten years of it and press Calculate again - the sheet will not move, because nothing is counting. abap2UI5 is [MIT licensed](/resources/license), commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.
 
-## The line that is not zero
+## Free to use is not the same as free to make
 
-Free to use is not the same as free to make. Those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
+Keep in mind, those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-So if this page took a line out of a budget, put a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question in [Slack](https://communityinviter.com/apps/abapgit/abap), counts too.
+So if this page took a line out of a budget, put a little of it back: [sponsor the contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. Reporting a bug, or answering somebody else's question on github or in [Slack](https://communityinviter.com/apps/abapgit/abap), counts too.
 
 </div>
