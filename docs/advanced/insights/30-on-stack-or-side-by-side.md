@@ -15,8 +15,10 @@ maintenance slots, its change freeze in December.
 
 **Side-by-side** means the app runs on the SAP BTP ABAP Environment and calls
 the S/4 system remotely — released OData, RFC or SOAP services. Everything on
-the BTP side is Level A by construction, and it works against S/4HANA Public
-Cloud, where on-stack custom code is not an option at all.
+the BTP side is Level A by construction — the levels are
+[#29](/advanced/insights/29-when-the-api-is-not-released) — and it works
+against S/4HANA Public Cloud, where on-stack custom code is not an option at
+all.
 
 ![The apps run on the SAP BTP ABAP Environment and call released remote APIs of S/4HANA](/advanced/use_cases/side_by_side_level_a.svg){ width=90% }
 

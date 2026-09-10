@@ -10,8 +10,9 @@ whether it is currently showing a table, a form or a wizard, and it has no idea
 which action follows the next click. Open the network tab and you can watch it
 find out.
 
-Everything it needs arrives per request. Everything it decides is decided on
-the server.
+Everything it needs arrives per request — the two strings of
+[#5](/advanced/insights/05-ui5-over-the-wire). Everything it decides is decided
+on the server.
 
 The pattern has a name: a **Hypermedia-Driven Application**. Between the
 multi-page app, where every interaction fetches a whole document, and the

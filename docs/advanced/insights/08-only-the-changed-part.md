@@ -1,6 +1,7 @@
 # #8 Only the Changed Part
 
-If the backend sends the view on every request, does the screen rebuild itself
+If the backend sends the view on every request —
+[#5](/advanced/insights/05-ui5-over-the-wire) — does the screen rebuild itself
 on every click?
 
 It would, and the user would notice within about two seconds. A rebuilt view is

@@ -25,7 +25,8 @@ attribute, `end` goes back up. Four methods, and you now know the entire API.
 
 Nothing in there names a control, which is exactly why every control is
 reachable — including the ones released last month and the ones nobody has
-wrapped. The builder cannot be behind UI5, because it never knew what UI5
+wrapped. The vocabulary stays UI5's own, which is
+[#4](/advanced/insights/04-no-annotation-in-between). The builder cannot be behind UI5, because it never knew what UI5
 contains.
 
 The trade is honest: the completion list is gone. What replaced it is not
