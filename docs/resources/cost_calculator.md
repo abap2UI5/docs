@@ -36,13 +36,12 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 <div><span class="cost-total-what">Total, over <span data-echo="cost-term">3 years</span></span><output data-total>€0</output></div>
 <div><span class="cost-total-what">Per year</span><output data-total>€0</output></div>
 <div><span class="cost-total-what">Per user, per month</span><output data-total>€0</output></div>
+<p class="cost-total-note">The formula is short: every line is zero, and a sum of zeros is zero - no matter what you clicked before. 😉 abap2UI5 is <a href="/docs/resources/license">MIT licensed</a>, commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.</p>
 </div>
 </div>
 </div>
 
 <div class="cost-after" data-result hidden>
-
-The formula is short: every line is zero, and a sum of zeros is zero - no matter what you clicked before. ;) abap2UI5 is [MIT licensed](/resources/license), commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.
 
 <div class="cost-give">
 
@@ -55,7 +54,8 @@ And it is payable in a currency you already have. If this page took a line out o
 - **Sponsor the work.** [The contributors](/resources/sponsor), and the open-source projects abap2UI5 stands on. This is the one line that takes money, and the smallest amount is a real one.
 - **Answer somebody.** A question in [Slack](https://communityinviter.com/apps/abapgit/abap) or under a [GitHub issue](https://github.com/abap2UI5/abap2UI5/issues) can save the next person an afternoon of searching.
 - **Send what you built.** A bug report with a reproducer, a sample worth copying, a pull request - the feature you needed and wrote yourself is a feature everybody gets.
-- **Say that it exists.** A blog post, a talk, a screenshot of your app in the launchpad, a word in the SAP Community. There is no marketing department; there is you.
+- **Say that it exists.** A blog post, a talk, a screenshot of your app in the launchpad. On [LinkedIn](https://www.linkedin.com/company/abap2ui5) you can mention the project's page and tag the post **#abap2UI5**, and a post in the [SAP Community](https://community.sap.com/) reaches the people who have the same problem you had last month. Everything written about abap2UI5 is collected on the [references page](/resources/references). There is no marketing department; there is you.
+- **Put your company on the list.** [Who Uses abap2UI5?](/resources/who_uses) collects the customer projects, integrations and workshops that run on it. Adding yours is one row in a table, and it is what tells the next team asking *is anybody actually using this?* that the answer is yes.
 
 Pick whichever is easiest this week. None of it comes with an invoice, and all of it counts.
 

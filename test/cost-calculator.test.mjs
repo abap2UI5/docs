@@ -158,10 +158,16 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
   const ways = (last.match(/^- \*\*/gm) || []);
-  assert.equal(ways.length, 4, 'four ways, each led by what it is');
-  assert.equal((last.match(/\]\(https?:/g) || []).length, 2, 'two of them lead somewhere to do it: Slack and the issue tracker');
-  assert.match(last, /github\.com\/abap2UI5\/abap2UI5\/issues/);
-  assert.match(last, /communityinviter\.com/);
+  assert.equal(ways.length, 5, 'five ways, each led by what it is');
+  /* Every way says where to do it, and the four places are not
+     interchangeable: two to answer somebody in, two to say it out loud. */
+  assert.match(last, /communityinviter\.com/, 'Slack');
+  assert.match(last, /github\.com\/abap2UI5\/abap2UI5\/issues/, 'the issue tracker');
+  assert.match(last, /linkedin\.com\/company\/abap2ui5/, 'the project page a post can mention');
+  assert.match(last, /community\.sap\.com/, 'the SAP Community');
+  assert.match(last, /#abap2UI5/, 'and the tag that collects those posts');
+  assert.match(last, /\]\(\/resources\/references\)/, 'where what is written about it lands');
+  assert.match(last, /\]\(\/resources\/who_uses\)/, 'and the list a company can put itself on');
 });
 
 /* The stylesheet is written twice - scripts/site-css/docs.css for the site the
