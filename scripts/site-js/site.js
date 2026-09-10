@@ -373,6 +373,43 @@ document.addEventListener('click', (e) => {
     chosen[group.dataset.key] = toggle.checked;
     write();
   });
+
+  /* A SECTION'S OWN WORDS FOLD IT WHEN YOU ARE ALREADY THERE.
+   *
+   * Reported as: pressing a heading in the menu opens the section, pressing
+   * the same heading again does not close it. Both true, and the reason is
+   * that the words are a LINK. Most sections here point at a page of their
+   * own, so the first press went to that page - and the section holding the
+   * page you are on is opened by the build and again by the walk above,
+   * whatever is stored, because a menu that hid where you are would be worse
+   * than one that forgets. The second press went to that same page a second
+   * time: a fresh document, the same section, opened again. Only the caret
+   * folded it, which is a target of 24 pixels next to twelve characters that
+   * look like they should do it.
+   *
+   * So when the link is the page the reader is ON, it has nothing to open,
+   * and it folds the list instead. Anywhere else it stays what it says it is
+   * - the way to that section's first page. A press that means "in a new
+   * tab" still means that.
+   *
+   * The box is flipped through a `change` event rather than by hand, so the
+   * decision is written down by the one listener above that writes: assigning
+   * `checked` fires nothing, and a fold that was not remembered would come
+   * back on the next page as though it had not been asked for. */
+  const page = (url) => url.pathname.replace(/index\.html$/, '');
+  box?.addEventListener('click', (e) => {
+    const label = e.target.closest?.('a.side-label');
+    if (!label || e.defaultPrevented) return;
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (label.target && label.target !== '_self') return;
+    if (page(new URL(label.href)) !== page(location)) return;
+    const group = label.closest('.side-group');
+    if (!group || !groups.includes(group)) return;
+    e.preventDefault();
+    const toggle = boxOf(group);
+    toggle.checked = !toggle.checked;
+    toggle.dispatchEvent(new Event('change', { bubbles: true }));
+  });
 })();
 /* ---- copy a listing ---------------------------------------------------
  *
