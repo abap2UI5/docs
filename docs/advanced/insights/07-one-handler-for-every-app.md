@@ -23,7 +23,8 @@ Gateway. The stack fits on a screenshot.
 The reason it can be generic is that nothing about the data is agreed in
 advance. In an OData conversation the metadata comes first and fixes the shape;
 data follows within that shape for the rest of the session. Here the model
-travels **with** every response, so each response may carry a different one.
+travels **with** every response — [#5](/advanced/insights/05-ui5-over-the-wire) —
+so each response may carry a different one.
 There is no contract to violate because there is no contract to register.
 
 ## How Much Handler That Is

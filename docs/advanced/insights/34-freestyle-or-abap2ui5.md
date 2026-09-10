@@ -41,8 +41,9 @@ release to coordinate — for a screen whose logic never left the server in the
 first place.
 
 The practical tiebreaker is usually iteration speed against client richness.
-Change a class, activate, refresh — no build, no cache, no deployment — is
-worth a great deal for internal applications, and worth exactly nothing for an
+Change a class, activate, refresh — no build, no cache, no deployment,
+[#11](/advanced/insights/11-no-build-no-deploy-no-cache) — is worth a great
+deal for internal applications, and worth exactly nothing for an
 app that has to work on a tablet in a warehouse with no signal.
 
 What is left after the edges is still most business software: forms, tables,

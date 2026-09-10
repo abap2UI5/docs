@@ -1,7 +1,8 @@
 # #31 One App, Many Systems
 
-A side-by-side app already runs outside the system it serves. Which invites a
-question worth asking out loud: how many systems can it serve?
+A side-by-side app ([#30](/advanced/insights/30-on-stack-or-side-by-side))
+already runs outside the system it serves. Which invites a question worth
+asking out loud: how many systems can it serve?
 
 More than one. The app lives on the SAP BTP ABAP Environment and reaches each
 S/4 system through its released APIs, so the connection is configuration rather

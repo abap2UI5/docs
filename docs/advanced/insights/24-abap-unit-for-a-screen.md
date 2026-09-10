@@ -9,8 +9,8 @@ include. That is the whole story here, and the reason it stays that short is a
 decision in the app rather than in the framework: **the logic does not touch
 `client`.**
 
-`main( )` dispatches. The methods it dispatches to read data, decide, and
-change attributes. Only `view_display( )` and the message calls need the
+`main( )` dispatches — [#16](/advanced/insights/16-one-click-one-request). The
+methods it dispatches to read data, decide, and change attributes. Only `view_display( )` and the message calls need the
 client, so a test calls the other methods directly and looks at the attributes
 afterwards:
 

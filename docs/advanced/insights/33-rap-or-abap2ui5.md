@@ -27,8 +27,9 @@ choosing the harder road for no prize.
 **Reach for abap2UI5 when the screen is the deliverable.** One consumer, one
 purpose, and often a short life: an operations tool, a correction screen, a
 form somebody needs by Thursday, a dashboard for one team. Also whenever the
-shape is not known until runtime — a table whose columns come from RTTI — or
-when the screen needs a control the annotation vocabulary does not reach. And
+shape is not known until runtime — a table whose columns come from RTTI,
+[#1](/advanced/insights/01-somewhere-on-the-way-to-ui5) — or when the screen
+needs a control the annotation vocabulary does not reach. And
 on an older release, where RAP is not available at all.
 
 **The two are not exclusive, and this is the part worth remembering.** An

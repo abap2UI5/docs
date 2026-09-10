@@ -30,8 +30,9 @@ standard transport system moves it to production like any other ABAP object.
 There is no state in which the backend is live and the frontend is not — which
 is the state most Fiori incidents are actually about.
 
-**No cache to invalidate.** The UI is built on every request, so there is no
-build output that can be stale. Nobody runs a cache transaction, nobody asks a
+**No cache to invalidate.** The UI is built on every request
+([#5](/advanced/insights/05-ui5-over-the-wire)), so there is no build output
+that can be stale. Nobody runs a cache transaction, nobody asks a
 colleague to hard-refresh, and a change that does not appear is a change that
 was not activated.
 

@@ -11,8 +11,9 @@ system. An agent writing a freestyle app has to hold an ABAP backend and a
 JavaScript frontend in its head at once and keep the contract between them
 true.
 
-An agent writing an abap2UI5 app writes one file, in one language, and the
-thing it writes is the thing that runs.
+An agent writing an abap2UI5 app writes one file, in one language — the shape
+of [#14](/advanced/insights/14-a-classrun-for-the-browser) — and the thing it
+writes is the thing that runs.
 
 Three things around the framework turn that from a nice property into a working
 setup.
