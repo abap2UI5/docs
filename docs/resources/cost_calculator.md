@@ -52,15 +52,12 @@ Keep in mind that those zeros were written in somebody's evenings - the release 
 And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back - eleven that cost an evening, and one that costs money:
 
 - **Star the repository.** One click on [GitHub](https://github.com/abap2UI5/abap2UI5), and the next visitor sees a project rather than an experiment.
-- **Answer somebody.** One reply in [Slack](https://communityinviter.com/apps/abapgit/abap) can save the next person an afternoon of searching for it.
+- **Answer somebody.** One reply on an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://communityinviter.com/apps/abapgit/abap) can save the next person an afternoon of searching for it.
 - **Show it to somebody.** The [playground](https://abap2ui5.github.io/playground/) runs a class in a browser - no system, no install, one link.
 - **Report what broke.** An [issue](https://github.com/abap2UI5/abap2UI5/issues) with a class that reproduces the problem is half of the fix already.
-- **Send a screen you built.** A class in [samples](https://github.com/abap2UI5/samples) is what the next developer copies instead of inventing it.
-- **Add a control.** [samples-controls](https://github.com/abap2UI5/samples-controls) is one app per UI5 control, and some of them are still missing.
-- **Pick up something small.** The [contribution list](/resources/contribution) starts at *one property on the view builder* - no project required.
 - **Fix a line in these docs.** Every page carries an *Edit this page* link into [the repository](https://github.com/abap2UI5/docs), and typos count.
 - **Post about it.** Mention [the page](https://www.linkedin.com/company/abap2ui5) on LinkedIn, tag it **#abap2UI5**, and it lands in the [references](/resources/references).
-- **Write it up.** One article in the [SAP Community](https://community.sap.com/) reaches everybody who has the problem you just solved.
+- **Write it up.** One article in the [SAP Community](https://community.sap.com/) or on [LinkedIn](https://www.linkedin.com/company/abap2ui5) reaches everybody who has the problem you just solved.
 - **Add your company.** One row in [Who Uses abap2UI5?](/resources/who_uses) is what answers *is anybody actually running this?*
 - **Sponsor the work.** [The contributors](/resources/sponsor), and the open-source projects it stands on - the smallest amount is a real one.
 
