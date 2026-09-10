@@ -1,16 +1,14 @@
 # #2 The Cost of a Screen
 
-An ABAP team needs a screen. Not an application — a screen. A maintenance view
+An ABAP team needs a screen. A maintenance view
 for a customizing table nobody wants to explain in SM30 again. A cockpit
 showing what last night's job actually did. An approval step for one
-department, used by four people, twice a week.
+department. Sometimes theses are tasked used by four people, twice a year. Sometimes these program are only used in a go live or migration phase and will neveer started again after that.
 
-The logic behind such a screen is thirty lines. The user interface in front of
+The logic behind such a screen might be thirty lines. And if the user interface in front of
 it is not, and — this is the part that hurts — it does not scale down with the
 logic: a data model, a service, a binding, an annotation model, a frontend
-artifact, a deployment. And at the end an object that now exists forever, has
-to be transported, has to survive an upgrade, and one day has to be deprecated
-by someone who never met the department that asked for it.
+artifact, a deployment. And all of these objects will now exist forever if you don't delete it.f 
 
 None of that is waste. It is what makes a real application dependable. It is
 simply a *fixed* cost, and a fixed cost is brutal to a small thing.
@@ -116,13 +114,8 @@ on a phone if that is where you open it. Replace `model_init( )` with the
 `SELECT` that reads your job log and it is finished. Nothing published, nothing
 to deprecate, nothing anybody has to un-build in three years.
 
-That is the trade in one sentence: **the ceremony is gone, and so is the
-generosity.** You write the view by hand. Nothing generates it from
-annotations, nothing hands you filter bars, variants or export for free. For
-the screens above that is a rounding error — a table and two buttons. For a
-list report with fifteen filters, sorting, personalization and an Excel export,
-Fiori Elements beats this by a distance.
+abap2UI5 is not a replacement your RAP or UI5 apps, it can be a nice addidtion to your existing UI soultion. Especially fpr small programs or when you need a UI for a single time task.
 
-Knowing which of the two you are looking at is most of the skill.
+Give abap2UI5 a try!
 
 Happy ABAPing! 🦖🦕🦣
