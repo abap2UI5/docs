@@ -34,7 +34,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/site-css/docs.css` | The manual's own layer over the catalogue's stylesheet — the chapter menu, the outline, prev/next, the Run panel, the skip link. Joined with the two borrowed files and minified into one `site.css` at build time |
 | `scripts/site-js/site.js` | The entry point for everything a page does beyond its markup. Bundled with the four modules it imports (below) into one `site.js` by esbuild — six requests three deep became one |
 | `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
-| `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it; pinned by `test/site-memory.test.mjs` |
+| `docs/.vitepress/theme/site-memory.js` | Where the reader was, on each site, so the bar comes back to it — and `forgetOnReload( )`, which drops all of it on a refresh; pinned by `test/site-memory.test.mjs` and `test/reload-reset.test.mjs` |
 | `docs/.vitepress/theme/link-to-selection.js` | **Copy link to selection** — the button under a selection inside the article, and the fallback for a browser too old for `:~:`. `theme/text-fragment.js` is the half with no DOM in it (what to quote, how to spell it), pinned by `test/text-fragment.test.mjs` |
 | `docs/.vitepress/theme/TheBar.vue` | The bar, as one element this repository owns: the brand, `SiteNav.vue` (the four sections), `SearchBox.vue`, the two marks, `SiteMenu.vue` (the menu behind the last button, and the version number `check:version` reads). It used to be the theme's bar with our parts in its slots and 85 override lines arguing its own parts out of the way; the theme now keeps two things, the hamburger and the screen it opens on a phone |
 | `docs/.vitepress/theme/SiteNav.vue` | The four sections, in the bar and again in the phone screen the theme's hamburger opens. Every item that leaves this deployment carries a `target` (`check:cross-site`), and three of the four are lifted to where the reader last was (`site-memory.js`) |
@@ -61,7 +61,7 @@ in it are decidable, and all thirteen are decided before a merge:
 
 | | |
 |---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow; the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it; and the crumb trail above every title, walked against the real sidebar so a restructured section cannot leave the trail passing against a fiction; and **the sidebar against the pages** (`test/sidebar-titles.test.mjs`): every entry's label is its page's own H1 (a search result shows the H1, the menu the label, and fourteen pages had two names a reader could not connect), every section's link is either its own page or the first page in its list (Configuration opened Setup while Installation stood first), and every page under `docs/` has an entry |
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the cross-site position memory, specifically which stored values `theme/site-memory.js` may follow and what a refresh forgets (`test/reload-reset.test.mjs`); the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it; and the crumb trail above every title, walked against the real sidebar so a restructured section cannot leave the trail passing against a fiction; and **the sidebar against the pages** (`test/sidebar-titles.test.mjs`): every entry's label is its page's own H1 (a search result shows the H1, the menu the label, and fourteen pages had two names a reader could not connect), every section's link is either its own page or the first page in its list (Configuration opened Setup while Installation stood first), and every page under `docs/` has an entry |
 | `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteMenu.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt, and in `SiteBar.vue` until the bar was split), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file |
@@ -346,6 +346,26 @@ not it is also treated as a page.
 | where you were | `theme/site-memory.js`. Every page writes its own path down; the Samples item is lifted to whatever the catalogue last wrote. A stored value is **checked, not followed** — resolved against this origin and kept only if it is still inside the section the markup declares: the href it carries, or a wider `scope` the caller names for a link written deeper than what it restores (the other three bars point Documentation at the first page of the manual and still come back to wherever the reader was in it). A poisoned or stale key costs a restored position and nothing else. The cases are `test/site-memory.test.mjs` |
 | where **on** the page you were | `theme/site-memory.js` again, keys `:scroll` (a small map of path → offset, the twelve most recent) and `:returning`. Restored **on arrival by the bar and nowhere else**: a bar item writes one record saying where it is sending the reader, and the page that *is* that, arriving within half a minute and with no hash of its own, honours it. Restoring on every load would fight the browser's own back-and-forward restoration and would drop a reader who followed an ordinary link into the middle of a page with nothing to explain it. A stored offset is checked the same way a stored path is — `scrollTo` takes whatever it is given. `test/scroll-memory.test.mjs` |
 | the last thing you searched for | `theme/search-engine.js`, key `:search`. A hit opens another page, often another deployment, and the box that opens there was empty; the query is written down as a hit is opened and the next box starts with it, selected, so the first keystroke replaces it. Checked (a string, short, and less than half an hour old) rather than used. `test/search.test.mjs` |
+
+**A refresh starts over.** Every one of those is a memory of a JOURNEY — state
+one page hands the next because a click here makes a new document, which is why
+the chapter menu's shape (`:docs-sections`, `scripts/site-js/site.js`), the
+offset, the four bar items and the search box all survive a navigation. Reload
+is the one press on the site that has never meant *go somewhere*, and it is
+what a reader presses when a page looks wrong: handing them back the same
+half-open menus, the same offset and a bar still pointing at yesterday's sample
+is the site remembering its way back into whatever they were trying to leave.
+So `forgetOnReload( )` empties all seven keys on a `reload` navigation and on
+no other, first thing, before anything reads them — the page that follows is a
+first visit, and starts writing a new trail at once. **The theme is not in the
+list**: a colour scheme is a choice about every page there will ever be, not a
+place, and nothing here clears by prefix. The keys being shared means a refresh
+here also drops what the catalogue and the playground wrote about themselves,
+which is the point — afterwards all four items in the bar open their section's
+front page. Their copy of the module does the same on its own reloads
+(`forgetOnReload( )` in `src/shell/site-memory.mjs` over there, called from
+`keepSiteLinksCurrent( )` and `rememberHere( )`; the search box forgets its own
+key in `setUpSearch( )`).
 
 **The playground is remembered too** (`:last-playground`), and it did not use
 to be. The argument against was that its URL carries the code in the editor

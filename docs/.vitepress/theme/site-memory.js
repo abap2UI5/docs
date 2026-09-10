@@ -338,3 +338,80 @@ export function restoreScroll() {
   };
   requestAnimationFrame(put);
 }
+
+/* ── A REFRESH STARTS OVER ──────────────────────────────────────────────────
+ *
+ * Reported as: "it now remembers everywhere on the documentation where I was -
+ * but when I refresh the page everything should be initial again, the menus
+ * folded, when I move between Documentation, Samples and Home."
+ *
+ * Which is what pressing reload has always meant, and every memory above is
+ * the other case. They exist because a click makes a NEW DOCUMENT: the shape
+ * of the chapter menu, how far down the page you were, which page of the other
+ * section you left - all of it is state a page hands the next one so that a
+ * journey ACROSS pages reads as one. None of it is a preference; all of it is
+ * "where I am right now", written down because the browser drops it at the
+ * door.
+ *
+ * A refresh is the reader saying: not this, start again. It is the one press
+ * on the site that has never meant "go somewhere" - and it is what everyone
+ * reaches for when a page looks wrong. Handing them back the same half-open
+ * menus, the same offset and a bar still pointing at yesterday's sample is the
+ * one answer that cannot help: the site remembers its way back into whatever
+ * they were trying to leave. So the trail is dropped, and the next document
+ * starts writing a new one.
+ *
+ * WHAT IS DROPPED IS THE TRAIL, NOT THE READER'S SETTINGS. The theme
+ * (`:theme`) is a choice about every page there will ever be, and a refresh
+ * that turned the site white again would be a bug of exactly the kind this is
+ * fixing. It is not in the list, and nothing here clears by prefix.
+ *
+ * The keys are shared with the two deployments beside this one, so a refresh
+ * here also drops what the catalogue and the playground wrote about
+ * themselves - which is the point: after it, all four items in the bar open
+ * their section's front page again. Their own copy of this module does the
+ * same on ITS reloads - forgetOnReload( ) in src/shell/site-memory.mjs over
+ * there, called from keepSiteLinksCurrent( ) and from rememberHere( ) and
+ * acting once per document, because the three documents call those two in
+ * either order. Change one, change the other.
+ */
+
+/** The places this file remembers a reader in, all five of them. */
+const REMEMBERED = [KEY.docs, KEY.samples, KEY.playground, SCROLL_KEY, HANDOFF_KEY];
+
+/** How this document was arrived at: "navigate", "reload", "back_forward",
+ *  "prerender" - or "" where the browser will not say. */
+export function arrivedBy() {
+  try {
+    const entry = performance.getEntriesByType("navigation")[0];
+    if (entry && typeof entry.type === "string") return entry.type;
+    /* What a browser too old for that entry still has. 1 is TYPE_RELOAD. */
+    return performance.navigation?.type === 1 ? "reload" : "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Forget the way back here - and only on a reload, which is the whole of it.
+ *
+ * `also` is what the CALLER remembers under its own keys: the chapter menu and
+ * the search box belong to one deployment each, so this file does not spell
+ * them (`site.js` does). `how` is here to be passed in by the tests, which
+ * have no navigation entry to read.
+ *
+ * Answers whether this was the arrival it acts on - a refused storage has
+ * nothing to forget and is not a different answer.
+ */
+export function forgetOnReload(also = [], how = arrivedBy()) {
+  if (how !== "reload") return false;
+  if (typeof localStorage === "undefined") return false;
+  for (const key of [...REMEMBERED, ...also]) {
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      /* A refused storage has nothing to forget. */
+    }
+  }
+  return true;
+}

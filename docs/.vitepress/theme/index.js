@@ -24,7 +24,7 @@ import { setUpCostCalculator } from './cost-calculator.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
 import Crumbs from './Crumbs.vue'
-import { rememberHere, rememberScroll, restoreScroll } from './site-memory.js'
+import { forgetOnReload, rememberHere, rememberScroll, restoreScroll } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -122,6 +122,15 @@ export default {
     // whether this arrival is the one the bar named, and holds the offset
     // against the router's own scroll-to-top and a page that is still growing.
     if (!import.meta.env.SSR) {
+      // A REFRESH STARTS OVER, before any of the below reads the memory: all
+      // of it is state one page hands the next so a journey across pages reads
+      // as one, and reload is the reader saying the journey is over
+      // (site-memory.js). Only the search box is named - the chapter menu this
+      // resets on the published site is `scripts/site-js/site.js`'s, and the
+      // one here is the default theme's, which persists nothing. The key is
+      // search-engine.js's QUERY_KEY, spelled rather than imported so this
+      // does not pull the matching engine in.
+      forgetOnReload(['abap2ui5-playground:search'])
       rememberUnlessHome()
       setUpCodeLines()
       restoreScroll()
