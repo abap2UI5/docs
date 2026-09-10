@@ -125,4 +125,6 @@ screen somebody needs exactly once.
 
 Install it with abapGit and give it a try!
 
+A screen that costs one class is a screen that gets built.
+
 Happy ABAPing! 🦖🦕🦣
