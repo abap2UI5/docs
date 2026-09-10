@@ -36,7 +36,7 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 <div><span class="cost-total-what">Total, over <span data-echo="cost-term">3 years</span></span><output data-total>€0</output></div>
 <div><span class="cost-total-what">Per year</span><output data-total>€0</output></div>
 <div><span class="cost-total-what">Per user, per month</span><output data-total>€0</output></div>
-<p class="cost-total-note">The formula is short: every line is zero, and a sum of zeros is zero - no matter what you clicked before. 😉 abap2UI5 is <a href="/docs/resources/license">MIT licensed</a>, commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.</p>
+<p class="cost-total-note">The formula is short: every line is zero, and a sum of zeros is zero - no matter what you clicked before. abap2UI5 is <a href="/docs/resources/license">MIT licensed</a>, commercial use included, and what you build with it is a standard UI5 app served by the ABAP stack you already run.</p>
 </div>
 </div>
 </div>
