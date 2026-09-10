@@ -15,7 +15,34 @@ import { setUpPlayground } from './playground.js';
 import { setUpCodeLines, watchCodeLines } from './code-lines.js';
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js';
 import { setUpCostCalculator } from './cost-calculator.js';
-import { entryOf, handOff, lastVisited, rememberHere, rememberScroll, restoreScroll, takeHandoff } from './site-memory.js';
+import { entryOf, forgetOnReload, handOff, lastVisited, rememberHere, rememberScroll, restoreScroll, takeHandoff } from './site-memory.js';
+
+/* ---- a refresh starts over ---------------------------------------------
+ *
+ * "It now remembers everywhere on the documentation where I was - but when I
+ * refresh the page everything should be initial again, the menus folded, when
+ * I move between Documentation, Samples and Home."
+ *
+ * Everything this site writes down is a memory of a JOURNEY between its pages,
+ * kept because every page is a fresh document (site-memory.js says the rest).
+ * Reload is the one press that has never meant "go somewhere", and it is what
+ * a reader reaches for when a page looks wrong - so what it gets back is a
+ * first visit: the chapter menu as the build folds it, no offset, and four bar
+ * items pointing at their section's front page.
+ *
+ * FIRST, BEFORE ANYTHING READS ANY OF IT. The menu below is put back from
+ * storage as this file runs, the bar is lifted from it a few lines down, and
+ * the search box - the catalogue's own module, bundled after this one - opens
+ * with the last query. All of them read a store this has already emptied.
+ *
+ * The two keys here are the ones this deployment owns; the five the memory
+ * itself keeps are its own business. The theme is in neither list: a colour
+ * scheme is a choice about every page there will ever be, not a place. */
+const SECTIONS_KEY = 'abap2ui5-playground:docs-sections';
+/* Spelled here and in the search module the bar carries (theme/search-engine.js
+   is this repository's copy of it, QUERY_KEY). */
+const SEARCH_KEY = 'abap2ui5-playground:search';
+forgetOnReload([SECTIONS_KEY, SEARCH_KEY]);
 
 /* The Run button under a runnable ABAP example, and "copy link to selection":
    one delegated listener each, for the whole document. */
@@ -289,7 +316,7 @@ document.addEventListener('click', (e) => {
   /* A second name, because every value under the first one was written by the
      navigation bug above and none of it is the reader's. A store that cannot
      be trusted is worse than an empty one. */
-  const KEY = 'abap2ui5-playground:docs-sections';
+  const KEY = SECTIONS_KEY;
   /* A section is a checkbox followed by its group (build-site.mjs): the box
      is what opens it, the group carries the key it is remembered by. */
   const groups = [...document.querySelectorAll('.sidebar .side-group[data-key]')];
