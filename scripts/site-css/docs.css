@@ -1209,8 +1209,20 @@ html { scrollbar-gutter: stable; }
   font-size: 13px; line-height: 1.6; color: var(--fg-dim);
 }
 .cost-give ul li { margin: 0; padding: 0; }
-.cost-give ul li strong { display: block; color: var(--fg); font-weight: 600; }
+/* The lead of a way is a line of its own - and only the lead: a strong later
+   in the sentence (the tag a post carries) is a word inside it. */
+.cost-give ul li strong:first-child { display: block; }
+.cost-give ul li strong { color: var(--fg); font-weight: 600; }
 @media (max-width: 620px) { .cost-give ul { grid-template-columns: 1fr; } }
+/* The note is the sheet's last line rather than a paragraph under it: the
+   three figures answer the question, and the sentence that says why they are
+   all the same character belongs inside the same border. It spans the grid,
+   sits on a hairline under the figures, and is the size of a caption - a note
+   on the total, not a fourth number. */
+.cost-total-note {
+  grid-column: 1 / -1; margin: 4px 0 0; padding-top: 14px;
+  border-top: 1px solid var(--line); font-size: 13px; line-height: 1.6; color: var(--fg-dim);
+}
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
 
 /* ---- the front door's example folds on a phone --------------------------
