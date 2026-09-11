@@ -204,10 +204,11 @@ launchpad tile or SAP Build Work Zone.
 
 ## Made for AI agents
 
-One class is one file — the whole app, for an agent to write. The abap2UI5
-linter and the MCP server let the agent check its own work without an SAP
-system: the linter validates the view, the MCP server boots the app headless
-and returns the errors and a screenshot.
+abap2UI5 is a perfect fit for AI-assisted development. An app is one ABAP
+class, so an agent writes the whole thing — UI and logic — in one go, and a
+working app or a new screen is a matter of minutes rather than days. The
+linter and the MCP server let the agent check its own work before a developer
+looks at it, so the first version that reaches a review already runs.
 
 → *More on [Developing with AI](/get_started/ai)*
 
