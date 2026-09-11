@@ -144,6 +144,50 @@ export function trimTerms(entries, { ceiling = 1 / 3 } = {}) {
   return entries;
 }
 
+/* ── THE WORD THE READER HAS FOR IT ────────────────────────────────────────
+ *
+ * "readonly" found nothing, and every page about it says `editable`; "F4" is
+ * what half the readers call the value help. A pair is `[what is typed, what
+ * the entry says]`: an entry that says the second gets the first, added to
+ * `terms` - the long tail, at the long tail's weight, so the alias FINDS the
+ * entry and the ranking stays with the words it really carries. One direction
+ * each, on purpose: a reader who types "editable" has the project's word
+ * already. Data rather than code, so it is not a second thing the four bars
+ * have to carry a copy of.
+ *
+ * What is NOT here is the spelling with the space taken out - "messagebox"
+ * for "Message Box": the matcher looks for that itself (`joined( )` in
+ * theme/search-engine.js), at the weight of the field it is in.
+ */
+export const SYNONYMS = [
+  ['readonly', 'editable'],
+  ['f4', 'value help'],
+  ['msg', 'message'],
+  ['popup', 'dialog'],
+  ['dialog', 'popup'],
+  ['flp', 'launchpad'],
+  ['launchpad', 'flp'],
+  ['i18n', 'translation'],
+  ['translation', 'i18n'],
+  ['login', 'logon'],
+  ['logon', 'login'],
+  ['dropdown', 'select'],
+  ['excel', 'xlsx'],
+  ['xlsx', 'excel'],
+];
+
+/** The synonyms, added to every entry's `terms` that says the meaning and
+ *  not the alias. */
+export function enrich(entries, synonyms = SYNONYMS) {
+  for (const e of entries) {
+    const said = `${e.title} ${e.text} ${(e.headings || []).map((h) => h[0]).join(' ')} ${e.terms || ''}`.toLowerCase();
+    const has = (w) => new RegExp(`(^|[^\\p{L}\\p{N}_])${w}([^\\p{L}\\p{N}_]|$)`, 'u').test(said);
+    const extra = synonyms.filter(([alias, meaning]) => has(meaning) && !has(alias)).map(([alias]) => alias);
+    if (extra.length) e.terms = [e.terms, ...extra].filter(Boolean).join(' ');
+  }
+  return entries;
+}
+
 export async function buildIndex(root, { fetchFn = globalThis.fetch, log = () => {} } = {}) {
   const entries = trimTerms(docEntries());
   const areas = [{ area: 'docs', label: 'Documentation', count: entries.length }];
@@ -160,5 +204,5 @@ export async function buildIndex(root, { fetchFn = globalThis.fetch, log = () =>
     log(`  ${repo}: ${rows.length} sample(s) (${found.source})`);
   }
 
-  return { built: new Date().toISOString(), areas, entries };
+  return { built: new Date().toISOString(), areas, entries: enrich(entries) };
 }

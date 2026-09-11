@@ -74,6 +74,10 @@ function hide() {
  * them is not measurable. */
 const hits = computed(() => (entries.value.length ? search(entries.value, query.value, { limit: 500 }) : []));
 const groups = computed(() => grouped(hits.value));
+/* What answered, when it was not what was typed: a typo corrected or a word
+ * set aside (search-engine.js). The list says so above the results, and the
+ * marks in the rows are of the query that answered, not the one that did not. */
+const relaxedTo = computed(() => hits.value.relaxedTo || '');
 
 /* What is in the box, in the two numbers a reader recognises. Only once the
  * index has arrived - before that the box says what it is, not how much. */
@@ -185,7 +189,7 @@ onMounted(() => document.addEventListener('keydown', onKey));
 onUnmounted(() => document.removeEventListener('keydown', onKey));
 
 const indexOf = (hit) => rows.value.indexOf(hit);
-const parts = (text) => highlight(text, query.value);
+const parts = (text) => highlight(text, relaxedTo.value || query.value);
 </script>
 
 <template>
@@ -251,6 +255,9 @@ const parts = (text) => highlight(text, query.value);
           </div>
           <p v-else-if="!rows.length" class="a2ui5-search-note">
             Nothing matches <strong>{{ query }}</strong>.
+          </p>
+          <p v-else-if="relaxedTo" class="a2ui5-search-note">
+            Nothing matches <strong>{{ query }}</strong> — showing <strong>{{ relaxedTo }}</strong>.
           </p>
 
           <div v-for="group in groups" :key="group.label" class="a2ui5-search-group">
