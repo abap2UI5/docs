@@ -815,7 +815,7 @@ const bands = (body, tiles = '') => {
    * rather than being given a band it did not ask for. */
   const lead = parts[0].startsWith('<h2') ? '' : parts.shift();
   const hinge = parts.findIndex((part) => part.includes('a2ui5-play'));
-  return lead + parts.map((part, i) => {
+  const rendered = parts.map((part, i) => {
     const id = (part.match(/^<h2 id="([^"]+)"/) || [, ''])[1];
     const card = hinge > 0 && i < hinge ? ' data-card' : '';
     /* ...and the hinge marks itself, for the same reason: what needs the full
@@ -823,7 +823,14 @@ const bands = (body, tiles = '') => {
     const demo = i === hinge ? ' data-demo' : '';
     return `<section class="band"${id ? ` data-band="${esc(id)}"` : ''}${card}${demo}>${part}</section>`
       + (i === hinge ? tiles : '');
-  }).join('');
+  });
+  /* The cards share one grid of their own, so every row of it is as tall as
+     the tallest card: four panels of one size, whatever each one says. In the
+     page's grid only the two cards on a row could be held to one height, and
+     the second row sat visibly taller than the first. */
+  const cards = hinge > 0 ? rendered.slice(0, hinge) : [];
+  const rest = hinge > 0 ? rendered.slice(hinge) : rendered;
+  return lead + (cards.length ? `<div class="cards">${cards.join('')}</div>` : '') + rest.join('');
 };
 
 const home = ({ body, fm, page }) => {

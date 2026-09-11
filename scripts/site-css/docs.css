@@ -754,9 +754,11 @@ html { scroll-padding-top: 62px; }
  * label/value pairs is homework, not an answer. What was load-bearing in it
  * went into the answers themselves.
  *
- * Two by two, every card the same width and, by `align-items: stretch`, the
- * same height as the one beside it. Three sections in a column beside a table
- * never balanced against anything; four balance against each other.
+ * Two by two, every card the same width and the same height - not only as
+ * the one beside it but as all four, because the build puts them in a grid
+ * of their own whose rows are `1fr`: every row as tall as the tallest card.
+ * Three sections in a column beside a table never balanced against anything;
+ * four balance against each other.
  *
  * Raised rather than ruled. A hairline over a heading separates bands read in
  * order; these are read in any order, so each is a panel of its own - the
@@ -768,6 +770,13 @@ html { scroll-padding-top: 62px; }
  * Edit-on-GitHub link dropped that card out of the grid without a word. A
  * wording change is the one edit this page invites; it must not be able to
  * break the layout. See bands( ) in build-site.mjs. */
+.home .cards {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 24px;
+}
 .home .band[data-card] {
   grid-column: auto;
   padding: 22px 24px 24px;
@@ -805,7 +814,7 @@ html { scroll-padding-top: 62px; }
 
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
-  .home .vp-doc.bands { display: block; }
+  .home .vp-doc.bands, .home .cards { display: block; }
   /* `display: block` drops the row gap with the grid; the tile row carries
      its own, like the cards. */
   .home .bands .tiles { margin-top: 24px; }
