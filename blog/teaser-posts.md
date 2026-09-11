@@ -34,11 +34,11 @@ attached article preview, so the post carries no inline URL. 744 characters.
 ## The Cost of a Screen
 
 Plain text — LinkedIn renders no markdown. The article link comes from the
-attached article preview, so the post carries no inline URL. 1024 characters.
+attached article preview, so the post carries no inline URL. 1257 characters.
 
-> Small applications in ABAP are still built the way they have always been
-> built: a selection screen, a SELECT, an ALV grid. And honestly - why not. It
-> takes an afternoon.
+> Small applications in ABAP are still built the way they always were: a
+> selection screen, a SELECT, an ALV grid. And honestly - why not. It takes an
+> afternoon.
 >
 > A maintenance view for a customizing table nobody wants to explain in SM30
 > again. A cockpit showing what last night's job did. An approval step for one
@@ -47,12 +47,16 @@ attached article preview, so the post carries no inline URL. 1024 characters.
 >
 > Building any of those in UI5 is a different afternoon: a data model, a
 > service, a binding, an annotation model, a frontend project, a deployment -
-> and every one of those objects then exists forever. So the ALV stays, and
-> everyone agrees to stop thinking about it.
+> and every one of those objects then exists forever. So the ALV stays.
 >
 > New article 🎉 The same job monitor as a complete abap2UI5 app: one ABAP
 > class, activate, call the endpoint. About as much work as the ALV, except
 > this one follows the Fiori design guidelines and starts on your phone too.
+>
+> abap2UI5 is open source, MIT licensed, and it runs on the UI5 and the ABAP
+> your system already has: one abapGit pull, nothing to license, nothing to
+> deploy beside it. A perfect complement to the RAP and freestyle UI5 apps you
+> already run - for the screens nobody would start a project for.
 >
 > Which of your ALV grids would you hand to a user as a Fiori app, if it cost
 > you one class?
