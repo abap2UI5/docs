@@ -10,9 +10,11 @@
  *                            and in --check mode holds the committed copy
  *                            against the interface
  *
- * Both fetch the SAME source at the SAME pin: the raw file at the release the
- * site names (lib/release.mjs), never main - a reader installs a release, and
- * main is ahead of it by definition.
+ * Both fetch the SAME source at the SAME ref: the raw file on the framework
+ * branch this site tracks - `frameworkRef( )` in lib/release.mjs, which is
+ * main, or whatever A2UI5_REF pins a run back to. It used to be the release
+ * the site names, and release.mjs says why it no longer is: a page could not
+ * be corrected to an API that had landed on main until the next tag.
  *
  * The full parser lives here too, used by generate-api-reference. It answers
  * a richer question than check-api-names asks - not "does this name exist"
@@ -42,10 +44,20 @@ export async function fetchInterface(ref) {
 /* ---------------------------------------------------------------- parsing */
 
 /** ABAP-Doc escapes, undone. The parsed model carries PLAIN text; whoever
- *  renders it into markdown or HTML escapes for that target again. */
+ *  renders it into markdown or HTML escapes for that target again.
+ *
+ *  All five XML entities and the numeric forms, not the three this knew for a
+ *  while: ABAP-Doc is XML, so the interface writes an apostrophe as `&apos;`,
+ *  and the page printed `sap.tnt&apos;s` for as long as the decoder did not
+ *  know the name. `&amp;` goes LAST, so `&amp;lt;` comes out as the literal
+ *  `&lt;` the author escaped, not as `<`. */
 const decode = (s) => s
   .replace(/&lt;/g, '<')
   .replace(/&gt;/g, '>')
+  .replace(/&apos;/g, "'")
+  .replace(/&quot;/g, '"')
+  .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
   .replace(/&amp;/g, '&')
   .replace(/\\([{}|])/g, '$1');
 
