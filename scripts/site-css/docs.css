@@ -1188,16 +1188,16 @@ html { scrollbar-gutter: stable; }
 }
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
 
-/* ---- the front door's example folds ------------------------------------
+/* ---- the front door's example folds on a phone --------------------------
  *
- * The example is 121 lines, and on 390px of width that was three screens of
- * column definitions between the cards and the end of the page. On a desk
- * the frame that runs the example hides the listing once it is up
- * (theme/playground.js) - but not before, and not in a window too narrow to
- * start itself, and not when the loader is refused. So the listing is folded
- * to its first screen everywhere, until it is asked for; site.js adds the
- * class and the button. While the frame stands in for the listing the
- * button has nothing to unfold, so it goes with it. */
+ * The example is 137 lines, and on 390px of width that was 4,000 of the
+ * front door's 6,900px - three screens of column definitions between the
+ * cards and where to go next. On a desk the frame that runs the example
+ * hides the listing anyway (theme/playground.js); on a phone the example
+ * does not start itself, so the listing stays, and it stays folded to its
+ * first screen until it is asked for. site.js adds the class and the
+ * button, and only under a coarse pointer, so nothing here applies on a
+ * desk. */
 .a2ui5-play.is-folded div[class*="language-"] {
   max-height: 440px;
   overflow: hidden;
@@ -1226,4 +1226,3 @@ html { scrollbar-gutter: stable; }
   cursor: pointer;
 }
 .a2ui5-play-fold:hover { border-color: var(--accent); }
-.a2ui5-play div[class*="language-"][hidden] + .a2ui5-play-fold { display: none; }
