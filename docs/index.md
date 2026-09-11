@@ -64,9 +64,10 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # has to convince is the one who decides whether it may be used. So nothing
 # here is arranged for a developer's reading order: the cards come before the
 # code. What a developer gets anyway, because it costs the manager nothing,
-# is two sentences in front of the example (what you are looking at, how to
-# play with it), one way out behind it (the tutorial, through to transport
-# and unit tests), and the UI5 releases in the integration card. The daily tools
+# is the example itself - there is no paragraph in front of it any more; the
+# heading and the running app say what it is - one way out behind it (the
+# tutorial, through to transport and unit tests), and the UI5 releases in
+# the integration card. The daily tools
 # - ADT, the ABAP debugger, ABAP Unit, the linter, the MCP server - are on
 # the Tooling page, one click into the manual.
 #
@@ -213,12 +214,6 @@ or ten thousand, the SAP license you have is the one you keep; run your own
 numbers through the [Cost Calculator](/resources/cost_calculator).
 
 ## Try it out now
-
-This is the whole app: one ABAP class on the left, running on the right. Press
-the pencil on a row, change the date, save — every click is one roundtrip into
-the class, which builds the view and hands it back with the data
-([how it works](/get_started/about#how-it-works)). Change a line of the code
-and run it again.
 
 ```abap edit
 CLASS zcl_app_invoices DEFINITION PUBLIC.
