@@ -196,8 +196,8 @@ transports, ATC and ABAP Unit apply as they do to everything else you ship.
 
 ## Plays well with what you have
 
-It complements your UI5 and RAP apps — it does not replace them, and lives
-right next to your existing solutions. It runs in a browser tab, a Fiori
+abap2UI5 complements your UI5 and RAP apps — it does not replace them, and
+lives right next to your existing solutions. It runs in a browser tab, a Fiori
 launchpad tile or SAP Build Work Zone.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
