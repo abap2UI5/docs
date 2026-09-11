@@ -199,8 +199,8 @@ you ship. Support is the community's, on GitHub and Slack.
 
 **Complements UI5 freestyle and RAP — it does not replace them, and lives
 right next to your existing UI5 solutions.** It runs in a
-browser tab, a Fiori launchpad tile or Build
-Work Zone and without internet access.
+browser tab, a Fiori launchpad tile or SAP Build Work Zone, and without
+internet access.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
@@ -208,7 +208,7 @@ Work Zone and without internet access.
 
 **One class is one file — the whole app, for an agent to write.** The
 abap2UI5 linter and the MCP server let it
-check its own work without an SAP system. 
+check its own work without an SAP system.
 
 → *More on [Developing with AI](/get_started/ai)*
 
@@ -216,7 +216,8 @@ check its own work without an SAP system.
 
 **Nothing.** MIT licensed, commercial use included — no
 license key, no subscription, no per-user fee, and no BTP required. Ten users
-or ten thousand, it runs on your ABAP Stack with the UI5 version you already have, the SAP license you have is the one you keep.
+or ten thousand, it runs on your ABAP stack with the UI5 version you already
+have, and the SAP license you have is the one you keep.
 
 → *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
