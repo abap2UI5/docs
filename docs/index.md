@@ -173,7 +173,7 @@ features:
     link: https://abap2ui5.github.io/playground/samples/
     target: _self
   - title: Take an app to production
-    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 17.5h16M6.5 17.5V9.8l5.5-4.3 5.5 4.3v7.7M10 17.5v-4.2h4v4.2"/></svg>
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.5 19.5V9l5.5 3.5V9l5.5 3.5V9l6 3.5v7zM3.5 19.5h17M6 4.5h3v7.5"/></svg>
     details: Security, authorizations, the launchpad tile, the transport — what a go-live needs, on one page.
     link: /configuration/productive_usage
 ---
