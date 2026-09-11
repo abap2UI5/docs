@@ -49,7 +49,7 @@ Set the sliders to your landscape, tick your systems and your support, pick a cu
 
 Keep in mind that those zeros were written in somebody's evenings - the release you will pull next month, the answer under your issue, the 7.02 downport nobody asked for. That part of the bill is real; it is just not addressed to you.
 
-And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back - eight that cost an evening, and one that costs money:
+And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back:
 
 - **Star the repository.** One click on [GitHub](https://github.com/abap2UI5/abap2UI5), and the next visitor sees a project rather than an experiment.
 - **Answer somebody.** One reply under an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://communityinviter.com/apps/abapgit/abap) saves somebody else an afternoon of searching.
