@@ -794,8 +794,14 @@ html { scroll-padding-top: 62px; }
 /* The card is already the measure; capping the paragraphs again would leave a
    gutter inside a gutter. */
 .home .band[data-card] > p { max-width: none; }
-/* A card is a box with a floor: the last paragraph must not push against it. */
-.home .band[data-card] > p:last-child { margin-bottom: 0; }
+/* A card is a column, and its last line - the "→ More on …" - sits on the
+   floor of it, whatever the text above it comes to: four cards of one height
+   with the way out in the same place on each, rather than each card's link
+   hanging wherever its paragraph happened to end. Flex margins do not
+   collapse, so the paragraph spacing is written out as top margins. */
+.home .band[data-card] { display: flex; flex-direction: column; }
+.home .band[data-card] > p { margin: 12px 0 0; }
+.home .band[data-card] > p:last-child { margin-top: auto; padding-top: 12px; }
 
 /* The example is the widest thing on the page because what it opens is two
    panes - the ABAP on the left, the app it renders on the right. Held to a
