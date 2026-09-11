@@ -172,14 +172,17 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   assert.match(last, /#abap2UI5/, 'and the tag that collects those posts');
   assert.match(last, /\]\(\/resources\/references\)/, 'where what is written about it lands');
   assert.match(last, /\]\(\/resources\/who_uses\)/, 'and the list a company can put itself on');
-  /* The intro counts the ways, so it goes stale the moment one is added or
-     taken out - which is exactly how it went stale. All but one cost an
-     evening; that one is the money. */
+  /* An intro that counts the ways goes stale the moment one is added or
+     taken out - which is exactly how it went stale. The count was then taken
+     out of the intro altogether, which is the other way of never being
+     wrong; so the number is held to the list only while the intro states
+     one. All but one cost an evening; that one is the money. */
   const said = last.match(/- (\w+) that cost an evening, and one that costs money/);
   const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
                  'eight', 'nine', 'ten', 'eleven', 'twelve'];
-  assert.ok(said, 'the intro says how many ways there are');
-  assert.equal(said[1], words[ways.length - 1], `${ways.length} ways, so the intro says ${words[ways.length - 1]} plus the one that costs money`);
+  if (said) {
+    assert.equal(said[1], words[ways.length - 1], `${ways.length} ways, so the intro says ${words[ways.length - 1]} plus the one that costs money`);
+  }
 });
 
 /* The stylesheet is written twice - scripts/site-css/docs.css for the site the
