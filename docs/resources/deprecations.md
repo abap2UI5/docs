@@ -423,8 +423,8 @@ ones on `z2ui5_if_ui5_exit`, not copies, so a config structure that gains a
 field gains it under either name.
 
 `z2ui5_if_exit` is deleted after a transition period, so move your exit over
-when you next touch it — after the release that brings the new name, which the
-examples on this site still wait for.
+when you next touch it. The new name shipped with 1.144.0, and every exit
+example on this site is written against it.
 
 ### `z2ui5_if_types` → the object that uses the type
 
@@ -438,7 +438,7 @@ exists, so the type you need is declared where you already are:
 | `z2ui5_if_types=>ty_s_event_control` | `z2ui5_if_client=>ty_s_event_control` — the `s_ctrl` of `_event( )` |
 | `z2ui5_if_types=>ty_s_name_value` / `ty_t_name_value` | `z2ui5_if_client=>ty_s_name_value` / `ty_t_name_value` |
 | `z2ui5_if_types=>cs_device` | `z2ui5_if_client=>cs_device` |
-| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_exit`, whose two methods take them |
+| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_ui5_exit`, whose two methods take them |
 | `z2ui5_if_types=>ty_s_draft` | `z2ui5_cl_ui5_srv_draft=>ty_s_draft` |
 | `z2ui5_if_types=>ty_s_config` | written out inside `z2ui5_if_client=>ty_s_get-s_config` |
 
