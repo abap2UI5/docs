@@ -33,22 +33,25 @@ attached article preview, so the post carries no inline URL. 744 characters.
 
 ## The Cost of a Screen
 
-Plain text — LinkedIn renders no markdown.
+Plain text — LinkedIn renders no markdown. The article link comes from the
+attached article preview, so the post carries no inline URL. 1006 characters.
 
-> A maintenance view for a customizing table. A cockpit showing what last
-> night's job did. An approval step for one department.
+> A maintenance view for a customizing table nobody wants to explain in SM30
+> again. A cockpit showing what last night's job did. An approval step for one
+> department. Some of these run during a go-live and are never started again.
 >
-> The logic behind each is about thirty lines. The cost of putting a UI in front
-> of thirty lines is not thirty lines, and it does not scale down: a data model,
-> a service, a binding, a frontend artifact, a deployment — and an object that
-> has to be transported, survive upgrades, and one day be deprecated by someone
-> who never met the department that asked for it.
+> The logic behind such a screen might be thirty lines. The user interface in
+> front of it is not, and it does not scale down with the logic: a data model, a
+> service, a binding, an annotation model, a frontend artifact, a deployment -
+> and every one of those objects then exists forever.
 >
-> So the screen never gets built. Every system has a Z package full of the ones
-> that became a selection screen and an ALV grid instead.
+> So the screen does not get built. Or it becomes a selection screen and an ALV
+> grid, and everyone agrees to stop thinking about it. Every system has a Z
+> package full of them.
 >
-> New article 🎉 with a job monitor as a complete abap2UI5 app — and an honest
-> note on where this is the wrong trade.
+> New article 🎉 The job monitor instead, as a complete abap2UI5 app - one class,
+> nothing else. About as much work as an ALV, except this one follows the Fiori
+> design guidelines and starts on your phone too.
 >
 > Which screen in your system stayed an ALV grid because a proper UI was never
 > worth the effort?
