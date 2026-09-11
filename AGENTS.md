@@ -277,8 +277,47 @@ what a reader wants is a sample, in another repository, on another deployment.
 (`/docs/search-index.json`, built by `generate-search.mjs`): every page of the
 manual with its headings and its words, and all ~770 entries of the three
 sample catalogues with the titles, summaries and keywords those repositories
-maintain. Results are grouped by area, documentation first, and a sample hit
-opens that sample's own page in the catalogue.
+maintain. Results are grouped by area, and a sample hit opens that sample's
+own page in the catalogue. The groups come in the order of their best hit;
+the documentation leads whenever it has a real answer (a hit within half of
+the best hit anywhere), and a page that only MENTIONS the word comes after
+the samples that are about it — "dialog" used to open on Value Help, Popup,
+PDF and Lock above forty-seven samples that are dialogs.
+
+**What the matcher does with the words, and why.** Each rule is a query that
+was measured wrong on the real index before it, and each is pinned in
+`test/search.test.mjs`:
+
+- **Stop words are not search terms** while a real word is left. "how do i
+  install" was answered with Client API › check_on_init, and Installation
+  was not in the first four: `a` and `i` are a prefix of something in every
+  entry and each earned a title-hit's worth of points. A query that is
+  nothing but stop words still asks what it says.
+- **The words next to each other earn a bonus.** "abap cloud" preferred
+  Toolchain › abap-cleaner (a title hit on `abap`, a mention of `cloud`)
+  over the heading that IS the two words typed.
+- **A field with its spaces taken out is matched too**, at the weight of the
+  field, for terms of five letters and up: "messagebox" found the three
+  samples spelled that way and not the chapter whose heading is "Message
+  Box", nor "selectdialog" a single page. The index carries no compound
+  forms for this; the matcher looks (`joined( )`).
+- **The plural is the singular with an `s` on it**, taken off before the
+  prefix match — "tables" found 33 entries and "table" 202, and all 169 it
+  missed were about tables. Letters only, never `ss`, never a class name.
+- **Nothing found is not the end**: the word on the fewest entries is set
+  aside, then the next, until something answers; a single word that still
+  finds nothing is tried against every title word one edit away ("tabel" is
+  "table"; and the candidate that starts the way the reader started wins
+  over the one on more titles, or "tabel" would be "label"). Whatever
+  answered is on the result as `hits.relaxedTo` and both boxes say so above
+  the rows: a list that silently answers a different question than the one
+  typed is worse than an empty one.
+- **Synonyms are data in the index, not code in the matcher**: `SYNONYMS` in
+  `scripts/lib/search-index.mjs` is `[what is typed, what the entry says]`
+  pairs ("readonly" for `editable`, "f4" for the value help), added to an
+  entry's `terms` — the long tail's weight, so the alias finds the entry and
+  the ranking stays with the words it really carries. One direction each,
+  so it is the reader's word that is mapped, not the project's.
 
 **The box states the type it would otherwise inherit.** Every rule inside the
 panel is identical to `.search-panel`'s in `catalogue.css` — and the two still

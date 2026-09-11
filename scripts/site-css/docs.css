@@ -867,6 +867,10 @@ html { scroll-padding-top: 62px; }
  * and a rule under a row of boxes is a second edge on the same edge. */
 .vp-doc .a2ui5-links {
   display: flex; flex-wrap: wrap; gap: 8px 28px;
+  /* Centred, like the tiles' row above it is: three links at the left edge
+     under three boxes that span the width read as a fourth thing that did
+     not get finished. */
+  justify-content: center;
   /* Well clear of the tiles above, and close to the rule under it: the row
      belongs to the page's foot, not to the tiles. */
   margin: 56px 0 0;
