@@ -149,8 +149,8 @@ hero:
     height: 200px
   # Two buttons, in the order a stranger needs them: try it without installing
   # anything, then read the one page that says what it is - "In a Nutshell",
-  # named on the button as the page is named in the sidebar, so the reader
-  # lands where the label said. The second used to be "Install with
+  # behind a button that says "Learn more...", which is what the reader
+  # wants rather than what the page is called. The second used to be "Install with
   # abapGit" - the third mention of abapGit in the first screen, and a step
   # the manager this page addresses is not taking; installing is the first
   # tile below. The playground is first on purpose — it is the one claim on
@@ -163,7 +163,7 @@ hero:
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
     - theme: alt
-      text: In a Nutshell
+      text: Learn more...
       link: /get_started/about
 
 # Three things to do next, each on the page for it. The bar names the
