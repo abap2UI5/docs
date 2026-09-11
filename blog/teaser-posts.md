@@ -34,27 +34,28 @@ attached article preview, so the post carries no inline URL. 744 characters.
 ## The Cost of a Screen
 
 Plain text — LinkedIn renders no markdown. The article link comes from the
-attached article preview, so the post carries no inline URL. 1006 characters.
+attached article preview, so the post carries no inline URL. 1024 characters.
 
+> Small applications in ABAP are still built the way they have always been
+> built: a selection screen, a SELECT, an ALV grid. And honestly - why not. It
+> takes an afternoon.
+>
 > A maintenance view for a customizing table nobody wants to explain in SM30
 > again. A cockpit showing what last night's job did. An approval step for one
-> department. Some of these run during a go-live and are never started again.
+> department, four people, twice a year. A correction screen somebody needs
+> exactly once, during a go-live.
 >
-> The logic behind such a screen might be thirty lines. The user interface in
-> front of it is not, and it does not scale down with the logic: a data model, a
-> service, a binding, an annotation model, a frontend artifact, a deployment -
-> and every one of those objects then exists forever.
+> Building any of those in UI5 is a different afternoon: a data model, a
+> service, a binding, an annotation model, a frontend project, a deployment -
+> and every one of those objects then exists forever. So the ALV stays, and
+> everyone agrees to stop thinking about it.
 >
-> So the screen does not get built. Or it becomes a selection screen and an ALV
-> grid, and everyone agrees to stop thinking about it. Every system has a Z
-> package full of them.
+> New article 🎉 The same job monitor as a complete abap2UI5 app: one ABAP
+> class, activate, call the endpoint. About as much work as the ALV, except
+> this one follows the Fiori design guidelines and starts on your phone too.
 >
-> New article 🎉 The job monitor instead, as a complete abap2UI5 app - one class,
-> nothing else. About as much work as an ALV, except this one follows the Fiori
-> design guidelines and starts on your phone too.
->
-> Which screen in your system stayed an ALV grid because a proper UI was never
-> worth the effort?
+> Which of your ALV grids would you hand to a user as a Fiori app, if it cost
+> you one class?
 >
 > #ABAP #SAP #UI5
 
