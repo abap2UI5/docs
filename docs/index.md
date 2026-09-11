@@ -18,7 +18,7 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # colleague's link, and who has not decided to read a manual yet.
 #
 # So the page answers, in this order: what it is (the hero), the four answers
-# a decision needs — security, cost, integration, AI — what one app looks
+# a decision needs — security, integration, AI, cost — what one app looks
 # like, running right here, and then where to go next (the three tiles).
 # Under it, one line of where the project lives. A reader who wants the
 # manual is one word away in the bar; this page does not compete with it.
@@ -41,13 +41,13 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # asks instead, and its bold lead is the one-word answer - so the reader who
 # scans only the headings still leaves with the price.
 #
-# THE ORDER IS AN ARGUMENT: it is safe here, and it costs nothing - then it
-# fits what you run, and an agent can write it. The price used to be the last
-# card, on the reasoning that it is the last question; measured, the last
-# card sat at 1,000px on a desk and 2,900 on a phone, under the fold on both,
-# and for the manager this page is written for it is usually the FIRST
-# question. So the tagline now says "free, MIT licensed" in the first screen
-# and the cost card stands second, where "Nothing." is read.
+# THE ORDER IS AN ARGUMENT: it is safe here, and it fits what you run - then
+# an agent can write it, and it costs nothing. The price is the last card
+# because it is the closing line: a reader who has taken the first three
+# reaches "Nothing." as the answer to the question the cards have built up
+# to. It is not hidden for being last - the tagline says "free, MIT
+# licensed" in the first screen, and the cards are one sentence each now,
+# so all four stand on one desk screen.
 #
 # THE CARDS ANSWER A BUYER, not only a developer - somebody who would otherwise
 # license a low-code platform, and who asks what a developer does not: who is
@@ -191,13 +191,6 @@ an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
 you ship. Support is the community's, on GitHub and Slack; more on
 [Enterprise Readiness](/get_started/about#enterprise-ready).
 
-## And what does it cost?
-
-**Nothing.** [MIT licensed](/resources/license), commercial use included — no
-license key, no subscription, no per-user fee, and no BTP required. Ten users
-or ten thousand, the SAP license you have is the one you keep; run your own
-numbers through the [Cost Calculator](/resources/cost_calculator).
-
 ## Plays well with what you have
 
 **Complements UI5 freestyle and RAP — it does not replace them.** It runs in a
@@ -211,6 +204,13 @@ access; more on [Integration](/get_started/about#where-it-fits).
 [linter](/advanced/linter) and the [MCP server](/advanced/mcp_server) let it
 check its own work without an SAP system; more on
 [Developing with AI](/get_started/ai).
+
+## And what does it cost?
+
+**Nothing.** [MIT licensed](/resources/license), commercial use included — no
+license key, no subscription, no per-user fee, and no BTP required. Ten users
+or ten thousand, the SAP license you have is the one you keep; run your own
+numbers through the [Cost Calculator](/resources/cost_calculator).
 
 ## Try it out now
 
