@@ -34,19 +34,24 @@ attached article preview, so the post carries no inline URL. 744 characters.
 ## The Cost of a Screen
 
 Plain text — LinkedIn renders no markdown. The article link comes from the
-attached article preview, so the post carries no inline URL. 1143 characters,
-and the first paragraph is 135 of them: what stands above LinkedIn's fold.
+attached article preview, so the post carries no inline URL. 1141 characters,
+and the first line is 111 of them: what stands above LinkedIn's fold, so it
+says the whole thing on its own.
 
 > Small applications in ABAP are still built the way they always were: a
-> selection screen, a SELECT, an ALV grid. And honestly - why not.
+> selection screen, a SELECT, an ALV grid.
 >
-> It takes an afternoon. A cockpit showing what last night's job did. An
-> approval step for one department, four people, twice a year. A correction
-> screen somebody needs exactly once, during a go-live.
+> And honestly - why not.
+>
+> It just takes a few hours to build a cockpit showing what last night's job
+> did. An approval step for one department, four people, twice a year. A
+> correction screen somebody needs exactly once, during a go-live.
 >
 > Building any of those in UI5 is different: a data model, a service, a
-> binding, an annotation model, a frontend project, a deployment - and every
-> one of those objects then exists forever. So the ALV stays.
+> binding, an annotation model, sometimes also a frontend project and a
+> deployment.
+>
+> So the ALV stays.
 >
 > New article 🎉 The same job monitor as a complete abap2UI5 app: one ABAP
 > class, activate, call the endpoint. About as much work as the ALV, except
@@ -60,7 +65,7 @@ and the first paragraph is 135 of them: what stands above LinkedIn's fold.
 > Which of your ALV grids would you hand to a user as a Fiori app, if it cost
 > you one class?
 >
-> #ABAP #SAP #UI5
+> #ABAP #SAP #UI5 #abapGit #abap2UI5
 
 ## abap2UI5 in Your Favorite Programming Model
 
