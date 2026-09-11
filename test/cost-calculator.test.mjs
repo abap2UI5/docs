@@ -158,7 +158,7 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   assert.match(last, /\]\(\/resources\/sponsor\)/, 'the last section is the one that asks');
   assert.match(last, /open-source/i);
   const ways = (last.match(/^- \*\*/gm) || []);
-  assert.equal(ways.length, 9, 'nine ways, each led by what it is and each one thing to do');
+  assert.equal(ways.length, 7, 'seven ways, each led by what it is and each one thing to do');
   for (const way of last.split('\n').filter((l) => l.startsWith('- **'))) {
     assert.match(way, /\]\(/, `${way.slice(0, 28)}… says where to do it`);
   }

@@ -53,9 +53,7 @@ And it is payable in a currency you already have. If this page took a line out o
 
 - **Star the repository.** One click on [GitHub](https://github.com/abap2UI5/abap2UI5), and the next visitor sees a project rather than an experiment.
 - **Answer somebody.** One reply under an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://communityinviter.com/apps/abapgit/abap) saves somebody else an afternoon of searching.
-- **Show it to somebody.** The [playground](https://abap2ui5.github.io/playground/) runs a class in a browser - no system, no install, one link.
 - **Report what broke.** An [issue](https://github.com/abap2UI5/abap2UI5/issues) with a class that reproduces the problem is half of the fix already.
-- **Fix a line in these docs.** Every page carries an *Edit this page* link into [the repository](https://github.com/abap2UI5/docs), and typos count.
 - **Post about it.** A short post that mentions [the page](https://www.linkedin.com/company/abap2ui5) and carries **#abap2UI5** is how the word gets around.
 - **Write it up.** A full article in the [SAP Community](https://community.sap.com/) or on [LinkedIn](https://www.linkedin.com/company/abap2ui5) reaches the next person, and lands in the [references](/resources/references).
 - **Add your company.** One row in [Who Uses abap2UI5?](/resources/who_uses) is what answers *is anybody actually running this?*
