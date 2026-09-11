@@ -109,8 +109,8 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # under the code is the same shape again. The link sits on the topic, never on the word
 # "here" - a reader scanning the links has to be able to tell where each one
 # goes. The cost card's is the calculator - a page of sliders for users,
-# systems, apps and support tiers whose every line comes to zero - and not
-# the license, which is already linked where "MIT licensed" stands. A second
+# systems, apps and support tiers whose every line comes to zero - in the
+# same "More on …" words as the other three, so the four lines read as one. A second
 # link to the same page inside one card is the "every claim once" rule broken
 # with a hyperlink.
 #
@@ -218,7 +218,7 @@ subscription, no per-user fee, and no BTP required. It runs on your ABAP stack
 with the UI5 version already installed, and the license you have is the one
 you keep.
 
-→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
+→ *More on [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
 
