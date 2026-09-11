@@ -136,11 +136,12 @@ hero:
   # THREE "no"s. There were four - "no RAP" stood between them - and a list of
   # negatives stops being read at the third. RAP has its own sentence in the
   # Integration card, where the point is that the two work side by side.
-  # THE PRICE IS IN THE FIRST SCREEN. "Free, MIT licensed" replaced "Install it
-  # with abapGit" here: abapGit stood three times in the first screen (the
-  # tagline, the second button, the Documentation tile), and the price stood
-  # nowhere above the fold. The install path is the first tile now.
-  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Free and MIT licensed, and it runs on anything from NetWeaver 7.02 to ABAP Cloud."
+  # THE INSTALL PATH IS IN THE FIRST SCREEN. "Install with abapGit" is the
+  # second sentence: one tool, no project to set up, and the reader knows how
+  # it gets onto a system before reading anything else. The price has its own
+  # card below, and the tiles that used to repeat abapGit sit under the
+  # example now, so the word stands once above the fold.
+  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Install with abapGit, and it runs on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
     src: /logo-hero.webp
     alt: abap2UI5 Logo
