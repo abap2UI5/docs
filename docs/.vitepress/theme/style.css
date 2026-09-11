@@ -1251,29 +1251,12 @@
 
 /* ------------------------------------ the home page, below the hero ---
  *
- * Three feature cards, and a second row of three below them that is this
- * file's own. VPFeatures picks its column count from the NUMBER of cards,
- * and three gives `grid-3` — full width below 768px, a third of the row
- * above it — so nothing has to be overridden for the first row. Change the
- * count in docs/index.md and that row changes with it: five would give
- * `grid-4` and a lone fifth card under four, which is what the override that
- * used to live here existed to prevent — and the second row below, whose
- * breakpoint is written out by hand, would no longer line up with it.
+ * Two feature cards. VPFeatures picks its column count from the NUMBER of
+ * cards, and two gives `grid-2` — full width below 640px, half the row above
+ * it — so nothing has to be overridden. Change the count in docs/index.md
+ * and the row changes with it. The row of cards this file used to draw under
+ * them is one line of links now (`.a2ui5-links`, below the prose rule).
  */
-
-/* The second row of cards - the repository, LinkedIn, the playground - under
- * the theme's three and on the same grid: the same 1152px, the same 16px
- * gutters, the same padding, so the two rows read as one grid with a line
- * break in it. What sets the row apart is the drawing: the cards above are
- * outlined, these are filled with the brand's soft tint and carry the mark
- * in the brand colour, with an arrow after the title that says "elsewhere"
- * - and on hover the border turns brand, the card lifts a couple of pixels
- * and the arrow moves. A card that leaves this site should look like one
- * before it is clicked, and like something to click rather than to read.
- *
- * The selectors carry the block class twice because this sits inside
- * `.vp-doc` — VPHomeContent wraps the markdown that follows the frontmatter —
- * and `.vp-doc a` outranks a single class. */
 /* ------------------------------------------- prose on the front page ---
  *
  * The markdown under the hero sits in a 1152px block, and until now its
@@ -1295,113 +1278,37 @@
   max-width: 74ch;
 }
 
-.a2ui5-out {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  margin: 16px auto 0;
-  max-width: 1152px;
-}
-
-/* One breakpoint, and it is `grid-3`'s: the row above goes from stacked to
- * three-across at 768px, and a second row that broke to two columns at 640px
- * and to three at 960px spent the two widths in between disagreeing with it
- * — three cards over two, then two over three. One grid for all five cards,
- * changing at one width, is the whole point of drawing them together. */
-@media (min-width: 768px) {
-  .a2ui5-out {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-.a2ui5-out .a2ui5-out-card {
+/* Where the project lives, as one line under the example: the code, the
+ * news, the way to give back. The selectors carry `.vp-doc` because this sits
+ * inside VPHomeContent and `.vp-doc a` outranks a single class. The published
+ * page's copy is in scripts/site-css/docs.css. */
+.vp-doc .a2ui5-links {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 100%;
-  /* ONE CARD, DRAWN ONE WAY. Half of these were tinted and half outlined,
-     because the tint used to mean "this leaves the site" - and on a row where
-     two of three cards are pages of this manual, a reader reads that as two
-     kinds of thing rather than as one row of six places to go. The outline is
-     the one that survives: it is what the three feature cards above wear, and
-     what this file's own "edges, not surfaces" section argues for. What tells
-     you whether a card leaves is the arrow on it, which is a thing you can
-     read rather than a shade you have to compare. */
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  padding: 24px;
-  background-color: transparent;
-  color: var(--vp-c-text-1);
-  text-decoration: none;
-  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-}
-
-/* `.vp-doc a:hover` above would turn the whole card red and underline it:
- * the answer to "is this a link" is the card itself here, so the text stays
- * as it is and the card moves instead. */
-.a2ui5-out .a2ui5-out-card:hover {
-  border-color: var(--a2ui5-c-link);
-  transform: translateY(-2px);
-  box-shadow: var(--vp-shadow-2);
-  color: var(--vp-c-text-1);
-  text-decoration: none;
-}
-
-.a2ui5-out .a2ui5-out-icon {
-  display: block;
-  margin-bottom: 14px;
-  color: var(--a2ui5-c-link);
-}
-
-.a2ui5-out .a2ui5-out-icon svg {
-  display: block;
-  width: 22px;
-  height: 22px;
-}
-
-.a2ui5-out .a2ui5-out-title {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-}
-
-.a2ui5-out .a2ui5-out-title::after {
-  content: "↗";
-  color: var(--a2ui5-c-link);
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--vp-c-divider);
   font-size: 14px;
-  font-weight: 400;
-  transition: transform 0.25s;
-}
-
-.a2ui5-out .a2ui5-out-card:hover .a2ui5-out-title::after {
-  transform: translate(2px, -2px);
-}
-
-/* EVERY CARD CARRIES THE SAME ARROW, AND IT IS `↗`.
- *
- * Two rounds got here. First a card that stayed on this site carried no arrow
- * at all, on the argument that an arrow means "this leaves" - which left half
- * a row with nothing on it to say it could be pressed, and a card with no
- * affordance reads as a panel rather than as a door. Then both kinds were
- * arrowed and the arrow was made to say WHICH kind: `↗` out, `→` in.
- *
- * That is one distinction too many for a row of nine tiles. The arrow's job on
- * a signpost is "press me", and a reader comparing two glyph shapes across a
- * grid to work out which link leaves the deployment is a reader doing the
- * page's work. One arrow, on everything. Where a card goes is what the card
- * SAYS - and all nine are one site anyway, which is the whole argument of
- * *One site in three places*. */
-
-.a2ui5-out .a2ui5-out-details {
-  display: block;
-  padding-top: 8px;
-  color: var(--vp-c-text-2);
-  font-size: 14px;
+  line-height: 22px;
   font-weight: 500;
-  line-height: 24px;
+}
+.vp-doc .a2ui5-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+}
+.vp-doc .a2ui5-links a:hover {
+  color: var(--a2ui5-c-link);
+  text-decoration: none;
+}
+.vp-doc .a2ui5-links svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  color: var(--a2ui5-c-link);
 }
 
 /* ==================================== the home page, in the same register ===
@@ -1664,32 +1571,6 @@
   }
 
   .Layout .VPHome .VPFeature .details {
-    padding-top: 7px;
-    font-size: 13px;
-    line-height: 22px;
-  }
-
-  /* The second row of cards is this file's own, further up — the same
-   * treatment as the theme's cards, so the two rows stay one grid. */
-  .Layout .VPHome .a2ui5-out .a2ui5-out-card {
-    padding: 22px;
-  }
-
-  .Layout .VPHome .a2ui5-out .a2ui5-out-icon {
-    margin-bottom: 12px;
-  }
-
-  .Layout .VPHome .a2ui5-out .a2ui5-out-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .Layout .VPHome .a2ui5-out .a2ui5-out-title {
-    font-size: 15px;
-    line-height: 22px;
-  }
-
-  .Layout .VPHome .a2ui5-out .a2ui5-out-details {
     padding-top: 7px;
     font-size: 13px;
     line-height: 22px;

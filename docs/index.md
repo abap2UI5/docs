@@ -17,11 +17,11 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # for somebody who arrived from a conference talk, a LinkedIn post or a
 # colleague's link, and who has not decided to read a manual yet.
 #
-# So the page answers, in this order: what it is (the hero), where to go next
-# (the three tiles), the four answers a decision needs — security, integration,
-# cost, AI — what one app looks like, with a button that RUNS it right here,
-# and what is built around it. A reader who wants the manual is one word away
-# in the bar; this page does not compete with it.
+# So the page answers, in this order: what it is (the hero), the four answers
+# a decision needs — security, cost, integration, AI — what one app looks
+# like, running right here, and then where to go next (the three tiles).
+# Under it, one line of where the project lives. A reader who wants the
+# manual is one word away in the bar; this page does not compete with it.
 #
 # KEEP IT SHORT. Every claim on this page is made once. The tagline, the fact
 # table, the example's bullets and the AI section each used to carry their own
@@ -30,12 +30,15 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # tagline now, and nowhere else. abapGit is the same story: the tagline and the
 # second button say it, so no card says it again.
 #
-# AND EVERY CARD MAKES ONE BOLD CLAIM, with plain sentences around it. The
-# four used to share a formula - bold lead, explanation, "**And it ...**",
-# explanation - which reads as a template by the third card. The headings
-# are claims too, not labels: "Plays well with what you have" promises
-# something, where "Integration" only named a topic. The last card asks
-# instead, and its bold lead is the one-word answer - so the reader who
+# AND EVERY CARD IS ONE BOLD CLAIM AND ONE PLAIN SENTENCE. They used to be
+# two or three paragraphs each - the enterprise card alone ran to 120 words -
+# and four panels of prose under three tiles read as a page that starts
+# over. What a card says now is the claim, one sentence that backs it, and
+# the link to the page that argues it in full: the About page carries the
+# lifecycle, the exit path and the support model, and carried them before.
+# The headings are claims too, not labels: "Plays well with what you have"
+# promises something, where "Integration" only named a topic. The last card
+# asks instead, and its bold lead is the one-word answer - so the reader who
 # scans only the headings still leaves with the price.
 #
 # THE ORDER IS AN ARGUMENT: it is safe here, and it costs nothing - then it
@@ -49,15 +52,12 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # THE CARDS ANSWER A BUYER, not only a developer - somebody who would otherwise
 # license a low-code platform, and who asks what a developer does not: who is
 # behind this, what happens when nobody is, how an app is governed, what it is
-# not for. So the enterprise card says lifecycle (transports, ATC, ABAP Unit),
-# exit path (a handful of classes and one table, nothing to migrate away
-# from), versioned releases with every change listed, and support as it is
-# (the community's, no vendor SLA - and nothing that ends with a contract).
-# The integration card says what comes with UI5 itself, 1.71 to 2.x, and
-# that a system without internet access is fine. References by name and a
-# list of what this is NOT for were tried here and taken out again by the
-# maintainer: the limits stay on the About page, the references on Who Uses
-# abap2UI5.
+# not for. The answers - lifecycle (transports, ATC, ABAP Unit), exit path (a
+# handful of classes and one table), versioned releases, support as it is
+# (the community's, no vendor SLA) - stand on the About page, and each card
+# links the section that carries them. References by name and a list of what
+# this is NOT for were tried here and taken out again by the maintainer: the
+# limits stay on the About page, the references on Who Uses abap2UI5.
 #
 # THIS PAGE IS FOR THE MANAGER. A developer has usually found the project by
 # another path - a talk, a sample, the playground - and the person this page
@@ -66,9 +66,9 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # code. What a developer gets anyway, because it costs the manager nothing,
 # is two sentences in front of the example (what you are looking at, how to
 # play with it), one way out behind it (the tutorial, through to transport
-# and unit tests), the UI5 releases in the integration card, and a Tooling
-# card that names the daily tools - ADT, the ABAP debugger, ABAP Unit -
-# before the extras.
+# and unit tests), and the UI5 releases in the integration card. The daily tools
+# - ADT, the ABAP debugger, ABAP Unit, the linter, the MCP server - are on
+# the Tooling page, one click into the manual.
 #
 # THE THREE TILES ARE TASKS, NOT PLACES. They used to say Documentation,
 # Samples, Playground - the same three words, in the same order, with the
@@ -78,6 +78,14 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # choosing between is what to DO next: build a first app, find a sample for
 # the use case in front of them, take an app to production. Each tile names
 # the task and lands on the page for it; the bar goes on naming the places.
+#
+# AND THEY STAND UNDER THE EXAMPLE, not under the hero. Under the hero they
+# were the second row of the first screen - two buttons, then three tiles,
+# five calls to action before a single claim was made - and "what to do
+# next" is a question a reader asks after the case, not before it. So the
+# published page draws them after the running app: the argument, the proof,
+# then the three doors. The frontmatter is where they are written because
+# VitePress, the second opinion, knows no other place for them.
 #
 # THE EXAMPLE IS A REAL APP, not a greeting: the tutorial's finished class - a
 # table of invoices with an edit dialog, a date picker, save and a toast - so
@@ -94,15 +102,25 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # table and out of the class with it: a field a reader sees typed and filled
 # but never displayed is a question this example is not here to answer.
 #
-# EVERY CARD ENDS WITH A WAY OUT, and the link sits on the topic, never on the
-# word "here" - a reader scanning the links has to be able to tell where each
-# one goes. The cost card's is the calculator - a page of sliders for users,
+# EVERY CARD ENDS WITH A WAY OUT, IN ITS LAST SENTENCE. Each card used to
+# close on its own "→ More on …" line in italics - four extra lines on the
+# page, every one of them saying what the sentence above it could say. The
+# example keeps its line: the tutorial is the way out of the whole page, not
+# of a card. The link sits on the topic, never on the word
+# "here" - a reader scanning the links has to be able to tell where each one
+# goes. The cost card's is the calculator - a page of sliders for users,
 # systems, apps and support tiers whose every line comes to zero - and not
-# the license, which is already linked in the line above where "MIT licensed"
-# stands. A second link to the same page inside one card is the "every claim
-# once" rule broken with a hyperlink - which is also why the AI card's "The
-# AI guide" is no longer a link: it and the card's closer pointed at the same
-# page, one line apart.
+# the license, which is already linked where "MIT licensed" stands. A second
+# link to the same page inside one card is the "every claim once" rule broken
+# with a hyperlink.
+#
+# THE LAST LINE IS A LINE, NOT A ROW OF CARDS. "Around the project" used to
+# be five cards - Add-ons, Tooling, Community, LinkedIn, Sponsor - carrying
+# more words between them than the cost card, a whole screen under the
+# example. Add-ons and Tooling are pages of the manual and stood twice (the
+# AI card already names the linter and the MCP server); the repositories are
+# in the bar's menu. What is left is where the project lives outside this
+# site - the code, the news, the way to give back - and that is one line.
 hero:
   # No greeting line. "Welcome to abap2UI5" stood over the headline in the
   # accent at 20px, and read as a second headline - two lines to take in
@@ -145,8 +163,10 @@ hero:
       text: How it works
       link: /get_started/about#how-it-works
 
-# Three things to do next, each on the page for it. The bar above names the
-# places; these name the tasks (see THE THREE TILES ARE TASKS above).
+# Three things to do next, each on the page for it. The bar names the
+# places; these name the tasks (see THE THREE TILES ARE TASKS above). They
+# are frontmatter, so VitePress draws them under the hero; the published page
+# draws them UNDER THE EXAMPLE (build-site.mjs), where "what next" belongs.
 features:
   - title: Build your first app
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M8 7.5 3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M13.6 4.8 10.4 19.2"/></svg>
@@ -166,56 +186,31 @@ features:
 ## Ready for your enterprise
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
-logon — your [authorizations](/configuration/authorization) and
-[session handling](/configuration/security) apply unchanged, and your data never
-leaves your system.
-
-An app is an ABAP class: transports, ATC, ABAP Unit and code review, as for
-everything else you ship. The framework itself is a handful of classes and one
-table in your own system — nothing to renew, and nothing to migrate away from.
-Every merge is tested against Standard ABAP and ABAP Cloud, and every release
-lists its changes in the [release notes](/resources/changelog).
-
-[Support](/resources/support) is the community's, on GitHub and Slack. There is no vendor and no SLA — and
-nothing that stops working when a contract ends.
-
-→ *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
+logon, your own [authorizations](/configuration/authorization) — and an app is
+an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
+you ship. Support is the community's, on GitHub and Slack; more on
+[Enterprise Readiness](/get_started/about#enterprise-ready).
 
 ## And what does it cost?
 
 **Nothing.** [MIT licensed](/resources/license), commercial use included — no
-license key, no subscription, no per-user fee, and no BTP required.
-
-Nobody counts your users, because nothing is counting. It is a standard UI5 app
-served by your own ABAP stack: ten users or ten thousand, the SAP license you
-have is the one you keep.
-
-→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
+license key, no subscription, no per-user fee, and no BTP required. Ten users
+or ten thousand, the SAP license you have is the one you keep; run your own
+numbers through the [Cost Calculator](/resources/cost_calculator).
 
 ## Plays well with what you have
 
-**Complements UI5 freestyle and RAP — it does not replace them.** Your RAP
-business objects and OData services stay where they are; abap2UI5 covers the app
-that would otherwise need a frontend project of its own.
-
-It runs where your users already are: a browser tab, a
-[Fiori launchpad](/configuration/launchpad) tile, [SAP Build Work
-Zone](/configuration/btp) or [SAP Mobile Start](/configuration/mobile_start).
-Because it is UI5 itself — 1.71 to 2.x — Fiori design, themes, accessibility
-and translation come with it, and rendering with the UI5 your system ships, it
-works without internet access.
-
-→ *More on [Integration](/get_started/about#where-it-fits)*
+**Complements UI5 freestyle and RAP — it does not replace them.** It runs in a
+browser tab, a [Fiori launchpad](/configuration/launchpad) tile or SAP Build
+Work Zone, with the UI5 your system ships, 1.71 to 2.x, and without internet
+access; more on [Integration](/get_started/about#where-it-fits).
 
 ## Made for AI agents
 
-**One class is one file — the whole app, for an agent to write.** An agent can
-check its own work without an SAP system: the [linter](/advanced/linter)
-validates the view, the [MCP server](/advanced/mcp_server) boots the app
-headless and returns the errors and a screenshot. The AI guide starts with one
-paragraph to paste at the top of a prompt.
-
-→ *More on [Developing with AI](/get_started/ai)*
+**One class is one file — the whole app, for an agent to write.** The
+[linter](/advanced/linter) and the [MCP server](/advanced/mcp_server) let it
+check its own work without an SAP system; more on
+[Developing with AI](/get_started/ai).
 
 ## Try it out now
 
@@ -351,33 +346,8 @@ ENDCLASS.
 
 → *The [Tutorial](/tutorials/walkthrough/) builds this app in twelve steps, through to transport and unit tests*
 
-## Around the project
-
-<div class="a2ui5-out">
-  <a class="a2ui5-out-card is-inside" href="/docs/resources/addons">
-    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M16.5 13.5v6M13.5 16.5h6"/></svg></span>
-    <span class="a2ui5-out-title">Add-ons</span>
-    <span class="a2ui5-out-details">Optional repositories for the things not every app needs: popups, HTTP and RFC connectors, a lock manager, table maintenance, launchpad KPIs.</span>
-  </a>
-  <a class="a2ui5-out-card is-inside" href="/docs/advanced/tooling">
-    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" d="M14.5 6.2a4 4 0 0 1 5 5l-8.2 8.2a2 2 0 0 1-2.8 0l-.9-.9a2 2 0 0 1 0-2.8zM4.5 4.5l4 4"/></svg></span>
-    <span class="a2ui5-out-title">Tooling</span>
-    <span class="a2ui5-out-details">Write it in ADT, debug it in the ABAP debugger, test it with ABAP Unit. On top: a linter that catches a broken view before it reaches a system, a VS Code extension that runs the app on F9, an MCP server for AI assistants, and an app template to start from.</span>
-  </a>
-
-  <a class="a2ui5-out-card" href="https://github.com/abap2UI5/abap2UI5/" target="_blank" rel="noreferrer">
-    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></span>
-    <span class="a2ui5-out-title">Community</span>
-    <span class="a2ui5-out-details">Built in the open — read the code, open an issue, send a pull request.</span>
-  </a>
-  <a class="a2ui5-out-card" href="https://www.linkedin.com/company/abap2ui5/" target="_blank" rel="noreferrer">
-    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></span>
-    <span class="a2ui5-out-title">LinkedIn</span>
-    <span class="a2ui5-out-details">New releases, articles, and what people are building with it.</span>
-  </a>
-  <a class="a2ui5-out-card is-inside" href="/docs/resources/sponsor">
-    <span class="a2ui5-out-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.6-4.9-9.5-9.2C1.1 8.4 3 5 6.4 5c2 0 3.4 1.1 4.3 2.3l1.3 1.7 1.3-1.7C14.2 6.1 15.6 5 17.6 5c3.4 0 5.3 3.4 3.9 6.8C19.6 16.1 12 21 12 21z"/></svg></span>
-    <span class="a2ui5-out-title">Sponsor</span>
-    <span class="a2ui5-out-details">Free and maintained by volunteers. If it saved your project time, here is a way to give some back.</span>
-  </a>
-</div>
+<p class="a2ui5-links">
+  <a href="https://github.com/abap2UI5/abap2UI5/" target="_blank" rel="noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
+  <a href="https://www.linkedin.com/company/abap2ui5/" target="_blank" rel="noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>LinkedIn</a>
+  <a href="/docs/resources/sponsor"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21s-7.6-4.9-9.5-9.2C1.1 8.4 3 5 6.4 5c2 0 3.4 1.1 4.3 2.3l1.3 1.7 1.3-1.7C14.2 6.1 15.6 5 17.6 5c3.4 0 5.3 3.4 3.9 6.8C19.6 16.1 12 21 12 21z"/></svg>Sponsor</a>
+</p>

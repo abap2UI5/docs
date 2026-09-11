@@ -672,12 +672,13 @@ html { scroll-padding-top: 62px; }
 .hero-image { flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; transform: translate(-32px, -32px); }
 .hero-image img { display: block; width: 200px; height: auto; border: 0; border-radius: 0; }
 
-/* The three places the bar names, in the order the bar names them. */
+/* The three things to do next - build a first app, find a sample, take one
+   to production. Under the example rather than under the hero
+   (build-site.mjs places them), so the row is one band of the grid below
+   and takes its spacing from the grid's row gap. */
 .tiles {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
-  /* 44 rather than 36: the theme pads each card by 8 inside the row, so the
-     row opens 8 above the card. */
-  margin-top: 44px;
+  grid-column: 1 / -1; min-width: 0;
 }
 .tile {
   display: block; padding: 22px;
@@ -688,8 +689,8 @@ html { scroll-padding-top: 62px; }
 .tile-icon { display: block; margin-bottom: 12px; color: var(--accent); }
 .tile-icon svg { display: block; width: 21px; height: 21px; }
 .tile-title { display: block; font-size: 15px; line-height: 22px; font-weight: 600; }
-/* Three cards that are links and look like panels are three doors with no
-   handle. One glyph on all of them, the same one the tiles' own row uses. */
+/* Cards that are links and look like panels are doors with no handle. One
+   glyph on all of them. */
 .tile-title::after {
   content: "↗"; display: inline-block; margin-left: 6px;
   color: var(--accent); font-size: 14px; font-weight: 400;
@@ -796,6 +797,9 @@ html { scroll-padding-top: 62px; }
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
+  /* `display: block` drops the row gap with the grid; the tile row carries
+     its own, like the cards. */
+  .home .bands .tiles { margin-top: 24px; }
   /* One card per row, and they stay cards: what a card says here is "this is
      one of the answers, read them in any order", which is as true on a phone
      as on a desk. `display: block` drops the row gap with the grid, so the
@@ -827,67 +831,28 @@ html { scroll-padding-top: 62px; }
   .tiles { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---- the cards the home page writes by hand ---------------------------
+/* ---- where the project lives, in one line ------------------------------
  *
- * `<div class="a2ui5-out">` in docs/index.md: the two places around the
- * framework, and the three ways into the project. Five cards on one grid -
- * three across and two under them - since the linter stopped being a card of
- * its own: it is one of the tools the Tooling card names, and a reader who
- * has to decide between two cards to find it was deciding about nothing. It is the manual's own
- * markup and its own rules - the values here are style.css's, at the nine
- * tenths that file states for the home page, with its variables read back to
- * the ones the catalogue's stylesheet declares (`--vp-c-divider` is `--line`,
- * `--vp-c-text-2` is `--fg-dim`, `--a2ui5-c-link` is `--accent`, which on this
- * page is the red above).
- *
- * A copy while both stylesheets exist. When VitePress goes, style.css goes
- * with it and this is where the rules live. */
-.a2ui5-out {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
-  margin: 16px 0 0;
+ * `<p class="a2ui5-links">` in docs/index.md, under the example: the code,
+ * the news, the way to give back. It was a row of five cards - Add-ons,
+ * Tooling, Community, LinkedIn, Sponsor - under a heading of its own, a
+ * whole screen after the example on a page that had already made its case.
+ * Two of the five were pages of the manual, one click away in the bar; what
+ * is left is what lives OUTSIDE this site, and three links are a line, not
+ * a section. A hairline over it, so it reads as the page's last line rather
+ * than as part of the example. */
+.vp-doc .a2ui5-links {
+  display: flex; flex-wrap: wrap; gap: 8px 28px;
+  margin: 32px 0 0; padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 14px; line-height: 22px; font-weight: 500;
 }
-/* One breakpoint, and it is the tile row's: rows that changed at different
-   widths spent the widths in between disagreeing - three cards over two. */
-@media (min-width: 768px) {
-  .a2ui5-out { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-.a2ui5-out .a2ui5-out-card {
-  display: flex; flex-direction: column; align-items: flex-start; height: 100%;
-  /* Outlined, not tinted. The tint used to mean "this leaves the site", and on
-     a row where two of three cards are pages of this manual a reader reads
-     that as two kinds of thing rather than as one row of places to go. What
-     tells you whether a card leaves is the arrow, which is readable. */
-  padding: 22px;
-  border: 1px solid var(--line); border-radius: 6px;
-  background: none; color: var(--fg); text-decoration: none;
-  transition: border-color .25s, transform .25s, box-shadow .25s;
-}
-/* The card is the answer to "is this a link", so the text stays as it is and
-   the card moves instead. */
-.a2ui5-out .a2ui5-out-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
+.vp-doc .a2ui5-links a {
+  display: inline-flex; align-items: center; gap: 8px;
   color: var(--fg); text-decoration: none;
 }
-.a2ui5-out .a2ui5-out-icon { display: block; margin-bottom: 12px; color: var(--accent); }
-.a2ui5-out .a2ui5-out-icon svg { display: block; width: 20px; height: 20px; }
-.a2ui5-out .a2ui5-out-title {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 15px; line-height: 22px; font-weight: 600;
-}
-.a2ui5-out .a2ui5-out-title::after {
-  content: "↗"; color: var(--accent); font-size: 14px; font-weight: 400;
-  transition: transform .25s;
-}
-.a2ui5-out .a2ui5-out-card:hover .a2ui5-out-title::after { transform: translate(2px, -2px); }
-.a2ui5-out .a2ui5-out-details {
-  display: block; padding-top: 7px;
-  font-size: 13px; line-height: 22px; font-weight: 500; color: var(--fg-dim);
-}
+.vp-doc .a2ui5-links a:hover { color: var(--accent); text-decoration: none; }
+.vp-doc .a2ui5-links svg { display: block; width: 16px; height: 16px; color: var(--accent); }
 
 /* An icon in front of a link, behaving like the glyph it replaced: the size
    and colour of the text around it, on its baseline. */
