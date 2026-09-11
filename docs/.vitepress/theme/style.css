@@ -1286,6 +1286,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 28px;
+  justify-content: center;
   margin: 32px 0 0;
   font-size: 14px;
   line-height: 22px;
