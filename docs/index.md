@@ -163,7 +163,7 @@ hero:
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
     - theme: alt
-      text: Learn more...
+      text: Learn more…
       link: /get_started/about
 
 # Three things to do next, each on the page for it. The bar names the
@@ -188,25 +188,27 @@ features:
 
 ## Ready for your enterprise
 
-Runs inside the security you already have. One HTTP endpoint, standard SAP logon, your own authorizations — and an app is
-an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
-you ship. Support is the community's, on GitHub and Slack.
+abap2UI5 runs inside the security you already have. One HTTP endpoint,
+standard SAP logon, your own authorizations — and an app is an ABAP class, so
+transports, ATC and ABAP Unit apply as they do to everything else you ship.
+Support is the community's, on GitHub and Slack.
 
 → *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
 ## Plays well with what you have
 
-Complements your UI5 and RAP Apps — it does not replace them, and lives
-right next to your existing solutions. It runs in a browser tab, a Fiori launchpad tile and SAP Build Work Zone.
+It complements your UI5 and RAP apps — it does not replace them, and lives
+right next to your existing solutions. It runs in a browser tab, a Fiori
+launchpad tile or SAP Build Work Zone.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
-One class is one file — the whole app, for an agent to write. The abap2UI5 linter and the MCP server let
-the agent check its own work without an SAP system: the linter validates the
-view, the MCP server boots the app headless and returns the errors and a
-screenshot.
+One class is one file — the whole app, for an agent to write. The abap2UI5
+linter and the MCP server let the agent check its own work without an SAP
+system: the linter validates the view, the MCP server boots the app headless
+and returns the errors and a screenshot.
 
 → *More on [Developing with AI](/get_started/ai)*
 
@@ -214,7 +216,7 @@ screenshot.
 
 Nothing. MIT licensed, commercial use included — no license key, no
 subscription, no per-user fee, and no BTP required. It runs on your ABAP stack
-with the already installed UI5 version, and the license you have is the one
+with the UI5 version already installed, and the license you have is the one
 you keep.
 
 → *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
