@@ -109,8 +109,8 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # under the code is the same shape again. The link sits on the topic, never on the word
 # "here" - a reader scanning the links has to be able to tell where each one
 # goes. The cost card's is the calculator - a page of sliders for users,
-# systems, apps and support tiers whose every line comes to zero - and not
-# the license, which is already linked where "MIT licensed" stands. A second
+# systems, apps and support tiers whose every line comes to zero - in the
+# same "More on …" words as the other three, so the four lines read as one. A second
 # link to the same page inside one card is the "every claim once" rule broken
 # with a hyperlink.
 #
@@ -147,22 +147,14 @@ hero:
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
-  # Two buttons, in the order a stranger needs them: try it without installing
-  # anything, then read the one page that says what it is - "In a Nutshell",
-  # behind a button that says "Learn more...", which is what the reader
-  # wants rather than what the page is called. The second used to be "Install with
-  # abapGit" - the third mention of abapGit in the first screen, and a step
-  # the manager this page addresses is not taking; installing is the first
-  # tile below. The playground is first on purpose — it is the one claim on
-  # this page a reader can check in ten seconds, and it costs them nothing.
-  # It is an absolute URL, so VitePress draws it as an external link and
-  # gives it a `target` of its own, which is also what keeps this site's
-  # router off a neighbouring deployment (scripts/lib/cross-site.mjs).
+  # One button, in the accent: "Learn more…" opens the one page that says
+  # what this is ("In a Nutshell"), which is the next step for the reader
+  # this page is written for. There was a second, "Try it in the browser",
+  # into the playground; the bar names the playground, the sample tile under
+  # the example opens it, and the example itself runs on this page, so the
+  # button said a third time what the page already offers twice.
   actions:
-    - theme: alt
-      text: Try it in the browser
-      link: https://abap2ui5.github.io/playground/
-    - theme: alt
+    - theme: brand
       text: Learn more…
       link: /get_started/about
 
@@ -181,7 +173,7 @@ features:
     link: https://abap2ui5.github.io/playground/samples/
     target: _self
   - title: Take an app to production
-    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 17.5h16M6.5 17.5V9.8l5.5-4.3 5.5 4.3v7.7M10 17.5v-4.2h4v4.2"/></svg>
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.5 19.5V9l5.5 3.5V9l5.5 3.5V9l6 3.5v7zM3.5 19.5h17M6 4.5h3v7.5"/></svg>
     details: Security, authorizations, the launchpad tile, the transport — what a go-live needs, on one page.
     link: /configuration/productive_usage
 ---
@@ -218,7 +210,7 @@ subscription, no per-user fee, and no BTP required. It runs on your ABAP stack
 with the UI5 version already installed, and the license you have is the one
 you keep.
 
-→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
+→ *More on [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
 
