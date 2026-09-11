@@ -33,27 +33,39 @@ attached article preview, so the post carries no inline URL. 744 characters.
 
 ## The Cost of a Screen
 
-Plain text — LinkedIn renders no markdown.
+Plain text — LinkedIn renders no markdown. The article link comes from the
+attached article preview, so the post carries no inline URL. 1141 characters,
+and the first line is 111 of them: what stands above LinkedIn's fold, so it
+says the whole thing on its own.
 
-> A maintenance view for a customizing table. A cockpit showing what last
-> night's job did. An approval step for one department.
+> Small applications in ABAP are still built the way they always were: a
+> selection screen, a SELECT, an ALV grid.
 >
-> The logic behind each is about thirty lines. The cost of putting a UI in front
-> of thirty lines is not thirty lines, and it does not scale down: a data model,
-> a service, a binding, a frontend artifact, a deployment — and an object that
-> has to be transported, survive upgrades, and one day be deprecated by someone
-> who never met the department that asked for it.
+> And honestly - why not.
 >
-> So the screen never gets built. Every system has a Z package full of the ones
-> that became a selection screen and an ALV grid instead.
+> It just takes a few hours to build a cockpit showing what last night's job
+> did. An approval step for one department, four people, twice a year. A
+> correction screen somebody needs exactly once, during a go-live.
 >
-> New article 🎉 with a job monitor as a complete abap2UI5 app — and an honest
-> note on where this is the wrong trade.
+> Building any of those in UI5 is different: a data model, a service, a
+> binding, an annotation model, sometimes also a frontend project and a
+> deployment.
 >
-> Which screen in your system stayed an ALV grid because a proper UI was never
-> worth the effort?
+> So the ALV stays.
 >
-> #ABAP #SAP #UI5
+> New article 🎉 The same job monitor as a complete abap2UI5 app: one ABAP
+> class, activate, call the endpoint. About as much work as the ALV, except
+> this one follows the Fiori design guidelines and starts on your phone too.
+>
+> abap2UI5 is open source, MIT licensed, and it runs on the UI5 and the ABAP
+> your system already has: one abapGit pull, nothing to deploy beside it. A
+> perfect complement to the RAP and freestyle UI5 apps you already run — for
+> the screens nobody would start a project for.
+>
+> Which of your ALV grids would you hand to a user as a Fiori app, if it cost
+> you one class?
+>
+> #ABAP #SAP #UI5 #abapGit #abap2UI5
 
 ## abap2UI5 in Your Favorite Programming Model
 
