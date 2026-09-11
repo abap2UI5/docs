@@ -194,7 +194,8 @@ you ship. Support is the community's, on GitHub and Slack; more on
 
 ## Plays well with what you have
 
-**Complements UI5 freestyle and RAP — it does not replace them.** It runs in a
+**Complements UI5 freestyle and RAP — it does not replace them, and lives
+right next to your existing UI5 solutions.** It runs in a
 browser tab, a [Fiori launchpad](/configuration/launchpad) tile or SAP Build
 Work Zone, with the UI5 your system ships, 1.71 to 2.x, and without internet
 access; more on [Integration](/get_started/about#where-it-fits).
