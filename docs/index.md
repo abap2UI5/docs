@@ -18,7 +18,7 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # colleague's link, and who has not decided to read a manual yet.
 #
 # So the page answers, in this order: what it is (the hero), the four answers
-# a decision needs — security, cost, integration, AI — what one app looks
+# a decision needs — security, integration, AI, cost — what one app looks
 # like, running right here, and then where to go next (the three tiles).
 # Under it, one line of where the project lives. A reader who wants the
 # manual is one word away in the bar; this page does not compete with it.
@@ -41,13 +41,13 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # asks instead, and its bold lead is the one-word answer - so the reader who
 # scans only the headings still leaves with the price.
 #
-# THE ORDER IS AN ARGUMENT: it is safe here, and it costs nothing - then it
-# fits what you run, and an agent can write it. The price used to be the last
-# card, on the reasoning that it is the last question; measured, the last
-# card sat at 1,000px on a desk and 2,900 on a phone, under the fold on both,
-# and for the manager this page is written for it is usually the FIRST
-# question. So the tagline now says "free, MIT licensed" in the first screen
-# and the cost card stands second, where "Nothing." is read.
+# THE ORDER IS AN ARGUMENT: it is safe here, and it fits what you run - then
+# an agent can write it, and it costs nothing. The price is the last card
+# because it is the closing line: a reader who has taken the first three
+# reaches "Nothing." as the answer to the question the cards have built up
+# to. It is not hidden for being last - the tagline says "free, MIT
+# licensed" in the first screen, and the cards are one sentence each now,
+# so all four stand on one desk screen.
 #
 # THE CARDS ANSWER A BUYER, not only a developer - somebody who would otherwise
 # license a low-code platform, and who asks what a developer does not: who is
@@ -64,9 +64,10 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # has to convince is the one who decides whether it may be used. So nothing
 # here is arranged for a developer's reading order: the cards come before the
 # code. What a developer gets anyway, because it costs the manager nothing,
-# is two sentences in front of the example (what you are looking at, how to
-# play with it), one way out behind it (the tutorial, through to transport
-# and unit tests), and the UI5 releases in the integration card. The daily tools
+# is the example itself - there is no paragraph in front of it any more; the
+# heading and the running app say what it is - one way out behind it (the
+# tutorial, through to transport and unit tests), and the UI5 releases in
+# the integration card. The daily tools
 # - ADT, the ABAP debugger, ABAP Unit, the linter, the MCP server - are on
 # the Tooling page, one click into the manual.
 #
@@ -102,11 +103,10 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # table and out of the class with it: a field a reader sees typed and filled
 # but never displayed is a question this example is not here to answer.
 #
-# EVERY CARD ENDS WITH A WAY OUT, IN ITS LAST SENTENCE. Each card used to
-# close on its own "→ More on …" line in italics - four extra lines on the
-# page, every one of them saying what the sentence above it could say. The
-# example keeps its line: the tutorial is the way out of the whole page, not
-# of a card. The link sits on the topic, never on the word
+# EVERY CARD ENDS WITH A WAY OUT, ON A LINE OF ITS OWN: "→ More on …" in
+# italics, the same shape on all four, so the cards read as one structure
+# and the eye finds the link in the same place on each. The example's line
+# under the code is the same shape again. The link sits on the topic, never on the word
 # "here" - a reader scanning the links has to be able to tell where each one
 # goes. The cost card's is the calculator - a page of sliders for users,
 # systems, apps and support tiers whose every line comes to zero - and not
@@ -136,18 +136,21 @@ hero:
   # THREE "no"s. There were four - "no RAP" stood between them - and a list of
   # negatives stops being read at the third. RAP has its own sentence in the
   # Integration card, where the point is that the two work side by side.
-  # THE PRICE IS IN THE FIRST SCREEN. "Free, MIT licensed" replaced "Install it
-  # with abapGit" here: abapGit stood three times in the first screen (the
-  # tagline, the second button, the Documentation tile), and the price stood
-  # nowhere above the fold. The install path is the first tile now.
-  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Free and MIT licensed, and it runs on anything from NetWeaver 7.02 to ABAP Cloud."
+  # THE INSTALL PATH IS IN THE FIRST SCREEN. "Install with abapGit" is the
+  # second sentence: one tool, no project to set up, and the reader knows how
+  # it gets onto a system before reading anything else. The price has its own
+  # card below, and the tiles that used to repeat abapGit sit under the
+  # example now, so the word stands once above the fold.
+  tagline: "One ABAP class is one UI5 app — no JavaScript, no OData, no frontend project. Install with abapGit, and it runs on anything from NetWeaver 7.02 to ABAP Cloud."
   image:
     src: /logo-hero.webp
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
   # Two buttons, in the order a stranger needs them: try it without installing
-  # anything, then read how it works. The second used to be "Install with
+  # anything, then read the one page that says what it is - "In a Nutshell",
+  # named on the button as the page is named in the sidebar, so the reader
+  # lands where the label said. The second used to be "Install with
   # abapGit" - the third mention of abapGit in the first screen, and a step
   # the manager this page addresses is not taking; installing is the first
   # tile below. The playground is first on purpose — it is the one claim on
@@ -160,8 +163,8 @@ hero:
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
     - theme: alt
-      text: How it works
-      link: /get_started/about#how-it-works
+      text: In a Nutshell
+      link: /get_started/about
 
 # Three things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). They
@@ -188,37 +191,37 @@ features:
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon, your own [authorizations](/configuration/authorization) — and an app is
 an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
-you ship. Support is the community's, on GitHub and Slack; more on
-[Enterprise Readiness](/get_started/about#enterprise-ready).
+you ship. Support is the community's, on GitHub and Slack.
 
-## And what does it cost?
-
-**Nothing.** [MIT licensed](/resources/license), commercial use included — no
-license key, no subscription, no per-user fee, and no BTP required. Ten users
-or ten thousand, the SAP license you have is the one you keep; run your own
-numbers through the [Cost Calculator](/resources/cost_calculator).
+→ *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
 ## Plays well with what you have
 
-**Complements UI5 freestyle and RAP — it does not replace them.** It runs in a
+**Complements UI5 freestyle and RAP — it does not replace them, and lives
+right next to your existing UI5 solutions.** It runs in a
 browser tab, a [Fiori launchpad](/configuration/launchpad) tile or SAP Build
 Work Zone, with the UI5 your system ships, 1.71 to 2.x, and without internet
-access; more on [Integration](/get_started/about#where-it-fits).
+access.
+
+→ *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
 **One class is one file — the whole app, for an agent to write.** The
 [linter](/advanced/linter) and the [MCP server](/advanced/mcp_server) let it
-check its own work without an SAP system; more on
-[Developing with AI](/get_started/ai).
+check its own work without an SAP system.
+
+→ *More on [Developing with AI](/get_started/ai)*
+
+## And what does it cost?
+
+**Nothing.** [MIT licensed](/resources/license), commercial use included — no
+license key, no subscription, no per-user fee, and no BTP required. Ten users
+or ten thousand, the SAP license you have is the one you keep.
+
+→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
-
-This is the whole app: one ABAP class on the left, running on the right. Press
-the pencil on a row, change the date, save — every click is one roundtrip into
-the class, which builds the view and hands it back with the data
-([how it works](/get_started/about#how-it-works)). Change a line of the code
-and run it again.
 
 ```abap edit
 CLASS zcl_app_invoices DEFINITION PUBLIC.
@@ -344,7 +347,7 @@ CLASS zcl_app_invoices IMPLEMENTATION.
 ENDCLASS.
 ```
 
-→ *The [Tutorial](/tutorials/walkthrough/) builds this app in twelve steps, through to transport and unit tests*
+→ *The [Tutorial](/tutorials/walkthrough/) builds this app in twelve steps, through to transport and unit tests. It runs with the UI5 and the ABAP stack you already have.*
 
 <p class="a2ui5-links">
   <a href="https://github.com/abap2UI5/abap2UI5/" target="_blank" rel="noreferrer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
