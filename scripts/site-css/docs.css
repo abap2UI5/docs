@@ -672,14 +672,13 @@ html { scroll-padding-top: 62px; }
 .hero-image { flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; transform: translate(-32px, -32px); }
 .hero-image img { display: block; width: 200px; height: auto; border: 0; border-radius: 0; }
 
-/* The two things to do next - build a first app, take one to production.
-   Two columns, because there are two: a third stood empty once the sample
-   tile went (it was the hero's first button in other words). */
+/* The three things to do next - build a first app, find a sample, take one
+   to production. Under the example rather than under the hero
+   (build-site.mjs places them), so the row is one band of the grid below
+   and takes its spacing from the grid's row gap. */
 .tiles {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;
-  /* 44 rather than 36: the theme pads each card by 8 inside the row, so the
-     row opens 8 above the card. */
-  margin-top: 44px;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  grid-column: 1 / -1; min-width: 0;
 }
 .tile {
   display: block; padding: 22px;
@@ -798,6 +797,9 @@ html { scroll-padding-top: 62px; }
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
   .home .vp-doc.bands { display: block; }
+  /* `display: block` drops the row gap with the grid; the tile row carries
+     its own, like the cards. */
+  .home .bands .tiles { margin-top: 24px; }
   /* One card per row, and they stay cards: what a card says here is "this is
      one of the answers, read them in any order", which is as true on a phone
      as on a desk. `display: block` drops the row gap with the grid, so the

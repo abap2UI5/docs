@@ -17,11 +17,11 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # for somebody who arrived from a conference talk, a LinkedIn post or a
 # colleague's link, and who has not decided to read a manual yet.
 #
-# So the page answers, in this order: what it is (the hero), where to go next
-# (the two tiles), the four answers a decision needs — security, cost,
-# integration, AI — and what one app looks like, running right here. Under
-# it, one line of where the project lives. A reader who wants the manual is
-# one word away in the bar; this page does not compete with it.
+# So the page answers, in this order: what it is (the hero), the four answers
+# a decision needs — security, cost, integration, AI — what one app looks
+# like, running right here, and then where to go next (the three tiles).
+# Under it, one line of where the project lives. A reader who wants the
+# manual is one word away in the bar; this page does not compete with it.
 #
 # KEEP IT SHORT. Every claim on this page is made once. The tagline, the fact
 # table, the example's bullets and the AI section each used to carry their own
@@ -70,17 +70,22 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # - ADT, the ABAP debugger, ABAP Unit, the linter, the MCP server - are on
 # the Tooling page, one click into the manual.
 #
-# THE TWO TILES ARE TASKS, NOT PLACES. They used to say Documentation,
+# THE THREE TILES ARE TASKS, NOT PLACES. They used to say Documentation,
 # Samples, Playground - the same three words, in the same order, with the
 # same marks, 44px under the bar that already says them. A tile that repeats
 # the row above it is a second copy to keep in step, which is the reason the
 # old Guide dropdown was taken out of the bar. What a reader on this page is
-# choosing between is what to DO next: build a first app, take an app to
-# production. There was a third, "Find a sample for your use case", and it
-# was the hero's first button in other words - both open the playground -
-# so the first screen carried five calls to action for three destinations.
-# Each tile names the task and lands on the page for it; the bar goes on
-# naming the places.
+# choosing between is what to DO next: build a first app, find a sample for
+# the use case in front of them, take an app to production. Each tile names
+# the task and lands on the page for it; the bar goes on naming the places.
+#
+# AND THEY STAND UNDER THE EXAMPLE, not under the hero. Under the hero they
+# were the second row of the first screen - two buttons, then three tiles,
+# five calls to action before a single claim was made - and "what to do
+# next" is a question a reader asks after the case, not before it. So the
+# published page draws them after the running app: the argument, the proof,
+# then the three doors. The frontmatter is where they are written because
+# VitePress, the second opinion, knows no other place for them.
 #
 # THE EXAMPLE IS A REAL APP, not a greeting: the tutorial's finished class - a
 # table of invoices with an edit dialog, a date picker, save and a toast - so
@@ -158,13 +163,20 @@ hero:
       text: How it works
       link: /get_started/about#how-it-works
 
-# Two things to do next, each on the page for it. The bar above names the
-# places; these name the tasks (see THE TWO TILES ARE TASKS above).
+# Three things to do next, each on the page for it. The bar names the
+# places; these name the tasks (see THE THREE TILES ARE TASKS above). They
+# are frontmatter, so VitePress draws them under the hero; the published page
+# draws them UNDER THE EXAMPLE (build-site.mjs), where "what next" belongs.
 features:
   - title: Build your first app
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M8 7.5 3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M13.6 4.8 10.4 19.2"/></svg>
     details: Install with abapGit, run Hello World, then the twelve-step tutorial — through to transport and unit tests.
     link: /get_started/quickstart
+  - title: Find a sample for your use case
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.2" width="18.8" height="15.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M2.6 9.1h18.8M8.2 9.1v10.7"/></svg>
+    details: Over 700 working apps, searchable by control, by library and by the UI5 release your system runs.
+    link: https://abap2ui5.github.io/playground/samples/
+    target: _self
   - title: Take an app to production
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 17.5h16M6.5 17.5V9.8l5.5-4.3 5.5 4.3v7.7M10 17.5v-4.2h4v4.2"/></svg>
     details: Security, authorizations, the launchpad tile, the transport — what a go-live needs, on one page.

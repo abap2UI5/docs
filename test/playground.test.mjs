@@ -368,7 +368,7 @@ test('the home page stylesheet names no heading of the home page', () => {
 });
 
 test('the build marks the cards and the demo by where they are', () => {
-  const fn = BUILD.slice(BUILD.indexOf('const bands = (body)'), BUILD.indexOf('const home = ('));
+  const fn = BUILD.slice(BUILD.indexOf('const bands = ('), BUILD.indexOf('const home = ('));
   assert.match(fn, /includes\('a2ui5-play'\)/,
     'the runnable example is the hinge, and it is found by its markup');
   assert.match(fn, /i < hinge \? ' data-card'/, 'everything above the hinge is an answer');

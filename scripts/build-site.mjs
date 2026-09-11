@@ -72,7 +72,7 @@ pages.sort();
  * Not parsed here. `md.render(src, env)` fills `env.frontmatter` with the
  * whole block, nested keys and all - the same @mdit-vue plugin the shipped
  * site reads it with - and strips it from the HTML on the way. So the home
- * page's hero, its two tiles and their inline SVGs arrive as objects, which
+ * page's hero, its three tiles and their inline SVGs arrive as objects, which
  * is what makes the front door buildable here at all. */
 
 /* ---- the frame, borrowed rather than copied --------------------------
@@ -301,7 +301,7 @@ const urlOf = (page) => BASE + page.replace(/\.md$/, '.html');
 /** A link out of the FRONTMATTER, based.
  *
  * The renderer rewrites every link in the body and cannot see these: the hero's
- * two buttons and the two tiles are frontmatter, and `/get_started/about`
+ * two buttons and the three tiles are frontmatter, and `/get_started/about`
  * arrived in the page as `/get_started/about` - a path that is not on this
  * deployment at all. An absolute URL is left exactly as written; it is another
  * site, and one of them carries a `target` that keeps a router off it. */
@@ -754,7 +754,7 @@ const chapter = ({ body, page, route }) => `<main class="manual">
 /* ---- the front door ---------------------------------------------------
  *
  * The one page of this site that is not a chapter: a greeting, the headline,
- * the tagline, two buttons and two tiles, and then the markdown under the
+ * the tagline, two buttons and three tiles, and then the markdown under the
  * frontmatter as an ordinary article. Every value it is drawn with - 20/28 for
  * the greeting, 38/46 for the headline, 17/26 for the tagline, 13 on a 34px
  * button, a 15/22 tile title over 13/22 of detail - is the one the page
@@ -804,8 +804,13 @@ const tile = (f) => `<a class="tile" href="${esc(linkOf(f.link))}"${f.target ? `
  * the example is found by the markup the fence generator writes, not by a name
  * anybody can retype. Rename all four, reorder them, add a fifth: they stay
  * cards, and the grid follows. */
-const bands = (body) => {
-  const parts = body.split(/(?=<h2\b)/);
+/* THE TILES COME AFTER THE HINGE. They are frontmatter and VitePress draws
+ * them under the hero; here they are handed in and placed after the band the
+ * example is in - the argument, the proof, then where to go next. The line of
+ * links the page ends on is written in the same markdown section as the
+ * example, so it is split off into a band of its own and lands after them. */
+const bands = (body, tiles = '') => {
+  const parts = body.split(/(?=<h2\b|<p class="a2ui5-links")/);
   /* Anything before the first heading - there is none today - stays as it is
    * rather than being given a band it did not ask for. */
   const lead = parts[0].startsWith('<h2') ? '' : parts.shift();
@@ -816,7 +821,8 @@ const bands = (body) => {
     /* ...and the hinge marks itself, for the same reason: what needs the full
        width is the band the example is IN, whatever it ends up being called. */
     const demo = i === hinge ? ' data-demo' : '';
-    return `<section class="band"${id ? ` data-band="${esc(id)}"` : ''}${card}${demo}>${part}</section>`;
+    return `<section class="band"${id ? ` data-band="${esc(id)}"` : ''}${card}${demo}>${part}</section>`
+      + (i === hinge ? tiles : '');
   }).join('');
 };
 
@@ -848,9 +854,8 @@ const home = ({ body, fm, page }) => {
          alt="${esc(img.alt || '')}" width="200"${h} decoding="async" fetchpriority="high"></div>`;
     })() : ''}
   </section>
-  <section class="tiles">${(fm.features || []).map(tile).join('')}
-  </section>
-  <div class="vp-doc bands">${bands(body)}</div>
+  <div class="vp-doc bands">${bands(body, `<section class="tiles">${(fm.features || []).map(tile).join('')}
+  </section>`)}</div>
   <!-- The front door is a page of this repository like any other, and it was
        the only one that did not say so: the home layout has no doc-foot, so the
        one page most likely to want a correction was the one page with no way
