@@ -1287,8 +1287,6 @@
   flex-wrap: wrap;
   gap: 8px 28px;
   margin: 32px 0 0;
-  padding-top: 20px;
-  border-top: 1px solid var(--vp-c-divider);
   font-size: 14px;
   line-height: 22px;
   font-weight: 500;

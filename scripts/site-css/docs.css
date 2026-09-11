@@ -793,6 +793,15 @@ html { scroll-padding-top: 62px; }
    column, neither is worth looking at. */
 .home .band[data-demo] .a2ui5-play,
 .home .band[data-demo] > p { max-width: none; }
+/* Its heading is the one the page turns on - the cards make the case, this
+   is the proof - so it is set like a section title rather than like a
+   chapter's H2: larger, and without the hairline every other H2 carries. A
+   rule over it drew a line between the argument and the proof, and the row
+   gap above the band is already the separation. */
+.home .band[data-demo] > h2 {
+  margin: 8px 0 16px; padding-top: 0; border-top: 0;
+  font-size: 22px; line-height: 1.3; letter-spacing: -.02em;
+}
 
 @media (max-width: 860px) {
   /* One column again: two 300px columns of prose are worse than a long page. */
@@ -839,12 +848,11 @@ html { scroll-padding-top: 62px; }
  * whole screen after the example on a page that had already made its case.
  * Two of the five were pages of the manual, one click away in the bar; what
  * is left is what lives OUTSIDE this site, and three links are a line, not
- * a section. A hairline over it, so it reads as the page's last line rather
- * than as part of the example. */
+ * a section. No hairline over it: the tiles above are boxes of their own,
+ * and a rule under a row of boxes is a second edge on the same edge. */
 .vp-doc .a2ui5-links {
   display: flex; flex-wrap: wrap; gap: 8px 28px;
-  margin: 32px 0 0; padding-top: 20px;
-  border-top: 1px solid var(--line);
+  margin: 32px 0 0;
   font-size: 14px; line-height: 22px; font-weight: 500;
 }
 .vp-doc .a2ui5-links a {
