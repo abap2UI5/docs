@@ -213,7 +213,7 @@ check its own work without an SAP system.
 
 Nothing. MIT licensed, commercial use included — no license key, no
 subscription, no per-user fee, and no BTP required. It runs on your ABAP stack
-with the UI5 version you already have, and the SAP license you have is the one
+with the already installed UI5 version, and the SAP license you have is the one
 you keep.
 
 → *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
