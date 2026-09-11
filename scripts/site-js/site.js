@@ -402,17 +402,17 @@ document.addEventListener('click', async (e) => {
   } catch { /* a browser that refuses the clipboard: the text is still selectable */ }
 });
 
-/* ---- the front door's example folds on a phone --------------------------
+/* ---- the front door's example folds ------------------------------------
  *
- * 137 lines of ABAP under a thumb are three screens of scrolling before
- * anything else on the page; on a desk the running frame replaces the
- * listing (playground.js), and on a phone the example does not start
- * itself, so the listing is what a phone sees. Folded to its first screen,
- * with a button that says how much is behind it. Coarse pointer only - a
- * desk never sees the fold, and a reader who presses Run gets the frame
- * over the whole thing either way. */
-(function foldOnPhone() {
-  if (!matchMedia?.('(pointer: coarse)').matches) return;
+ * 121 lines of ABAP are three screens of scrolling on a phone and two on a
+ * desk. On a desk the running frame replaces the listing (playground.js) -
+ * once the loader has arrived, and only in a window wide enough to start
+ * itself; on a phone the example does not start itself at all. In every
+ * other case the listing is what the reader sees, so it is folded to its
+ * first screen everywhere, with a button that says how much is behind it.
+ * The button hides itself while the frame has the listing hidden (docs.css),
+ * and a reader who presses Run gets the frame over the whole thing. */
+(function foldTheExample() {
   for (const play of document.querySelectorAll('.a2ui5-play[data-play="edit"]')) {
     const block = play.querySelector('div[class*="language-"]');
     if (!block) continue;
