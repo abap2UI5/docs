@@ -147,24 +147,16 @@ hero:
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
-  # Two buttons. "Learn more…" first and in the accent: it opens the one page
-  # that says what this is ("In a Nutshell"), which is the next step for the
-  # reader this page is written for. The playground second, outlined - the
-  # one claim a reader can check in ten seconds, for the one who wants to. The second used to be "Install with
-  # abapGit" - the third mention of abapGit in the first screen, and a step
-  # the manager this page addresses is not taking; installing is the first
-  # tile below. The playground is first on purpose — it is the one claim on
-  # this page a reader can check in ten seconds, and it costs them nothing.
-  # It is an absolute URL, so VitePress draws it as an external link and
-  # gives it a `target` of its own, which is also what keeps this site's
-  # router off a neighbouring deployment (scripts/lib/cross-site.mjs).
+  # One button, in the accent: "Learn more…" opens the one page that says
+  # what this is ("In a Nutshell"), which is the next step for the reader
+  # this page is written for. There was a second, "Try it in the browser",
+  # into the playground; the bar names the playground, the sample tile under
+  # the example opens it, and the example itself runs on this page, so the
+  # button said a third time what the page already offers twice.
   actions:
     - theme: brand
       text: Learn more…
       link: /get_started/about
-    - theme: alt
-      text: Try it in the browser
-      link: https://abap2ui5.github.io/playground/
 
 # Three things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). They
