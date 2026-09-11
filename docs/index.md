@@ -147,14 +147,14 @@ hero:
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
-  # One button, in the accent: "Learn more…" opens the one page that says
+  # One button, outlined: "Learn more…" opens the one page that says
   # what this is ("In a Nutshell"), which is the next step for the reader
   # this page is written for. There was a second, "Try it in the browser",
   # into the playground; the bar names the playground, the sample tile under
   # the example opens it, and the example itself runs on this page, so the
   # button said a third time what the page already offers twice.
   actions:
-    - theme: brand
+    - theme: alt
       text: Learn more…
       link: /get_started/about
 
