@@ -204,11 +204,10 @@ launchpad tile or SAP Build Work Zone.
 
 ## Made for AI agents
 
-abap2UI5 is a perfect fit for AI-assisted development. An app is one ABAP
-class, so an agent writes the whole thing — UI and logic — in one go, and a
-working app or a new screen is a matter of minutes rather than days. The
-linter and the MCP server let the agent check its own work before a developer
-looks at it, so the first version that reaches a review already runs.
+An app is one ABAP class, so an agent writes the whole thing — UI and logic — in one go, and a
+working app or a new screen is a matter of minutes. The abap2UI5
+linter and the MCP server let the agent double check its own work before a developer
+looks at it.
 
 → *More on [Developing with AI](/get_started/ai)*
 
