@@ -852,9 +852,12 @@ html { scroll-padding-top: 62px; }
  * and a rule under a row of boxes is a second edge on the same edge. */
 .vp-doc .a2ui5-links {
   display: flex; flex-wrap: wrap; gap: 8px 28px;
-  margin: 32px 0 0;
+  /* Well clear of the tiles above, and close to the rule under it: the row
+     belongs to the page's foot, not to the tiles. */
+  margin: 56px 0 0;
   font-size: 14px; line-height: 22px; font-weight: 500;
 }
+.home .doc-foot { margin-top: 20px; }
 .vp-doc .a2ui5-links a {
   display: inline-flex; align-items: center; gap: 8px;
   color: var(--fg); text-decoration: none;
