@@ -30,16 +30,16 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # tagline now, and nowhere else. abapGit is the same story: the tagline and the
 # second button say it, so no card says it again.
 #
-# AND EVERY CARD IS ONE BOLD CLAIM AND ONE PLAIN SENTENCE. They used to be
+# AND EVERY CARD IS ONE SHORT PARAGRAPH OF PLAIN TEXT. They used to be
 # two or three paragraphs each - the enterprise card alone ran to 120 words -
 # and four panels of prose under three tiles read as a page that starts
 # over. What a card says now is the claim, one sentence that backs it, and
 # the link to the page that argues it in full: the About page carries the
 # lifecycle, the exit path and the support model, and carried them before.
-# The headings are claims too, not labels: "Plays well with what you have"
+# Nothing in the paragraph is bold: the heading carries the claim, the text
+# reads as one run. The headings are claims too, not labels: "Plays well with what you have"
 # promises something, where "Integration" only named a topic. The last card
-# asks instead, and its bold lead is the one-word answer - so the reader who
-# scans only the headings still leaves with the price.
+# asks instead, and its first word is the one-word answer.
 #
 # THE ORDER IS AN ARGUMENT: it is safe here, and it fits what you run - then
 # an agent can write it, and it costs nothing. The price is the last card
@@ -159,7 +159,7 @@ hero:
   # gives it a `target` of its own, which is also what keeps this site's
   # router off a neighbouring deployment (scripts/lib/cross-site.mjs).
   actions:
-    - theme: brand
+    - theme: alt
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
     - theme: alt
@@ -188,9 +188,7 @@ features:
 
 ## Ready for your enterprise
 
-**Runs inside the security you already have.**
-
-One HTTP endpoint, standard SAP logon, your own authorizations — and an app is
+Runs inside the security you already have. One HTTP endpoint, standard SAP logon, your own authorizations — and an app is
 an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
 you ship. Support is the community's, on GitHub and Slack.
 
@@ -198,28 +196,22 @@ you ship. Support is the community's, on GitHub and Slack.
 
 ## Plays well with what you have
 
-**Complements UI5 freestyle and RAP — it does not replace them, and lives
-right next to your existing UI5 solutions.**
-
-It runs in a browser tab, a Fiori launchpad tile or SAP Build Work Zone, and without
+Complements UI5 freestyle and RAP — it does not replace them, and lives
+right next to your existing UI5 solutions. It runs in a browser tab, a Fiori launchpad tile or SAP Build Work Zone, and without
 internet access.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
-**One class is one file — the whole app, for an agent to write.**
-
-The abap2UI5 linter and the MCP server let it
+One class is one file — the whole app, for an agent to write. The abap2UI5 linter and the MCP server let it
 check its own work without an SAP system.
 
 → *More on [Developing with AI](/get_started/ai)*
 
 ## And what does it cost?
 
-**Nothing.**
-
-MIT licensed, commercial use included — no license key, no subscription, no per-user fee, and no BTP required. Ten users
+Nothing. MIT licensed, commercial use included — no license key, no subscription, no per-user fee, and no BTP required. Ten users
 or ten thousand, it runs on your ABAP stack with the UI5 version you already
 have, and the SAP license you have is the one you keep.
 
