@@ -196,17 +196,14 @@ you ship. Support is the community's, on GitHub and Slack.
 
 ## Plays well with what you have
 
-Complements UI5 freestyle and RAP — it does not replace them, and lives
-right next to your existing UI5 solutions. It runs in a browser tab, a Fiori launchpad tile or SAP Build Work Zone, and without
-internet access.
+Complements your UI5 and RAP Apps — it does not replace them, and lives
+right next to your existing solutions. It runs in a browser tab, a Fiori launchpad tile and SAP Build Work Zone.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
-One class is one file — the whole app, for an agent to write, with no
-frontend project to keep in step. The AI guide starts with one paragraph to
-paste at the top of a prompt, and the abap2UI5 linter and the MCP server let
+One class is one file — the whole app, for an agent to write. The abap2UI5 linter and the MCP server let
 the agent check its own work without an SAP system: the linter validates the
 view, the MCP server boots the app headless and returns the errors and a
 screenshot.
@@ -217,7 +214,7 @@ screenshot.
 
 Nothing. MIT licensed, commercial use included — no license key, no
 subscription, no per-user fee, and no BTP required. It runs on your ABAP stack
-with the already installed UI5 version, and the SAP license you have is the one
+with the already installed UI5 version, and the license you have is the one
 you keep.
 
 → *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
