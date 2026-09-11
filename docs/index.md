@@ -189,7 +189,7 @@ features:
 ## Ready for your enterprise
 
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
-logon, your own [authorizations](/configuration/authorization) — and an app is
+logon, your own authorizations — and an app is
 an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
 you ship. Support is the community's, on GitHub and Slack.
 
@@ -199,25 +199,24 @@ you ship. Support is the community's, on GitHub and Slack.
 
 **Complements UI5 freestyle and RAP — it does not replace them, and lives
 right next to your existing UI5 solutions.** It runs in a
-browser tab, a [Fiori launchpad](/configuration/launchpad) tile or SAP Build
-Work Zone, with the UI5 your system ships, 1.71 to 2.x, and without internet
-access.
+browser tab, a Fiori launchpad tile or Build
+Work Zone and without internet access.
 
 → *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
 **One class is one file — the whole app, for an agent to write.** The
-[linter](/advanced/linter) and the [MCP server](/advanced/mcp_server) let it
-check its own work without an SAP system.
+abap2UI5 linter and the MCP server let it
+check its own work without an SAP system. 
 
 → *More on [Developing with AI](/get_started/ai)*
 
 ## And what does it cost?
 
-**Nothing.** [MIT licensed](/resources/license), commercial use included — no
+**Nothing.** MIT licensed, commercial use included — no
 license key, no subscription, no per-user fee, and no BTP required. Ten users
-or ten thousand, the SAP license you have is the one you keep.
+or ten thousand, it runs on your ABAP Stack with the UI5 version you already have, the SAP license you have is the one you keep.
 
 → *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
