@@ -191,7 +191,6 @@ features:
 abap2UI5 runs inside the security you already have. One HTTP endpoint,
 standard SAP logon, your own authorizations — and an app is an ABAP class, so
 transports, ATC and ABAP Unit apply as they do to everything else you ship.
-Support is the community's, on GitHub and Slack.
 
 → *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
