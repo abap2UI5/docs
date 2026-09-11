@@ -103,11 +103,10 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # table and out of the class with it: a field a reader sees typed and filled
 # but never displayed is a question this example is not here to answer.
 #
-# EVERY CARD ENDS WITH A WAY OUT, IN ITS LAST SENTENCE. Each card used to
-# close on its own "→ More on …" line in italics - four extra lines on the
-# page, every one of them saying what the sentence above it could say. The
-# example keeps its line: the tutorial is the way out of the whole page, not
-# of a card. The link sits on the topic, never on the word
+# EVERY CARD ENDS WITH A WAY OUT, ON A LINE OF ITS OWN: "→ More on …" in
+# italics, the same shape on all four, so the cards read as one structure
+# and the eye finds the link in the same place on each. The example's line
+# under the code is the same shape again. The link sits on the topic, never on the word
 # "here" - a reader scanning the links has to be able to tell where each one
 # goes. The cost card's is the calculator - a page of sliders for users,
 # systems, apps and support tiers whose every line comes to zero - and not
@@ -148,7 +147,9 @@ hero:
     width: 200px
     height: 200px
   # Two buttons, in the order a stranger needs them: try it without installing
-  # anything, then read how it works. The second used to be "Install with
+  # anything, then read the one page that says what it is - "In a Nutshell",
+  # named on the button as the page is named in the sidebar, so the reader
+  # lands where the label said. The second used to be "Install with
   # abapGit" - the third mention of abapGit in the first screen, and a step
   # the manager this page addresses is not taking; installing is the first
   # tile below. The playground is first on purpose — it is the one claim on
@@ -161,8 +162,8 @@ hero:
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
     - theme: alt
-      text: How it works
-      link: /get_started/about#how-it-works
+      text: In a Nutshell
+      link: /get_started/about
 
 # Three things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). They
@@ -189,8 +190,9 @@ features:
 **Runs inside the security you already have.** One HTTP endpoint, standard SAP
 logon, your own [authorizations](/configuration/authorization) — and an app is
 an ABAP class, so transports, ATC and ABAP Unit apply as to everything else
-you ship. Support is the community's, on GitHub and Slack; more on
-[Enterprise Readiness](/get_started/about#enterprise-ready).
+you ship. Support is the community's, on GitHub and Slack.
+
+→ *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
 
 ## Plays well with what you have
 
@@ -198,21 +200,25 @@ you ship. Support is the community's, on GitHub and Slack; more on
 right next to your existing UI5 solutions.** It runs in a
 browser tab, a [Fiori launchpad](/configuration/launchpad) tile or SAP Build
 Work Zone, with the UI5 your system ships, 1.71 to 2.x, and without internet
-access; more on [Integration](/get_started/about#where-it-fits).
+access.
+
+→ *More on [Integration](/get_started/about#where-it-fits)*
 
 ## Made for AI agents
 
 **One class is one file — the whole app, for an agent to write.** The
 [linter](/advanced/linter) and the [MCP server](/advanced/mcp_server) let it
-check its own work without an SAP system; more on
-[Developing with AI](/get_started/ai).
+check its own work without an SAP system.
+
+→ *More on [Developing with AI](/get_started/ai)*
 
 ## And what does it cost?
 
 **Nothing.** [MIT licensed](/resources/license), commercial use included — no
 license key, no subscription, no per-user fee, and no BTP required. Ten users
-or ten thousand, the SAP license you have is the one you keep; run your own
-numbers through the [Cost Calculator](/resources/cost_calculator).
+or ten thousand, the SAP license you have is the one you keep.
+
+→ *Run your own numbers through the [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
 
