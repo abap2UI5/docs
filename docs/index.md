@@ -204,8 +204,12 @@ internet access.
 
 ## Made for AI agents
 
-One class is one file — the whole app, for an agent to write. The abap2UI5 linter and the MCP server let it
-check its own work without an SAP system.
+One class is one file — the whole app, for an agent to write, with no
+frontend project to keep in step. The AI guide starts with one paragraph to
+paste at the top of a prompt, and the abap2UI5 linter and the MCP server let
+the agent check its own work without an SAP system: the linter validates the
+view, the MCP server boots the app headless and returns the errors and a
+screenshot.
 
 → *More on [Developing with AI](/get_started/ai)*
 
