@@ -147,10 +147,10 @@ hero:
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
-  # Two buttons, in the order a stranger needs them: try it without installing
-  # anything, then read the one page that says what it is - "In a Nutshell",
-  # behind a button that says "Learn more...", which is what the reader
-  # wants rather than what the page is called. The second used to be "Install with
+  # Two buttons. "Learn more…" first and in the accent: it opens the one page
+  # that says what this is ("In a Nutshell"), which is the next step for the
+  # reader this page is written for. The playground second, outlined - the
+  # one claim a reader can check in ten seconds, for the one who wants to. The second used to be "Install with
   # abapGit" - the third mention of abapGit in the first screen, and a step
   # the manager this page addresses is not taking; installing is the first
   # tile below. The playground is first on purpose — it is the one claim on
@@ -159,12 +159,12 @@ hero:
   # gives it a `target` of its own, which is also what keeps this site's
   # router off a neighbouring deployment (scripts/lib/cross-site.mjs).
   actions:
+    - theme: brand
+      text: Learn more…
+      link: /get_started/about
     - theme: alt
       text: Try it in the browser
       link: https://abap2ui5.github.io/playground/
-    - theme: alt
-      text: Learn more…
-      link: /get_started/about
 
 # Three things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). They
