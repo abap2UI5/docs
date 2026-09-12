@@ -16,7 +16,7 @@ To install on an older system, use the `702` branch:
 Some sample projects and other repositories also ship a downported version. Check whether a `702` branch is available.
 
 ## Installation
-The installation on an old release follows the normal [installation](/configuration/installation) flow with two adjustments:
+The installation on an old release follows the normal [Quickstart](/get_started/quickstart) flow with two adjustments:
 1. Pull the `702` branch with abapGit — abapGit itself is 7.02-compatible, so deployment to old ECC machines works the same way as everywhere else
 2. Create the HTTP handler (SICF service) with the 7.02-compatible handler syntax instead of the modern snippet
 

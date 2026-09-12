@@ -91,8 +91,8 @@ https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_app_walkthrough
 ```
 
 That URL is a bookmark, an intranet link — or a tile: the
-[Installation](/configuration/installation) page says what launching looks
-like per system, from the [Fiori Launchpad](/configuration/launchpad) on
+[Deployment Scenarios](/configuration/installation) page says what launching
+looks like per system, from the [Fiori Launchpad](/configuration/launchpad) on
 S/4 Private Cloud and On-Premise to the tile chain on
 [S/4 Public Cloud](/configuration/s4_public_cloud). On a phone, the app can
 be [added to the home screen](/configuration/mobile_start) like any web app.
