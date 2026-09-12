@@ -58,7 +58,10 @@ jobs:
           ref: main
           path: .samples-controls
           fetch-depth: 1
-          sparse-checkout: SAMPLES.md
+          sparse-checkout: |
+            SAMPLES.md
+            catalogue.json
+            src
           sparse-checkout-cone-mode: false
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         continue-on-error: true
@@ -67,7 +70,10 @@ jobs:
           ref: main
           path: .samples-stack
           fetch-depth: 1
-          sparse-checkout: SAMPLES.md
+          sparse-checkout: |
+            SAMPLES.md
+            catalogue.json
+            src
           sparse-checkout-cone-mode: false
 
       # The playground's stylesheet, for the shared-design gate, and the two

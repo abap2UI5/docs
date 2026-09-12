@@ -161,9 +161,10 @@ These message functions evolve all the time. Open an issue if you hit errors or 
 
 ## Working Samples
 
-Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
-that use what this page describes. Each is a single class — pull the repository with
-[abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
+Complete apps from the [sample catalog](https://abap2ui5.github.io/playground/samples/)
+that use what this page describes. Each is a single class in [abap2UI5/samples](https://github.com/abap2UI5/samples)
+unless its row names another of the three sample repositories — pull that repository with
+[abapGit](https://abapgit.org) and start the class with `?app_start=<class>`.
 
 | Sample | Class |
 |---|---|

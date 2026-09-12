@@ -196,3 +196,43 @@ export function parseCatalogue(text) {
   }
   return byClass;
 }
+
+/* ------------------------------------------------- the checkout, if any */
+
+/** The checkout of a sample repository, if one is at hand: the first of its
+ *  homes (an explicit `*_HOME`, then the sibling names CI and a contributor
+ *  use) that holds the repository's catalogue - `catalogue.json`, or the
+ *  SAMPLES.md it is rendered from. `null` when none is, which the caller
+ *  treats as "cannot verify", never as "verified". */
+export function resolveHome(repo, root) {
+  const dirs = HOMES[repo];
+  if (!dirs) throw new Error(`no catalogue location known for ${repo}`);
+  for (const dir of dirs) {
+    const at = dir.endsWith('_HOME') ? process.env[dir] : path.join(root, dir);
+    if (!at) continue;
+    if (fs.existsSync(path.join(at, 'catalogue.json')) || fs.existsSync(path.join(at, 'SAMPLES.md'))) return at;
+  }
+  return null;
+}
+
+/** A parsed catalogue.json as a map from the lower-cased class name to what a
+ *  link needs of an entry: the source path under the repository (`file` in
+ *  samples and samples-controls, `path` in samples-stack - pinned as-is by
+ *  each repository's contract gate), a label made of the title and the one
+ *  sentence under it, and the branch a samples-stack package ships on.
+ *  The three shapes differ on purpose; this is the one place the difference
+ *  is read. */
+export function entriesByClass(catalogue) {
+  const byClass = new Map();
+  for (const entry of entriesOf(catalogue)) {
+    const title = typeof entry.title === 'string' ? entry.title.trim() : '';
+    const sentence = typeof entry.summary === 'string' ? entry.summary.trim() : '';
+    const label = [title, sentence].filter(Boolean).join(' — ') || entry.class;
+    byClass.set(entry.class.toLowerCase(), {
+      label,
+      path: entry.file ?? entry.path,
+      branch: typeof entry.branch === 'string' && entry.branch !== 'main' ? entry.branch : '',
+    });
+  }
+  return byClass;
+}

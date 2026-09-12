@@ -18,7 +18,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs` |
 | `docs/public/` | Static assets — **and** the generated `llms.txt`, `llms-full.txt` and per-page `.md`, which are gitignored |
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
-| `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus `SAMPLES.md` in an `abap2UI5/samples` checkout, checks the link in both directions, and resolves the source links a page writes by hand against the same checkout |
+| `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus the catalogue of the repository each class belongs to — the prefix decides: `z2ui5_cl_smp_app_*` is `abap2UI5/samples` (read from its `SAMPLES.md` in a checkout), `z2ui5_cl_smpc_*` samples-controls and `z2ui5_cl_smps_*` samples-stack (read from their `catalogue.json`, a checkout or the published copy). Checks the link in both directions for the samples repository (the `" @docs` line), the class's existence for the other two, and resolves the source links a page writes by hand against whichever checkout is here |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
@@ -74,7 +74,7 @@ in it are decidable, and all thirteen are decided before a merge:
 
 **What it now guards is the second opinion, not the site.** Since the switch, the published pages link the playground's own `catalogue.css`, borrowed whole at build time — so the palette cannot drift from the playground's there, by construction. `style.css` is VitePress's, and VitePress is no longer served. Keep the gate: it is what says so when somebody edits `style.css` expecting the site to change |
 | `check:images` | every image under `docs/public`, against the three things a page can afford and the one it cannot: a screenshot is WebP (the PNG captures were 200 to 335 kB each, 2.9 MB across the manual, on pages of 20 kB of text; the same captures as WebP are a fifth of that), a deliverable is one of the PNGs the logo page hands out, nothing is over its budget, and the build can measure every one - an image it cannot size gets no width and height and moves the page when it lands |
-| `check:samples` | the **Working Samples** blocks and the source links a page writes by hand, against [abap2UI5/samples](https://github.com/abap2UI5/samples) |
+| `check:samples` | the **Working Samples** blocks and the source links a page writes by hand, against [abap2UI5/samples](https://github.com/abap2UI5/samples), [samples-controls](https://github.com/abap2UI5/samples-controls) and [samples-stack](https://github.com/abap2UI5/samples-stack) — a page may declare a class of any of the three |
 
 **All four walking gates carry a floor.** A gate that checked nothing reports
 the same shape as a gate that found nothing wrong — which is precisely how
@@ -101,7 +101,12 @@ silence — went a release without CI, and how `check:conventions` sat in
 `check:samples` needs an `abap2UI5/samples` checkout — set `SAMPLES_HOME`, or
 clone it as a sibling. Without one it *skips* rather than fails, so verify the
 output says what you think it says. CI checks out `abap2UI5/samples@main`
-explicitly for this reason.
+explicitly for this reason. The other two repositories are found the same way
+(`SAMPLES_CONTROLS_HOME` / `SAMPLES_STACK_HOME`, or `.samples-controls` /
+`../samples-controls` and the stack equivalents) and fall back to the
+`catalogue.json` each publishes; CI checks both out with `catalogue.json` and
+`src`, so a class a page declares from them is held to the tree, not only to
+the catalogue.
 
 There used to be one more, `check:counts`, holding four figures on a
 `resources/samples.md` page against the catalogues themselves. That page is
@@ -708,7 +713,8 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   `npm run link:samples` after changing a page's `samples:` frontmatter;
   `check:samples` fails if a rewrite would change anything. It also resolves
   every source link a page writes **by hand** — `github.com/abap2UI5/samples/blob/main/…`
-  in the prose rather than in a generated block — against that same checkout.
+  in the prose rather than in a generated block, and the same for the two
+  sibling repositories — against that same checkout.
   The 37 essay pages under `advanced/insights/` link a sample that way on
   purpose (none of them carries a block: a "Full source:" sentence is the shape
   an essay wants, not a see-also list at the end), and the samples repository
