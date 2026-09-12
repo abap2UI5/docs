@@ -41,5 +41,3 @@ different UI in front of it.
 
 Rule of thumb: model the behavior once, in RAP, if more than one thing will
 use it. Build the screen wherever it is cheapest.
-
-Happy ABAPing! 🦖🦕🦣

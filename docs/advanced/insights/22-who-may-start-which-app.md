@@ -62,5 +62,3 @@ it, and nothing else — there is no client-side rule to read out of a bundle,
 because there is no bundle.
 
 One node, one class, one AUTHORITY-CHECK. The rest is PFCG.
-
-Happy ABAPing! 🦖🦕🦣

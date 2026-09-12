@@ -53,5 +53,3 @@ for either.
 
 Extensibility is not the absence of a boundary. It is knowing exactly where
 the boundary is.
-
-Happy ABAPing! 🦖🦕🦣

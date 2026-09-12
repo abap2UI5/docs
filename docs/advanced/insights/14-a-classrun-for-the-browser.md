@@ -55,5 +55,3 @@ That holds for the small screens this series keeps coming back to. A larger app
 splits into several classes like any other ABAP program does, and how is
 [its own article](/advanced/insights/25-when-one-class-is-not-enough). The
 point is where it starts: one class, one method, and it runs.
-
-Happy ABAPing! 🦖🦕🦣

@@ -119,5 +119,3 @@ control by control. Reaching every control is not the same as being handed one.
 
 A vocabulary is a promise about what will be needed. An API makes no such
 promise — and takes nothing off the table either.
-
-Happy ABAPing! 🦖🦕🦣

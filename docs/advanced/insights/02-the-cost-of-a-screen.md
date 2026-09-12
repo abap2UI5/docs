@@ -127,8 +127,6 @@ Install it with abapGit and give it a try!
 
 A screen that costs one class is a screen that gets built.
 
-Happy ABAPing! 🦖🦕🦣
-
 *The article before this one:
 [#1 Somewhere on the Way to UI5, We Lost RTTS](/advanced/insights/01-somewhere-on-the-way-to-ui5)
 — a table whose structure is only known at runtime, drawn in UI5.*

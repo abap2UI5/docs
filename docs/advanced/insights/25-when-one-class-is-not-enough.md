@@ -45,5 +45,3 @@ container. The seams are classes, method calls and one stack — which is exactl
 what a larger ABAP program has been made of for thirty years.
 
 A larger app is more classes. The unit stayed the same size.
-
-Happy ABAPing! 🦖🦕🦣

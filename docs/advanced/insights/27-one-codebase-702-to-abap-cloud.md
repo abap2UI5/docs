@@ -38,5 +38,3 @@ sentence in this article.
 
 A framework that needs nothing from the release does not have to be ported
 when the release changes.
-
-Happy ABAPing! 🦖🦕🦣

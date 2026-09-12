@@ -43,5 +43,3 @@ from that.
 
 Neither is a migration. abap2UI5 is adopted one app at a time, and the first
 one costs an abapGit pull and an afternoon.
-
-Happy ABAPing! 🦖🦕🦣

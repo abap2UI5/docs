@@ -49,8 +49,6 @@ level later means changing what it calls, not how it renders:
 
 A wrapper does not make the dependency clean. It makes it findable.
 
-Happy ABAPing! 🦖🦕🦣
-
 *The levels are SAP's, from the
 [Clean Core Extensibility white paper](https://community.sap.com/t5/technology-blog-posts-by-sap/why-clean-core-matters-get-some-insights-into-our-brand-new-extensibility/ba-p/14163750)
 of August 2025; the

@@ -43,5 +43,3 @@ ancient UI5 version knows what that is worth.
 
 A frontend that knows nothing about the app is a frontend that never needs
 to be redeployed when the app changes.
-
-Happy ABAPing! 🦖🦕🦣

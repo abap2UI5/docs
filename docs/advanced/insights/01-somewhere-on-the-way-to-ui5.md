@@ -135,5 +135,3 @@ directly, so a structure that exists only at runtime stops being a special
 case. It is just data — the way it was in the old SALV and field-catalog days.
 
 So next time you reach for RTTS and need a screen, give abap2UI5 a try.
-
-Happy ABAPing! 🦖🦕🦣

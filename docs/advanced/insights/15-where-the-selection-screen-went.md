@@ -46,5 +46,3 @@ field and the variable.
 
 The selection screen's best idea was never the screen. It was that the
 variable and the field were the same declaration.
-
-Happy ABAPing! 🦖🦕🦣

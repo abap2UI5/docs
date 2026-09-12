@@ -57,5 +57,3 @@ about this app during a rolling restart. Take that as high praise.
 
 Stateful for the user, stateless for the system — and the price is keeping
 the instance small.
-
-Happy ABAPing! 🦖🦕🦣
