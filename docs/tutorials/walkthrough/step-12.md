@@ -14,9 +14,11 @@ could have written before ever hearing of this framework.
 
 ## The Class Under Test
 
-The app is unchanged from [Step 10](/tutorials/walkthrough/step-10) — printed
-here in full so this step stands on its own:
+The app is unchanged from [Step 10](/tutorials/walkthrough/step-10). It is
+folded here in full so this step stands on its own — open it when you want to
+copy the class, or read on to the tests, which are what this step is about:
 
+::: details The complete class — `zcl_app_walkthrough`, as Step 10 left it
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
 
@@ -256,6 +258,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 
 ENDCLASS.
 ```
+:::
 
 ## The Test Class
 

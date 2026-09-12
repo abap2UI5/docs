@@ -147,13 +147,23 @@ hero:
     alt: abap2UI5 Logo
     width: 200px
     height: 200px
-  # One button, outlined: "Learn more…" opens the one page that says
-  # what this is ("In a Nutshell"), which is the next step for the reader
-  # this page is written for. There was a second, "Try it in the browser",
-  # into the playground; the bar names the playground, the sample tile under
-  # the example opens it, and the example itself runs on this page, so the
-  # button said a third time what the page already offers twice.
+  # Two buttons. The accent one opens the playground: the one thing a
+  # developer who arrived here can DO in the next ten seconds, with nothing
+  # installed - the bar names the place and the example below runs on this
+  # page, but neither is a call to action in the first screen, and a first
+  # screen with no primary action reads as a brochure. Same tab (target
+  # _self), like every other way into the neighbouring site. The outlined
+  # one, "Learn more…", opens the page that says what this is ("In a
+  # Nutshell"), which is the next step for the manager this page is written
+  # for. (A playground button stood here before and was taken out as the
+  # third copy of what the page already offered twice; it is back as the
+  # primary action on purpose - the two readers of this page want different
+  # first clicks, and the hero can afford one each.)
   actions:
+    - theme: brand
+      text: Try it in the playground
+      link: https://abap2ui5.github.io/playground/
+      target: _self
     - theme: alt
       text: Learn more…
       link: /get_started/about
