@@ -5,8 +5,14 @@ markdown. Kept here rather than on the published pages: they are publishing
 material, not documentation.
 
 The sections stand in the order the articles are numbered in
-`docs/advanced/insights/`, so this file is also the publishing order. Move a
-post here when an article moves there.
+`docs/advanced/insights/`, one per article, so this file is also the
+publishing order. Move a post here when an article moves there. A post whose
+article does not exist yet waits under *Not yet published* at the end, and
+moves up the day its article lands.
+
+The fifteen posts marked *draft* were written from the articles after the
+fact, in the shape of the ones before them, and have not been posted - read
+one before it goes out, the way the others were read.
 
 ## Somewhere on the Way to UI5, We Lost RTTS
 
@@ -353,24 +359,257 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## No Cache, No Deploy, Any IDE
+## One Click, One Request
 
-Plain text — LinkedIn renders no markdown.
+Plain text — LinkedIn renders no markdown. Draft, 803 characters.
 
-> The abap2UI5 loop is: change the class, activate, refresh the browser.
+> Every click is one HTTP request, and every request is one call to main( ) on a
+> fresh instance.
 >
-> What is missing from that sentence is the point. No deployment — activating is
-> the deployment. No cache to invalidate — the UI is built per request, so
-> nothing can be stale. No IDE agreement, because it is ABAP. No context switch
-> to debug: a breakpoint in the method that built the view stops there.
+> That is PBO and PAI with the names filed off. A request arrives with the event
+> and what the user changed, main( ) runs, decides, returns. Nothing runs between
+> two clicks, because nothing is there to run - no timer, no controller, no
+> half-finished promise.
 >
-> Individually, conveniences. Together, the reason a screen gets tried at all —
-> when an experiment costs a class and a refresh, "could we just show this?"
-> stops being a project.
+> So main( ) is a dispatcher over three questions: is this the first call, is the
+> app coming back to the screen, did an event fire. Two of the three are the
+> mistake everybody makes exactly once - the init branch has to stand first, and
+> a return owes a view.
 >
-> New article 🎉
+> New article 🎉 The mental model everything else in abap2UI5 rests on, in one
+> sentence and one CASE statement.
 >
-> What is your current edit-to-see-it time on a Fiori change?
+> Which habit from dialog programming did you have to unlearn first?
+>
+> #ABAP #SAP #UI5
+
+## What the Client Can Do
+
+Plain text — LinkedIn renders no markdown. Draft, 778 characters.
+
+> An app implements one interface with one method. Its single parameter is the
+> other interface - and it is the whole of what an app can ask the framework for.
+>
+> Show a screen, put ABAP data on it, find out what the user did, talk to the
+> user, move to another app and back, ask the browser for something. Eight rows
+> in a table, and the two that carry the most weight are the smallest: _bind( )
+> takes an ABAP variable and returns the binding path, _event( ) names what the
+> frontend sends when a control fires. Both are string generators, and that is
+> all they are.
+>
+> New article 🎉 The API surface an abap2UI5 app ever touches - small enough to
+> hold in your head, by design rather than by accident.
+>
+> How many methods of your UI framework could you name without looking?
+>
+> #ABAP #SAP #UI5
+
+## CALL SCREEN, LEAVE SCREEN
+
+Plain text — LinkedIn renders no markdown. Draft, 714 characters.
+
+> Module pools had a call stack of screens. CALL SCREEN pushed one, LEAVE TO
+> SCREEN 0 popped it, and the screen underneath came back with its fields intact.
+>
+> abap2UI5 has the same stack. Its elements are app instances: nav_app_call( )
+> pushes one, nav_app_leave( ) pops it, and the caller gets main( ) called again
+> with its attributes still there. What it reads back is not a string in a
+> parameter table - it is the sub-app instance itself, typed attributes and all.
+> A luxury CALL SCREEN never had.
+>
+> New article 🎉 Screens within one class, screens between classes, popups as
+> classes of their own - and the one navigation that is not on the stack.
+>
+> What did your CALL SCREEN chains hand back, and how?
+>
+> #ABAP #SAP #UI5
+
+## Where F4 Went
+
+Plain text — LinkedIn renders no markdown. Draft, 749 characters.
+
+> PARAMETERS pa_arbgb TYPE t100-arbgb got a value help for free. The DDIC knew
+> the search help, the screen knew the DDIC, and nobody wrote a line for it.
+>
+> An Input in a UI5 view is a box that holds text. It has no idea what type
+> stands behind it.
+>
+> abap2UI5 does not put the automatic version back. What it gives you is the
+> three shapes an F4 actually comes in: suggestions while typing (a bound table,
+> no roundtrip), a selection popup (a SELECT, a list, an event with the picked
+> row), and a reusable value help as a class of its own on the stack.
+>
+> New article 🎉 F4 is three lines and a SELECT now. No longer free - and no
+> longer limited to the DDIC either.
+>
+> Which of your value helps would be better as a SELECT than as a search help?
+>
+> #ABAP #SAP #UI5
+
+## MESSAGE Still Works
+
+Plain text — LinkedIn renders no markdown. Draft, 918 characters.
+
+> Thirty years of habits around messages, and most of them carry over unchanged.
+> What changes is where the message ends up.
+>
+> A toast for what needs no acknowledgment, a box for what does. sy after
+> MESSAGE ... INTO, a BAPIRET2 table, an exception object - the framework reads
+> text, type and details out of each. Message classes, T100 texts and the
+> translation tooling around them stay exactly as useful as they were: an app
+> is an ABAP class, there is no i18n file beside it, nobody exports a properties
+> file to anybody.
+>
+> What is different is the exception that gets away: one catch in the HTTP
+> handler, HTTP 500, a restart overlay - and one setting every production
+> system needs so the 500 body does not tell a browser more than it should.
+>
+> New article 🎉 The message classes, the texts and the translation stay. Only
+> the dump looks different.
+>
+> Where do your messages land today - and who translates them?
+>
+> #ABAP #SAP #UI5
+
+## The Lock Is Gone by the Next Click
+
+Plain text — LinkedIn renders no markdown. Draft, 915 characters.
+
+> VA02 holds its lock for as long as the dialog session lives. That works
+> because the session lives.
+>
+> In abap2UI5 every click is a fresh session, so a lock set while the order
+> opens is released before the user has finished reading the screen. The ABAP is
+> still valid. The assumption underneath it is not - and this is the habit that
+> most reliably surprises a developer coming from dialog programming.
+>
+> It is not a limitation to work around. It is the question every stateless web
+> application has answered since roughly 1999: lock at save, an optimistic check
+> on the timestamp, a soft lock for the "being edited by Müller" warning - and
+> the GUI way, still there, for the few apps that should pin a work process.
+>
+> New article 🎉 A lock is a promise about a session. Where the session is one
+> request long, the promise has to be, too.
+>
+> How does your app tell the second user that the first one was faster?
+>
+> #ABAP #SAP #UI5
+
+## Who May Start Which App
+
+Plain text — LinkedIn renders no markdown. Draft, 840 characters.
+
+> One ICF node serves every abap2UI5 app, and the URL names the class. So
+> anybody with the node can start any class?
+>
+> Only if nobody decided otherwise, and the deciding happens in two familiar
+> places. Authentication is the ICF node's - logon, SSO, certificate, like any
+> other UI5 app. Authorization is the app's, the way a report checks before it
+> selects: an AUTHORITY-CHECK in the branch that shows the first view, one
+> object, one field, the class as the value, roles in PFCG. The check sits in
+> the class it protects, so a transport carries the app and its guard together.
+>
+> New article 🎉 One node, one class, one AUTHORITY-CHECK. The rest is PFCG -
+> plus the CSRF token and the Content Security Policy a web app needs and a
+> report never did.
+>
+> Where does the authorization check sit in your apps - on the node, or in the
+> code?
+>
+> #ABAP #SAP #UI5
+
+## 100 Rows, Four Hours, One Request
+
+Plain text — LinkedIn renders no markdown. Draft, 847 characters.
+
+> Three numbers decide whether an abap2UI5 app feels fast, and none of them is
+> in your code.
+>
+> 100 rows: a UI5 JSON model shows a list binding at most 100 items by default.
+> Bind a table with 300 entries and the rest are dropped - silently, no error
+> anywhere. Raised per view from ABAP, and not the fix for fifty thousand rows.
+>
+> Four hours: the serialized instance lives in one table until it expires. Back
+> after lunch, you continue; back tomorrow, you start fresh.
+>
+> One request: every click is one roundtrip plus one read and one write of the
+> draft, so the cost of a click is the size of the instance plus the size of
+> the model - which are the same attributes.
+>
+> New article 🎉 Small instance, bounded model, one request per click.
+> Everything else the system already does well.
+>
+> Which of the three has cost you the most debugging time?
+>
+> #ABAP #SAP #UI5
+
+## ABAP Unit for a Screen
+
+Plain text — LinkedIn renders no markdown. Draft, 817 characters.
+
+> Testing a screen is usually where enthusiasm goes to die. You drive a
+> browser, or you mock a framework, or you decide - silently, in a meeting
+> nobody minuted - that this part is tested by the users.
+>
+> An abap2UI5 app is a global class, and a global class has a Test Classes
+> include. That is the whole story, and it stays that short because of one
+> decision in the app: the logic does not touch the client. main( ) dispatches,
+> the methods it dispatches to read data, decide and change attributes - and a
+> test calls those methods directly and looks at the attributes afterwards.
+> Nothing in the test is abap2UI5.
+>
+> New article 🎉 A screen under ABAP Unit, with no browser driven and no
+> framework mocked - and the linter for the half a unit test cannot see.
+>
+> When did a screen of yours last have a unit test?
+>
+> #ABAP #SAP #UI5
+
+## When One Class Is Not Enough
+
+Plain text — LinkedIn renders no markdown. Draft, 819 characters.
+
+> Every example in this series is one class, and for the screens it is about
+> that is the right size. Real applications grow past it.
+>
+> A framework with no answer here produces one 4,000-line class and a
+> maintainer who resigns. There are four seams, and each one is ordinary ABAP:
+> one class per screen, connected by the stack. Popups and value helps as
+> classes of their own. The logic in a class that has no screen - the service a
+> second screen, a batch job and a test all call. Parts of one screen as nested
+> views.
+>
+> What does not appear in that list is a single framework concept. No component,
+> no manifest, no router, no controller hierarchy, no dependency injection
+> container.
+>
+> New article 🎉 A larger app is more classes. The unit stayed the same size.
+>
+> Where do you cut a screen that has grown too big?
+>
+> #ABAP #SAP #UI5
+
+## A Tile Like Any Other
+
+Plain text — LinkedIn renders no markdown. Draft, 802 characters.
+
+> An app that is reached by pasting a URL is a demo. It becomes an application
+> when it has a tile.
+>
+> In the launchpad an abap2UI5 app is indistinguishable from the RAP and
+> freestyle tiles beside it. One thing is installed once: the abap2UI5 shell in
+> the UI5 repository, through abapGit, for the whole system. Everything else is
+> the Fiori administration the system already does - a target mapping, a tile,
+> a catalog, a role - with nothing abap2UI5-specific in it except one
+> parameter: the app class.
+>
+> And when the tile is blank, because it will be, once: the app index after an
+> abapGit import. One report, one cache, one hard reload.
+>
+> New article 🎉 One shell in the UI5 repository, one parameter per tile. No
+> user can tell the difference.
+>
+> How long did your last "blank tile" take to find?
 >
 > #ABAP #SAP #UI5
 
@@ -396,49 +635,6 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
-## 2,300 Lines
-
-Plain text — LinkedIn renders no markdown.
-
-> The communication core of abap2UI5 is one HTTP handler, two interfaces and one
-> database table — originally around 2,300 lines of ABAP.
->
-> It is small because of what it does not do. It does not build views, apps do.
-> It does not decide flow, apps do. It does not wrap UI5 controls, so it does
-> not grow when UI5 does.
->
-> Which matters past elegance: a framework in the request path sees every input,
-> every response, every user. There is a difference between trusting a package
-> because it is popular and being able to open it and find out.
->
-> New article 🎉
->
-> When did you last read a framework you depend on?
->
-> #ABAP #SAP #UI5
-
-## What It Does Not Do
-
-Plain text — LinkedIn renders no markdown.
-
-> Eighteen articles is enough credit to say what abap2UI5 does not do.
->
-> Offline is out — every event asks the server what happens next; take the
-> server away and there is no app left. Pushdown to HANA is indirect, and a
-> frontend fuzzy search help is not available. Real-time and collaborative UIs
-> are the wrong shape for a request-per-event model. Separate frontend and
-> backend teams lose the contract between them. And where a Fiori Elements
-> floorplan fits, it fits — that is less work, not more.
->
-> What is left is still most business software: forms, tables, dashboards,
-> approvals, the small screens nobody funds a project for.
->
-> New article 🎉
->
-> Where would you put the line?
->
-> #ABAP #SAP #UI5
-
 ## Cloud-Ready Is a Property of Your App
 
 Plain text — LinkedIn renders no markdown.
@@ -461,6 +657,81 @@ Plain text — LinkedIn renders no markdown.
 >
 > #ABAP #SAP #UI5
 
+## When the API Is Not Released
+
+Plain text — LinkedIn renders no markdown. Draft, 923 characters.
+
+> SAP grades an extension on four clean core levels now: A for released APIs
+> only, B for classic APIs in Standard ABAP, C for SAP-internal objects, D for
+> modifications.
+>
+> abap2UI5 is Level A. Which says nothing about your app - the level an app
+> reaches is decided by what the app calls.
+>
+> So the case that actually comes up on a Tuesday: the API you need is not
+> released. The move is a wrapper - a class in Standard ABAP that calls the
+> classic API and is itself released for ABAP for Cloud Development. Graded on
+> its own, B, while the app calling it stays A. The value is not the grade. It
+> is that the part of the system which is not upgrade-stable now has a name, a
+> size and a boundary - one class to re-check when SAP changes the API
+> underneath it.
+>
+> New article 🎉 A wrapper does not make the dependency clean. It makes it
+> findable.
+>
+> How many classic APIs does your newest app reach - and could you list them?
+>
+> #ABAP #SAP #UI5
+
+## On-Stack or Side-by-Side
+
+Plain text — LinkedIn renders no markdown. Draft, 834 characters.
+
+> Two places to run an abap2UI5 app, and the choice is about lifecycles, not
+> about code. The class is the same class either way.
+>
+> On-stack: inside the SAP system. Direct reads, no remote call, the transport
+> you already use - and that system's release, upgrade window and change freeze
+> in December.
+>
+> Side-by-side: on the SAP BTP ABAP Environment, calling S/4 through released
+> remote APIs. Released, upgraded and restarted on its own schedule, and the
+> S/4 system does not have to agree. The cost is equally plain: a remote call is
+> slower than a local read, the released APIs are narrower, and there is a
+> second system to run.
+>
+> New article 🎉 Neither choice touches the app class. The same code renders in
+> both places - only what it reads changes.
+>
+> Which constraint decides it for you - the data path, or the release cycle?
+>
+> #ABAP #SAP #UI5
+
+## One App, Many Systems
+
+Plain text — LinkedIn renders no markdown. Draft, 931 characters.
+
+> A side-by-side app already runs outside the system it serves. So: how many
+> systems can it serve?
+>
+> More than one. The app lives on the SAP BTP ABAP Environment and reaches each
+> S/4 system through its released APIs, so the connection is configuration
+> rather than code. One codebase, deployed once, serving several tenants, each
+> with its own system, its own data and its own release - nobody transports
+> into a customer system, and a fix reaches every tenant at once.
+>
+> Nothing was added to make this possible. The frontend renders whatever
+> arrives, the app is one class with nothing beside it, and the state travels
+> with the request. The limits are the ones the shape implies - and the
+> tenant's data boundary is now the app's to enforce.
+>
+> New article 🎉 A framework with nothing to install per system can serve
+> systems it was never installed on.
+>
+> Would you run one app for several S/4 systems - and what would stop you?
+>
+> #ABAP #SAP #UI5
+
 ## From ITS to abap2UI5
 
 Plain text — LinkedIn renders no markdown.
@@ -478,28 +749,6 @@ Plain text — LinkedIn renders no markdown.
 > New article 🎉
 >
 > Which of these six did you write your first web app in?
->
-> #ABAP #SAP #UI5
-
-## Where the View Lives
-
-Plain text — LinkedIn renders no markdown.
-
-> Three ways to get a UI5 screen in front of a user on an ABAP stack. All three
-> render in the browser, same control library, same framework. What differs is
-> where the view is defined — and therefore when it is fixed.
->
-> UI5 Freestyle: a file in a frontend project, fixed at build time.
-> RAP with Fiori Elements: UI annotations on CDS, fixed when they are activated.
-> abap2UI5: an XML string an ABAP class produced for this request.
->
-> Everything else follows from that axis — what gets deployed per app, what a
-> screen costs in artifacts, what can still change at runtime. Not a ranking:
-> fixed early standardises well, fixed late adapts well.
->
-> New article 🎉
->
-> Where does the view live in the app you are working on today?
 >
 > #ABAP #SAP #UI5
 
@@ -568,5 +817,120 @@ Plain text — LinkedIn renders no markdown.
 > New article 🎉
 >
 > Is your bottleneck building the apps, or governing them afterwards?
+>
+> #ABAP #SAP #UI5
+
+## Written for Agents
+
+Plain text — LinkedIn renders no markdown. Draft, 848 characters.
+
+> An app is one class, and the class is text. That property has a consequence
+> nobody was designing for in 2023: it is the shape an AI coding agent is best
+> at.
+>
+> An agent writing a Fiori Elements app keeps a CDS view, annotations, a
+> behavior definition, a service binding and a generated frontend in step, and
+> can verify none of it without a system. An agent writing abap2UI5 writes one
+> file, in one language, and the thing it writes is the thing that runs.
+>
+> Three things turn that into a working setup: a map for the reader with no
+> checkout, a linter that checks the view without a system, and several
+> hundred worked examples - many of them ported by agents exactly that way.
+>
+> New article 🎉 Code-first was the design. Agent-friendly was the consequence.
+>
+> What does your assistant get wrong about your framework, and what would fix
+> it?
+>
+> #ABAP #SAP #UI5
+
+## Not yet published
+
+Posts whose article is not in `docs/advanced/insights/` yet. Each moves up
+into the numbered order the day its article lands.
+
+### No Cache, No Deploy, Any IDE
+
+Plain text — LinkedIn renders no markdown.
+
+> The abap2UI5 loop is: change the class, activate, refresh the browser.
+>
+> What is missing from that sentence is the point. No deployment — activating is
+> the deployment. No cache to invalidate — the UI is built per request, so
+> nothing can be stale. No IDE agreement, because it is ABAP. No context switch
+> to debug: a breakpoint in the method that built the view stops there.
+>
+> Individually, conveniences. Together, the reason a screen gets tried at all —
+> when an experiment costs a class and a refresh, "could we just show this?"
+> stops being a project.
+>
+> New article 🎉
+>
+> What is your current edit-to-see-it time on a Fiori change?
+>
+> #ABAP #SAP #UI5
+
+### 2,300 Lines
+
+Plain text — LinkedIn renders no markdown.
+
+> The communication core of abap2UI5 is one HTTP handler, two interfaces and one
+> database table — originally around 2,300 lines of ABAP.
+>
+> It is small because of what it does not do. It does not build views, apps do.
+> It does not decide flow, apps do. It does not wrap UI5 controls, so it does
+> not grow when UI5 does.
+>
+> Which matters past elegance: a framework in the request path sees every input,
+> every response, every user. There is a difference between trusting a package
+> because it is popular and being able to open it and find out.
+>
+> New article 🎉
+>
+> When did you last read a framework you depend on?
+>
+> #ABAP #SAP #UI5
+
+### What It Does Not Do
+
+Plain text — LinkedIn renders no markdown.
+
+> Eighteen articles is enough credit to say what abap2UI5 does not do.
+>
+> Offline is out — every event asks the server what happens next; take the
+> server away and there is no app left. Pushdown to HANA is indirect, and a
+> frontend fuzzy search help is not available. Real-time and collaborative UIs
+> are the wrong shape for a request-per-event model. Separate frontend and
+> backend teams lose the contract between them. And where a Fiori Elements
+> floorplan fits, it fits — that is less work, not more.
+>
+> What is left is still most business software: forms, tables, dashboards,
+> approvals, the small screens nobody funds a project for.
+>
+> New article 🎉
+>
+> Where would you put the line?
+>
+> #ABAP #SAP #UI5
+
+### Where the View Lives
+
+Plain text — LinkedIn renders no markdown.
+
+> Three ways to get a UI5 screen in front of a user on an ABAP stack. All three
+> render in the browser, same control library, same framework. What differs is
+> where the view is defined — and therefore when it is fixed.
+>
+> UI5 Freestyle: a file in a frontend project, fixed at build time.
+> RAP with Fiori Elements: UI annotations on CDS, fixed when they are activated.
+> abap2UI5: an XML string an ABAP class produced for this request.
+>
+> Everything else follows from that axis — what gets deployed per app, what a
+> screen costs in artifacts, what can still change at runtime. Not a ranking:
+> fixed early standardises well, fixed late adapts well.
+>
+> New article 🎉
+>
+> Where does the view live in the app you are working on today?
 >
 > #ABAP #SAP #UI5
