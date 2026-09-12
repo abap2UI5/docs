@@ -59,7 +59,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { frameworkRef } from './lib/release.mjs';
-import { fetchInterface } from './lib/client-interface.mjs';
+import { fetchInterface, interfaceSource } from './lib/client-interface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGES = path.join(ROOT, 'docs');
@@ -81,6 +81,7 @@ if (!REF) {
 let iface;
 try {
   iface = await fetchInterface(REF);
+  console.log(`read ${interfaceSource(REF)}`);
 } catch (err) {
   console.log(`z2ui5_if_client at ${REF}: not resolved (${err.message})`);
   console.log('SKIPPED: nothing was verified.');

@@ -21,7 +21,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus the catalogue of the repository each class belongs to — the prefix decides: `z2ui5_cl_smp_app_*` is `abap2UI5/samples` (read from its `SAMPLES.md` in a checkout), `z2ui5_cl_smpc_*` samples-controls and `z2ui5_cl_smps_*` samples-stack (read from their `catalogue.json`, a checkout or the published copy). Checks the link in both directions for the samples repository (the `" @docs` line), the class's existence for the other two, and resolves the source links a page writes by hand against whichever checkout is here |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
-| `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`) and the full parser `generate-api-reference.mjs` renders from |
+| `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`; `A2UI5_HOME` reads the same ref out of a local clone of the framework instead, with `git show`, never its working tree) and the full parser `generate-api-reference.mjs` renders from; pinned by `test/client-interface.test.mjs` |
 | `scripts/check-version.mjs` | The release number in the bar's menu, the deprecations page and the changelog, against the newest release tag of the framework |
 | `scripts/generate-search.mjs` | Builds `docs/public/search-index.json` — the pages of this site plus every entry in the three sample catalogues, which is what the box in the middle of the bar searches. Runs inside `docs:build`, so the deploy publishes it; `scripts/lib/search-index.mjs` is what goes in |
 | `scripts/lib/pages.mjs` | What a page of this site IS: the sidebar walk, its title, its opening sentences, its headings, its words. Shared by `build-site.mjs`, `generate-llms.mjs` and `generate-search.mjs` so a page added to the sidebar reaches all three; `summarise( )` — the description of 150 pages and the note in `llms.txt`, which nobody writes and nobody proofreads — is pinned by `test/summarise.test.mjs` |
@@ -630,7 +630,16 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   PROSE: `resources/deprecations.md` carries a *next release* column, and
   `check:version` keeps the release number in the bar's menu, the deprecations
   page and the changelog honest. `A2UI5_REF` still overrides the ref — now to
-  pin a run BACK to a release rather than forward to main.
+  pin a run BACK to a release rather than forward to main. `A2UI5_HOME` points
+  the same three at a local clone of the framework: the ref is then read out
+  of it with `git show` (so `A2UI5_HOME=../abap2UI5 npm run generate:api`
+  regenerates the reference on a machine that cannot reach
+  raw.githubusercontent.com, and `A2UI5_REF=my-branch` on top regenerates it
+  against a branch that has not merged). It is deliberately not a
+  sibling-checkout convenience like the sample catalogues have: the clone's
+  working tree is never read, because the branch a neighbouring checkout
+  happens to be on must not change a gate's verdict. Every run prints where
+  the interface came from — read the line before trusting an OK.
 
 - **A link to a neighbouring site needs `target="_self"`, and looks fine
   without it.** The playground, the catalogue and the linter's rule pages are

@@ -16,6 +16,18 @@
  * the site names, and release.mjs says why it no longer is: a page could not
  * be corrected to an API that had landed on main until the next tag.
  *
+ * The file can come out of a clone of the framework instead of off the
+ * network: `A2UI5_HOME` names the clone, and the same ref is then read with
+ * `git show` from it. That is for a machine that cannot reach
+ * raw.githubusercontent.com (the gates SKIP there, honestly, and a
+ * regeneration has nothing to write), and for regenerating the reference
+ * against a branch that has not merged yet. It is not a sibling-checkout
+ * convenience like lib/catalogue.mjs has, on purpose: the catalogue lookup
+ * answers "which classes exist", where any recent copy will do, and this one
+ * answers "what does main say", where the branch a neighbouring checkout
+ * happens to be on must not change the gate's verdict. Only an explicit
+ * A2UI5_HOME does, and the run prints where the interface came from.
+ *
  * The full parser lives here too, used by generate-api-reference. It answers
  * a richer question than check-api-names asks - not "does this name exist"
  * but "what is everything, with its types, defaults, values and the ABAP-Doc
@@ -25,20 +37,59 @@
  * that produces some of it.
  */
 
+import { execFileSync } from 'child_process';
+
 /** The one file this documentation calls "the client API". */
 export const interfacePath = 'src/02/z2ui5_if_client.intf.abap';
 
 export const interfaceUrl = (ref) =>
   `https://raw.githubusercontent.com/abap2UI5/abap2UI5/${ref}/${interfacePath}`;
 
+/** A clone of the framework to read the interface from instead of the
+ *  network, or null: `A2UI5_HOME`. */
+export function frameworkHome() {
+  return process.env.A2UI5_HOME || null;
+}
+
+/** Where a run reads the interface from, for the line it prints - so the
+ *  output says whether github.com or a clone answered. */
+export function interfaceSource(ref, home = frameworkHome()) {
+  return home ? `${interfacePath} at ${ref} in the clone at ${home} (A2UI5_HOME)` : interfaceUrl(ref);
+}
+
 /** The interface source at a pinned ref. Throws on any network or HTTP
  *  failure - the CALLER decides whether that skips or fails, because a gate
  *  must not go red over an unreachable github.com and must not claim to have
- *  verified something it did not. */
-export async function fetchInterface(ref) {
+ *  verified something it did not. With A2UI5_HOME set, no network at all:
+ *  the ref is read out of that clone, and not being in it throws the same way. */
+export async function fetchInterface(ref, { home = frameworkHome() } = {}) {
+  if (home) return readInterface(ref, home);
   const res = await fetch(interfaceUrl(ref), { signal: AbortSignal.timeout(20000) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.text();
+}
+
+/** The interface at `ref` out of a clone of the framework: what `git show`
+ *  answers for `<ref>:src/02/z2ui5_if_client.intf.abap`, trying the remote's
+ *  copy of the branch too, because a clone that has never checked main out
+ *  knows it only as `origin/main`. The WORKING TREE is deliberately not read:
+ *  it is whichever branch the clone is on right now, and a gate that judged
+ *  the site against that would give a different verdict on the same commit
+ *  depending on what its neighbour was doing. A branch is asked for by
+ *  name, through A2UI5_REF, the same way a release is. */
+export function readInterface(ref, home) {
+  const tried = [];
+  for (const spec of [ref, `origin/${ref}`]) {
+    try {
+      return execFileSync('git', ['-C', home, 'show', `${spec}:${interfacePath}`], {
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+    } catch (err) {
+      tried.push(`${spec}: ${String(err.stderr ?? err.message).trim().split('\n')[0]}`);
+    }
+  }
+  throw new Error(`not in the clone at ${home} - ${tried.join('; ')}`);
 }
 
 /* ---------------------------------------------------------------- parsing */

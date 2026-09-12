@@ -48,3 +48,48 @@ test('a constant run keeps its label, and the doc line under it is not the label
     { name: 'control_by_id', type: 'string', value: 'CONTROL_BY_ID', label: 'Control' },
   ]);
 });
+
+/* ---------------------------------------------------- where the file comes from */
+
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+
+import { fetchInterface, interfaceSource, interfaceUrl, readInterface, interfacePath } from '../scripts/lib/client-interface.mjs';
+
+/** A throwaway clone of the framework: one commit on `main` carrying the
+ *  interface, and a working tree that has moved on to another branch with a
+ *  DIFFERENT interface - the case the clone source must not be fooled by. */
+function cloneWith(mainText, branchText) {
+  const home = fs.mkdtempSync(path.join(os.tmpdir(), 'a2ui5-home-'));
+  const git = (...args) => execFileSync('git', ['-C', home, ...args], { stdio: ['ignore', 'pipe', 'pipe'] });
+  git('init', '-q', '-b', 'main');
+  git('config', 'user.email', 'test@example.com');
+  git('config', 'user.name', 'test');
+  fs.mkdirSync(path.join(home, path.dirname(interfacePath)), { recursive: true });
+  fs.writeFileSync(path.join(home, interfacePath), mainText);
+  git('add', '.');
+  git('commit', '-q', '-m', 'main');
+  git('checkout', '-q', '-b', 'feature');
+  fs.writeFileSync(path.join(home, interfacePath), branchText);
+  git('commit', '-q', '-am', 'feature');
+  return home;
+}
+
+test('A2UI5_HOME reads the ref out of the clone, not whatever its working tree is on', async () => {
+  const home = cloneWith('INTERFACE main.\n', 'INTERFACE feature.\n');
+  try {
+    assert.equal(readInterface('main', home), 'INTERFACE main.\n');
+    assert.equal(readInterface('feature', home), 'INTERFACE feature.\n');
+    assert.equal(await fetchInterface('main', { home }), 'INTERFACE main.\n');
+    assert.throws(() => readInterface('no-such-branch', home), /not in the clone at .*no-such-branch/);
+  } finally {
+    fs.rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test('the run says where the interface came from', () => {
+  assert.equal(interfaceSource('main', null), interfaceUrl('main'));
+  assert.match(interfaceSource('main', '/srv/abap2UI5'), /at main in the clone at \/srv\/abap2UI5 \(A2UI5_HOME\)/);
+});
