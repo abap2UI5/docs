@@ -142,7 +142,7 @@ test('the links wait for the sheet, and lead out of it only there', () => {
   const sheet = PAGE.slice(PAGE.indexOf('<div class="cost-result"'), PAGE.indexOf('<div class="cost-after"'));
   assert.match(sheet, /Support<small>[^<]*<span data-echo="cost-support">/, 'the sheet has a support line');
   assert.match(sheet, /github\.com\/abap2UI5\/abap2UI5\/issues/, 'and the issue tracker is on it');
-  assert.match(sheet, /communityinviter\.com/, 'and Slack');
+  assert.match(sheet, /abapgit\.slack\.com\/join\/shared_invite/, 'and Slack');
   assert.doesNotMatch(sheet, /cost-perks|<\/ul>/, 'and nothing is left of the list that used to close the sheet');
 });
 
@@ -165,7 +165,7 @@ test('the front door\'s cost card leads here, and the page ends on the four ways
   /* Every way says where to do it, and the four places are not
      interchangeable: two to answer somebody in, two to say it out loud. And
      every way carries a link, because a way without one is a wish. */
-  assert.match(last, /communityinviter\.com/, 'Slack');
+  assert.match(last, /abapgit\.slack\.com\/join\/shared_invite/, 'Slack');
   assert.match(last, /github\.com\/abap2UI5\/abap2UI5\/issues/, 'the issue tracker');
   assert.match(last, /linkedin\.com\/company\/abap2ui5/, 'the project page a post can mention');
   assert.match(last, /community\.sap\.com/, 'the SAP Community');

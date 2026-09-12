@@ -218,6 +218,6 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| App State, Bookmark and Share | [`Z2UI5_CL_SMP_APP_498`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_498.clas.abap) |
+| Hash — App State, Bookmark and Share | [`Z2UI5_CL_SMP_APP_498`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_498.clas.abap) |
 
 <!-- samples:end -->

@@ -7,6 +7,7 @@ samples:
   - z2ui5_cl_smp_app_452
   - z2ui5_cl_smp_app_467
   - z2ui5_cl_smp_app_474
+  - z2ui5_cl_smp_app_502
 ---
 # Message
 
@@ -168,11 +169,12 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| MessageToast, Text and Duration | [`Z2UI5_CL_SMP_APP_381`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_381.clas.abap) |
+| Message — MessageToast, Position, onClose and Class | [`Z2UI5_CL_SMP_APP_381`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_381.clas.abap) |
 | MessageBox, Types and Custom Actions | [`Z2UI5_CL_SMP_APP_382`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_382.clas.abap) |
 | MessageBox from SY, BAPIRET2 or Exception | [`Z2UI5_CL_SMP_APP_008`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_008.clas.abap) |
 | MessageView and MessagePopover (A) | [`Z2UI5_CL_SMP_APP_452`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_452.clas.abap) |
 | Message Model and MessageManager (C) | [`Z2UI5_CL_SMP_APP_467`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_467.clas.abap) |
 | MessagePopover URL Policy (A) | [`Z2UI5_CL_SMP_APP_474`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_474.clas.abap) |
+| MessageBox for Any Data | [`Z2UI5_CL_SMP_APP_502`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_502.clas.abap) |
 
 <!-- samples:end -->

@@ -10,7 +10,7 @@ The community offers support for abap2UI5 on a best-effort basis.
 
 If you hit a bug or unexpected behavior, please open an [issue](https://github.com/abap2UI5/abap2UI5/issues). A code snippet that reproduces the bug helps a lot — it lets others quickly test and locate the problem.
 
-Join the abap2UI5 channel on [Slack](https://communityinviter.com/apps/abapgit/abap) to ask questions, share insights, or get help from other developers.
+Join the abap2UI5 channel on [Slack](https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email) to ask questions, share insights, or get help from other developers.
 
 ::: tip
 If you need a specific feature that isn't there yet, open an issue — a good way to discuss possible extensions to the project.
@@ -27,7 +27,7 @@ abap2UI5 is free and MIT-licensed — there is nothing to buy from the project i
 abap2UI5 is an open-source project that values open, transparent communication. When you can, use public channels so others can join the conversation and benefit from it. Get in touch via these platforms:
 
 - Repository: Open an issue on [GitHub](https://github.com/abap2UI5/abap2UI5/issues)
-- Slack: Join the abap2UI5 channel on [abapGit Slack](https://communityinviter.com/apps/abapgit/abap)
+- Slack: Join the abap2UI5 channel on [abapGit Slack](https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email)
 - Social Media: Share your thoughts on [LinkedIn](https://www.linkedin.com/company/abap2ui5)
 
 For private inquiries, email <contact@abap2UI5.org>. Since this is a spare-time project, replies might take some time.
