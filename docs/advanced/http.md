@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # HTTP Connector
 
-The [abap2UI5 HTTP Connector](https://github.com/abap2UI5-addons/http-connector) calls abap2UI5 apps remotely over HTTP between two ABAP systems. It works similarly to the [RFC Connector](./rfc.md), but uses HTTP instead of RFC as the communication channel.
+The [abap2UI5 HTTP Connector](https://github.com/abap2UI5-addons/http-connector) calls abap2UI5 apps remotely over HTTP between two ABAP systems. It works similarly to the [RFC Connector](/advanced/rfc), but uses HTTP instead of RFC as the communication channel.
 
 ## When to use
 The HTTP Connector enables several useful cases:

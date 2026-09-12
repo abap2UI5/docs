@@ -146,7 +146,7 @@ ENDCLASS.
 The message box shows one message — but it also takes a whole set of them. Pass
 a BAPI return table, a message log or the result of a validation run and the
 framework flattens it into the lines the box shows; see
-[Logging](./logging) for the sources it reads.
+[Logging](/cookbook/translation_messages/logging) for the sources it reads.
 
 For something richer than a list of lines — a sortable table with severities
 and long texts — build the view from the same data, or take the ready-made

@@ -9,7 +9,7 @@ That method takes **any** message source, not just a string: a BAL table, a
 `cl_bali_log`, a `bapiret2` table, `sy`, an exception. Anything that is not a
 plain string goes through the framework's message mapper, which flattens it
 into the lines the box shows — so every example below is the same one call with
-a different argument. See [Message](./message) for the other sources.
+a different argument. See [Message](/cookbook/translation_messages/message) for the other sources.
 
 ## BAL Tables
 In classic ABAP, use the BAL function modules and hand the BAL table over as it is. In the `bal_t_msgr` structure, `msgno` is the message number within the message class (`msgid`), while `msgnumber` is the message's sequence number within the log:

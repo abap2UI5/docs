@@ -31,7 +31,7 @@ A helpful mental model:
 
 While a draft is open, the underlying record is **locked** so nobody else can edit it at the same time — but the lock is held by SAP's RAP framework, not by your app. That means your abap2UI5 app can stay **stateless**: the user can close the browser, come back tomorrow, and resume exactly where they left off.
 
-In abap2UI5 you drive draft-enabled RAP business objects directly through **EML** (Entity Manipulation Language), exactly like any other entity — see also [EML](./eml.md). There is no abap2UI5-specific draft API and nothing to configure: the EML statements in the examples below would work identically in any ABAP program. What the rest of this page adds is the abap2UI5 part — binding the draft values to input fields, reacting to button events, and walking the user through the draft lifecycle. Time for code.
+In abap2UI5 you drive draft-enabled RAP business objects directly through **EML** (Entity Manipulation Language), exactly like any other entity — see also [EML](/cookbook/eml_cds_sql/eml). There is no abap2UI5-specific draft API and nothing to configure: the EML statements in the examples below would work identically in any ABAP program. What the rest of this page adds is the abap2UI5 part — binding the draft values to input fields, reacting to button events, and walking the user through the draft lifecycle. Time for code.
 
 ::: tip You don't have to build anything
 On S/4HANA and the BTP ABAP Environment (Steampunk), many business objects already ship as draft-enabled BOs. All examples on this page use **`I_BankTP`**, a draft-enabled BO that ships with S/4HANA. You don't create a BO, and you don't create a draft table — SAP provides both. Your app just calls the standard BO via EML.
@@ -1014,8 +1014,8 @@ A quick checklist of the mistakes beginners hit most often:
 | "Record is locked" errors | A leftover draft from a previous session | `Resume` or `Discard` the existing draft (step 2) |
 | Changes silently lost on exit | No save before leaving edit mode | Save (or prompt to keep) before switching back to VIEW |
 
-For the full story on inspecting `FAILED` / `REPORTED` after EML calls, see the **Failure Handling** section in [EML](./eml.md).
+For the full story on inspecting `FAILED` / `REPORTED` after EML calls, see the **Failure Handling** section in [EML](/cookbook/eml_cds_sql/eml).
 
 ::: tip
-The field names (`BankCountry`, `BankInternalID`, `SWIFTCode`, `LongBankName`) and the draft-shadow table (`cabnk_bank_d`) match the released `I_BankTP` on current S/4HANA — on other releases the BO name, fields, or shadow table may differ. If no standard BO covers your object, define your own draft-enabled RAP BO (with its own `draft table z…_d`, `lock master`, etc.) and consume it the same way; see the [SAP RAP draft documentation](https://help.sap.com/docs/abap-cloud/abap-rap/draft). If you need locks for non-draft objects, see [Locks](../expert_more/lock.md).
+The field names (`BankCountry`, `BankInternalID`, `SWIFTCode`, `LongBankName`) and the draft-shadow table (`cabnk_bank_d`) match the released `I_BankTP` on current S/4HANA — on other releases the BO name, fields, or shadow table may differ. If no standard BO covers your object, define your own draft-enabled RAP BO (with its own `draft table z…_d`, `lock master`, etc.) and consume it the same way; see the [SAP RAP draft documentation](https://help.sap.com/docs/abap-cloud/abap-rap/draft). If you need locks for non-draft objects, see [Locks](/cookbook/expert_more/lock).
 :::

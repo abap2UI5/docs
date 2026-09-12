@@ -132,7 +132,7 @@ run in the browser.
 From there, pick the direction that fits:
 
 - **Read an app that already does it.** The [sample catalog](https://abap2ui5.github.io/playground/samples/)
-  holds hundreds of working apps from three repositories, every one with its
+  holds over 700 working apps from three repositories, every one with its
   ABAP printed in full and — where it needs no system — a button that runs it in
   your browser. Start on [Learn](https://abap2ui5.github.io/playground/samples/?src=learn),
   the path from the smallest app that runs to files, devices and custom CSS.

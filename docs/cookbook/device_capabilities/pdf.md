@@ -80,7 +80,7 @@ For a ready-made dialog with a title bar and buttons, the
 
 ## Download Instead of Display
 
-To let the user save the PDF rather than view it inline, use the [file download](./upload_download.md) pattern:
+To let the user save the PDF rather than view it inline, use the [file download](/cookbook/device_capabilities/upload_download) pattern:
 
 ```abap
 client->follow_up_action(

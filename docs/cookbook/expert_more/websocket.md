@@ -47,8 +47,8 @@ WebSockets cost a permanent connection per user — comparable to a stateful ses
 - multi-user collaboration (chat, shared editing)
 - long-running background jobs reporting status
 
-For *"refresh every few seconds"* the [Timer](../browser_interaction/timer.md) is cheaper and simpler.
+For *"refresh every few seconds"* the [Timer](/cookbook/browser_interaction/timer) is cheaper and simpler.
 
 ::: warning
-APC/AMC are not available on every ABAP platform — check release notes for your system (ABAP Cloud, S/4 Public Cloud, BTP ABAP Environment) before designing around them.
+ABAP Push Channels and ABAP Messaging Channels exist from ABAP Platform 7.40 SP05 on. In ABAP Cloud (BTP ABAP Environment, S/4 Public Cloud) only the released APIs of the two are available — the [samples-stack](https://github.com/abap2UI5/samples-stack) README says what its AMC/APC package needs from the system before you design around them.
 :::

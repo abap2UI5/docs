@@ -216,7 +216,7 @@ magnitude apart, and most iterations should end at the first.
 
 ## Next Steps
 
-- [Building with AI](/get_started/ai) — the whole AI setup in rising order of
+- [Developing with AI](/get_started/ai) — the whole AI setup in rising order of
   effort; this server is the top rung
 - [abap2UI5 linter](/advanced/linter) — the gates behind `validate_view` and
   `screenshot_view`

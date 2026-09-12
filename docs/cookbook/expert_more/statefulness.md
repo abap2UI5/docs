@@ -37,11 +37,11 @@ See `Z2UI5_CL_SMPS_APP_485` (sticky session with locks) and `Z2UI5_CL_SMPS_APP_4
 ## When to Use It
 Stateful sessions are useful when:
 
-- You need a **classic SAP-GUI-style enqueue** that survives between user interactions — see [Locks → Stateful Session](./lock.md#_5-stateful-session).
+- You need a **classic SAP-GUI-style enqueue** that survives between user interactions — see [Locks → Stateful Session](/cookbook/expert_more/lock#_5-stateful-session).
 - You hold a **resource that is expensive to set up** on every roundtrip (e.g. an open RFC destination, a long-running selection, a cached internal table that cannot be re-derived cheaply).
 - You are migrating a legacy dynpro flow one-to-one and want the same session semantics during the transition.
 
-For everything else — and especially anything user-facing on a busy system — stick with the stateless default and use [optimistic checks](./lock.md#_3-optimistic-check) or [soft locks](./lock.md#_6-soft-lock) instead.
+For everything else — and especially anything user-facing on a busy system — stick with the stateless default and use [optimistic checks](/cookbook/expert_more/lock#_3-optimistic-check) or [soft locks](/cookbook/expert_more/lock#_6-soft-lock) instead.
 
 ## Trade-offs
 ::: warning
