@@ -52,7 +52,7 @@ Keep in mind that those zeros were written in somebody's evenings - the release 
 And it is payable in a currency you already have. If this page took a line out of a budget, here is what puts a little of it back:
 
 - **Star the repository.** One click on [GitHub](https://github.com/abap2UI5/abap2UI5), and the next visitor sees a project rather than an experiment.
-- **Answer somebody.** One reply under an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://communityinviter.com/apps/abapgit/abap) saves somebody else an afternoon of searching.
+- **Answer somebody.** One reply under an [issue](https://github.com/abap2UI5/abap2UI5/issues) or in [Slack](https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email) saves somebody else an afternoon of searching.
 - **Report what broke.** An [issue](https://github.com/abap2UI5/abap2UI5/issues) with a class that reproduces the problem is half of the fix already.
 - **Post about it.** A short post that mentions [the page](https://www.linkedin.com/company/abap2ui5) and carries **#abap2UI5** is how the word gets around.
 - **Write it up.** A full article in the [SAP Community](https://community.sap.com/) or on [LinkedIn](https://www.linkedin.com/company/abap2ui5) reaches the next person, and lands in the [references](/resources/references).
