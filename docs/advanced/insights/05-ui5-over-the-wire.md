@@ -56,5 +56,3 @@ design — so what travels is the layer directly above it. A view, not a page.
 
 The frontend stopped being an application and became a renderer, and most of
 what follows in this series comes out of that one move.
-
-Happy ABAPing! 🦖🦕🦣

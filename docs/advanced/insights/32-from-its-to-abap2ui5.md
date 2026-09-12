@@ -39,5 +39,3 @@ otherwise. What has been moving back ever since is not the rendering but the
 Which makes Over-the-Wire less of a new idea than a returning one, arriving
 with the part the old server-rendered world never had — a real control library
 in the browser.
-
-Happy ABAPing! 🦖🦕🦣

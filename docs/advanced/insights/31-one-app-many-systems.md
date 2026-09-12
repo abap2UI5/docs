@@ -31,5 +31,3 @@ responsibility the ABAP authorization concept was not asked to carry here.
 
 A framework with nothing to install per system is a framework that can serve
 systems it was never installed on.
-
-Happy ABAPing! 🦖🦕🦣

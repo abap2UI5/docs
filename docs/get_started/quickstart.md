@@ -12,17 +12,30 @@ No system at hand? Two ways to see abap2UI5 run before anything is installed:
   framework in your browser: write ABAP on the left, watch the app run on the
   right, nothing to install.
 - The [**sample catalog**](https://abap2ui5.github.io/playground/samples/)
-  lists hundreds of working apps, each with its ABAP printed in full and a
+  lists over 700 working apps, each with its ABAP printed in full and a
   button that runs it - a live demo of every pattern the cookbook describes.
 
 Both are also where to send a colleague who wants to see it before reading on.
 
+## Before You Start
+
+Four things the three steps below assume:
+
+- **abapGit** is installed on the system — the one-time tool that pulls
+  abap2UI5 in. New to it? Follow the
+  [abapGit installation guide](https://docs.abapgit.org/user-guide/getting-started/install.html);
+  the [abapGit](/technical/tools/abapgit) page says what the project uses it for.
+- **Developer authorization**, plus the right to create and activate an ICF
+  node in `SICF` — on many systems a Basis task, so ask early.
+- **A package** for the handler class. A local `$TMP` package is fine for a
+  first look; a transportable one comes with [Productive Usage](/configuration/productive_usage).
+- **The browser reaches the OpenUI5 CDN**, or the system serves UI5 itself —
+  see [Bootstrapping](/configuration/setup/ui5_bootstrapping) for the second case.
+
 ## 1. Install the Framework via abapGit
 
 Pull [abap2UI5](https://github.com/abap2UI5/abap2UI5) with
-[abapGit](https://abapgit.org). (New to abapGit? Install it first — see
-[abapGit](/technical/tools/abapgit); it's the one-time tool used to pull
-abap2UI5 into your system.) For anything beyond a first look, pull a
+[abapGit](https://abapgit.org). For anything beyond a first look, pull a
 [release](https://github.com/abap2UI5/abap2UI5/releases/) rather than `main` —
 see [Productive Usage](/configuration/productive_usage) for why.
 
@@ -41,7 +54,8 @@ later.
 The framework is everything you need: the HTTP endpoint you create next serves
 the UI5 frontend itself, so there is no separate frontend to deploy. For a
 launchpad or a Fiori Elements host, the frontend can also be deployed as an app
-of its own — see [Frontend](/advanced/extensibility/frontend).
+of its own into the UI5 ABAP repository — see
+[Fiori Launchpad](/configuration/launchpad#installation).
 
 ## 2. Set Up HTTP Handler and Service
 Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:

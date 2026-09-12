@@ -48,5 +48,3 @@ read again.
 
 Small instance, bounded model, one request per click. Everything else the
 system already does well.
-
-Happy ABAPing! 🦖🦕🦣

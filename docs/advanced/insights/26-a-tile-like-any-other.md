@@ -49,5 +49,3 @@ the [ABAP Cloud pages](/configuration/btp) describe the setup.
 
 One shell in the UI5 repository, one parameter per tile. No user can tell
 the difference.
-
-Happy ABAPing! 🦖🦕🦣

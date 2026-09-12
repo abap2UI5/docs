@@ -1,8 +1,8 @@
 ---
 outline: [2, 4]
 ---
-# Installation
-abap2UI5 apps run directly via an HTTP service — the fastest and simplest setup. This works on every ABAP release and with both ABAP language versions (Standard ABAP and ABAP for Cloud).
+# Deployment Scenarios
+To install the framework, start with the [Quickstart](/get_started/quickstart) — this page is about where the endpoint may live, per system. abap2UI5 apps run directly via an HTTP service — the fastest and simplest setup. This works on every ABAP release and with both ABAP language versions (Standard ABAP and ABAP for Cloud).
 
 But production use may need extra considerations across different system environments.
 

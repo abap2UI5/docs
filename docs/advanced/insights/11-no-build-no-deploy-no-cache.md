@@ -56,5 +56,3 @@ show this on a screen?" stops being the opening of a project and becomes
 something you try before lunch.
 
 Iteration speed is not a nice-to-have. It decides which ideas get built at all.
-
-Happy ABAPing! 🦖🦕🦣

@@ -59,5 +59,3 @@ per user, or a table that did not exist a millisecond ago, which is where
 
 F4 is three lines and a SELECT now. It is no longer free, and it is no
 longer limited to the DDIC either.
-
-Happy ABAPing! 🦖🦕🦣

@@ -12,7 +12,7 @@ app without leaving the editor.
 They are independent of each other. Take the first one and stop, or take all
 three. Building with an AI assistant? That whole side of the tooling — the
 indexes, the agent conventions, the MCP server — is collected on
-[Building with AI](/get_started/ai).
+[Developing with AI](/get_started/ai).
 
 ## Start a project from the template
 

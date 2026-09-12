@@ -11,14 +11,14 @@ Extend the object page of a Fiori list report app with an abap2UI5 app. See the 
 
 1. Register the FLP integration in the component.js:
 
-```javascript
+```js
 // Register abap2UI5 FLP integration for component container
 jQuery.sap.registerModulePath("z2ui5", "/sap/bc/ui5_ui5/sap/z2ui5");
 ```
 
 2. Adapt the object page extension controller.js:
 
-```javascript
+```js
 sap.ui.core.Component.create({
 				name: "z2ui5",
 				settings: {

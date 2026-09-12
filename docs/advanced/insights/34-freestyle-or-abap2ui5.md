@@ -52,5 +52,3 @@ project for.
 
 Nothing about picking one rules out the other later. The view is a string
 either way, and the controls are the same controls.
-
-Happy ABAPing! 🦖🦕🦣

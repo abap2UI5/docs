@@ -40,5 +40,3 @@ The completion list was a way to avoid reading the SDK. Coverage of the whole
 API is worth more than a shortcut around part of it.
 
 Four verbs that name no control can build every control.
-
-Happy ABAPing! 🦖🦕🦣

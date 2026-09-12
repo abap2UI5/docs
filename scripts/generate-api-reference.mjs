@@ -56,7 +56,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { frameworkRef } from './lib/release.mjs';
-import { fetchInterface, parseInterface, interfacePath } from './lib/client-interface.mjs';
+import { fetchInterface, interfaceSource, parseInterface, interfacePath } from './lib/client-interface.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGE = path.join(ROOT, 'docs', 'resources', 'api.md');
@@ -79,13 +79,14 @@ if (!REF) {
 let iface;
 try {
   iface = await fetchInterface(REF);
+  console.log(`read ${interfaceSource(REF)}`);
 } catch (err) {
   console.log(`z2ui5_if_client at ${REF}: not resolved (${err.message})`);
   if (CHECK) {
     console.log('SKIPPED: nothing was verified.');
     process.exit(0);
   }
-  console.error('nothing to generate from - try again with a network.');
+  console.error('nothing to generate from - try again with a network, or point A2UI5_HOME at a clone of abap2UI5/abap2UI5.');
   process.exit(1);
 }
 

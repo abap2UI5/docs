@@ -5,6 +5,19 @@ outline: [2, 4]
 
 This project uses [abapGit](https://github.com/abapGit/abapGit) for version control and easy code distribution.
 
+## Installing abapGit
+
+abapGit is itself ABAP, installed once per system before anything else in this
+documentation can be pulled. The
+[abapGit installation guide](https://docs.abapgit.org/user-guide/getting-started/install.html)
+covers both flavors: the standalone report, which is one program to create and
+activate and is enough to pull abap2UI5, and the developer version pulled with
+it afterwards. ABAP Cloud systems — BTP ABAP Environment and S/4 Public Cloud —
+use [abapGit for Eclipse](https://eclipse.abapgit.org/) in ADT instead; the
+[S/4 Public Cloud](/configuration/s4_public_cloud) page walks through that pull
+screenshot by screenshot. With abapGit in place, the
+[Quickstart](/get_started/quickstart) is the next page.
+
 ## Git Client
 
 We build all project artifacts directly in an ABAP system and store them in a GitHub repository through abapGit.

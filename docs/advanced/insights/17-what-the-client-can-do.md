@@ -56,5 +56,3 @@ interface itself, so it cannot drift from what the framework actually offers.
 
 One method in, one interface out. Everything an app can do is a method on
 `client`.
-
-Happy ABAPing! 🦖🦕🦣

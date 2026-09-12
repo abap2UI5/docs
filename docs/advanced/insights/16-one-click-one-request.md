@@ -61,5 +61,3 @@ Local variables, an open cursor, a lock: gone with the work process, every
 time, no exceptions.
 
 PBO builds, PAI decides, and the dialog step is a POST.
-
-Happy ABAPing! 🦖🦕🦣

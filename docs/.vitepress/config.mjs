@@ -276,13 +276,17 @@ export default defineConfig({
         ],
       },
       {
-        // No overview page any more. This is a collection of concrete
-        // problem-and-solution chapters, and a map page in front of it was a
-        // stop between the reader and the recipe - it restated the sidebar
-        // they were already looking at. The section opens on the first
-        // chapter instead.
+        // An index page again, for DISCOVERY rather than lookup. It was
+        // taken out once, with reason: a reader looking a recipe up has this
+        // sidebar, and a map page in front of it restated the menu they were
+        // already reading. So the section opened on its first chapter, the
+        // Cheat Sheet - and a first visit landed on a page whose opening line
+        // says it is a checklist, not an introduction. The index is that
+        // introduction: one row per group with what it covers and where it
+        // starts, and the sheet named as the page to keep open. Lookup still
+        // goes straight to the rows below; the row above them opens the map.
         text: "Cookbook",
-        link: "/cookbook/cheat_sheet",
+        link: "/cookbook/",
         collapsed: true,
         items: [
           // The sheet you keep open while working - first, because this is
@@ -465,7 +469,10 @@ export default defineConfig({
         link: "/configuration/installation",
         collapsed: true,
         items: [
-          { text: "Installation", link: "/configuration/installation" },
+          // The file keeps its name - the URL has been public for years - and
+          // the page says what it is about: not how to install the framework
+          // (that is the Quickstart) but where the endpoint lives per system.
+          { text: "Deployment Scenarios", link: "/configuration/installation" },
           {
             text: "Setup",
             link: "/configuration/setup",
@@ -502,7 +509,11 @@ export default defineConfig({
       },
       {
         text: "Advanced Topics",
-        link: "/advanced/extensibility/user_exits",
+        // The section's own page: one row per group below, with what it
+        // covers and its first page. It opened on User Exits, the first leaf
+        // of the first group, which told a reader nothing about the other
+        // four groups.
+        link: "/advanced/",
         collapsed: true,
         items: [
           // Twelve entries in a flat list until now, of four different kinds:

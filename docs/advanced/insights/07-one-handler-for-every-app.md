@@ -54,5 +54,3 @@ govern, and becomes a class.
 
 A handler that knows nothing about the application never has to be written
 again for the next one.
-
-Happy ABAPing! 🦖🦕🦣

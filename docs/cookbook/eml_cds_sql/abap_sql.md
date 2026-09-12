@@ -138,5 +138,5 @@ WHEN client->check_on_event( `SAVE` ).
 ```
 
 ::: tip
-For data sourced from the Virtual Data Model, prefer reading from a [CDS view](./cds.md) instead of base tables — you get business semantics, associations, and authorization checks out of the box.
+For data sourced from the Virtual Data Model, prefer reading from a [CDS view](/cookbook/eml_cds_sql/cds) instead of base tables — you get business semantics, associations, and authorization checks out of the box.
 :::

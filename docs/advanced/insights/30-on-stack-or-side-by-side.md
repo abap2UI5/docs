@@ -38,5 +38,3 @@ side closes the gap and is graded on its own — the BTP side stays Level A:
 
 Neither choice touches the app class. The same code renders in both places —
 only what it reads changes.
-
-Happy ABAPing! 🦖🦕🦣

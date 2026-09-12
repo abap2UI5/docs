@@ -75,5 +75,3 @@ out of habit.
 
 A lock is a promise about a session. Where the session is one request long,
 the promise has to be, too.
-
-Happy ABAPing! 🦖🦕🦣

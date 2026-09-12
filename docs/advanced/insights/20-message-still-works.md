@@ -60,5 +60,3 @@ developer wants and considerably more than a browser should get.
 
 The message classes, the texts and the translation stay. Only the dump
 looks different.
-
-Happy ABAPing! 🦖🦕🦣

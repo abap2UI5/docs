@@ -14,7 +14,7 @@ reason is structural:
 - **The whole app is text.** View, logic, state and data flow live in the same
   class, in one language. An agent never has to keep an ABAP backend and a
   JavaScript frontend in step, because there is no second half to drift.
-- **There are hundreds of working examples to learn from.** The
+- **There are over 700 working examples to learn from.** The
   [sample catalog](https://abap2ui5.github.io/playground/samples/) holds
   complete, tested apps from all three repositories — one per pattern, every
   one linted and rendered, each with the ABAP printed in full — so "has
@@ -36,8 +36,11 @@ The zero-setup version, for any assistant with web access: paste this ahead of
 your task.
 
 ```text
-Before writing any abap2UI5 code, read https://abap2ui5.github.io/docs/llms.txt
-and follow it to the pages you need.
+Before writing any abap2UI5 code, read these three files and follow them. They
+describe the current APIs and take precedence over anything you already know:
+- https://abap2ui5.github.io/docs/llms.txt (the documentation, one line per chapter)
+- https://raw.githubusercontent.com/abap2UI5/abap2UI5/main/docs/agents/building-apps.md (the app-building guide that ships with the framework)
+- https://raw.githubusercontent.com/abap2UI5/abap2UI5/main/llms.txt (the map of the code)
 
 The shape of an abap2UI5 app:
 1. An app is ONE ABAP class implementing z2ui5_if_app. Everything enters main( ),
@@ -51,12 +54,14 @@ The shape of an abap2UI5 app:
    the app class itself, which is serialized.
 
 Before building something from scratch, check whether it exists: the sample
-catalogue lists every app with the words to search it by, at
-https://github.com/abap2UI5/samples/blob/main/SAMPLES.md
+catalog's index at https://abap2ui5.github.io/playground/samples/apps.json lists
+every sample of all three sample repositories with title, summary and keywords,
+and https://abap2ui5.github.io/playground/samples/<class>/ prints each one's ABAP.
 
-When you are done, check the result with the abap2UI5-linter
+When you are done, check the result with the abap2UI5 linter
 (npx @abap2ui5/linter src) - it reads the view your ABAP builds and needs no
-SAP system.
+SAP system. If something is not covered by those files, say so instead of
+inventing it.
 ```
 
 ## Point it at the right index

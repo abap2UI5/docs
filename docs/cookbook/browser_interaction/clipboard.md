@@ -55,7 +55,7 @@ ENDCLASS.
 
 ## Copy the App State URL
 
-To share the current app state instead of a custom string, compose the link with `client->app_state_get_href( )` and hand it to the same `clipboard_copy` action — see [App State](../event_navigation/navigation/app_state.md).
+To share the current app state instead of a custom string, compose the link with `client->app_state_get_href( )` and hand it to the same `clipboard_copy` action — see [App State](/cookbook/event_navigation/navigation/app_state).
 
 ::: warning
 The browser's Clipboard API requires HTTPS (or `localhost`). On plain HTTP the call is silently ignored.
@@ -65,9 +65,10 @@ The browser's Clipboard API requires HTTPS (or `localhost`). On plain HTTP the c
 
 ## Working Samples
 
-Complete apps from the [sample catalog](https://github.com/abap2UI5/samples/blob/main/SAMPLES.md)
-that use what this page describes. Each is a single class — pull the repository with
-[abapGit](https://abapgit.org) and start it with `?app_start=<class>`.
+Complete apps from the [sample catalog](https://abap2ui5.github.io/playground/samples/)
+that use what this page describes. Each is a single class in [abap2UI5/samples](https://github.com/abap2UI5/samples)
+unless its row names another of the three sample repositories — pull that repository with
+[abapGit](https://abapgit.org) and start the class with `?app_start=<class>`.
 
 | Sample | Class |
 |---|---|

@@ -22,7 +22,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { parseCatalogue, countCatalogue, countEntries } from '../scripts/lib/catalogue.mjs';
+import { parseCatalogue, countCatalogue, countEntries, entriesByClass, resolveHome } from '../scripts/lib/catalogue.mjs';
 
 const ROWS = [
   '## Basics',
@@ -191,4 +191,29 @@ test('an unreachable published catalogue costs the figure, never the build', asy
   // a half-written or wrong file must count for nothing, not throw
   assert.equal(await countCatalogue('samples', dir, { fetchFn: served('not json {') }), null);
   assert.equal(await countCatalogue('samples', dir, { fetchFn: served('{"counts":{"samples":97}}') }), null);
+});
+
+test('a catalogue.json becomes a map from class to label, path and branch, whatever its shape', () => {
+  const controls = entriesByClass(JSON.parse(JSON_CONTROLS));
+  const stack = entriesByClass(JSON.parse(JSON_STACK));
+  assert.equal(controls.size, countEntries(JSON.parse(JSON_CONTROLS)));
+  assert.equal(stack.size, countEntries(JSON.parse(JSON_STACK)));
+  for (const [cls, hit] of [...controls, ...stack]) {
+    assert.equal(cls, cls.toLowerCase(), 'keyed by the lower-cased class, the way pages declare it');
+    assert.ok(hit.path && hit.path.endsWith('.clas.abap'), `${cls} has its source path`);
+    assert.ok(hit.label.length > 0, `${cls} has a label`);
+  }
+  // samples-stack rows name the package branch a reader pulls; main is no branch worth naming
+  const named = [...stack.values()].filter((h) => h.branch);
+  assert.ok(named.every((h) => h.branch !== 'main'));
+});
+
+test('a checkout is found by its catalogue, and its absence is null rather than a guess', (t) => {
+  const root = scratch();
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  assert.equal(resolveHome('samples-controls', root), null);
+  fs.mkdirSync(path.join(root, '.samples-controls'));
+  fs.writeFileSync(path.join(root, '.samples-controls', 'catalogue.json'), JSON_CONTROLS);
+  assert.equal(resolveHome('samples-controls', root), path.join(root, '.samples-controls'));
+  assert.throws(() => resolveHome('samples-nowhere', root), /no catalogue location/);
 });

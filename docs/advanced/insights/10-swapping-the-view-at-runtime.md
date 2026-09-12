@@ -66,5 +66,3 @@ request is running, then what a screen can adapt to is no longer fixed on the
 day it was designed.
 
 A view that is built is a view that can be built differently.
-
-Happy ABAPing! 🦖🦕🦣

@@ -193,5 +193,3 @@ launchpad as all your other UI5 and RAP apps. It reaches your business logic
 however you like, with the programming model of your choice.
 
 One interface, one method, and no opinion about what is behind the screen.
-
-Happy ABAPing! 🦖🦕🦣

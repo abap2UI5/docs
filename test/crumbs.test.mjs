@@ -106,11 +106,25 @@ test('the real sidebar files the pages where a reader would look for them', () =
 test('every page the sidebar names gets a trail longer than the word Documentation', () => {
   // The section headers duplicate their first chapter's link, so a walk that
   // matched shallowly would leave a whole level of pages with no trail at all.
+  //
+  // The one page entitled to the single crumb is a top-level section's OWN
+  // page - the Cookbook's index, the Advanced Topics index - which no row
+  // under the section repeats: its title IS the section, so "Documentation"
+  // is everything above it. Pinned as exactly one crumb rather than skipped,
+  // so a walk that gave such a page a trail of two would be as wrong here as
+  // a walk that gave a chapter one.
   const seen = [];
   const walk = (items) => (items || []).forEach((i) => { if (i.link) seen.push(i.link); walk(i.items); });
   walk(config.themeConfig.sidebar);
+  const below = (items) => (items || []).flatMap((i) => [i.link, ...below(i.items)]).filter(Boolean);
+  const own = new Set(config.themeConfig.sidebar
+    .filter((s) => s.link && !below(s.items).includes(s.link))
+    .map((s) => s.link));
+  assert.ok(own.size > 0, 'expected at least one section with a page of its own');
   assert.ok(seen.length > 100, `expected the manual's sidebar, got ${seen.length} entries`);
   for (const link of seen) {
-    assert.ok(trailFor(config.themeConfig.sidebar, link).length > 1, `no trail for ${link}`);
+    const trail = trailFor(config.themeConfig.sidebar, link);
+    if (own.has(link)) assert.equal(trail.length, 1, `${link} is a section's own page and gets the one crumb`);
+    else assert.ok(trail.length > 1, `no trail for ${link}`);
   }
 });

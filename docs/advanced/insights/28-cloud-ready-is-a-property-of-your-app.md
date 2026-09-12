@@ -53,5 +53,3 @@ property of what the application reads and writes, and it is decided in the
 
 A cloud-ready framework does not make a cloud-ready app. It just stops being
 the reason one is not.
-
-Happy ABAPing! 🦖🦕🦣

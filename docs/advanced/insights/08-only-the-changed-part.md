@@ -53,5 +53,3 @@ noticed. Data binding was doing this while the JavaScript world was still
 inventing names for it.
 
 Sending the whole view is the exception, not the rhythm.
-
-Happy ABAPing! 🦖🦕🦣

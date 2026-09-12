@@ -83,7 +83,10 @@ jobs:
           ref: main
           path: .samples-controls
           fetch-depth: 1
-          sparse-checkout: SAMPLES.md
+          sparse-checkout: |
+            SAMPLES.md
+            catalogue.json
+            src
           sparse-checkout-cone-mode: false
       # samples-stack was missing here while generate-llms.mjs counts three
       # catalogues into the llms.txt it publishes. The deploy therefore
@@ -96,7 +99,10 @@ jobs:
           ref: main
           path: .samples-stack
           fetch-depth: 1
-          sparse-checkout: SAMPLES.md
+          sparse-checkout: |
+            SAMPLES.md
+            catalogue.json
+            src
           sparse-checkout-cone-mode: false
 
       # The playground's stylesheet, for the shared-design gate, and the two

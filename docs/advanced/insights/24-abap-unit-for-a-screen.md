@@ -158,5 +158,3 @@ pipeline, in seconds.
 Logic in ABAP Unit, view in the linter, and the roundtrip in a browser. Keep
 the client out of the logic, and the logic is testable the way any ABAP class
 is.
-
-Happy ABAPing! 🦖🦕🦣
