@@ -207,8 +207,8 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Hash — Routing mode fresh | [`Z2UI5_CL_SMP_APP_468`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_468.clas.abap) |
+| Hash — Routing mode fresh | [`Z2UI5_CL_SMP_APP_468`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_468.clas.abap) |
 | Routing mode keep | [`Z2UI5_CL_SMP_APP_480`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_480.clas.abap) |
-| Hash — App-Owned Routing (#/detail) | [`Z2UI5_CL_SMP_APP_499`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_499.clas.abap) |
+| Hash — App-Owned Routing (#/detail) | [`Z2UI5_CL_SMP_APP_499`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_499.clas.abap) |
 
 <!-- samples:end -->
