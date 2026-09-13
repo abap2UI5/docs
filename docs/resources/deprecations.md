@@ -154,12 +154,22 @@ See [Data Binding](/cookbook/model/binding) for the full picture.
 
 ### `custom_mapper` / `custom_filter` on `_bind( )`
 
-Both hand your app a reference into the bundled AJSON library — a mirrored copy
-of an external project, not a contract abap2UI5 owns. An app implementing
+**No AJSON type belongs in a bind call any more.** Both parameters hand your app
+a reference into the bundled AJSON library — a mirrored copy of an external
+project, not a contract abap2UI5 owns. An app implementing
 `z2ui5_if_ajson_mapping` / `_filter` binds itself to whatever that mirror looks
-like today.
+like today, and a resync of the mirror is free to break it. The same goes for
+`custom_mapper_back` / `custom_filter_back` on
+`_bind_edit( )` (the section above), which are inert on top of that.
 
-Everything they were reached for now has a declarative counterpart on `_bind( )`:
+Everything they were reached for is declarative on `_bind( )` now, and each
+replacement has a sample that proves it:
+
+| What you used AJSON for | What to write instead | Sample |
+|---|---|---|
+| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_507.clas.abap) |
+| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/00/97/z2ui5_cl_smp_app_509.clas.abap) |
+| Anything else | Shape the value in ABAP before you bind it | — |
 
 ```abap
 " old - a filter that drops initial fields
@@ -174,10 +184,38 @@ client->_bind( val                = ms_data
                omit_initial_paths = VALUE #( ( `PRICE` ) ( `STATE` ) ) )
 ```
 
-For a control property that must receive an **object** rather than a string,
-`json = abap_true` splices a JSON node into the model. Anything else is better
-shaped in ABAP before binding. Both parameters are still evaluated and keep
-working.
+```abap
+" old - a mapper, so the model carries keys an ABAP structure cannot spell
+client->_bind( val = ms_card custom_mapper = lo_manifest_mapper )
+
+" new - the string already holds the JSON, so splice it in as a node
+client->_bind( val = mv_card_manifest json = abap_true )
+```
+
+#### Nothing to migrate, in practice
+
+Measured across [samples](https://github.com/abap2UI5/samples),
+[samples-controls](https://github.com/abap2UI5/samples-controls) and
+[samples-stack](https://github.com/abap2UI5/samples-stack): not one app class
+passes either parameter or implements either interface, and none ever did in
+their git history. If your own apps are the same — and most are — there is
+nothing to change, only nothing new to write. The linter has no rule for this
+one yet, so `grep -ri "custom_mapper\|custom_filter" src` is how you find out.
+
+#### One gap, and one thing that stays
+
+The single thing `_bind( )` deliberately cannot do is a mapping that differs
+**per direction**. That only ever lived on `_bind_edit( )`, where the `_back`
+halves are no longer evaluated, so it is not a working feature you would be
+giving up.
+
+And this is about the *interface*, not the library: AJSON stays. It is the model
+engine behind every roundtrip, and `json = abap_true` is implemented with it.
+What is going away is the leak of a mirrored library into the API your app
+compiles against.
+
+Both parameters are still evaluated and keep working — existing code does not
+break.
 
 ### The `view` parameter of `_bind( )` / `_bind_edit( )`
 
