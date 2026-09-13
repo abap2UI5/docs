@@ -69,6 +69,7 @@ tell you what is coming if you do not.
 | `set_app_state_active( )` | `app_state_set_active( )` | *next release* |
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | *next release* |
 | `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | *next release* |
+| `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, *next release* |
 
 ## Obsolete: still compiles
 
@@ -563,3 +564,33 @@ re-exports the date helpers from `z2ui5.Formatter` (module
 ```
 
 See [Formatter](/cookbook/model/formatter).
+
+### `check_allow_multi_req` → `check_queue_last`
+
+`s_ctrl-check_allow_multi_req` sent the event while another round-trip was
+still running. Every firing went out at once and the responses could land in
+any order — but only the newest response may commit its result, so each earlier
+round-trip was work the backend did to have its answer thrown away.
+
+The case it was reached for is the wire that fires per keystroke — `liveChange`,
+`liveSearch`, `sliderChange` — and `check_queue_last` serves that one properly:
+while a round-trip is in flight the **last** event fired on the wire is kept and
+dispatched once the response has landed. One round-trip at a time, order
+preserved, and the backend ends on the control's current value.
+
+```abap
+" old - one round-trip per keystroke, responses in any order
+)->a( n = `liveChange` v = client->_event(
+    val    = `SEARCH`
+    s_ctrl = VALUE #( check_allow_multi_req = abap_true ) )
+
+" new - one round-trip at a time, the last keystroke survives
+)->a( n = `liveChange` v = client->_event(
+    val    = `SEARCH`
+    s_ctrl = VALUE #( check_queue_last = abap_true ) )
+```
+
+The component is gone from `ty_s_event_control`, so an app that names it does
+not activate — the rename above is the whole migration. Without either flag the
+busy guard drops every event fired during a flight, which is right for a click
+and wrong for a keystroke.
