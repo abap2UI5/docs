@@ -340,7 +340,9 @@
       "group": "Messages",
       "doc": [
         "Show a sap.m.MessageBox. `text` is TYPE any and takes whatever the app has: a text, a message structure or table (BAPIRET2, T100, RAP, symsg, a log object, an exception), an HTML string, a business table, a nested structure or tree, an object, a number. Messages are recognized first and set the box's severity and title themselves; everything else is rendered - a headline in the box, the data itself in the details. The one case that shows nothing at all is complex data that is initial (an empty message table stays as silent as it always was).",
-        "Every option below is the sap.m.MessageBox option of the same name, passed through when set; onclose is the one abap2UI5-shaped exception."
+        "What this method carries is what an ABAP app decides: the data in any shape it has, the kind of box, the buttons as a table, the backend event its closing raises. A plain sap.m.MessageBox option that abap2UI5 only passes through is set on the CONTROL instead - through the whitelisted global call, whose last argument is the UI5 option object 1:1:",
+        "``client->follow_up_action( val = client->cs_event-control_global t_arg = VALUE #( ( `MESSAGE_BOX` ) ( `error` ) ( `Not saved.` ) ( `{\"contentWidth\":\"30rem\",\"icon\":\"WARNING\"}` ) ) )``",
+        "The method IS the box type there, and the option object lands in the same frontend code this method reaches. `textDirection`, `icon`, `closeOnNavigation`, `dependentOn` (UI5 1.124 on) and `contentWidth` were parameters here until 2026-09 and travel that way now."
       ],
       "parameters": [
         {
@@ -391,40 +393,10 @@
           "doc": "the action (or control id) that has the focus when the box opens."
         },
         {
-          "name": "textdirection",
-          "type": "clike",
-          "optional": true,
-          "doc": "`LTR`, `RTL` or `Inherit` for the text."
-        },
-        {
-          "name": "icon",
-          "type": "clike",
-          "optional": true,
-          "doc": "an icon of sap.m.MessageBox.Icon (`NONE`, `INFORMATION`, `WARNING`, `ERROR`, `SUCCESS`, `QUESTION`) instead of the one the type implies."
-        },
-        {
           "name": "details",
           "type": "clike",
           "optional": true,
           "doc": "a further text (or JSON) shown behind the box's \"Show details\" link."
-        },
-        {
-          "name": "closeonnavigation",
-          "type": "abap_bool",
-          "default": "abap_true",
-          "doc": "close the box when the page navigates (the default); abap_false keeps it open."
-        },
-        {
-          "name": "dependenton",
-          "type": "clike",
-          "optional": true,
-          "doc": "the id of a control the box becomes a dependent of, so it is destroyed with that control (UI5 1.124 on)."
-        },
-        {
-          "name": "contentwidth",
-          "type": "clike",
-          "optional": true,
-          "doc": "a CSS width for the box's content."
         }
       ]
     },
@@ -432,7 +404,10 @@
       "name": "message_toast_display",
       "group": "Messages",
       "doc": [
-        "Show a sap.m.MessageToast with text - the fire-and-forget notification for a saved record or a copied link, gone again after a few seconds. Every other parameter is the option of the same name of sap.m.MessageToast.show( ), passed through only when set, so UI5 owns every default; onclose and class are abap2UI5-shaped."
+        "Show a sap.m.MessageToast with text - the fire-and-forget notification for a saved record or a copied link, gone again after a few seconds.",
+        "Three parameters, and two of them are not UI5 options at all: the text an ABAP app composed, and the backend event its closing raises. Where the toast docks, how it animates, how wide it is - that is the CONTROL, and it is steered through the whitelisted global call, whose last argument is the sap.m.MessageToast.show( ) option object 1:1:",
+        "``client->follow_up_action( val = client->cs_event-control_global t_arg = VALUE #( ( `MESSAGE_TOAST` ) ( `show` ) ( `Saved.` ) ( `{\"my\":\"center center\",\"at\":\"center center\",\"width\":\"20em\"}` ) ) )``",
+        "`width`, `my`, `at`, `of`, `offset`, `collision`, `autoClose`, `animationTimingFunction`, `animationDuration`, `closeOnBrowserNavigation` and the abap2UI5-own `class` were parameters here until 2026-09 and travel that way now. That call also composes its text on the CLIENT - extra arguments fill `{0}`, `{1}` placeholders - so a toast over an event parameter needs no round-trip at all."
       ],
       "parameters": [
         {
@@ -447,76 +422,10 @@
           "doc": "milliseconds the toast stays (UI5 default 3000)."
         },
         {
-          "name": "width",
-          "type": "clike",
-          "optional": true,
-          "doc": "the toast's CSS width (UI5 default 15em)."
-        },
-        {
-          "name": "my",
-          "type": "clike",
-          "optional": true,
-          "doc": "the toast's own docking point, a sap.ui.core.Popup.Dock value (UI5 default `center bottom`)."
-        },
-        {
-          "name": "at",
-          "type": "clike",
-          "optional": true,
-          "doc": "the docking point of `of` the toast is placed at (UI5 default `center bottom`)."
-        },
-        {
-          "name": "of",
-          "type": "clike",
-          "optional": true,
-          "doc": "the control id or DOM reference the toast is positioned relative to (UI5 default: the window)."
-        },
-        {
-          "name": "offset",
-          "type": "clike",
-          "optional": true,
-          "doc": "the offset from that position as `x y` in pixels."
-        },
-        {
-          "name": "collision",
-          "type": "clike",
-          "optional": true,
-          "doc": "how a toast that would leave the window is moved (`fit`, `flip`, `none`, one value per axis; UI5 default `fit fit`)."
-        },
-        {
           "name": "onclose",
           "type": "clike",
           "default": "``",
           "doc": "a BACKEND event name raised when the toast closes."
-        },
-        {
-          "name": "autoclose",
-          "type": "abap_bool",
-          "default": "abap_true",
-          "doc": "close after duration (the default) or stay until the user clicks elsewhere."
-        },
-        {
-          "name": "animationtimingfunction",
-          "type": "clike",
-          "optional": true,
-          "doc": "the CSS timing function of the fade (UI5 default `ease`)."
-        },
-        {
-          "name": "animationduration",
-          "type": "clike",
-          "optional": true,
-          "doc": "the fade duration in milliseconds (UI5 default 1000)."
-        },
-        {
-          "name": "closeonbrowsernavigation",
-          "type": "abap_bool",
-          "default": "abap_true",
-          "doc": "close on browser navigation (the default)."
-        },
-        {
-          "name": "class",
-          "type": "clike",
-          "optional": true,
-          "doc": "one or more CSS classes added to the toast."
         }
       ]
     },
@@ -524,7 +433,7 @@
       "name": "_event",
       "group": "Events and frontend actions",
       "doc": [
-        "Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_allow_multi_req sends the event while another roundtrip is still running, check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set. check_queue_last keeps the LAST event fired on the wire while a roundtrip is in flight and dispatches it once the response has landed, instead of dropping it - one roundtrip in flight at a time, order preserved, the backend ends on the control's current value; it is the flag for a per-keystroke wire (liveChange, liveSearch, sliderChange), where check_allow_multi_req would send one roundtrip per keystroke with responses landing in any order. Not combined with check_allow_multi_req."
+        "Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set. check_queue_last keeps the LAST event fired on the wire while a roundtrip is in flight and dispatches it once the response has landed, instead of dropping it - one roundtrip in flight at a time, order preserved, the backend ends on the control's current value; it is the flag for a per-keystroke wire (liveChange, liveSearch, sliderChange), which without it loses every keystroke typed while a roundtrip runs, the last one included."
       ],
       "preferred": "val",
       "parameters": [
@@ -544,7 +453,7 @@
           "name": "s_ctrl",
           "type": "ty_s_event_control",
           "optional": true,
-          "doc": "the per-wire options (ty_s_event_control): send while another roundtrip runs, keep the last firing until the running roundtrip has landed, cancel the control's default, quote every argument as a literal."
+          "doc": "the per-wire options (ty_s_event_control): keep the last firing until the running roundtrip has landed, cancel the control's default, quote every argument as a literal."
         },
         {
           "name": "arg",
@@ -577,7 +486,7 @@
           "name": "tab",
           "type": "data",
           "optional": true,
-          "doc": "bind ONE CELL of an internal table instead of a whole attribute: pass the table here and the row number in tab_index, and the bound value as val - the row component itself, e.g. `_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )` -> `{/MT_EMP/0/NAME}`. The cell is identified by REFERENCE: val has to BE the component of that row, not a copy of its value (a helper variable holding the same string is refused with BINDING_ERROR_TAB_CELL_LEVEL). One toolchain caveat, not an ABAP one: a STOCK abaplint downport lowers a table expression read at COMPONENT level to `READ TABLE ... INTO <wa>` - a copy - and the cell is then refused on code that is correct at the v750 target. This repository patches that lowering to `ASSIGNING` (node/setup/patch-abaplint-downport.mjs, filed upstream), so `tab[ n ]-comp` works through every build here. An app downported by an UNPATCHED abaplint has to assign the row first - `ASSIGN tab[ n ] TO <row>`, then `val = <row>-comp` - which the same rule already lowers with ASSIGNING and which is 7.02-native. Measured, not assumed: the transpiler resolves every form correctly; only the downport loses the reference. What travels is still the whole table - this only writes a row-qualified path into the view, so the model keeps the ARRAY shape while the view addresses single rows. Use it where the original model is an array but the view repeats controls instead of binding an aggregation (six statically written panels over /Employee/0..5), which is otherwise written as a series of flat attributes (emp1_name, emp2_name, ...) and loses that shape. For a REPEATING aggregation bind the table itself (`items = _bind( mt_emp )`) and keep the template's fields relative."
+          "doc": "bind ONE CELL of an internal table instead of a whole attribute: pass the table here and the row number in tab_index, and the bound value as val - the row component itself, e.g. `_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )` -> `{/MT_EMP/0/NAME}`. The cell is identified by REFERENCE: val has to BE the component of that row, not a copy of its value (a helper variable holding the same string is refused with BINDING_ERROR_TAB_CELL_LEVEL). One toolchain caveat, not an ABAP one, and only for an app that DOWNPORTS with abaplint older than 2.120.51: that downport lowered a table expression read at COMPONENT level to `READ TABLE ... INTO <wa>` - a copy - so the cell was refused on code correct at the v750 target. Fixed upstream (abaplint/abaplint#4276): the outline is `ASSIGNING` from 2.120.51 on, which is what the write path of the same rule always emitted. On an older abaplint, assign the row first - `ASSIGN tab[ n ] TO <row>`, then `val = <row>-comp` - which that rule already lowered with ASSIGNING and which is 7.02-native. Measured, not assumed: the transpiler resolves every form correctly; only the old downport lost the reference. What travels is still the whole table - this only writes a row-qualified path into the view, so the model keeps the ARRAY shape while the view addresses single rows. Use it where the original model is an array but the view repeats controls instead of binding an aggregation (six statically written panels over /Employee/0..5), which is otherwise written as a series of flat attributes (emp1_name, emp2_name, ...) and loses that shape. For a REPEATING aggregation bind the table itself (`items = _bind( mt_emp )`) and keep the template's fields relative."
         },
         {
           "name": "tab_index",
@@ -1456,10 +1365,6 @@
         "The per-wire options of _event( ) - see the documentation on the method for what each one decides."
       ],
       "members": [
-        {
-          "name": "check_allow_multi_req",
-          "type": "abap_bool"
-        },
         {
           "name": "check_prevent_default",
           "type": "abap_bool",
