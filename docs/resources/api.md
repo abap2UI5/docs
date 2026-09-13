@@ -147,7 +147,7 @@ Bind a public attribute of the app to the view. Returns the binding expression f
 |---|---|---|---|
 | `val` | `data` |  | the attribute to bind - a PUBLIC attribute of the app (or a component of one), passed by reference: the framework reaches it by name on the next roundtrip, so a local variable, a copy or a protected attribute cannot be bound (BINDING_ERROR). |
 | `path` | `abap_bool` | `abap_false` | abap_true returns the model PATH of val instead of the value binding - what a bound aggregation, a binding_call filter or sorter and bindElement need; _bind_path( ) is the readable spelling of it. |
-| `tab` | `data` | *optional* | bind ONE CELL of an internal table instead of a whole attribute: pass the table here and the row number in tab_index, and the bound value as val - the row component itself, e.g. `_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )` -> `{/MT_EMP/0/NAME}`. The cell is identified by REFERENCE: val has to BE the component of that row, not a copy of its value (a helper variable holding the same string is refused with BINDING_ERROR_TAB_CELL_LEVEL). One toolchain caveat, not an ABAP one: a STOCK abaplint downport lowers a table expression read at COMPONENT level to `READ TABLE ... INTO <wa>` - a copy - and the cell is then refused on code that is correct at the v750 target. This repository patches that lowering to `ASSIGNING` (node/setup/patch-abaplint-downport.mjs, filed upstream), so `tab[ n ]-comp` works through every build here. An app downported by an UNPATCHED abaplint has to assign the row first - `ASSIGN tab[ n ] TO <row>`, then `val = <row>-comp` - which the same rule already lowers with ASSIGNING and which is 7.02-native. Measured, not assumed: the transpiler resolves every form correctly; only the downport loses the reference. What travels is still the whole table - this only writes a row-qualified path into the view, so the model keeps the ARRAY shape while the view addresses single rows. Use it where the original model is an array but the view repeats controls instead of binding an aggregation (six statically written panels over /Employee/0..5), which is otherwise written as a series of flat attributes (emp1_name, emp2_name, ...) and loses that shape. For a REPEATING aggregation bind the table itself (`items = _bind( mt_emp )`) and keep the template's fields relative. |
+| `tab` | `data` | *optional* | bind ONE CELL of an internal table instead of a whole attribute: pass the table here and the row number in tab_index, and the bound value as val - the row component itself, e.g. `_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )` -> `{/MT_EMP/0/NAME}`. The cell is identified by REFERENCE: val has to BE the component of that row, not a copy of its value (a helper variable holding the same string is refused with BINDING_ERROR_TAB_CELL_LEVEL). One toolchain caveat, not an ABAP one, and only for an app that DOWNPORTS with abaplint older than 2.120.51: that downport lowered a table expression read at COMPONENT level to `READ TABLE ... INTO <wa>` - a copy - so the cell was refused on code correct at the v750 target. Fixed upstream (abaplint/abaplint#4276): the outline is `ASSIGNING` from 2.120.51 on, which is what the write path of the same rule always emitted. On an older abaplint, assign the row first - `ASSIGN tab[ n ] TO <row>`, then `val = <row>-comp` - which that rule already lowered with ASSIGNING and which is 7.02-native. Measured, not assumed: the transpiler resolves every form correctly; only the old downport lost the reference. What travels is still the whole table - this only writes a row-qualified path into the view, so the model keeps the ARRAY shape while the view addresses single rows. Use it where the original model is an array but the view repeats controls instead of binding an aggregation (six statically written panels over /Employee/0..5), which is otherwise written as a series of flat attributes (emp1_name, emp2_name, ...) and loses that shape. For a REPEATING aggregation bind the table itself (`items = _bind( mt_emp )`) and keep the template's fields relative. |
 | `tab_index` | `i` | *optional* | the row of tab to address, counted the ABAP way from 1 - the client path is 0-based, so tab_index = 1 renders as `/0/`. A row that does not exist raises BINDING_ERROR_TAB_CELL_LEVEL instead of dumping, but note that writing the val argument as `tab[ n ]` already dumps on the ABAP side when row n is missing - seed the table before building the view. |
 | `switch_default_model` | `abap_bool` | `abap_false` | abap_true writes the binding against the named `http` model - where abap2UI5's own data lives once view_display( switch_default_model_path = ... ) has made an OData service the view's default model. |
 | `omit_initial` | `abap_bool` | `abap_false` | keep INITIAL fields out of the serialized model instead of sending them as `` / 0. An ABAP field is never absent - it is initial - so by default every field reaches the client as an explicit value, which overrides the UI5 property default the original view relies on (and an enum-typed property rejects the empty string outright). Set it when a bound template's rows fill different subsets of the same properties. |
@@ -174,13 +174,13 @@ Returns `string`.
 
 ### `_event`
 
-Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_allow_multi_req sends the event while another roundtrip is still running, check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set. check_queue_last keeps the LAST event fired on the wire while a roundtrip is in flight and dispatches it once the response has landed, instead of dropping it - one roundtrip in flight at a time, order preserved, the backend ends on the control's current value; it is the flag for a per-keystroke wire (liveChange, liveSearch, sliderChange), where check_allow_multi_req would send one roundtrip per keystroke with responses landing in any order. Not combined with check_allow_multi_req.
+Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set. check_queue_last keeps the LAST event fired on the wire while a roundtrip is in flight and dispatches it once the response has landed, instead of dropping it - one roundtrip in flight at a time, order preserved, the backend ends on the control's current value; it is the flag for a per-keystroke wire (liveChange, liveSearch, sliderChange), which without it loses every keystroke typed while a roundtrip runs, the last one included.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `val` | `clike` | *optional* | the event name the handler checks with check_on_event( `SAVE` ) - upper case by convention, unique within the app. |
 | `t_arg` | `string_table` | *optional* | arguments sent with the event and read back with get_event_arg( n ) in the same order: a literal, a `${$source>/...}` or `${$parameters>/...}` client expression evaluated when the event fires, or `$event>...` for a field of the UI5 event itself. |
-| `s_ctrl` | `ty_s_event_control` | *optional* | the per-wire options (ty_s_event_control): send while another roundtrip runs, keep the last firing until the running roundtrip has landed, cancel the control's default, quote every argument as a literal. |
+| `s_ctrl` | `ty_s_event_control` | *optional* | the per-wire options (ty_s_event_control): keep the last firing until the running roundtrip has landed, cancel the control's default, quote every argument as a literal. |
 | `arg` | `clike` | *optional* | the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. An argument that starts with `$` or `{` (or an .eB( expression) is written RAW, as live UI5 expression syntax - that is how `${$source>/KEY}` reaches the handler as the row's value. Data that may start with those characters (text a user typed, a key from a foreign system) is therefore evaluated, not passed: set s_ctrl-check_arg_literal to have every argument of the wire quoted as a string instead. |
 
 Preferred parameter: `val` — a positional call passes it.
@@ -247,7 +247,11 @@ Returns `string`.
 
 Show a sap.m.MessageBox. `text` is TYPE any and takes whatever the app has: a text, a message structure or table (BAPIRET2, T100, RAP, symsg, a log object, an exception), an HTML string, a business table, a nested structure or tree, an object, a number. Messages are recognized first and set the box's severity and title themselves; everything else is rendered - a headline in the box, the data itself in the details. The one case that shows nothing at all is complex data that is initial (an empty message table stays as silent as it always was).
 
-Every option below is the sap.m.MessageBox option of the same name, passed through when set; onclose is the one abap2UI5-shaped exception.
+What this method carries is what an ABAP app decides: the data in any shape it has, the kind of box, the buttons as a table, the backend event its closing raises. A plain sap.m.MessageBox option that abap2UI5 only passes through is set on the CONTROL instead - through the whitelisted global call, whose last argument is the UI5 option object 1:1:
+
+``client->follow_up_action( val = client->cs_event-control_global t_arg = VALUE #( ( `MESSAGE_BOX` ) ( `error` ) ( `Not saved.` ) ( `{"contentWidth":"30rem","icon":"WARNING"}` ) ) )``
+
+The method IS the box type there, and the option object lands in the same frontend code this method reaches. `textDirection`, `icon`, `closeOnNavigation`, `dependentOn` (UI5 1.124 on) and `contentWidth` were parameters here until 2026-09 and travel that way now.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -259,33 +263,23 @@ Every option below is the sap.m.MessageBox option of the same name, passed throu
 | `actions` | `string_table` | *optional* | the buttons, as sap.m.MessageBox.Action names (`OK`, `CANCEL`, `YES`, `NO`, `ABORT`, `RETRY`, `IGNORE`, `CLOSE`, `DELETE`) or as free texts; `OK` alone when not supplied. |
 | `emphasizedaction` | `clike` | *optional* | the one of the actions rendered as the emphasized button. |
 | `initialfocus` | `clike` | *optional* | the action (or control id) that has the focus when the box opens. |
-| `textdirection` | `clike` | *optional* | `LTR`, `RTL` or `Inherit` for the text. |
-| `icon` | `clike` | *optional* | an icon of sap.m.MessageBox.Icon (`NONE`, `INFORMATION`, `WARNING`, `ERROR`, `SUCCESS`, `QUESTION`) instead of the one the type implies. |
 | `details` | `clike` | *optional* | a further text (or JSON) shown behind the box's "Show details" link. |
-| `closeonnavigation` | `abap_bool` | `abap_true` | close the box when the page navigates (the default); abap_false keeps it open. |
-| `dependenton` | `clike` | *optional* | the id of a control the box becomes a dependent of, so it is destroyed with that control (UI5 1.124 on). |
-| `contentwidth` | `clike` | *optional* | a CSS width for the box's content. |
 
 ### `message_toast_display`
 
-Show a sap.m.MessageToast with text - the fire-and-forget notification for a saved record or a copied link, gone again after a few seconds. Every other parameter is the option of the same name of sap.m.MessageToast.show( ), passed through only when set, so UI5 owns every default; onclose and class are abap2UI5-shaped.
+Show a sap.m.MessageToast with text - the fire-and-forget notification for a saved record or a copied link, gone again after a few seconds.
+
+Three parameters, and two of them are not UI5 options at all: the text an ABAP app composed, and the backend event its closing raises. Where the toast docks, how it animates, how wide it is - that is the CONTROL, and it is steered through the whitelisted global call, whose last argument is the sap.m.MessageToast.show( ) option object 1:1:
+
+``client->follow_up_action( val = client->cs_event-control_global t_arg = VALUE #( ( `MESSAGE_TOAST` ) ( `show` ) ( `Saved.` ) ( `{"my":"center center","at":"center center","width":"20em"}` ) ) )``
+
+`width`, `my`, `at`, `of`, `offset`, `collision`, `autoClose`, `animationTimingFunction`, `animationDuration`, `closeOnBrowserNavigation` and the abap2UI5-own `class` were parameters here until 2026-09 and travel that way now. That call also composes its text on the CLIENT - extra arguments fill `{0}`, `{1}` placeholders - so a toast over an event parameter needs no round-trip at all.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `text` | `clike` |  | the text shown. |
 | `duration` | `clike` | *optional* | milliseconds the toast stays (UI5 default 3000). |
-| `width` | `clike` | *optional* | the toast's CSS width (UI5 default 15em). |
-| `my` | `clike` | *optional* | the toast's own docking point, a sap.ui.core.Popup.Dock value (UI5 default `center bottom`). |
-| `at` | `clike` | *optional* | the docking point of `of` the toast is placed at (UI5 default `center bottom`). |
-| `of` | `clike` | *optional* | the control id or DOM reference the toast is positioned relative to (UI5 default: the window). |
-| `offset` | `clike` | *optional* | the offset from that position as `x y` in pixels. |
-| `collision` | `clike` | *optional* | how a toast that would leave the window is moved (`fit`, `flip`, `none`, one value per axis; UI5 default `fit fit`). |
 | `onclose` | `clike` | *(empty)* | a BACKEND event name raised when the toast closes. |
-| `autoclose` | `abap_bool` | `abap_true` | close after duration (the default) or stay until the user clicks elsewhere. |
-| `animationtimingfunction` | `clike` | *optional* | the CSS timing function of the fade (UI5 default `ease`). |
-| `animationduration` | `clike` | *optional* | the fade duration in milliseconds (UI5 default 1000). |
-| `closeonbrowsernavigation` | `abap_bool` | `abap_true` | close on browser navigation (the default). |
-| `class` | `clike` | *optional* | one or more CSS classes added to the toast. |
 
 ## App navigation
 
@@ -575,7 +569,6 @@ The per-wire options of _event( ) - see the documentation on the method for what
 
 | Field | Type |
 |---|---|
-| `check_allow_multi_req` | `abap_bool` |
 | `check_prevent_default` | `abap_bool` |
 | `prevent_default_expr` | `string` |
 | `check_arg_literal` | `abap_bool` |
