@@ -65,8 +65,8 @@ tell you what is coming if you do not.
 | `cs_config-title` | `cs_event-set_title` | 1.144.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
-| `set_push_state( )` | `hash_set( )` | **removed**, *next release* |
-| `set_app_state_active( )` | `app_state_set_active( )` | **removed**, *next release* |
+| `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, *next release* |
+| `set_app_state_active( )`, `cs_event-set_app_state_active` | `app_state_set_active( )`, `cs_event-app_state_set_active` | **removed**, *next release* |
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, *next release* |
 | `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | **removed**, *next release* |
 | `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, *next release* |
@@ -520,10 +520,15 @@ the state the URL carries.
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | it is the *hash* that is being routed; `nav_*` is app-to-app navigation |
 | `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | the backend composes the link now, so the app can show or mail it, not only copy it |
 
-**Removed.** The first three shared their wire value with the surviving name —
-the old spelling and the new one reached the same branch — so there was no
-behavior to migrate, only a name, and a call that still writes the old one does
-not compile:
+The first two also had an *event* spelling — `cs_event-set_push_state` and
+`cs_event-set_app_state_active`, alias constants for `cs_event-hash_set` and
+`cs_event-app_state_set_active`. They are removed with the methods, so the
+whole family is `hash_*` / `app_state_*` and nothing else.
+
+**Removed.** Everything but the last shared its wire value with the surviving
+name — the old spelling and the new one reached the same branch — so there was
+no behavior to migrate, only a name, and a call that still writes an old one
+does not compile:
 
 ```abap
 " before
