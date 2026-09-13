@@ -50,7 +50,7 @@ tell you what is coming if you do not.
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
-| `_bind( view = … )` | omit the parameter | 1.142.0 |
+| `_bind( view = … )` | omit the parameter | **removed**, *next release* |
 | `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
 | `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
 | `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
@@ -220,8 +220,11 @@ break.
 
 ### The `view` parameter of `_bind( )` / `_bind_edit( )`
 
-Inert — it is not passed on internally and has no effect. It dates from the time
-each view had its own model. Omit it.
+**Removed.** It dates from the time each view slot had a model of its own; today
+one model serves every open slot, so there was nothing left for it to select —
+the parameter was inert, never passed on internally, for as long as it carried
+the obsolete mark. Deleting it is the whole migration, and a call that still
+names it does not compile.
 
 ```abap
 " old
@@ -230,6 +233,10 @@ client->_bind( val = ms_data view = client->cs_view-popup )
 " new
 client->_bind( ms_data )
 ```
+
+The binding string that comes back is the one that came back before. `cs_view`
+itself stays — it is the view slot of `follow_up_action( )`, where it does
+select one.
 
 ### `cs_event-wizard_set_next_step`
 
