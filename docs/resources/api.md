@@ -34,9 +34,11 @@ structures. The same reference as one JSON document: [client-api.json](https://a
 
 ### `check_on_event`
 
+TRUE when this roundtrip was triggered by the event named val - the check a handler branch opens with (ELSEIF client->check_on_event( `SAVE` )). Without val, TRUE when any event is being handled at all. The name is what the wire registered with _event( `SAVE` ); the same name is in get_event( ), for a CASE-shaped dispatcher.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `clike` | *optional* |  |
+| `val` | `clike` | *optional* | the event name to compare with, or empty for "any event". |
 
 Returns `abap_bool`.
 
@@ -56,7 +58,7 @@ The first start is included ON PURPOSE and is part of the contract, not an accid
 
 IF client->check_on_navigated( ). view_display( ). ENDIF.
 
-the complete display condition on its own - no OR with check_on_init( ) is needed, and the samples and documentation are written that way. Whoever changes the factory keeps this true, or every sample in the three catalogues stops rendering on its first start with nothing raised anywhere.
+the complete display condition on its own - no OR with check_on_init( ) is needed, and the samples and documentation are written that way.
 
 Returns `abap_bool`.
 
@@ -64,70 +66,90 @@ Returns `abap_bool`.
 
 ### `view_destroy`
 
+Empty the MAIN view slot on this response - the screen goes blank until the next view_display( ). Rarely needed: a new view_display( ) replaces the view anyway. It is for the app that wants the page cleared without drawing another view, e.g. right before it hands over to a called app.
+
 ### `view_display`
 
 Display the MAIN view. A new main view is a new screen, so an open popup and popover go with it - re-open one in the same roundtrip if it is meant to survive ( the frontend builds MAIN first, then the popup ).
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `clike` |  |  |
-| `switch_default_model_anno_uri` | `clike` | *optional* |  |
-| `switch_default_model_path` | `clike` | *optional* |  |
+| `val` | `clike` |  | the view XML - what z2ui5_cl_ui5_view_builder=>stringify( ) returns, a sap.ui.core.mvc.View with everything inside it. |
+| `switch_default_model_anno_uri` | `clike` | *optional* | the annotation file URI of the OData service named in switch_default_model_path, for the smart controls that read annotations (optional). |
+| `switch_default_model_path` | `clike` | *optional* | the service URL of an OData V2 service to install as the view's DEFAULT model, for smart controls that bind against OData metadata (`/sap/opu/odata/IWBEP/GWSAMPLE_BASIC/`). abap2UI5's own data then lives in the named `http` model, reached with `_bind( val = ... switch_default_model = abap_true )`. |
 
 ## Nested views
 
 ### `nest_view_display`
 
+Render a NESTED view into a control of the main view: the fragment in val is inserted into the control with the given id through the UI5 mutator named in method_insert, after method_destroy has cleared what was there. The main view stays as it is - only the fragment is rendered again on the next call, which is what a nested view is for. It shares the main view's model, so _bind( ) and _event( ) work in it like anywhere else; see the Nested Views chapter.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `clike` |  |  |
-| `id` | `clike` |  |  |
-| `method_insert` | `clike` |  |  |
-| `method_destroy` | `clike` | *optional* |  |
+| `val` | `clike` |  | the XML of the nested view - a sap.ui.core.mvc.View built like the main one, its root element (a Page, a VBox) is what the anchor receives. |
+| `id` | `clike` |  | the id of the control in the main view that receives the fragment - any control with an aggregation to insert into. |
+| `method_insert` | `clike` |  | the UI5 mutator called on that control to add the fragment (`addContent` for a Page or a VBox, `addItem` for a List, `addPage` for a NavContainer). |
+| `method_destroy` | `clike` | *optional* | the mutator that removes the previous content first (`removeAllContent`, `removeAllItems`); without it every call adds one more fragment. |
 
 ### `nest_view_destroy`
 
+Remove the nested view (the NEST slot) from its anchor control on this response.
+
 ### `nest2_view_display`
+
+A second nested slot with exactly the contract of nest_view_display( ) - for a fragment inside the nested fragment, or two independent fragments on one page that are re-rendered separately.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `clike` |  |  |
-| `id` | `clike` |  |  |
-| `method_insert` | `clike` |  |  |
-| `method_destroy` | `clike` | *optional* |  |
+| `val` | `clike` |  | as nest_view_display( ). |
+| `id` | `clike` |  | as nest_view_display( ) - a control of the main view or of the first nested view. |
+| `method_insert` | `clike` |  | as nest_view_display( ). |
+| `method_destroy` | `clike` | *optional* | as nest_view_display( ). |
 
 ### `nest2_view_destroy`
+
+Remove the second nested view (the NEST2 slot) from its anchor control on this response.
 
 ## Popups and popovers
 
 ### `popup_display`
 
+Open the XML in val as the POPUP slot - a sap.m.Dialog that lies over the main view, which stays as it is. One popup at a time: a second popup_display( ) replaces the first. The popup shares the app's model, so _bind( ) and _event( ) work in it as in the view; close it with popup_destroy( ) in the handler of the event that ends it. See the Popup chapter.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `clike` |  |  |
+| `val` | `clike` |  | the popup XML: a core:FragmentDefinition with the Dialog inside it, as z2ui5_cl_ui5_view_builder=>factory( )->ele( n = `FragmentDefinition` ns = `core` ) ... ->stringify( ) produces it. |
 
 ### `popup_destroy`
 
+Close the popup: the POPUP slot is emptied on this response and the main view underneath is untouched. Call it in the handler of the event that ends the dialog - Save, Cancel, the close button.
+
 ### `popover_display`
+
+Open the XML as a POPOVER anchored to the control whose id is by_id (sap.m.Popover openBy) - the usual shape for a menu, a quick view or a confirmation next to the button that was pressed. One popover at a time; it shares the app's model like a popup does, and popover_destroy( ) closes it. See the Popover chapter.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `xml` | `clike` |  |  |
-| `by_id` | `clike` |  |  |
+| `xml` | `clike` |  | the popover XML: a core:FragmentDefinition with the Popover inside it, from the view builder. |
+| `by_id` | `clike` |  | the id of the control the popover opens by - usually the button whose press event this roundtrip handles. |
 
 ### `popover_destroy`
+
+Close the popover: the POPOVER slot is emptied on this response.
 
 ## Data binding
 
 ### `_bind`
 
+Bind a public attribute of the app to the view. Returns the binding expression for a view attribute - `{/NAME}` - and registers val, so its value travels to the client with the response and what the user edits travels back before the next main( ), without a line of code for the transport. A table binds as a whole (`items = _bind( mt_items )`) and the rows become the template's context, so the template's own bindings stay relative (`{NAME}`). See the Binding chapter.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `data` |  |  |
-| `path` | `abap_bool` | `abap_false` |  |
+| `val` | `data` |  | the attribute to bind - a PUBLIC attribute of the app (or a component of one), passed by reference: the framework reaches it by name on the next roundtrip, so a local variable, a copy or a protected attribute cannot be bound (BINDING_ERROR). |
+| `path` | `abap_bool` | `abap_false` | abap_true returns the model PATH of val instead of the value binding - what a bound aggregation, a binding_call filter or sorter and bindElement need; _bind_path( ) is the readable spelling of it. |
 | `tab` | `data` | *optional* | bind ONE CELL of an internal table instead of a whole attribute: pass the table here and the row number in tab_index, and the bound value as val - the row component itself, e.g. `_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )` -> `{/MT_EMP/0/NAME}`. The cell is identified by REFERENCE: val has to BE the component of that row, not a copy of its value (a helper variable holding the same string is refused with BINDING_ERROR_TAB_CELL_LEVEL). One toolchain caveat, not an ABAP one: a STOCK abaplint downport lowers a table expression read at COMPONENT level to `READ TABLE ... INTO <wa>` - a copy - and the cell is then refused on code that is correct at the v750 target. This repository patches that lowering to `ASSIGNING` (node/setup/patch-abaplint-downport.mjs, filed upstream), so `tab[ n ]-comp` works through every build here. An app downported by an UNPATCHED abaplint has to assign the row first - `ASSIGN tab[ n ] TO <row>`, then `val = <row>-comp` - which the same rule already lowers with ASSIGNING and which is 7.02-native. Measured, not assumed: the transpiler resolves every form correctly; only the downport loses the reference. What travels is still the whole table - this only writes a row-qualified path into the view, so the model keeps the ARRAY shape while the view addresses single rows. Use it where the original model is an array but the view repeats controls instead of binding an aggregation (six statically written panels over /Employee/0..5), which is otherwise written as a series of flat attributes (emp1_name, emp2_name, ...) and loses that shape. For a REPEATING aggregation bind the table itself (`items = _bind( mt_emp )`) and keep the template's fields relative. |
 | `tab_index` | `i` | *optional* | the row of tab to address, counted the ABAP way from 1 - the client path is 0-based, so tab_index = 1 renders as `/0/`. A row that does not exist raises BINDING_ERROR_TAB_CELL_LEVEL instead of dumping, but note that writing the val argument as `tab[ n ]` already dumps on the ABAP side when row n is missing - seed the table before building the view. |
-| `switch_default_model` | `abap_bool` | `abap_false` |  |
+| `switch_default_model` | `abap_bool` | `abap_false` | abap_true writes the binding against the named `http` model - where abap2UI5's own data lives once view_display( switch_default_model_path = ... ) has made an OData service the view's default model. |
 | `omit_initial` | `abap_bool` | `abap_false` | keep INITIAL fields out of the serialized model instead of sending them as `` / 0. An ABAP field is never absent - it is initial - so by default every field reaches the client as an explicit value, which overrides the UI5 property default the original view relies on (and an enum-typed property rejects the empty string outright). Set it when a bound template's rows fill different subsets of the same properties. |
 | `omit_initial_paths` | `string_table` | *optional* | the same omission SCOPED to the listed fields (upper-cased column names, the last path segment). Use it when the blanket flag is too coarse: an abap_false that MUST reach the client is itself initial, so omit_initial would drop it and the control would fall back to its own default - list the numeric/enum columns instead and leave the booleans. |
 | `json` | `abap_bool` | `abap_false` | the bound string already CONTAINS JSON - splice it into the model as a JSON node instead of sending it as a quoted string. For a control property that must receive an OBJECT, which no typed ABAP value can be (a sap.ui.integration Card manifest: its keys `sap.app`/`sap.card` are not valid ABAP field names, and a string is read as a manifest URL). Outbound only - see z2ui5_cl_ui5_srv_model. Ignored for a CELL (tab supplied): whether a value is JSON is decided on the table's bind. custom_mapper, custom_filter and the omit_initial pair are passed on to the table there, like a _bind( ) of the table itself would store them. |
@@ -144,7 +166,7 @@ Deliberately ONE parameter. The moment a second is needed - tab / tab_index for 
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `data` |  |  |
+| `val` | `data` |  | the public attribute whose model path is returned - the same reference rule as _bind( ). |
 
 Returns `string`.
 
@@ -152,14 +174,14 @@ Returns `string`.
 
 ### `_event`
 
-Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_allow_multi_req sends the event while another roundtrip is still running, check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set.
+Register a backend event and return the handler expression for a view attribute (press = client->_event( `SAVE` )). s_ctrl carries the optional event flags: check_allow_multi_req sends the event while another roundtrip is still running, check_prevent_default cancels the control's built-in default for this event (oEvent.preventDefault(), e.g. a sap.tnt NavigationListItem press that must not select the item) before the roundtrip - the event is still sent, so the backend stays in charge of what happens instead. That flag is baked per WIRE at render time; prevent_default_expr is the same veto decided per FIRING - a client expression evaluated when the event fires, so one wire can protect one row/column and let the rest through (`${$parameters>/column}.getId().indexOf('COL_DATE') >= 0`). It wins over the flag when both are set. check_queue_last keeps the LAST event fired on the wire while a roundtrip is in flight and dispatches it once the response has landed, instead of dropping it - one roundtrip in flight at a time, order preserved, the backend ends on the control's current value; it is the flag for a per-keystroke wire (liveChange, liveSearch, sliderChange), where check_allow_multi_req would send one roundtrip per keystroke with responses landing in any order. Not combined with check_allow_multi_req.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `clike` | *optional* |  |
-| `t_arg` | `string_table` | *optional* |  |
-| `s_ctrl` | `ty_s_event_control` | *optional* |  |
-| `arg` | `clike` | *optional* | appended rather than slotted next to t_arg, where it would read better: rule 5 allows a new optional parameter at the END of the list - inserting one reorders a public signature the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. An argument that starts with `$` or `{` (or an .eB( expression) is written RAW, as live UI5 expression syntax - that is how `${$source>/KEY}` reaches the handler as the row's value. Data that may start with those characters (text a user typed, a key from a foreign system) is therefore evaluated, not passed: set s_ctrl-check_arg_literal to have every argument of the wire quoted as a string instead. |
+| `val` | `clike` | *optional* | the event name the handler checks with check_on_event( `SAVE` ) - upper case by convention, unique within the app. |
+| `t_arg` | `string_table` | *optional* | arguments sent with the event and read back with get_event_arg( n ) in the same order: a literal, a `${$source>/...}` or `${$parameters>/...}` client expression evaluated when the event fires, or `$event>...` for a field of the UI5 event itself. |
+| `s_ctrl` | `ty_s_event_control` | *optional* | the per-wire options (ty_s_event_control): send while another roundtrip runs, keep the last firing until the running roundtrip has landed, cancel the control's default, quote every argument as a literal. |
+| `arg` | `clike` | *optional* | the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. An argument that starts with `$` or `{` (or an .eB( expression) is written RAW, as live UI5 expression syntax - that is how `${$source>/KEY}` reaches the handler as the row's value. Data that may start with those characters (text a user typed, a key from a foreign system) is therefore evaluated, not passed: set s_ctrl-check_arg_literal to have every argument of the wire quoted as a string instead. |
 
 Preferred parameter: `val` — a positional call passes it.
 
@@ -167,19 +189,39 @@ Returns `string`.
 
 ### `follow_up_action`
 
-Schedule a frontend action to run after the backend response is processed. Two ways to call it: pass a frontend event as val (e.g. cs_event-set_title) with its arguments in t_arg and the framework builds the event call; or pass a raw JavaScript expression as val (without t_arg) to run it as-is. The control/binding calls are frontend events too; their t_arg is positional (an empty argument between filled ones keeps its slot as ``): cs_event-control_by_id - call a method on a control resolved by id: t_arg = id, method, params. Any public control method works unless it is on the frontend denylist (methods that would break framework invariants). The named per-aggregation mutators are on the allowed side of that line - addItem, removeItem, removeAllItems, destroyContent - and only the GENERIC reflection variants that take the member name as an argument are denied (addAggregation, removeAllAggregation, setAssociation, ...). The view is passed as the separate view parameter (default cs_view-main resolves the id across all open views; pass cs_view-popup/popover/... to scope the lookup to that view). Two entries are NOT UI5 methods but frontend capabilities in method form: `css` sets ONE whitelisted CSS declaration on the control's own DOM node (t_arg = id, `css`, property, value) - for a value the control has no property for at all, e.g. the width of a sap.m.Page; prefer a bound property wherever one exists. `toggleBy` opens/closes a popup anchored to a control (t_arg = id, `toggleBy`, anchor id). An association setter (setSelectedSection, setSelectedItem) clears the association when its argument is EMPTY. Wherever an argument takes a CONTROL ID, it also takes an aggregation ITEM, addressed positionally as `<id>/<aggregation>/<index>` (`carousel/pages/2`, 0-based). A control cloned from an aggregation template has no id the backend can spell - UI5 mints it from the template id, the parent id and the index, and the parent id carries the view prefix assigned at runtime - so this is the only way to reach one. It is the equivalent of the UI5 controller idiom `oCarousel.setActivePage( oCarousel.getPages()[ i ] )`. A plain id (no slashes) resolves exactly as before. cs_event-control_global - call a whitelisted method on a global object (MESSAGE_TOAST, MESSAGE_BOX, BUSY_INDICATOR, THEMING, POPUP, INVISIBLE_MESSAGE, FORMATTING, ICON_POOL): t_arg = object, method, params. POPUP-setWithinArea confines every popup to the control whose id is passed (sap.ui.core.Popup.setWithinArea, needs UI5 >= 1.89) instead of to the window; an EMPTY argument releases the restriction again. INVISIBLE_MESSAGE-announce reads a text out to a screen reader without rendering it (sap.ui.core.InvisibleMessage, needs UI5 >= 1.78): t_arg = text, mode (Polite, default, or Assertive). It is a singleton, so there is no control id - this is the only way to announce a change the backend made. FORMATTING-setCustomCurrencies registers currency codes the standard sap.ui.model.type.Currency does not know, or overrides their digit count (sap/base/i18n/Formatting, needs UI5 >= 1.120): t_arg = JSON object, e.g. {"BGN4":{"digits":4}}. It REPLACES the whole registration - addCustomCurrencies MERGES codes into it instead (t_arg = the same map). Reaching for the wrong one is silent: an app that registers currencies as it loads more data and calls setCustomCurrencies drops what it registered before, and the symptom is a wrong digit count in a table, never an error. What this reaches is the FORMATTING configuration, not a control that has already formatted: a control caching its NumberFormat at init( ) - among them sap.ui.unified.Currency - keeps the digit count it was built with, because it implements no localization-change hook. A BOUND sap.ui.model.type.Currency does implement one and re-formats. ICON_POOL-registerFont makes an icon collection outside the default SAP-icons font resolvable - sap.tnt's SAP-icons-TNT is the common one: t_arg = fontFamily, fontURI, e.g. `SAP-icons-TNT` / `sap/tnt/themes/base/fonts/`. A normal UI5 app does this in its Component's init; an abap2UI5 app has no Component of its own, and IconPool is a module SINGLETON rather than a control, so no other wire reaches it. Without the registration a sap-icon://SAP-icons-TNT/... URI renders NO GLYPH and logs nothing. The fontURI is a module path in every real use and is resolved through sap.ui.require.toUrl, so the registration survives a different mount point; an absolute URL is passed through. Issue it from the init branch - the same collection is registered only once per session, so a repeat call costs nothing. cs_event-smart_variant_init - run the initialise( ) handshake sap.ui.comp variant management needs (a controller would call oSmartVariantManagement.initialise( fnCallback, oPersonalizableControl )). Without it the control keeps no personalizable control, saving a view fails inside sap.ui.fl and stored variants are never loaded: t_arg = SmartVariantManagement id, personalizable control id (optional, default: the first control that registered itself). The action waits for that registration, which the smart controls do once their OData metadata has loaded. cs_event-filter_bar_variant_init - wire a classic sap.ui.comp.filterbar.FilterBar to a SmartVariantManagement: t_arg = SmartVariantManagement id, FilterBar id. A SmartFilterBar knows its own fields and registers itself (see smart_variant_init above); a classic FilterBar does not, so a list report normally hand-writes the same controller boilerplate - registerFetchData / registerApplyData / registerGetFiltersWithValues, addPersonalizableControl( ) with a PersonalizableInfo, and a change handler per filter field that marks the variant as modified. This action does all of it, so saving, selecting and restoring a variant works without a single line of JavaScript. The restored values reach the backend through the binding of the filter fields, no extra roundtrip needed. cs_event-keyboard_shortcut - bind a key combination to a named backend event, the declarative equivalent of a sap.ui.core.CommandExecution shortcut: t_arg = combination, event name. The combination is spelled like the UI5 one (`Ctrl+S`, `Ctrl+Shift+D`, `F2`; ctrl/shift/alt/meta in any order, cmd/command/option/control accepted as aliases). Pressing it fires the event exactly like a button press and suppresses the browser's own default for the combination. Registering the same combination again rebinds it; an empty event name removes it. The registrations belong to the running app and are dropped when another app takes over. An optional THIRD t_arg SCOPES the shortcut: the scoped registration wins while its scope is OPEN and the unscoped one applies otherwise, which is how a UI5 CommandExecution in a Popover's dependents shadows the page-level one for the same command. A scope is either a view slot (cs_view-popover/popup/nested/nested2/main) or the ID OF A CONTROL that can be open or closed - a Popover/Dialog declared in the view and opened with control_by_id openBy, which never enters a framework slot. A control scope beats a slot scope (it is the more specific statement), then the innermost open slot wins. An empty event name removes the registration of THAT scope only. cs_event-hash_attach_changed - APP-OWNED hash routing (HashChanger#attachHashChanged), the 1:1 counterpart of a UI5 router's own hash (`#/Page2`) for an app that does NOT use hash_routing: t_arg = a backend event name. From then on hash_set( `/Page2` ) writes that value as the whole app hash (a pushed history entry), hash_replace( ) the same without a new entry, and a hash change the app did not write itself - browser Back/Forward, a manual URL edit - fires the registered event; the hash the browser now stands on arrives with that request (and with every other one, a fresh deep-link start included) in get( )-s_config-hash, so the app decides what to show. While registered, the framework leaves the hash entirely alone. Calling it without t_arg unregisters. The registration dies with an app switch - register it in view_display( ), so every render (a draft restore included) re-asserts it. Mutually exclusive with hash_routing (a routed app's hash belongs to the router) and with app_state_set_active (both claim the whole hash). cs_event-hash_back - the UI5 onNavBack pattern: without t_arg one real step back in the browser history (`window.history.go(-1)` - the step is CONSUMED, and the resulting hash change fires the registered event). With t_arg = a fallback hash it guards the cold deep link the way UI5's recommended onNavBack does: when this page load never pushed an app hash, there is no in-app step to take, so the fallback is written as a REPLACE instead of falling out of the app - and the change fires the registered event, which shows the fallback route. cs_event-binding_call - apply a declarative filter/sorter to an aggregation binding, the client-side equivalent of the UI5 controller pattern getBinding('items').filter(...); the model data stays untouched: t_arg = id, aggregation, method, params. method `filter`: params = path, operator, value1, value2 (empty values clear the filter); method `sort`: params = path, descending, group (abap_bool as `X`/``). Each of these events also works roundtrip-free when WIRED IN THE VIEW: write the same call where its result is consumed (`)->a( n = `press` v = client->follow_up_action( val = ... t_arg = ... ) )`) and the action runs in the browser without a server call.
+Schedule a frontend action to run after the backend response has been processed. Two ways to call it: pass a frontend event as val (a cs_event-* constant, e.g. cs_event-set_title) with its arguments in t_arg and the framework builds the event call; or pass a raw JavaScript expression as val, without t_arg, to run it as it is. The families below take structured arguments; t_arg is POSITIONAL, and an empty argument between filled ones keeps its slot as ``.
+
+Every one of them also works roundtrip-free when WIRED IN THE VIEW: write the same call where its result is consumed - `)->a( n = `press` v = client->follow_up_action( val = ... t_arg = ... ) )` - and the action runs in the browser without a server call.
+
+**cs_event-control_by_id** - call a method on a control resolved by id, t_arg = id, method, params: ``client->follow_up_action( val = client->cs_event-control_by_id t_arg = VALUE #( ( `tab` ) ( `setSelectedIndex` ) ( `0` ) ) )``. Any public control method works unless it is on the frontend denylist (methods that would break framework invariants). The named per-aggregation mutators are on the allowed side of that line - addItem, removeItem, removeAllItems, destroyContent - and only the GENERIC reflection variants that take the member name as an argument are denied (addAggregation, removeAllAggregation, setAssociation, ...). The view is passed as the separate view parameter (default cs_view-main resolves the id across all open views; pass cs_view-popup/popover/... to scope the lookup to that view). Two entries are NOT UI5 methods but frontend capabilities in method form: `css` sets ONE whitelisted CSS declaration on the control's own DOM node (t_arg = id, `css`, property, value) - for a value the control has no property for at all, e.g. the width of a sap.m.Page; prefer a bound property wherever one exists. `toggleBy` opens/closes a popup anchored to a control (t_arg = id, `toggleBy`, anchor id). An association setter (setSelectedSection, setSelectedItem) clears the association when its argument is EMPTY. Wherever an argument takes a CONTROL ID, it also takes an aggregation ITEM, addressed positionally as `<id>/<aggregation>/<index>` (`carousel/pages/2`, 0-based). A control cloned from an aggregation template has no id the backend can spell - UI5 mints it from the template id, the parent id and the index, and the parent id carries the view prefix assigned at runtime - so this is the only way to reach one. It is the equivalent of the UI5 controller idiom `oCarousel.setActivePage( oCarousel.getPages()[ i ] )`. A plain id (no slashes) resolves exactly as before.
+
+**cs_event-control_global** - call a whitelisted method on a global object (MESSAGE_TOAST, MESSAGE_BOX, BUSY_INDICATOR, THEMING, POPUP, INVISIBLE_MESSAGE, FORMATTING, ICON_POOL), t_arg = object, method, params: ``client->follow_up_action( val = client->cs_event-control_global t_arg = VALUE #( ( `BUSY_INDICATOR` ) ( `show` ) ( `0` ) ) )``. POPUP-setWithinArea confines every popup to the control whose id is passed (sap.ui.core.Popup.setWithinArea, needs UI5 >= 1.89) instead of to the window; an EMPTY argument releases the restriction again. INVISIBLE_MESSAGE-announce reads a text out to a screen reader without rendering it (sap.ui.core.InvisibleMessage, needs UI5 >= 1.78): t_arg = text, mode (Polite, default, or Assertive). It is a singleton, so there is no control id - this is the only way to announce a change the backend made. FORMATTING-setCustomCurrencies registers currency codes the standard sap.ui.model.type.Currency does not know, or overrides their digit count (sap/base/i18n/Formatting, needs UI5 >= 1.120): t_arg = JSON object, e.g. {"BGN4":{"digits":4}}. It REPLACES the whole registration - addCustomCurrencies MERGES codes into it instead (t_arg = the same map). Reaching for the wrong one is silent: an app that registers currencies as it loads more data and calls setCustomCurrencies drops what it registered before, and the symptom is a wrong digit count in a table, never an error. What this reaches is the FORMATTING configuration, not a control that has already formatted: a control caching its NumberFormat at init( ) - among them sap.ui.unified.Currency - keeps the digit count it was built with, because it implements no localization-change hook. A BOUND sap.ui.model.type.Currency does implement one and re-formats. ICON_POOL-registerFont makes an icon collection outside the default SAP-icons font resolvable - sap.tnt's SAP-icons-TNT is the common one: t_arg = fontFamily, fontURI, e.g. `SAP-icons-TNT` / `sap/tnt/themes/base/fonts/`. A normal UI5 app does this in its Component's init; an abap2UI5 app has no Component of its own, and IconPool is a module SINGLETON rather than a control, so no other wire reaches it. Without the registration a sap-icon://SAP-icons-TNT/... URI renders NO GLYPH and logs nothing. The fontURI is a module path in every real use and is resolved through sap.ui.require.toUrl, so the registration survives a different mount point; an absolute URL is passed through. Issue it from the init branch - the same collection is registered only once per session, so a repeat call costs nothing.
+
+**cs_event-smart_variant_init** - run the initialise( ) handshake sap.ui.comp variant management needs (a controller would call oSmartVariantManagement.initialise( fnCallback, oPersonalizableControl )), t_arg = SmartVariantManagement id, personalizable control id (optional, default: the first control that registered itself): ``client->follow_up_action( val = client->cs_event-smart_variant_init t_arg = VALUE #( ( `pageVariant` ) ) )``. Without it the control keeps no personalizable control, saving a view fails inside sap.ui.fl and stored variants are never loaded. The action waits for that registration, which the smart controls do once their OData metadata has loaded.
+
+**cs_event-filter_bar_variant_init** - wire a classic sap.ui.comp.filterbar.FilterBar to a SmartVariantManagement, t_arg = SmartVariantManagement id, FilterBar id: ``client->follow_up_action( val = client->cs_event-filter_bar_variant_init t_arg = VALUE #( ( `variant` ) ( `filterbar` ) ) )``. A SmartFilterBar knows its own fields and registers itself (see smart_variant_init above); a classic FilterBar does not, so a list report normally hand-writes the same controller boilerplate - registerFetchData / registerApplyData / registerGetFiltersWithValues, addPersonalizableControl( ) with a PersonalizableInfo, and a change handler per filter field that marks the variant as modified. This action does all of it, so saving, selecting and restoring a variant works without a single line of JavaScript. The restored values reach the backend through the binding of the filter fields, no extra roundtrip needed.
+
+**cs_event-keyboard_shortcut** - bind a key combination to a named backend event, the declarative equivalent of a sap.ui.core.CommandExecution shortcut, t_arg = combination, event name: ``client->follow_up_action( val = client->cs_event-keyboard_shortcut t_arg = VALUE #( ( `Ctrl+S` ) ( `SAVE` ) ) )``. The combination is spelled like the UI5 one (`Ctrl+S`, `Ctrl+Shift+D`, `F2`; ctrl/shift/alt/meta in any order, cmd/command/option/control accepted as aliases). Pressing it fires the event exactly like a button press and suppresses the browser's own default for the combination. Registering the same combination again rebinds it; an empty event name removes it. The registrations belong to the running app and are dropped when another app takes over. An optional THIRD t_arg SCOPES the shortcut: the scoped registration wins while its scope is OPEN and the unscoped one applies otherwise, which is how a UI5 CommandExecution in a Popover's dependents shadows the page-level one for the same command. A scope is either a view slot (cs_view-popover/popup/nested/nested2/main) or the ID OF A CONTROL that can be open or closed - a Popover/Dialog declared in the view and opened with control_by_id openBy, which never enters a framework slot. A control scope beats a slot scope (it is the more specific statement), then the innermost open slot wins. An empty event name removes the registration of THAT scope only.
+
+**cs_event-hash_attach_changed** - APP-OWNED hash routing (HashChanger#attachHashChanged), the 1:1 counterpart of a UI5 router's own hash (`#/Page2`) for an app that does NOT use hash_routing, t_arg = a backend event name: ``client->follow_up_action( val = client->cs_event-hash_attach_changed t_arg = VALUE #( ( `HASH_CHANGED` ) ) )``. From then on hash_set( `/Page2` ) writes that value as the whole app hash (a pushed history entry), hash_replace( ) the same without a new entry, and a hash change the app did not write itself - browser Back/Forward, a manual URL edit - fires the registered event; the hash the browser now stands on arrives with that request (and with every other one, a fresh deep-link start included) in get( )-s_config-hash, so the app decides what to show. While registered, the framework leaves the hash entirely alone. Calling it without t_arg unregisters. The registration dies with an app switch - register it in view_display( ), so every render (a draft restore included) re-asserts it. Mutually exclusive with hash_routing (a routed app's hash belongs to the router) and with app_state_set_active (both claim the whole hash).
+
+**cs_event-hash_back** - the UI5 onNavBack pattern: without t_arg one real step back in the browser history (`window.history.go(-1)` - the step is CONSUMED, and the resulting hash change fires the registered event). With t_arg = a fallback hash it guards the cold deep link the way UI5's recommended onNavBack does: when this page load never pushed an app hash, there is no in-app step to take, so the fallback is written as a REPLACE instead of falling out of the app - and the change fires the registered event, which shows the fallback route: ``client->follow_up_action( val = client->cs_event-hash_back t_arg = VALUE #( ( `/` ) ) )``.
+
+**cs_event-binding_call** - apply a declarative filter or sorter to an aggregation binding, the client-side equivalent of the UI5 controller pattern getBinding('items').filter(...); the model data stays untouched. t_arg = id, aggregation, method, params. Method `filter`: params = path, operator, value1, value2 (empty values clear the filter); method `sort`: params = path, descending, group (abap_bool as `X`/``): ``client->follow_up_action( val = client->cs_event-binding_call t_arg = VALUE #( ( `tab` ) ( `items` ) ( `filter` ) ( `NAME` ) ( `Contains` ) ( `ab` ) ) )``.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `string` |  |  |
-| `view` | `clike` | `cs_view-main` |  |
-| `t_arg` | `string_table` | *optional* |  |
+| `val` | `string` |  | the frontend event - a cs_event-* constant - or a raw JavaScript expression when t_arg is not supplied. |
+| `view` | `clike` | `cs_view-main` | the view slot the action's control id is resolved in: cs_view-main, the default, searches every open view; cs_view-popup, -popover, -nested, -nested2 scope the lookup to that slot. |
+| `t_arg` | `string_table` | *optional* | the positional arguments of the event - each family above says what they are; an empty argument between filled ones keeps its slot as ``. |
 
 Returns `string`.
 
 ## Reading the request
 
 ### `get`
+
+Everything the frontend sent with this roundtrip, as one structure (ty_s_get): the event and its arguments, the device, focus, scroll and UI5 runtime information, the browser location (s_config), the launchpad startup parameters (t_comp_params), the draft ids, data a returning app handed over (r_event_data) and the table cells this roundtrip's delta could not apply (t_model_skipped). Cheap to call more than once - the launchpad parameters are parsed once per roundtrip and remembered.
 
 Returns `ty_s_get`.
 
@@ -191,9 +233,11 @@ Returns `string`.
 
 ### `get_event_arg`
 
+One argument of the event that triggered this roundtrip, in the order the wire's t_arg listed them - the way to read the row key or the event parameter a wire carried (`t_arg = VALUE #( ( `${$source>/KEY}` ) )`, or the same with `arg =`). Empty when the position does not exist; the whole list is get( )-t_event_arg.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `v` | `i` | `1` |  |
+| `v` | `i` | `1` | the 1-based position in t_arg. The default 1 is the first argument - the only one a wire written with `arg =` carries. |
 
 Returns `string`.
 
@@ -203,63 +247,73 @@ Returns `string`.
 
 Show a sap.m.MessageBox. `text` is TYPE any and takes whatever the app has: a text, a message structure or table (BAPIRET2, T100, RAP, symsg, a log object, an exception), an HTML string, a business table, a nested structure or tree, an object, a number. Messages are recognized first and set the box's severity and title themselves; everything else is rendered - a headline in the box, the data itself in the details. The one case that shows nothing at all is complex data that is initial (an empty message table stays as silent as it always was).
 
+Every option below is the sap.m.MessageBox option of the same name, passed through when set; onclose is the one abap2UI5-shaped exception.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `text` | `any` |  |  |
-| `type` | `clike` | `information` |  |
-| `title` | `clike` | *optional* |  |
-| `styleclass` | `clike` | *optional* |  |
-| `onclose` | `clike` | *optional* |  |
-| `actions` | `string_table` | *optional* |  |
-| `emphasizedaction` | `clike` | *optional* |  |
-| `initialfocus` | `clike` | *optional* |  |
-| `textdirection` | `clike` | *optional* |  |
-| `icon` | `clike` | *optional* |  |
-| `details` | `clike` | *optional* |  |
-| `closeonnavigation` | `abap_bool` | `abap_true` |  |
-| `dependenton` | `clike` | *optional* |  |
-| `contentwidth` | `clike` | *optional* |  |
+| `text` | `any` |  | what to show - a text, or any of the shapes above. |
+| `type` | `clike` | `information` | the kind of box, which decides icon and default title: `information` (the default), `warning`, `error`, `success`, `confirm`, `alert` or `show`. |
+| `title` | `clike` | *optional* | the title bar text; the type's own title when empty. |
+| `styleclass` | `clike` | *optional* | one or more CSS classes added to the box. |
+| `onclose` | `clike` | *optional* | a BACKEND event name raised when the box closes; the action the user pressed arrives as the first event argument (get_event_arg( )), so one handler tells DELETE from CANCEL. |
+| `actions` | `string_table` | *optional* | the buttons, as sap.m.MessageBox.Action names (`OK`, `CANCEL`, `YES`, `NO`, `ABORT`, `RETRY`, `IGNORE`, `CLOSE`, `DELETE`) or as free texts; `OK` alone when not supplied. |
+| `emphasizedaction` | `clike` | *optional* | the one of the actions rendered as the emphasized button. |
+| `initialfocus` | `clike` | *optional* | the action (or control id) that has the focus when the box opens. |
+| `textdirection` | `clike` | *optional* | `LTR`, `RTL` or `Inherit` for the text. |
+| `icon` | `clike` | *optional* | an icon of sap.m.MessageBox.Icon (`NONE`, `INFORMATION`, `WARNING`, `ERROR`, `SUCCESS`, `QUESTION`) instead of the one the type implies. |
+| `details` | `clike` | *optional* | a further text (or JSON) shown behind the box's "Show details" link. |
+| `closeonnavigation` | `abap_bool` | `abap_true` | close the box when the page navigates (the default); abap_false keeps it open. |
+| `dependenton` | `clike` | *optional* | the id of a control the box becomes a dependent of, so it is destroyed with that control (UI5 1.124 on). |
+| `contentwidth` | `clike` | *optional* | a CSS width for the box's content. |
 
 ### `message_toast_display`
 
+Show a sap.m.MessageToast with text - the fire-and-forget notification for a saved record or a copied link, gone again after a few seconds. Every other parameter is the option of the same name of sap.m.MessageToast.show( ), passed through only when set, so UI5 owns every default; onclose and class are abap2UI5-shaped.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `text` | `clike` |  |  |
-| `duration` | `clike` | *optional* |  |
-| `width` | `clike` | *optional* |  |
-| `my` | `clike` | *optional* |  |
-| `at` | `clike` | *optional* |  |
-| `of` | `clike` | *optional* |  |
-| `offset` | `clike` | *optional* |  |
-| `collision` | `clike` | *optional* |  |
-| `onclose` | `clike` | *(empty)* |  |
-| `autoclose` | `abap_bool` | `abap_true` |  |
-| `animationtimingfunction` | `clike` | *optional* |  |
-| `animationduration` | `clike` | *optional* |  |
-| `closeonbrowsernavigation` | `abap_bool` | `abap_true` |  |
-| `class` | `clike` | *optional* |  |
+| `text` | `clike` |  | the text shown. |
+| `duration` | `clike` | *optional* | milliseconds the toast stays (UI5 default 3000). |
+| `width` | `clike` | *optional* | the toast's CSS width (UI5 default 15em). |
+| `my` | `clike` | *optional* | the toast's own docking point, a sap.ui.core.Popup.Dock value (UI5 default `center bottom`). |
+| `at` | `clike` | *optional* | the docking point of `of` the toast is placed at (UI5 default `center bottom`). |
+| `of` | `clike` | *optional* | the control id or DOM reference the toast is positioned relative to (UI5 default: the window). |
+| `offset` | `clike` | *optional* | the offset from that position as `x y` in pixels. |
+| `collision` | `clike` | *optional* | how a toast that would leave the window is moved (`fit`, `flip`, `none`, one value per axis; UI5 default `fit fit`). |
+| `onclose` | `clike` | *(empty)* | a BACKEND event name raised when the toast closes. |
+| `autoclose` | `abap_bool` | `abap_true` | close after duration (the default) or stay until the user clicks elsewhere. |
+| `animationtimingfunction` | `clike` | *optional* | the CSS timing function of the fade (UI5 default `ease`). |
+| `animationduration` | `clike` | *optional* | the fade duration in milliseconds (UI5 default 1000). |
+| `closeonbrowsernavigation` | `abap_bool` | `abap_true` | close on browser navigation (the default). |
+| `class` | `clike` | *optional* | one or more CSS classes added to the toast. |
 
 ## App navigation
 
 ### `get_app`
 
+The app instance behind a draft id. Without id the running app itself - the object main( ) was called on, for a helper that only holds the client. With an id, the instance that draft holds, loaded from the database: that is how the previous app on the stack is reached (get( )-s_draft-id_prev_app, which get_app_prev( ) does for you).
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `id` | `clike` | *optional* |  |
+| `id` | `clike` | *optional* | the draft id of the instance to load (get( )-s_draft-id, -id_prev_app, -id_prev_app_stack); empty for the running app. |
 
 Returns `REF TO z2ui5_if_app`.
 
 ### `_event_nav_app_leave`
 
+The handler expression for a view attribute that LEAVES this app on press - a Page's navButtonPress, a Cancel button: `)->a( n = `navButtonPress` v = client->_event_nav_app_leave( ) )`. The press does what nav_app_leave( ) does in a handler, without a branch in main( ): the previous app on the stack takes the screen back. Pair it with `showNavButton` bound to check_app_prev_stack( ), so the button is only there when it has somewhere to go.
+
 Returns `string`.
 
 ### `nav_app_leave`
 
+Hand the screen back to the previous app on the stack - the one that called this app with nav_app_call( ) - or, with app supplied, to that instance instead, WITHOUT pushing the current app onto the stack: a forward navigation that discards this app. The target's main( ) runs next with check_on_navigated( ) true, so it re-displays its view (the browser still shows this app's view until it does); event and r_data let the leaving app hand a result over. Scheduled for the end of the roundtrip, so it is usually the last statement of a handler branch.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `app` | `REF TO z2ui5_if_app` | *optional* |  |
-| `event` | `clike` | *optional* |  |
-| `r_data` | `data` | *optional* |  |
+| `app` | `REF TO z2ui5_if_app` | *optional* | the app to show next; not supplied, the app this one was called from - with nothing to return to, the user lands on the start page, so guard the call with check_app_prev_stack( ). |
+| `event` | `clike` | *optional* | an event name the target finds in check_on_event( ) on arrival, so a return WITH a result can be told from a plain return. |
+| `r_data` | `data` | *optional* | data handed to the target, read there as get( )-r_event_data (a reference to a copy of it). An intentionally empty value still arrives. |
 
 Preferred parameter: `app` — a positional call passes it.
 
@@ -267,17 +321,23 @@ Returns `string`.
 
 ### `nav_app_call`
 
+Show another app on top of this one. The instance in app takes the screen with the next response and its main( ) runs, check_on_init( ) and check_on_navigated( ) both true; this app is pushed onto the stack and gets the screen back when the called app calls nav_app_leave( ) - then this main( ) runs again with check_on_navigated( ) true, and get_app_prev( ) is the called instance, its public attributes readable as the result. Scheduled for the end of the roundtrip, so it is usually the last statement of a handler branch. See the Navigation chapter.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `app` | `REF TO z2ui5_if_app` |  |  |
+| `app` | `REF TO z2ui5_if_app` |  | a bound instance of the app to call - NEW zcl_other_app( ) with whatever it needs set on it before the call; an unbound reference raises NAV_APP_TARGET_NOT_BOUND. |
 
 Returns `string`.
 
 ### `check_app_prev_stack`
 
+TRUE when there is an app to return to - this app was reached through nav_app_call( ), so nav_app_leave( ) lands somewhere. What a Page's showNavButton binds to (`b = client->check_app_prev_stack( )`), so the back button is only there where it has somewhere to go.
+
 Returns `abap_bool`.
 
 ### `get_app_prev`
+
+The app instance on the other side of the last navigation: inside a called app, the caller; back in the caller after the called app's nav_app_leave( ), the instance that just returned - cast it to its class and read its public attributes for the result it produced.
 
 Returns `REF TO z2ui5_if_app`.
 
@@ -289,7 +349,7 @@ The app-state hash: while active, the URL carries the id of the CURRENT app stat
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `abap_bool` | `abap_true` |  |
+| `val` | `abap_bool` | `abap_true` | abap_true (the default) switches the tracking on, abap_false switches it off. |
 
 ### `app_state_get_href`
 
@@ -303,7 +363,7 @@ HashChanger#setHash: write VAL as the app's URL hash - a PUSHED history entry, s
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `string` | *optional* |  |
+| `val` | `string` | *optional* | the hash to write - the whole app hash (`/Page2`) with a hash_attach_changed listener registered, otherwise the suffix appended to the hash the page already has. |
 
 ### `hash_replace`
 
@@ -311,15 +371,17 @@ HashChanger#replaceHash: write VAL as the app's URL hash WITHOUT a new history e
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `string` | *optional* |  |
+| `val` | `string` | *optional* | the hash to write, spelled as for hash_set( ). |
 
 ## Session
 
 ### `set_session_stateful`
 
+Switch the ABAP session of this app to STATEFUL from this roundtrip on - the work process and the session context (enqueue locks, open RFC connections, everything the app does not serialise) survive between roundtrips - or back to stateless with abap_false. The price is one pinned work process per active user, so it is for the few internal, low-traffic apps that need GUI-like locking; see the Statefulness chapter. Two calls in one roundtrip cancel out - the state at the END of the roundtrip is what the server gets. Pair every switch on with a switch off on every exit path.
+
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `abap_bool` | `abap_true` |  |
+| `val` | `abap_bool` | `abap_true` | abap_true (the default) makes the session stateful, abap_false makes it stateless again. |
 
 ## Constants
 
@@ -328,6 +390,8 @@ frontend action, `cs_view` the view slots, `cs_device` what `get( )` reports
 about the device, `cs_nav_mode` the routing modes.
 
 ### `cs_device`
+
+The values get( )-s_device carries, as constants to compare against: what system, browser, os and orientation say about the client, e.g. `IF client->get( )-s_device-system = client->cs_device-system-phone.`
 
 | Constant | Value |
 |---|---|
@@ -348,6 +412,8 @@ about the device, `cs_nav_mode` the routing modes.
 | `cs_device-orientation-landscape` | `landscape` |
 
 ### `cs_event`
+
+Every frontend event a wire or follow_up_action( ) can name: what the browser does when the response arrives (set_title, scroll_to, download_b64_file, clipboard_copy, ...) or when the wired control fires (the control_by_id / control_global / binding_call family), the smart-control handshakes, the hash family, and - at the end - obsolete spellings kept so old apps compile. follow_up_action( ) documents the families that take structured arguments; the rest take the argument their name suggests, one sample each in the cookbook.
 
 | Constant | Value | |
 |---|---|---|
@@ -389,6 +455,8 @@ about the device, `cs_nav_mode` the routing modes.
 
 ### `cs_view`
 
+The five slots the frontend renders into: the main view, the two nested views, the popup and the popover. The `view` parameter of follow_up_action( ) and _event_client( ) names the slot a control id is resolved in, and a keyboard shortcut can be scoped to one.
+
 | Constant | Value |
 |---|---|
 | `cs_view-main` | `MAIN` |
@@ -411,12 +479,16 @@ Hash-based app routing modes, switched on with follow_up_action( cs_event-hash_r
 
 ### `ty_s_name_value`
 
+A name-value pair, both strings - the shape of a launchpad startup parameter in get( )-t_comp_params (n = the parameter name the tile passed, v = its first value).
+
 | Field | Type |
 |---|---|
 | `n` | `string` |
 | `v` | `string` |
 
 ### `ty_t_name_value`
+
+The table of name-value pairs get( )-t_comp_params carries.
 
 Defined as `STANDARD TABLE OF ty_s_name_value WITH EMPTY KEY`.
 
@@ -435,6 +507,8 @@ Reading the trace alone pushes no model, so the browser goes on showing the refu
 | `value` | `string` |
 
 ### `ty_t_model_skip`
+
+The table of skipped cells get( )-t_model_skipped carries, one ty_s_model_skip row per cell this roundtrip's delta could not apply.
 
 Defined as `STANDARD TABLE OF ty_s_model_skip WITH EMPTY KEY`.
 
@@ -505,5 +579,6 @@ The per-wire options of _event( ) - see the documentation on the method for what
 | `check_prevent_default` | `abap_bool` |
 | `prevent_default_expr` | `string` |
 | `check_arg_literal` | `abap_bool` |
+| `check_queue_last` | `abap_bool` |
 
 <!-- api:end -->
