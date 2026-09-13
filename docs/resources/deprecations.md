@@ -58,17 +58,17 @@ tell you what is coming if you do not.
 | `client->get( )-viewname` | delete the read | **removed**, 1.143.0 |
 | `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, 1.143.0 |
 | `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` | **removed**, 1.142.0 |
-| `cs_event-wizard_set_next_step` | two `control_by_id` calls | 1.143.0 |
+| `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, *next release* |
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
 | `cs_config-title` | `cs_event-set_title` | 1.144.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
-| `set_push_state( )` | `hash_set( )` | *next release* |
-| `set_app_state_active( )` | `app_state_set_active( )` | *next release* |
-| `cs_event-set_nav_routing` | `cs_event-hash_routing` | *next release* |
-| `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | *next release* |
+| `set_push_state( )` | `hash_set( )` | **removed**, *next release* |
+| `set_app_state_active( )` | `app_state_set_active( )` | **removed**, *next release* |
+| `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, *next release* |
+| `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | **removed**, *next release* |
 | `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, *next release* |
 
 ## Obsolete: still compiles
@@ -240,11 +240,11 @@ select one.
 
 ### `cs_event-wizard_set_next_step`
 
-The event bundles the two calls a UI5 controller makes on a Wizard
+**Removed.** The event bundled the two calls a UI5 controller makes on a Wizard
 (`discardProgress( oStep )` + `oStep.setNextStep( oNext )`) into one fixed pair.
 Both methods are on the frontend's `CONTROL_METHODS` whitelist, so the same flow
 is two ordinary `control_by_id` calls — which additionally reach `goToStep`, a
-step the bundled event cannot express.
+step the bundled event could not express.
 
 ```abap
 " old
@@ -258,7 +258,9 @@ client->follow_up_action( val   = client->cs_event-control_by_id
                           t_arg = VALUE #( ( `step1` ) ( `setNextStep` ) ( `step2` ) ) ).
 ```
 
-The constant and its handler stay and keep working.
+The constant is gone from `cs_event` and the `WIZARD_SET_NEXT_STEP` handler is
+gone from the frontend, so a call that still names either does not compile and
+a raw string does nothing.
 
 ### The `nav_container_to` event family
 
@@ -518,9 +520,10 @@ the state the URL carries.
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | it is the *hash* that is being routed; `nav_*` is app-to-app navigation |
 | `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | the backend composes the link now, so the app can show or mail it, not only copy it |
 
-Both spellings compile, and the first three share their wire value — the old
-name and the new one reach the same branch, so there is no behavior to migrate,
-only a name:
+**Removed.** The first three shared their wire value with the surviving name —
+the old spelling and the new one reached the same branch — so there was no
+behavior to migrate, only a name, and a call that still writes the old one does
+not compile:
 
 ```abap
 " before
@@ -532,12 +535,13 @@ client->hash_set( `&my-app-state=detail` ).
 client->follow_up_action( client->cs_event-hash_routing ).
 ```
 
-`cs_event-clipboard_app_state` is the one that is not a pure rename: it
-composed the link in the browser and could only put it on the clipboard. The
-replacement hands the string to the backend, which is what lets an app show it
-in an `Input`, mail it or render it as a QR code — and the composed link keeps
-a Fiori Launchpad's shell hash, so a recipient lands in the app instead of on
-the launchpad home page:
+`cs_event-clipboard_app_state` is the one that was not a pure rename: it
+composed the link in the browser and could only put it on the clipboard, and
+its frontend handler is gone with the constant. The replacement hands the
+string to the backend, which is what lets an app show it in an `Input`, mail it
+or render it as a QR code — and the composed link keeps a Fiori Launchpad's
+shell hash, so a recipient lands in the app instead of on the launchpad home
+page:
 
 ```abap
 " before - fire and forget, the link never existed in ABAP
