@@ -160,6 +160,22 @@ press = client->follow_up_action(
     t_arg = VALUE #( ( `msgPopover` ) ( `toggleBy` ) ( `${$source>/id}` ) ) )
 ```
 
+A `t_arg` argument that starts with a brace travels as **real JSON** rather than
+as a string. That is how `MESSAGE_TOAST` and `MESSAGE_BOX` take their UI5
+options — the object is the last argument of the call and is the option object
+of `sap.m.MessageToast.show( )` / `sap.m.MessageBox.<type>( )` 1:1, with the box
+type as the method:
+
+```abap
+client->follow_up_action(
+    val   = client->cs_event-control_global
+    t_arg = VALUE #( ( `MESSAGE_BOX` ) ( `error` ) ( `Not saved.` )
+                     ( `{"contentWidth":"30rem","icon":"WARNING"}` ) ) ).
+```
+
+Which options belong here and which stay on `client->message_box_display( )` is
+the subject of [Message](/cookbook/translation_messages/message).
+
 The same events also work as a **statement** in your `main` method, with the identical `t_arg` — then the browser runs them after the response arrives, once your backend work is done:
 
 ```abap
