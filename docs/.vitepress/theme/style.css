@@ -1292,6 +1292,14 @@
   line-height: 22px;
   font-weight: 500;
 }
+/* The row is a `<p>`, so the 74ch prose measure above catches it too - and
+ * centring inside a box that ends two thirds of the way across the page is
+ * not centring under the tiles. A row of links is not a run of text: it takes
+ * the full width and centres in that. Three classes and the element, to
+ * outrank the cap. */
+.Layout .VPHome .vp-doc p.a2ui5-links {
+  max-width: none;
+}
 .vp-doc .a2ui5-links a {
   display: inline-flex;
   align-items: center;
