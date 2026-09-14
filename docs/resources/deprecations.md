@@ -168,8 +168,8 @@ replacement has a sample that proves it:
 
 | What you used AJSON for | What to write instead | Sample |
 |---|---|---|
-| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_507.clas.abap) |
-| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_509.clas.abap) |
+| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_507.clas.abap) |
+| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_509.clas.abap) |
 | Anything else | Shape the value in ABAP before you bind it | — |
 
 ```abap
@@ -378,13 +378,67 @@ still work; treat them as stable-but-closed rather than as something to migrate
 away from today. No page of this documentation uses them any more: what the
 examples reached them for is SAP standard — `cl_web_http_utility` for base64
 (`cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases), and
-a failing library raises its own exception instead of being wrapped. JSON is
-built and read by hand: compose it as a string in ABAP and bind it with
-`_bind( val = ... json = abap_true )` on the way out, and read the one field
-you need with `find` / `substring_before` on the way in — the payloads that
-reach an app are written by the framework and are flat. There is deliberately
-no released parser.
+a failing library raises its own exception instead of being wrapped. For the
+JSON they were also reached for, see the section below.
 :::
+
+### JSON is built and read by hand
+
+**There is deliberately no released JSON parser or writer, and there is no
+substitute to reach for.** `/ui2/cl_json` is not released for ABAP Cloud,
+`xco_cp_json` is missing on 7.02, and the bundled [ajson](/technical/tools/ajson)
+is the framework's model engine — a mirrored copy of an external project, which
+the abap2UI5 linter reports as `non-released-api` when an app names it, and it
+is right to.
+
+There was a released reader, `z2ui5_cl_ui5_json`, for two weeks in September
+2026. It was removed again before it had shipped in any release, so no
+installation ever had it and nothing has to be migrated away from it.
+
+**Outbound — a control property that must receive an object.** A
+`sap.ui.integration` Card manifest is the case this exists for: its keys
+(`sap.app`, `sap.card`) are not valid ABAP field names, so no typed ABAP value
+can be that object, and UI5 reads a *string* manifest as a manifest URL. Keep
+the JSON in a `string` attribute, compose it in ABAP, and bind it as a node:
+
+```abap
+client->_bind( val = mv_card_manifest json = abap_true )
+```
+
+A string that does not parse raises rather than shipping broken JSON to the
+frontend. This direction is outbound only — the attribute is not read back, so
+ABAP stays the single author of it. Where the payload has a URL instead, bind
+that; it needs no flag.
+
+**Inbound — an event argument that arrives as JSON.** Write the few lines that
+read the field you need. `Z2UI5_CL_SMP_APP_327`
+([`json_get_value`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_327.clas.abap),
+one field of a flat object) and `Z2UI5_CL_SMP_APP_197`
+([`json_get_values`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_197.clas.abap),
+one property across an array of objects) are the pattern to copy: find
+`"<name>":"` and take what stands up to the next quote.
+
+Two limits worth knowing before you copy it:
+
+- **It is a reader for FLAT payloads.** A control-valued event parameter is
+  marshaled as an object of the control's `ID` plus its public properties, and
+  a property whose value is itself an object or an array travels as one — the
+  frontend passes such a value through rather than flattening it. A `find` walk
+  answers the flat case; a nested one is a sign to bind the value into the model
+  instead of parsing it out of an event argument, which is what a two-way bound
+  attribute does for you with no parsing at all.
+- **A payload composed from user input needs escaping on both ends.** The
+  samples above read what the *framework* wrote. If your own app also writes the
+  JSON — publishing into an AMC channel, say — then a quote the user typed
+  reaches the reader as `\"`, and a `substring_before` on the next quote ends
+  the value early.
+  `Z2UI5_CL_SMPS_APP_489`
+  ([samples-stack](https://github.com/abap2UI5/samples-stack/blob/main/src/07/z2ui5_cl_smps_app_489.clas.abap))
+  is that case written out: a writer that escapes and a reader that walks the
+  value resolving escapes.
+
+An app parsing genuinely arbitrary, nested JSON is doing something this
+framework does not hand it a tool for.
 
 ### Invisible custom controls
 
