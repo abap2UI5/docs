@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_074
   - z2ui5_cl_smp_app_186
+  - z2ui5_cl_smp_app_517
 ---
 # Upload, Download
 
@@ -103,5 +104,6 @@ unless its row names another of the three sample repositories — pull that repo
 |---|---|
 | Upload to the Backend (C) | [`Z2UI5_CL_SMP_APP_074`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_074.clas.abap) |
 | Download to the Browser (A) | [`Z2UI5_CL_SMP_APP_186`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_186.clas.abap) |
+| Upload with an UploadSet (C) | [`Z2UI5_CL_SMP_APP_517`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_517.clas.abap) |
 
 <!-- samples:end -->
