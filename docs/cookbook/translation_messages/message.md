@@ -234,7 +234,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Message — MessageToast via the Global Object | [`Z2UI5_CL_SMP_APP_381`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_381.clas.abap) |
+| MessageToast via the Global Object | [`Z2UI5_CL_SMP_APP_381`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_381.clas.abap) |
 | MessageBox, Types and Custom Actions | [`Z2UI5_CL_SMP_APP_382`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_382.clas.abap) |
 | MessageBox from SY, BAPIRET2 or Exception | [`Z2UI5_CL_SMP_APP_008`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_008.clas.abap) |
 | MessageView and MessagePopover (A) | [`Z2UI5_CL_SMP_APP_452`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_452.clas.abap) |

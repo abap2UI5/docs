@@ -70,6 +70,7 @@ tell you what is coming if you do not.
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, *next release* |
 | `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | **removed**, *next release* |
 | `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, *next release* |
+| the UI5 options of `message_toast_display( )` / `message_box_display( )` | set them on the control, through `cs_event-control_global` | **removed**, *next release* |
 
 ## Obsolete: still compiles
 
@@ -168,8 +169,8 @@ replacement has a sample that proves it:
 
 | What you used AJSON for | What to write instead | Sample |
 |---|---|---|
-| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_507.clas.abap) |
-| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_509.clas.abap) |
+| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_507.clas.abap) |
+| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_509.clas.abap) |
 | Anything else | Shape the value in ABAP before you bind it | — |
 
 ```abap
@@ -217,50 +218,6 @@ compiles against.
 
 Both parameters are still evaluated and keep working — existing code does not
 break.
-
-### The `view` parameter of `_bind( )` / `_bind_edit( )`
-
-**Removed.** It dates from the time each view slot had a model of its own; today
-one model serves every open slot, so there was nothing left for it to select —
-the parameter was inert, never passed on internally, for as long as it carried
-the obsolete mark. Deleting it is the whole migration, and a call that still
-names it does not compile.
-
-```abap
-" old
-client->_bind( val = ms_data view = client->cs_view-popup )
-
-" new
-client->_bind( ms_data )
-```
-
-The binding string that comes back is the one that came back before. `cs_view`
-itself stays — it is the view slot of `follow_up_action( )`, where it does
-select one.
-
-### `cs_event-wizard_set_next_step`
-
-**Removed.** The event bundled the two calls a UI5 controller makes on a Wizard
-(`discardProgress( oStep )` + `oStep.setNextStep( oNext )`) into one fixed pair.
-Both methods are on the frontend's `CONTROL_METHODS` whitelist, so the same flow
-is two ordinary `control_by_id` calls — which additionally reach `goToStep`, a
-step the bundled event could not express.
-
-```abap
-" old
-client->follow_up_action( val   = client->cs_event-wizard_set_next_step
-                          t_arg = VALUE #( ( `wizard` ) ( `step2` ) ) ).
-
-" new
-client->follow_up_action( val   = client->cs_event-control_by_id
-                          t_arg = VALUE #( ( `wizard` ) ( `discardProgress` ) ( `step1` ) ) ).
-client->follow_up_action( val   = client->cs_event-control_by_id
-                          t_arg = VALUE #( ( `step1` ) ( `setNextStep` ) ( `step2` ) ) ).
-```
-
-The constant is gone from `cs_event` and the `WIZARD_SET_NEXT_STEP` handler is
-gone from the frontend, so a call that still names either does not compile and
-a raw string does nothing.
 
 ### The `nav_container_to` event family
 
@@ -400,7 +357,6 @@ ABAP with no control in the view at all:
 | `Title` | `cs_event-set_title` — [Title](/cookbook/browser_interaction/title) |
 | `LPTitle` | `cs_event-set_title_launchpad` — [Title](/cookbook/browser_interaction/title) |
 | `Favicon` | `cs_event-set_favicon` |
-| `SoftKeyboard` | `cs_event-keyboard_set_mode` — [Soft Keyboard](/cookbook/browser_interaction/soft_keyboard) |
 | `Info` | `client->get( )-s_device` / `-s_ui5` / `-s_focus` / `-s_scroll` — [Device Info](/cookbook/device_capabilities/info) |
 | `History` | `client->hash_set( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
 
@@ -508,6 +464,75 @@ and runs exactly as before, and every moved type is identical field for field,
 so a variable declared the old way still fits the new signatures. There is no
 deadline; change it when you next touch the class.
 
+### `z2ui5.Util` → `z2ui5.Formatter`
+
+`z2ui5.Util` (module `z2ui5/Util`) is a backward-compatible alias that
+re-exports the date helpers from `z2ui5.Formatter` (module
+`z2ui5/model/formatter`). It will not gain new helpers.
+
+```abap
+" old
+|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
+    formatter: 'z2ui5.Util.DateCreateObject' \}|
+
+" new
+|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
+    formatter: 'Formatter.DateCreateObject' \}|
+```
+
+See [Formatter](/cookbook/model/formatter).
+
+## Removed: does not compile any more
+
+Every name below is **gone from the framework**, not merely marked. A call
+that still writes one fails at activation, so these are the entries to work
+through before you pull a release that carries them — the table above says
+which one that is.
+
+### The `view` parameter of `_bind( )` / `_bind_edit( )`
+
+**Removed.** It dates from the time each view slot had a model of its own; today
+one model serves every open slot, so there was nothing left for it to select —
+the parameter was inert, never passed on internally, for as long as it carried
+the obsolete mark. Deleting it is the whole migration, and a call that still
+names it does not compile.
+
+```abap
+" old
+client->_bind( val = ms_data view = client->cs_view-popup )
+
+" new
+client->_bind( ms_data )
+```
+
+The binding string that comes back is the one that came back before. `cs_view`
+itself stays — it is the view slot of `follow_up_action( )`, where it does
+select one.
+
+### `cs_event-wizard_set_next_step`
+
+**Removed.** The event bundled the two calls a UI5 controller makes on a Wizard
+(`discardProgress( oStep )` + `oStep.setNextStep( oNext )`) into one fixed pair.
+Both methods are on the frontend's `CONTROL_METHODS` whitelist, so the same flow
+is two ordinary `control_by_id` calls — which additionally reach `goToStep`, a
+step the bundled event could not express.
+
+```abap
+" old
+client->follow_up_action( val   = client->cs_event-wizard_set_next_step
+                          t_arg = VALUE #( ( `wizard` ) ( `step2` ) ) ).
+
+" new
+client->follow_up_action( val   = client->cs_event-control_by_id
+                          t_arg = VALUE #( ( `wizard` ) ( `discardProgress` ) ( `step1` ) ) ).
+client->follow_up_action( val   = client->cs_event-control_by_id
+                          t_arg = VALUE #( ( `step1` ) ( `setNextStep` ) ( `step2` ) ) ).
+```
+
+The constant is gone from `cs_event` and the `WIZARD_SET_NEXT_STEP` handler is
+gone from the frontend, so a call that still names either does not compile and
+a raw string does nothing.
+
 ### The URL API is `hash_*` and `app_state_*` now
 
 <Badge type="tip" text="next release" />
@@ -567,24 +592,6 @@ What is genuinely new rather than renamed — `hash_replace( )`,
 app the URL semantics of a UI5 router — is on
 [Hash](/cookbook/event_navigation/navigation/hash).
 
-### `z2ui5.Util` → `z2ui5.Formatter`
-
-`z2ui5.Util` (module `z2ui5/Util`) is a backward-compatible alias that
-re-exports the date helpers from `z2ui5.Formatter` (module
-`z2ui5/model/formatter`). It will not gain new helpers.
-
-```abap
-" old
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'z2ui5.Util.DateCreateObject' \}|
-
-" new
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'Formatter.DateCreateObject' \}|
-```
-
-See [Formatter](/cookbook/model/formatter).
-
 ### `check_allow_multi_req` → `check_queue_last`
 
 `s_ctrl-check_allow_multi_req` sent the event while another round-trip was
@@ -614,3 +621,49 @@ The component is gone from `ty_s_event_control`, so an app that names it does
 not activate — the rename above is the whole migration. Without either flag the
 busy guard drops every event fired during a flight, which is right for a click
 and wrong for a keystroke.
+
+### The UI5 options of `message_toast_display( )` / `message_box_display( )`
+
+**Removed.** Both methods had grown to fourteen parameters each, and most of
+each list was a plain `sap.m` option abap2UI5 did nothing with but pass on. What
+the ABAP method carries is what an ABAP app decides — the data in whatever shape
+it has, the kind of box, the buttons, the backend event its closing raises.
+Where a toast docks and how wide a box is are not ABAP decisions, and they are
+set on the control now.
+
+| Method | Parameters gone |
+|---|---|
+| `message_toast_display( )` | `width`, `my`, `at`, `of`, `offset`, `collision`, `autoclose`, `animationtimingfunction`, `animationduration`, `closeonbrowsernavigation`, `class` |
+| `message_box_display( )` | `textdirection`, `icon`, `closeonnavigation`, `dependenton`, `contentwidth` |
+
+This is the one entry on this page that shortens a **signature** rather than
+retiring a name, so a call that still passes one of them fails on the parameter,
+not on the method. What stays is `text`, `type`, `title`, `styleclass`,
+`actions`, `emphasizedaction`, `initialfocus`, `details` and `onclose` on the
+box, and `text`, `duration` and `onclose` on the toast.
+
+The replacement is the whitelisted global call, whose last argument is the
+option object of `sap.m.MessageToast.show( )` / `sap.m.MessageBox.<type>( )`
+1:1 — an argument that starts with a brace travels as real JSON:
+
+```abap
+" old
+client->message_box_display( text         = `Not saved.`
+                             type         = `error`
+                             contentwidth = `30rem`
+                             icon         = `WARNING` ).
+
+" new - the display method IS the box type
+client->follow_up_action(
+    val   = client->cs_event-control_global
+    t_arg = VALUE #( ( `MESSAGE_BOX` )
+                     ( `error` )
+                     ( `Not saved.` )
+                     ( `{"contentWidth":"30rem","icon":"WARNING"}` ) ) ).
+```
+
+Both paths end in the same frontend code, so the options behave identically:
+`onClose` stays a backend event name on either, the details are still expanded,
+`dependentOn` is still resolved to a control. The raw path can do one thing
+more — wired into a view it needs no round-trip at all. See
+[Message](/cookbook/translation_messages/message).

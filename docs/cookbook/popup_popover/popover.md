@@ -87,7 +87,7 @@ unless its row names another of the three sample repositories — pull that repo
 | Sample | Class |
 |---|---|
 | Basic Example with Placement | [`Z2UI5_CL_SMP_APP_026`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_026.clas.abap) |
-| Popover — Open from a Table Row (A) | [`Z2UI5_CL_SMP_APP_052`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_052.clas.abap) |
+| Open from a Table Row (A) | [`Z2UI5_CL_SMP_APP_052`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_052.clas.abap) |
 | Select from a List | [`Z2UI5_CL_SMP_APP_081`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_081.clas.abap) |
 | QuickView Contact Card | [`Z2UI5_CL_SMP_APP_109`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_109.clas.abap) |
 | Toggle by ID (toggleBy) (A) | [`Z2UI5_CL_SMP_APP_465`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_465.clas.abap) |
