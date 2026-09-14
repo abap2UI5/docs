@@ -168,8 +168,8 @@ replacement has a sample that proves it:
 
 | What you used AJSON for | What to write instead | Sample |
 |---|---|---|
-| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_507.clas.abap) |
-| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/00/z2ui5_cl_smp_app_509.clas.abap) |
+| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_507.clas.abap) |
+| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_509.clas.abap) |
 | Anything else | Shape the value in ABAP before you bind it | — |
 
 ```abap
