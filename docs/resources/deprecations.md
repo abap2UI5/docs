@@ -378,8 +378,12 @@ still work; treat them as stable-but-closed rather than as something to migrate
 away from today. No page of this documentation uses them any more: what the
 examples reached them for is SAP standard — `cl_web_http_utility` for base64
 (`cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases), and
-a failing library raises its own exception instead of being wrapped. The JSON
-reader an app needs is the released `z2ui5_cl_ui5_json`.
+a failing library raises its own exception instead of being wrapped. JSON is
+built and read by hand: compose it as a string in ABAP and bind it with
+`_bind( val = ... json = abap_true )` on the way out, and read the one field
+you need with `find` / `substring_before` on the way in — the payloads that
+reach an app are written by the framework and are flat. There is deliberately
+no released parser.
 :::
 
 ### Invisible custom controls
