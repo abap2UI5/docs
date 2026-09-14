@@ -234,7 +234,7 @@ unless its row names another of the three sample repositories — pull that repo
 | Large Table with Growing and ScrollContainer | [`Z2UI5_CL_SMP_APP_006`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_006.clas.abap) |
 | Filter Rows in the Backend | [`Z2UI5_CL_SMP_APP_045`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_045.clas.abap) |
 | Search in the Backend (SearchField) | [`Z2UI5_CL_SMP_APP_053`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_053.clas.abap) |
-| Live Search with Parallel Requests | [`Z2UI5_CL_SMP_APP_059`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_059.clas.abap) |
+| Live Search over a Large Table | [`Z2UI5_CL_SMP_APP_059`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_059.clas.abap) |
 | Full Example with sap.ui.table | [`Z2UI5_CL_SMP_APP_070`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_070.clas.abap) |
 | Events on Cell Level | [`Z2UI5_CL_SMP_APP_160`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_160.clas.abap) |
 | Keep Column Filters on Refresh (C) | [`Z2UI5_CL_SMP_APP_143`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_143.clas.abap) |
