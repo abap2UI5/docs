@@ -8,6 +8,10 @@ samples:
   - z2ui5_cl_smp_app_202
   - z2ui5_cl_smp_app_449
   - z2ui5_cl_smp_app_465
+  - z2ui5_cl_smp_app_513
+  - z2ui5_cl_smp_app_514
+  - z2ui5_cl_smp_app_515
+  - z2ui5_cl_smp_app_518
 ---
 # Frontend
 
@@ -349,5 +353,9 @@ unless its row names another of the three sample repositories — pull that repo
 | Wizard with Steps (A) | [`Z2UI5_CL_SMP_APP_202`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_202.clas.abap) |
 | Open the PDF Viewer by ID (A) | [`Z2UI5_CL_SMP_APP_449`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_449.clas.abap) |
 | Toggle by ID (toggleBy) (A) | [`Z2UI5_CL_SMP_APP_465`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_465.clas.abap) |
+| Inline CSS on a Control (css) (A) | [`Z2UI5_CL_SMP_APP_513`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_513.clas.abap) |
+| Aggregation Item by Index (A) | [`Z2UI5_CL_SMP_APP_514`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_514.clas.abap) |
+| The Global Busy Indicator (A) | [`Z2UI5_CL_SMP_APP_515`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_515.clas.abap) |
+| Register an Icon Font (A) | [`Z2UI5_CL_SMP_APP_518`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_518.clas.abap) |
 
 <!-- samples:end -->
