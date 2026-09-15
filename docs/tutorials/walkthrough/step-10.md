@@ -76,7 +76,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
   METHOD on_event.
 
     " get_event( ) holds the name passed to _event( );
-    " get_event_arg( ) returns the extra argument attached via t_arg
+    " get_event_arg( ) returns the extra argument attached via arg
     CASE client->get_event( ).
       WHEN `READ`.
         data_read( ).
@@ -177,8 +177,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
                 )->tag( `Button`
                     )->a( n = `icon`    v = `sap-icon://edit`
                     )->a( n = `tooltip` v = `Edit delivery date`
-                    )->a( n = `press`   v = client->_event( val   = `EDIT`
-                                                            t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
+                    )->a( n = `press`   v = client->_event( val = `EDIT` arg = `${PRODUCT}` ) ).
 
     client->view_display( view->stringify( ) ).
 

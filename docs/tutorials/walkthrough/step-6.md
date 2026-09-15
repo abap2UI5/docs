@@ -59,8 +59,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
                                   )->a( n = `description` v = `{SUPPLIER}`
                                   )->a( n = `info`        v = `{QUANTITY}`
                                   )->a( n = `type`        v = `Active`
-                                  )->a( n = `press`       v = client->_event( val   = `SHOW_INVOICE`
-                                                                              t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
+                                  )->a( n = `press`       v = client->_event( val = `SHOW_INVOICE` arg = `${PRODUCT}` ) ).
 
       client->view_display( view->stringify( ) ).
 
@@ -80,11 +79,13 @@ ENDCLASS.
 - **`type = Active`** makes the whole row clickable and gives it press
   feedback; the `press` handler sits on the row template, so every row fires
   the same event.
-- **The argument rides with the event:**
-  ``t_arg = VALUE #( ( `${PRODUCT}` ) )``. The `${...}` syntax is resolved
-  *per row* in the browser — each clone of the template carries its own
-  product name. On the server, `client->get_event_arg( )` returns it, and a
-  table read finds the row.
+- **The argument rides with the event:** ``arg = `${PRODUCT}` ``. The
+  `${...}` syntax is resolved *per row* in the browser — each clone of the
+  template carries its own product name. On the server,
+  `client->get_event_arg( )` returns it, and a table read finds the row.
+  `arg` is the one-value spelling of `t_arg`: it is exactly
+  ``t_arg = VALUE #( ( `${PRODUCT}` ) )``, and from two values on `t_arg` is
+  the parameter to use.
 - **The state is still there.** `t_invoices` was filled in the
   `check_on_navigated` branch of an earlier roundtrip — the framework
   restored it before this one, so the event handler can read it. That is the
