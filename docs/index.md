@@ -293,8 +293,7 @@ CLASS zcl_app_invoices IMPLEMENTATION.
                   )->tag( `Button`
                       )->a( n = `icon`    v = `sap-icon://edit`
                       )->a( n = `tooltip` v = `Edit delivery date`
-                      )->a( n = `press`   v = client->_event( val   = `EDIT`
-                                                              t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
+                      )->a( n = `press`   v = client->_event( val = `EDIT` arg = `${PRODUCT}` ) ).
 
       client->view_display( view->stringify( ) ).
 

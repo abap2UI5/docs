@@ -33,11 +33,13 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-If the backend needs more details about the event, use the `t_arg` parameter to add extra info. Three prefixes are available:
+If the backend needs more details about the event, use the `arg` parameter to add extra info. Three prefixes are available:
 
 - **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}` returns the button text)
 - **`$parameters`** — the event parameters defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
 - **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`). Note: unlike the other two prefixes, `$event` is written without the `${...}` wrapper and without a leading `/` — see the [Event](#event) section below.
+
+`arg` carries one value, which is what most events need. For two or more, use `t_arg` instead and pass them as a table — ``t_arg = VALUE #( ( `${$source>/text}` ) ( `${$parameters>/id}` ) )`` — and read them back in the same order with `client->get_event_arg( 2 )`, `( 3 )` and so on. The two are the same wire: `arg = x` is exactly ``t_arg = VALUE #( ( x ) )``.
 
 For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_SMP_APP_167`.
 
@@ -56,9 +58,9 @@ METHOD z2ui5_if_app~main.
                 )->tag( `Button`
                     )->a( n = `text`  v = `post`
                     )->a( n = `press` v = client->_event(
-                                          val   = `BUTTON_POST`
+                                          val = `BUTTON_POST`
                                           " reads the button text → result: "post"
-                                          t_arg = VALUE #( ( `${$source>/text}` ) ) ) ).
+                                          arg = `${$source>/text}` ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -85,9 +87,9 @@ METHOD z2ui5_if_app~main.
                     )->a( n = `id`    v = `button_id`
                     )->a( n = `text`  v = `post`
                     )->a( n = `press` v = client->_event(
-                                          val   = `BUTTON_POST`
+                                          val = `BUTTON_POST`
                                           " reads the event parameter 'id' → result: "mainView--button_id"
-                                          t_arg = VALUE #( ( `${$parameters>/id}` ) ) ) ).
+                                          arg = `${$parameters>/id}` ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -113,9 +115,9 @@ METHOD z2ui5_if_app~main.
                 )->tag( `Button`
                     )->a( n = `text`  v = `post`
                     )->a( n = `press` v = client->_event(
-                                          val   = `BUTTON_POST`
+                                          val = `BUTTON_POST`
                                           " reads an event-object attribute → result: "press"
-                                          t_arg = VALUE #( ( `$event>sId` ) ) ) ).
+                                          arg = `$event>sId` ) ).
 
     client->view_display( view->stringify( ) ).
 
@@ -157,8 +159,8 @@ CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
                 )->tag( `Button`
                     )->a( n = `text`  v = `post`
                     )->a( n = `press` v = client->_event(
-                                          val   = `BUTTON_POST`
-                                          t_arg = VALUE #( ( `$` && client->_bind( name ) ) ) ) ).
+                                          val = `BUTTON_POST`
+                                          arg = `$` && client->_bind( name ) ) ).
 
     client->view_display( view->stringify( ) ).
 

@@ -61,8 +61,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
                                   )->a( n = `description` v = `{SUPPLIER}`
                                   )->a( n = `info`        v = `{QUANTITY}`
                                   )->a( n = `type`        v = `Active`
-                                  )->a( n = `press`       v = client->_event( val   = `EDIT`
-                                                                              t_arg = VALUE #( ( `${PRODUCT}` ) ) ) ).
+                                  )->a( n = `press`       v = client->_event( val = `EDIT` arg = `${PRODUCT}` ) ).
 
       client->view_display( view->stringify( ) ).
 

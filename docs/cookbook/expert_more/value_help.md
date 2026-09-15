@@ -116,9 +116,7 @@ CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
                                 )->a( n = `title`       v = `{CARRNAME}`
                                 )->a( n = `description` v = `{CARRID}`
                                 )->a( n = `type`        v = `Active`
-                                )->a( n = `press`       v = client->_event(
-                                                                val = `PICK`
-                                                                t_arg = VALUE #( ( `${CARRID}` ) ) ) ).
+                                )->a( n = `press`       v = client->_event( val = `PICK` arg = `${CARRID}` ) ).
 
         client->popup_display( popup->stringify( ) ).
 
