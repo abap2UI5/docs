@@ -1,4 +1,4 @@
-# #3 abap2UI5 in Your Favorite Programming Model
+# #3 Whatever Your ABAP Can Call
 
 Before you use a framework, you want to know what it expects from you: a
 structure to follow, a lifecycle to fit into, layers to fill in, names to get
@@ -26,16 +26,13 @@ is about as ceremonious as pressing F8: activate the class, append
 `?app_start=zcl_my_app` to your service URL, and there it is.
 
 Beyond that, there are no rules. No service to define, no binding to maintain,
-no annotations, nothing to transport but the class itself. Whether you build
-one huge app of 10,000 lines, split it across several apps, or design an
-architecture of your own out of parent and child classes is entirely your
-business — the framework never asks.
+no annotations, nothing to transport but the class itself.
 
-This has a pleasant side effect. Since abap2UI5 serves a UI and never asks
-where your data comes from, the data can come from wherever it already lives.
-Which is worth showing rather than claiming.
+And because `main( )` is an ordinary ABAP method, the demands end there — in
+particular, the framework never asks where your data comes from. Whatever your
+ABAP can call, your app can call. Which is worth showing rather than claiming.
 
-## The Same Class, Three Programming Models
+## One Screen, Three Decades of ABAP
 
 Here is a small edit screen writing through a RAP business object:
 
@@ -142,8 +139,9 @@ classic way:
 
 *The table is invented — use your favorite database table instead.*
 
-Or a classic BAPI you have been calling in that system since before the phone
-in your pocket existed — different object, different decade, same UI around it:
+Or a BAPI you have been calling in that system since before the phone in your
+pocket existed — different object, different decade, same screen in front of
+it:
 
 ```abap
   METHOD on_save.
@@ -173,23 +171,53 @@ in your pocket existed — different object, different decade, same UI around it
 
 *The BAPI is just an example — use your favorite BAPI instead.*
 
-Three programming models, one unchanged UI class. abap2UI5 sees the same thing
-in all three: a method that ran and returned. It never looks inside. The same
-app could call your EWM delivery classes, a proxy to another system, or
-whatever SAP releases next year and calls the future.
+## The Framework Never Looks Inside
+
+Three save handlers, one unchanged UI class. abap2UI5 sees the same thing in
+all three: a method that ran and returned. It has no opinion about what
+happened in between, because it never looks — the only thing it takes back out
+of your class is a view.
+
+This gets called *programming model agnostic*, and that phrase is too small
+for it. RAP is a programming model. A `MODIFY` is not. A BAPI is not, and
+neither is the EWM delivery class, the proxy to a neighboring system, or the
+function module somebody wrote in 1998 that has run every night since. What
+the three handlers have in common is not a model. It is that they are ABAP
+statements in a method — and that is the entire requirement.
+
+Which is the useful property, because a grown SAP system was never written in
+one model. It was written in all of them at once, in layers, by decade, and
+the layers do not line up with screens. A single click routinely crosses
+several: read a CDS view, check something in a function module, write through
+EML, then put a message on screen out of a `bapiret2` table. That is an
+ordinary ABAP method — and an awkward thing to express as soon as the UI
+framework has a preferred way in.
+
+So the practical question is not *which programming model does abap2UI5
+support*. It is what you have to do **first**, before the screen can exist at
+all:
+
+- **Nothing has to be released.** No OData service, no projection view, no
+  behavior definition, no wrapper around the function module to make it
+  presentable to a UI layer.
+- **Nothing has to move.** The logic stays in the class, the module pool
+  include or the function group where it already is, at whatever release level
+  it already has. The screen is new; nothing behind it has to be.
+- **Nothing is locked in.** When the table does become a business object and
+  the BAPI a released API, `on_save( )` changes and the rest of the class does
+  not. The view never knew which one it was.
 
 ## Conclusion
 
 There are plenty of use cases where a strict programming model is exactly what
 you want, and picking one deliberately is good engineering. But there are also
 the ones where a developer needs more freedom — customers who are not on the
-newest release, logic that never quite fits the shape a programming model has
-in mind, and the screen from
-[the last article](/advanced/insights/02-the-cost-of-a-screen) that would
-otherwise not get built at all.
+newest release, logic that never quite fits the shape a model has in mind, and
+the screen from [the last article](/advanced/insights/02-the-cost-of-a-screen)
+that would otherwise not get built at all.
 
 abap2UI5 runs in the same system, under the same authorizations, in the same
 launchpad as all your other UI5 and RAP apps. It reaches your business logic
-however you like, with the programming model of your choice.
+the way any other ABAP class would: by calling it.
 
 One interface, one method, and no opinion about what is behind the screen.
