@@ -73,28 +73,29 @@ says the whole thing on its own.
 >
 > #ABAP #SAP #UI5 #abapGit #abap2UI5
 
-## abap2UI5 in Your Favorite Programming Model
+## One Class, No Programming Model
 
-Plain text — LinkedIn renders no markdown.
+Plain text — LinkedIn renders no markdown. The article link comes from the
+attached article preview, so the post carries no inline URL. 794 characters,
+and the first line is 56 of them: the claim on its own, above LinkedIn's
+fold.
 
-> With abap2UI5 you start by writing an ABAP class, the way you used to start a
-> report with a selection screen. One interface, one method — that is the whole
-> contract.
+> With abap2UI5 there is no programming model to fit into.
 >
-> Beyond that there are no rules. No service, no binding, no annotations,
-> nothing to transport but the class — and no demands on how you design your
-> model.
+> You write an ABAP class, the way you used to start a report with a selection
+> screen. One interface, one method — that is the whole contract. No service,
+> no binding, no annotations, nothing to transport but the class.
 >
-> The new article shows the same edit screen three times: through a RAP business
-> object, straight to a database table, and against a BAPI from twenty years
-> ago. Three programming models, one unchanged UI class.
+> New article 🎉 The same edit screen three times: through a RAP business
+> object, straight to a database table, and against a BAPI that has been
+> running in production for twenty years. One unchanged UI class — because
+> those are not three programming models, they are three ABAP statements.
 >
-> Where a strict programming model fits, use it. This is one more option next to
-> it, for the screen that would otherwise not get built at all.
+> Nothing has to be released first and nothing has to move. A complement to
+> the RAP and UI5 apps you already run, for the screen that would otherwise
+> wait for a modeling exercise.
 >
-> New article 🎉
->
-> Which programming model would sit behind your screen?
+> What would sit behind your screen?
 >
 > #ABAP #SAP #UI5
 
