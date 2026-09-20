@@ -141,9 +141,8 @@ classic way:
 
 *The table is invented — use your favorite database table instead.*
 
-Or a BAPI you have been calling in that system since before the phone in your
-pocket existed — different object, different decade, same screen in front of
-it:
+Or a BAPI that has been running in production there for twenty years —
+different object, different decade, same screen in front of it:
 
 ```abap
   METHOD on_save.
