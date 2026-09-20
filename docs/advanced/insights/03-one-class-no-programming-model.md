@@ -1,4 +1,4 @@
-# #3 Whatever Your ABAP Can Call
+# #3 One Class, No Programming Model
 
 Before you use a framework, you want to know what it expects from you: a
 structure to follow, a lifecycle to fit into, layers to fill in, names to get
@@ -28,9 +28,11 @@ is about as ceremonious as pressing F8: activate the class, append
 Beyond that, there are no rules. No service to define, no binding to maintain,
 no annotations, nothing to transport but the class itself.
 
-And because `main( )` is an ordinary ABAP method, the demands end there — in
-particular, the framework never asks where your data comes from. Whatever your
-ABAP can call, your app can call. Which is worth showing rather than claiming.
+And there is no programming model in the box either. `main( )` is an ordinary
+ABAP method, so the demands end at its signature: the framework never asks
+where your data comes from, and it has nothing to say about how you get it.
+Whatever your ABAP can call, your app can call — which is worth showing rather
+than claiming.
 
 ## One Screen, Three Decades of ABAP
 
@@ -171,7 +173,7 @@ it:
 
 *The BAPI is just an example — use your favorite BAPI instead.*
 
-## The Framework Never Looks Inside
+## No Model to Fit Into
 
 Three save handlers, one unchanged UI class. abap2UI5 sees the same thing in
 all three: a method that ran and returned. It has no opinion about what
@@ -207,6 +209,9 @@ all:
   the BAPI a released API, `on_save( )` changes and the rest of the class does
   not. The view never knew which one it was.
 
+None of that is freedom in the abstract. It is the difference between a screen
+that gets built this week and one that waits for a modeling exercise first.
+
 ## Conclusion
 
 There are plenty of use cases where a strict programming model is exactly what
@@ -220,4 +225,5 @@ abap2UI5 runs in the same system, under the same authorizations, in the same
 launchpad as all your other UI5 and RAP apps. It reaches your business logic
 the way any other ABAP class would: by calling it.
 
-One interface, one method, and no opinion about what is behind the screen.
+One class, no programming model, and no opinion about what is behind the
+screen.
