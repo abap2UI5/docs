@@ -1,8 +1,8 @@
 # #3 One Class, No Programming Model
 
-To use a framework, you always havte to fullfll certain requoirememnts: that can be a structure to follow,
-a lifecycle to fit into, layers to fill in — most of it in place before
-anything reaches a screen.
+To use a framework, you always have to fulfill certain requirements: these can
+be a structure to follow, a lifecycle to fit into, layers to fill in — most of
+them in place before anything reaches a screen.
 
 Here is the whole list for abap2UI5. You write an ABAP class — the way you used
 to start a report with a selection screen — and implement one interface with
