@@ -185,6 +185,17 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:conventions
 
+      # a page that is WRAPPED has to stay wrapped. The manual is not written to
+      # one column - 39 pages are wrapped, 59 are one line per paragraph - so a
+      # site-wide column would be a reformat, not a gate. What is decidable is
+      # the drift: an editor rewrites a paragraph, hands it back as one long
+      # line, and the next diff of that paragraph is one changed line instead of
+      # three, so every later correction to it reads as a rewrite. It arrived
+      # twice in two days on the same page. npm run fix:line-length rewraps.
+      - name: line length
+        if: ${{ !cancelled() }}
+        run: npm run check:line-length
+
       # every complete app class either carries a Run button or a marker on its
       # page saying why it cannot run in the playground. The rules that offer
       # the button fail towards NOT offering one, so without this an example

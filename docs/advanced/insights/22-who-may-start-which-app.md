@@ -41,8 +41,8 @@ instead of a view:
 
 One authorization object with one field, the app class as the value, roles as
 usual in PFCG. Nothing here is new to anybody in the room, and that is the
-point: the check sits in the class it protects, so a transport carries the app and its
-guard together, and nothing on the node has to know which classes exist.
+point: the check sits in the class it protects, so a transport carries the app
+and its guard together, and nothing on the node has to know which classes exist.
 
 It also holds on the way into an app that the URL never names: a
 `nav_app_call( )` from another app arrives as an ordinary roundtrip with no

@@ -7,7 +7,8 @@ samples:
 ---
 # URL Handling
 
-Working with URLs is common — reading parameters from the current URL, opening links in new tabs, or managing browser history.
+Working with URLs is common — reading parameters from the current URL, opening
+links in new tabs, or managing browser history.
 
 ## Read URL Parameters
 

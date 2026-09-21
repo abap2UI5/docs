@@ -198,9 +198,10 @@ a button still keeps its color: that rule was never about which color it was.
 
 The site's own tokens come from the playground's own stylesheet, which this
 build borrows whole (`scripts/site-css/docs.css` adds what only the manual
-needs), so that the four stay one palette. Take the hex values from this table rather than picking them out of a
-screenshot with a color dropper: a PNG scaled in a browser hands you an
-interpolated pixel, which is a color that appears nowhere in the brand.
+needs), so that the four stay one palette. Take the hex values from this table
+rather than picking them out of a screenshot with a color dropper: a PNG scaled
+in a browser hands you an interpolated pixel, which is a color that appears
+nowhere in the brand.
 
 ## Using the Mark
 

@@ -106,8 +106,8 @@ Two gates run over every file, and they answer different questions.
 
 Everything the view writes is resolved against a **UI5 metadata snapshot** —
 every control OpenUI5 ships, with its full member list and types, and every
-enum, generated from the OpenUI5 sources. It is instant, needs no browser, and catches the whole
-family of *this name does not exist* defects:
+enum, generated from the OpenUI5 sources. It is instant, needs no browser, and
+catches the whole family of *this name does not exist* defects:
 
 | | |
 | --- | --- |
