@@ -165,6 +165,9 @@ jobs:
       - name: house conventions
         if: ${{ !cancelled() }}
         run: npm run check:conventions
+      - name: line length
+        if: ${{ !cancelled() }}
+        run: npm run check:line-length
       - name: Run-button coverage
         if: ${{ !cancelled() }}
         run: npm run check:playground

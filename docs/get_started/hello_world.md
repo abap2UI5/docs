@@ -28,7 +28,8 @@ Open the abap2UI5 startup page in your browser — the page the
 [Quickstart](/get_started/quickstart#_3-first-launch) ends on — enter the class
 name `ZCL_APP_HELLO_WORLD` in the input field, and launch it.
 
-That is a complete abap2UI5 app: one class, one method, no frontend project and no OData service.
+That is a complete abap2UI5 app: one class, one method, no frontend project and
+no OData service.
 
 ## Starting an App by URL
 
@@ -51,7 +52,8 @@ roundtrip — is cataloged with symptom, cause and fix in
 [Common Failures](/cookbook/troubleshooting/common_failures).
 
 ::: tip **Naming**
-Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_` prefix is reserved for the framework and its samples.
+Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_`
+prefix is reserved for the framework and its samples.
 :::
 
 ## A Real Screen, an Event and Data Exchange

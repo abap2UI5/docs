@@ -1,5 +1,5 @@
 /*
- * The thirteen gates are written out in three places. Do all three name the
+ * The fourteen gates are written out in three places. Do all three name the
  * same set?
  *
  * `package.json`'s `check` script is what a contributor runs; check.yml is
@@ -16,7 +16,7 @@
  *     the one gate that reads the house style.
  *
  * Both were found by eye, weeks apart. This is the same reading done by a
- * machine, in `npm test`, so a twelfth gate added to one list and forgotten
+ * machine, in `npm test`, so a new gate added to one list and forgotten
  * in the other two is red before it is merged rather than after.
  *
  * The ORDER is deliberately not compared: deploy.yml has to build the site it
@@ -88,13 +88,13 @@ test('check.yml keeps the script order, so a green run locally is a green run th
   assert.deepEqual(workflowGates('.github/workflows/check.yml'), scriptGates());
 });
 
-test('the documents say thirteen, and there are thirteen', () => {
+test('the documents say fourteen, and there are fourteen', () => {
   /* AGENTS.md, README.md, CONTRIBUTING.md and CLAUDE.md all count them in
-   * prose. A fourteenth gate that left the four documents saying "thirteen" is the
+   * prose. A fifteenth gate that left the four documents saying "fourteen" is the
    * same drift as a gate missing from a workflow, one document over. */
   const gates = scriptGates();
-  assert.equal(gates.length, 13, `the count in the four documents is 13, the lists have ${gates.length}`);
+  assert.equal(gates.length, 14, `the count in the four documents is 14, the lists have ${gates.length}`);
   for (const doc of ['AGENTS.md', 'README.md', 'CONTRIBUTING.md', 'CLAUDE.md']) {
-    assert.match(read(doc), /thirteen/, `${doc} counts the gates`);
+    assert.match(read(doc), /fourteen/, `${doc} counts the gates`);
   }
 });

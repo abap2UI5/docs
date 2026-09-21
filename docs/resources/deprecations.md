@@ -4,8 +4,8 @@ description: What in abap2UI5 has a successor - each deprecated call with what t
 ---
 # Deprecations
 
-Things in abap2UI5 that have a successor. Every entry says what to write instead, with the old and the new code next to
-each other.
+Things in abap2UI5 that have a successor. Every entry says what to write
+instead, with the old and the new code next to each other.
 
 ::: tip Not the same as deprecated UI5 controls
 This page is about **abap2UI5's own** API. Controls SAP has deprecated in UI5
@@ -76,8 +76,9 @@ tell you what is coming if you do not.
 
 ### The model-update methods do nothing
 
-`view_model_update( )`, `nest_view_model_update( )`, `nest2_view_model_update( )`,
-`popup_model_update( )` and `popover_model_update( )` are **empty methods**.
+`view_model_update( )`, `nest_view_model_update( )`,
+`nest2_view_model_update( )`, `popup_model_update( )` and
+`popover_model_update( )` are **empty methods**.
 
 The model is pushed automatically now: the framework compares the model state
 before `main( )` — taken after the incoming client deltas were applied — with
@@ -279,8 +280,8 @@ DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
 client->view_display( view->stringify( ) ).
 ```
 
-The chain is `factory` / `ele` / `tag` / `a` / `end` / `stringify`: `ele( )` adds
-a child and descends into it, `tag( )` adds one and stays, `a( )` sets an
+The chain is `factory` / `ele` / `tag` / `a` / `end` / `stringify`: `ele( )`
+adds a child and descends into it, `tag( )` adds one and stays, `a( )` sets an
 attribute on the element it follows, `end( )` ascends. One rule carries the
 whole builder — `a( )` applies to the element the chain is **pointing at** — so
 give an element its attributes before its first child.
@@ -326,8 +327,8 @@ existing calls keep compiling. See [Add-ons](/resources/addons).
 
 `z2ui5_cl_util`, `z2ui5_cl_util_ext`, `z2ui5_cl_util_db`, `z2ui5_cl_util_http`,
 `z2ui5_cl_util_log`, `z2ui5_cl_util_msg`, `z2ui5_cl_util_range`,
-`z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` are frozen.
-Inside the framework they were replaced by an internal context class.
+`z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` are
+frozen. Inside the framework they were replaced by an internal context class.
 
 ::: warning No drop-in successor for apps
 There is no public replacement API for app code. The classes still ship and

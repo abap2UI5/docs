@@ -27,8 +27,9 @@ still has a method per control.
 
 **A check that needs no system.** The [linter](/advanced/linter) reconstructs
 the UI5 view out of the ABAP that builds it and reports what UI5 does not have.
-An agent that can verify its own work stops handing over apps that do not
-render — the difference between a helper and a generator of plausible nonsense. The same linter gates the sample repositories.
+An agent that can verify its own work stops handing over apps that do not render
+— the difference between a helper and a generator of plausible nonsense. The
+same linter gates the sample repositories.
 
 **Several hundred worked examples.** The sample catalogs hold a complete,
 tested app per pattern — value help, tree, navigation, upload — so *has
