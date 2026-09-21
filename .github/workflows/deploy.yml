@@ -168,6 +168,9 @@ jobs:
       - name: line length
         if: ${{ !cancelled() }}
         run: npm run check:line-length
+      - name: vocabulary
+        if: ${{ !cancelled() }}
+        run: npm run check:vocabulary
       - name: Run-button coverage
         if: ${{ !cancelled() }}
         run: npm run check:playground

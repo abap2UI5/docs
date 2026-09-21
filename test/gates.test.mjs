@@ -1,5 +1,5 @@
 /*
- * The fourteen gates are written out in three places. Do all three name the
+ * The fifteen gates are written out in three places. Do all three name the
  * same set?
  *
  * `package.json`'s `check` script is what a contributor runs; check.yml is
@@ -88,13 +88,13 @@ test('check.yml keeps the script order, so a green run locally is a green run th
   assert.deepEqual(workflowGates('.github/workflows/check.yml'), scriptGates());
 });
 
-test('the documents say fourteen, and there are fourteen', () => {
+test('the documents say fifteen, and there are fifteen', () => {
   /* AGENTS.md, README.md, CONTRIBUTING.md and CLAUDE.md all count them in
-   * prose. A fifteenth gate that left the four documents saying "fourteen" is the
+   * prose. A sixteenth gate that left the four documents saying "fifteen" is the
    * same drift as a gate missing from a workflow, one document over. */
   const gates = scriptGates();
-  assert.equal(gates.length, 14, `the count in the four documents is 14, the lists have ${gates.length}`);
+  assert.equal(gates.length, 15, `the count in the four documents is 15, the lists have ${gates.length}`);
   for (const doc of ['AGENTS.md', 'README.md', 'CONTRIBUTING.md', 'CLAUDE.md']) {
-    assert.match(read(doc), /fourteen/, `${doc} counts the gates`);
+    assert.match(read(doc), /fifteen/, `${doc} counts the gates`);
   }
 });
