@@ -1,7 +1,8 @@
 # #3 One Class, No Programming Model
 
-Every framework expects something from you: thant can be a structure to follow, a lifecycle to fit into, layers to fill in — most of it in place
-before anything reaches a screen.
+Every framework expects something from you: that can be a structure to follow,
+a lifecycle to fit into, layers to fill in — most of it in place before
+anything reaches a screen.
 
 Here is the whole list for abap2UI5. You write an ABAP class — the way you used
 to start a report with a selection screen — and implement one interface with
@@ -25,7 +26,7 @@ to your service URL, and there it is — about as ceremonious as pressing F8.
 No service to define, no binding to maintain, no annotations, nothing to
 transport but the class. And no programming model either: `main( )` is an
 ordinary ABAP method, so the demands end at its signature. Whatever your ABAP
-can call, your app can call - so lets check the possibilities we get next:
+can call, your app can call — so let's look at what that makes possible:
 
 ## One Screen, Three Decades of ABAP
 
@@ -169,11 +170,11 @@ different object, different decade, same screen in front of it:
 Three save handlers, one unchanged UI class. abap2UI5 never looks inside any of
 them — the only thing it takes back out of your class is a view.
 
-This could be called *programming model agnostic*. RAP is a programming model. A `MODIFY` is not, a BAPI is not, and
-neither is the EWM delivery class or the function module somebody wrote in
-2000s that has run every night since. What the three handlers have in common is
-not a model. It is that they are ABAP statements in a method — and that is the
-entire requirement.
+This could be called *programming model agnostic* — except RAP is a programming
+model, and a `MODIFY` is not, a BAPI is not, and neither is the EWM delivery
+class or the function module somebody wrote in the 2000s that has run every
+night since. What the three handlers have in common is not a model. It is that
+they are ABAP statements in a method — and that is the entire requirement.
 
 Which is the useful property, because a grown SAP system was never written in
 one model but in all of them at once, by decade — and the layers do not line up
