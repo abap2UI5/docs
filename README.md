@@ -15,13 +15,13 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all fourteen steps
+npm run check        # what CI runs, all fifteen steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but fourteen things in
-it are decidable, and `npm run check` decides all fourteen before a merge — the
+A documentation repository has no compiler for its prose, but fifteen things in
+it are decidable, and `npm run check` decides all fifteen before a merge — the
 prose builds (`docs:build`), the four bars are still made of the same palette,
 type and radii as the playground's (`check:design`), every link into a
 neighbouring site on this origin
@@ -45,7 +45,7 @@ passed. Several of these go stale without anybody touching this repository (a
 release is published elsewhere, a sample class is renamed elsewhere), which is
 why the deploy re-runs them rather than trusting the merge.
 
-**[AGENTS.md](AGENTS.md) describes each of the fourteen**, what a failure means and
+**[AGENTS.md](AGENTS.md) describes each of the fifteen**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
 

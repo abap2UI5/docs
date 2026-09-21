@@ -19,6 +19,7 @@
     "check:examples": "node scripts/check-examples.mjs",
     "check:conventions": "node scripts/check-conventions.mjs",
     "check:line-length": "node scripts/check-line-length.mjs",
+    "check:vocabulary": "node scripts/check-vocabulary.mjs",
     "fix:line-length": "node scripts/check-line-length.mjs --fix",
     "fmt:chains": "node scripts/check-conventions.mjs --fix",
     "check:playground": "node scripts/check-playground.mjs",
@@ -31,7 +32,7 @@
     "link:samples": "node scripts/link-samples.mjs",
     "check:samples": "node scripts/link-samples.mjs --check",
     "test": "node --test test/*.test.mjs",
-    "check": "npm run test && npm run check:version && npm run build && npm run docs:build && npm run check:cross-site && npm run check:design && npm run check:images && npm run check:examples && npm run check:conventions && npm run check:line-length && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
+    "check": "npm run test && npm run check:version && npm run build && npm run docs:build && npm run check:cross-site && npm run check:design && npm run check:images && npm run check:examples && npm run check:conventions && npm run check:line-length && npm run check:vocabulary && npm run check:playground && npm run check:api-names && npm run check:api-reference && npm run check:samples",
     "llms": "node scripts/generate-llms.mjs",
     "search": "node scripts/generate-search.mjs",
     "check:version": "node scripts/check-version.mjs",
@@ -42,7 +43,9 @@
   "devDependencies": {
     "@abap2ui5/linter": "^0.6.1",
     "@abaplint/cli": "^2.120.52",
+    "dictionary-en": "^4.0.0",
     "esbuild": "^0.28.2",
+    "nspell": "^2.1.5",
     "vitepress": "^1.6.4"
   },
   "engines": {

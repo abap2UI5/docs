@@ -196,6 +196,18 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:line-length
 
+      # every prose word against a dictionary, and then against the words this
+      # project uses that a dictionary does not carry. test/spelling.test.mjs
+      # answers WHICH spelling of a word (it names British forms from a list);
+      # it cannot see a word that is neither spelling of anything. "thant",
+      # "havte", "fullfll" and "requoirememnts" went through the browser
+      # editor, through this workflow and out to the published site in two
+      # days, one of them in the first sentence of a page - which is where the
+      # search index, llms.txt and the card subtitle take their description.
+      - name: vocabulary
+        if: ${{ !cancelled() }}
+        run: npm run check:vocabulary
+
       # every complete app class either carries a Run button or a marker on its
       # page saying why it cannot run in the playground. The rules that offer
       # the button fail towards NOT offering one, so without this an example
