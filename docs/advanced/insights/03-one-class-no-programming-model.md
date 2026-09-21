@@ -1,6 +1,6 @@
 # #3 One Class, No Programming Model
 
-Every framework expects something from you: that can be a structure to follow,
+To use a framework, you always havte to fullfll certain requoirememnts: that can be a structure to follow,
 a lifecycle to fit into, layers to fill in — most of it in place before
 anything reaches a screen.
 
@@ -107,7 +107,7 @@ CLASS zcl_travel_edit IMPLEMENTATION.
 ENDCLASS.
 ```
 
-*The entity is invented — use your favorite RAP object instead.*
+*The entity is just an example — use your favorite RAP object instead.*
 
 The RAP object does not notice anything unusual — validations, determinations
 and authorizations all still run. EML does not care who calls it.
@@ -132,7 +132,7 @@ classic way:
   ENDMETHOD.
 ```
 
-*The table is invented — use your favorite database table instead.*
+*The table is just an example — use your favorite table instead.*
 
 Or a BAPI that has been running in production there for twenty years —
 different object, different decade, same screen in front of it:
@@ -192,8 +192,7 @@ Where a strict programming model fits, use it — picking one deliberately is
 good engineering. abap2UI5 is for the rest: the customer not on the newest
 release, the logic that never quite fits the shape a model has in mind, and the
 screen from [the last article](/advanced/insights/02-the-cost-of-a-screen) that
-would otherwise not get built at all — in the same system, under the same
-authorizations, in the same launchpad as your other UI5 and RAP apps.
+would otherwise not get built at all.
 
 One class, no programming model, and no opinion about what is behind the
 screen.
