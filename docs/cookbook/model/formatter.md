@@ -159,8 +159,8 @@ a property that wants a **JavaScript `Date` object** — `DatePicker.dateValue`,
 `PlanningCalendarAppointment.startDate` — and JSON has no date type, so the
 model physically cannot carry one. For that, and for one text case, the
 framework ships a small curated formatter module. It is a public contract:
-`z2ui5/model/formatter`, also published as the `z2ui5.Formatter` global for
-releases without `core:require`.
+`z2ui5/model/formatter`, reached through `core:require` (UI5 1.74 and later).
+The `z2ui5.Formatter` global that used to cover older releases is gone.
 
 Load it once on the view root, then name a helper in the binding string:
 

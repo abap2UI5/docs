@@ -130,7 +130,6 @@ object at all:
 | Form | Example |
 |---|---|
 | Module IDs | `z2ui5/core/Server`, `z2ui5/model/formatter` |
-| Globals | `z2ui5.Formatter` |
 | Custom control XML namespace | `xmlns:z2ui5="z2ui5.cc"` → `z2ui5/cc/<Name>` |
 | Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
 
@@ -228,7 +227,7 @@ apps that use a user exit are affected — everything else in the renamed
 installation works without a change.
 :::
 
-**The frontend namespace.** Module IDs, globals and the `z2ui5.cc` XML namespace
+**The frontend namespace.** Module IDs and the `z2ui5.cc` XML namespace
 stay `z2ui5` in a renamed installation — see
 [The Frontend Namespace](#the-frontend-namespace) above.
 

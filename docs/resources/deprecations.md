@@ -65,7 +65,10 @@ tell you what is coming if you do not.
 | `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, *next release* |
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
-| `z2ui5.Util` | `z2ui5.Formatter` | 1.142.0 |
+| `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, *next release* |
+| `cs_event-z2ui5` | a raw expression through `follow_up_action( )` | **removed**, *next release* |
+| `z2ui5_cl_pop_js_loader` | a raw expression through `follow_up_action( )` | **removed**, *next release* |
+| custom JS reading `window.z2ui5` | nothing - the global is gone | **removed**, *next release* |
 | `cs_config-title` | `cs_event-set_title` | 1.144.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
@@ -259,24 +262,6 @@ travels as the *empty* slot where the removed constant injected the literal
 `MAIN`. An empty slot resolves the id across every open view, so it still finds
 a container in the main view — it is wider, never narrower, and only an id that
 exists in two open slots at once could tell the two apart.
-
-`cs_event-z2ui5` sits in the same obsolete group. It calls a function you
-registered as a `z2ui5.*` global; passing the expression straight to
-`follow_up_action( )` is the same call without the indirection:
-
-```abap
-" old
-client->follow_up_action( val   = client->cs_event-z2ui5
-                          t_arg = VALUE #( ( `myFunction` ) ) ).
-
-" new
-client->follow_up_action( `myFunction()` ).
-```
-
-It still works and is still dispatched. Note that both forms ship hand-written
-JavaScript from the backend to the browser — read
-[Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) before
-using either.
 
 ### `z2ui5_cl_xml_view` → `z2ui5_cl_ui5_view_builder`
 
@@ -543,24 +528,6 @@ and runs exactly as before, and every moved type is identical field for field,
 so a variable declared the old way still fits the new signatures. There is no
 deadline; change it when you next touch the class.
 
-### `z2ui5.Util` → `z2ui5.Formatter`
-
-`z2ui5.Util` (module `z2ui5/Util`) is a backward-compatible alias that
-re-exports the date helpers from `z2ui5.Formatter` (module
-`z2ui5/model/formatter`). It will not gain new helpers.
-
-```abap
-" old
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'z2ui5.Util.DateCreateObject' \}|
-
-" new
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'Formatter.DateCreateObject' \}|
-```
-
-See [Formatter](/cookbook/model/formatter).
-
 ## Removed: does not compile any more
 
 Every name below is **gone from the framework**, not merely marked. A call
@@ -746,3 +713,48 @@ Both paths end in the same frontend code, so the options behave identically:
 `dependentOn` is still resolved to a control. The raw path can do one thing
 more — wired into a view it needs no round-trip at all. See
 [Message](/cookbook/translation_messages/message).
+
+### The `z2ui5` frontend global
+
+**Removed.** The frontend kept its state on a global object, `window.z2ui5`, and
+apps could reach into it from custom JavaScript. That object is gone: the
+frontend keeps its state to itself, and nothing abap2UI5 ships puts anything on
+`window` any more. Everything that existed only to reach the global went with
+it.
+
+`cs_event-z2ui5` called a function you had registered as a `z2ui5.*` member.
+Define the function on `window` instead and pass the call as a raw expression -
+the same call without the indirection:
+
+```abap
+" old
+client->follow_up_action( val   = client->cs_event-z2ui5
+                          t_arg = VALUE #( ( `myFunction` ) ) ).
+
+" new
+client->follow_up_action( `myFunction()` ).
+```
+
+A raw expression ships hand-written JavaScript from the backend to the browser
+and needs a CSP that allows `unsafe-eval` - read
+[Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) before
+using it.
+
+`z2ui5_cl_pop_js_loader`, the built-in popup that loaded such a function onto
+the global, is removed with it; the popup had nothing left to write into.
+
+The `z2ui5.Util` and `z2ui5.Formatter` globals, and the `z2ui5/Util` module,
+are gone too. The date helpers live in `z2ui5/model/formatter`, loaded on the
+view root with `core:require` (UI5 1.74 and later):
+
+```abap
+" old
+|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
+    formatter: 'z2ui5.Util.DateCreateObject' \}|
+
+" new - view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` )
+|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
+    formatter: 'Formatter.DateCreateObject' \}|
+```
+
+See [Formatter](/cookbook/model/formatter).
