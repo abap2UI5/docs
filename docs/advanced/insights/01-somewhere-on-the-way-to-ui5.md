@@ -103,7 +103,7 @@ handed back. `comp-type` says whether a component is a DDIC type, which is
 where the real labels live — the field catalog, rebuilt from its own source.
 
 Full source:
-[`Z2UI5_CL_SMP_APP_497`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_497.clas.abap),
+[`Z2UI5_CL_SMP_APP_497`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_497.clas.abap),
 one of the abap2UI5 samples, so it is compiled and linted on every commit.
 
 A table nobody described, drawn from whatever the data turned out to be.

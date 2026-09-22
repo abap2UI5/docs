@@ -174,8 +174,8 @@ replacement has a sample that proves it:
 
 | What you used AJSON for | What to write instead | Sample |
 |---|---|---|
-| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_507.clas.abap) |
-| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_509.clas.abap) |
+| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_507.clas.abap) |
+| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_509.clas.abap) |
 | Anything else | Shape the value in ABAP before you bind it | — |
 
 ```abap
@@ -394,9 +394,9 @@ that; it needs no flag.
 
 **Inbound — an event argument that arrives as JSON.** Write the few lines that
 read the field you need. `Z2UI5_CL_SMP_APP_327`
-([`json_get_value`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_327.clas.abap),
+([`json_get_value`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_327.clas.abap),
 one field of a flat object) and `Z2UI5_CL_SMP_APP_197`
-([`json_get_values`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_197.clas.abap),
+([`json_get_values`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_197.clas.abap),
 one property across an array of objects) are the pattern to copy: find
 `"<name>":"` and take what stands up to the next quote.
 

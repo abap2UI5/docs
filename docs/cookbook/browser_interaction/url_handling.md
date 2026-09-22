@@ -121,8 +121,8 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Open a URL in a New Tab (A) | [`Z2UI5_CL_SMP_APP_073`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_073.clas.abap) |
-| Open Mail, Phone and SMS Links (A) | [`Z2UI5_CL_SMP_APP_316`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_316.clas.abap) |
-| Reload the Page (A) | [`Z2UI5_CL_SMP_APP_492`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_492.clas.abap) |
+| Open a URL in a New Tab (A) | [`Z2UI5_CL_SMP_APP_073`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_073.clas.abap) |
+| Open Mail, Phone and SMS Links (A) | [`Z2UI5_CL_SMP_APP_316`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_316.clas.abap) |
+| Reload the Page (A) | [`Z2UI5_CL_SMP_APP_492`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_492.clas.abap) |
 
 <!-- samples:end -->

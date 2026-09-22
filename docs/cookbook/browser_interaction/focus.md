@@ -108,8 +108,8 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Set Focus and Select Text in an Input (A) | [`Z2UI5_CL_SMP_APP_133`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_133.clas.abap) |
-| Jump to the Next Input on Enter (A) | [`Z2UI5_CL_SMP_APP_189`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_189.clas.abap) |
-| Focus a Table Cell by Column and Row (A) | [`Z2UI5_CL_SMP_APP_421`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_421.clas.abap) |
+| Set Focus and Select Text in an Input (A) | [`Z2UI5_CL_SMP_APP_133`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_133.clas.abap) |
+| Jump to the Next Input on Enter (A) | [`Z2UI5_CL_SMP_APP_189`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_189.clas.abap) |
+| Focus a Table Cell by Column and Row (A) | [`Z2UI5_CL_SMP_APP_421`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_421.clas.abap) |
 
 <!-- samples:end -->

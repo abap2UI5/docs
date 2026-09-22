@@ -99,7 +99,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Keyboard Layout of an Input (inputmode) (C) | [`Z2UI5_CL_SMP_APP_516`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_516.clas.abap) |
-| Scan Field with Submit (InputExt) (A,C) | [`Z2UI5_CL_SMP_APP_530`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_530.clas.abap) |
+| Keyboard Layout of an Input (inputmode) (C) | [`Z2UI5_CL_SMP_APP_516`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_516.clas.abap) |
+| Scan Field with Submit (InputExt) (A,C) | [`Z2UI5_CL_SMP_APP_530`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_530.clas.abap) |
 
 <!-- samples:end -->

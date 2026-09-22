@@ -160,6 +160,6 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Editable Cells, Add and Delete Rows | [`Z2UI5_CL_SMP_APP_011`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_011.clas.abap) |
+| Editable Cells, Add and Delete Rows | [`Z2UI5_CL_SMP_APP_011`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_011.clas.abap) |
 
 <!-- samples:end -->

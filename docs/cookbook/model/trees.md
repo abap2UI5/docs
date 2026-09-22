@@ -105,9 +105,9 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Nested ABAP Table in a sap.m.Tree | [`Z2UI5_CL_SMP_APP_460`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_460.clas.abap) |
-| Drag and Drop Nodes (A,C) | [`Z2UI5_CL_SMP_APP_461`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_461.clas.abap) |
-| Inside a Dialog (C) | [`Z2UI5_CL_SMP_APP_462`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_462.clas.abap) |
-| Editable Nodes with CustomTreeItem (C) | [`Z2UI5_CL_SMP_APP_463`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_463.clas.abap) |
+| Nested ABAP Table in a sap.m.Tree | [`Z2UI5_CL_SMP_APP_460`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_460.clas.abap) |
+| Drag and Drop Nodes (A,C) | [`Z2UI5_CL_SMP_APP_461`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_461.clas.abap) |
+| Inside a Dialog (C) | [`Z2UI5_CL_SMP_APP_462`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_462.clas.abap) |
+| Editable Nodes with CustomTreeItem (C) | [`Z2UI5_CL_SMP_APP_463`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_463.clas.abap) |
 
 <!-- samples:end -->

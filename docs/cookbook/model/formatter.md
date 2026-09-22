@@ -365,11 +365,11 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Currency Amounts (sap.ui.model.type.Currency) | [`Z2UI5_CL_SMP_APP_067`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_067.clas.abap) |
-| ABAP Date and Time Strings (DATS/TIMS) | [`Z2UI5_CL_SMP_APP_450`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_450.clas.abap) |
-| Date Object for the DatePicker | [`Z2UI5_CL_SMP_APP_457`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_457.clas.abap) |
-| Date Objects for the PlanningCalendar | [`Z2UI5_CL_SMP_APP_456`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_456.clas.abap) |
-| Inline Icons in a Text | [`Z2UI5_CL_SMP_APP_466`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_466.clas.abap) |
-| When Not to Use One: Compute in ABAP | [`Z2UI5_CL_SMP_APP_453`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_453.clas.abap) |
+| Currency Amounts (sap.ui.model.type.Currency) | [`Z2UI5_CL_SMP_APP_067`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_067.clas.abap) |
+| ABAP Date and Time Strings (DATS/TIMS) | [`Z2UI5_CL_SMP_APP_450`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_450.clas.abap) |
+| Date Object for the DatePicker | [`Z2UI5_CL_SMP_APP_457`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_457.clas.abap) |
+| Date Objects for the PlanningCalendar | [`Z2UI5_CL_SMP_APP_456`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_456.clas.abap) |
+| Inline Icons in a Text | [`Z2UI5_CL_SMP_APP_466`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_466.clas.abap) |
+| When Not to Use One: Compute in ABAP | [`Z2UI5_CL_SMP_APP_453`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_453.clas.abap) |
 
 <!-- samples:end -->

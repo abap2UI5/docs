@@ -296,7 +296,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Build Columns Dynamically (template:repeat) | [`Z2UI5_CL_SMP_APP_173`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_173.clas.abap) |
-| Dynamic Content in a Nested View | [`Z2UI5_CL_SMP_APP_176`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_176.clas.abap) |
+| Build Columns Dynamically (template:repeat) | [`Z2UI5_CL_SMP_APP_173`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_173.clas.abap) |
+| Dynamic Content in a Nested View | [`Z2UI5_CL_SMP_APP_176`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_176.clas.abap) |
 
 <!-- samples:end -->

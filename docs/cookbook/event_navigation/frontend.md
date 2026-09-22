@@ -345,16 +345,16 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Link with preventDefault (A) | [`Z2UI5_CL_SMP_APP_472`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_472.clas.abap) |
-| Element Binding to the Selected Row (A) | [`Z2UI5_CL_SMP_APP_470`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_470.clas.abap) |
-| Expand a Panel by ID (setExpanded) (A) | [`Z2UI5_CL_SMP_APP_448`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_448.clas.abap) |
-| Switch NavContainer Page by ID (A) | [`Z2UI5_CL_SMP_APP_088`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_088.clas.abap) |
-| Wizard with Steps (A) | [`Z2UI5_CL_SMP_APP_202`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_202.clas.abap) |
-| Open the PDF Viewer by ID (A) | [`Z2UI5_CL_SMP_APP_449`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_449.clas.abap) |
-| Toggle by ID (toggleBy) (A) | [`Z2UI5_CL_SMP_APP_465`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_465.clas.abap) |
-| Inline CSS on a Control (css) (A) | [`Z2UI5_CL_SMP_APP_513`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_513.clas.abap) |
-| Aggregation Item by Index (A) | [`Z2UI5_CL_SMP_APP_514`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_514.clas.abap) |
-| The Global Busy Indicator (A) | [`Z2UI5_CL_SMP_APP_515`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_515.clas.abap) |
-| Register an Icon Font (A) | [`Z2UI5_CL_SMP_APP_518`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_518.clas.abap) |
+| Link with preventDefault (A) | [`Z2UI5_CL_SMP_APP_472`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_472.clas.abap) |
+| Element Binding to the Selected Row (A) | [`Z2UI5_CL_SMP_APP_470`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_470.clas.abap) |
+| Expand a Panel by ID (setExpanded) (A) | [`Z2UI5_CL_SMP_APP_448`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_448.clas.abap) |
+| Switch NavContainer Page by ID (A) | [`Z2UI5_CL_SMP_APP_088`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_088.clas.abap) |
+| Wizard with Steps (A) | [`Z2UI5_CL_SMP_APP_202`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_202.clas.abap) |
+| Open the PDF Viewer by ID (A) | [`Z2UI5_CL_SMP_APP_449`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_449.clas.abap) |
+| Toggle by ID (toggleBy) (A) | [`Z2UI5_CL_SMP_APP_465`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_465.clas.abap) |
+| Inline CSS on a Control (css) (A) | [`Z2UI5_CL_SMP_APP_513`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_513.clas.abap) |
+| Aggregation Item by Index (A) | [`Z2UI5_CL_SMP_APP_514`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_514.clas.abap) |
+| The Global Busy Indicator (A) | [`Z2UI5_CL_SMP_APP_515`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_515.clas.abap) |
+| Register an Icon Font (A) | [`Z2UI5_CL_SMP_APP_518`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_518.clas.abap) |
 
 <!-- samples:end -->
