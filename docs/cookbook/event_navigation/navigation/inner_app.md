@@ -156,8 +156,8 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Call and Leave Apps (nav_app_call) | [`Z2UI5_CL_SMP_APP_024`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_024.clas.abap) |
-| Return Data and Events to the Caller | [`Z2UI5_CL_SMP_APP_488`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_488.clas.abap) |
-| Data Loss Protection on Leaving (A,C) | [`Z2UI5_CL_SMP_APP_279`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_279.clas.abap) |
+| Call and Leave Apps (nav_app_call) | [`Z2UI5_CL_SMP_APP_024`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_024.clas.abap) |
+| Return Data and Events to the Caller | [`Z2UI5_CL_SMP_APP_488`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_488.clas.abap) |
+| Data Loss Protection on Leaving (A,C) | [`Z2UI5_CL_SMP_APP_279`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_279.clas.abap) |
 
 <!-- samples:end -->

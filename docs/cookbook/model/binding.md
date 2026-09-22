@@ -178,10 +178,10 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Basics II — Data Binding: Input and Button | [`Z2UI5_CL_SMP_APP_494`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_494.clas.abap) |
-| Types for Integer, Decimal, Date and Time | [`Z2UI5_CL_SMP_APP_047`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_047.clas.abap) |
-| Structure Fields and INCLUDEs | [`Z2UI5_CL_SMP_APP_166`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_166.clas.abap) |
-| Single Table Cell (tab_index) | [`Z2UI5_CL_SMP_APP_144`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_144.clas.abap) |
-| Dynamic Table Typed at Runtime (RTTI) | [`Z2UI5_CL_SMP_APP_061`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_061.clas.abap) |
+| Basics II — Data Binding: Input and Button | [`Z2UI5_CL_SMP_APP_494`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_494.clas.abap) |
+| Types for Integer, Decimal, Date and Time | [`Z2UI5_CL_SMP_APP_047`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_047.clas.abap) |
+| Structure Fields and INCLUDEs | [`Z2UI5_CL_SMP_APP_166`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_166.clas.abap) |
+| Single Table Cell (tab_index) | [`Z2UI5_CL_SMP_APP_144`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_144.clas.abap) |
+| Dynamic Table Typed at Runtime (RTTI) | [`Z2UI5_CL_SMP_APP_061`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_061.clas.abap) |
 
 <!-- samples:end -->

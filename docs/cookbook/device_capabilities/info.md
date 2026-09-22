@@ -143,7 +143,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Frontend Info: UI5 Version, Theme, OS, Browser | [`Z2UI5_CL_SMP_APP_122`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_122.clas.abap) |
-| Device Model: Phone, Tablet, Desktop (A) | [`Z2UI5_CL_SMP_APP_445`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_445.clas.abap) |
+| Frontend Info: UI5 Version, Theme, OS, Browser | [`Z2UI5_CL_SMP_APP_122`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_122.clas.abap) |
+| Device Model: Phone, Tablet, Desktop (A) | [`Z2UI5_CL_SMP_APP_445`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_445.clas.abap) |
 
 <!-- samples:end -->

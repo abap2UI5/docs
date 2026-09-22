@@ -337,10 +337,10 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Basic Example (nest_view_display) | [`Z2UI5_CL_SMP_APP_065`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_065.clas.abap) |
-| Embed Another App's View | [`Z2UI5_CL_SMP_APP_104`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_104.clas.abap) |
-| Master-Detail with FlexibleColumnLayout | [`Z2UI5_CL_SMP_APP_097`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_097.clas.abap) |
-| Three Columns with FlexibleColumnLayout | [`Z2UI5_CL_SMP_APP_098`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_098.clas.abap) |
-| Dynamic Content in a Nested View | [`Z2UI5_CL_SMP_APP_176`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_176.clas.abap) |
+| Basic Example (nest_view_display) | [`Z2UI5_CL_SMP_APP_065`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_065.clas.abap) |
+| Embed Another App's View | [`Z2UI5_CL_SMP_APP_104`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_104.clas.abap) |
+| Master-Detail with FlexibleColumnLayout | [`Z2UI5_CL_SMP_APP_097`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_097.clas.abap) |
+| Three Columns with FlexibleColumnLayout | [`Z2UI5_CL_SMP_APP_098`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_098.clas.abap) |
+| Dynamic Content in a Nested View | [`Z2UI5_CL_SMP_APP_176`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_176.clas.abap) |
 
 <!-- samples:end -->

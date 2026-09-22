@@ -72,7 +72,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Copy to Clipboard (A) | [`Z2UI5_CL_SMP_APP_325`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_325.clas.abap) |
-| Local and Session Storage (A,C) | [`Z2UI5_CL_SMP_APP_327`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_327.clas.abap) |
+| Copy to Clipboard (A) | [`Z2UI5_CL_SMP_APP_325`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_325.clas.abap) |
+| Local and Session Storage (A,C) | [`Z2UI5_CL_SMP_APP_327`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_327.clas.abap) |
 
 <!-- samples:end -->

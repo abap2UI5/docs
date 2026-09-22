@@ -126,6 +126,7 @@ formatter
 formatters
 fullscreen
 geolocation
+getter
 github
 gitignored
 globals

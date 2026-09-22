@@ -1,78 +1,92 @@
 ---
 outline: [2, 4]
 samples:
-  - z2ui5_cl_smp_app_352
   - z2ui5_cl_smp_app_516
+  - z2ui5_cl_smp_app_530
 ---
 # Soft Keyboard
 
-## Hide Soft Keyboard
+On a touch device the on-screen keyboard pops up whenever an input receives
+focus. Sometimes you do not want it — in a warehouse, on a handheld used mainly
+for barcode scanning, the keyboard covers half the screen and nobody ever types
+into the field. Sometimes you want a *different* one: a digit pad for a
+quantity, a phone layout for a number.
 
-For UI5 input fields, the soft keyboard pops up automatically when an input receives focus. Sometimes — for example, in warehouses with small devices used mainly for barcode scanning — you don't want this behavior.
+Both are the HTML `inputmode` attribute, and abap2UI5 exposes it as a **bound
+property** of a companion control.
 
-The `keyboard_set_mode` frontend event sets the HTML `inputmode` attribute on a UI5 input. Pass the control id and the desired mode (`none` hides the soft keyboard; `text`, `numeric`, `decimal`, `tel`, etc. restore it with the matching layout).
+## The control
+
+`z2ui5.cc.InputExt` is a `sap.m.Input` in every respect — same value binding,
+same suggestions, same value state, same events — with one property added:
+
+| Property | What it does |
+|---|---|
+| `inputMode` | the HTML `inputmode` of the inner `<input>`: `none` keeps the keyboard down, `numeric`, `decimal`, `tel`, `email`, `url`, `search`, `text` ask for that layout. Empty leaves the field exactly as `sap.m.Input` rendered it |
+
+Declare the namespace on the view and build the field as `z2ui5:InputExt`:
 
 ```abap
-CLASS z2ui5_cl_sample_softkeyb DEFINITION PUBLIC.
+DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+    )->ele( n = `View` ns = `mvc`
+        )->a( n = `xmlns`       v = `sap.m`
+        )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+        )->a( n = `xmlns:z2ui5` v = `z2ui5.cc` ).
 
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
+view->ele( `Shell`
+    )->ele( `Page`
+        )->a( n = `title` v = `abap2UI5 - Soft Keyboard`
 
-    DATA input TYPE string.
+        )->tag( n = `InputExt` ns = `z2ui5`
+            )->a( n = `value`     v = client->_bind( value )
+            )->a( n = `inputMode` v = client->_bind( mode ) ).
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_softkeyb IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`      v = `sap.m`
-              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
-              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
-
-              )->ele( `Shell`
-                  )->ele( `Page`
-                      )->a( n = `title`          v = `abap2UI5 - Softkeyboard on/off`
-                      )->a( n = `navButtonPress` v = client->_event( `BACK` )
-                      )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-
-                      )->ele( n = `SimpleForm` ns = `form`
-                          )->a( n = `editable` b = abap_true
-
-                          )->ele( n = `content` ns = `form`
-                              )->tag( `Title`
-                                  )->a( n = `text` v = `Keyboard on/off`
-                              )->tag( `Label`
-                                  )->a( n = `text` v = `Input`
-                              )->tag( `Input`
-                                  )->a( n = `id`               v = `ZINPUT`
-                                  )->a( n = `value`            v = client->_bind( input )
-                                  )->a( n = `valueHelpRequest` v = client->_event( `CALL_KEYBOARD` )
-                                  )->a( n = `showValueHelp`    b = abap_true ).
-
-      client->view_display( view->stringify( ) ).
-
-      RETURN.
-    ENDIF.
-
-    CASE client->get( )-event.
-      WHEN `CALL_KEYBOARD`.
-        client->follow_up_action( val   = client->cs_event-keyboard_set_mode
-                        t_arg = VALUE #( ( `ZINPUT` ) ( `none` ) ) ).
-      WHEN `BACK`.
-        client->nav_app_leave( ).
-    ENDCASE.
-
-  ENDMETHOD.
-ENDCLASS.
+client->view_display( view->stringify( ) ).
 ```
 
-To re-enable the keyboard, fire the same event with a different mode (`text`, `numeric`, …).
+`mode` is an ordinary `TYPE string` attribute of the app. Switching the keyboard
+is therefore a **model update and nothing else**:
+
+```abap
+CASE client->get_event( ).
+  WHEN `NUMERIC`.
+    mode = `numeric`.
+  WHEN `OFF`.
+    mode = `none`.
+ENDCASE.
+```
+
+No follow-up action travels, and there is no ordering to get right between an
+action and the next render.
+
+## Why it is a property and not an action
+
+`inputmode` lives on one DOM attribute, and **UI5 throws that DOM away on every
+re-render**. A frontend action that writes the attribute therefore holds only
+until the next thing redraws the field — a model update on the same input
+included — and nothing reports that it is gone: the field still works, the
+keyboard just comes back.
+
+`InputExt` writes the mode on every rendering, so it is part of what the control
+*is*. That is also why the mode survives a roundtrip without the app restoring
+anything.
+
+::: warning cs_event-keyboard_set_mode is removed
+Before 2026-09 this page taught a frontend action,
+`client->follow_up_action( val = client->cs_event-keyboard_set_mode … )`, which
+set the attribute directly on the DOM. It carried exactly the defect above and
+**was removed from the framework**; an app that still calls it fails at compile
+time. The migration is the control on this page: declare
+`xmlns:z2ui5="z2ui5.cc"`, build the field as `z2ui5:InputExt`, bind `inputMode`
+to a string attribute, and delete the action.
+:::
+
+## An unknown mode is refused, not guessed
+
+`inputMode` is checked against the HTML keyword list before it is written. A
+browser silently falls back to its default for a keyword it does not know, which
+on screen is indistinguishable from the property having had no effect at all —
+so the control logs the bad value instead and writes nothing.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 
@@ -85,7 +99,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Soft Keyboard Mode on Mobile (A) | [`Z2UI5_CL_SMP_APP_352`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_352.clas.abap) |
-| Keyboard Layout of an Input (inputmode) (C) | [`Z2UI5_CL_SMP_APP_516`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_516.clas.abap) |
+| Keyboard Layout of an Input (inputmode) (C) | [`Z2UI5_CL_SMP_APP_516`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_516.clas.abap) |
+| Scan Field with Submit (InputExt) (A,C) | [`Z2UI5_CL_SMP_APP_530`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_530.clas.abap) |
 
 <!-- samples:end -->

@@ -161,6 +161,6 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Model setSizeLimit for Large Tables (A) | [`Z2UI5_CL_SMP_APP_071`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_071.clas.abap) |
+| Model setSizeLimit for Large Tables (A) | [`Z2UI5_CL_SMP_APP_071`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_071.clas.abap) |
 
 <!-- samples:end -->

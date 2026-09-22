@@ -369,8 +369,8 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Basics I — Hello World, the Smallest App | [`Z2UI5_CL_SMP_APP_493`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_493.clas.abap) |
-| Basics III — Lifecycle: Init, Event, Navigated | [`Z2UI5_CL_SMP_APP_495`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_495.clas.abap) |
-| Basics IV — Events, Views and Roundtrips | [`Z2UI5_CL_SMP_APP_004`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_004.clas.abap) |
+| Basics I — Hello World, the Smallest App | [`Z2UI5_CL_SMP_APP_493`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_493.clas.abap) |
+| Basics III — Lifecycle: Init, Event, Navigated | [`Z2UI5_CL_SMP_APP_495`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_495.clas.abap) |
+| Basics IV — Events, Views and Roundtrips | [`Z2UI5_CL_SMP_APP_004`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_004.clas.abap) |
 
 <!-- samples:end -->

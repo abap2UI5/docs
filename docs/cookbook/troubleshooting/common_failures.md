@@ -251,6 +251,6 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Basics V — The Developer Tools (Ctrl+F12) | [`Z2UI5_CL_SMP_APP_496`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_496.clas.abap) |
+| Basics V — The Developer Tools (Ctrl+F12) | [`Z2UI5_CL_SMP_APP_496`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_496.clas.abap) |
 
 <!-- samples:end -->

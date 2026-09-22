@@ -159,7 +159,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Value Help: Suggestions and F4 Dialog | [`Z2UI5_CL_SMP_APP_009`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_009.clas.abap) |
-| MultiInput with Tokens (C) | [`Z2UI5_CL_SMP_APP_078`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_078.clas.abap) |
+| Value Help: Suggestions and F4 Dialog | [`Z2UI5_CL_SMP_APP_009`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_009.clas.abap) |
+| MultiInput with Tokens (C) | [`Z2UI5_CL_SMP_APP_078`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_078.clas.abap) |
 
 <!-- samples:end -->

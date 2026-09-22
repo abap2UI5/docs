@@ -189,10 +189,10 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Ways to Open a Dialog (A) | [`Z2UI5_CL_SMP_APP_012`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_012.clas.abap) |
-| Value Help: Suggestions and F4 Dialog | [`Z2UI5_CL_SMP_APP_009`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_009.clas.abap) |
-| Dialog inside a Dialog | [`Z2UI5_CL_SMP_APP_161`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_161.clas.abap) |
-| Navigate between Dialogs (NavContainer) (A) | [`Z2UI5_CL_SMP_APP_170`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_170.clas.abap) |
-| Element Binding to the Selected Row (A) | [`Z2UI5_CL_SMP_APP_470`](https://github.com/abap2UI5/samples/blob/main/src/01/z2ui5_cl_smp_app_470.clas.abap) |
+| Ways to Open a Dialog (A) | [`Z2UI5_CL_SMP_APP_012`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_012.clas.abap) |
+| Value Help: Suggestions and F4 Dialog | [`Z2UI5_CL_SMP_APP_009`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_009.clas.abap) |
+| Dialog inside a Dialog | [`Z2UI5_CL_SMP_APP_161`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_161.clas.abap) |
+| Navigate between Dialogs (NavContainer) (A) | [`Z2UI5_CL_SMP_APP_170`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_170.clas.abap) |
+| Element Binding to the Selected Row (A) | [`Z2UI5_CL_SMP_APP_470`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_470.clas.abap) |
 
 <!-- samples:end -->
