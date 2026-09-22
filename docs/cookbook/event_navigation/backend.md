@@ -132,6 +132,53 @@ ENDMETHOD.
 You can read any object attribute, but use only public and released attributes to avoid compatibility issues with future UI5 versions.
 :::
 
+## A Control in Another View Slot
+
+The forms above read the control that fired, the event object, or a bound
+model property. None of them reaches a **different** control — an id is local
+to the view or fragment it was written in, and a `${...}` is a binding path,
+so it addresses data and never a control.
+
+`$controller.slotValue( slot, id, getter )` reads what a control in a named
+view slot currently holds. The classic case is a dialog whose value the button
+that closes it has to carry:
+
+```abap
+)->a( n = `press` v = client->_event(
+                        val = `SAVE`
+                        arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` ) ).
+```
+
+```abap
+CASE client->get( )-event.
+    WHEN `SAVE`.
+        DATA(image) = client->get_event_arg( ).
+        client->popup_destroy( ).
+ENDCASE.
+```
+
+The slot is one of the `cs_view` keys — `MAIN`, `NEST`, `NEST2`, `POPUP`,
+`POPOVER` — and an **empty** slot searches every open one and then the global
+registry, the same resolution `cs_event-control_by_id` uses for
+`cs_view-main`.
+
+The getter takes no arguments on purpose. To *call* a control, use
+`cs_event-control_by_id`, which has a method whitelist in front of it; this is
+a read.
+
+::: tip It never throws, it logs
+A closed slot, an unknown id, a method the control does not have, or a getter
+that raises — each is written to the browser console and sent as the empty
+string. That is deliberate: an argument expression is evaluated while UI5
+dispatches the handler, so an expression that throws loses the whole **event**,
+leaving a button that does nothing and an app with no way to tell.
+:::
+
+`$controller.slotById( slot, id )` hands the control itself over, for a
+null-tolerant reader such as `$controller.textPath( )`. It answers `null` on a
+miss — and a method call on that `null` is exactly the throw the tip above
+describes, so prefer `slotValue( )` whenever you want a value.
+
 ## Model Properties
 Read model properties bound to the event:
 ```abap

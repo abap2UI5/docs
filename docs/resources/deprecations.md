@@ -54,6 +54,7 @@ tell you what is coming if you do not.
 | `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, *next release* |
 | `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, *next release* |
 | the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, *next release* |
+| `cs_event-image_editor_popup_close` | `_event( arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` )` plus the app's own `popup_destroy( )` | **removed**, *next release* |
 | `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
 | `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
 | `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
