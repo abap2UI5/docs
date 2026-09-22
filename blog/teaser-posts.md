@@ -76,7 +76,7 @@ says the whole thing on its own.
 ## One Class, No Programming Model
 
 Plain text — LinkedIn renders no markdown. The article link comes from the
-attached article preview, so the post carries no inline URL. 615 characters,
+attached article preview, so the post carries no inline URL. 576 characters,
 and the first line is 56 of them: the claim on its own, above LinkedIn's
 fold.
 
@@ -87,13 +87,13 @@ fold.
 > no binding, no annotations, nothing to transport but the class.
 >
 > New article 🎉 The same edit screen three times: through a RAP business
-> object, straight to a database table, and against a BAPI that has been
-> running in production for twenty years. One unchanged UI class — because
-> those are not three programming models, they are three ABAP statements.
+> object, straight to a database table, and against a twenty-year-old BAPI.
+> All of it with one unchanged UI class — not three programming models, three
+> ABAP statements.
 >
 > What would sit behind your screen?
 >
-> #ABAP #SAP #UI5
+> #ABAP #SAP #UI5 #abap2UI5
 
 ## No Annotation in Between
 
