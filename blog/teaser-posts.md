@@ -76,7 +76,7 @@ says the whole thing on its own.
 ## One Class, No Programming Model
 
 Plain text — LinkedIn renders no markdown. The article link comes from the
-attached article preview, so the post carries no inline URL. 794 characters,
+attached article preview, so the post carries no inline URL. 615 characters,
 and the first line is 56 of them: the claim on its own, above LinkedIn's
 fold.
 
@@ -90,10 +90,6 @@ fold.
 > object, straight to a database table, and against a BAPI that has been
 > running in production for twenty years. One unchanged UI class — because
 > those are not three programming models, they are three ABAP statements.
->
-> Nothing has to be released first and nothing has to move. A complement to
-> the RAP and UI5 apps you already run, for the screen that would otherwise
-> wait for a modeling exercise.
 >
 > What would sit behind your screen?
 >
