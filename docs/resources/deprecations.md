@@ -51,6 +51,9 @@ tell you what is coming if you do not.
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, *next release* |
+| `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, *next release* |
+| `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, *next release* |
+| the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, *next release* |
 | `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
 | `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
 | `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
@@ -220,21 +223,41 @@ compiles against.
 Both parameters are still evaluated and keep working — existing code does not
 break.
 
-### The `nav_container_to` event family
+### The `nav_container_to` event family — removed
 
 `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_`
-variants still work — the backend maps them onto `cs_event-control_by_id` with
-method `to`. New code can address the container directly:
+variants are **gone**; an app that names one fails at compile time. They never
+reached the frontend as events of their own — the backend rewrote each of them
+into `cs_event-control_by_id` with method `to` — so the migration is to write
+that call, which additionally reaches every *other* method of a NavContainer
+instead of the single `to` the constants could express:
 
 ```abap
 " old
 client->follow_up_action( val   = client->cs_event-nav_container_to
-                          t_arg = VALUE #( ( `page2` ) ) ).
+                          t_arg = VALUE #( ( `navcon` ) ( `page2` ) ) ).
 
 " new
 client->follow_up_action( val   = client->cs_event-control_by_id
                           t_arg = VALUE #( ( `navcon` ) ( `to` ) ( `page2` ) ) ).
 ```
+
+A container in another view slot took a variant of its own; now it is the
+`view` parameter:
+
+```abap
+" old: cs_event-popup_nav_container_to
+" new
+client->follow_up_action( val   = client->cs_event-control_by_id
+                          view  = client->cs_view-popup
+                          t_arg = VALUE #( ( `navcon` ) ( `to` ) ( `page2` ) ) ).
+```
+
+One difference worth knowing when migrating the MAIN variant: `cs_view-main`
+travels as the *empty* slot where the removed constant injected the literal
+`MAIN`. An empty slot resolves the id across every open view, so it still finds
+a container in the main view — it is wider, never narrower, and only an id that
+exists in two open slots at once could tell the two apart.
 
 `cs_event-z2ui5` sits in the same obsolete group. It calls a function you
 registered as a `z2ui5.*` global; passing the expression straight to
