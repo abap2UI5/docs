@@ -40,7 +40,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.144.0**. Entries marked *next release* are already
+The released version is **1.144.1**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
@@ -50,11 +50,11 @@ tell you what is coming if you do not.
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
-| `_bind( view = … )` | omit the parameter | **removed**, *next release* |
-| `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, *next release* |
-| `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, *next release* |
-| the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, *next release* |
-| `cs_event-image_editor_popup_close` | `_event( arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` )` plus the app's own `popup_destroy( )` | **removed**, *next release* |
+| `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
+| `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |
+| `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, 1.144.1 |
+| the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, 1.144.1 |
+| `cs_event-image_editor_popup_close` | `_event( arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` )` plus the app's own `popup_destroy( )` | **removed**, 1.144.1 |
 | `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
 | `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
 | `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
@@ -62,7 +62,7 @@ tell you what is coming if you do not.
 | `client->get( )-viewname` | delete the read | **removed**, 1.143.0 |
 | `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, 1.143.0 |
 | `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` | **removed**, 1.142.0 |
-| `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, *next release* |
+| `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, 1.144.1 |
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, *next release* |
@@ -72,12 +72,12 @@ tell you what is coming if you do not.
 | `cs_config-title` | `cs_event-set_title` | 1.144.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
-| `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, *next release* |
-| `set_app_state_active( )`, `cs_event-set_app_state_active` | `app_state_set_active( )`, `cs_event-app_state_set_active` | **removed**, *next release* |
-| `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, *next release* |
-| `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | **removed**, *next release* |
-| `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, *next release* |
-| the UI5 options of `message_toast_display( )` / `message_box_display( )` | set them on the control, through `cs_event-control_global` | **removed**, *next release* |
+| `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
+| `set_app_state_active( )`, `cs_event-set_app_state_active` | `app_state_set_active( )`, `cs_event-app_state_set_active` | **removed**, 1.144.1 |
+| `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, 1.144.1 |
+| `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | **removed**, 1.144.1 |
+| `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, 1.144.1 |
+| the UI5 options of `message_toast_display( )` / `message_box_display( )` | set them on the control, through `cs_event-control_global` | **removed**, 1.144.1 |
 
 ## Obsolete: still compiles
 
@@ -581,7 +581,7 @@ a raw string does nothing.
 
 ### The URL API is `hash_*` and `app_state_*` now
 
-<Badge type="tip" text="next release" />
+<Badge type="tip" text="1.144.1" />
 
 One naming rule for everything that touches the URL, taken from UI5's own:
 `nav_*` keeps meaning real navigation between apps, `hash_*` is the URL

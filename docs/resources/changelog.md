@@ -7,6 +7,35 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.144.1
+2026-09-22
+- Added app-owned hash routing: `client->hash_set( )` / `hash_replace( )` write the URL fragment (a pushed or a replaced history entry), `cs_event-hash_back` steps back with an optional fallback hash, `cs_event-hash_attach_changed` raises a backend event on a hash change the app did not make, and `cs_event-hash_routing` sets the routing mode. `app_state_set_active( )` keeps the id of the current app state in the URL, and `app_state_get_href( )` hands that share link to ABAP
+- Added `s_ctrl-check_queue_last` on `_event( )`: an event fired while a round-trip is in flight is kept and sent after it, the last one wins — the flag for a live wire such as a search field. `s_ctrl-check_no_busy` keeps the busy overlay down on such a wire, so it no longer flashes over the field being typed into
+- Added `a( t = … )` on the view builder: text passed as `t` renders literally, a brace or a backslash in it is shown instead of parsed as a binding. Use it for data and user input in a view attribute; `v` keeps the binding vocabulary
+- `message_box_display( )` shows any data, not only messages — a table, a nested structure, a tree, an object, a number — and a box with details shows them open instead of behind a *Show details* link. Messages (BAPIRET2, T100, RAP, exceptions, …) are still recognized first and set severity and title
+- `STORE_DATA` reads a model-path payload, so a handler can write browser storage too, not only a view wire
+- `CONTROL_BY_ID` resolves the argument of `setCurrentStep` to a control, so a `Wizard` step can be set by id
+- A misused view builder chain raises an exception the app can catch, instead of producing a broken view
+- Performance: the view builder concatenates once per render, a conditional GET of the shell page is answered before the page is built, the XML templating preprocessor runs only for a view that uses templating, and several things the engine computed on every request are computed once
+- The default response headers no longer include `Cross-Origin-Opener-Policy` — on a plain-HTTP system the browser ignored it and logged a console error on every start
+- Hosting outside an SAP system: seams for the draft store and the environment, and the transpiled framework ships as the npm package `@abap2ui5/runtime`; every release carries the backend already built (`backend-<version>.tar.gz`)
+- The start page no longer loses its second roundtrip, and the OData model is loaded only when an app uses it
+- Many smaller fixes from code reviews of the ABAP and the frontend core
+
+**Removed**
+- BREAKING: the `view` parameter of `_bind( )` / `_bind_edit( )` — it had done nothing for a long time; delete it
+- BREAKING: `set_push_state( )` / `cs_event-set_push_state`, `set_app_state_active( )` / `cs_event-set_app_state_active` and `cs_event-set_nav_routing` — renamed to `hash_set( )`, `app_state_set_active( )` and `cs_event-hash_routing` above; the wire values are unchanged
+- BREAKING: `cs_event-clipboard_app_state` → `app_state_get_href( )` + `cs_event-clipboard_copy`
+- BREAKING: `cs_event-wizard_set_next_step` → two `control_by_id` calls
+- BREAKING: `cs_event-keyboard_set_mode` → the bound `inputMode` property of `z2ui5.cc.InputExt`, which survives a re-render
+- BREAKING: `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants → `cs_event-control_by_id` with method `to`
+- BREAKING: `cs_event-image_editor_popup_close`
+- BREAKING: `_event( s_ctrl-check_allow_multi_req )` → `s_ctrl-check_queue_last`
+- BREAKING: the pure UI5 options of `message_toast_display( )` and `message_box_display( )` (width, docking, animation and the like) — set them on the control through `cs_event-control_global`
+- BREAKING: the released DDIC structure `Z2UI5_T_02` — name a type your own system has
+
+See [Deprecations](/resources/deprecations) for the migration of each.
+
 ## 1.144.0
 2026-08-30
 - Added `client->_event( arg = … )`, the one-value spelling of `t_arg`. `arg = x` is exactly `t_arg = VALUE #( ( x ) )` — the client folds it into the same table, so the wire and `get_event_arg( )` are unchanged — and it exists because most event wires carry a single value (a row key, a `${$source>/…}`, one event parameter), where the table constructor is longer than the value inside it. Passing both appends `arg` behind the `t_arg` rows. From two values on, `t_arg` stays the right parameter: there is deliberately no `arg2`/`arg3`
