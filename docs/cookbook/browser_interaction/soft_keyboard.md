@@ -71,12 +71,12 @@ keyboard just comes back.
 *is*. That is also why the mode survives a roundtrip without the app restoring
 anything.
 
-::: warning cs_event-keyboard_set_mode is removed
-Before 2026-09 this page taught a frontend action,
-`client->follow_up_action( val = client->cs_event-keyboard_set_mode … )`, which
-set the attribute directly on the DOM. It carried exactly the defect above and
-**was removed from the framework**; an app that still calls it fails at compile
-time. The migration is the control on this page: declare
+::: warning The keyboard-mode frontend action is removed
+Before 2026-09 this page taught a frontend action that set the attribute
+directly on the DOM. It carried exactly the defect above and **was removed from
+the framework in 1.144.1** (see [Deprecations](/resources/deprecations)); an
+app that still calls it fails at compile time. The migration is the control on
+this page: declare
 `xmlns:z2ui5="z2ui5.cc"`, build the field as `z2ui5:InputExt`, bind `inputMode`
 to a string attribute, and delete the action.
 :::

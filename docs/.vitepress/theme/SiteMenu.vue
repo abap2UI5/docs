@@ -24,7 +24,7 @@ const { isDark } = useData();
  * four entries under it were already in this menu, so what was left of that
  * dropdown was the NUMBER, and this is where it went. Moving it means moving
  * the pattern in release.mjs with it. */
-const VERSION = "1.144.0";
+const VERSION = "1.144.1";
 
 const extra = ref(null);
 

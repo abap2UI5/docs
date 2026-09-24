@@ -179,7 +179,7 @@ Register a backend event and return the handler expression for a view attribute 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `val` | `clike` | *optional* | the event name the handler checks with check_on_event( `SAVE` ) - upper case by convention, unique within the app. |
-| `t_arg` | `string_table` | *optional* | arguments sent with the event and read back with get_event_arg( n ) in the same order: a literal, a `${$source>/...}` or `${$parameters>/...}` client expression evaluated when the event fires, or `$event>...` for a field of the UI5 event itself. |
+| `t_arg` | `string_table` | *optional* | arguments sent with the event and read back with get_event_arg( n ) in the same order: a literal, a `${$source>/...}` or `${$parameters>/...}` client expression evaluated when the event fires, or `$event>...` for a field of the UI5 event itself. Two controller helpers reach what no binding path can, because a `${...}` addresses DATA and these address the live control tree: `$controller.textPath( ${$parameters>/item} )` - the ancestor-text breadcrumb of the control that fired; and `$controller.slotValue( 'POPUP', 'myId', 'getValue' )` - what a control in ANOTHER view slot currently holds. An id is local to the view or fragment it was written in, so a control in a dialog is not reachable otherwise; the slot keys are those of cs_view, and an empty one searches every open slot. The getter takes no arguments on purpose - to CALL a control use cs_event-control_by_id, which has a whitelist in front of it. Every miss (slot closed, id unknown, no such method, a getter that raises) is logged and sent as the empty string: an argument expression is evaluated while UI5 dispatches the handler, so one that throws loses the whole EVENT. `$controller.slotById( 'POPUP', 'myId' )` hands the control itself over for a null-tolerant reader such as textPath( ) - it answers null on a miss, which a method call on it would then throw over. |
 | `s_ctrl` | `ty_s_event_control` | *optional* | the per-wire options (ty_s_event_control): keep the last firing until the running roundtrip has landed, cancel the control's default, quote every argument as a literal, leave the global busy indicator down. |
 | `arg` | `clike` | *optional* | the ONE-VALUE spelling of t_arg: `arg = x` is exactly `t_arg = VALUE #( ( x ) )`, byte for byte, and the handler reads it back with the same `get_event_arg( )`. It exists because the single argument is what most wires carry - a row key, a `${$source>/...}`, one event parameter - and there the table constructor is longer than the value inside it. From two values on, t_arg is the right parameter and stays it; arg deliberately does not grow into arg2/arg3, which would only put the positional numbering the table already spells out back into the parameter names. Passing both APPENDS arg behind the t_arg rows - a defined composition, not a guess between two readings. An argument that starts with `$` or `{` (or an .eB( expression) is written RAW, as live UI5 expression syntax - that is how `${$source>/KEY}` reaches the handler as the row's value. Data that may start with those characters (text a user typed, a key from a foreign system) is therefore evaluated, not passed: set s_ctrl-check_arg_literal to have every argument of the wire quoted as a string instead. |
 
@@ -189,9 +189,11 @@ Returns `string`.
 
 ### `follow_up_action`
 
-Schedule a frontend action to run after the backend response has been processed. Two ways to call it: pass a frontend event as val (a cs_event-* constant, e.g. cs_event-set_title) with its arguments in t_arg and the framework builds the event call; or pass a raw JavaScript expression as val, without t_arg, to run it as it is. The families below take structured arguments; t_arg is POSITIONAL, and an empty argument between filled ones keeps its slot as ``.
+Schedule a frontend action to run after the backend response has been processed: pass a frontend event as val (a cs_event-* constant, e.g. cs_event-set_title) with its arguments in t_arg, and the framework builds the event call as pure data. The families below take structured arguments; t_arg is POSITIONAL, and an empty argument between filled ones keeps its slot as ``.
 
-Every one of them also works roundtrip-free when WIRED IN THE VIEW: write the same call where its result is consumed - `)->a( n = `press` v = client->follow_up_action( val = ... t_arg = ... ) )` - and the action runs in the browser without a server call.
+A raw JavaScript expression as val (e.g. `sap.m.MessageToast.show('x')`) is not run - that form was removed. Its cs_event-* equivalents: control_global for the UI5 globals (MessageToast, MessageBox, BusyIndicator), control_by_id for a control method and hash_back for history.back( ). Frontend code of the app's own ships as a custom control in the customer frontend BSP (z2ui5_ccc).
+
+Every cs_event-* action also works roundtrip-free when WIRED IN THE VIEW: write the same call where its result is consumed - `)->a( n = `press` v = client->follow_up_action( val = ... t_arg = ... ) )` - and the action runs in the browser without a server call.
 
 **cs_event-control_by_id** - call a method on a control resolved by id, t_arg = id, method, params: ``client->follow_up_action( val = client->cs_event-control_by_id t_arg = VALUE #( ( `tab` ) ( `setSelectedIndex` ) ( `0` ) ) )``. Any public control method works unless it is on the frontend denylist (methods that would break framework invariants). The named per-aggregation mutators are on the allowed side of that line - addItem, removeItem, removeAllItems, destroyContent - and only the GENERIC reflection variants that take the member name as an argument are denied (addAggregation, removeAllAggregation, setAssociation, ...). The view is passed as the separate view parameter (default cs_view-main resolves the id across all open views; pass cs_view-popup/popover/... to scope the lookup to that view). Two entries are NOT UI5 methods but frontend capabilities in method form: `css` sets ONE whitelisted CSS declaration on the control's own DOM node (t_arg = id, `css`, property, value) - for a value the control has no property for at all, e.g. the width of a sap.m.Page; prefer a bound property wherever one exists. `toggleBy` opens/closes a popup anchored to a control (t_arg = id, `toggleBy`, anchor id). An association setter (setSelectedSection, setSelectedItem) clears the association when its argument is EMPTY. Wherever an argument takes a CONTROL ID, it also takes an aggregation ITEM, addressed positionally as `<id>/<aggregation>/<index>` (`carousel/pages/2`, 0-based). A control cloned from an aggregation template has no id the backend can spell - UI5 mints it from the template id, the parent id and the index, and the parent id carries the view prefix assigned at runtime - so this is the only way to reach one. It is the equivalent of the UI5 controller idiom `oCarousel.setActivePage( oCarousel.getPages()[ i ] )`. A plain id (no slashes) resolves exactly as before.
 
@@ -213,7 +215,7 @@ Every one of them also works roundtrip-free when WIRED IN THE VIEW: write the sa
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `string` |  | the frontend event - a cs_event-* constant - or a raw JavaScript expression when t_arg is not supplied. |
+| `val` | `string` |  | the frontend event - a cs_event-* constant. |
 | `view` | `clike` | `cs_view-main` | the view slot the action's control id is resolved in: cs_view-main, the default, searches every open view; cs_view-popup, -popover, -nested, -nested2 scope the lookup to that slot. |
 | `t_arg` | `string_table` | *optional* | the positional arguments of the event - each family above says what they are; an empty argument between filled ones keeps its slot as ``. |
 
@@ -387,8 +389,6 @@ about the device, `cs_nav_mode` the routing modes.
 
 ### `cs_device`
 
-The values get( )-s_device carries, as constants to compare against: what system, browser, os and orientation say about the client, e.g. `IF client->get( )-s_device-system = client->cs_device-system-phone.`
-
 | Constant | Value |
 |---|---|
 | `cs_device-system-phone` | `phone` |
@@ -409,29 +409,26 @@ The values get( )-s_device carries, as constants to compare against: what system
 
 ### `cs_event`
 
-Every frontend event a wire or follow_up_action( ) can name: what the browser does when the response arrives (set_title, scroll_to, download_b64_file, clipboard_copy, ...) or when the wired control fires (the control_by_id / control_global / binding_call family), the smart-control handshakes, the hash family, and - at the end - obsolete spellings kept so old apps compile. follow_up_action( ) documents the families that take structured arguments; the rest take the argument their name suggests, one sample each in the cookbook.
-
 | Constant | Value | |
 |---|---|---|
 | `cs_event-popup_close` | `POPUP_CLOSE` |  |
 | `cs_event-popover_close` | `POPOVER_CLOSE` |  |
-| `cs_event-set_size_limit` | `SET_SIZE_LIMIT` |  |
-| `cs_event-set_odata_model` | `SET_ODATA_MODEL` |  |
 | `cs_event-cross_app_nav_to_ext` | `CROSS_APP_NAV_TO_EXT` |  |
 | `cs_event-cross_app_nav_to_prev_app` | `CROSS_APP_NAV_TO_PREV_APP` |  |
+| `cs_event-set_size_limit` | `SET_SIZE_LIMIT` |  |
+| `cs_event-set_odata_model` | `SET_ODATA_MODEL` |  |
 | `cs_event-clipboard_copy` | `CLIPBOARD_COPY` |  |
 | `cs_event-set_title` | `SET_TITLE` |  |
+| `cs_event-set_title_launchpad` | `SET_TITLE_LAUNCHPAD` |  |
 | `cs_event-set_favicon` | `SET_FAVICON` |  |
 | `cs_event-set_focus` | `SET_FOCUS` |  |
 | `cs_event-scroll_to` | `SCROLL_TO` |  |
 | `cs_event-scroll_into_view` | `SCROLL_INTO_VIEW` |  |
 | `cs_event-start_timer` | `START_TIMER` |  |
 | `cs_event-system_logout` | `SYSTEM_LOGOUT` |  |
-| `cs_event-keyboard_set_mode` | `KEYBOARD_SET_MODE` |  |
 | `cs_event-keyboard_shortcut` | `KEYBOARD_SHORTCUT` |  |
 | `cs_event-open_new_tab` | `OPEN_NEW_TAB` |  |
 | `cs_event-location_reload` | `LOCATION_RELOAD` |  |
-| `cs_event-set_title_launchpad` | `SET_TITLE_LAUNCHPAD` |  |
 | `cs_event-download_b64_file` | `DOWNLOAD_B64_FILE` |  |
 | `cs_event-urlhelper` | `URLHELPER` |  |
 | `cs_event-store_data` | `STORE_DATA` |  |
@@ -450,8 +447,6 @@ Every frontend event a wire or follow_up_action( ) can name: what the browser do
 | `cs_event-app_state_set_active` | `SET_APP_STATE_ACTIVE` | *experimental* |
 
 ### `cs_view`
-
-The five slots the frontend renders into: the main view, the two nested views, the popup and the popover. The `view` parameter of follow_up_action( ) and _event_client( ) names the slot a control id is resolved in, and a keyboard shortcut can be scoped to one.
 
 | Constant | Value |
 |---|---|
@@ -475,16 +470,12 @@ Hash-based app routing modes, switched on with follow_up_action( cs_event-hash_r
 
 ### `ty_s_name_value`
 
-A name-value pair, both strings - the shape of a launchpad startup parameter in get( )-t_comp_params (n = the parameter name the tile passed, v = its first value).
-
 | Field | Type |
 |---|---|
 | `n` | `string` |
 | `v` | `string` |
 
 ### `ty_t_name_value`
-
-The table of name-value pairs get( )-t_comp_params carries.
 
 Defined as `STANDARD TABLE OF ty_s_name_value WITH EMPTY KEY`.
 
