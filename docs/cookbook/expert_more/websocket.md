@@ -13,7 +13,7 @@ The building blocks:
 |---|---|
 | **APC** (Application Push Channel, `SAPC`) | Exposes the WebSocket endpoint over HTTP/S |
 | **AMC** (Application Messaging Channel, `SAMC`) | In-system pub/sub — any ABAP code can broadcast into a channel |
-| **Custom JS** in the view | Opens the socket, dispatches incoming messages |
+| **Custom control** in the frontend | Opens the socket, dispatches incoming messages |
 
 Once both channels are configured, any `COMMIT WORK` that fires an AMC publish reaches every connected browser within milliseconds — no polling, no timer.
 
@@ -32,7 +32,7 @@ A full reference implementation lives in the [samples-stack repository](https://
 
 ## Client Side
 
-The browser opens the socket via [raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) embedded in the view. The connection stays open across normal abap2UI5 roundtrips — incoming messages can update a model, trigger a toast, or fire an abap2UI5 event to pull fresh data from the backend:
+The browser opens the socket from a [custom control](/advanced/extensibility/custom_control) - the frontend ships one for it, `cc/Websocket`, which the sample below uses, so the app itself carries no JavaScript. The connection stays open across normal abap2UI5 roundtrips — incoming messages can update a model, trigger a toast, or fire an abap2UI5 event to pull fresh data from the backend:
 
 ```js
 const ws = new WebSocket("wss://" + window.location.host + "/sap/bc/apc/sap/z2ui5_sample");

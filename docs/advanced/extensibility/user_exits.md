@@ -23,7 +23,7 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
 
   METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
-    cs_config-theme = `sap_belize`.
+    cs_config-theme = `sap_horizon_dark`.
 
   ENDMETHOD.
 

@@ -220,9 +220,10 @@ in `CATCH cx_root`, so nothing is reported: the installation just runs with the
 default configuration and your [user exit](/advanced/extensibility/user_exits) is
 never called — no custom theme, no bootstrap configuration, no CSP override.
 
-::: warning Patch the two literals after renaming
+::: warning Patch the literals after renaming
 In your renamed branch, change the literals in `get_user_exit_class( )` to your
-own namespace (`` `ZMYUI5_IF_EXIT` `` and `` `ZMYUI5_CL_UI5_USER_EXIT` ``). Only
+own namespace (`` `ZMYUI5_IF_UI5_EXIT` ``, `` `ZMYUI5_CL_UI5_USER_EXIT` `` and
+the `` `ZMYUI5_IF_EXIT` `` fallback beside them). Only
 apps that use a user exit are affected — everything else in the renamed
 installation works without a change.
 :::

@@ -12,7 +12,7 @@ ABAP text elements translate messages, so they show up in different languages wi
 ```abap
   METHOD z2ui5_if_app~main.
 
-  DATA(lv_msg_translated) = `this is a translatable message in english`(001).
+  DATA(lv_msg_translated) = 'this is a translatable message in english'(001).
   client->message_box_display( lv_msg_translated ).
 
 ENDMETHOD.
