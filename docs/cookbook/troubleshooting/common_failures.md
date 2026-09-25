@@ -41,11 +41,11 @@ See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
 
 ## Type Coercion Without an Explicit UI5 Type
 
-ABAP and UI5 do not share a type system. A `d` field goes on the wire as `YYYYMMDD`, but `DatePicker` expects an ISO date. `abap_bool` arrives as `"X"`/`""`, but `CheckBox` expects `true`/`false`. Packed numbers arrive as strings without locale formatting. The control renders the raw value, parses it wrong, or treats it as empty.
+ABAP and UI5 do not share a type system. A `d` field goes on the wire as `YYYYMMDD` and a `t` as `HHMMSS`; packed numbers arrive as strings without locale formatting; and a flag declared as `c LENGTH 1` travels as the string `"X"` - only the boolean ABAP types (`abap_bool`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`. The control renders the raw value, parses it wrong, or treats it as empty.
 
 Where to look:
-- **Symptom**: a `DatePicker` shows `Invalid Date` or refuses input; a `CheckBox` is always unchecked even when the attribute is `abap_true`; numeric inputs lose decimals or render with the wrong separator.
-- **Fix**: attach a `sap.ui.model.type.Date` / `Float` / `Currency` to the binding, or write a formatter.
+- **Symptom**: a `DatePicker` shows the date in the wrong pattern or ignores the locale; a `CheckBox` is always unchecked although the flag is `'X'` - the attribute is a `c LENGTH 1`, not `abap_bool`; numeric inputs lose decimals or render with the wrong separator.
+- **Fix**: type the flag `abap_bool` and bind it directly; attach a `sap.ui.model.type.Date` / `Float` / `Currency` to the binding where the locale or the pattern matters, or write a formatter.
 
 See [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping) for the type-mapping table and [Formatter](/cookbook/model/formatter) for the patterns.
 
@@ -109,7 +109,7 @@ See [Popup](/cookbook/popup_popover/popup) and the worked example in the walkthr
 
 Where to look:
 - **Browser network tab**: the request payload contains the event name as the browser sent it. Compare it character-for-character against your `WHEN` literal.
-- **Prefer the `client->cs_event-*` constants** where the framework provides them (`open_new_tab`, `set_title`, `scroll_to`, …) over raw strings. For custom events, declare a constant in the class and reference both ends from the same source — typos then fail to compile instead of failing silently at runtime.
+- **Declare a constant per event name** rather than typing the string twice - `client->cs_event-*` are the frontend actions of `follow_up_action( )`, not names for your own events. For custom events, declare a constant in the class and reference both ends from the same source — typos then fail to compile instead of failing silently at runtime.
 
 ## State Lost Between Events
 
@@ -201,12 +201,13 @@ row behind it. Keep initial values out of the model with `_bind( )`'s
 `omit_initial_paths` (see the [Client API](/resources/api)), or give the
 binding an explicit fallback to the enum's default value.
 
-### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — page loads, component does not start
+### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — a popup does not open
 
-A hardened CSP without `'unsafe-eval'` meets an old UI5 release: the `1.71`
-ui5loader still evaluates module source as a string. Either bootstrap a
-modern UI5 release, or keep `'unsafe-eval'` in the policy — see
-[Security → Hardening](/configuration/security#hardening-dropping-unsafe-eval).
+An old UI5 release (`1.71` to `1.82`) meets a popup that names a module it has
+not loaded yet - in a binding type or a `core:require` - and evaluates it as a
+string, which the default policy forbids. Either bootstrap `1.84` or newer, or
+switch `'unsafe-eval'` on for `script-src` in the user exit — see
+[Security → Older releases](/configuration/security#older-releases-switching-unsafe-eval-on).
 
 ### `403 ICFEUCONFORBIDDEN` — separately deployed frontend, every action fails
 

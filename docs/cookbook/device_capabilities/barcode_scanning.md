@@ -49,7 +49,7 @@ ENDMETHOD.
 ```
 
 ::: tip **UI5 Versions**
-This feature works only with the UI5 framework, not with OpenUI5.
+This feature needs SAPUI5 - OpenUI5 does not ship the barcode scanner.
 :::
 
 ## Focus Handling

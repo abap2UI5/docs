@@ -2366,7 +2366,10 @@
 .Layout a:focus-visible,
 .Layout button:focus-visible,
 .Layout summary:focus-visible,
-.Layout input:focus-visible,
+.Layout input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* ---- a number beside every line, and an address for it ----
  *

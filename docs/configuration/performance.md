@@ -54,7 +54,7 @@ Want to tune your app further? A few tips:
 - Call `client->view_display` only when needed — on initialization and when the view structure changes. For a pure data change, set the attribute and return; the framework pushes the delta and UI5 re-renders only the controls that changed.
 
 - Bind data with `client->_bind` — the framework sends only the paths the user actually edited back to ABAP (a delta), so read-only and untouched fields cost nothing on the return trip.
-- Declare public attributes in your app class only for variables shown on the frontend. This keeps the framework from reading unused values.
+- Declare public attributes in your app class only for variables shown on the frontend: public is what becomes part of the model sent to the browser. Everything else is serialized into the draft either way, so keep large data out of the instance rather than merely private.
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 
 ## Performance Issues?

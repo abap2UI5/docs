@@ -42,10 +42,12 @@ load. Write it as a backtick literal rather than a string template: a template
 has to escape every brace, and one missed escape is a parser error on the whole
 statement instead of a wrong string. Ask how we know.
 
-**Everything else is a system decision, not an app decision.** Extra JavaScript
-for the initial page is `custom_js` in the HTTP GET configuration, set in the
-[user exit](/advanced/extensibility/user_exits) through `z2ui5_if_ui5_exit` —
-one place, reviewable, and the same for every app in the system.
+**Everything else is a system decision, not an app decision.** Frontend code
+of your own is a custom control in the customer frontend BSP (`z2ui5_ccc`),
+and what the initial page loads is the bootstrap the
+[user exit](/advanced/extensibility/user_exits) sets through
+`z2ui5_if_ui5_exit` — one place, reviewable, and the same for every app in
+the system.
 
 None of them lets an app change the framework, and none requires the framework
 to change for an app. No plugin registry to learn, and no pull request to wait

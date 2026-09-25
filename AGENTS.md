@@ -823,7 +823,7 @@ serve it, and open each example in it, checking that the status line reaches
 `running` and that the app frame contains something:
 
 ```sh
-npm run runnable -- --json > /tmp/runnable.json   # 63 examples, ABAP included
+npm run runnable -- --json > /tmp/runnable.json   # 64 examples, ABAP included
 git clone https://github.com/abap2UI5/playground && cd playground
 npm ci && npm run build                       # the first build is a few minutes
 RUNNABLE_JSON=/tmp/runnable.json npm test -- docs-examples

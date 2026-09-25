@@ -183,24 +183,51 @@ export const title = (body, fallback) =>
 
 /** Every `##`/`###` heading on a page, flattened — what a reader is actually
  *  looking for when they type two words into a search box. Anchors are
- *  VitePress's own slug: lower case, non-word runs to a dash. */
+ *  VitePress's own slug (slugify below), made unique the way markdown-it-anchor
+ *  does it - the second `## EML` on a page is `eml-1`. */
 export function headings(body) {
   const out = [];
+  const seen = new Map();
   let inFence = false;
   for (const line of stripFrontmatter(body).split('\n')) {
     if (line.startsWith('```')) { inFence = !inFence; continue; }
     if (inFence) continue;
-    const m = /^(#{2,3})\s+(.+?)\s*$/.exec(line);
+    /* Every heading counts towards the de-duplication - the title of the
+       page takes its slug first, so a `## EML` under `# EML` is `eml-1` -
+       and only the second and third level are indexed. */
+    const m = /^(#{1,3})\s+(.+?)\s*$/.exec(line);
     if (!m) continue;
     const text = m[2].replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*`]/g, '').trim();
     if (!text) continue;
-    out.push({
-      text,
-      anchor: text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '-').replace(/^-|-$/g, ''),
-    });
+    const slug = slugify(text);
+    const n = seen.get(slug) ?? 0;
+    seen.set(slug, n + 1);
+    if (m[1].length === 1) continue;
+    out.push({ text, anchor: n === 0 ? slug : `${slug}-${n}` });
   }
   return out;
 }
+
+/** The id VitePress gives a heading - `@mdit-vue/shared`'s slugify, copied
+ *  rather than imported so this file stays runnable without VitePress's tree
+ *  (the playground's build calls into it). What it does that a plain
+ *  "non-word runs to a dash" did not: a heading starting with a digit gets an
+ *  underscore in front (`## 3. First Launch` is `_3-first-launch`), and a
+ *  character outside its fixed list - an arrow, a dash of the long kind -
+ *  stays in the id. 93 of the index's 737 heading links were dead before
+ *  this matched the real ids. */
+const rControl = /[\u0000-\u001f]/g;
+const rSpecial = /[\s~`!@#$%^&*()\-_+=[\]{}|\\;:"'\u201c\u201d\u2018\u2019<>,.?/]+/g;
+const rCombining = /[\u0300-\u036F]/g;
+export const slugify = (str) => str
+  .normalize('NFKD')
+  .replace(rCombining, '')
+  .replace(rControl, '')
+  .replace(rSpecial, '-')
+  .replace(/-{2,}/g, '-')
+  .replace(/^-+|-+$/g, '')
+  .replace(/^(\d)/, '_$1')
+  .toLowerCase();
 
 /* Words that are in every page of every documentation and therefore identify
  * none of it. Kept short on purpose: this is a size measure, not a language

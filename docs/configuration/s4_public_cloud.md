@@ -77,10 +77,10 @@ Up to here the HTTP service is enough — you can open it and use abap2UI5 with 
 
 ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with the [SAP Fiori Tools](https://marketplace.visualstudio.com/items?itemName=SAPSE.sap-ux-fiori-tools-extension-pack) extension pack instead.
 
-1. Clone the branch that matches your stack — `cloud_v2` for the current UI5 runtime:
+1. Clone the branch that matches your stack — `cloud` for the classic UI5 runtime, `cloud_v2` for the [legacy-free](/advanced/legacy_free) one (UI5 2.x preview):
 
    ```sh
-   git clone --branch cloud_v2 --single-branch https://github.com/abap2UI5/frontend.git
+   git clone --branch cloud --single-branch https://github.com/abap2UI5/frontend.git
    ```
 
 2. In the `app` folder, open the Fiori **Application Info** page and add a **deployment configuration** pointing at your system. Keep the target package name short here too.

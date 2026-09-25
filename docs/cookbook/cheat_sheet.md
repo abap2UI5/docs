@@ -8,7 +8,7 @@ A one-page recap of the rules that decide whether an abap2UI5 app works or misbe
 | Rule | Why it matters |
 |---|---|
 | Implement `z2ui5_if_app` and put everything in the single `main` method | It is the only entry point the framework calls — on the initial load *and* on every user interaction → [Life Cycle](/cookbook/event_navigation/life_cycle) |
-| Dispatch with one `IF` / `ELSEIF` chain over `check_on_init( )`, `check_on_navigated( )` and `check_on_event( )` | Each check answers for its own phase only; separate `IF` blocks let two branches run in the same roundtrip → [Life Cycle](/cookbook/event_navigation/life_cycle) |
+| Dispatch with one `IF` / `ELSEIF` chain over `check_on_init( )`, `check_on_navigated( )` and `check_on_event( )` | `check_on_init( )` implies `check_on_navigated( )`, so init goes first; separate `IF` blocks let two branches run in the same roundtrip → [Life Cycle](/cookbook/event_navigation/life_cycle) |
 | Always call `view_display( )` in the `check_on_navigated( )` branch | After a called app returns via `nav_app_leave( )`, the browser still shows *its* view — without a re-display the user is left on a stale or blank screen → [Navigation](/cookbook/event_navigation/navigation/inner_app) |
 | Declare every attribute you bind in the `PUBLIC SECTION` | Binding works via dynamic `ASSIGN` and cannot reach `PROTECTED` / `PRIVATE`; the roundtrip fails with `BINDING_ERROR` → [Binding](/cookbook/model/binding) |
 | Keep state in attributes, not in local variables | Between two events the app instance is serialized into a draft on the SERVER and read back — attributes survive at any visibility; locals, `DATA(...)` declarations, open cursors and locks do not → [Statefulness](/cookbook/expert_more/statefulness) |

@@ -51,6 +51,10 @@ const onHome = computed(() => page.value.relativePath === "index.md");
  * section. */
 const samplesHref = ref(SAMPLES);
 const docsHref = ref(DOCS);
+/* And the Playground's, which was bound in the markup and declared nowhere:
+ * the item rendered without an href, and leave( ) then sent it to the
+ * catalogue - the one branch it had for anything that was not the manual. */
+const playgroundHref = ref(PLAYGROUND);
 
 /* Documentation restores WHEREVER IN THE MANUAL you were, which is why it
  * passes a scope: the link is written at the manual's first page, and a stored
@@ -65,6 +69,7 @@ const docsHref = ref(DOCS);
 const lift = () => {
   samplesHref.value = lastVisited("samples", SAMPLES);
   docsHref.value = lastVisited("docs", DOCS, HOME);
+  playgroundHref.value = lastVisited("playground", PLAYGROUND);
 };
 /* The lift that cannot be missed: on the click itself, on the element, because
  * a ref set in the handler reaches the DOM a tick too late.
@@ -85,11 +90,9 @@ const leave = (e) => {
    * in theme/index.js is throttled, and a click that lands inside its window
    * would otherwise store an offset from before the last scroll. */
   rememberScroll();
-  if (el.dataset.site) {
-    el.href = el.dataset.site === "docs"
-      ? lastVisited("docs", DOCS, HOME)
-      : lastVisited("samples", SAMPLES);
-  }
+  if (el.dataset.site === "docs") el.href = lastVisited("docs", DOCS, HOME);
+  else if (el.dataset.site === "samples") el.href = lastVisited("samples", SAMPLES);
+  else if (el.dataset.site === "playground") el.href = lastVisited("playground", PLAYGROUND);
   handOff(el.href);
 };
 

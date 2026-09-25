@@ -22,7 +22,8 @@ npm run check        # what CI runs, all fifteen steps
 
 A documentation repository has no compiler for its prose, but fifteen things in
 it are decidable, and `npm run check` decides all fifteen before a merge — the
-prose builds (`docs:build`), the four bars are still made of the same palette,
+site builds (`build`, the pages as they are published, and `docs:build`, the
+VitePress second opinion), the four bars are still made of the same palette,
 type and radii as the playground's (`check:design`), every link into a
 neighbouring site on this origin
 — the playground, the catalogue — still leads there rather than to this site's
@@ -30,13 +31,16 @@ own 404 (`check:cross-site`), the fenced ABAP examples compile and the views
 they build name real UI5 API (`check:examples`), those examples are written
 in the same house style as the sample corpora — chain layout and class shell —
 (`check:conventions`), every `client->` name and
-`cs_*` constant the prose and snippets mention still exists in the release the
-site names (`check:api-names`), the generated client API reference still
-matches the interface at that release (`check:api-reference`), the sample
+`cs_*` constant the prose and snippets mention still exists in the framework
+on `main` (`check:api-names`), the generated client API reference still
+matches the interface there (`check:api-reference`), the sample
 links still match the sample repositories (`check:samples`), every complete
 app example carries a playground Run button or its declared reason not to
 (`check:playground`), the release
-number in the nav bar still matches the framework (`check:version`), and the
+number in the nav bar still matches the framework (`check:version`), every
+image is the format and the size a page can afford (`check:images`), a page
+that is wrapped stays wrapped (`check:line-length`), every prose word is one
+a dictionary or the project's own list knows (`check:vocabulary`), and the
 catalogue parser still parses (`test`).
 `.github/workflows/check.yml` runs the same list in the same order, so a green
 `npm run check` locally is a green pull request — and `deploy.yml` runs it
@@ -53,7 +57,7 @@ changing anything beyond prose.
 
 The bar is the mark, then the four sections — **Home**, **Documentation**,
 **Samples**, **Playground** — then one search box, then the project's links.
-The two middle sections are this site; Samples and Playground are the two
+The first two sections are this site; Samples and Playground are the two
 neighbouring deployments on the same origin, and all four bars across them are
 kept identical by hand.
 
@@ -83,7 +87,7 @@ than on the site.
 
 The client API is published for the same reader as one JSON document,
 [client-api.json](https://abap2ui5.github.io/docs/api/client-api.json) —
-generated from `z2ui5_if_client` at the pinned release by
+generated from `z2ui5_if_client` on the framework's `main` by
 `npm run generate:api`, committed, and held fresh by `check:api-reference`.
 The human-readable half is the [Client API page](https://abap2ui5.github.io/docs/resources/api.html).
 
@@ -103,8 +107,9 @@ Which blocks get a button is decided in `docs/.vitepress/playground.mjs`, and
 the rule is narrow on purpose — a button on an example that cannot run is worse
 than no button. It has to be a complete class implementing `z2ui5_if_app` that
 displays something and needs nothing the browser has not got: no table of its
-own, no CDS entity, no add-on repository, no on-premise SAP class. **38 of the
-261 ABAP blocks here** clear that today. Every rule was written from an example
+own, no CDS entity, no add-on repository, no on-premise SAP class. **64 of the
+83 complete app classes here** clear that today (`npm run check:playground`
+prints the current count). Every rule was written from an example
 watched failing in a real playground; `test/playground.test.mjs` keeps one
 fixture per shape, and [AGENTS.md](AGENTS.md) says how to redo the measurement.
 

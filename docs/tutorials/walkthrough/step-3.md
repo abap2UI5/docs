@@ -75,8 +75,9 @@ ENDCLASS.
 - ``client->_event( `SAY_HELLO` )`` wires the button: it returns the press
   handler that sends the event — with the name you chose — back to `main`.
 
-Each `check_*` method is true only for its own phase, so the `IF`/`ELSEIF`
-chain cleanly dispatches every roundtrip. The full picture is on the
+`check_on_init( )` implies `check_on_navigated( )`, so init comes first and
+the `IF`/`ELSEIF` chain takes each roundtrip through one branch. The full
+picture is on the
 [Life Cycle](/cookbook/event_navigation/life_cycle) page.
 
 Next: data leaves the browser and reaches your class — without a single line

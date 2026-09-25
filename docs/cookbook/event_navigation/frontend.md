@@ -150,11 +150,11 @@ The control-call constants — `control_by_id`, `control_global`, `binding_call`
 | Event            | `t_arg` (positional)                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------ |
 | `control_by_id`  | `id`, `method`, `params…` — call a method on a control resolved by id                 |
-| `control_global` | `object`, `method`, `params…` — `MESSAGE_TOAST`, `MESSAGE_BOX`, `BUSY_INDICATOR`, `THEMING`, `POPUP`, `INVISIBLE_MESSAGE`, `FORMATTING` |
+| `control_global` | `object`, `method`, `params…` — `MESSAGE_TOAST`, `MESSAGE_BOX`, `BUSY_INDICATOR`, `THEMING`, `POPUP`, `INVISIBLE_MESSAGE`, `FORMATTING`, `ICON_POOL` |
 | `binding_call`   | `id`, `aggregation`, `method`, `params…` — e.g. `filter` (path, operator, value1, value2) or `sort` (path, descending, group) on the aggregation's binding |
 | `bind_element`   | `index`, `_bind( table )` — element-bind a whole view slot to a table row, see below  |
 
-For `control_by_id`, any public control method is callable as long as it is not on the framework's **denylist**: methods that would break abap2UI5's own invariants (destroying views, re-rendering, detaching the framework's handlers, …) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`, `enablePostButton`, …) simply work. A small set of methods is additionally special-cased for typed arguments. `control_global` and `binding_call` remain strict whitelists — only the listed global objects and the binding methods `filter` / `sort` are callable. Three of those objects are less obvious than the rest: `POPUP-setWithinArea` confines every popup to one control instead of to the window (UI5 &ge; 1.89; an empty argument releases it again), `INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without rendering it (UI5 &ge; 1.78; `t_arg` = text, mode), and `FORMATTING-setCustomCurrencies` / `-addCustomCurrency` register currency codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge; 1.120) — `set…` REPLACES the whole registration, `add…` adds one code.
+For `control_by_id`, any public control method is callable as long as it is not on the framework's **denylist**: methods that would break abap2UI5's own invariants (destroying views, re-rendering, detaching the framework's handlers, …) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`, `enablePostButton`, …) simply work. A small set of methods is additionally special-cased for typed arguments. `control_global` and `binding_call` remain strict whitelists — only the listed global objects and the binding methods `filter` / `sort` are callable. Three of those objects are less obvious than the rest: `POPUP-setWithinArea` confines every popup to one control instead of to the window (UI5 &ge; 1.89; an empty argument releases it again), `INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without rendering it (UI5 &ge; 1.78; `t_arg` = text, mode), and `FORMATTING-setCustomCurrencies` / `-addCustomCurrencies` register currency codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge; 1.120) — `set…` REPLACES the whole registration, `add…` MERGES codes into it.
 
 ```abap
 " toggle a MessagePopover open, anchored to the pressing button, no roundtrip
@@ -182,10 +182,11 @@ the subject of [Message](/cookbook/translation_messages/message).
 The same events also work as a **statement** in your `main` method, with the identical `t_arg` — then the browser runs them after the response arrives, once your backend work is done:
 
 ```abap
-" after backend processing, advance a wizard step
+" after backend processing, let the wizard advance: setNextStep is the
+" STEP's method, so the current step is the control addressed
 client->follow_up_action(
     val   = client->cs_event-control_by_id
-    t_arg = VALUE #( ( `wiz` ) ( `setNextStep` ) ( `STEP2` ) ) ).
+    t_arg = VALUE #( ( `STEP1` ) ( `setNextStep` ) ( `STEP2` ) ) ).
 ```
 
 
@@ -227,112 +228,18 @@ The view used to be the second entry of `t_arg` (`id`, `view`, `method`, …). I
 
 ## Raw JavaScript
 
-The second way to call `follow_up_action( )`: pass a raw JavaScript expression as
-`val` (without `t_arg`). It runs as-is in the browser.
-
-```abap
-client->follow_up_action( `myFunction()` ).
-```
-
-`follow_up_action( )` decides which way applies from the content of `val`: a
-plain event name (only `A-Z`, `a-z`, `0-9`, `_`) becomes a frontend event call,
-anything containing JavaScript syntax runs verbatim.
-
-::: warning Not Recommended
-This is still available, but its use is **strongly discouraged**. Injecting
-arbitrary JavaScript from the backend into the frontend introduces serious
-security risks. Only use it if you fully understand the consequences and have no
-alternative.
-:::
-
-
-### Why It Is a Security Risk
-
-Custom JS works by sending a JavaScript string from the ABAP backend to the frontend, where it is injected into the DOM as an HTML `<script>` tag and executed in the user's browser. This pattern is essentially a **self-inflicted Cross-Site Scripting (XSS) vector** and breaks several security assumptions UI5 normally protects you from:
-
-- **Bypasses output encoding.** UI5 escapes model data by default to prevent XSS. Raw `<script>` injection sidesteps that protection entirely.
-- **Executes with full user privileges.** The injected code runs in the same origin as your app and can read cookies, session tokens, the UI5 model, and any data the user has access to — and send it anywhere.
-- **Dynamic content is dangerous.** If any part of the injected JavaScript is built from user input, database values, translations, or other non-static sources, an attacker who controls that source can execute arbitrary code in every user's browser.
-- **Breaks Content Security Policy (CSP).** A strict CSP — one of the most effective defenses against XSS — typically forbids inline scripts. Custom JS forces you to weaken or disable CSP, removing that protection for the whole app.
-- **Hard to audit.** JavaScript assembled in ABAP strings is not covered by frontend linters, static analysis, or code review tools that normally catch dangerous patterns.
-- **No sandboxing.** The script has the same DOM and network access as the rest of the app. There is no isolation boundary.
-
-### Safer Alternatives
-
-Before reaching for raw JavaScript, consider:
-
-- Use the **built-in frontend events** above — most browser interactions are already covered.
-- Use the **standard UI5 controls and APIs**.
-- Build a proper **[Custom Control](/advanced/extensibility/custom_control)** with a defined interface and reviewable frontend code.
-- Use the dedicated cookbook pages for [Clipboard](/cookbook/browser_interaction/clipboard), [Focus](/cookbook/browser_interaction/focus), [Scrolling](/cookbook/browser_interaction/scrolling), [Timer](/cookbook/browser_interaction/timer), [URL Handling](/cookbook/browser_interaction/url_handling), and similar.
-
-### How It Works (If You Still Need It)
-
-If you accept the risks and decide to use it anyway, the idea is: send the JavaScript function with the view to the frontend, then call it later when an event fires.
-
-A `core:HTML` control carries the `<script>` tag as its content — in this case, the JavaScript function definition — so the function is defined when the view renders. On the backend, `follow_up_action( )` then runs it by name on the frontend.
-
-```abap
-  METHOD z2ui5_if_app~main.
-
-  IF client->check_on_navigated( ).
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`      v = `sap.m`
-              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
-              )->a( n = `xmlns:core` v = `sap.ui.core`
-
-              " the script travels as the CONTENT of a core:HTML control - the
-              " builder re-escapes it on stringify, so the literal markup is
-              " written here
-              )->tag( n = `HTML` ns = `core`
-                  )->a( n = `content` v = |<script>function myFunction() \{ console.log( `Hello World` ); \}</script>|
-
-              )->ele( `Page`
-                  )->tag( `Button`
-                      )->a( n = `text`  v = `call custom JS`
-                      )->a( n = `press` v = client->_event( `CUSTOM_JS` ) ).
-
-      client->view_display( view->stringify( ) ).
-
-  ENDIF.
-
-  IF client->get( )-event = `CUSTOM_JS`.
-      client->follow_up_action( `myFunction()` ).
-  ENDIF.
-
-ENDMETHOD.
-```
-
-::: danger Never Inject Untrusted Input
-If you must use this, ensure the JavaScript content is **entirely static and hardcoded**. Never concatenate user input, database values, translatable texts, or any other dynamic data into the script string — doing so turns the feature into a direct XSS vulnerability.
-:::
-
-### Embedding JavaScript Directly in an XML View
-
-::: warning Also Not Recommended
-The same security considerations apply: any `<script>` element embedded in an XML view runs with full app privileges and bypasses UI5's output encoding. Prefer a [Custom Control](/advanced/extensibility/custom_control) or one of the built-in events instead.
-:::
-
-If you want to look at — or hand-craft — the raw XML view that abap2UI5 produces, a `<script>` tag is placed in the `html` namespace alongside the regular UI5 controls. The view stringified by `z2ui5_cl_ui5_view_builder=>factory( )` ends up looking like this:
-
-```xml
-<mvc:View
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m"
-    xmlns:html="http://www.w3.org/1999/xhtml">
-  <html:script>
-    function myFunction() { console.log("Hello World"); }
-  </html:script>
-  <Page>
-    <Button text="call custom JS" press="..." />
-  </Page>
-</mvc:View>
-```
-
-The browser parses the `html:script` element and executes its content as JavaScript at view render time. The function becomes available globally and can then be triggered from the backend via `follow_up_action( )` — or, ideally, replaced entirely with a built-in frontend event (e.g. `SET_TITLE`, `SCROLL_TO`) instead of hand-written JavaScript.
-
-This is exactly what the `core:HTML` control shown above produces; the two approaches are equivalent. Both ship raw JavaScript from the backend to the browser, and both carry the security risks described above. Use neither unless there is genuinely no alternative.
+There is no third way. `follow_up_action( )` used to take a raw JavaScript
+expression as `val` and run it in the browser; that form is gone. A `val` the
+frontend does not know as an event name is not run - it arrives as an unknown
+event and nothing happens. What the raw form was reached for has a
+`cs_event-*` equivalent: `control_global` for the UI5 globals (`MessageToast`,
+`MessageBox`, `BusyIndicator`, …), `control_by_id` for a control method,
+`hash_back` for `history.back( )`. Frontend code of the app's own ships as a
+[Custom Control](/advanced/extensibility/custom_control) in the customer
+frontend BSP, with a defined interface and reviewable code - not as a string
+assembled in ABAP, which is what the raw form was: a `<script>` from the
+backend, executed with the user's privileges, outside UI5's output encoding and
+against any strict Content Security Policy.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 
