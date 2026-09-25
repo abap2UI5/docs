@@ -50,7 +50,7 @@ export default defineConfig({
     ["link", { rel: "shortcut icon", href: "/docs/favicon.ico" }],
     [
       "link",
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/docs/favicon.ico" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/docs/apple-touch-icon.png" },
     ],
     // THE TYPE. One file, from this origin, and preloaded because it is what
     // the first line of every page is set in — a `@font-face` is only

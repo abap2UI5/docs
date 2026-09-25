@@ -739,7 +739,7 @@ const lastTouched = (() => {
 })();
 
 const chapter = ({ body, page, route }) => `<main class="manual">
-  <input class="side-open" type="checkbox" id="side-open">
+  <input class="side-open" type="checkbox" id="side-open" aria-label="Chapters">
   ${sidebarFor(route)}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">
@@ -1322,7 +1322,7 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
   bar: BAR_DOCS,
   inline: [NOT_FOUND_SCRIPT],
   main: `<main class="manual">
-  <input class="side-open" type="checkbox" id="side-open">
+  <input class="side-open" type="checkbox" id="side-open" aria-label="Chapters">
   ${sidebarFor('/404')}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
   <div class="doc-body" id="main-content" tabindex="-1">

@@ -19,8 +19,8 @@ deployed by merging it.
 
 ## What this site is, from a security point of view
 
-- **There is no server.** The site is static files built by VitePress and
-  served from GitHub Pages. No backend, no SAP system, no account, no session,
+- **There is no server.** The site is static files, written by
+  `scripts/build-site.mjs` and served from GitHub Pages. No backend, no SAP system, no account, no session,
   and nothing a reader types is sent anywhere.
 - **The one thing that executes is the Run button.** A fenced example that
   carries one links into
@@ -34,15 +34,19 @@ deployed by merging it.
   checked against, `abap2UI5` and its sibling repositories at a pinned release.
   A wrong statement here is usually wrong there first — but report it here if
   that is where you found it.
-- **Dependencies are pinned**, and the generators fetch only from
-  `raw.githubusercontent.com` at that pin.
+- **Dependencies are pinned.** What the build fetches beyond them is the
+  organisation's own: the framework's interface and the sample catalogues from
+  `raw.githubusercontent.com`, and the bar, two stylesheets, the search box and
+  the ABAP highlighter from the playground's published site
+  (`abap2ui5.github.io/playground`), which the build runs to colour the
+  examples - so a compromise of that deployment would reach this build.
 
 ## Out of scope
 
 - A page that is out of date, incomplete, or wrong about the framework. That is
   a documentation bug and belongs in
-  [an issue](https://github.com/abap2UI5/docs/issues) — it is what the eight
-  checks in [AGENTS.md](AGENTS.md) exist to catch, so a report that names one
+  [an issue](https://github.com/abap2UI5/docs/issues) — it is what the fifteen
+  gates in [AGENTS.md](AGENTS.md) exist to catch, so a report that names one
   they missed is genuinely useful.
 - Anything a reader does to their own browser tab with code they wrote
   themselves.

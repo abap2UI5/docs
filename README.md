@@ -22,7 +22,8 @@ npm run check        # what CI runs, all fifteen steps
 
 A documentation repository has no compiler for its prose, but fifteen things in
 it are decidable, and `npm run check` decides all fifteen before a merge — the
-prose builds (`docs:build`), the four bars are still made of the same palette,
+site builds (`build`, the pages as they are published, and `docs:build`, the
+VitePress second opinion), the four bars are still made of the same palette,
 type and radii as the playground's (`check:design`), every link into a
 neighbouring site on this origin
 — the playground, the catalogue — still leads there rather than to this site's
@@ -36,7 +37,10 @@ matches the interface there (`check:api-reference`), the sample
 links still match the sample repositories (`check:samples`), every complete
 app example carries a playground Run button or its declared reason not to
 (`check:playground`), the release
-number in the nav bar still matches the framework (`check:version`), and the
+number in the nav bar still matches the framework (`check:version`), every
+image is the format and the size a page can afford (`check:images`), a page
+that is wrapped stays wrapped (`check:line-length`), every prose word is one
+a dictionary or the project's own list knows (`check:vocabulary`), and the
 catalogue parser still parses (`test`).
 `.github/workflows/check.yml` runs the same list in the same order, so a green
 `npm run check` locally is a green pull request — and `deploy.yml` runs it
@@ -53,7 +57,7 @@ changing anything beyond prose.
 
 The bar is the mark, then the four sections — **Home**, **Documentation**,
 **Samples**, **Playground** — then one search box, then the project's links.
-The two middle sections are this site; Samples and Playground are the two
+The first two sections are this site; Samples and Playground are the two
 neighbouring deployments on the same origin, and all four bars across them are
 kept identical by hand.
 
