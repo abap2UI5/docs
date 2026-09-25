@@ -342,7 +342,7 @@ export function grouped(hits, { perGroup = 8 } = {}) {
   return groups.map(({ label, hits: rows, total }) => ({ label, hits: rows, total }));
 }
 
-/** The index, fetched once. Callers await this on the first keystroke, never
+/** The index, fetched once. Callers await this when the box is opened, never
  *  at load: a reader who does not search pays nothing for the box. */
 let pending = null;
 export function loadIndex(url = INDEX_URL, { fetchFn = globalThis.fetch } = {}) {

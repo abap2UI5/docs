@@ -267,6 +267,7 @@ const MENU_SCRIPT = (() => {
  * finding a string in somebody else's markup and failing loudly when it is not
  * there. */
 const RELEASE = declaredRelease(ROOT);
+if (!RELEASE) throw new Error('the three places that name the release disagree (npm run check:version says which) - not building a bar that reads "Version null"');
 const withRelease = (bar) => {
   const at = '<div class="socials">';
   if (!bar.includes(at)) throw new Error("the borrowed bar has no socials group to put the release before");
@@ -390,6 +391,10 @@ const LEVELS = (() => {
 
 function outlineFor(html) {
   const rows = [...html.matchAll(/<h([2-6]) id="([^"]+)"[^>]*>([\s\S]*?)<a class="header-anchor"/g)]
+    /* `text` is the heading's own markup with its tags dropped - HTML text
+       already, `&amp;` for an ampersand - and is written back as it is: put
+       through esc( ) a second time, "Build & Test" read "Build &amp; Test"
+       in the outline. */
     .map((m) => ({ level: Number(m[1]), id: m[2], text: m[3].replace(/<[^>]*>/g, '').trim() }))
     .filter((r) => r.level >= LEVELS[0] && r.level <= LEVELS[1]);
   if (rows.length < 2) return '';
@@ -408,7 +413,7 @@ function outlineFor(html) {
      do the same (tools/sample-pages.mjs over there). */
   return `<div class="outline">
     <div class="outline-head">On this page</div>
-    <nav aria-label="On this page">${rows.map((r) => `<a href="#${r.id}"${r.level > top ? ` class="lvl-${r.level - top + 2}"` : ''}>${esc(r.text)}</a>`).join('')}</nav>
+    <nav aria-label="On this page">${rows.map((r) => `<a href="#${r.id}"${r.level > top ? ` class="lvl-${r.level - top + 2}"` : ''}>${r.text}</a>`).join('')}</nav>
   </div>`;
 }
 
@@ -958,7 +963,10 @@ const tabled = (html) => html.replace(
 const abapify = (html) => html.replace(
   /(<div class="language-abap[^"]*">[\s\S]*?<code>)([\s\S]*?)(<\/code>)/g,
   (all, head, code, tail) => {
-    const lines = [...code.matchAll(/<span class="line">([\s\S]*?)<\/span>\s*(?=<span class="line">|$)/g)]
+    /* `line` and whatever Shiki put beside it (`line highlighted`, `line diff
+       add`): a line with a second class is still a line, and matched on the
+       bare class alone it fell out of the listing. */
+    const lines = [...code.matchAll(/<span class="line(?: [^"]*)?">([\s\S]*?)<\/span>\s*(?=<span class="line(?: [^"]*)?">|$)/g)]
       .map((m) => unescape(m[1].replace(/<[^>]*>/g, '')));
     if (!lines.length) return all;
     const source = lines.join('\n');
@@ -1219,7 +1227,10 @@ for (const page of pages) {
 /* Every page as [path, name], for the suggestions at the foot of the 404 - the
    one place that wants the whole list inside one page. `<` is escaped, so no
    chapter title can end the script block early. */
-const nearby = JSON.stringify(pages.map((f) => [f.replace(/(?:\/index)?\.md$/, ''), names.get(f)]))
+/* `cookbook/index`, not `cookbook`: the script below appends `.html`, and the
+   build writes cookbook/index.html and never cookbook.html - so a suggestion
+   for a section's front page was itself a 404. */
+const nearby = JSON.stringify(pages.map((f) => [f.replace(/\.md$/, ''), names.get(f)]))
   .replace(/</g, '\\u003c');
 
 /* The page's own script, in a constant so the page can WRITE it and ANNOUNCE

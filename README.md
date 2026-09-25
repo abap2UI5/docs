@@ -30,9 +30,9 @@ own 404 (`check:cross-site`), the fenced ABAP examples compile and the views
 they build name real UI5 API (`check:examples`), those examples are written
 in the same house style as the sample corpora — chain layout and class shell —
 (`check:conventions`), every `client->` name and
-`cs_*` constant the prose and snippets mention still exists in the release the
-site names (`check:api-names`), the generated client API reference still
-matches the interface at that release (`check:api-reference`), the sample
+`cs_*` constant the prose and snippets mention still exists in the framework
+on `main` (`check:api-names`), the generated client API reference still
+matches the interface there (`check:api-reference`), the sample
 links still match the sample repositories (`check:samples`), every complete
 app example carries a playground Run button or its declared reason not to
 (`check:playground`), the release
@@ -83,7 +83,7 @@ than on the site.
 
 The client API is published for the same reader as one JSON document,
 [client-api.json](https://abap2ui5.github.io/docs/api/client-api.json) —
-generated from `z2ui5_if_client` at the pinned release by
+generated from `z2ui5_if_client` on the framework's `main` by
 `npm run generate:api`, committed, and held fresh by `check:api-reference`.
 The human-readable half is the [Client API page](https://abap2ui5.github.io/docs/resources/api.html).
 
@@ -103,8 +103,9 @@ Which blocks get a button is decided in `docs/.vitepress/playground.mjs`, and
 the rule is narrow on purpose — a button on an example that cannot run is worse
 than no button. It has to be a complete class implementing `z2ui5_if_app` that
 displays something and needs nothing the browser has not got: no table of its
-own, no CDS entity, no add-on repository, no on-premise SAP class. **38 of the
-261 ABAP blocks here** clear that today. Every rule was written from an example
+own, no CDS entity, no add-on repository, no on-premise SAP class. **64 of the
+83 complete app classes here** clear that today (`npm run check:playground`
+prints the current count). Every rule was written from an example
 watched failing in a real playground; `test/playground.test.mjs` keeps one
 fixture per shape, and [AGENTS.md](AGENTS.md) says how to redo the measurement.
 

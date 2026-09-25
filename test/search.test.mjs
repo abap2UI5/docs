@@ -121,6 +121,14 @@ test('a heading anchor is the one VitePress generates', () => {
   /* A fenced block is code, not an outline: a comment starting with ## in an
    * ABAP example is not a section of the page. */
   assert.equal(headings('```abap\n## not a heading\n```\n').length, 0);
+  /* The three shapes a plain "non-word runs to a dash" got wrong, against the
+   * ids VitePress writes into the built pages: a heading that starts with a
+   * digit gets an underscore (get_started/quickstart.html), a character
+   * outside slugify's list stays (cookbook/view/xml_templating.html), and the
+   * second heading of one name on a page counts up (cookbook/eml_cds_sql/eml.html). */
+  assert.deepEqual(headings('## 3. First Launch\n').map((h) => h.anchor), ['_3-first-launch']);
+  assert.deepEqual(headings('## `template:repeat` — Loops\n').map((h) => h.anchor), ['template-repeat-—-loops']);
+  assert.deepEqual(headings('## EML\n\ntext\n\n## EML\n').map((h) => h.anchor), ['eml', 'eml-1']);
 });
 
 /* ------------------------------------------------------------ the matcher */

@@ -51,7 +51,13 @@ function loader() {
       window.abap2ui5Embed
         ? resolve(window.abap2ui5Embed)
         : reject(new Error('The playground loader did not install itself.')));
-    script.addEventListener('error', () => reject(new Error(`${LOADER} could not be loaded.`)));
+    script.addEventListener('error', () => {
+      /* Forgotten, not kept: a load that failed once (offline for a moment)
+       * must not answer every later press on the page with the same error. */
+      loading = undefined;
+      script.remove();
+      reject(new Error(`${LOADER} could not be loaded.`));
+    });
     document.head.append(script);
   });
   return loading;
