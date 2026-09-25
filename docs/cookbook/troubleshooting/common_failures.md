@@ -201,12 +201,13 @@ row behind it. Keep initial values out of the model with `_bind( )`'s
 `omit_initial_paths` (see the [Client API](/resources/api)), or give the
 binding an explicit fallback to the enum's default value.
 
-### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — page loads, component does not start
+### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — a popup does not open
 
-A hardened CSP without `'unsafe-eval'` meets an old UI5 release: the `1.71`
-ui5loader still evaluates module source as a string. Either bootstrap a
-modern UI5 release, or keep `'unsafe-eval'` in the policy — see
-[Security → Hardening](/configuration/security#hardening-dropping-unsafe-eval).
+An old UI5 release (`1.71` to `1.82`) meets a popup that names a module it has
+not loaded yet - in a binding type or a `core:require` - and evaluates it as a
+string, which the default policy forbids. Either bootstrap `1.84` or newer, or
+switch `'unsafe-eval'` on for `script-src` in the user exit — see
+[Security → Older releases](/configuration/security#older-releases-switching-unsafe-eval-on).
 
 ### `403 ICFEUCONFORBIDDEN` — separately deployed frontend, every action fails
 

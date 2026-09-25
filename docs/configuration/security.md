@@ -24,76 +24,71 @@ The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. Th
 abap2UI5 never sends the app's business logic to the client. All business processes stay safely on the server, and sensitive data never reaches the frontend.
 
 ## Content-Security-Policy
-To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP blocks attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. The default policy allows a fixed set of trusted sources — the SAP and OpenUI5 CDNs plus jsDelivr and cdnjs; the complete policy is shown below. It also carries two hardening directives — `object-src 'none'` and `base-uri 'self'` — that block plugin content and pin `<base>` to the app origin. It deliberately carries **no** `frame-ancestors`: browsers ignore that directive in a `<meta>` CSP (and log a console warning about it), so cross-origin framing is forbidden by the real `X-Frame-Options` response header instead — see [Response headers](#response-headers) below.
+To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP blocks attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. The default policy allows a fixed set of trusted sources — the SAP and OpenUI5 CDN hosts, and nothing else; an installation that loads from another host adds it in the user exit, to the one directive that needs it. The complete policy is shown below. It also carries two hardening directives — `object-src 'none'` and `base-uri 'self'` — that block plugin content and pin `<base>` to the app origin. It deliberately carries **no** `frame-ancestors`: browsers ignore that directive in a `<meta>` CSP (and log a console warning about it), so cross-origin framing is forbidden by the real `X-Frame-Options` response header instead — see [Response headers](#response-headers) below.
 
-The default **does** contain `'unsafe-eval'`: the ui5loader of OpenUI5 `1.71` — the oldest supported release — still evaluates module source as a string, and without `'unsafe-eval'` a `1.71` bootstrap fails with a CSP `EvalError`. Modern UI5 releases load all modules without `eval()`, so if you pin a modern release you can tighten the policy — see [Hardening: Dropping `'unsafe-eval'`](#hardening-dropping-unsafe-eval) below.
+The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts: nothing abap2UI5 ships evaluates code, and UI5 from `1.84` on loads its modules without `eval()`. The page's one inline script is allowed by its SHA-256 hash, which the framework appends to `script-src` after the exit ran, so an injected `<script>`, an `onerror=` attribute or a `javascript:` URL is refused by the browser. Only a popup on UI5 `1.71` to `1.82` can still need `'unsafe-eval'` — see [Older releases](#older-releases-switching-unsafe-eval-on) below.
 
 ### Default CSP
-By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`):
+By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`; the framework appends the hash of the page's inline script to `script-src` afterwards):
 ```xml
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data:
-    ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com openui5.hana.ondemand.com *.openui5.hana.ondemand.com
-    sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas;
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:
+    ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
+    openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org schemas *.schemas;
+    script-src 'self' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
+    openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org;
+    style-src 'self' 'unsafe-inline' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
+    openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org;
     connect-src 'self' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
-    openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org
-    cdn.jsdelivr.net *.cdn.jsdelivr.net cdnjs.cloudflare.com *.cdnjs.cloudflare.com;
+    openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org;
     worker-src 'self' blob:;
     object-src 'none'; base-uri 'self';"/>
 ```
 
+`script-src` and `style-src` are written out rather than left to the `default-src` fallback on purpose: `default-src` carries `data:` and `blob:` for images, fonts and media, and a `data:` that falls through to `script-src` is a textbook CSP bypass. `style-src` keeps `'unsafe-inline'` because UI5 renders style attributes itself.
+
 ### Customizing the CSP
-If needed, adjust the CSP in the [user exit](/advanced/extensibility/user_exits). The exit runs after the framework fills in the defaults, so whatever you set there overrides the default policy:
+If needed, adjust the CSP in the [user exit](/advanced/extensibility/user_exits). The exit runs after the framework fills in the default, so edit the directive you need rather than replacing the whole tag — a copy of the tag goes stale with the next release, an edit does not:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
-    cs_config-content_security_policy = `<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' ui5.sap.com *.ui5.sap.com sdk.openui5.org *.sdk.openui5.org cdn.jsdelivr.net *.cdn.jsdelivr.net"/>`.
+    " an installation that loads a library from another host
+    REPLACE `script-src 'self'` IN cs_config-content_security_policy
+       WITH `script-src 'self' cdn.example.com`.
+    REPLACE `connect-src 'self'` IN cs_config-content_security_policy
+       WITH `connect-src 'self' cdn.example.com`.
 
 ENDMETHOD.
 ```
 
-### Hardening: Dropping `'unsafe-eval'`
-`'unsafe-eval'` weakens the protection CSP provides against script injection. The default keeps it only because OpenUI5 `1.71` — the oldest supported release — still executes fetched modules via `eval()` in its module loader. If you pin a modern UI5 release, no `eval()` is involved and you can remove `'unsafe-eval'` in the same exit where you set the bootstrap source. The example below is the default policy without `'unsafe-eval'`:
+A `script-src` that names `'unsafe-inline'` itself is left without the hash of the page's inline script — `'unsafe-inline'` would be ignored beside a hash anyway.
+
+### Older releases: switching `'unsafe-eval'` on
+On UI5 `1.71` to `1.82` a popup is processed synchronously, and a module that the popup's XML only names in a binding type or a `core:require` is fetched and evaluated as a string on the spot. The frontend loads the popup's controls asynchronously first, so the shipped popups stay clean — but a module it cannot see from the XML still needs `'unsafe-eval'` on those releases. Such an installation switches it on in the same exit, for `script-src` only:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
-    cs_config-src   = `https://ui5.sap.com/resources/sap-ui-core.js`.
-    cs_config-theme = `sap_horizon`.
+    cs_config-src   = `https://ui5.sap.com/1.71/resources/sap-ui-core.js`.
 
-    " modern UI5 loads modules without eval() - drop 'unsafe-eval'
-    cs_config-content_security_policy =
-      |<meta http-equiv="Content-Security-Policy" | &&
-      |content="default-src 'self' 'unsafe-inline' data: | &&
-      |ui5.sap.com *.ui5.sap.com | &&
-      |sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com | &&
-      |openui5.hana.ondemand.com *.openui5.hana.ondemand.com | &&
-      |sdk.openui5.org *.sdk.openui5.org | &&
-      |cdn.jsdelivr.net *.cdn.jsdelivr.net | &&
-      |cdnjs.cloudflare.com *.cdnjs.cloudflare.com schemas *.schemas; | &&
-      |connect-src 'self' | &&
-      |  ui5.sap.com *.ui5.sap.com | &&
-      |  sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com | &&
-      |  openui5.hana.ondemand.com *.openui5.hana.ondemand.com | &&
-      |  sdk.openui5.org *.sdk.openui5.org | &&
-      |  cdn.jsdelivr.net *.cdn.jsdelivr.net | &&
-      |  cdnjs.cloudflare.com *.cdnjs.cloudflare.com; | &&
-      |worker-src 'self' blob:; | &&
-      |object-src 'none'; base-uri 'self'; "/>|.
+    " UI5 1.71 to 1.82: a popup that names a module it has not loaded
+    " evaluates it as a string
+    REPLACE `script-src 'self'` IN cs_config-content_security_policy
+       WITH `script-src 'self' 'unsafe-eval'`.
 
 ENDMETHOD.
 ```
 
 ::: warning
-With `'unsafe-eval'` removed, bootstrapping an old release such as `1.71` fails: the page loads, but the component cannot start and the browser console shows an error like
+The symptom without it is a popup that does not open, and in the browser console an error like
 
 ```
-Failed to load component for container container. Reason: EvalError: Evaluating a string as
-JavaScript violates the following Content Security Policy directive because 'unsafe-eval' is
-not an allowed source of script: default-src 'self' 'unsafe-inline' data: ui5.sap.com ...
+EvalError: Evaluating a string as JavaScript violates the following Content
+Security Policy directive because 'unsafe-eval' is not an allowed source of
+script: script-src 'self' ui5.sap.com ...
 ```
 
-Only tighten the policy when every system you deploy to bootstraps a modern release.
+From `1.84` on nothing needs it; leave the default alone there.
 :::
 
 ## Response headers
@@ -107,12 +102,14 @@ abap2UI5 sets these on every response, out of the box:
 | `X-Content-Type-Options` | `nosniff` | the browser honors the declared content type instead of guessing one |
 | `Referrer-Policy` | `strict-origin-when-cross-origin` | a cross-origin request leaks the origin, never the path or query |
 | `Permissions-Policy` | `geolocation=(self), microphone=(self), camera=(self), payment=(), usb=()` | the device APIs abap2UI5 offers stay available to the app itself; payment and USB are off |
-| `cache-control` / `Pragma` / `Expires` | `no-cache, no-store, must-revalidate` / `no-cache` / `0` | the roundtrip responses carry application state — nothing about them may be cached |
 | `Cross-Origin-Resource-Policy` | `same-origin` | no other site may embed a response of the app as a resource |
 
 They live in `cs_config-t_security_header` and are set in the same
 [user exit](/advanced/extensibility/user_exits) as the CSP, so an installation
-behind a proxy that already sets one of them can drop or change it:
+behind a proxy that already sets one of them can drop or change it. Caching is
+not among them: the handler decides it per verb — the page is checked against
+its `ETag` and answered with a `304`, every other response is `no-store` — and
+an exit entry named `cache-control` still wins over that:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
@@ -160,7 +157,7 @@ ENDMETHOD.
 ```
 
 ## Cross-Site Request Forgery (CSRF)
-Every state-changing request in abap2UI5 is a POST, so the framework ships its own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or may not be there. The check compares the host authority of the request's `Origin` (or `Referer`) header against the `Host` header — a cross-origin POST is rejected with an error response before any app logic runs.
+Every state-changing request in abap2UI5 is a POST, so the framework ships its own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or may not be there. The check compares the host authority of the request's `Origin` (or `Referer`) header against the `Host` header — or, by default, against the first `X-Forwarded-Host` when a proxy sent one (`cs_config-check_trust_forwarded_host`; an installation without a proxy hardens the gate by switching it to `abap_false`) — a cross-origin POST is rejected with an error response before any app logic runs.
 
 **CSRF protection is active by default.** A fresh install rejects cross-origin POSTs without any configuration. If your endpoint must accept cross-origin POSTs (for example, behind a proxy setup where the origin legitimately differs), opt out in the [user exit](/advanced/extensibility/user_exits):
 
