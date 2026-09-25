@@ -128,7 +128,7 @@ test('a heading anchor is the one VitePress generates', () => {
    * second heading of one name on a page counts up (cookbook/eml_cds_sql/eml.html). */
   assert.deepEqual(headings('## 3. First Launch\n').map((h) => h.anchor), ['_3-first-launch']);
   assert.deepEqual(headings('## `template:repeat` — Loops\n').map((h) => h.anchor), ['template-repeat-—-loops']);
-  assert.deepEqual(headings('## EML\n\ntext\n\n## EML\n').map((h) => h.anchor), ['eml', 'eml-1']);
+  assert.deepEqual(headings('# EML\n\n## EML\n\ntext\n\n## EML\n').map((h) => h.anchor), ['eml-1', 'eml-2']);
 });
 
 /* ------------------------------------------------------------ the matcher */

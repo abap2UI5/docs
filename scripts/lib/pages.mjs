@@ -192,13 +192,17 @@ export function headings(body) {
   for (const line of stripFrontmatter(body).split('\n')) {
     if (line.startsWith('```')) { inFence = !inFence; continue; }
     if (inFence) continue;
-    const m = /^(#{2,3})\s+(.+?)\s*$/.exec(line);
+    /* Every heading counts towards the de-duplication - the title of the
+       page takes its slug first, so a `## EML` under `# EML` is `eml-1` -
+       and only the second and third level are indexed. */
+    const m = /^(#{1,3})\s+(.+?)\s*$/.exec(line);
     if (!m) continue;
     const text = m[2].replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*`]/g, '').trim();
     if (!text) continue;
     const slug = slugify(text);
     const n = seen.get(slug) ?? 0;
     seen.set(slug, n + 1);
+    if (m[1].length === 1) continue;
     out.push({ text, anchor: n === 0 ? slug : `${slug}-${n}` });
   }
   return out;
