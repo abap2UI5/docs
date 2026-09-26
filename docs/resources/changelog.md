@@ -18,7 +18,7 @@ shipping, and for the full removal list with migration notes.
 - A misused view builder chain raises an exception the app can catch, instead of producing a broken view
 - Performance: the view builder concatenates once per render, a conditional GET of the shell page is answered before the page is built, the XML templating preprocessor runs only for a view that uses templating, and several things the engine computed on every request are computed once
 - The default response headers no longer include `Cross-Origin-Opener-Policy` — on a plain-HTTP system the browser ignored it and logged a console error on every start
-- Hosting outside an SAP system: seams for the draft store and the environment, and the transpiled framework ships as the npm package `@abap2ui5/runtime`; every release carries the backend already built (`backend-<version>.tar.gz`)
+- Hosting outside an SAP system: seams for the draft store and the environment, and the transpiled framework is packaged for npm (published as `@abap2ui5/node-runtime` from the next release on); every release carries the backend already built (`backend-<version>.tar.gz`)
 - The start page no longer loses its second roundtrip, and the OData model is loaded only when an app uses it
 - Many smaller fixes from code reviews of the ABAP and the frontend core
 
