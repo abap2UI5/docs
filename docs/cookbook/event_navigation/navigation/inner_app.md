@@ -85,10 +85,11 @@ CLASS z2ui5_cl_sample_stack DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA mv_level TYPE i.
-    DATA mv_note  TYPE string.
+    DATA mv_note TYPE string.
 
   PROTECTED SECTION.
+    DATA mv_level TYPE i.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -109,7 +110,7 @@ CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
               )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
               )->ele( `Page`
-                  )->a( n = `title` v = |Level { mv_level }|
+                  )->a( n = `title` t = |Level { mv_level }|
 
                   )->tag( `Text`
                       )->a( n = `text` v = client->_bind( mv_note )

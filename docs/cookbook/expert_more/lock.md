@@ -63,13 +63,14 @@ CLASS z2ui5_cl_sample_lock_1 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA vbeln    TYPE vbak-vbeln VALUE `0000004711`.
-    DATA auart    TYPE vbak-auart.
-    DATA ernam    TYPE vbak-ernam.
-    DATA erdat    TYPE vbak-erdat.
+    DATA auart TYPE vbak-auart.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
+    DATA ernam TYPE vbak-ernam.
+    DATA erdat TYPE vbak-erdat.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -144,7 +145,7 @@ CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   v = vbeln
+                                )->a( n = `value`   t = vbeln
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -153,12 +154,12 @@ CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Created by`
                             )->tag( `Input`
-                                )->a( n = `value`   v = ernam
+                                )->a( n = `value`   t = ernam
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Created on`
                             )->tag( `Input`
-                                )->a( n = `value`   v = CONV string( erdat )
+                                )->a( n = `value`   t = CONV string( erdat )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Button`
                                 )->a( n = `text`    v = `Save`
@@ -227,11 +228,12 @@ CLASS z2ui5_cl_sample_lock_2 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
     DATA auart TYPE vbak-auart.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -327,7 +329,7 @@ CLASS z2ui5_cl_sample_lock_2 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   v = vbeln
+                                )->a( n = `value`   t = vbeln
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -396,14 +398,15 @@ CLASS z2ui5_cl_sample_lock_3 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
     DATA auart TYPE vbak-auart.
-
-    DATA token_aedat TYPE vbak-aedat.
-    DATA token_aezet TYPE vbak-UPD_TMSTMP.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
+
+    DATA token_aedat TYPE vbak-aedat.
+    DATA token_aezet TYPE vbak-UPD_TMSTMP.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -498,7 +501,7 @@ CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   v = vbeln
+                                )->a( n = `value`   t = vbeln
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -541,14 +544,15 @@ CLASS z2ui5_cl_sample_lock_4 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
     DATA auart TYPE vbak-auart.
-
-    DATA token_aedat TYPE vbak-aedat.
-    DATA token_aezet TYPE vbak-UPD_TMSTMP.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
+
+    DATA token_aedat TYPE vbak-aedat.
+    DATA token_aezet TYPE vbak-UPD_TMSTMP.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -672,7 +676,7 @@ CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   v = vbeln
+                                )->a( n = `value`   t = vbeln
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -755,11 +759,12 @@ CLASS z2ui5_cl_sample_lock_5 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
     DATA auart TYPE vbak-auart.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -893,7 +898,7 @@ CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   v = vbeln
+                                )->a( n = `value`   t = vbeln
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -952,14 +957,15 @@ CLASS z2ui5_cl_sample_lock_6 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
-    DATA vbeln       TYPE vbak-vbeln VALUE `0000004711`.
-    DATA auart       TYPE vbak-auart.
-    DATA locked_by   TYPE string.
-    DATA token_aedat TYPE vbak-aedat.
-    DATA token_aezet TYPE vbak-UPD_TMSTMP.
+    DATA auart TYPE vbak-auart.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+
+    DATA vbeln       TYPE vbak-vbeln VALUE `0000004711`.
+    DATA locked_by   TYPE string.
+    DATA token_aedat TYPE vbak-aedat.
+    DATA token_aezet TYPE vbak-UPD_TMSTMP.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -1144,7 +1150,7 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   v = vbeln
+                                )->a( n = `value`   t = vbeln
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -1153,7 +1159,7 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Status`
                             )->tag( `Input`
-                                )->a( n = `value`   v = locked_by
+                                )->a( n = `value`   t = locked_by
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Button`
                                 )->a( n = `text`    v = `Save`

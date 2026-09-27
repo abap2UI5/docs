@@ -75,7 +75,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
               )->a( n = `xmlns:core` v = `sap.ui.core`
 
               )->ele( `Dialog`
-                  )->a( n = `title` v = |Edit { s_edit-product }|
+                  )->a( n = `title` t = |Edit { s_edit-product }|
 
                   )->ele( `content`
 
@@ -121,6 +121,9 @@ ENDCLASS.
   time `SAVE` arrives, the attribute already holds the new value.
 - **`popup_display( )` / `popup_destroy( )`** show and close the dialog. The
   main view is never rebuilt — it waits behind the popup.
+- **`t` for the title.** It carries the product name, which is data: through
+  `v` a brace in it would be read as a binding, through `t` it is shown as
+  written.
 - **No refresh call after `SAVE`.** The handler changes `t_invoices` and
   does nothing else: every roundtrip that changed bound data pushes the new
   model to the browser by itself, and the list updates.
