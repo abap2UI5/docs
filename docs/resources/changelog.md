@@ -9,7 +9,26 @@ shipping, and for the full removal list with migration notes.
 
 ## 1.145.0
 2026-09-26
-- TODO
+- Security: the default Content Security Policy no longer allows `'unsafe-inline'` or `'unsafe-eval'` for scripts. The page's one inline script runs by its SHA-256 hash, and the default names `img-src` and `media-src` explicitly - an exit that needs a cross-origin icon or sound host adds it there. On UI5 1.71 to 1.82, only a module a popup names in a binding type or `core:require` still needs `'unsafe-eval'`; switch it on in `z2ui5_if_ui5_exit`
+- Several `z2ui5.Component` instances can run side by side on one page - a launchpad in keep-alive mode or a host that creates the component twice no longer corrupts the first one. A host app that embeds the component names its backend with `componentData.endpoint`
+- Added `GET <node>?z2ui5-bundle`: the frontend as a script of its own, for a UI5 app that embeds the z2ui5 component instead of opening the page. Without the parameter a GET is the page, as before
+- Node hosting: every release publishes `@abap2ui5/node-runtime` on npm - abap2UI5 transpiled to JavaScript, with `serve( )` and the downported ABAP sources for your own app classes
+- The frontend's diagnostics also go to the browser console with `sap-ui-logLevel=WARNING`, and a keyboard shortcut can bind the `+` key (`"Ctrl++"`)
+- An app class in a namespace (`/NS/CL_X`) survives reload, bookmark and Back/Forward through hash routing; URL parameters in front of the launchpad's `sap-startup-params` are kept
+- The app start checks that a class named by the URL, the hash or the launchpad implements `z2ui5_if_app` before it is created
+- `styles_css` from the user exit applies again
+- Fixes in navigation (`nav_app_leave( )` two levels up and after an expired draft), in the model (a cleared table reference, empty date and time fields, negative UTC offsets), in popups during Back/Forward, in the CSRF check behind a proxy on :443, and in the 7.02 branch's test classes
+- The view builder raises `VIEW_BUILDER_ERROR` on an attribute or element name that is no XML name, instead of producing a view the browser refuses
+- The framework's own views and popups get component-prefixed ids (`<component>---mainView`); ids an app declares are unchanged. Only CSS or scripts that match the full rendered DOM id need a look
+
+**Removed**
+- BREAKING: the global `z2ui5` object - no `window.z2ui5` any more; the frontend keeps its state per component
+- BREAKING: `cs_event-z2ui5` and the obsolete popup `z2ui5_cl_pop_js_loader` → a custom control in `z2ui5_ccc`
+- BREAKING: raw JavaScript in `follow_up_action( )` → `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc`
+- BREAKING: `custom_js` and `title` in the user exit's HTTP config → a custom control in `z2ui5_ccc`; `cs_event-set_title`
+- BREAKING: the `z2ui5.Util` and `z2ui5.Formatter` globals and the `z2ui5/Util` module → `core:require` of `z2ui5/model/formatter`
+
+See [Deprecations](/resources/deprecations) for the migration of each.
 
 ## 1.144.1
 2026-09-22

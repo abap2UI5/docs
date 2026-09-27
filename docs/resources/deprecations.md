@@ -40,7 +40,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.144.1**. Entries marked *next release* are already
+The released version is **1.145.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
@@ -65,10 +65,12 @@ tell you what is coming if you do not.
 | `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, 1.144.1 |
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
-| `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, *next release* |
-| `cs_event-z2ui5` | a custom control in `z2ui5_ccc`, called by `cs_event-control_by_id` | **removed**, *next release* |
-| `z2ui5_cl_pop_js_loader` | a custom control in `z2ui5_ccc` | **removed**, *next release* |
-| custom JS reading `window.z2ui5` | nothing - the global is gone | **removed**, *next release* |
+| `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, 1.145.0 |
+| `cs_event-z2ui5` | a custom control in `z2ui5_ccc`, called by `cs_event-control_by_id` | **removed**, 1.145.0 |
+| `z2ui5_cl_pop_js_loader` | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
+| custom JS reading `window.z2ui5` | nothing - the global is gone | **removed**, 1.145.0 |
+| `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
+| raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | 1.144.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
