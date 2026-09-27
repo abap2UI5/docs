@@ -7,6 +7,10 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.145.0
+2026-09-26
+- TODO
+
 ## 1.144.1
 2026-09-22
 - Added app-owned hash routing: `client->hash_set( )` / `hash_replace( )` write the URL fragment (a pushed or a replaced history entry), `cs_event-hash_back` steps back with an optional fallback hash, `cs_event-hash_attach_changed` raises a backend event on a hash change the app did not make, and `cs_event-hash_routing` sets the routing mode. `app_state_set_active( )` keeps the id of the current app state in the URL, and `app_state_get_href( )` hands that share link to ABAP
