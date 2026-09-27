@@ -70,7 +70,7 @@ That install is about 45 MB, and 19 MB of it is a Playwright driver only
 `run_app` uses — paid on the first start, cached afterwards.
 
 `screenshot_view` additionally needs the linter's render runtime and a browser
-— `npm i -D @abap2ui5/render-runtime && npx playwright install chromium` in the
+— `npm i -D @abap2ui5/linter-render && npx playwright install chromium` in the
 linter checkout. `validate_view`'s property gate needs neither.
 
 ### Level 2 — the sample catalogs and deploying (about 110 MB)

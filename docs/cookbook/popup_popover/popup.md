@@ -101,9 +101,14 @@ CLASS z2ui5_cl_sample_confirm DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_question TYPE string.
-    DATA mv_confirmed TYPE abap_bool.
+
+    METHODS confirmed
+      RETURNING
+        VALUE(result) TYPE abap_bool.
 
   PROTECTED SECTION.
+    DATA mv_confirmed TYPE abap_bool.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -145,6 +150,12 @@ CLASS z2ui5_cl_sample_confirm IMPLEMENTATION.
     ENDCASE.
 
   ENDMETHOD.
+
+  METHOD confirmed.
+
+    result = mv_confirmed.
+
+  ENDMETHOD.
 ENDCLASS.
 ```
 
@@ -161,7 +172,7 @@ CASE abap_true.
 
   WHEN client->check_on_navigated( ).
     DATA(lo_prev) = CAST z2ui5_cl_sample_confirm( client->get_app_prev( ) ).
-    IF lo_prev IS BOUND AND lo_prev->mv_confirmed = abap_true.
+    IF lo_prev IS BOUND AND lo_prev->confirmed( ) = abap_true.
       delete_entry( ).
     ENDIF.
     view_display( ).
@@ -169,9 +180,10 @@ CASE abap_true.
 ENDCASE.
 ```
 
-Two things carry the whole pattern: the popup's answer is a **public attribute**
-on its own instance, and `get_app_prev( )` is how the caller reaches it. Nothing
-is passed back through events.
+Two things carry the whole pattern: the popup's answer is an **attribute** on
+its own instance, and `get_app_prev( )` is how the caller reaches it. Nothing
+is passed back through events. No view binds the answer, so it stays
+protected and the caller reads it through `confirmed( )`.
 
 A ready-made set of these — confirm, select, ranges, file up- and download and
 about a dozen more — is the

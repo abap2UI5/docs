@@ -202,12 +202,13 @@ CLASS z2ui5_cl_smp_app_067 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA amount            TYPE p LENGTH 14 DECIMALS 3.
-    DATA currency          TYPE string.
-    DATA numeric           TYPE n LENGTH 12.
-    DATA check_initialized TYPE abap_bool.
+    DATA amount   TYPE p LENGTH 14 DECIMALS 3.
+    DATA currency TYPE string.
+    DATA numeric  TYPE n LENGTH 12.
 
   PROTECTED SECTION.
+    DATA check_initialized TYPE abap_bool.
+
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -256,8 +257,9 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Documentation`
                             )->tag( `Link`
-                                )->a( n = `text` v = `https://sdk.openui5.org/api/sap.ui.model.type.Currency`
-                                )->a( n = `href` v = `https://sdk.openui5.org/api/sap.ui.model.type.Currency`
+                                )->a( n = `text`   v = `https://sdk.openui5.org/api/sap.ui.model.type.Currency`
+                                )->a( n = `href`   v = `https://sdk.openui5.org/api/sap.ui.model.type.Currency`
+                                )->a( n = `target` v = `_blank`
 
                             )->tag( `Label`
                                 )->a( n = `text` v = `One field`
@@ -332,8 +334,9 @@ CLASS z2ui5_cl_smp_app_067 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Documentation`
                             )->tag( `Link`
-                                )->a( n = `text` v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
-                                )->a( n = `href` v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                                )->a( n = `text`   v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                                )->a( n = `href`   v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
+                                )->a( n = `target` v = `_blank`
                             )->tag( `Label`
                                 )->a( n = `text` v = `Numeric`
                             )->tag( `Input`

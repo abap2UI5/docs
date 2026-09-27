@@ -134,7 +134,7 @@ It needs a real UI5 runtime, so it ships as a second package — one deliberate
 install rather than a surprise attached to the first:
 
 ```sh
-npm install -D @abap2ui5/render-runtime   # the UI5 runtime, once
+npm install -D @abap2ui5/linter-render    # the UI5 runtime, once
 npx playwright install chromium           # and its browser
 ```
 

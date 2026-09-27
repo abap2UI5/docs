@@ -110,7 +110,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
               )->a( n = `xmlns:core` v = `sap.ui.core`
 
               )->ele( `Dialog`
-                  )->a( n = `title` v = |Edit { s_edit-product }|
+                  )->a( n = `title` t = |Edit { s_edit-product }|
 
                   )->ele( `content`
 

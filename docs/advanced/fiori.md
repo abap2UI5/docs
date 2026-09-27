@@ -66,11 +66,12 @@ sap.ui.core.Component.create({
 
 5. Create abap2UI5 app class
 
-On the ABAP side, the app receives the Fiori startup parameters (like the app class name and any custom key-value pairs) via `client->get( )-t_comp_params`. The `check_initialized` flag — a public `abap_bool` attribute of the app class — ensures the parameters are read only once, on the first roundtrip. Setting `backgrounddesign = 'List'` gives the page a white background matching the Fiori object page:
+On the ABAP side, the app receives the Fiori startup parameters (like the app class name and any custom key-value pairs) via `client->get( )-t_comp_params`. The `check_initialized` flag — a protected `abap_bool` attribute of the app class — ensures the parameters are read only once, on the first roundtrip. Setting `backgrounddesign = 'List'` gives the page a white background matching the Fiori object page:
 ```abap
   " class definition:
   " PUBLIC SECTION.
   "   INTERFACES z2ui5_if_app.
+  " PROTECTED SECTION.
   "   DATA check_initialized TYPE abap_bool.
 
   METHOD z2ui5_if_app~main.

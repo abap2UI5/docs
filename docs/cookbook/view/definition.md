@@ -30,7 +30,7 @@ CLASS z2ui5_cl_sample_view_xml IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     client->view_display(
-        |<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" | &
+        |<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" | &
         |          displayBlock="true" height="100%">| &
         |  <Shell>| &
         |     <Page title="My title">| &
@@ -68,9 +68,8 @@ CLASS z2ui5_cl_sample_view_builder IMPLEMENTATION.
 
     DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
-            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
             )->ele( `Shell`
                 )->ele( `Page`
@@ -123,6 +122,16 @@ flag reaches the view without a conversion of its own:
 ```abap
     )->a( n = `editable` b = mv_edit_mode
     )->a( n = `visible`  b = xsdbool( lines( mt_item ) > 0 ) )
+```
+
+For text that comes from data — a name read from a table, a user's input —
+pass `t`. UI5 reads a brace in an attribute value as a binding, so through `v`
+a value such as `{A}` is resolved as a binding path instead of shown; `t`
+escapes it and the text appears as written. `v` stays the form for bindings
+and literals:
+
+```abap
+    )->a( n = `title` t = |Edit { ms_order-customer }| )
 ```
 
 Tips for working with views:

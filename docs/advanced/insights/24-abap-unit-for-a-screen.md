@@ -28,15 +28,15 @@ CLASS zcl_app_overdue DEFINITION PUBLIC.
       END OF ty_s_invoice.
     TYPES ty_t_invoice TYPE STANDARD TABLE OF ty_s_invoice WITH EMPTY KEY.
 
-    DATA t_invoices TYPE ty_t_invoice.
-    DATA t_overdue  TYPE ty_t_invoice.
-    DATA key_date   TYPE d.
+    DATA t_overdue TYPE ty_t_invoice.
+    DATA key_date  TYPE d.
 
     METHODS data_read.
     METHODS overdue_calc.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
+    DATA client     TYPE REF TO z2ui5_if_client.
+    DATA t_invoices TYPE ty_t_invoice.
     METHODS view_display.
 
   PRIVATE SECTION.
@@ -148,7 +148,9 @@ Two habits are worth keeping on purpose, and both are free if you start with
 them. Handler methods take their input from attributes rather than from
 `client->get( )`, so a test can set the input. And `data_read( )` is its own
 method, so a test can either run the real `SELECT` against test data or fill
-the table by hand and test the logic alone.
+the table by hand and test the logic alone. No view binds `t_invoices`, so it
+sits in the protected section; a test that fills it by hand is made a friend
+of the class with `LOCAL FRIENDS` in the test include.
 
 The view itself has a different kind of check. The [linter](/advanced/linter)
 reconstructs the XML the chain builds and holds it against the UI5 metadata —
