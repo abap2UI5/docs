@@ -13,9 +13,9 @@ On the frontend, abap2UI5 behaves like a standard UI5 app, so the usual tools an
 ### Developer Tools
 Press `Ctrl+F12` to open the built-in **Developer Tools** of abap2UI5:
 ![Developer Tools showing XML View and Data Model inspection](/configuration/debug.webp)
-Tabs cover the whole roundtrip: **Error** and **Log**, the **System** info, the **Previous Request** and **Response**, the app's **Source Code**, and for every view slot (main, popup, popover, nested) the rendered **View** XML and its **Model** data.
+Six tabs cover the whole roundtrip: **Overview**, **Problems**, **Roundtrips** (each request and its response), **View & Data** (the rendered XML and the model of the slot you pick — main, popup, popover, nested), **System** and **Search**.
 
-The footer offers **Logout**, **Restart**, a jump to **ADT**, and an **Export** that bundles everything — including the running app's ABAP class source — into one blob you can attach to a bug report. Error popups also carry a copy-to-clipboard button for the same purpose.
+The footer offers **Retry**, **Restart**, **Logout**, a jump to **ADT**, **Copy**, **Report a Bug** and an **Export** that bundles everything — including the running app's ABAP class source — into one blob you can attach to a bug report. Error popups also carry a copy-to-clipboard button for the same purpose.
 
 ### UI5 Inspector
 Another option: the SAP default debugging tool, the [UI5 Inspector](https://chromewebstore.google.com/detail/ui5-inspector/bebecogbafbighhaildooiibipcnbngo).

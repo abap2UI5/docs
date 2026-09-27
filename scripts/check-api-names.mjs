@@ -155,7 +155,7 @@ function markdownFiles(dir, out = []) {
 }
 
 /** The fenced ABAP blocks of a page, as one string with everything else blanked. */
-const abapOnly = (text) => text.replace(/```(\w*)\n([\s\S]*?)```/g, (all, lang, body) => (
+const abapOnly = (text) => text.replace(/```(\w*)[^\n]*\n([\s\S]*?)```/g, (all, lang, body) => (
   /^(abap)?$/i.test(lang) ? all.replace(body, body) : ' '.repeat(all.length)
 ));
 

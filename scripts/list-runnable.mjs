@@ -53,7 +53,7 @@ function pages(dir, found = []) {
 const examples = [];
 for (const file of pages(DOCS)) {
   const md = fs.readFileSync(file, 'utf8');
-  for (const fence of md.matchAll(/```abap\n([\s\S]*?)```/g)) {
+  for (const fence of md.matchAll(/^```abap\b[^\n]*\n([\s\S]*?)^```/gm)) {
     const code = fence[1];
     if (!isRunnable(code)) continue;
     examples.push({

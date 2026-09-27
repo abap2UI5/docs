@@ -29,8 +29,6 @@ The themes shipped with current UI5 versions are:
 | `sap_fiori_3_dark`   | Quartz Dark                          |
 | `sap_fiori_3_hcb`    | Quartz high-contrast black           |
 | `sap_fiori_3_hcw`    | Quartz high-contrast white           |
-| `sap_belize`         | Belize (older, blue)                 |
-| `sap_belize_plus`    | Belize Plus (older, gray background) |
 
 See the official [list of available themes](https://sapui5.hana.ondemand.com/#/topic/4cfe7eff3001447a9d4b0abeaba95166) for the most up-to-date catalog.
 

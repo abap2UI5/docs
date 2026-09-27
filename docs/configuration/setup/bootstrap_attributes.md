@@ -28,7 +28,6 @@ METHOD z2ui5_if_ui5_exit~set_config_http_get.
     cs_config-t_add_config = VALUE #(
       ( n = `data-sap-ui-libs`         v = `sap.m,sap.ui.table` )
       ( n = `data-sap-ui-language`     v = `en` )
-      ( n = `data-sap-ui-frameOptions` v = `allow` )
       ( n = `data-sap-ui-preload`      v = `async` ) ).
 
 ENDMETHOD.
@@ -49,7 +48,7 @@ ENDMETHOD.
 | `data-sap-ui-resourceroots`     | Additional resource roots for custom libraries. |
 | `data-sap-ui-xx-componentpreload` | Component-preload strategy for very large apps. |
 
-Attributes set by abap2UI5 by default can be overridden — a row with the same name wins over the framework default.
+The attributes abap2UI5 writes itself (`data-sap-ui-async`, `data-sap-ui-frameOptions`, `data-sap-ui-compatVersion`, `data-sap-ui-bindingSyntax`, `data-sap-ui-theme`, …) cannot be overridden here: the rows are appended after them, and a browser keeps the first of two attributes with the same name. `t_add_config` adds attributes; the theme has its own field (`cs_config-theme`).
 
 ## See Also
 

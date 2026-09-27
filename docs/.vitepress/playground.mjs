@@ -72,7 +72,7 @@ const DECLARED_NAME = /^\s*(?:CLASS|INTERFACE)\s+([a-zA-Z_]\w*)\s+(?:DEFINITION|
 const MAX_NAME = 30;
 
 /** Something has to arrive on screen. */
-const DISPLAYS_SOMETHING = /->\s*(?:view|popup|message_box|message_toast|nest_view)[a-z_]*_display\s*\(/i;
+const DISPLAYS_SOMETHING = /->\s*(?:view|popup|popover|message_box|message_toast|nest_view)[a-z_]*_display\s*\(/i;
 
 /* The database in the page holds the framework's own tables and what open-abap
  * ships. A business table is not among them, and `SELECT` from one is the
@@ -206,7 +206,7 @@ function tablesUsed(code) {
 function unimplementedMethods(code) {
   const definition = code.split(CLASS_IMPLEMENTATION)[0];
   const declared = [];
-  for (const m of definition.matchAll(/^\s*METHODS:?\s+([^.]+)\./gim)) {
+  for (const m of definition.matchAll(/^\s*(?:CLASS-)?METHODS:?\s+([^.]+)\./gim)) {
     for (const one of m[1].split(',')) {
       const name = /^\s*([a-z_]\w*)/i.exec(one)?.[1];
       /* A redefinition or an interface method is implemented under another

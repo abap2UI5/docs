@@ -146,7 +146,7 @@ function legacyFragments() {
     if (SHOWS_THE_OLD_API.has(page)) continue;
     const md = readFileSync(file, 'utf8');
     if (md.includes('This page still shows the previous view builder')) continue;
-    for (const m of md.matchAll(/```abap\n([\s\S]*?)```/g)) {
+    for (const m of md.matchAll(/^```abap\b[^\n]*\n([\s\S]*?)^```/gm)) {
       const code = m[1];
       /* The other fluent API in this documentation. `z2ui5_cl_ajson` chains
        * the same way and its verbs are its own, so a fence building JSON is
@@ -190,7 +190,7 @@ function examples() {
   for (const file of walk(DOCS).filter((f) => f.endsWith('.md')).sort()) {
     const md = readFileSync(file, 'utf8');
     const pending = md.includes('This page still shows the previous view builder');
-    for (const m of md.matchAll(/```abap\n([\s\S]*?)```/g)) {
+    for (const m of md.matchAll(/^```abap\b[^\n]*\n([\s\S]*?)^```/gm)) {
       const code = m[1];
       if (!/CLASS\s+\S+\s+DEFINITION/i.test(code)) continue;
       if (!/CLASS\s+\S+\s+IMPLEMENTATION/i.test(code)) continue;

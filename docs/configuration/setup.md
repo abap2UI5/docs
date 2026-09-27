@@ -22,7 +22,7 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
 ENDCLASS.
 ```
 
-`set_config_http_get` is called once per page request — i.e. when the browser asks for the HTML shell. The changing parameter `cs_config` holds every value that ends up in the generated `index.html`.
+`set_config_http_get` is called for the page request — when the browser asks for the HTML shell — and once more per response for its `t_security_header`, which every response of the handler carries; keep it cheap and deterministic. The changing parameter `cs_config` holds every value that ends up in the generated `index.html`.
 
 ## What You Can Configure
 

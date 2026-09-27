@@ -10,8 +10,8 @@ npm run docs:dev       # the site at localhost, with hot reload, while writing
 npm run check          # everything CI runs on a pull request
 ```
 
-`npm run check` is `check.yml`: the test suite, then the VitePress build, then
-the gates that hold the pages to what the other repositories actually ship —
+`npm run check` is `check.yml`: the test suite, then the site build (and the
+VitePress build as a second opinion), then the gates that hold the pages to what the other repositories actually ship —
 the version the site names, the examples it prints, the Run buttons the
 playground can honour, the API names and the sample links. A page that quotes
 another repository is checked against that repository, not against memory,

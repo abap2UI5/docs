@@ -155,7 +155,9 @@ reads the answer back off the same instance when control returns:
 CASE abap_true.
 
   WHEN client->check_on_event( `DELETE` ).
-    client->nav_app_call( NEW z2ui5_cl_sample_confirm( mv_question = `Delete this entry?` ) ).
+    DATA(lo_confirm) = NEW z2ui5_cl_sample_confirm( ).
+    lo_confirm->mv_question = `Delete this entry?`.
+    client->nav_app_call( lo_confirm ).
 
   WHEN client->check_on_navigated( ).
     DATA(lo_prev) = CAST z2ui5_cl_sample_confirm( client->get_app_prev( ) ).

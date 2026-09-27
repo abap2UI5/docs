@@ -58,7 +58,7 @@ tell you what is coming if you do not.
 | `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
 | `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
 | `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
-| `cs_event-history_back` | `nav_app_leave( )` or a raw expression | **removed**, 1.143.0 |
+| `cs_event-history_back` | `nav_app_leave( )` or `cs_event-hash_back` | **removed**, 1.143.0 |
 | `client->get( )-viewname` | delete the read | **removed**, 1.143.0 |
 | `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, 1.143.0 |
 | `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` | **removed**, 1.142.0 |
@@ -66,8 +66,8 @@ tell you what is coming if you do not.
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
 | built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, *next release* |
-| `cs_event-z2ui5` | a raw expression through `follow_up_action( )` | **removed**, *next release* |
-| `z2ui5_cl_pop_js_loader` | a raw expression through `follow_up_action( )` | **removed**, *next release* |
+| `cs_event-z2ui5` | a custom control in `z2ui5_ccc`, called by `cs_event-control_by_id` | **removed**, *next release* |
+| `z2ui5_cl_pop_js_loader` | a custom control in `z2ui5_ccc` | **removed**, *next release* |
 | custom JS reading `window.z2ui5` | nothing - the global is gone | **removed**, *next release* |
 | `cs_config-title` | `cs_event-set_title` | 1.144.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
@@ -723,22 +723,25 @@ frontend keeps its state to itself, and nothing abap2UI5 ships puts anything on
 it.
 
 `cs_event-z2ui5` called a function you had registered as a `z2ui5.*` member.
-Define the function on `window` instead and pass the call as a raw expression -
-the same call without the indirection:
+Nothing runs hand-written JavaScript from the backend any more - the raw
+expression form of `follow_up_action( )` went with the global. What the
+function did belongs in a
+[custom control](/advanced/extensibility/custom_control) in the customer
+frontend BSP (`z2ui5_ccc`), reached like any other control:
 
 ```abap
 " old
 client->follow_up_action( val   = client->cs_event-z2ui5
                           t_arg = VALUE #( ( `myFunction` ) ) ).
 
-" new
-client->follow_up_action( `myFunction()` ).
+" new - the function is a method of a custom control in the view
+client->follow_up_action( val   = client->cs_event-control_by_id
+                          t_arg = VALUE #( ( `myControl` ) ( `myFunction` ) ) ).
 ```
 
-A raw expression ships hand-written JavaScript from the backend to the browser
-and needs a CSP that allows `unsafe-eval` - read
-[Raw JavaScript](/cookbook/event_navigation/frontend#raw-javascript) before
-using it.
+The UI5 globals need no control of their own: `cs_event-control_global`
+reaches `MessageToast`, `MessageBox`, `BusyIndicator` and the rest - see
+[Frontend](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend).
 
 `z2ui5_cl_pop_js_loader`, the built-in popup that loaded such a function onto
 the global, is removed with it; the popup had nothing left to write into.

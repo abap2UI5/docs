@@ -67,7 +67,7 @@ alone would let them collide; the segment is what keeps them apart.
 | `smpc` | [samples-controls](https://github.com/abap2UI5/samples-controls) — control samples |
 | `popup` | [popups](https://github.com/abap2UI5-addons/popups) — the popups [add-on](/resources/addons) |
 | `cci` | [custom-controls](https://github.com/abap2UI5-addons/custom-controls) — custom controls shared with the community |
-| `ccc` | [custom-controls-customer](https://github.com/abap2UI5/custom-controls-customer) — the template for **your own** frontend artifacts |
+| `ccc` | [custom-controls-customer](https://github.com/abap2UI5-addons/custom-controls-customer) — the template for **your own** frontend artifacts |
 
 The two tables share one rule and one exception. The rule: an object's segment
 tells you which repository it was pulled from. The exception: frozen code keeps
@@ -106,7 +106,7 @@ hierarchy in your system. For the framework repository that is:
 |---|---|
 | `src/00/` | External libraries — ajson, S-RTTI and the vendored context/HTTP helpers |
 | `src/01/` | Internal use only — draft persistence, request handling, event routing, binding, and the generated frontend |
-| `src/02/` | The released API — the six objects above |
+| `src/02/` | The released API — the five objects above |
 | `src/99/` | Frozen — see [Deprecations](/resources/deprecations) |
 
 The package a class sits in is the honest answer to "may I use this?": `src/02`
@@ -191,13 +191,13 @@ instead of `z2ui5_if_app`.
 }
 ```
 
-The renamed copy is a complete, installable abapGit project under your own namespace — install it side by side with the original, pin it to a release, or ship it inside your product. The abap2UI5 CI runs this transformation on every change (`npm run rename`, workflow `test_rename.yaml`) to guarantee the codebase stays renameable.
+The renamed copy is a complete, installable abapGit project under your own namespace — install it side by side with the original, pin it to a release, or ship it inside your product. The abap2UI5 CI runs this transformation on every change (`npm run rename`, workflow `build-rename.yaml`) to guarantee the codebase stays renameable.
 
 ### Step-by-Step Guide
-Everything is already set up in the main repository: the on-demand GitHub Action `build_rename` renames all artifacts to a namespace of your choice and pushes the result as a ready-to-install branch. Renaming abap2UI5 takes just two steps:
+Everything is already set up in the main repository: the on-demand GitHub Action `build-rename` renames all artifacts to a namespace of your choice and pushes the result as a ready-to-install branch. Renaming abap2UI5 takes just two steps:
 
 1. **Fork** the [abap2UI5 repository](https://github.com/abap2UI5/abap2UI5)
-2. **Run the Action** — in your fork, open the *Actions* tab (enable workflows when asked), select the **build_rename** workflow, and start it with your new namespace (a letter followed by letters, digits or underscores, max. 10 characters, e.g., `ZMYUI5`)
+2. **Run the Action** — in your fork, open the *Actions* tab (enable workflows when asked), select the **build-rename** workflow, and start it with your new namespace (a letter followed by letters, digits or underscores, max. 10 characters, e.g., `ZMYUI5`)
 
 The workflow runs `abaplint --rename` with the checked-in configuration `.github/abaplint/rename.jsonc` and pushes the renamed sources to the branch `rename_<name>` (e.g., `rename_zmyui5`). The branch contains the complete renamed `src` tree together with a matching `.abapgit.xml` — **pull it with abapGit** into your ABAP system for a parallel installation next to the original.
 
@@ -220,9 +220,10 @@ in `CATCH cx_root`, so nothing is reported: the installation just runs with the
 default configuration and your [user exit](/advanced/extensibility/user_exits) is
 never called — no custom theme, no bootstrap configuration, no CSP override.
 
-::: warning Patch the two literals after renaming
+::: warning Patch the literals after renaming
 In your renamed branch, change the literals in `get_user_exit_class( )` to your
-own namespace (`` `ZMYUI5_IF_EXIT` `` and `` `ZMYUI5_CL_UI5_USER_EXIT` ``). Only
+own namespace (`` `ZMYUI5_IF_UI5_EXIT` ``, `` `ZMYUI5_CL_UI5_USER_EXIT` `` and
+the `` `ZMYUI5_IF_EXIT` `` fallback beside them). Only
 apps that use a user exit are affected — everything else in the renamed
 installation works without a change.
 :::

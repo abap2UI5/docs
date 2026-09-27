@@ -44,9 +44,10 @@ That is the form a browser bookmark, a Launchpad tile and every sample
 catalog use — the sample pages all say "start it with `?app_start=<class>`"
 and mean exactly this.
 
-If launching reports `The app 'ZCL_APP_HELLO_WORLD' does not exist in the
-system.`, the framework could not instantiate the class: a typo in the name, or
-the class is not activated yet. Anything that goes wrong *after* this point —
+If launching reports `Class ZCL_APP_HELLO_WORLD does not exist or does not
+implement z2ui5_if_app`, the framework could not instantiate the class: a typo
+in the name, the class is not activated yet, or `INTERFACES z2ui5_if_app` is
+missing. Anything that goes wrong *after* this point —
 an app that renders empty, a binding that does not update, an error view on a
 roundtrip — is cataloged with symptom, cause and fix in
 [Common Failures](/cookbook/troubleshooting/common_failures).
@@ -116,9 +117,9 @@ happening, and none of them needed any code you had to write yourself:
 
 ## Jump into the Code
 
-Press `Ctrl+F12` in any running app to open the **Developer Tools** — tabs for
-the app's source code, the rendered view XML, the model data, the
-request/response pair and the error log. It is the first place to look when
+Press `Ctrl+F12` in any running app to open the **Developer Tools** — the
+problems, every roundtrip with its request and response, the rendered view XML
+and the model data of each slot. It is the first place to look when
 something does not render the way you expected:
 
 ![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.webp)

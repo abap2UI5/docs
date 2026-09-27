@@ -10,7 +10,7 @@ Value help (the classic ABAP **F4** input help) lets users pick a value from a l
 
 ## Suggestions on the Input
 
-The lightest variant — type-ahead from a bound list, no popup, no roundtrip after the initial render. Bind `suggestionitems` to an internal table and pick the columns via the `suggestion_item` template:
+The lightest variant — type-ahead from a bound list, no popup, no roundtrip after the initial render. Bind the `suggestionItems` aggregation to an internal table and pick the columns in its item template:
 
 ```abap
 TYPES: BEGIN OF ty_country,
@@ -136,9 +136,6 @@ pressable — without it the `press` event never fires.
 
 For a ready-made picker with sorting, multi-select and a search field, the
 [popups add-on](https://github.com/abap2UI5-addons/popups) carries one.
-
-
-Pass `i_multiselect = abap_true` for multi-pick; the result table is then in `ls_res-table`.
 
 ## DDIC Search Help
 

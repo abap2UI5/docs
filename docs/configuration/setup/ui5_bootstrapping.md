@@ -30,7 +30,7 @@ Without an override, abap2UI5 uses the OpenUI5 cache-buster URL — i.e. the cur
 | `https://ui5.sap.com/1.71/resources/sap-ui-core.js`                         | Oldest supported version |
 
 ::: tip CSP and older releases
-The module loader of older UI5 releases (such as `1.71`) still relies on `eval()`. The default Content Security Policy therefore includes `'unsafe-eval'`, so even `1.71` bootstraps out of the box. If you pin a modern release, consider removing `'unsafe-eval'` from the CSP for extra hardening — see [Hardening: Dropping `'unsafe-eval'`](/configuration/security#hardening-dropping-unsafe-eval).
+The default Content Security Policy carries no `'unsafe-eval'`; UI5 bootstraps and runs without it from `1.84` on, and `1.71` does too, unless a popup names a module it has not loaded yet. Only then does an old release need it switched on in the user exit — see [Older releases](/configuration/security#older-releases-switching-unsafe-eval-on).
 :::
 
 ### OpenUI5 vs SAPUI5

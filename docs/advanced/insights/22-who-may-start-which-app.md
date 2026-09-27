@@ -52,7 +52,7 @@ with the refusal branch and what it should say, is on
 [Authorization](/configuration/authorization).
 
 What the framework itself brings to the table is the part a web application
-needs and a report never did. A CSRF token on every POST, on by default. A
+needs and a report never did. A CSRF check on every POST, on by default. A
 Content Security Policy on the first page, restricting what the browser will
 load, tightened in the user exit when an old UI5 release no longer has to be
 served. Error details off in production, as

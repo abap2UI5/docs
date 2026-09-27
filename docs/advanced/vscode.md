@@ -321,7 +321,7 @@ navigation map; the Control Properties view; and the MCP servers.
 | `abap2ui5.openMode` | `tab` | `tab`, `panel` or `external` |
 | `abap2ui5.reloadOn` | `activation` | When the preview reloads: `activation`, `save` or `never` |
 | `abap2ui5.viewCheck.minUi5` | `1.71` | The UI5 version your system runs |
-| `abap2ui5.viewCheck.distribution` | `sapui5` | Which distribution the system serves |
+| `abap2ui5.viewCheck.distribution` | *(not decided)* | Which distribution the system serves — `sapui5` or `openui5`; undecided, a control from a SAPUI5-only library is a hint |
 | `abap2ui5.viewCheck.live` | `true` | Run the property gate while typing |
 | `abap2ui5.viewCheck.render` | `false` | Also run the headless render gate |
 | `abap2ui5.viewPreview.theme` | `sap_horizon` | Theme the systemless preview renders in |

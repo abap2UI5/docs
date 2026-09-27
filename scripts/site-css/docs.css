@@ -171,7 +171,7 @@
 /* Below 1100 the outline goes, exactly as it does on a sample page. The menu
    stays: it is a drawer at this width already, and a manual with no way into
    its other chapters is not one. */
-@media (max-width: 1100px) {
+@media (max-width: 1099.98px) {
   .manual { grid-template-columns: minmax(0, 1fr); }
   .manual .outline { display: none; }
 }
@@ -1096,9 +1096,17 @@ html { scrollbar-gutter: stable; }
  * be broken across two sheets if it fits on one, and a heading may not be
  * the last thing on a sheet. */
 @media print {
-  .bar, .sidebar, .outline, .prev-next, .skip, .side-button, .side-scrim, .run-panel { display: none !important; }
+  .bar, .sidebar, .outline, .prev-next, .skip, .side-button, .side-scrim,
+  .a2ui5-play-run, .a2ui5-play-bar, .a2ui5-play-fold, .abap2ui5-demo, .doc-foot .edit { display: none !important; }
   html { scroll-padding-top: 0; }
-  body { background: #fff; }
+  /* The palette back to light, whatever the reader chose on screen: the site
+     switches schemes by attribute (data-theme), which a browser's print
+     emulation does not touch - so a dark page printed #e6e7ea on white. */
+  :root, :root[data-theme="dark"] {
+    --bg: #fff; --bg-sunken: #f4f5f7; --fg: #1c1d21; --fg-dim: #6a6d76; --line: #d9dbe0;
+    color-scheme: light;
+  }
+  body { background: #fff; color: var(--fg); }
   .manual, .doc-body, .home { display: block; max-width: none; margin: 0; padding: 0; }
   .vp-doc { max-width: none; }
   a { color: inherit; }
