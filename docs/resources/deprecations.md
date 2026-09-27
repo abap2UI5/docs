@@ -442,10 +442,10 @@ The controls still ship and views that use them keep rendering. See
 [Frontend](/cookbook/event_navigation/frontend) for the full argument
 list of each event.
 
-A `Timer` can keep the busy indicator down for its tick: its `finished` event
-is an ordinary `_event( )` wire, so it takes `s_ctrl-check_no_busy`. The same
-flag is a third argument of `cs_event-start_timer`, `` `X` `` (*next release*)
-— see [Timer](/cookbook/browser_interaction/timer#without-the-busy-indicator).
+Migrating a `Timer` whose `finished` wire kept the busy indicator down with
+`s_ctrl-check_no_busy`: `cs_event-start_timer` takes the same flag as its third
+argument, `` `X` `` (*next release*) — see
+[Timer](/cookbook/browser_interaction/timer#without-the-busy-indicator).
 
 ### `cs_config-title` → `cs_event-set_title`
 
