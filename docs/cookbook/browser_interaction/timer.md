@@ -18,6 +18,8 @@ client->follow_up_action(
 
 After 2 seconds the browser triggers a backend roundtrip with the event name `REFRESH`, which you handle via `check_on_event` like any other event.
 
+An optional third argument keeps the busy indicator down for the tick — see [Without the Busy Indicator](#without-the-busy-indicator).
+
 ## Periodic Refresh
 
 To get a repeating timer, simply re-arm it at the end of each handler:
@@ -85,6 +87,21 @@ WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
 ## Replacing a Pending Timer
 
 There is one timer at a time. Calling `start_timer` again before the previous one fires replaces it — useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke.
+
+## Without the Busy Indicator
+
+Each tick is a backend roundtrip like any other, so when the backend takes longer than a second, the full-screen busy indicator comes up. For a tick nobody is waiting on — a background poll, or a carousel or ticker that moves on by itself — the overlay then flashes over a screen the user is only reading. Pass `` `X` `` as a third argument to keep it down for that tick:
+
+```abap
+WHEN client->check_on_event( `TICK` ).
+  " read the new status ...
+  client->follow_up_action( val   = client->cs_event-start_timer
+                            t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `X` ) ) ).
+```
+
+The flag belongs to the tick that call arms, so a repeating timer passes it again every time it re-arms. Write it as the string `` `X` ``, not `abap_true`: `t_arg` is a string table, and abaplint's syntax check rejects a `c` value such as `abap_true` as one of its rows.
+
+Only the overlay goes — the flag does for the tick what [`check_no_busy`](/resources/api#event) does for an `_event( )` wire. The tick is still the one roundtrip in flight: a click that lands while it runs is dropped, as during any roundtrip, and brings the overlay up at once. Leave the flag off for a tick the user is actually waiting for; there the overlay is what tells them the app is working.
 
 ::: warning
 Each timer tick causes a full backend roundtrip. Use sensible intervals (e.g. 2000 ms or more) to avoid heavy server load.
