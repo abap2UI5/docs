@@ -28,5 +28,5 @@ You'll see output like this:
 Convert the UI5 app to stringified ABAP:
 ```sh
 cd ..
-npm run auto_app2abap
+npm run app2abap
 ```

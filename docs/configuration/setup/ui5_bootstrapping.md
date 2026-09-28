@@ -35,10 +35,10 @@ The default Content Security Policy carries no `'unsafe-eval'`; UI5 bootstraps a
 
 ### OpenUI5 vs SAPUI5
 
-- **OpenUI5** (`sdk.openui5.org`) is the Apache-licensed open-source subset of UI5. It contains all libraries a typical abap2UI5 app uses: `sap.m`, `sap.ui.core`, `sap.ui.layout`, `sap.ui.table`, `sap.ui.unified`, `sap.uxap`, `sap.f`, `sap.tnt`, `sap.viz`.
-- **SAPUI5** (`ui5.sap.com`) is the SAP-licensed superset. It adds e.g. `sap.ui.comp` (Smart Controls, `ValueHelpDialog`), `sap.suite.ui.commons`, `sap.ui.generic.app` and the Fiori Elements floorplans.
+- **OpenUI5** (`sdk.openui5.org`) is the Apache-licensed open-source subset of UI5. It contains all libraries a typical abap2UI5 app uses: `sap.m`, `sap.ui.core`, `sap.ui.layout`, `sap.ui.table`, `sap.ui.unified`, `sap.uxap`, `sap.f`, `sap.tnt`.
+- **SAPUI5** (`ui5.sap.com`) is the SAP-licensed superset. It adds e.g. `sap.ui.comp` (Smart Controls, `ValueHelpDialog`), `sap.viz` (`VizFrame` charts), `sap.ui.richtexteditor` (`RichTextEditor`), `sap.ui.export` (spreadsheet export), `sap.suite.ui.commons`, `sap.ui.generic.app` and the Fiori Elements floorplans.
 
-If you only need controls available in OpenUI5 — which covers the vast majority of abap2UI5 apps — stick with `sdk.openui5.org`. Switch to `ui5.sap.com` only when you genuinely need a `sap.ui.comp.*` control or a SAPUI5-only library.
+If you only need controls available in OpenUI5 — which covers the vast majority of abap2UI5 apps — stick with `sdk.openui5.org`. Switch to `ui5.sap.com` only when you genuinely need a `sap.ui.comp.*` control or another SAPUI5-only library: OpenUI5 cannot load their controls.
 
 ### Pinning a Version
 
