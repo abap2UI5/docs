@@ -134,6 +134,10 @@ Embed your apps into:
 - Fiori Launchpads on S/4 On-Premise
 - Tiles on S/4 Public Cloud
 - Build Work Zone Websites on BTP
+- Any UI5 app of your own, a Fiori elements page or a UI Integration Card, with the [embed control](https://github.com/abap2UI5/embed-control) (`@abap2ui5/embed-control` on npm)
+
+### Beyond the ABAP Stack
+The framework also runs without an SAP system: every release is published as `@abap2ui5/node-runtime`, abap2UI5 transpiled to JavaScript. [cap2UI5](https://cap2ui5.github.io/docs/) builds on it and hosts abap2UI5 in a CAP project (`@cap2ui5/cds-plugin`), with the samples as `@cap2ui5/samples`.
 
 ## Tooling, Community
 

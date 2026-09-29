@@ -585,6 +585,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Tooling", link: "/advanced/tooling" },
+              { text: "npm Packages", link: "/advanced/npm_packages" },
               { text: "abap2UI5 linter", link: "/advanced/linter" },
               { text: "MCP Server", link: "/advanced/mcp_server" },
               { text: "VS Code Extension", link: "/advanced/vscode" },
