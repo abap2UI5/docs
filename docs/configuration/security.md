@@ -28,13 +28,15 @@ To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default
 
 The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts: nothing abap2UI5 ships evaluates code, and UI5 from `1.84` on loads its modules without `eval()`. The page's one inline script is allowed by its SHA-256 hash, which the framework appends to `script-src` after the exit ran, so an injected `<script>`, an `onerror=` attribute or a `javascript:` URL is refused by the browser. Only a popup on UI5 `1.71` to `1.82` can still need `'unsafe-eval'` — see [Older releases](#older-releases-switching-unsafe-eval-on) below.
 
+What `script-src` does carry is `'wasm-unsafe-eval'`. It lets a script the page already runs compile WebAssembly and nothing else — a string still never becomes code. The camera scanner of SAPUI5 (`sap.ndc.BarcodeScannerButton`) decodes the picture with WebAssembly, and without the keyword it stops with a `CompileError`. A policy you write yourself in the exit has to keep it for the scanner.
+
 ### Default CSP
 By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`; the framework appends the hash of the page's inline script to `script-src` afterwards):
 ```xml
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:
     ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
     openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org schemas *.schemas;
-    script-src 'self' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
+    script-src 'self' 'wasm-unsafe-eval' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
     openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org;
     style-src 'self' 'unsafe-inline' ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
     openui5.hana.ondemand.com *.openui5.hana.ondemand.com sdk.openui5.org *.sdk.openui5.org;
