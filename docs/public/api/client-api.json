@@ -35,6 +35,18 @@
           "type": "clike",
           "optional": true,
           "doc": "the service URL of an OData V2 service to install as the view's DEFAULT model, for smart controls that bind against OData metadata (`/sap/opu/odata/IWBEP/GWSAMPLE_BASIC/`). abap2UI5's own data then lives in the named `http` model, reached with `_bind( val = ... switch_default_model = abap_true )`."
+        },
+        {
+          "name": "transition",
+          "type": "clike",
+          "optional": true,
+          "doc": "the page transition the new view arrives with - a cs_transition value. The old view stays on screen until the new one is built and then leaves with the animation. Empty: the view is swapped without one, as before. Pass it where the SCREEN changes - the check_on_navigated( ) branch - not on every re-render. Going back plays the sap.m.NavContainer rule: the page being left runs the transition it arrived with in reverse, whatever is passed here, and this value is what the new page will leave with on the next way back."
+        },
+        {
+          "name": "transition_back",
+          "type": "abap_bool",
+          "default": "abap_false",
+          "doc": "abap_true plays the change as a way BACK - for an app that steps back between its own screens, a wizard's Previous button. Not needed after nav_app_leave( ) or the browser Back button under hash_routing: both are recognized."
         }
       ]
     },
@@ -977,6 +989,39 @@
           "name": "keep",
           "type": "string",
           "value": "KEEP"
+        }
+      ]
+    },
+    {
+      "name": "cs_transition",
+      "doc": [
+        "The page transitions of view_display( transition = ... ) - the names sap.m.NavContainer.to( ) takes, played by the framework's root sap.m.App when it replaces the MAIN view: slide      - the new page comes in from the right (since the Fiori 3 themes a short slide combined with a fade) base_slide - the classic full-width slide. UI5 1.74 and newer; an older release plays slide instead fade       - the pages cross-fade flip       - the page turns over show       - no animation, but the old page stays up until the new one is built, and the change counts for the way back"
+      ],
+      "members": [
+        {
+          "name": "slide",
+          "type": "string",
+          "value": "slide"
+        },
+        {
+          "name": "base_slide",
+          "type": "string",
+          "value": "baseSlide"
+        },
+        {
+          "name": "fade",
+          "type": "string",
+          "value": "fade"
+        },
+        {
+          "name": "flip",
+          "type": "string",
+          "value": "flip"
+        },
+        {
+          "name": "show",
+          "type": "string",
+          "value": "show"
         }
       ]
     }
