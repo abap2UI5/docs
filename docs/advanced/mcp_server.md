@@ -116,7 +116,7 @@ far, and it is what buys an agent the ability to look at what it built.
 **Claude Code:**
 
 ```sh
-claude mcp add abap2ui5 -- npx --yes @abap2ui5/mcp-server
+claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server abap2ui5-mcp
 ```
 
 From a checkout instead: `claude mcp add abap2ui5 -- node
@@ -131,7 +131,7 @@ stdio shape:
   "mcpServers": {
     "abap2ui5": {
       "command": "npx",
-      "args": ["--yes", "@abap2ui5/mcp-server"],
+      "args": ["--yes", "-p", "@abap2ui5/mcp-server", "abap2ui5-mcp"],
       "env": {
         "AI_VIEW_CHECK_HOME": "/path/to/linter",
         "A2UI5_HOME": "/path/to/abap2UI5",
