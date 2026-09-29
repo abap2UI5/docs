@@ -12,7 +12,8 @@ app without leaving the editor.
 They are independent of each other. Take the first one and stop, or take all
 three. Building with an AI assistant? That whole side of the tooling — the
 indexes, the agent conventions, the MCP server — is collected on
-[Developing with AI](/get_started/ai).
+[Developing with AI](/get_started/ai). Which npm package does what, and which
+versions go together, is on [npm Packages](/advanced/npm_packages).
 
 ## Start a project from the template
 
