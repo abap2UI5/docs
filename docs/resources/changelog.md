@@ -7,6 +7,16 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.146.0
+2026-09-29
+- Embedded mode: a component loaded through `?z2ui5-bundle` (`z2ui5.embed.Container` of [abap2UI5/embed-control](https://github.com/abap2UI5/embed-control)), or given `componentData.embedded = true` by a host's `ComponentContainer`, leaves the URL to its host - it neither reads nor writes the hash. A Fiori elements object page keeps its route across roundtrips
+- Embedded mode: an app no longer takes the focus from the host page, leaves no `z2ui5` global behind, and its developer tools no longer capture the host's console and errors. Restart in the error dialog restarts the app in place instead of reloading the host's page
+- Page transitions: `view_display( transition = ... )` animates the new main view (`slide`, `baseSlide`, `fade`, `flip`, `show`); `nav_app_leave( )`, the browser Back button and `transition_back = abap_true` play it reversed. Try them with the sample `Z2UI5_CL_SMP_APP_531`
+- `cs_event-start_timer` takes `` `X` `` as its third argument to keep the busy indicator down for a tick
+- Security: the default CSP allows `'wasm-unsafe-eval'` for scripts, so the WebAssembly barcode scanners (`sap.ndc.BarcodeScannerButton`, the BarcodeScanner of abap2UI5-addons) work; `'unsafe-eval'` stays out
+- New on npm: `@abap2ui5/bsp` - a UI5 app as an abapGit BSP and back (`npx @abap2ui5/bsp app2bsp webapp --name ZMYAPP`, `bsp2app`, `check`)
+- `@abap2ui5/node-runtime`: responses are compressed with gzip, a roundtrip with a large table is linear again, express 4 works next to express 5, own app classes that extend something load, and the test apps `ZCL_TST_*` are no longer in the package
+
 ## 1.145.0
 2026-09-26
 - Security: the default Content Security Policy no longer allows `'unsafe-inline'` or `'unsafe-eval'` for scripts. The page's one inline script runs by its SHA-256 hash, and the default names `img-src` and `media-src` explicitly - an exit that needs a cross-origin icon or sound host adds it there. On UI5 1.71 to 1.82, only a module a popup names in a binding type or `core:require` still needs `'unsafe-eval'`; switch it on in `z2ui5_if_ui5_exit`

@@ -40,7 +40,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.145.0**. Entries marked *next release* are already
+The released version is **1.146.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
@@ -444,7 +444,7 @@ list of each event.
 
 Migrating a `Timer` whose `finished` wire kept the busy indicator down with
 `s_ctrl-check_no_busy`: `cs_event-start_timer` takes the same flag as its third
-argument, `` `X` `` (*next release*) — see
+argument, `` `X` `` (1.146.0) — see
 [Timer](/cookbook/browser_interaction/timer#without-the-busy-indicator).
 
 ### `cs_config-title` → `cs_event-set_title`
