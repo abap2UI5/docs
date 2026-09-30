@@ -6,7 +6,9 @@ samples:
 ---
 # XML Templating
 
-XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace — `template:repeat`, `template:if`, `template:then`, `template:else`, `template:with` — and expands them into plain XML *before* the control tree is created. abap2UI5 exposes these instructions through the fluent builder so you can drive the expansion from ABAP data.
+XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace — `template:repeat`, `template:if`, `template:then`, `template:elseif`, `template:else`, `template:with` — and expands them into plain XML *before* the control tree is created. abap2UI5 exposes these instructions through the fluent builder so you can drive the expansion from ABAP data.
+
+It is the technique behind every **metadata-driven** UI: the input of the expansion is a *meta model* — data about the view, such as which columns a table has or which fields of which type a form shows — rather than the data the controls display. A UI5 app hands the preprocessor the OData meta model of its service; in abap2UI5 the meta model is plain ABAP data you bind like any other attribute (see [Meta Model](#meta-model-a-form-from-a-field-catalog) below).
 
 See the official UI5 references for the underlying mechanics:
 [XML Templating](https://sapui5.hana.ondemand.com/sdk/#/topic/5ee619fc1370463ea674ee04b65ed83b),
@@ -75,7 +77,7 @@ Notes on the snippet:
 - `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells). `template` is an element namespace like any other, so the builder needs nothing beyond `ns = template` on the element — the prefix itself is declared once on the view's root.
 - Inside the loop, `{L0>FNAME}` is a templating-time read — it ends up as the literal string `NAME`/`DATE`/`AGE` in the expanded XML.
 - `{= '{' + ${L1>FNAME} + '}' }` is an [expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0) that **constructs another binding string at templating time**. With `L1>FNAME = NAME` it expands to `text="{NAME}"`, which becomes a normal runtime binding against the row of `mt_data`. This is the standard pattern for templated tables: outer loop builds the columns, inner loop builds the cells, expression binding wires each cell to the right field of the row.
-- `template_repeat` accepts the same optional attributes as the UI5 instruction (`startIndex`, `length`) plus list-binding extras like sorters and filters.
+- `list` is a list binding like any other, so it takes the binding-info form too: `{path: '...', startIndex: 0, length: 2}` cuts the loop to a slice of the table — see [Meta Model](#meta-model-a-form-from-a-field-catalog) below.
 
 The full sample is `Z2UI5_CL_SMP_APP_173`.
 
@@ -200,7 +202,117 @@ view->ele( n = `if` ns = `template`
 
 The test argument follows the same rules as in UI5: any binding expression is fine, and the string `"false"` is treated as boolean `false` (a UI5 convenience). For richer conditions use expression binding, e.g. `` `{= ${template>/MV_COUNT} > 0 }` ``.
 
-`template:elseif` is also supported by UI5, and needs nothing extra here: it is the same `ele` call with a different name, `ns = template` and a `test` attribute. That is the point of the builder — every templating instruction UI5 has is reachable the moment UI5 has it, without waiting for a method.
+`template:elseif` is also supported by UI5, and needs nothing extra here: it is the same `ele` call with a different name, `ns = template` and a `test` attribute, placed between the `then` and the `else`. That is the point of the builder — every templating instruction UI5 has is reachable the moment UI5 has it, without waiting for a method. The form in the next section picks one of four controls with it.
+
+## Meta Model: a Form from a Field Catalog
+
+The table above is driven by a flat list. A form usually needs more: fields in groups, and a control that depends on the type of the field. That is a meta model in the sense of UI5's OData meta model — a description of the entity — and in abap2UI5 it is a deep ABAP structure:
+
+```abap
+TYPES:
+  BEGIN OF ty_s_field,
+    name  TYPE string,
+    label TYPE string,
+    type  TYPE string,
+  END OF ty_s_field,
+  ty_t_field TYPE STANDARD TABLE OF ty_s_field WITH EMPTY KEY.
+
+TYPES:
+  BEGIN OF ty_s_group,
+    title   TYPE string,
+    t_field TYPE ty_t_field,
+  END OF ty_s_group,
+  ty_t_group TYPE STANDARD TABLE OF ty_s_group WITH EMPTY KEY.
+
+TYPES:
+  BEGIN OF ty_s_meta,
+    entity  TYPE string,
+    t_group TYPE ty_t_group,
+  END OF ty_s_meta.
+
+ms_meta = VALUE #(
+  entity  = `Person`
+  t_group = VALUE #(
+    ( title   = `General`
+      t_field = VALUE #( ( name = `NAME` label = `Name`       type = `STRING` )
+                         ( name = `DATE` label = `Birth Date` type = `DATE` )
+                         ( name = `CITY` label = `City`       type = `STRING` ) ) )
+    ( title   = `Details`
+      t_field = VALUE #( ( name = `AGE`    label = `Age`    type = `NUMBER` )
+                         ( name = `ACTIVE` label = `Active` type = `BOOLEAN` ) ) ) ) ).
+```
+
+Four instructions turn it into a form:
+
+- **`template:with`** gives the meta model a short name: `path = template>/MS_META`, `var = meta`, and everything inside reads `{meta>...}`. The `path` attribute is a plain path, without braces.
+- **Nested `template:repeat`** — the outer loop runs over the groups and writes a `core:Title` per group, the inner one runs over `{group>T_FIELD}`, a path relative to the outer loop's variable, and writes a `Label` and a control per field.
+- **`template:if` / `template:elseif` / `template:else`** picks that control from the field's type.
+- **`startIndex` / `length`** in the binding info of a `list` cut the loop — the header shows the first two fields of the first group only.
+
+The values the controls show are ordinary runtime bindings. The container carries an element binding to the record (`binding = {/MS_DETAIL}`), and each control's value is composed at templating time from the field name, the same expression-binding trick as the table cells above:
+
+```abap
+DATA(box) = view->ele( n = `with` ns = `template`
+    )->a( n = `path` v = `template>/MS_META`
+    )->a( n = `var`  v = `meta`
+    )->ele( `VBox`
+        )->a( n = `binding` v = `{/MS_DETAIL}` ).
+
+box->ele( `ObjectHeader`
+    )->a( n = `title` v = `{meta>ENTITY}`
+    )->ele( `attributes`
+        )->ele( n = `repeat` ns = `template`
+            )->a( n = `list` v = `{path: 'meta>T_GROUP/0/T_FIELD', startIndex: 0, length: 2}`
+            )->a( n = `var`  v = `head`
+            )->tag( `ObjectAttribute`
+                )->a( n = `title` v = `{head>LABEL}`
+                )->a( n = `text`  v = `{= '{' + ${head>NAME} + '}' }` ).
+
+DATA(field) = box->ele( n = `SimpleForm` ns = `form`
+    )->a( n = `editable` b = abap_true
+    )->a( n = `layout`   v = `ResponsiveGridLayout`
+    )->ele( n = `content` ns = `form`
+        )->ele( n = `repeat` ns = `template`
+            )->a( n = `list` v = `{meta>T_GROUP}`
+            )->a( n = `var`  v = `group`
+            )->tag( n = `Title` ns = `core`
+                )->a( n = `text` v = `{group>TITLE}`
+            )->ele( n = `repeat` ns = `template`
+                )->a( n = `list` v = `{group>T_FIELD}`
+                )->a( n = `var`  v = `field` ).
+
+field->tag( `Label`
+    )->a( n = `text` v = `{field>LABEL}` ).
+
+field->ele( n = `if` ns = `template`
+    )->a( n = `test` v = `{= ${field>TYPE} === 'BOOLEAN' }`
+    )->ele( n = `then` ns = `template`
+        )->tag( `Switch`
+            )->a( n = `state` v = `{= '{' + ${field>NAME} + '}' }`
+    )->end(
+    )->ele( n = `elseif` ns = `template`
+        )->a( n = `test` v = `{= ${field>TYPE} === 'DATE' }`
+        )->tag( `DatePicker`
+            )->a( n = `value`       v = `{= '{' + ${field>NAME} + '}' }`
+            )->a( n = `valueFormat` v = `yyyy-MM-dd`
+    )->end(
+    )->ele( n = `elseif` ns = `template`
+        )->a( n = `test` v = `{= ${field>TYPE} === 'NUMBER' }`
+        )->tag( `StepInput`
+            )->a( n = `value` v = `{= '{' + ${field>NAME} + '}' }`
+    )->end(
+    )->ele( n = `else` ns = `template`
+        )->tag( `Input`
+            )->a( n = `value` v = `{= '{' + ${field>NAME} + '}' }` ).
+```
+
+Move a field to the other group, reorder it or change its type, and the form follows — no view code changes. In the sample the paths are composed from `client->_bind( val = ms_meta path = abap_true )` rather than written as literals; the literals above only keep the snippet short.
+
+The full sample is `Z2UI5_CL_SMP_APP_173`.
+
+::: warning Only the `template>` model
+The frontend hands the preprocessor exactly one model: the view's JSON model, as `template`. A UI5 OData meta model — `{meta>/...}` against the `$metadata` of a service, `sap.ui.model.odata.AnnotationHelper` — is not available at templating time, not even with an OData default model from `switch_default_model_path`. Read the metadata in ABAP and bind the result, as above.
+:::
 
 ## Re-rendering
 
@@ -229,7 +341,8 @@ DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->ele( `Shell`
             )->ele( `Page`
                 )->a( n = `title` v = `Main View`
-                )->a( n = `id`    v = `test` ).   " ...
+                )->tag( `VBox`
+                    )->a( n = `id` v = `box_nest` ).   " ...
 
 client->view_display( view->stringify( ) ).
 
@@ -255,13 +368,21 @@ DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
 
                             )->ele( `Column` ).   " ...
 
-client->nest_view_display( val           = nested->stringify( )
-                           id            = `test`
-                           method_insert = `addContent` ).
+client->nest_view_display( val            = nested->stringify( )
+                           id             = `box_nest`
+                           method_insert  = `addItem`
+                           method_destroy = `removeAllItems` ).
 
 ```
 
-`nest_view_display` targets a control in the existing view by id (`test`) and appends/replaces the nested view there. To refresh the templated piece on a data change, call `nest_view_display` again from the event handler — the main view is left untouched.
+`nest_view_display` targets a control in the existing view by id (`box_nest`) and appends/replaces the nested view there. Give the nested view a container of its own: `method_destroy` empties the whole aggregation, so a nested view inserted into the page's `content` would take everything else on the page with it on the next render. To refresh the templated piece on a data change, call `nest_view_display` again from the event handler — the main view is not sent and stays as it is:
+
+```abap
+ELSEIF client->check_on_event( `TOGGLE_AGE` ).
+  ASSIGN mt_layout[ fname = `AGE` ] TO FIELD-SYMBOL(<age>).
+  <age>-visible = COND #( WHEN <age>-visible = `true` THEN `false` ELSE `true` ).
+  nest_view_display( ).
+```
 
 ## Templating vs ABAP-side Composition
 
@@ -273,6 +394,7 @@ The two demo apps both build *dynamic* views, but with different mechanics. Pick
 | Number of controls comes from an internal table, computed once       | ABAP `LOOP` over the table, calling the builder for each row                         |
 | Reusable XML fragment that UI5 itself should expand against metadata | `template:repeat` / `template:if` — keeps the templating logic in the view layer     |
 | Cells of a table where the column set itself is data-driven          | `template:repeat` — UI5 expands columns and cell bindings in one pass, as in app 173 |
+| A form or table described by a meta model (groups, fields, types)    | `template:with` + nested `template:repeat` + `template:if`/`elseif`, as in app 173   |
 
 Plain ABAP control flow covers most cases and is easier to debug. Reach for `template:` when you want the expansion to live in the view (closer to standard UI5 patterns) or when you are mapping a metadata-style structure onto controls.
 
@@ -283,7 +405,7 @@ Plain ABAP control flow covers most cases and is easier to debug. Reach for `tem
 - Use expression binding (`{= ... }`) when the value you need is a binding string itself. Templating-time expressions can read `${var>...}` and concatenate strings, which is how dynamic cell bindings are assembled.
 - If a templated control does not update after a data change, you forgot to rebuild — call `view_display` or `nest_view_display` again.
 
-See `Z2UI5_CL_SMP_APP_173` for `template:repeat` + `template:if` in a single view and `Z2UI5_CL_SMP_APP_176` for the stable-shell / templated-nested-view pattern.
+See `Z2UI5_CL_SMP_APP_173` for `template:repeat`, `template:if`/`elseif`/`else`, `template:with` and a form generated from a meta model in a single view, and `Z2UI5_CL_SMP_APP_176` for the stable-shell / templated-nested-view pattern with a re-render on an event.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 
@@ -296,7 +418,7 @@ unless its row names another of the three sample repositories — pull that repo
 
 | Sample | Class |
 |---|---|
-| Build Columns Dynamically (template:repeat) | [`Z2UI5_CL_SMP_APP_173`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_173.clas.abap) |
+| Metadata-Driven Table and Form | [`Z2UI5_CL_SMP_APP_173`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_173.clas.abap) |
 | Dynamic Content in a Nested View | [`Z2UI5_CL_SMP_APP_176`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_176.clas.abap) |
 
 <!-- samples:end -->
