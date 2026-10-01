@@ -200,6 +200,17 @@ const BAR = (() => {
      the manual. Here the front of the section is the manual's own. */
   if (!brand.test(bar)) throw new Error(`no wordmark in the bar from ${frame.from}`);
   bar = bar.replace(brand, `$1${HOME}"`);
+  /* THE MARK BESIDE THE NAME IS THIS DEPLOYMENT'S OWN FILE. The rewrite above
+     turned the sample page's `../../favicon.png` into the playground's
+     published copy - a request to a neighbouring deployment in front of the
+     first paint, and one the page's own policy refuses: img-src names this
+     origin's path and the two GitHub hosts (scripts/lib/csp.mjs), not
+     /playground/, so every page of the manual drew a broken-image glyph
+     where the mark belongs. The same PNG is committed under docs/public,
+     which is where every other image on the page comes from. */
+  const mark = /(<a class="brand"[^>]*>\s*<img[^>]*?\bsrc=")[^"]*"/;
+  if (!mark.test(bar)) throw new Error(`no mark in the wordmark of the bar from ${frame.from}`);
+  bar = bar.replace(mark, `$1${BASE}favicon.png"`);
   /* THE SAMPLES ITEM HAS TO SAY WHICH SECTION IT RESTORES.
    *
    * The bar is lifted from a per-sample page, where Samples is the section the
@@ -361,11 +372,33 @@ function sidebarFor(route) {
       ? `<a class="side-item level-${level}${here ? ' here' : ''}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
       : `<span class="side-item level-${level}">${esc(i.text)}</span>`;
     const key = [...trail, i.text].join(' / ');
+    /* A GROUP WITHOUT A `collapsed` KEY IS A PLAIN LABELLED LIST. That is
+       VitePress's rule and the one config.mjs is written to: the walkthrough's
+       twelve steps, Binding's two pages, the thirty-six insights - "the
+       sequence IS the tutorial, so a reader working through it has to see
+       where they are on every page". This build gave every group a caret and
+       opened only the one holding the current page, so from any other chapter
+       Tutorial unfolded to a single closed row saying Walkthrough, and a
+       second press was needed to see that there were steps at all. No box, no
+       caret, always open: the label keeps the caret's width so its word lines
+       up with the words beside it, and site.js has nothing to remember for
+       it - a list that cannot be folded has no state. */
+    if (i.collapsed === undefined) {
+      const label = href
+        ? `<a class="side-label${here ? ' here' : ''}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
+        : `<span class="side-label">${esc(i.text)}</span>`;
+      return `<div class="side-group side-plain level-${level}">`
+        + `<div class="side-row"><span class="side-caret side-caret-none" aria-hidden="true"></span>${label}</div>`
+        + `<div class="side-items">${tree(i.items, level + 1, [...trail, i.text])}</div></div>`;
+    }
     const id = `side-box-${++boxes}`;
     const label = href
       ? `<a class="side-label${here ? ' here' : ''}" href="${esc(href)}"${on}>${esc(i.text)}</a>`
       : `<label class="side-label" for="${id}">${esc(i.text)}</label>`;
-    return `<input class="side-toggle" type="checkbox" id="${id}"${holds(i) ? ' checked' : ''} aria-label="${esc(i.text)}: open the section">`
+    /* Open when the page is inside it, or when the sidebar says it starts
+       open (`collapsed: false`); the reader's own toggles come back from
+       storage in site.js on top of this. */
+    return `<input class="side-toggle" type="checkbox" id="${id}"${holds(i) || i.collapsed === false ? ' checked' : ''} aria-label="${esc(i.text)}: open the section">`
       + `<div class="side-group level-${level}" data-key="${esc(key)}">`
       + `<div class="side-row"><label class="side-caret" for="${id}" aria-hidden="true"></label>${label}</div>`
       + `<div class="side-items">${tree(i.items, level + 1, [...trail, i.text])}</div></div>`;

@@ -28,10 +28,12 @@
  * is not a grid track cannot push the two columns off the line they share with
  * the catalogue.
  *
- * What this costs, said plainly: the menu is no longer always in view. It was,
- * when it had a column of its own - and it had that column by taking 260px out
- * of the article, which is what put the manual's text 332px right of the
- * catalogue's.
+ * It used to cost something, said plainly: placed absolutely in that margin
+ * the menu scrolled away with the first screen, where the column it replaced
+ * had always been in view - and it had that column by taking 260px out of
+ * the article, which is what put the manual's text 332px right of the
+ * catalogue's. From 1680 up it is fixed in the margin now (below), so it
+ * stays in view without a column of its own.
  */
 .manual {
   position: relative;
@@ -151,11 +153,20 @@
   .side-button { display: none; }
   .side-scrim { display: none; }
   .sidebar {
-    position: absolute;
-    top: 0; bottom: auto; left: -240px;
+    /* FIXED, NOT ABSOLUTE: the menu stays in view while the chapter scrolls.
+       Placed absolutely in the margin it scrolled away with the first screen
+       of every page - a reader two screens into a 5,000px chapter had no way
+       to the next one but the top of the page, which is the one thing the
+       old sidebar column never did to them. The same margin, the same 220
+       and the same 40 short of the article: the container is 1160 centred,
+       so its left edge is 50% - 580, and the menu stands 240 left of that.
+       Taller than the window it scrolls on its own, over its own gutter. */
+    position: fixed;
+    top: 46px; bottom: 0; left: calc(50% - 820px);
     width: 220px;
-    padding: 48px 0 0;
-    overflow: visible;
+    padding: 48px 0 40px;
+    overflow-y: auto;
+    scrollbar-width: thin;
     background: none;
     border: 0;
     transform: none;
@@ -262,13 +273,29 @@
    marker a <details> would otherwise draw for us. Drawn on a label, so the
    click reaches the box. */
 .side-caret {
-  flex: none; width: 10px; height: 10px; margin-right: 2px;
+  flex: none; display: flex; align-items: center; justify-content: center;
+  width: 10px; height: 10px; margin-right: 2px;
+  cursor: pointer;
+}
+/* THE GLYPH IS ITS OWN 10px BOX, whatever the label around it grows to. It
+   was clipped out of the label itself, and under a thumb the label is 24 by
+   36 (below) - so the triangle scaled with it, and every section of the
+   drawer on a phone carried a 12 by 27 wedge beside its name. The label is
+   the target; this is the mark. */
+.side-caret::before {
+  content: ""; width: 10px; height: 10px;
   background: currentColor; opacity: .55;
   clip-path: polygon(30% 12%, 30% 88%, 78% 50%);
   transition: transform .15s;
-  cursor: pointer;
 }
-.side-toggle:checked + .side-group > .side-row > .side-caret { transform: rotate(90deg); }
+.side-toggle:checked + .side-group > .side-row > .side-caret::before { transform: rotate(90deg); }
+/* A plain labelled list has no caret to turn - the build writes one for a
+   group with no `collapsed` key, which VitePress draws as a list that is
+   always open. The glyph's box stays, empty, so the word lines up with the
+   words beside it. */
+.side-caret-none { cursor: default; }
+.side-caret-none::before { display: none; }
+.sidebar .side-plain > .side-row > span.side-label { cursor: default; }
 
 /* Each level steps in by the width of that triangle, so a row lines up under
    its parent's WORD rather than under its marker. */
@@ -409,6 +436,89 @@
    `.code-key`, and with the variable no longer set every listing was drawn in
    the body colour. */
 
+/* ---- the filename over a block -----------------------------------------
+ *
+ * ```cds [srv/travel-flows.cds] (markup.mjs, codeTitle) - drawn as the tab a
+ * ::: code-group draws, because it is the one-tab case of the same thing.
+ * The theme carried this and the switch to this build did not bring it: the
+ * name stood over the listing as a bare line of text in the body face, and
+ * the block under it kept the edge and the radius of a block standing on its
+ * own, so the two read as a caption and a box rather than as one box. */
+.vp-doc .a2ui5-titled {
+  margin: 16px 0;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg-sunken);
+  overflow: hidden;
+}
+.vp-doc .a2ui5-titled-name {
+  padding: 8px 14px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--fg);
+  font-family: var(--font-mono); font-size: 12px; line-height: 20px;
+}
+/* The underline is the tab, and it is only as wide as the name - a full-width
+   rule under a short filename reads as a section divider, which this is not. */
+.vp-doc .a2ui5-titled-name span {
+  display: inline-block; padding-bottom: 7px; margin-bottom: -1px;
+  border-bottom: 2px solid var(--accent);
+}
+/* The block inside is the body of a box that already has an edge and a
+   radius, so it gives up its own; the Run bar under it keeps the bottom
+   corners. */
+.vp-doc .a2ui5-titled div[class*="language-"] { margin: 0; border: 0; border-radius: 0; }
+.vp-doc .a2ui5-titled .a2ui5-play { margin: 0; }
+.vp-doc .a2ui5-titled .a2ui5-play-run,
+.vp-doc .a2ui5-titled .a2ui5-play-bar,
+.vp-doc .a2ui5-titled .a2ui5-play-failed { border-left: 0; border-right: 0; border-bottom: 0; border-radius: 0; }
+
+/* ---- copy link to selection --------------------------------------------
+ *
+ * The button under a selection inside the article (theme/link-to-selection.js
+ * puts it on screen, theme/text-fragment.js says what it copies), and the
+ * mark a browser too old for text fragments gets instead of the browser's
+ * own. Both were the theme's rules, and neither came across with the build:
+ * the script went on appending a button to the body and setting its left and
+ * top, and a button that is not positioned ignores both - so selecting a
+ * sentence put a plain grey browser button at the very foot of the page,
+ * where nobody looked for it.
+ *
+ * Positioned in DOCUMENT coordinates rather than the viewport, so it stays on
+ * the words it belongs to while the page scrolls under it. */
+.a2ui5-quote {
+  position: absolute; z-index: 20;
+  padding: 5px 11px;
+  border: 1px solid var(--line); border-radius: var(--radius-control);
+  background: var(--bg); color: var(--accent);
+  font: inherit; font-size: 12px; font-weight: 500; line-height: 18px;
+  white-space: nowrap; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+}
+.a2ui5-quote:hover { background: var(--bg-sunken); }
+/* The fallback's mark: the tint a sample page colours a linked line with
+   (`--mark`, sample.css), because it is the same promise - this is the part
+   of the page the link was about. Removed after a few seconds by the script. */
+.vp-doc .a2ui5-quoted { background: var(--mark); border-radius: var(--radius-control); transition: background .4s; }
+@media print { .a2ui5-quote { display: none !important; } }
+
+/* A press that is being answered - the runtime is booting - says so in the
+   cursor; the button is disabled for as long as it takes. */
+.vp-doc .a2ui5-play-run:disabled { cursor: progress; }
+
+/* ---- what the article has that nothing above styles -------------------
+ *
+ * A quotation and a definition list are set in the body's type - the browser
+ * gives both a 40px margin and the quotation nothing else, so a quoted line
+ * read as a paragraph that had slipped sideways. The rule down the left is
+ * the same hairline a ::: block carries, which is the same kind of aside. */
+.vp-doc blockquote {
+  margin: 12px 0; padding: 2px 0 2px 14px;
+  border-left: 3px solid var(--line);
+  color: var(--fg-dim);
+}
+.vp-doc blockquote p { margin: 4px 0; }
+.vp-doc dd { margin: 0 0 8px 16px; }
+.vp-doc dd, .vp-doc dt, .vp-doc summary { font-size: 14px; line-height: 1.55; }
+
 /* ---- the ::: blocks -------------------------------------------------- */
 .vp-doc .custom-block {
   margin: 16px 0; padding: 10px 14px;
@@ -419,6 +529,12 @@
 .vp-doc .custom-block.danger { border-left-color: #cf222e; }
 .vp-doc .custom-block-title { margin: 0 0 4px; font-size: 13px; font-weight: 700; }
 .vp-doc .custom-block p { margin: 4px 0; font-size: 13px; }
+/* ::: details - a block that opens. The summary is the control, and it looked
+   like the title of a block that does not: the same weight, the pointer of a
+   paragraph. It takes the title's weight and a pointer, and a little air
+   under it once the block is open so the text does not sit on its heel. */
+.vp-doc .custom-block.details summary { font-size: 13px; font-weight: 700; cursor: pointer; }
+.vp-doc .custom-block.details[open] summary { margin-bottom: 6px; }
 
 /* ---- an anchor lands BELOW the bar ------------------------------------
  *
