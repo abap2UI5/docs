@@ -556,7 +556,18 @@ Three things to know before touching it:
   chapter menu stands in the margin from 1680px up and is a drawer below it,
   because a third grid track can only exist by taking width out of the article
   — which is what put the manual's prose on a different vertical from the
-  catalogue's.
+  catalogue's. In the margin it is `position: fixed` (at `50% - 820px`, which
+  is 240 left of the centred container), so it stays in view while the chapter
+  scrolls and scrolls on its own when it is taller than the window; placed
+  absolutely it went with the first screen, and a reader two screens into a
+  chapter had no way to the next one.
+- **The sidebar's `collapsed` key means what it means in VitePress.** A group
+  with `collapsed: true` gets a caret and opens when it holds the page;
+  `collapsed: false` opens by default; a group with NO key is a plain labelled
+  list — no box, no caret, always open (`side-plain`), which is what the
+  walkthrough's twelve steps and Binding's two pages are written as. The first
+  cut of `sidebarFor( )` gave every group a caret and opened only the one
+  holding the page, so Tutorial unfolded to a single closed row.
 - **Every page carries its own head.** Title, description, canonical, and the
   six og/twitter values, all with absolute urls: a relative `og:url` is
   silently dropped and the preview falls back to a grey card. That is what

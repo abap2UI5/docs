@@ -98,6 +98,6 @@ test('a section nobody touched keeps the shape the build gave it', () => {
 test('the way to the current page is opened, and never written down', () => {
   const here = menu.slice(menu.indexOf('const here ='));
   const untilWrite = here.slice(0, here.indexOf('const write ='));
-  assert.match(untilWrite, /boxOf\(el\)\.checked = true/, 'a menu that hid the page you are on would be worse');
+  assert.match(untilWrite, /const box = boxOf\(el\);\s*if \(box\) box\.checked = true/, 'a menu that hid the page you are on would be worse');
   assert.equal(/chosen\[/.test(untilWrite), false, 'walking somewhere is not choosing it');
 });

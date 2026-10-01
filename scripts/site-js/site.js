@@ -320,7 +320,13 @@ document.addEventListener('click', (e) => {
   /* A section is a checkbox followed by its group (build-site.mjs): the box
      is what opens it, the group carries the key it is remembered by. */
   const groups = [...document.querySelectorAll('.sidebar .side-group[data-key]')];
-  const boxOf = (g) => g.previousElementSibling;
+  /* ...and a group without one - a plain labelled list, which the build
+     writes for a section that has no `collapsed` key - has no box, and its
+     previous sibling is whatever row stands above it. */
+  const boxOf = (g) => {
+    const b = g.previousElementSibling;
+    return b?.classList?.contains('side-toggle') ? b : null;
+  };
   if (!groups.length) return;
   /* key -> true when the reader opened that section, false when they closed
      it. A section they never touched is simply absent, and keeps whatever
@@ -333,11 +339,17 @@ document.addEventListener('click', (e) => {
   };
   const chosen = read();
   for (const g of groups) {
-    if (Object.prototype.hasOwnProperty.call(chosen, g.dataset.key)) boxOf(g).checked = !!chosen[g.dataset.key];
+    const box = boxOf(g);
+    if (box && Object.prototype.hasOwnProperty.call(chosen, g.dataset.key)) box.checked = !!chosen[g.dataset.key];
   }
   /* ...and the way to where you are, whatever was stored. */
   const here = document.querySelector('.sidebar .here');
-  if (here) for (let el = here.closest('.side-group'); el; el = el.parentElement?.closest('.side-group')) boxOf(el).checked = true;
+  if (here) {
+    for (let el = here.closest('.side-group'); el; el = el.parentElement?.closest('.side-group')) {
+      const box = boxOf(el);
+      if (box) box.checked = true;
+    }
+  }
 
   /* ...AND THE MENU IS SCROLLED TO IT. The manual is 166 rows deep and the
    * menu is its own scrolling box, which every page opened at the top of. A
@@ -374,6 +386,22 @@ document.addEventListener('click', (e) => {
     write();
   });
 })();
+/* ---- the drawer closes on Escape -----------------------------------------
+ *
+ * Below 1680 the chapter menu is a drawer over the page, opened and closed by
+ * a checkbox with no script - which is right, and leaves out the one key
+ * every other overlay on this site answers: the search box and the menu
+ * behind the bar's last button both close on Escape, and the drawer sat
+ * open. Unchecking the box is all closing is; the focus goes back to the
+ * button that opened it, as the menu's does. */
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  const box = document.getElementById('side-open');
+  if (!box?.checked) return;
+  box.checked = false;
+  document.querySelector('.side-button')?.focus();
+});
+
 /* ---- copy a listing ---------------------------------------------------
  *
  * The button is the renderer's own, on every code block, and nothing had ever
