@@ -18,6 +18,7 @@ decide which ones fit are here.
 | [`@abap2ui5/linter-render`](https://www.npmjs.com/package/@abap2ui5/linter-render) | the UI5 runtime the linter's render gate uses | [abap2UI5/linter](https://github.com/abap2UI5/linter) |
 | [`@abap2ui5/mcp-server`](https://www.npmjs.com/package/@abap2ui5/mcp-server) | the development loop for AI agents | [abap2UI5/mcp-server](https://github.com/abap2UI5/mcp-server) |
 | [`@abap2ui5/node-runtime`](https://www.npmjs.com/package/@abap2ui5/node-runtime) | the framework transpiled to JavaScript, with an HTTP handler | [abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5) |
+| [`@abap2ui5/bsp`](https://www.npmjs.com/package/@abap2ui5/bsp) | a UI5 app as an abapGit BSP, and back | [abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5/tree/main/tools/bsp) |
 | [`@abap2ui5/embed-control`](https://www.npmjs.com/package/@abap2ui5/embed-control) | a UI5 control that runs an abap2UI5 app inside another UI5 app | [abap2UI5/embed-control](https://github.com/abap2UI5/embed-control) |
 | [`@cap2ui5/cds-plugin`](https://www.npmjs.com/package/@cap2ui5/cds-plugin) | abap2UI5 in a CAP project, apps as JavaScript classes | [cap2UI5/cap2UI5](https://github.com/cap2UI5/cap2UI5) |
 | [`@cap2ui5/samples`](https://www.npmjs.com/package/@cap2ui5/samples) | the samples as apps for the CAP plugin | [cap2UI5/samples](https://github.com/cap2UI5/samples) |
@@ -35,6 +36,8 @@ Marketplace. It bundles the linter and starts the MCP server.
 @abap2ui5/node-runtime ◀──exact pin── @cap2ui5/cds-plugin ◀──peer── @cap2ui5/samples
 
 @abap2ui5/embed-control ──talks HTTP to──▶ abap2UI5 on ABAP, node-runtime or the CAP plugin
+
+@abap2ui5/bsp ── depends on nothing; the embed control's CI uses it to write the BSP of its examples
 ```
 
 ## Which versions go together
@@ -43,6 +46,9 @@ Marketplace. It bundles the linter and starts the MCP server.
   `@abap2ui5/node-runtime` is the framework's version, and it is built from
   that release's tag. Its `@abaplint/runtime` is pinned to the version the
   transpile ran with, because transpiled code is tied to its runtime.
+- **The BSP tool shares that version.** `@abap2ui5/bsp` is published from
+  the same release tag as `@abap2ui5/node-runtime` and carries the
+  framework's version. It depends on nothing, and nothing pins it.
 - **The CAP plugin pins one node-runtime.** `@cap2ui5/cds-plugin` depends on
   exactly one `@abap2ui5/node-runtime` version, the one its tests ran
   against. A project that wants another one says so with npm `overrides`;
@@ -75,7 +81,15 @@ name:
 | Linter | `npx @abap2ui5/linter src` | `npx --no-install abap2ui5lint src` |
 | MCP server | `npx -y -p @abap2ui5/mcp-server abap2ui5-mcp` | `npx --no-install abap2ui5-mcp` |
 | ABAP Unit runner | `npx -y -p @abap2ui5/mcp-server abap2ui5-unit` | `npx --no-install abap2ui5-unit` |
+| BSP tool | `npx @abap2ui5/bsp app2bsp webapp --name ZMYAPP` | `npx --no-install abap2ui5-bsp app2bsp webapp --name ZMYAPP` |
 | cap2UI5 translator | `npx -y -p @cap2ui5/cds-plugin -p @abaplint/core cap2ui5 abap2js` | `npx --no-install cap2ui5 abap2js` |
 
 The translator reads ABAP with `@abaplint/core`, which is an optional peer of
 the plugin: a project that translates adds it with `npm add -D @abaplint/core`.
+
+The BSP tool has three commands: `app2bsp` writes an app folder as the
+abapGit repository of a BSP, `bsp2app` turns a serialized BSP back into
+an app folder, and `check` holds a BSP to the page rules (names the
+system accepts, no line over 255 characters). Its
+[README](https://github.com/abap2UI5/abap2UI5/tree/main/tools/bsp#readme)
+has the options, and the same functions are exported for a script.
