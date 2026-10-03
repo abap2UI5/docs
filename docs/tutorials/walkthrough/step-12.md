@@ -402,8 +402,14 @@ require an update of it.
 It describes the screen the way the browser holds it: `get_layers( )` returns
 every open view — the main view, the two nested views, popup and popover —
 with its XML and its model, `get_messages( )` every message with its severity,
-`set_cell( )` edits one table cell, and `set_check_events( )` makes `click( )`
-refuse an event that is not wired on the screen. `get_state( )` and
+and `set_check_events( )` makes `click( )` refuse an event that is not wired
+on the screen. Edits go out typed, as the browser sends them: `set_bool( )`
+for a CheckBox, `set_json( )` for any JSON value at a model path — an array of
+keys, a number — and `set_cell( )`, `set_row( )` and `select_row( )` for table
+rows, all sent as the same model delta the frontend builds, which
+`get_request_json( )` shows. `close_layer( )` closes a popup the way the
+browser does, without a roundtrip, and every edit and event takes an optional
+`layer` when it is not meant for the topmost open one. `get_state( )` and
 `resume( )` continue a session from its draft id in a new instance — which is
 what the [agent add-on](/advanced/agents#in-production-the-agent-add-on)
 builds on.

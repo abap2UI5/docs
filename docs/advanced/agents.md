@@ -272,7 +272,8 @@ is not part of the draft, so the app shows its main view.
 - **Every call is audited**: user, session, app, operation, event, arguments
   (masked for password inputs and sensitive fields), outcome, and the MCP
   client's name and version. Users see their own entries, administrators
-  everybody's.
+  everybody's, and the [Admin Cockpit](/configuration/monitoring#agents) sums
+  them up per day, app and client.
 - **A web page cannot drive it**: a request with an `Origin` of another host
   is refused, and only `Content-Type: application/json` is accepted, so the
   user's single sign-on cookies are of no use to a foreign page.
@@ -296,10 +297,15 @@ through the client's OAuth flow. Then ask the agent to call `app_list`.
 
 - **Stateful apps** (`client->set_session_stateful( )`) cannot be operated:
   a stateful session lives within one HTTP request, and an MCP call is one
-  request. `app_start` refuses them.
-- Values travel as text, as the browser sends them. A multi-choice value and
-  an edit inside a structure that also holds a table cell cannot be sent yet
-  and are refused before anything is sent.
+  request. `app_start` refuses them, and an app that switches to a stateful
+  session midway ends the session.
+- **Only event arguments travel as text.** Values go out typed, as the
+  browser sends them — a boolean as `true` or `false`, a multi-choice value as
+  an array of keys, a number as a number — in the same model delta the
+  frontend builds: a table cell as a row change, everything else, a structure
+  holding a table included, as the whole attribute. The event's arguments —
+  `args` and the row arguments of a row action — are still sent as text: a
+  boolean as `X` or blank, an object or array as its JSON.
 - Labels, texts and messages are what the app wrote, in the user's logon
   language.
 
@@ -322,7 +328,8 @@ plays the browser's side of the protocol inside ABAP, which makes a whole user
 session an ABAP Unit test. [Step 12](/tutorials/walkthrough/step-12#testing-the-roundtrip)
 of the walkthrough shows it; the add-on uses its session API — `resume( )`,
 `get_state( )` and `get_layers( )` — to continue a session in the next HTTP
-request.
+request, `set_json( )` to send each value typed, and `close_layer( )` for
+`@CLOSE_POPUP` and `@CLOSE_POPOVER`.
 
 ## Next Steps
 
