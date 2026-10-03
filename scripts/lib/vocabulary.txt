@@ -32,12 +32,17 @@ transpiles
 alv
 btp
 cds
+drilldown
 dynpro
+dynpros
 eml
 fiori
 floorplans
 flp
+gui
 hana
+hotspot
+hotspots
 kerberos
 odata
 persistency
@@ -74,6 +79,7 @@ livewire
 mcp
 npm
 npx
+oauth
 png
 preprocessor
 reconciler
@@ -106,6 +112,7 @@ bookmarkable
 booleans
 centric
 changelog
+checkboxes
 clickjacking
 cloudification
 codebase
@@ -144,6 +151,7 @@ lifecycles
 lightbulb
 linter
 linters
+middleware
 mistyped
 mjs
 multiselect

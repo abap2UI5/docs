@@ -488,6 +488,11 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
+          // What the installation logs about its apps: the roundtrip monitor
+          // seam and the Admin Cockpit add-on built on it. Next to
+          // Performance because a slow p95 is where a reader of one page
+          // goes looking for the other.
+          { text: "Monitoring", link: "/configuration/monitoring" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Logout", link: "/configuration/logout" },
@@ -557,6 +562,10 @@ export default defineConfig({
               { text: "RFC Connector", link: "/advanced/rfc" },
               { text: "HTTP Connector", link: "/advanced/http" },
               { text: "Fiori Elements Integration", link: "/advanced/fiori" },
+              // The other outside party an app talks to: an AI agent, over
+              // MCP - in the sandbox, from VS Code, or as an endpoint in the
+              // system.
+              { text: "Agent-Operable Apps", link: "/advanced/agents" },
             ],
           },
           {
@@ -570,6 +579,10 @@ export default defineConfig({
               { text: "Downporting", link: "/advanced/downporting" },
               { text: "Namespaces, Renaming", link: "/advanced/renaming" },
               { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
+              // A classic report taken to ABAP Cloud as a class of the
+              // abap-cloud-gui add-on - another stack the code was not
+              // written for, which is what this group is about.
+              { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
               { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
             ],
           },

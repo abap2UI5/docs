@@ -297,6 +297,30 @@ Every prompt — system pick, credentials — stays an ordinary VS Code dialog t
 agent never sees. The names keep the two apart: the abap2UI5 server's `run_app`
 builds and boots the transpiled sandbox, this one runs a class on a system.
 
+### Operating an app on the system
+
+::: info Preview — coming with the next release
+The app tools below are on a development branch of the extension and not in a
+release yet.
+:::
+
+The same server gets the four app tools of the
+[MCP server](/advanced/mcp_server) — `app_list`, `app_start`, `app_describe`
+and `app_act` — on your real system. An agent reads the app's screen as an
+*agent snapshot* (its fields and values, its actions, tables and messages),
+fills fields by model path or label and fires events by name, over the
+abap2UI5 JSON protocol: no browser, no screenshot, and anything not on the
+screen is refused with what is. [Agent-Operable Apps](/advanced/agents)
+describes the snapshot and the tools.
+
+They run through the proxy on the active system **as you**, and an event may
+save, post or delete data. So they do nothing until you set
+`abap2ui5.agent.enableAppTools` — in your **User** settings, which a workspace
+cannot change. Until then they stay listed and tell the agent how to switch
+them on, without contacting the system. The launch URL has to carry the class
+as a query parameter (`…?app_start={class}`), and the tools never switch the
+active system on their own.
+
 ## In the browser
 
 The extension ships a web bundle, so it also runs in
@@ -328,6 +352,7 @@ navigation map; the Control Properties view; and the MCP servers.
 | `abap2ui5.viewPreview.viewport` | `1280x900` | Viewport(s); a comma-separated list is a device matrix |
 | `abap2ui5.inlineFindings` | `problems` | The finding at the end of its line: `problems`, `all` or `off` |
 | `abap2ui5.mcp.reposRoot` | – | Folder holding the `abap2UI5` / `samples-controls` / `linter` / `mcp-server` checkouts |
+| `abap2ui5.agent.enableAppTools` | `false` | Allow the system server's app tools to operate apps on the real system, as you — User settings only. *Preview, next release* |
 
 Every command is in the Command Palette (`Ctrl/Cmd + Shift + P`) under
 *abap2UI5*; the full settings and command tables are in the
@@ -338,5 +363,7 @@ Every command is in the Command Palette (`Ctrl/Cmd + Shift + P`) under
 - [abap2UI5 linter](/advanced/linter) — the gates behind the editor diagnostics
 - [MCP Server](/advanced/mcp_server) — the systemless loop the extension
   registers for agents
+- [Agent-Operable Apps](/advanced/agents) — the app tools, the snapshot they
+  answer with, and the endpoint for production
 - [Working Off-Stack](/advanced/working_off_stack) — the project the template
   gallery writes

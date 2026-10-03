@@ -128,7 +128,8 @@ npm.
 ### Level 3 — see the running app (a browser, and a build)
 
 Adds `build_backend`, `run_app`, `interact_app`, `run_unit_tests` and
-`verify_app`: the screenshot loop.
+`verify_app`: the screenshot loop. From the next release on, the four `app_*`
+tools that operate an app without a browser need the same build.
 
 ```sh
 npx playwright install chromium
@@ -217,8 +218,13 @@ deliberately does not have: your real systems.
 | `build_log` | The last build's full output, page by page — the error the result's short tail cut off |
 | `run_app` | Boot any app class headless, return boot status, real page errors (benign UI5 noise filtered) and a full-page **screenshot as an image**. The *running* app, so it needs a `build_backend` first |
 | `interact_app` | `run_app` with hands: boot the app, then click, fill, press and wait through a short script, and get the screenshot after it — the **event branch** of an app, visible without a system |
+| `app_list` | The app classes the built backend can start — the deployed apps and the framework's own. *Preview, next release* |
+| `app_start` | Start an app and get its **agent snapshot**: fields with path, label, kind and value, actions with event and arguments, tables, messages — over the abap2UI5 JSON protocol, no browser. *Preview, next release* |
+| `app_describe` | The current snapshot of a session, from memory — no roundtrip. *Preview, next release* |
+| `app_act` | Fill fields and fire an event by name, validated against the snapshot and sent as the real model delta, and get the next snapshot. *Preview, next release* |
 | `run_unit_tests` | The test classes deployed with an app, run in the open-abap runtime: **assertions**, not pictures |
 | `verify_app` | **The whole loop in one call** — validate, deploy, build, unit tests, boot — stopping at the first stage that fails and reporting every stage before it |
+| `migrate_report` | Convert a **classic ABAP report** into an app class of the abap-cloud-gui add-on, with its converter report2cloud: the class files, the migration report (TODOs, tables and APIs not released on ABAP Cloud with their successors) and the refusals with `file:row:col`. `deploy: true` also builds it here and answers the agent snapshot of its selection screen. Needs an abap-cloud-gui checkout. *Preview, next release* |
 | `backend` | `status` / `start` / `stop` / `restart` of the local express backend |
 | `remove_app` | Delete a dev app from the sandbox, or list what is deployed |
 
@@ -226,6 +232,28 @@ Two of these look similar and are not: `screenshot_view` photographs the
 **view** (seconds, no backend, mock data), `run_app` photographs the **running
 app** (a build, a real roundtrip, real behavior). They cost three orders of
 magnitude apart, and most iterations should end at the first.
+
+`interact_app` and the four `app_*` tools both drive the running app, and
+answer different questions. `interact_app` clicks through a headless browser by
+CSS selector and hands back a picture; `app_start` and `app_act` speak the
+protocol itself and hand back data — which fields the screen has and what is in
+them, which events it offers, what the messages say — and refuse an act the
+screen does not allow, naming what it does. Use the first for what only a
+rendered page shows, the second for what an event *does*.
+[Agent-Operable Apps](/advanced/agents) describes the snapshot and the tools,
+which the VS Code extension, the agent add-on and cap2UI5 implement as well.
+
+`migrate_report` is the one tool that does not start from an empty class: it
+takes the source of an existing report — and its `.prog.xml`, for the real
+selection texts — and hands back the class that keeps the report's structure.
+The converter is not part of the server and not on npm; it runs from a
+checkout of [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui)
+(`ABAP_CLOUD_GUI_HOME`, else a sibling `../abap-cloud-gui`, with `npm ci`
+done), and `setup_status` says when it is missing. With `deploy: true` the
+class goes into the sandbox together with the add-on's runtime and the popups
+it calls, and `app_act` with `CGUI_EXECUTE` runs the report — up to the first
+database table it reads, which the local backend does not have.
+[Migrating Classic Reports](/advanced/report_migration) is the whole story.
 
 ## The intended loop
 
@@ -276,3 +304,7 @@ magnitude apart, and most iterations should end at the first.
   `screenshot_view`
 - [VS Code Extension](/advanced/vscode) — registers this server for you, and
   adds the real-system tools
+- [Agent-Operable Apps](/advanced/agents) — the `app_*` tools here, on a real
+  system and as an endpoint in production
+- [Migrating Classic Reports](/advanced/report_migration) — what
+  `migrate_report` converts, refuses and leaves to you

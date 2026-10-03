@@ -155,6 +155,11 @@ function legacyFragments() {
        * read, and a heuristic that needs one would skip exactly the fragments
        * this gate exists for. */
       if (/z2ui5_cl_ajson/i.test(code)) continue;
+      /* And the abap-cloud-gui add-on's report API: a class inheriting from
+       * z2ui5_cl_cgui_report chains `screen->parameter( )` and
+       * `list( )->write( )`, which are its verbs, not the view builder's
+       * (advanced/report_migration shows a converted report). */
+      if (/z2ui5_cl_cgui_/i.test(code)) continue;
       /* mid-chain: `)->input( )` */
       for (const call of code.matchAll(/\)->([a-z_][a-z0-9_]*)\(/gi)) {
         const verb = call[1].toLowerCase();

@@ -85,3 +85,5 @@ working from what abap2UI5 is today rather than from what it recalls.
 - [Working Off-Stack](/advanced/working_off_stack) — the repository all of this
   assumes
 - [Tooling](/advanced/tooling) — the human side of the same loop
+- [Agent-Operable Apps](/advanced/agents) — the other direction: an agent
+  operating a finished app instead of writing one
