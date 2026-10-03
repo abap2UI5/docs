@@ -224,6 +224,7 @@ deliberately does not have: your real systems.
 | `app_act` | Fill fields and fire an event by name, validated against the snapshot and sent as the real model delta, and get the next snapshot. *Preview, next release* |
 | `run_unit_tests` | The test classes deployed with an app, run in the open-abap runtime: **assertions**, not pictures |
 | `verify_app` | **The whole loop in one call** — validate, deploy, build, unit tests, boot — stopping at the first stage that fails and reporting every stage before it |
+| `migrate_report` | Convert a **classic ABAP report** into an app class of the abap-cloud-gui add-on, with its converter report2cloud: the class files, the migration report (TODOs, tables and APIs not released on ABAP Cloud with their successors) and the refusals with `file:row:col`. `deploy: true` also builds it here and answers the agent snapshot of its selection screen. Needs an abap-cloud-gui checkout. *Preview, next release* |
 | `backend` | `status` / `start` / `stop` / `restart` of the local express backend |
 | `remove_app` | Delete a dev app from the sandbox, or list what is deployed |
 
@@ -240,7 +241,19 @@ them, which events it offers, what the messages say — and refuse an act the
 screen does not allow, naming what it does. Use the first for what only a
 rendered page shows, the second for what an event *does*.
 [Agent-Operable Apps](/advanced/agents) describes the snapshot and the tools,
-which the VS Code extension and the agent add-on implement as well.
+which the VS Code extension, the agent add-on and cap2UI5 implement as well.
+
+`migrate_report` is the one tool that does not start from an empty class: it
+takes the source of an existing report — and its `.prog.xml`, for the real
+selection texts — and hands back the class that keeps the report's structure.
+The converter is not part of the server and not on npm; it runs from a
+checkout of [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui)
+(`ABAP_CLOUD_GUI_HOME`, else a sibling `../abap-cloud-gui`, with `npm ci`
+done), and `setup_status` says when it is missing. With `deploy: true` the
+class goes into the sandbox together with the add-on's runtime and the popups
+it calls, and `app_act` with `CGUI_EXECUTE` runs the report — up to the first
+database table it reads, which the local backend does not have.
+[Migrating Classic Reports](/advanced/report_migration) is the whole story.
 
 ## The intended loop
 
@@ -293,3 +306,5 @@ which the VS Code extension and the agent add-on implement as well.
   adds the real-system tools
 - [Agent-Operable Apps](/advanced/agents) — the `app_*` tools here, on a real
   system and as an endpoint in production
+- [Migrating Classic Reports](/advanced/report_migration) — what
+  `migrate_report` converts, refuses and leaves to you

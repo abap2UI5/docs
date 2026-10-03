@@ -579,6 +579,10 @@ export default defineConfig({
               { text: "Downporting", link: "/advanced/downporting" },
               { text: "Namespaces, Renaming", link: "/advanced/renaming" },
               { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
+              // A classic report taken to ABAP Cloud as a class of the
+              // abap-cloud-gui add-on - another stack the code was not
+              // written for, which is what this group is about.
+              { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
               { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
             ],
           },
