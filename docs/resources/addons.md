@@ -30,6 +30,14 @@ versioned on its own rather than riding along with a framework release.
 | [launchpad-kpi](https://github.com/abap2UI5-addons/launchpad-kpi) | Show KPIs of abap2UI5 apps on the Fiori Launchpad | [Fiori Launchpad](/configuration/launchpad) |
 | [rap-ext](https://github.com/abap2UI5-addons/rap-ext) | Display RAP and CDS artifacts with abap2UI5 | [RAP](/cookbook/eml_cds_sql/rap) |
 
+Two more are finished and come with the next abap2UI5 release, because both
+build on what is in it: [admin-cockpit](https://github.com/abap2UI5-addons/admin-cockpit),
+usage, performance, errors and a security traffic light for an installation
+([Monitoring](/configuration/monitoring)), and
+[agent](https://github.com/abap2UI5-addons/agent), an MCP endpoint in the
+system through which AI agents operate abap2UI5 apps
+([Agent-Operable Apps](/advanced/agents)).
+
 An empty right-hand column is not a gap in the add-on — it is one this manual
 has not written a chapter about. The repository's own README is the reference
 in that case.

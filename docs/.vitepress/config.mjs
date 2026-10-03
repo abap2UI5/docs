@@ -488,6 +488,11 @@ export default defineConfig({
           { text: "Security", link: "/configuration/security" },
           { text: "Authorization", link: "/configuration/authorization" },
           { text: "Performance", link: "/configuration/performance" },
+          // What the installation logs about its apps: the roundtrip monitor
+          // seam and the Admin Cockpit add-on built on it. Next to
+          // Performance because a slow p95 is where a reader of one page
+          // goes looking for the other.
+          { text: "Monitoring", link: "/configuration/monitoring" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Logout", link: "/configuration/logout" },
@@ -557,6 +562,10 @@ export default defineConfig({
               { text: "RFC Connector", link: "/advanced/rfc" },
               { text: "HTTP Connector", link: "/advanced/http" },
               { text: "Fiori Elements Integration", link: "/advanced/fiori" },
+              // The other outside party an app talks to: an AI agent, over
+              // MCP - in the sandbox, from VS Code, or as an endpoint in the
+              // system.
+              { text: "Agent-Operable Apps", link: "/advanced/agents" },
             ],
           },
           {

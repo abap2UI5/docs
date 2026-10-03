@@ -77,9 +77,21 @@ have: your configured **systems**. An agent can list them, search app classes
 over ADT and get the app rendered on the real system as a screenshot — while
 every credential prompt stays an ordinary VS Code dialog the agent never sees.
 
+## Let it operate the app
+
+From the next release on — today on development branches — an agent can also
+*use* the app it wrote, not only look at it: four tools read the screen as data,
+fill fields by model path and fire events by name, over the app's own JSON
+protocol. They exist in the MCP server against the local sandbox, in the VS
+Code extension against your system once you allow it, and as an MCP endpoint
+inside the SAP system for agents working on behalf of users.
+[Agent-Operable Apps](/advanced/agents) covers all three.
+
 ## Next Steps
 
 - [Working Off-Stack](/advanced/working_off_stack) — the repository all of this
   assumes
 - [MCP Server](/advanced/mcp_server) — the three levels, every tool and the loop
 - [Tooling](/advanced/tooling) — the human side of the same loop
+- [Agent-Operable Apps](/advanced/agents) — agents filling fields and firing
+  events, in the sandbox, on your system and in production

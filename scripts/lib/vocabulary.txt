@@ -74,6 +74,7 @@ livewire
 mcp
 npm
 npx
+oauth
 png
 preprocessor
 reconciler
