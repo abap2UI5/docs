@@ -161,8 +161,8 @@ row event parameters, the refusals — is
 [`docs/agent-snapshot.md`](https://github.com/abap2UI5/mcp-server/blob/6bd3cc3a79e99f8027fb0b62cc968f4161bf1118/docs/agent-snapshot.md)
 in the MCP server's repository, at the commit this page was written against.
 The MCP server, the VS Code extension and cap2UI5 run that repository's own
-code; the agent add-on derives the snapshot in ABAP and does not describe
-selection dialogs and message lists yet.
+code; the agent add-on derives the same snapshot in ABAP, byte-identical to
+it on every recorded and synthetic case of its parity check.
 
 ## While developing: the MCP server
 
@@ -480,8 +480,7 @@ templating; custom controls (listed under `unsupported`, not described);
 frontend actions such as opening a new tab or copying to the clipboard (listed,
 never performed); nested tables, `MultiInput` tokens, file uploads, drag and
 drop. An app built from standard controls bound to its own attributes is
-operable as it stands. The agent add-on, whose snapshot is derived in ABAP,
-does not describe selection dialogs and message lists yet.
+operable as it stands.
 
 ## Testing the roundtrip in ABAP
 
