@@ -61,7 +61,11 @@ To go back to the launchpad app the user came from:
 Both are ordinary [frontend events](/cookbook/event_navigation/frontend), so
 they work in the two positions every frontend event does: wired to a control as
 above, or as a statement in `main` when the navigation should follow some
-backend work.
+backend work. The arguments differ between the two, though. The object literal
+and the `$` binding above are resolved by UI5 when the press fires; a statement
+sends its arguments as data, so there the target has to be JSON,
+`{"semanticObject":"Z2UI5_CL_LP_SAMPLE_04","action":"display"}`, and the
+parameters a JSON object of their values.
 
 ## Arriving From Another App
 

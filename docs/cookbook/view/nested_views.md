@@ -104,7 +104,8 @@ The full pattern (re-render everything vs. main only vs. nested only) is in `Z2U
 
 | Anchor control          | Typical `method_insert`     | Typical `method_destroy`        |
 | ----------------------- | --------------------------- | ------------------------------- |
-| `Page`, `VBox`, generic | `addContent`                | `removeAllContent`              |
+| `Page`, `Panel`         | `addContent`                | `removeAllContent`              |
+| `VBox`, `HBox`          | `addItem`                   | `removeAllItems`                |
 | `FlexibleColumnLayout`  | `addMidColumnPage`          | `removeAllMidColumnPages`       |
 | `FlexibleColumnLayout`  | `addEndColumnPage`          | `removeAllEndColumnPages`       |
 | `FlexibleColumnLayout`  | `addBeginColumnPage`        | `removeAllBeginColumnPages`     |

@@ -45,13 +45,17 @@ The framework keeps a call stack. From the newly called class, return to the pre
 
 ENDMETHOD.
 ```
-To read data from the previous app, cast it like this:
+To read data from the previous app, cast it like this. `check_on_navigated( )` is true on the first start as well, and `get_app_prev( )` then returns the running app itself, so the cast is guarded:
 ```abap
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-        DATA(lo_called_app) = CAST z2ui5_cl_new_app( client->get_app_prev( ) ).
-        client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
+        TRY.
+            DATA(lo_called_app) = CAST z2ui5_cl_new_app( client->get_app_prev( ) ).
+            client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
+          CATCH cx_sy_move_cast_error.
+            " not back from z2ui5_cl_new_app - the first start, for one
+        ENDTRY.
         view_display( ).
     ENDIF.
 
@@ -99,8 +103,10 @@ CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
     IF client->check_on_navigated( ).
 
       " Coming back up: read what the app above left on its own instance
+      " (on the first start get_app_prev( ) is this instance, on the way
+      " down it is the caller - only on the way up is it a deeper level)
       DATA(lo_prev) = CAST z2ui5_cl_sample_stack( client->get_app_prev( ) ).
-      IF lo_prev IS BOUND.
+      IF lo_prev->mv_level > mv_level.
         mv_note = |back from level { lo_prev->mv_level }|.
       ENDIF.
 

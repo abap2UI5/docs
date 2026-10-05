@@ -32,10 +32,12 @@ displaying the sub-app's. And it can read what the sub-app left behind:
 
 ```abap
     WHEN client->check_on_navigated( ).
-      DATA(detail) = CAST zcl_app_detail( client->get_app_prev( ) ).
-      IF detail IS BOUND.
-        message = detail->result.
-      ENDIF.
+      TRY.
+          DATA(detail) = CAST zcl_app_detail( client->get_app_prev( ) ).
+          message = detail->result.
+        CATCH cx_sy_move_cast_error.
+          " the first start: get_app_prev( ) is this app itself
+      ENDTRY.
       view_display( ).
 ```
 

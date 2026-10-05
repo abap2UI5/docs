@@ -20,10 +20,20 @@ DATA(lv_search) = client->get( )-s_config-search.
 ## Open a New Tab
 Open a URL in a new browser tab via a frontend event:
 ```abap
-DATA(lv_url) = `https://www.abap2UI5.org`.
+DATA(lv_url) = `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report`.
 client->follow_up_action(
     val   = client->cs_event-open_new_tab
     t_arg = VALUE #( ( lv_url ) ) ).
+```
+
+The URL has to be on the app's own origin: the frontend refuses any other with
+an error message, and so does `location_reload`. An external site goes through
+`urlhelper` with `REDIRECT`, which accepts any `http` or `https` address:
+```abap
+client->follow_up_action(
+    val   = client->cs_event-urlhelper
+    t_arg = VALUE #( ( `REDIRECT` )
+                     ( `{"URL":"https://www.abap2UI5.org","NEW_WINDOW":true}` ) ) ).
 ```
 
 ## Browser History
@@ -86,10 +96,10 @@ CLASS z2ui5_cl_sample_url IMPLEMENTATION.
                   )->tag( `Text`
                       )->a( n = `text` v = client->_bind( mv_search )
                   )->tag( `Button`
-                      )->a( n = `text`  v = `open abap2UI5.org in a new tab`
+                      )->a( n = `text`  v = `open the report in a new tab`
                       )->a( n = `press` v = client->follow_up_action(
                                                val   = client->cs_event-open_new_tab
-                                               t_arg = VALUE #( ( `https://www.abap2UI5.org` ) ) )
+                                               t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report` ) ) )
                   )->tag( `Button`
                       )->a( n = `text`  v = `push a history entry`
                       )->a( n = `press` v = client->_event( `PUSH` ) ).

@@ -68,28 +68,28 @@ This strips the leading zeros for display and re-pads them on write-back.
 
 ## Date
 
-ABAP `d` is an 8-character string `YYYYMMDD`. `DatePicker` accepts it directly via `client->_bind( mv_date )` for the default case. For explicit locale or pattern control, use `sap.ui.model.type.Date` with a `source` pattern that matches the wire format:
+ABAP `d` goes on the wire as an ISO date string, `2024-01-15` (an initial date as an empty string), and the framework reads the same shape back. For explicit locale or pattern control, use `sap.ui.model.type.Date` with a `source` pattern that matches the wire format:
 
 ```abap
 )->tag( `DatePicker`
     )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
                               type: 'sap.ui.model.type.Date',
-                              formatOptions: \{ pattern: 'yyyy-MM-dd',
-                                                source: \{ pattern: 'yyyyMMdd' \} \} \}|
+                              formatOptions: \{ pattern: 'dd.MM.yyyy',
+                                                source: \{ pattern: 'yyyy-MM-dd' \} \} \}|
 ```
 
 `source.pattern` is the wire format (ABAP side); the outer `pattern` is what the user sees.
 
 ## Time
 
-ABAP `t` is a 6-character string `HHMMSS`. Same pattern as Date, with `sap.ui.model.type.Time`:
+ABAP `t` goes on the wire as `12:30:00` (an initial time as an empty string). Same pattern as Date, with `sap.ui.model.type.Time`:
 
 ```abap
 )->tag( `TimePicker`
     )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_time path = abap_true ) }',
                               type: 'sap.ui.model.type.Time',
-                              formatOptions: \{ pattern: 'HH:mm:ss',
-                                                source: \{ pattern: 'HHmmss' \} \} \}|
+                              formatOptions: \{ pattern: 'HH:mm',
+                                                source: \{ pattern: 'HH:mm:ss' \} \} \}|
 ```
 
 ## Boolean
@@ -136,11 +136,11 @@ renders the control **visible**. Use the builder's boolean parameter for that:
 
 ## Timestamp
 
-`timestamp` and `timestampl` are packed numbers with no built-in UI5 type that reads them directly. Two practical approaches:
+`timestamp` and `timestampl` go on the wire as an ISO string in UTC, `2024-01-15T12:30:00Z` (`timestampl` with its fraction), and the framework reads that shape back. For a property that wants a `Date` object, `Formatter.DateCreateObject` reads the string as it is — see [the formatters abap2UI5 ships](#the-formatters-abap2ui5-ships). For an editable value, two practical approaches:
 
 **Split in ABAP** — break the timestamp into separate `d` and `t` fields before sending, bind each with the [Date](#date) / [Time](#time) formatter above, recombine after the event. Simplest when the UI shows date and time as separate fields anyway.
 
-**Send as string with a source pattern** — convert to a string in `yyyyMMddHHmmss` format on the ABAP side, then bind with `sap.ui.model.type.DateTime`:
+**Send as string with a source pattern** — convert to a `string` attribute in `yyyyMMddHHmmss` format on the ABAP side, then bind with `sap.ui.model.type.DateTime`:
 ```abap
 )->tag( `DateTimePicker`
     )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_ts_string path = abap_true ) }',
@@ -148,7 +148,7 @@ renders the control **visible**. Use the builder's boolean parameter for that:
                               formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',
                                                 source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}|
 ```
-Conversion happens in ABAP (`WRITE timestamp TO ts_string …` or a helper); the framework moves the string verbatim.
+Conversion happens in ABAP (`ts_string = |{ timestamp }|` yields those 14 digits for a `timestamp`); the framework moves the string verbatim.
 
 A custom JS formatter is the third option when neither fits.
 
@@ -171,14 +171,21 @@ view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 
 )->tag( `DatePicker`
     )->a( n = `dateValue` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
-                                 formatter: 'Formatter.DateAbapDateToDateObject' \}|
+                                 formatter: 'Formatter.DateCreateObject' \}|
 ```
+
+`mv_date` is a `d`, so it arrives as `2024-01-15`, which `DateCreateObject`
+reads. The `DateAbapDate…` helpers are for a date held as an eight-digit
+string instead — a `c LENGTH 8` key or a legacy structure field. The
+JavaScript `Date` constructor reads a bare ISO date as midnight UTC, so west
+of Greenwich the picker shows the day before; where that matters, bind the
+`value` with the [Date](#date) type instead.
 
 | Helper | Takes | Returns |
 |---|---|---|
-| `DateAbapDateToDateObject` | an ABAP `d` on the wire (`YYYYMMDD`) | a `Date` at midnight local time |
-| `DateAbapDateTimeToDateObject` | an ABAP `d` and `t` as two `parts` (the `t` may be omitted → midnight) | a `Date` with the time applied |
-| `DateCreateObject` | anything the JS `Date` constructor parses (an ISO string, `utclong`) | a `Date` |
+| `DateAbapDateToDateObject` | an ABAP date held as an eight-digit string (`20240115`) — not a `d` attribute, which arrives as `2024-01-15` | a `Date` at midnight local time |
+| `DateAbapDateTimeToDateObject` | the same date string and a six-digit time string (`123000`) as two `parts` (the time may be omitted → midnight) | a `Date` with the time applied |
+| `DateCreateObject` | anything the JS `Date` constructor parses (an ISO string: a `d`, `timestamp` or `utclong` attribute) | a `Date` |
 | `expandInlineIcons` | a formatted-text string carrying `%%icon:sap-icon://<name>%%` placeholders | the same text with the theme's icon glyphs inlined — for a `MessageStrip` text |
 
 An **initial or empty** value yields `null`, never an `Invalid Date`. That

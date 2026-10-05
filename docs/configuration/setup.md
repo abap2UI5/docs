@@ -19,10 +19,14 @@ CLASS zcl_a2ui5_user_exit IMPLEMENTATION.
     " your configuration goes here
   ENDMETHOD.
 
+  METHOD z2ui5_if_ui5_exit~set_config_http_post.
+    " the roundtrips - an empty implementation is fine
+  ENDMETHOD.
+
 ENDCLASS.
 ```
 
-`set_config_http_get` is called for the page request — when the browser asks for the HTML shell — and once more per response for its `t_security_header`, which every response of the handler carries; keep it cheap and deterministic. The changing parameter `cs_config` holds every value that ends up in the generated `index.html`.
+`set_config_http_get` is called for the page request — when the browser asks for the HTML shell — and once more per response for its `t_security_header`, which every response of the handler carries; keep it cheap and deterministic. The changing parameter `cs_config` holds every value that ends up in the generated `index.html`. The interface has no default for either method, so the class implements `set_config_http_post` too, even empty; it is called for every roundtrip, see [User Exits](/advanced/extensibility/user_exits).
 
 ## What You Can Configure
 
