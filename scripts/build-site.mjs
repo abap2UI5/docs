@@ -1002,6 +1002,43 @@ const named = (html) => html.replace(
   },
 );
 
+/* ...AND EVERY LINE ITS NUMBER, BEFORE THE PAGE IS DRAWN. code-lines.js
+ * numbers the listings in the browser, and that came after the first paint:
+ * the gutter appeared and every line of every listing moved fourteen pixels
+ * and three characters to the right while the reader was looking at it, and a
+ * link to one line (#B2L42) arrived before the line had the id it names. So
+ * the build writes exactly what number( ) there would - the class, the id, the
+ * empty link and the two data attributes - and number( ) leaves a listing that
+ * already carries `data-lines` alone. The browser copy stays for the
+ * VitePress build, which has no step like this one.
+ *
+ * A block is counted whether or not it gets numbers (a one-line listing does
+ * not), because the block index is the listing's position on the page and
+ * code-lines.js counts it the same way. A listing whose lines are not one
+ * `span.line` per row is left for the browser rather than guessed at. */
+const numbered = (html) => {
+  let block = 0;
+  return html.replace(
+    /(<div class="language-[^"]*"[^>]*>[\s\S]*?<pre [^>]*><code)([^>]*)(>)([\s\S]*?)(<\/code>)/g,
+    (all, open, attrs, gt, code, close) => {
+      const bi = ++block;
+      if (/\bdata-lines=/.test(attrs)) return all;
+      const rows = code.split('\n');
+      if (!rows.every((row) => /^<span class="line(?: [^"]*)?">[\s\S]*<\/span>$/.test(row))) return all;
+      let count = rows.length;
+      if (count && rows[count - 1].replace(/<[^>]*>/g, '') === '') count--;
+      if (count < 2) return all;
+      const lines = rows.map((row, i) => {
+        if (i >= count) return row;
+        const n = i + 1;
+        return row.replace(/^<span class="line((?: [^"]*)?)">/,
+          `<span class="line$1 ln" id="B${bi}L${n}"><a href="#B${bi}L${n}" aria-label="Line ${n}" tabindex="-1"></a>`);
+      });
+      return `${open}${attrs} data-lines="${count}" data-block="${bi}"${gt}${lines.join('\n')}${close}`;
+    },
+  );
+};
+
 /* AND A TABLE IS A REGION TOO, for the same reason and with the same words.
  * The renderer wraps every table in `div.vp-doc-table tabindex="0"` so that a
  * keyboard can scroll one wider than the column - the api reference alone has
@@ -1165,6 +1202,16 @@ const decoded = (s) => { try { return decodeURIComponent(s); } catch { return s;
 
 /* ---- run ------------------------------------------------------------- */
 const md = await createMarkdownRenderer(DOCS, config.markdown || {}, BASE);
+/* ABAP IS NOT SHIKI'S TO COLOUR HERE. abapify( ) throws away every span Shiki
+ * puts in an ABAP listing and paints it again with the catalogue's highlighter -
+ * and with 979 ABAP fences that grammar was most of this build's time, spent
+ * on markup nobody sees. So an ABAP fence is highlighted as plain text: the
+ * `language-abap` wrapper comes from the fence, not from here, the line spans
+ * and the `{3,5}` marks are Shiki's either way, and abapify( ) reads the text
+ * out of either just the same. */
+const shikiHighlight = md.options.highlight;
+md.options.highlight = (str, lang, attrs) =>
+  shikiHighlight(str, /^abap$/i.test(lang) ? 'txt' : lang, attrs);
 fs.rmSync(OUT, { recursive: true, force: true });
 
 /* The borrowed highlighter, made importable. It is a module, not data, and the
@@ -1240,7 +1287,7 @@ for (const page of pages) {
   seenImages = 0;
   seenBlocks = 0;
   seenTables = 0;
-  body = tabled(named(notProse(sized(recolour(abapify(body))))));
+  body = numbered(tabled(named(notProse(sized(recolour(abapify(body)))))));
   /* A link that opens a new tab hands that tab a `window.opener` pointing at
      this one unless it says otherwise. Every current browser implies
      `noopener` for `target="_blank"` and has since 2020 - this is for the ones

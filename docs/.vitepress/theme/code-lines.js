@@ -24,7 +24,9 @@
  *
  * This is a single page application, so it runs again on every route change,
  * and it is idempotent: a block that already carries its numbers is left
- * alone.
+ * alone. On the static site that is every listing of two lines or more:
+ * build-site.mjs writes the same markup at build time (numbered( ) there), so
+ * the gutter is in the first paint instead of shifting the code after it.
  */
 
 const HASH = /^#B([0-9]+)L([0-9]+)(?:-L([0-9]+))?$/;
