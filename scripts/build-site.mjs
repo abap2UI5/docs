@@ -307,6 +307,8 @@ const withRelease = (bar) => {
 
 const marked = (find) => inNav(BAR, (nav) => once(nav, find, ' aria-current="page"'));
 const BAR_DOCS = withRelease(marked('data-site="docs"'));
+/* The ids the bar brings with it, which no heading of a page may also take. */
+const BAR_IDS = new Set([...BAR_DOCS.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
 const BAR_HOME = withRelease(marked(`href="${HOME}"`));
 
 /* THE OTHER HALF OF THE PAIR IS THE BORROWED MARKUP'S, so it is checked rather
@@ -1210,6 +1212,24 @@ for (const page of pages) {
   const src = fs.readFileSync(path.join(DOCS, page), 'utf8');
   const env = {};
   let body = md.render(src, env).replace(/ v-pre=""/g, '');
+  /* VitePress's <Badge> is a Vue component, and this build renders no Vue: it
+     went out as a raw `<badge …>` - an unknown open tag that wrapped the rest
+     of its section - and the version it carried was lost. Written as the
+     span VitePress itself renders, outside listings. */
+  body = outsidePre(body, (h) => h.replace(
+    /<Badge\s+type="(\w+)"\s+text="([^"]*)"\s*\/?>(?:<\/Badge>)?/g,
+    (_, type, text) => `<span class="VPBadge ${type}">${text}</span>`,
+  ));
+  /* A heading whose slug is an id the bar already carries - the Theme page's
+     own title slugs to `theme`, the bar's switch - would put one id on the
+     page twice, and `#theme` (and the heading's permalink) would land on the
+     menu's hidden button. Such a heading's id takes a suffix; the sweep at
+     the end refuses any id that is still doubled. */
+  body = body.replace(/(<h[1-6][^>]*\bid=")([^"]+)(")/g, (m, open, id, close) => (BAR_IDS.has(id) ? `${open}${id}-section${close}` : m))
+    .replace(/(href="#)([^"]+)(")/g, (m, open, id, close) => (BAR_IDS.has(id) ? `${open}${id}-section${close}` : m));
+  /* The renderer's copy button is named by its title alone, which not every
+     screen reader and browser pair announces; 400 of them across the site. */
+  body = body.replace(/<button title="Copy Code" class="copy">/g, '<button title="Copy Code" aria-label="Copy code" class="copy">');
   const fm = env.frontmatter || {};
   /* The renderer puts the base in front of a LINK but not in front of an
      asset: VitePress rewrites those in a Vite step this build does not have,
@@ -1399,7 +1419,8 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
     + meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
   bar: BAR_DOCS,
   inline: [NOT_FOUND_SCRIPT],
-  main: `<main class="manual">
+  /* data-not-found: site.js writes no position down here (see there). */
+  main: `<main class="manual" data-not-found>
   <input class="side-open" type="checkbox" id="side-open" aria-label="Chapters">
   ${sidebarFor('/404')}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
@@ -1618,6 +1639,15 @@ const resolve = (to) => {
     /* Listings set aside (outsidePre above): an XML view printed in a fence
        is full of href= and src= that are not links of this site. */
     const html = fs.readFileSync(at, 'utf8').replace(PRE, '');
+    /* AN ID TWICE ON ONE PAGE is an address for the wrong element. The bar
+       carries ids of its own (`theme`, `extra`), and a heading that slugs to
+       the same word - the Theme page's own title did - sent `#theme` and the
+       heading's permalink to the menu's hidden button. */
+    const seen = new Set();
+    for (const m of html.matchAll(/\bid="([^"]+)"/g)) {
+      if (seen.has(m[1])) dead.push(`${at.slice(OUT.length)} -> id="${m[1]}" is on this page twice`);
+      seen.add(m[1]);
+    }
     /* A link INSIDE the page - `href="#a-section"` - is checked against this
        page's own ids. It is where a stale anchor is likeliest: a heading is
        renamed and the sentence pointing at it three screens up is not. */

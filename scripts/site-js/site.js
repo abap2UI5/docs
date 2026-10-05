@@ -69,7 +69,11 @@ else addEventListener('load', markDirective, { once: true });
    as a page of the manual, going Home would overwrite the chapter you were
    reading, and Documentation would then open the home page - which is what the
    Home item is for. */
-if (!location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs');
+/* Nor the 404, which GitHub Pages serves AT the address that missed: written
+   down, it was where the Documentation item on every bar went next - straight
+   back to the dead page. The catalogue's 404 is spared the same way. */
+const notFound = document.querySelector('main[data-not-found]') !== null;
+if (!notFound && !location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs');
 restoreScroll();
 
 /* How far down the page, which is the other half of coming back to it.
@@ -77,7 +81,7 @@ restoreScroll();
 let pending = 0;
 addEventListener('scroll', () => {
   if (pending) return;
-  pending = setTimeout(() => { pending = 0; rememberScroll(); }, 300);
+  pending = setTimeout(() => { pending = 0; if (!notFound) rememberScroll(); }, 300);
 }, { passive: true });
 addEventListener('pagehide', () => rememberScroll());
 

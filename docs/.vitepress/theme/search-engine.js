@@ -443,6 +443,17 @@ export function rememberQuery(query) {
   }
 }
 
+/** Forget what was searched for - the box calls it on a reload, which starts
+ *  the site over (search-box.mjs in abap2UI5/playground imports it from its
+ *  copy of this file). */
+export function forgetQuery() {
+  try {
+    store()?.removeItem(QUERY_KEY);
+  } catch {
+    /* A refused storage has nothing to forget. */
+  }
+}
+
 /** What to open the box with, or `''` — which is every case that is not a
  *  recent query written by this box. */
 export function recallQuery() {

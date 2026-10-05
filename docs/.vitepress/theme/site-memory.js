@@ -275,8 +275,11 @@ export function takeHandoff() {
   if (!store()) return null;
   let record = null;
   try {
-    record = JSON.parse(store().getItem(HANDOFF_KEY) || "null");
+    const raw = store().getItem(HANDOFF_KEY);
+    /* Removed before it is parsed: a corrupt record used to throw first and
+     * stay behind for ever. */
     store().removeItem(HANDOFF_KEY);
+    record = JSON.parse(raw || "null");
   } catch {
     return null;
   }
