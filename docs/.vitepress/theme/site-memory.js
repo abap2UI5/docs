@@ -36,6 +36,19 @@
 // This site only ever READS that key. The playground writes it, and never
 // from an embedded or app-only view.
 
+/* The store, or null where there is none. `typeof localStorage` guarded
+ * nothing: with storage blocked (cookies off for the site, the embedded case)
+ * the getter itself throws a SecurityError, and that throw - outside every
+ * try - stopped the whole bundled site.js at its first call, search box and
+ * all. The playground's copies have always gone through a guard like this. */
+function store() {
+  try {
+    return globalThis.localStorage ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /* The playground's namespace, for keys this site writes too. It is the wrong
  * word for a value shared by three deployments and it is the namespace every
  * other key on this origin already uses - including the theme, which crossed
@@ -49,9 +62,9 @@ const KEY = {
 
 /** Write down that the reader is on this site's page. */
 export function rememberHere(site = "docs") {
-  if (typeof localStorage === "undefined" || !KEY[site]) return;
+  if (!store() || !KEY[site]) return;
   try {
-    localStorage.setItem(KEY[site], location.pathname + location.search + location.hash);
+    store().setItem(KEY[site], location.pathname + location.search + location.hash);
   } catch {
     /* A refused or full storage. The reader simply is not remembered. */
   }
@@ -79,9 +92,9 @@ export function rememberHere(site = "docs") {
  * values that are simply ignored.
  */
 export function lastVisited(site, fallback, scope = fallback) {
-  if (typeof localStorage === "undefined") return fallback;
+  if (!store()) return fallback;
   try {
-    const last = localStorage.getItem(KEY[site]);
+    const last = store().getItem(KEY[site]);
     if (!last) return fallback;
     /* The section, from the link that is already written, so this works
      * unchanged on a dev server where the three sites sit at other paths - and
@@ -92,6 +105,12 @@ export function lastVisited(site, fallback, scope = fallback) {
     const target = new URL(last, location.origin);
     if (target.origin !== location.origin) return fallback;
     if (!target.pathname.startsWith(base.pathname)) return fallback;
+    /* The catalogue lives UNDER the playground's path, and the playground
+     * never writes a samples page as itself - so a stored /playground/samples/x
+     * is not a playground to return to, and the Playground item does not open
+     * a sample page. The playground's own copy refuses it the same way
+     * (upgradeSiteLinks( ) in src/shell/site-memory.mjs over there). */
+    if (site === "playground" && /\/samples(\/|$)/.test(target.pathname.slice(base.pathname.length - 1))) return fallback;
     return target.pathname + target.search + target.hash;
   } catch {
     return fallback;
@@ -187,7 +206,7 @@ const here = () => location.pathname + location.search;
 
 const readMap = () => {
   try {
-    const raw = JSON.parse(localStorage.getItem(SCROLL_KEY) || "{}");
+    const raw = JSON.parse(store().getItem(SCROLL_KEY) || "{}");
     return raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
   } catch {
     return {};
@@ -198,7 +217,7 @@ const readMap = () => {
  *  a scroll handler, which is where it is called from - `pagehide` alone loses
  *  the offset whenever a browser decides not to fire it. */
 export function rememberScroll(y = window.scrollY, path = here()) {
-  if (typeof localStorage === "undefined") return;
+  if (!store()) return;
   if (!Number.isFinite(y) || y < 0) return;
   try {
     const map = readMap();
@@ -207,7 +226,7 @@ export function rememberScroll(y = window.scrollY, path = here()) {
     delete map[path];
     map[path] = Math.round(y);
     for (const old of Object.keys(map).slice(0, -SCROLL_MAX)) delete map[old];
-    localStorage.setItem(SCROLL_KEY, JSON.stringify(map));
+    store().setItem(SCROLL_KEY, JSON.stringify(map));
   } catch {
     /* A refused or full storage. The reader lands at the top, as before. */
   }
@@ -217,7 +236,7 @@ export function rememberScroll(y = window.scrollY, path = here()) {
  *  origin can write anything here, and `scrollTo` will take whatever it is
  *  given. */
 export function scrollOf(path = here()) {
-  if (typeof localStorage === "undefined") return 0;
+  if (!store()) return 0;
   try {
     const y = readMap()[path];
     return Number.isFinite(y) && y >= 0 && y < 1e7 ? y : 0;
@@ -234,11 +253,11 @@ export function scrollOf(path = here()) {
  * another host (which shares no storage) writes nothing.
  */
 export function handOff(href) {
-  if (typeof localStorage === "undefined" || !href) return;
+  if (!store() || !href) return;
   try {
     const to = new URL(href, location.href);
     if (to.origin !== location.origin) return;
-    localStorage.setItem(HANDOFF_KEY, JSON.stringify({ to: to.pathname + to.search, at: Date.now() }));
+    store().setItem(HANDOFF_KEY, JSON.stringify({ to: to.pathname + to.search, at: Date.now() }));
   } catch {
     /* Not a URL, or no storage. Nothing is restored, which is the old
      * behaviour and not a broken one. */
@@ -253,11 +272,11 @@ export function handOff(href) {
  * would be a later navigation inheriting somebody else's destination.
  */
 export function takeHandoff() {
-  if (typeof localStorage === "undefined") return null;
+  if (!store()) return null;
   let record = null;
   try {
-    record = JSON.parse(localStorage.getItem(HANDOFF_KEY) || "null");
-    localStorage.removeItem(HANDOFF_KEY);
+    record = JSON.parse(store().getItem(HANDOFF_KEY) || "null");
+    store().removeItem(HANDOFF_KEY);
   } catch {
     return null;
   }
@@ -405,10 +424,10 @@ export function arrivedBy() {
  */
 export function forgetOnReload(also = [], how = arrivedBy()) {
   if (how !== "reload") return false;
-  if (typeof localStorage === "undefined") return false;
+  if (!store()) return false;
   for (const key of [...REMEMBERED, ...also]) {
     try {
-      localStorage.removeItem(key);
+      store().removeItem(key);
     } catch {
       /* A refused storage has nothing to forget. */
     }

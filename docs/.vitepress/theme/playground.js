@@ -78,6 +78,8 @@ async function start(button, { unasked = false } = {}) {
   if (!container || container.dataset.running) return;
   container.dataset.running = '1';
   const label = button.textContent;
+  /* Read before the button is disabled, which drops the focus off it. */
+  const hadFocus = document.activeElement === button;
   button.disabled = true;
   button.textContent = 'Starting the ABAP runtime…';
 
@@ -119,14 +121,34 @@ async function start(button, { unasked = false } = {}) {
    * taken to what they started, so that one is left alone. */
   if (unasked) holdStill(container);
   container.append(demo);
-  embed.setUp(container);
+  try {
+    embed.setUp(container);
+  } catch (e) {
+    /* A loader that threw while mounting left the example stuck on
+     * "Starting…" with its button disabled; it is put back the way the
+     * failed download above puts it back. */
+    demo.remove();
+    delete container.dataset.running;
+    if (unasked) {
+      button.disabled = false;
+      button.textContent = label;
+      return;
+    }
+    button.remove();
+    fail(container, String(e.message || e));
+    return;
+  }
   /* The printed listing steps aside for the editable one: the frame now shows
    * the same source in a place the reader can type. It is hidden rather than
    * removed - `sourceOf` reads it, Close brings it back, and a reader who
    * copies is copying the block that was always there. */
   if (editable) listing(container)?.toggleAttribute('hidden', true);
 
-  button.replaceWith(bar(container, demo, embed, source));
+  const controls = bar(container, demo, embed, source);
+  button.replaceWith(controls);
+  /* The focus goes where the button was rather than to <body>, or a keyboard
+   * reader starts tabbing from the top of the page again. */
+  if (hadFocus && !unasked) controls.querySelector('.a2ui5-play-close')?.focus();
 }
 
 /** What replaces the button: close it again, or take it somewhere it can be
@@ -145,7 +167,9 @@ function bar(container, demo, embed, source) {
     demo.remove();
     listing(container)?.toggleAttribute('hidden', false);
     delete container.dataset.running;
-    bar.replaceWith(runButton(container));
+    const run = runButton(container);
+    bar.replaceWith(run);
+    run.focus();
   });
 
   /* In THIS tab, and the label says so: a switch to the playground with the

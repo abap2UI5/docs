@@ -263,8 +263,12 @@ document.addEventListener('click', (e) => {
   const mark = () => {
     let last = -1;
     if (window.scrollY >= 1) {
+      // The headings are in document order, so the first one below the line
+      // ends the walk - one layout read per heading passed, not per heading
+      // on the page, on every scroll frame.
       for (let i = 0; i < heads.length; i++) {
-        if (heads[i].getBoundingClientRect().top <= LINE) last = i;
+        if (heads[i].getBoundingClientRect().top > LINE) break;
+        last = i;
       }
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) last = heads.length - 1;
     }
@@ -395,11 +399,15 @@ document.addEventListener('click', (e) => {
  * open. Unchecking the box is all closing is; the focus goes back to the
  * button that opened it, as the menu's does. */
 document.addEventListener('keydown', (e) => {
-  if (e.key !== 'Escape') return;
+  // An Escape the search panel already answered is not this one's.
+  if (e.key !== 'Escape' || e.defaultPrevented) return;
   const box = document.getElementById('side-open');
   if (!box?.checked) return;
   box.checked = false;
-  document.querySelector('.side-button')?.focus();
+  // The control itself: .side-button is a <label>, which cannot take focus,
+  // so the focus stayed on a link in the drawer that had just closed. The
+  // box's :focus-visible draws the ring on the label.
+  box.focus();
 });
 
 /* ---- copy a listing ---------------------------------------------------

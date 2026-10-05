@@ -115,3 +115,16 @@ test('a URL with no directive in it is not one', () => {
   // Somebody else's fragment directive, for something that is not text.
   assert.equal(parseDirective('/docs/x.html#:~:unknown=1'), null);
 });
+
+test('a quote the page carries in another case is ambiguous too, because the browser ignores case', () => {
+  /* "client" under a heading "Client" is two matches to the browser. Counted
+   * case-sensitively the quote looked unique, went out bare, and the link
+   * landed on the heading instead of the word that was selected. */
+  const directive = fragmentFor({
+    text: 'client',
+    prefix: 'every app gets a',
+    pageText: 'Client\nevery app gets a client object',
+  });
+  assert.notEqual(directive, 'text=client');
+  assert.match(directive, /^text=every%20app%20gets%20a-,client/);
+});

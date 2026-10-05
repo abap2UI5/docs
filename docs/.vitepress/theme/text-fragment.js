@@ -67,7 +67,12 @@ const EDGE = 5;
 const EXACT = 12;
 
 /** How many places in the page this run of words occurs. */
-const count = (page, needle) => (needle === "" ? 0 : page.split(needle).length - 1);
+/* Case-insensitive, because the browser matches a text directive that way:
+ * "client" on a page that also says "Client" is two matches to the browser,
+ * and counted case-sensitively it looked unique and went out without the
+ * prefix that would have told them apart. */
+const count = (page, needle) =>
+  needle === "" ? 0 : page.toLowerCase().split(needle.toLowerCase()).length - 1;
 
 /**
  * The `text=` directive for a selection, or null when there is nothing to

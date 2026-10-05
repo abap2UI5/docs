@@ -23,6 +23,19 @@
  * because that is what typing looks like before you have finished.
  */
 
+/* The store, or null where there is none. `typeof localStorage` guarded
+ * nothing: with storage blocked (cookies off for the site, the embedded case)
+ * the getter itself throws a SecurityError, and that throw - outside every
+ * try - stopped the whole bundled site.js at its first call, search box and
+ * all. The playground's copies have always gone through a guard like this. */
+function store() {
+  try {
+    return globalThis.localStorage ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /** Where the index lives — one document, on the origin all four sites share. */
 export const INDEX_URL = 'https://abap2ui5.github.io/docs/search-index.json';
 
@@ -84,8 +97,12 @@ function scoreField(value, term, weight) {
   if (at === 0) return weight * 2;
   if (/[^\p{L}\p{N}]/u.test(hay[at - 1] || '')) return weight;
   if (term.length <= 2) {
-    const next = hay.indexOf(term, at + 1);
-    return next > 0 && /[^\p{L}\p{N}]/u.test(hay[next - 1]) ? weight : 0;
+    // Every later occurrence, not only the next one: "ui" sits inside
+    // "build" and "guide" before it starts a word in "Build guide UI".
+    for (let i = hay.indexOf(term, at + 1); i > 0; i = hay.indexOf(term, i + 1)) {
+      if (/[^\p{L}\p{N}]/u.test(hay[i - 1])) return weight;
+    }
+    return 0;
   }
   return weight / 2;
 }
@@ -369,8 +386,11 @@ export function highlight(text, query) {
     for (;;) {
       const at = low.indexOf(term, from);
       if (at < 0) break;
-      marks.push([at, at + term.length]);
       from = at + term.length;
+      // A one- or two-letter term is a hit at a word start only (scoreField),
+      // so only there is it marked - not the "ui" inside "Build".
+      if (term.length <= 2 && at > 0 && !/[^\p{L}\p{N}]/u.test(low[at - 1])) continue;
+      marks.push([at, at + term.length]);
     }
   }
   if (!marks.length) return [[hay, false]];
@@ -413,11 +433,11 @@ const QUERY_MAX = 120;
 /** Write down what was typed, as a hit is opened. An empty or absurd query
  *  clears the memory rather than storing itself. */
 export function rememberQuery(query) {
-  if (typeof localStorage === 'undefined') return;
+  if (!store()) return;
   const q = (query || '').trim();
   try {
-    if (!q || q.length > QUERY_MAX) localStorage.removeItem(QUERY_KEY);
-    else localStorage.setItem(QUERY_KEY, JSON.stringify({ q, at: Date.now() }));
+    if (!q || q.length > QUERY_MAX) store().removeItem(QUERY_KEY);
+    else store().setItem(QUERY_KEY, JSON.stringify({ q, at: Date.now() }));
   } catch {
     /* A refused or full storage. The reader types it again, as before. */
   }
@@ -426,10 +446,10 @@ export function rememberQuery(query) {
 /** What to open the box with, or `''` — which is every case that is not a
  *  recent query written by this box. */
 export function recallQuery() {
-  if (typeof localStorage === 'undefined') return '';
+  if (!store()) return '';
   let record = null;
   try {
-    record = JSON.parse(localStorage.getItem(QUERY_KEY) || 'null');
+    record = JSON.parse(store().getItem(QUERY_KEY) || 'null');
   } catch {
     return ''; /* not JSON: not something this wrote */
   }
