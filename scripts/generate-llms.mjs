@@ -106,7 +106,15 @@ const absoluteLink = (target) => {
         : mdSuffix(at);
   return `${SITE}${to}${hash !== undefined ? `#${hash}` : ''}`;
 };
-function absoluteLinks(markdown) {
+/* A RELATIVE link (`](../cookbook/x)`) is the same trap one step removed:
+ * llms-full.txt is served from /docs/, so it resolved against that and left
+ * the site. It is resolved against the page it was written in, and then goes
+ * the way a root-relative one does. */
+const relativeLink = (target, link) => {
+  const url = new URL(target, `https://x${link}`);
+  return absoluteLink(url.pathname + (url.hash ? `#${decodeURIComponent(url.hash.slice(1))}` : ''));
+};
+function absoluteLinks(markdown, link) {
   let fence = null;
   return markdown.split('\n').map((line) => {
     const open = /^\s*(`{3,}|~{3,})/.exec(line);
@@ -116,7 +124,9 @@ function absoluteLinks(markdown) {
       return line;
     }
     if (fence) return line;
-    return line.replace(/\]\((\/(?!\/)[^)\s]*)/g, (m, target) => `](${absoluteLink(target)}`);
+    return line
+      .replace(/\]\((\/(?!\/)[^)\s]*)/g, (m, target) => `](${absoluteLink(target)}`)
+      .replace(/\]\((\.\.?\/[^)\s]*)/g, (m, target) => `](${relativeLink(target, link)}`);
   }).join('\n');
 }
 
@@ -264,7 +274,7 @@ const index = [
 /* --- llms-full.txt: everything ------------------------------------------- */
 
 const chapter = (link, text) => {
-  const body = absoluteLinks(stripFrontmatter(read.get(link)).trim());
+  const body = absoluteLinks(stripFrontmatter(read.get(link)).trim(), link);
   return `\n\n---\n\n<!-- ${SITE}${link} -->\n\n${body}`;
 };
 
@@ -284,7 +294,7 @@ let written = 0;
 for (const [link, body] of read) {
   const out = path.join(PUBLIC, mdSuffix(link).slice(1));
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, `<!-- ${SITE}${link} -->\n\n${absoluteLinks(stripFrontmatter(body).trim())}\n`);
+  fs.writeFileSync(out, `<!-- ${SITE}${link} -->\n\n${absoluteLinks(stripFrontmatter(body).trim(), link)}\n`);
   written += 1;
 }
 

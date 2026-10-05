@@ -92,10 +92,17 @@ addEventListener('pagehide', () => rememberScroll());
 for (const group of document.querySelectorAll('.vp-code-group')) {
   const tabs = [...group.querySelectorAll('.tabs input')];
   const blocks = [...group.querySelectorAll('.blocks > div')];
-  group.addEventListener('change', () => {
+  const sync = () => {
     const at = tabs.findIndex((t) => t.checked);
-    blocks.forEach((b, i) => b.classList.toggle('active', i === at));
-  });
+    if (at > -1) blocks.forEach((b, i) => b.classList.toggle('active', i === at));
+  };
+  group.addEventListener('change', sync);
+  /* And at once: a page rebuilt by Back or Forward (or reloaded, in Firefox)
+     has its radios put back where the reader left them - no change event -
+     while the markup's `active` stays on the first block, so the second tab
+     was underlined over the first tab's code. */
+  sync();
+  addEventListener('pageshow', sync);
 }
 
 /* ---- the bar remembers where you were ---------------------------------
@@ -402,7 +409,10 @@ document.addEventListener('click', (e) => {
  * behind the bar's last button both close on Escape, and the drawer sat
  * open. Unchecking the box is all closing is; the focus goes back to the
  * button that opened it, as the menu's does. */
-document.addEventListener('keydown', (e) => {
+/* On the window, not the document: site.js runs before search.mjs, so a
+   document listener here heard the Escape BEFORE the search panel could
+   claim it, and one press closed both. The window hears it after. */
+addEventListener('keydown', (e) => {
   // An Escape the search panel already answered is not this one's.
   if (e.key !== 'Escape' || e.defaultPrevented) return;
   const box = document.getElementById('side-open');

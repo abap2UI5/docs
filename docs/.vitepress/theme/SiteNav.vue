@@ -11,7 +11,7 @@
  * phone opens instead of it, where the same four items are a list rather than
  * a strip.
  */
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useData } from "vitepress";
 import { handOff, lastVisited, rememberScroll } from "./site-memory.js";
 
@@ -99,12 +99,20 @@ const leave = (e) => {
 /* Lifted on mount, and again whenever the stored position can have moved while
  * this page stayed open: the catalogue narrowed in another tab, a Back that
  * brought this page out of the back-forward cache. */
+const liftWhenVisible = () => {
+  if (document.visibilityState === "visible") lift();
+};
 onMounted(() => {
   lift();
   addEventListener("pageshow", lift);
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") lift();
-  });
+  document.addEventListener("visibilitychange", liftWhenVisible);
+});
+/* And taken down again: the phone menu mounts a second copy of this bar each
+ * time it opens (v-if), and every copy left its two listeners behind, each
+ * holding a component that was long gone. */
+onUnmounted(() => {
+  removeEventListener("pageshow", lift);
+  document.removeEventListener("visibilitychange", liftWhenVisible);
 });
 </script>
 

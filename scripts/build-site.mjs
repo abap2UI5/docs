@@ -626,16 +626,22 @@ const linkedData = ({ page, title, description, url, isHome }) => {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        ...trail.map((c, i) => ({
-          '@type': 'ListItem', position: i + 1, name: c.text,
-          /* Named exactly as the crumb line names it, `.html` and all - the
-             same rule `crumbsFor` uses - so the url in the structured data is
-             the url a reader would land on, and the one the page declares as
-             canonical. */
-          ...(c.link ? { item: SITE_URL + c.link + (c.link.endsWith('/') ? 'index.html' : '.html') } : {}),
+        ...trail.map((c) => ({
+          '@type': 'ListItem', name: c.text,
+          /* In the form the page names itself canonical() - a section's front
+             page as its directory, every other page with `.html` - so one page
+             is one url here too. Written as the crumb line writes it
+             (`…/cookbook/index.html`), a section's front page was listed
+             twice under two urls, its crumb and itself. */
+          ...(c.link ? { item: SITE_URL + c.link + (c.link.endsWith('/') ? '' : '.html') } : {}),
         })),
-        { '@type': 'ListItem', position: trail.length + 1, name: title.replace(/ \| abap2UI5$/, ''), item: url },
-      ],
+        { '@type': 'ListItem', name: title.replace(/ \| abap2UI5$/, ''), item: url },
+      ]
+        /* And two steps that land on the same page are one step (View ›
+           Definition are the same page, and so are Documentation › Get Started
+           on a chapter of it): the later, nearer name is kept. */
+        .filter((entry, i, all) => i === all.length - 1 || !entry.item || entry.item !== all[i + 1].item)
+        .map((entry, i) => ({ ...entry, position: i + 1 })),
     },
   ]);
   return `<script type="application/ld+json">${json.replace(/</g, '\\u003c')}</script>`;
@@ -1168,7 +1174,15 @@ const sized = (html) => html.replace(/<img ([^>]*?)src="([^"]+)"([^>]*)>/g, (tag
   if (/\bheight=/.test(tag) || !size || !size.w || !size.h) return tag.replace(/\s*\/?>$/, `${later}>`);
   const declared = tag.match(/\bwidth="(\d+)"/);
   if (declared) return tag.replace(/>$/, ` height="${Math.round(size.h * +declared[1] / size.w)}"${later}>`);
-  if (/\bwidth=/.test(tag)) return tag.replace(/>$/, `${later}>`);   // a percentage, or something else
+  /* A percentage is a share of the column, not a size, and as an attribute
+     it is not valid HTML either - so it moves into the style, and the tag
+     gets the intrinsic pair like any other: without it the image reserved
+     nothing and the text under it jumped when it arrived. */
+  const share = tag.match(/\swidth="(\d+(?:\.\d+)?%)"/);
+  if (share && !/\bstyle=/.test(tag)) {
+    return tag.replace(share[0], '').replace(/\s*\/?>$/, ` width="${size.w}" height="${size.h}" style="width:${share[1]}"${later}>`);
+  }
+  if (/\bwidth=/.test(tag)) return tag.replace(/>$/, `${later}>`);   // something else
   return `<img ${before}src="${src}" width="${size.w}" height="${size.h}"${later}${after}>`;
 });
 

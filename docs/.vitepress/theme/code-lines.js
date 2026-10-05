@@ -53,6 +53,21 @@ function mark(scroll) {
    * nines Number( ) is Infinity and it never ended at all. The catalogue's
    * copy (src/catalogue/lines.mjs over there) learned the same. */
   const code = blocks()[range.block - 1];
+  /* A listing on a code group's hidden tab: the address is a click on its
+     line away (a reader on the second tab picked it), but the block is
+     display:none - nothing could scroll to it and the mark was 0px tall. So
+     its tab is chosen first, the way a click on it would (the click is what
+     both the renderer's script and site.js answer), and then it is scrolled
+     to, which the browser's own jump to the id could not do. */
+  const wrap = code?.closest('.vp-code-group .blocks > div');
+  if (wrap && !wrap.classList.contains('active')) {
+    const index = [...wrap.parentElement.children].indexOf(wrap);
+    const tab = wrap.closest('.vp-code-group').querySelectorAll('.tabs input')[index];
+    if (tab && !tab.checked) {
+      tab.click();
+      scroll = true;
+    }
+  }
   const last = Math.min(range.to, Number(code?.dataset.lines) || 0);
   for (let n = range.from; n <= last; n++) {
     const el = document.getElementById(`B${range.block}L${n}`);
