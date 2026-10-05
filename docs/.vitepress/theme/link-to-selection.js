@@ -125,15 +125,26 @@ function copy() {
   const range = quoted()
   if (!range) return hide()
 
-  const { prefix, suffix } = around(range)
+  let { prefix, suffix } = around(range)
+  let text = range.toString()
+  /* The browser matches a text directive at word boundaries only, and a drag
+   * with the mouse starts and ends inside words more often than not - so a
+   * word cut at either edge is taken whole, from the text around it. */
+  const lead = /^[\p{L}\p{N}_]/u.test(text) ? /[\p{L}\p{N}_]+$/u.exec(prefix)?.[0] ?? '' : ''
+  const tail = /[\p{L}\p{N}_]$/u.test(text) ? /^[\p{L}\p{N}_]+/u.exec(suffix)?.[0] ?? '' : ''
+  text = lead + text + tail
+  prefix = prefix.slice(0, prefix.length - lead.length)
+  suffix = suffix.slice(tail.length)
   const directive = fragmentFor({
-    text: range.toString(),
+    text,
     prefix,
     suffix,
-    /* Read here rather than on every selection change: this is the whole
-     * article as text, and it is only needed to answer whether the quote is
-     * ambiguous. */
-    pageText: document.querySelector(ARTICLE)?.innerText ?? '',
+    /* Read here rather than on every selection change, and the whole page
+     * rather than the article: the browser looks for the quote everywhere,
+     * the sidebar and the crumbs come first, and a phrase that is unique in
+     * the article but also names a sidebar row went to the sidebar - on a
+     * screen wide enough to show it. Counting too much only adds a prefix. */
+    pageText: document.body.textContent ?? '',
   })
   if (!directive) return hide()
 

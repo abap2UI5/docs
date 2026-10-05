@@ -108,13 +108,29 @@ export function describe(body) {
   return said || summarise(body);
 }
 
+/** A fence tracker that reads fences the way markdown-it does: ``` or ~~~,
+ *  three or more, up to three spaces in, and closed only by the same mark at
+ *  least as long with nothing after it. A bare startsWith('```') missed ~~~
+ *  fences and closed a ````md fence on the ``` inside it, so headings inside a
+ *  listing were indexed and a real one after it got a dead `-1` anchor. */
+export function fenceTracker() {
+  let fence = null;
+  return (line) => {
+    const f = /^ {0,3}(`{3,}|~{3,})(.*)$/.exec(line);
+    if (f) {
+      if (!fence) { fence = f[1]; return true; }
+      if (f[1][0] === fence[0] && f[1].length >= fence.length && !/\S/.test(f[2])) { fence = null; return true; }
+    }
+    return fence !== null;
+  };
+}
+
 export function summarise(body) {
   const lines = stripFrontmatter(body).split('\n');
   const para = [];
-  let inFence = false;
+  const inFence = fenceTracker();
   for (const line of lines) {
-    if (line.startsWith('```')) { inFence = !inFence; continue; }
-    if (inFence) continue;
+    if (inFence(line)) continue;
     const t = line.trim();
     if (!para.length) {
       if (!t || t.startsWith('#') || t.startsWith(':::') || t.startsWith('|') || t.startsWith('<')) continue;
@@ -190,21 +206,22 @@ export const title = (body, fallback) =>
 export function headings(body) {
   const out = [];
   const seen = new Map();
-  let inFence = false;
+  const inFence = fenceTracker();
   for (const line of stripFrontmatter(body).split('\n')) {
-    if (line.startsWith('```')) { inFence = !inFence; continue; }
-    if (inFence) continue;
+    if (inFence(line)) continue;
     /* Every heading counts towards the de-duplication - the title of the
        page takes its slug first, so a `## EML` under `# EML` is `eml-1` -
        and only the second and third level are indexed. */
-    const m = /^(#{1,3})\s+(.+?)\s*$/.exec(line);
+    // Every level takes its slug (`#### Setup` makes a later `## Setup`
+    // `setup-1`, as the renderer does); only the second and third are listed.
+    const m = /^ {0,3}(#{1,6})\s+(.+?)\s*$/.exec(line);
     if (!m) continue;
     const text = m[2].replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*`]/g, '').trim();
     if (!text) continue;
     const slug = slugify(text);
     const n = seen.get(slug) ?? 0;
     seen.set(slug, n + 1);
-    if (m[1].length === 1) continue;
+    if (m[1].length === 1 || m[1].length > 3) continue;
     out.push({ text, anchor: n === 0 ? slug : `${slug}-${n}` });
   }
   return out;

@@ -294,19 +294,25 @@ function nearest(entries, term) {
  * (above) and the list says so: `hits.relaxedTo` is the query that answered.
  */
 export function search(entries, query, { limit = 30 } = {}) {
-  let terms = queryTerms(query);
+  /* Eight words at most. Nobody narrows a list with a ninth, and a pasted
+   * error message or a line of ABAP is thirty: every relaxing pass below
+   * scored the whole index once per word, and the box froze for seconds on
+   * each keystroke after the paste. */
+  let terms = queryTerms(query).slice(0, 8);
   if (!terms.length) return [];
 
   let hits = rank(entries, terms, phrasesOf(query, terms), limit);
   if (hits.length) return hits;
 
+  // Each word's reach once, not once per comparison per pass.
+  const reached = new Map(terms.map((t) => [t, reach(entries, t)]));
   while (terms.length > 1) {
     /* The word on the fewest entries goes; of two on as few, the one typed
      * last - the reader's most recent word is the one most likely one too
      * many. The rest keep their order, which is the reader's. */
     let out = 0;
     terms.forEach((t, i) => {
-      if (i && reach(entries, t) <= reach(entries, terms[out])) out = i;
+      if (i && reached.get(t) <= reached.get(terms[out])) out = i;
     });
     terms = terms.filter((_, i) => i !== out);
     hits = rank(entries, terms, [terms.join(' ')], limit);

@@ -46,12 +46,23 @@ test('a long selection is quoted as its two ends', () => {
 
 test('a selection that crosses lines is quoted as two ends however short it is', () => {
   // The reason it must be: an exact quote has to be found inside ONE block,
-  // and every line of a highlighted code fence is an element of its own. Five
-  // words over two lines are quoted as two words and two words - the halves
-  // may not overlap, because textEnd is looked for after textStart, so the one
-  // in the middle is spanned rather than spelled.
+  // and every line of a highlighted code fence is an element of its own. Each
+  // end comes from its own line: the browser does not match a space against
+  // a line break inside <pre>, so an end that ran over one found nothing.
   assert.equal(fragmentFor({ text: 'METHOD z2ui5_if_app~main.\n  DATA lv_x TYPE' }),
-    'text=METHOD%20z2ui5_if_app~main.,lv_x%20TYPE');
+    'text=METHOD%20z2ui5_if_app~main.,DATA%20lv_x%20TYPE');
+});
+
+test('across short lines, neither end runs over a line break', () => {
+  // Five words from the start of a listing used to be "PUBLIC SECTION.
+  // INTERFACES ..." - two lines, and a dead link.
+  const text = 'PUBLIC SECTION.\n    INTERFACES if_http_extension.\nENDCLASS.';
+  assert.equal(fragmentFor({ text }), 'text=PUBLIC%20SECTION.,ENDCLASS.');
+});
+
+test('a zero-width character in the selection is not quoted', () => {
+  // A heading's hidden permalink holds one, and Range.toString( ) reports it.
+  assert.equal(fragmentFor({ text: '3. First Launch \u200B' }), 'text=3.%20First%20Launch');
 });
 
 test('a quote the page repeats is given the words in front of it', () => {

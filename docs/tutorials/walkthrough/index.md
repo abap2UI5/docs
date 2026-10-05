@@ -27,18 +27,23 @@ no frontend project, no OData service.
 
 ## Steps
 
-- **[Step 1: The App Class](/tutorials/walkthrough/step-1)** — the smallest possible app: one class, one method, one message.
+- **[Step 1: The App Class](/tutorials/walkthrough/step-1)** — the smallest
+  possible app: one class, one method, one message.
 - **[Step 2: A First View](/tutorials/walkthrough/step-2)** — render a UI5 view built entirely in ABAP.
 - **[Step 3: Events](/tutorials/walkthrough/step-3)** — a button, a press event, and the lifecycle behind them.
 - **[Step 4: Data Binding](/tutorials/walkthrough/step-4)** — an input field whose value reaches the server by itself.
 - **[Step 5: List Binding](/tutorials/walkthrough/step-5)** — show an internal table as a UI5 list.
 - **[Step 6: Row Events](/tutorials/walkthrough/step-6)** — react to a click on a row, and know which row it was.
 - **[Step 7: Popups](/tutorials/walkthrough/step-7)** — edit a row in a dialog.
-- **[Step 8: Selection Screen](/tutorials/walkthrough/step-8)** — a form above the list, and reading the data it asks for.
-- **[Step 9: Tables](/tutorials/walkthrough/step-9)** — swap the list for a real table with columns, cells and row actions.
+- **[Step 8: Selection Screen](/tutorials/walkthrough/step-8)** — a form above
+  the list, and reading the data it asks for.
+- **[Step 9: Tables](/tutorials/walkthrough/step-9)** — swap the list for a real
+  table with columns, cells and row actions.
 - **[Step 10: App Structure](/tutorials/walkthrough/step-10)** — refactor into the structure real apps use.
-- **[Step 11: From Playground to Production](/tutorials/walkthrough/step-11)** — real data, the transport order, authorization, and the URL users start from.
-- **[Step 12: Unit Tests](/tutorials/walkthrough/step-12)** — test the app class like any ABAP class; no UI5 runtime involved.
+- **[Step 11: From Playground to Production](/tutorials/walkthrough/step-11)** —
+  real data, the transport order, authorization, and the URL users start from.
+- **[Step 12: Unit Tests](/tutorials/walkthrough/step-12)** — test the app class
+  like any ABAP class; no UI5 runtime involved.
 
 ## What You Should Know
 

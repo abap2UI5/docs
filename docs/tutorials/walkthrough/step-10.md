@@ -286,10 +286,15 @@ ENDCLASS.
 
 ## What to Take Away
 
-- One controller class, one `main` method, all state in public attributes — that is the whole app
-- The view is rebuilt only when the structure changes. Reading data, saving, and opening or closing a popup do not need a fresh `view_display( )`
-- Popups use the same builder as the view — a `core:FragmentDefinition` root instead of `mvc:View` — shown with `popup_display` / `popup_destroy` while the main view stays in place
-- Reading and writing the database is plain ABAP; abap2UI5 does not abstract that layer, which is what makes it easy to plug into existing code
+- One controller class, one `main` method, all state in public attributes — that
+  is the whole app
+- The view is rebuilt only when the structure changes. Reading data, saving, and
+  opening or closing a popup do not need a fresh `view_display( )`
+- Popups use the same builder as the view — a `core:FragmentDefinition` root
+  instead of `mvc:View` — shown with `popup_display` / `popup_destroy` while the
+  main view stays in place
+- Reading and writing the database is plain ABAP; abap2UI5 does not abstract
+  that layer, which is what makes it easy to plug into existing code
 
 ## Where to Go From Here
 
