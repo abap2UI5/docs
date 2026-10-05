@@ -17,9 +17,10 @@ on:
   pull_request:
 
   # ...and by hand, which there was no way to do. A pull request whose run
-  # never got created - GitHub does not always raise the event when a branch
-  # has just been recreated under an open pull request - left the fifteen gates
-  # with no way to be asked again short of pushing something. This is that way.
+  # never got created left the fifteen gates with no way to be asked again
+  # short of pushing something. This is that way - and it is how bump-linter
+  # starts this workflow: a PR opened with the workflow's own GITHUB_TOKEN
+  # raises no pull_request event at all, which is why those runs were missing.
   workflow_dispatch:
 
 concurrency:
