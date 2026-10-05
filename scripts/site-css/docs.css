@@ -1220,6 +1220,14 @@ html { scrollbar-gutter: stable; }
 @media print {
   .bar, .sidebar, .outline, .prev-next, .skip, .side-button, .side-scrim,
   .a2ui5-play-run, .a2ui5-play-bar, .a2ui5-play-fold, .abap2ui5-demo, .doc-foot .edit { display: none !important; }
+  /* The code, all of it. The front door's example starts itself on a desk and
+     hides its listing behind the frame, which print hides too - the PDF had
+     no ABAP in it at all; on a phone the listing is folded to its first
+     screen; and a code group printed only the tab that happened to be open. */
+  .a2ui5-play div[class*="language-"][hidden] { display: block !important; }
+  .a2ui5-play.is-folded div[class*="language-"] { max-height: none !important; overflow: visible !important; }
+  .a2ui5-play.is-folded div[class*="language-"]::after { display: none !important; }
+  .vp-code-group .blocks > div[class*="language-"] { display: block !important; }
   html { scroll-padding-top: 0; }
   /* The palette back to light, whatever the reader chose on screen: the site
      switches schemes by attribute (data-theme), which a browser's print
@@ -1396,6 +1404,10 @@ html { scrollbar-gutter: stable; }
   cursor: pointer;
 }
 .a2ui5-play-fold:hover { border-color: var(--accent); }
+/* And gone while the example runs: the listing steps aside for the frame
+   (playground.js), and a "Show all N lines" left above it toggled a listing
+   nobody could see. */
+.a2ui5-play > div[class*="language-"][hidden] + .a2ui5-play-fold { display: none; }
 
 /* The release a section is new in - VitePress's <Badge>, which the build
    writes as the span VitePress renders (scripts/build-site.mjs). */

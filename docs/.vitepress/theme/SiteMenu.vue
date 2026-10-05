@@ -12,7 +12,7 @@
  * setUpExtra() in the playground's catalogue.mjs and extra.mjs.
  */
 import { inject, onMounted, ref, watch } from "vue";
-import { useData } from "vitepress";
+import { useData, useRoute } from "vitepress";
 
 const { isDark } = useData();
 
@@ -27,6 +27,15 @@ const { isDark } = useData();
 const VERSION = "1.146.0";
 
 const extra = ref(null);
+
+/* Closed by a route change too: an internal link in the menu (Release notes)
+ * is an in-app navigation here, no click lands outside it, and the menu
+ * stayed open over the new page. The static build reloads, so it never had
+ * this. */
+const route = useRoute();
+watch(() => route.path, () => {
+  if (extra.value) extra.value.open = false;
+});
 
 onMounted(() => {
   document.addEventListener("click", (e) => {

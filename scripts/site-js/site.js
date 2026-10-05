@@ -85,6 +85,14 @@ addEventListener('scroll', () => {
 }, { passive: true });
 addEventListener('pagehide', () => rememberScroll());
 
+/* The chapter drawer closed when a page is shown: its checkbox is form state,
+   which Back restores (and the back-forward cache keeps), so a reader who
+   picked a chapter from the drawer and went back found it open over the page. */
+addEventListener('pageshow', () => {
+  const open = document.getElementById('side-open');
+  if (open) open.checked = false;
+});
+
 /* A code group: the renderer gives every tab a radio and marks the first block
    `active`. The blocks sit in a container of their own, so no sibling selector
    reaches from the checked radio to the block it belongs to - this does, once,
@@ -291,6 +299,16 @@ document.addEventListener('click', (e) => {
     if (at > -1) { links[at].classList.remove('here'); links[at].removeAttribute('aria-current'); }
     if (last > -1) { links[last].classList.add('here'); links[last].setAttribute('aria-current', 'true'); }
     at = last;
+    /* The outline is a scroll box of its own (max-height in docs.css), and on
+       a long page - the API reference has 57 rows - the marked row scrolled
+       out of it, leaving "On this page" pointing at nothing visible. Kept in
+       view, a third of the way down, and only when it has left the box. */
+    const box = last > -1 ? links[last].closest('.outline') : null;
+    if (box && box.scrollHeight > box.clientHeight) {
+      const row = links[last].getBoundingClientRect();
+      const frame = box.getBoundingClientRect();
+      if (row.top < frame.top || row.bottom > frame.bottom) box.scrollTop += row.top - frame.top - box.clientHeight / 3;
+    }
   };
   let pending = false;
   const schedule = () => {
@@ -448,7 +466,14 @@ document.addEventListener('click', async (e) => {
   try {
     await navigator.clipboard.writeText(text);
     button.classList.add('done');
-    setTimeout(() => button.classList.remove('done'), 1400);
+    /* Said, not only drawn: the button's fixed aria-label hid the CSS
+       "Copied", so a screen reader never heard that the copy worked. */
+    const name = button.getAttribute('aria-label');
+    button.setAttribute('aria-label', 'Copied');
+    setTimeout(() => {
+      button.classList.remove('done');
+      if (name) button.setAttribute('aria-label', name);
+    }, 1400);
   } catch { /* a browser that refuses the clipboard: the text is still selectable */ }
 });
 
