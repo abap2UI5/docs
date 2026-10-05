@@ -78,3 +78,21 @@ test('code fences, headings and tables are not the description', () => {
   const body = '# T\n\n```abap\nDATA(lo_x) = NEW cl_y( ).\n```\n\n| a | b |\n\nThe real opening sentence of the page, which is what a reader wants.';
   assert.equal(summarise(body), 'The real opening sentence of the page, which is what a reader wants.');
 });
+
+test('a question mark and an exclamation mark end a sentence too', () => {
+  /* Only the full stop counted, so a page that opens on a question was cut at
+     a dash inside it - "If the backend sends the view on every request", the
+     question never asked - or took the question and lost the answer after it. */
+  assert.equal(
+    summarise('# T\n\nIf the backend sends the view on every request — #5 — does the screen rebuild itself on '
+      + 'every click? It does not, and this page is why. A third sentence.'),
+    'If the backend sends the view on every request — #5 — does the screen rebuild itself on every click? '
+      + 'It does not, and this page is why.',
+  );
+  assert.equal(
+    summarise('# T\n\nThe view is a string the app produced for this request. Which raises a question: what stops '
+      + 'the next one from producing another? Nothing! A fourth sentence nobody needs here at all, going on.'),
+    'The view is a string the app produced for this request. Which raises a question: what stops the next one '
+      + 'from producing another?',
+  );
+});

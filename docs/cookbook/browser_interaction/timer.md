@@ -81,7 +81,7 @@ WHEN client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
 
 WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
   client->follow_up_action( val   = client->cs_event-open_new_tab
-                  t_arg = VALUE #( ( `https://www.google.com/search?q=abap2ui5` ) ) ).
+                  t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report` ) ) ).
 ```
 
 ## Replacing a Pending Timer

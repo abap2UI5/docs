@@ -1,8 +1,8 @@
 # Build and deploy the VitePress site to GitHub Pages.
 #
 # This used to build and publish without running a single check. check.yml ran
-# the six gates in parallel on the same push, which looks equivalent and is
-# not: nothing connected the two, so a red check and a green deploy simply both
+# the gates (six of them then) in parallel on the same push, which looks
+# equivalent and is not: nothing connected the two, so a red check and a green deploy simply both
 # happened, and the site went out with whatever the gates had objected to. The
 # gates are the ones that go stale WITHOUT anybody touching this repository -
 # a release is published elsewhere, a sample class is renamed elsewhere - so
@@ -39,11 +39,12 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+# The token reads, and nothing more, unless a job says otherwise. Writing to
+# Pages and minting the OIDC token are the DEPLOY job's alone (below): the
+# build job runs `npm ci` and every gate's dependencies, and none of that code
+# needs to be able to publish a site.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
@@ -56,25 +57,36 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # pages: read is configure-pages', which reads the site's settings
+    permissions:
+      contents: read
+      pages: read
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # Not needed if lastUpdated is not enabled
 
-      # The sample catalogues, for the corpus sizes in the generated llms.txt -
-      # one file out of each repository, and nothing else. `continue-on-error`
-      # is the point: generate-llms.mjs leaves the number out when a catalogue
-      # is not here, so a repository that is unreachable costs the deploy a
-      # figure, never the site.
+      # abap2UI5/samples, in full: check:samples holds every Working Samples
+      # block and every hand-written source link to it. NOT continue-on-error,
+      # unlike the two below and unlike its first version: without this
+      # checkout check:samples SKIPS rather than fails, so an unreachable
+      # repository published a site whose sample links nothing had checked -
+      # check.yml never allowed that for a pull request.
       - name: Sample catalogues
-        continue-on-error: true
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: abap2UI5/samples
           ref: main
           path: .samples
           fetch-depth: 1
+
+      # The other two catalogues, for the corpus sizes in the generated
+      # llms.txt and the classes a page declares from them. `continue-on-error`
+      # is the point here: generate-llms.mjs leaves the number out when a
+      # catalogue is not here, and link-samples.mjs falls back to the
+      # catalogue.json each one publishes, so an unreachable repository costs
+      # the deploy a figure, never the site.
       - name: Sample catalogues (controls)
         continue-on-error: true
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -138,11 +150,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # The same eleven gates check.yml runs for a pull request, and the reason
+      # The same fifteen gates check.yml runs for a pull request, and the reason
       # each one is here is written above it there. The ORDER is the one thing
-      # that cannot match: this job has to build the site it publishes, so
-      # `docs:build` and `check:cross-site` - which judges the built HTML -
-      # come after the eight that need neither, instead of third and fourth.
+      # that cannot match: this job has to build the site it publishes, so the
+      # two builds and `check:cross-site` - which judges the built HTML - come
+      # after the twelve that need none of them, instead of third to fifth.
       # What has to stay in step is the SET; a gate that runs for a pull
       # request and not for the deploy is a gate main can be published past.
       # `!cancelled()` so one failure still reports the others: a deploy that
@@ -152,6 +164,8 @@ jobs:
         run: npm test
       - name: release version
         if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run check:version
       - name: shared design values
         if: ${{ !cancelled() }}
@@ -227,6 +241,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     name: Deploy
+    # the only job that publishes, so the only one that may
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

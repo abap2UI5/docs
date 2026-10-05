@@ -74,13 +74,61 @@ const PUBLIC = path.join(DOCS, 'public');
  * Counted ONCE per repository, here, so the phrase in llms.txt and the log
  * line at the bottom cannot come from two different attempts. */
 const corpus = new Map();
-for (const repo of ['samples', 'samples-controls']) {
+for (const repo of ['samples', 'samples-controls', 'samples-stack']) {
   corpus.set(repo, await countCatalogue(repo, ROOT));
 }
 const counted = (repo, phrase) => {
   const c = corpus.get(repo);
   return c === null ? phrase : `${c.count} ${phrase}`;
 };
+/* The catalogue's size is the three repositories together, and it was typed:
+ * "771", true on the day it was written and on no day since. Counted like the
+ * other two figures, and left out when any one of the three could not be -
+ * two thirds of a total is a wrong number, not a smaller one. */
+const allThree = [...corpus.values()].every(Boolean)
+  ? `${[...corpus.values()].reduce((sum, c) => sum + c.count, 0)} complete apps`
+  : 'complete apps';
+
+/* Root-relative links, absolute. A page links `/cookbook/model/trees`, which
+ * the HTML build bases at /docs/ - but the raw twin of the page and
+ * llms-full.txt are served as they are, under /docs/, where `/cookbook/…`
+ * resolves to the ORIGIN root: another repository's site, and a 404. An agent
+ * following a link out of a markdown page got nothing. So every `](/…)`
+ * outside a fence becomes the published URL - a page as its own `.md` twin,
+ * which is what this reader is reading, an asset as itself, the #section
+ * kept. */
+const absoluteLink = (target) => {
+  const [at, hash] = target.split(/#(.*)/s);
+  const last = at.split('/').pop();
+  const to = at === '/' ? '/'
+    : at.endsWith('.html') ? `${at.slice(0, -5)}.md`
+      : last.includes('.') ? at
+        : mdSuffix(at);
+  return `${SITE}${to}${hash !== undefined ? `#${hash}` : ''}`;
+};
+/* A RELATIVE link (`](../cookbook/x)`) is the same trap one step removed:
+ * llms-full.txt is served from /docs/, so it resolved against that and left
+ * the site. It is resolved against the page it was written in, and then goes
+ * the way a root-relative one does. */
+const relativeLink = (target, link) => {
+  const url = new URL(target, `https://x${link}`);
+  return absoluteLink(url.pathname + (url.hash ? `#${decodeURIComponent(url.hash.slice(1))}` : ''));
+};
+function absoluteLinks(markdown, link) {
+  let fence = null;
+  return markdown.split('\n').map((line) => {
+    const open = /^\s*(`{3,}|~{3,})/.exec(line);
+    if (open) {
+      if (!fence) fence = open[1][0];
+      else if (open[1][0] === fence) fence = null;
+      return line;
+    }
+    if (fence) return line;
+    return line
+      .replace(/\]\((\/(?!\/)[^)\s]*)/g, (m, target) => `](${absoluteLink(target)}`)
+      .replace(/\]\((\.\.?\/[^)\s]*)/g, (m, target) => `](${relativeLink(target, link)}`);
+  }).join('\n');
+}
 
 const pages = sidebarPages();
 const linked = new Set(pages.map((p) => p.link));
@@ -161,14 +209,14 @@ const index = [
   '',
   /* THE TWO ANSWERS THIS FILE COULD NOT GIVE. An assistant writing abap2UI5
      asks "has somebody already built this?" and "what exactly does the client
-     interface offer?", and the answer to both is published - 771 sample
-     classes with an index of their own, and the interface generated from the
+     interface offer?", and the answer to both is published - every sample
+     class with an index of its own, and the interface generated from the
      source - and neither was named here. Both are one fetch. */
   '- [the playground](https://abap2ui5.github.io/playground/llms.txt): how to open a class in the',
   '  browser by URL, how to embed a running example in a page of your own, and',
   '  where the samples are as data',
-  '- [the sample catalogue](https://abap2ui5.github.io/playground/samples/llms.txt): 771',
-  '  complete apps from three repositories, each with a page of its own and the',
+  `- [the sample catalogue](https://abap2ui5.github.io/playground/samples/llms.txt): ${allThree}`,
+  '  from three repositories, each with a page of its own and the',
   '  class in full. That file describes `apps.json`, the whole index as data:',
   '  what each sample builds, the controls and libraries it needs, the oldest',
   '  UI5 release it runs on, and whether it runs in a browser with no system',
@@ -226,7 +274,7 @@ const index = [
 /* --- llms-full.txt: everything ------------------------------------------- */
 
 const chapter = (link, text) => {
-  const body = stripFrontmatter(read.get(link)).trim();
+  const body = absoluteLinks(stripFrontmatter(read.get(link)).trim(), link);
   return `\n\n---\n\n<!-- ${SITE}${link} -->\n\n${body}`;
 };
 
@@ -246,7 +294,7 @@ let written = 0;
 for (const [link, body] of read) {
   const out = path.join(PUBLIC, mdSuffix(link).slice(1));
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  fs.writeFileSync(out, `<!-- ${SITE}${link} -->\n\n${stripFrontmatter(body).trim()}\n`);
+  fs.writeFileSync(out, `<!-- ${SITE}${link} -->\n\n${absoluteLinks(stripFrontmatter(body).trim(), link)}\n`);
   written += 1;
 }
 
@@ -259,7 +307,7 @@ console.log(`llms.txt: ${pages.length} pages in ${bySection.size} sections (${kb
  * files and both are valid - the only way to notice a number went missing that
  * should have been there, or arrived from the fallback when a checkout was
  * expected, is to be told which ones were taken and from where. */
-for (const repo of ['samples', 'samples-controls']) {
+for (const repo of corpus.keys()) {
   const c = corpus.get(repo);
   console.log(`  ${repo}: ${c === null ? 'no catalogue anywhere — published without a count' : `${c.count} apps (${c.source})`}`);
 }

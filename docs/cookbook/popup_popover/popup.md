@@ -171,10 +171,15 @@ CASE abap_true.
     client->nav_app_call( lo_confirm ).
 
   WHEN client->check_on_navigated( ).
-    DATA(lo_prev) = CAST z2ui5_cl_sample_confirm( client->get_app_prev( ) ).
-    IF lo_prev IS BOUND AND lo_prev->confirmed( ) = abap_true.
-      delete_entry( ).
-    ENDIF.
+    TRY.
+        DATA(lo_prev) = CAST z2ui5_cl_sample_confirm( client->get_app_prev( ) ).
+        IF lo_prev->confirmed( ) = abap_true.
+          delete_entry( ).
+        ENDIF.
+      CATCH cx_sy_move_cast_error.
+        " not back from the popup - on the first start get_app_prev( )
+        " is this app itself
+    ENDTRY.
     view_display( ).
 
 ENDCASE.

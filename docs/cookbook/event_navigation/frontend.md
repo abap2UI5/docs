@@ -34,8 +34,8 @@ the click.
 
 ```abap
 )->tag( `Button`
-    )->a( n = `text`  v = `reload`
-    )->a( n = `press` v = client->follow_up_action( client->cs_event-location_reload ) )
+    )->a( n = `text`  v = `close`
+    )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close ) )
 ```
 
 (An event that takes no arguments needs no `t_arg` at all, and `val` can be
@@ -135,12 +135,21 @@ METHOD z2ui5_if_app~main.
                     )->a( n = `text`  v = `open new tab`
                     )->a( n = `press` v = client->follow_up_action(
                                              val   = client->cs_event-open_new_tab
-                                             t_arg = VALUE #( ( `https://github.com/abap2UI5` ) ) ) ).
+                                             t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report` ) ) ) ).
 
     client->view_display( view->stringify( ) ).
 
 
 ENDMETHOD.
+```
+
+The URL has to be on the app's own origin — the frontend refuses any other with an error message, and the same holds for `location_reload`, which navigates the current tab to the URL in its one argument. For an external site, `urlhelper` with `REDIRECT` takes the target as a JSON argument and accepts any `http` or `https` address:
+
+```abap
+client->follow_up_action(
+    val   = client->cs_event-urlhelper
+    t_arg = VALUE #( ( `REDIRECT` )
+                     ( `{"URL":"https://github.com/abap2UI5","NEW_WINDOW":true}` ) ) ).
 ```
 
 ## Calling control methods on the frontend

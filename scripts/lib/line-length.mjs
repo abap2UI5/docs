@@ -138,6 +138,14 @@ function tokenize(text) {
   return tokens;
 }
 
+/* What a line may not START with once it is a continuation line: everything
+ * markdown reads as the start of a block when it stands first - a list bullet,
+ * an ordered-list number (any number, though only `1.` interrupts a paragraph
+ * in CommonMark - the next edit may make it the first), a quote, an ATX
+ * heading, a rule or setext underline, a fence, a container, a table row, an
+ * HTML block. */
+const BLOCK_OPENER = /^(?:[-*+>|]|#{1,6}|\d{1,9}[.)]|[-=_*]{2,}|`{3,}.*|~{3,}.*|:::.*|<.*)$/;
+
 /** The paragraph around `index`, as [from, to] inclusive line indices. */
 function paragraphAround(lines, index) {
   const holds = (l) => {
@@ -180,19 +188,24 @@ export function rewrap(source, lineNumbers) {
       .join(' ');
 
     const out = [];
-    let current = lead;
-    let empty = true;
+    let words = [];
+    const render = (ws) => (out.length ? hang : lead) + ws.join(' ');
     for (const token of tokenize(text)) {
-      const candidate = empty ? current + token : `${current} ${token}`;
-      if (!empty && candidate.length > LIMIT) {
-        out.push(current);
-        current = hang + token;
+      if (words.length && render([...words, token]).length > LIMIT) {
+        /* Never open a line with a token that opens a block there: a "-" or a
+           "1." at the start of a line is a list item, ">" a quote, "#" a
+           heading, "---" a rule or a heading underline - and the paragraph
+           would render as something else while every word stayed the same.
+           The word before it comes down too, as many as it takes. */
+        const carry = [token];
+        while (BLOCK_OPENER.test(carry[0]) && words.length > 1) carry.unshift(words.pop());
+        out.push(render(words));
+        words = carry;
       } else {
-        current = candidate;
-        empty = false;
+        words.push(token);
       }
     }
-    if (!empty) out.push(current);
+    if (words.length) out.push(render(words));
 
     if (out.join('\n') !== lines.slice(from, to + 1).join('\n')) {
       lines.splice(from, to - from + 1, ...out);

@@ -8,7 +8,7 @@ samples:
 Not every problem raises an ABAP exception. Many failures surface only in the browser, fail silently, or look like framework bugs when they are actually pattern mistakes. The sections below cover the ten most common ones — what the symptom looks like and where to find the real cause.
 
 ::: tip Developer Tools first
-Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/debugging) — the **Error**, **Log**, **Previous Request** and **Response** tabs show most of what the browser-DevTools steps below dig for, without leaving the app.
+Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/debugging) — its **Error** and **Log** tabs (under **Problems**) and **Request** and **Response** (under **Roundtrips**) show most of what the browser-DevTools steps below dig for, without leaving the app.
 :::
 
 ## Binding-Path Mismatch
@@ -41,7 +41,7 @@ See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
 
 ## Type Coercion Without an Explicit UI5 Type
 
-ABAP and UI5 do not share a type system. A `d` field goes on the wire as `YYYYMMDD` and a `t` as `HHMMSS`; packed numbers arrive as strings without locale formatting; and a flag declared as `c LENGTH 1` travels as the string `"X"` - only the boolean ABAP types (`abap_bool`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`. The control renders the raw value, parses it wrong, or treats it as empty.
+ABAP and UI5 do not share a type system. A `d` field goes on the wire as the ISO string `2024-01-15`, a `t` as `12:30:00` and a `timestamp` as `2024-01-15T12:30:00Z`; packed numbers arrive as JSON numbers without locale formatting; and a flag declared as `c LENGTH 1` travels as the string `"X"` - only the boolean ABAP types (`abap_bool`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`. The control renders the raw value, parses it wrong, or treats it as empty.
 
 Where to look:
 - **Symptom**: a `DatePicker` shows the date in the wrong pattern or ignores the locale; a `CheckBox` is always unchecked although the flag is `'X'` - the attribute is a `c LENGTH 1`, not `abap_bool`; numeric inputs lose decimals or render with the wrong separator.

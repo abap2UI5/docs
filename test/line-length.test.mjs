@@ -90,6 +90,22 @@ test('rewrap never splits a code span, a link or a container directive', () => {
   assert.ok(out.includes('[the sample catalog](https://example.com/a/b)'));
 });
 
+test('rewrap never starts a line with something that opens a block', () => {
+  /* A dash, a number with a full stop, a ">" or a "#" that lands first on a
+     wrapped line is a list item, a quote or a heading from then on: same
+     words, a different page. The word before it comes down with it. */
+  for (const opener of ['-', '1.', '2)', '>', '#', '+', '---']) {
+    const pad = 'word '.repeat(16);       // 79 characters, so the opener lands at the break
+    const source = `# Title\n\n${pad}${opener} and then the sentence goes on for a good while longer.\n`;
+    const out = rewrap(source, [3]);
+    assert.notEqual(out, null, opener);
+    assert.equal(out.replace(/\s+/g, ' ').trim(), source.replace(/\s+/g, ' ').trim(), opener);
+    for (const line of out.split('\n').slice(2)) {
+      assert.equal(line.trimStart().split(' ')[0] === opener, false, `${JSON.stringify(opener)} opened ${JSON.stringify(line)}`);
+    }
+  }
+});
+
 test('the manual itself passes the rule it sets', async () => {
   const { glob } = await import('node:fs/promises');
   let held = 0;

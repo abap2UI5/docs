@@ -97,9 +97,14 @@
   background: var(--bg);
   border-right: 1px solid var(--line);
   transform: translateX(-100%);
-  transition: transform .18s ease;
+  /* Hidden while closed, not only moved off screen: a translated drawer is
+     still in the tab order and the accessibility tree, and a keyboard reader
+     tabbed through forty invisible chapter links to reach the article. The
+     visibility flips after the slide out, so the closing animation stays. */
+  visibility: hidden;
+  transition: transform .18s ease, visibility 0s .18s;
 }
-.side-open:checked ~ .sidebar { transform: none; }
+.side-open:checked ~ .sidebar { transform: none; visibility: visible; transition: transform .18s ease; }
 
 .side-scrim {
   position: fixed;
@@ -170,6 +175,7 @@
     background: none;
     border: 0;
     transform: none;
+    visibility: visible;
     transition: none;
     /* ...AND BACK UNDER THE BAR. The drawer above stands at 40 because it
        covers the page; standing there while placed in the margin instead put
@@ -1390,3 +1396,20 @@ html { scrollbar-gutter: stable; }
   cursor: pointer;
 }
 .a2ui5-play-fold:hover { border-color: var(--accent); }
+
+/* The release a section is new in - VitePress's <Badge>, which the build
+   writes as the span VitePress renders (scripts/build-site.mjs). */
+.VPBadge {
+  display: inline-block;
+  margin-left: 2px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  vertical-align: middle;
+}
+.VPBadge.tip { color: var(--accent); border-color: var(--accent); }
+.VPBadge.warning { color: #a15c07; border-color: #a15c07; }
+.VPBadge.danger { color: var(--danger, #b5253a); border-color: var(--danger, #b5253a); }

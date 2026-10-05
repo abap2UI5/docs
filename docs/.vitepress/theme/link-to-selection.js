@@ -88,12 +88,19 @@ function around(range) {
 
 /** The one button, made when it is first needed and moved about after that. */
 let button
+// The pending "Link copied" fade, cancelled when a new selection shows the
+// button - or the old timer hid the button of the next selection.
+let hideTimer
 
 function show(range) {
+  clearTimeout(hideTimer)
   if (!button) {
     button = document.createElement('button')
     button.type = 'button'
     button.className = 'a2ui5-quote'
+    // "Link copied" is said on the button itself; polite, so a screen reader
+    // hears the outcome of the press as well.
+    button.setAttribute('aria-live', 'polite')
     button.textContent = LABEL
     button.addEventListener('mousedown', (event) => event.preventDefault()) // keep the selection
     button.addEventListener('click', copy)
@@ -133,7 +140,8 @@ function copy() {
   const url = `${location.origin}${location.pathname}${location.search}#:~:${directive}`
   const said = (text) => {
     button.textContent = text
-    setTimeout(hide, 1600)
+    clearTimeout(hideTimer)
+    hideTimer = setTimeout(hide, 1600)
   }
   try {
     navigator.clipboard.writeText(url).then(() => said(DONE), () => said(FAILED))
@@ -179,11 +187,12 @@ export function markDirective(url = location.href) {
   const article = document.querySelector(ARTICLE)
   if (!directive || !article || directive.start === '') return
 
-  const wanted = normalise(directive.start)
+  // Lower-cased on both sides, as the browser itself matches a directive.
+  const wanted = normalise(directive.start).toLowerCase()
   /* The DEEPEST element carrying the words: every ancestor up to <body>
    * carries them too, and scrolling to the article is not an answer. */
   const carrying = [...article.querySelectorAll('*')].filter(
-    (element) => normalise(element.textContent).includes(wanted),
+    (element) => normalise(element.textContent).toLowerCase().includes(wanted),
   )
   const target = carrying.find((element) => !carrying.some((other) => other !== element && element.contains(other)))
   if (!target) return

@@ -97,6 +97,18 @@ export function setUpCostCalculator() {
   /* A browser puts a page's controls back where they were when it restores
      the page - back, forward, reload - while the words beside them are the
      page's own again. */
-  addEventListener('pageshow', () => syncCostCalculator());
+  addEventListener('pageshow', () => {
+    /* ...including their DISABLED state, in Firefox: a reload after Calculate
+       brought the inputs back greyed with the sheet hidden, and one during the
+       "Calculating" moment left the button itself dead. A calculator that is
+       not showing its sheet has nothing to be locked for. */
+    for (const calc of document.querySelectorAll(CALCULATOR)) {
+      if (calc.dataset.state === 'calculated') continue;
+      for (const c of calc.querySelectorAll('.cost-inputs input, .cost-inputs select, button[data-calculate]')) c.disabled = false;
+      const inputs = calc.querySelector('.cost-inputs');
+      if (inputs) delete inputs.dataset.locked;
+    }
+    syncCostCalculator();
+  });
   syncCostCalculator();
 }

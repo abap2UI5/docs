@@ -30,7 +30,7 @@ import { createMarkdownRenderer } from 'vitepress';
 import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
-import { describe } from './lib/pages.mjs';
+import { describe, title as titleOf } from './lib/pages.mjs';
 import { measureImage } from './lib/images.mjs';
 import { contentSecurityPolicy, inlineScriptsIn } from './lib/csp.mjs';
 import { stripComments } from './lib/html.mjs';
@@ -114,10 +114,23 @@ const PUBLISHED = (process.env.PLAYGROUND_URL || 'https://abap2ui5.github.io/pla
  * shared asset - one rewrite turns all of them absolute. Which sample does not
  * matter and is not hard-coded: the first one the sitemap names.
  */
+/* With a timeout and three tries. A fetch with neither waits as long as the
+   socket does - a stalled request held the deploy until the job's own
+   15-minute limit - and one dropped connection or a 5xx from Pages, which
+   happens, failed a build there was nothing wrong with. A 4xx is an answer
+   and is not retried. */
 const fetchText = async (url) => {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
-  return res.text();
+  for (let attempt = 1; ; attempt++) {
+    let res;
+    try {
+      res = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    } catch (err) {
+      if (attempt === 3) throw new Error(`${err.message} for ${url} (3 tries)`);
+    }
+    if (res?.ok) return res.text();
+    if (res && (res.status < 500 || attempt === 3)) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+    await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+  }
 };
 
 const frame = await (async () => {
@@ -294,6 +307,8 @@ const withRelease = (bar) => {
 
 const marked = (find) => inNav(BAR, (nav) => once(nav, find, ' aria-current="page"'));
 const BAR_DOCS = withRelease(marked('data-site="docs"'));
+/* The ids the bar brings with it, which no heading of a page may also take. */
+const BAR_IDS = new Set([...BAR_DOCS.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
 const BAR_HOME = withRelease(marked(`href="${HOME}"`));
 
 /* THE OTHER HALF OF THE PAIR IS THE BORROWED MARKUP'S, so it is checked rather
@@ -611,16 +626,22 @@ const linkedData = ({ page, title, description, url, isHome }) => {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        ...trail.map((c, i) => ({
-          '@type': 'ListItem', position: i + 1, name: c.text,
-          /* Named exactly as the crumb line names it, `.html` and all - the
-             same rule `crumbsFor` uses - so the url in the structured data is
-             the url a reader would land on, and the one the page declares as
-             canonical. */
-          ...(c.link ? { item: SITE_URL + c.link + (c.link.endsWith('/') ? 'index.html' : '.html') } : {}),
+        ...trail.map((c) => ({
+          '@type': 'ListItem', name: c.text,
+          /* In the form the page names itself canonical() - a section's front
+             page as its directory, every other page with `.html` - so one page
+             is one url here too. Written as the crumb line writes it
+             (`…/cookbook/index.html`), a section's front page was listed
+             twice under two urls, its crumb and itself. */
+          ...(c.link ? { item: SITE_URL + c.link + (c.link.endsWith('/') ? '' : '.html') } : {}),
         })),
-        { '@type': 'ListItem', position: trail.length + 1, name: title.replace(/ \| abap2UI5$/, ''), item: url },
-      ],
+        { '@type': 'ListItem', name: title.replace(/ \| abap2UI5$/, ''), item: url },
+      ]
+        /* And two steps that land on the same page are one step (View ›
+           Definition are the same page, and so are Documentation › Get Started
+           on a chapter of it): the later, nearer name is kept. */
+        .filter((entry, i, all) => i === all.length - 1 || !entry.item || entry.item !== all[i + 1].item)
+        .map((entry, i) => ({ ...entry, position: i + 1 })),
     },
   ]);
   return `<script type="application/ld+json">${json.replace(/</g, '\\u003c')}</script>`;
@@ -759,6 +780,13 @@ function prevNextFor(route) {
 const lastTouched = (() => {
   const when = new Map();
   try {
+    /* A SHALLOW clone has history, just not enough: `git log` answers with the
+       one commit it has, so every page got HEAD's date and the sitemap told a
+       crawler that all of them changed today. Not knowing is the honest
+       answer there, and it is the same answer as having no git at all. */
+    const shallow = execFileSync('git', ['rev-parse', '--is-shallow-repository'],
+      { cwd: ROOT, encoding: 'utf8' }).trim() === 'true';
+    if (shallow) throw new Error('shallow');
     const log = execFileSync('git', ['log', '--pretty=format:%cs', '--name-only', '--', 'docs'],
       { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
     let date = '';
@@ -980,6 +1008,43 @@ const named = (html) => html.replace(
   },
 );
 
+/* ...AND EVERY LINE ITS NUMBER, BEFORE THE PAGE IS DRAWN. code-lines.js
+ * numbers the listings in the browser, and that came after the first paint:
+ * the gutter appeared and every line of every listing moved fourteen pixels
+ * and three characters to the right while the reader was looking at it, and a
+ * link to one line (#B2L42) arrived before the line had the id it names. So
+ * the build writes exactly what number( ) there would - the class, the id, the
+ * empty link and the two data attributes - and number( ) leaves a listing that
+ * already carries `data-lines` alone. The browser copy stays for the
+ * VitePress build, which has no step like this one.
+ *
+ * A block is counted whether or not it gets numbers (a one-line listing does
+ * not), because the block index is the listing's position on the page and
+ * code-lines.js counts it the same way. A listing whose lines are not one
+ * `span.line` per row is left for the browser rather than guessed at. */
+const numbered = (html) => {
+  let block = 0;
+  return html.replace(
+    /(<div class="language-[^"]*"[^>]*>[\s\S]*?<pre [^>]*><code)([^>]*)(>)([\s\S]*?)(<\/code>)/g,
+    (all, open, attrs, gt, code, close) => {
+      const bi = ++block;
+      if (/\bdata-lines=/.test(attrs)) return all;
+      const rows = code.split('\n');
+      if (!rows.every((row) => /^<span class="line(?: [^"]*)?">[\s\S]*<\/span>$/.test(row))) return all;
+      let count = rows.length;
+      if (count && rows[count - 1].replace(/<[^>]*>/g, '') === '') count--;
+      if (count < 2) return all;
+      const lines = rows.map((row, i) => {
+        if (i >= count) return row;
+        const n = i + 1;
+        return row.replace(/^<span class="line((?: [^"]*)?)">/,
+          `<span class="line$1 ln" id="B${bi}L${n}"><a href="#B${bi}L${n}" aria-label="Line ${n}" tabindex="-1"></a>`);
+      });
+      return `${open}${attrs} data-lines="${count}" data-block="${bi}"${gt}${lines.join('\n')}${close}`;
+    },
+  );
+};
+
 /* AND A TABLE IS A REGION TOO, for the same reason and with the same words.
  * The renderer wraps every table in `div.vp-doc-table tabindex="0"` so that a
  * keyboard can scroll one wider than the column - the api reference alone has
@@ -1109,7 +1174,15 @@ const sized = (html) => html.replace(/<img ([^>]*?)src="([^"]+)"([^>]*)>/g, (tag
   if (/\bheight=/.test(tag) || !size || !size.w || !size.h) return tag.replace(/\s*\/?>$/, `${later}>`);
   const declared = tag.match(/\bwidth="(\d+)"/);
   if (declared) return tag.replace(/>$/, ` height="${Math.round(size.h * +declared[1] / size.w)}"${later}>`);
-  if (/\bwidth=/.test(tag)) return tag.replace(/>$/, `${later}>`);   // a percentage, or something else
+  /* A percentage is a share of the column, not a size, and as an attribute
+     it is not valid HTML either - so it moves into the style, and the tag
+     gets the intrinsic pair like any other: without it the image reserved
+     nothing and the text under it jumped when it arrived. */
+  const share = tag.match(/\swidth="(\d+(?:\.\d+)?%)"/);
+  if (share && !/\bstyle=/.test(tag)) {
+    return tag.replace(share[0], '').replace(/\s*\/?>$/, ` width="${size.w}" height="${size.h}" style="width:${share[1]}"${later}>`);
+  }
+  if (/\bwidth=/.test(tag)) return tag.replace(/>$/, `${later}>`);   // something else
   return `<img ${before}src="${src}" width="${size.w}" height="${size.h}"${later}${after}>`;
 });
 
@@ -1123,8 +1196,36 @@ const recolour = (html) => html.replace(
   },
 );
 
+/* A listing is text, not markup. The link rewrites below and the dead-link
+ * sweep read `href="…"` and `src="…"` - and a fence that SHOWS an XML view or
+ * an HTML page carries exactly that, which they rewrote and judged as if it
+ * were a link of this site. So they see the page with every <pre> set aside. */
+const PRE = /<pre\b[\s\S]*?<\/pre>/g;
+const outsidePre = (html, fn) => {
+  let out = '', at = 0;
+  for (const m of html.matchAll(PRE)) {
+    out += fn(html.slice(at, m.index)) + m[0];
+    at = m.index + m[0].length;
+  }
+  return out + fn(html.slice(at));
+};
+/* decodeURIComponent throws on a stray `%` - `100%` in an address, a
+ * hand-typed anchor - and one malformed link would end the build with a stack
+ * trace instead of naming it. The raw value is what is compared then. */
+const decoded = (s) => { try { return decodeURIComponent(s); } catch { return s; } };
+
 /* ---- run ------------------------------------------------------------- */
 const md = await createMarkdownRenderer(DOCS, config.markdown || {}, BASE);
+/* ABAP IS NOT SHIKI'S TO COLOUR HERE. abapify( ) throws away every span Shiki
+ * puts in an ABAP listing and paints it again with the catalogue's highlighter -
+ * and with 979 ABAP fences that grammar was most of this build's time, spent
+ * on markup nobody sees. So an ABAP fence is highlighted as plain text: the
+ * `language-abap` wrapper comes from the fence, not from here, the line spans
+ * and the `{3,5}` marks are Shiki's either way, and abapify( ) reads the text
+ * out of either just the same. */
+const shikiHighlight = md.options.highlight;
+md.options.highlight = (str, lang, attrs) =>
+  shikiHighlight(str, /^abap$/i.test(lang) ? 'txt' : lang, attrs);
 fs.rmSync(OUT, { recursive: true, force: true });
 
 /* The borrowed highlighter, made importable. It is a module, not data, and the
@@ -1154,7 +1255,9 @@ const nameOf = (page) => {
   const fm = src.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   const declared = fm && fm[1].match(/^title:\s*(.+)$/m);
   if (declared) return declared[1].trim().replace(/^["']|["']$/g, '');
-  return (src.match(/^#\s+(.+)$/m) || [, page])[1].trim();
+  /* pages.mjs's title( ), which skips the frontmatter first: a `# ` line
+     inside it - a YAML comment - read as the page's H1. */
+  return titleOf(src, page);
 };
 /* Read once. `nameOf` opens the file, and this used to call it twice per page
    inside the same expression - 332 reads to count 166 names. */
@@ -1170,17 +1273,35 @@ for (const page of pages) {
   const src = fs.readFileSync(path.join(DOCS, page), 'utf8');
   const env = {};
   let body = md.render(src, env).replace(/ v-pre=""/g, '');
+  /* VitePress's <Badge> is a Vue component, and this build renders no Vue: it
+     went out as a raw `<badge …>` - an unknown open tag that wrapped the rest
+     of its section - and the version it carried was lost. Written as the
+     span VitePress itself renders, outside listings. */
+  body = outsidePre(body, (h) => h.replace(
+    /<Badge\s+type="(\w+)"\s+text="([^"]*)"\s*\/?>(?:<\/Badge>)?/g,
+    (_, type, text) => `<span class="VPBadge ${type}">${text}</span>`,
+  ));
+  /* A heading whose slug is an id the bar already carries - the Theme page's
+     own title slugs to `theme`, the bar's switch - would put one id on the
+     page twice, and `#theme` (and the heading's permalink) would land on the
+     menu's hidden button. Such a heading's id takes a suffix; the sweep at
+     the end refuses any id that is still doubled. */
+  body = body.replace(/(<h[1-6][^>]*\bid=")([^"]+)(")/g, (m, open, id, close) => (BAR_IDS.has(id) ? `${open}${id}-section${close}` : m))
+    .replace(/(href="#)([^"]+)(")/g, (m, open, id, close) => (BAR_IDS.has(id) ? `${open}${id}-section${close}` : m));
+  /* The renderer's copy button is named by its title alone, which not every
+     screen reader and browser pair announces; 400 of them across the site. */
+  body = body.replace(/<button title="Copy Code" class="copy">/g, '<button title="Copy Code" aria-label="Copy code" class="copy">');
   const fm = env.frontmatter || {};
   /* The renderer puts the base in front of a LINK but not in front of an
      asset: VitePress rewrites those in a Vite step this build does not have,
      so `/get_started/image-2.png` arrives without the `/docs`. One rewrite,
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
-  body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
+  body = outsidePre(body, (h) => h.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`));
   seenImages = 0;
   seenBlocks = 0;
   seenTables = 0;
-  body = tabled(named(notProse(sized(recolour(abapify(body))))));
+  body = numbered(tabled(named(notProse(sized(recolour(abapify(body)))))));
   /* A link that opens a new tab hands that tab a `window.opener` pointing at
      this one unless it says otherwise. Every current browser implies
      `noopener` for `target="_blank"` and has since 2020 - this is for the ones
@@ -1194,12 +1315,12 @@ for (const page of pages) {
      it too, by trying `<path>.html` - so it was never broken on the site and
      is broken everywhere else, which is the kind of link that goes wrong on
      the day the host changes. A file that exists is named. */
-  body = body.replace(/href="(\/docs\/[^"#?]*)([^"]*)"/g, (all, at, rest) => {
+  body = outsidePre(body, (h) => h.replace(/href="(\/docs\/[^"#?]*)([^"]*)"/g, (all, at, rest) => {
     const last = at.split('/').pop();
     if (at.endsWith('/')) return `href="${at}index.html${rest}"`;
     return last.includes('.') ? all : `href="${at}.html${rest}"`;
-  });
-  const name = fm.title || (src.match(/^#\s+(.+)$/m) || [, page])[1];
+  }));
+  const name = fm.title || titleOf(src, page);
   const route = routeOf(page);
   const isHome = fm.layout === 'home';
   /* The theme's own title template, and its own rule for the preview: a
@@ -1287,7 +1408,12 @@ const NOT_FOUND_SCRIPT = `
    happened. The character classes below say the same thing without one.) */
 (function () {
   var pages = ${nearby};
-  var words = decodeURIComponent(location.pathname)
+  /* A stray percent sign in an address makes decodeURIComponent throw, and
+     the reader who most needs a suggestion got none: the raw address still
+     carries its words. */
+  var address = location.pathname;
+  try { address = decodeURIComponent(address); } catch (e) { /* keep it raw */ }
+  var words = address
     .replace(/[.]html?$/, "").split(/[^a-zA-Z0-9]+/).filter(function (w) { return w.length > 2; })
     .map(function (w) { return w.toLowerCase(); });
   if (!words.length) return;
@@ -1354,7 +1480,8 @@ fs.writeFileSync(path.join(OUT, 'docs', '404.html'), shell({
     + meta({ page: '404.md', title: 'Not found | abap2UI5', description: SITE_DESC, kind: 'website' }),
   bar: BAR_DOCS,
   inline: [NOT_FOUND_SCRIPT],
-  main: `<main class="manual">
+  /* data-not-found: site.js writes no position down here (see there). */
+  main: `<main class="manual" data-not-found>
   <input class="side-open" type="checkbox" id="side-open" aria-label="Chapters">
   ${sidebarFor('/404')}
   <label class="side-scrim" for="side-open" aria-hidden="true"></label>
@@ -1403,19 +1530,31 @@ fs.writeFileSync(path.join(OUT, 'docs', 'sitemap.xml'),
   + `\n</urlset>\n`);
 
 /* ---- what the pages need beside them --------------------------------- */
+/* A file in docs/public that lands where the build already wrote something -
+   a hand-written redirect stub left at the address of a page that came back,
+   say - silently replaced that page on the site. That is a decision nobody
+   made, so it stops the build and names both. */
+const collisions = [];
 const copyInto = (from, to) => {
   if (!fs.existsSync(from)) return 0;
   let n = 0;
   for (const e of fs.readdirSync(from, { withFileTypes: true })) {
     const a = path.join(from, e.name), b = path.join(to, e.name);
-    if (e.isDirectory()) { fs.mkdirSync(b, { recursive: true }); n += copyInto(a, b); }
-    else { fs.mkdirSync(to, { recursive: true }); fs.copyFileSync(a, b); n++; }
+    if (e.isDirectory()) { fs.mkdirSync(b, { recursive: true }); n += copyInto(a, b); continue; }
+    if (fs.existsSync(b)) { collisions.push(`${path.relative(ROOT, a)} -> ${b.slice(OUT.length)}`); continue; }
+    fs.mkdirSync(to, { recursive: true }); fs.copyFileSync(a, b); n++;
   }
   return n;
 };
 /* publicDir goes to the root of the site, which is where llms.txt points and
    where every <img src="/docs/get_started/image-2.png"> resolves. */
 const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
+if (collisions.length) {
+  console.error(`\n${collisions.length} file(s) in docs/public would overwrite what the build wrote:`);
+  for (const c of collisions) console.error(`   ${c}`);
+  console.error('Delete the file, or the page - one address cannot be both.');
+  process.exit(1);
+}
 /* The catalogue's two stylesheets and its search box come from its build; only
    the manual's own layer and its own entry module live in this repository.
    search.mjs is the SAME CODE the 772 sample pages load - the box in this bar
@@ -1558,12 +1697,23 @@ const resolve = (to) => {
     const at = path.join(dir, e.name);
     if (e.isDirectory()) { sweep(at); continue; }
     if (!e.name.endsWith('.html')) continue;
-    const html = fs.readFileSync(at, 'utf8');
+    /* Listings set aside (outsidePre above): an XML view printed in a fence
+       is full of href= and src= that are not links of this site. */
+    const html = fs.readFileSync(at, 'utf8').replace(PRE, '');
+    /* AN ID TWICE ON ONE PAGE is an address for the wrong element. The bar
+       carries ids of its own (`theme`, `extra`), and a heading that slugs to
+       the same word - the Theme page's own title did - sent `#theme` and the
+       heading's permalink to the menu's hidden button. */
+    const seen = new Set();
+    for (const m of html.matchAll(/\bid="([^"]+)"/g)) {
+      if (seen.has(m[1])) dead.push(`${at.slice(OUT.length)} -> id="${m[1]}" is on this page twice`);
+      seen.add(m[1]);
+    }
     /* A link INSIDE the page - `href="#a-section"` - is checked against this
        page's own ids. It is where a stale anchor is likeliest: a heading is
        renamed and the sentence pointing at it three screens up is not. */
     for (const m of html.matchAll(/href="#([^"]+)"/g)) {
-      const fragment = decodeURIComponent(m[1]);
+      const fragment = decoded(m[1]);
       checked++; anchors++;
       if (fragment === 'top' || fragment.startsWith(':~:')) continue;
       if (!ids(at).has(fragment)) dead.push(`${at.slice(OUT.length)} -> #${m[1]}  (no section by that name on this page)`);
@@ -1589,7 +1739,25 @@ const resolve = (to) => {
       /* `#top` is the browser's own, and a text fragment (`#:~:text=…`) names
          words rather than an element. */
       if (fragment === 'top' || fragment.startsWith(':~:')) continue;
-      if (!ids(target).has(decodeURIComponent(fragment)))
+      if (!ids(target).has(decoded(fragment)))
+        dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (the page is there, that section is not)`);
+    }
+    /* A RELATIVE link - `./../cookbook/x.html`, which the deprecations page
+       carries - was never read at all: both loops above start at a `#` or a
+       `/`. It is resolved against this page's own address, the way the
+       browser will, and then held to the same file. Anything with a scheme
+       (`https:`, `mailto:`, `data:`) or protocol-relative is not ours. */
+    const here = new URL(at.slice(OUT.length).split(path.sep).join('/'), 'https://abap2ui5.github.io');
+    for (const m of html.matchAll(/(?:href|src)="(?![a-z][a-z0-9+.-]*:|\/|#)([^"]+)"/gi)) {
+      const url = new URL(m[1].replace(/&amp;/g, '&'), here);
+      if (!url.pathname.startsWith(BASE)) continue;
+      checked++;
+      const target = resolve(decoded(url.pathname));
+      if (!target) { dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (relative, resolves to ${url.pathname})`); continue; }
+      const fragment = url.hash.slice(1);
+      if (!fragment || !target.endsWith('.html') || fragment === 'top' || fragment.startsWith(':~:')) continue;
+      anchors++;
+      if (!ids(target).has(decoded(fragment)))
         dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (the page is there, that section is not)`);
     }
   }

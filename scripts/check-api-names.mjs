@@ -64,12 +64,19 @@ import { fetchInterface, interfaceSource } from './lib/client-interface.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PAGES = path.join(ROOT, 'docs');
 
-/* The pages that are ABOUT the names that went away. */
+/* The pages that are ABOUT the names that went away. Each one has to exist:
+ * an exemption for a page that was renamed or folded away exempts nothing, and
+ * one for a path that comes back later exempts a page nobody meant to. */
 const EXEMPT = new Set([
   'resources/deprecations.md',
   'resources/changelog.md',
-  'cookbook/event_navigation/action.md',
 ]);
+const missingExempt = [...EXEMPT].filter((rel) => !fs.existsSync(path.join(PAGES, rel)));
+if (missingExempt.length) {
+  console.log(`check-api-names: EXEMPT names ${missingExempt.join(', ')}, which is not a page under docs/.`);
+  console.log('  Take it off the list, or point it at where that page went.');
+  process.exit(1);
+}
 
 const REF = frameworkRef();
 if (!REF) {
@@ -234,8 +241,9 @@ for (const file of markdownFiles(PAGES)) {
 }
 
 /* 4: the source links. Distinct URLs only - the same file is linked from
- * several pages - and one HEAD each, which is a handful of requests. A network
- * failure here SKIPS this question and leaves the three above intact. */
+ * several pages - and one HEAD each, which is a handful of requests. A link
+ * the network could not resolve is SKIPPED, by itself: it used to skip the
+ * whole question, so one timeout threw away every 404 that HAD come back. */
 let links = 0;
 {
   const seen = new Map();
@@ -260,16 +268,18 @@ let links = 0;
       return undefined;      // unreachable, not absent
     }
   }));
-  if (verdicts.some((v) => v === undefined)) {
-    console.log('source links: not resolved (network) - that question was skipped.');
-    links = 0;
-  } else {
-    for (const target of verdicts.filter(Boolean)) {
-      problems.push(
-        `${[...seen.get(target)].join(', ')}: links ${target} in abap2UI5, which is not there on main\n`
-        + '    the file moved or was deleted - a link every reader who clicks it gets a 404 from',
-      );
-    }
+  const targets = [...seen.keys()];
+  const unresolved = targets.filter((_, i) => verdicts[i] === undefined);
+  if (unresolved.length) {
+    console.log(`source links: ${unresolved.length} of ${targets.length} not resolved (network) - skipped:`);
+    for (const target of unresolved) console.log(`  ${target}`);
+    links -= unresolved.length;
+  }
+  for (const target of verdicts.filter(Boolean)) {
+    problems.push(
+      `${[...seen.get(target)].join(', ')}: links ${target} in abap2UI5, which is not there on main\n`
+      + '    the file moved or was deleted - a link every reader who clicks it gets a 404 from',
+    );
   }
 }
 

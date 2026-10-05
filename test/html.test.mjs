@@ -38,6 +38,16 @@ test('an escaped comment in a listing is text and is left alone', () => {
   assert.equal(stripComments(listing), listing);
 });
 
+test('a comment that mentions <script> is a comment, not a script', () => {
+  /* Split at the scripts first, `<!-- the <script> below -->` opened a
+     "script" that ran to the next </script>: the comment's tail stayed on the
+     page, and csp.mjs reported it as an inline script nobody wrote. */
+  const script = '<script>real()</script>';
+  assert.equal(stripComments(`<p>a</p><!-- the <script> below sets the theme -->${script}<p>b</p>`),
+    `<p>a</p>${script}<p>b</p>`);
+  assert.equal(stripComments(`<!-- <script src="x.js"></script> -->${script}`), script);
+});
+
 /* ---- the build, as written ---------------------------------------------- */
 const BUILD = readFileSync(join(ROOT, 'scripts/build-site.mjs'), 'utf8');
 const CSS = readFileSync(join(ROOT, 'scripts/site-css/docs.css'), 'utf8');

@@ -8,7 +8,7 @@ samples:
 ---
 # Statefulness
 
-By default, abap2UI5 runs **stateless** like any other UI5 freestyle app, with only REST calls to the ABAP backend. Each roundtrip starts a fresh ABAP session, executes the controller, serializes the app state back into the client, and tears the work process down again. Nothing on the server survives between two clicks — and that is exactly what makes the runtime scale.
+By default, abap2UI5 runs **stateless** like any other UI5 freestyle app, with only REST calls to the ABAP backend. Each roundtrip starts a fresh ABAP session, executes the controller, serializes the app state into a server-side draft (table `Z2UI5_T_01`) whose id is all the browser keeps, and tears the work process down again. No session survives between two clicks — and that is exactly what makes the runtime scale.
 
 For the small set of cases where a sticky backend session is needed — classic GUI-style locking, heavy session-bound resources, RFC connections that must stay open — abap2UI5 can also run in **stateful** mode.
 

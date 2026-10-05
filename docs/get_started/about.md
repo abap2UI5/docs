@@ -54,7 +54,7 @@ Each app ships as an [abapGit](https://abapgit.org) project, so installation acr
 
 The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view, the framework sends it to the browser with the data already embedded in it, and every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
 
-Nothing survives on the server between two clicks, and that is deliberate: the app's state travels with the roundtrip and is restored before `main( )` runs again, so each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
+No ABAP session survives between two clicks, and that is deliberate: the app's state is written to a draft on the server, the browser keeps only its id, and the draft is restored before `main( )` runs again, so each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
 
 Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea behind htmx, Hotwire and Phoenix LiveView. abap2UI5 applies it to UI5.
 

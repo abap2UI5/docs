@@ -81,6 +81,13 @@ const DISPLAYS_SOMETHING = /->\s*(?:view|popup|popover|message_box|message_toast
  * uses it. */
 const TABLES_THE_PAGE_HAS = new Set(['t100']);
 
+/* RAP/EML and HANA-only SQL: ABAP that needs a CDS entity, a behavior
+ * definition or a HANA database before it even compiles. ONE list, shared with
+ * scripts/check-examples.mjs, which skips the same examples for the same
+ * reason - two copies had already drifted apart (that one knew CONTAINS( ),
+ * this one did not). */
+export const NEEDS_A_SYSTEM = /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENTITIES\b|TABLE\s+FOR\s+(?:READ|CREATE|UPDATE)\b|\bFUZZY\b|CONTAINS\s*\(/i;
+
 /*
  * What the browser has not got, in the words the failure arrives in. Order
  * matters only for which reason is reported first.
@@ -89,7 +96,7 @@ const NEEDS_MORE_THAN_A_BROWSER = [
   {
     // draft_handling, eml, fuzzy_search
     why: 'needs a CDS entity, a behavior definition or a HANA database',
-    what: /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENTITIES\b|TABLE\s+FOR\s+(?:READ|CREATE|UPDATE)\b|\bFUZZY\b/i,
+    what: NEEDS_A_SYSTEM,
   },
   {
     // launchpad — z2ui5_if_lp_kpi lives in abap2UI5-addons, not in the framework
@@ -140,8 +147,14 @@ export function abapOnly(code) {
       if (line.startsWith('*')) return '';
       let out = '';
       let quote;
+      let escaped = false;
       for (const c of line) {
         if (quote) {
+          /* `|a \| b|` - inside a string template a backslash escapes the next
+           * character, the delimiter included. Read as a close, the rest of
+           * the template became code and its words could trip a rule. */
+          if (escaped) { out += ' '; escaped = false; continue; }
+          if (quote === '|' && c === '\\') { out += ' '; escaped = true; continue; }
           out += c === quote ? c : ' ';
           if (c === quote) quote = undefined;
         } else if (c === "'" || c === '`' || c === '|') {
@@ -163,8 +176,13 @@ export function abapOnly(code) {
  * it read as a table called VALUE. */
 const NOT_A_TABLE = new Set([
   'value', 'table', 'corresponding', 'new', 'ref', 'conv', 'cond', 'switch',
-  'reduce', 'filter', 'exact', 'lines', 'initial',
+  'reduce', 'filter', 'exact', 'lines', 'initial', 'adjacent', 'dataset',
 ]);
+
+/* A table name as Open SQL writes it: a plain name, or one in a namespace -
+ * `/dmo/flight` is a table the page does not have just as much as `sflight`,
+ * and `[a-z_]\w*` stopped at its first slash and saw nothing. */
+const TABLE_NAME = String.raw`(\/\w+\/\w+|[a-z_]\w*)`;
 
 /** Every name the code introduces itself — a variable, a type, a parameter. */
 function declaredNames(code) {
@@ -193,10 +211,17 @@ function tablesUsed(code) {
     if (declared.has(name) || NOT_A_TABLE.has(name) || TABLES_THE_PAGE_HAS.has(name)) return;
     out.add(name);
   };
-  for (const m of code.matchAll(/(\bINHERITING\s+)?\bFROM\s+@?([a-z_]\w*)/gi)) {
+  for (const m of code.matchAll(new RegExp(String.raw`(\bINHERITING\s+)?\bFROM\s+@?${TABLE_NAME}`, 'gi'))) {
     if (!m[1]) consider(m[2]);
   }
-  for (const m of code.matchAll(/^\s*(?:INSERT|UPDATE|MODIFY)\s+([a-z_]\w*)\s/gim)) consider(m[1]);
+  // the second table of a SELECT is as much a table as the first
+  for (const m of code.matchAll(new RegExp(String.raw`\bJOIN\s+${TABLE_NAME}`, 'gi'))) consider(m[1]);
+  /* The writes, DELETE among them. `INSERT INTO ztab` names its table after
+   * the INTO, and read without it the table was called "into". A name the
+   * code declared (`DELETE lt_rows WHERE …`, `INSERT ls_row INTO TABLE …`) is
+   * an internal table and drops out in consider( ). */
+  const write = String.raw`^\s*(?:INSERT\s+(?:INTO\s+)?|UPDATE\s+|MODIFY\s+|DELETE\s+(?:FROM\s+)?)${TABLE_NAME}(?=[\s.]|$)`;
+  for (const m of code.matchAll(new RegExp(write, 'gim'))) consider(m[1]);
   return [...out];
 }
 
@@ -244,13 +269,27 @@ export function playgroundExample(code) {
   if (!IS_AN_APP.test(code)) {
     return { why: 'does not implement z2ui5_if_app, so there is no app to start' };
   }
+  /* One fence, one object. The playground puts the code into ONE file named
+   * after the first object it declares, and a test class (whatever its name -
+   * `ltcl_` is a habit, not a rule), a second class or an interface beside it
+   * has no file of its own there. An interface FIRST would name the file
+   * after the interface. */
+  const abap = abapOnly(code);
+  const objects = new Set();
+  for (const m of abap.matchAll(/^\s*CLASS\s+(\S+)\s+DEFINITION\b(?!\s+(?:DEFERRED|LOAD)\b)/gim)) {
+    objects.add(m[1].toLowerCase());
+  }
+  const interfaces = [...abap.matchAll(/^\s*INTERFACE\s+([a-z_\/][\w\/]*)(?!\s+(?:DEFERRED|LOAD)\b)/gim)];
+  if (objects.size > 1 || interfaces.length || /\bDEFINITION\b[^.]*\bFOR\s+TESTING\b/i.test(abap)) {
+    const all = [...objects, ...interfaces.map((m) => m[1].toLowerCase())];
+    return { why: `holds ${all.length > 1 ? all.join(', ') : `${all[0]} and a test class`} in one fence — the playground runs one abapGit object per file` };
+  }
   const name = DECLARED_NAME.exec(code)?.[1];
   if (!name) return { why: 'declares no global class' };
   if (name.length > MAX_NAME) {
     return { why: `${name} is ${name.length} characters — an ABAP object name is at most ${MAX_NAME}` };
   }
 
-  const abap = abapOnly(code);
   /* The reasons come before the "shows nothing" one on purpose: an example
    * that needs an add-on also displays through it, and naming the add-on is
    * the useful half of that sentence. */

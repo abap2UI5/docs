@@ -137,6 +137,81 @@ ${DISPLAY}`);
   assert.equal(runs(code), 'z2ui5_cl_app_table_basic');
 });
 
+test('a SELECT from a namespaced table gets nothing', () => {
+  // `/dmo/flight` stopped the table name at its first slash and was invisible.
+  const code = app('z2ui5_cl_sample_ns', `    SELECT FROM /dmo/flight FIELDS * INTO TABLE @DATA(rows).
+${DISPLAY}`);
+  assert.match(refused(code), /\/dmo\/flight/);
+});
+
+test('the second table of a JOIN is a table too', () => {
+  const code = app('z2ui5_cl_sample_join', `    SELECT FROM t100 AS a INNER JOIN vbak AS b ON a~msgnr = b~vbeln
+      FIELDS a~text INTO TABLE @DATA(rows).
+${DISPLAY}`);
+  assert.match(refused(code), /vbak/);
+});
+
+test('INSERT INTO names its table after the INTO, and DELETE is a write', () => {
+  const insert = app('z2ui5_cl_sample_ins', `    DATA ls_row TYPE string.
+    INSERT INTO zorders VALUES @ls_row.
+${DISPLAY}`);
+  const why = refused(insert);
+  assert.match(why, /zorders/);
+  assert.equal(/\binto\b/.test(why.split('—')[0]), false, 'INTO is a keyword, not a table');
+
+  assert.match(refused(app('z2ui5_cl_sample_del', `    DELETE zorders FROM @( VALUE #( ) ).
+${DISPLAY}`)), /zorders/);
+  assert.match(refused(app('z2ui5_cl_sample_del', `    DELETE FROM zorders WHERE id = 1.
+${DISPLAY}`)), /zorders/);
+});
+
+test('DELETE on an internal table is not a database write', () => {
+  const code = app('z2ui5_cl_sample_del', `    DATA lt_rows TYPE string_table.
+    DELETE lt_rows WHERE table_line IS INITIAL.
+    DELETE ADJACENT DUPLICATES FROM lt_rows.
+${DISPLAY}`);
+  assert.equal(runs(code), 'z2ui5_cl_sample_del');
+});
+
+test('CONTAINS( ) is the HANA full-text search, as check:examples already knew', () => {
+  // One NEEDS_A_SYSTEM, exported from playground.mjs and imported there.
+  const code = app('z2ui5_cl_sample_fuzzy', `    SELECT FROM t100 FIELDS * WHERE CONTAINS( ( text ), 'x', FUZZY( 0.8 ) ) INTO TABLE @DATA(rows).
+${DISPLAY}`);
+  assert.match(refused(code), /HANA/);
+});
+
+test('a test class beside the app gets nothing, whatever it is called', () => {
+  // `ltcl_` is a habit, not a rule; the localObjects check only knows lcl_.
+  const code = `${app('z2ui5_cl_sample_x', DISPLAY)}
+CLASS tests DEFINITION FOR TESTING RISK LEVEL HARMLESS DURATION SHORT.
+  PRIVATE SECTION.
+    METHODS run FOR TESTING.
+ENDCLASS.
+CLASS tests IMPLEMENTATION.
+  METHOD run.
+  ENDMETHOD.
+ENDCLASS.`;
+  assert.match(refused(code), /one abapGit object/);
+});
+
+test('a second global class or an interface in the fence gets nothing', () => {
+  const helper = `CLASS zcl_other DEFINITION PUBLIC.
+  PUBLIC SECTION.
+ENDCLASS.
+CLASS zcl_other IMPLEMENTATION.
+ENDCLASS.`;
+  assert.match(refused(`${app('z2ui5_cl_sample_x', DISPLAY)}\n${helper}`), /zcl_other/);
+  // An interface first would name the playground's file after the interface.
+  const iface = `INTERFACE zif_thing PUBLIC.
+  METHODS go.
+ENDINTERFACE.
+${app('z2ui5_cl_sample_x', DISPLAY)}`;
+  assert.match(refused(iface), /zif_thing/);
+  // `CLASS … DEFINITION DEFERRED` declares nothing new, and INTERFACES is not
+  // INTERFACE.
+  assert.ok(runs(`CLASS z2ui5_cl_sample_x DEFINITION DEFERRED.\n${app('z2ui5_cl_sample_x', DISPLAY)}`));
+});
+
 test('EML gets nothing', () => {
   const code = app('z2ui5_cl_sample_eml', `    READ ENTITIES OF i_salesorder IN LOCAL MODE ENTITY salesorder ALL FIELDS WITH VALUE #( ) RESULT DATA(rows).
 ${DISPLAY}`);
@@ -237,6 +312,16 @@ test('comments go, string templates keep their braces', () => {
   // The delimiters stay so nothing shifts; a double quote inside a literal is
   // not the start of a comment.
   assert.match(stripped, /DATA\(z\) = ` {5}`\./);
+});
+
+test('an escaped pipe does not close a string template', () => {
+  // `|a \| b|` - read as a close, the rest of the template became code, and
+  // a word in it could trip a rule.
+  const stripped = abapOnly('DATA(x) = |a \\| FROM vbak|.');
+  assert.equal(stripped.includes('vbak'), false);
+  assert.match(stripped, /\.$/);
+  assert.ok(runs(app('z2ui5_cl_sample_x', `    DATA(x) = |a \\| FROM vbak|.
+${DISPLAY}`)));
 });
 
 /* ---------------------------------------------------------------------------

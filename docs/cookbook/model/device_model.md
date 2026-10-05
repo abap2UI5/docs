@@ -26,10 +26,10 @@ DATA(device) = client->get( )-s_device.
 DATA(system)      = device-system.            " e.g. `desktop`, `phone`, `tablet`
 DATA(orientation) = device-orientation.       " `landscape` | `portrait`
 
-DATA(browser)     = device-browser-name.      " e.g. `chrome`
+DATA(browser)     = device-browser-name.      " UI5's short code: `cr`, `ff`, `sf`, `ed`
 DATA(brw_version) = device-browser-version.
 
-DATA(os)          = device-os-name.           " e.g. `win`, `mac`, `ios`, `android`
+DATA(os)          = device-os-name.           " e.g. `win`, `mac`, `iOS`, `Android`
 DATA(os_version)  = device-os-version.
 
 DATA(width)       = device-resize-width.      " current viewport, in px

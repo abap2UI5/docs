@@ -144,8 +144,10 @@ export function summarise(body) {
    *
    * So: take sentence ends until there are at least 110 characters, and stop
    * at the last one that stays under 200 - a description is a paragraph's
-   * opening, not the paragraph. The cut itself is unchanged, and a period
-   * inside `sap.m.Table` or `1.71` is still not a sentence end. One sentence
+   * opening, not the paragraph. A question mark and an exclamation mark end a
+   * sentence as a full stop does - a page that opens "Why one class? Because
+   * …" was cut after the answer, or not at all - and a period inside
+   * `sap.m.Table` or `1.71` is still not a sentence end. One sentence
    * that is already long enough is still one sentence, and a paragraph with
    * nothing more in it stays as short as it is.
    *
@@ -154,15 +156,15 @@ export function summarise(body) {
    * showed up as "…control of its own " under a search hit, in the note beside
    * an llms.txt entry, and in the meta description of two pages. */
   let first = '';
-  for (const end of plain.matchAll(/\.(?=\s|$)|:\s—|\s—\s/g)) {
+  for (const end of plain.matchAll(/[.?!](?=\s|$)|:\s—|\s—\s/g)) {
     if (end.index <= 40) continue;
     /* A DASH ENDS A FIRST SENTENCE AND NEVER EXTENDS ONE. The two dash forms
        are here because a page can open with a sentence that never reaches a
        full stop; cutting a LATER one at a dash stops mid-clause, and it did:
        "...two additional database tables (z2ui5_t_99 and z2ui5_t_98", with the
        bracket still open, and "What it cannot do is find out whether the app
-       works". Past the first sentence, only a full stop will do. */
-    if (first && !end[0].startsWith('.')) continue;
+       works". Past the first sentence, only a sentence end will do. */
+    if (first && !/^[.?!]/.test(end[0])) continue;
     const candidate = plain.slice(0, end.index + 1).trim();
     /* AND NOT INSIDE A BRACKET. The quickstart opens "Pull abap2UI5 with
        abapGit. (New to abapGit? Install it first — see ...)", and the cut at

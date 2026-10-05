@@ -69,7 +69,11 @@ else addEventListener('load', markDirective, { once: true });
    as a page of the manual, going Home would overwrite the chapter you were
    reading, and Documentation would then open the home page - which is what the
    Home item is for. */
-if (!location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs');
+/* Nor the 404, which GitHub Pages serves AT the address that missed: written
+   down, it was where the Documentation item on every bar went next - straight
+   back to the dead page. The catalogue's 404 is spared the same way. */
+const notFound = document.querySelector('main[data-not-found]') !== null;
+if (!notFound && !location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs');
 restoreScroll();
 
 /* How far down the page, which is the other half of coming back to it.
@@ -77,7 +81,7 @@ restoreScroll();
 let pending = 0;
 addEventListener('scroll', () => {
   if (pending) return;
-  pending = setTimeout(() => { pending = 0; rememberScroll(); }, 300);
+  pending = setTimeout(() => { pending = 0; if (!notFound) rememberScroll(); }, 300);
 }, { passive: true });
 addEventListener('pagehide', () => rememberScroll());
 
@@ -88,10 +92,17 @@ addEventListener('pagehide', () => rememberScroll());
 for (const group of document.querySelectorAll('.vp-code-group')) {
   const tabs = [...group.querySelectorAll('.tabs input')];
   const blocks = [...group.querySelectorAll('.blocks > div')];
-  group.addEventListener('change', () => {
+  const sync = () => {
     const at = tabs.findIndex((t) => t.checked);
-    blocks.forEach((b, i) => b.classList.toggle('active', i === at));
-  });
+    if (at > -1) blocks.forEach((b, i) => b.classList.toggle('active', i === at));
+  };
+  group.addEventListener('change', sync);
+  /* And at once: a page rebuilt by Back or Forward (or reloaded, in Firefox)
+     has its radios put back where the reader left them - no change event -
+     while the markup's `active` stays on the first block, so the second tab
+     was underlined over the first tab's code. */
+  sync();
+  addEventListener('pageshow', sync);
 }
 
 /* ---- the bar remembers where you were ---------------------------------
@@ -263,8 +274,12 @@ document.addEventListener('click', (e) => {
   const mark = () => {
     let last = -1;
     if (window.scrollY >= 1) {
+      // The headings are in document order, so the first one below the line
+      // ends the walk - one layout read per heading passed, not per heading
+      // on the page, on every scroll frame.
       for (let i = 0; i < heads.length; i++) {
-        if (heads[i].getBoundingClientRect().top <= LINE) last = i;
+        if (heads[i].getBoundingClientRect().top > LINE) break;
+        last = i;
       }
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) last = heads.length - 1;
     }
@@ -394,12 +409,19 @@ document.addEventListener('click', (e) => {
  * behind the bar's last button both close on Escape, and the drawer sat
  * open. Unchecking the box is all closing is; the focus goes back to the
  * button that opened it, as the menu's does. */
-document.addEventListener('keydown', (e) => {
-  if (e.key !== 'Escape') return;
+/* On the window, not the document: site.js runs before search.mjs, so a
+   document listener here heard the Escape BEFORE the search panel could
+   claim it, and one press closed both. The window hears it after. */
+addEventListener('keydown', (e) => {
+  // An Escape the search panel already answered is not this one's.
+  if (e.key !== 'Escape' || e.defaultPrevented) return;
   const box = document.getElementById('side-open');
   if (!box?.checked) return;
   box.checked = false;
-  document.querySelector('.side-button')?.focus();
+  // The control itself: .side-button is a <label>, which cannot take focus,
+  // so the focus stayed on a link in the drawer that had just closed. The
+  // box's :focus-visible draws the ring on the label.
+  box.focus();
 });
 
 /* ---- copy a listing ---------------------------------------------------

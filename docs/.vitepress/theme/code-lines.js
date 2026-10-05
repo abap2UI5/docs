@@ -24,7 +24,9 @@
  *
  * This is a single page application, so it runs again on every route change,
  * and it is idempotent: a block that already carries its numbers is left
- * alone.
+ * alone. On the static site that is every listing of two lines or more:
+ * build-site.mjs writes the same markup at build time (numbered( ) there), so
+ * the gutter is in the first paint instead of shifting the code after it.
  */
 
 const HASH = /^#B([0-9]+)L([0-9]+)(?:-L([0-9]+))?$/;
@@ -46,7 +48,28 @@ function mark(scroll) {
   const range = picked();
   if (!range) return;
   let first = null;
-  for (let n = range.from; n <= range.to; n++) {
+  /* Walked only as far as the listing goes: #B1L1-L999999999 is a link
+   * anybody can paste, and a loop to its end was a hung tab - with enough
+   * nines Number( ) is Infinity and it never ended at all. The catalogue's
+   * copy (src/catalogue/lines.mjs over there) learned the same. */
+  const code = blocks()[range.block - 1];
+  /* A listing on a code group's hidden tab: the address is a click on its
+     line away (a reader on the second tab picked it), but the block is
+     display:none - nothing could scroll to it and the mark was 0px tall. So
+     its tab is chosen first, the way a click on it would (the click is what
+     both the renderer's script and site.js answer), and then it is scrolled
+     to, which the browser's own jump to the id could not do. */
+  const wrap = code?.closest('.vp-code-group .blocks > div');
+  if (wrap && !wrap.classList.contains('active')) {
+    const index = [...wrap.parentElement.children].indexOf(wrap);
+    const tab = wrap.closest('.vp-code-group').querySelectorAll('.tabs input')[index];
+    if (tab && !tab.checked) {
+      tab.click();
+      scroll = true;
+    }
+  }
+  const last = Math.min(range.to, Number(code?.dataset.lines) || 0);
+  for (let n = range.from; n <= last; n++) {
     const el = document.getElementById(`B${range.block}L${n}`);
     if (!el) continue;
     el.classList.add('is-marked');
@@ -93,7 +116,14 @@ function number(code, bi) {
 
 export function setUpCodeLines() {
   blocks().forEach((code, i) => number(code, i + 1));
-  mark(false);
+  /* An address the reader ARRIVED with: a single line is an element id, and
+   * the browser scrolls to it on its own; a passage (#B2L42-L58) is no id at
+   * all, so it was marked somewhere below the fold and the page opened at the
+   * top. And a shift-click after arriving extends from the line arrived at,
+   * as one after a click does. */
+  const start = picked();
+  if (start) anchor = { block: start.block, line: start.from };
+  mark(start !== null && start.from !== start.to);
 }
 
 /** Once, at boot: the listeners are the document's and outlive every page. */

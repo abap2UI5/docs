@@ -163,10 +163,29 @@ for (const file of pages) {
 /* ----------------------------------------------------------------- verdict */
 
 /* The same floor check-playground and check-examples carry: a walk that found
- * nothing reports exactly like a site with nothing wrong in it. */
-if (chainsJudged === 0 && classesJudged === 0) {
-  console.error('check-conventions: no view chain and no app class found in any fence —');
-  console.error('has the fence language or the builder name changed?');
+ * nothing reports exactly like a site with nothing wrong in it. Either half on
+ * its own is a gate that checked nothing - the site has dozens of both, so a
+ * zero on EITHER side means its walk stopped matching, not that the pages
+ * went clean. */
+if (chainsJudged === 0 || classesJudged === 0) {
+  console.error(`check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) found in the fences —`);
+  console.error('has the fence language, the builder name or the class shape changed?');
+  process.exit(1);
+}
+
+/* The canary. A judged chain only counts if the rule still fires: a linter
+ * bump that renamed or dropped `chain-house-layout` would leave every chain
+ * "judged" and every finding gone, which reads exactly like a clean site. */
+const CANARY = [
+  'DATA(view) = z2ui5_cl_ui5_view_builder=>factory(',
+  '    )->ele( `Page` )->a( n = `title` v = `x`',
+  '            )->tag( `Text` )->a( n = `text` v = `y`',
+  '  )->stringify( ).',
+].join('\n');
+if (!checkAbapSource(CANARY, CHAIN_OPTS).findings.some((f) => f.type === 'chain-house-layout')) {
+  console.error('check-conventions: chain-house-layout did not fire on a chain that breaks it on');
+  console.error('every line — the rule is gone or renamed in @abap2ui5/linter, so no verdict');
+  console.error('below would mean anything.');
   process.exit(1);
 }
 

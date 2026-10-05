@@ -193,6 +193,12 @@ test('a letter or two counts at the start of a word only', () => {
   const [page] = [{ area: 'docs', title: 'Build', text: '', headings: [], terms: 'guide', url: '/x' }];
   assert.equal(search([page], 'ui').length, 0);
   assert.equal(search([{ ...page, title: 'UI5 Versions' }], 'ui').length, 1);
+  /* ...wherever in the field that word start is. Only the SECOND occurrence
+   * used to be looked at, so two hits inside words hid the third that starts
+   * one: "Build guide UI" did not answer `ui`. */
+  assert.equal(search([{ ...page, title: 'Build guide UI' }], 'ui').length, 1);
+  /* And what is marked is what was matched: not the `ui` inside `Build`. */
+  assert.deepEqual(highlight('Build UI', 'ui'), [['Build ', false], ['UI', true]]);
 });
 
 test('the words next to each other beat the words one at a time', () => {

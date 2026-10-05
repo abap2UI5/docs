@@ -88,7 +88,7 @@ CLASS zcl_app_overdue IMPLEMENTATION.
 
                 )->tag( `DatePicker`
                     )->a( n = `value`         v = client->_bind( key_date )
-                    )->a( n = `valueFormat`   v = `yyyyMMdd`
+                    )->a( n = `valueFormat`   v = `yyyy-MM-dd`
                     )->a( n = `displayFormat` v = `medium`
                     )->a( n = `change`        v = client->_event( `RECALC` )
 
