@@ -18,6 +18,8 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  # To start check.yml on the PR's branch (below).
+  actions: write
 
 jobs:
   bump-linter:
@@ -64,6 +66,7 @@ jobs:
       run: npm run check:playground
 
     - if: steps.pin.outputs.changed == 'true'
+      id: pr
       uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
       with:
         branch: bump-linter
@@ -73,3 +76,12 @@ jobs:
           Weekly move of `@abap2ui5/linter` to the latest version on npm
           (${{ steps.pin.outputs.version }}). Every fenced ABAP example on
           the site was re-checked in the workflow that opened this PR.
+
+    # A push or a PR made with the workflow's own GITHUB_TOKEN starts no
+    # workflow runs - GitHub's rule against loops - so check.yml, and with it
+    # the eleven gates this job does not run itself, never ran on this PR.
+    # workflow_dispatch is exempt.
+    - if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
+      run: gh workflow run check.yml --ref bump-linter
+      env:
+        GH_TOKEN: ${{ github.token }}
