@@ -39,7 +39,11 @@ function store() {
 /** Where the index lives — one document, on the origin all four sites share. */
 export const INDEX_URL = 'https://abap2ui5.github.io/docs/search-index.json';
 
-const normalise = (s) => (s || '').toLowerCase();
+/* Lower-cased without changing the length. "İ" (the Turkish capital I, which
+ * a Turkish keyboard types for Shift+i) lower-cases to "i" plus a combining
+ * dot - two code units - so "İNPUT" split into "i" and "nput", matched the
+ * wrong entries, and every highlight after it landed one character late. */
+const normalise = (s) => (s || '').replace(/\u0130/g, 'I').toLowerCase().replace(/\u0131/g, 'i');
 /* A query is split the way the index was built (scripts/lib/pages.mjs): the
  * dot and the underscore stay inside a word, everything else is a boundary. So
  * `client->view_display( )` pasted out of a page is two terms, both of which
@@ -386,7 +390,7 @@ export function highlight(text, query) {
   const hay = text || '';
   if (!terms.length || !hay) return [[hay, false]];
   const marks = [];
-  const low = hay.toLowerCase();
+  const low = normalise(hay);
   for (const term of terms) {
     let from = 0;
     for (;;) {
