@@ -81,7 +81,7 @@ watch(isDark, (dark) => {
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg>
     </summary>
     <div class="a2ui5-menu">
-      <button class="theme" type="button" role="switch" :aria-checked="isDark" @click="toggleAppearance">
+      <button class="theme" type="button" role="switch" :aria-checked="isDark" aria-label="Dark theme" @click="toggleAppearance">
         <span class="when-light"><span class="glyph" aria-hidden="true">☾</span>Switch to dark</span>
         <span class="when-dark"><span class="glyph" aria-hidden="true">☀</span>Switch to light</span>
       </button>
