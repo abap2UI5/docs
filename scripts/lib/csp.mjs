@@ -74,7 +74,11 @@ export function contentSecurityPolicy(inlineScripts) {
  * so it is not one.
  */
 export function inlineScriptsIn(html) {
-  return [...html.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)]
-    .filter((m) => !/\btype="application\/ld\+json"/.test(m[1]))
+  /* Comments are matched too, and dropped, in the same left-to-right scan as
+     stripComments( ): a comment that mentions `<script>` is not where a script
+     starts, and read as one it was a policy violation in a page that had none. */
+  return [...html.matchAll(/<!--[\s\S]*?-->|<script\b([^>]*)>([\s\S]*?)<\/script>/g)]
+    .filter((m) => m[0].startsWith('<script'))
+    .filter((m) => !/\bsrc=/.test(m[1]) && !/\btype="application\/ld\+json"/.test(m[1]))
     .map((m) => m[2]);
 }

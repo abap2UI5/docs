@@ -71,3 +71,14 @@ test('every prose word of the manual is one something knows', () => {
   }
   assert.deepEqual(found, []);
 });
+
+test('the dictionary is read once per process, not once per page', () => {
+  /* nspell(en) is ~440ms to build, and the gate calls findUnknown once per
+     page: rebuilt on every call it was 70 of the gate's 71 seconds. Fifty
+     calls inside two seconds is impossible unless it is built once - and the
+     cached answers must not leak one call's word list into the next. */
+  const started = Date.now();
+  for (let i = 0; i < 50; i++) unknown(page('one roundtrip per click'), ['roundtrip']);
+  assert.ok(Date.now() - started < 2000, `50 calls took ${Date.now() - started}ms`);
+  assert.deepEqual(unknown(page('one roundtrip per click')), ['roundtrip']);
+});

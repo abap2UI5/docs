@@ -67,8 +67,17 @@ let tag = null;
 let latest = null;
 let why = '';
 try {
+  /* With the workflow's token when there is one. Unauthenticated, the API
+     allows 60 requests an hour per IP, and a hosted runner shares its IP with
+     everybody else's jobs - so "rate limit" was the usual way this half went
+     UNVERIFIED in CI, which is the one place it has to happen. */
+  const token = process.env.GITHUB_TOKEN;
   const res = await fetch(API, {
-    headers: { accept: 'application/vnd.github+json', 'user-agent': 'abap2ui5-docs-check-version' },
+    headers: {
+      accept: 'application/vnd.github+json',
+      'user-agent': 'abap2ui5-docs-check-version',
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+    },
     signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);

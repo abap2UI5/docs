@@ -30,7 +30,7 @@ import { createMarkdownRenderer } from 'vitepress';
 import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
 import { trailFor } from '../docs/.vitepress/theme/crumbs.js';
-import { describe } from './lib/pages.mjs';
+import { describe, title as titleOf } from './lib/pages.mjs';
 import { measureImage } from './lib/images.mjs';
 import { contentSecurityPolicy, inlineScriptsIn } from './lib/csp.mjs';
 import { stripComments } from './lib/html.mjs';
@@ -114,10 +114,23 @@ const PUBLISHED = (process.env.PLAYGROUND_URL || 'https://abap2ui5.github.io/pla
  * shared asset - one rewrite turns all of them absolute. Which sample does not
  * matter and is not hard-coded: the first one the sitemap names.
  */
+/* With a timeout and three tries. A fetch with neither waits as long as the
+   socket does - a stalled request held the deploy until the job's own
+   15-minute limit - and one dropped connection or a 5xx from Pages, which
+   happens, failed a build there was nothing wrong with. A 4xx is an answer
+   and is not retried. */
 const fetchText = async (url) => {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`${res.status} ${res.statusText} for ${url}`);
-  return res.text();
+  for (let attempt = 1; ; attempt++) {
+    let res;
+    try {
+      res = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    } catch (err) {
+      if (attempt === 3) throw new Error(`${err.message} for ${url} (3 tries)`);
+    }
+    if (res?.ok) return res.text();
+    if (res && (res.status < 500 || attempt === 3)) throw new Error(`${res.status} ${res.statusText} for ${url}`);
+    await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+  }
 };
 
 const frame = await (async () => {
@@ -759,6 +772,13 @@ function prevNextFor(route) {
 const lastTouched = (() => {
   const when = new Map();
   try {
+    /* A SHALLOW clone has history, just not enough: `git log` answers with the
+       one commit it has, so every page got HEAD's date and the sitemap told a
+       crawler that all of them changed today. Not knowing is the honest
+       answer there, and it is the same answer as having no git at all. */
+    const shallow = execFileSync('git', ['rev-parse', '--is-shallow-repository'],
+      { cwd: ROOT, encoding: 'utf8' }).trim() === 'true';
+    if (shallow) throw new Error('shallow');
     const log = execFileSync('git', ['log', '--pretty=format:%cs', '--name-only', '--', 'docs'],
       { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
     let date = '';
@@ -1123,6 +1143,24 @@ const recolour = (html) => html.replace(
   },
 );
 
+/* A listing is text, not markup. The link rewrites below and the dead-link
+ * sweep read `href="…"` and `src="…"` - and a fence that SHOWS an XML view or
+ * an HTML page carries exactly that, which they rewrote and judged as if it
+ * were a link of this site. So they see the page with every <pre> set aside. */
+const PRE = /<pre\b[\s\S]*?<\/pre>/g;
+const outsidePre = (html, fn) => {
+  let out = '', at = 0;
+  for (const m of html.matchAll(PRE)) {
+    out += fn(html.slice(at, m.index)) + m[0];
+    at = m.index + m[0].length;
+  }
+  return out + fn(html.slice(at));
+};
+/* decodeURIComponent throws on a stray `%` - `100%` in an address, a
+ * hand-typed anchor - and one malformed link would end the build with a stack
+ * trace instead of naming it. The raw value is what is compared then. */
+const decoded = (s) => { try { return decodeURIComponent(s); } catch { return s; } };
+
 /* ---- run ------------------------------------------------------------- */
 const md = await createMarkdownRenderer(DOCS, config.markdown || {}, BASE);
 fs.rmSync(OUT, { recursive: true, force: true });
@@ -1154,7 +1192,9 @@ const nameOf = (page) => {
   const fm = src.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   const declared = fm && fm[1].match(/^title:\s*(.+)$/m);
   if (declared) return declared[1].trim().replace(/^["']|["']$/g, '');
-  return (src.match(/^#\s+(.+)$/m) || [, page])[1].trim();
+  /* pages.mjs's title( ), which skips the frontmatter first: a `# ` line
+     inside it - a YAML comment - read as the page's H1. */
+  return titleOf(src, page);
 };
 /* Read once. `nameOf` opens the file, and this used to call it twice per page
    inside the same expression - 332 reads to count 166 names. */
@@ -1176,7 +1216,7 @@ for (const page of pages) {
      so `/get_started/image-2.png` arrives without the `/docs`. One rewrite,
      and only for paths that are root-relative and not already based - which
      is what the theme was quietly doing for us. */
-  body = body.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`);
+  body = outsidePre(body, (h) => h.replace(/(\b(?:src|href)=")\/(?!docs\/)([^"]*)"/g, `$1${BASE}$2"`));
   seenImages = 0;
   seenBlocks = 0;
   seenTables = 0;
@@ -1194,12 +1234,12 @@ for (const page of pages) {
      it too, by trying `<path>.html` - so it was never broken on the site and
      is broken everywhere else, which is the kind of link that goes wrong on
      the day the host changes. A file that exists is named. */
-  body = body.replace(/href="(\/docs\/[^"#?]*)([^"]*)"/g, (all, at, rest) => {
+  body = outsidePre(body, (h) => h.replace(/href="(\/docs\/[^"#?]*)([^"]*)"/g, (all, at, rest) => {
     const last = at.split('/').pop();
     if (at.endsWith('/')) return `href="${at}index.html${rest}"`;
     return last.includes('.') ? all : `href="${at}.html${rest}"`;
-  });
-  const name = fm.title || (src.match(/^#\s+(.+)$/m) || [, page])[1];
+  }));
+  const name = fm.title || titleOf(src, page);
   const route = routeOf(page);
   const isHome = fm.layout === 'home';
   /* The theme's own title template, and its own rule for the preview: a
@@ -1287,7 +1327,12 @@ const NOT_FOUND_SCRIPT = `
    happened. The character classes below say the same thing without one.) */
 (function () {
   var pages = ${nearby};
-  var words = decodeURIComponent(location.pathname)
+  /* A stray percent sign in an address makes decodeURIComponent throw, and
+     the reader who most needs a suggestion got none: the raw address still
+     carries its words. */
+  var address = location.pathname;
+  try { address = decodeURIComponent(address); } catch (e) { /* keep it raw */ }
+  var words = address
     .replace(/[.]html?$/, "").split(/[^a-zA-Z0-9]+/).filter(function (w) { return w.length > 2; })
     .map(function (w) { return w.toLowerCase(); });
   if (!words.length) return;
@@ -1403,19 +1448,31 @@ fs.writeFileSync(path.join(OUT, 'docs', 'sitemap.xml'),
   + `\n</urlset>\n`);
 
 /* ---- what the pages need beside them --------------------------------- */
+/* A file in docs/public that lands where the build already wrote something -
+   a hand-written redirect stub left at the address of a page that came back,
+   say - silently replaced that page on the site. That is a decision nobody
+   made, so it stops the build and names both. */
+const collisions = [];
 const copyInto = (from, to) => {
   if (!fs.existsSync(from)) return 0;
   let n = 0;
   for (const e of fs.readdirSync(from, { withFileTypes: true })) {
     const a = path.join(from, e.name), b = path.join(to, e.name);
-    if (e.isDirectory()) { fs.mkdirSync(b, { recursive: true }); n += copyInto(a, b); }
-    else { fs.mkdirSync(to, { recursive: true }); fs.copyFileSync(a, b); n++; }
+    if (e.isDirectory()) { fs.mkdirSync(b, { recursive: true }); n += copyInto(a, b); continue; }
+    if (fs.existsSync(b)) { collisions.push(`${path.relative(ROOT, a)} -> ${b.slice(OUT.length)}`); continue; }
+    fs.mkdirSync(to, { recursive: true }); fs.copyFileSync(a, b); n++;
   }
   return n;
 };
 /* publicDir goes to the root of the site, which is where llms.txt points and
    where every <img src="/docs/get_started/image-2.png"> resolves. */
 const assets = copyInto(path.join(DOCS, 'public'), path.join(OUT, 'docs'));
+if (collisions.length) {
+  console.error(`\n${collisions.length} file(s) in docs/public would overwrite what the build wrote:`);
+  for (const c of collisions) console.error(`   ${c}`);
+  console.error('Delete the file, or the page - one address cannot be both.');
+  process.exit(1);
+}
 /* The catalogue's two stylesheets and its search box come from its build; only
    the manual's own layer and its own entry module live in this repository.
    search.mjs is the SAME CODE the 772 sample pages load - the box in this bar
@@ -1558,12 +1615,14 @@ const resolve = (to) => {
     const at = path.join(dir, e.name);
     if (e.isDirectory()) { sweep(at); continue; }
     if (!e.name.endsWith('.html')) continue;
-    const html = fs.readFileSync(at, 'utf8');
+    /* Listings set aside (outsidePre above): an XML view printed in a fence
+       is full of href= and src= that are not links of this site. */
+    const html = fs.readFileSync(at, 'utf8').replace(PRE, '');
     /* A link INSIDE the page - `href="#a-section"` - is checked against this
        page's own ids. It is where a stale anchor is likeliest: a heading is
        renamed and the sentence pointing at it three screens up is not. */
     for (const m of html.matchAll(/href="#([^"]+)"/g)) {
-      const fragment = decodeURIComponent(m[1]);
+      const fragment = decoded(m[1]);
       checked++; anchors++;
       if (fragment === 'top' || fragment.startsWith(':~:')) continue;
       if (!ids(at).has(fragment)) dead.push(`${at.slice(OUT.length)} -> #${m[1]}  (no section by that name on this page)`);
@@ -1589,7 +1648,25 @@ const resolve = (to) => {
       /* `#top` is the browser's own, and a text fragment (`#:~:text=…`) names
          words rather than an element. */
       if (fragment === 'top' || fragment.startsWith(':~:')) continue;
-      if (!ids(target).has(decodeURIComponent(fragment)))
+      if (!ids(target).has(decoded(fragment)))
+        dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (the page is there, that section is not)`);
+    }
+    /* A RELATIVE link - `./../cookbook/x.html`, which the deprecations page
+       carries - was never read at all: both loops above start at a `#` or a
+       `/`. It is resolved against this page's own address, the way the
+       browser will, and then held to the same file. Anything with a scheme
+       (`https:`, `mailto:`, `data:`) or protocol-relative is not ours. */
+    const here = new URL(at.slice(OUT.length).split(path.sep).join('/'), 'https://abap2ui5.github.io');
+    for (const m of html.matchAll(/(?:href|src)="(?![a-z][a-z0-9+.-]*:|\/|#)([^"]+)"/gi)) {
+      const url = new URL(m[1].replace(/&amp;/g, '&'), here);
+      if (!url.pathname.startsWith(BASE)) continue;
+      checked++;
+      const target = resolve(decoded(url.pathname));
+      if (!target) { dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (relative, resolves to ${url.pathname})`); continue; }
+      const fragment = url.hash.slice(1);
+      if (!fragment || !target.endsWith('.html') || fragment === 'top' || fragment.startsWith(':~:')) continue;
+      anchors++;
+      if (!ids(target).has(decoded(fragment)))
         dead.push(`${at.slice(OUT.length)} -> ${m[1]}  (the page is there, that section is not)`);
     }
   }

@@ -49,14 +49,28 @@ const AFFIX = new Set([
   'free', 'wide', 'less', 'ish', 'est',
 ]);
 
+// Built once per process. Reading the Hunspell affix and word files is ~440ms,
+// and the gate asks for it once per page: rebuilding it on every call was
+// most of the gate's runtime. The answers are cached too - the same few
+// thousand words recur on every page.
+let spell;
+const dictionaryAnswers = new Map();
+function inDictionary(w) {
+  let answer = dictionaryAnswers.get(w);
+  if (answer === undefined) {
+    spell ??= nspell(en);
+    answer = spell.correct(w) || spell.correct(w.toLowerCase());
+    dictionaryAnswers.set(w, answer);
+  }
+  return answer;
+}
+
 /**
  * Every word of `markdown` that no dictionary and no list of ours knows, as
  * {line, word}. Ordered by where it stands.
  */
 export function findUnknown(markdown, { words = projectWords() } = {}) {
-  const spell = nspell(en);
   const known = new Set(words.map((w) => w.toLowerCase()));
-  const inDictionary = (w) => spell.correct(w) || spell.correct(w.toLowerCase());
   const ok = (w) => known.has(w.toLowerCase()) || inDictionary(w);
 
   const found = [];

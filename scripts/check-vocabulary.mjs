@@ -23,8 +23,11 @@ for (const file of pages) {
   for (const { line, word } of findUnknown(source, { words })) {
     findings.push({ file, line, word });
   }
-  // what the list is actually earning
-  for (const { word } of findUnknown(source, { words: [] })) seen.add(word.toLowerCase());
+  // what the list is actually earning - a second pass over every page, so only
+  // when it was asked for
+  if (unused) {
+    for (const { word } of findUnknown(source, { words: [] })) seen.add(word.toLowerCase());
+  }
   checked++;
 }
 

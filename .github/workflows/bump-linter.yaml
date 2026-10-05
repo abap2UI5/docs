@@ -47,13 +47,19 @@ jobs:
         fi
 
     # The gates that consume the linter: every fenced example on the site,
-    # plus the script tests. A rule that starts rejecting a documented
-    # example fails here, in the PR run, not on main - and a rejected
-    # example is a finding about the DOCUMENTATION, which is the point.
+    # the house layout of every chain, plus the script tests. A rule that
+    # starts rejecting a documented example fails here, in the PR run, not on
+    # main - and a rejected example is a finding about the DOCUMENTATION,
+    # which is the point. check:conventions is the linter's
+    # `chain-house-layout` rule, opt-in and so the one most likely to move
+    # under a bump: it was missing here, so a release that changed the layout
+    # it wants surfaced as a red deploy instead of a red bump PR.
     - if: steps.pin.outputs.changed == 'true'
       run: npm test
     - if: steps.pin.outputs.changed == 'true'
       run: npm run check:examples
+    - if: steps.pin.outputs.changed == 'true'
+      run: npm run check:conventions
     - if: steps.pin.outputs.changed == 'true'
       run: npm run check:playground
 

@@ -50,6 +50,10 @@ jobs:
         #
         # PIPESTATUS, the same way abap2UI5/linter's upstream-sync.yml handles
         # the identical `node … | tee` shape.
+        #
+        # The token is for the release API's rate limit (see check-version.mjs).
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set +e
           node scripts/check-version.mjs | tee version.txt

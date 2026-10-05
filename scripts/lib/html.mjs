@@ -12,8 +12,11 @@
  * a "<!--" inside JavaScript is legal JavaScript that is not this build's to
  * rewrite. The escaped "&lt;!--" in a listing is text, and never matched. */
 export function stripComments(html) {
-  return html
-    .split(/(<script\b[\s\S]*?<\/script>)/)
-    .map((part, i) => (i % 2 ? part : part.replace(/<!--[\s\S]*?-->/g, '')))
-    .join('');
+  /* One scan, left to right, whichever comes first. Splitting at the scripts
+     first read a comment that MENTIONS `<script>` as a script's start: the
+     comment's tail survived, and so did everything up to the next
+     `</script>` - which csp.mjs then reported as an inline script nobody
+     wrote. A comment inside a script cannot start a match, because the script
+     is consumed whole before the scan gets there. */
+  return html.replace(/(<script\b[^>]*>[\s\S]*?<\/script>)|<!--[\s\S]*?-->/g, (m, script) => script ?? '');
 }

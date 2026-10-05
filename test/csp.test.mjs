@@ -53,6 +53,13 @@ test('the inline scripts of a page are the ones the browser would run', () => {
   assert.deepEqual(inlineScriptsIn(page), ['one', 'two'], 'a src is not inline and a data block is not run');
 });
 
+test('a comment that mentions <script> starts no inline script', () => {
+  // read as a script's start, it was a policy violation in a page that had none
+  const page = '<!-- the <script> below sets the theme --><script>one</script>'
+    + '<!-- <script>never()</script> -->';
+  assert.deepEqual(inlineScriptsIn(page), ['one']);
+});
+
 /* ---- the build, as written ---------------------------------------------- */
 const BUILD = readFileSync(join(ROOT, 'scripts/build-site.mjs'), 'utf8');
 

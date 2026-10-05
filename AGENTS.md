@@ -85,7 +85,10 @@ the same shape as a gate that found nothing wrong — which is precisely how
 `check:examples` passed for years on an abaplint config with no rules in it. So
 `check:examples`, `check:conventions` and `check:playground` each exit 1 when
 their walk finds no example at all, and say which of the fence language, the
-page layout or the builder name is the likely cause. `check:line-length` exits 1
+page layout or the builder name is the likely cause - `check:conventions` when
+EITHER of its halves finds nothing (no chain, or no app class), and also when
+`chain-house-layout` stays silent on a canary chain built to break it, which is
+what a linter bump that renamed the rule would look like. `check:line-length` exits 1
 when no page of the site counts as wrapped, which would mean its fence handling
 or its glob stopped matching rather than that the manual went loose, and
 `check:vocabulary` when it walked no page or read an empty word list. `check:cross-site` carries
@@ -108,7 +111,9 @@ silence — went a release without CI, and how `check:conventions` sat in
 `check:samples` needs an `abap2UI5/samples` checkout — set `SAMPLES_HOME`, or
 clone it as a sibling. Without one it *skips* rather than fails, so verify the
 output says what you think it says. CI checks out `abap2UI5/samples@main`
-explicitly for this reason. The other two repositories are found the same way
+explicitly for this reason, and that checkout may not fail - not in
+`check.yml` and not in `deploy.yml`, where a `continue-on-error` on it once let
+a deploy publish sample links nothing had checked. The other two repositories are found the same way
 (`SAMPLES_CONTROLS_HOME` / `SAMPLES_STACK_HOME`, or `.samples-controls` /
 `../samples-controls` and the stack equivalents) and fall back to the
 `catalogue.json` each publishes; CI checks both out with `catalogue.json` and
@@ -148,7 +153,7 @@ are a projection of the pages next to them:
 |---|---|
 | [`/docs/llms.txt`](https://abap2ui5.github.io/docs/llms.txt) | the map: every page with its title and one line of what it covers, plus the repositories around it |
 | [`/docs/llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) | the whole documentation as one markdown document |
-| `/docs/<page>.md` | each page as raw markdown, next to its `.html` |
+| `/docs/<page>.md` | each page as raw markdown, next to its `.html` — with every root-relative link outside a fence made absolute (a page as its `.md` twin, an asset as itself), because `/cookbook/…` served under `/docs/` resolves to the origin root, which is another repository |
 
 One more file is published for machines and — unlike the three above —
 **committed**: [`/docs/api/client-api.json`](https://abap2ui5.github.io/docs/api/client-api.json),
@@ -513,13 +518,20 @@ arrives instead of pushing the paragraph under it down; `.vp-doc img` sets
 `height: auto`, which is what turns the pair into a ratio rather than a size. A
 `sitemap.xml` names all 166 pages with the date of the commit that last touched
 each — not the date of the build, which would tell a crawler that every page
-changed on every deploy. `robots.txt` is deliberately not written, for the
+changed on every deploy. A shallow clone cannot know that date (its `git log`
+answers HEAD's for every page), so there it falls back to the day of the build,
+as with no git at all; the deploy clones in full. `robots.txt` is deliberately not written, for the
 reason the playground gives: a crawler reads it at the ORIGIN root, and that
 belongs to another repository.
 
 **The build is itself a gate.** It refuses to finish on a dead internal link —
-33,275 of them are checked on every run — which is what VitePress's own build
-did for us.
+37,652 of them are checked on every run, root-relative, absolute into this
+deployment and relative (`./../cookbook/…`, resolved against the page the way
+the browser will), with every `<pre>` listing set aside because an XML view
+printed in a fence is not a link — which is what VitePress's own build did for
+us. It refuses, too, when a file in `docs/public/` would land on an address the
+build already wrote: a stub left behind at a page that came back would replace
+that page silently.
 
 **The menu beside a chapter is a checkbox, a row and a list per section.**
 It was a `<details>` with the section's link inside its `<summary>` — the
@@ -583,8 +595,9 @@ Three things to know before touching it:
   stops at the last one under 200. Over those 150 pages the median went from 84
   to 117 characters and the ones under 60 from 34 to 8 — the eight are pages
   whose opening paragraph is one short sentence, which is the honest answer. Two rules keep
-  it from cutting mid-thought: past the first sentence only a full stop counts
-  — the dash forms exist for a page that opens without one — and a candidate
+  it from cutting mid-thought: past the first sentence only a sentence end
+  counts (`.`, `?` or `!`) — the dash forms exist for a page that opens without
+  one — and a candidate
   that leaves a bracket open is skipped. `test/summarise.test.mjs` holds all of
   it, because nothing else reads these before they ship.
 
@@ -800,15 +813,16 @@ failing in a real one:
 | a complete class implementing `z2ui5_if_app` | the playground compiles a whole abapGit object, and the framework starts an app |
 | a name of at most 30 characters | not a playground limit — a longer class exists nowhere. Two were printed here for years, invisible to `check:examples`, which renames every example to `zcl_docs_example_NN` before compiling it |
 | displays something | `configuration/authorization.md` starts, shows an empty frame and demonstrates nothing |
-| no `SELECT` outside the tables the page has | the database in the page holds the framework's tables and what open-abap ships; T100 is there, VBAK is not |
-| no EML, CDS or HANA SQL | same list `check-examples.mjs` already skips |
+| no `SELECT` outside the tables the page has, and no write to one | the database in the page holds the framework's tables and what open-abap ships; T100 is there, VBAK is not. A namespaced `/dmo/flight` and the table after a `JOIN` count, and so do `INSERT INTO`, `UPDATE`, `MODIFY` and `DELETE` |
+| no EML, CDS or HANA SQL | the very list `check-examples.mjs` skips: one regex, `NEEDS_A_SYSTEM`, exported from `playground.mjs` |
+| one object per fence | a playground file is one abapGit object: a test class (any name), a second class or an interface beside the app has nowhere to go |
 | no add-on, no on-premise SAP class, no function module | `z2ui5_if_lp_kpi`, `cl_bcs_message`, `cl_demo_output`, `describe_by_name` |
 | no method declared and never implemented, no local class | neither compiles as printed, here or in a system |
 
 `test/playground.test.mjs` pins one fixture per line of that table, **plus the
 shapes a rule written one word wider would have swallowed**: a `SELECT` in a
-comment, the word FROM inside a string, `INSERT VALUE #( )` into an internal
-table.
+comment, the word FROM inside a string (an escaped `\|` in a template
+included), `INSERT VALUE #( )` into an internal table, `DELETE` on one.
 
 **The bookkeeping half of the question, however, is decidable, and
 `check:playground` decides it.** An example the rules refuse carries a marker

@@ -98,3 +98,48 @@ test('the documents say fifteen, and there are fifteen', () => {
     assert.match(read(doc), /fifteen/, `${doc} counts the gates`);
   }
 });
+
+/* ---- how each gate is run, not only whether ------------------------------ */
+
+/** The steps of a workflow, as blocks of text: everything from one `- ` at the
+ *  steps' indentation to the next. Enough YAML for what is asked below. */
+function steps(file) {
+  const yml = read(file);
+  const out = [];
+  for (const m of yml.matchAll(/^(\s+)steps:\s*\n([\s\S]*?)(?=^\S|^\s{2}\S|(?![\s\S]))/gm)) {
+    const body = m[2];
+    const indent = /^(\s*)- /m.exec(body)?.[1] ?? '';
+    for (const block of body.split(new RegExp(`^${indent}- `, 'm')).slice(1)) out.push(block);
+  }
+  return out;
+}
+const gateOf = (step) => /^\s*run:\s*npm (?:run ([\w:-]+)|(test))\s*$/m.exec(step)?.slice(1).find(Boolean);
+
+test('the steps are actually read', () => {
+  for (const f of ['.github/workflows/check.yml', '.github/workflows/deploy.yml']) {
+    assert.equal(steps(f).filter(gateOf).length, 15, `${f}: every gate is a step of its own`);
+  }
+});
+
+test('no gate may fail without failing the run, and none is skipped by a condition', () => {
+  /* `continue-on-error` on a gate is a gate that reports red and publishes
+     anyway; an `if:` other than `!cancelled()` is one that does not run at
+     all on some path. Either turns a gate into a decoration, and both look
+     like a gate in the list above. */
+  for (const f of ['.github/workflows/check.yml', '.github/workflows/deploy.yml']) {
+    for (const step of steps(f).filter(gateOf)) {
+      assert.equal(/^\s*continue-on-error:/m.test(step), false, `${f}: ${gateOf(step)} carries continue-on-error`);
+      const cond = /^\s*if:\s*(.+?)\s*$/m.exec(step)?.[1];
+      assert.ok(cond === undefined || cond === '${{ !cancelled() }}', `${f}: ${gateOf(step)} runs only if ${cond}`);
+    }
+  }
+});
+
+test('deploy.yml runs every gate before it uploads what it publishes', () => {
+  const all = steps('.github/workflows/deploy.yml');
+  const upload = all.findIndex((step) => /uses:\s*actions\/upload-pages-artifact@/.test(step));
+  assert.ok(upload > 0, 'deploy.yml uploads a pages artifact');
+  all.forEach((step, i) => {
+    if (gateOf(step)) assert.ok(i < upload, `${gateOf(step)} runs after the upload, so it gates nothing`);
+  });
+});

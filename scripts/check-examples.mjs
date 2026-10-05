@@ -39,6 +39,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import { frameworkRef } from './lib/release.mjs';
+import { NEEDS_A_SYSTEM } from '../docs/.vitepress/playground.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = join(ROOT, 'docs');
@@ -69,8 +70,8 @@ const walk = (dir) =>
 /* RAP/EML and HANA-only SQL: real ABAP that needs a CDS entity, a behavior
  * definition or a HANA database to compile at all. abaplint has none of them
  * here, so the parse error is about this check's environment, not about the
- * example. */
-const NEEDS_A_SYSTEM = /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENTITIES\b|TABLE\s+FOR\s+(READ|CREATE|UPDATE)\b|\bFUZZY\b|CONTAINS\s*\(/i;
+ * example. The list is playground.mjs's NEEDS_A_SYSTEM - the Run button
+ * refuses the same examples for the same reason, and two copies had drifted. */
 
 const skipped = [];
 const unmigrated = [];
