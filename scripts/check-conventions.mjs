@@ -57,7 +57,9 @@ const walk = (dir) =>
     return statSync(p).isDirectory() ? walk(p) : [p];
   });
 
-/** Every fenced abap block on a page, with the line its first line sits on. */
+/** Every fenced abap block on a page. `start` is the 1-based number of the
+ *  line that opens the fence, so code line k (1-based) is file line
+ *  start + k - which the findings below were reporting one line early. */
 function fences(md) {
   const lines = md.split('\n');
   const out = [];
@@ -106,7 +108,7 @@ for (const file of pages) {
       continue;
     }
     for (const f of found) {
-      chainFindings.push({ page, line: fence.start + f.line - 1, count: f.count });
+      chainFindings.push({ page, line: fence.start + f.line, count: f.count });
     }
   }
 
@@ -154,7 +156,7 @@ for (const file of pages) {
         [/^\s*PRIVATE\s+SECTION\s*\./im, 'PRIVATE SECTION.'],
       ].filter(([re]) => !re.test(block)).map(([, name]) => name);
       if (missing.length) {
-        sectionFindings.push({ page, line: fence.start + lines.slice(0, j + 1).length - 1, missing });
+        sectionFindings.push({ page, line: fence.start + j + 1, missing });
       }
     }
   }

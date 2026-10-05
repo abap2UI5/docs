@@ -58,7 +58,9 @@ of its own into the UI5 ABAP repository — see
 [Fiori Launchpad](/configuration/launchpad#installation).
 
 ## 2. Set Up HTTP Handler and Service
-Create a package and define an HTTP handler class. Use the **ABAP** tab for Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
+Create a package and define an HTTP handler class. Use the **ABAP** tab for
+Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the
+**ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
 
 ::: code-group
 
@@ -89,7 +91,8 @@ ENDCLASS.
 ```
 :::
 
-Next, use transaction `SICF` to create an HTTP service and enter your handler class in the service's **Handler List** tab, then activate the node:
+Next, use transaction `SICF` to create an HTTP service and enter your handler
+class in the service's **Handler List** tab, then activate the node:
 
 <img width="743" height="697" alt="SICF service creation dialog in transaction SICF" src="https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4" /> <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.webp)
@@ -101,7 +104,8 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 :::
 
 ::: tip **Security**
-abap2UI5 talks only to the HTTP service you define, giving you full control over accessibility, authentication, and other security aspects.
+abap2UI5 talks only to the HTTP service you define, giving you full control over
+accessibility, authentication, and other security aspects.
 :::
 
 ::: tip **ABAP Language Versions**
@@ -111,12 +115,17 @@ Cloud compatibility, whichever handler this system runs.
 :::
 
 ## 3. First Launch
-Open the HTTP endpoint in your browser — in `SICF`, right-click your service node and choose **Test Service** (the URL looks like `https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where you will launch your own apps later:
+Open the HTTP endpoint in your browser — in `SICF`, right-click your service
+node and choose **Test Service** (the URL looks like
+`https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where
+you will launch your own apps later:
 <img width="800" height="429" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press `check` to verify your installation, then launch the bundled test app to confirm everything works.
+Press `check` to verify your installation, then launch the bundled test app to
+confirm everything works.
 
-You should now see the page of the startup app. That is the whole install verified: abapGit pull,
-handler, service and app class. If you see something else instead:
+You should now see the page of the startup app. That is the whole install
+verified: abapGit pull, handler, service and app class. If you see something
+else instead:
 
 - **The browser shows an ICF error page or a plain 404** — the request never
   reached the handler. In `SICF`, check that the service node is *activated*

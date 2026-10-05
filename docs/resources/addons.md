@@ -4,7 +4,10 @@ description: The optional add-ons around abap2UI5 - popups, HTTP and RFC connect
 ---
 # Add-ons
 
-abap2UI5 focuses on core capabilities — rendering views, handling events, and exchanging data. This keeps the framework lean and easy to maintain. The real strength lies in the ecosystem: **ready-to-use add-ons and community projects** that extend abap2UI5 for specific needs.
+abap2UI5 focuses on core capabilities — rendering views, handling events, and
+exchanging data. This keeps the framework lean and easy to maintain. The real
+strength lies in the ecosystem: **ready-to-use add-ons and community projects**
+that extend abap2UI5 for specific needs.
 
 ## Available Add-ons
 
@@ -61,4 +64,6 @@ Other open-source projects use abap2UI5 — try them out:
 
 ## Contribution
 
-Built a feature or your own open-source project with abap2UI5? Contribute to existing repositories or start your own. Add your project here so others can find, use, and contribute to your work.
+Built a feature or your own open-source project with abap2UI5? Contribute to
+existing repositories or start your own. Add your project here so others can
+find, use, and contribute to your work.

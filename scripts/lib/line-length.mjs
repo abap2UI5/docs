@@ -105,7 +105,19 @@ export function judge(source) {
   if (prose.length < MIN_PROSE_LINES) {
     return { wrapped: false, reason: 'too few prose lines', prose, over: [] };
   }
-  const wrapped = over.length / prose.length < WRAPPED_BELOW;
+  /* Or held on evidence of wrapping: continuation lines - a line of 60 to 80
+   * characters followed by more of the same paragraph, neither of them a list
+   * item or a table row - at least twice as many as the long lines. The share
+   * alone judged the drift itself: on a page of under twenty prose lines ONE
+   * paragraph written back onto a single line was already 5%, the page
+   * stopped being held, and the gate went green on exactly what it exists to
+   * catch. A page that was never wrapped has next to no such lines. */
+  const block = (t) => /^\s*([-*+>|]|\d+\.)\s/.test(t);
+  const continued = prose.filter((l, k) => k > 0 && prose[k - 1].line === l.line - 1
+    && prose[k - 1].length <= LIMIT && prose[k - 1].length >= 60
+    && !block(l.text) && !block(prose[k - 1].text)).length;
+  const wrapped = over.length / prose.length < WRAPPED_BELOW
+    || (continued >= 3 && continued >= 2 * over.length);
   return { wrapped, prose, over: wrapped ? over : [] };
 }
 

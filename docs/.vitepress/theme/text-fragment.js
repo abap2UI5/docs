@@ -49,7 +49,10 @@
  */
 
 /** Whitespace as a text fragment matches it: one space, and none at the ends. */
-export const normalise = (text) => String(text ?? "").replace(/\s+/g, " ").trim();
+/* Zero-width characters go too: a heading's hidden permalink holds one, which
+ * Range.toString( ) reports and \s does not match - so a selected heading was
+ * quoted with a character the page does not show, and the link landed nowhere. */
+export const normalise = (text) => String(text ?? "").replace(/[\u200B-\u200D\u2060\uFEFF]/g, "").replace(/\s+/g, " ").trim();
 
 /* What has to be escaped inside a part of the directive. encodeURIComponent
  * already takes "," and "&"; "-" it leaves alone, because "-" is unreserved in
@@ -93,18 +96,35 @@ export function fragmentFor({ text, prefix = "", suffix = "", pageText = "" } = 
   const spans = /\n/.test(String(text)) || all.length > EXACT;
   const half = Math.min(EDGE, Math.floor(all.length / 2));
 
-  const start = spans && half > 0 ? all.slice(0, half).join(" ") : selection;
-  const end = spans && half > 0 ? all.slice(all.length - half).join(" ") : "";
+  /* Across lines, each end is taken from its own line. The browser does not
+   * match a space in the directive against a line break inside <pre>, and
+   * ABAP lines are short: five words from the start of a listing ran over
+   * a newline and the link found nothing. In prose a line break is only
+   * whitespace, and words from one line still match there. */
+  const rows = String(text).split("\n").map(normalise).filter(Boolean);
+  let start = spans && half > 0 ? all.slice(0, half).join(" ") : selection;
+  let end = spans && half > 0 ? all.slice(all.length - half).join(" ") : "";
+  if (rows.length > 1) {
+    start = words(rows[0]).slice(0, EDGE).join(" ");
+    end = words(rows[rows.length - 1]).slice(-EDGE).join(" ");
+  }
 
   /* Where the match BEGINS is what a repeated quote gets wrong, so it is the
    * start that has to be made unique: first with the words in front of it,
    * then - for a quote whose end is its own end - with the words after. */
   let before = "";
   let after = "";
+  /* The context words come from the one line next to the selection, for the
+   * reason the ends do: a prefix or suffix that ran over a line break inside
+   * <pre> matched nothing, and took the whole link down with it. */
+  const nearRow = (text, last) => {
+    const lines = String(text).split("\n").map(normalise).filter(Boolean);
+    return (last ? lines[lines.length - 1] : lines[0]) ?? "";
+  };
   if (page !== "" && count(page, start) > 1) {
-    before = words(normalise(prefix)).slice(-CONTEXT).join(" ");
+    before = words(nearRow(prefix, true)).slice(-CONTEXT).join(" ");
     if (before === "" || count(page, `${before} ${start}`) > 1) {
-      after = words(normalise(suffix)).slice(0, CONTEXT).join(" ");
+      after = words(nearRow(suffix, false)).slice(0, CONTEXT).join(" ");
     }
   }
 

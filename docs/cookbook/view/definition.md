@@ -8,9 +8,15 @@ description: How an abap2UI5 view is defined - a standard UI5 XML view sent from
 ---
 # Definition
 
-abap2UI5 uses [SAP UI5](https://sapui5.hana.ondemand.com) on the frontend without modification. Whatever your ABAP code sends to the browser is a **standard UI5 XML view** — the same XML you would write in any UI5 freestyle project.
+abap2UI5 uses [SAP UI5](https://sapui5.hana.ondemand.com) on the frontend
+without modification. Whatever your ABAP code sends to the browser is a
+**standard UI5 XML view** — the same XML you would write in any UI5 freestyle
+project.
 
-The consequence: **everything in the UI5 SDK works in abap2UI5 1:1 when you write the XML directly**. Any control, any property, any namespace from the [UI5 Demo Kit](https://sapui5.hana.ondemand.com/sdk) is available. Copy the XML, paste it into your ABAP class, and it renders.
+The consequence: **everything in the UI5 SDK works in abap2UI5 1:1 when you
+write the XML directly**. Any control, any property, any namespace from the
+[UI5 Demo Kit](https://sapui5.hana.ondemand.com/sdk) is available. Copy the XML,
+paste it into your ABAP class, and it renders.
 
 ## Sending a View
 
@@ -169,14 +175,24 @@ of them before you deploy, and the rest have to be verified against the SDK.
 
 ## Where to Look for Controls
 
-Because UI5 XML is used 1:1, **the UI5 documentation is your reference** for anything visual:
+Because UI5 XML is used 1:1, **the UI5 documentation is your reference** for
+anything visual:
 
 - [UI5 Demo Kit](https://sapui5.hana.ondemand.com/sdk) — interactive samples for every control
 - [UI5 Control API](https://sapui5.hana.ondemand.com/sdk/#/api) — properties, aggregations, events
 
-Find a control you like in the UI5 docs, copy its XML, paste it into `view_display( )` — done. abap2UI5 has no separate control catalog to learn.
+Find a control you like in the UI5 docs, copy its XML, paste it into
+`view_display( )` — done. abap2UI5 has no separate control catalog to learn.
 
-One thing the SDK will not warn you about while you copy: the control may be deprecated. Because the XML is passed through 1:1, a deprecated control renders exactly like any other — until UI5 removes it, which has already happened once (the Belize themes went in 1.136). Nothing in the framework stops you, so this is a question to hand to a tool rather than to remember: the [linter](/advanced/linter) reports a deprecated control, member or whole library against the release *your* system runs, and [ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the always-current list.
+One thing the SDK will not warn you about while you copy: the control may be
+deprecated. Because the XML is passed through 1:1, a deprecated control renders
+exactly like any other — until UI5 removes it, which has already happened once
+(the Belize themes went in 1.136). Nothing in the framework stops you, so this
+is a question to hand to a tool rather than to remember: the
+[linter](/advanced/linter) reports a deprecated control, member or whole library
+against the release *your* system runs, and
+[ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the
+always-current list.
 
 The one trap worth knowing by hand is the *namespace* of a control that exists
 twice. `Avatar` written with no `ns` resolves through the view's default
@@ -190,7 +206,8 @@ dead since 1.38 along with it and still render something.
 
 ## Choosing a Control
 
-The UI5 SDK is large. The table below covers the choices that come up in almost every abap2UI5 app — use it as a starting point before diving into the SDK.
+The UI5 SDK is large. The table below covers the choices that come up in almost
+every abap2UI5 app — use it as a starting point before diving into the SDK.
 
 | Need                              | Use                                                   | Notes                                                                              |
 | --------------------------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------- |
@@ -210,10 +227,13 @@ The UI5 SDK is large. The table below covers the choices that come up in almost 
 | Status indicator                  | `sap.m.ObjectStatus`                                  | Colored text + icon for state.                                                     |
 | Modal dialog                      | `sap.m.Dialog` (inside a `core:FragmentDefinition`)           | See [Popup](/cookbook/popup_popover/popup).                                        |
 
-When two controls fit, prefer the simpler one: `Table` over `TreeTable`, `SimpleForm` over `Form`, `Select` over `ComboBox`. Switch to the richer variant only when a concrete requirement justifies it.
+When two controls fit, prefer the simpler one: `Table` over `TreeTable`,
+`SimpleForm` over `Form`, `Select` over `ComboBox`. Switch to the richer variant
+only when a concrete requirement justifies it.
 
 ## Next Steps
-This produces a static view. [Binding](/cookbook/model/binding) walks through sharing data between the view and the app logic.
+This produces a static view. [Binding](/cookbook/model/binding) walks through
+sharing data between the view and the app logic.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 
