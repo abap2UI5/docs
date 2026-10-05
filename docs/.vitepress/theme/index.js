@@ -56,7 +56,10 @@ export default {
   enhanceApp({ app, router, siteData }) {
     // The Run button under a runnable ABAP example. One delegated listener for
     // the whole site — the browser half of docs/.vitepress/playground.mjs.
-    if (!import.meta.env.SSR) setUpPlayground()
+    // It answers with what arms the front door's self-starting example, which
+    // a route change has to call again: thrown away, Home reached in-app
+    // (about -> brand -> Home) never started its example.
+    const rearmPlayground = import.meta.env.SSR ? undefined : setUpPlayground()
 
     // The cost calculator's sliders and the sheet under them
     // (cost-calculator.js): two delegated listeners for the whole site, and
@@ -142,6 +145,7 @@ export default {
         // Home -> Documentation is a route change, not a load: this site is
         // one application and two of the bar's four items are pages of it.
         setUpCodeLines()
+        rearmPlayground?.()
         restoreScroll()
         onAfter?.(to)
       }

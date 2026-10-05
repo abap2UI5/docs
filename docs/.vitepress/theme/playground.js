@@ -47,10 +47,14 @@ function loader() {
   loading ??= new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = LOADER;
-    script.addEventListener('load', () =>
-      window.abap2ui5Embed
-        ? resolve(window.abap2ui5Embed)
-        : reject(new Error('The playground loader did not install itself.')));
+    script.addEventListener('load', () => {
+      if (window.abap2ui5Embed) return resolve(window.abap2ui5Embed);
+      // Forgotten as the error below is: kept, this rejection answered every
+      // later press on the page.
+      loading = undefined;
+      script.remove();
+      reject(new Error('The playground loader did not install itself.'));
+    });
     script.addEventListener('error', () => {
       /* Forgotten, not kept: a load that failed once (offline for a moment)
        * must not answer every later press on the page with the same error. */
@@ -66,9 +70,24 @@ function loader() {
 /** The ABAP in a runnable block: the text the reader sees and copies. */
 const sourceOf = (container) => container.querySelector('pre code')?.textContent ?? '';
 
+/* The button stays, enabled, with the explanation under it: removed, with
+ * `data-running` left on the block, the example could never start again once
+ * the network was back, and the focus fell to <body>. A second failure
+ * replaces the first note rather than stacking under it. */
+function failed(container, button, label, hadFocus, message) {
+  delete container.dataset.running;
+  button.disabled = false;
+  button.textContent = label;
+  container.querySelector('.a2ui5-play-failed')?.remove();
+  fail(container, message);
+  if (hadFocus) button.focus();
+}
+
 function fail(container, message) {
   const note = document.createElement('p');
   note.className = 'a2ui5-play-failed';
+  // Announced when it appears: the reader pressed Run and is waiting.
+  note.setAttribute('role', 'alert');
   note.textContent = `${message} The example still runs at ${PLAYGROUND}.`;
   container.append(note);
 }
@@ -97,8 +116,7 @@ async function start(button, { unasked = false } = {}) {
       button.textContent = label;
       return;
     }
-    button.remove();
-    fail(container, String(e.message || e));
+    failed(container, button, label, hadFocus, String(e.message || e));
     return;
   }
 
@@ -134,8 +152,7 @@ async function start(button, { unasked = false } = {}) {
       button.textContent = label;
       return;
     }
-    button.remove();
-    fail(container, String(e.message || e));
+    failed(container, button, label, hadFocus, String(e.message || e));
     return;
   }
   /* The printed listing steps aside for the editable one: the frame now shows
@@ -146,6 +163,8 @@ async function start(button, { unasked = false } = {}) {
 
   const controls = bar(container, demo, embed, source);
   button.replaceWith(controls);
+  // The note a failed attempt left is out of date now that it runs.
+  container.querySelector('.a2ui5-play-failed')?.remove();
   /* The focus goes where the button was rather than to <body>, or a keyboard
    * reader starts tabbing from the top of the page again. */
   if (hadFocus && !unasked) controls.querySelector('.a2ui5-play-close')?.focus();
