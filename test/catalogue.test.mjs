@@ -134,6 +134,9 @@ test('a catalogue.json is counted entry by entry, and its counts field is never 
   // which the chain treats as "this file answered nothing", not as a figure
   assert.equal(countEntries({ counts: { samples: 40 }, samples: [] }), 0);
   assert.equal(countEntries({ samples: [{ class: '', file: 'x' }, { class: 'Z', file: '' }, { title: 'no pointer' }] }), 0);
+  /* the overview app of samples-stack is the catalogue inside a system, not a
+   * sample - the catalogue gives it no page, so it is no entry here either */
+  assert.equal(countEntries({ samples: [{ class: 'Z2UI5_CL_SMPS_APP_000', path: 'src/z2ui5_cl_smps_app_000.clas.abap', technology: 'Overview' }] }), 0);
 });
 
 test('a corpus size is counted where the checkout is, without asking the network', async (t) => {
