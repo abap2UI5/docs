@@ -23,6 +23,15 @@ export const manualPages = (dir) => readdirSync(dir, { withFileTypes: true }).fl
 
 const blank = (s) => ' '.repeat(s.length);
 
+/* An inline code span the way markdown reads one: a run of backticks, and the
+ * code up to the next run of the SAME length. `[^`]*` between single
+ * backticks read ``client->_event( `SAY_HELLO` )`` as an empty span, the
+ * call, a span and an empty span - the code in the middle went through as
+ * prose, so a name in it could be "corrected" by fix-spelling
+ * (``lv_colour = `x` `` became ``lv_color = `x` ``). A run with no partner
+ * is a literal backtick, as it is to markdown. */
+const CODE_SPAN = /(?<!`)(`+)(?!`)([\s\S]*?[^`])\1(?!`)/g;
+
 /** Each line of `markdown` with everything that is not prose replaced by
  *  spaces of the same length. */
 export function proseLines(markdown) {
@@ -80,7 +89,7 @@ export function proseLines(markdown) {
     const open = text.indexOf('<!--');
     if (open !== -1) { text = text.slice(0, open) + blank(text.slice(open)); comment = true; }
     out.push(text
-      .replace(/`[^`]*`/g, blank)
+      .replace(CODE_SPAN, blank)
       .replace(/\]\([^)]*\)/g, blank)
       .replace(/<[^>]+>/g, blank)
       .replace(/https?:\/\/\S+/g, blank));
