@@ -24,7 +24,7 @@ npx @abap2ui5/linter src
 ```
 
 That is the whole of it: no install, no configuration, no system. The package
-is about 240 kB and pulls in nothing else, so the line above is a fast one.
+is about 500 kB and pulls in nothing else, so the line above is a fast one.
 
 ```
 src/zcl_my_app.clas.abap
