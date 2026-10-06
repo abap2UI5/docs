@@ -190,6 +190,75 @@ if (legacy.length) {
   process.exit(1);
 }
 
+/* The second thing a fragment can be held to without a system: a STRING
+ * TEMPLATE whose literal text runs over a line break. ABAP allows a line
+ * break inside a template only within an embedded expression `{ … }`; the
+ * literal text between `|` and `|` has to stay on one line, or the statement
+ * does not parse. It is the natural way to wrap a long binding string - and
+ * nine binding-string fragments on the Formatter, Binding and Deprecations
+ * pages were written that way, none of which compiled. The complete classes
+ * are compiled below and would fail there too; this is for the fragments,
+ * which nothing compiles.
+ *
+ * A small lexer rather than a regex, because the three literal forms nest:
+ * a template's `{ … }` holds code again, with its own `'…'`, `` `…` `` and
+ * templates in it, and a `"` or a first-column `*` is a comment only in code. */
+function templateLineBreaks(code) {
+  const lines = [];
+  const stack = ['code'];
+  let line = 1;
+  let column = 0;
+  for (let i = 0; i < code.length; i++) {
+    const c = code[i];
+    const top = stack[stack.length - 1];
+    if (c === '\n') {
+      if (top === 'template') lines.push(line);
+      line++;
+      column = 0;
+      continue;
+    }
+    column++;
+    if (top === 'template') {
+      if (c === '\\') { i++; column++; continue; }
+      if (c === '{') stack.push('expression');
+      else if (c === '|') stack.pop();
+      continue;
+    }
+    if ((c === '*' && column === 1) || c === '"') {
+      while (i + 1 < code.length && code[i + 1] !== '\n') i++;
+      continue;
+    }
+    if (c === '`' || c === "'") {
+      while (i + 1 < code.length && code[i + 1] !== c && code[i + 1] !== '\n') { i++; column++; }
+      if (code[i + 1] === c) { i++; column++; }
+      continue;
+    }
+    if (c === '|') stack.push('template');
+    else if (top === 'expression' && c === '{') stack.push('expression');
+    else if (top === 'expression' && c === '}') stack.pop();
+  }
+  return lines;
+}
+
+const wrappedTemplates = [];
+for (const file of walk(DOCS).filter((f) => f.endsWith('.md')).sort()) {
+  const md = readFileSync(file, 'utf8');
+  for (const m of md.matchAll(/^```abap\b[^\n]*\n([\s\S]*?)^```/gm)) {
+    const fenceLine = md.slice(0, m.index).split('\n').length;
+    for (const at of templateLineBreaks(m[1])) {
+      wrappedTemplates.push(`${file.slice(ROOT.length + 1)}:${fenceLine + at}`);
+    }
+  }
+}
+if (wrappedTemplates.length) {
+  console.error(`check-examples: ${wrappedTemplates.length} string template(s) carry literal text over a line break:\n`);
+  for (const at of wrappedTemplates) console.error(`  - ${at}`);
+  console.error('\nOnly an embedded expression { … } may span lines in ABAP; the literal text of');
+  console.error('a |…| template may not, and the statement does not compile. Close the template');
+  console.error('on its line and continue with && |…|, or break inside a { … }.');
+  process.exit(1);
+}
+
 /** Every fenced abap block that is a whole class. */
 function examples() {
   const out = [];
