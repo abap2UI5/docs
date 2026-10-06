@@ -497,17 +497,61 @@ export default defineConfig({
           { text: "Productive Usage", link: "/configuration/productive_usage" },
           { text: "Logout", link: "/configuration/logout" },
           { text: "Debugging", link: "/configuration/debugging" },
-          { text: "Fiori Launchpad", link: "/configuration/launchpad" },
+          // The Launchpad, Work Zone and Mobile Start moved to Integration,
+          // where the other places an app can appear are; their URLs stayed.
+          // What was left of "ABAP Cloud, BTP" was this one page, so it
+          // stands in the row rather than in a group of one.
+          { text: "S/4 Public Cloud", link: "/configuration/s4_public_cloud" },
+        ],
+      },
+      {
+        // EVERY PLACE AN APP CAN APPEAR outside its own browser tab, in one
+        // section: the SAP entry points, the phone, Microsoft 365, other
+        // systems and AI agents. They stood in three places before - the
+        // Launchpad, Work Zone and Mobile Start under Configuration, the
+        // connectors and the embed control under Advanced Topics › Integration
+        // - and a reader asking "can I show my app in X" had no one list to
+        // look at. The pages kept their URLs; only the menu moved. The
+        // section opens on its own overview, which is that list.
+        text: "Integration",
+        link: "/integration/",
+        collapsed: true,
+        items: [
           {
-            text: "ABAP Cloud, BTP",
+            text: "SAP",
             collapsed: true,
             items: [
-              {
-                text: "S/4 Public Cloud",
-                link: "/configuration/s4_public_cloud",
-              },
+              { text: "Fiori Launchpad", link: "/configuration/launchpad" },
               { text: "Build Work Zone", link: "/configuration/btp" },
+              { text: "Fiori Elements Integration", link: "/advanced/fiori" },
+            ],
+          },
+          {
+            text: "Mobile",
+            collapsed: true,
+            items: [
               { text: "Mobile Start", link: "/configuration/mobile_start" },
+              { text: "Native Mobile Shell", link: "/integration/mobile_shell" },
+            ],
+          },
+          {
+            text: "Microsoft 365",
+            collapsed: true,
+            items: [
+              { text: "Microsoft Teams", link: "/integration/teams" },
+              { text: "Microsoft Excel", link: "/integration/excel" },
+            ],
+          },
+          {
+            // What the app talks to on the outside: another ABAP system, and
+            // an AI agent over MCP - in the sandbox, from VS Code, or as an
+            // endpoint in the system.
+            text: "Systems, Agents",
+            collapsed: true,
+            items: [
+              { text: "RFC Connector", link: "/advanced/rfc" },
+              { text: "HTTP Connector", link: "/advanced/http" },
+              { text: "Agent-Operable Apps", link: "/advanced/agents" },
             ],
           },
         ],
@@ -553,21 +597,9 @@ export default defineConfig({
               },
             ],
           },
-          {
-            // What the app talks to on the outside. Three pages that were
-            // three unrelated-looking lines in the flat list.
-            text: "Integration",
-            collapsed: true,
-            items: [
-              { text: "RFC Connector", link: "/advanced/rfc" },
-              { text: "HTTP Connector", link: "/advanced/http" },
-              { text: "Fiori Elements Integration", link: "/advanced/fiori" },
-              // The other outside party an app talks to: an AI agent, over
-              // MCP - in the sandbox, from VS Code, or as an endpoint in the
-              // system.
-              { text: "Agent-Operable Apps", link: "/advanced/agents" },
-            ],
-          },
+          // The Integration group that stood here - RFC, HTTP, Fiori Elements,
+          // Agent-Operable Apps - is a section of its own now, next to
+          // Configuration, with the Launchpad and the Microsoft 365 pages.
           {
             // Where it runs: an older release, a renamed namespace, a system
             // the framework is not installed on, a UI5 runtime without the

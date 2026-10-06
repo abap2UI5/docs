@@ -202,7 +202,7 @@ abap2UI5 complements your UI5 and RAP apps — it does not replace them, and
 lives right next to your existing solutions. It runs in a browser tab, a Fiori
 launchpad tile or SAP Build Work Zone.
 
-→ *More on [Integration](/get_started/about#where-it-fits)*
+→ *More on [Integration](/integration/)*
 
 ## Made for AI agents
 
