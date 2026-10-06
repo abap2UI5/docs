@@ -382,6 +382,7 @@ Instead of `true`, an object configures it:
 | `apps` | none | apps the project opts in — names, or patterns with `*`; the way a transpiled ABAP app opts in |
 | `confirm` | none | events an agent hands to a human: `"EVENT"` for every app, `"APP:EVENT"` for one, `*` as a wildcard |
 | `forbidden` | none | events an agent never fires, written the same way |
+| `retention` | `90` | days a row of the audit log is kept; `0` or `false` keeps every row |
 
 A key the endpoint does not know is refused at start, because a misspelled
 `forbidden` would otherwise leave the event open.
@@ -436,8 +437,11 @@ arguments, the outcome (`ok`, `refused`, `confirm`, `forbidden`, `error`) and
 the refusal. The **values** an agent entered are never stored, only which
 fields it filled. Like the drafts, the entity is part of the model and in no
 service — the next `cds deploy` creates its table whether the endpoint is on
-or not, and nothing deletes its rows. To show it, expose it in a service of
-your own with a `@restrict` such as `where: 'owner = $user'`.
+or not. A row older than `retention` days (90 unless set) is deleted, swept
+by an agent call at most once an hour; `0` keeps every row, and the plugin's
+`purgeAgentLog( )` runs the same delete from a job of your own. To show it,
+expose it in a service of your own with a `@restrict` such as
+`where: 'owner = $user'`.
 
 ### Sessions and restarts
 
