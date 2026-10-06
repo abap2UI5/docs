@@ -963,12 +963,12 @@ CLASS z2ui5_cl_sample_draft IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Bank Country`
                             )->tag( `Input`
-                                )->a( n = `value`   v = bank_country
+                                )->a( n = `value`   v = CONV #( bank_country )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Bank Key`
                             )->tag( `Input`
-                                )->a( n = `value`   v = bank_internal_id
+                                )->a( n = `value`   v = CONV #( bank_internal_id )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Bank Name`
