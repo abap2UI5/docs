@@ -185,10 +185,15 @@ stdio shape:
 To run a checkout instead, swap those two lines for `"command": "node"` and
 `"args": ["/path/to/mcp-server/server.mjs"]`.
 
-The three `env` entries are only needed when the checkouts are not siblings of
-the server — which they cannot be when it runs from npx, so state them there.
-Drop the ones whose level you stopped short of. VS Code wants the
-same object under a top-level `"servers"` key instead of `"mcpServers"`.
+The three `env` entries point the server at checkouts that are not its
+siblings — which they cannot be when it runs from npx. Set one only for a
+checkout you actually have, and to its real path; leave the others out, and
+leave `env` out entirely without any. A variable that is set decides alone: a
+placeholder or a wrong path does not fall back to the linter npx installed
+beside the server, to the GitHub mirror, or — for `A2UI5_HOME` — to the
+`@abap2ui5/node-runtime` backend, and the tools report that checkout missing
+instead. VS Code wants the same object under a top-level `"servers"` key
+instead of `"mcpServers"`.
 
 ::: tip Using VS Code?
 The [abap2UI5 extension](/advanced/vscode) registers this server for you — no
