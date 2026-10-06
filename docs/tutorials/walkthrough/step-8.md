@@ -133,8 +133,8 @@ ENDCLASS.
   [View → Definition](/cookbook/view/definition).
 - **`sap.ui.layout.form` needs its own namespace.** `xmlns:form` is declared on
   the root next to `xmlns:mvc`, and `SimpleForm` and its `content` aggregation
-  are written with `ns = \`form\``. A `SimpleForm` lays out label/field pairs by
-  itself — no grid, no widths.
+  are written with `` ns = `form` ``. A `SimpleForm` lays out label/field pairs
+  by itself — no grid, no widths.
 - **`DatePicker` with `valueFormat`.** The picker shows the date in the user's
   locale and hands your ABAP attribute the format you asked for — here
   `yyyy-MM-dd`, so a string comparison sorts correctly.

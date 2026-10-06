@@ -154,7 +154,7 @@ client->follow_up_action(
 
 ## Calling control methods on the frontend
 
-The control-call constants — `control_by_id`, `control_global`, `binding_call` and `bind_element` — are frontend events too, but instead of a fixed built-in action they operate on a control, a global object, a binding or a whole view slot. Their arguments are **positional**: an empty argument between two filled ones keeps its slot as `` `` ``.
+The control-call constants — `control_by_id`, `control_global`, `binding_call` and `bind_element` — are frontend events too, but instead of a fixed built-in action they operate on a control, a global object, a binding or a whole view slot. Their arguments are **positional**: an empty argument between two filled ones keeps its slot as ``` `` ```.
 
 | Event            | `t_arg` (positional)                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------ |
