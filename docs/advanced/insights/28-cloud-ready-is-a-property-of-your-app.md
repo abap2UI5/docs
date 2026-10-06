@@ -25,7 +25,7 @@ Two lines decide it. Here is cloud-ready:
 
     SELECT FROM i_salesorder
       FIELDS salesorder, salesorganization
-      INTO TABLE @t_orders
+      INTO CORRESPONDING FIELDS OF TABLE @t_orders
       UP TO 10 ROWS.
 ```
 
@@ -37,7 +37,7 @@ and here is the same screen, not cloud-ready:
 
     SELECT FROM vbak
       FIELDS vbeln, vkorg
-      INTO TABLE @t_orders
+      INTO CORRESPONDING FIELDS OF TABLE @t_orders
       UP TO 10 ROWS.
 ```
 
