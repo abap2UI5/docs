@@ -15,7 +15,7 @@ This section walks through what you need to get started.
 
 ## Scanning
 
-Since UI5 version 1.102, the `sap.ndc.BarcodeScannerButton` control is part of the UI5 library, making barcode scanning easy. Use it like any other UI5 control with abap2UI5. The example below shows the basic behavior — customize the handling once the scanning event fires:
+The `sap.ndc.BarcodeScannerButton` control of the SAPUI5 library `sap.ndc` makes barcode scanning easy. From UI5 1.92 on it scans with the device camera in a plain browser; on an older release it scans only inside a native container such as the SAP Fiori Client and otherwise opens a dialog for typing the code in. Use it like any other UI5 control with abap2UI5. The example below shows the basic behavior — customize the handling once the scanning event fires:
 
 ```abap
   METHOD z2ui5_if_app~main.
