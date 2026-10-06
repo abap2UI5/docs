@@ -761,7 +761,8 @@ the global, is removed with it; the popup had nothing left to write into.
 
 The `z2ui5.Util` and `z2ui5.Formatter` globals, and the `z2ui5/Util` module,
 are gone too. The date helpers live in `z2ui5/model/formatter`, loaded on the
-view root with `core:require` (UI5 1.74 and later):
+view root with `core:require` (on every UI5 release abap2UI5 supports, 1.71
+included):
 
 ```abap
 " old
