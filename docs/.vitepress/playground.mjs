@@ -85,8 +85,14 @@ const TABLES_THE_PAGE_HAS = new Set(['t100']);
  * definition or a HANA database before it even compiles. ONE list, shared with
  * scripts/check-examples.mjs, which skips the same examples for the same
  * reason - two copies had already drifted apart (that one knew CONTAINS( ),
- * this one did not). */
-export const NEEDS_A_SYSTEM = /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENTITIES\b|TABLE\s+FOR\s+(?:READ|CREATE|UPDATE)\b|\bFUZZY\b|CONTAINS\s*\(/i;
+ * this one did not).
+ *
+ * CONTAINS( ) the HANA predicate, not contains( ) the ABAP string function:
+ * the predicate opens on a column list or a column and a comma
+ * (`CONTAINS( ( name1, ort01 ), @x, ... )`), the function on a named argument
+ * (`contains( val = text sub = 'x' )`). Matched on the bare name, an example
+ * testing a string was not compiled by check:examples and lost its button. */
+export const NEEDS_A_SYSTEM = /\bREAD\s+ENTITIES\b|\bMODIFY\s+ENTITIES\b|\bCOMMIT\s+ENTITIES\b|TABLE\s+FOR\s+(?:READ|CREATE|UPDATE)\b|\bFUZZY\b|\bCONTAINS\s*\(\s*(?:\(|[\w~\/-]+\s*,)/i;
 
 /*
  * What the browser has not got, in the words the failure arrives in. Order
