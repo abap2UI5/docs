@@ -45,11 +45,11 @@ ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code (a plain `string` al
 ```
 
 Common `formatOptions`:
-- `showMeasure: false` — hides the currency symbol
-- `showNumber: false` — hides the amount, shows only the symbol
-- `preserveDecimals: false` — trims trailing zeros
-- `currencyCode: false` — hides the ISO code
-- `style: 'short'` / `'long'` — compact (`123M`) or full-text (`123 million US dollars`) notation
+- `showMeasure: false` — hides the currency, shows only the amount
+- `showNumber: false` — hides the amount, shows only the currency (UI5 1.89 and later)
+- `preserveDecimals: false` — rounds the amount to the currency's decimals; by default the type keeps any further decimals (UI5 1.89 and later — before, it always rounds)
+- `currencyCode: false` — shows the currency symbol (`€`) instead of the ISO code (`EUR`), where the currency has one
+- `style: 'short'` — compact notation (`123M`); `'long'` formats a currency the same way
 
 The [Full Worked Example](#full-worked-example) below demonstrates each of these variants in a single app.
 
