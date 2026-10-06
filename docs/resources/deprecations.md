@@ -71,7 +71,7 @@ tell you what is coming if you do not.
 | custom JS reading `window.z2ui5` | nothing - the global is gone | **removed**, 1.145.0 |
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
-| `cs_config-title` | `cs_event-set_title` | 1.144.0 |
+| `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
 | `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
@@ -467,8 +467,8 @@ client->follow_up_action( val   = client->cs_event-set_title
                           t_arg = VALUE #( ( `Invoice App` ) ) ).
 ```
 
-The field stays on `cs_config` and an exit that assigns it still compiles — it
-simply has no effect. The generated page carries a constant
+The field was removed from `cs_config` in 1.145.0, so an exit that still assigns
+it no longer compiles — delete the line. The generated page carries a constant
 `<title>abap2UI5</title>`, which is what the tab shows while UI5 boots, before
 any app can speak. Inside a Fiori Launchpad shell the title is
 `cs_event-set_title_launchpad`, unchanged. See
