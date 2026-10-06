@@ -43,7 +43,7 @@ ENDMETHOD.
 | `data-sap-ui-async`             | Asynchronous module loading. Set to `true` by abap2UI5 — fixed. |
 | `data-sap-ui-preload`           | Module preloading strategy: `async`, `sync` or empty (off). |
 | `data-sap-ui-frameOptions`      | Clickjacking protection: `trusted`, `allow`, `deny`. Set to `trusted` by abap2UI5 — fixed. |
-| `data-sap-ui-allowlistService`  | Endpoint for the URL allowlist service. |
+| `data-sap-ui-allowlistService`  | Endpoint for the URL allowlist service. UI5 1.85 and later; before 1.85 the attribute is `data-sap-ui-whitelistService`, and the new name is ignored. |
 | `data-sap-ui-bindingSyntax`     | Binding syntax: `complex` or `simple`. Set to `complex` by abap2UI5 — fixed, and its expressions require it. |
 | `data-sap-ui-resourceroots`     | Resource roots for custom libraries. Set by abap2UI5 (`z2ui5`) — fixed; your own controls load through the reserved [`z2ui5_ccc` root](/advanced/extensibility/custom_control) instead. |
 | `data-sap-ui-xx-componentpreload` | Component-preload strategy for very large apps. |
