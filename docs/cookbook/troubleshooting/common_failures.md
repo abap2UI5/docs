@@ -128,11 +128,12 @@ you, in the error view of a failed roundtrip or in the browser console. Every
 message below is one the framework or UI5 actually produces; find yours, and
 the entry says what caused it and where the fix is explained.
 
-### `The app 'ZCL_...' does not exist in the system.`
+### `The app 'ZCL_...' does not exist in the system or does not implement z2ui5_if_app.`
 
-The framework could not instantiate the class named in `?app_start=` — a typo
-in the URL, or the class exists but is not activated. The roundtrip answers
-500 and shows this message. Fix the name or activate the class; the
+The framework could not start the class named in `?app_start=` — a typo in
+the URL, a class that exists but is not activated, or a class that does not
+implement `z2ui5_if_app`. The roundtrip answers 500 and shows this message.
+Fix the name, activate the class or add the interface; the
 [Quickstart's verify step](/get_started/quickstart#_3-first-launch) covers the other
 first-launch failures around it.
 
