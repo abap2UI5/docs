@@ -5,11 +5,11 @@ when it has a tile — and in the launchpad an abap2UI5 app is indistinguishable
 from the RAP and freestyle tiles beside it. Same shell, same theme, same back
 button, same "who built this one again?" from the person supporting it.
 
-**What is installed once.** The launchpad loads a UI5 app from the system's
-UI5 repository, so the abap2UI5 shell has to exist there as one: the
-[launchpad connector](https://github.com/abap2UI5-addons) ships it through
-abapGit, as app `z2ui5`. That is one deployment for the whole system, not one
-per app — every abap2UI5 tile you ever create points at the same shell.
+**What is installed once.** The launchpad loads a UI5 app from the system's UI5
+repository, so the abap2UI5 shell has to exist there as one: the `standard`
+branch of the [frontend repository](https://github.com/abap2UI5/frontend) ships
+it through abapGit, as app `z2ui5`. That is one deployment for the whole system,
+not one per app — every abap2UI5 tile you ever create points at the same shell.
 
 **What is configured per app.** A target mapping, with the app class as the
 parameter:
