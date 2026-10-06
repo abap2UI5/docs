@@ -160,9 +160,22 @@ for (const m of model.methods) m.group = groupOf(m.name);
 
 /* ---------------------------------------------------------------- markdown */
 
+/* The EMPTY ABAP literal, `` - which the interface's ABAP-Doc writes the way
+ * ABAP writes it ("abap_bool as `X`/``", "keeps its slot as ``"). In markdown
+ * two backticks OPEN a code span, and it runs to the next `` in the
+ * paragraph: on start_timer and binding_call that is the opening of the
+ * example after it, so the page printed the sentence as code and the example
+ * as prose with every literal stripped out - `VALUE #( (  ) (  ) (  ) )`. A
+ * `` that stands alone between spaces or punctuation is the literal, and is
+ * written as a code span of its own, three backticks either side. An
+ * opening `` is followed by its code and a closing one preceded by it, so
+ * neither matches. */
+const EMPTY_LITERAL = /(^|[\s(/])``(?=$|[\s.,;:)/])/g;
+
 /** `<` becomes an HTML tag in VitePress prose, but stays literal inside an
  *  inline-code span - so escape around the spans, never inside them. */
 const prose = (s) => s
+  .replace(EMPTY_LITERAL, '$1``` `` ```')
   .split(/(`[^`]*`)/)
   .map((part, i) => (i % 2 ? part : part.replace(/</g, '&lt;')))
   .join('');
