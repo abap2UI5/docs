@@ -195,14 +195,15 @@ against the release *your* system runs, and
 always-current list.
 
 The one trap worth knowing by hand is the *namespace* of a control that exists
-twice. `Avatar` written with no `ns` resolves through the view's default
-`xmlns` to `sap.m.Avatar`, which is the one to use; ``ns = `f` `` produces
-`<f:Avatar>` — `sap.f.Avatar`, deprecated since 1.73. `AvatarGroup` and
-`AvatarGroupItem` are the other way round: those really do live in `sap.f` and
-need the prefix. The same shape catches whole libraries — half of
-`sap.ui.commons` (`Button`, `Label`, `Dialog`, `Panel`, …) has a namesake in
-`sap.m`, so XML copied from an old tutorial can drag a library that has been
-dead since 1.38 along with it and still render something.
+twice. `Avatar` written with no `ns` resolves through the view's default `xmlns`
+to `sap.m.Avatar`, which is the one to use; ``ns = `f` `` produces `<f:Avatar>`
+— `sap.f.Avatar`, deprecated since 1.73. Both `sap.m.Avatar` and the deprecation
+arrived in 1.73, so on 1.71 and 1.72 `sap.f.Avatar` is the only one there is.
+`AvatarGroup` and `AvatarGroupItem` (1.73 too) are the other way round: those
+really do live in `sap.f` and need the prefix. The same shape catches whole
+libraries — half of `sap.ui.commons` (`Button`, `Label`, `Dialog`, `Panel`, …)
+has a namesake in `sap.m`, so XML copied from an old tutorial can drag a library
+that has been dead since 1.38 along with it and still render something.
 
 ## Choosing a Control
 
