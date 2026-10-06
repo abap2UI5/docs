@@ -13,6 +13,7 @@ Value help (the classic ABAP **F4** input help) lets users pick a value from a l
 The lightest variant — type-ahead from a bound list, no popup, no roundtrip after the initial render. Bind the `suggestionItems` aggregation to an internal table and pick the columns in its item template:
 
 ```abap
+" PUBLIC SECTION of the app class - _bind( ) reaches public attributes only
 TYPES: BEGIN OF ty_country,
          code TYPE c LENGTH 3,
          name TYPE string,
@@ -20,6 +21,7 @@ TYPES: BEGIN OF ty_country,
 DATA mt_countries TYPE STANDARD TABLE OF ty_country.
 DATA mv_country   TYPE string.
 
+" in main( )
 mt_countries = VALUE #( ( code = `DE` name = `Germany` )
                         ( code = `FR` name = `France`  )
                         ( code = `IT` name = `Italy`   ) ).
