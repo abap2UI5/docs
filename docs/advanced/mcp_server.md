@@ -97,7 +97,9 @@ claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server -p @abap2ui5/linter
 
 Makes the Level 0 tools read local clones instead of the GitHub mirror —
 offline, and as current as your last pull — and adds `scope_of` and
-`deploy_app`.
+`deploy_app`. `scope_of` reads the OpenUI5 sources and so needs an OpenUI5
+checkout as well: `OPENUI5_SRC`, else `../fork-openui5` beside the
+samples-controls clone.
 
 ```sh
 git clone https://github.com/abap2UI5/abap2UI5          # A2UI5_HOME
