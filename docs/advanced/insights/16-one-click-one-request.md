@@ -47,8 +47,8 @@ first, or the one-time setup never runs.
 **A return owes a view.** Coming back from a sub-app or a value help does not
 fire `check_on_init( )` again. It fires `check_on_navigated( )`, and the browser
 is still showing whatever the sub-app left. An app that builds its view only
-under init comes back to a blank screen, and nothing reports it — the response
-simply carries no view, and no view is a perfectly valid thing to send.
+under init leaves the user on that stale screen, and nothing reports it — the
+response simply carries no view, and no view is a perfectly valid thing to send.
 
 **An event owes nothing.** The handler changes attributes and returns. Bound
 controls update from the model, focus and scroll stay where they were, and
