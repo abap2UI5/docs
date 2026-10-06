@@ -160,9 +160,9 @@ When a value looks wrong, the fix is almost always a UI5-side `type` (e.g. `sap.
 
 ```abap
 )->tag( `Input`
-    )->a( n = `value` v = |\{ parts: [ `{ client->_bind( val = amount   path = abap_true ) }`,
-                                       `{ client->_bind( val = currency path = abap_true ) }` ],
-                              type: 'sap.ui.model.type.Currency' \}|
+    )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val  = amount
+                                                         path = abap_true ) }', '{ client->_bind( val  = currency
+                                                                                                  path = abap_true ) }' ], type: 'sap.ui.model.type.Currency' \}|
 ```
 
 See [Formatter](/cookbook/model/formatter) for the full example with `formatOptions`, `constraints`, and read-only display variants.
