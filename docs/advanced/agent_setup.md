@@ -54,12 +54,12 @@ The tools an agent then has:
 | `capabilities` | whether abap2UI5 can express a UI5 feature at all, from the verified capability map |
 | `validate_view` | the linter's gates, in seconds, against your project's own config |
 | `deploy_app` | write the class into a local sandbox and compile it |
-| `build_backend` / `run_app` | transpile the framework and the app to Node, boot it headless, and hand back the errors **and a screenshot** |
+| `build_backend` / `run_app` | get the framework already transpiled to Node, transpile the app on top, boot it headless, and hand back the errors **and a screenshot** |
 | `pitfalls` | the defects a green run still does not catch — abapGit import, activation, the oldest UI5 release |
 
 Set-up is leveled: validating views needs one small checkout and a minute;
-the screenshot loop needs a browser and a first build measured in tens of
-minutes. Stop where the value stops for you — the
+the screenshot loop needs a browser and a first build of a minute at most.
+Stop where the value stops for you — the
 [MCP Server page](/advanced/mcp_server) has the three levels, every tool and
 the loop they are meant to be used in.
 
