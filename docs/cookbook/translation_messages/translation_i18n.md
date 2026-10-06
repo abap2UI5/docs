@@ -79,6 +79,15 @@ CLASS lcl_help IMPLEMENTATION.
             scrtext_l TYPE string,
           END OF ddic.
     DATA exists TYPE abap_bool.
+    " the shape of if_xco_dtel_content=>ts_field_label - a label is a text
+    " and its length, not a string
+    DATA: BEGIN OF label,
+            text   TYPE c LENGTH 60,
+            length TYPE n LENGTH 2,
+          END OF label.
+    " ...and a name is the CHAR30 sxco_ad_object_name, which a dynamic call
+    " does not convert a string into
+    DATA object_name TYPE c LENGTH 30.
 
     DATA(data_element_name) = i_data_element_name.
 
@@ -120,9 +129,10 @@ CLASS lcl_help IMPLEMENTATION.
       CATCH cx_root.
         TRY.
             DATA(xco_cp_abap_dictionary) = `XCO_CP_ABAP_DICTIONARY`.
+            object_name = data_element_name.
             CALL METHOD (xco_cp_abap_dictionary)=>(`DATA_ELEMENT`)
               EXPORTING
-                iv_name         = data_element_name
+                iv_name         = object_name
               RECEIVING
                 ro_data_element = data_element.
 
@@ -140,19 +150,23 @@ CLASS lcl_help IMPLEMENTATION.
 
             CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_HEADING_FIELD_LABEL`)
               RECEIVING
-                rs_heading_field_label = result-header.
+                rs_heading_field_label = label.
+            result-header = label-text.
 
             CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_SHORT_FIELD_LABEL`)
               RECEIVING
-                rs_short_field_label = result-short.
+                rs_short_field_label = label.
+            result-short = label-text.
 
             CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_MEDIUM_FIELD_LABEL`)
               RECEIVING
-                rs_medium_field_label = result-medium.
+                rs_medium_field_label = label.
+            result-medium = label-text.
 
             CALL METHOD content->(`IF_XCO_DTEL_CONTENT~GET_LONG_FIELD_LABEL`)
               RECEIVING
-                rs_long_field_label = result-long.
+                rs_long_field_label = label.
+            result-long = label-text.
 
           CATCH cx_root.
         ENDTRY.
