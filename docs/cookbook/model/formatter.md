@@ -39,9 +39,9 @@ ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code (a plain `string` al
 
 ```abap
 )->tag( `Input`
-    )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val = amount   path = abap_true ) }',
-                                       '{ client->_bind( val = currency path = abap_true ) }' ],
-                              type: 'sap.ui.model.type.Currency' \}|
+    )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val = amount   path = abap_true ) }',|
+                       && | '{ client->_bind( val = currency path = abap_true ) }' ],|
+                       && | type: 'sap.ui.model.type.Currency' \}|
 ```
 
 Common `formatOptions`:
@@ -59,9 +59,9 @@ ABAP `n LENGTH n` is sent as a digit string, leading zeros included. Without a t
 
 ```abap
 )->tag( `Text`
-    )->a( n = `text` v = |\{ path: '{ client->_bind( val = numeric path = abap_true ) }',
-                             type: 'sap.ui.model.odata.type.String',
-                             constraints: \{ isDigitSequence: true \} \}|
+    )->a( n = `text` v = |\{ path: '{ client->_bind( val = numeric path = abap_true ) }',|
+                      && | type: 'sap.ui.model.odata.type.String',|
+                      && | constraints: \{ isDigitSequence: true \} \}|
 ```
 
 This strips the leading zeros for display and re-pads them on write-back.
@@ -72,10 +72,10 @@ ABAP `d` goes on the wire as an ISO date string, `2024-01-15` (an initial date a
 
 ```abap
 )->tag( `DatePicker`
-    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
-                              type: 'sap.ui.model.type.Date',
-                              formatOptions: \{ pattern: 'dd.MM.yyyy',
-                                                source: \{ pattern: 'yyyy-MM-dd' \} \} \}|
+    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',|
+                       && | type: 'sap.ui.model.type.Date',|
+                       && | formatOptions: \{ pattern: 'dd.MM.yyyy',|
+                       && | source: \{ pattern: 'yyyy-MM-dd' \} \} \}|
 ```
 
 `source.pattern` is the wire format (ABAP side); the outer `pattern` is what the user sees.
@@ -86,10 +86,10 @@ ABAP `t` goes on the wire as `12:30:00` (an initial time as an empty string). Sa
 
 ```abap
 )->tag( `TimePicker`
-    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_time path = abap_true ) }',
-                              type: 'sap.ui.model.type.Time',
-                              formatOptions: \{ pattern: 'HH:mm',
-                                                source: \{ pattern: 'HH:mm:ss' \} \} \}|
+    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_time path = abap_true ) }',|
+                       && | type: 'sap.ui.model.type.Time',|
+                       && | formatOptions: \{ pattern: 'HH:mm',|
+                       && | source: \{ pattern: 'HH:mm:ss' \} \} \}|
 ```
 
 ## Boolean
@@ -143,10 +143,10 @@ renders the control **visible**. Use the builder's boolean parameter for that:
 **Send as string with a source pattern** — convert to a `string` attribute in `yyyyMMddHHmmss` format on the ABAP side, then bind with `sap.ui.model.type.DateTime`:
 ```abap
 )->tag( `DateTimePicker`
-    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_ts_string path = abap_true ) }',
-                              type: 'sap.ui.model.type.DateTime',
-                              formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',
-                                                source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}|
+    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_ts_string path = abap_true ) }',|
+                       && | type: 'sap.ui.model.type.DateTime',|
+                       && | formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',|
+                       && | source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}|
 ```
 Conversion happens in ABAP (`ts_string = |{ timestamp }|` yields those 14 digits for a `timestamp`); the framework moves the string verbatim.
 
@@ -170,8 +170,8 @@ view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 ...
 
 )->tag( `DatePicker`
-    )->a( n = `dateValue` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
-                                 formatter: 'Formatter.DateCreateObject' \}|
+    )->a( n = `dateValue` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',|
+                           && | formatter: 'Formatter.DateCreateObject' \}|
 ```
 
 `mv_date` is a `d`, so it arrives as `2024-01-15`, which `DateCreateObject`

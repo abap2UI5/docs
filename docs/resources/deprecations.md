@@ -759,12 +759,10 @@ view root with `core:require` (UI5 1.74 and later):
 
 ```abap
 " old
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'z2ui5.Util.DateCreateObject' \}|
+|\{ path: '{ client->_bind( val = mv_date path = abap_true ) }', formatter: 'z2ui5.Util.DateCreateObject' \}|
 
 " new - view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` )
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'Formatter.DateCreateObject' \}|
+|\{ path: '{ client->_bind( val = mv_date path = abap_true ) }', formatter: 'Formatter.DateCreateObject' \}|
 ```
 
 See [Formatter](/cookbook/model/formatter).
