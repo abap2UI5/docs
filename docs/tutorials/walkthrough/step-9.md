@@ -10,8 +10,8 @@ A list shows three fields per row. A table shows columns — with headers, with
 a cell per field, and with room for a row action. This step swaps
 `sap.m.List` for `sap.m.Table` and brings back the edit dialog from
 [Step 7](/tutorials/walkthrough/step-7), now opened by a button in a column of
-its own. To keep the table in focus, it starts from Step 7's class rather than
-Step 8's: the selection form is set aside here and comes back in
+its own. To keep the table in focus, it leaves Step 8's selection form out and
+fills the table on navigation, as Step 7 did; the form comes back in
 [Step 10](/tutorials/walkthrough/step-10), which puts all the parts together:
 
 ```abap
