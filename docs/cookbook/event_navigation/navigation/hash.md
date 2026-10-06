@@ -153,13 +153,10 @@ browser now stands on rides along with that request, and with every other one:
 CASE client->get_event( ).
 
   WHEN `HASH_CHANGED`.
-    " the router's routeMatched: show the page the hash now names
-    CASE client->get( )-s_config-hash.
-      WHEN `/detail`.
-        check_detail = abap_true.
-      WHEN OTHERS.
-        check_detail = abap_false.
-    ENDCASE.
+    " the router's routeMatched: show the page the hash now names.
+    " s_config-hash is the browser's raw location hash - `#/detail`,
+    " and inside a launchpad the shell's own part stands in front of it
+    check_detail = xsdbool( client->get( )-s_config-hash CS `/detail` ).
 
 ENDCASE.
 ```
