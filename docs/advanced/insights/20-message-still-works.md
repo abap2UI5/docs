@@ -42,8 +42,10 @@ travels all the way up to it. The roundtrip ends with HTTP 500, the database
 work of that roundtrip is rolled back, and the browser shows an *Application
 Error, please restart* overlay with the exception chain behind a *Details*
 button. There is no *continue*: the roundtrip that would have carried the app's
-next state is the one that failed, so the user restarts, and the draft brings
-them back to where they were.
+next state is the one that failed, so the user restarts — from the app's first
+screen, unless the app keeps its draft id in the URL
+([app state](/cookbook/event_navigation/navigation/app_state)), which brings
+them back to where they were before the click that failed.
 
 That is the fallback, and reaching it means the user has lost the screen.
 Anything predictable — a failed conversion, a locked object, a service that is
