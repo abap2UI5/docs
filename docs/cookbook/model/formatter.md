@@ -128,8 +128,10 @@ comparison held.
 ::: tip A boolean written into the view is a different question
 All of the above is about a **bound** value. An ABAP boolean put straight into
 the XML as an attribute value — `)->a( n = `visible` v = flag )` — is
-stringified, and UI5 reads any non-empty string as true, so `abap_false`
-renders the control **visible**. Use the builder's boolean parameter for that:
+stringified to `X` or to an empty string, and UI5 reads a boolean attribute
+as true only when it says `true`: on 1.71 `abap_true` renders the control
+**hidden**, and a newer release logs `X` as invalid and ignores it, leaving
+the property at its default. Use the builder's boolean parameter for that:
 `)->a( n = `visible` b = flag )`. The linter rule
 [`unconverted-abap-boolean`](/advanced/linter) catches it.
 :::

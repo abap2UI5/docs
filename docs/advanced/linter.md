@@ -156,7 +156,7 @@ them:
 | `frozen-view-builder` | the class builds its view with the frozen predecessor of `z2ui5_cl_ui5_view_builder` (see [Deprecations](/resources/deprecations)). That is fine to keep — it works — but no rule above can read it, so none of them ran: switching to `z2ui5_cl_ui5_view_builder` is what buys the whole gate |
 | `binding-to-nonpublic` | a `PROTECTED`/`PRIVATE` attribute bound — only `PUBLIC` attributes are serialized into the model, so the first roundtrip fails with `BINDING_ERROR` |
 | `binding-to-local` | a local variable bound — the instance is serialized across the roundtrip, the method stack is not, so the value is lost |
-| `unconverted-abap-boolean` | an ABAP boolean written straight into the view: it arrives as `'X'`/`' '` and UI5 reads any non-empty string as true, so `visible = abap_false` makes the control **visible** |
+| `unconverted-abap-boolean` | an ABAP boolean written straight into the view: it arrives as `X` or as an empty string, and UI5 reads a boolean attribute as true only when it says `true`, so on 1.71 `visible = abap_true` makes the control **hidden** |
 | `missing-on-navigated-branch` | a lifecycle dispatcher with no `check_on_navigated( )` branch — the app works standalone and goes blank the first time another app hands control back |
 | `view-never-displayed` | a view is built and never handed to the client: an empty page, no error |
 | `source-line-too-long` | a source line over 255 characters — the class does not fail to lint, it fails to **import**, and abapGit leaves an empty class stub behind |
