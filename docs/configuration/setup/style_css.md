@@ -9,8 +9,7 @@ UI5 supports app-specific CSS in addition to the theme. abap2UI5 injects whateve
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
 
     cs_config-styles_css =
-      |body \{ background-color: #f5f5f5; \}| &&
-      |.myRedButton \{ color: red; font-weight: bold; \}|.
+      |.myRedButton .sapMBtnContent \{ color: red; font-weight: bold; \}|.
 
 ENDMETHOD.
 ```
@@ -22,6 +21,8 @@ In the XML view you then reference your class via the `class` property:
         )->a( n = `text`  v = `Delete`
         )->a( n = `class` v = `myRedButton` )
 ```
+
+The `class` lands on the control's outermost element, and a rule there loses wherever the theme styles an element inside it. A button's text color is set on its inner element, so `.myRedButton { color: red; }` alone leaves the text as it was; the rule above reaches into the button for that reason - through an internal class, with the caveat the tips below give. The same goes for the page: `body { background-color: … }` loses to the theme's `.sapUiBody` rule, and an `App` paints the theme's background over the body anyway.
 
 ## When to Use Custom CSS
 
