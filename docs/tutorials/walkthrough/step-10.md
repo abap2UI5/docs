@@ -9,9 +9,9 @@ samples:
 
 Everything so far lived in one `main` method, and by now that method does five
 different jobs. Real apps — the framework's own, and the sample catalogs' —
-separate the phases into methods. This step changes no behavior at all: it
-puts the code where a reader expects it, and assembles every part of the
-tutorial into the complete app.
+separate the phases into methods. This step adds no new concept: it puts the
+code where a reader expects it, and assembles every part of the tutorial —
+Step 8's selection screen above Step 9's table — into the complete app.
 
 ## What It Does
 
