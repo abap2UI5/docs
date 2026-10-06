@@ -22,9 +22,10 @@ Once both channels are configured, any `COMMIT WORK` that fires an AMC publish r
 An APC class extending `cl_apc_wsp_ext_stateless_base` binds an AMC consumer when a client connects, so AMC messages are forwarded to that socket. Broadcasting is then a one-liner from anywhere in the system:
 
 ```abap
-DATA(lo_producer) = cl_amc_channel_manager=>create_message_producer(
-    i_application_id = `Z2UI5_SAMPLE`
-    i_channel_id     = `/news_feed` ).
+DATA(lo_producer) = CAST if_amc_message_producer_text(
+    cl_amc_channel_manager=>create_message_producer(
+        i_application_id = `Z2UI5_SAMPLE`
+        i_channel_id     = `/news_feed` ) ).
 lo_producer->send( i_message = `New order arrived` ).
 ```
 
