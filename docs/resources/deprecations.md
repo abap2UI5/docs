@@ -529,11 +529,17 @@ DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
 DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
 ```
 
-Nothing was deleted and nothing was reshaped. `z2ui5_if_types` still ships,
-unchanged, from the framework's frozen package — an app that names it compiles
-and runs exactly as before, and every moved type is identical field for field,
-so a variable declared the old way still fits the new signatures. There is no
-deadline; change it when you next touch the class.
+Nothing was deleted. `z2ui5_if_types` still ships, unchanged, from the
+framework's frozen package, so a declaration that names it still compiles. Four
+of the types have changed since they moved, though, and the frozen copies did
+not follow: `ty_s_get` carries `t_model_skipped` now, `ty_s_event_control`
+lost `check_allow_multi_req` and gained four flags, `ty_s_http_config` lost
+`title` and `custom_js`, and `ty_s_http_config_post` gained
+`check_trust_forwarded_host`. A variable of an old type therefore no longer
+fits the signature it was declared for — `ls_get = client->get( )` and
+`_event( s_ctrl = ls_ctrl )` are both a syntax error — and has to be declared
+with the new name. The other types are identical field for field; change those
+when you next touch the class.
 
 ## Removed: does not compile any more
 
