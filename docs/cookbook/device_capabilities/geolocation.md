@@ -7,7 +7,7 @@ samples:
 
 abap2UI5 offers a custom control for reading geolocation data from the user's device — longitude, latitude, altitude, speed, and accuracy values. This is handy for logistics apps, field service tools, or any scenario where location matters.
 
-The control fires a `finished` event once the browser resolves the device position, and the binding writes every value back into your ABAP attributes. See also `Z2UI5_CL_SMP_APP_120`.
+The control fires a `finished` event once the browser resolves the device position, and the binding writes every value back into your ABAP attributes. It reads the position once per instance, and every view display builds a new one — so display the view in `check_on_navigated( )` only: displayed on every roundtrip, each `finished` would start the next read, without end. See also `Z2UI5_CL_SMP_APP_120`.
 
 ```abap
 CLASS z2ui5_cl_sample_geolocation DEFINITION PUBLIC.
@@ -29,45 +29,46 @@ CLASS z2ui5_cl_sample_geolocation IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`       v = `sap.m`
-            )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`       v = `sap.m`
+              )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
 
-            )->ele( `Shell`
-                )->ele( `Page`
-                    )->a( n = `title` v = `Geolocation`
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Geolocation`
 
-                    )->tag( n = `Geolocation` ns = `z2ui5`
-                        )->a( n = `finished`         v = client->_event( `POST` )
-                        )->a( n = `longitude`        v = client->_bind( longitude )
-                        )->a( n = `latitude`         v = client->_bind( latitude )
-                        )->a( n = `altitude`         v = client->_bind( altitude )
-                        )->a( n = `altitudeAccuracy` v = client->_bind( altitudeaccuracy )
-                        )->a( n = `accuracy`         v = client->_bind( accuracy )
-                        )->a( n = `speed`            v = client->_bind( speed )
+                      )->tag( n = `Geolocation` ns = `z2ui5`
+                          )->a( n = `finished`         v = client->_event( `POST` )
+                          )->a( n = `longitude`        v = client->_bind( longitude )
+                          )->a( n = `latitude`         v = client->_bind( latitude )
+                          )->a( n = `altitude`         v = client->_bind( altitude )
+                          )->a( n = `altitudeAccuracy` v = client->_bind( altitudeaccuracy )
+                          )->a( n = `accuracy`         v = client->_bind( accuracy )
+                          )->a( n = `speed`            v = client->_bind( speed )
 
-                    " the control itself draws nothing - it reads the position
-                    " and writes it into the bound attributes. Show them.
-                    )->ele( `List`
-                        )->a( n = `headerText` v = `Device position`
-                        )->ele( `items`
-                            )->tag( `DisplayListItem`
-                                )->a( n = `label` v = `Latitude`
-                                )->a( n = `value` v = client->_bind( latitude )
-                            )->tag( `DisplayListItem`
-                                )->a( n = `label` v = `Longitude`
-                                )->a( n = `value` v = client->_bind( longitude )
-                            )->tag( `DisplayListItem`
-                                )->a( n = `label` v = `Altitude`
-                                )->a( n = `value` v = client->_bind( altitude )
-                            )->tag( `DisplayListItem`
-                                )->a( n = `label` v = `Accuracy`
-                                )->a( n = `value` v = client->_bind( accuracy ) ).
+                      " the control itself draws nothing - it reads the position
+                      " and writes it into the bound attributes. Show them.
+                      )->ele( `List`
+                          )->a( n = `headerText` v = `Device position`
+                          )->ele( `items`
+                              )->tag( `DisplayListItem`
+                                  )->a( n = `label` v = `Latitude`
+                                  )->a( n = `value` v = client->_bind( latitude )
+                              )->tag( `DisplayListItem`
+                                  )->a( n = `label` v = `Longitude`
+                                  )->a( n = `value` v = client->_bind( longitude )
+                              )->tag( `DisplayListItem`
+                                  )->a( n = `label` v = `Altitude`
+                                  )->a( n = `value` v = client->_bind( altitude )
+                              )->tag( `DisplayListItem`
+                                  )->a( n = `label` v = `Accuracy`
+                                  )->a( n = `value` v = client->_bind( accuracy ) ).
 
-    client->view_display( view->stringify( ) ).
-
+      client->view_display( view->stringify( ) ).
+    ENDIF.
 
     CASE client->get( )-event.
       WHEN `POST`.
