@@ -141,8 +141,8 @@ From then on the app owns the whole hash and the framework leaves it alone:
 
 | Call | UI5 equivalent | What it does |
 |---|---|---|
-| <code>client-&gt;hash_set( `/detail` )</code> | `HashChanger#setHash`, the router's `navTo` | writes `#/detail` as a **pushed** history entry — Back has a step to take |
-| <code>client-&gt;hash_replace( `/detail` )</code> | `HashChanger#replaceHash`, `navTo( …, abap_true )` | writes the same hash with **no** new entry — Back skips it |
+| ``client->hash_set( `/detail` )`` | `HashChanger#setHash`, the router's `navTo` | writes `#/detail` as a **pushed** history entry — Back has a step to take |
+| ``client->hash_replace( `/detail` )`` | `HashChanger#replaceHash`, `navTo( …, abap_true )` | writes the same hash with **no** new entry — Back skips it |
 | `cs_event-hash_back` | the `onNavBack` pattern | one real, **consumed** step back in the browser history |
 
 A hash change the app did **not** write itself — browser Back/Forward, a manual
@@ -153,13 +153,10 @@ browser now stands on rides along with that request, and with every other one:
 CASE client->get_event( ).
 
   WHEN `HASH_CHANGED`.
-    " the router's routeMatched: show the page the hash now names
-    CASE client->get( )-s_config-hash.
-      WHEN `/detail`.
-        check_detail = abap_true.
-      WHEN OTHERS.
-        check_detail = abap_false.
-    ENDCASE.
+    " the router's routeMatched: show the page the hash now names.
+    " s_config-hash is the browser's raw location hash - `#/detail`,
+    " and inside a launchpad the shell's own part stands in front of it
+    check_detail = xsdbool( client->get( )-s_config-hash CS `/detail` ).
 
 ENDCASE.
 ```
@@ -191,7 +188,7 @@ start page rather than on whatever was in the browser before.
 ::: warning Without a listener, `hash_set( )` writes a suffix
 `hash_set( )` predates the listener and keeps its original behavior when no
 listener is registered: the value is appended to the hash rather than being the
-whole of it, which is what <code>hash_set( `&amp;my-app-state=detail` )</code>
+whole of it, which is what ``hash_set( `&my-app-state=detail` )``
 is doing. Registering the
 listener is what makes the value the *whole* app hash — and what makes browser
 Back reach your app at all.

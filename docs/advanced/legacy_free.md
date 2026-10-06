@@ -30,7 +30,7 @@ The legacy-free frontend ships as the `v2` branches of the [frontend repository]
 | `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x preview) |
 | `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x preview) |
 
-The v2 branches install the frontend under the same `z2ui5` name as the classic branches. To evaluate the legacy-free frontend side by side with the classic one in the same system, use the frontend repository's `build_rename` workflow to generate a branch with the whole deployment identity (BSP, ICF nodes, handler class) under a different name — see the [frontend repository](https://github.com/abap2UI5/frontend) for details.
+The v2 branches install the frontend under the same `z2ui5` name as the classic branches. To evaluate the legacy-free frontend side by side with the classic one in the same system, run abap2UI5's [`frontend_deploy`](https://github.com/abap2UI5/abap2UI5/actions/workflows/frontend_deploy.yaml) workflow with a branch name of the form `standard_v2_<name>`: it generates that branch of the frontend repository with the whole deployment identity (BSP, ICF nodes, handler class) under a different name. This is for the BSP of `standard_v2`; the [frontend repository](https://github.com/abap2UI5/frontend) has the details.
 
 ## Why Try the v2 Version?
 

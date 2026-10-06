@@ -8,13 +8,20 @@
 import { readFile } from 'node:fs/promises';
 import { glob } from 'node:fs/promises';
 import { writeFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { judge, rewrap, LIMIT } from './lib/line-length.mjs';
+
+// The repository, not the directory the gate happens to be started from: a
+// glob relative to the cwd walked nothing from anywhere else, and the floor
+// below then blamed the fence handling for it.
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const list = process.argv.includes('--list');
 const fix = process.argv.includes('--fix');
 
 const pages = [];
-for await (const file of glob('docs/**/*.md')) {
+for await (const file of glob('docs/**/*.md', { cwd: ROOT })) {
   // docs/public holds the GENERATED per-page markdown, which is a projection
   // of the pages next to it and gitignored.
   if (file.startsWith('docs/public/') || file.includes('/.vitepress/')) continue;
@@ -28,7 +35,7 @@ const failures = [];
 const fixed = [];
 
 for (const file of pages) {
-  const source = await readFile(file, 'utf8');
+  const source = await readFile(join(ROOT, file), 'utf8');
   const verdict = judge(source);
   if (!verdict.wrapped) { loose++; continue; }
   held++;
@@ -37,7 +44,7 @@ for (const file of pages) {
   if (fix) {
     const rewrapped = rewrap(source, verdict.over.map((l) => l.line));
     if (rewrapped) {
-      await writeFile(file, rewrapped);
+      await writeFile(join(ROOT, file), rewrapped);
       fixed.push({ file, lines: verdict.over.length });
       continue;
     }

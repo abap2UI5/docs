@@ -22,7 +22,7 @@ repository, already assembled.
 | `src/zcl_app_001` | a working app — an input, a bound table, an event — in the canonical shape its `AGENTS.md` describes |
 | `abaplint.jsonc` | ABAP syntax and style, with the framework resolved as a dependency, so it compiles the app **without an SAP system** |
 | `abap2ui5lint.jsonc` | the [abap2UI5 linter](/advanced/linter) — the view your ABAP builds, judged against the UI5 API and against your own class |
-| `.github/workflows/check.yml` | both gates on every push and pull request, at the versions `package-lock.json` pins — so CI and your machine run the same thing |
+| `.github/workflows/check.yml` | both gates on every push and pull request: abaplint at the version `package-lock.json` pins, the linter through its GitHub Action, whose pin the template keeps on the release line of its linter devDependency |
 | `AGENTS.md` | the conventions an AI assistant should follow in this project, plus a `.claude/settings.json` allowlist so it can run the gates without asking |
 
 ## From template to first green check
@@ -54,7 +54,7 @@ ABAP package still says *abap2UI5 app*, and the app is still `ZCL_APP_001`.
 One command changes all three:
 
 ```sh
-npm run rename -- --class zcl_my_app --package "My App" --repo my-app
+node scripts/rename.mjs --class zcl_my_app --package "My App" --repo my-app
 ```
 
 Add `--dry` first to see what it would touch. It renames the class in the ABAP
@@ -70,7 +70,8 @@ names abap2UI5 as the copyright holder.
 
 Install the [framework](/get_started/quickstart) and then your own repository,
 both with [abapGit](https://abapgit.org). The starter app needs framework
-**1.143.0** or newer — that is the release the gates lint against. Open
+**1.143.0** or newer — the first release it compiles against; the gates lint
+it against the release `abaplint.jsonc` pins. Open
 `<your endpoint>?app_start=zcl_my_app` and you are looking at the same app the
 checks just passed.
 

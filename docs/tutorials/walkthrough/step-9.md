@@ -8,8 +8,11 @@ samples:
 
 A list shows three fields per row. A table shows columns — with headers, with
 a cell per field, and with room for a row action. This step swaps
-`sap.m.List` for `sap.m.Table` and puts the edit button from
-[Step 7](/tutorials/walkthrough/step-7) back, now in a column of its own:
+`sap.m.List` for `sap.m.Table` and brings back the edit dialog from
+[Step 7](/tutorials/walkthrough/step-7), now opened by a button in a column of
+its own. To keep the table in focus, it leaves Step 8's selection form out and
+fills the table on navigation, as Step 7 did; the form comes back in
+[Step 10](/tutorials/walkthrough/step-10), which puts all the parts together:
 
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
@@ -162,8 +165,9 @@ ENDCLASS.
   rather than a child.
 - **`tab` holds the table.** The chain is split again: the `Table` goes into a
   variable, and `columns` and `items` are filled from it in two statements. A
-  single chain would work too, but it would ascend six levels between the last
-  column and the first cell.
+  single chain would work too, but it would need two bare `end( )` calls after
+  the last column — out of the `Column`, out of `columns` — before `items`
+  could open, which is exactly the count a reader gets wrong.
 - **The fifth column has no header text and a fixed `10%` width.** It only
   carries the edit button defined in the row cells — this is how a row action
   gets a column of its own.

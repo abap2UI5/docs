@@ -25,7 +25,7 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createMarkdownRenderer } from 'vitepress';
 import { build as bundle, transform } from 'esbuild';
 import config from '../docs/.vitepress/config.mjs';
@@ -36,7 +36,10 @@ import { contentSecurityPolicy, inlineScriptsIn } from './lib/csp.mjs';
 import { stripComments } from './lib/html.mjs';
 import { declaredRelease } from './lib/release.mjs';
 
-const ROOT = process.cwd();
+/* The repository, wherever the build is started from - the cwd found no
+   `docs/` from anywhere but the root. The output directory on the command
+   line is still the caller's, relative to where they are. */
+const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = path.join(ROOT, 'docs');
 const OUT = process.argv[2] || path.join(ROOT, '.prototype');
 const BASE = '/docs/';

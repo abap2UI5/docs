@@ -21,16 +21,20 @@ framework, or out of a wrong app name in the URL.
    the **whole exception chain** in it, with each entry's class, message, source
    position and attributes, because that body is the only diagnostic that
    survives the roundtrip. Nothing else anywhere records it.
-2. **The browser shows the fatal-error overlay.** It reads *Application Error -
-   Please Restart The App*, shows a short preview of the message, and offers
-   **Details** and **Copy** for the full text and **Refresh** / **Logout** to
-   start over. It is drawn from raw DOM rather than from UI5 controls, so it
-   still appears when the failure left the UI5 core itself unusable.
-3. **The app is over.** There is no *continue* on that overlay by design: the
+2. **The browser shows the error dialog.** An *Application Error* dialog
+   shows a short preview of the message and offers **Details** and **Copy** for
+   the full text and **Restart** to start over; Escape does not close it. When
+   UI5 cannot render even that dialog, a fallback overlay drawn from raw DOM
+   takes its place — *Application Error - Please Restart The App*, with
+   **Refresh** / **Logout** — so the failure is still reported when it left the
+   UI5 core itself unusable.
+3. **The app is over.** There is no *continue* on that dialog by design: the
    roundtrip that would have carried the app's next state is the one that
    failed, so what is on screen no longer matches anything on the server. The
-   user restarts; the draft is still in the database, so a bookmarked app comes
-   back where it was.
+   user restarts, and the app starts from its first screen — unless its draft
+   id is in the URL, through the
+   [app state](/cookbook/event_navigation/navigation/app_state) or hash routing
+   in `KEEP` mode, which brings it back to where it was.
 
 A short dump reaches the browser the same way — the application server's own
 500 page comes back instead of the handler's body, and the overlay strips it

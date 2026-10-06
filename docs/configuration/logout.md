@@ -11,7 +11,7 @@ Fire the event from any controller method to log the user off:
 client->follow_up_action( client->cs_event-system_logout ).
 ```
 
-Optionally pass a same-origin URL as the first argument to control where the user lands afterwards. The default is `/sap/public/bc/icf/logoff`:
+Optionally pass a same-origin URL as the first argument. It **replaces** the logoff endpoint the event navigates to, `/sap/public/bc/icf/logoff` by default, so it has to end the ICF session itself — as the BSP logoff page below does — and inside the launchpad it is taken instead of the shell's `Container.logout()`:
 ```abap
 client->follow_up_action(
   val   = client->cs_event-system_logout
@@ -50,7 +50,7 @@ The event terminates whichever layers the current startup context owns:
 There are three ways to influence what happens on logout. Pick the one that matches your goal.
 
 ### Custom Post-Logoff URL
-Pass any same-origin URL as `t_arg`. The browser navigates there once the SAP sessions are ended (see the second example in [The Logout Event](#the-logout-event)). Useful when you want a specific landing page — for instance, the standard BSP logoff confirmation page — without changing any system settings.
+Pass a same-origin URL as `t_arg`. The browser navigates there *instead of* `/sap/public/bc/icf/logoff` (after the BSP context is ended, on a BSP URL), so only a URL that logs off itself — for instance, the standard BSP logoff confirmation page, see the second example in [The Logout Event](#the-logout-event) — ends the ICF / SSO session; a plain landing page leaves the user logged on. To land somewhere else after the standard logoff, configure it in `SICF` (below).
 
 
 ::: warning

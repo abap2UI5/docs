@@ -52,7 +52,7 @@ Each app ships as an [abapGit](https://abapgit.org) project, so installation acr
 
 ## How It Works
 
-The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view, the framework sends it to the browser with the data already embedded in it, and every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
+The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view, the framework sends it to the browser in one response with the JSON model its controls bind to, and every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
 
 No ABAP session survives between two clicks, and that is deliberate: the app's state is written to a draft on the server, the browser keeps only its id, and the draft is restored before `main( )` runs again, so each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
 
@@ -65,7 +65,7 @@ Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea
 A thin frontend: the browser renders, and everything else — logic, data, state — stays in the backend. There is nothing to configure on the client and nothing to clear from its cache, and business data never leaves the server except as the view the user is looking at.
 
 ### Performance
-One roundtrip per interaction, with the data already in the view — no OData call per control, no second request to fill what the first one drew. That is fewer round trips than a freestyle UI5 app makes for the same screen, and it is where the speed comes from.
+One roundtrip per interaction, with the data in the same response as the view — no OData call per control, no second request to fill what the first one drew. That is fewer round trips than a freestyle UI5 app makes for the same screen, and it is where the speed comes from.
 
 → *See [Performance](/configuration/performance) for what to measure and what to tune*
 

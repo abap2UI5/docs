@@ -44,8 +44,9 @@ builder chain and judges the two together:
   or does not have **yet** on the release you target (the `@since` floor —
   1.71 by default, which is what most systems serve),
 - bindings that point at nothing, events nothing handles, deprecated controls,
-- and then it loads every view in a headless browser, which is the only way to
-  find a view that does not merely render wrongly but fails to load at all.
+- and, with its render package `@abap2ui5/linter-render` installed as well,
+  it loads every view in a headless browser, which is the only way to find a
+  view that does not merely render wrongly but fails to load at all.
 
 ```sh
 npx @abap2ui5/linter src

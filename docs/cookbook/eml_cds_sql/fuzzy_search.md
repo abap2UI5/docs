@@ -25,11 +25,17 @@ CLASS z2ui5_cl_sample_fuzzy DEFINITION PUBLIC.
     DATA mv_search    TYPE string.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+    METHODS load_data.
+    METHODS render.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 CLASS z2ui5_cl_sample_fuzzy IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
+
+    me->client = client.
 
     CASE abap_true.
 

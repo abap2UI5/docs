@@ -89,6 +89,12 @@ export function entriesOf(catalogue) {
       if (!entry || typeof entry !== 'object') continue;
       const cls = entry.class;
       const file = entry.file ?? entry.path;
+      /* samples-stack lists its overview app (Z2UI5_CL_SMPS_APP_000,
+       * technology "Overview") beside the samples. It is not one: it is the
+       * catalogue itself, inside a system, and the catalogue leaves it out
+       * (readStack in abap2UI5/playground's tools/build-catalogue.mjs) - so it
+       * has no page there, and a search hit on it was a 404. */
+      if (entry.technology === 'Overview') continue;
       if (typeof cls === 'string' && cls.trim() && typeof file === 'string' && file.trim()) out.push(entry);
     }
   }

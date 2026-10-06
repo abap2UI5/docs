@@ -59,9 +59,10 @@ CLASS z2ui5_cl_sample_pdf IMPLEMENTATION.
                   )->a( n = `title` v = `Invoice 4711`
 
                   )->tag( `PDFViewer`
-                      )->a( n = `source` v = client->_bind( mv_pdf )
-                      )->a( n = `title`  v = `Invoice 4711`
-                      )->a( n = `height` v = `600px` ).
+                      )->a( n = `source`          v = client->_bind( mv_pdf )
+                      )->a( n = `isTrustedSource` b = abap_true
+                      )->a( n = `title`           v = `Invoice 4711`
+                      )->a( n = `height`          v = `600px` ).
 
       client->view_display( view->stringify( ) ).
     ENDIF.
@@ -70,8 +71,16 @@ CLASS z2ui5_cl_sample_pdf IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Leave `height` off and the viewer opens in its own dialog instead of sitting in
-the page — the same control, one property apart.
+`isTrustedSource` is what puts the document on the screen: without it, UI5
+1.121 and later, and the recent patches of the older maintenance lines (1.71
+from 1.71.63), show "The PDF cannot be displayed" in its place. Set it for a
+PDF your own system produced — a patch that does not know the property ignores
+it.
+
+To show the viewer as a dialog instead, keep it in the page's `dependents` and
+call its `open` method with `cs_event-control_by_id` — sample
+`Z2UI5_CL_SMP_APP_449` below does exactly that. Leaving `height` off does not
+make it one: the viewer stays in the page.
 
 The base64 string travels in the model, so a large document is a large
 roundtrip. Past a few megabytes, offer the

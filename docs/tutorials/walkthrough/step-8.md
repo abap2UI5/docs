@@ -95,9 +95,13 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
       " demo data — in your system, replace this with a SELECT, e.g.:
       " SELECT product, supplier, quantity, delivery_date
       "   FROM zinvoice
-      "   WHERE supplier      LIKE @s_search-supplier
-      "     AND delivery_date BETWEEN @s_search-date_from AND @s_search-date_to
+      "   WHERE supplier      LIKE @( |%{ s_search-supplier }%| )
+      "     AND delivery_date >= @s_search-date_from
+      "     AND delivery_date <= @( COND #( WHEN s_search-date_to IS INITIAL
+      "                                     THEN `9999-12-31`
+      "                                     ELSE s_search-date_to ) )
       "   INTO TABLE @t_invoices.
+      " (an empty field filters nothing, as with the DELETEs below)
       t_invoices = VALUE #(
           ( product = `Pineapple`    supplier = `ACME`          quantity = `21` delivery_date = `2026-07-15` )
           ( product = `Milk`         supplier = `Green Growers` quantity = `4`  delivery_date = `2026-07-20` )
@@ -133,8 +137,8 @@ ENDCLASS.
   [View → Definition](/cookbook/view/definition).
 - **`sap.ui.layout.form` needs its own namespace.** `xmlns:form` is declared on
   the root next to `xmlns:mvc`, and `SimpleForm` and its `content` aggregation
-  are written with `ns = \`form\``. A `SimpleForm` lays out label/field pairs by
-  itself — no grid, no widths.
+  are written with `` ns = `form` ``. A `SimpleForm` lays out label/field pairs
+  by itself — no grid, no widths.
 - **`DatePicker` with `valueFormat`.** The picker shows the date in the user's
   locale and hands your ABAP attribute the format you asked for — here
   `yyyy-MM-dd`, so a string comparison sorts correctly.

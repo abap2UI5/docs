@@ -81,7 +81,7 @@ METHOD render_any.
     columns->ele( `Column`
         )->ele( `header`
             )->tag( `Text`
-                )->a( n = `text` v = comp-name ).
+                )->a( n = `text` v = CONV string( comp-name ) ).
   ENDLOOP.
 
   " one cell per component, bound by field name

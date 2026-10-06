@@ -14,7 +14,7 @@ This technique fits prototyping or porting existing demo programs. For productio
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(lv_style) = `<html:style type="text/css">body {` && |\n|  &&
+    DATA(lv_style) = `<style type="text/css">body {` && |\n|  &&
                                       `     font-family: Arial;` && |\n|  &&
                                       `     font-size: 90%;` && |\n|  &&
                                       `}` && |\n|  &&
@@ -75,7 +75,7 @@ METHOD z2ui5_if_app~main.
                                       `tr.body {` && |\n|  &&
                                       `    background-color:#EFEFEF;` && |\n|  &&
                                       `}` && |\n|  &&
-                                      `</html:style>`.
+                                      `</style>`.
 
     "generate HTML output, e.g. from a database query:
     "SELECT * FROM scarr INTO TABLE @DATA(carriers).

@@ -7,13 +7,18 @@
 //   node scripts/check-vocabulary.mjs --unused   name entries no page uses
 
 import { readFile } from 'node:fs/promises';
+import { dirname, join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { manualPages } from './lib/prose.mjs';
 import { findUnknown, projectWords, WORDS_FILE } from './lib/vocabulary.mjs';
 
 const unused = process.argv.includes('--unused');
 
+// The repository, not the cwd: `manualPages('docs')` threw ENOENT when the
+// gate was started from anywhere but the root.
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const words = projectWords();
-const pages = manualPages('docs');
+const pages = manualPages(join(ROOT, 'docs'));
 const seen = new Set();
 const findings = [];
 let checked = 0;
@@ -21,7 +26,7 @@ let checked = 0;
 for (const file of pages) {
   const source = await readFile(file, 'utf8');
   for (const { line, word } of findUnknown(source, { words })) {
-    findings.push({ file, line, word });
+    findings.push({ file: relative(ROOT, file), line, word });
   }
   // what the list is actually earning - a second pass over every page, so only
   // when it was asked for

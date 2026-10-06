@@ -39,17 +39,17 @@ ABAP `p LENGTH n DECIMALS m` + a `c LENGTH 3` currency code (a plain `string` al
 
 ```abap
 )->tag( `Input`
-    )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val = amount   path = abap_true ) }',
-                                       '{ client->_bind( val = currency path = abap_true ) }' ],
-                              type: 'sap.ui.model.type.Currency' \}|
+    )->a( n = `value` v = |\{ parts: [ '{ client->_bind( val = amount   path = abap_true ) }',|
+                       && | '{ client->_bind( val = currency path = abap_true ) }' ],|
+                       && | type: 'sap.ui.model.type.Currency' \}|
 ```
 
 Common `formatOptions`:
-- `showMeasure: false` — hides the currency symbol
-- `showNumber: false` — hides the amount, shows only the symbol
-- `preserveDecimals: false` — trims trailing zeros
-- `currencyCode: false` — hides the ISO code
-- `style: 'short'` / `'long'` — compact (`123M`) or full-text (`123 million US dollars`) notation
+- `showMeasure: false` — hides the currency, shows only the amount
+- `showNumber: false` — hides the amount, shows only the currency (UI5 1.89 and later)
+- `preserveDecimals: false` — rounds the amount to the currency's decimals; by default the type keeps any further decimals (UI5 1.89 and later — before, it always rounds)
+- `currencyCode: false` — shows the currency symbol (`€`) instead of the ISO code (`EUR`), where the currency has one
+- `style: 'short'` — compact notation (`123M`); `'long'` formats a currency the same way
 
 The [Full Worked Example](#full-worked-example) below demonstrates each of these variants in a single app.
 
@@ -59,9 +59,9 @@ ABAP `n LENGTH n` is sent as a digit string, leading zeros included. Without a t
 
 ```abap
 )->tag( `Text`
-    )->a( n = `text` v = |\{ path: '{ client->_bind( val = numeric path = abap_true ) }',
-                             type: 'sap.ui.model.odata.type.String',
-                             constraints: \{ isDigitSequence: true \} \}|
+    )->a( n = `text` v = |\{ path: '{ client->_bind( val = numeric path = abap_true ) }',|
+                      && | type: 'sap.ui.model.odata.type.String',|
+                      && | constraints: \{ isDigitSequence: true \} \}|
 ```
 
 This strips the leading zeros for display and re-pads them on write-back.
@@ -72,10 +72,10 @@ ABAP `d` goes on the wire as an ISO date string, `2024-01-15` (an initial date a
 
 ```abap
 )->tag( `DatePicker`
-    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
-                              type: 'sap.ui.model.type.Date',
-                              formatOptions: \{ pattern: 'dd.MM.yyyy',
-                                                source: \{ pattern: 'yyyy-MM-dd' \} \} \}|
+    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',|
+                       && | type: 'sap.ui.model.type.Date',|
+                       && | formatOptions: \{ pattern: 'dd.MM.yyyy',|
+                       && | source: \{ pattern: 'yyyy-MM-dd' \} \} \}|
 ```
 
 `source.pattern` is the wire format (ABAP side); the outer `pattern` is what the user sees.
@@ -86,10 +86,10 @@ ABAP `t` goes on the wire as `12:30:00` (an initial time as an empty string). Sa
 
 ```abap
 )->tag( `TimePicker`
-    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_time path = abap_true ) }',
-                              type: 'sap.ui.model.type.Time',
-                              formatOptions: \{ pattern: 'HH:mm',
-                                                source: \{ pattern: 'HH:mm:ss' \} \} \}|
+    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_time path = abap_true ) }',|
+                       && | type: 'sap.ui.model.type.Time',|
+                       && | formatOptions: \{ pattern: 'HH:mm',|
+                       && | source: \{ pattern: 'HH:mm:ss' \} \} \}|
 ```
 
 ## Boolean
@@ -127,9 +127,12 @@ comparison held.
 
 ::: tip A boolean written into the view is a different question
 All of the above is about a **bound** value. An ABAP boolean put straight into
-the XML as an attribute value — `)->a( n = `visible` v = flag )` — is
-stringified, and UI5 reads any non-empty string as true, so `abap_false`
-renders the control **visible**. Use the builder's boolean parameter for that:
+the XML as an attribute value — `)->a( n = `visible` v = xsdbool( … ) )` — is
+stringified to `X` or to an empty string (a bare `v = flag` does not even
+compile: `v` is a string), and UI5 reads a boolean attribute as true only
+when it says `true`: on 1.71 `abap_true` renders the control **hidden**, and
+a newer release logs `X` as invalid and ignores it, leaving the property at
+its default. Use the builder's boolean parameter for that:
 `)->a( n = `visible` b = flag )`. The linter rule
 [`unconverted-abap-boolean`](/advanced/linter) catches it.
 :::
@@ -143,10 +146,10 @@ renders the control **visible**. Use the builder's boolean parameter for that:
 **Send as string with a source pattern** — convert to a `string` attribute in `yyyyMMddHHmmss` format on the ABAP side, then bind with `sap.ui.model.type.DateTime`:
 ```abap
 )->tag( `DateTimePicker`
-    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_ts_string path = abap_true ) }',
-                              type: 'sap.ui.model.type.DateTime',
-                              formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',
-                                                source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}|
+    )->a( n = `value` v = |\{ path: '{ client->_bind( val = mv_ts_string path = abap_true ) }',|
+                       && | type: 'sap.ui.model.type.DateTime',|
+                       && | formatOptions: \{ pattern: 'yyyy-MM-dd HH:mm:ss',|
+                       && | source: \{ pattern: 'yyyyMMddHHmmss' \} \} \}|
 ```
 Conversion happens in ABAP (`ts_string = |{ timestamp }|` yields those 14 digits for a `timestamp`); the framework moves the string verbatim.
 
@@ -159,8 +162,9 @@ a property that wants a **JavaScript `Date` object** — `DatePicker.dateValue`,
 `PlanningCalendarAppointment.startDate` — and JSON has no date type, so the
 model physically cannot carry one. For that, and for one text case, the
 framework ships a small curated formatter module. It is a public contract:
-`z2ui5/model/formatter`, reached through `core:require` (UI5 1.74 and later).
-The `z2ui5.Formatter` global that used to cover older releases is gone.
+`z2ui5/model/formatter`, reached through `core:require`, which every UI5
+release abap2UI5 supports understands, 1.71 included. The `z2ui5.Formatter`
+global it replaces is gone.
 
 Load it once on the view root, then name a helper in the binding string:
 
@@ -170,8 +174,8 @@ view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` ).
 ...
 
 )->tag( `DatePicker`
-    )->a( n = `dateValue` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',
-                                 formatter: 'Formatter.DateCreateObject' \}|
+    )->a( n = `dateValue` v = |\{ path: '{ client->_bind( val = mv_date path = abap_true ) }',|
+                           && | formatter: 'Formatter.DateCreateObject' \}|
 ```
 
 `mv_date` is a `d`, so it arrives as `2024-01-15`, which `DateCreateObject`

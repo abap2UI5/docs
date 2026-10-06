@@ -26,7 +26,7 @@ A one-page recap of the rules that decide whether an abap2UI5 app works or misbe
         )->a( n = `enabled` b = abap_false )   " → enabled="false"
 ```
 
-Through `v` the flag is written verbatim: `abap_true` arrives in the view as `enabled="X"` and `abap_false` as an empty value. Neither is the `true` / `false` UI5 expects, and neither is a syntax error — the view renders, with the control in the wrong state.
+Through `v` a bare flag does not compile — `v` is a string, and a `c` field is not type-compatible with it — and a flag-valued expression such as `xsdbool( … )` is written verbatim: `abap_true` arrives in the view as `enabled="X"` and `abap_false` as an empty value. `X` is not the `true` UI5 expects, and that one is no syntax error — the view renders, and on 1.71 the control is disabled.
 
 A **literal** is a string and belongs in `v`, unquoted by any flag variable:
 

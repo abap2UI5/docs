@@ -225,15 +225,15 @@ the formatter named.
 ## Examples
 
 Both examples are developed in
-[abap2UI5/embed-control](https://github.com/abap2UI5/embed-control), next to
-the package, and run without an SAP system as well: their OData service comes
-from a mock server, abap2UI5 from
+[abap2UI5/samples-embed-control](https://github.com/abap2UI5/samples-embed-control),
+where they take the package from npm, and run without an SAP system as well:
+their OData service comes from a mock server, abap2UI5 from
 [`@abap2ui5/node-runtime`](https://www.npmjs.com/package/@abap2ui5/node-runtime).
 
-- [`examples/fiori-elements`](https://github.com/abap2UI5/embed-control/tree/main/examples/fiori-elements) -
+- [`fiori-elements`](https://github.com/abap2UI5/samples-embed-control/tree/main/fiori-elements) -
   OData V4, list report and object page of customers, the control in a
   custom section.
-- [`examples/fiori-elements-v2`](https://github.com/abap2UI5/embed-control/tree/main/examples/fiori-elements-v2) -
+- [`fiori-elements-v2`](https://github.com/abap2UI5/samples-embed-control/tree/main/fiori-elements-v2) -
   OData V2, list report and object page of countries, the control in an
   object page extension. Its folder `abap/` holds the RAP service the app
   reads and the abap2UI5 app it starts: the CDS view entity on `T005T`, its

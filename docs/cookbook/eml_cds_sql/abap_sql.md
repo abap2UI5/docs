@@ -28,7 +28,7 @@ CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
       SELECT FROM sflight
         FIELDS carrid, connid, fldate, price, currency
         ORDER BY carrid, connid, fldate
-        INTO TABLE @mt_flights
+        INTO CORRESPONDING FIELDS OF TABLE @mt_flights
         UP TO 50 ROWS.
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(

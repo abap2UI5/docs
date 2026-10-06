@@ -128,11 +128,12 @@ you, in the error view of a failed roundtrip or in the browser console. Every
 message below is one the framework or UI5 actually produces; find yours, and
 the entry says what caused it and where the fix is explained.
 
-### `The app 'ZCL_...' does not exist in the system.`
+### `The app 'ZCL_...' does not exist in the system or does not implement z2ui5_if_app.`
 
-The framework could not instantiate the class named in `?app_start=` — a typo
-in the URL, or the class exists but is not activated. The roundtrip answers
-500 and shows this message. Fix the name or activate the class; the
+The framework could not start the class named in `?app_start=` — a typo in
+the URL, a class that exists but is not activated, or a class that does not
+implement `z2ui5_if_app`. The roundtrip answers 500 and shows this message.
+Fix the name, activate the class or add the interface; the
 [Quickstart's verify step](/get_started/quickstart#_3-first-launch) covers the other
 first-launch failures around it.
 
@@ -149,12 +150,13 @@ row the table does not have: the index is off (it is 1-based, like every ABAP
 index), or the table was refilled or shortened after the index was computed
 and before the view was built. Rebuild the view from the current table state.
 
-### `Binding Error - component '...' not found in the bound row`
+### `BINDING_ERROR_TAB_CELL_LEVEL - No class attribute for binding found - Please check if the bound values are public attributes of your class`
 
-The same cell binding, but `val` is not a component of `tab`'s row type — the
-classic case is passing a field of a *different* structure (a copy, a work
-area of another type) as the cell value, or a renamed column that the view
-code still names. Bind the field of the row type the table actually has.
+The same cell binding, but `val` is not a field of the row `tab_index` names.
+The cell is found by **reference**, not by value, so the classic case is a
+copy: a helper variable or a work area holding the same value instead of the
+row's own component, `tab[ n ]-comp`. Bind the component of the table row
+itself.
 
 ### `APP_SERIALIZATION_ERROR - the app state could not be serialized. Please check if all generic data references are public attributes of your class`
 

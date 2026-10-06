@@ -180,6 +180,15 @@ ${DISPLAY}`);
   assert.match(refused(code), /HANA/);
 });
 
+test('contains( ) the string function is ABAP, not the HANA predicate', () => {
+  // Named arguments: the built-in every release has. Read as CONTAINS( ) the
+  // example lost its button and check:examples stopped compiling it.
+  const code = app('z2ui5_cl_sample_contains', `    IF contains( val = \`Hello\` sub = \`ell\` ).
+${DISPLAY}
+    ENDIF.`);
+  assert.equal(runs(code), 'z2ui5_cl_sample_contains');
+});
+
 test('a test class beside the app gets nothing, whatever it is called', () => {
   // `ltcl_` is a habit, not a rule; the localObjects check only knows lcl_.
   const code = `${app('z2ui5_cl_sample_x', DISPLAY)}

@@ -30,6 +30,8 @@ The themes shipped with current UI5 versions are:
 | `sap_fiori_3_hcb`    | Quartz high-contrast black           |
 | `sap_fiori_3_hcw`    | Quartz high-contrast white           |
 
+The Horizon themes, the default among them, need UI5 1.102 or later. On an older release — the 1.71 floor, or an old UI5 a system serves itself — set a Quartz theme such as `sap_fiori_3`: UI5 there has no fallback for a `sap_` theme it does not ship, so the page loads no theme stylesheet and the controls render unstyled.
+
 See the official [list of available themes](https://sapui5.hana.ondemand.com/#/topic/4cfe7eff3001447a9d4b0abeaba95166) for the most up-to-date catalog.
 
 ## End-User Override
@@ -44,6 +46,6 @@ This is convenient for trying out a theme without redeploying.
 
 ## Custom Themes
 
-For brand-specific colors, fonts or logos use the SAP [UI Theme Designer](https://sapui5.hana.ondemand.com/#/topic/be8f7c61bb2444299b3f3429b986e8be) to generate a self-contained theme. Host it on your SAP system or any web server, then set `cs_config-theme` to its theme ID. UI5 loads custom themes relative to the bootstrap `src` location — if your theme lives elsewhere, register its path with the `data-sap-ui-theme-roots` bootstrap attribute.
+For brand-specific colors, fonts or logos use the SAP [UI Theme Designer](https://sapui5.hana.ondemand.com/#/topic/be8f7c61bb2444299b3f3429b986e8be) to generate a self-contained theme. Host it on your SAP system or any web server, then set `cs_config-theme` to its theme ID. UI5 loads custom themes relative to the bootstrap `src` location — if your theme lives elsewhere, register its path with the `data-sap-ui-theme-roots` bootstrap attribute. A theme on another host is also a host the page's Content Security Policy has to allow: add it to `style-src` and `img-src` in your exit — see [Customizing the CSP](/configuration/security#customizing-the-csp).
 
 See the official [theming documentation](https://sapui5.hana.ondemand.com/#/topic/91f2cebe7c8e4d289fd80a4f0c0bd2ca) for the bigger picture.

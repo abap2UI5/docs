@@ -71,7 +71,7 @@ tell you what is coming if you do not.
 | custom JS reading `window.z2ui5` | nothing - the global is gone | **removed**, 1.145.0 |
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
-| `cs_config-title` | `cs_event-set_title` | 1.144.0 |
+| `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
 | `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
@@ -467,8 +467,8 @@ client->follow_up_action( val   = client->cs_event-set_title
                           t_arg = VALUE #( ( `Invoice App` ) ) ).
 ```
 
-The field stays on `cs_config` and an exit that assigns it still compiles — it
-simply has no effect. The generated page carries a constant
+The field was removed from `cs_config` in 1.145.0, so an exit that still assigns
+it no longer compiles — delete the line. The generated page carries a constant
 `<title>abap2UI5</title>`, which is what the tab shows while UI5 boots, before
 any app can speak. Inside a Fiori Launchpad shell the title is
 `cs_event-set_title_launchpad`, unchanged. See
@@ -529,11 +529,17 @@ DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
 DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
 ```
 
-Nothing was deleted and nothing was reshaped. `z2ui5_if_types` still ships,
-unchanged, from the framework's frozen package — an app that names it compiles
-and runs exactly as before, and every moved type is identical field for field,
-so a variable declared the old way still fits the new signatures. There is no
-deadline; change it when you next touch the class.
+Nothing was deleted. `z2ui5_if_types` still ships, unchanged, from the
+framework's frozen package, so a declaration that names it still compiles. Four
+of the types have changed since they moved, though, and the frozen copies did
+not follow: `ty_s_get` carries `t_model_skipped` now, `ty_s_event_control`
+lost `check_allow_multi_req` and gained four flags, `ty_s_http_config` lost
+`title` and `custom_js`, and `ty_s_http_config_post` gained
+`check_trust_forwarded_host`. A variable of an old type therefore no longer
+fits the signature it was declared for — `ls_get = client->get( )` and
+`_event( s_ctrl = ls_ctrl )` are both a syntax error — and has to be declared
+with the new name. The other types are identical field for field; change those
+when you next touch the class.
 
 ## Removed: does not compile any more
 
@@ -755,16 +761,15 @@ the global, is removed with it; the popup had nothing left to write into.
 
 The `z2ui5.Util` and `z2ui5.Formatter` globals, and the `z2ui5/Util` module,
 are gone too. The date helpers live in `z2ui5/model/formatter`, loaded on the
-view root with `core:require` (UI5 1.74 and later):
+view root with `core:require` (on every UI5 release abap2UI5 supports, 1.71
+included):
 
 ```abap
 " old
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'z2ui5.Util.DateCreateObject' \}|
+|\{ path: '{ client->_bind( val = mv_date path = abap_true ) }', formatter: 'z2ui5.Util.DateCreateObject' \}|
 
 " new - view->a( n = `core:require` v = `{Formatter: 'z2ui5/model/formatter'}` )
-|\{ path: `{ client->_bind( val = mv_date path = abap_true ) }`,
-    formatter: 'Formatter.DateCreateObject' \}|
+|\{ path: '{ client->_bind( val = mv_date path = abap_true ) }', formatter: 'Formatter.DateCreateObject' \}|
 ```
 
 See [Formatter](/cookbook/model/formatter).

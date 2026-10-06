@@ -99,7 +99,12 @@ try {
 
 /** method name -> Set of IMPORTING parameter names. */
 const methods = new Map();
-/** constant group (cs_event, cs_view, ...) -> Set of member names. */
+/** constant group -> Set of member names, keyed by the group's FULL path:
+ *  `cs_device` holds `system`, and `cs_device-system` holds `phone`. Keyed by
+ *  the inner name alone, `cs_device-system-phone` could only ever be checked
+ *  as far as `system` - so `cs_device-system-phonee` passed - and the inner
+ *  names are not unique either: `browser` and `os` are groups of cs_device
+ *  AND of ty_s_get's s_device, with different members. */
 const groups = new Map();
 
 {
@@ -114,20 +119,16 @@ const groups = new Map();
     if (begin) {
       const name = begin[1].toLowerCase();
       // the nested group is itself a member of what encloses it: a page
-      // spelling the full path (`cs_device-system-phone`) trips the
-      // two-segment match `cs_device-system` first, and that spelling is
-      // exactly how an app writes the constant - it has to resolve
-      for (const g of open) groups.get(g).add(name);
+      // spelling the full path (`cs_device-system-phone`) walks through it
+      if (open.length) groups.get(open.join('-')).add(name);
       open.push(name);
-      groups.set(name, new Set());
+      groups.set(open.join('-'), new Set());
       continue;
     }
     if (/^\s*END OF ([a-z_0-9]+)/i.test(line)) { open.pop(); continue; }
     if (open.length) {
-      // a member of every group it is nested in, so cs_device-system-phone
-      // resolves whether the page writes the outer or the inner name
       const member = /^\s*([a-z_0-9]+)\s+TYPE\s/i.exec(line);
-      if (member) for (const g of open) groups.get(g).add(member[1].toLowerCase());
+      if (member) groups.get(open.join('-')).add(member[1].toLowerCase());
       continue;
     }
 
@@ -143,7 +144,7 @@ const groups = new Map();
   }
 }
 
-if (methods.size === 0 || !groups.has('cs_event')) {
+if (methods.size === 0 || !groups.has('cs_event') || !groups.has('cs_device-system')) {
   console.log(`z2ui5_if_client at ${REF} parsed to nothing - the interface changed shape.`);
   console.log('Fix the parser in scripts/check-api-names.mjs, or this gate silently stops checking.');
   process.exit(1);
@@ -161,15 +162,67 @@ function markdownFiles(dir, out = []) {
   return out;
 }
 
-/** The fenced ABAP blocks of a page, as one string with everything else blanked. */
-const abapOnly = (text) => text.replace(/```(\w*)[^\n]*\n([\s\S]*?)```/g, (all, lang, body) => (
-  /^(abap)?$/i.test(lang) ? all.replace(body, body) : ' '.repeat(all.length)
-));
+/** The fenced ABAP blocks of a page, as one string with everything else blanked.
+ *
+ *  Line by line, the way markdown reads a fence: it opens at the start of a
+ *  line and closes on a line of the same mark and nothing else. The regex
+ *  this replaces opened a "fence" at any three backticks - the inline code
+ *  span that prints the empty ABAP literal is one - paired fences from there
+ *  on by position, and blanked nothing outside them: the prose went through
+ *  as if it were ABAP. */
+const abapOnly = (text) => {
+  let fence = null;
+  return text.split('\n').map((line) => {
+    const mark = /^ {0,3}(`{3,}|~{3,})\s*([^\s`]*)/.exec(line);
+    if (fence) {
+      if (mark && mark[1][0] === fence.mark[0] && mark[1].length >= fence.mark.length && !mark[2]) {
+        fence = null;
+        return '';
+      }
+      return fence.abap ? line : '';
+    }
+    if (mark) fence = { mark: mark[1], abap: /^(abap)?$/i.test(mark[2]) };
+    return '';
+  }).join('\n');
+};
 
-/** Blank ABAP string literals so an XML attribute inside one is not a parameter. */
-const withoutLiterals = (text) => text
-  .replace(/`[^`\n]*`/g, (x) => ' '.repeat(x.length))
-  .replace(/\|[^|\n]*\|/g, (x) => ' '.repeat(x.length));
+/** Blank ABAP string literals and comments, so an XML attribute inside a
+ *  literal is not a parameter - but keep the embedded expressions of a string
+ *  template, which are code: `|{ client->_bind( val = x path = abap_true ) }|`
+ *  is a call like any other, and blanking the template whole let any
+ *  parameter name through inside one. An embedded expression may run over
+ *  several lines (formatter.md breaks a _bind( ) call inside one); a literal
+ *  may not, so only the `{` survives a line end. */
+const withoutLiterals = (text) => {
+  const open = [];          // what is open: ` ' | (literals), { (code inside a template)
+  return text.split('\n').map((line) => {
+    while (open.length && open.at(-1) !== '{') open.pop();
+    if (!open.length && line.startsWith('*')) return '';
+    let out = '';
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      const top = open.at(-1);
+      if (top === '`' || top === "'") {
+        if (c === top && line[i + 1] === top) { out += '  '; i++; continue; }   // doubled: an escaped delimiter
+        if (c === top) open.pop();
+        out += c === top ? c : ' ';
+        continue;
+      }
+      if (top === '|') {
+        if (c === '\\') { out += '  '; i++; continue; }                       // \| \{ \} \\ and the rest
+        if (c === '{') open.push('{');
+        else if (c === '|') open.pop();
+        out += c === '{' || c === '|' ? c : ' ';
+        continue;
+      }
+      if (c === '`' || c === "'" || c === '|') { open.push(c); out += c; continue; }
+      if (c === '}' && top === '{') { open.pop(); out += c; continue; }
+      if (c === '"') break;                                                    // a comment, to the end of the line
+      out += c;
+    }
+    return out;
+  }).join('\n');
+};
 
 /* The frozen package, by the name segments renaming.md documents for it
  * (`util`, `pop`, `xml_view`) plus the four objects that were relocated into
@@ -228,14 +281,20 @@ for (const file of markdownFiles(PAGES)) {
     problems.push(`${rel}: \`${use[0]}\` is in the framework's frozen package (src/99) - resources/deprecations.md is the one page that names it`);
   }
 
-  // 3: cs_<group>-<member>, wherever it is written
-  for (const use of text.matchAll(/\b(cs_[a-z_0-9]+)-([a-z_0-9]+)/gi)) {
-    const group = use[1].toLowerCase();
-    const member = use[2].toLowerCase();
-    if (!groups.has(group)) continue;
+  // 3: cs_<group>-<member>, wherever it is written - every segment of it,
+  // down through the nested groups (`cs_device-system-phone`)
+  for (const use of text.matchAll(/\b(cs_[a-z_0-9]+)((?:-[a-z_0-9]+)+)/gi)) {
+    let at = use[1].toLowerCase();
+    if (!groups.has(at)) continue;
     checked += 1;
-    if (!groups.get(group).has(member)) {
-      problems.push(`${rel}: \`${use[0]}\` is not in ${group} on ${REF}`);
+    for (const member of use[2].slice(1).toLowerCase().split('-')) {
+      const members = groups.get(at);
+      if (!members) break;          // a constant, not a group: the name ended before this
+      if (!members.has(member)) {
+        problems.push(`${rel}: \`${use[0]}\` is not in ${at} on ${REF}`);
+        break;
+      }
+      at = `${at}-${member}`;
     }
   }
 }

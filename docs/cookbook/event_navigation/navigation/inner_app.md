@@ -145,8 +145,8 @@ ENDCLASS.
 ```
 
 `check_app_prev_stack( )` is what grays out *leave* at the bottom of the stack —
-calling `nav_app_leave( )` with nothing to return to drops the user out of the
-app.
+there `nav_app_leave( )` has nothing to return to, the roundtrip simply ends on
+this app, and an enabled button would do nothing at all.
 
 ::: tip Browser Back & Forward
 By default, the browser's Back button leaves the abap2UI5 page — it does not step through the app stack. Enable [hash routing](/cookbook/event_navigation/navigation/hash) with `client->follow_up_action( client->cs_event-hash_routing )` to couple the browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps bookmarkable.

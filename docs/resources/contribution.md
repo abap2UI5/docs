@@ -9,9 +9,9 @@ time or alongside other projects. All kinds of contributions are welcome.
 
 ## How You Can Contribute
 There are several ways to get involved and help:
-- Extend the view builder — for example, add a missing property to an existing
-  control
-- Add a new UI5 control to the framework so everyone can use it
+- Improve the framework itself — a fix, a frontend action, a test. A UI5
+  control or property needs no addition: the view builder writes any of them
+  as it is, and the legacy builder with a method per control is frozen
 - Build a custom control for your own specific scenario and share it
 - Share your demos and apps to showcase what's possible with abap2UI5
 - Improve the documentation and polish code snippets to make abap2UI5 easier to

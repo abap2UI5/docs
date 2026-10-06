@@ -31,7 +31,8 @@ Marketplace. It bundles the linter and starts the MCP server.
 ```
 @abap2ui5/linter ──optional peer──▶ @abap2ui5/linter-render
        ▲
-       └── read by @abap2ui5/mcp-server and the VS Code extension
+       ├── peer (one minor) of @abap2ui5/mcp-server
+       └── read by the VS Code extension
 
 @abap2ui5/node-runtime ◀──exact pin── @cap2ui5/cds-plugin ◀──peer── @cap2ui5/samples
 
@@ -64,10 +65,14 @@ Marketplace. It bundles the linter and starts the MCP server.
 - **The embed control needs abap2UI5 1.145.0 or later** on the server, on
   ABAP as well as through node-runtime or the CAP plugin. Its README lists
   what 1.145.0 does not do yet.
-- **The MCP server has no version coupling of its own.** It finds the linter
-  next to it (a sibling checkout, `AI_VIEW_CHECK_HOME`, or the project's
-  `node_modules`) and takes the framework from the newest plain release. The
-  VS Code extension starts it without a version pin for the same reason.
+- **The MCP server is coupled to the linter's minor, and to nothing else.**
+  It declares `@abap2ui5/linter` as a peer, and `@abap2ui5/linter-render` as
+  an optional one, in the range of one linter minor (`>=0.8.0 <0.9.0` today),
+  and npm installs the linter with it; a linter of another minor in a project
+  makes `npm install` refuse with `ERESOLVE` until the server moves its range.
+  It finds the linter next to it (a sibling checkout, `AI_VIEW_CHECK_HOME`, or
+  the project's `node_modules`) and takes the framework from the newest plain
+  release. The VS Code extension starts it without a version pin.
 
 ## Starting the command-line tools
 

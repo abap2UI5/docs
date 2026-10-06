@@ -145,7 +145,7 @@ CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   t = vbeln
+                                )->a( n = `value`   t = CONV string( vbeln )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -154,7 +154,7 @@ CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Created by`
                             )->tag( `Input`
-                                )->a( n = `value`   t = ernam
+                                )->a( n = `value`   t = CONV string( ernam )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Created on`
@@ -329,7 +329,7 @@ CLASS z2ui5_cl_sample_lock_2 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   t = vbeln
+                                )->a( n = `value`   t = CONV string( vbeln )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -501,7 +501,7 @@ CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   t = vbeln
+                                )->a( n = `value`   t = CONV string( vbeln )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -676,7 +676,7 @@ CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   t = vbeln
+                                )->a( n = `value`   t = CONV string( vbeln )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -898,7 +898,7 @@ CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   t = vbeln
+                                )->a( n = `value`   t = CONV string( vbeln )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`
@@ -1150,7 +1150,7 @@ CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
                             )->tag( `Label`
                                 )->a( n = `text` v = `Sales Order`
                             )->tag( `Input`
-                                )->a( n = `value`   t = vbeln
+                                )->a( n = `value`   t = CONV string( vbeln )
                                 )->a( n = `enabled` b = abap_false
                             )->tag( `Label`
                                 )->a( n = `text` v = `Type`

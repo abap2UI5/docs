@@ -20,8 +20,8 @@ The nice part is that nothing was added to make this possible. It works because
 of what the earlier articles already established. The frontend is a shell that
 renders whatever arrives, so it does not care which system produced it. The app
 is one class with no artifacts beside it, so there is nothing per-tenant to
-deploy. And the state that makes a roundtrip work travels with the request, so
-no server holds a session belonging to one customer.
+deploy. And the state that makes a roundtrip work is a draft row the request
+names by its id, so no server holds a session belonging to one customer.
 
 The limits are the ones the shape implies, and they are not small. Every tenant
 needs its released APIs reachable. Latency is now on the wire. And the tenant's

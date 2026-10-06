@@ -25,10 +25,13 @@ a control by id:
                                                ( `page2` ) ) ).
 ```
 
-The whitelist decides what is reachable. Check it before writing anything —
-a method it already declares costs one call, and an argument it does not
-declare is dropped in silence — a debugging session you can skip by reading a
-list first.
+Any public method of the control is reachable, unless the frontend's denylist
+refuses it — `destroy`, the `bind…` and `attach…` families, the generic
+`setAggregation` and its kin. A short list of methods also declares the kind
+of each argument: `setActivePage` is on it, which is why `page2` arrives as the
+page with that id rather than as a string, and an argument beyond what an entry
+declares is dropped in silence — a debugging session you can skip by reading
+that list first.
 
 **A custom control lives in its own BSP.** The frontend resolves two reserved
 resource roots — `z2ui5_cci` for the custom-controls addon, `z2ui5_ccc` for a

@@ -8,7 +8,7 @@ Embed your abap2UI5 apps into the SAP Fiori Launchpad (FLP) on S/4 On-Premise or
 
 ## Installation
 
-The Launchpad loads the abap2UI5 frontend from the UI5 ABAP repository of your system (as app `z2ui5`). Install the Launchpad connector from the [abap2UI5-addons](https://github.com/abap2UI5-addons) organization via abapGit — it ships the frontend app for the UI5 repository. After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
+The Launchpad loads the abap2UI5 frontend from the UI5 ABAP repository of your system (as app `z2ui5`). Pull the `standard` branch of the [frontend repository](https://github.com/abap2UI5/frontend) via abapGit (`standard_v2` for the [legacy-free](/advanced/legacy_free) frontend) — it ships the frontend app as the BSP `Z2UI5` for the UI5 repository. After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
 
 ## Target Mapping
 Use these parameters for target mapping in your Launchpad configuration. abap2UI5 uses the app's class name as the Semantic Object so each app gets its own navigation target — replace `Z2UI5_CL_MY_APP` with your app class:

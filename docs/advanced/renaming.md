@@ -230,25 +230,24 @@ things fall outside that, and it is worth knowing them before you ship a renamed
 installation.
 
 **Class names written as strings.** A dynamic lookup passes its class or
-interface name as text, and text is not a reference. One production lookup in
-`src/` is affected: the user exit.
-`<ns>_cl_ui5_user_exit=>get_user_exit_class( )` searches for classes
-implementing the literal `` `Z2UI5_IF_UI5_EXIT` ``, which in a renamed
-installation is not the interface your exit implements — that one is
-`<NS>_IF_UI5_EXIT`. The lookup therefore comes back empty (or, next to an
-original installation, with the *other* installation's exit class, which then
-cannot be instantiated into the renamed reference and is discarded). The search
-is wrapped in `CATCH cx_root`, so nothing is reported: the installation just
-runs with the default configuration and your
-[user exit](/advanced/extensibility/user_exits) is never called — no custom
-theme, no bootstrap configuration, no CSP override.
+interface name as text, and text is not a reference: in a renamed branch these
+literals still say `Z2UI5_…`. On `main` they sit in five classes, and none of
+them fails loudly:
+
+| Renamed class (method) | Literal | Left as it is |
+|---|---|---|
+| `<ns>_cl_ui5_action` (`app_create( )`), `<ns>_cl_ui5_app_start` (`on_event_check( )`) | `` `Z2UI5_IF_APP` `` | every app start is refused as "does not exist in the system or does not implement z2ui5_if_app" — an app of the renamed installation implements `<NS>_IF_APP` |
+| `<ns>_cl_ui5_user_exit` (`exit_class_lookup( )`) | `` `Z2UI5_IF_UI5_EXIT` ``, `` `Z2UI5_CL_UI5_USER_EXIT` `` and the fallback to the superseded exit interface beside them | the lookup comes back empty (or, next to an original installation, with the *other* installation's exit class, which cannot be instantiated into the renamed reference and is discarded). It is wrapped in `CATCH cx_root`, so nothing is reported and your [user exit](/advanced/extensibility/user_exits) is never called — no custom theme, no bootstrap configuration, no CSP override |
+| `<ns>_cl_ui5_srv_monitor` (`monitor_class_lookup( )`) | `` `Z2UI5_IF_UI5_MONITOR` `` | the [roundtrip monitor](/configuration/monitoring) is never called |
+| `<ns>_cl_ui5_srv_model` (`diss_oref( )`) | `` `Z2UI5_CL_UI5_CLIENT` `` | a `client` reference held in a public attribute is no longer skipped when the model is built |
+| `<ns>_cl_ui5_util_context` (`xml_srtti_descr( )`) | `` `Z2UI5_CL_SRT_TYPEDESCR` `` | an attribute that is saved through S-RTTI names a class the renamed installation does not have |
 
 ::: warning Patch the literals after renaming
-In your renamed branch, change the literals in `get_user_exit_class( )` to your
-own namespace (`` `ZMYUI5_IF_UI5_EXIT` ``, `` `ZMYUI5_CL_UI5_USER_EXIT` `` and
-the `` `ZMYUI5_IF_EXIT` `` fallback beside them). Only
-apps that use a user exit are affected — everything else in the renamed
-installation works without a change.
+In your renamed branch, replace `Z2UI5_` with your own namespace in each of
+these literals (`` `ZMYUI5_IF_APP` ``, `` `ZMYUI5_IF_UI5_EXIT` `` and so on).
+``git grep -n '`Z2UI5_' -- src`` finds them, next to test-class literals
+and the names of add-on classes, which stay as they are; run it again after
+every upgrade, because the table above is the one on `main` today.
 :::
 
 **The frontend namespace.** Module IDs and the `z2ui5.cc` XML namespace

@@ -12,9 +12,11 @@ two strings and moves them over HTTP. There is no CDS artifact, no RAP object,
 no OData service in the middle, so there is almost nothing a given release has
 to support.
 
-Almost. The one genuine SAP dependency is GUID creation, and it is written to
-satisfy both language versions at once — ABAP Cloud and Standard ABAP, from a
-single code line. That is the entire list.
+Almost. What does differ — GUID creation, base64 and code page conversion,
+finding the classes that implement an interface, the HTTP request and response
+objects and a handful more — sits in two utility classes, written to satisfy
+both language versions at once through dynamic calls: ABAP Cloud and Standard
+ABAP, from a single code line.
 
 The rest is arithmetic. New ABAP syntax is written normally in the main
 repository, and abaplint generates the low-syntax branch automatically, down to
