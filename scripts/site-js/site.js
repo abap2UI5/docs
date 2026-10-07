@@ -35,13 +35,15 @@ import { entryOf, forgetOnReload, handOff, lastVisited, rememberHere, rememberSc
  * the search box - the catalogue's own module, bundled after this one - opens
  * with the last query. All of them read a store this has already emptied.
  *
- * The two keys here are the ones this deployment owns; the five the memory
+ * The keys here are the ones this deployment owns; the five the memory
  * itself keeps are its own business. The theme is in neither list: a colour
  * scheme is a choice about every page there will ever be, not a place. */
 const SECTIONS_KEY = 'abap2ui5-playground:docs-sections';
 /* Spelled here and in the search module the bar carries (theme/search-engine.js
    is this repository's copy of it, QUERY_KEY). */
 const SEARCH_KEY = 'abap2ui5-playground:search';
+/* How far the chapter menu was scrolled when a link in it was clicked (tree()). */
+const MENU_SCROLL_KEY = 'abap2ui5-playground:docs-menu-scroll';
 forgetOnReload([SECTIONS_KEY, SEARCH_KEY]);
 
 /* The Run button under a runnable ABAP example, and "copy link to selection":
@@ -394,8 +396,30 @@ document.addEventListener('click', (e) => {
    * this runs at load, and a menu that scrolls by itself in front of the
    * reader is a different kind of wrong. Roughly a third down rather than at
    * the very top, so the rows above it - its neighbours in the same section -
-   * are on screen too. */
+   * are on screen too.
+   *
+   * BUT A CLICK IN THE MENU KEEPS THE MENU WHERE IT WAS. Every page is a fresh
+   * document, so the menu came back at the top, and the rule above then moved
+   * the clicked row to a third of the way down - a reader working down a long
+   * section saw the list jump under the pointer on every click, and the rows
+   * they were about to click next somewhere else. So the click writes down how
+   * far the menu was scrolled, and which page it was going to; that page, and
+   * only that page, puts it back. Per tab (sessionStorage), and read once: a
+   * page reached any other way keeps the rule above. The rule still runs after
+   * it, for the case where the kept offset would leave the row out of view. */
   const box = document.querySelector('.sidebar');
+  try {
+    const kept = JSON.parse(sessionStorage.getItem(MENU_SCROLL_KEY) || 'null');
+    sessionStorage.removeItem(MENU_SCROLL_KEY);
+    if (box && kept && kept.to === location.pathname && Number.isFinite(kept.top)) box.scrollTop = kept.top;
+  } catch { /* a browser that refuses storage opens the menu at its row */ }
+  box?.addEventListener('click', (e) => {
+    const link = e.target.closest?.('a[href]');
+    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    try {
+      sessionStorage.setItem(MENU_SCROLL_KEY, JSON.stringify({ to: new URL(link.href, location.href).pathname, top: box.scrollTop }));
+    } catch { /* nothing to keep it in */ }
+  });
   if (here && box && box.scrollHeight > box.clientHeight) {
     const at = here.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop;
     if (at < box.scrollTop + 8 || at > box.scrollTop + box.clientHeight - 40)

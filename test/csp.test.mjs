@@ -19,7 +19,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { readdirSync } from 'node:fs';
-import { contentSecurityPolicy, hashOf, imageAllowed, inlineScriptsIn, NEIGHBOUR } from '../scripts/lib/csp.mjs';
+import { contentSecurityPolicy, hashOf, imageAllowed, inlineScriptsIn, NEIGHBOUR, USER_ATTACHMENTS } from '../scripts/lib/csp.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -40,7 +40,7 @@ test('only the hashed scripts are allowed inline, and nothing else is', () => {
 test('the rest of the policy: no objects, no foreign base, styles inline for the highlighter', () => {
   const policy = contentSecurityPolicy([]);
   for (const d of ["default-src 'self'", "object-src 'none'", "base-uri 'self'", "form-action 'self'",
-    "style-src 'self' 'unsafe-inline'", "img-src 'self' data: https://github.com https://*.githubusercontent.com", "font-src 'self'",
+    "style-src 'self' 'unsafe-inline'", "img-src 'self' data: https://github.com https://*.githubusercontent.com https://github-production-user-asset-6210df.s3.amazonaws.com", "font-src 'self'",
     `frame-src 'self' ${NEIGHBOUR}`, `connect-src 'self' ${NEIGHBOUR}`]) {
     assert.ok(policy.includes(d), d);
   }
@@ -108,6 +108,7 @@ test('every picture a page takes from another host is a host the policy allows',
 
 test('imageAllowed reads the list the way a browser reads it', () => {
   assert.ok(imageAllowed('https://github.com/user-attachments/assets/x'));
+  assert.ok(imageAllowed(`${USER_ATTACHMENTS}/102328295/1-x.png?X-Amz-Signature=y`), 'where that one redirects to');
   assert.ok(imageAllowed('https://private-user-images.githubusercontent.com/x.png'));
   assert.ok(imageAllowed('https://raw.githubusercontent.com/abap2UI5/x/main/y.png'));
   assert.ok(imageAllowed('https://abap2ui5.github.io/docs/logo.webp'), 'this origin');
