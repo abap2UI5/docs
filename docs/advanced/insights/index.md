@@ -1,7 +1,7 @@
 ---
-description: The Insights series - the ideas behind abap2UI5 in pieces one coffee long, from why it exists and how it works to a working day and where it belongs.
+description: The abap2UI5 blog series - the ideas behind abap2UI5 in pieces one coffee long, from why it exists and how it works to a working day and where it belongs.
 ---
-# Technical Insights
+# Blogs
 
 Thirty-six short articles about one idea: what happens when the ABAP server
 sends the *screen* instead of only the data.
