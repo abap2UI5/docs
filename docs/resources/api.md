@@ -313,7 +313,7 @@ Hand the screen back to the previous app on the stack - the one that called this
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `app` | `REF TO z2ui5_if_app` | *optional* | the app to show next; not supplied, the app this one was called from - with nothing to return to, the user lands on the start page, so guard the call with check_app_prev_stack( ). |
+| `app` | `REF TO z2ui5_if_app` | *optional* | the app to show next; not supplied, the app this one was called from. With nothing to return to - a root app, or a caller whose draft has expired (announced with a toast) - the leave is dropped: the roundtrip ends on this app, which keeps the screen. Guard the call with check_app_prev_stack( ). |
 | `event` | `clike` | *optional* | an event name the target finds in check_on_event( ) on arrival, so a return WITH a result can be told from a plain return. |
 | `r_data` | `data` | *optional* | data handed to the target, read there as get( )-r_event_data (a reference to a copy of it). An intentionally empty value still arrives. |
 
