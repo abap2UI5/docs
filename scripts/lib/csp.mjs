@@ -18,12 +18,16 @@
  *   style-src    'unsafe-inline' has to stay: the highlighter puts a colour
  *                pair on every token as a style attribute, and <noscript>
  *                carries a <style>.
- *   img-src      this origin, data: URIs, and the two hosts the pages still
- *                take screenshots from: github.com, whose user-attachments
- *                URLs answer with a redirect to *.githubusercontent.com. A
+ *   img-src      this origin, data: URIs, and the hosts the pages still take
+ *                screenshots from: github.com and *.githubusercontent.com, and
+ *                the S3 bucket a github.com/user-attachments URL answers with
+ *                a redirect to. A policy is checked again on every hop of a
+ *                redirect, so without the bucket every such picture was a
+ *                broken-image glyph although its own URL was on the list. A
  *                host missing here is a picture the page silently loses, so
  *                test/csp.test.mjs walks every page for the hosts its images
- *                name and holds them against this list.
+ *                name and holds them against this list - which cannot see a
+ *                redirect, so a hop like the bucket's has to be named here.
  *   connect-src  this origin (the search index) and the playground.
  *   frame-src    this origin and the playground (the Run panel's frame).
  *   object-src   none. base-uri and form-action: this origin.
@@ -35,8 +39,11 @@ import { createHash } from 'node:crypto';
 /** The neighbouring deployments, which on the published site are 'self'. */
 export const NEIGHBOUR = 'https://abap2ui5.github.io';
 
+/** Where github.com/user-attachments/assets/<id> redirects to (302, signed). */
+export const USER_ATTACHMENTS = 'https://github-production-user-asset-6210df.s3.amazonaws.com';
+
 /** Where a page may still load a picture from besides this origin. */
-export const IMAGE_HOSTS = ['https://github.com', 'https://*.githubusercontent.com'];
+export const IMAGE_HOSTS = ['https://github.com', 'https://*.githubusercontent.com', USER_ATTACHMENTS];
 
 /** Whether `url` is a picture the policy lets a page load. */
 export function imageAllowed(url, origin = NEIGHBOUR) {
