@@ -5,7 +5,7 @@ description: Every place an abap2UI5 app can appear outside its own browser tab 
 # Integration
 
 An abap2UI5 app is one URL on your ABAP system, and most places that can show
-a web page can show it. This section collects them: the SAP entry points your
+a web page can show it. This page collects them: the SAP entry points your
 users already open, the phone, Microsoft 365, other systems and AI agents.
 Each page stands on its own; the table says where to start.
 

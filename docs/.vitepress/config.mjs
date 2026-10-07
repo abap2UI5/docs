@@ -505,58 +505,6 @@ export default defineConfig({
         ],
       },
       {
-        // EVERY PLACE AN APP CAN APPEAR outside its own browser tab, in one
-        // section: the SAP entry points, the phone, Microsoft 365, other
-        // systems and AI agents. They stood in three places before - the
-        // Launchpad, Work Zone and Mobile Start under Configuration, the
-        // connectors and the embed control under Advanced Topics › Integration
-        // - and a reader asking "can I show my app in X" had no one list to
-        // look at. The pages kept their URLs; only the menu moved. The
-        // section opens on its own overview, which is that list.
-        text: "Integration",
-        link: "/integration/",
-        collapsed: true,
-        items: [
-          {
-            text: "SAP",
-            collapsed: true,
-            items: [
-              { text: "Fiori Launchpad", link: "/configuration/launchpad" },
-              { text: "Build Work Zone", link: "/configuration/btp" },
-              { text: "Fiori Elements Integration", link: "/advanced/fiori" },
-            ],
-          },
-          {
-            text: "Mobile",
-            collapsed: true,
-            items: [
-              { text: "Mobile Start", link: "/configuration/mobile_start" },
-              { text: "Native Mobile Shell", link: "/integration/mobile_shell" },
-            ],
-          },
-          {
-            text: "Microsoft 365",
-            collapsed: true,
-            items: [
-              { text: "Microsoft Teams", link: "/integration/teams" },
-              { text: "Microsoft Excel", link: "/integration/excel" },
-            ],
-          },
-          {
-            // What the app talks to on the outside: another ABAP system, and
-            // an AI agent over MCP - in the sandbox, from VS Code, or as an
-            // endpoint in the system.
-            text: "Systems, Agents",
-            collapsed: true,
-            items: [
-              { text: "RFC Connector", link: "/advanced/rfc" },
-              { text: "HTTP Connector", link: "/advanced/http" },
-              { text: "Agent-Operable Apps", link: "/advanced/agents" },
-            ],
-          },
-        ],
-      },
-      {
         text: "Advanced Topics",
         // The section's own page: one row per group below, with what it
         // covers and its first page. It opened on User Exits, the first leaf
@@ -572,7 +520,7 @@ export default defineConfig({
           // without scrolling, which it was not when it was the twelfth.
           //
           // Use Cases is gone from this section: it was converted into the
-          // Technical Insights articles below - the clean core levels and the
+          // Blogs under Resources - the clean core levels and the
           // wrapper, on-stack against side-by-side, and one app serving many
           // systems - and the page it used to be is in the git history.
           //
@@ -597,9 +545,58 @@ export default defineConfig({
               },
             ],
           },
-          // The Integration group that stood here - RFC, HTTP, Fiori Elements,
-          // Agent-Operable Apps - is a section of its own now, next to
-          // Configuration, with the Launchpad and the Microsoft 365 pages.
+          {
+            // EVERY PLACE AN APP CAN APPEAR outside its own browser tab, in
+            // one group: the SAP entry points, the phone, Microsoft 365, other
+            // systems and AI agents. They stood in three places once - the
+            // Launchpad, Work Zone and Mobile Start under Configuration, the
+            // connectors and the embed control under Advanced Topics - then in
+            // a top-level section of their own, and now in this group. The
+            // pages kept their URLs; only the menu moved. The group opens on its
+            // own overview, which is that list.
+            text: "Integration",
+            link: "/integration/",
+            collapsed: true,
+            items: [
+              {
+                text: "SAP",
+                collapsed: true,
+                items: [
+                  { text: "Fiori Launchpad", link: "/configuration/launchpad" },
+                  { text: "Build Work Zone", link: "/configuration/btp" },
+                  { text: "Fiori Elements Integration", link: "/advanced/fiori" },
+                ],
+              },
+              {
+                text: "Mobile",
+                collapsed: true,
+                items: [
+                  { text: "Mobile Start", link: "/configuration/mobile_start" },
+                  { text: "Native Mobile Shell", link: "/integration/mobile_shell" },
+                ],
+              },
+              {
+                text: "Microsoft 365",
+                collapsed: true,
+                items: [
+                  { text: "Microsoft Teams", link: "/integration/teams" },
+                  { text: "Microsoft Excel", link: "/integration/excel" },
+                ],
+              },
+              {
+                // What the app talks to on the outside: another ABAP system, and
+                // an AI agent over MCP - in the sandbox, from VS Code, or as an
+                // endpoint in the system.
+                text: "Systems, Agents",
+                collapsed: true,
+                items: [
+                  { text: "RFC Connector", link: "/advanced/rfc" },
+                  { text: "HTTP Connector", link: "/advanced/http" },
+                  { text: "Agent-Operable Apps", link: "/advanced/agents" },
+                ],
+              },
+            ],
+          },
           {
             // Where it runs: an older release, a renamed namespace, a system
             // the framework is not installed on, a UI5 runtime without the
@@ -656,23 +653,39 @@ export default defineConfig({
         ],
       },
       {
-        // A SECTION OF ITS OWN. Thirty-six essays stood three levels deep
-        // under "Advanced Topics", a label that says "later" - and among
-        // them are the pages a reader deciding whether to adopt the framework
-        // is looking for: the cost of a screen, RAP or abap2UI5, low-code or
-        // abap2UI5. Sixty per cent of that section was this, and none of it
-        // was advanced. The URLs stay where they were published.
-        text: "Know-How",
-        link: "/advanced/insights/",
+        text: "Resources",
+        link: "/resources/references",
         collapsed: true,
         items: [
+          { text: "References", link: "/resources/references" },
+          // Generated from z2ui5_if_client at the pinned release by
+          // scripts/generate-api-reference.mjs — the entry lives here rather
+          // than in the Cookbook because it is a lookup destination, not a
+          // reading path: the cookbook chapters explain, this page lists.
+          { text: "Client API", link: "/resources/api" },
+          // No "Sample Catalogues" entry here any more. A page that only
+          // described the three catalogues put a stop between the reader and
+          // the corpus, and had to be kept true about counts and facets it
+          // did not own. The catalogue pages introduce themselves and link
+          // one another; the home page opens the first of them directly, and
+          // the cookbook links individual samples per chapter.
+          //
+          // Moved here from Advanced Topics: the ecosystem around the
+          // framework rather than a technique to apply to your own app, and
+          // it closes by asking the reader to add their project - the same
+          // invitation Who Uses abap2UI5? makes below it.
+          { text: "Add-ons", link: "/resources/addons" },
+          { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
+          { text: "Release Notes", link: "/resources/changelog" },
+          { text: "Deprecations", link: "/resources/deprecations" },
           {
-            // The series itself, as a group under the section - the shape
-            // Tutorial › Walkthrough has, and for the same reason: the
-            // series' own index page gets a crumb trail this way (the
-            // section is the trail, the group is the page).
-            text: "Technical Insights",
+            // The series of essays, moved here from a top-level "Know-How"
+            // section of its own: a reader looks for them next to References
+            // and Who Uses abap2UI5?, as reading about the framework rather
+            // than a step in using it. The URLs stay where they were published.
+            text: "Blogs",
             link: "/advanced/insights/",
+            collapsed: true,
             items: [
               // Four blocks - why, how it works, a working day, where it
               // belongs - and the index page at the link above names them. The
@@ -716,34 +729,6 @@ export default defineConfig({
               { text: "#36 Written for Agents", link: "/advanced/insights/36-written-for-agents" },
             ],
           },
-        ],
-      },
-      {
-        text: "Resources",
-        link: "/resources/references",
-        collapsed: true,
-        items: [
-          { text: "References", link: "/resources/references" },
-          // Generated from z2ui5_if_client at the pinned release by
-          // scripts/generate-api-reference.mjs — the entry lives here rather
-          // than in the Cookbook because it is a lookup destination, not a
-          // reading path: the cookbook chapters explain, this page lists.
-          { text: "Client API", link: "/resources/api" },
-          // No "Sample Catalogues" entry here any more. A page that only
-          // described the three catalogues put a stop between the reader and
-          // the corpus, and had to be kept true about counts and facets it
-          // did not own. The catalogue pages introduce themselves and link
-          // one another; the home page opens the first of them directly, and
-          // the cookbook links individual samples per chapter.
-          //
-          // Moved here from Advanced Topics: the ecosystem around the
-          // framework rather than a technique to apply to your own app, and
-          // it closes by asking the reader to add their project - the same
-          // invitation Who Uses abap2UI5? makes below it.
-          { text: "Add-ons", link: "/resources/addons" },
-          { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
-          { text: "Release Notes", link: "/resources/changelog" },
-          { text: "Deprecations", link: "/resources/deprecations" },
           {
             // The project rather than the framework: what it costs, who to
             // ask, how to join in. Six entries that stood between the
