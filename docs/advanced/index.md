@@ -1,20 +1,20 @@
 ---
 outline: [2, 4]
-description: What comes after the first app - extending the framework, running it on older releases and other stacks, and the tools you develop with.
+description: What comes after the first app - extending the framework, showing an app outside the browser tab, running it on older releases and other stacks, and the tools you develop with.
 ---
 # Advanced Topics
 
 Everything in this section is something you do to an app that already runs:
-extend the framework underneath it, take it to a release or a stack it was
-not written on, or set up the machine you write it on. None of it is needed
-for a first app — the [Quickstart](/get_started/quickstart) and the
-[Cookbook](/cookbook/) come first — and every group below stands on its own.
-Where an app can appear besides a browser tab, and what it can talk to, is
-the [Integration](/integration/) section.
+extend the framework underneath it, show it somewhere besides a browser tab,
+take it to a release or a stack it was not written on, or set up the machine
+you write it on. None of it is needed for a first app — the
+[Quickstart](/get_started/quickstart) and the [Cookbook](/cookbook/) come
+first — and every group below stands on its own.
 
 | Group | What it covers | Start with |
 |---|---|---|
 | Extensibility | User exits on the HTTP handler, the frontend artifacts as an app of your own, custom UI5 controls | [User Exits](/advanced/extensibility/user_exits) |
+| Integration | The Fiori Launchpad, SAP Build Work Zone, Mobile Start, a native mobile shell, Microsoft Teams and Excel, another ABAP system and AI agents | [Integration](/integration/) |
 | Releases, Stacks | The downport to NetWeaver 7.02, renaming the `Z2UI5_` prefix, developing in a repository off the stack, converting classic reports for ABAP Cloud, the legacy-free UI5 runtime | [Downporting](/advanced/downporting) |
 | Developer Setup | The tooling around the framework, the linter, the MCP server, the VS Code extension, and the setup for an AI agent | [Tooling](/advanced/tooling) |
 | Toolchain | The open-source projects the framework is built with — abapGit, ajson, S-RTTI, abaplint, open-abap, abap-cleaner, abapmerge | [Toolchain](/technical/tools/) |
