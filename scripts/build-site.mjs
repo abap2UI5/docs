@@ -660,16 +660,36 @@ const linkedData = ({ page, title, description, url, isHome }) => {
  * Pages sets no headers of ours, so it is a <meta>, which cannot carry
  * frame-ancestors and does not need to.
  *
- * The two inline scripts are the exception a hash makes: the theme line,
- * which has to run before the first paint, and the menu script the bar
- * brings with it from the playground. Both are hashed at build time from
+ * The three inline scripts are the exception a hash makes: the theme line,
+ * which has to run before the first paint, the menu script the bar
+ * brings with it from the playground, and the prefetch rules. Both are hashed at build time from
  * the very string that is written, so they cannot drift - and every page
  * is read back for an inline script that is neither, which would be a
  * script the policy silently kills (scripts/lib/csp.mjs). Styles stay
  * 'unsafe-inline': the highlighter writes a colour pair on every token. */
 const THEME_SCRIPT = 'try{var t=localStorage.getItem("abap2ui5-playground:theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}';
 const MENU_SCRIPT_BODY = MENU_SCRIPT.replace(/^<script>/, '').replace(/<\/script>$/, '');
-const INLINE = [THEME_SCRIPT, MENU_SCRIPT_BODY];
+/* THE NEXT PAGE IS FETCHED WHILE THE POINTER RESTS ON ITS LINK. A click in
+   the menu was a whole new document every time, and the reader watched the
+   bar and the menu go white and come back. What makes that disappear is two
+   things together: the page already being here when the click lands (this),
+   and the browser carrying the bar and the menu across unchanged while only
+   the article fades (`@view-transition` in docs.css). No router - every page
+   is still a page of its own, at its own address, with its own policy.
+
+   PREFETCH, NEVER PRERENDER: a prerendered page runs site.js, and site.js
+   writes down where the reader IS (rememberHere, the scroll memory) - a page
+   they only hovered would become the place the bar takes them back to.
+   `moderate` is a 200ms hover or a pointerdown; a link to a neighbouring
+   deployment (`target`) is left alone, and so is anything outside BASE.
+   A browser that does not know the rules ignores the block. */
+const PREFETCH_RULES = JSON.stringify({
+  prefetch: [{
+    where: { and: [{ href_matches: `${BASE}*` }, { not: { selector_matches: '[target]' } }] },
+    eagerness: 'moderate',
+  }],
+});
+const INLINE = [THEME_SCRIPT, MENU_SCRIPT_BODY, PREFETCH_RULES];
 const announced = (raw, allowed) => {
   /* Without the comments the sources are written with (scripts/lib/html.mjs),
      and read back for its scripts AFTER that, so what is checked is what is
@@ -681,7 +701,7 @@ const announced = (raw, allowed) => {
   return page;
 };
 
-/* `inline`: the scripts THIS page brings beyond the two every page carries -
+/* `inline`: the scripts THIS page brings beyond the three every page carries -
    the 404's suggestions are the one case - each hashed into the policy of the
    page that carries it, and only that page. */
 const shell = ({ title, main, bar, head = '', inline = [], italic = false }) => {
@@ -706,7 +726,14 @@ const shell = ({ title, main, bar, head = '', inline = [], italic = false }) => 
 <meta name="theme-color" content="#1e2024" media="(prefers-color-scheme: dark)">
 <link rel="preload" href="${BASE}fonts/inter-roman-latin.woff2" as="font" type="font/woff2" crossorigin>
 ${italic ? `<link rel="preload" href="${BASE}fonts/inter-italic-latin.woff2" as="font" type="font/woff2" crossorigin>\n` : ''}<link rel="stylesheet" href="${BASE}site.css">
-<script type="module" src="${BASE}site.js"></script>
+<!-- RENDER-BLOCKING, so the first frame is the finished one. site.js puts
+     the menu back - the sections the reader opened, the offset it was
+     scrolled to - and a frame painted before that is a menu that jumps; in a
+     view transition (docs.css) it is the frame the transition settles on. It
+     costs no round trip a page did not already wait for: site.css, from the
+     same origin and the same cache, blocks the first paint as it is. -->
+<script type="module" src="${BASE}site.js" blocking="render"></script>
+<script type="speculationrules">${PREFETCH_RULES}</script>
 <!-- TWO BUTTONS THAT ARE ONLY BUTTONS WITH JAVASCRIPT. The Run bar under a
      runnable example and the copy button on a listing are written into the
      page by the build, and both do their work in the browser - so with

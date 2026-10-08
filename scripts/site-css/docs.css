@@ -1425,3 +1425,36 @@ html { scrollbar-gutter: stable; }
 .VPBadge.tip { color: var(--accent); border-color: var(--accent); }
 .VPBadge.warning { color: #a15c07; border-color: #a15c07; }
 .VPBadge.danger { color: var(--danger, #b5253a); border-color: var(--danger, #b5253a); }
+
+/* ---- a click in the menu changes the article, not the page --------------
+ *
+ * Every page is its own document, so a click in the menu used to repaint
+ * everything: the bar and the menu went blank for a frame and came back, and
+ * read as the whole site reloading under the reader. A cross-document view
+ * transition carries them across instead. Both pages opt in here, the bar and
+ * the menu are named so the browser matches them old-to-new, and the named
+ * pair is shown as it is on the NEW page at once - no fade, no slide - while
+ * the rest (the article, the outline, the footer) crossfades briefly. It also
+ * applies to back and forward.
+ *
+ * Only between two pages of the manual: the catalogue and the playground do
+ * not opt in, so crossing to them is an ordinary navigation, as before. A
+ * browser without cross-document transitions navigates as it always did.
+ * The menu's shape and offset are put back before the first frame
+ * (`blocking="render"` on site.js, build-site.mjs), which is what lets the
+ * new menu appear exactly where the old one stood. */
+@view-transition { navigation: auto; }
+.bar { view-transition-name: site-bar; }
+.sidebar { view-transition-name: site-chapters; }
+::view-transition-group(site-bar),
+::view-transition-group(site-chapters),
+::view-transition-new(site-bar),
+::view-transition-new(site-chapters) { animation: none; }
+::view-transition-old(site-bar),
+::view-transition-old(site-chapters) { display: none; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: .12s; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}
