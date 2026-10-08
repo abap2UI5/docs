@@ -4,7 +4,7 @@ description: Unit-test the app class like any ABAP class — the data methods ar
 ---
 # Step 12: Unit Tests
 
-The app is in production since [Step 11](/tutorials/walkthrough/step-11), and
+The app is in production since [Step 11](/tutorials/step-11), and
 changes will keep coming — a new filter, a second editable field, the next
 framework release. What lets the next transport leave with confidence is the
 same thing as in every other ABAP project: unit tests. This step adds them to
@@ -14,7 +14,7 @@ could have written before ever hearing of this framework.
 
 ## The Class Under Test
 
-The app is unchanged from [Step 10](/tutorials/walkthrough/step-10). It is
+The app is unchanged from [Step 10](/tutorials/step-10). It is
 folded here in full so this step stands on its own — open it when you want to
 copy the class, or read on to the tests, which are what this step is about:
 
@@ -344,7 +344,7 @@ different seams:
 - **`update_writes_back`** plays the popup workflow without the popup: fill
   `s_edit` the way the dialog's bindings would, call `data_update`, and check
   the table. When the demo data becomes a real `UPDATE` in
-  [Step 11](/tutorials/walkthrough/step-11), this is the test that grows a
+  [Step 11](/tutorials/step-11), this is the test that grows a
   test double for the database layer — the seam is already in place.
 
 ## Why This Worked

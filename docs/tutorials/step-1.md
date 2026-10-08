@@ -39,7 +39,7 @@ enter the class name.
   while all logic, state and data stay in ABAP on the server.
 - **`main` runs on every roundtrip.** The framework calls it when the app
   starts and again after every user interaction. Right now every call shows
-  the same message box; from [Step 3](/tutorials/walkthrough/step-3) on we
+  the same message box; from [Step 3](/tutorials/step-3) on we
   will tell the calls apart.
 - **`client` is the whole API.** Displaying views and messages, reacting to
   events, binding data — everything in this tutorial goes through this one

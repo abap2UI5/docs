@@ -284,7 +284,7 @@ your data protection officer before switching them on.
 
 ### Reproducing an error
 
-When the headless frontend from [Step 12](/tutorials/walkthrough/step-12#testing-the-roundtrip)
+When the headless frontend from [Step 12](/tutorials/step-12#testing-the-roundtrip)
 of the walkthrough is installed, the detail of an error group offers
 **Reproduce…** for the selected occurrence. It resumes the draft the failed
 request came with and fires the same event again through the simulator, so the

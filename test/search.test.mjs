@@ -100,8 +100,8 @@ test('a page is indexed by its headings and by its words', () => {
   assert.equal(page.url, 'https://abap2ui5.github.io/docs/cookbook/carousel.html');
   /* A directory index is served at the trailing slash and must not become
    * `<dir>/.html`, which is a 404 the reader meets after the search worked. */
-  const [index] = docEntries([{ section: 'Tutorial', text: 'Walkthrough', link: '/tutorials/walkthrough/' }], () => body);
-  assert.equal(index.url, 'https://abap2ui5.github.io/docs/tutorials/walkthrough/');
+  const [index] = docEntries([{ section: 'Tutorial', text: 'Tutorial', link: '/tutorials/' }], () => body);
+  assert.equal(index.url, 'https://abap2ui5.github.io/docs/tutorials/');
 });
 
 test('the words of a page are distinct, and the noise is left out', () => {

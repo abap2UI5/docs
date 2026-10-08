@@ -240,39 +240,26 @@ export default defineConfig({
         // read after the framework is installed and before the reference
         // chapters, and that is the order the three sections stand in.
         text: "Tutorial",
-        link: "/tutorials/walkthrough/",
+        link: "/tutorials/",
         collapsed: true,
+        // The section's own row opens the tutorial's index page, and the
+        // steps stand directly under it. They used to sit one level deeper,
+        // in a "Walkthrough" group that was the only thing in the section -
+        // two rows in front of the reader for one tutorial, and a caret that
+        // opened onto a second label before the first step.
         items: [
-          {
-            // No `collapsed` key at all, like Quickstart above: that is what
-            // makes a group a plain labelled list instead of a collapsible
-            // one. `collapsed: false` would still render the toggle and still
-            // let the steps be folded away - and the sequence IS the tutorial,
-            // so a reader working through it has to see where they are on
-            // every page.
-            //
-            // The group label itself opens the walkthrough's index page.
-            // That page used to stand above the group as a separate
-            // "Overview" entry, which put two lines in front of the reader
-            // for one page - the label they were looking for and the entry
-            // that actually opened it.
-            text: "Walkthrough",
-            link: "/tutorials/walkthrough/",
-            items: [
-              { text: "1. The App Class", link: "/tutorials/walkthrough/step-1" },
-              { text: "2. A First View", link: "/tutorials/walkthrough/step-2" },
-              { text: "3. Events", link: "/tutorials/walkthrough/step-3" },
-              { text: "4. Data Binding", link: "/tutorials/walkthrough/step-4" },
-              { text: "5. List Binding", link: "/tutorials/walkthrough/step-5" },
-              { text: "6. Row Events", link: "/tutorials/walkthrough/step-6" },
-              { text: "7. Popups", link: "/tutorials/walkthrough/step-7" },
-              { text: "8. Selection Screen", link: "/tutorials/walkthrough/step-8" },
-              { text: "9. Tables", link: "/tutorials/walkthrough/step-9" },
-              { text: "10. App Structure", link: "/tutorials/walkthrough/step-10" },
-              { text: "11. To Production", link: "/tutorials/walkthrough/step-11" },
-              { text: "12. Unit Tests", link: "/tutorials/walkthrough/step-12" },
-            ],
-          },
+          { text: "1. The App Class", link: "/tutorials/step-1" },
+          { text: "2. A First View", link: "/tutorials/step-2" },
+          { text: "3. Events", link: "/tutorials/step-3" },
+          { text: "4. Data Binding", link: "/tutorials/step-4" },
+          { text: "5. List Binding", link: "/tutorials/step-5" },
+          { text: "6. Row Events", link: "/tutorials/step-6" },
+          { text: "7. Popups", link: "/tutorials/step-7" },
+          { text: "8. Selection Screen", link: "/tutorials/step-8" },
+          { text: "9. Tables", link: "/tutorials/step-9" },
+          { text: "10. App Structure", link: "/tutorials/step-10" },
+          { text: "11. To Production", link: "/tutorials/step-11" },
+          { text: "12. Unit Tests", link: "/tutorials/step-12" },
         ],
       },
       {

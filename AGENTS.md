@@ -576,8 +576,8 @@ Three things to know before touching it:
 - **The sidebar's `collapsed` key means what it means in VitePress.** A group
   with `collapsed: true` gets a caret and opens when it holds the page;
   `collapsed: false` opens by default; a group with NO key is a plain labelled
-  list — no box, no caret, always open (`side-plain`), which is what the
-  walkthrough's twelve steps and Binding's two pages are written as. The first
+  list — no box, no caret, always open (`side-plain`), which is what
+  Binding's two pages are written as. The first
   cut of `sidebarFor( )` gave every group a caret and opened only the one
   holding the page, so Tutorial unfolded to a single closed row.
 - **Every page carries its own head.** Title, description, canonical, and the
@@ -616,7 +616,7 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are eighteen of them. Eight are `/technical/*`: that whole section became
+There are thirty-one of them. Eight are `/technical/*`: that whole section became
 the Know-How series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
@@ -628,6 +628,11 @@ its sidebar entry already was), the three one-paragraph toolchain pages and
 `advanced/local` (sections of `technical/tools/`), `configuration/btp_abap_env`
 (S/4 Public Cloud, which says it covers both), `configuration/transport`
 (Productive Usage) and `resources/contact` (Support).
+The last thirteen are the Tutorial's, moved on 2026-10-08 when its single
+"Walkthrough" group was dissolved: `tutorials/walkthrough/index` and
+`step-1` to `step-12` each point at the same page one level up, under
+`/tutorials/`. Those carry a one-line script on top of the `meta refresh`
+that keeps the `#fragment`, because links into a step's sections exist.
 
 Two things make this safe rather than a second set of pages to maintain:
 

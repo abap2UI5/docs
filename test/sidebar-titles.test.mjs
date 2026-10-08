@@ -11,7 +11,7 @@
  *   - A section's `link` was not the first page under it: Configuration
  *     opened Setup while Installation stood first, Advanced Topics opened
  *     Downporting. A section's words open its link (build-site.mjs), so the
- *     link has to be either the section's own page - the Walkthrough's
+ *     link has to be either the section's own page - the Tutorial's
  *     index, the Model chapter's Binding - or the first page in the list
  *     under it, never a page from the middle.
  *

@@ -348,8 +348,8 @@ function sidebarFor(route) {
   const same = (link) => link && link.replace(/\/$/, '') === route.replace(/\/$/, '');
   const holds = (i) => same(i.link) || (i.items || []).some(holds);
   /* THE KEY A SECTION IS REMEMBERED BY, and it has to be its own. It used to
-     be the section's link, falling back to its text - and four sections in
-     this menu share a link with another one (Walkthrough, View / Definition,
+     be the section's link, falling back to its text - and three sections in
+     this menu share a link with another one (View / Definition,
      Model / Binding, Configuration / Setup all point at their own first page,
      which is also a section). Two <details> with one key are one entry in the
      reader's stored menu: opening either wrote both, and the store came back
@@ -391,8 +391,8 @@ function sidebarFor(route) {
       : `<span class="side-item level-${level}">${esc(i.text)}</span>`;
     const key = [...trail, i.text].join(' / ');
     /* A GROUP WITHOUT A `collapsed` KEY IS A PLAIN LABELLED LIST. That is
-       VitePress's rule and the one config.mjs is written to: the walkthrough's
-       twelve steps, Binding's two pages, the thirty-six insights - "the
+       VitePress's rule and the one config.mjs is written to: Binding's two
+       pages, the thirty-six insights - "the
        sequence IS the tutorial, so a reader working through it has to see
        where they are on every page". This build gave every group a caret and
        opened only the one holding the current page, so from any other chapter

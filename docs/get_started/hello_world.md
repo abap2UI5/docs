@@ -127,7 +127,7 @@ something does not render the way you expected:
 ## Where Next
 
 Want all of that explained rather than just shown? The
-[Walkthrough](/tutorials/walkthrough/) takes these two classes apart and grows them
+[Tutorial](/tutorials/) takes these two classes apart and grows them
 into a complete app, one concept per step — views, events, binding, lists,
 tables, a selection screen and popups. Every step is a complete class you can
 run in the browser.

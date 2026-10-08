@@ -16,8 +16,8 @@ export const DOCS = '/get_started/about'
 
 /** One spelling for a page, so a sidebar entry and the page being rendered can
  *  be compared at all: no extension, no `index`, no trailing slash, and one
- *  slash at the front. The sidebar writes `/tutorials/walkthrough/` and the
- *  file is `tutorials/walkthrough/index.md`; both have to end as the same
+ *  slash at the front. The sidebar writes `/tutorials/` and the
+ *  file is `tutorials/index.md`; both have to end as the same
  *  string. The leading slash is COLLAPSED rather than assumed, because the
  *  trail is built by putting one in front of a `relativePath` — and a value
  *  that already carried one would otherwise match nothing, which reads as a
@@ -68,8 +68,8 @@ function sectionsOf(sidebar, path) {
 /**
  * The trail for one page, outermost first: `[{ text, link }, …]`.
  *
- * `link` is absent on a crumb the sidebar gives nowhere to open — "Quickstart"
- * and "Walkthrough" are labels over a list of steps, not pages — and such a
+ * `link` is absent on a crumb the sidebar gives nowhere to open — a group that
+ * is only a label over a list of pages, not a page — and such a
  * crumb is drawn as plain text, which is what the catalogue does with its own
  * last one.
  *

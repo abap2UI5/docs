@@ -71,7 +71,7 @@ ENDCLASS.
 
 - **The table binds like the string did.** ``client->_bind( t_invoices )``
   on the list's `items` aggregation — the same call as in
-  [Step 4](/tutorials/walkthrough/step-4), just with an internal table behind
+  [Step 4](/tutorials/step-4), just with an internal table behind
   it.
 - **The `StandardListItem` is a template, not a row.** UI5 clones it once per
   line of the table. Inside the template, `{PRODUCT}` is a plain UI5 binding

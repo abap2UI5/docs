@@ -491,7 +491,7 @@ operable as it stands.
 The engine under the add-on is useful on its own, and older than the add-on:
 [abap2UI5/headless-frontend](https://github.com/abap2UI5/headless-frontend)
 plays the browser's side of the protocol inside ABAP, which makes a whole user
-session an ABAP Unit test. [Step 12](/tutorials/walkthrough/step-12#testing-the-roundtrip)
+session an ABAP Unit test. [Step 12](/tutorials/step-12#testing-the-roundtrip)
 of the walkthrough shows it; the add-on uses its session API — `resume( )`,
 `get_state( )` and `get_layers( )` — to continue a session in the next HTTP
 request, `set_json( )` to send each value typed, and `close_layer( )` for

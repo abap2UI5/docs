@@ -15,10 +15,10 @@ Step 8's selection screen above Step 9's table — into the complete app.
 
 ## What It Does
 
-1. **Selection screen** — supplier and a delivery-date range ([Step 8](/tutorials/walkthrough/step-8)).
-2. **Read** — fetch the matching invoices on button press ([Step 8](/tutorials/walkthrough/step-8)).
-3. **Result table** — columns, cells and a row action ([Step 9](/tutorials/walkthrough/step-9)).
-4. **Popup** — edit the delivery date of one row ([Step 7](/tutorials/walkthrough/step-7)).
+1. **Selection screen** — supplier and a delivery-date range ([Step 8](/tutorials/step-8)).
+2. **Read** — fetch the matching invoices on button press ([Step 8](/tutorials/step-8)).
+3. **Result table** — columns, cells and a row action ([Step 9](/tutorials/step-9)).
+4. **Popup** — edit the delivery date of one row ([Step 7](/tutorials/step-7)).
 5. **Post** — write the change back and refresh the table.
 
 ## The Class
@@ -305,9 +305,9 @@ ENDCLASS.
 The app is built — the walkthrough's last two steps take it out of the
 playground:
 
-- **[Step 11: From Playground to Production](/tutorials/walkthrough/step-11)** —
+- **[Step 11: From Playground to Production](/tutorials/step-11)** —
   real data, the transport order, authorization, and the URL users start from,
-- **[Step 12: Unit Tests](/tutorials/walkthrough/step-12)** — the structure of
+- **[Step 12: Unit Tests](/tutorials/step-12)** — the structure of
   this step pays off: the data methods are testable without any UI.
 
 And for everything beyond the walkthrough:
