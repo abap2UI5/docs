@@ -12,9 +12,9 @@
  * What is allowed, and why each thing is:
  *   script-src   this origin (site.js, search.mjs), the playground beside it
  *                (the Run panel's loader, which on the published site IS this
- *                origin and on a dev server is not), and the two inline
- *                scripts by hash - the theme line and the borrowed menu
- *                script. No 'unsafe-inline', which is the whole point.
+ *                origin and on a dev server is not), and the inline
+ *                scripts by hash - the theme line, the borrowed menu
+ *                script and the prefetch rules. No 'unsafe-inline', which is the whole point.
  *   style-src    'unsafe-inline' has to stay: the highlighter puts a colour
  *                pair on every token as a style attribute, and <noscript>
  *                carries a <style>.

@@ -9,10 +9,10 @@ samples:
 A list shows three fields per row. A table shows columns — with headers, with
 a cell per field, and with room for a row action. This step swaps
 `sap.m.List` for `sap.m.Table` and brings back the edit dialog from
-[Step 7](/tutorials/walkthrough/step-7), now opened by a button in a column of
+[Step 7](/tutorials/step-7), now opened by a button in a column of
 its own. To keep the table in focus, it leaves Step 8's selection form out and
 fills the table on navigation, as Step 7 did; the form comes back in
-[Step 10](/tutorials/walkthrough/step-10), which puts all the parts together:
+[Step 10](/tutorials/step-10), which puts all the parts together:
 
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
@@ -175,7 +175,7 @@ ENDCLASS.
   ships. The tooltip is what a reader of the screen — and a screen reader —
   gets instead of a label.
 
-Everything else is [Step 7](/tutorials/walkthrough/step-7) unchanged: the row
+Everything else is [Step 7](/tutorials/step-7) unchanged: the row
 event carries `${PRODUCT}`, the dialog binds `s_edit`, and `SAVE` writes back
 into the internal table without rebuilding the view.
 

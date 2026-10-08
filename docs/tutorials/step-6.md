@@ -6,7 +6,7 @@ samples:
 ---
 # Step 6: Row Events
 
-A list of five rows raises a question [Step 3](/tutorials/walkthrough/step-3)
+A list of five rows raises a question [Step 3](/tutorials/step-3)
 did not have: *which* row was clicked? The event stays the same — what is new
 is the argument it carries:
 
@@ -89,7 +89,7 @@ ENDCLASS.
 - **The state is still there.** `t_invoices` was filled in the
   `check_on_navigated` branch of an earlier roundtrip — the framework
   restored it before this one, so the event handler can read it. That is the
-  serialization from [Step 4](/tutorials/walkthrough/step-4) doing its job.
+  serialization from [Step 4](/tutorials/step-4) doing its job.
 
 More on both event directions — server events like this one, and events
 handled purely in the browser — under

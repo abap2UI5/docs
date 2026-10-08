@@ -25,10 +25,10 @@ test('one spelling for a page, whatever it was written as', () => {
   assert.equal(key('/get_started/about'), '/get_started/about');
   assert.equal(key('/get_started/about.md'), '/get_started/about');
   assert.equal(key('/get_started/about.html'), '/get_started/about');
-  // The sidebar writes the walkthrough's index with a trailing slash and the
+  // The sidebar writes the tutorial's index with a trailing slash and the
   // file is `index.md`; both have to arrive at the same string.
-  assert.equal(key('/tutorials/walkthrough/'), '/tutorials/walkthrough');
-  assert.equal(key('/tutorials/walkthrough/index.md'), '/tutorials/walkthrough');
+  assert.equal(key('/tutorials/'), '/tutorials');
+  assert.equal(key('/tutorials/index.md'), '/tutorials');
   assert.equal(key('/cookbook/model/trees#binding'), '/cookbook/model/trees');
   assert.equal(key('/'), '/');
   assert.equal(key(''), '/');
@@ -95,7 +95,7 @@ test('the real sidebar files the pages where a reader would look for them', () =
   const cases = [
     ['get_started/about.md', ['Documentation', 'Getting Started']],
     ['get_started/hello_world.md', ['Documentation', 'Getting Started']],
-    ['tutorials/walkthrough/step-4.md', ['Documentation', 'Tutorial', 'Walkthrough']],
+    ['tutorials/step-4.md', ['Documentation', 'Tutorial']],
     ['cookbook/model/trees.md', ['Documentation', 'Cookbook', 'Model']],
     ['cookbook/model/expression_binding.md', ['Documentation', 'Cookbook', 'Model', 'Binding']],
     ['cookbook/view/definition.md', ['Documentation', 'Cookbook', 'View']],

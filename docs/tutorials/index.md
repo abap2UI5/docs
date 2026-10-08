@@ -2,9 +2,9 @@
 outline: [2, 4]
 description: Learn abap2UI5 by building — a step-by-step walkthrough where every step is a complete class you can run in the browser.
 ---
-# Walkthrough
+# Tutorial
 
-Learn abap2UI5 by building something. The **Walkthrough** grows a small invoice
+Learn abap2UI5 by building something. The **Tutorial** grows a small invoice
 app from a single message box into a complete application, one concept per
 step: the app class and its lifecycle, views written in ABAP, events, data
 binding, lists, tables, a selection screen and popups — and then takes the
@@ -20,29 +20,29 @@ step you are interested in.
 
 ## Preview
 
-![The finished walkthrough app: a table of invoices with a selection form above it, and a dialog editing one row](/tutorials/walkthrough-preview.webp)
+![The finished tutorial app: a table of invoices with a selection form above it, and a dialog editing one row](/tutorials/walkthrough-preview.webp)
 
 This is the app after the last building step — a few hundred lines of ABAP,
 no frontend project, no OData service.
 
 ## Steps
 
-- **[Step 1: The App Class](/tutorials/walkthrough/step-1)** — the smallest
+- **[Step 1: The App Class](/tutorials/step-1)** — the smallest
   possible app: one class, one method, one message.
-- **[Step 2: A First View](/tutorials/walkthrough/step-2)** — render a UI5 view built entirely in ABAP.
-- **[Step 3: Events](/tutorials/walkthrough/step-3)** — a button, a press event, and the lifecycle behind them.
-- **[Step 4: Data Binding](/tutorials/walkthrough/step-4)** — an input field whose value reaches the server by itself.
-- **[Step 5: List Binding](/tutorials/walkthrough/step-5)** — show an internal table as a UI5 list.
-- **[Step 6: Row Events](/tutorials/walkthrough/step-6)** — react to a click on a row, and know which row it was.
-- **[Step 7: Popups](/tutorials/walkthrough/step-7)** — edit a row in a dialog.
-- **[Step 8: Selection Screen](/tutorials/walkthrough/step-8)** — a form above
+- **[Step 2: A First View](/tutorials/step-2)** — render a UI5 view built entirely in ABAP.
+- **[Step 3: Events](/tutorials/step-3)** — a button, a press event, and the lifecycle behind them.
+- **[Step 4: Data Binding](/tutorials/step-4)** — an input field whose value reaches the server by itself.
+- **[Step 5: List Binding](/tutorials/step-5)** — show an internal table as a UI5 list.
+- **[Step 6: Row Events](/tutorials/step-6)** — react to a click on a row, and know which row it was.
+- **[Step 7: Popups](/tutorials/step-7)** — edit a row in a dialog.
+- **[Step 8: Selection Screen](/tutorials/step-8)** — a form above
   the list, and reading the data it asks for.
-- **[Step 9: Tables](/tutorials/walkthrough/step-9)** — swap the list for a real
+- **[Step 9: Tables](/tutorials/step-9)** — swap the list for a real
   table with columns, cells and row actions.
-- **[Step 10: App Structure](/tutorials/walkthrough/step-10)** — refactor into the structure real apps use.
-- **[Step 11: From Playground to Production](/tutorials/walkthrough/step-11)** —
+- **[Step 10: App Structure](/tutorials/step-10)** — refactor into the structure real apps use.
+- **[Step 11: From Playground to Production](/tutorials/step-11)** —
   real data, the transport order, authorization, and the URL users start from.
-- **[Step 12: Unit Tests](/tutorials/walkthrough/step-12)** — test the app class
+- **[Step 12: Unit Tests](/tutorials/step-12)** — test the app class
   like any ABAP class; no UI5 runtime involved.
 
 ## What You Should Know
@@ -54,7 +54,7 @@ reading first: it starts the smallest possible app in your own system, which is
 where this tutorial picks up.
 
 The Run button works without any installation at all, so you can also simply
-begin at [Step 1](/tutorials/walkthrough/step-1).
+begin at [Step 1](/tutorials/step-1).
 
 Keep the [Cheat Sheet](/cookbook/cheat_sheet) open while you work through the
 steps — it is every recurring construct on one page, from binding syntax to the

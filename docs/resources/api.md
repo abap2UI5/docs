@@ -19,7 +19,7 @@ behind the bar's last button.
 
 The interface is deliberately small and deliberately stable. How the pieces
 fit together — the lifecycle, binding, events — is what the
-[Tutorial](/tutorials/walkthrough/) and the [Cookbook](/cookbook/view/definition)
+[Tutorial](/tutorials/) and the [Cookbook](/cookbook/view/definition)
 explain; this page is the contract they explain it against. What an older app
 may still call, and what to write instead, is on
 [Deprecations](/resources/deprecations) and nowhere else.

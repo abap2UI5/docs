@@ -5,7 +5,7 @@
  * Three deployments share one origin, and one of them runs whatever ABAP a
  * shared link carries. A page of the manual runs nothing of the kind and says
  * so with a Content-Security-Policy - a <meta>, because GitHub Pages sets no
- * headers of ours. What has to hold: the two inline scripts the build writes
+ * headers of ours. What has to hold: the inline scripts the build writes
  * are allowed by HASH and nothing inline is allowed otherwise, the hash is the
  * one CSP spells, a data block is not a script, and the build refuses a page
  * carrying an inline script the policy would kill rather than publishing a
@@ -64,13 +64,17 @@ test('a comment that mentions <script> starts no inline script', () => {
 const BUILD = readFileSync(join(ROOT, 'scripts/build-site.mjs'), 'utf8');
 
 test('the build hashes the very strings it writes, and writes the policy before them', () => {
-  assert.match(BUILD, /const INLINE = \[THEME_SCRIPT, MENU_SCRIPT_BODY\];/);
+  assert.match(BUILD, /const INLINE = \[THEME_SCRIPT, MENU_SCRIPT_BODY, PREFETCH_RULES\];/);
   assert.match(BUILD, /const allowed = \[\.\.\.INLINE, \.\.\.inline\];\s*const csp = contentSecurityPolicy\(allowed\);/,
-    'the two scripts every page carries, plus what this page brings - and the policy is made of exactly those');
+    'the scripts every page carries, plus what this page brings - and the policy is made of exactly those');
   assert.match(BUILD, /<script>\${THEME_SCRIPT}<\/script>/, 'the theme line is written from the same constant that is hashed');
   const meta = BUILD.indexOf('<meta http-equiv="Content-Security-Policy" content="${csp}">');
   const theme = BUILD.indexOf('<script>${THEME_SCRIPT}</script>');
   assert.ok(meta > 0 && theme > meta, 'the policy has to be parsed before the first script it governs');
+  /* The prefetch rules are a script to the policy too - a hash, like the
+     other two, rather than 'inline-speculation-rules', which would let any
+     rules block on the page through. */
+  assert.match(BUILD, /<script type="speculationrules">\$\{PREFETCH_RULES\}<\/script>/, 'the rules are written from the same constant that is hashed');
 });
 
 test('a page carrying an inline script the policy would kill is refused, not published', () => {

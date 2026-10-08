@@ -4,7 +4,7 @@ description: Take the finished walkthrough app to a real system — real data, a
 ---
 # Step 11: From Playground to Production
 
-The app from [Step 10](/tutorials/walkthrough/step-10) is finished — and so
+The app from [Step 10](/tutorials/step-10) is finished — and so
 far it has run in the playground, or in your development system against demo
 data. This step takes it to the system your users work on. Unlike the ten
 steps before it, there is nothing new to build here: everything this step
@@ -110,5 +110,5 @@ S/4 Private Cloud and On-Premise to the tile chain on
   screen — is a wrapper around `?app_start=`
 
 The app is live. What keeps it safe from the *next* change is
-[Step 12](/tutorials/walkthrough/step-12) — unit tests against the app class,
+[Step 12](/tutorials/step-12) — unit tests against the app class,
 which the structure from Step 10 makes plain ABAP.
