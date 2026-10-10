@@ -1,6 +1,6 @@
 # #37 What the AI Leaves Behind
 
-The commercial low-code platforms have AI assistants now. Describe an app in
+Low-code platforms have AI assistants now. Describe an app in
 chat and the assistant assembles it in the visual designer, out of the same
 components, bindings and event logic a hand on the mouse would have used —
 their own material says so, and it is the right way to build such an
