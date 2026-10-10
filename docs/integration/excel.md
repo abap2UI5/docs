@@ -14,9 +14,8 @@ Excel where it is.
 
 ::: info Preview — proof of concept
 The add-in is checked by CI against a stand-in for Office.js, and nobody has
-run it in a real Excel yet. `z2ui5.cc.ExcelBridge` is on the framework's
-`main` branch and in no release yet: until the first release after 1.146.0
-lists it in its changelog, install abap2UI5 from `main` to use it.
+run it in a real Excel yet. `z2ui5.cc.ExcelBridge` ships with abap2UI5
+1.147.0 and later.
 :::
 
 ## How It Works

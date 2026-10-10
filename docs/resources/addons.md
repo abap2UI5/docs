@@ -34,8 +34,8 @@ versioned on its own rather than riding along with a framework release.
 | [rap-ext](https://github.com/abap2UI5-addons/rap-ext) | Display RAP and CDS artifacts with abap2UI5 | [RAP](/cookbook/eml_cds_sql/rap) |
 | [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) | Apps written the way you write a classic report — selection screen, `WRITE` list, ALV, event blocks — on ABAP Cloud and down to 7.02 | [Migrating Classic Reports](/advanced/report_migration) |
 
-Two more are finished and come with the next abap2UI5 release, because both
-build on what is in it: [admin-cockpit](https://github.com/abap2UI5-addons/admin-cockpit),
+Two more need abap2UI5 1.147.0 or later, because both build on what is in
+it: [admin-cockpit](https://github.com/abap2UI5-addons/admin-cockpit),
 usage, performance, errors and a security traffic light for an installation
 ([Monitoring](/configuration/monitoring)), and
 [abap-agent-runtime](https://github.com/abap2UI5-addons/abap-agent-runtime), an MCP endpoint in the
