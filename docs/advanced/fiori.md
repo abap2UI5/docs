@@ -264,11 +264,11 @@ ABAP, not ABAP Cloud.
 
 ## Superseded: `Component.create` in a controller extension
 
-Before the control, the add-on
-[abap2UI5-addons/fiori-elements-integration](https://github.com/abap2UI5-addons/fiori-elements-integration)
-embedded abap2UI5 by hand: a controller extension registered the launchpad
-integration, created the `z2ui5` component with `Component.create` and put it
-into a `VBox` in a `ComponentContainer`, and a launchpad target mapping for
-`z2ui5` had to exist. The control replaces all of it - a fragment bound to
-the object, no controller code, no target mapping - and the parameters go in
-by name rather than by position. Move an app built that way to the control.
+Before the control, the add-on `abap2UI5-addons/fiori-elements-integration` (no
+longer published) embedded abap2UI5 by hand: a controller extension registered
+the launchpad integration, created the `z2ui5` component with `Component.create`
+and put it into a `VBox` in a `ComponentContainer`, and a launchpad target
+mapping for `z2ui5` had to exist. The control replaces all of it - a fragment
+bound to the object, no controller code, no target mapping - and the parameters
+go in by name rather than by position. Move an app built that way to the
+control.

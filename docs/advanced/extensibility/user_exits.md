@@ -49,4 +49,4 @@ ENDCLASS.
 
 
 
-A second interface is found the same way: [`z2ui5_if_ui5_monitor`](/configuration/monitoring), which the framework calls after every roundtrip so an installation can log usage, timings and errors. Unlike the exit it fails open — a monitor that raises costs its log entry, never the app. *Preview, coming with the next release.*
+A second interface is found the same way: [`z2ui5_if_ui5_monitor`](/configuration/monitoring), which the framework calls after every roundtrip so an installation can log usage, timings and errors. Unlike the exit it fails open — a monitor that raises costs its log entry, never the app. Available from abap2UI5 1.147.0 on.

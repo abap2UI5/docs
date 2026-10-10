@@ -58,7 +58,7 @@ Want to tune your app further? A few tips:
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 
 ## Measuring It
-To see where the time goes in production rather than guess, log the roundtrips: the [roundtrip monitor](/configuration/monitoring) reports every roundtrip's duration in three phases — reading the draft, your app's `main( )`, building the response — plus the model and response sizes and the browser's own measure, and the Admin Cockpit add-on turns that into p95 times per app and hints such as a model that has grown too large. *Preview, coming with the next release.*
+To see where the time goes in production rather than guess, log the roundtrips: the [roundtrip monitor](/configuration/monitoring) reports every roundtrip's duration in three phases — reading the draft, your app's `main( )`, building the response — plus the model and response sizes and the browser's own measure, and the Admin Cockpit add-on turns that into p95 times per app and hints such as a model that has grown too large. *From abap2UI5 1.147.0 on.*
 
 ## Performance Issues?
 If you hit performance issues, build a sample and submit a pull request to the samples repository. We're glad to analyze it and see whether abap2UI5 can be made even faster.

@@ -4,11 +4,9 @@ description: Logging what abap2UI5 apps do in production - the roundtrip monitor
 ---
 # Monitoring
 
-::: info Preview — coming with the next release
-Both parts of this page are finished on development branches and are not in a
-release yet: the monitor interface comes with the next abap2UI5 release, and
-the Admin Cockpit add-on is published next to it. Details can still change
-until then.
+::: info New in 1.147.0
+The monitor interface ships with abap2UI5 1.147.0 and later. The Admin Cockpit
+add-on is installed from its own repository with abapGit, like every add-on.
 :::
 
 abap2UI5 serves every roundtrip and keeps no record of any of them. That is on
