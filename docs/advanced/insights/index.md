@@ -3,7 +3,7 @@ description: The abap2UI5 blog series - the ideas behind abap2UI5 in pieces one 
 ---
 # Blogs
 
-Thirty-six short articles about one idea: what happens when the ABAP server
+Thirty-seven short articles about one idea: what happens when the ABAP server
 sends the *screen* instead of only the data.
 
 Each one is about a coffee long, makes a single claim, and shows it in code
@@ -103,6 +103,7 @@ alternatives — including the cases where you should pick something else.
 | [#34 UI5 Freestyle or abap2UI5?](/advanced/insights/34-freestyle-or-abap2ui5) | where the browser has to be smart |
 | [#35 Low-Code or abap2UI5?](/advanced/insights/35-low-code-or-abap2ui5) | designer against code |
 | [#36 Written for Agents](/advanced/insights/36-written-for-agents) | the consequence nobody designed |
+| [#37 What the AI Leaves Behind](/advanced/insights/37-what-the-ai-leaves-behind) | the demo is not the artifact |
 
 *The articles on how it works grew out of
 [Under the Hood of abap2UI5](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)

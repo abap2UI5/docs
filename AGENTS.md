@@ -760,7 +760,7 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   every source link a page writes **by hand** — `github.com/abap2UI5/samples/blob/main/…`
   in the prose rather than in a generated block, and the same for the two
   sibling repositories — against that same checkout.
-  The 37 essay pages under `advanced/insights/` link a sample that way on
+  The 38 essay pages under `advanced/insights/` link a sample that way on
   purpose (none of them carries a block: a "Full source:" sentence is the shape
   an essay wants, not a see-also list at the end), and the samples repository
   renumbers, so such a link is one renumber away from a 404 with nothing

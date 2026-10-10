@@ -714,6 +714,7 @@ export default defineConfig({
               { text: "#34 UI5 Freestyle or abap2UI5?", link: "/advanced/insights/34-freestyle-or-abap2ui5" },
               { text: "#35 Low-Code or abap2UI5?", link: "/advanced/insights/35-low-code-or-abap2ui5" },
               { text: "#36 Written for Agents", link: "/advanced/insights/36-written-for-agents" },
+              { text: "#37 What the AI Leaves Behind", link: "/advanced/insights/37-what-the-ai-leaves-behind" },
             ],
           },
           {
