@@ -16,7 +16,7 @@ Every commit to the framework runs through CI before it reaches a release:
 - The sample catalogs double as a regression corpus: over 700 apps that are validated against the framework
 
 ## Monitoring
-Whether abap2UI5 is used, fast and safely configured is what the [Monitoring](/configuration/monitoring) page covers: a monitor interface the framework calls after every roundtrip, and the Admin Cockpit add-on with a security traffic light that works without any logging. *Preview, coming with the next release.*
+Whether abap2UI5 is used, fast and safely configured is what the [Monitoring](/configuration/monitoring) page covers: a monitor interface the framework calls after every roundtrip, and the Admin Cockpit add-on with a security traffic light that works without any logging. *From abap2UI5 1.147.0 on.*
 
 ## Renaming
 If you're starting new development but already have abap2UI5 apps in production and want to avoid update risk, install multiple instances of abap2UI5 with the [renaming feature](/advanced/renaming). This lets you keep developing safely without disrupting your existing production apps.

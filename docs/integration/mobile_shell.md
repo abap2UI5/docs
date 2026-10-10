@@ -56,8 +56,8 @@ scanner: a button that calls the shell's scanner, writes the result into its
 bound `value` and fires `OnScan`; a canceled or failed scan fires
 `OnError`. Outside the shell it renders an invisible placeholder, so the same
 view runs unchanged in a browser - `showInBrowser` shows the button anyway,
-and a press then fires `OnError`. The control is on the framework's `main`
-branch and in no release yet.
+and a press then fires `OnError`. The control ships with abap2UI5 1.147.0
+and later.
 
 The sample app in the repository's `abap/src` is the worked example.
 

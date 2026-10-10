@@ -7,6 +7,17 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.147.0
+2026-10-11
+- Roundtrip monitor: a new released interface `z2ui5_if_ui5_monitor` - implement it in a class of your own and abap2UI5 calls it once per roundtrip (app, event, timings, sizes, errors). Off until the user exit sets the new field `check_monitor_active` of `ty_s_http_config_post`
+- New custom controls: `z2ui5.cc.ExcelBridge` lets an app in the task pane of an Excel add-in write bound rows to the sheet and read the selection back ([`abap2UI5-addons/office-addin`](https://github.com/abap2UI5-addons/office-addin)); `z2ui5.cc.NativeBridgeScan` scans a barcode inside the native mobile shell ([abap2UI5/mobile-shell](https://github.com/abap2UI5/mobile-shell))
+- Tables: copy to the clipboard with `sap.m.plugins.CopyProvider` (UI5 1.110 and later) through the shipped `z2ui5/model/clipboard`
+- Embedded mode: `?z2ui5-bundle` also registers the frontend as `z2ui5.embed.frontend`; a host whose page is only the component can hand the URL hash back with `componentData.ownsHash: true` (hash routing, Back/Forward, a route restored on reload); the custom controls of `z2ui5_cci` / `z2ui5_ccc` load behind a proxy with a path prefix (SAP Build Work Zone, an approuter)
+- Renaming: a renamed installation (the `rename_<name>` branches of `build-rename`) starts apps and finds its user exit again; `tools/bsp_rename/rename-bsp.mjs --backend <prefix>` makes a renamed frontend BSP call a backend renamed with `build-rename` (`frontend_deploy` branch `standard_<name>__<backend>`)
+- Claude Code plugin: `/plugin marketplace add abap2UI5/abap2UI5`, then `/plugin install abap2ui5@abap2ui5` - the four agent skills, the MCP server, the commands `/abap2ui5:new-app`, `check`, `add-ai`, `find-sample`, `explain`, a reviewer subagent and a lint-on-edit hook
+- `@abap2ui5/node-runtime`: transpiler and runtime 2.14.3 with `output/` in a folder per origin (an import of `output/<file>` by path changes), the new bin `abap2ui5-transpile`, TypeScript declarations, stateful sessions and one request at a time, `serve()` and `npm run express` answer only requests to loopback names unless `allowedHosts` / `ALLOWED_HOSTS` adds more, and a smaller package without unit tests and source maps
+- Many fixes: message boxes (braces in texts, type from the most severe message, an ID column shown as data), keyboard shortcuts, date and timestamp handling in the model, the navigation stack, the launchpad dirty flag, and the custom controls FileUploader, CameraPicture, CameraSelector, UITableExt, MultiInputExt and Focus - the full list is in the GitHub release notes
+
 ## 1.146.0
 2026-09-29
 - Embedded mode: a component loaded through `?z2ui5-bundle` (`z2ui5.embed.Container` of [abap2UI5/embed-control](https://github.com/abap2UI5/embed-control)), or given `componentData.embedded = true` by a host's `ComponentContainer`, leaves the URL to its host - it neither reads nor writes the hash. A Fiori elements object page keeps its route across roundtrips
