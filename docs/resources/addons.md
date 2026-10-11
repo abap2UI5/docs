@@ -38,7 +38,7 @@ Two more are finished and come with the next abap2UI5 release, because both
 build on what is in it: [admin-cockpit](https://github.com/abap2UI5-addons/admin-cockpit),
 usage, performance, errors and a security traffic light for an installation
 ([Monitoring](/configuration/monitoring)), and
-[agent](https://github.com/abap2UI5-addons/agent), an MCP endpoint in the
+[abap-agent-runtime](https://github.com/abap2UI5-addons/abap-agent-runtime), an MCP endpoint in the
 system through which AI agents operate abap2UI5 apps
 ([Agent-Operable Apps](/advanced/agents)). The next release of abap-cloud-gui
 brings a converter as well, report2cloud, which turns an existing classic

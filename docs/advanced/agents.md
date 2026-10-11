@@ -204,7 +204,7 @@ listed and answer with how to switch them on, without contacting the system.
 
 ## In production: the agent add-on
 
-[**abap2UI5-addons/agent**](https://github.com/abap2UI5-addons/agent) puts an
+[**abap2UI5-addons/abap-agent-runtime**](https://github.com/abap2UI5-addons/abap-agent-runtime) puts an
 MCP endpoint into the SAP system itself, written in ABAP: any MCP client that
 connects to a remote server over HTTP calls `/sap/bc/z2ui5_agent`, and the
 endpoint operates the app inside the system as the user who logged on. No

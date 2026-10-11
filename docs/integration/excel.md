@@ -8,7 +8,7 @@ An abap2UI5 app can run in the task pane of Excel, the panel on the right of
 the workbook, and it can read and write that workbook. The app stays an ABAP
 class: it puts an ABAP table into a sheet, or takes the cells the user has
 selected back into the app, with the custom control `z2ui5.cc.ExcelBridge`.
-The add-in around it is [`abap2UI5/office-addin`](https://github.com/abap2UI5/office-addin):
+The add-in around it is [`abap2UI5-addons/office-addin`](https://github.com/abap2UI5-addons/office-addin):
 a host page you pull into your system with abapGit, and a manifest that tells
 Excel where it is.
 
@@ -61,7 +61,7 @@ proxy that puts both under one host.
 
 ## Install
 
-1. **Pull [`abap2UI5/office-addin`](https://github.com/abap2UI5/office-addin)
+1. **Pull [`abap2UI5-addons/office-addin`](https://github.com/abap2UI5-addons/office-addin)
    with abapGit** into a package of its own, on the system that runs
    abap2UI5. It brings the demo app `Z2UI5_CL_XL_DEMO`, the BSP application
    `Z2UI5_XL` with the host page, and its ICF nodes.
