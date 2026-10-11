@@ -209,6 +209,7 @@ deliberately does not have: your real systems.
 | `capabilities` | Whether abap2UI5 can express a UI5 feature **at all**, from the verified capability map. The question to ask before writing a line of ABAP |
 | `app_guide` | **How to build an app**, live from the framework checkout: the app class template, lifecycle, the view-builder chain, binding, events, popups, navigation, portability |
 | `scaffold_app` | The files a new project starts from, live from app-template — both gate configs, the CI workflow, the abapGit metadata, an `AGENTS.md` and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
+| `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both gate configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing. *Preview, next release* |
 | `examples` | Search the three sample catalogs for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
 | `read_example` | The source of a sample an `examples` hit named — the whole class, from the checkout or fetched from GitHub |
 | `api_reference` | The client API an app calls, `z2ui5_if_client`, parsed live **with its ABAP-Doc**: methods, parameters, defaults and the `cs_*` constants, looked up instead of guessed |
