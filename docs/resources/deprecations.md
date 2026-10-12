@@ -40,7 +40,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.146.0**. Entries marked *next release* are already
+The released version is **1.147.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
