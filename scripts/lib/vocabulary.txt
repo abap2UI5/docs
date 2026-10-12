@@ -78,6 +78,7 @@ ico
 iframe
 json
 livewire
+loopback
 mcp
 npm
 npx
@@ -199,6 +200,7 @@ splitter
 stateful
 statefulness
 stringified
+subagent
 subclasses
 sublicense
 subpath
