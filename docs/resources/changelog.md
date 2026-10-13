@@ -8,7 +8,7 @@ See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
 ## 1.147.0
-2026-10-13
+2026-10-14
 - Roundtrip monitor: a new released interface `z2ui5_if_ui5_monitor` - implement it in a class of your own and abap2UI5 calls it once per roundtrip (app, event, timings, sizes, errors). Off until the user exit sets the new field `check_monitor_active` of `ty_s_http_config_post`
 - New custom controls: `z2ui5.cc.ExcelBridge` lets an app in the task pane of an Excel add-in write bound rows to the sheet and read the selection back ([`abap2UI5-addons/office-addin`](https://github.com/abap2UI5-addons/office-addin)); `z2ui5.cc.NativeBridgeScan` scans a barcode inside the native mobile shell ([abap2UI5/mobile-shell](https://github.com/abap2UI5/mobile-shell))
 - Tables: copy to the clipboard with `sap.m.plugins.CopyProvider` (UI5 1.110 and later) through the shipped `z2ui5/model/clipboard`
