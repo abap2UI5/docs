@@ -299,11 +299,6 @@ builds and boots the transpiled sandbox, this one runs a class on a system.
 
 ### Operating an app on the system
 
-::: info Preview — coming with the next release
-The app tools below are on a development branch of the extension and not in a
-release yet.
-:::
-
 The same server gets the four app tools of the
 [MCP server](/advanced/mcp_server) — `app_list`, `app_start`, `app_describe`
 and `app_act` — on your real system. An agent reads the app's screen as an
@@ -352,7 +347,7 @@ navigation map; the Control Properties view; and the MCP servers.
 | `abap2ui5.viewPreview.viewport` | `1280x900` | Viewport(s); a comma-separated list is a device matrix |
 | `abap2ui5.inlineFindings` | `problems` | The finding at the end of its line: `problems`, `all` or `off` |
 | `abap2ui5.mcp.reposRoot` | – | Folder holding the `abap2UI5` / `samples-controls` / `linter` / `mcp-server` checkouts |
-| `abap2ui5.agent.enableAppTools` | `false` | Allow the system server's app tools to operate apps on the real system, as you — User settings only. *Preview, next release* |
+| `abap2ui5.agent.enableAppTools` | `false` | Allow the system server's app tools to operate apps on the real system, as you — User settings only |
 
 Every command is in the Command Palette (`Ctrl/Cmd + Shift + P`) under
 *abap2UI5*; the full settings and command tables are in the
