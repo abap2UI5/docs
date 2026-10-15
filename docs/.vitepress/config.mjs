@@ -603,9 +603,11 @@ export default defineConfig({
             ],
           },
           {
-            // The machine you develop on, and the three tools the project
-            // ships for it - each documented in full here, so their READMEs
-            // can stay short and point at a page instead of growing a second
+            // The machine you develop on, and the tools the project ships
+            // for it - Tooling walks the whole loop in order, from the
+            // playground to the agent runtime, and the three with a page of
+            // their own are documented in full here, so their READMEs can
+            // stay short and point at a page instead of growing a second
             // copy that drifts. Tooling moved here from Getting Started
             // (which editor, transpiler and client tools you develop WITH is
             // a question a newcomer does not have yet), and its file moved
