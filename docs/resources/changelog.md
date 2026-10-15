@@ -7,6 +7,11 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.148.0
+2026-10-14
+- `@abap2ui5/node-runtime` - **breaking for a host that loads `apps/index.mjs`**: `npx abap2ui5-transpile abap abap2ui5` now transpiles the framework and your own classes together, with one transpiler version, into a runtime of your own in `abap2ui5/`. Import `serve` from `./abap2ui5/host.mjs` instead of from `@abap2ui5/node-runtime`; `apps/index.mjs`, `--keep` and the apps folder are gone. Your tables are created in the SQLite database like the framework's, and a run takes about ten seconds. `abap2ui5-own-apps` is deprecated and stays, unchanged, for the hosts that still call it
+- `@abap2ui5/node-runtime`: transpiler and runtime 2.14.5 and a newer open-abap-core - `ASSIGN COMPONENT` of a name with a dash, `rescale( )`, `CREATE DATA ... TYPE (name)` with a lower-case name, `cl_abap_tstmp=>add( )` keeping the fraction of a `timestampl`, and duplicate JSON keys read in document order. Eight framework unit tests that were skipped on Node run there now
+
 ## 1.147.0
 2026-10-14
 - Roundtrip monitor: a new released interface `z2ui5_if_ui5_monitor` - implement it in a class of your own and abap2UI5 calls it once per roundtrip (app, event, timings, sizes, errors). Off until the user exit sets the new field `check_monitor_active` of `ty_s_http_config_post`
