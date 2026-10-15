@@ -262,8 +262,8 @@ headless frontend and not yet in a release of either; details can still
 change until then.
 :::
 
-**Use it** when the users of an app are agents — Claude, Copilot Studio,
-Joule, any MCP client — acting for the people who log on. The endpoint is
+**Use it** when the users of an app are AI agents — any MCP client —
+acting for the people who log on. The endpoint is
 disabled after installation, only apps that opt in are reachable, events that
 need a human are never fired by an agent, and every call is audited.
 
