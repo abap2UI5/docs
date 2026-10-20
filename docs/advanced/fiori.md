@@ -286,30 +286,18 @@ ENDMETHOD.
 
 ### Upgrades
 
-Nothing changes by itself. abap2UI5 is code in the system: an upgrade is an
-abapGit pull on the development system and a transport, like any other custom
-code, and the version of the control is pinned by the `package-lock.json` of
-the Fiori elements app. What is true is that every embedded section moves with
-the backend at once, because the frontend comes from it - the same as every
-Fiori app moves with the SAPUI5 release of the system.
+An upgrade of abap2UI5 is a transport like any other: an abapGit pull on the
+development system, then the usual way to production. Nothing changes before
+that, and an embedded section needs no test process of its own - it gets the
+same check on the quality system as a SAPUI5 upgrade or a support package,
+which move every Fiori app of the system at once as well. The frontend comes
+from the backend, so browser and server always run the same version.
 
-- **Pin a [release](https://github.com/abap2UI5/abap2UI5/releases/)** and
-  upgrade deliberately, not by tracking `main`
-  ([Productive Usage](/configuration/productive_usage)).
-- **Test on the quality system before the transport goes on.** The list of
-  what to open is short and can be found by searching the Fiori elements apps
-  for `z2ui5:Container`: every object page with a section, once. An OPA5 or
-  wdi5 journey of the host app that opens the object page covers it
-  automatically; the framework itself runs the frontend embedded in a host
-  page it does not own, in its browser tests on every commit.
-- **No mismatch between browser and server.** The frontend is the backend's
-  own, it carries an `ETag`, and the browser takes the new one on the first
-  page load after the transport - no cache to clear, no second version to keep
-  in step.
-- **Freeze it if you have to.** A second installation under another prefix
-  ([Renaming](/advanced/renaming)) with a node of its own serves the embedded
-  sections, and the control's `endpoint` points at it. That installation is
-  upgraded on its own schedule, while new development continues on the first.
+Pin a [release](https://github.com/abap2UI5/abap2UI5/releases/) rather than
+tracking `main` ([Productive Usage](/configuration/productive_usage)). To keep
+the embedded sections on a fixed version while development moves on, install
+abap2UI5 a second time under another prefix ([Renaming](/advanced/renaming))
+with a node of its own, and point the control's `endpoint` at it.
 
 ### Sessions and load
 
