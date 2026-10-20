@@ -222,6 +222,126 @@ ENDMETHOD.
 Every value arrives as a string. The table also carries `app_start`, the class
 the formatter named.
 
+## Running it in production
+
+Three questions decide whether an embedded section goes live: who may start
+which class, what an upgrade of abap2UI5 does to the apps already running, and
+what several containers on one page cost the server.
+
+### Who may start which class
+
+The class name and the parameters are in the fragment, and the fragment runs
+in the browser. Whoever can reach the service node can send another class name
+or another key - exactly as with `?app_start=` on abap2UI5's own page, so
+embedding the app changes nothing here. The framework checks the type and not
+the user: a class that does not implement `z2ui5_if_app` is refused before it
+is instantiated, and a draft belongs to the user who created it. Who may run
+what is decided in two places, and both are ordinary ABAP:
+
+- **The node decides who reaches abap2UI5 at all.** Logon procedure, SSO and
+  the authorization field of the node in `SICF` (checked against `S_ICF`)
+  work as on any other service. A node of its own for the apps of one area -
+  a handler class that calls `z2ui5_cl_ui5_http_handler=>run( server )` - is
+  named in the control's `endpoint` property:
+  `<z2ui5:Container endpoint="/sap/bc/z2ui5_sd" .../>`. Give every container
+  on a page the same endpoint: the first one loads the frontend for all of
+  them.
+- **The class decides who may run it.** An `AUTHORITY-CHECK` in `main( )`,
+  before anything is selected or displayed, with a message when it fails. It
+  is the one check that holds however the class is started - its own page,
+  the launchpad, a container, or `nav_app_call( )` from another app. The
+  node cannot make this decision for it: the first POST carries the class in
+  its body, and the roundtrips after it carry none. See
+  [Authorization](/configuration/authorization).
+
+The parameters are user input too. A credit check started with
+`salesorder = 4711` can be started with any other number, so the class checks
+the object, not only the app - the authorization for the sales organization of
+the order, for example. Reading through a CDS view entity with an access
+control applies that access control, and EML on the RAP business object runs
+its authorization control; a plain `SELECT` on the database table checks
+nothing.
+
+```abap
+METHOD z2ui5_if_app~main.
+
+  IF client->check_on_init( ).
+
+    AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
+                    ID `APP` FIELD `ZCL_SALES_ORDER_CREDIT_CHECK`.
+    IF sy-subrc <> 0.
+      client->message_box_display( text  = `You are not authorized to use this app.`
+                                   type  = `error`
+                                   title = `Not authorized` ).
+      RETURN.
+    ENDIF.
+
+    " read the order through a view with access control (or EML), and
+    " refuse the same way when the user may not see it
+
+  ENDIF.
+
+ENDMETHOD.
+```
+
+### Upgrades
+
+Nothing changes by itself. abap2UI5 is code in the system: an upgrade is an
+abapGit pull on the development system and a transport, like any other custom
+code, and the version of the control is pinned by the `package-lock.json` of
+the Fiori elements app. What is true is that every embedded section moves with
+the backend at once, because the frontend comes from it - the same as every
+Fiori app moves with the SAPUI5 release of the system.
+
+- **Pin a [release](https://github.com/abap2UI5/abap2UI5/releases/)** and
+  upgrade deliberately, not by tracking `main`
+  ([Productive Usage](/configuration/productive_usage)).
+- **Test on the quality system before the transport goes on.** The list of
+  what to open is short and can be found by searching the Fiori elements apps
+  for `z2ui5:Container`: every object page with a section, once. An OPA5 or
+  wdi5 journey of the host app that opens the object page covers it
+  automatically; the framework itself runs the frontend embedded in a host
+  page it does not own, in its browser tests on every commit.
+- **No mismatch between browser and server.** The frontend is the backend's
+  own, it carries an `ETag`, and the browser takes the new one on the first
+  page load after the transport - no cache to clear, no second version to keep
+  in step.
+- **Freeze it if you have to.** A second installation under another prefix
+  ([Renaming](/advanced/renaming)) with a node of its own serves the embedded
+  sections, and the control's `endpoint` points at it. That installation is
+  upgraded on its own schedule, while new development continues on the first.
+
+### Sessions and load
+
+An abap2UI5 app is stateless by default
+([Statefulness](/cookbook/expert_more/statefulness)): between two clicks there
+is no open ABAP session and no work process held. What a container keeps on the
+server is its draft - one row in `Z2UI5_T_01`, written on each roundtrip and
+deleted when it expires (after four hours by default, `draft_exp_time_in_hours`
+in the [user exit](/advanced/extensibility/user_exits)). Three containers on a
+page are three drafts, not three sessions.
+
+What a page costs:
+
+| When | Requests |
+|---|---|
+| The page opens | one GET for the frontend, for the whole page (a `304` once the browser has it), and one POST per container to start its app |
+| The user acts in a container | one POST, from that container only |
+| Another object is opened | one POST per container - a new start with the new key |
+| Nobody touches the section | nothing |
+
+The server time of a roundtrip is the app's `main( )` plus reading and writing
+its draft, so a section is as fast as its start is cheap: read what the section
+shows when it starts, and leave the expensive part to a button. The
+[roundtrip monitor](/configuration/monitoring) measures it per class - total
+time, draft load, `main( )`, response - and the Admin Cockpit shows the p95 per
+app, which is the number to look at on the quality system with the real data.
+*From abap2UI5 1.147.0 on.*
+
+Do not switch an embedded app to `set_session_stateful( )`: that is the one
+setting that turns a container into an open session, one work process per user
+and container for as long as the page stays open.
+
 ## Examples
 
 Both examples are developed in
