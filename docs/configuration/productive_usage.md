@@ -8,6 +8,8 @@ Technically, abap2UI5 is just an HTTP handler implementation — use it like any
 ## Stable Version
 The project evolves all the time, so there's no fixed "stable" version. But we keep changes to the public APIs minimal to avoid frequent app refactoring. Pin to a [release](https://github.com/abap2UI5/abap2UI5/releases/) instead of tracking the main branch, and update regularly to keep refactoring effort low.
 
+Apps embedded in Fiori elements or UI5 freestyle apps with the embed control load their frontend from the backend, so an upgrade reaches all of them at once. What to test before the transport moves on, and how to keep them on a frozen installation, is on [Fiori Elements Integration](/advanced/fiori#upgrades).
+
 ## Quality Assurance
 Every commit to the framework runs through CI before it reaches a release:
 

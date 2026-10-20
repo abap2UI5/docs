@@ -7,10 +7,8 @@ description: Authorization for abap2UI5 apps at the service level or in the app 
 abap2UI5 gives you flexibility in managing authorization. It has no built-in authorization mechanism, so you can build your own solution at either the service or the app level.
 
 ## Service-Level
-The easiest way to manage access to different apps is to add authorization checks in the HTTP handler. This approach restricts access to individual apps based on the `app_start` URL parameter, directly in the ICF service handler class.
+The HTTP handler decides **who reaches abap2UI5 at all** - not which app runs. Logon procedure, SSO and the authorization field of the node in `SICF` (checked against `S_ICF`) work as on any other ICF service, and need no code. For a check of your own, put it in the handler before it calls the framework:
 
-### Example: Restricting Access Based on URL Parameters
-In this example, we use the ICF handler class to control which apps users can access. The ``get_form_field( `app_start` )`` call reads the `app_start` URL parameter that names the abap2UI5 app class to launch (e.g. `...?app_start=my_app`). If the user requests an unauthorized app, the handler refuses access.
 ```abap
 CLASS z2ui5_cl_my_http_handler DEFINITION PUBLIC.
 
@@ -22,54 +20,31 @@ ENDCLASS.
 CLASS z2ui5_cl_my_http_handler IMPLEMENTATION.
 
   METHOD if_http_extension~handle_request.
-    " Read the app name from the request
-    DATA(lv_app) = to_upper( server->request->get_form_field( `app_start` ) ).
 
-    " Restrict access to a specific app
-    IF lv_app <> `MY_APP`.
-      RETURN.
-    ENDIF.
-
-    " Call the abap2UI5 handler
-    z2ui5_cl_ui5_http_handler=>run( server ).
-  ENDMETHOD.
-
-ENDCLASS.
-```
-### Example: Authorization Objects in Service Handlers
-You can also pair this with SAP authorization objects. The example below uses a custom authorization object `Z_APP_AUTH` with an `APP` field — define the object in transaction `SU21` and assign it to the matching roles on your system:
-```abap
-CLASS z2ui5_cl_my_http_handler DEFINITION PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES if_http_extension.
-
-ENDCLASS.
-
-CLASS z2ui5_cl_my_http_handler IMPLEMENTATION.
-
-  METHOD if_http_extension~handle_request.
-    " Read the app name from the request
-    DATA(lv_app) = to_upper( server->request->get_form_field( `app_start` ) ).
-
-    " Run an authorization check
+    " may this user use the apps behind this node at all?
     AUTHORITY-CHECK OBJECT `Z_APP_AUTH`
-                    ID `APP` FIELD lv_app.
+                    ID `APP` FIELD `SALES`.
 
     IF sy-subrc <> 0.
-      " Authorization failed, refuse access
+      server->response->set_status( code   = 403
+                                    reason = `Forbidden` ).
       RETURN.
     ENDIF.
 
-    " Call the abap2UI5 handler if authorized
     z2ui5_cl_ui5_http_handler=>run( server ).
   ENDMETHOD.
+
 ENDCLASS.
 ```
-Create multiple HTTP endpoints for different users or departments to fine-tune access.
+
+The example uses a custom authorization object `Z_APP_AUTH` with an `APP` field — define the object in transaction `SU21` and assign it to the matching roles on your system. Create one node per user group or department, each with a handler like this, to separate who may reach which group of apps.
+
+::: warning Do not decide on `app_start` in the handler
+It is tempting to read the class from the request - ``server->request->get_form_field( `app_start` )`` - and refuse the ones a user may not run. That does not work. `app_start` is a URL parameter of the first page request only: the roundtrips are POSTs to the service URI, the class travels in the body of the first one (from the launchpad and from the [embed control](/advanced/fiori) it never is in the URL at all), every roundtrip after the start carries no class name, and `nav_app_call( )` changes the app without the client naming it. A handler that refuses on that parameter either breaks every roundtrip or checks nothing. Which app may run is decided in the app.
+:::
 
 ## App-Level
-Alternatively, handle authorization within individual app classes. This approach works well when you want each app to check user permissions before acting.
+Whoever reaches the node can start any class that implements `z2ui5_if_app` - the class name comes from the browser, as the URL parameter, a launchpad parameter or the `app` property of the [embed control](/advanced/fiori). The framework checks the type, not the user: a class that does not implement the interface is refused before it is instantiated. So the decision which user may run which app belongs in the app class, the way a report checks before it selects. It holds however the app is started - its own page, the launchpad, a Fiori elements section, or `nav_app_call( )` from another app - and a transport carries the app and its guard together.
 
 ### Example: Authorization Check in an App Class
 In this approach, each app checks the user's permissions, like traditional ABAP apps.
@@ -131,6 +106,5 @@ The refusal branch matters as much as the check. Returning without displaying
 anything leaves the user on an empty frame with nothing to go on — indistinguishable
 from an app that crashed. Say what happened, then return.
 
-::: warning
-If you don't add authorization checks at the app level, make sure users can't bypass service-level checks by navigating between apps.
-:::
+## Startup Parameters Are User Input
+An app started with parameters - from the launchpad, or from a Fiori elements object page with the [embed control](/advanced/fiori) (`client->get( )-t_comp_params`) - can be started with any other value. An app that shows one sales order checks that the user may see *that* order, not only that they may run the app: the authorization for its sales organization, for example. Reading through a CDS view entity with an access control applies that access control, and EML on a RAP business object runs its authorization control; a plain `SELECT` on the database table checks nothing.
