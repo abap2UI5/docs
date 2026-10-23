@@ -138,6 +138,7 @@ jobs:
             src/catalogue/page-entry.mjs
             src/shell/site-memory.mjs
             tools/sample-pages.mjs
+            tools/sample-frame.mjs
           sparse-checkout-cone-mode: false
 
       - name: Setup Node

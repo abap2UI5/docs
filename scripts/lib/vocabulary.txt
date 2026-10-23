@@ -56,6 +56,7 @@ worklists
 xsdbool
 
 # The web, and the tools around it
+anthropic
 api
 backend
 backends
@@ -83,6 +84,7 @@ mcp
 npm
 npx
 oauth
+ollama
 png
 preprocessor
 reconciler

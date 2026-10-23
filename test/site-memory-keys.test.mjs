@@ -71,7 +71,14 @@ test('the playground spells them the same way', { skip: playground ? false : 'no
  * says the shape, and a checkout without the entry file is named as such. */
 test('a sample page writes to the same places', { skip: playground ? false : 'no playground checkout' }, () => {
   const entry = path.join(playground, 'src', 'catalogue', 'page-entry.mjs');
-  const pages = fs.readFileSync(path.join(playground, 'tools', 'sample-pages.mjs'), 'utf8');
+  /* The script tag moved out of sample-pages.mjs into sample-frame.mjs (the
+   * bar and the frame a sample page is written into) - the shape is read off
+   * both, whichever the checkout has; check.yml and deploy.yml name both. */
+  const pages = ['sample-pages.mjs', 'sample-frame.mjs']
+    .map((name) => path.join(playground, 'tools', name))
+    .filter((file) => fs.existsSync(file))
+    .map((file) => fs.readFileSync(file, 'utf8'))
+    .join('\n');
   if (pages.includes('samples/page.mjs')) {
     assert.ok(fs.existsSync(entry),
       'the sample pages load samples/page.mjs, so the checkout has to carry src/catalogue/page-entry.mjs - the sparse checkout in check.yml and deploy.yml names it');

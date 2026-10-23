@@ -305,7 +305,7 @@ Three parameters, and two of them are not UI5 options at all: the text an ABAP a
 
 ### `get_app`
 
-The app instance behind a draft id. Without id the running app itself - the object main( ) was called on, for a helper that only holds the client. With an id, the instance that draft holds, loaded from the database: that is how the previous app on the stack is reached (get( )-s_draft-id_prev_app, which get_app_prev( ) does for you).
+The app instance behind a draft id. Without id the running app itself - the object main( ) was called on, for a helper that only holds the client. With an id, the instance that draft holds, loaded from the database: that is how the previous app on the stack is reached (get( )-s_draft-id_prev_app, which get_app_prev( ) does for you). The running app's own draft id returns the in-memory instance, not a load.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -391,7 +391,7 @@ HashChanger#replaceHash: write VAL as the app's URL hash WITHOUT a new history e
 
 ### `set_session_stateful`
 
-Switch the ABAP session of this app to STATEFUL from this roundtrip on - the work process and the session context (enqueue locks, open RFC connections, everything the app does not serialise) survive between roundtrips - or back to stateless with abap_false. The price is one pinned work process per active user, so it is for the few internal, low-traffic apps that need GUI-like locking; see the Statefulness chapter. Two calls in one roundtrip cancel out - the state at the END of the roundtrip is what the server gets. Pair every switch on with a switch off on every exit path.
+Switch the ABAP session of this app to STATEFUL from this roundtrip on - the work process and the session context (enqueue locks, open RFC connections, everything the app does not serialise) survive between roundtrips - or back to stateless with abap_false. The price is one pinned work process per active user, so it is for the few internal, low-traffic apps that need GUI-like locking; see the Statefulness chapter. Two calls in one roundtrip cancel out - the state at the END of the roundtrip is what the server gets. Pair every switch on with a switch off on every exit path. The framework still writes the draft of a stateful app when the URL carries the app (hash routing, app state) and on every nav_app_call( ) / nav_app_leave( ), and that write is a COMMIT WORK: a LUW the app keeps open across roundtrips does not survive those paths.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
