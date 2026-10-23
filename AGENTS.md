@@ -15,7 +15,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 
 | Path | Purpose |
 | --- | --- |
-| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs` |
+| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. Two pages are not chapters: `index.md` (`layout: home`, the front door) and `evaluate.md` (`layout: landing`, the page for the person who approves abap2UI5 - drawn like the front door, with no sidebar, outline or crumb trail, and its own address so a link to it does not say "manual"; its frontmatter says why) |
 | `docs/public/` | Static assets — **and** the generated `llms.txt`, `llms-full.txt` and per-page `.md`, which are gitignored |
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus the catalogue of the repository each class belongs to — the prefix decides: `z2ui5_cl_smp_app_*` is `abap2UI5/samples` (read from its `SAMPLES.md` in a checkout), `z2ui5_cl_smpc_*` samples-controls and `z2ui5_cl_smps_*` samples-stack (read from their `catalogue.json`, a checkout or the published copy). Checks the link in both directions for the samples repository (the `" @docs` line), the class's existence for the other two, and resolves the source links a page writes by hand against whichever checkout is here |
@@ -617,7 +617,7 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are thirty-one of them. Eight are `/technical/*`: that whole section became
+There are thirty-two of them. Eight are `/technical/*`: that whole section became
 the Know-How series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
@@ -634,6 +634,10 @@ The last thirteen are the Tutorial's, moved on 2026-10-08 when its single
 `step-1` to `step-12` each point at the same page one level up, under
 `/tutorials/`. Those carry a one-line script on top of the `meta refresh`
 that keeps the `#fragment`, because links into a step's sections exist.
+The thirty-second is `get_started/evaluate`, the Evaluate page's address for
+its first day (2026-10-23) before it got the landing layout and moved to
+`/evaluate`; the framework's README and two of its docs pages link sections of
+it, so the stub keeps the fragment the same way.
 
 Two things make this safe rather than a second set of pages to maintain:
 

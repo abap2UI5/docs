@@ -323,6 +323,10 @@ const BAR_DOCS = withRelease(marked('data-site="docs"'));
 /* The ids the bar brings with it, which no heading of a page may also take. */
 const BAR_IDS = new Set([...BAR_DOCS.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]));
 const BAR_HOME = withRelease(marked(`href="${HOME}"`));
+/* The bar with no section marked: the Evaluate page is neither the front
+   door nor a chapter, and a bar that said "Documentation" in bold over it
+   would put the reader the page is written for into the manual. */
+const BAR_PLAIN = withRelease(BAR);
 
 /* THE OTHER HALF OF THE PAIR IS THE BORROWED MARKUP'S, so it is checked rather
  * than assumed. `data-site` above says which page to come back to; `data-back`,
@@ -985,6 +989,50 @@ const home = ({ body, fm, page }) => {
 </main>`;
 };
 
+/* ---- the landing page ------------------------------------------------
+ *
+ * The one chapter drawn like the front door: `layout: landing` in the
+ * frontmatter (docs/evaluate.md says why). The hero's name, tagline, buttons
+ * and note come from the frontmatter the way the front door's do; its H1 is
+ * the page's own, taken out of the body and printed once in the hero; the
+ * image is a screenshot rather than a mark, so it is drawn at the width a
+ * screenshot needs. The H2 sections become bands (no hinge, so no cards),
+ * the tiles stand after the last of them, and the figures under the hero. */
+const landing = ({ body, fm, page }) => {
+  const h = fm.hero || {};
+  const img = h.image || {};
+  const h1 = (body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [, ''])[1].replace(/<[^>]+>/g, '');
+  const rest = body.replace(/<h1[^>]*>[\s\S]*?<\/h1>\s*/, '');
+  const shot = img.src ? (() => {
+    const at = BASE + String(img.src).replace(/^\//, '');
+    const box = measure(path.join(DOCS, 'public', at.slice(BASE.length)));
+    const size = box && box.w ? ` width="${box.w}" height="${box.h}"` : '';
+    return `<div class="hero-image hero-shot"><img src="${esc(at)}" alt="${esc(img.alt || '')}"${size} decoding="async" fetchpriority="high"></div>`;
+  })() : '';
+  return `<main class="home landing" id="main-content" tabindex="-1">
+  <section class="hero">
+    <div class="hero-main">
+      ${h.name ? `<p class="hero-name">${esc(h.name)}</p>` : ''}
+      <h1 class="hero-text">${h1}</h1>
+      ${h.tagline ? `<p class="hero-tagline">${esc(h.tagline)}</p>` : ''}
+      <div class="hero-actions">${(h.actions || []).map((a) => `
+        <a class="hero-action ${a.theme === 'brand' ? 'primary' : 'plain'}" href="${esc(linkOf(a.link))}"${a.target ? ` target="${esc(a.target)}"` : ''}>${esc(a.text)}</a>`).join('')}
+      </div>
+      ${h.note ? `<p class="hero-note">${esc(h.note)}</p>` : ''}
+    </div>
+    ${shot}
+  </section>
+  ${factsLine('hero-facts')}
+  <div class="vp-doc bands">${bands(rest)}<section class="tiles">${(fm.features || []).map(tile).join('')}
+  </section></div>
+  <div class="doc-foot">
+    <a class="edit" href="${esc((config.themeConfig.editLink?.pattern || '').replace(':path', page))}"
+       target="_blank" rel="noopener">${esc(config.themeConfig.editLink?.text || 'Edit this page on GitHub')} ↗</a>
+    <span class="updated">Last updated: <time datetime="${lastTouched(page)}">${lastTouched(page)}</time></span>
+  </div>
+</main>`;
+};
+
 /* ---- the ABAP, tokenised by the file the catalogue tokenises with -------
  *
  * Not "the same colours" - the same PROGRAM. `abap-highlight.mjs` is what
@@ -1367,6 +1415,7 @@ for (const page of pages) {
   const name = fm.title || titleOf(src, page);
   const route = routeOf(page);
   const isHome = fm.layout === 'home';
+  const isLanding = fm.layout === 'landing';
   /* The theme's own title template, and its own rule for the preview: a
      chapter previews as itself, the front door as the project. A name two
      chapters share carries the section that tells them apart. */
@@ -1399,13 +1448,13 @@ for (const page of pages) {
          sentence cannot be taken from. */
       description: isHome ? (fm.description || SITE_DESC) : (describe(src) || SITE_DESC),
     }),
-    bar: isHome ? BAR_HOME : BAR_DOCS,
-    main: isHome ? home({ body, fm, page }) : chapter({ body, page, route }),
+    bar: isHome ? BAR_HOME : isLanding ? BAR_PLAIN : BAR_DOCS,
+    main: isHome ? home({ body, fm, page }) : isLanding ? landing({ body, fm, page }) : chapter({ body, page, route }),
     /* The front door sets its "More on …" lines in italic, in the first
        screen; unpreloaded, the italic arrived a round trip after the roman
        and those four lines were drawn twice. A chapter has italic here and
        there and fetches it when it needs it. */
-    italic: isHome,
+    italic: isHome || isLanding,
   });
 
   const to = path.join(OUT, 'docs', page.replace(/\.md$/, '.html'));

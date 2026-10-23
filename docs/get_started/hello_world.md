@@ -150,7 +150,7 @@ From there, pick the direction that fits:
 - **See who runs it.** [Who Uses abap2UI5?](/resources/who_uses) lists ready-to-use
   apps, real-world scenarios and companies already running on it; the
   [add-ons](/resources/addons) cover what not every app needs.
-- **Need somebody's approval?** [Evaluate abap2UI5](/get_started/evaluate) is
+- **Need somebody's approval?** [Evaluate abap2UI5](/evaluate) is
   the page for the person who decides whether it may be used: when to use it
   and when RAP, what the organization keeps, what it costs, and the objections
   a review board raises. Send the link rather than the argument.
