@@ -38,6 +38,7 @@ dynpro
 dynpros
 eml
 fiori
+floorplan
 floorplans
 flp
 gui
@@ -52,6 +53,7 @@ sapconnect
 searchhelp
 steampunkification
 subaccount
+worklist
 worklists
 xsdbool
 

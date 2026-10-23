@@ -94,7 +94,7 @@ It is deliberately not built for everything. Three cases are a poor fit, and kno
 - **Offline use and complex client-side behavior.** The browser renders; it does not hold the application.
 - **Teams that work strictly separately.** The app is one ABAP class — that is the point, and it means there is no frontend project for a frontend team to own.
 
-→ *See [On-Stack or Side-by-Side](/advanced/insights/30-on-stack-or-side-by-side) and [One App, Many Systems](/advanced/insights/31-one-app-many-systems) for the deployment scenarios*
+→ *See [On-Stack or Side-by-Side](/advanced/insights/30-on-stack-or-side-by-side) and [One App, Many Systems](/advanced/insights/31-one-app-many-systems) for the deployment scenarios, and [Evaluate abap2UI5](/get_started/evaluate) for the same decision written for the people who approve a tool rather than build with it*
 
 ## Compatibility
 <br>
