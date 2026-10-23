@@ -11,6 +11,10 @@ links the page that carries the detail behind each answer. A developer who
 wants to see it run is better served by the [Quickstart](/get_started/quickstart);
 send them there and read on.
 
+![An abap2UI5 app: a selection form above a table of invoices, with a dialog editing one row](/tutorials/walkthrough-preview.webp)
+
+<p class="a2ui5-facts"></p>
+
 ## The problem it answers
 
 Every SAP system has screens nobody shipped: the cockpit for one team, the

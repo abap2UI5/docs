@@ -35,6 +35,7 @@ import { measureImage } from './lib/images.mjs';
 import { contentSecurityPolicy, inlineScriptsIn } from './lib/csp.mjs';
 import { stripComments } from './lib/html.mjs';
 import { declaredRelease } from './lib/release.mjs';
+import { readFacts } from './lib/facts.mjs';
 
 /* The repository, wherever the build is started from - the cwd found no
    `docs/` from anywhere but the root. The output directory on the command
@@ -135,6 +136,15 @@ const fetchText = async (url) => {
     await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
   }
 };
+
+/* The counted figures (lib/facts.mjs): read once, printed under the front
+   door's hero and wherever a page carries `<p class="a2ui5-facts"></p>`. A
+   read that fails costs the line, never the build, and says so below. */
+const facts = await readFacts();
+for (const note of facts.notes) console.log(note);
+const factsLine = (cls) => (facts.items.length
+  ? `<p class="${cls}">${facts.items.map(esc).join(' · ')}</p>`
+  : '');
 
 const frame = await (async () => {
   if (playground) {
@@ -941,6 +951,7 @@ const home = ({ body, fm, page }) => {
       <div class="hero-actions">${(h.actions || []).map((a) => `
         <a class="hero-action ${a.theme === 'brand' ? 'primary' : 'plain'}" href="${esc(linkOf(a.link))}"${a.target ? ` target="${esc(a.target)}"` : ''}>${esc(a.text)}</a>`).join('')}
       </div>
+      ${h.note ? `<p class="hero-note">${esc(h.note)}</p>` : ''}
     </div>
     ${img.src ? (() => {
       /* The one image on this site that is NOT lazy - it is the first thing on
@@ -957,6 +968,7 @@ const home = ({ body, fm, page }) => {
          alt="${esc(img.alt || '')}" width="200"${h} decoding="async" fetchpriority="high"></div>`;
     })() : ''}
   </section>
+  ${factsLine('hero-facts')}
   <div class="vp-doc bands">${bands(body, `<section class="tiles">${(fm.features || []).map(tile).join('')}
   </section>`)}</div>
   <!-- The front door is a page of this repository like any other, and it was
@@ -1321,6 +1333,8 @@ for (const page of pages) {
   /* The renderer's copy button is named by its title alone, which not every
      screen reader and browser pair announces; 400 of them across the site. */
   body = body.replace(/<button title="Copy Code" class="copy">/g, '<button title="Copy Code" aria-label="Copy code" class="copy">');
+  /* A page that asks for the counted figures gets them here, or nothing. */
+  body = body.replace(/<p class="a2ui5-facts"><\/p>/g, factsLine('a2ui5-facts'));
   const fm = env.frontmatter || {};
   /* The renderer puts the base in front of a LINK but not in front of an
      asset: VitePress rewrites those in a Vite step this build does not have,

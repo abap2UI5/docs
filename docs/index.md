@@ -163,6 +163,12 @@ hero:
   # third copy of what the page already offered twice; it is back as the
   # primary action on purpose - the two readers of this page want different
   # first clicks, and the hero can afford one each.)
+  # THE LINE UNDER THE BUTTONS is what the primary one costs. A vendor's
+  # first screen says "start free trial" and means a license key, a runtime
+  # of your own and a call; this one means a browser tab. Said once, here,
+  # where the reader has just read the button - not in the tagline, which is
+  # about what runs on the system, and not on a card, which argues cost.
+  note: "Nothing to install, no trial license, no sales call — the playground runs in your browser."
   actions:
     - theme: brand
       text: Try it in the playground

@@ -786,6 +786,19 @@ html { scroll-padding-top: 62px; }
    of the bar, and it carries a `::after` divider. Borrowing a stylesheet means
    its class names are taken - this one cost 17px of button before it was
    found, which is the width of that divider. */
+/* One line under the buttons, set like the tagline's quieter sibling: what
+   the primary button costs, which is nothing - no install, no trial license,
+   no sales call. It is the one claim on the page a vendor cannot make, and it
+   stands where the reader's eye is after reading the buttons. */
+.hero-note { margin: 0; padding-top: 14px; font-size: 13px; line-height: 20px; color: var(--fg-dim); }
+/* The counted figures, under the hero and across its width: tests, gates,
+   stars, read at build time from where they are counted (lib/facts.mjs) and
+   never typed here. One quiet line, so it reads as a fact sheet's footer and
+   not as a second tagline. */
+.hero-facts, .vp-doc p.a2ui5-facts {
+  margin: 0; padding: 20px 0 0; font-size: 13px; line-height: 20px; color: var(--fg-dim);
+}
+.vp-doc p.a2ui5-facts { padding-top: 0; }
 .hero-action.primary { background: var(--accent); color: var(--accent-fg); }
 .hero-action.plain { border-color: var(--line); color: var(--fg); }
 .hero-action.plain:hover { border-color: var(--accent); color: var(--accent); }
