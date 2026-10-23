@@ -63,6 +63,7 @@ export const NEIGHBOURS = [
   '/playground/',           // the playground, and the sample catalogue under it
   '/linter/',               // the linter's rule reference
   '/layout-editor/',        // the layout editor, published by abap2UI5/layout-editor's pages workflow
+  '/evaluate/',             // Evaluate abap2UI5, the page for the people who approve it (abap2UI5/evaluate)
   '/web-abap2UI5-build/',   // a live build of the frontend, credited on Sponsor
 ];
 

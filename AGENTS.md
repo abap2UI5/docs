@@ -15,7 +15,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 
 | Path | Purpose |
 | --- | --- |
-| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. One page is not a chapter: `index.md` (`layout: home`, the front door). The page for the person who approves abap2UI5, Evaluate abap2UI5, is not in this repository: it is a page of the playground's deployment (`/playground/evaluate/`, abap2UI5/playground `src/evaluate/`), so a link a developer sends to the person who decides does not say "manual"; `docs/public/evaluate.html` keeps its old address here answering |
+| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. One page is not a chapter: `index.md` (`layout: home`, the front door). The page for the person who approves abap2UI5, Evaluate abap2UI5, is not in this repository: it is a site of its own (`/evaluate/`, the repository abap2UI5/evaluate), so a link a developer sends to the person who decides does not say "manual"; `docs/public/evaluate.html` keeps its old address here answering |
 | `docs/public/` | Static assets — **and** the generated `llms.txt`, `llms-full.txt` and per-page `.md`, which are gitignored |
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus the catalogue of the repository each class belongs to — the prefix decides: `z2ui5_cl_smp_app_*` is `abap2UI5/samples` (read from its `SAMPLES.md` in a checkout), `z2ui5_cl_smpc_*` samples-controls and `z2ui5_cl_smps_*` samples-stack (read from their `catalogue.json`, a checkout or the published copy). Checks the link in both directions for the samples repository (the `" @docs` line), the class's existence for the other two, and resolves the source links a page writes by hand against whichever checkout is here |
@@ -638,8 +638,8 @@ The thirty-second is `get_started/evaluate`, the Evaluate page's address for
 its first day (2026-10-23) before it got the landing layout and moved to
 `/evaluate`; the framework's README and two of its docs pages link sections of
 it, so the stub keeps the fragment the same way. The thirty-third is
-`/evaluate` itself: the page left the manual for the playground's deployment
-(`/playground/evaluate/`, the same section ids), and both stubs go straight
+`/evaluate` itself: the page left the manual for a site of its own
+(`/evaluate/`, abap2UI5/evaluate, the same section ids), and both stubs go straight
 there.
 
 Two things make this safe rather than a second set of pages to maintain:
