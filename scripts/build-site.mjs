@@ -250,8 +250,8 @@ const BAR = (() => {
     ` data-site="samples" data-scope="${PUBLISHED}/samples/"`));
 })();
 
-/* WHICH OF THE FOUR THE READER IS ON. The bar names Home, Documentation,
- * Samples and Playground, and marks one of them; on this deployment that is
+/* WHICH OF THE FIVE THE READER IS ON. The bar names Home, Documentation,
+ * Samples, Playground and AI Studio, and marks one of them; on this deployment that is
  * Documentation for every chapter and Home for the front door, which is a
  * different page of the same site.
  *
