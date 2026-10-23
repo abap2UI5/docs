@@ -1,0 +1,31 @@
+<!doctype html>
+<!--
+  Redirect for the page that lived here, /docs/evaluate, from 2026-10-23 until
+  it moved to the playground's deployment as /playground/evaluate/. It is the
+  page for the person who approves abap2UI5, and an address under /docs/ said
+  "manual" before they had read a word. The front door, the Quickstart, Hello
+  World and In a Nutshell link the new address; the framework's README and two
+  of its docs pages linked this one, with section fragments - so it keeps
+  working, and the one-line script carries the #fragment across (the section
+  ids are the same over there).
+
+  VitePress has no redirect mechanism; files under public/ are copied into the
+  build verbatim, which is why this is a hand-written page. Delete it only when
+  the old URL has stopped receiving traffic.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Page moved - abap2UI5</title>
+    <link rel="canonical" href="https://abap2ui5.github.io/playground/evaluate/">
+    <meta http-equiv="refresh" content="0; url=/playground/evaluate/">
+    <meta name="robots" content="noindex">
+    <script>location.replace('/playground/evaluate/' + location.hash);</script>
+  </head>
+  <body>
+    <p>
+      This page moved to
+      <a href="/playground/evaluate/" target="_self">Evaluate abap2UI5</a>.
+    </p>
+  </body>
+</html>

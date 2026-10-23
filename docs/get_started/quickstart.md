@@ -147,4 +147,4 @@ is the next page: it is the smallest app that can exist, how to start it, and
 what each line of it does.
 
 If somebody else decides whether abap2UI5 may be used on your system,
-[Evaluate abap2UI5](/evaluate) is the page written for them.
+[Evaluate abap2UI5](https://abap2ui5.github.io/playground/evaluate/) is the page written for them.

@@ -157,7 +157,9 @@ hero:
   # one opens the page written for the manager this page is written for:
   # "Evaluate abap2UI5" - when to use it and when RAP, what the organization
   # keeps, where it runs, what it costs, the objections, and how to test it
-  # on one real screen. It used to open "In a Nutshell", the technical
+  # on one real screen. It is a page of the playground's deployment
+  # (/playground/evaluate/), not of the manual, so a link to it does not say
+  # "manual" - hence the target, like every way into the neighbouring site. It used to open "In a Nutshell", the technical
   # picture, which is one click into the manual and the page for the
   # architect. (A playground button stood here before and was taken out as the
   # third copy of what the page already offered twice; it is back as the
@@ -176,7 +178,8 @@ hero:
       target: _self
     - theme: alt
       text: Evaluate it for your organization
-      link: /evaluate
+      link: https://abap2ui5.github.io/playground/evaluate/
+      target: _self
 
 # Four things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). The
@@ -201,7 +204,8 @@ features:
   - title: Evaluate it for your team
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 12.5 9 17.5 20 6.5"/></svg>
     details: When to use it and when RAP, what your organization keeps, what it costs, and the objections a review board raises — on one page.
-    link: /evaluate
+    link: https://abap2ui5.github.io/playground/evaluate/
+    target: _self
 ---
 
 ## Ready for your enterprise
@@ -210,7 +214,7 @@ abap2UI5 runs inside the security you already have. One HTTP endpoint,
 standard SAP logon, your own authorizations — and an app is an ABAP class, so
 transports, ATC and ABAP Unit apply as they do to everything else you ship.
 
-→ *More on [What you keep](/evaluate#what-you-keep)*
+→ *More on [What you keep](https://abap2ui5.github.io/playground/evaluate/#what-you-keep)*
 
 ## Plays well with what you have
 
