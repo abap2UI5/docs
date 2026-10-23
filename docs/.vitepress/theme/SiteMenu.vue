@@ -93,6 +93,10 @@ watch(isDark, (dark) => {
       <a href="/docs/resources/contribution">Contribute</a>
       <a href="/docs/resources/sponsor">Sponsor</a>
       <span class="a2ui5-menu-head">Tools</span>
+      <!-- The AI Studio: an app built from a description, in the browser, on
+           the playground's deployment - same origin, so `target="_self"` as
+           the Linter rules row below says. -->
+      <a href="https://abap2ui5.github.io/playground/ai/" target="_self">AI Studio</a>
       <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
       <!-- SAME ORIGIN, ANOTHER DEPLOYMENT: `target="_self"`, not the
            `target="_blank"` the github.com rows carry, and not nothing - a
