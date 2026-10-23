@@ -34,8 +34,9 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # two or three paragraphs each - the enterprise card alone ran to 120 words -
 # and four panels of prose under three tiles read as a page that starts
 # over. What a card says now is the claim, one sentence that backs it, and
-# the link to the page that argues it in full: the About page carries the
-# lifecycle, the exit path and the support model, and carried them before.
+# the link to the page that argues it in full: the Evaluate page carries the
+# lifecycle, the exit path and the support model (the About page did, until
+# it was cut back to the technical picture).
 # Nothing in the paragraph is bold: the heading carries the claim, the text
 # reads as one run. The headings are claims too, not labels: "Plays well with what you have"
 # promises something, where "Integration" only named a topic. The last card
@@ -54,10 +55,10 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # behind this, what happens when nobody is, how an app is governed, what it is
 # not for. The answers - lifecycle (transports, ATC, ABAP Unit), exit path (a
 # handful of classes and one table), versioned releases, support as it is
-# (the community's, no vendor SLA) - stand on the About page, and each card
+# (the community's, no vendor SLA) - stand on the Evaluate page, and each card
 # links the section that carries them. References by name and a list of what
 # this is NOT for were tried here and taken out again by the maintainer: the
-# limits stay on the About page, the references on Who Uses abap2UI5.
+# limits stay on the Evaluate page, the references on Who Uses abap2UI5.
 #
 # THIS PAGE IS FOR THE MANAGER. A developer has usually found the project by
 # another path - a talk, a sample, the playground - and the person this page
@@ -153,9 +154,12 @@ hero:
   # page, but neither is a call to action in the first screen, and a first
   # screen with no primary action reads as a brochure. Same tab (target
   # _self), like every other way into the neighbouring site. The outlined
-  # one, "Learn more…", opens the page that says what this is ("In a
-  # Nutshell"), which is the next step for the manager this page is written
-  # for. (A playground button stood here before and was taken out as the
+  # one opens the page written for the manager this page is written for:
+  # "Evaluate abap2UI5" - when to use it and when RAP, what the organization
+  # keeps, where it runs, what it costs, the objections, and how to test it
+  # on one real screen. It used to open "In a Nutshell", the technical
+  # picture, which is one click into the manual and the page for the
+  # architect. (A playground button stood here before and was taken out as the
   # third copy of what the page already offered twice; it is back as the
   # primary action on purpose - the two readers of this page want different
   # first clicks, and the hero can afford one each.)
@@ -165,11 +169,13 @@ hero:
       link: https://abap2ui5.github.io/playground/
       target: _self
     - theme: alt
-      text: Learn more…
-      link: /get_started/about
+      text: Evaluate it for your organization
+      link: /get_started/evaluate
 
-# Three things to do next, each on the page for it. The bar names the
-# places; these name the tasks (see THE THREE TILES ARE TASKS above). They
+# Four things to do next, each on the page for it. The bar names the
+# places; these name the tasks (see THE THREE TILES ARE TASKS above). The
+# fourth is the decision-maker's task - evaluate it for a team - because a
+# reader who is not going to build anything still has one thing to do. They
 # are frontmatter, so VitePress draws them under the hero; the published page
 # draws them UNDER THE EXAMPLE (build-site.mjs), where "what next" belongs.
 features:
@@ -186,6 +192,10 @@ features:
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.5 19.5V9l5.5 3.5V9l5.5 3.5V9l6 3.5v7zM3.5 19.5h17M6 4.5h3v7.5"/></svg>
     details: Security, authorizations, the launchpad tile, the transport — what a go-live needs, on one page.
     link: /configuration/productive_usage
+  - title: Evaluate it for your team
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 12.5 9 17.5 20 6.5"/></svg>
+    details: When to use it and when RAP, what your organization keeps, what it costs, and the objections a review board raises — on one page.
+    link: /get_started/evaluate
 ---
 
 ## Ready for your enterprise
@@ -194,7 +204,7 @@ abap2UI5 runs inside the security you already have. One HTTP endpoint,
 standard SAP logon, your own authorizations — and an app is an ABAP class, so
 transports, ATC and ABAP Unit apply as they do to everything else you ship.
 
-→ *More on [Enterprise Readiness](/get_started/about#enterprise-ready)*
+→ *More on [What you keep](/get_started/evaluate#what-you-keep)*
 
 ## Plays well with what you have
 

@@ -798,9 +798,15 @@ html { scroll-padding-top: 62px; }
    to production. Under the example rather than under the hero
    (build-site.mjs places them), so the row is one band of the grid below
    and takes its spacing from the grid's row gap. */
+/* Four tiles, one per task - build, find, ship, evaluate - and the fourth is
+   the one for the reader who builds nothing. Two by two under 1100px, where
+   four 13px details in a row stop being readable. */
 .tiles {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
   grid-column: 1 / -1; min-width: 0;
+}
+@media (max-width: 1100px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .tile {
   display: block; padding: 22px;
