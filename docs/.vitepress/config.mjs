@@ -230,7 +230,7 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "In a Nutshell", link: "/get_started/about" }, // sidebar
-          { text: "Evaluate abap2UI5", link: "/get_started/evaluate" },
+          { text: "Evaluate abap2UI5", link: "/evaluate" },
           { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Developing with AI", link: "/get_started/ai" },

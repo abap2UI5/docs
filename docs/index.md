@@ -163,6 +163,12 @@ hero:
   # third copy of what the page already offered twice; it is back as the
   # primary action on purpose - the two readers of this page want different
   # first clicks, and the hero can afford one each.)
+  # THE LINE UNDER THE BUTTONS is what the primary one costs. A vendor's
+  # first screen says "start free trial" and means a license key, a runtime
+  # of your own and a call; this one means a browser tab. Said once, here,
+  # where the reader has just read the button - not in the tagline, which is
+  # about what runs on the system, and not on a card, which argues cost.
+  note: "Nothing to install, no trial license, no sales call — the playground runs in your browser."
   actions:
     - theme: brand
       text: Try it in the playground
@@ -170,7 +176,7 @@ hero:
       target: _self
     - theme: alt
       text: Evaluate it for your organization
-      link: /get_started/evaluate
+      link: /evaluate
 
 # Four things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). The
@@ -195,7 +201,7 @@ features:
   - title: Evaluate it for your team
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 12.5 9 17.5 20 6.5"/></svg>
     details: When to use it and when RAP, what your organization keeps, what it costs, and the objections a review board raises — on one page.
-    link: /get_started/evaluate
+    link: /evaluate
 ---
 
 ## Ready for your enterprise
@@ -204,7 +210,7 @@ abap2UI5 runs inside the security you already have. One HTTP endpoint,
 standard SAP logon, your own authorizations — and an app is an ABAP class, so
 transports, ATC and ABAP Unit apply as they do to everything else you ship.
 
-→ *More on [What you keep](/get_started/evaluate#what-you-keep)*
+→ *More on [What you keep](/evaluate#what-you-keep)*
 
 ## Plays well with what you have
 

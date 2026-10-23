@@ -786,6 +786,19 @@ html { scroll-padding-top: 62px; }
    of the bar, and it carries a `::after` divider. Borrowing a stylesheet means
    its class names are taken - this one cost 17px of button before it was
    found, which is the width of that divider. */
+/* One line under the buttons, set like the tagline's quieter sibling: what
+   the primary button costs, which is nothing - no install, no trial license,
+   no sales call. It is the one claim on the page a vendor cannot make, and it
+   stands where the reader's eye is after reading the buttons. */
+.hero-note { margin: 0; padding-top: 14px; font-size: 13px; line-height: 20px; color: var(--fg-dim); }
+/* The counted figures, under the hero and across its width: tests, gates,
+   stars, read at build time from where they are counted (lib/facts.mjs) and
+   never typed here. One quiet line, so it reads as a fact sheet's footer and
+   not as a second tagline. */
+.hero-facts, .vp-doc p.a2ui5-facts {
+  margin: 0; padding: 20px 0 0; font-size: 13px; line-height: 20px; color: var(--fg-dim);
+}
+.vp-doc p.a2ui5-facts { padding-top: 0; }
 .hero-action.primary { background: var(--accent); color: var(--accent-fg); }
 .hero-action.plain { border-color: var(--line); color: var(--fg); }
 .hero-action.plain:hover { border-color: var(--accent); color: var(--accent); }
@@ -793,6 +806,23 @@ html { scroll-padding-top: 62px; }
    has always drawn it. */
 .hero-image { flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; transform: translate(-32px, -32px); }
 .hero-image img { display: block; width: 200px; height: auto; border: 0; border-radius: 0; }
+/* The landing page's hero carries a screenshot where the front door has the
+   mark: drawn at the width a screenshot needs, framed like the ones in the
+   chapters, and not shifted up and left the way the mark is. */
+.landing .hero-image.hero-shot { transform: none; justify-content: flex-end; padding-left: 32px; }
+.landing .hero-image.hero-shot img {
+  width: 100%; max-width: 520px; height: auto;
+  border: 1px solid var(--line); border-radius: 6px;
+}
+/* Its tables are tables - a header row, cells that wrap - not the front
+   door's two-column fact sheet, which is what `.home table` is styled as. */
+.landing .vp-doc table { max-width: none; }
+.landing .vp-doc table thead { display: table-header-group; }
+.landing .vp-doc table td:first-child { width: auto; white-space: normal; }
+/* The bands follow one another as sections of one argument, so each one
+   after the first opens on the hairline the H2 carries and a little air. */
+.landing .band + .band { padding-top: 8px; }
+.landing .bands .tiles { margin-top: 8px; }
 
 /* The three things to do next - build a first app, find a sample, take one
    to production. Under the example rather than under the hero
@@ -986,6 +1016,9 @@ html { scroll-padding-top: 62px; }
 @media (max-width: 860px) {
   .hero { display: block; }
   .hero-image { display: none; }
+  /* ...but the landing page's screenshot stays, under the text: it is the
+     one picture the reader of that page gets. */
+  .landing .hero-image.hero-shot { display: flex; padding: 24px 0 0; justify-content: flex-start; }
   .tiles { grid-template-columns: minmax(0, 1fr); }
 }
 

@@ -1,15 +1,57 @@
 ---
+# THE PAGE FOR THE PERSON WHO APPROVES IT, drawn like the front door and not
+# like a chapter: no sidebar, no outline, no crumb trail saying "Documentation
+# > Getting Started" over the first line. A developer sends this link to the
+# person who decides, and that person must not land in the manual. It is the
+# `landing` layout of build-site.mjs: the hero carries the name, the claim,
+# the intro and the two doors; the screenshot stands where the front door has
+# its mark, because the reader of this page will not open the playground to
+# see an app; the counted figures stand under the hero (lib/facts.mjs); the
+# H2 sections are bands across the width; the four tiles at the end are the
+# four ways to start, in order of effort, so the last section does not list
+# them a second time.
+#
+# The H1 stays in the body - the search index and the sidebar test read it
+# there - and the layout prints it in the hero instead, once.
+layout: landing
+title: Evaluate abap2UI5
 outline: [2, 4]
 description: abap2UI5 for the people who approve a tool rather than build with it - what problem it answers, when it is the right choice and when RAP is, what your organization keeps, where it runs, what it costs, the objections a review board raises, and how to test it on one real screen in a week.
+hero:
+  name: For the people who approve it
+  tagline: "For IT management, architecture boards, product owners, SAP Basis and internal audit: the questions a review asks, in the order it asks them, each with the page that carries the detail. A developer who wants to see it run is better served by the Quickstart; send them there and read on."
+  image:
+    src: /tutorials/walkthrough-preview.webp
+    alt: "An abap2UI5 app: a selection form above a table of invoices, with a dialog editing one row"
+  actions:
+    - theme: brand
+      text: Try it in the playground
+      link: https://abap2ui5.github.io/playground/
+      target: _self
+    - theme: alt
+      text: Read the technical picture
+      link: /get_started/about
+  note: "Nothing to install, no trial license, no sales call — the playground runs in your browser."
+features:
+  - title: Ten minutes, nothing installed
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 8.4v7.2a.5.5 0 0 0 .76.43l5.8-3.6a.5.5 0 0 0 0-.86l-5.8-3.6a.5.5 0 0 0-.76.43z" fill="currentColor"/></svg>
+    details: Open the playground and change a running app, or browse the sample catalog for the screen closest to yours.
+    link: https://abap2ui5.github.io/playground/samples/
+    target: _self
+  - title: One afternoon, one developer
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M8 7.5 3.5 12 8 16.5M16 7.5l4.5 4.5-4.5 4.5M13.6 4.8 10.4 19.2"/></svg>
+    details: Send them the Quickstart — abapGit pull, ICF node, first app. The tutorial takes the same app to transport and unit tests.
+    link: /get_started/quickstart
+  - title: One question
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 5.5h16v10H9l-4.5 3.5z"/></svg>
+    details: Ask it in the Slack channel or as a GitHub issue, where the people who run it in production answer.
+    link: https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email
+  - title: A partner
+    icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.5 19.5V9l5.5 3.5V9l5.5 3.5V9l6 3.5v7zM3.5 19.5h17M6 4.5h3v7.5"/></svg>
+    details: The companies on Who Uses abap2UI5? offer implementation, workshops and support agreements.
+    link: /resources/who_uses
 ---
 # Evaluate abap2UI5
-
-This page is for the people who decide whether abap2UI5 may be used: IT
-management, architecture boards, product owners, SAP Basis, internal audit.
-It answers the questions such a review asks, in the order it asks them, and
-links the page that carries the detail behind each answer. A developer who
-wants to see it run is better served by the [Quickstart](/get_started/quickstart);
-send them there and read on.
 
 ## The problem it answers
 
@@ -265,20 +307,4 @@ Then hold this page against the security model and the verified-on page
 with the skepticism you would apply to a vendor's slide, and decide from
 the screen, not from the slide.
 
-Where to start, in order of effort:
-
-1. **Ten minutes, nothing installed.** Open the
-   [playground](https://abap2ui5.github.io/playground/) and change a running
-   app, or browse the
-   [sample catalog](https://abap2ui5.github.io/playground/samples/) for the
-   screen closest to yours.
-2. **One afternoon, one developer.** Send them the
-   [Quickstart](/get_started/quickstart): abapGit pull, ICF node, first app.
-   The [Tutorial](/tutorials/) takes the same app to transport and unit
-   tests.
-3. **One question.** Ask it in the
-   [Slack channel](https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email)
-   or as a [GitHub issue](https://github.com/abap2UI5/abap2UI5/issues), where
-   the people who run it in production answer.
-4. **A partner.** The companies on [Who Uses abap2UI5?](/resources/who_uses)
-   offer implementation, workshops and support agreements.
+Where to start, in order of effort, is under this line.
