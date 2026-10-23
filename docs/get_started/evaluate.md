@@ -73,6 +73,9 @@ line rather than with a feeling:
 - **Offline, or a native mobile SDK, is a requirement.** abap2UI5 is a
   roundtrip to the ABAP system on every interaction. It has a mobile shell
   for camera, barcode and location; it has no offline store.
+- **A frontend team should own the frontend.** The app is one ABAP class;
+  that is the point, and it means there is no frontend project for a
+  separate team to own, and no place for heavy client-side behavior.
 - **The organization has standardized on it.** A clean-core guideline that
   names RAP as the extensibility model is a decision already taken.
   abap2UI5 passes the ABAP Cloud checks, but it is not SAP's programming

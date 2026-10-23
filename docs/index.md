@@ -34,8 +34,9 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # two or three paragraphs each - the enterprise card alone ran to 120 words -
 # and four panels of prose under three tiles read as a page that starts
 # over. What a card says now is the claim, one sentence that backs it, and
-# the link to the page that argues it in full: the About page carries the
-# lifecycle, the exit path and the support model, and carried them before.
+# the link to the page that argues it in full: the Evaluate page carries the
+# lifecycle, the exit path and the support model (the About page did, until
+# it was cut back to the technical picture).
 # Nothing in the paragraph is bold: the heading carries the claim, the text
 # reads as one run. The headings are claims too, not labels: "Plays well with what you have"
 # promises something, where "Integration" only named a topic. The last card
@@ -54,10 +55,10 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # behind this, what happens when nobody is, how an app is governed, what it is
 # not for. The answers - lifecycle (transports, ATC, ABAP Unit), exit path (a
 # handful of classes and one table), versioned releases, support as it is
-# (the community's, no vendor SLA) - stand on the About page, and each card
+# (the community's, no vendor SLA) - stand on the Evaluate page, and each card
 # links the section that carries them. References by name and a list of what
 # this is NOT for were tried here and taken out again by the maintainer: the
-# limits stay on the About page, the references on Who Uses abap2UI5.
+# limits stay on the Evaluate page, the references on Who Uses abap2UI5.
 #
 # THIS PAGE IS FOR THE MANAGER. A developer has usually found the project by
 # another path - a talk, a sample, the playground - and the person this page
