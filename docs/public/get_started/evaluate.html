@@ -1,29 +1,23 @@
 <!doctype html>
 <!--
-  Redirect for the page that lived at /docs/get_started/evaluate for one day
-  (2026-10-23). It moved to /docs/evaluate when it got the landing layout: the
-  page is sent to the person who approves abap2UI5, and "get_started" in the
-  address said "manual" before they had read a word. The framework's README
-  and two of its docs pages linked the old address - so it keeps working.
-
-  VitePress has no redirect mechanism; files under public/ are copied into the
-  build verbatim, which is why this is a hand-written page. The one-line
-  script keeps a #fragment, because the links into it name sections. Delete
-  it only when the old URL has stopped receiving traffic.
+  Redirect: the page lived at /docs/get_started/evaluate for one day (2026-10-23), then at /docs/evaluate.
+  abap2UI5 for decision makers is its own site now (abap2UI5/test-docs), and
+  the manual is for developers. Old links keep working; delete this only when
+  the old URL has stopped receiving traffic.
 -->
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <title>Page moved - abap2UI5</title>
-    <link rel="canonical" href="https://abap2ui5.github.io/docs/evaluate.html">
-    <meta http-equiv="refresh" content="0; url=/docs/evaluate.html">
+    <link rel="canonical" href="https://abap2ui5.github.io/test-docs/">
+    <meta http-equiv="refresh" content="0; url=https://abap2ui5.github.io/test-docs/">
     <meta name="robots" content="noindex">
-    <script>location.replace('/docs/evaluate.html' + location.hash);</script>
+    <script>location.replace('https://abap2ui5.github.io/test-docs/' + location.hash);</script>
   </head>
   <body>
     <p>
       This page moved to
-      <a href="/docs/evaluate.html">Evaluate abap2UI5</a>.
+      <a href="https://abap2ui5.github.io/test-docs/" target="_self">abap2UI5 for decision makers</a>.
     </p>
   </body>
 </html>

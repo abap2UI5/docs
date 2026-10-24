@@ -15,12 +15,12 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 
 | Path | Purpose |
 | --- | --- |
-| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. Two pages are not chapters: `index.md` (`layout: home`, the front door) and `evaluate.md` (`layout: landing`, the page for the person who approves abap2UI5 - drawn like the front door, with no sidebar, outline or crumb trail, and its own address so a link to it does not say "manual"; its frontmatter says why) |
+| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. One page is not a chapter: `index.md` (`layout: home`, the front door). **The manual is for developers.** The case for the person who approves abap2UI5 - what it can build, how it compares, what it costs, who runs it - is a site of its own, [abap2UI5/test-docs](https://github.com/abap2UI5/test-docs) at https://abap2ui5.github.io/test-docs/; link it, never argue it here a second time |
 | `docs/public/` | Static assets — **and** the generated `llms.txt`, `llms-full.txt` and per-page `.md`, which are gitignored |
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus the catalogue of the repository each class belongs to — the prefix decides: `z2ui5_cl_smp_app_*` is `abap2UI5/samples` (read from its `SAMPLES.md` in a checkout), `z2ui5_cl_smpc_*` samples-controls and `z2ui5_cl_smps_*` samples-stack (read from their `catalogue.json`, a checkout or the published copy). Checks the link in both directions for the samples repository (the `" @docs` line), the class's existence for the other two, and resolves the source links a page writes by hand against whichever checkout is here |
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
-| `scripts/lib/facts.mjs` | The counted figures the front door and the Evaluate page print under the hero and in `<p class="a2ui5-facts"></p>` - unit tests, specs, browser suites, gates, GitHub stars. Read at build time from the framework README's `facts:start` block (`A2UI5_HOME` via `git show`, else raw GitHub) and the GitHub API; this repository types no number of its own, and a read that fails costs the line, never the build, and says so in the build log |
+| `scripts/lib/facts.mjs` | The counted figures the front door prints under the hero and in `<p class="a2ui5-facts"></p>` - unit tests, specs, browser suites, gates, GitHub stars. Read at build time from the framework README's `facts:start` block (`A2UI5_HOME` via `git show`, else raw GitHub) and the GitHub API; this repository types no number of its own, and a read that fails costs the line, never the build, and says so in the build log |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`; `A2UI5_HOME` reads the same ref out of a local clone of the framework instead, with `git show`, never its working tree) and the full parser `generate-api-reference.mjs` renders from; pinned by `test/client-interface.test.mjs` |
 | `scripts/check-version.mjs` | The release number in the bar's menu, the deprecations page and the changelog, against the newest release tag of the framework |
@@ -49,7 +49,6 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-images.mjs` | Every image under `docs/public`: a screenshot is WebP, a deliverable is one of the PNGs the logo page hands out, none is over its budget, and the build can measure each of them - `scripts/lib/images.mjs` is the one reader both this gate and `build-site.mjs` use, so a format the build cannot size fails here rather than shifting the page there |
 | `scripts/lib/html.mjs` | `stripComments( )`: every finished page leaves the build without the HTML comments its sources are written with - 418 kB across the site, a tenth of every page's compressed weight, read by nobody - outside `<script>`, because a script's text is what its hash in the policy is taken from |
 | `scripts/lib/prose.mjs` | What on a page is PROSE - not fenced or inline code, not a link target, a tag, a comment, a URL, a generated block or a frontmatter setting - and the house spelling of it, which is American: the British forms as patterns, each with the American form it becomes. `test/spelling.test.mjs` is the gate; `scripts/fix-spelling.mjs` (`npm run fix:spelling`) rewrites exactly the words the gate names |
-| `docs/.vitepress/theme/cost-calculator.js` | The cost calculator (`resources/cost_calculator`): sliders whose readouts follow them, a choice of support, and a Calculate button that greys the inputs and hands out the sheet - which echoes the readouts, in the currency chosen - until the next round. Two things ride on the reveal rather than on the input rows: the links out (the issue tracker, Slack) sit on the sheet's Support line, and under the total is a short plain list of what the zeros get you. `theme/cost-model.js` is the half with no DOM in it - the reading of a position, and the total, which is zero for any input; `test/cost-calculator.test.mjs` pins the arithmetic and holds the page's written readouts to what the script would write |
 | `scripts/lib/csp.mjs` | The Content-Security-Policy every page is published under, as a `<meta>` because GitHub Pages sets no headers of ours: this origin, the playground beside it for the Run panel, and the two inline scripts by hash - the theme line and the borrowed menu script, hashed from the very string the build writes. `build-site.mjs` reads every finished page back for an inline script that is neither, and refuses to publish it |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
 
@@ -617,7 +616,7 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are thirty-two of them. Eight are `/technical/*`: that whole section became
+There are thirty-six of them. Eight are `/technical/*`: that whole section became
 the Know-How series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
@@ -634,10 +633,13 @@ The last thirteen are the Tutorial's, moved on 2026-10-08 when its single
 `step-1` to `step-12` each point at the same page one level up, under
 `/tutorials/`. Those carry a one-line script on top of the `meta refresh`
 that keeps the `#fragment`, because links into a step's sections exist.
-The thirty-second is `get_started/evaluate`, the Evaluate page's address for
-its first day (2026-10-23) before it got the landing layout and moved to
-`/evaluate`; the framework's README and two of its docs pages link sections of
-it, so the stub keeps the fragment the same way.
+The last five point out of this site, at the page for decision makers
+(https://abap2ui5.github.io/test-docs/), which took over what the manual
+carried for them on 2026-10-24: `evaluate` and `get_started/evaluate` (its
+address for its first day) keep the `#fragment`, because the framework's README
+links sections of it and the new page keeps every section id;
+`resources/cost_calculator`, `resources/who_uses` and `resources/references`
+point at the section that carries each now.
 
 Two things make this safe rather than a second set of pages to maintain:
 

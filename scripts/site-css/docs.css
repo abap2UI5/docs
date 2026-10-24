@@ -806,30 +806,13 @@ html { scroll-padding-top: 62px; }
    has always drawn it. */
 .hero-image { flex: 1 1 auto; min-width: 0; display: flex; justify-content: center; transform: translate(-32px, -32px); }
 .hero-image img { display: block; width: 200px; height: auto; border: 0; border-radius: 0; }
-/* The landing page's hero carries a screenshot where the front door has the
-   mark: drawn at the width a screenshot needs, framed like the ones in the
-   chapters, and not shifted up and left the way the mark is. */
-.landing .hero-image.hero-shot { transform: none; justify-content: flex-end; padding-left: 32px; }
-.landing .hero-image.hero-shot img {
-  width: 100%; max-width: 520px; height: auto;
-  border: 1px solid var(--line); border-radius: 6px;
-}
-/* Its tables are tables - a header row, cells that wrap - not the front
-   door's two-column fact sheet, which is what `.home table` is styled as. */
-.landing .vp-doc table { max-width: none; }
-.landing .vp-doc table thead { display: table-header-group; }
-.landing .vp-doc table td:first-child { width: auto; white-space: normal; }
-/* The bands follow one another as sections of one argument, so each one
-   after the first opens on the hairline the H2 carries and a little air. */
-.landing .band + .band { padding-top: 8px; }
-.landing .bands .tiles { margin-top: 8px; }
-
 /* The three things to do next - build a first app, find a sample, take one
    to production. Under the example rather than under the hero
    (build-site.mjs places them), so the row is one band of the grid below
    and takes its spacing from the grid's row gap. */
-/* Four tiles, one per task - build, find, ship, evaluate - and the fourth is
-   the one for the reader who builds nothing. Two by two under 1100px, where
+/* Four tiles, one per task - build, find, ship, and hand the page for the
+   decision maker over - the fourth is the one for the reader who builds
+   nothing. Two by two under 1100px, where
    four 13px details in a row stop being readable. */
 .tiles {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px;
@@ -1016,9 +999,6 @@ html { scroll-padding-top: 62px; }
 @media (max-width: 860px) {
   .hero { display: block; }
   .hero-image { display: none; }
-  /* ...but the landing page's screenshot stays, under the text: it is the
-     one picture the reader of that page gets. */
-  .landing .hero-image.hero-shot { display: flex; padding: 24px 0 0; justify-content: flex-start; }
   .tiles { grid-template-columns: minmax(0, 1fr); }
 }
 
@@ -1286,124 +1266,6 @@ html { scrollbar-gutter: stable; }
      sheet - the one thing paper needs said that a screen does not. */
   p, li, blockquote { orphans: 3; widows: 3; }
 }
-
-/* ---- the cost calculator ----------------------------------------------
- *
- * resources/cost_calculator: a sheet of sliders whose every line comes to
- * the same number. Plain form controls in the page's own type, the accent
- * on the slider's thumb and on the total, and nothing that needs the
- * script - the page reads the same with the sliders dead. */
-.cost { margin: 20px 0; }
-.cost-row {
-  display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr) minmax(0, 13em);
-  gap: 6px 16px; align-items: center;
-  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
-}
-.cost-row label { font-weight: 600; }
-.cost-row input[type="range"] { width: 100%; margin: 0; accent-color: var(--accent); }
-.cost-row output { text-align: right; font-variant-numeric: tabular-nums; color: var(--fg-dim); }
-.cost-row select {
-  grid-column: 2 / -1; justify-self: end; font: inherit; padding: 4px 8px;
-  border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: inherit;
-}
-/* A choice rather than a scale: radio buttons or checkboxes, across the
-   columns the slider and its readout would take. The links that used to sit
-   beside them are down in the sheet now - an input row is for choosing, and a
-   link in one is a way out of the page before it has said anything. */
-.cost-row .cost-label { font-weight: 600; }
-.cost-row .cost-choices { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
-.cost-row .cost-choices label { display: inline-flex; align-items: center; gap: 6px; margin-right: 12px; font-weight: 400; }
-.cost-row .cost-choices input[type="radio"],
-.cost-row .cost-choices input[type="checkbox"] { margin: 0; accent-color: var(--accent); }
-/* The sheet is what the button hands out: hidden until Calculate is pressed,
-   the inputs greyed while it shows, and the button then offers a new round. */
-.cost-actions { margin: 16px 0; }
-.cost-calculate {
-  font: inherit; font-size: 13px; font-weight: 600; line-height: 34px; padding: 0 16px;
-  border: 1px solid transparent; border-radius: 6px; cursor: pointer;
-  background: var(--accent); color: var(--accent-fg, #fff);
-}
-.cost-calculate:hover { filter: brightness(1.08); }
-.cost-calculate:disabled { cursor: progress; opacity: .7; }
-.cost-inputs[data-locked] .cost-row { opacity: .5; }
-/* ON A PHONE A ROW IS TWO LINES: the label with its readout on the first and
-   the slider the whole width of the second - the shape a phone's own settings
-   give a slider - where the readout used to take a third line of its own. A
-   choice's boxes go under their label rather than beside it: nine systems in
-   the column beside "Your systems" left the label wrapped to a word a line and
-   the boxes to a two-word column. The button is the row's whole width, and
-   the height of a finger. */
-@media (max-width: 620px) {
-  .cost-row { grid-template-columns: minmax(0, 1fr) auto; }
-  .cost-row output { grid-column: 2; grid-row: 1; }
-  .cost-row input[type="range"] { grid-column: 1 / -1; grid-row: 2; }
-  .cost-row .cost-choices { grid-column: 1 / -1; }
-  .cost-calculate { width: 100%; line-height: 44px; }
-}
-/* A thumb rather than a pointer: each box the size of a target and the word
-   beside it a row the height of one, the slider a band a finger can land on,
-   and the currency list a size iOS does not zoom the page in on - a control
-   set under 16px is one it magnifies on focus and leaves magnified. Nothing
-   here moves under a mouse. */
-@media (pointer: coarse) {
-  .cost-row .cost-choices label { min-height: 32px; }
-  .cost-row .cost-choices input[type="radio"],
-  .cost-row .cost-choices input[type="checkbox"] { width: 18px; height: 18px; }
-  .cost-row input[type="range"] { height: 32px; }
-  .cost-row select { font-size: 16px; }
-}
-.cost-sheet { margin: 20px 0 0; padding: 0 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg-sunken); }
-.cost-line {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
-  padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.55;
-}
-.cost-line:last-child { border-bottom: 0; }
-.cost-line small { display: block; font-size: 13px; color: var(--fg-dim); }
-.cost-amount { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.cost-total {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
-  margin: 16px 0 24px; padding: 16px 20px; border: 1px solid var(--accent); border-radius: 8px;
-}
-.cost-total > div { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--fg-dim); }
-.cost-total output { font-size: 28px; line-height: 1.15; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
-.cost-total > div:first-child output { font-size: 40px; }
-/* The one line the sheet cannot total. The answer above it is ten zeros, so
-   the way to say that somebody still paid for them is a panel of its own -
-   the accent border the total carries, on the quieter background, so it reads
-   as the other half of the answer rather than as a footnote or a plea. The
-   four ways are a list without markers, two columns where there is room, each
-   led by what it is: three of them cost an evening and one costs money, and
-   they are in that order on purpose. */
-.cost-give {
-  margin: 28px 0 0; padding: 4px 24px 20px; border: 1px solid var(--accent);
-  border-radius: 8px; background: var(--bg-sunken);
-}
-.cost-give h2 { margin: 16px 0 10px; padding: 0; border: 0; }
-.cost-give p { font-size: 14px; }
-.cost-give > :last-child { margin-bottom: 0; }
-/* Named down to the element, because both themes give a list in an article a
-   marker and an indent of its own. */
-.cost-give ul {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px;
-  margin: 16px 0; padding: 0; list-style: none;
-  font-size: 13px; line-height: 1.6; color: var(--fg-dim);
-}
-.cost-give ul li { margin: 0; padding: 0; }
-/* The lead of a way is a line of its own - and only the lead: a strong later
-   in the sentence (the tag a post carries) is a word inside it. */
-.cost-give ul li strong:first-child { display: block; }
-.cost-give ul li strong { color: var(--fg); font-weight: 600; }
-@media (max-width: 620px) { .cost-give ul { grid-template-columns: 1fr; } }
-/* The note is the sheet's last line rather than a paragraph under it: the
-   three figures answer the question, and the sentence that says why they are
-   all the same character belongs inside the same border. It spans the grid,
-   sits on a hairline under the figures, and is the size of a caption - a note
-   on the total, not a fourth number. */
-.cost-total-note {
-  grid-column: 1 / -1; margin: 4px 0 0; padding-top: 14px;
-  border-top: 1px solid var(--line); font-size: 13px; line-height: 1.6; color: var(--fg-dim);
-}
-@media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
 
 /* ---- the front door's example folds on a phone --------------------------
  *

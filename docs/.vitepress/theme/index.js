@@ -20,7 +20,6 @@ import './style.css'
 import { setUpPlayground } from './playground.js'
 import { setUpCodeLines, watchCodeLines } from './code-lines.js'
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js'
-import { setUpCostCalculator } from './cost-calculator.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
 import Crumbs from './Crumbs.vue'
@@ -61,10 +60,6 @@ export default {
     // (about -> brand -> Home) never started its example.
     const rearmPlayground = import.meta.env.SSR ? undefined : setUpPlayground()
 
-    // The cost calculator's sliders and the sheet under them
-    // (cost-calculator.js): two delegated listeners for the whole site, and
-    // nothing to do on any page but resources/cost_calculator.
-    if (!import.meta.env.SSR) setUpCostCalculator()
 
     // A number beside every line of every listing, and an address for it -
     // #B2L42 is line 42 of the second listing on the page, #B2L42-L58 a

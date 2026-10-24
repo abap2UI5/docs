@@ -1,5 +1,5 @@
 /*
- * facts — the counted figures the front door and the Evaluate page print.
+ * facts — the counted figures the front door prints.
  *
  * This repository owns no number about the framework, and keeps none by hand:
  * the one page that carried four figures of its own (`resources/samples.md`)
