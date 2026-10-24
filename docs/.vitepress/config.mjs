@@ -230,7 +230,6 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "In a Nutshell", link: "/get_started/about" }, // sidebar
-          { text: "Evaluate abap2UI5", link: "/evaluate" },
           { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Developing with AI", link: "/get_started/ai" },
@@ -516,8 +515,8 @@ export default defineConfig({
           // page in this section teaches something you do to your own app -
           // downport it, run it off-stack, extend it, wire it to something.
           // Add-ons teaches nothing: it is a list of what other people
-          // published, which is the same kind of page as References and Who
-          // Uses abap2UI5?. The pages that need it still link it by name.
+          // published, so it reads as a resource. The pages that need it still
+          // link it by name.
           {
             text: "Extensibility",
             collapsed: true,
@@ -644,10 +643,9 @@ export default defineConfig({
       },
       {
         text: "Resources",
-        link: "/resources/references",
+        link: "/resources/api",
         collapsed: true,
         items: [
-          { text: "References", link: "/resources/references" },
           // Generated from z2ui5_if_client at the pinned release by
           // scripts/generate-api-reference.mjs — the entry lives here rather
           // than in the Cookbook because it is a lookup destination, not a
@@ -662,17 +660,15 @@ export default defineConfig({
           //
           // Moved here from Advanced Topics: the ecosystem around the
           // framework rather than a technique to apply to your own app, and
-          // it closes by asking the reader to add their project - the same
-          // invitation Who Uses abap2UI5? makes below it.
+          // it closes by asking the reader to add their project.
           { text: "Add-ons", link: "/resources/addons" },
-          { text: "Who Uses abap2UI5?", link: "/resources/who_uses" },
           { text: "Release Notes", link: "/resources/changelog" },
           { text: "Deprecations", link: "/resources/deprecations" },
           {
             // The series of essays, moved here from a top-level "Know-How"
-            // section of its own: a reader looks for them next to References
-            // and Who Uses abap2UI5?, as reading about the framework rather
-            // than a step in using it. The URLs stay where they were published.
+            // section of its own: a reader looks for them among the resources,
+            // as reading about the framework rather than a step in using it.
+            // The URLs stay where they were published.
             text: "Blogs",
             link: "/advanced/insights/",
             collapsed: true,
@@ -731,10 +727,6 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "License", link: "/resources/license" },
-              // What the license comes to for YOUR landscape: sliders for
-              // users, systems, apps and support tiers, and a sheet whose
-              // every line is zero. The front door's cost card opens it.
-              { text: "Cost Calculator", link: "/resources/cost_calculator" },
               { text: "Support", link: "/resources/support" },
               // SIDEBAR copy — the nav bar has the same two entries verbatim,
               // further up under the version number. Search for this marker,

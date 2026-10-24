@@ -14,7 +14,6 @@
 import { setUpPlayground } from './playground.js';
 import { setUpCodeLines, watchCodeLines } from './code-lines.js';
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js';
-import { setUpCostCalculator } from './cost-calculator.js';
 import { entryOf, forgetOnReload, handOff, lastVisited, rememberHere, rememberScroll, restoreScroll, takeHandoff } from './site-memory.js';
 
 /* ---- a refresh starts over ---------------------------------------------
@@ -50,10 +49,6 @@ forgetOnReload([SECTIONS_KEY, SEARCH_KEY]);
    one delegated listener each, for the whole document. */
 setUpPlayground();
 setUpLinkToSelection();
-
-/* The cost calculator's sliders and the sheet under them (cost-calculator.js):
-   two delegated listeners, and nothing to do on any page but that one. */
-setUpCostCalculator();
 
 /* A number beside every line of every listing, and an address for it - #B2L42
    is line 42 of the second listing on the page. `watchCodeLines` hangs the

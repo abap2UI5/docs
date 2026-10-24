@@ -18,8 +18,8 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # colleague's link, and who has not decided to read a manual yet.
 #
 # So the page answers, in this order: what it is (the hero), the four answers
-# a decision needs — security, integration, AI, cost — what one app looks
-# like, running right here, and then where to go next (the three tiles).
+# a developer asks first — security, integration, AI — what one app looks
+# like, running right here, and then where to go next (the tiles).
 # Under it, one line of where the project lives. A reader who wants the
 # manual is one word away in the bar; this page does not compete with it.
 #
@@ -34,43 +34,24 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # two or three paragraphs each - the enterprise card alone ran to 120 words -
 # and four panels of prose under three tiles read as a page that starts
 # over. What a card says now is the claim, one sentence that backs it, and
-# the link to the page that argues it in full: the Evaluate page carries the
-# lifecycle, the exit path and the support model (the About page did, until
-# it was cut back to the technical picture).
+# the link to the page that argues it in full.
 # Nothing in the paragraph is bold: the heading carries the claim, the text
 # reads as one run. The headings are claims too, not labels: "Plays well with what you have"
 # promises something, where "Integration" only named a topic. The last card
 # asks instead, and its first word is the one-word answer.
 #
 # THE ORDER IS AN ARGUMENT: it is safe here, and it fits what you run - then
-# an agent can write it, and it costs nothing. The price is the last card
-# because it is the closing line: a reader who has taken the first three
-# reaches "Nothing." as the answer to the question the cards have built up
-# to. It is not hidden for being last - the tagline says "free, MIT
-# licensed" in the first screen, and the cards are one sentence each now,
-# so all four stand on one desk screen.
+# an agent can write it. The price card that closed the row is gone with the
+# rest of the case for the buyer (THIS PAGE IS FOR THE DEVELOPER, below); the
+# description and the license page still say MIT.
 #
-# THE CARDS ANSWER A BUYER, not only a developer - somebody who would otherwise
-# license a low-code platform, and who asks what a developer does not: who is
-# behind this, what happens when nobody is, how an app is governed, what it is
-# not for. The answers - lifecycle (transports, ATC, ABAP Unit), exit path (a
-# handful of classes and one table), versioned releases, support as it is
-# (the community's, no vendor SLA) - stand on the Evaluate page, and each card
-# links the section that carries them. References by name and a list of what
-# this is NOT for were tried here and taken out again by the maintainer: the
-# limits stay on the Evaluate page, the references on Who Uses abap2UI5.
-#
-# THIS PAGE IS FOR THE MANAGER. A developer has usually found the project by
-# another path - a talk, a sample, the playground - and the person this page
-# has to convince is the one who decides whether it may be used. So nothing
-# here is arranged for a developer's reading order: the cards come before the
-# code. What a developer gets anyway, because it costs the manager nothing,
-# is the example itself - there is no paragraph in front of it any more; the
-# heading and the running app say what it is - one way out behind it (the
-# tutorial, through to transport and unit tests), and the UI5 releases in
-# the integration card. The daily tools
-# - ADT, the ABAP debugger, ABAP Unit, the linter, the MCP server - are on
-# the Tooling page, one click into the manual.
+# THIS PAGE IS FOR THE DEVELOPER. The manual is technical; the case for the
+# person who approves abap2UI5 - what it can build, how it compares with RAP,
+# freestyle UI5 and commercial platforms, what it costs, who runs it - is a
+# site of its own (https://abap2ui5.github.io/test-docs/, abap2UI5/test-docs).
+# This page argues none of that a second time: the hero's second button and
+# the last tile hand that reader over, once each, and every claim on a card
+# links a page of the manual.
 #
 # THE THREE TILES ARE TASKS, NOT PLACES. They used to say Documentation,
 # Samples, Playground - the same three words, in the same order, with the
@@ -105,13 +86,12 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # but never displayed is a question this example is not here to answer.
 #
 # EVERY CARD ENDS WITH A WAY OUT, ON A LINE OF ITS OWN: "→ More on …" in
-# italics, the same shape on all four, so the cards read as one structure
+# italics, the same shape on all three, so the cards read as one structure
 # and the eye finds the link in the same place on each. The example's line
 # under the code is the same shape again. The link sits on the topic, never on the word
 # "here" - a reader scanning the links has to be able to tell where each one
-# goes. The cost card's is the calculator - a page of sliders for users,
-# systems, apps and support tiers whose every line comes to zero - in the
-# same "More on …" words as the other three, so the four lines read as one. A second
+# goes, in the same "More on …" words on all three, so the lines read as
+# one. A second
 # link to the same page inside one card is the "every claim once" rule broken
 # with a hyperlink.
 #
@@ -154,15 +134,9 @@ hero:
   # page, but neither is a call to action in the first screen, and a first
   # screen with no primary action reads as a brochure. Same tab (target
   # _self), like every other way into the neighbouring site. The outlined
-  # one opens the page written for the manager this page is written for:
-  # "Evaluate abap2UI5" - when to use it and when RAP, what the organization
-  # keeps, where it runs, what it costs, the objections, and how to test it
-  # on one real screen. It used to open "In a Nutshell", the technical
-  # picture, which is one click into the manual and the page for the
-  # architect. (A playground button stood here before and was taken out as the
-  # third copy of what the page already offered twice; it is back as the
-  # primary action on purpose - the two readers of this page want different
-  # first clicks, and the hero can afford one each.)
+  # one opens "In a Nutshell", the technical picture of how the framework
+  # works. The page for the person who approves abap2UI5 is the last tile,
+  # not a button: this page is the developer's.
   # THE LINE UNDER THE BUTTONS is what the primary one costs. A vendor's
   # first screen says "start free trial" and means a license key, a runtime
   # of your own and a call; this one means a browser tab. Said once, here,
@@ -175,13 +149,13 @@ hero:
       link: https://abap2ui5.github.io/playground/
       target: _self
     - theme: alt
-      text: Evaluate it for your organization
-      link: /evaluate
+      text: See how it works
+      link: /get_started/about
 
 # Four things to do next, each on the page for it. The bar names the
 # places; these name the tasks (see THE THREE TILES ARE TASKS above). The
-# fourth is the decision-maker's task - evaluate it for a team - because a
-# reader who is not going to build anything still has one thing to do. They
+# fourth hands the page over to whoever approves abap2UI5 - a site of its own,
+# so the manual does not argue the case a second time. They
 # are frontmatter, so VitePress draws them under the hero; the published page
 # draws them UNDER THE EXAMPLE (build-site.mjs), where "what next" belongs.
 features:
@@ -198,10 +172,11 @@ features:
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.5 19.5V9l5.5 3.5V9l5.5 3.5V9l6 3.5v7zM3.5 19.5h17M6 4.5h3v7.5"/></svg>
     details: Security, authorizations, the launchpad tile, the transport — what a go-live needs, on one page.
     link: /configuration/productive_usage
-  - title: Evaluate it for your team
+  - title: Send it to whoever decides
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 12.5 9 17.5 20 6.5"/></svg>
-    details: When to use it and when RAP, what your organization keeps, what it costs, and the objections a review board raises — on one page.
-    link: /evaluate
+    details: What abap2UI5 means for an organization — what it can build, how it compares, what it costs — for the person who approves it.
+    link: https://abap2ui5.github.io/test-docs/
+    target: _self
 ---
 
 ## Ready for your enterprise
@@ -210,7 +185,7 @@ abap2UI5 runs inside the security you already have. One HTTP endpoint,
 standard SAP logon, your own authorizations — and an app is an ABAP class, so
 transports, ATC and ABAP Unit apply as they do to everything else you ship.
 
-→ *More on [What you keep](/evaluate#what-you-keep)*
+→ *More on [Security](/configuration/security)*
 
 ## Plays well with what you have
 
@@ -228,15 +203,6 @@ abap2UI5 linter and the MCP server let the agent double-check its own work
 before a developer looks at it.
 
 → *More on [Developing with AI](/get_started/ai)*
-
-## And what does it cost?
-
-Nothing. MIT licensed, commercial use included — no license key, no
-subscription, no per-user fee, and no BTP required. It runs on your ABAP stack
-with the UI5 version already installed, and the license you have is the one
-you keep.
-
-→ *More on [Cost Calculator](/resources/cost_calculator)*
 
 ## Try it out now
 

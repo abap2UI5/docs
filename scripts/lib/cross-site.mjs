@@ -64,6 +64,7 @@ export const NEIGHBOURS = [
   '/linter/',               // the linter's rule reference
   '/layout-editor/',        // the layout editor, published by abap2UI5/layout-editor's pages workflow
   '/web-abap2UI5-build/',   // a live build of the frontend, credited on Sponsor
+  '/test-docs/',            // abap2UI5 for decision makers, published by abap2UI5/test-docs
 ];
 
 /** What a retired deployment was replaced BY, so the error can say it. */
