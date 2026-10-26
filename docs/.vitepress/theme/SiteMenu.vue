@@ -92,11 +92,17 @@ watch(isDark, (dark) => {
       <a href="/docs/resources/support">Support</a>
       <a href="/docs/resources/contribution">Contribute</a>
       <a href="/docs/resources/sponsor">Sponsor</a>
+      <a href="https://abap2ui5.github.io/test-docs/" target="_self">For decision makers</a>
       <span class="a2ui5-menu-head">Tools</span>
-      <!-- The AI Studio: an app built from a description, in the browser, on
-           the playground's deployment - same origin, so `target="_self"` as
-           the Linter rules row below says. -->
+      <!-- The standalone tools: the AI Studio (an app built from a
+           description, on the playground's deployment), the Layout Editor and
+           the Report converter (abap2UI5-addons/abap-cloud-gui). The first
+           two are on this origin, so `target="_self"` as the Linter rules row
+           below says; the third is on another host and needs none, but
+           carries it so the rows read alike. -->
       <a href="https://abap2ui5.github.io/playground/ai/" target="_self">AI Studio</a>
+      <a href="https://abap2ui5.github.io/layout-editor/" target="_self">Layout Editor</a>
+      <a href="https://abap2ui5-addons.github.io/abap-cloud-gui/" target="_self">Report converter</a>
       <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
       <!-- SAME ORIGIN, ANOTHER DEPLOYMENT: `target="_self"`, not the
            `target="_blank"` the github.com rows carry, and not nothing - a
