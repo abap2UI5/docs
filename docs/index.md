@@ -204,6 +204,17 @@ before a developer looks at it.
 
 → *More on [Developing with AI](/get_started/ai)*
 
+## Tools of their own
+
+Three tools stand on their own, each on a page of its own: the
+[AI Studio](https://abap2ui5.github.io/playground/ai/) builds an app from a
+description, the [Layout Editor](https://abap2ui5.github.io/layout-editor/)
+turns a drag-and-drop layout into one app class, and the
+[Report converter](https://abap2ui5-addons.github.io/abap-cloud-gui/) turns a
+classic report into an app that runs on ABAP Cloud.
+
+→ *More on [Tooling](/advanced/tooling)*
+
 ## Try it out now
 
 ```abap edit
