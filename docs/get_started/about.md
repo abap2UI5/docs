@@ -35,7 +35,7 @@ A finished app looks like any other UI5 app, because it is one — a selection s
 ## Background
 Since launching in 2023, abap2UI5 has grown from a small side project into a community-driven framework used by ABAP developers worldwide. The framework absorbs frontend complexity, so you can focus on business logic with your existing ABAP skills. Each app ships as an [abapGit](https://abapgit.org) project, so installation across systems needs no separate frontend deployment.
 
-This page is the technical picture. What abap2UI5 means for an organization - what it can build, how it compares, what it costs - is on [abap2UI5 for decision makers](https://abap2ui5.github.io/test-docs/), written for the people who approve a tool rather than build with it.
+This page is the technical picture. What abap2UI5 means for an organization - what it can build, how it compares, what it costs - is on [abap2UI5 for decision makers](https://abap2ui5.github.io/why/), written for the people who approve a tool rather than build with it.
 
 → *See the [Quickstart](/get_started/quickstart) for step-by-step setup, and [Sample Apps](https://abap2ui5.github.io/playground/samples/) to watch abap2UI5 in action*
 

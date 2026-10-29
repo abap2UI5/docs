@@ -48,7 +48,7 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # THIS PAGE IS FOR THE DEVELOPER. The manual is technical; the case for the
 # person who approves abap2UI5 - what it can build, how it compares with RAP,
 # freestyle UI5 and commercial platforms, what it costs, who runs it - is a
-# site of its own (https://abap2ui5.github.io/test-docs/, abap2UI5/test-docs).
+# site of its own (https://abap2ui5.github.io/why/, abap2UI5/why).
 # This page argues none of that a second time: the hero's second button and
 # the last tile hand that reader over, once each, and every claim on a card
 # links a page of the manual.
@@ -175,7 +175,7 @@ features:
   - title: Send it to whoever decides
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M4 12.5 9 17.5 20 6.5"/></svg>
     details: What abap2UI5 means for an organization — what it can build, how it compares, what it costs — for the person who approves it.
-    link: https://abap2ui5.github.io/test-docs/
+    link: https://abap2ui5.github.io/why/
     target: _self
 ---
 

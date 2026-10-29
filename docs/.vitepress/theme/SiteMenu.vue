@@ -92,7 +92,7 @@ watch(isDark, (dark) => {
       <a href="/docs/resources/support">Support</a>
       <a href="/docs/resources/contribution">Contribute</a>
       <a href="/docs/resources/sponsor">Sponsor</a>
-      <a href="https://abap2ui5.github.io/test-docs/" target="_self">For decision makers</a>
+      <a href="https://abap2ui5.github.io/why/" target="_self">For decision makers</a>
       <span class="a2ui5-menu-head">Tools</span>
       <!-- The standalone tools: the AI Studio (an app built from a
            description, on the playground's deployment), the Layout Editor and
