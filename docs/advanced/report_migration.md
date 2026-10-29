@@ -4,12 +4,10 @@ description: Converting a classic ABAP report - selection screen, event blocks, 
 ---
 # Migrating Classic Reports
 
-::: info Preview — coming with the next release
-The converter report2cloud and the MCP server's `migrate_report` tool are
-finished on development branches of
-[abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) and of the
-[MCP server](/advanced/mcp_server), and are not in a release of either yet.
-Details can still change until then.
+::: info Released
+report2cloud is part of abap-cloud-gui since its release 1.0.0, the
+`migrate_report` tool part of the [MCP server](/advanced/mcp_server) since
+its 1.0.0.
 :::
 
 ABAP Cloud has no `REPORT`, no `PARAMETERS`, no `WRITE` and no ALV, and a
