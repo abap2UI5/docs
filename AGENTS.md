@@ -15,7 +15,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 
 | Path | Purpose |
 | --- | --- |
-| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. One page is not a chapter: `index.md` (`layout: home`, the front door). **The manual is for developers.** The case for the person who approves abap2UI5 - what it can build, how it compares, what it costs, who runs it - is a site of its own, [abap2UI5/test-docs](https://github.com/abap2UI5/test-docs) at https://abap2ui5.github.io/test-docs/; link it, never argue it here a second time |
+| `docs/` | The pages. Sidebar and nav live in `docs/.vitepress/config.mjs`. One page is not a chapter: `index.md` (`layout: home`, the front door). **The manual is for developers.** The case for the person who approves abap2UI5 - what it can build, how it compares, what it costs, who runs it - is a site of its own, [abap2UI5/why](https://github.com/abap2UI5/why) at https://abap2ui5.github.io/why/; link it, never argue it here a second time |
 | `docs/public/` | Static assets — **and** the generated `llms.txt`, `llms-full.txt` and per-page `.md`, which are gitignored |
 | `scripts/check-examples.mjs` | Extracts every fenced ABAP block that builds a view, compiles it against the real framework and lints the view it produces |
 | `scripts/link-samples.mjs` | Generates the *Working Samples* block on a page from its `samples:` frontmatter plus the catalogue of the repository each class belongs to — the prefix decides: `z2ui5_cl_smp_app_*` is `abap2UI5/samples` (read from its `SAMPLES.md` in a checkout), `z2ui5_cl_smpc_*` samples-controls and `z2ui5_cl_smps_*` samples-stack (read from their `catalogue.json`, a checkout or the published copy). Checks the link in both directions for the samples repository (the `" @docs` line), the class's existence for the other two, and resolves the source links a page writes by hand against whichever checkout is here |
@@ -634,7 +634,7 @@ The last thirteen are the Tutorial's, moved on 2026-10-08 when its single
 `/tutorials/`. Those carry a one-line script on top of the `meta refresh`
 that keeps the `#fragment`, because links into a step's sections exist.
 The last five point out of this site, at the page for decision makers
-(https://abap2ui5.github.io/test-docs/), which took over what the manual
+(https://abap2ui5.github.io/why/), which took over what the manual
 carried for them on 2026-10-24: `evaluate` and `get_started/evaluate` (its
 address for its first day) keep the `#fragment`, because the framework's README
 links sections of it and the new page keeps every section id;

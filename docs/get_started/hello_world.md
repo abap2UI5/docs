@@ -149,7 +149,7 @@ From there, pick the direction that fits:
   is the page to read before the first go-live.
 - **Extend it.** The [add-ons](/resources/addons) cover what not every app
   needs.
-- **Need somebody's approval?** [abap2UI5 for decision makers](https://abap2ui5.github.io/test-docs/) is
+- **Need somebody's approval?** [abap2UI5 for decision makers](https://abap2ui5.github.io/why/) is
   the page for the person who decides whether it may be used. Send the link
   rather than the argument.
 
