@@ -181,11 +181,21 @@ features:
 
 ## Ready for your enterprise
 
-abap2UI5 runs inside the security you already have. One HTTP endpoint,
-standard SAP logon, your own authorizations — and an app is an ABAP class, so
-transports, ATC and ABAP Unit apply as they do to everything else you ship.
+abap2UI5 runs inside the security, the process and the release cycle you
+already have:
 
-→ *More on [Security](/configuration/security)*
+- **Security** — one HTTP endpoint, standard SAP logon, your own
+  authorizations, and a strict Content Security Policy.
+- **Process** — an app is an ABAP class, so transports, ATC and ABAP Unit
+  apply as they do to everything else you ship.
+- **Stability** — every release is tested on Standard ABAP and ABAP Cloud,
+  down to NetWeaver 7.02, and on UI5 1.71 and the current release.
+- **Accessibility** — views are standard UI5 views, as accessible as UI5
+  makes them.
+
+→ *More on [Security](/configuration/security). For your review board: the
+[review pack](https://github.com/abap2UI5/abap2UI5/blob/main/docs/review.md)
+and the [page for decision makers](https://abap2ui5.github.io/why/#what-you-keep).*
 
 ## Plays well with what you have
 
