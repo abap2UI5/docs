@@ -599,6 +599,8 @@ export default defineConfig({
               // abap-cloud-gui add-on - another stack the code was not
               // written for, which is what this group is about.
               { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
+              // its counterpart for new code: an app written as a report
+              { text: "Apps Written Like Reports", link: "/advanced/report_style" },
               { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
             ],
           },
