@@ -23,7 +23,7 @@ const { page } = useData();
 const SAME_TAB = "_self";
 
 const PLAYGROUND = "https://abap2ui5.github.io/playground/";
-const SAMPLES = "https://abap2ui5.github.io/playground/samples/";
+const SAMPLES = "https://abap2ui5.github.io/samples-site/";
 const HOME = "/docs/";
 const DOCS = "/docs/get_started/about";
 
