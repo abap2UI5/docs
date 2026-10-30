@@ -103,32 +103,6 @@ export default defineConfig({
     ],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
     ["meta", { name: "twitter:image", content: OG_IMAGE }],
-    // One theme across the three deployments on this origin - this site, the
-    // playground and the sample catalogue (abap2ui5.github.io/docs and
-    // /playground). They share a localStorage, and now that all three wear
-    // the same bar, a switch that only turned half of them dark would read as
-    // a broken switch rather than as three sites.
-    //
-    // The playground's key is the one that carries it; VitePress's own is
-    // written from it here so that everything downstream - its runtime, its
-    // `appearance` handling, the `.dark` class - goes on believing it is in
-    // charge. In the head and synchronous, after VitePress's own appearance
-    // script and still before the first paint, so a reader arriving from a
-    // dark playground gets a dark page rather than a white flash.
-    //
-    // theme/SiteMenu.vue writes the playground key back when the button here
-    // is pressed. Its two lines and these are one mechanism.
-    [
-      "script",
-      {},
-      `try {
-  var t = localStorage.getItem("abap2ui5-playground:theme");
-  if (t === "dark" || t === "light") {
-    localStorage.setItem("vitepress-theme-appearance", t);
-    document.documentElement.classList.toggle("dark", t === "dark");
-  }
-} catch (e) { /* a browser that refuses storage keeps this site's own theme */ }`,
-    ],
   ],
   title: "abap2UI5",
   description: "Build UI5 Apps Purely in ABAP",

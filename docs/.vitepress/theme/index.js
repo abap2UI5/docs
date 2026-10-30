@@ -1,20 +1,8 @@
 // https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
-// ...WITHOUT ITS FONTS. `vitepress/theme` differs from this entry by one line -
-// it imports `styles/fonts.css`, which declares Inter and nothing else. This
-// site does not set anything in Inter: `--vp-font-family-base` is overridden at
-// `:root` below with the stack all four deployments share (system-ui first,
-// i.e. the reader's own face), and `--vp-font-family-mono` with the shared mono
-// one. So the build was emitting 627 kB of Inter in fourteen files and
-// PRELOADING one of them on every page - a download in front of the first
-// paint, for a face the page never drew a letter with. Chromium, asked which
-// font it actually used for the home page headline, answers with the system
-// one.
-//
-// If the four sites ever do adopt one face for every reader rather than each
-// reader's own, this import comes back and the preload is then the right thing
-// to have - and `--font-ui` in the playground's catalogue.css has to name it in
-// the same breath, which is what check:design holds.
+// ...WITHOUT ITS FONTS: the theme's own fonts.css brings all fourteen Inter
+// subsets and a Google Fonts @import; this site serves the two Latin subsets
+// it needs from docs/public/fonts/ instead (style.css).
 import DefaultTheme from 'vitepress/theme-without-fonts'
 import './style.css'
 import { setUpPlayground } from './playground.js'
@@ -23,7 +11,6 @@ import { markDirective, setUpLinkToSelection } from './link-to-selection.js'
 import TheBar from './TheBar.vue'
 import SiteNav from './SiteNav.vue'
 import Crumbs from './Crumbs.vue'
-import { forgetOnReload, rememberHere, rememberScroll, restoreScroll } from './site-memory.js'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -85,63 +72,17 @@ export default {
       else window.addEventListener('load', markDirective, { once: true })
     }
 
-    // Where the reader is, for the Docs item on the other three bars to come
-    // back to (site-memory.js). On every route change, because this site is a
-    // single page application: the first page would otherwise be the only one
-    // ever written down. `onAfterRouteChange` rather than `onBeforeRouteChange`
-    // - the location is the new one only after the change has happened.
-    // THE HOME PAGE IS NOT WRITTEN DOWN. Every other page is, and the
-    // Documentation item on all four bars comes back to whatever was written
-    // last. If the front door counted as a page of the manual, going Home
-    // would overwrite the chapter you were reading with `/docs/`, and
-    // Documentation would then open the home page - which is what the Home
-    // item is for and not what the word Documentation promises. Home stays a
-    // place you go to, never a place you are returned to.
-    const rememberUnlessHome = () => {
-      if (!location.pathname.replace(/index\.html$/, '').match(/\/docs\/?$/)) rememberHere('docs')
-    }
-
-    // How far DOWN the page, which is the other half of coming back to it.
-    // The offset is written for every page including the home page: what the
-    // rule above is about is which page the Documentation item opens, and
-    // that is a different question from where in a page the reader was.
-    //
-    // Throttled, because scroll fires per frame and this writes to storage.
-    // `pagehide` as well, for a reader who leaves inside the window - and
-    // SiteNav.vue writes it on the click itself, which is the case that has
-    // to be exact.
-    let pending = 0
-    const noteScroll = () => {
-      if (pending) return
-      pending = setTimeout(() => { pending = 0; rememberScroll() }, 300)
-    }
-
-    // ...and back to it, but ONLY when the bar said so. site-memory.js decides
-    // whether this arrival is the one the bar named, and holds the offset
-    // against the router's own scroll-to-top and a page that is still growing.
+    // This site keeps no memory shared with the other abap2UI5 sites: it is
+    // built and deployed on its own, and the way to the playground or the
+    // samples is a plain link. Scrolling is the router's.
     if (!import.meta.env.SSR) {
-      // A REFRESH STARTS OVER, before any of the below reads the memory: all
-      // of it is state one page hands the next so a journey across pages reads
-      // as one, and reload is the reader saying the journey is over
-      // (site-memory.js). Only the search box is named - the chapter menu this
-      // resets on the published site is `scripts/site-js/site.js`'s, and the
-      // one here is the default theme's, which persists nothing. The key is
-      // search-engine.js's QUERY_KEY, spelled rather than imported so this
-      // does not pull the matching engine in.
-      forgetOnReload(['abap2ui5-playground:search'])
-      rememberUnlessHome()
       setUpCodeLines()
-      restoreScroll()
-      addEventListener('scroll', noteScroll, { passive: true })
-      addEventListener('pagehide', () => rememberScroll())
       const onAfter = router.onAfterRouteChange
       router.onAfterRouteChange = (to) => {
-        rememberUnlessHome()
         // Home -> Documentation is a route change, not a load: this site is
         // one application and two of the bar's four items are pages of it.
         setUpCodeLines()
         rearmPlayground?.()
-        restoreScroll()
         onAfter?.(to)
       }
     }

@@ -16,12 +16,9 @@
  * over there): the measured sizes with a little room above them, so a bigger
  * capture is a question and not a surprise.
  *
- * And the one thing a page cannot afford at all: an image the build cannot
- * measure. build-site.mjs writes width and height onto every <img> so the box
- * is reserved before the file lands; a file it cannot read the size of gets
- * no box and moves the page when it arrives. Same reader as the build
- * (scripts/lib/images.mjs), so a format the build cannot size fails here
- * rather than shifting the page there.
+ * And the one thing a page cannot afford at all: an image whose size cannot
+ * be read (scripts/lib/images.mjs) - a format nobody can measure is a format
+ * nobody can give a box, and it moves the page when it arrives.
  *
  *   npm run check:images
  */

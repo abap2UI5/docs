@@ -1203,10 +1203,9 @@
   overflow: hidden;
 }
 
-/* A FLOOR under the frame the embed sizes for itself, and the one piece of
- * this that is not decoration.
+/* A FLOOR under the frame, and the one piece of this that is not decoration.
  *
- * The embed loader starts an app-only demo at 320px and then grows it to the
+ * An app-only demo used to start at 320px and then grow to the
  * height the app reports, measured from the app document's `scrollHeight`.
  * That measurement works for a document that FLOWS — and an abap2UI5 app is
  * the other kind. Almost every example here is a `Shell` around a `Page`, laid
@@ -1237,8 +1236,7 @@
   }
 }
 
-/* The loader could not be reached — an offline reader, or a blocked
- * third-party request. Say so where the button was, and say where the example
+/* The frame could not be built - a browser without CompressionStream. Say so where the button was, and say where the example
  * can be run instead. */
 .vp-doc .a2ui5-play-failed {
   margin: 0;
@@ -2732,3 +2730,13 @@
   border-top: 1px solid var(--line); font-size: 13px; line-height: 1.6; color: var(--fg-dim);
 }
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
+
+/* The playground frame under a runnable example (embed.js): the full width of
+ * the block, no border of its own; its height is the attribute embed.js sets
+ * and updates from the height the frame reports. */
+.abap2ui5-demo-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  transition: height 0.2s;
+}

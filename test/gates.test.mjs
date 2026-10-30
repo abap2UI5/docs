@@ -1,5 +1,5 @@
 /*
- * The fifteen gates are written out in three places. Do all three name the
+ * The thirteen gates are written out in three places. Do all three name the
  * same set?
  *
  * `package.json`'s `check` script is what a contributor runs; check.yml is
@@ -88,14 +88,14 @@ test('check.yml keeps the script order, so a green run locally is a green run th
   assert.deepEqual(workflowGates('.github/workflows/check.yml'), scriptGates());
 });
 
-test('the documents say fifteen, and there are fifteen', () => {
+test('the documents say thirteen, and there are thirteen', () => {
   /* AGENTS.md, README.md, CONTRIBUTING.md and CLAUDE.md all count them in
-   * prose. A sixteenth gate that left the four documents saying "fifteen" is the
+   * prose. A fourteenth gate that left the four documents saying "thirteen" is the
    * same drift as a gate missing from a workflow, one document over. */
   const gates = scriptGates();
-  assert.equal(gates.length, 15, `the count in the four documents is 15, the lists have ${gates.length}`);
+  assert.equal(gates.length, 13, `the count in the four documents is 13, the lists have ${gates.length}`);
   for (const doc of ['AGENTS.md', 'README.md', 'CONTRIBUTING.md', 'CLAUDE.md']) {
-    assert.match(read(doc), /fifteen/, `${doc} counts the gates`);
+    assert.match(read(doc), /thirteen/, `${doc} counts the gates`);
   }
 });
 
@@ -117,7 +117,7 @@ const gateOf = (step) => /^\s*run:\s*npm (?:run ([\w:-]+)|(test))\s*$/m.exec(ste
 
 test('the steps are actually read', () => {
   for (const f of ['.github/workflows/check.yml', '.github/workflows/deploy.yml']) {
-    assert.equal(steps(f).filter(gateOf).length, 15, `${f}: every gate is a step of its own`);
+    assert.equal(steps(f).filter(gateOf).length, 13, `${f}: every gate is a step of its own`);
   }
 });
 
