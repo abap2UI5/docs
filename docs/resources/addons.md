@@ -40,9 +40,9 @@ usage, performance, errors and a security traffic light for an installation
 ([Monitoring](/configuration/monitoring)), and
 [abap-agent-runtime](https://github.com/abap2UI5-addons/abap-agent-runtime), an MCP endpoint in the
 system through which AI agents operate abap2UI5 apps
-([Agent-Operable Apps](/advanced/agents)). The next release of abap-cloud-gui
-brings a converter as well, report2cloud, which turns an existing classic
-report into a class of the add-on
+([Agent-Operable Apps](/advanced/agents)). abap-cloud-gui brings a
+converter as well since its release 1.0.0, report2cloud, which turns an
+existing classic report into a class of the add-on
 ([Migrating Classic Reports](/advanced/report_migration)).
 
 An empty right-hand column is not a gap in the add-on — it is one this manual
