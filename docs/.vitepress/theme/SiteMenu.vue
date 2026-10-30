@@ -57,17 +57,6 @@ const toggleAppearance = inject("toggle-appearance", () => {
   isDark.value = !isDark.value;
 });
 
-/* And the choice, handed to the other two deployments. The head script in
- * config.mjs reads this key back before the first paint; the two halves are
- * one mechanism. Not on the server, and not on the first render either - only
- * when the reader actually changes it. */
-watch(isDark, (dark) => {
-  try {
-    localStorage.setItem("abap2ui5-playground:theme", dark ? "dark" : "light");
-  } catch {
-    /* A refused or full storage. This tab is dark; the next site is not. */
-  }
-});
 </script>
 
 <template>

@@ -1,29 +1,12 @@
 /* ========================================================== the palette ===
  *
- * ONE PALETTE ACROSS THREE SITES. These seven values are the playground's and
- * the sample catalogue's, copied out of src/shell/shell.css and
- * src/catalogue/catalogue.css in abap2UI5/playground rather than approximated:
- * the three deployments sit on one origin, wear one bar, and are read as one
- * site by anybody moving between them. A reader who crosses from the catalogue
- * to a page here should not be able to tell that they changed sites - which
- * they could, when this file's greys were half a step bluer and its accent was
- * a different colour entirely.
- *
- * They are written out rather than imported. Three repositories deploy
- * separately and a stylesheet fetched across them would be a request in front
- * of the first paint; the copies are kept in step by hand, as the bar's own
- * markup is. Change them together.
- *
- * THE ACCENT IS SAP BLUE, not the brand red this site used to set every link
- * and button in. That red is the circle in the mark and it stays the mark's -
- * see the note under the logo rules on the home page, and resources/logo.md,
- * which documents the press kit and is the one page that still names it. What
- * changed is what a LINK is coloured with, and it is now the same blue the
- * playground fills its Run button with and the catalogue marks a matching card
- * with. The measurements: #0a6ed1 on white is 5.04:1 and #4aa3ff on #16171a is
- * 6.81:1, so both clear AA for body text - the red cleared it on white at
- * 4.74:1 and FAILED in dark at 3.62:1, which is why it needed a second, lifted
- * value there. One value per theme now does the whole job. */
+ * THE FAMILY'S ACCENT: the red of the logo, as CONVENTION.md in
+ * abap2UI5/abap2UI5.github.io writes it down for every abap2UI5 site - copied
+ * here, not imported. It used to be SAP blue on this site, because the mark's
+ * red in dark failed AA at 3.62:1; the convention lifts it for dark instead,
+ * and every pairing clears AA: #d03c4a on white 4.74:1, #f0606d on #16171a
+ * 5.63:1, white on the red button 4.74:1, #16171a on the lifted red 5.63:1.
+ * The greys are this site's own, close to the convention's reference values. */
 /* ---- the type ---------------------------------------------------------
  *
  * Inter, self-hosted out of docs/public/fonts, Latin only. The two files are
@@ -68,35 +51,29 @@
   --fg: #1c1d21;
   --fg-dim: #6a6d76;
   --line: #d9dbe0;
-  --accent: #0a6ed1;
+  --accent: #d03c4a;
   --accent-fg: #ffffff;
   color-scheme: light;
 }
 
 /* VitePress keys everything off `.dark` on the root element, so there is no
- * media query here and no `[data-theme]`: its own appearance script decides,
- * and the head script in config.mjs hands it the choice the other two sites
- * were left on. */
+ * media query here and no `[data-theme]`: its own appearance script decides. */
 .dark {
   --bg: #16171a;
   --bg-sunken: #1e2024;
   --fg: #e6e7ea;
   --fg-dim: #9a9da6;
   --line: #303338;
-  --accent: #4aa3ff;
-  --accent-fg: #0b1620;
+  --accent: #f0606d;
+  --accent-fg: #16171a;
   color-scheme: dark;
 }
 
 
-/* ---- THE MARK'S RED, and where it is allowed ----
+/* ---- THE MARK'S RED on the home page ----
  *
- * The site's accent is SAP blue and stays blue: that decision is measured and
- * written down above, and the four bars share the value across two
- * repositories. This is the other colour the project actually has - the circle
- * in the mark, sampled from logo.png at #d03c4a - and it is used on ONE page,
- * the home page, which is the mark's own page and the one place a reader is
- * being greeted rather than being read to.
+ * The same red as the accent, kept under its own names for the home page's
+ * greeting, where it was used before the accent became red as well.
  *
  * The dark value is lifted, and that is not decoration: #d03c4a on #16171a is
  * 3.78:1, which fails AA for text. #e8697a on the same ground is 5.75:1. On
@@ -1203,10 +1180,9 @@
   overflow: hidden;
 }
 
-/* A FLOOR under the frame the embed sizes for itself, and the one piece of
- * this that is not decoration.
+/* A FLOOR under the frame, and the one piece of this that is not decoration.
  *
- * The embed loader starts an app-only demo at 320px and then grows it to the
+ * An app-only demo used to start at 320px and then grow to the
  * height the app reports, measured from the app document's `scrollHeight`.
  * That measurement works for a document that FLOWS — and an abap2UI5 app is
  * the other kind. Almost every example here is a `Shell` around a `Page`, laid
@@ -1237,8 +1213,7 @@
   }
 }
 
-/* The loader could not be reached — an offline reader, or a blocked
- * third-party request. Say so where the button was, and say where the example
+/* The frame could not be built - a browser without CompressionStream. Say so where the button was, and say where the example
  * can be run instead. */
 .vp-doc .a2ui5-play-failed {
   margin: 0;
@@ -2732,3 +2707,13 @@
   border-top: 1px solid var(--line); font-size: 13px; line-height: 1.6; color: var(--fg-dim);
 }
 @media (max-width: 620px) { .cost-total { grid-template-columns: 1fr; } }
+
+/* The playground frame under a runnable example (embed.js): the full width of
+ * the block, no border of its own; its height is the attribute embed.js sets
+ * and updates from the height the frame reports. */
+.abap2ui5-demo-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  transition: height 0.2s;
+}

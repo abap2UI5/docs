@@ -19,20 +19,10 @@ on:
   push:
     branches: [main]
 
-  # AND WHEN THE PLAYGROUND HAS BEEN PUBLISHED, and every night regardless.
-  # scripts/build-site.mjs borrows the bar, the bar's script and two
-  # stylesheets from the published playground at build time - so a change to
-  # the bar over there reached the manual's 167 pages only with the manual's
-  # next push, and until then there were two bars. abap2UI5/playground's
-  # pages.yml sends `playground-published` after each deploy (it needs a
-  # token over there, DOCS_DISPATCH_TOKEN; without one it says so and does
-  # nothing), and the schedule is the net under that: the playground itself
-  # publishes nightly at 04:00 for the sample catalogue, and this runs an
-  # hour later so the manual is never more than a day behind it. A deploy
-  # that finds nothing changed publishes the same site again, which is what
-  # a static site costs.
-  repository_dispatch:
-    types: [playground-published]
+  # And every night: the release number and the sample links name things in
+  # other repositories that move without this one being touched. This site
+  # borrows nothing from another site at build time; it is built from this
+  # repository alone.
   schedule:
     - cron: '0 5 * * *'
 
@@ -117,30 +107,6 @@ jobs:
             src
           sparse-checkout-cone-mode: false
 
-      # The playground's stylesheet, for the shared-design gate, and the two
-      # files that carry the other half of the cross-site position memory -
-      # `npm test` compares the five localStorage keys against them, because
-      # until now they were kept in step by a comment in each file. Three
-      # files, and continue-on-error because check:design falls back to the
-      # published copy over the network; when neither is reachable it fails
-      # rather than passing on one stylesheet agreeing with itself, and the
-      # key comparison skips loudly.
-      - name: Playground stylesheet
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        continue-on-error: true
-        with:
-          repository: abap2UI5/playground
-          ref: main
-          path: .playground
-          fetch-depth: 1
-          sparse-checkout: |
-            src/catalogue/catalogue.css
-            src/catalogue/page-entry.mjs
-            src/shell/site-memory.mjs
-            tools/sample-pages.mjs
-            tools/sample-frame.mjs
-          sparse-checkout-cone-mode: false
-
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -151,10 +117,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # The same fifteen gates check.yml runs for a pull request, and the reason
+      # The same thirteen gates check.yml runs for a pull request, and the reason
       # each one is here is written above it there. The ORDER is the one thing
       # that cannot match: this job has to build the site it publishes, so the
-      # two builds and `check:cross-site` - which judges the built HTML - come
+      # build and `check:cross-site` - which judges the built HTML - come
       # after the twelve that need none of them, instead of third to fifth.
       # What has to stay in step is the SET; a gate that runs for a pull
       # request and not for the deploy is a gate main can be published past.
@@ -168,9 +134,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npm run check:version
-      - name: shared design values
-        if: ${{ !cancelled() }}
-        run: npm run check:design
       - name: images
         if: ${{ !cancelled() }}
         run: npm run check:images
@@ -202,19 +165,9 @@ jobs:
       # …and only then the thing that gets published. `docs:build` is itself
       # one of the gates - a page that does not build is a page nobody can
       # read - so it stays a build step rather than being listed twice.
-      # THE SITE THAT IS PUBLISHED. scripts/build-site.mjs writes all 166 pages
-      # as static HTML - no Vue, no router, no theme - and refuses to finish on
-      # a dead internal link. It takes the bar and the catalogue's two
-      # stylesheets from the published playground when no built checkout is at
-      # hand, which is the case here.
+      # THE SITE THAT IS PUBLISHED: VitePress's build, from this repository
+      # alone.
       - name: Build the site
-        run: npm run build
-
-      # ...and VitePress's build beside it, which is no longer published. It is
-      # the second opinion the cross-site gate below judges, because that gate
-      # is about VitePress's ROUTER and the published site has none - see the
-      # note on DIST in scripts/check-cross-site.mjs.
-      - name: Build with VitePress
         run: npm run docs:build
 
       # The one gate that cannot run before the build, because what it judges
@@ -225,13 +178,12 @@ jobs:
       - name: cross-site links
         run: npm run check:cross-site
 
-      # WHAT GOES OUT IS scripts/build-site.mjs's OUTPUT, not VitePress's.
-      # `.site/docs` is the root of this deployment: the artefact's root is
-      # served at /docs/, which is what every absolute path inside it names.
+      # WHAT GOES OUT IS VitePress's OUTPUT. Its root is served at /docs/, the
+      # `base` in config.mjs.
       - name: Upload artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
-          path: .site/docs
+          path: docs/.vitepress/dist
 
   # Deployment job
   deploy:

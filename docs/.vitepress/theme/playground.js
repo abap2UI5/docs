@@ -9,8 +9,8 @@
  *
  * Three things are deliberate.
  *
- * **Nothing is fetched until somebody clicks.** Not the loader script, not the
- * playground, not the three megabytes it brings. A reader who never presses a
+ * **Nothing is fetched until somebody clicks.** Not the playground, not the
+ * three megabytes it brings. A reader who never presses a
  * button makes no request to another site and pays nothing, and a page with
  * seven examples on it is still a page of prose.
  *
@@ -33,38 +33,14 @@
  * in this tab, not to another embedded frame.
  */
 
-/* The published playground. Absolute rather than site-relative on purpose: it
- * is a different project with its own deployment, and the code to run travels
- * in the URL fragment, so this works from a local `docs:dev` as well as from
- * the published site. */
-const PLAYGROUND = 'https://abap2ui5.github.io/playground/';
-const LOADER = `${PLAYGROUND}embed/abap2ui5-embed.js`;
+/* The playground, as a frame built here (embed.js). Nothing is fetched from
+ * the playground's site but the frame itself, and nothing until somebody
+ * clicks: the two sites share a URL contract, not code. */
+import * as localEmbed from './embed.js';
+import { PLAYGROUND } from './embed.js';
 
-/** The embed loader, fetched once, on the first click anywhere on the site. */
-let loading;
 function loader() {
-  if (window.abap2ui5Embed) return Promise.resolve(window.abap2ui5Embed);
-  loading ??= new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = LOADER;
-    script.addEventListener('load', () => {
-      if (window.abap2ui5Embed) return resolve(window.abap2ui5Embed);
-      // Forgotten as the error below is: kept, this rejection answered every
-      // later press on the page.
-      loading = undefined;
-      script.remove();
-      reject(new Error('The playground loader did not install itself.'));
-    });
-    script.addEventListener('error', () => {
-      /* Forgotten, not kept: a load that failed once (offline for a moment)
-       * must not answer every later press on the page with the same error. */
-      loading = undefined;
-      script.remove();
-      reject(new Error(`${LOADER} could not be loaded.`));
-    });
-    document.head.append(script);
-  });
-  return loading;
+  return Promise.resolve(localEmbed);
 }
 
 /** The ABAP in a runnable block: the text the reader sees and copies. */
@@ -193,8 +169,7 @@ function bar(container, demo, embed, source) {
 
   /* In THIS tab, and the label says so: a switch to the playground with the
    * code that is on this page, not a window that opens beside it. The way
-   * back is the Documentation item in the playground's bar, which comes back
-   * to this page (site-memory.js); a reader who wants a second tab has the
+   * back is the browser's Back; a reader who wants a second tab has the
    * middle button. */
   const open = document.createElement('a');
   open.className = 'a2ui5-play-open';
