@@ -1,21 +1,24 @@
 ---
-description: The abap2UI5 blog series - the ideas behind abap2UI5 in pieces one coffee long, from why it exists and how it works to a working day and where it belongs.
+description: The abap2UI5 Insights series - thirty-eight short technical articles on why the framework works the way it does, from the two strings on the wire to upgrading an installation.
 ---
-# Blogs
+# Insights
 
-Thirty-seven short articles about one idea: what happens when the ABAP server
+Thirty-eight short articles about one idea: what happens when the ABAP server
 sends the *screen* instead of only the data.
 
-Each one is about a coffee long, makes a single claim, and shows it in code
-wherever code can show it. Read one on its own and it stands. Read them in
-order and the four blocks add up to the whole picture — why the framework
-exists, how it works under the app, what a working day with it looks like, and
-where it belongs next to what SAP ships.
+Each one makes a single claim and shows it in code wherever code can show it.
+Read one on its own and it stands. Read them in order and the blocks add up
+to the whole picture — what the framework rests on, how it works under the
+app, what a working day with it looks like, and where it belongs in the
+landscape. They are the "why it works like this" for an architect; the case
+for using it — what it costs, who runs it, how it compares as a decision — is
+made on [the case for abap2UI5](https://abap2ui5.github.io/why/){target="_self"},
+and is only linked from here.
 
 There is a good chance you will also pick up a few things about ABAP along the
 way. RTTS, the dialog step, `ENQUEUE`, the selection screen, the ICF node, the
 launchpad: this framework did not invent much, it just moved a lot of familiar
-furniture into a browser, and half the fun is recognizing the room.
+furniture into a browser.
 
 Everything turns on one axis:
 
@@ -34,19 +37,29 @@ Everything else follows from where the view sits: what is deployed per app,
 what a screen costs in artifacts, what can still change at runtime, and which
 language it is all written in.
 
-New here? Start with [#2 The Cost of a Screen](/advanced/insights/02-the-cost-of-a-screen) —
-it is the one that explains why anybody wrote this thing.
+New here? Start with [#5 UI5 Over-the-Wire](/advanced/insights/05-ui5-over-the-wire),
+the one idea everything else is a consequence of, and
+[#16 One Click, One Request](/advanced/insights/16-one-click-one-request),
+the mental model every app is written against.
 
-## Why
+## What It Rests On
 
-What the framework is for, before how it works.
+The two properties that come before the mechanism: a model that may be typed
+at runtime, and an app that is one class with no programming model around it.
 
 | | |
 |---|---|
 | [#1 Somewhere on the Way to UI5, We Lost RTTS](/advanced/insights/01-somewhere-on-the-way-to-ui5) | a table whose structure is only known at runtime, drawn in UI5 |
-| [#2 The Cost of a Screen](/advanced/insights/02-the-cost-of-a-screen) | why the thirty-line screen never gets built, and a whole one as a class |
 | [#3 One Class, No Programming Model](/advanced/insights/03-one-class-no-programming-model) | every API the system has, from BAPI to EML, behind one unchanged UI class |
 | [#4 No Annotation in Between](/advanced/insights/04-no-annotation-in-between) | the vocabulary is the UI5 control library, all of it |
+
+## The First Example
+
+The smallest complete app, read line by line — and nothing beside it.
+
+| | |
+|---|---|
+| [#2 The Cost of a Screen](/advanced/insights/02-the-cost-of-a-screen) | a whole application as one class, and what has to exist beside it |
 
 ## How It Works
 
@@ -57,11 +70,11 @@ end to end if you like knowing why something works before you use it.
 |---|---|
 | [#5 UI5 Over-the-Wire](/advanced/insights/05-ui5-over-the-wire) | every request answered with two strings |
 | [#6 The Frontend Knows Nothing](/advanced/insights/06-the-frontend-knows-nothing) | one shell for every app, and why it never needs a redeploy |
-| [#7 One Handler for Every App](/advanced/insights/07-one-handler-for-every-app) | no service per screen, and how small the handler is |
+| [#7 One Handler for Every App](/advanced/insights/07-one-handler-for-every-app) | no service per screen, and what the handler leaves to the apps |
 | [#8 Only the Changed Part](/advanced/insights/08-only-the-changed-part) | the view stays, the model updates |
 | [#9 A New Instance on Every Request](/advanced/insights/09-a-new-instance-on-every-request) | serialized state, and what that asks of the class |
 | [#10 Swapping the View at Runtime](/advanced/insights/10-swapping-the-view-at-runtime) | a different control, chosen in an IF |
-| [#11 No Build, No Deploy, No Cache](/advanced/insights/11-no-build-no-deploy-no-cache) | change, activate, refresh |
+| [#11 No Build, No Deploy, No Cache](/advanced/insights/11-no-build-no-deploy-no-cache) | change, activate, refresh — and where a BSP still enters |
 | [#12 Where Your Own JavaScript Goes](/advanced/insights/12-where-your-own-javascript-goes) | three declared seams, no plugin system |
 | [#13 Four Verbs, Every Control](/advanced/insights/13-four-verbs-every-control) | why the view builder knows no controls |
 | [#14 A Classrun for the Browser](/advanced/insights/14-a-classrun-for-the-browser) | the shape it copied |
@@ -80,16 +93,16 @@ over — messages, locks, F4, authorizations, the launchpad tile.
 | [#19 Where F4 Went](/advanced/insights/19-where-f4-went) | value help in three sizes |
 | [#20 MESSAGE Still Works](/advanced/insights/20-message-still-works) | messages, exceptions, translation |
 | [#21 The Lock Is Gone by the Next Click](/advanced/insights/21-the-lock-is-gone-by-the-next-click) | enqueue in a stateless world |
-| [#22 Who May Start Which App](/advanced/insights/22-who-may-start-which-app) | one ICF node, authorization, CSRF |
+| [#22 Who May Start Which App](/advanced/insights/22-who-may-start-which-app) | one ICF node, authorization, CSRF, the CSP |
 | [#23 100 Rows, Four Hours, One Request](/advanced/insights/23-100-rows-four-hours-one-request) | the three numbers behind performance |
 | [#24 ABAP Unit for a Screen](/advanced/insights/24-abap-unit-for-a-screen) | testing the class, linting the view |
 | [#25 When One Class Is Not Enough](/advanced/insights/25-when-one-class-is-not-enough) | the seams of a larger app |
 | [#26 A Tile Like Any Other](/advanced/insights/26-a-tile-like-any-other) | into the Fiori Launchpad |
 
-## Where It Belongs
+## Where It Belongs in the Landscape
 
-Releases, clean core, deployment shapes, and the honest comparison against the
-alternatives — including the cases where you should pick something else.
+Releases, clean core, deployment shapes, and the technical criteria that
+decide between abap2UI5, RAP and UI5 Freestyle for a given screen.
 
 | | |
 |---|---|
@@ -97,13 +110,22 @@ alternatives — including the cases where you should pick something else.
 | [#28 Cloud-Ready Is a Property of Your App](/advanced/insights/28-cloud-ready-is-a-property-of-your-app) | decided in the SELECT |
 | [#29 When the API Is Not Released](/advanced/insights/29-when-the-api-is-not-released) | the clean core levels, and the wrapper |
 | [#30 On-Stack or Side-by-Side](/advanced/insights/30-on-stack-or-side-by-side) | two places to run, one class |
-| [#31 One App, Many Systems](/advanced/insights/31-one-app-many-systems) | a SaaS shape in ABAP |
+| [#31 One App, Many Systems](/advanced/insights/31-one-app-many-systems) | several S/4 systems behind one app, and the boundary the app draws |
 | [#32 From ITS to abap2UI5](/advanced/insights/32-from-its-to-abap2ui5) | twenty-seven years in one line |
-| [#33 RAP or abap2UI5?](/advanced/insights/33-rap-or-abap2ui5) | behavior against screen |
-| [#34 UI5 Freestyle or abap2UI5?](/advanced/insights/34-freestyle-or-abap2ui5) | where the browser has to be smart |
-| [#35 Low-Code or abap2UI5?](/advanced/insights/35-low-code-or-abap2ui5) | designer against code |
-| [#36 Written for Agents](/advanced/insights/36-written-for-agents) | the consequence nobody designed |
-| [#37 What the AI Leaves Behind](/advanced/insights/37-what-the-ai-leaves-behind) | the demo is not the artifact |
+| [#33 RAP or abap2UI5?](/advanced/insights/33-rap-or-abap2ui5) | behavior against screen, and EML from an abap2UI5 app |
+| [#34 UI5 Freestyle or abap2UI5?](/advanced/insights/34-freestyle-or-abap2ui5) | the four edges where the browser has to be smart |
+| [#36 Written for Agents](/advanced/insights/36-written-for-agents) | why one class in one language suits an agent |
+
+## Running It
+
+What an architect asks before an installation goes productive: the threat
+model, the sizing, the upgrade.
+
+| | |
+|---|---|
+| [#37 What the Client Can Send](/advanced/insights/37-what-the-client-can-send) | the class, the draft id, the event, every bound value — and what is checked |
+| [#38 How Many Users](/advanced/insights/38-how-many-users) | work processes, draft rows, no server affinity, what the monitor measures |
+| [#39 Upgrading the Framework](/advanced/insights/39-upgrading-the-framework) | release tags, the stable contract, the frozen package, pull, pin, roll back |
 
 *The articles on how it works grew out of
 [Under the Hood of abap2UI5](https://community.sap.com/t5/technology-blog-posts-by-members/abap2ui5-7-technical-background-under-the-hood-of-abap2ui5/ba-p/13566459)

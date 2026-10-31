@@ -163,13 +163,10 @@ above and adds a second one of its own for the half that server deliberately
 does not have: your configured systems — list them, search app classes, run a
 class on the real system as a screenshot.
 
-::: info Preview — coming with the next release
-The same system server's **app tools** — an agent operating the app on your
-system through its JSON protocol, answering with the agent snapshot — are
-finished on a development branch of the extension and not yet in a release;
-details can still change until then. [Agent-Operable Apps](/advanced/agents)
-describes them.
-:::
+Since 0.31.0 the same system server carries the **app tools** — an agent
+operating the app on your system through its JSON protocol, answering with
+the agent snapshot — behind the setting `abap2ui5.agent.enableAppTools`.
+[Agent-Operable Apps](/advanced/agents) describes them.
 
 ## 5. Linter in CI: every push, annotated
 
@@ -256,10 +253,11 @@ next to the app: whatever the app lets a user do on a screen, it lets an agent
 do, and nothing more. Underneath it is the headless frontend above, playing
 the browser's half of the protocol.
 
-::: info Preview — coming with the next release
-The add-on is finished on development branches of abap-agent-runtime and the
-headless frontend and not yet in a release of either; details can still
-change until then.
+::: info Not in a release yet
+The add-on is on `main` of abap-agent-runtime and its generated `standard` /
+`cloud` branches, pulled into a 7.5x on-premise system but not yet run in
+production, and its API may still change before 1.0. Its CHANGELOG says
+when it does.
 :::
 
 **Use it** when the users of an app are AI agents — any MCP client —

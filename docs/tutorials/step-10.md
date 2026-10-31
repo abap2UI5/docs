@@ -269,7 +269,9 @@ ENDCLASS.
 ## The Structure
 
 - **`main` is a pure dispatcher.** It stashes `client` in a protected attribute
-  — so the handler methods can use it without passing it around — and routes
+  — so the handler methods can use it without passing it around, and
+  protected rather than public because nothing binds it and a public
+  attribute would be serialized into the draft for nothing — and routes
   each roundtrip to the method for its phase. `check_on_event( )` without an
   argument is true for *any* event; the `CASE` in `on_event` decides which one.
   Both dispatch shapes are fine, and
@@ -312,7 +314,7 @@ playground:
 
 And for everything beyond the walkthrough:
 
-- the [Cookbook](/cookbook/view/definition) — every topic of this walkthrough as a
+- the [Cookbook](/cookbook/) — every topic of this walkthrough as a
   reference chapter, from [value helps](/cookbook/expert_more/value_help) to
   [navigation between apps](/cookbook/event_navigation/navigation/inner_app),
 - the [sample catalog](https://abap2ui5.github.io/samples-site/) — complete,

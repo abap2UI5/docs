@@ -49,5 +49,5 @@ Automatic syntax rewriting is only the last step. The codebase is compatible wit
 
 Keep these principles in mind if you want to set up your next abapGit project with compatibility for older releases.
 
-## Further Reading
-Background article: [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).
+## Background
+The steps above are complete on their own. The article they come from describes how the downport came about: [Running abap2UI5 on older R/3 Releases](https://www.linkedin.com/pulse/running-abap2ui5-older-r3-releases-downport-compatibility-abaplint-mjkle).

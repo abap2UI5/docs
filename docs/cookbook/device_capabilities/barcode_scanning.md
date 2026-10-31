@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smpc_sapui5_011
+description: Scan barcodes with the SAPUI5 barcode scanner button, with a keyboard-emulating scanner and focus handling, or with the native shell's scanner - and where to render a barcode.
 ---
 # Barcode Scanning
 
@@ -15,120 +16,11 @@ This section walks through what you need to get started.
 
 ## Scanning
 
-The `sap.ndc.BarcodeScannerButton` control of the SAPUI5 library `sap.ndc` makes barcode scanning easy. From UI5 1.92 on it scans with the device camera in a plain browser; on an older release it scans only inside a native container such as the SAP Fiori Client and otherwise opens a dialog for typing the code in. Use it like any other UI5 control with abap2UI5. The example below shows the basic behavior — customize the handling once the scanning event fires:
+The `sap.ndc.BarcodeScannerButton` control of the SAPUI5 library `sap.ndc` makes barcode scanning easy. From UI5 1.92 on it scans with the device camera in a plain browser; on an older release it scans only inside a native container such as the SAP Fiori Client and otherwise opens a dialog for typing the code in. Use it like any other UI5 control with abap2UI5. The example below shows the basic behavior — the view is built once, in the navigated branch, and the `scanSuccess` event carries the code and its format as event arguments:
 
 ```abap
-  METHOD z2ui5_if_app~main.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:ndc` v = `sap.ndc`
-
-            )->ele( `Page`
-                )->tag( n = `BarcodeScannerButton` ns = `ndc`
-                    )->a( n = `dialogTitle` v = `Barcode Scanner`
-                    )->a( n = `scanSuccess` v = client->_event(
-                                                   val   = `SCAN_SUCCESS`
-                                                   t_arg = VALUE #(
-                                                       ( `${$parameters>/text}`   )
-                                                       ( `${$parameters>/format}` ) ) ) ).
-
-    client->view_display( view->stringify( ) ).
-
-    IF client->get( )-event = `SCAN_SUCCESS`.
-
-        DATA(lv_input)  = client->get_event_arg( ).
-        DATA(lv_format) = client->get_event_arg( 2 ).
-        "custom processing...
-        client->message_box_display( |Scan finished: { lv_input } { lv_format }| ).
-    ENDIF.
-
-ENDMETHOD.
-```
-
-::: tip **UI5 Versions**
-This feature needs SAPUI5 - OpenUI5 does not ship the barcode scanner.
-:::
-
-## Focus Handling
-Most scanner devices emulate a keyboard. In that case, add an input field and move the focus from the backend — the scanned data flows into the input as if typed.
-
-The example below moves focus from one field to the next after each Enter key press by firing the `set_focus` frontend event:
-
-```abap
-CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-    DATA one TYPE string.
-    DATA two TYPE string.
-
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
-  METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`      v = `sap.m`
-              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
-              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
-
-              )->ele( `Page`
-                  )->ele( n = `SimpleForm` ns = `form`
-                      )->ele( n = `content` ns = `form`
-                          )->tag( `Label`
-                              )->a( n = `text` v = `One`
-                          )->tag( `Input`
-                              )->a( n = `id`     v = `id1`
-                              )->a( n = `value`  v = client->_bind( one )
-                              )->a( n = `submit` v = client->_event( `ONE_ENTER` )
-                          )->tag( `Label`
-                              )->a( n = `text` v = `Two`
-                          )->tag( `Input`
-                              )->a( n = `id`     v = `id2`
-                              )->a( n = `value`  v = client->_bind( two )
-                              )->a( n = `submit` v = client->_event( `TWO_ENTER` ) ).
-
-      client->view_display( view->stringify( ) ).
-      RETURN.
-    ENDIF.
-
-    CASE client->get( )-event.
-      WHEN `ONE_ENTER`.
-        client->follow_up_action( val   = client->cs_event-set_focus
-                        t_arg = VALUE #( ( `id2` ) ) ).
-      WHEN `TWO_ENTER`.
-        client->follow_up_action( val   = client->cs_event-set_focus
-                        t_arg = VALUE #( ( `id1` ) ) ).
-    ENDCASE.
-
-  ENDMETHOD.
-ENDCLASS.
-```
-
-## Play Sounds
-
-Audio feedback is handy in some scenarios. Fire the `play_audio` frontend event with the URL of a sound file — for example a `.wav` from the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`:
-
-```abap
-CLASS z2ui5_cl_sample_sound DEFINITION PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_app.
-    DATA company_code TYPE string.
-
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
-
-CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
+  " PUBLIC SECTION:    DATA mv_code TYPE string.
+  " PROTECTED SECTION: DATA mv_format TYPE string.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -137,40 +29,67 @@ CLASS z2ui5_cl_sample_sound IMPLEMENTATION.
           )->ele( n = `View` ns = `mvc`
               )->a( n = `xmlns`     v = `sap.m`
               )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:ndc` v = `sap.ndc`
 
               )->ele( `Page`
-                  )->ele( `VBox`
-                      )->tag( `Input`
-                          )->a( n = `id`          v = `inputApp`
-                          )->a( n = `value`       v = client->_bind( company_code )
-                          )->a( n = `type`        v = `Number`
-                          )->a( n = `placeholder` v = `Company Code`
-                          )->a( n = `submit`      v = client->_event( `CHECK_INPUT` )
-                      )->tag( `Button`
-                          )->a( n = `text`  v = `check`
-                          )->a( n = `press` v = client->_event( `CHECK_INPUT` ) ).
+                  )->a( n = `title` v = `Barcode Scanning`
+
+                  )->tag( n = `BarcodeScannerButton` ns = `ndc`
+                      )->a( n = `dialogTitle` v = `Barcode Scanner`
+                      )->a( n = `scanSuccess` v = client->_event(
+                                                     val   = `SCAN_SUCCESS`
+                                                     t_arg = VALUE #(
+                                                         ( `${$parameters>/text}`   )
+                                                         ( `${$parameters>/format}` ) ) )
+                  )->tag( `Text`
+                      )->a( n = `text` v = client->_bind( mv_code ) ).
 
       client->view_display( view->stringify( ) ).
 
-      RETURN.
-    ENDIF.
+    ELSEIF client->check_on_event( `SCAN_SUCCESS` ).
 
-    IF client->get( )-event = `CHECK_INPUT`.
-      IF company_code IS INITIAL.
-        client->follow_up_action( val   = client->cs_event-play_audio
-                        t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav` ) ) ).
-        client->message_box_display( type = `error` text = `Input is empty!` ).
-      ELSE.
-        CLEAR company_code.
-      ENDIF.
+      mv_code   = client->get_event_arg( ).
+      mv_format = client->get_event_arg( 2 ).
+      "custom processing...
+      client->message_box_display( |Scan finished: { mv_code } { mv_format }| ).
+
     ENDIF.
 
   ENDMETHOD.
-ENDCLASS.
 ```
 
+::: tip **UI5 Versions**
+This feature needs SAPUI5 - OpenUI5 does not ship the barcode scanner.
+:::
+
+## Native Mobile Shell
+
+Inside the [native mobile shell](/integration/mobile_shell), the framework's own `z2ui5:NativeBridgeScan` control calls the phone's scanner through the shell's bridge and hands the code back in `OnScan`; in a plain browser it renders nothing, so the same view runs in both places. The control and the shell are described on that page.
+
+## Focus Handling
+Most scanner devices emulate a keyboard. In that case, add an input field and move the focus from the backend — the scanned data flows into the input as if typed. After each Enter key press, the handler fires the `set_focus` frontend event for the next field:
+
+```abap
+ELSEIF client->check_on_event( `ONE_ENTER` ).
+  client->follow_up_action( val   = client->cs_event-set_focus
+                            t_arg = VALUE #( ( `id2` ) ) ).
+```
+
+The complete form with two inputs chained this way is on [Focus](/cookbook/browser_interaction/focus#basic-usage).
+
+## Play Sounds
+
+Audio feedback is handy in some scenarios. Fire the `play_audio` frontend event with the URL of a sound file — for example a `.wav` from the SAP MIME repository:
+
+```abap
+client->follow_up_action( val   = client->cs_event-play_audio
+                          t_arg = VALUE #( ( `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav` ) ) ).
+```
+
+The input-validation beep built around it is on [Audio](/cookbook/device_capabilities/audio).
+
 ## Render Barcodes
-To also render barcodes, use bwip-js, which ships with the js-libraries add-on. See [Add-ons](/resources/addons) for details.
+To render a barcode or a QR code, the `Barcode` control of the [custom-controls add-on](https://github.com/abap2UI5-addons/custom-controls) wraps bwip-js in a builder class, `z2ui5_cl_cci_barcode`; the same add-on carries a `BarcodeScanner` that reads every barcode in the camera picture at once into an ABAP table.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

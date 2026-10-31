@@ -63,13 +63,17 @@ Marketplace. It bundles the linter and starts the MCP server.
   runtime pins the OpenUI5 version the linter's metadata was generated from.
   Its old name, `@abap2ui5/render-runtime`, is deprecated.
 - **The embed control needs abap2UI5 1.145.0 or later** on the server, on
-  ABAP as well as through node-runtime or the CAP plugin. Its README lists
-  what 1.145.0 does not do yet.
-- **The MCP server is coupled to the linter's minor, and to nothing else.**
-  It declares `@abap2ui5/linter` as a peer, and `@abap2ui5/linter-render` as
-  an optional one, in the range of one linter minor (`>=0.8.0 <0.9.0` today),
-  and npm installs the linter with it; a linter of another minor in a project
-  makes `npm install` refuse with `ERESOLVE` until the server moves its range.
+  ABAP as well as through node-runtime or the CAP plugin — and 1.146.0 or
+  later wherever the page it sits in routes by the URL hash, such as a
+  [Fiori elements object page](/advanced/fiori). Its README lists what
+  1.145.0 does not do yet.
+- **The MCP server is coupled to the linter's range, and to nothing else.**
+  It declares `@abap2ui5/linter` and `@abap2ui5/linter-render` as peers in
+  a range of linter minors it moves with its releases —
+  `npm view @abap2ui5/mcp-server peerDependencies` prints the current one —
+  and npm installs the linter with it; a linter outside that range in a
+  project makes `npm install` refuse with `ERESOLVE` until the server moves
+  its range.
   It finds the linter next to it (a sibling checkout, `AI_VIEW_CHECK_HOME`, or
   the project's `node_modules`) and takes the framework from the newest plain
   release. The VS Code extension starts it without a version pin.

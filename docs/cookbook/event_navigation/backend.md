@@ -3,134 +3,232 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_167
   - z2ui5_cl_smp_app_197
+description: Backend events in abap2UI5 - client->_event( ) wires a control event to main( ), with arguments from the source control, the event parameters or the model, and the per-wire options in s_ctrl.
 ---
 # Backend
 
-UI5 control properties can both display data and fire events. To run backend logic when an event fires, use the `client->_event` method.
+UI5 control properties can both display data and fire events. To run backend
+logic when an event fires, use the `client->_event` method.
 
 ## Basic
-As an example, we use the `press` property of a button. To fire events to the backend, assign the result of `client->_event( 'MY_EVENT_NAME' )` to the matching UI5 control property. The backend can then read the event details with `client->get( )-event`.
+As an example, we use the `press` property of a button. To fire events to the
+backend, assign the result of ``client->_event( `MY_EVENT_NAME` )`` to the
+matching UI5 control property. The backend can then read the event details with
+`client->get( )-event`.
 
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Button`
-                    )->a( n = `text`  v = `post`
-                    )->a( n = `press` v = client->_event( `BUTTON_POST` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `post`
+                      )->a( n = `press` v = client->_event( `BUTTON_POST` ) ).
 
-    CASE client->get( )-event.
-        WHEN `BUTTON_POST`.
-            client->message_box_display( `The button was pressed` ).
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_box_display( `The button was pressed` ).
+
+    ENDIF.
 
 ENDMETHOD.
 ```
-If the backend needs more details about the event, use the `arg` parameter to add extra info. Three prefixes are available:
+If the backend needs more details about the event, use the `arg` parameter to
+add extra info. Three prefixes are available:
 
-- **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}` returns the button text)
-- **`$parameters`** — the event parameters defined by the UI5 control (e.g., `${$parameters>/id}` returns the element ID)
-- **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the event type like `press`). Note: unlike the other two prefixes, `$event` is written without the `${...}` wrapper and without a leading `/` — see the [Event](#event) section below.
+- **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}`
+  returns the button text)
+- **`$parameters`** — the event parameters defined by the UI5 control (e.g.,
+  `${$parameters>/id}` returns the element ID)
+- **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the
+  event type like `press`). Note: unlike the other two prefixes, `$event` is
+  written without the `${...}` wrapper and without a leading `/` — see the
+  [Event](#event) section below.
 
-`arg` carries one value, which is what most events need. For two or more, use `t_arg` instead and pass them as a table — ``t_arg = VALUE #( ( `${$source>/text}` ) ( `${$parameters>/id}` ) )`` — and read them back in the same order with `client->get_event_arg( 2 )`, `( 3 )` and so on. The two are the same wire: `arg = x` is exactly ``t_arg = VALUE #( ( x ) )``.
+`arg` carries one value, which is what most events need. For two or more, use
+`t_arg` instead and pass them as a table — ``t_arg = VALUE #( (
+`${$source>/text}` ) ( `${$parameters>/id}` ) )`` — and read them back in the
+same order with `client->get_event_arg( 2 )`, `( 3 )` and so on. The two are the
+same wire: `arg = x` is exactly ``t_arg = VALUE #( ( x ) )``.
 
-For details, see the [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe) and sample `Z2UI5_CL_SMP_APP_167`.
+For details, see the
+[UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe)
+and sample `Z2UI5_CL_SMP_APP_167`.
 
 ## Source
-Send properties of the event source control to the backend. The syntax `${$source>/text}` reads the `text` property of the UI5 control that fired the event — here, the button itself, returning the button's label (`post`):
+Send properties of the event source control to the backend. The syntax
+`${$source>/text}` reads the `text` property of the UI5 control that fired the
+event — here, the button itself, returning the button's label (`post`):
 
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Button`
-                    )->a( n = `text`  v = `post`
-                    )->a( n = `press` v = client->_event(
-                                          val = `BUTTON_POST`
-                                          " reads the button text → result: "post"
-                                          arg = `${$source>/text}` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `post`
+                      )->a( n = `press` v = client->_event(
+                                            val = `BUTTON_POST`
+                                            " reads the button text → result: "post"
+                                            arg = `${$source>/text}` ) ).
 
-    CASE client->get( )-event.
-      WHEN `BUTTON_POST`.
-          client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
+
+    ENDIF.
 
 ENDMETHOD.
 ```
 
 ## Parameters
-Read parameters of the event. The syntax `${$parameters>/id}` reads the `id` parameter out of the event's parameter map — UI5 builds a qualified ID like `mainView--button_id`:
+Read parameters of the event. The syntax `${$parameters>/id}` reads the `id`
+parameter out of the event's parameter map — UI5 builds a qualified ID like
+`mainView--button_id`:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Button`
-                    )->a( n = `id`    v = `button_id`
-                    )->a( n = `text`  v = `post`
-                    )->a( n = `press` v = client->_event(
-                                          val = `BUTTON_POST`
-                                          " reads the event parameter 'id' → result: "mainView--button_id"
-                                          arg = `${$parameters>/id}` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `id`    v = `button_id`
+                      )->a( n = `text`  v = `post`
+                      )->a( n = `press` v = client->_event(
+                                            val = `BUTTON_POST`
+                                            " reads the event parameter 'id' → result: "mainView--button_id"
+                                            arg = `${$parameters>/id}` ) ).
 
-    CASE client->get( )-event.
-        WHEN `BUTTON_POST`.
-            client->message_box_display( |The button id is { client->get_event_arg( ) }| ).
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_box_display( |The button id is { client->get_event_arg( ) }| ).
+
+    ENDIF.
 
 ENDMETHOD.
 ```
 
 ## Event
-Read specific properties of the event object. The syntax `$event>sId` reads the `sId` attribute of the UI5 event — here it returns the event type name (`press`). Note: there's no `${...}` wrapper because `$event` directly references the event object:
+Read specific properties of the event object. The syntax `$event>sId` reads the
+`sId` attribute of the UI5 event — here it returns the event type name
+(`press`). Note: there's no `${...}` wrapper because `$event` directly
+references the event object:
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Button`
-                    )->a( n = `text`  v = `post`
-                    )->a( n = `press` v = client->_event(
-                                          val = `BUTTON_POST`
-                                          " reads an event-object attribute → result: "press"
-                                          arg = `$event>sId` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `post`
+                      )->a( n = `press` v = client->_event(
+                                            val = `BUTTON_POST`
+                                            " reads an event-object attribute → result: "press"
+                                            arg = `$event>sId` ) ).
 
-    CASE client->get( )-event.
-        WHEN `BUTTON_POST`.
-            client->message_box_display( |The event id is { client->get_event_arg( ) }| ).
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_box_display( |The event id is { client->get_event_arg( ) }| ).
+
+    ENDIF.
 
 ENDMETHOD.
 ```
 ::: warning
-You can read any object attribute, but use only public and released attributes to avoid compatibility issues with future UI5 versions.
+You can read any object attribute, but use only public and released attributes
+to avoid compatibility issues with future UI5 versions.
 :::
+
+## More Than One Argument
+
+`get_event_arg( )` without a value reads the first argument, which is the only
+one a wire written with `arg =` carries. A wire written with `t_arg` carries
+as many as the table has rows, in that order, and `get_event_arg( n )` reads
+position `n`; a position that does not exist answers the empty string, and the
+whole list is `client->get( )-t_event_arg`:
+
+```abap
+)->a( n = `press` v = client->_event(
+                        val   = `ROW_PRESS`
+                        t_arg = VALUE #( ( `${$source>/title}` )
+                                         ( `${$parameters>/id}` )
+                                         ( `$event>sId` ) ) ) )
+```
+
+```abap
+CASE client->get( )-event.
+    WHEN `ROW_PRESS`.
+        DATA(lv_title) = client->get_event_arg( ).
+        DATA(lv_id)    = client->get_event_arg( 2 ).
+        DATA(lv_type)  = client->get_event_arg( 3 ).
+ENDCASE.
+```
+
+An argument that starts with `$` or `{` is written into the view **raw**, as a
+live UI5 expression — that is how `${$source>/KEY}` reaches the handler as the
+row's value. The flip side is that data which may start with those characters
+(text a user typed, a key from a foreign system) would be *evaluated* rather
+than passed. A wire that carries data rather than bindings sets
+`s_ctrl-check_arg_literal`, which quotes every argument of that wire as a
+string; see the next section.
+
+## The Per-Wire Options: `s_ctrl`
+
+`_event( )` takes a third parameter, `s_ctrl`, a structure of flags that are
+baked into the wire when the view is built. Each one answers a question a
+plain `press` never asks:
+
+| Flag | What it decides |
+|---|---|
+| `check_queue_last` | While a roundtrip is in flight, the **last** event fired on this wire is kept and dispatched once the response has landed, instead of being dropped. One roundtrip at a time, order preserved, and the backend ends on the control's current value. This is the flag for a per-keystroke wire — `liveChange`, `liveSearch`, `sliderChange` — which without it loses every keystroke typed while a roundtrip runs, the last one included |
+| `check_no_busy` | Keeps the global busy indicator down for this wire. The roundtrip, the busy *state* and the guard are unchanged; only the full-screen overlay is not shown. For a per-keystroke wire the overlay is the wrong feedback — the user is looking at the field, not waiting for a screen — and from the second character on it flashes over the field. Pair it with `check_queue_last`: nothing is lost and nothing blinks |
+| `check_prevent_default` | Cancels the control's built-in default for this event before the roundtrip (`oEvent.preventDefault( )`) — a `sap.tnt` `NavigationListItem` press that must not select the item, a `Link` that must not follow its `href`. The event is still sent, so the backend decides what happens instead |
+| `prevent_default_expr` | The same veto decided **per firing** instead of per wire: a client expression evaluated when the event fires, which cancels the default only when it is truthy, e.g. `${$parameters>/column}.getId().indexOf('COL_DATE') >= 0` — one wire protects one column and lets the rest through. Wins over the flag when both are set |
+| `check_arg_literal` | Quotes **every** argument of this wire as a string. The form for a wire whose arguments are data rather than bindings — see [More Than One Argument](#more-than-one-argument) above |
+
+The live search is the case that needs two of them at once:
+
+```abap
+)->tag( `SearchField`
+    )->a( n = `value`      v = client->_bind( mv_search )
+    )->a( n = `liveChange` v = client->_event(
+                                 val    = `SEARCH`
+                                 s_ctrl = VALUE #( check_queue_last = abap_true
+                                                   check_no_busy    = abap_true ) ) )
+```
+
+Without the first flag the busy guard drops every keystroke that lands on a
+roundtrip already in flight, and the list stays at the value of the last
+*completed* roundtrip until the user pauses and types again. Without the
+second one the overlay flashes over the field while they type. Sample
+`Z2UI5_CL_SMP_APP_059` on [Tables](/cookbook/model/tables) is the live search
+written out in full.
 
 ## A Control in Another View Slot
 
@@ -179,10 +277,16 @@ null-tolerant reader such as `$controller.textPath( )`. It answers `null` on a
 miss — and a method call on that `null` is exactly the throw the tip above
 describes, so prefer `slotValue( )` whenever you want a value.
 
+`$controller.textPath( control )` is the other helper that addresses the live
+control tree rather than data: it answers the ancestor-text breadcrumb of the
+control that fired — the titles and labels on the way up from it — so a
+handler can tell which panel or tab a press came from without an id of its
+own: ``arg = `$controller.textPath( ${$parameters>/item} )` ``.
+
 ## Model Properties
 Read model properties bound to the event:
 ```abap
-CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
+CLASS zcl_sample_event_model DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -192,29 +296,31 @@ CLASS z2ui5_cl_app_hello_world DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_app_hello_world IMPLEMENTATION.
+CLASS zcl_sample_event_model IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( name )
-                )->tag( `Button`
-                    )->a( n = `text`  v = `post`
-                    )->a( n = `press` v = client->_event(
-                                          val = `BUTTON_POST`
-                                          arg = `$` && client->_bind( name ) ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( name )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `post`
+                      )->a( n = `press` v = client->_event(
+                                            val = `BUTTON_POST`
+                                            arg = `$` && client->_bind( name ) ) ).
 
-    CASE client->get( )-event.
-        WHEN `BUTTON_POST`.
-            client->message_box_display( |The name is { client->get_event_arg( ) }| ).
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_box_display( |The name is { client->get_event_arg( ) }| ).
+
+    ENDIF.
 
 ENDMETHOD.
 
@@ -222,7 +328,8 @@ ENDCLASS.
 ```
 
 ::: tip
-This is just a demo. Reading `name` directly would be easier — the framework updates it automatically.
+This is just a demo. Reading `name` directly would be easier — the framework
+updates it automatically.
 :::
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->

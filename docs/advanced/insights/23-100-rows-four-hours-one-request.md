@@ -1,3 +1,6 @@
+---
+description: The three numbers behind abap2UI5 performance - the 100-row size limit of a list binding, the four-hour draft expiry, and what one request costs in instance and model size.
+---
 # #23 100 Rows, Four Hours, One Request
 
 Three numbers decide whether an abap2UI5 app feels fast, and none of them is in
@@ -26,9 +29,11 @@ the way a selection screen always did.
 lives in `z2ui5_t_01` until it expires, four hours by default. A user who comes
 back after lunch continues where they were; one who comes back tomorrow starts
 fresh. The number is `draft_exp_time_in_hours` in the user exit, and this table
-is the one place in the framework that grows — it is cleaned up on its own
-schedule, and a system with many users and long-running screens sizes it like
-any other table.
+is the one place in the framework that grows. It is also the one that cleans
+itself: on every first start of an app the framework deletes every row older
+than the expiry, one `DELETE` and a `COMMIT WORK`, so the table holds at most
+the clicks of the last four hours. How that adds up for a given number of
+users is [#38](/advanced/insights/38-how-many-users).
 
 **One request.** Every click is one HTTP roundtrip plus one read and one write
 of the draft. So the cost of a click is the size of the instance plus the size

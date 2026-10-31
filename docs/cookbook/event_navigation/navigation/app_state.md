@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_498
+description: The app state in abap2UI5 - app_state_set_active( ) puts the id of the current state into the URL so a reload, a bookmark or a shared link restores the screen exactly, and app_state_get_href( ) composes that link.
 ---
 # App State, Share, Bookmark
 
@@ -45,7 +46,7 @@ link no longer restores anything.
 ## A Complete App
 
 ```abap
-CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC.
+CLASS zcl_sample_app_state DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -55,7 +56,7 @@ CLASS z2ui5_cl_sample_app_state DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_app_state IMPLEMENTATION.
+CLASS zcl_sample_app_state IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -99,7 +100,7 @@ it — copy it, show it in an `Input` the user can select, mail it, render it as
 a QR code:
 
 ```abap
-CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
+CLASS zcl_sample_share DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -109,7 +110,7 @@ CLASS z2ui5_cl_sample_share DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_share IMPLEMENTATION.
+CLASS zcl_sample_share IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.

@@ -22,10 +22,12 @@ const WRAPPED_BELOW = 0.05;
 const MIN_PROSE_LINES = 5;
 
 const GENERATED = [
-  // Written by scripts/link-samples.mjs and scripts/generate-api-reference.mjs.
-  // Wrapping one of these by hand is a change the next regeneration undoes.
+  // Written by scripts/link-samples.mjs, scripts/generate-api-reference.mjs
+  // and scripts/generate-controls-reference.mjs. Wrapping one of these by
+  // hand is a change the next regeneration undoes.
   [/^<!-- samples:start\b/, /^<!-- samples:end -->/],
   [/^<!-- api:start\b/, /^<!-- api:end -->/],
+  [/^<!-- controls:start\b/, /^<!-- controls:end -->/],
 ];
 
 // A token nothing can break: a URL, or a root-absolute path of some length.

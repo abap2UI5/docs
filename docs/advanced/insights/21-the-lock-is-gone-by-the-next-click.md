@@ -1,3 +1,6 @@
+---
+description: Why an ENQUEUE set while a screen opens is gone before the next click, and the patterns that replace it - lock at save, an optimistic check, a soft lock, a stateful session.
+---
 # #21 The Lock Is Gone by the Next Click
 
 `VA02` calls `ENQUEUE_EVVBAK` when the order opens and holds the lock for as
@@ -18,35 +21,10 @@ the answers are known. Locking splits into two questions:
 | **Edit** | What happens while the user is thinking and typing? |
 | **Save** | What happens the moment they hit save? |
 
-**Lock at save.** Nothing is held while the user thinks. The handler acquires
-the lock, writes, commits and releases, all inside one roundtrip. The lock
-exists for milliseconds:
-
-```abap
-  METHOD on_save.
-
-    CALL FUNCTION 'ENQUEUE_EVVBAK'
-      EXPORTING  mode_vbak      = 'E'
-                 mandt          = sy-mandt
-                 vbeln          = vbeln
-      EXCEPTIONS foreign_lock   = 1
-                 system_failure = 2
-                 OTHERS         = 3.
-    IF sy-subrc <> 0.
-      client->message_box_display( `Locked by another user.` ).
-      RETURN.
-    ENDIF.
-
-    UPDATE vbak SET auart = @auart WHERE vbeln = @vbeln.
-    COMMIT WORK.
-
-    CALL FUNCTION 'DEQUEUE_EVVBAK'
-      EXPORTING mode_vbak = 'E'
-                mandt     = sy-mandt
-                vbeln     = vbeln.
-
-  ENDMETHOD.
-```
+**Lock at save.** Nothing is held while the user thinks. The save handler
+acquires the enqueue, writes, commits and releases, all inside one roundtrip —
+the lock exists for milliseconds, and a foreign lock is a message box instead
+of a write.
 
 **Plus an optimistic check.** Two users can still read the same order, edit for
 ten minutes each, and save one after the other — the second silently wins, and
@@ -54,7 +32,8 @@ the first user's afternoon disappears without a message. So the app remembers
 the change timestamp it read, and compares before it writes: if the row changed
 underneath, the save is refused and the user is told what happened. Together,
 lock at save and the optimistic check are the production default for a
-stateless app.
+stateless app. Every pattern on this page is written out as a complete class,
+with the edge cases, on [Lock](/cookbook/expert_more/lock).
 
 ![The lock lives inside one roundtrip; the timestamp guards the minutes between.](/insights/21-lock-at-save.svg)
 
@@ -72,6 +51,3 @@ of a dialog flow and for a resource that is expensive to rebuild per request.
 It is also one pinned work process per active user, has to be released on
 every exit path, and is not available on public cloud. Use it knowingly, not
 out of habit.
-
-A lock is a promise about a session. Where the session is one request long,
-the promise has to be, too.

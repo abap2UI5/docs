@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: abaplint in abap2UI5 - the static analysis on every pull request, the automatic 7.02 downport and the namespace renaming, with the configuration files each of them reads.
 ---
 # abaplint
 

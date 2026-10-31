@@ -4,11 +4,13 @@ description: AI agents operating abap2UI5 apps - four tools that read an app's s
 ---
 # Agent-Operable Apps
 
-::: info Preview — coming with the next release
-Everything on this page is finished on development branches of the MCP server,
-the VS Code extension, abap2UI5/headless-frontend, the agent add-on and the
-cap2UI5 plugin, and is not in a release of any of them yet. Details can still
-change until then.
+::: info Where it is released
+The four tools ship in the [MCP server](/advanced/mcp_server) since
+`@abap2ui5/mcp-server` 1.0.0, in the [VS Code extension](/advanced/vscode)
+since 0.31.0 and in cap2UI5's `@cap2ui5/cds-plugin` since 0.5.0. The agent
+add-on, abap2UI5-addons/abap-agent-runtime, is on its `main` branch and the
+generated `standard` / `cloud` branches and not in a release yet — its API may
+still change before 1.0, and its CHANGELOG says when it does.
 :::
 
 An abap2UI5 app is one ABAP class, and its whole conversation with the outside
@@ -205,7 +207,11 @@ listed and answer with how to switch them on, without contacting the system.
 ## In production: the agent add-on
 
 [**abap2UI5-addons/abap-agent-runtime**](https://github.com/abap2UI5-addons/abap-agent-runtime) puts an
-MCP endpoint into the SAP system itself, written in ABAP: any MCP client that
+MCP endpoint into the SAP system itself, written in ABAP. It is not in a
+release yet: what its README describes is on `main` and on the generated
+`standard` / `cloud` branches, pulled into a 7.5x on-premise system and not
+yet run in production; the ABAP Cloud setup is written down but marked *to
+verify on your system*. Any MCP client that
 connects to a remote server over HTTP calls `/sap/bc/z2ui5_agent`, and the
 endpoint operates the app inside the system as the user who logged on. No
 Node, no browser, no technical user.

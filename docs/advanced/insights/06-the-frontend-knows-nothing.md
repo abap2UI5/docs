@@ -1,3 +1,6 @@
+---
+description: What the first GET delivers to the browser - a shell that renders a view and a model and knows no app - and why one shell serves every app in the system without a redeploy.
+---
 # #6 The Frontend Knows Nothing
 
 The first GET request delivers a UI5 app to the browser. Worth asking what is

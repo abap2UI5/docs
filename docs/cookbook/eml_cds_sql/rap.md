@@ -6,6 +6,7 @@ samples:
   - z2ui5_cl_smps_app_003
   - z2ui5_cl_smps_app_004
   - z2ui5_cl_smps_app_005
+description: What RAP is and what abap2UI5 is not - a UI library that calls EML, CDS and ABAP SQL from outside the RAP framework, with the explicit COMMIT ENTITIES that brings.
 ---
 # RAP
 
@@ -21,18 +22,7 @@ This distinction matters: RAP defines the architecture *around* your application
 
 ## abap2UI5 is Agnostic
 
-Because abap2UI5 imposes no access layer, you pick whatever fits:
-
-| Access Layer | Works in abap2UI5? |
-|---|---|
-| ABAP SQL (`SELECT`, `INSERT`, …) | ✅ |
-| CDS Views (VDM, custom) | ✅ |
-| EML (`READ ENTITIES`, `MODIFY ENTITIES`) | ✅ |
-| Function modules, BAPIs | ✅ |
-| RAP actions called via EML | ✅ |
-| Direct table access | ✅ |
-
-Nothing is excluded. The abap2UI5 controller is a plain ABAP class — any statement that is valid in ABAP is valid there.
+Because abap2UI5 imposes no access layer, the app class reads and writes with whatever fits — ABAP SQL, CDS views, EML including RAP actions, function modules and BAPIs — since it is a plain ABAP class and any statement that is valid in ABAP is valid there.
 
 ## Using RAP Functionality from Outside
 
@@ -51,7 +41,10 @@ READ ENTITIES OF i_salesordertp
 MODIFY ENTITIES OF i_salesordertp
   ENTITY salesorder
   CREATE FIELDS ( salesordertype salesorganization soldtoparty )
-  WITH VALUE #( ( %cid = `001` %data = VALUE #( ... ) ) )
+  WITH VALUE #( ( %cid  = `001`
+                  %data = VALUE #( SalesOrderType    = `TA`
+                                   SalesOrganization = `1010`
+                                   SoldToParty       = `0033500056` ) ) )
   MAPPED DATA(ls_mapped)
   FAILED DATA(ls_failed)
   REPORTED DATA(ls_reported).

@@ -5,15 +5,19 @@ samples:
   - z2ui5_cl_smp_app_461
   - z2ui5_cl_smp_app_462
   - z2ui5_cl_smp_app_463
+description: Trees in abap2UI5 - a nested internal table bound to sap.m.Tree, the child-table field that names the levels, selection, the expand state across roundtrips, lazy loading and the TreeTable.
 ---
 # Trees
 
-For hierarchical data, abap2UI5 uses nested ABAP structures to represent tree levels. Each level holds a table of child nodes, which UI5 traverses to build the expandable tree control.
+For hierarchical data, abap2UI5 uses nested ABAP structures to represent tree
+levels. Each level holds a table of child nodes, which UI5 traverses to build
+the expandable tree control.
 
 ## Tree
-Define a type hierarchy where each node contains a child table of the next level:
+Define a type hierarchy where each node contains a child table of the next
+level:
 ```abap
-CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
+CLASS zcl_sample_tree DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -27,73 +31,164 @@ CLASS z2ui5_cl_sample_tree DEFINITION PUBLIC.
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH DEFAULT KEY,
+        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level3 WITH EMPTY KEY,
       END OF ty_prodh_node_level2,
       BEGIN OF ty_prodh_node_level1,
         is_selected TYPE abap_bool,
         text        TYPE string,
         prodh       TYPE string,
-        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH DEFAULT KEY,
+        nodes       TYPE STANDARD TABLE OF ty_prodh_node_level2 WITH EMPTY KEY,
       END OF ty_prodh_node_level1,
-      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH DEFAULT KEY.
+      ty_prodh_nodes TYPE STANDARD TABLE OF ty_prodh_node_level1 WITH EMPTY KEY.
     DATA prodh_nodes    TYPE ty_prodh_nodes.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_tree IMPLEMENTATION.
+CLASS zcl_sample_tree IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    prodh_nodes = VALUE #( (
-        text = `Machines`
-        prodh  = `00100`
-        nodes  = VALUE #( (
-            text = `Pumps`
-            prodh = `0010000100`
-            nodes = VALUE #( (
-                text  = `Pump 001`
-                prodh = `001000010000000100` ) (
-                text  = `Pump 002`
-                prodh = `001000010000000105` ) )
-        ) ) ) (
-        text  = `Paints`
-        prodh = `00110`
-        nodes = VALUE #( (
-            text  = `Gloss paints`
-            prodh = `0011000105`
-            nodes = VALUE #( (
-                text  = `Paint 001`
-                prodh = `001100010500000100` ) (
-                text  = `Paint 002`
-                prodh = `001100010500000105` )
-    ) ) ) ) ).
+    IF client->check_on_navigated( ).
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+      prodh_nodes = VALUE #( (
+          text = `Machines`
+          prodh  = `00100`
+          nodes  = VALUE #( (
+              text = `Pumps`
+              prodh = `0010000100`
+              nodes = VALUE #( (
+                  text  = `Pump 001`
+                  prodh = `001000010000000100` ) (
+                  text  = `Pump 002`
+                  prodh = `001000010000000105` ) )
+          ) ) ) (
+          text  = `Paints`
+          prodh = `00110`
+          nodes = VALUE #( (
+              text  = `Gloss paints`
+              prodh = `0011000105`
+              nodes = VALUE #( (
+                  text  = `Paint 001`
+                  prodh = `001100010500000100` ) (
+                  text  = `Paint 002`
+                  prodh = `001100010500000105` )
+      ) ) ) ) ).
 
-            )->ele( `Page`
-                )->ele( `Tree`
-                    )->a( n = `items` v = client->_bind( prodh_nodes )
-                    )->a( n = `mode`  v = `MultiSelect`
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-                    )->ele( `items`
-                        )->tag( `StandardTreeItem`
-                            )->a( n = `selected` v = `{IS_SELECTED}`
-                            )->a( n = `title`    v = `{TEXT}` ).
+              )->ele( `Page`
+                  )->ele( `Tree`
+                      )->a( n = `items` v = client->_bind( prodh_nodes )
+                      )->a( n = `mode`  v = `MultiSelect`
 
-    client->view_display( view->stringify( ) ).
+                      )->ele( `items`
+                          )->tag( `StandardTreeItem`
+                              )->a( n = `selected` v = `{IS_SELECTED}`
+                              )->a( n = `title`    v = `{TEXT}` ).
 
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
 ```
 
-The child table field (`nodes` in the example above) is the key: UI5 follows that field name to locate sub-items at each level. The name must match across all levels but can be anything you choose.
+The child table field (`nodes` in the example above) is the key: UI5 follows
+that field name to locate sub-items at each level. The name must match across
+all levels but can be anything you choose.
 
-Note that the example binds `IS_SELECTED` to the item's `selected` property and puts the tree in `MultiSelect` mode, so the user's selection is synced back to ABAP — in the default mode `None` an item is not selectable and `selected` is ignored. A display-only tree needs no editable cells.
+Note that the example binds `IS_SELECTED` to the item's `selected` property and
+puts the tree in `MultiSelect` mode, so the user's selection is synced back to
+ABAP — in the default mode `None` an item is not selectable and `selected` is
+ignored. A display-only tree needs no editable cells.
+
+## The Expand State Across Roundtrips
+
+A `sap.m.Tree` starts collapsed, and a rebuilt binding starts collapsed
+again — so after a `view_display( )`, or a model push that replaces the
+bound table, every node the user had opened is closed. The framework ships
+an invisible companion control for exactly this: `z2ui5:Tree` takes a
+snapshot of the tree's expand state before every roundtrip and restores it
+after the render. Give the tree an `id`, declare the `z2ui5.cc` namespace on
+the view and put the companion next to the tree with `tree_id`:
+
+```abap
+)->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+
+...
+
+)->ele( `Tree`
+    )->a( n = `id`    v = `tree1`
+    )->a( n = `items` v = client->_bind( prodh_nodes )
+    )->tag( `StandardTreeItem`
+        )->a( n = `title` v = `{TEXT}`
+)->end(
+)->tag( n = `Tree` ns = `z2ui5`
+    )->a( n = `tree_id` v = `tree1` )
+```
+
+Snapshots are keyed by `tree_id`, so a tree in the main view and one in a
+popup keep independent states. Sample `Z2UI5_CL_SMP_APP_463` uses it under an
+editable `CustomTreeItem`, where every edit is a roundtrip that would
+otherwise fold the tree.
+
+## Reacting to Expand and Collapse
+
+`toggleOpenState` fires when the user opens or closes a node, with the
+item's index and whether it is expanded now. Wire it like any backend event
+and read the parameters from `t_arg`:
+
+```abap
+)->ele( `Tree`
+    )->a( n = `items`           v = client->_bind( prodh_nodes )
+    )->a( n = `toggleOpenState` v = client->_event(
+                                      val   = `TOGGLE`
+                                      t_arg = VALUE #( ( `${$parameters>/itemIndex}` )
+                                                       ( `${$parameters>/expanded}` ) ) )
+```
+
+The index counts the *visible* rows of the flattened tree, top to bottom —
+it is the position in what the user sees, not in `prodh_nodes`, and it
+shifts with every node that is open above it. A handler that has to find the
+node in the ABAP hierarchy therefore walks the open nodes in the same order,
+which is why the companion control above matters here too: it is what keeps
+the backend's picture of "open" and the browser's the same.
+
+### Loading a Level on Demand
+
+A tree over a large hierarchy need not carry every level from the start.
+Send the first level with empty `nodes` tables and fill a node's children in
+the `TOGGLE` branch the first time it is expanded — the changed table reaches
+the tree with the model push, and the companion control keeps the node open
+through it. A node with an empty `nodes` table shows no expand arrow, so a level
+that may have children needs a placeholder row until it is read, or a flag of
+its own that the item's template renders as the icon.
+
+## `TreeTable`
+
+For fixed columns over a hierarchy — subtotals, a bill of material — the
+grid table `sap.ui.table.TreeTable` binds the same nested table through its
+`rows` aggregation. It needs to be told which component holds the children,
+and how many levels start open:
+
+```abap
+)->ele( n = `TreeTable` ns = `table`
+    )->a( n = `id`   v = `tree`
+    )->a( n = `rows` v = |\{ path: '{ client->_bind_path( t_tree ) }', | &&
+                        |parameters: \{ arrayNames: ['NODES'], numberOfExpandedLevels: 1 \} \}|
+```
+
+Expanding and collapsing from the backend is a control call —
+`expandToLevel` and `collapseAll` are methods of the control, reached with
+`cs_event-control_by_id` and the table's id. `Z2UI5_CL_SMP_APP_545` in the
+samples repository is the worked example, with a sum per node computed in
+ABAP. [Definition](/cookbook/view/definition#choosing-a-control) says when to
+prefer which of the two trees.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

@@ -1,13 +1,16 @@
 ---
 outline: [2, 4]
+description: What costs time in an abap2UI5 roundtrip - the view rebuild, the draft, the bound data - and how to keep each small; measuring it with the roundtrip monitor.
 ---
 # Performance
 
-abap2UI5 is fast. Almost all processing runs on the ABAP backend, which is much faster than the browser.
-
-abap2UI5 keeps frontend logic minimal: no business logic runs in the browser. Everything goes straight to the UI5 framework, which focuses only on UI rendering.
-
-We've tested abap2UI5 with tables holding large numbers of entries and columns, so you can build your app with confidence — performance shouldn't be a concern.
+Almost all processing of an abap2UI5 app runs in ABAP; the browser renders
+what the backend sends. A roundtrip is one POST that occupies one dialog work
+process for three phases - reading the draft, your `main( )`, building the
+response - and what the app can make expensive is the size of its instance,
+the size of its bound data and the number of times it rebuilds the view. This
+page is about the three; what a roundtrip costs the system and how the draft
+table grows is on [Sizing](/configuration/sizing).
 
 ## Call `view_display( )` once
 
@@ -54,7 +57,7 @@ Want to tune your app further? A few tips:
 - Call `client->view_display` only when needed — on initialization and when the view structure changes. For a pure data change, set the attribute and return; the framework pushes the delta and UI5 re-renders only the controls that changed.
 
 - Bind data with `client->_bind` — the framework sends only the paths the user actually edited back to ABAP (a delta), so read-only and untouched fields cost nothing on the return trip.
-- Declare public attributes in your app class only for variables shown on the frontend: public is what `_bind( )` needs to reach an attribute, and only what is bound becomes part of the model sent to the browser. Everything else is serialized into the draft either way, so keep large data out of the instance rather than merely private.
+- Declare public attributes in your app class only for variables shown on the frontend: public is what `_bind( )` needs to reach an attribute, and only what is bound becomes part of the model sent to the browser. Every attribute of the instance, whatever its visibility, is serialized into the draft either way - read on every click, written on every click - so keep large data out of the instance rather than merely private. What a draft row holds and how big the table gets is on [Sizing](/configuration/sizing#what-a-draft-row-holds).
 - Follow standard ABAP best practices, like cutting loops and choosing sorted tables, just like in any other ABAP project.
 
 ## Measuring It

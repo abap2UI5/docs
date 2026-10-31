@@ -1,3 +1,6 @@
+---
+description: A different control chosen in an IF - what follows when the view is a string the app produces per request rather than an artifact fixed at design time.
+---
 # #10 Swapping the View at Runtime
 
 The view is a string the app produced for this request. Which raises an
@@ -10,10 +13,13 @@ Nothing does. That is not a loophole — it is the feature.
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->get_event( ) = `TOGGLE`.
+
+    IF client->check_on_navigated( ).
+      set_view( ).
+    ELSEIF client->get_event( ) = `TOGGLE`.
       as_list = xsdbool( as_list = abap_false ).
+      set_view( ).          " the structure changes, so this event owes a view
     ENDIF.
-    set_view( ).
 
   ENDMETHOD.
 

@@ -1,3 +1,6 @@
+---
+description: The framework is ABAP Cloud compliant, and that says nothing about the app - cloud-readiness is decided in the SELECT, a released CDS view against a database table.
+---
 # #28 Cloud-Ready Is a Property of Your App
 
 The framework is ABAP Cloud compliant. It is written in the ABAP for Cloud
@@ -46,10 +49,6 @@ the next upgrade and can move to a cloud system, and the other cannot — and
 nothing about the user interface is involved in the difference.
 
 That is worth saying plainly, because a framework's badge is easy to mistake
-for a guarantee, and vendors are not always in a hurry to correct the mistake.
-Clean core is not a property a dependency grants an application. It is a
-property of what the application reads and writes, and it is decided in the
-`SELECT`.
-
-A cloud-ready framework does not make a cloud-ready app. It just stops being
-the reason one is not.
+for a guarantee. Clean core is not a property a dependency grants an
+application. It is a property of what the application reads and writes, and it
+is decided in the `SELECT`.

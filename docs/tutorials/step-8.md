@@ -141,7 +141,10 @@ ENDCLASS.
   by itself — no grid, no widths.
 - **`DatePicker` with `valueFormat`.** The picker shows the date in the user's
   locale and hands your ABAP attribute the format you asked for — here
-  `yyyy-MM-dd`, so a string comparison sorts correctly.
+  `yyyy-MM-dd`, so a string comparison sorts correctly. The `valueFormat` has
+  to match the ABAP type behind the binding: `yyyy-MM-dd` is the shape a
+  `string` compares by and the one an ABAP `d` travels in, so the same
+  pattern works for both — see [Formatter → Date](/cookbook/model/formatter#date).
 - **The event handler reads data, and nothing else.** No `view_display( )` in
   the `READ` branch: the view already exists in the browser, only `t_invoices`
   changed, and every roundtrip that changed bound data pushes the new model by

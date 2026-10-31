@@ -48,18 +48,26 @@ enter the class name.
 ## The Interface
 
 `z2ui5_if_app` is the whole contract between your class and the framework —
-one method, one parameter:
+one method, one parameter, and three things around it:
 
 ```abap
 INTERFACE z2ui5_if_app PUBLIC.
+  INTERFACES if_serializable_object.
+
+  DATA id_draft TYPE string.
+  DATA id_app   TYPE string.
+
   METHODS main
     IMPORTING
       client TYPE REF TO z2ui5_if_client.
 ENDINTERFACE.
 ```
 
-(The real interface also declares a few attributes the framework manages for
-you — you can ignore them.)
+`if_serializable_object` is there because the framework stores your whole
+instance between two roundtrips and reads it back — which is what lets a
+class attribute survive from one click to the next. `id_draft` and `id_app`
+are the ids it manages for that; you never set them. (The interface also
+carries the framework's version and license as constants.)
 
 
 Next, we replace the message box with a real UI5 view.

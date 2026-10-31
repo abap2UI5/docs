@@ -4,6 +4,7 @@ samples:
   - z2ui5_cl_smps_app_483
   - z2ui5_cl_smps_app_484
   - z2ui5_cl_smps_app_481
+description: Cross-app navigation in abap2UI5 - leaving for another Fiori app through the launchpad shell with cross_app_nav_to_ext, reading startup parameters on arrival, listing the intents of a semantic object, and the shell title.
 ---
 # Cross App
 
@@ -66,6 +67,31 @@ and the `$` binding above are resolved by UI5 when the press fires; a statement
 sends its arguments as data, so there the target has to be JSON,
 `{"semanticObject":"Z2UI5_CL_LP_SAMPLE_04","action":"display"}`, and the
 parameters a JSON object of their values.
+
+## Which Apps Can I Navigate To?
+
+`cross_app_nav_get_links` asks the shell for the intents the launchpad
+offers *this user* for a semantic object — the list a Fiori elements smart
+link shows in its popover — and hands the answer back as a backend event.
+`t_arg` is the target, the parameters and the event name; target and
+parameters are read like those of `cross_app_nav_to_ext`, an action in the
+target narrows the list, and the parameters drop the intents a mandatory
+parameter of which is missing:
+
+```abap
+client->follow_up_action(
+    val   = client->cs_event-cross_app_nav_get_links
+    t_arg = VALUE #( ( `{"semanticObject":"BusinessPartner"}` )
+                     ( `{"BusinessPartner":"4711"}` )
+                     ( `LINKS` ) ) ).
+```
+
+The event is raised once the shell has answered, its first argument a JSON
+array with one object per intent — `intent` (the hash), `text`, `subTitle`,
+and the hash split into `semanticObject`, `action` and `params`, ready to be
+handed to `cross_app_nav_to_ext`. Outside the launchpad the call is a logged
+no-op and the event is not raised, so a handler that waits for `LINKS` must
+not be the only way forward.
 
 ## Arriving From Another App
 

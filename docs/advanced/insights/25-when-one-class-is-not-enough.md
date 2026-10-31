@@ -1,3 +1,6 @@
+---
+description: The four seams of a larger abap2UI5 app - a class per screen on the stack, popups as classes, logic in a class without a screen, nested views - all of them ordinary ABAP.
+---
 # #25 When One Class Is Not Enough
 
 Every example in this series is one class, and for the screens it is about
@@ -20,7 +23,7 @@ settings popup used from several screens — each is a `z2ui5_if_app` that
 displays into the popup slot. Written once, called from anywhere, tested on its
 own.
 
-**The logic in a class that has no screen.** A `zcl_invoice_service` with
+**The logic in a class that has no screen.** A `zcl_sample_invoice_service` with
 `read( )`, `validate( )` and `post( )` is where the business logic goes when a
 second screen needs it, or a batch job does, or a test does. The app class
 becomes what a dynpro program's PAI modules were: it takes the event, calls the
@@ -43,5 +46,3 @@ What does not appear in that list is a single framework concept. No component,
 no manifest, no router, no controller hierarchy, no dependency injection
 container. The seams are classes, method calls and one stack — which is exactly
 what a larger ABAP program has been made of for thirty years.
-
-A larger app is more classes. The unit stayed the same size.

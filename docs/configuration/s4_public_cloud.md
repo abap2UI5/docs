@@ -1,9 +1,12 @@
 ---
 outline: [2, 4]
+description: Installing abap2UI5 on S/4 Public Cloud and the BTP ABAP Environment - the ADT abapGit pull, mass activation, the HTTP service, the frontend deployment and the chain of objects that puts a tile in front of a business user.
 ---
 # S/4 Public Cloud
 
-Use abap2UI5 for on-stack extension scenarios in S/4 Public Cloud. It uses only released APIs and is fully compatible with the ABAP Cloud language version, satisfying SAP's "clean core" cloud extension requirements.
+abap2UI5 runs on S/4 Public Cloud as an on-stack extension: it is written in
+the ABAP Cloud language version and uses released APIs only, so it passes the
+system's checks like any other ABAP Cloud development.
 
 The setup in the **BTP ABAP Environment** is the same as in S/4 Public Cloud -
 both are ABAP for Cloud, both install through the ADT abapGit - so this page
@@ -77,7 +80,7 @@ Up to here the HTTP service is enough — you can open it and use abap2UI5 with 
 
 ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with the [SAP Fiori Tools](https://marketplace.visualstudio.com/items?itemName=SAPSE.sap-ux-fiori-tools-extension-pack) extension pack instead.
 
-1. Clone the branch that matches your stack — `cloud` for the classic UI5 runtime, `cloud_v2` for the [legacy-free](/advanced/legacy_free) one (UI5 2.x preview):
+1. Clone the branch that matches your stack — `cloud` for the classic UI5 runtime, `cloud_v2` for the [legacy-free](/advanced/legacy_free) one (UI5 2.x preview), or `cloud_new`, which carries no copy of the frontend: its app is one view with one `z2ui5.embed.Container` that loads the frontend from the backend at run time, so an abap2UI5 update needs no new deployment of the app. `cloud_new` needs an abap2UI5 newer than 1.146.0 and exists since 1.147.0; the trade-off is that the frontend is fetched from the HTTP service on every page load, and the legacy-free runtime is not covered by it yet. Every branch uses the same service, objects and launchpad settings, so a system switches by deploying another one:
 
    ```sh
    git clone --branch cloud --single-branch https://github.com/abap2UI5/frontend.git
@@ -90,9 +93,9 @@ ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with t
 ::: tip **Where the deployed app sends its requests**
 Only the *separately deployed* app needs this — when the backend serves the page itself, it tells the frontend to post back to the same URL.
 
-The `cloud` and `cloud_v2` branches ship `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path an HTTP service with ID `Z2UI5` is published under. If you created the service under a **different ID**, change that entry in `manifest.json` to match — otherwise the POSTs go to a service that does not exist and the app fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
+The `cloud`, `cloud_v2` and `cloud_new` branches ship `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path an HTTP service with ID `Z2UI5` is published under. If you created the service under a **different ID**, change that entry in `manifest.json` to match — otherwise the POSTs go to a service that does not exist and the app fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
 
-The on-premise branches (`standard`, `standard_v2`) use the SICF path `/sap/bc/z2ui5` instead.
+The on-premise branches (`standard`, `standard_v2`, `standard_new`) use the SICF path `/sap/bc/z2ui5` instead.
 :::
 
 ## 5. Give Business Users Access (Optional)
@@ -112,7 +115,7 @@ Opening the HTTP service directly works because a developer has `S_DEVELOP`. A b
 4. **Business Role** — add the business catalog to a role in the ABAP Launchpad.
 5. **Space and page** — create them and place the tile, so the user has somewhere to click.
 
-SAP's [Launchpad configuration guide](https://developers.sap.com/tutorials/abap-s4hanacloud-procurement-purchasereq-flp.html) covers the generic mechanics of these objects.
+SAP's tutorial [Integrate List Report into ABAP Fiori Launchpad](https://developers.sap.com/tutorials/abap-environment-integrate-app-into-flp.html) covers the generic mechanics of the IAM app, the business catalog and the business role, and the SAP Help page [Launchpad App Descriptor Items](https://help.sap.com/docs/btp/sap-business-technology-platform/launchpad-app-descriptor-items) the descriptor item.
 
 ::: tip **A walkthrough with screenshots**
 Warren Eiserman documented a full first install of this scenario, step by step and with screenshots of every dialog:

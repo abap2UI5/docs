@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_496
+description: The ten most common ways an abap2UI5 app fails without an ABAP exception - a binding that resolves to nothing, a non-public attribute, type coercion, malformed XML, a missing or surplus view_display, a popup never destroyed - with the symptom and where to look.
 ---
 # Common Failures
 
@@ -37,7 +38,7 @@ Where to look:
 - **The error text itself.** Unlike a binding-path mismatch, this failure is reported by name — if you are reading a browser-console warning, you are looking at the section above, not at this one.
 - **Check the visibility of the attribute** in the class definition. Helper variables that never appear in a `_bind( )` call can stay private; anything you bind must move to `PUBLIC SECTION`.
 
-See [Binding → Bound Attributes Must Be Public](/cookbook/model/binding).
+See [Life Cycle → Bound Attributes Must Be Public](/cookbook/event_navigation/life_cycle#bound-attributes-must-be-public).
 
 ## Type Coercion Without an Explicit UI5 Type
 
@@ -101,7 +102,7 @@ Where to look:
 - **Symptom**: a button on the main page "does nothing" right after a popup workflow, or a second open reopens the same popup on top of the first.
 - **Pair every `popup_display( )` with an explicit `popup_destroy( )`** in **every** branch that ends the dialog — Save and Cancel both need it, not just the happy path.
 
-See [Popup](/cookbook/popup_popover/popup) and the worked example in the walkthrough's [Popups step](/tutorials/step-7).
+See [Popup](/cookbook/popup_popover/popup) and the worked example in [the tutorial's Popups step](/tutorials/step-7).
 
 ## Event-Name Casing Mismatch
 

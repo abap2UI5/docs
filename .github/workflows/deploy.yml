@@ -149,6 +149,9 @@ jobs:
       - name: vocabulary
         if: ${{ !cancelled() }}
         run: npm run check:vocabulary
+      - name: audience
+        if: ${{ !cancelled() }}
+        run: npm run check:audience
       - name: Run-button coverage
         if: ${{ !cancelled() }}
         run: npm run check:playground
@@ -158,6 +161,11 @@ jobs:
       - name: API reference freshness
         if: ${{ !cancelled() }}
         run: npm run check:api-reference
+      - name: controls reference freshness
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run check:controls
       - name: sample links
         if: ${{ !cancelled() }}
         run: npm run check:samples

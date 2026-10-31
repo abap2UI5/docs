@@ -165,6 +165,16 @@ jobs:
         if: ${{ !cancelled() }}
         run: npm run check:vocabulary
 
+      # every prose word against the phrases of the site for decision makers
+      # - license fee, per-user, ROI, business case. The manual is for
+      # developers and links that site; a page that argues the case itself is
+      # a second, unmaintained copy of it. Four pages may use the words: the
+      # license, support and sponsoring pages, and the one sentence in
+      # "In a Nutshell" that hands the reader over
+      - name: audience
+        if: ${{ !cancelled() }}
+        run: npm run check:audience
+
       # every complete app class either carries a Run button or a marker on its
       # page saying why it cannot run in the playground. The rules that offer
       # the button fail towards NOT offering one, so without this an example
@@ -191,6 +201,18 @@ jobs:
       - name: API reference freshness
         if: ${{ !cancelled() }}
         run: npm run check:api-reference
+
+      # the committed custom-controls reference (resources/controls.md),
+      # regenerated from app/webapp/cc on main - the metadata of every
+      # control the frontend ships, read by running each module - and
+      # compared byte for byte, the same way the API reference is. Lists the
+      # directory through the repository's contents API, so it needs
+      # github.com like the step above does
+      - name: controls reference freshness
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npm run check:controls
 
       # the Working Samples blocks: still generated from what the catalogue says
       # today, still pointing at classes that exist, and still pointed back at

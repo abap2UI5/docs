@@ -1,3 +1,6 @@
+---
+description: Every request is a fresh instance of the app class - how z2ui5_t_01 carries the serialized instance forward, which attributes survive, and why a large attribute costs every click.
+---
 # #9 A New Instance on Every Request
 
 Every request lands on a fresh instance of the app class. No session holds the

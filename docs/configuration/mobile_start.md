@@ -14,5 +14,5 @@ SAP Mobile Start surfaces your abap2UI5 apps as tiles in SAP's native mobile ent
 
 Since abap2UI5 views are responsive UI5 controls, most apps work on phones as they are — check layouts with narrow screens in mind (see the [Device Model](/cookbook/model/device_model) page for adapting views to the device).
 
-## Further Reading
-The original article with step-by-step screenshots: [Setup SAP Mobile Start](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-33-setup-uzure/).
+## Background
+The steps above are complete on their own. The article they come from has a screenshot of every dialog: [Setup SAP Mobile Start](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-33-setup-uzure/).

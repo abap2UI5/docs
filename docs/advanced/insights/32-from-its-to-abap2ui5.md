@@ -1,3 +1,6 @@
+---
+description: Twenty-seven years of SAP user interfaces in one line - ITS, BSP, Web Dynpro, UI5 Freestyle, RAP, abap2UI5 - and which move did not reverse.
+---
 # #32 From ITS to abap2UI5
 
 Twenty-seven years of SAP user interfaces, laid out end to end — because the

@@ -1,3 +1,6 @@
+---
+description: SAP's four clean core levels, where abap2UI5 sits (Level A), where an app lands by what it calls, and the wrapper that gives an unreleased API a name and a boundary.
+---
 # #29 When the API Is Not Released
 
 SAP grades an extension, and since August 2025 it does so on four **clean core
@@ -38,7 +41,8 @@ as long as it stays with classic APIs — and the app calling it stays A.
 The value of that is not the grade. Nobody's users care about the grade. It is
 that the part of the system which is not upgrade-stable now has a name, a size
 and a boundary — one class to re-check when SAP changes the classic API
-underneath it, instead of a search through every app that ever touched it.
+underneath it, instead of a search through every app that ever touched it: the
+wrapper does not make the dependency clean, it makes it findable.
 
 On S/4HANA Private Cloud and on-premise the app itself may also be Standard
 ABAP, and on releases that do not know ABAP for Cloud Development yet that is
@@ -46,8 +50,6 @@ the only option. The framework stays Level A either way, so moving an app up a
 level later means changing what it calls, not how it renders:
 
 ![Apps written in Standard ABAP call classic APIs or SAP-internal objects, while abap2UI5 itself stays Level A](/advanced/use_cases/on_stack_level_b.svg){ width=90% }
-
-A wrapper does not make the dependency clean. It makes it findable.
 
 *The levels are SAP's, from the
 [Clean Core Extensibility white paper](https://community.sap.com/t5/technology-blog-posts-by-sap/why-clean-core-matters-get-some-insights-into-our-brand-new-extensibility/ba-p/14163750)

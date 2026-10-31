@@ -21,7 +21,7 @@ Create this destination in your BTP subaccount (**Connectivity → Destinations*
 - Name: `BACKEND_ABAP2UI5`
 - Type: `HTTP`
 - Description: abap2UI5 Destination
-- URL: `https://<your-abap-system>/sap/z2ui5`
+- URL: `https://<your-abap-system>/sap/bc/z2ui5`
 - Proxy Type: Internet
 - Authentication: `BasicAuthentication`
 - User: *(user)*
@@ -50,9 +50,9 @@ SAP Build Work Zone needs these additional properties to route requests correctl
 
 After that, the tile opens your abap2UI5 app inside the Work Zone shell; the same content is also picked up by [SAP Mobile Start](/configuration/mobile_start).
 
-## Further Reading
-The original article series with step-by-step screenshots:
+## Background
+The steps above are complete on their own. The article series they come from has a screenshot of every dialog:
 - [Installation & Configuration of BTP](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-13-installation-lf1re/)
 - [Setup SAP Build Work Zone](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-23-setup-ujdqe/)
 
-SAP's own tutorials cover the generic Work Zone plumbing: [Configure SAP Build Work Zone](https://developers.sap.com/tutorials/spa-configure-workzone..html) and [Integrate Your Application with SAP Build Work Zone](https://developers.sap.com/tutorials/integrate-with-work-zone..html).
+SAP's own tutorials cover the generic Work Zone plumbing: [Configure SAP Build Work Zone](https://developers.sap.com/tutorials/spa-configure-workzone.html) and [Integrate Your Application with SAP Build Work Zone](https://developers.sap.com/tutorials/integrate-with-work-zone.html).

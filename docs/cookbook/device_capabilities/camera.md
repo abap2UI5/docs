@@ -2,24 +2,25 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_306
+description: Take a photo with the device camera through the CameraPicture control - the base64 JPEG in value, the thumbnail, the properties that pick the camera, and the CameraSelector that lists them.
 ---
 # Camera
 
 abap2UI5 offers a custom control for taking photos directly from the device's camera. The control returns the image as a base64-encoded string, ready for backend processing.
 
-A minimal example based on sample `Z2UI5_CL_SMP_APP_306`:
 ```abap
-CLASS z2ui5_cl_smp_app_306 DEFINITION PUBLIC.
+CLASS zcl_sample_camera DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
     DATA mv_picture_base TYPE string.
+    DATA mv_thumbnail    TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
+CLASS zcl_sample_camera IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -34,20 +35,57 @@ CLASS z2ui5_cl_smp_app_306 IMPLEMENTATION.
                       )->a( n = `title` v = `abap2UI5 - Device Camera Picture`
 
                       )->tag( n = `CameraPicture` ns = `z2ui5`
-                          )->a( n = `value`   v = client->_bind( mv_picture_base )
-                          )->a( n = `OnPhoto` v = client->_event( `CAPTURE` ) ).
+                          )->a( n = `value`     v = client->_bind( mv_picture_base )
+                          )->a( n = `thumbnail` v = client->_bind( mv_thumbnail )
+                          )->a( n = `OnPhoto`   v = client->_event( `CAPTURE` )
+                      )->tag( `Image`
+                          )->a( n = `src` v = client->_bind( mv_thumbnail ) ).
 
       client->view_display( view->stringify( ) ).
 
-    ENDIF.
-
-    IF client->get( )-event = `CAPTURE`.
+    ELSEIF client->check_on_event( `CAPTURE` ).
       "process mv_picture_base here...
+
     ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
 ```
+
+The control renders a button; pressing it opens a dialog with the live camera stream and a *Capture* button. The capture writes the full-resolution JPEG into `value` as a `data:image/jpeg;base64,…` URL and a 300 px wide preview into `thumbnail`, then fires `OnPhoto`. Bind `thumbnail` to an `Image`, as above, and leave the full picture out of the view — it travels in the model either way, and a photo from a phone camera is a few megabytes of base64.
+
+## Properties and Events
+
+| Property | |
+|---|---|
+| `value` | the captured photo, a base64 JPEG data URL (quality 0.85) |
+| `thumbnail` | a 300 px wide JPEG of the same picture for previews |
+| `width`, `height` | the size of the trigger button; a bare number is read as pixels, empty leaves it auto-sized |
+| `autoplay` | start the camera stream as soon as the dialog opens; default `true` |
+| `facingMode` | which camera a phone opens: `user` for the front, `environment` for the back camera. Set, it is requested as an exact constraint, so a device without that camera fails to open |
+| `deviceId` | one specific camera, by the id the browser assigns it — what the `CameraSelector` below hands over |
+
+| Event | |
+|---|---|
+| `OnPhoto` | a photo was captured; `photo` carries the same data URL as `value` |
+| `press` | the trigger button was pressed, before the dialog opens. A wire with `s_ctrl-check_prevent_default` vetoes the dialog, so an app can refuse the camera from ABAP |
+
+A failure — no HTTPS, a denied permission, a camera another app holds — is shown on a status line inside the dialog and logged to the browser console; no event reaches the backend for it.
+
+## Choosing a Camera
+
+`z2ui5:CameraSelector` is a `sap.m.ComboBox` filled with the device's cameras: one item per video input, its key the browser's device id, its text the camera's label. Bind `selectedKey` to an attribute and hand the same attribute to `deviceId`:
+
+```abap
+)->tag( n = `CameraSelector` ns = `z2ui5`
+    )->a( n = `selectedKey` v = client->_bind( mv_device_id )
+)->tag( n = `CameraPicture` ns = `z2ui5`
+    )->a( n = `deviceId`    v = client->_bind( mv_device_id )
+    )->a( n = `value`       v = client->_bind( mv_picture_base )
+    )->a( n = `OnPhoto`     v = client->_event( `CAPTURE` ) )
+```
+
+Before the page has the camera permission a browser lists the cameras without ids or labels, so the list is read again every time the dropdown opens and whenever the browser reports a device change — after the first photo the names are there.
 
 ::: tip **Browser Restrictions**
 Camera access relies on browser permissions and security settings. Most browsers need HTTPS and display a permission prompt. Watch for browser warnings while testing.

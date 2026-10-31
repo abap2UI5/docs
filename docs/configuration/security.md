@@ -3,35 +3,121 @@ outline: [2, 4]
 description: How abap2UI5 keeps data on the server - one HTTP endpoint, SAP authentication and authorization, the Content-Security-Policy, response headers and CSRF.
 ---
 # Security
-abap2UI5 is a backend-centric framework. All logic and business data stay on the server; the frontend gets only the data it needs to render the view.
+abap2UI5 is a backend-centric framework: the app runs in ABAP, the browser
+renders what the backend sends. This page is the data-flow rule, the threat
+model, and the HTTP hardening the framework ships: the Content Security
+Policy, the response headers and the CSRF check. The framework's own
+[security model](https://github.com/abap2UI5/abap2UI5/blob/main/docs/security.md)
+names the gate or test behind each guarantee, and
+[SECURITY.md](https://github.com/abap2UI5/abap2UI5/blob/main/SECURITY.md) is
+the disclosure process.
 
 ## HTTP Endpoint
-The abap2UI5 framework runs as an HTTP handler. You build the HTTP handler and call the abap2UI5 API inside it. Users access abap2UI5 by calling the endpoint externally, with security managed like any other UI5 app.
+The abap2UI5 framework runs as an HTTP handler. You build the HTTP handler and
+call the abap2UI5 API inside it. Users access abap2UI5 by calling the endpoint
+externally, with security managed like any other UI5 app.
 
 ## Authentication
-The ICF (Internet Communication Framework) node level handles authentication. You get full control over the ICF node configuration, including visibility settings, login procedures, and other security settings.
+The ICF (Internet Communication Framework) node level handles authentication.
+You get full control over the ICF node configuration, including visibility
+settings, login procedures, and other security settings. abap2UI5 adds no user
+store, no token and no session concept beyond the ICF session: a request that
+reaches the handler has passed SAP logon, and `sy-uname` is the user. SSO, SAML
+and Kerberos are the node's logon procedure, configured as for any ICF service;
+which sessions a logout then has to end is on [Logout](/configuration/logout).
 
 ## Authorization
-As an app developer, you have full flexibility over authorization. Set it up at either the app level or the service node level. For details on setting up authorization for your endpoint, see the [Authorization](/configuration/authorization) page.
+As an app developer, you have full flexibility over authorization. Set it up at
+either the app level or the service node level. For details on setting up
+authorization for your endpoint, see the
+[Authorization](/configuration/authorization) page.
 
-## Backend Code
-abap2UI5 ships as custom code. Once installed, you own the code in full and can change it as needed. To stay compatible with future updates, avoid direct changes to the core codebase.
+## What Leaves the Server
+One rule decides what the browser gets to see, and it is worth stating
+precisely:
 
-## Frontend Code
-The frontend is a Single-Page Application (SPA) built with SAPUI5 or OpenUI5. The HTTP endpoint delivers it on the first request, in line with standard practices for modern web apps.
+- **What is bound goes to the browser.** An attribute passed to `_bind( )`
+  is part of the JSON model of the view, sent with the response and - that
+  is what two-way binding means - writable from the client on the next
+  roundtrip. A value that drives a database write or a dynamic `WHERE`
+  clause is validated in the app before it is used, as a screen field would
+  be.
+- **What is public but unbound stays on the server.** The model is built
+  from the bound attributes only; a public attribute no view binds is never
+  serialized for the browser.
+- **The whole instance goes into the draft.** Every attribute of the app
+  class, whatever its visibility, is serialized into `Z2UI5_T_01` between
+  two roundtrips - on the server, in the database of the system, in a row
+  bound to the user who wrote it.
+- **Nothing else leaves.** The business logic is ABAP and is never sent; the
+  view is XML the app built; a follow-up action is data (an event name and
+  its arguments), never code. The 500 body carries the exception chain and
+  the app, event and draft context - never the host name, client or user -
+  and `check_hide_error_details` replaces it with a generic message.
 
-## Business Logic
-abap2UI5 never sends the app's business logic to the client. All business processes stay safely on the server, and sensitive data never reaches the frontend.
+## Threat Model
+What the framework guarantees, what the app has to do, and what the
+operator sets - from the browser's side, where everything that arrives is
+input:
+
+| The client controls | What the framework does with it |
+|---|---|
+| The app class name (`app_start`, the hash route, the first POST) | refused before instantiation unless the class implements `z2ui5_if_app` - a type check, not an authorization. Which user may run which app is decided in the app's `main( )`, by design; the ICF node's authorization field decides who reaches the node at all - [Authorization](/configuration/authorization) |
+| The draft id | not a secret: it travels in bookmark URLs and app-state links. Every read of `Z2UI5_T_01` is checked against the `UNAME` that wrote the row and fails closed, so a leaked or guessed id loads nothing for another user and degrades to a fresh app start |
+| The model delta | applied to the bound attributes and to nothing else; validation of the values is the app's |
+| The event name and its arguments | dispatched to the app's `main( )`; the app decides what an event means |
+| A `control_by_id` / `control_global` call it replays | a method outside the whitelists, or on a denylist of framework-hostile methods (`destroy`, `setModel`, `bind*`, `attach*`, `fireEvent`, `rerender`, `invalidate`, the generic aggregation and association mutators, anything starting with `_`), is logged and dropped - the backend is the trusted driver, the lists guard the framework's own invariants rather than form a security boundary |
+| The launchpad startup parameters (`t_comp_params`) | handed to the app as data through `client->get( )`; what they mean is the app's decision |
+| `X-Forwarded-Host` | compared against `Origin` by the CSRF check when `check_trust_forwarded_host` is on (the default, for proxies); a client can set the header itself, so an installation without a proxy switches it off |
+| `Origin` / `Referer` on a POST | the CSRF check, on by default: a cross-origin POST is rejected with 403 before any app logic runs |
+
+What the operator sets, all in the [user exit](/advanced/extensibility/user_exits):
+`check_hide_error_details` (the exception chain off the 500 body),
+`check_trust_forwarded_host`, `check_csrf_active`, the bootstrap source
+(`cs_config-src` - a public CDN serves the whole JavaScript runtime into an
+authenticated session), the CSP and the response headers below. The Admin
+Cockpit reads all of them off the running system as a traffic light -
+[Monitoring](/configuration/monitoring#admin-cockpit).
+
+What the app has to do, and no framework setting replaces: the
+authorization check in `main( )`, the validation of every bound value, and
+the decision what reaches the DOM - HTML in a message passes a sanitizer, a
+link the message link policy, but neither is a reason to put untrusted
+markup into a message in the first place.
 
 ## Content-Security-Policy
-To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by default. CSP blocks attacks like cross-site scripting (XSS) and data injection by restricting which resources the browser can load. The default policy allows a fixed set of trusted sources — the SAP and OpenUI5 CDN hosts, and nothing else; an installation that loads from another host adds it in the user exit, to the one directive that needs it. The complete policy is shown below. It also carries two hardening directives — `object-src 'none'` and `base-uri 'self'` — that block plugin content and pin `<base>` to the app origin. It deliberately carries **no** `frame-ancestors`: browsers ignore that directive in a `<meta>` CSP (and log a console warning about it), so cross-origin framing is forbidden by the real `X-Frame-Options` response header instead — see [Response headers](#response-headers) below.
+To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by
+default. CSP blocks attacks like cross-site scripting (XSS) and data injection
+by restricting which resources the browser can load. The default policy allows a
+fixed set of trusted sources — the SAP and OpenUI5 CDN hosts, and nothing else;
+an installation that loads from another host adds it in the user exit, to the
+one directive that needs it. The complete policy is shown below. It also carries
+two hardening directives — `object-src 'none'` and `base-uri 'self'` — that
+block plugin content and pin `<base>` to the app origin. It deliberately carries
+**no** `frame-ancestors`: browsers ignore that directive in a `<meta>` CSP (and
+log a console warning about it), so cross-origin framing is forbidden by the
+real `X-Frame-Options` response header instead — see
+[Response headers](#response-headers) below.
 
-The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts: nothing abap2UI5 ships evaluates code, and UI5 from `1.84` on loads its modules without `eval()`. The page's one inline script is allowed by its SHA-256 hash, which the framework appends to `script-src` after the exit ran, so an injected `<script>`, an `onerror=` attribute or a `javascript:` URL is refused by the browser. Only a popup on UI5 `1.71` to `1.82` can still need `'unsafe-eval'` — see [Older releases](#older-releases-switching-unsafe-eval-on) below.
+The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts:
+nothing abap2UI5 ships evaluates code, and UI5 from `1.84` on loads its modules
+without `eval()`. The page's one inline script is allowed by its SHA-256 hash,
+which the framework appends to `script-src` after the exit ran, so an injected
+`<script>`, an `onerror=` attribute or a `javascript:` URL is refused by the
+browser. Only a popup on UI5 `1.71` to `1.82` can still need `'unsafe-eval'` —
+see [Older releases](#older-releases-switching-unsafe-eval-on) below.
 
-What `script-src` does carry is `'wasm-unsafe-eval'`. It lets a script the page already runs compile WebAssembly and nothing else — a string still never becomes code. The camera scanner of SAPUI5 (`sap.ndc.BarcodeScannerButton`) decodes the picture with WebAssembly, and without the keyword it stops with a `CompileError`. A policy you write yourself in the exit has to keep it for the scanner.
+What `script-src` does carry is `'wasm-unsafe-eval'`. It lets a script the page
+already runs compile WebAssembly and nothing else — a string still never becomes
+code. The camera scanner of SAPUI5 (`sap.ndc.BarcodeScannerButton`) decodes the
+picture with WebAssembly, and without the keyword it stops with a
+`CompileError`. A policy you write yourself in the exit has to keep it for the
+scanner.
 
 ### Default CSP
-By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`; the framework appends the hash of the page's inline script to `script-src` afterwards):
+By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`;
+the framework appends the hash of the page's inline script to `script-src`
+afterwards):
 ```xml
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: blob:
     ui5.sap.com *.ui5.sap.com sapui5.hana.ondemand.com *.sapui5.hana.ondemand.com
@@ -50,10 +136,18 @@ By default, abap2UI5 uses the CSP below (defined in `z2ui5_cl_ui5_user_exit`; th
     object-src 'none'; base-uri 'self';"/>
 ```
 
-`script-src` and `style-src` are written out rather than left to the `default-src` fallback on purpose: `default-src` carries `data:` and `blob:` for images, fonts and media, and a `data:` that falls through to `script-src` is a textbook CSP bypass. `style-src` keeps `'unsafe-inline'` because UI5 renders style attributes itself.
+`script-src` and `style-src` are written out rather than left to the
+`default-src` fallback on purpose: `default-src` carries `data:` and `blob:` for
+images, fonts and media, and a `data:` that falls through to `script-src` is a
+textbook CSP bypass. `style-src` keeps `'unsafe-inline'` because UI5 renders
+style attributes itself.
 
 ### Customizing the CSP
-If needed, adjust the CSP in the [user exit](/advanced/extensibility/user_exits). The exit runs after the framework fills in the default, so edit the directive you need rather than replacing the whole tag — a copy of the tag goes stale with the next release, an edit does not:
+If needed, adjust the CSP in the
+[user exit](/advanced/extensibility/user_exits). The exit runs after the
+framework fills in the default, so edit the directive you need rather than
+replacing the whole tag — a copy of the tag goes stale with the next release, an
+edit does not:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
@@ -67,10 +161,17 @@ METHOD z2ui5_if_ui5_exit~set_config_http_get.
 ENDMETHOD.
 ```
 
-A `script-src` that names `'unsafe-inline'` itself is left without the hash of the page's inline script — `'unsafe-inline'` would be ignored beside a hash anyway.
+A `script-src` that names `'unsafe-inline'` itself is left without the hash of
+the page's inline script — `'unsafe-inline'` would be ignored beside a hash
+anyway.
 
 ### Older releases: switching `'unsafe-eval'` on
-On UI5 `1.71` to `1.82` a popup is processed synchronously, and a module that the popup's XML only names in a binding type or a `core:require` is fetched and evaluated as a string on the spot. The frontend loads the popup's controls asynchronously first, so the shipped popups stay clean — but a module it cannot see from the XML still needs `'unsafe-eval'` on those releases. Such an installation switches it on in the same exit, for `script-src` only:
+On UI5 `1.71` to `1.82` a popup is processed synchronously, and a module that
+the popup's XML only names in a binding type or a `core:require` is fetched and
+evaluated as a string on the spot. The frontend loads the popup's controls
+asynchronously first, so the shipped popups stay clean — but a module it cannot
+see from the XML still needs `'unsafe-eval'` on those releases. Such an
+installation switches it on in the same exit, for `script-src` only:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
@@ -86,7 +187,8 @@ ENDMETHOD.
 ```
 
 ::: warning
-The symptom without it is a popup that does not open, and in the browser console an error like
+The symptom without it is a popup that does not open, and in the browser console
+an error like
 
 ```
 EvalError: Evaluating a string as JavaScript violates the following Content
@@ -163,9 +265,19 @@ ENDMETHOD.
 ```
 
 ## Cross-Site Request Forgery (CSRF)
-Every state-changing request in abap2UI5 is a POST, so the framework ships its own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or may not be there. The check compares the host authority of the request's `Origin` (or `Referer`) header against the `Host` header — or, by default, against the first `X-Forwarded-Host` when a proxy sent one (`cs_config-check_trust_forwarded_host`; an installation without a proxy hardens the gate by switching it to `abap_false`) — a cross-origin POST is rejected with an error response before any app logic runs.
+Every state-changing request in abap2UI5 is a POST, so the framework ships its
+own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or
+may not be there. The check compares the host authority of the request's
+`Origin` (or `Referer`) header against the `Host` header — or, by default,
+against the first `X-Forwarded-Host` when a proxy sent one
+(`cs_config-check_trust_forwarded_host`; an installation without a proxy hardens
+the gate by switching it to `abap_false`) — a cross-origin POST is rejected with
+an error response before any app logic runs.
 
-**CSRF protection is active by default.** A fresh install rejects cross-origin POSTs without any configuration. If your endpoint must accept cross-origin POSTs (for example, behind a proxy setup where the origin legitimately differs), opt out in the [user exit](/advanced/extensibility/user_exits):
+**CSRF protection is active by default.** A fresh install rejects cross-origin
+POSTs without any configuration. If your endpoint must accept cross-origin POSTs
+(for example, behind a proxy setup where the origin legitimately differs), opt
+out in the [user exit](/advanced/extensibility/user_exits):
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_post.

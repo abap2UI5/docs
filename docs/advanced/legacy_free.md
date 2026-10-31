@@ -1,42 +1,53 @@
 ---
 outline: [2, 4]
+description: The legacy-free variant of the abap2UI5 frontend - the v2 branches of the frontend repository bootstrapped from OpenUI5's legacy-free distribution, what that distribution leaves out, and how to install it next to the classic frontend.
 ---
 # UI5 Legacy-Free
 
-The abap2UI5 frontend is also available as a **legacy-free** variant, bootstrapped from the new legacy-free distribution of OpenUI5 (`1.142.0-legacy-free`) — the build without `jQuery.sap.*`, synchronous APIs, and other deprecated globals. It is essentially a preview of the API surface that UI5 2.x will enforce.
+The abap2UI5 frontend is also available as a **legacy-free** variant,
+bootstrapped from the legacy-free distribution of OpenUI5 — the build without
+`jQuery.sap.*`, synchronous APIs and the other deprecated globals. Which
+version it loads is pinned in the frontend's bootstrap
+(`1.142.0-legacy-free` in `tools/app2app_v2/patch-v2.mjs` of the framework
+repository today); the branches below carry it.
 
 ## What is UI5 Legacy-Free?
 
-`*-legacy-free` is a parallel distribution of OpenUI5/SAPUI5 (starting with the 1.136.x line) that ships the same controls and APIs as the regular 1.x build, but with everything deprecated removed up front. In practice that means no `jQuery.sap.*`, no `sap.ui.getCore()`, no synchronous module loading (`sap.ui.requireSync`, sync XHR), no global view/controller factories, no jQuery bundled into the core, and none of the compatibility shims that 1.x kept around for backwards compatibility.
+`*-legacy-free` is a parallel distribution of OpenUI5/SAPUI5 (starting with the
+1.136.x line) that ships the same controls and APIs as the regular 1.x build,
+but with everything deprecated removed up front. In practice that means no
+`jQuery.sap.*`, no `sap.ui.getCore()`, no synchronous module loading
+(`sap.ui.requireSync`, sync XHR), no global view/controller factories, no jQuery
+bundled into the core, and none of the compatibility shims that 1.x kept around
+for backwards compatibility.
 
-## Why It Matters for the Future
-
-UI5 2.x — the next major release line — will enforce exactly this surface. By developing against the legacy-free build today, the project gets several things at once:
-
-- **A real-world preview of UI5 2.x.** Anything that still works here will keep working on 2.x; anything that breaks is something that would have broken on 2.x anyway, just discovered earlier and on our terms.
-- **No future migration cliff.** The painful "rip out jQuery.sap and sync APIs" step that most UI5 1.x apps will eventually face is done incrementally as part of normal development, not as a one-shot upgrade project.
-- **A leaner, faster runtime.** Dropping jQuery and the compatibility layers shrinks the bootstrap, speeds up startup, and reduces memory footprint — particularly noticeable on mobile and constrained networks.
-- **Modern, async-first patterns.** Async module loading, async component and view creation, and standard `Promise`-based APIs are the only option, which keeps the codebase aligned with the current web platform instead of with patterns from the early 2010s.
-- **Cleaner extension points for abap2UI5.** Custom controls and the frontend glue code can rely on stable, documented APIs only, without reaching into internals that are scheduled for removal.
-
-In short: the legacy-free build is the bridge between today's UI5 1.x ecosystem and tomorrow's UI5 2.x. Building the abap2UI5 frontend on it now means the framework is ready for 2.x the day it lands, instead of chasing it afterwards.
+UI5 2.x enforces exactly this surface, so the legacy-free build is a preview
+of it on a 1.x release: what runs on it runs on 2.x, and what breaks on it
+would break on 2.x. The abap2UI5 frontend and its custom controls are held
+to that surface by the `UI5_2X` check of the framework's CI, and the v2
+branches are how an installation runs on it today.
 
 ## Installation
 
-The legacy-free frontend ships as the `v2` branches of the [frontend repository](https://github.com/abap2UI5/frontend). Pull the branch that matches your system into your ABAP system with [abapGit](https://abapgit.org) and activate — there is no separate build step:
+The legacy-free frontend ships as the `v2` branches of the
+[frontend repository](https://github.com/abap2UI5/frontend). Pull the branch
+that matches your system into your ABAP system with
+[abapGit](https://abapgit.org) and activate — there is no separate build step:
 
 | Branch | System | UI5 |
 |--------------|-------------------------------------------------------|-----------------------------|
 | `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x preview) |
 | `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x preview) |
 
-The v2 branches install the frontend under the same `z2ui5` name as the classic branches. To evaluate the legacy-free frontend side by side with the classic one in the same system, run abap2UI5's [`frontend_deploy`](https://github.com/abap2UI5/abap2UI5/actions/workflows/frontend_deploy.yaml) workflow with a branch name of the form `standard_v2_<name>`: it generates that branch of the frontend repository with the whole deployment identity (BSP, ICF nodes, handler class) under a different name. This is for the BSP of `standard_v2`; the [frontend repository](https://github.com/abap2UI5/frontend) has the details.
-
-## Why Try the v2 Version?
-
-- **Future-proof.** Apps already run on what UI5 2.x will require — no big-bang migration later.
-- **Smaller and faster.** No jQuery and no compatibility layers means a leaner core and quicker startup.
-- **Cleaner foundation.** Modern async patterns, no hidden globals, better alignment with current web standards.
+The v2 branches install the frontend under the same `z2ui5` name as the classic
+branches. To evaluate the legacy-free frontend side by side with the classic one
+in the same system, run abap2UI5's
+[`frontend_deploy`](https://github.com/abap2UI5/abap2UI5/actions/workflows/frontend_deploy.yaml)
+workflow with a branch name of the form `standard_v2_<name>`: it generates that
+branch of the frontend repository with the whole deployment identity (BSP, ICF
+nodes, handler class) under a different name. This is for the BSP of
+`standard_v2`; the [frontend repository](https://github.com/abap2UI5/frontend)
+has the details.
 
 ## Learn More
 

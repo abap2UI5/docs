@@ -42,8 +42,16 @@ import { execFileSync } from 'child_process';
 /** The one file this documentation calls "the client API". */
 export const interfacePath = 'src/02/z2ui5_if_client.intf.abap';
 
-export const interfaceUrl = (ref) =>
-  `https://raw.githubusercontent.com/abap2UI5/abap2UI5/${ref}/${interfacePath}`;
+/** The framework's other public interface, the user exit - rendered into
+ *  advanced/extensibility/user_exits.md by the same generator - and the
+ *  shipped implementation that seeds its defaults before a customer exit
+ *  runs. Every `file` parameter below defaults to the client interface, so
+ *  the two callers that only ever wanted that one read as they did. */
+export const exitInterfacePath = 'src/02/z2ui5_if_ui5_exit.intf.abap';
+export const exitClassPath = 'src/01/04/z2ui5_cl_ui5_user_exit.clas.abap';
+
+export const interfaceUrl = (ref, file = interfacePath) =>
+  `https://raw.githubusercontent.com/abap2UI5/abap2UI5/${ref}/${file}`;
 
 /** A clone of the framework to read the interface from instead of the
  *  network, or null: `A2UI5_HOME`. */
@@ -53,8 +61,8 @@ export function frameworkHome() {
 
 /** Where a run reads the interface from, for the line it prints - so the
  *  output says whether github.com or a clone answered. */
-export function interfaceSource(ref, home = frameworkHome()) {
-  return home ? `${interfacePath} at ${ref} in the clone at ${home} (A2UI5_HOME)` : interfaceUrl(ref);
+export function interfaceSource(ref, home = frameworkHome(), file = interfacePath) {
+  return home ? `${file} at ${ref} in the clone at ${home} (A2UI5_HOME)` : interfaceUrl(ref, file);
 }
 
 /** The interface source at a pinned ref. Throws on any network or HTTP
@@ -62,9 +70,9 @@ export function interfaceSource(ref, home = frameworkHome()) {
  *  must not go red over an unreachable github.com and must not claim to have
  *  verified something it did not. With A2UI5_HOME set, no network at all:
  *  the ref is read out of that clone, and not being in it throws the same way. */
-export async function fetchInterface(ref, { home = frameworkHome() } = {}) {
-  if (home) return readInterface(ref, home);
-  const res = await fetch(interfaceUrl(ref), { signal: AbortSignal.timeout(20000) });
+export async function fetchInterface(ref, { home = frameworkHome(), file = interfacePath } = {}) {
+  if (home) return readInterface(ref, home, file);
+  const res = await fetch(interfaceUrl(ref, file), { signal: AbortSignal.timeout(20000) });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.text();
 }
@@ -77,11 +85,11 @@ export async function fetchInterface(ref, { home = frameworkHome() } = {}) {
  *  the site against that would give a different verdict on the same commit
  *  depending on what its neighbour was doing. A branch is asked for by
  *  name, through A2UI5_REF, the same way a release is. */
-export function readInterface(ref, home) {
+export function readInterface(ref, home, file = interfacePath) {
   const tried = [];
   for (const spec of [ref, `origin/${ref}`]) {
     try {
-      return execFileSync('git', ['-C', home, 'show', `${spec}:${interfacePath}`], {
+      return execFileSync('git', ['-C', home, 'show', `${spec}:${file}`], {
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'pipe'],
       });
@@ -171,14 +179,26 @@ function splitDoc(rawLines) {
  * obsolete spellings below - both names reach the same branch" that way.
  * The same comment before a method parameter is a note on that one
  * parameter and lands as `doc`.
+ *
+ * The ABAP-Doc written on the INTERFACE statement itself lands in `doc` on
+ * the model - z2ui5_if_ui5_exit opens with three paragraphs of it, and
+ * without a home of their own they were read as the doc of the first type.
+ *
+ * `memberNotes` keeps the WHOLE plain-comment run before a member as its
+ * `note`, line by line, next to the one-line `label`. The exit interface
+ * documents every field of its config structures that way - twenty lines on
+ * the CSP tag, with the two REPLACE statements an installation writes - and
+ * a label is the wrong shape for that. Opt-in, so the client model (and the
+ * JSON generated from it, compared byte for byte) does not change shape.
  */
-export function parseInterface(text) {
+export function parseInterface(text, { memberNotes = false } = {}) {
   const model = { constants: [], types: [], methods: [] };
   let doc = [];          // pending "! lines
   let note = [];         // pending plain " lines (method-parameter notes)
   let mode = null;       // 'constants' | 'types' after the introducing keyword
   const stack = [];      // open BEGIN OF groups
   let label = null;      // current run label inside the innermost group
+  let run = [];          // the whole current comment run inside a group
   let inRun = false;     // the previous line was a plain comment
   let method = null;     // the method being read
   let section = null;    // 'importing' | 'returning' | …
@@ -206,8 +226,12 @@ export function parseInterface(text) {
     if (abapDoc) { doc.push(abapDoc[1]); continue; }
     const comment = /^\s*"(?!!)\s?(.*)$/.exec(raw);
     if (comment) {
-      if (stack.length) { if (!inRun) label = decode(comment[1].trim()); }
-      else note.push(comment[1].trim());
+      if (stack.length) {
+        if (!inRun) { label = decode(comment[1].trim()); run = []; }
+        run.push(decode(comment[1].trimEnd()));
+      } else {
+        note.push(comment[1].trim());
+      }
       inRun = true;
       continue;
     }
@@ -218,18 +242,27 @@ export function parseInterface(text) {
     const ends = /\.\s*$/.test(line);           // the statement closes here
     const stmt = line.replace(/[,.]\s*$/, '');  // …either way, drop the mark
 
+    const header = /^\s*INTERFACE\s+([a-z0-9_\/]+)/i.exec(stmt);
+    if (header && !method && !stack.length) {
+      model.name = header[1].toLowerCase();
+      model.doc = paragraphs(takeDoc().map(decode));
+      continue;
+    }
+
     const begin = /^\s*BEGIN OF ([a-z0-9_]+)$/i.exec(stmt);
     if (begin) {
       const group = { name: begin[1].toLowerCase(), doc: paragraphs(takeDoc().map(decode)), members: [] };
       if (stack.length) stack.at(-1).members.push(group);
       stack.push(group);
       label = null;
+      run = [];
       continue;
     }
     const end = /^\s*END OF ([a-z0-9_]+)$/i.exec(stmt);
     if (end) {
       const group = stack.pop();
       label = null;
+      run = [];
       if (!stack.length) (mode === 'types' ? model.types : model.constants).push(group);
       continue;
     }
@@ -241,7 +274,12 @@ export function parseInterface(text) {
           type: member[2].trim(),
           ...(member[3] !== undefined ? { value: member[3] } : {}),
           ...(label ? { label } : {}),
+          ...(memberNotes && run.length ? { note: run } : {}),
         });
+        /* a run documents the member right after it, not every member of
+         * the group - the client's cs_event runs label a whole run on
+         * purpose, and that stays what `label` is */
+        if (memberNotes) run = [];
       }
       continue;
     }

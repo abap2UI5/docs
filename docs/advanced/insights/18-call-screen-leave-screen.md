@@ -1,3 +1,6 @@
+---
+description: The app stack - nav_app_call( ) pushes an instance, nav_app_leave( ) pops it, get_app_prev( ) hands the caller the sub-app with its typed attributes - and where popups and the launchpad fit.
+---
 # #18 CALL SCREEN, LEAVE SCREEN
 
 Module pools had a call stack of screens. `CALL SCREEN 200` pushed one,
@@ -17,7 +20,7 @@ navigation, no handover, nothing to serialize twice.
 
 ```abap
     " push: the called app takes the screen, this instance waits underneath
-    client->nav_app_call( NEW zcl_app_detail( order_id = order_id ) ).
+    client->nav_app_call( NEW zcl_sample_detail( order_id = order_id ) ).
 ```
 
 ```abap
@@ -33,7 +36,7 @@ displaying the sub-app's. And it can read what the sub-app left behind:
 ```abap
     WHEN client->check_on_navigated( ).
       TRY.
-          DATA(detail) = CAST zcl_app_detail( client->get_app_prev( ) ).
+          DATA(detail) = CAST zcl_sample_detail( client->get_app_prev( ) ).
           message = detail->result.
         CATCH cx_sy_move_cast_error.
           " the first start: get_app_prev( ) is this app itself
@@ -62,5 +65,3 @@ apps goes through the launchpad's cross-app navigation, so that the shell's
 history and back button keep working — that is a `cs_event` constant rather
 than a `nav_app_call( )`, and
 [its own page](/cookbook/event_navigation/navigation/cross_app).
-
-The stack came along. Its elements are instances now, not screen numbers.

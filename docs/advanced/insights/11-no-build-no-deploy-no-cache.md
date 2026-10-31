@@ -1,3 +1,6 @@
+---
+description: What is missing from change, activate, refresh - no frontend build, no deployment path, no cache to invalidate - because the initial page and the frontend modules are answered from ABAP source.
+---
 # #11 No Build, No Deploy, No Cache
 
 The loop is: change the class, activate, refresh the browser.
@@ -9,9 +12,14 @@ a BSP application: a frontend artifact, built somewhere, deployed to the ABAP
 stack, transported on its own path, and invalidated from its own caches when it
 changes.
 
-abap2UI5 does not have one. The initial GET is answered from ABAP source code —
-the page and the frontend files it needs are strings inside the handler, and
-serving them is a method call.
+The standalone ICF node needs none. The initial GET is answered from ABAP
+source code — the page and the frontend modules it needs are strings in
+generated classes, and serving them is a method call. A BSP enters in two
+cases only, and both are system-wide rather than per app: the launchpad loads
+the shell from the UI5 repository, so that installation pulls one BSP for the
+whole system ([#26](/advanced/insights/26-a-tile-like-any-other)); and a
+custom control of your own lives in a BSP of its own
+([#12](/advanced/insights/12-where-your-own-javascript-goes)).
 
 ![Four steps, or a method that returns a string.](/insights/11-initial-request.svg)
 
@@ -44,15 +52,7 @@ frontend toolchain to fix a label.
 stops in the method that built the view. The browser dev tools stay closed,
 because the logic that produced the screen never left the backend.
 
-**No supply chain to answer for.** A frontend build pipeline is a dependency
-tree, and a dependency tree is something somebody has to audit, pin and renew.
-A project whose frontend ships as ABAP source has one thing to review: the
-source. Every file that reaches the browser is in the repository, readable,
-diffable, and transported by the system that already governs everything else.
-
-Individually these are conveniences. Together they change which questions get
-asked out loud: when an experiment costs a class and a refresh, "could we just
-show this on a screen?" stops being the opening of a project and becomes
-something you try before lunch.
-
-Iteration speed is not a nice-to-have. It decides which ideas get built at all.
+Every file that reaches the browser is in the repository, readable, diffable,
+and transported by the system that already governs everything else — what
+that is worth to a review is on
+[What you keep](https://abap2ui5.github.io/why/#what-you-keep){target="_self"}.

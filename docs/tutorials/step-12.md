@@ -373,50 +373,14 @@ these tests.
 
 ## Testing the Roundtrip
 
-::: info Preview — coming with the next release
-The simulator below runs against the current framework from its next version
-on, which is on a development branch today; so is the layer and session API
-described after the example.
-:::
-
 The tests above stop at the class on purpose: they call the data methods and
-never go through `main( )`. When the whole user session should be under test
-as well — the typed value, the event, the framework's dispatch, the draft —
+never go through `main( )`. For the whole user session — the typed value,
+the event, the framework's dispatch, the draft —
 [abap2UI5/headless-frontend](https://github.com/abap2UI5/headless-frontend)
-plays the browser's half of the protocol inside ABAP.
-`z2ui5_cl_frontend_simulator` builds the request the UI5 frontend would build,
-hands it to the framework in the same session, and reads the response back:
-
-```abap
-DATA(sim) = z2ui5_cl_frontend_simulator=>start( `Z2UI5_CL_FRONTEND_SIM_EXAMPLE` ).
-
-sim->set_value( name = `MV_NAME` value = `World` ).
-sim->click( `GREET` ).
-
-cl_abap_unit_assert=>assert_equals( exp = `Hello World!`
-                                    act = sim->get_message( ) ).
-```
-
-The app is addressed by names its class already contains: `MV_NAME` is the
-bound attribute, `GREET` the event. No browser, no HTTP, milliseconds per
-session. It is a repository installed next to the framework, and it drives the
-framework's engine rather than its released API, so a framework release can
-require an update of it.
-
-It describes the screen the way the browser holds it: `get_layers( )` returns
-every open view — the main view, the two nested views, popup and popover —
-with its XML and its model, `get_messages( )` every message with its severity,
-and `set_check_events( )` makes `click( )` refuse an event that is not wired
-on the screen. Edits go out typed, as the browser sends them: `set_bool( )`
-for a CheckBox, `set_json( )` for any JSON value at a model path — an array of
-keys, a number — and `set_cell( )`, `set_row( )` and `select_row( )` for table
-rows, all sent as the same model delta the frontend builds, which
-`get_request_json( )` shows. `close_layer( )` closes a popup the way the
-browser does, without a roundtrip, and every edit and event takes an optional
-`layer` when it is not meant for the topmost open one. `get_state( )` and
-`resume( )` continue a session from its draft id in a new instance — which is
-what the [agent add-on](/advanced/agents#in-production-the-agent-add-on)
-builds on.
+plays the browser's half of the protocol inside ABAP, so a test clicks and
+types against the running framework without a browser or HTTP. It is a
+repository of its own, not yet released, and its API follows the
+framework's engine rather than its released interface.
 
 ## What to Take Away
 
@@ -430,6 +394,6 @@ builds on.
   without an SAP system
 
 That is the end of the walkthrough: one class, grown from a message box to a
-tested app in production. The [Cookbook](/cookbook/view/definition) covers
+tested app in production. The [Cookbook](/cookbook/) covers
 every topic again as a reference chapter, and the
 [sample catalog](https://abap2ui5.github.io/samples-site/) continues from here.

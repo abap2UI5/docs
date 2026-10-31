@@ -6,6 +6,7 @@ samples:
   - z2ui5_cl_smp_app_097
   - z2ui5_cl_smp_app_098
   - z2ui5_cl_smp_app_176
+description: Nested views in abap2UI5 - nest_view_display( ) renders a view fragment into an anchor control of the main view, so one part of the screen is re-rendered on its own; the parameters, the second slot and a master-detail with the FlexibleColumnLayout.
 ---
 # Nested Views
 
@@ -21,7 +22,7 @@ Two ingredients are needed:
 2. **A nested view + a `nest_view_display` call** — builds the fragment and ships it to the named anchor.
 
 ```abap
-CLASS z2ui5_cl_sample_nest DEFINITION PUBLIC.
+CLASS zcl_sample_nest DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -32,54 +33,56 @@ CLASS z2ui5_cl_sample_nest DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_nest IMPLEMENTATION.
+CLASS zcl_sample_nest IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    " 1) Main view with an anchor
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-            )->ele( `Shell`
-                )->ele( `Page`
-                    )->a( n = `title` v = `Main View`
-                    )->a( n = `id`    v = `test`        " <-- the anchor id
-
-                    )->ele( `content`
-                        )->tag( `Button`
-                            )->a( n = `text`  v = `Re-render only the nested view`
-                            )->a( n = `press` v = client->_event( `NEST` ) ).
-
-    " 2) Nested view, built like any other view
-    DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-            )->ele( `Page`
-                )->a( n = `title` v = `Nested View`
-
-                )->tag( `Input`
-                    )->a( n = `value` v = client->_bind( mv_input_nest )
-                )->tag( `Button`
-                    )->a( n = `text`  v = `event`
-                    )->a( n = `press` v = client->_event( `TEST` ) ).
-
     IF client->check_on_navigated( ).
-      client->view_display( view->stringify( ) ).
-    ENDIF.
 
-    CASE client->get( )-event.
-      WHEN `NEST`.
-        client->nest_view_display(
-            val            = nested->stringify( )
-            id             = `test`                " target the anchor
-            method_insert  = `addContent`          " UI5 mutator on that control
-            method_destroy = `removeAllContent` ). " and the one that clears it first
-      WHEN `TEST`.
-        client->message_toast_display( |nested input: { mv_input_nest }| ).
-    ENDCASE.
+      " 1) Main view with an anchor
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `Main View`
+                      )->a( n = `id`    v = `test`        " <-- the anchor id
+
+                      )->ele( `content`
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `Re-render only the nested view`
+                              )->a( n = `press` v = client->_event( `NEST` ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `NEST` ).
+
+      " 2) Nested view, built like any other view
+      DATA(nested) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `Nested View`
+
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( mv_input_nest )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `event`
+                      )->a( n = `press` v = client->_event( `TEST` ) ).
+
+      client->nest_view_display(
+          val            = nested->stringify( )
+          id             = `test`                " target the anchor
+          method_insert  = `addContent`          " UI5 mutator on that control
+          method_destroy = `removeAllContent` ). " and the one that clears it first
+
+    ELSEIF client->check_on_event( `TEST` ).
+      client->message_toast_display( |nested input: { mv_input_nest }| ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -136,7 +139,7 @@ A rule of thumb:
 The most common real-world use: a master list on the left, detail content on the right. `sap.f.FlexibleColumnLayout` is the standard container; abap2UI5 nests the detail view into its middle column.
 
 ```abap
-CLASS z2ui5_cl_sample_nest_fcl DEFINITION PUBLIC.
+CLASS zcl_sample_nest_fcl DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -160,7 +163,7 @@ CLASS z2ui5_cl_sample_nest_fcl DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_nest_fcl IMPLEMENTATION.
+CLASS zcl_sample_nest_fcl IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 

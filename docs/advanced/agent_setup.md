@@ -79,8 +79,8 @@ every credential prompt stays an ordinary VS Code dialog the agent never sees.
 
 ## Let it operate the app
 
-From the next release on — today on development branches — an agent can also
-*use* the app it wrote, not only look at it: four tools read the screen as data,
+An agent can also *use* the app it wrote, not only look at it: four tools
+read the screen as data,
 fill fields by model path and fire events by name, over the app's own JSON
 protocol. They exist in the MCP server against the local sandbox, in the VS
 Code extension against your system once you allow it, and as an MCP endpoint

@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_122
   - z2ui5_cl_smp_app_445
+description: What the frontend sends with every roundtrip - the UI5 runtime, the device, the focus and the scroll positions - read from client->get( ) without a control or an event.
 ---
 # Info
 
@@ -19,7 +20,7 @@ the roundtrip that started the app, so `client->get( )` already holds them by
 the time `main` runs. Press **Run** to see what your own browser reports:
 
 ```abap
-CLASS z2ui5_cl_sample_info DEFINITION PUBLIC.
+CLASS zcl_sample_info DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -37,7 +38,7 @@ CLASS z2ui5_cl_sample_info DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_info IMPLEMENTATION.
+CLASS zcl_sample_info IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).

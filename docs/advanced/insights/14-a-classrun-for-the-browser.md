@@ -1,14 +1,17 @@
+---
+description: The shape abap2UI5 copied from if_oo_adt_classrun - one interface, one method, and it runs - and why a one-class app is one thing to read.
+---
 # #14 A Classrun for the Browser
 
 Every ABAP developer already knows the smallest program that does something:
 
 ```abap
-CLASS zcl_app_adt DEFINITION PUBLIC.
+CLASS zcl_sample_adt DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES if_oo_adt_classrun.
 ENDCLASS.
 
-CLASS zcl_app_adt IMPLEMENTATION.
+CLASS zcl_sample_adt IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     out->write( `Hello World` ).
   ENDMETHOD.
@@ -22,7 +25,7 @@ to answer a question in thirty seconds.
 That is the shape abap2UI5 copied — and yes, the resemblance is on purpose:
 
 ```abap
-CLASS zcl_app_ui5 DEFINITION PUBLIC.
+CLASS zcl_sample_ui5 DEFINITION PUBLIC.
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
 
@@ -30,7 +33,7 @@ CLASS zcl_app_ui5 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS zcl_app_ui5 IMPLEMENTATION.
+CLASS zcl_sample_ui5 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
     client->message_toast_display( `Hello World` ).
   ENDMETHOD.

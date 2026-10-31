@@ -6,7 +6,7 @@ title: Home
 # preview card carries. It used to be the slogan alone - four words for the
 # most important page on the site, where every chapter has a sentence of its
 # own. What it is, what it needs, what it costs, where it runs.
-description: One ABAP class is one UI5 app - no JavaScript, no OData, no frontend project. Free and MIT licensed, installed with abapGit, from NetWeaver 7.02 to ABAP Cloud.
+description: One ABAP class is one UI5 app - no JavaScript, no OData, no frontend project. Installed with abapGit, from NetWeaver 7.02 to ABAP Cloud.
 
 # THIS PAGE IS THE PROJECT'S FRONT DOOR, NOT THE MANUAL'S.
 #

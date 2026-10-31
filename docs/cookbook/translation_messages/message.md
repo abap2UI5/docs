@@ -9,6 +9,7 @@ samples:
   - z2ui5_cl_smp_app_474
   - z2ui5_cl_smp_app_502
   - z2ui5_cl_smp_app_512
+description: Messages in abap2UI5 - message_toast_display( ) and message_box_display( ) with their parameters, the message shapes they accept (sy, BAPIRET2, a log, an exception), and the global call for plain UI5 options.
 ---
 # Message
 
@@ -125,13 +126,10 @@ arrive as an object rather than as a string that looks like one. Both ways end
 in the same frontend code: `onClose` stays a backend event name on either path,
 and the details of a box are expanded on either path.
 
-These options left the two client methods in September 2026 and are set through
-the global object now:
-
-| Control | Options on the control |
-|---|---|
-| `MESSAGE_TOAST` | `width`, `my`, `at`, `of`, `offset`, `collision`, `autoClose`, `animationTimingFunction`, `animationDuration`, `closeOnBrowserNavigation`, and the abap2UI5-own `class` |
-| `MESSAGE_BOX` | `icon`, `textDirection`, `closeOnNavigation`, `dependentOn`, `contentWidth` |
+The UI5 options — where a toast docks, a box's icon, width or text
+direction — are set this way and only this way; the parameter list on
+[Deprecations](/resources/deprecations#the-ui5-options-of-message-toast-display-message-box-display)
+is the one to check when an older app does not compile.
 
 The global call has one more property the client method cannot have: it can be
 **wired into the view**, where it runs without a round-trip at all. Extra
@@ -152,13 +150,54 @@ what was pressed without asking the backend:
 See [Frontend Actions](/cookbook/event_navigation/frontend) for the other global
 objects this call reaches.
 
+## The Parameters of `message_box_display( )`
+
+| Parameter | What it does |
+|---|---|
+| `text` | what to show — `TYPE any`: a text, a message structure or table (`BAPIRET2`, `T100`, RAP, `symsg`, a log object, an exception), an HTML string, a business table, a nested structure, an object, a number. Messages are recognized first and set severity and title themselves; several become one box typed by the most severe. The one case that shows nothing is complex data that is initial — an empty message table stays silent |
+| `type` | the kind of box, which decides icon and default title: `information` (the default), `warning`, `error`, `success`, `confirm`, `alert` or `show` |
+| `title` | the title bar text; the type's own title when empty |
+| `actions` | the buttons, as `sap.m.MessageBox.Action` names (`OK`, `CANCEL`, `YES`, `NO`, `ABORT`, `RETRY`, `IGNORE`, `CLOSE`, `DELETE`) or as free texts. Not supplied, UI5's default for the type applies — `OK` for information and success, `CLOSE` for error, `OK` and `CANCEL` for confirm — so an `onclose` handler should not expect `OK` alone |
+| `onclose` | a **backend** event name raised when the box closes; the action the user pressed arrives as the first event argument, `get_event_arg( )`, so one handler tells `DELETE` from `CANCEL` |
+| `emphasizedaction` | the one of the actions rendered as the emphasized button |
+| `initialfocus` | the action (or control id) that has the focus when the box opens |
+| `details` | a further text (or JSON) shown below the message, already unfolded — the box's *Show details* link is hidden |
+| `styleclass` | one or more CSS classes added to the box |
+
+A confirmation is therefore one call and one branch:
+
+```abap
+ELSEIF client->check_on_event( `DELETE` ).
+  client->message_box_display(
+      text             = `Delete this entry?`
+      type             = `confirm`
+      actions          = VALUE #( ( `DELETE` ) ( `CANCEL` ) )
+      emphasizedaction = `DELETE`
+      onclose          = `DELETE_CONFIRMED` ).
+
+ELSEIF client->check_on_event( `DELETE_CONFIRMED` ).
+  IF client->get_event_arg( ) = `DELETE`.
+    delete_entry( ).
+  ENDIF.
+```
+
+`Z2UI5_CL_SMP_APP_382` opens a box of every type with the same `onclose`
+and shows the answer in a toast.
+
+### `message_toast_display( )`
+
+Three parameters: `text`, `duration` — the milliseconds the toast stays,
+UI5's default is 3000 — and `onclose`, a backend event name raised when it
+has gone. Everything else about the toast is the control's and goes through
+the global call above, which also composes its text on the client.
+
 ## All of Them in One App
 
 The fragments above are each one call. Press **Run** to see the whole family in
 a single app:
 
 ```abap
-CLASS z2ui5_cl_sample_message DEFINITION PUBLIC.
+CLASS zcl_sample_message DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -167,7 +206,7 @@ CLASS z2ui5_cl_sample_message DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_message IMPLEMENTATION.
+CLASS zcl_sample_message IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).

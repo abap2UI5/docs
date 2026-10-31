@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Where the abap2UI5 endpoint lives per system - the plain HTTP service, and what S/4 Public Cloud, Private Cloud, on-premise and BTP add to it before business users reach an app.
 ---
 # Deployment Scenarios
 To install the framework, start with the [Quickstart](/get_started/quickstart) — this page is about where the endpoint may live, per system. abap2UI5 apps run directly via an HTTP service — the fastest and simplest setup. This works on every ABAP release and with both ABAP language versions (Standard ABAP and ABAP for Cloud).

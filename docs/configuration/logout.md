@@ -1,9 +1,10 @@
 ---
 outline: [2, 4]
+description: Logging a user off from an abap2UI5 app with the client event system_logout - which of the launchpad, ICF and BSP sessions it ends in each startup context, the post-logoff URL, the SICF logoff page and what single sign-on leaves open.
 ---
 # Logout
 
-A logout button isn't a single action. Depending on how an abap2UI5 app was started, the user may have one, two, or three SAP sessions open at the same time, and each lives in a different place. abap2UI5 ships a built-in client event, `system_logout`, that terminates whichever sessions exist for the current app. See sample `Z2UI5_CL_SMP_APP_361` for a working example.
+A logout button isn't a single action. Depending on how an abap2UI5 app was started, the user may have one, two, or three SAP sessions open at the same time, and each lives in a different place. abap2UI5 ships a built-in client event, `system_logout`, that terminates whichever sessions exist for the current app. The sample [`Z2UI5_CL_SMP_APP_361`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_361.clas.abap) in abap2UI5/samples is a working example.
 
 ## The Logout Event
 Fire the event from any controller method to log the user off:
@@ -26,7 +27,7 @@ abap2UI5 can be launched in three ways. Each one creates a different combination
 |---|---|---|
 | Fiori Launchpad tile | `…/sap/bc/ui2/flp#Z2UI5-display` | yes |
 | ICF HTTP handler (e.g. `Z2UI5_CL_UI5_HTTP_HANDLER`) | `…/sap/bc/<your-service>` | no |
-| BSP application (`Z2UI5`, `Z2UI5_V2`) | `…/sap/bc/bsp/sap/z2ui5/index.html` | no |
+| BSP application (`Z2UI5` — the same BSP on every branch of the frontend repository, `standard`, `standard_v2` and `standard_new`) | `…/sap/bc/bsp/sap/z2ui5/index.html` | no |
 
 ### Session Layers
 Up to three independent SAP sessions can exist at once. Different cookies, different lifetimes, different ways to end them:

@@ -51,6 +51,7 @@ tell you what is coming if you do not.
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
+| the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
 | `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |
 | `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, 1.144.1 |
 | the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, 1.144.1 |
@@ -568,6 +569,30 @@ The binding string that comes back is the one that came back before. `cs_view`
 itself stays — it is the view slot of `follow_up_action( )`, where it does
 select one.
 
+### The view slot of a control call
+
+The view slot of a `cs_event-control_by_id` call was the **second** entry of
+`t_arg` — `id`, `view`, `method`, `params`. It is the dedicated `view` importing
+parameter of `follow_up_action( )` now (default `cs_view-main`, which resolves
+the id across all open views), and the framework writes it into the argument
+list itself:
+
+```abap
+" old - the slot as a positional argument
+client->follow_up_action( val   = client->cs_event-control_by_id
+                          t_arg = VALUE #( ( `NavCon` ) ( `POPUP` ) ( `to` ) ( `page2` ) ) ).
+
+" new - the slot is the view parameter
+client->follow_up_action( val   = client->cs_event-control_by_id
+                          view  = client->cs_view-popup
+                          t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `page2` ) ) ).
+```
+
+**Removed.** A call that still passes `` `MAIN` `` as the second entry shifts
+every argument by one — the slot name becomes the method — and fails on the
+frontend. Drop the entry and pass the slot as `view`; see
+[Frontend](/cookbook/event_navigation/frontend#the-view-parameter).
+
 ### `cs_event-wizard_set_next_step`
 
 **Removed.** The event bundled the two calls a UI5 controller makes on a Wizard
@@ -645,6 +670,15 @@ share_link = client->app_state_get_href( ).
 client->follow_up_action( val   = client->cs_event-clipboard_copy
                           t_arg = VALUE #( ( share_link ) ) ).
 ```
+
+One behavior is older than the names: an app **without** a
+`cs_event-hash_attach_changed` listener gets from `hash_set( )` what
+`set_push_state( )` always did — the value is *appended* to the hash the page
+already has (`&my-app-state=detail`), written with `history.pushState`. Only
+with the listener registered is the value the whole app hash. That is current
+behavior, not a deprecation, and [Hash](/cookbook/event_navigation/navigation/hash#stepping-back)
+says so; it is recorded here because the suffix form is the one the old name
+documented.
 
 What is genuinely new rather than renamed — `hash_replace( )`,
 `cs_event-hash_back` and `cs_event-hash_attach_changed`, which together give an

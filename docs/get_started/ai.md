@@ -31,7 +31,7 @@ reason is structural:
 - **The whole app is text.** View, logic, state and data flow live in the same
   class, in one language. An agent never has to keep an ABAP backend and a
   JavaScript frontend in step, because there is no second half to drift.
-- **There are over 700 working examples to learn from.** The
+- **The sample catalog is there to learn from.** The
   [sample catalog](https://abap2ui5.github.io/samples-site/) holds
   complete, tested apps from all three repositories — one per pattern, every
   one linted and rendered, each with the ABAP printed in full — so "has

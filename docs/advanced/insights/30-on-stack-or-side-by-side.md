@@ -1,3 +1,6 @@
+---
+description: Two places to run the same app class - inside the SAP system, or on the BTP ABAP Environment against released remote APIs - and the lifecycle each one inherits.
+---
 # #30 On-Stack or Side-by-Side
 
 Two places to run an abap2UI5 app, and — this is the part people usually get

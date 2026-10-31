@@ -135,11 +135,11 @@ run in the browser.
 From there, pick the direction that fits:
 
 - **Read an app that already does it.** The [sample catalog](https://abap2ui5.github.io/samples-site/)
-  holds over 700 working apps from three repositories, every one with its
+  holds the working apps of three repositories, every one with its
   ABAP printed in full and — where it needs no system — a button that runs it in
   your browser. Start on [Learn](https://abap2ui5.github.io/samples-site/#learn),
   the path from the smallest app that runs to files, devices and custom CSS.
-- **Look a pattern up.** The [Cookbook](/cookbook/cheat_sheet) is the reference
+- **Look a pattern up.** The [Cookbook](/cookbook/) is the reference
   for everyday work — views, events, binding, tables, popups, navigation.
 - **Set up the tools.** Optional, and worth the ten minutes: the
   [tooling](/advanced/tooling) around the framework, and
@@ -149,7 +149,7 @@ From there, pick the direction that fits:
   is the page to read before the first go-live.
 - **Extend it.** The [add-ons](/resources/addons) cover what not every app
   needs.
-- **Need somebody's approval?** [abap2UI5 for decision makers](https://abap2ui5.github.io/why/) is
+- **Need somebody's approval?** [the case for abap2UI5](https://abap2ui5.github.io/why/) is
   the page for the person who decides whether it may be used. Send the link
   rather than the argument.
 

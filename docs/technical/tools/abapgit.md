@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: abapGit in abap2UI5 - installing it on-premise and in ADT, how the framework and every app travel through it, and how a contribution is committed with it.
 ---
 # abapGit
 
@@ -18,16 +19,20 @@ use [abapGit for Eclipse](https://eclipse.abapgit.org/) in ADT instead; the
 screenshot by screenshot. With abapGit in place, the
 [Quickstart](/get_started/quickstart) is the next page.
 
-## Git Client
+## How the framework travels
 
-We build all project artifacts directly in an ABAP system and store them in a GitHub repository through abapGit.
-This makes the project easy to install on any customer system. We publish updates right away, and any user can pull them whenever they want.
+The framework is developed in an ABAP system and serialized into its GitHub
+repository with abapGit; a system installs it by pulling that repository, and
+updates by pulling again. The folder logic is `PREFIX`, so the `src/00` to
+`src/99` folders become sub-packages of the package you pick (see
+[Namespaces, Renaming](/advanced/renaming#package-layout)).
 
 ## Apps as abapGit Artifacts
 
-Beyond the abap2UI5 core framework, all abap2UI5 apps live as ABAP classes — abapGit-managed objects — so you can install them through abapGit without any manual deployment, unlike traditional UI5 apps.
-
-You can also install multiple abap2UI5 apps with a single abapGit pull. This works smoothly in ABAP Cloud environments and cuts deployment overhead.
+An abap2UI5 app is an ABAP class, so it is an abapGit object like any other: a
+repository of app classes is pulled the same way as the framework, with no
+separate frontend deployment, and one pull installs every class in it —
+on-premise and, through abapGit for Eclipse, on ABAP Cloud.
 
 ## Contribution
 

@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_449
+description: Show a PDF from a binary string inline with the UI5 PDF viewer control and a base64 data URI, including the isTrustedSource property recent UI5 patches need, or offer it as a download.
 ---
 # PDF
 
@@ -19,7 +20,7 @@ Press **Run** — the base64 below is a real one-page PDF, so the viewer has
 something to show:
 
 ```abap
-CLASS z2ui5_cl_sample_pdf DEFINITION PUBLIC.
+CLASS zcl_sample_pdf DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -30,7 +31,7 @@ CLASS z2ui5_cl_sample_pdf DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_pdf IMPLEMENTATION.
+CLASS zcl_sample_pdf IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).

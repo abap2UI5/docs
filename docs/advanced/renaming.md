@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The Z2UI5_ prefix and the segment scheme of every object abap2UI5 and its ecosystem install, the package layout, and how the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own.
 ---
 # Namespaces, Renaming
 
@@ -53,7 +54,7 @@ prefix alone would let them collide; the segment is what keeps them apart.
 | Segment | Meaning |
 |---|---|
 | *(none)* — `z2ui5_if_app`, `z2ui5_if_client` | **The public API.** Both interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
-| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the two public classes `z2ui5_cl_ui5_http_handler` and `z2ui5_cl_ui5_view_builder` |
+| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the released classes and interfaces of `src/02` that carry it (`z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, the `z2ui5_*_ui5_llm` objects) |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
 | `util`, `pop`, `xml_view` | Frozen — see [Deprecations](/resources/deprecations) |
@@ -87,14 +88,14 @@ console — so when a custom control does not render, check that letter first.
 :::
 
 Only the public API is a contract. Every other segment may be restructured in
-any release — the engine classes carried a `z2ui5_cl_core_*` segment not long
-ago, and the generated frontend artifacts a `z2ui5_cl_app_*` one.
+any release.
 
 ::: tip Enforced, not just documented
-A CI gate (`check_object_naming`) fails the framework build when an object
-outside the public API and the frozen package is added without the `ui5` /
-`ui5f` segment. abaplint's own naming rule only checks the `Z2UI5_` prefix, so
-without that gate a new segment would drift in unnoticed.
+A CI gate of the framework, `.github/scripts/object-naming-gate.mjs`
+(`npm run check:naming`), fails the build when an object outside the public
+API, the frozen package and the two mirrored libraries is added without the
+`ui5` / `ui5f` segment. abaplint's own naming rule only checks the `Z2UI5_`
+prefix, so without that gate a new segment would drift in unnoticed.
 :::
 
 ### Package Layout
@@ -104,9 +105,9 @@ hierarchy in your system. For the framework repository that is:
 
 | Package | Contents |
 |---|---|
-| `src/00/` | External libraries — ajson, S-RTTI and the vendored context/HTTP helpers |
+| `src/00/` | External libraries — ajson (`src/00/01`), S-RTTI (`src/00/02`) and the framework's own utility classes (`src/00/03`) |
 | `src/01/` | Internal use only — draft persistence, request handling, event routing, binding, and the generated frontend |
-| `src/02/` | The released API — the five objects above |
+| `src/02/` | The released API — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, and `z2ui5_if_ui5_llm` with `z2ui5_cl_ui5_llm` and `z2ui5_cx_ui5_llm` |
 | `src/99/` | Frozen — see [Deprecations](/resources/deprecations) |
 
 The package a class sits in is the honest answer to "may I use this?": `src/02`
@@ -225,40 +226,26 @@ is pushed when there are no content changes), and you simply pull again with
 abapGit.
 
 ### What Renaming Does Not Cover
-abaplint rewrites object names and every reference the compiler can see. Three
-things fall outside that, and it is worth knowing them before you ship a renamed
-installation.
-
-**Class names written as strings.** A dynamic lookup passes its class or
-interface name as text, and text is not a reference: in a renamed branch these
-literals still say `Z2UI5_…`. On `main` they sit in five classes, and none of
-them fails loudly:
-
-| Renamed class (method) | Literal | Left as it is |
-|---|---|---|
-| `<ns>_cl_ui5_action` (`app_create( )`), `<ns>_cl_ui5_app_start` (`on_event_check( )`) | `` `Z2UI5_IF_APP` `` | every app start is refused as "does not exist in the system or does not implement z2ui5_if_app" — an app of the renamed installation implements `<NS>_IF_APP` |
-| `<ns>_cl_ui5_user_exit` (`exit_class_lookup( )`) | `` `Z2UI5_IF_UI5_EXIT` ``, `` `Z2UI5_CL_UI5_USER_EXIT` `` and the fallback to the superseded exit interface beside them | the lookup comes back empty (or, next to an original installation, with the *other* installation's exit class, which cannot be instantiated into the renamed reference and is discarded). It is wrapped in `CATCH cx_root`, so nothing is reported and your [user exit](/advanced/extensibility/user_exits) is never called — no custom theme, no bootstrap configuration, no CSP override |
-| `<ns>_cl_ui5_srv_monitor` (`monitor_class_lookup( )`) | `` `Z2UI5_IF_UI5_MONITOR` `` | the [roundtrip monitor](/configuration/monitoring) is never called |
-| `<ns>_cl_ui5_srv_model` (`diss_oref( )`) | `` `Z2UI5_CL_UI5_CLIENT` `` | a `client` reference held in a public attribute is no longer skipped when the model is built |
-| `<ns>_cl_ui5_util_context` (`xml_srtti_descr( )`) | `` `Z2UI5_CL_SRT_TYPEDESCR` `` | an attribute that is saved through S-RTTI names a class the renamed installation does not have |
-
-::: warning Patch the literals after renaming
-In your renamed branch, replace `Z2UI5_` with your own namespace in each of
-these literals (`` `ZMYUI5_IF_APP` ``, `` `ZMYUI5_IF_UI5_EXIT` `` and so on).
-``git grep -n '`Z2UI5_' -- src`` finds them, next to test-class literals
-and the names of add-on classes, which stay as they are; run it again after
-every upgrade, because the table above is the one on `main` today.
-:::
+abaplint rewrites object names and every reference the compiler can see — a
+`TYPE REF TO`, a static call, an `INTERFACES` — and leaves a string literal as
+it is. No production code of the framework names one of its own objects in a
+literal (a dynamic lookup takes the name from a typed reference instead), and
+the gate `.github/scripts/rename-literal-gate.mjs` (`npm run check:rename`)
+keeps it that way: it fails a pull request that adds such a literal, and the
+`build-rename` workflow runs it once more over the renamed tree. Two things
+stay outside the rename on purpose.
 
 **The frontend namespace.** Module IDs and the `z2ui5.cc` XML namespace
 stay `z2ui5` in a renamed installation — see
 [The Frontend Namespace](#the-frontend-namespace) above.
 
-**Real SAP namespaces.** The `build_rename` workflow takes a plain prefix — a
-letter followed by letters, digits or underscores. A registered SAP namespace
-such as `/ZZZ/` is a regular expression away in the abaplint configuration, but
-it is not what the workflow builds, and the namespace has to exist in the target
-system before you can import objects into it.
+**Real SAP namespaces.** The `build-rename` workflow takes a plain name
+(`ZMYUI5`) or a registered SAP namespace with both slashes (`/CA2UI5/`), at
+most 10 characters either way: `z2ui5_cl_ui5_client` becomes
+`/ca2ui5/cl_ui5_client`, abapGit stores it as `#ca2ui5#cl_ui5_client`, and the
+branch is `rename_ca2ui5`. The namespace has to be set up in the target system
+(transaction SE03) and a package of that namespace has to exist before abapGit
+can pull into it.
 
 ### Renaming in Practice: ajson
 abap2UI5 itself relies on this feature: its JSON handling comes from the
@@ -271,6 +258,8 @@ request with the latest ajson version renamed to `z2ui5`. abapGit bundles ajson
 under its own namespace the same way — renaming with abaplint also makes it
 possible to integrate open-source projects into each other.
 
-### Further Reading
+### Background
+The steps above are complete on their own. Two articles describe how the
+rename came about:
 - [Automagic standalone renaming of ABAP objects](https://community.sap.com/t5/application-development-blog-posts/automagic-standalone-renaming-of-abap-objects/ba-p/13499851)
 - [Renaming of ABAP Artifacts — The Power of abaplint and abapGit in ABAP Development](https://www.linkedin.com/pulse/renaming-abap-artifacts-power-abaplint-github-actions-development-kqede/)
