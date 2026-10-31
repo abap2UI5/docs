@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Read and change database data with ABAP SQL in an abap2UI5 app and bind the result straight to a UI5 table - SELECT, INSERT, UPDATE, DELETE as in any ABAP program.
 ---
 # ABAP SQL
 
@@ -10,7 +11,7 @@ ABAP SQL is the standard way to read and change data in the database directly fr
 The example below selects flights from the `sflight` table and shows them in a UI5 table:
 <!-- playground: no Run button — SELECTs from SFLIGHT, which no browser database has -->
 ```abap
-CLASS z2ui5_cl_sample_sql DEFINITION PUBLIC.
+CLASS zcl_sample_sql DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -20,7 +21,7 @@ CLASS z2ui5_cl_sample_sql DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_sql IMPLEMENTATION.
+CLASS zcl_sample_sql IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).

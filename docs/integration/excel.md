@@ -136,10 +136,15 @@ bindings it works with:
 
 | Property | |
 |---|---|
-| `rows`, `columns` | The ABAP table to write, and which of its fields go into the sheet, in which order, under which header |
-| `target` | Where: a cell address such as `B3`, `selection`, or `newSheet` with `sheetName` |
-| `asTable` | An Excel table with a header row (the default) |
+| `rows`, `columns` | The ABAP table to write, and which of its fields go into the sheet, in which order, under which header: a comma-separated list of field names, or a bound table of rows with `KEY`, `HEADER` and `NUMBER_FORMAT`. Empty, every field of the first row goes in |
+| `target` | Where: a cell address such as `B3` (the default is `A1`), `selection`, or `newSheet` with `sheetName` |
+| `asTable` | An Excel table (the default) rather than a plain range |
+| `header` | Write the column headers as the first row (the default) |
+| `numberFormats` | The Excel number format per column - a bound table along the columns, or a structure keyed by column - for a column whose `NUMBER_FORMAT` is empty; without one a number is `General`, a date `yyyy-mm-dd` and a string text (`@`) |
+| `maxCells` | The most cells one write or read may carry, header included; default 20,000, at most 100,000. More is refused with `OnError` and nothing is written or read |
 | `selection`, `selectionAddress` | What a read puts back: the selected cells as rows `COL1`, `COL2`, … and their address |
+| `readText` | Read the cells as the text Excel displays instead of their values - a formatted date as `15.01.2024` rather than as the ISO date it stands for; default `false` |
+| `selectionChange` | Fire `OnSelectionChange` with the new address whenever the user selects something else; off by default |
 | `available` | Turns true once Excel answered - bind a button's `visible` to it |
 
 The app calls `write` and `read` as a frontend action on that `id`, from a
@@ -150,12 +155,15 @@ client->follow_up_action( val   = client->cs_event-control_by_id
                           t_arg = VALUE #( ( `excel` ) ( `write` ) ) ).
 ```
 
-The control answers with the events `OnWritten`, `OnRead` and `OnError`.
-Values keep their types: a string is written as text, so a material number
-keeps its leading zeros and nothing becomes a formula; numbers stay numbers
-and ABAP dates become Excel dates. A call is capped at 20,000 cells by
-default. Outside Excel, in a plain browser, the control fires `OnError`, so
-the same app runs in both places.
+The control answers with the events `OnWritten` and `OnRead`, each carrying the
+`address` of the range and its `rowCount` and `columnCount`, `OnError` with a
+`message` and a `code`, and - with `selectionChange` on - `OnSelectionChange`
+with the `address` the user selected, held back for 300 ms so a drag across
+the sheet is one event. Values keep their types: a string is written as text,
+so a material number keeps its leading zeros and nothing becomes a formula;
+numbers stay numbers and ABAP dates become Excel dates. A call is capped at
+20,000 cells by default. Outside Excel, in a plain browser, the control fires
+`OnError`, so the same app runs in both places.
 
 The demo app `Z2UI5_CL_XL_DEMO` in the repository is the worked example: a
 material list with *Export to Excel*, *Take selection* and a *Follow

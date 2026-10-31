@@ -2,10 +2,11 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_489
+description: Push from the server into an abap2UI5 app with an ABAP Push Channel - the APC and AMC setup on the server, and the WebSocket custom control that hands every message to the backend as an event.
 ---
 # WebSocket
 
-Stateless roundtrips are fine for click-driven UIs, but some scenarios need the server to *push* — a news feed, a job-status indicator, a chat. abap2UI5 has no special API for this; you use SAP's standard WebSocket stack and feed the messages into the rendered view via custom JavaScript.
+Stateless roundtrips are fine for click-driven UIs, but some scenarios need the server to *push* — a news feed, a job-status indicator, a chat. abap2UI5 has no special API for this; you use SAP's standard WebSocket stack, and the frontend's `z2ui5:Websocket` control turns every message the channel delivers into an abap2UI5 event — no JavaScript in the app.
 
 The building blocks:
 
@@ -13,7 +14,7 @@ The building blocks:
 |---|---|
 | **APC** (Application Push Channel, `SAPC`) | Exposes the WebSocket endpoint over HTTP/S |
 | **AMC** (Application Messaging Channel, `SAMC`) | In-system pub/sub — any ABAP code can broadcast into a channel |
-| **Custom control** in the frontend | Opens the socket, dispatches incoming messages |
+| **`z2ui5:Websocket`** in the view | Opens the socket, hands every message to the backend as an event |
 
 Once both channels are configured, any `COMMIT WORK` that fires an AMC publish reaches every connected browser within milliseconds — no polling, no timer.
 
@@ -29,18 +30,85 @@ DATA(lo_producer) = CAST if_amc_message_producer_text(
 lo_producer->send( i_message = `New order arrived` ).
 ```
 
-A full reference implementation lives in the [samples-stack repository](https://github.com/abap2UI5/samples-stack) — `Z2UI5_CL_SMPS_APP_489_WS` for the APC handler and `Z2UI5_CL_SMPS_APP_489` for the consuming app.
+The APC handler class belongs to the APC application in `SAPC`; `Z2UI5_CL_SMPS_APP_489_WS` in the samples-stack repository is one, next to the consuming app listed below.
 
 ## Client Side
 
-The browser opens the socket from a [custom control](/advanced/extensibility/custom_control) - the frontend ships one for it, `cc/Websocket`, which the sample below uses, so the app itself carries no JavaScript. The connection stays open across normal abap2UI5 roundtrips — incoming messages can update a model, trigger a toast, or fire an abap2UI5 event to pull fresh data from the backend:
+The frontend ships the invisible custom control `z2ui5:Websocket`. It keeps the connection to the APC endpoint open across roundtrips; every text message the channel delivers lands in the bound `value` and fires `received`, which is an ordinary backend event. Sending is deliberately not part of the control — an app publishes from ABAP through AMC, as above — so consuming a push channel needs no JavaScript at all:
 
-```js
-const ws = new WebSocket("wss://" + window.location.host + "/sap/bc/apc/sap/z2ui5_sample");
-ws.onmessage = (e) => {
-  sap.m.MessageToast.show(e.data);
-};
+```abap
+CLASS zcl_sample_websocket DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+    DATA mv_message  TYPE string.
+    DATA mv_error    TYPE string.
+    DATA mt_messages TYPE string_table.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_sample_websocket IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    IF client->check_on_navigated( ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`       v = `sap.m`
+              )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `News Feed`
+
+                  )->tag( n = `Websocket` ns = `z2ui5`
+                      )->a( n = `path`     v = `/sap/bc/apc/sap/z2ui5_sample`
+                      )->a( n = `value`    v = client->_bind( mv_message )
+                      )->a( n = `received` v = client->_event( `RECEIVED` )
+                      )->a( n = `error`    v = client->_event( val   = `WS_ERROR`
+                                                               t_arg = VALUE #( ( `${$parameters>/code}` )
+                                                                                ( `${$parameters>/message}` ) ) )
+                  )->tag( `MessageStrip`
+                      )->a( n = `text`    v = client->_bind( mv_error )
+                      )->a( n = `type`    v = `Error`
+                      )->a( n = `visible` v = |\{= ${ client->_bind_path( mv_error ) } !== '' \}|
+                  )->ele( `List`
+                      )->a( n = `items` v = client->_bind( mt_messages )
+                      )->ele( `items`
+                          )->tag( `StandardListItem`
+                              )->a( n = `title` v = `{TABLE_LINE}` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `RECEIVED` ).
+      INSERT mv_message INTO mt_messages INDEX 1.
+
+    ELSEIF client->check_on_event( `WS_ERROR` ).
+      mv_error = |Push channel { client->get_event_arg( 1 ) }: { client->get_event_arg( 2 ) }|.
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
 ```
+
+The `RECEIVED` handler only changes bound data, so the view stays as it is and the list updates with the model — the connection is never touched by a roundtrip that leaves the view alone. A `view_display( )` builds a new control, which opens a new connection.
+
+| Property | |
+|---|---|
+| `path` | the APC path, resolved against the page's origin (`/sap/bc/apc/sap/<application>`); a full `ws://` or `wss://` URL is taken as it is |
+| `value` | the text of the message currently reported to the backend |
+| `checkActive` | `false` closes the connection; `true` again opens it — the way to pause a feed from ABAP. Default `true` |
+| `checkRepeat` | `false` closes the connection after the first message. Default `true` |
+
+| Event | |
+|---|---|
+| `received` | one message arrived and `value` holds it |
+| `error` | the connection could not be opened or was closed without the app asking; `code` is the WebSocket close code (`1006` for a handshake that never completed — an inactive ICF node, a rejected logon, an unknown APC application) or `CONSTRUCT` when the browser refused the URL, `message` the text |
+
+Messages and errors are queued in the browser and handed over one per roundtrip, in the order they happened: a burst of messages while a roundtrip is in flight is not lost, and the queue holds 100 items before it drops new ones and logs it. After a connection the app did not close, the control reconnects with an increasing delay, from half a second up to thirty, and after five failed attempts in a row it stops until `path` or `checkActive` changes — each failure has fired `error`, so the backend heard about every one.
 
 ## When to Reach For It
 

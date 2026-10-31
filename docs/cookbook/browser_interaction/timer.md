@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_064
   - z2ui5_cl_smp_app_028
+description: Raise a backend event after a delay with the start_timer frontend action - one pending timer per app, re-armed for a poll, with an optional flag that keeps the busy indicator down.
 ---
 # Timer
 
@@ -25,7 +26,7 @@ An optional third argument keeps the busy indicator down for the tick — see [W
 To get a repeating timer, simply re-arm it at the end of each handler:
 
 ```abap
-CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
+CLASS zcl_sample_timer DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -35,7 +36,7 @@ CLASS z2ui5_cl_sample_timer DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_timer IMPLEMENTATION.
+CLASS zcl_sample_timer IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.
@@ -87,6 +88,8 @@ WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
 ## Replacing a Pending Timer
 
 There is one timer at a time. Calling `start_timer` again before the previous one fires replaces it — useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke.
+
+Every roundtrip cancels the pending timer, which is why a poll re-arms it in every response that keeps it going — and why no timer survives an app switch: the `nav_app_call( )` or `nav_app_leave( )` that changes the app is a roundtrip, and the timer that was pending is gone before the next app's `main( )` runs. A tick that comes due while a roundtrip is in flight — a popup's own event, a Back/Forward restore — is not dropped and does not abort that request: it waits for the response to land and fires right after it.
 
 ## Without the Busy Indicator
 

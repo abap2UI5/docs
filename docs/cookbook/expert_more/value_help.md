@@ -3,10 +3,11 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_009
   - z2ui5_cl_smp_app_078
+description: Value help in abap2UI5 - type-ahead suggestions on an Input, a selection popup built with popup_display, a DDIC search help through an add-on, and a separate app for anything bigger.
 ---
 # Value Help
 
-Value help (the classic ABAP **F4** input help) lets users pick a value from a list instead of typing it. abap2UI5 covers the basics with two built-in popups and lets you build anything custom on top.
+Value help (the classic ABAP **F4** input help) lets users pick a value from a list instead of typing it. This page shows the three shapes it takes in abap2UI5: suggestions on the `Input` itself, a selection dialog built with `popup_display( )`, and the ready-made pickers of the popups add-on.
 
 ## Suggestions on the Input
 
@@ -54,7 +55,7 @@ navigation are involved — the popup is a second view of the same class, so the
 selected row is simply an attribute.
 
 ```abap
-CLASS z2ui5_cl_sample_f4 DEFINITION PUBLIC.
+CLASS zcl_sample_f4 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -72,7 +73,7 @@ CLASS z2ui5_cl_sample_f4 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_f4 IMPLEMENTATION.
+CLASS zcl_sample_f4 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.

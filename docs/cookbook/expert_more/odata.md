@@ -3,13 +3,14 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_315
   - z2ui5_cl_smps_app_314
+description: Bind a view to an OData V2 service next to the ABAP model with the set_odata_model frontend action - a named model, several models, the annotation URI, and column labels read from the service metadata.
 ---
 # OData
 
 By default, you bind public attributes of your class to UI5 properties with `_bind`. For cases where you need access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance with large amounts of data.
 
 ## Define Additional Model
-As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. Make sure the service is publicly reachable. The method below defines the model and exposes it under the name `FLIGHT`:
+As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. The browser fetches the service itself, so it has to be on the same origin as the abap2UI5 page and active in `SICF`, and the logged-in user needs the authorization for it — the ABAP side of the app never reads it. The action below creates the model and exposes it under the name `FLIGHT`:
 ```abap
 client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
@@ -17,6 +18,8 @@ client->follow_up_action(
         ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
         ( `FLIGHT` ) ) ).
 ```
+
+`t_arg` is positional: the service URL, the model name (empty for the view's default model), and an optional third argument, the URI of an annotation file the model loads with its metadata — what smart controls read their `UI.LineItem` and value-help annotations from. The model belongs to the main view: it is created once the action runs and destroyed with the next `view_display( )`, so the action goes next to the display, in the navigated branch, not into every handler.
 ## Bind Data
 Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
 ```abap
@@ -65,61 +68,76 @@ DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
 The `growing` property loads data in batches instead of all at once, boosting performance.
 
 ## Full Example
-The full source code:
+The full source code — the view and the model are set up once, in the navigated branch; an event handler of this app would leave both alone:
 ```abap
+CLASS zcl_sample_odata DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_sample_odata IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->ele( `Table`
-                    )->a( n = `items`   v = `{FLIGHT>/Airport}`
-                    )->a( n = `growing` b = abap_true
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-                    )->ele( `columns`
-                        )->ele( `Column`
-                            )->tag( `Text`
-                                )->a( n = `text` v = `AirportID`
-                        )->end(
-                        )->ele( `Column`
-                            )->tag( `Text`
-                                )->a( n = `text` v = `Name`
-                        )->end(
-                        )->ele( `Column`
-                            )->tag( `Text`
-                                )->a( n = `text` v = `City`
-                        )->end(
-                        )->ele( `Column`
-                            )->tag( `Text`
-                                )->a( n = `text` v = `CountryCode`
-                        )->end(
+              )->ele( `Page`
+                  )->ele( `Table`
+                      )->a( n = `items`   v = `{FLIGHT>/Airport}`
+                      )->a( n = `growing` b = abap_true
 
-                    )->end(
+                      )->ele( `columns`
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `AirportID`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `Name`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `City`
+                          )->end(
+                          )->ele( `Column`
+                              )->tag( `Text`
+                                  )->a( n = `text` v = `CountryCode`
+                          )->end(
 
-                    )->ele( `items`
-                        )->ele( `ColumnListItem`
-                            )->ele( `cells`
-                                )->tag( `Text`
-                                    )->a( n = `text` v = `{FLIGHT>AirportID}`
-                                )->tag( `Text`
-                                    )->a( n = `text` v = `{FLIGHT>Name}`
-                                )->tag( `Text`
-                                    )->a( n = `text` v = `{FLIGHT>City}`
-                                )->tag( `Text`
-                                    )->a( n = `text` v = `{FLIGHT>CountryCode}` ).
+                      )->end(
 
-    client->view_display( view->stringify( ) ).
+                      )->ele( `items`
+                          )->ele( `ColumnListItem`
+                              )->ele( `cells`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{FLIGHT>AirportID}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{FLIGHT>Name}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{FLIGHT>City}`
+                                  )->tag( `Text`
+                                      )->a( n = `text` v = `{FLIGHT>CountryCode}` ).
 
-    client->follow_up_action(
-        val   = z2ui5_if_client=>cs_event-set_odata_model
-        t_arg = VALUE #(
-            ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
-            ( `FLIGHT` ) ) ).
+      client->view_display( view->stringify( ) ).
 
-ENDMETHOD.
+      client->follow_up_action(
+          val   = z2ui5_if_client=>cs_event-set_odata_model
+          t_arg = VALUE #(
+              ( `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/` )
+              ( `FLIGHT` ) ) ).
+
+    ENDIF.
+
+  ENDMETHOD.
+ENDCLASS.
 ```
 
 ## Multiple OData Models
@@ -175,7 +193,6 @@ client->follow_up_action(
         ( `/sap/opu/odata/DMO/API_TRAVEL_U_V2/` )
         ( `TRAVEL` ) ) ).
 ```
-For a complete code snippet, see the sample `Z2UI5_CL_SMPS_APP_315` in the [samples-stack repository](https://github.com/abap2UI5/samples-stack).
 
 ## Metadata Binding
 In SAP contexts, OData services often carry extra annotations. Check the metadata definition of the service `/sap/opu/odata/DMO/API_TRAVEL_U_V2/$metadata`. The definitions for the entity `Currency`:

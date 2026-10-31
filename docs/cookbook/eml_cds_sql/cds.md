@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Read a CDS view - a VDM view such as I_SalesOrder or your own - with ABAP SQL in an abap2UI5 app and show the rows in a UI5 table.
 ---
 # CDS
 
@@ -9,7 +10,7 @@ All examples in these docs work without CDS. On a recent ABAP release, you can a
 ABAP Core Data Services (CDS) let you define structured views and read data straight from the database. The example below fetches sales orders from the `I_SalesOrder` view of the Virtual Data Model (VDM) and shows them in a UI5 table:
 <!-- playground: no Run button — reads the CDS view I_SalesOrder, which only a system has -->
 ```abap
-CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC.
+CLASS zcl_sample_cds DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -19,7 +20,7 @@ CLASS z2ui5_cl_sample_cds DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_cds IMPLEMENTATION.
+CLASS zcl_sample_cds IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).

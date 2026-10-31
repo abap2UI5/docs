@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Upload an XLSX into an internal table and download an internal table as XLSX - with the system's own XLSX APIs, with abap2xlsx, or exported in the browser by the custom-controls add-on.
 ---
 # Spreadsheet
 
@@ -13,7 +14,7 @@ Convert uploaded XLSX files into an internal table:
 
 <!-- playground: no Run button — calls lcl_help, and a class-local class has no abapGit file of its own -->
 ```abap
-CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
+CLASS zcl_sample_upload DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -24,29 +25,33 @@ CLASS z2ui5_cl_sample_upload DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_upload IMPLEMENTATION.
+CLASS zcl_sample_upload IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`       v = `sap.m`
-            )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( n = `FileUploader` ns = `z2ui5`
-                    )->a( n = `value`       v = client->_bind( mv_value )
-                    )->a( n = `path`        v = client->_bind( mv_path )
-                    )->a( n = `placeholder` v = `filepath here...`
-                    )->a( n = `upload`      v = client->_event( `UPLOAD` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`       v = `sap.m`
+              )->a( n = `xmlns:mvc`   v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:z2ui5` v = `z2ui5.cc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( n = `FileUploader` ns = `z2ui5`
+                      )->a( n = `value`       v = client->_bind( mv_value )
+                      )->a( n = `path`        v = client->_bind( mv_path )
+                      )->a( n = `fileType`    v = `xlsx`
+                      )->a( n = `placeholder` v = `filepath here...`
+                      )->a( n = `upload`      v = client->_event( `UPLOAD` ) ).
 
-    IF client->get( )-event = `UPLOAD`.
+      client->view_display( view->stringify( ) ).
 
-        DATA(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
-        "further process with itab...
-        client->message_box_display( `xlsx uploaded` ).
+    ELSEIF client->check_on_event( `UPLOAD` ).
+
+      DATA(lr_itab) = lcl_help=>itab_get_by_xlsx( mv_value ).
+      "further process with itab...
+      client->message_box_display( `xlsx uploaded` ).
+
     ENDIF.
 
   ENDMETHOD.
@@ -104,40 +109,43 @@ Convert an internal table to an XLSX file and download it to the frontend:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Button`
-                    )->a( n = `text`  v = `Open Download Popup`
-                    )->a( n = `press` v = client->_event( `DOWNLOAD` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `Download`
+                      )->a( n = `press` v = client->_event( `DOWNLOAD` ) ).
 
-    IF client->get( )-event = `DOWNLOAD`.
+      client->view_display( view->stringify( ) ).
 
-        TYPES:
-          BEGIN OF ty_row,
-            count TYPE i,
-            value TYPE string,
-            descr TYPE string,
-          END OF ty_row.
-        TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+    ELSEIF client->check_on_event( `DOWNLOAD` ).
 
-        DATA(lt_tab) = VALUE ty_tab(
+      TYPES:
+        BEGIN OF ty_row,
+          count TYPE i,
+          value TYPE string,
+          descr TYPE string,
+        END OF ty_row.
+      TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+
+      DATA(lt_tab) = VALUE ty_tab(
         ( count = `1` value = `red` descr = `this is a description` )
         ( count = `2` value = `red` descr = `this is a description` )
         ( count = `3` value = `red` descr = `this is a description` ) ).
 
-        DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
-        client->follow_up_action(
-            val   = client->cs_event-download_b64_file
-            t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+      DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
+      client->follow_up_action(
+          val   = client->cs_event-download_b64_file
+          t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+
     ENDIF.
 
-ENDMETHOD.
+  ENDMETHOD.
 ```
 
 ```abap [lcl_help]
@@ -211,46 +219,48 @@ Instead of the XLSX API above (which can change between releases), consider the 
 ```abap
   METHOD z2ui5_if_app~main.
 
-  DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-      )->ele( n = `View` ns = `mvc`
-          )->a( n = `xmlns`     v = `sap.m`
-          )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-          )->ele( `Page`
-              )->tag( `Button`
-                  )->a( n = `text`  v = `Open Download Popup`
-                  )->a( n = `press` v = client->_event( `DOWNLOAD` ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-  client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `Download`
+                      )->a( n = `press` v = client->_event( `DOWNLOAD` ) ).
 
+      client->view_display( view->stringify( ) ).
 
-  IF client->get( )-event = `DOWNLOAD`.
+    ELSEIF client->check_on_event( `DOWNLOAD` ).
 
-    TYPES:
-      BEGIN OF ty_row,
-        count TYPE i,
-        value TYPE string,
-        descr TYPE string,
-      END OF ty_row.
-    TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
+      TYPES:
+        BEGIN OF ty_row,
+          count TYPE i,
+          value TYPE string,
+          descr TYPE string,
+        END OF ty_row.
+      TYPES ty_tab TYPE STANDARD TABLE OF ty_row WITH EMPTY KEY.
 
-    DATA(lt_tab) = VALUE ty_tab(
-      ( count = `1` value = `red` descr = `this is a description` )
-      ( count = `2` value = `red` descr = `this is a description` )
-      ( count = `3` value = `red` descr = `this is a description` ) ).
+      DATA(lt_tab) = VALUE ty_tab(
+        ( count = `1` value = `red` descr = `this is a description` )
+        ( count = `2` value = `red` descr = `this is a description` )
+        ( count = `3` value = `red` descr = `this is a description` ) ).
 
-    TRY.
-        DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
-        client->follow_up_action(
-          val   = client->cs_event-download_b64_file
-          t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
-      CATCH zcx_excel INTO DATA(x).
-        client->message_box_display( text = x->get_text( )
-                                     type = `error` ).
-    ENDTRY.
-  ENDIF.
+      TRY.
+          DATA(lv_file) = lcl_help=>xlsx_get_by_itab( lt_tab ).
+          client->follow_up_action(
+            val   = client->cs_event-download_b64_file
+            t_arg = VALUE #( ( lv_file ) ( `test.xlsx` ) ) ).
+        CATCH zcx_excel INTO DATA(x).
+          client->message_box_display( text = x->get_text( )
+                                       type = `error` ).
+      ENDTRY.
 
-ENDMETHOD.
+    ENDIF.
+
+  ENDMETHOD.
 ```
 
 ```abap [lcl_help]
@@ -303,5 +313,5 @@ ENDCLASS.
 ```
 :::
 
-## UI5 Control
-To export data directly on the frontend, SAP offers the sap.ui.export.Spreadsheet control for exporting table content. With some extra logic, you can use this control with abap2UI5 too. See the [Add-ons](/resources/addons) page for a complete sample with the custom control. The coding effort may be higher than the file-based approach shown above.
+## Export in the Browser
+SAPUI5 ships `sap.ui.export.Spreadsheet`, which writes a table's rows to an `.xlsx` in the browser without a roundtrip. The `ExportSpreadsheet` control of the [custom-controls add-on](https://github.com/abap2UI5-addons/custom-controls) (builder class `z2ui5_cl_cci_spreadsheet`) wraps it for an abap2UI5 view; it needs SAPUI5, because OpenUI5 does not carry `sap.ui.export`.

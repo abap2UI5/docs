@@ -4,6 +4,7 @@ samples:
   - z2ui5_cl_smp_app_133
   - z2ui5_cl_smp_app_189
   - z2ui5_cl_smp_app_421
+description: Read which control holds the focus from client->get( )-s_focus, and move it from the backend with the set_focus frontend action, with an optional selection range.
 ---
 # Focus
 
@@ -32,7 +33,7 @@ This is useful for guided data entry, barcode scanning, or any flow where the ne
 After processing an event, call `client->follow_up_action( )` with `cs_event-set_focus` and the id of the input to focus next. (The value bindings on the inputs are omitted here to keep the focus logic clear — see [Barcode Scanning](/cookbook/device_capabilities/barcode_scanning) for the same form with bound inputs.)
 
 ```abap
-CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
+CLASS zcl_sample_focus DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -41,7 +42,7 @@ CLASS z2ui5_cl_sample_focus DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_focus IMPLEMENTATION.
+CLASS zcl_sample_focus IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -83,6 +84,8 @@ ENDCLASS.
 ```
 
 After the user presses Enter in `id1`, the backend fires `set_focus` for `id2` and the cursor moves to the second input. The same pattern works for any chain of fields.
+
+An id that resolves to no control is not an error: the frontend logs `SET_FOCUS: no control '<id>'` to the browser console and the focus stays where it is — nothing is raised and the roundtrip succeeds. The id is searched in every open view slot first (a popup, a popover, a nested view), then in the global registry, so a fully qualified id from a UI5 message works too. A control that is not rendered yet when the action runs — a `set_focus` in the same response as a `view_display( )` — receives the focus once it has rendered.
 
 ## Selection Range
 

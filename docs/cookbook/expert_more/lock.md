@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_485
   - z2ui5_cl_smps_app_490
+description: Eight ways to keep two users from overwriting each other in a stateless app - no lock, enqueue at save, optimistic timestamp check, the two combined, a stateful session, a soft lock table, RAP drafts and the lock-manager add-on - with full source for the first six.
 ---
 # Lock
 
@@ -13,7 +14,7 @@ In classic SAP GUI, a transaction like `VA02` calls `ENQUEUE_EVVBAK` and the loc
 | **Edit** | What happens while the user is thinking and typing? |
 | **Save** | What happens the moment they hit save? |
 
-The patterns below combine in different ways. The examples use the sales order header table `VBAK` and its standard enqueue object `EVVBAK`, but the same shapes apply to any table. The full source of each pattern is included as a collapsible block at the end of every section.
+The patterns below combine in different ways. The examples use the sales order header table `VBAK` and its standard enqueue object `EVVBAK`, but the same shapes apply to any table. For patterns 1 to 6 the full source is included as a collapsible block at the end of the section; 7 and 8 point at the RAP draft chapter and the add-on that implement them.
 
 ## Which Strategy?
 
@@ -44,7 +45,7 @@ For the underlying concepts and trade-offs of statefulness, see [Statefulness](/
 The minimal starting point — the user edits and saves, no lock and no conflict check. Last save wins, silently. Fine for personal sandboxes and throwaway demos, but rarely what you want in production.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_1</code></summary>
+<summary>Full source — <code>ZCL_SAMPLE_LOCK_1</code></summary>
 
 <!-- playground: no Run button — SELECTs from VBAK, which no browser database has -->
 ```abap
@@ -58,7 +59,7 @@ The minimal starting point — the user edits and saves, no lock and no conflict
 *   - Personal sandboxes, throwaway demos, internal tools where only
 *     one user ever touches a record.
 
-CLASS z2ui5_cl_sample_lock_1 DEFINITION PUBLIC.
+CLASS zcl_sample_lock_1 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -80,7 +81,7 @@ CLASS z2ui5_cl_sample_lock_1 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_lock_1 IMPLEMENTATION.
+CLASS zcl_sample_lock_1 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -206,10 +207,10 @@ METHOD on_event_save.
 ENDMETHOD.
 ```
 
-The lock exists for milliseconds, so this scales — but two parallel saves can still race if the timestamps line up, and the second one silently overwrites the first.
+The lock exists for milliseconds, so this scales — but it protects only the write, not the edit. The enqueue is taken after the user read the record, so a second user who read the same record, saved first and released the lock again is never noticed: the first user's save then overwrites that change with values based on the old read. That lost update is what the timestamp of pattern 3 catches.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_2</code></summary>
+<summary>Full source — <code>ZCL_SAMPLE_LOCK_2</code></summary>
 
 <!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
@@ -223,7 +224,7 @@ The lock exists for milliseconds, so this scales — but two parallel saves can 
 *   - Quick edits with low chance of two users hitting the same record
 *   - Default starting point for most stateless editing apps
 
-CLASS z2ui5_cl_sample_lock_2 DEFINITION PUBLIC.
+CLASS zcl_sample_lock_2 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -243,7 +244,7 @@ CLASS z2ui5_cl_sample_lock_2 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_lock_2 IMPLEMENTATION.
+CLASS zcl_sample_lock_2 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -378,7 +379,7 @@ No lock is held during the edit phase, so this scales to many concurrent users a
 Pick a column that *always* updates on writes. If anyone writes the table bypassing `AEDAT` / `UPD_TMSTMP`, the check silently misses real conflicts.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_3</code></summary>
+<summary>Full source — <code>ZCL_SAMPLE_LOCK_3</code></summary>
 
 <!-- playground: no Run button — SELECTs from VBAK, which no browser database has -->
 ```abap
@@ -393,7 +394,7 @@ Pick a column that *always* updates on writes. If anyone writes the table bypass
 *   - Combine with Scenario 2 — it costs almost nothing and catches
 *     real bugs
 
-CLASS z2ui5_cl_sample_lock_3 DEFINITION PUBLIC.
+CLASS zcl_sample_lock_3 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -416,7 +417,7 @@ CLASS z2ui5_cl_sample_lock_3 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_lock_3 IMPLEMENTATION.
+CLASS zcl_sample_lock_3 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -524,7 +525,7 @@ ENDCLASS.
 **Lock at Save** plus the **Optimistic Check** is the safest stateless pattern and the sensible production default — the enqueue serializes parallel saves of *this* app, the timestamp check catches everyone else.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_4</code></summary>
+<summary>Full source — <code>ZCL_SAMPLE_LOCK_4</code></summary>
 
 <!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
@@ -539,7 +540,7 @@ ENDCLASS.
 *   - The timestamp check catches anyone who slipped in via another
 *     path (SE16, batch job, classic SAP GUI) between read and write.
 
-CLASS z2ui5_cl_sample_lock_4 DEFINITION PUBLIC.
+CLASS zcl_sample_lock_4 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -562,7 +563,7 @@ CLASS z2ui5_cl_sample_lock_4 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_lock_4 IMPLEMENTATION.
+CLASS zcl_sample_lock_4 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -731,12 +732,10 @@ CALL FUNCTION `DEQUEUE_EVVBAK`
 client->set_session_stateful( abap_false ).
 ```
 
-::: warning
-Each active user pins a work process. Use stateful sessions only for low-traffic, internal apps. Always pair `set_session_stateful( )` with an explicit `set_session_stateful( abap_false )` on every exit path — otherwise a leaked enqueue blocks future users until the session times out.
-:::
+Each active user pins a work process, and a leaked enqueue blocks the record until the session times out — the cost and the rules for paying it are on [Statefulness → Trade-offs](/cookbook/expert_more/statefulness#trade-offs).
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_5</code></summary>
+<summary>Full source — <code>ZCL_SAMPLE_LOCK_5</code></summary>
 
 <!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
@@ -754,7 +753,7 @@ Each active user pins a work process. Use stateful sessions only for low-traffic
 * Cost: each active user pins a work process. Do NOT use this for
 * high-traffic apps.
 
-CLASS z2ui5_cl_sample_lock_5 DEFINITION PUBLIC.
+CLASS zcl_sample_lock_5 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -777,7 +776,7 @@ CLASS z2ui5_cl_sample_lock_5 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_lock_5 IMPLEMENTATION.
+CLASS zcl_sample_lock_5 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
@@ -933,7 +932,7 @@ A soft lock is a row in a custom Z table marking *"user X is editing object Y"*.
 A user closing the browser without pressing *Release* leaves the row behind, so add a cleanup job that deletes entries older than, say, 30 minutes. The example below uses a matching `Z2UI5_SAMPLE_01` table.
 
 <details>
-<summary>Full source — <code>Z2UI5_CL_SAMPLE_LOCK_6</code></summary>
+<summary>Full source — <code>ZCL_SAMPLE_LOCK_6</code></summary>
 
 <!-- playground: no Run button — calls the ENQUEUE_EVVBAK function module, and there is no application server -->
 ```abap
@@ -952,7 +951,7 @@ A user closing the browser without pressing *Release* leaves the row behind, so 
 *   LOCKED_AT  TIMESTAMPL  When the lock started
 * Delivery class A.
 
-CLASS z2ui5_cl_sample_lock_6 DEFINITION PUBLIC.
+CLASS zcl_sample_lock_6 DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -980,7 +979,7 @@ CLASS z2ui5_cl_sample_lock_6 DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS z2ui5_cl_sample_lock_6 IMPLEMENTATION.
+CLASS zcl_sample_lock_6 IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 

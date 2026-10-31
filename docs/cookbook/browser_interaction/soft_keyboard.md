@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_516
   - z2ui5_cl_smp_app_530
+description: Keep the on-screen keyboard down or ask for a digit or phone layout with the inputMode property of the InputExt control, a bound property rather than a frontend action.
 ---
 # Soft Keyboard
 
@@ -71,15 +72,8 @@ keyboard just comes back.
 *is*. That is also why the mode survives a roundtrip without the app restoring
 anything.
 
-::: warning The keyboard-mode frontend action is removed
-Before 2026-09 this page taught a frontend action that set the attribute
-directly on the DOM. It carried exactly the defect above and **was removed from
-the framework in 1.144.1** (see [Deprecations](/resources/deprecations)); an
-app that still calls it fails at compile time. The migration is the control on
-this page: declare
-`xmlns:z2ui5="z2ui5.cc"`, build the field as `z2ui5:InputExt`, bind `inputMode`
-to a string attribute, and delete the action.
-:::
+The frontend action that once wrote the attribute directly is gone for exactly
+this reason — see [Deprecations](/resources/deprecations).
 
 ## An unknown mode is refused, not guessed
 

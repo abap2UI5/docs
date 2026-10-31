@@ -9,6 +9,7 @@ samples:
   - z2ui5_cl_smps_app_478
   - z2ui5_cl_smps_app_479
   - z2ui5_cl_smps_app_493
+description: SmartFilterBar, SmartTable, SmartForm and SmartChart from sap.ui.comp on an OData V2 service, the page variant with its smart_variant_init handshake, and variants for a classic FilterBar.
 ---
 # Smart Controls
 
