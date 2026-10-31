@@ -267,7 +267,7 @@ const EVERYWHERE = new Set(('a an and are as at be by can for from has have in i
  *  or a method name is exactly what somebody types into this box. */
 export function terms(body) {
   const seen = new Set();
-  /* The same split the query goes through in theme/search-engine.js: the dot
+  /* The same split the query goes through in scripts/lib/search-engine.js: the dot
    * and the underscore stay INSIDE a word, because `sap.m.Table` and
    * `nav_app_call` are single things a reader types, and everything else -
    * `->` above all - is a boundary. The two rules have to agree or a word

@@ -20,8 +20,8 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/generate-llms.mjs` | Builds `llms.txt` / `llms-full.txt` / per-page markdown from the sidebar. Runs inside `docs:build`, so the deploy publishes them |
 | `scripts/generate-api-reference.mjs` | Generates the client API reference — the block in `docs/resources/api.md` and `docs/public/api/client-api.json` — from `z2ui5_if_client` on the framework branch this site tracks (`main`); `--check` is the freshness gate |
 | `scripts/lib/client-interface.mjs` | Where `z2ui5_if_client` is fetched from (the ref comes from `lib/release.mjs`, shared with `check-api-names.mjs`; `A2UI5_HOME` reads the same ref out of a local clone of the framework instead, with `git show`, never its working tree) and the full parser `generate-api-reference.mjs` renders from; pinned by `test/client-interface.test.mjs` |
-| `scripts/check-version.mjs` | The release number in the bar's menu, the deprecations page and the changelog, against the newest release tag of the framework |
-| `scripts/generate-search.mjs` | Builds `docs/public/search-index.json` — the pages of this site plus every entry in the three sample catalogues, which is what the box in the middle of the bar searches. Runs inside `docs:build`, so the deploy publishes it; `scripts/lib/search-index.mjs` is what goes in |
+| `scripts/check-version.mjs` | The release number in the bar's version dropdown, the deprecations page and the changelog, against the newest release tag of the framework |
+| `scripts/generate-search.mjs` | Builds `docs/public/search-index.json` — the pages of this site plus every entry in the three sample catalogues. This site's own bar searches with VitePress's local search; the index is published for the playground's search box, which fetches it from here. `scripts/lib/search-engine.js` is the matcher the playground carries a copy of, pinned with the index by `test/search.test.mjs`. Runs inside `docs:build`, so the deploy publishes it; `scripts/lib/search-index.mjs` is what goes in |
 | `scripts/lib/pages.mjs` | What a page of this site IS: the sidebar walk, its title, its opening sentences, its headings, its words. Shared by `generate-llms.mjs` and `generate-search.mjs` so a page added to the sidebar reaches both; `summarise( )` — the description of 150 pages and the note in `llms.txt`, which nobody writes and nobody proofreads — is pinned by `test/summarise.test.mjs` |
 | `docs/.vitepress/playground.mjs` | Decides which fenced ABAP example gets a **Run** button, and wraps the fence; `theme/playground.js` is the browser half |
 | `scripts/list-runnable.mjs` | The measurement's worklist: every fenced example that carries a Run button, out of the same `playground.mjs` that decides the button. `--json` adds each example's ABAP verbatim - what the button sends - so the measurement below can be driven rather than clicked |
@@ -30,14 +30,8 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-line-length.mjs` | The wrapped-page rule and `--fix` (`npm run fix:line-length`), which rewraps a drifted paragraph. `scripts/lib/line-length.mjs` is what a prose line IS here and what a rewrap may touch; pinned by `test/line-length.test.mjs`, which holds the manual to the rule as its last case |
 | `scripts/check-conventions.mjs` | The two house conventions the sample corpora gate and this one did not: the view-chain layout in every fenced chain (the linter's `chain-house-layout`, which is opt-in — `check-examples.mjs` writes its config without a `rules` block, so the rule was never emitted), and the three class section blocks in every fenced app class. `--fix` (`npm run fmt:chains`) reformats a drifted chain; the sections are a judgement and stay by hand |
 | `scripts/lib/catalogue.mjs` | Parses and counts a sample catalogue, for `link-samples.mjs` and for the figures `generate-llms.mjs` writes into `llms.txt` — from a sibling checkout when one is here, else from the `catalogue.json` each sample repository commits at its root; pinned by `test/catalogue.test.mjs`, because it has stopped matching twice and both times answered wrongly instead of failing |
-| `docs/.vitepress/theme/style.css` | Everything this site looks like. Its palette is the playground's, copied — see *One site in three places* below |
-| `docs/.vitepress/theme/link-to-selection.js` | **Copy link to selection** — the button under a selection inside the article, and the fallback for a browser too old for `:~:`. `theme/text-fragment.js` is the half with no DOM in it (what to quote, how to spell it), pinned by `test/text-fragment.test.mjs` |
-| `docs/.vitepress/theme/TheBar.vue` | The bar, as one element this repository owns: the brand, `SiteNav.vue` (the four sections), `SearchBox.vue`, the two marks, `SiteMenu.vue` (the menu behind the last button, and the version number `check:version` reads). It used to be the theme's bar with our parts in its slots and 85 override lines arguing its own parts out of the way; the theme now keeps two things, the hamburger and the screen it opens on a phone |
-| `docs/.vitepress/theme/SiteNav.vue` | The four sections, in the bar and again in the phone screen the theme's hamburger opens. Every item that leaves this deployment carries a `target` (`check:cross-site`); they are plain links, with no memory of where the reader was on another site |
-| `docs/.vitepress/theme/SiteMenu.vue` | The menu behind the bar's last button: the light/dark switch, the project's tools and its repositories, and the version number `check:version` reads (`VERSION`) |
-| `docs/.vitepress/theme/code-lines.js` | A number beside every line of every listing, and an address for it: `#B2L42` is line 42 of the second listing on a page, `#B2L42-L58` a passage of it. The block is part of the address because a page of this manual is a dozen listings and `#L42` would name a line in each; the catalogue's pages print one class, which is why theirs are `#L42`. The number is a CSS counter drawn from an empty link, so the block still copies as a file you can paste |
-| `docs/.vitepress/theme/Crumbs.vue` | The trail above the title on every page of the manual — "Documentation › Cookbook › Model". Rendered into the default theme's `doc-before` slot, so it is the doc column's first line and lands where the sample catalogue's own crumb line lands, to the pixel. `theme/crumbs.js` is the half with no Vue in it: it walks `themeConfig.sidebar` against the page, so the trail cannot drift from the navigation the way the bar's old Guide dropdown did. Pinned by `test/crumbs.test.mjs`, which walks the real sidebar |
-| `docs/.vitepress/theme/SearchBox.vue` | The box in the middle of the bar and what it opens. `theme/search-engine.js` is the matching, framework-free because the other three bars carry a copy of it; both are pinned by `test/search.test.mjs` |
+| `docs/.vitepress/theme/index.js` | **The default theme, as it comes.** The bar, the search (VitePress's local search), the sidebar, the outline and the home page are VitePress's own, so the manual reads like every other VitePress site a developer knows. Do not build a bar, a search box, a crumb trail or a menu of our own again: that is what this site had, 2,700 lines of CSS and five components arguing the theme's parts out of the way, and it read as a site nobody had seen before. The theme adds exactly one thing, the Run button (`playground.js`) |
+| `docs/.vitepress/theme/style.css` | The family's red as the theme's brand colour (`--vp-c-brand-*`, CONVENTION.md in abap2UI5/abap2UI5.github.io), the self-hosted Inter, and the few classes the theme has no rule for: the Run button, the filename over a block, the scroll wrapper round a wide table, an inline brand mark. Nothing that restyles the theme's own parts |
 | `scripts/check-images.mjs` | Every image under `docs/public`: a screenshot is WebP, a deliverable is one of the PNGs the logo page hands out, none is over its budget, and the build can measure each of them - `scripts/lib/images.mjs` is the reader |
 | `scripts/lib/prose.mjs` | What on a page is PROSE - not fenced or inline code, not a link target, a tag, a comment, a URL, a generated block or a frontmatter setting - and the house spelling of it, which is American: the British forms as patterns, each with the American form it becomes. `test/spelling.test.mjs` is the gate; `scripts/fix-spelling.mjs` (`npm run fix:spelling`) rewrites exactly the words the gate names |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
@@ -53,8 +47,8 @@ in it are decidable, and all thirteen are decided before a merge:
 
 | | |
 |---|---|
-| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; the text fragment behind *Copy link to selection* — what it quotes, and how it escapes it; and the crumb trail above every title, walked against the real sidebar so a restructured section cannot leave the trail passing against a fiction; and **the sidebar against the pages** (`test/sidebar-titles.test.mjs`): every entry's label is its page's own H1 (a search result shows the H1, the menu the label, and fourteen pages had two names a reader could not connect), every section's link is either its own page or the first page in its list (Configuration opened Setup while Installation stood first), and every page under `docs/` has an entry |
-| `check:version` | the release number in the bar's menu (`VERSION` in `theme/SiteMenu.vue` — it was a nav dropdown's label in `config.mjs` until the bar was rebuilt, and in `SiteBar.vue` until the bar was split), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
+| `test` | the sample-catalogue parser in `scripts/lib/`, against a row of every shape the three sample repositories generate; and **the sidebar against the pages** (`test/sidebar-titles.test.mjs`): every entry's label is its page's own H1 (a search result shows the H1, the menu the label, and fourteen pages had two names a reader could not connect), every section's link is either its own page or the first page in its list (Configuration opened Setup while Installation stood first), and every page under `docs/` has an entry |
+| `check:version` | the release number in the bar's version dropdown (the nav item in `config.mjs` whose text is the number), the deprecations page and the changelog, against the newest release tag of the framework — this one goes stale without anybody touching this repository |
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file. A fragment cannot be compiled, so every fence is also read for the two things decidable without a system: a call to a method of the frozen builder, and a `|…|` string template whose literal text runs over a line break (only a `{ … }` may) - nine binding strings were written that way and none compiled |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` on `main`, plus every `blob/main/` link into the framework's tree, plus **no name from the frozen package** (`src/99`: `z2ui5_cl_util*`, `z2ui5_cl_pop_*`, `z2ui5_cl_xml_view*`, `z2ui5_if_exit`, `z2ui5_if_types`, …) anywhere but on the deprecations page and in the changelog. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
@@ -259,7 +253,7 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   `.github/shared/check-framework-pin.mjs`, "releases never gate a merge").
   What a reader on the newest release does not have yet is now a question of
   PROSE: `resources/deprecations.md` carries a *next release* column, and
-  `check:version` keeps the release number in the bar's menu, the deprecations
+  `check:version` keeps the release number in the bar's version dropdown, the deprecations
   page and the changelog honest. `A2UI5_REF` still overrides the ref — now to
   pin a run BACK to a release rather than forward to main. `A2UI5_HOME` points
   the same three at a local clone of the framework: the ref is then read out
@@ -516,79 +510,6 @@ class in it (before that, `data-code` only worked for a class called
 error), the app-only layout fix for a column narrower than 820px, and
 `frameOptions="allow"` on the app frame. **Merge and deploy
 [abap2UI5/playground](https://github.com/abap2UI5/playground) first**, then this.
-
-## A link to what you selected
-
-Select anything inside a page of the manual — a sentence, a chain out of a
-fence, one method of an example — and a small **Copy link to selection** button
-appears under it. What it copies is this page's URL with the words quoted in it,
-as the browser's own [text fragment](https://developer.mozilla.org/en-US/docs/Web/URI/Fragment/Text_fragments):
-
-```
-.../development/lifecycle.html#:~:text=client-%3Eview_display
-```
-
-The browser finds those words and highlights them.
-
-**Why the words and not the line.** The per-sample pages in
-[abap2UI5/playground](https://github.com/abap2UI5/playground) answer "look at
-line 40 to 55" with `#L40-L55`, and that is right over there: one class per
-page, printed whole, so a line number is an address. A page here is a dozen
-fences and the prose around them — and, the part that decides it, nothing here
-has a commit behind it. GitHub's line links are permalinks because they name a
-SHA; a line number on a documentation page names whatever is on that line
-*today*, and the next correction to the example above it moves the line
-silently. A link somebody pasted into an issue would then point at the wrong
-line and nothing would be red. A quote of the words survives every edit that
-does not delete the words themselves, and when it does not survive it lands at
-the top of the page rather than on something else.
-
-**What it costs the pages: nothing.** No ids on a fence, no numbers in a
-gutter, no markup on any of the 838 examples — a text fragment is a property of
-the URL, not of the document, which is the whole reason this is a hundred lines
-of theme and no change to a single page.
-
-The parts worth knowing about `theme/text-fragment.js`, which is where the
-decisions are and what `test/text-fragment.test.mjs` pins:
-
-- A **short** selection is quoted whole; anything longer is quoted as its first
-  and last few words (`text=start,end`), because a directive carrying two
-  paragraphs is a URL nobody pastes into a chat window.
-- A selection that **crosses lines** is always quoted as start and end, however
-  short. An exact quote has to be found inside ONE block, and every line of a
-  highlighted fence is an element of its own — a two-line exact quote matches
-  nothing at all.
-- The **whitespace is collapsed**, because that is how the browser compares it:
-  an indented chain selected out of a fence is the same text as the one line
-  the directive spells.
-- A quote the page carries **twice** is an address for the wrong one, so the
-  words in front of the selection are added as a prefix (and the words after it
-  as a suffix if the page repeats those too). Only when it is actually
-  ambiguous: context is length in a URL and one more thing that can go stale.
-- The **hyphen is escaped by hand**. `encodeURIComponent` leaves `-` alone
-  because it is unreserved, and `-` is exactly what marks a part of the
-  directive as the prefix or the suffix: `client->view_display` written out
-  unescaped is a valid directive for something else entirely. That one is a
-  silent wrong answer, not an error, which is why it has a test of its own.
-
-**What a browser too old for `:~:` gets.** Text fragments are Chrome 80,
-Safari 16.1 and Firefox 131 and later; an older one ignores the directive and
-lands at the top of the page, which reads as a broken link. So
-`markDirective( )` in `link-to-selection.js` scrolls to the block the words are
-in and marks it for a few seconds instead — and it only ever runs where it is
-needed, because a browser that supports fragments takes the directive OUT of
-`location.href` (and has `document.fragmentDirective`, which is what is
-actually tested).
-
-**What could not be verified here, and has to be checked by hand once.**
-Headless Chromium under Playwright *parses* the directive — it strips it from
-`location.href` — and never acts on it: no scroll, no highlight, for a plain
-static page, cross-origin, same-origin, followed by a real click or opened
-directly. So everything up to the clipboard is checked (the button appears on a
-selection inside the article and on nothing else, the directive is the selected
-words, the URL is this page, the old-browser fallback marks the right element)
-and the last step — the browser actually jumping to the words — is not. Open
-one of these links in a real browser after changing anything here.
 
 ## Toolchain
 
