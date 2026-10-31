@@ -37,7 +37,7 @@ Since launching in 2023, abap2UI5 has grown from a small side project into a com
 
 This page is the technical picture. What abap2UI5 means for an organization - what it can build, how it compares, what it costs - is on [abap2UI5 for decision makers](https://abap2ui5.github.io/why/), written for the people who approve a tool rather than build with it.
 
-→ *See the [Quickstart](/get_started/quickstart) for step-by-step setup, and [Sample Apps](https://abap2ui5.github.io/playground/samples/) to watch abap2UI5 in action*
+→ *See the [Quickstart](/get_started/quickstart) for step-by-step setup, and [Sample Apps](https://abap2ui5.github.io/samples-site/) to watch abap2UI5 in action*
 
 ## How It Works
 

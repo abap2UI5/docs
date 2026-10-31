@@ -147,7 +147,7 @@ Tips for working with views:
 - The [abap2UI5 linter](/advanced/linter) rebuilds the view
   from your chain and reports unknown controls, properties, enum values and
   `@since` violations — no SAP system involved.
-- See the [samples repository](https://abap2ui5.github.io/playground/samples/) for ready-made
+- See the [samples repository](https://abap2ui5.github.io/samples-site/) for ready-made
   examples to copy and adapt.
 
 ::: warning Respect the UI5 Control Aggregation Rules
@@ -240,7 +240,7 @@ sharing data between the view and the app logic.
 
 ## Working Samples
 
-Complete apps from the [sample catalog](https://abap2ui5.github.io/playground/samples/)
+Complete apps from the [sample catalog](https://abap2ui5.github.io/samples-site/)
 that use what this page describes. Each is a single class in [abap2UI5/samples](https://github.com/abap2UI5/samples)
 unless its row names another of the three sample repositories — pull that repository with
 [abapGit](https://abapgit.org) and start the class with `?app_start=<class>`.

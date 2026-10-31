@@ -32,7 +32,7 @@ reason is structural:
   class, in one language. An agent never has to keep an ABAP backend and a
   JavaScript frontend in step, because there is no second half to drift.
 - **There are over 700 working examples to learn from.** The
-  [sample catalog](https://abap2ui5.github.io/playground/samples/) holds
+  [sample catalog](https://abap2ui5.github.io/samples-site/) holds
   complete, tested apps from all three repositories — one per pattern, every
   one linted and rendered, each with the ABAP printed in full — so "has
   somebody already built a value help, a tree, navigation between two apps?"
@@ -61,9 +61,10 @@ describe the current APIs and take precedence over anything you already know:
 
 The shape of an abap2UI5 app:
 1. An app is ONE ABAP class implementing z2ui5_if_app. Everything enters main( ),
-   which dispatches on client->check_on_navigated( ) (the display branch, true on
-   first start too), client->check_on_event( `X` ) and - for one-time setup only -
-   client->check_on_init( ).
+   which dispatches in ONE IF/ELSEIF chain, never in separate IF blocks:
+   client->check_on_init( ) (only when there is something to seed - seed, then
+   display), client->check_on_navigated( ) (display; true on first start too)
+   and client->check_on_event( `X` ).
 2. Build the view with z2ui5_cl_ui5_view_builder and its verbs ele / tag / a / end /
    stringify.
 3. Bind with client->_bind( ). It is bidirectional; only what the user edited comes back.
@@ -73,7 +74,7 @@ The shape of an abap2UI5 app:
 Before building something from scratch, check whether it exists: the sample
 catalog's index at https://abap2ui5.github.io/playground/samples/apps.json lists
 every sample of all three sample repositories with title, summary and keywords,
-and https://abap2ui5.github.io/playground/samples/<class>/ prints each one's ABAP.
+and https://abap2ui5.github.io/samples-site/sample/<class>/ prints each one's ABAP.
 
 When you are done, check the result with the abap2UI5 linter
 (npx @abap2ui5/linter src) - it reads the view your ABAP builds and needs no

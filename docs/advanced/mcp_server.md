@@ -116,10 +116,10 @@ hold** — several hundred of them, and the catalog below says how many
 today — and hands back a class to read rather than a snippet to trust.
 Any one of the three is enough to start; a missing clone is reported in the
 answer, not fatal. All three are sources of the one
-[sample catalog](https://abap2ui5.github.io/playground/samples/), which is where to read what each covers —
-[Learn](https://abap2ui5.github.io/playground/samples/?src=learn),
-[Controls](https://abap2ui5.github.io/playground/samples/?src=controls),
-[Stack](https://abap2ui5.github.io/playground/samples/?src=stack).
+[sample catalog](https://abap2ui5.github.io/samples-site/), which is where to read what each covers —
+[Learn](https://abap2ui5.github.io/samples-site/#learn),
+[Controls](https://abap2ui5.github.io/samples-site/),
+[Stack](https://abap2ui5.github.io/samples-site/).
 
 `deploy_app` writes into the gitignored sandbox of the samples-controls
 checkout, else of the abap2UI5 checkout. The server releases after 0.2.0 need
