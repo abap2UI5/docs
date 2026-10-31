@@ -9,7 +9,6 @@ import { setUpPlayground } from './playground.js'
 import { setUpCodeLines, watchCodeLines } from './code-lines.js'
 import { markDirective, setUpLinkToSelection } from './link-to-selection.js'
 import TheBar from './TheBar.vue'
-import SiteNav from './SiteNav.vue'
 import Crumbs from './Crumbs.vue'
 
 /** @type {import('vitepress').Theme} */
@@ -29,7 +28,6 @@ export default {
   Layout() {
     return h(DefaultTheme.Layout, null, {
       'nav-bar-content-before': () => h(TheBar),
-      'nav-screen-content-after': () => h(SiteNav),
       // Where in the manual you are, above the title, on every page that has
       // one (Crumbs.vue). `doc-before` is the slot immediately in front of the
       // article inside the doc column, so the trail is the column's first line
