@@ -65,6 +65,7 @@ export const NEIGHBOURS = [
   '/layout-editor/',        // the layout editor, published by abap2UI5/layout-editor's pages workflow
   '/web-abap2UI5-build/',   // a live build of the frontend, credited on Sponsor
   '/why/',                  // abap2UI5 for decision makers, published by abap2UI5/why
+  '/samples-site/',         // the sample catalogue's own site, published by abap2UI5/samples-site
 ];
 
 /** What a retired deployment was replaced BY, so the error can say it. */
