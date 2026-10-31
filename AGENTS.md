@@ -205,7 +205,7 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are thirty-six of them. Eight are `/technical/*`: that whole section became
+There are seventy-nine of them. Eight are `/technical/*`: that whole section became
 the Insights series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
@@ -229,6 +229,16 @@ address for its first day) keep the `#fragment`, because the framework's README
 links sections of it and the new page keeps every section id;
 `resources/cost_calculator`, `resources/who_uses` and `resources/references`
 point at the section that carries each now.
+The largest group, forty-four, is `/advanced/insights/`: the series left the
+manual for a site of its own on 2026-10-31,
+https://abap2ui5.github.io/insights/ (abap2UI5/insights), where every essay
+kept its slug. One stub per essay and one for the index point at the same
+essay there, carrying the `#fragment`; the five older stubs of the series
+(three renumberings, and #35 and the first #37, which went to the page for
+decision makers) and the `/technical/*` ones point at the new site directly,
+so no old address takes two hops. The essays, their SVGs and their sidebar
+group are gone from this repository; the sidebar keeps one row, `Insights`,
+that leads there.
 
 Two things make this safe rather than a second set of pages to maintain:
 
@@ -356,9 +366,8 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   every source link a page writes **by hand** — `github.com/abap2UI5/samples/blob/main/…`
   in the prose rather than in a generated block, and the same for the two
   sibling repositories — against that same checkout.
-  The Insights pages under `advanced/insights/` link a sample that way on
-  purpose (none of them carries a block: a "Full source:" sentence is the shape
-  an essay wants, not a see-also list at the end), and the samples repository
+  The Insights essays used to be the main case of a hand-written sample link
+  (they have their own site now, abap2UI5/insights); the samples repository
   renumbers, so such a link is one renumber away from a 404 with nothing
   watching it. Now something is, and it costs no request: CI clones
   `abap2UI5/samples` in full for the catalogue, so the answer is a file lookup. The client API

@@ -480,7 +480,7 @@ export default defineConfig({
           // without scrolling, which it was not when it was the twelfth.
           //
           // Use Cases is gone from this section: it was converted into the
-          // Insights under Resources - the clean core levels and the
+          // Insights (now a site of its own) - the clean core levels and the
           // wrapper, on-stack against side-by-side, and one app serving many
           // systems - and the page it used to be is in the git history.
           //
@@ -641,57 +641,15 @@ export default defineConfig({
           { text: "Release Notes", link: "/resources/changelog" },
           { text: "Deprecations", link: "/resources/deprecations" },
           {
-            // The series of essays, moved here from a top-level "Know-How"
-            // section of its own: a reader looks for them among the resources,
-            // as reading about the framework rather than a step in using it.
-            // The URLs stay where they were published.
+            // The series of essays has a site of its own since 2026-10-31,
+            // https://abap2ui5.github.io/insights/ (abap2UI5/insights) - one
+            // row here instead of thirty-eight. Another deployment on this
+            // origin, hence target _self (check:cross-site); the old
+            // addresses under /advanced/insights/ are stubs in docs/public/
+            // that point at the same essay there.
             text: "Insights",
-            link: "/advanced/insights/",
-            collapsed: true,
-            items: [
-              // Four blocks - why, how it works, a working day, where it
-              // belongs - and the index page at the link above names them. The
-              // numbers are part of each title on purpose: the articles are
-              // posted one at a time, and "#21" is how a reader refers to one.
-              { text: "#1 Somewhere on the Way to UI5, We Lost RTTS", link: "/advanced/insights/01-somewhere-on-the-way-to-ui5" },
-              { text: "#2 The Cost of a Screen", link: "/advanced/insights/02-the-cost-of-a-screen" },
-              { text: "#3 One Class, No Programming Model", link: "/advanced/insights/03-one-class-no-programming-model" },
-              { text: "#4 No Annotation in Between", link: "/advanced/insights/04-no-annotation-in-between" },
-              { text: "#5 UI5 Over-the-Wire", link: "/advanced/insights/05-ui5-over-the-wire" },
-              { text: "#6 The Frontend Knows Nothing", link: "/advanced/insights/06-the-frontend-knows-nothing" },
-              { text: "#7 One Handler for Every App", link: "/advanced/insights/07-one-handler-for-every-app" },
-              { text: "#8 Only the Changed Part", link: "/advanced/insights/08-only-the-changed-part" },
-              { text: "#9 A New Instance on Every Request", link: "/advanced/insights/09-a-new-instance-on-every-request" },
-              { text: "#10 Swapping the View at Runtime", link: "/advanced/insights/10-swapping-the-view-at-runtime" },
-              { text: "#11 No Build, No Deploy, No Cache", link: "/advanced/insights/11-no-build-no-deploy-no-cache" },
-              { text: "#12 Where Your Own JavaScript Goes", link: "/advanced/insights/12-where-your-own-javascript-goes" },
-              { text: "#13 Four Verbs, Every Control", link: "/advanced/insights/13-four-verbs-every-control" },
-              { text: "#14 A Classrun for the Browser", link: "/advanced/insights/14-a-classrun-for-the-browser" },
-              { text: "#15 Where the Selection Screen Went", link: "/advanced/insights/15-where-the-selection-screen-went" },
-              { text: "#16 One Click, One Request", link: "/advanced/insights/16-one-click-one-request" },
-              { text: "#17 What the Client Can Do", link: "/advanced/insights/17-what-the-client-can-do" },
-              { text: "#18 CALL SCREEN, LEAVE SCREEN", link: "/advanced/insights/18-call-screen-leave-screen" },
-              { text: "#19 Where F4 Went", link: "/advanced/insights/19-where-f4-went" },
-              { text: "#20 MESSAGE Still Works", link: "/advanced/insights/20-message-still-works" },
-              { text: "#21 The Lock Is Gone by the Next Click", link: "/advanced/insights/21-the-lock-is-gone-by-the-next-click" },
-              { text: "#22 Who May Start Which App", link: "/advanced/insights/22-who-may-start-which-app" },
-              { text: "#23 100 Rows, Four Hours, One Request", link: "/advanced/insights/23-100-rows-four-hours-one-request" },
-              { text: "#24 ABAP Unit for a Screen", link: "/advanced/insights/24-abap-unit-for-a-screen" },
-              { text: "#25 When One Class Is Not Enough", link: "/advanced/insights/25-when-one-class-is-not-enough" },
-              { text: "#26 A Tile Like Any Other", link: "/advanced/insights/26-a-tile-like-any-other" },
-              { text: "#27 One Codebase, 7.02 to ABAP Cloud", link: "/advanced/insights/27-one-codebase-702-to-abap-cloud" },
-              { text: "#28 Cloud-Ready Is a Property of Your App", link: "/advanced/insights/28-cloud-ready-is-a-property-of-your-app" },
-              { text: "#29 When the API Is Not Released", link: "/advanced/insights/29-when-the-api-is-not-released" },
-              { text: "#30 On-Stack or Side-by-Side", link: "/advanced/insights/30-on-stack-or-side-by-side" },
-              { text: "#31 One App, Many Systems", link: "/advanced/insights/31-one-app-many-systems" },
-              { text: "#32 From ITS to abap2UI5", link: "/advanced/insights/32-from-its-to-abap2ui5" },
-              { text: "#33 RAP or abap2UI5?", link: "/advanced/insights/33-rap-or-abap2ui5" },
-              { text: "#34 UI5 Freestyle or abap2UI5?", link: "/advanced/insights/34-freestyle-or-abap2ui5" },
-                  { text: "#36 Written for Agents", link: "/advanced/insights/36-written-for-agents" },
-              { text: "#37 What the Client Can Send", link: "/advanced/insights/37-what-the-client-can-send" },
-              { text: "#38 How Many Users", link: "/advanced/insights/38-how-many-users" },
-              { text: "#39 Upgrading the Framework", link: "/advanced/insights/39-upgrading-the-framework" },
-            ],
+            link: "https://abap2ui5.github.io/insights/",
+            target: "_self",
           },
           {
             // The project rather than the framework: what it costs, who to

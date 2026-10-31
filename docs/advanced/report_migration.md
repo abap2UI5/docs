@@ -314,5 +314,5 @@ The conversion is deterministic so that the step after it can be iterative:
   deploys into
 - [Agent-Operable Apps](/advanced/agents) — operating the converted report
   through its screen
-- [#29 When the API Is Not Released](/advanced/insights/29-when-the-api-is-not-released)
+- [#29 When the API Is Not Released](https://abap2ui5.github.io/insights/29-when-the-api-is-not-released/){target="_self"}
   — what to do about the objects the migration report lists

@@ -41,7 +41,9 @@ const h1Of = (link) => {
 const leaves = (items, out = []) => {
   for (const i of items) {
     if (i.items) leaves(i.items, out);
-    else if (i.link) out.push(i);
+    /* a row that leads to another site of the family (Insights) has no
+       page here to agree with; check:cross-site holds its target */
+    else if (i.link && !/^https?:/.test(i.link)) out.push(i);
   }
   return out;
 };
