@@ -1,5 +1,5 @@
 ---
-description: The one idea under abap2UI5: the backend answers every request with two strings, a UI5 XML view and its JSON model, and the browser renders them - UI5 Over-the-Wire.
+description: "The one idea under abap2UI5: the backend answers every request with two strings, a UI5 XML view and its JSON model, and the browser renders them - UI5 Over-the-Wire."
 ---
 # #5 UI5 Over-the-Wire
 
