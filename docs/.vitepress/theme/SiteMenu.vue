@@ -81,7 +81,16 @@ const toggleAppearance = inject("toggle-appearance", () => {
       <a href="/docs/resources/support">Support</a>
       <a href="/docs/resources/contribution">Contribute</a>
       <a href="/docs/resources/sponsor">Sponsor</a>
+      <!-- The other abap2UI5 sites, named here and nowhere else on this
+           site: the bar carries no row of them (CONVENTION.md in
+           abap2UI5/abap2UI5.github.io). Same origin, other deployments:
+           target="_self", as the Linter rules row below explains. -->
+      <span class="a2ui5-menu-head">Sites</span>
+      <a href="https://abap2ui5.github.io/" target="_self">Home</a>
       <a href="https://abap2ui5.github.io/why/" target="_self">For managers</a>
+      <a href="https://abap2ui5.github.io/samples-site/" target="_self">Samples</a>
+      <a href="https://abap2ui5.github.io/playground/" target="_self">Playground</a>
+      <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
       <span class="a2ui5-menu-head">Tools</span>
       <!-- The standalone tools: the AI Studio (an app built from a
            description, on the playground's deployment), the Layout Editor and
@@ -96,7 +105,6 @@ const toggleAppearance = inject("toggle-appearance", () => {
       <!-- Everything to install beside the framework, and the tools for the
            editor, the pipeline and the agent, each with a page: a site of
            its own. Not listed here a second time. -->
-      <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
       <span class="a2ui5-menu-head">Repositories</span>
       <div class="a2ui5-menu-repos">
         <div class="a2ui5-menu-group">

@@ -15,7 +15,7 @@
  * everything inside it is ours: the brand, the four sections, the search box,
  * the two marks, the menu. The theme keeps exactly two things, because they
  * are worth keeping and are not worth rebuilding: the hamburger and the screen
- * it opens on a phone (`nav-screen-content-after` carries the same SiteNav).
+ * it opens on a phone.
  *
  * What this buys, beyond the deleted CSS: the four documents now carry the
  * same MARKUP, not four readings of one description — this template is
@@ -23,7 +23,6 @@
  */
 import { withBase } from "vitepress";
 import SearchBox from "./SearchBox.vue";
-import SiteNav from "./SiteNav.vue";
 import SiteMenu from "./SiteMenu.vue";
 
 /* Through `withBase`, not written out: a bare `/docs/logo.png` in a template
@@ -36,15 +35,15 @@ const LOGO = withBase("/logo.png");
 
 <template>
   <div class="a2ui5-bar">
-    <!-- The mark and the name, closed by a hairline. A link to the home page,
-         which is what a brand is everywhere else on this origin; the nav says
-         which section you are in, so the brand does not say it too. -->
+    <!-- The mark and the name, closed by a hairline: the way home, which is
+         the one place that lists every abap2UI5 site (CONVENTION.md in
+         abap2UI5/abap2UI5.github.io). No row of the other sites here; the
+         menu names them. -->
     <a class="a2ui5-brand" href="https://abap2ui5.github.io/" target="_self">
       <img :src="LOGO" alt="" width="20" height="20">
       <span>abap2UI5</span>
     </a>
 
-    <SiteNav />
 
     <!-- Centred on THIS element, which spans the whole bar — the reason the
          box can simply be placed at 50% now instead of being pushed towards
