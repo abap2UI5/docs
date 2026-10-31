@@ -1,3 +1,6 @@
+---
+description: A table whose structure is only known at runtime, drawn in UI5 - how abap2UI5 binds data typed by the runtime type services without an entity type, and what a view without a contract costs.
+---
 # #1 Somewhere on the Way to UI5, We Lost RTTS
 
 Open SE16 and type a table name. Any table name. A screen appears with the
@@ -106,10 +109,10 @@ Full source:
 [`Z2UI5_CL_SMP_APP_497`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_497.clas.abap),
 one of the abap2UI5 samples, so it is compiled and linted on every commit.
 
-A table nobody described, drawn from whatever the data turned out to be.
-Doesn't that look a bit like `cl_salv_table` in a UI5 view? 😉 How far it goes
-is the [se16n addon](https://github.com/abap2UI5-addons/se16n), a full
-SE16-flavored app built on exactly this.
+A table nobody described, drawn from whatever the data turned out to be —
+`cl_salv_table` in a UI5 view. How far it goes is the
+[se16n addon](https://github.com/abap2UI5-addons/se16n), a full SE16-flavored
+app built on exactly this.
 
 Nothing in either half is exotic, which is what makes it cheap to hand over:
 the frontend is a freestyle UI5 app with `sap.m` controls and a `JSONModel`,
@@ -133,5 +136,3 @@ in ABAP Cloud too. Only the screen in front of it went missing.
 abap2UI5 gives runtime-typed ABAP a UI5 face again by binding the data
 directly, so a structure that exists only at runtime stops being a special
 case. It is just data — the way it was in the old SALV and field-catalog days.
-
-So next time you reach for RTTS and need a screen, give abap2UI5 a try.

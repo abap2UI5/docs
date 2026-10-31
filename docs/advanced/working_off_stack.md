@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: An abap2UI5 app as a git repository that abapGit pulls into the system - the app-template, the checks that run before the class reaches a system, and the loop a developer works in off-stack.
 ---
 # Working Off-Stack
 

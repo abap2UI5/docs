@@ -1,3 +1,6 @@
+---
+description: The one interface an abap2UI5 app implements, and why three save handlers - EML, a MODIFY, a BAPI - sit behind one unchanged UI class.
+---
 # #3 One Class, No Programming Model
 
 To use a framework, you always have to fulfill certain requirements: these can
@@ -20,8 +23,11 @@ ENDINTERFACE.
 ```
 
 That is it. abap2UI5 calls `main( )` on every roundtrip, and your class decides
-what to display and how to react. Activate it, append `?app_start=zcl_my_app`
-to your service URL, and there it is — about as ceremonious as pressing F8.
+what to display and how to react: the view is built when
+`check_on_navigated( )` is true, an event changes attributes and returns —
+the shape [#16](/advanced/insights/16-one-click-one-request) describes.
+Activate it, append `?app_start=zcl_my_app` to your service URL, and there it
+is — about as ceremonious as pressing F8.
 
 No service to define, no binding to maintain, no annotations, nothing to
 transport but the class. And no programming model either: `main( )` is an
@@ -34,7 +40,7 @@ Here is a small edit screen writing through a RAP business object:
 
 <!-- playground: no Run button — writes through a RAP business object, which only a system has -->
 ```abap
-CLASS zcl_travel_edit DEFINITION PUBLIC.
+CLASS zcl_sample_travel_edit DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -51,15 +57,17 @@ CLASS zcl_travel_edit DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS zcl_travel_edit IMPLEMENTATION.
+CLASS zcl_sample_travel_edit IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->get_event( ) = `SAVE`.
+
+    IF client->check_on_navigated( ).
+      set_view( ).
+    ELSEIF client->get_event( ) = `SAVE`.
       on_save( ).
     ENDIF.
-    set_view( ).
 
   ENDMETHOD.
 
@@ -189,12 +197,9 @@ one that waits for a modeling exercise.
 ## Conclusion
 
 Where a strict programming model fits, use it — picking one deliberately is
-good engineering. abap2UI5 is for the rest: the customer not on the newest
-release, the logic that never quite fits the shape a model has in mind, and the
-screen from [the last article](/advanced/insights/02-the-cost-of-a-screen) that
-would otherwise not get built at all.
-
-One class, no programming model, and no opinion about what is behind the
-screen.
-
-Give abap2UI5 a try. 🦖🦕🦣
+good engineering. abap2UI5 asks for nothing beyond the signature of `main( )`,
+so it fits the rest: the system not on the newest release, the logic that does
+not match the shape a model has in mind, and the screen from
+[the last article](/advanced/insights/02-the-cost-of-a-screen) whose whole
+backend is one class. Where it sits next to RAP is
+[#33](/advanced/insights/33-rap-or-abap2ui5).

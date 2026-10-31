@@ -1,3 +1,6 @@
+---
+description: The whole of z2ui5_if_client by shape - show a screen, bind data, read the event, navigate, message, follow-up actions - before knowing it by name.
+---
 # #17 What the Client Can Do
 
 The app implements one interface with one method. The single parameter of that
@@ -53,6 +56,3 @@ file, set the tab title, raise the model size limit. Each is a constant in
 That is the whole API surface an app ever touches. The full list with every
 parameter is on the [Client API](/resources/api) page, generated from the
 interface itself, so it cannot drift from what the framework actually offers.
-
-One method in, one interface out. Everything an app can do is a method on
-`client`.

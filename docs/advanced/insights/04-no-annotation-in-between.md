@@ -1,3 +1,6 @@
+---
+description: Why the vocabulary of an abap2UI5 view is the UI5 control library itself - every control, at the UI5 version the bootstrap names - shown with a sap.m.Wizard.
+---
 # #4 No Annotation in Between
 
 In a metadata-driven UI a screen is described rather than written. The
@@ -13,14 +16,17 @@ estimate triples.
 
 abap2UI5 has no vocabulary of its own to run out of. What it sends to the
 browser is a UI5 XML view, so the vocabulary is the UI5 control library itself
-— all of it, at the version the launchpad already serves.
+— all of it, at the UI5 version the
+[bootstrap](/configuration/setup/ui5_bootstrapping) names, which is a
+configuration decision of the installation rather than a property of the SAP
+release ([#27](/advanced/insights/27-one-codebase-702-to-abap-cloud)).
 
 Which is why a control nobody generates is not a special case. Take a
 three-step wizard, a control that is right there in `sap.m` and almost never
 turns up in a generated app:
 
 ```abap
-CLASS zcl_onboarding DEFINITION PUBLIC.
+CLASS zcl_sample_onboarding DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -37,15 +43,17 @@ CLASS zcl_onboarding DEFINITION PUBLIC.
 ENDCLASS.
 
 
-CLASS zcl_onboarding IMPLEMENTATION.
+CLASS zcl_sample_onboarding IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
     me->client = client.
-    IF client->get_event( ) = `COMPLETE`.
+
+    IF client->check_on_navigated( ).
+      set_view( ).
+    ELSEIF client->get_event( ) = `COMPLETE`.
       client->message_toast_display( |{ name } assigned to { plant }| ).
     ENDIF.
-    set_view( ).
 
   ENDMETHOD.
 
@@ -115,7 +123,6 @@ be said for most framework knowledge.
 
 The price is on the same page, and it is not small. Nothing writes the layout:
 a list report a few annotations would have described is here a table built
-control by control. Reaching every control is not the same as being handed one.
-
-A vocabulary is a promise about what will be needed. An API makes no such
-promise — and takes nothing off the table either.
+control by control. Reaching every control is not the same as being handed one,
+and [#33](/advanced/insights/33-rap-or-abap2ui5) is about when the generated
+list report is the better deal.

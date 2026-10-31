@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The logo, the brand colors and the illustrations of the abap2UI5 project - every original file the project puts its name on, and what may be done with them.
 ---
 # Logo & Brand
 

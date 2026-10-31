@@ -1,3 +1,6 @@
+---
+description: Why the view is not sent on every click - an event changes the model alone, UI5 data binding updates the bound controls, and focus, scroll and half-typed input survive.
+---
 # #8 Only the Changed Part
 
 If the backend sends the view on every request —

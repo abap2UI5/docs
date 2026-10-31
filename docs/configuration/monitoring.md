@@ -29,6 +29,30 @@ It is not called for the page request (GET), for HEAD, or for a POST the
 [CSRF check](/configuration/security#cross-site-request-forgery-csrf) rejected:
 none of them runs an app.
 
+### Switch it on
+
+The monitor is **off until the user exit switches it on**. Nothing seeds the
+switch: without it the framework does not even look for an implementing
+class. Set `check_monitor_active` in `set_config_http_post` of your
+[user exit](/advanced/extensibility/user_exits):
+
+```abap
+METHOD z2ui5_if_ui5_exit~set_config_http_post.
+  cs_config-check_monitor_active = abap_true.
+ENDMETHOD.
+```
+
+The field is read on every roundtrip, so setting it back to `abap_false`
+stops the monitor on the next one — in a running stateful session too.
+
+Why opt-in: a monitor is code of another package running inside every
+roundtrip of every app. What the method raises is caught (below), but a
+syntax error in the monitor class, or in any class it uses, is the runtime
+error `SYNTAX_ERROR` — a short dump no `CATCH` stops, on every request of
+every user. Only code that is never called cannot do that. So switch the
+monitor on once its package is pulled completely, active and checked, and
+not before.
+
 ### What a roundtrip reports
 
 `on_roundtrip` receives one structure, `is_roundtrip`:
@@ -118,10 +142,13 @@ ENDCLASS.
   change after a transport or a system copy. A monitor that has to feed two
   consumers calls the second one itself.
 
-Without an implementation nothing changes, apart from the one lookup per roll
-area. A host without a class repository — the framework running on Node — and
-a unit test install a monitor directly with
-`z2ui5_cl_ui5_srv_monitor=>set_monitor( )`.
+While the switch is off nothing changes at all: the exit is asked for the
+flag and the class repository is not consulted. With the switch on and no
+implementing class, the lookup runs once per roll area and finds nothing. A
+host without a class repository — the framework running on Node — and a unit
+test install a monitor directly with
+`z2ui5_cl_ui5_srv_monitor=>set_monitor( )`; a monitor installed that way is
+the host's choice and bypasses the switch.
 
 ## Admin Cockpit
 
@@ -153,21 +180,37 @@ the CSP, the response headers — is explained on the
 
 ### Installation
 
-Install the framework first, then the cockpit with abapGit into a package of
-its own. Pick the branch by your abap2UI5 release:
+1. Install the framework first (1.146.0 or later).
+2. Install the cockpit with abapGit into a package of its own. Pick the
+   branch by your abap2UI5 release:
 
-| Your abap2UI5 | Branch | What you get |
-| --- | --- | --- |
-| has `z2ui5_if_ui5_monitor` | `main` | everything |
-| has no monitor interface yet | `standalone` | Installation & Security, Drafts & Housekeeping, Settings — the other tabs say what they need |
+   | Your abap2UI5 | Branch | What you get |
+   | --- | --- | --- |
+   | has `z2ui5_if_ui5_monitor` | `main` | everything |
+   | 1.146.0 or later without the monitor interface | `standalone` | everything through the handler line of step 4 — only the phases of a roundtrip (load, main, render) need the interface |
 
-`standalone` is `main` without the one class that implements the monitor
-interface, because abapGit always pulls a whole repository and that class
-cannot activate without the interface. Once your abap2UI5 has it, switch the
-repository to `main` and pull.
+   `standalone` is `main` without the one class that implements the monitor
+   interface, because abapGit always pulls a whole repository and that class
+   cannot activate without the interface. Once your abap2UI5 has it, switch
+   the repository to `main` and pull.
+3. Start the cockpit right away: until somebody has claimed it, it shows
+   nothing but a screen for claiming the administrator role (below).
+4. Feed it. Two ways, which can be combined — with both, the monitor counts
+   and the handler line only records the request and response bodies:
 
-Then start the cockpit right away: until somebody has claimed it, it shows
-nothing but a screen for claiming the administrator role (below).
+   - **The handler line**, on every release: in your own HTTP handler class
+     (the one behind the ICF node, not a class of the framework repository)
+     replace `z2ui5_cl_ui5_http_handler=>run( server )` with
+     `z2ui5_cl_cockpit_wire=>run( server )`. It runs abap2UI5, takes the time
+     and records the roundtrip. Do this once the pull is complete and every
+     object is active.
+   - **The monitor**, with branch `main`: switch it on in your user exit, as
+     described [above](#switch-it-on) —
+     `cs_config-check_monitor_active = abap_true` in `set_config_http_post`.
+     It adds the phases of a roundtrip. Until the exit says so, abap2UI5
+     calls no monitor, and the usage, error and performance tabs stay empty.
+
+The README of the add-on carries the ABAP Cloud form of the handler line.
 
 ### Who may open it
 

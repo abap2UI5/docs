@@ -1,3 +1,6 @@
+---
+description: An abap2UI5 app in the Fiori Launchpad - the one shell BSP installed system-wide, the target mapping per app, what the app can read inside, and the blank tile after an import.
+---
 # #26 A Tile Like Any Other
 
 An app that is reached by pasting a URL is a demo. It becomes an application
@@ -42,10 +45,7 @@ keeps working.
 recurring trouble is not the app but the UI5 app index after an abapGit import:
 run `/UI5/APP_INDEX_CALCULATE`, clear the HTTP cache in `SMICM`, hard-reload.
 The [launchpad page](/configuration/launchpad) walks through it with
-screenshots. Bookmark it now and save yourself the twenty minutes.
+screenshots.
 
 Public Cloud is a different door: there the launchpad is Build Work Zone, and
 the [ABAP Cloud pages](/configuration/btp) describe the setup.
-
-One shell in the UI5 repository, one parameter per tile. No user can tell
-the difference.

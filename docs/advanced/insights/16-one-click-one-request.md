@@ -1,3 +1,6 @@
+---
+description: The mental model under every abap2UI5 app - one click is one request and one call to main( ) on a fresh instance - and the three questions main( ) dispatches on, in order.
+---
 # #16 One Click, One Request
 
 The mental model that everything else in the framework rests on fits in one

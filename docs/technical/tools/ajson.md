@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: ajson, the open-source JSON library abap2UI5 ships under its own namespace for every request and response, and why it replaced /UI2/CL_JSON.
 ---
 # ajson
 

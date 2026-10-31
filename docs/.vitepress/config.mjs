@@ -473,7 +473,7 @@ export default defineConfig({
           // without scrolling, which it was not when it was the twelfth.
           //
           // Use Cases is gone from this section: it was converted into the
-          // Blogs under Resources - the clean core levels and the
+          // Insights under Resources - the clean core levels and the
           // wrapper, on-stack against side-by-side, and one app serving many
           // systems - and the page it used to be is in the git history.
           //
@@ -637,7 +637,7 @@ export default defineConfig({
             // section of its own: a reader looks for them among the resources,
             // as reading about the framework rather than a step in using it.
             // The URLs stay where they were published.
-            text: "Blogs",
+            text: "Insights",
             link: "/advanced/insights/",
             collapsed: true,
             items: [
@@ -679,9 +679,10 @@ export default defineConfig({
               { text: "#32 From ITS to abap2UI5", link: "/advanced/insights/32-from-its-to-abap2ui5" },
               { text: "#33 RAP or abap2UI5?", link: "/advanced/insights/33-rap-or-abap2ui5" },
               { text: "#34 UI5 Freestyle or abap2UI5?", link: "/advanced/insights/34-freestyle-or-abap2ui5" },
-              { text: "#35 Low-Code or abap2UI5?", link: "/advanced/insights/35-low-code-or-abap2ui5" },
-              { text: "#36 Written for Agents", link: "/advanced/insights/36-written-for-agents" },
-              { text: "#37 What the AI Leaves Behind", link: "/advanced/insights/37-what-the-ai-leaves-behind" },
+                  { text: "#36 Written for Agents", link: "/advanced/insights/36-written-for-agents" },
+              { text: "#37 What the Client Can Send", link: "/advanced/insights/37-what-the-client-can-send" },
+              { text: "#38 How Many Users", link: "/advanced/insights/38-how-many-users" },
+              { text: "#39 Upgrading the Framework", link: "/advanced/insights/39-upgrading-the-framework" },
             ],
           },
           {

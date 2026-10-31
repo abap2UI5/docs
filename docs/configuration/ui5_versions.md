@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: Which UI5 distribution and version the abap2UI5 frontend loads - OpenUI5, SAPUI5, UI5 2.x and the legacy-free build - and how an app reads the running version and distribution from client->get( )-s_ui5.
 ---
 # UI5 Versions
 The abap2UI5 frontend uses the SAP UI5 framework, which ships in several distributions and versions. You choose which one to load during [bootstrapping](/configuration/setup/ui5_bootstrapping), the same way as for any other UI5 app on your system.
@@ -34,7 +35,7 @@ DATA(theme)           = ui5-theme.             " e.g. `sap_horizon`
 ```
 
 ## OpenUI5 or SAPUI5
-The `gav` (group–artifact–version) field tells you which UI5 distribution is loaded: SAPUI5 ships the `com.sap.ui5` modules, OpenUI5 does not. Checking whether `gav` contains `com.sap.ui5` is the same logic the framework itself uses internally to detect the distribution. No custom control and no extra roundtrip are needed — the info is part of every request, so it already works in `check_on_init( )`:
+The `gav` (group–artifact–version) field tells you which UI5 distribution is loaded: SAPUI5 ships the `com.sap.ui5` modules, OpenUI5 does not. Checking whether `gav` contains `com.sap.ui5` is the same logic the framework itself uses internally to detect the distribution. No custom control and no extra roundtrip are needed — the info is part of every request, so it already works in the first roundtrip, under `check_on_navigated( )` (or `check_on_init( )`, which also covers the very first start):
 
 ```abap
 IF client->check_on_navigated( ).

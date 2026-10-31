@@ -1,3 +1,6 @@
+---
+description: Value help in three sizes - suggestion items filtered in the browser, a selection popup of the same class, a reusable value-help app on the stack - and what the DDIC link cost.
+---
 # #19 Where F4 Went
 
 `PARAMETERS pa_arbgb TYPE t100-arbgb` got a value help for free, because the
@@ -56,6 +59,3 @@ candidates. What came back is that the candidates can be anything an ABAP
 `SELECT` can produce — a join, a CDS view with parameters, a filtered subset
 per user, or a table that did not exist a millisecond ago, which is where
 [#1](/advanced/insights/01-somewhere-on-the-way-to-ui5) started.
-
-F4 is three lines and a SELECT now. It is no longer free, and it is no
-longer limited to the DDIC either.

@@ -1,5 +1,6 @@
 ---
 outline: [2, 3]
+description: Running an abap2UI5 app inside the object page of a Fiori elements app with the embed control z2ui5.embed.Container from npm - the package, the fragment, the startup parameters and the abap2UI5 release it needs.
 ---
 # Fiori Elements Integration
 
@@ -15,10 +16,12 @@ hands fields of that object to the ABAP class as startup parameters.
 The control loads the abap2UI5 frontend itself, from the service it talks to
 anyway (`/sap/bc/z2ui5?z2ui5-bundle`), so the frontend always has the version
 of the backend. No launchpad target mapping for `z2ui5` is needed, and no
-controller code. It needs **abap2UI5 1.146.0 or later**: from that release
-on, an embedded abap2UI5 leaves the URL hash to the page it runs in. An older
-one clears the hash after every roundtrip, and the object page goes back to
-the list.
+controller code. The control itself runs against **abap2UI5 1.145.0 or
+later**, whose service answers `?z2ui5-bundle`; inside a Fiori elements object
+page it needs **1.146.0 or later**, because from that release on an embedded
+abap2UI5 leaves the URL hash to the page it runs in. 1.145.0 clears the hash
+after every roundtrip, and the object page goes back to the list. The
+control's README lists the other things 1.145.0 does not do yet.
 
 ## The package
 

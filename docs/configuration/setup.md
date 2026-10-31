@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The user exit z2ui5_if_ui5_exit that shapes the start page abap2UI5 generates - UI5 bootstrap source and version, theme, CSP and the other settings of the page abap2UI5 serves.
 ---
 # Setup
 

@@ -1,3 +1,6 @@
+---
+description: Why abap2UI5 runs from NetWeaver 7.02 to ABAP Cloud from one codebase - the three utility classes that absorb the release differences, the generated 702 branch, and UI5 from the bootstrap.
+---
 # #27 One Codebase, 7.02 to ABAP Cloud
 
 Most SAP landscapes are currently two landscapes. Something old that runs the
@@ -14,9 +17,11 @@ to support.
 
 Almost. What does differ — GUID creation, base64 and code page conversion,
 finding the classes that implement an interface, the HTTP request and response
-objects and a handful more — sits in two utility classes, written to satisfy
-both language versions at once through dynamic calls: ABAP Cloud and Standard
-ABAP, from a single code line.
+objects and a handful more — sits in three utility classes in one package
+(`z2ui5_cl_ui5_util_context`, `z2ui5_cl_ui5_util_http`,
+`z2ui5_cl_ui5_util_json_fl`, with `z2ui5_cx_ui5_util_error` as their
+exception), written to satisfy both language versions at once through dynamic
+calls: ABAP Cloud and Standard ABAP, from a single code line.
 
 The rest is arithmetic. New ABAP syntax is written normally in the main
 repository, and abaplint generates the low-syntax branch automatically, down to
@@ -35,8 +40,5 @@ heard of this year.
 What that buys is portability in both directions. An app written on ABAP Cloud
 runs on the older system. An app written on 7.02 runs on BTP ABAP Environment.
 The screen built for the system being replaced is not thrown away with it —
-which, for anybody in the middle of a conversion project, is the interesting
-sentence in this article.
-
-A framework that needs nothing from the release does not have to be ported
-when the release changes.
+provided the app itself reads nothing the new system no longer has, which is
+[#28](/advanced/insights/28-cloud-ready-is-a-property-of-your-app).

@@ -1,9 +1,12 @@
+---
+description: One ICF node serves every app and the URL names the class - where authentication, authorization, the CSRF check and the Content Security Policy each sit.
+---
 # #22 Who May Start Which App
 
 One ICF node serves every abap2UI5 app in the system, and the URL names the
-class: `?app_start=zcl_job_monitor`. Show that to a Basis colleague and you get
-the right question within about four seconds — so anybody with the node can
-start any class?
+class: `?app_start=zcl_sample_job_monitor`. Show that to a Basis colleague and
+you get the right question within about four seconds — so anybody with the node
+can start any class?
 
 Only if nobody decided otherwise, and the deciding happens in two familiar
 places.
@@ -24,7 +27,7 @@ instead of a view:
     IF client->check_on_navigated( ).
 
       AUTHORITY-CHECK OBJECT 'Z_APP_AUTH'
-                      ID 'APP' FIELD 'ZCL_JOB_MONITOR'.
+                      ID 'APP' FIELD 'ZCL_SAMPLE_JOB_MONITOR'.
       IF sy-subrc <> 0.
         client->message_box_display( text  = `You are not authorized to use this app.`
                                      type  = `error`
@@ -53,12 +56,17 @@ with the refusal branch and what it should say, is on
 
 What the framework itself brings to the table is the part a web application
 needs and a report never did. A CSRF check on every POST, on by default. A
-Content Security Policy on the first page, restricting what the browser will
-load, tightened in the user exit when an old UI5 release no longer has to be
-served. Error details off in production, as
+Content Security Policy on the first page, strict by default — no
+`'unsafe-eval'`, no `'unsafe-inline'` for scripts — which an installation on
+UI5 1.71 to 1.82 may have to *loosen* in the user exit for a popup that names
+a module it has not loaded
+([Security](/configuration/security#older-releases-switching-unsafe-eval-on)).
+Error details off in production, as
 [#20](/advanced/insights/20-message-still-works) described. And the business
 logic never leaves the server: the browser gets a view and the data bound to
 it, and nothing else — there is no client-side rule to read out of a bundle,
 because there is no bundle.
 
-One node, one class, one AUTHORITY-CHECK. The rest is PFCG.
+What the browser can send the other way — the class name, a draft id, the
+event name, every bound value — and what the framework checks on each is
+[#37](/advanced/insights/37-what-the-client-can-send).

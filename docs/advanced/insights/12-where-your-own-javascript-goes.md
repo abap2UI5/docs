@@ -1,3 +1,6 @@
+---
+description: The three declared seams for JavaScript of your own - a control method called by id, expression binding in the view, a custom control in the z2ui5_ccc BSP - and why there is no plugin system.
+---
 # #12 Where Your Own JavaScript Goes
 
 Sooner or later an app needs something the XML view cannot express. A chart
@@ -55,6 +58,3 @@ the system.
 None of them lets an app change the framework, and none requires the framework
 to change for an app. No plugin registry to learn, and no pull request to wait
 for either.
-
-Extensibility is not the absence of a boundary. It is knowing exactly where
-the boundary is.

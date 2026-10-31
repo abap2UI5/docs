@@ -10,7 +10,9 @@ system: activate the class, launch the app, look at the screen. So the agent
 writes something plausible, and you are the one who finds out.
 
 [**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) closes that
-loop. It is an [MCP](https://modelcontextprotocol.io) server: a small program
+loop. It is published as `@abap2ui5/mcp-server` on npm — 1.0.0 is the
+current release, and the four `app_*` tools, `add_agent_setup` and
+`migrate_report` are part of it. It is an [MCP](https://modelcontextprotocol.io) server: a small program
 your AI client starts in the background, which gives the agent a set of tools
 it can call by itself. Those tools let it check a view, **look at a picture of
 it**, deploy the class into a local sandbox, transpile it to Node beside the
@@ -85,9 +87,9 @@ That install is about 45 MB, and 19 MB of it is a Playwright driver only
 — `npm i -D @abap2ui5/linter-render && npx playwright install chromium` in the
 linter checkout. `validate_view`'s property gate needs neither.
 
-The server releases after 0.2.0 also find the linter where a project installed
-it — app-template has `@abap2ui5/linter` as a development dependency — and
-next to the server itself, so one command brings all three:
+Since 0.3.0 the server also finds the linter where a project installed it —
+app-template has `@abap2ui5/linter` as a development dependency — and next to
+the server itself, so one command brings all three:
 
 ```sh
 claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server -p @abap2ui5/linter -p @abap2ui5/linter-render abap2ui5-mcp
@@ -122,7 +124,7 @@ answer, not fatal. All three are sources of the one
 [Stack](https://abap2ui5.github.io/samples-site/).
 
 `deploy_app` writes into the gitignored sandbox of the samples-controls
-checkout, else of the abap2UI5 checkout. The server releases after 0.2.0 need
+checkout, else of the abap2UI5 checkout. Since 0.3.0 the server needs
 neither: without a checkout the sandbox is `~/.abap2ui5-mcp/sandbox`, linted
 with app-template's own configuration against the framework's sources from
 npm.
@@ -130,8 +132,8 @@ npm.
 ### Level 3 — see the running app (a browser, and a build)
 
 Adds `build_backend`, `run_app`, `interact_app`, `run_unit_tests` and
-`verify_app`: the screenshot loop. From the next release on, the four `app_*`
-tools that operate an app without a browser need the same build.
+`verify_app`: the screenshot loop. The four `app_*` tools that operate an app
+without a browser need the same build.
 
 ```sh
 npx playwright install chromium
@@ -142,7 +144,7 @@ Then one `build_backend`. What it builds depends on what is there:
 - **An abap2UI5 checkout:** it downloads the backend the framework's release
   workflow built for the checkout's version — about a minute — and afterwards
   transpiles only the deployed apps on top of it.
-- **No abap2UI5 checkout** (server releases after 0.2.0): it installs the npm
+- **No abap2UI5 checkout** (since 0.3.0): it installs the npm
   package [`@abap2ui5/node-runtime`](/advanced/npm_packages) — the framework,
   already transpiled — once per release into `~/.abap2ui5-mcp`, and transpiles
   only the deployed apps against it. About ten seconds for the first install,
@@ -209,7 +211,7 @@ deliberately does not have: your real systems.
 | `capabilities` | Whether abap2UI5 can express a UI5 feature **at all**, from the verified capability map. The question to ask before writing a line of ABAP |
 | `app_guide` | **How to build an app**, live from the framework checkout: the app class template, lifecycle, the view-builder chain, binding, events, popups, navigation, portability |
 | `scaffold_app` | The files a new project starts from, live from app-template — both gate configs, the CI workflow, the abapGit metadata, an `AGENTS.md` and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
-| `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both gate configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing. *Preview, next release* |
+| `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both gate configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing |
 | `examples` | Search the three sample catalogs for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
 | `read_example` | The source of a sample an `examples` hit named — the whole class, from the checkout or fetched from GitHub |
 | `api_reference` | The client API an app calls, `z2ui5_if_client`, parsed live **with its ABAP-Doc**: methods, parameters, defaults and the `cs_*` constants, looked up instead of guessed |
@@ -226,10 +228,10 @@ deliberately does not have: your real systems.
 | `build_log` | The last build's full output, page by page — the error the result's short tail cut off |
 | `run_app` | Boot any app class headless, return boot status, real page errors (benign UI5 noise filtered) and a full-page **screenshot as an image**. The *running* app, so it needs a `build_backend` first |
 | `interact_app` | `run_app` with hands: boot the app, then click, fill, press and wait through a short script, and get the screenshot after it — the **event branch** of an app, visible without a system |
-| `app_list` | The app classes the built backend can start — the deployed apps and the framework's own. *Preview, next release* |
-| `app_start` | Start an app and get its **agent snapshot**: fields with path, label, kind and value, actions with event and arguments, tables, messages — over the abap2UI5 JSON protocol, no browser. *Preview, next release* |
-| `app_describe` | The current snapshot of a session, from memory — no roundtrip. *Preview, next release* |
-| `app_act` | Fill fields and fire an event by name, validated against the snapshot and sent as the real model delta, and get the next snapshot. *Preview, next release* |
+| `app_list` | The app classes the built backend can start — the deployed apps and the framework's own |
+| `app_start` | Start an app and get its **agent snapshot**: fields with path, label, kind and value, actions with event and arguments, tables, messages — over the abap2UI5 JSON protocol, no browser |
+| `app_describe` | The current snapshot of a session, from memory — no roundtrip |
+| `app_act` | Fill fields and fire an event by name, validated against the snapshot and sent as the real model delta, and get the next snapshot |
 | `run_unit_tests` | The test classes deployed with an app, run in the open-abap runtime: **assertions**, not pictures |
 | `verify_app` | **The whole loop in one call** — validate, deploy, build, unit tests, boot — stopping at the first stage that fails and reporting every stage before it |
 | `migrate_report` | Convert a **classic ABAP report** into an app class of the abap-cloud-gui add-on, with its converter report2cloud: the class files, the migration report (TODOs, tables and APIs not released on ABAP Cloud with their successors) and the refusals with `file:row:col`. `deploy: true` also builds it here and answers the agent snapshot of its selection screen. Needs an abap-cloud-gui checkout (1.0.0 or later) |

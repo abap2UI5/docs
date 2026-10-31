@@ -18,9 +18,7 @@ If you need a specific feature that isn't there yet, open an issue — a good wa
 
 ## Commercial Support
 
-abap2UI5 is free and MIT-licensed — there is nothing to buy from the project itself. Companies and freelancers offer paid services around abap2UI5, such as implementation, app development, training, and support agreements. See [Who Uses abap2UI5?](/resources/who_uses) for companies active in the ecosystem.
-
-**Offering abap2UI5 services?** Add your company to that page or reach out at <contact@abap2UI5.org> to get listed.
+abap2UI5 is free and MIT-licensed — there is nothing to buy from the project itself. Companies and freelancers active in the ecosystem are listed under [Who runs it](https://abap2ui5.github.io/why/#who-runs-it){target="_self"} on the why-site. To be listed there, reach out at <contact@abap2UI5.org>.
 
 ## Contact
 
