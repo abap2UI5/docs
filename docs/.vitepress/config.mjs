@@ -448,6 +448,13 @@ export default defineConfig({
           { text: "Monitoring", link: "/configuration/monitoring" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
           { text: "Productive Usage", link: "/configuration/productive_usage" },
+          // The operations pages behind it, in the order a Basis team meets
+          // them: what a release is and how to move, what travels, what to
+          // watch, how much it costs in work processes and table rows.
+          { text: "Versioning, Upgrade", link: "/configuration/versioning" },
+          { text: "Transport, Landscape", link: "/configuration/transport" },
+          { text: "Basis Runbook", link: "/configuration/runbook" },
+          { text: "Sizing", link: "/configuration/sizing" },
           { text: "Logout", link: "/configuration/logout" },
           { text: "Debugging", link: "/configuration/debugging" },
           // The Launchpad, Work Zone and Mobile Start moved to Integration,

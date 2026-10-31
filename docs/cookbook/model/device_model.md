@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_445
+description: The device model in abap2UI5 - device, browser, OS and viewport information bound in the view through the UI5 device model, or read in ABAP from client->get( )-s_device.
 ---
 # Device Model
 
@@ -29,7 +30,7 @@ DATA(orientation) = device-orientation.       " `landscape` | `portrait`
 DATA(browser)     = device-browser-name.      " UI5's short code: `cr`, `ff`, `sf`, `ed`
 DATA(brw_version) = device-browser-version.
 
-DATA(os)          = device-os-name.           " e.g. `win`, `mac`, `iOS`, `Android`
+DATA(os)          = device-os-name.           " `win`, `mac`, `linux`, `ios`, `android`
 DATA(os_version)  = device-os-version.
 
 DATA(width)       = device-resize-width.      " current viewport, in px
@@ -40,13 +41,17 @@ DATA(pointer)     = device-support-pointer.
 DATA(retina)      = device-support-retina.
 ```
 
+The short codes are constants of the interface, so a comparison does not
+need the literal: `client->cs_device-os-ios`, `cs_device-browser-chrome`,
+`cs_device-system-phone`, `cs_device-orientation-portrait`.
+
 ## Both Together
 
 Press **Run** — the top half reads the device model straight in the view, the
 bottom half is the same information taken from ABAP:
 
 ```abap
-CLASS z2ui5_cl_sample_device DEFINITION PUBLIC.
+CLASS zcl_sample_device DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -59,7 +64,7 @@ CLASS z2ui5_cl_sample_device DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_device IMPLEMENTATION.
+CLASS zcl_sample_device IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).

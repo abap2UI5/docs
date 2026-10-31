@@ -2,10 +2,14 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_502
+description: Logging in abap2UI5 - the Business Application Log as in classic ABAP, and showing a BAL table, a cl_bali_log or an abap-logger instance with one message_box_display( ) call.
 ---
 # Logging
 
-Logging is critical for business processes. In ABAP systems, the standard tool is the Business Application Log (BAL), available on-premise and in ABAP Cloud environments alike. With abap2UI5, use BAL like you would in classic ABAP — and to show a log, hand it straight to `client->message_box_display( )`.
+Logging is critical for business processes. In ABAP systems, the standard tool
+is the Business Application Log (BAL), available on-premise and in ABAP Cloud
+environments alike. With abap2UI5, use BAL like you would in classic ABAP — and
+to show a log, hand it straight to `client->message_box_display( )`.
 
 That method takes **any** message source, not just a string: a BAL table, a
 `cl_bali_log`, a `bapiret2` table, `sy`, an exception. Anything that is not a
@@ -14,7 +18,10 @@ into the lines the box shows — so every example below is the same one call wit
 a different argument. See [Message](/cookbook/translation_messages/message) for the other sources.
 
 ## BAL Tables
-In classic ABAP, use the BAL function modules and hand the BAL table over as it is. In the `bal_t_msgr` structure, `msgno` is the message number within the message class (`msgid`), while `msgnumber` is the message's sequence number within the log:
+In classic ABAP, use the BAL function modules and hand the BAL table over as it
+is. In the `bal_t_msgr` structure, `msgno` is the message number within the
+message class (`msgid`), while `msgnumber` is the message's sequence number
+within the log:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -54,7 +61,9 @@ ENDMETHOD.
 ```
 
 ## abap-logger
-You can also use the open-source project [**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). It simplifies work with BAL logs and pairs well with abap2UI5:
+You can also use the open-source project
+[**abap-logger**](https://github.com/ABAP-Logger/ABAP-Logger). It simplifies
+work with BAL logs and pairs well with abap2UI5:
 ```abap
 METHOD z2ui5_if_app~main.
 
@@ -67,19 +76,10 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-## BAL Logs
-Unlike message classes, BAL logs carry more detail — like timestamps. The mapper reads them like any other message source, so the examples above work for BAL logs too:
-
-```abap
-METHOD z2ui5_if_app~main.
-
-  DATA(lo_log) = zcl_logger_factory=>create_log( desc = `ABAP Logger` ).
-  lo_log->e( `This is an error...` ).
-
-  client->message_box_display( lo_log ).
-
-ENDMETHOD.
-```
+Whichever source it is, the box shows the messages by severity, the most
+severe deciding its type; a log carries more than a message class does — a
+timestamp per entry, the sequence number — and that is what the message
+dialog of the popups add-on below renders where a box cannot.
 
 ::: tip Something richer than a message box
 A message box is a list of lines. For a sortable table of the log with its

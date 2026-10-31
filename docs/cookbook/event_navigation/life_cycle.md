@@ -10,7 +10,7 @@ description: The abap2UI5 app life cycle - every request enters main( ), and che
 Every request enters the `main` method. `CASE abap_true` dispatches between initialization, navigation returns, and user events using `` client->check_on_init( ) ``, `` client->check_on_event( `EVENT_NAME` ) ``, and `` client->check_on_navigated( ) ``. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
 
 ```abap
-CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
+CLASS zcl_sample_life_cycle DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -27,7 +27,7 @@ CLASS z2ui5_cl_demo_app_001 DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_demo_app_001 IMPLEMENTATION.
+CLASS zcl_sample_life_cycle IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 

@@ -23,7 +23,7 @@ paste it into your ABAP class, and it renders.
 The simplest case: build an XML string and ship it to the client.
 
 ```abap
-CLASS z2ui5_cl_sample_view_xml DEFINITION PUBLIC.
+CLASS zcl_sample_view_xml DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -32,18 +32,22 @@ CLASS z2ui5_cl_sample_view_xml DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_view_xml IMPLEMENTATION.
+CLASS zcl_sample_view_xml IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    client->view_display(
-        |<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" | &
-        |          displayBlock="true" height="100%">| &
-        |  <Shell>| &
-        |     <Page title="My title">| &
-        |         <Text text="My text"/>| &
-        |     </Page>| &
-        |  </Shell>| &
-        |</mvc:View>| ).
+    IF client->check_on_navigated( ).
+
+      client->view_display(
+          |<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" | &
+          |          displayBlock="true" height="100%">| &
+          |  <Shell>| &
+          |     <Page title="My title">| &
+          |         <Text text="My text"/>| &
+          |     </Page>| &
+          |  </Shell>| &
+          |</mvc:View>| ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -60,7 +64,7 @@ one call per control, so the shape of the chain is the shape of the view.
 frontend:
 
 ```abap
-CLASS z2ui5_cl_sample_view_builder DEFINITION PUBLIC.
+CLASS zcl_sample_view_builder DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -69,22 +73,26 @@ CLASS z2ui5_cl_sample_view_builder DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_view_builder IMPLEMENTATION.
+CLASS zcl_sample_view_builder IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Shell`
-                )->ele( `Page`
-                    )->a( n = `title` v = `My title`
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-                    )->tag( `Text`
-                        )->a( n = `text` v = `My text` ).
+              )->ele( `Shell`
+                  )->ele( `Page`
+                      )->a( n = `title` v = `My title`
 
-    client->view_display( view->stringify( ) ).
+                      )->tag( `Text`
+                          )->a( n = `text` v = `My text` ).
+
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -92,7 +100,9 @@ ENDCLASS.
 
 Both classes produce the exact same view — press **Run** on either one and the
 same page comes up. Use whichever you prefer: raw strings are fine for a
-handful of lines, the builder scales better for real apps.
+handful of lines, the builder scales better for real apps. Either way the
+view is built in the `check_on_navigated( )` branch and nowhere else; the
+reason is on [Life Cycle](/cookbook/event_navigation/life_cycle).
 
 Four verbs, and no catalog of controls behind them:
 
@@ -107,9 +117,10 @@ There is exactly one rule: `a( )` applies to the control the chain is
 **pointing at** — the child just added by `ele( )` or `tag( )` — so an
 attribute always follows its own control, and a control has to receive its
 attributes *before* its first child. `ele( )` descends and is closed by an
-`end( )`; `tag( )` stays, so a run of leaves needs none. The final `end( )`s
-may be left out entirely: `stringify( )` always renders from the root, no
-matter where the chain stopped.
+`end( )`; `tag( )` stays, so a run of leaves needs none. **The trailing
+`end( )`s are optional**: `stringify( )` always renders from the root, no
+matter where the chain stopped, which is why every example on this site ends
+on its last attribute and not on a run of `end( )`s.
 
 The root `mvc:View` and its `xmlns` declarations are written by hand, exactly
 as in a real UI5 view — the builder does not invent them for you.
@@ -122,23 +133,47 @@ other and carries its parent's namespace — `<m:content>` under a Page is
 ``ele( n = `content` ns = `m` )``, a default-namespace `<columns>` inside an
 `sap.ui.table.Table` is ``ele( `columns` )``.
 
-For an ABAP boolean pass `b` instead of `v`; it renders `true`/`false`, so a
-flag reaches the view without a conversion of its own:
+### The Three Forms of an Attribute
+
+`a( )` takes the attribute's name and exactly **one** of three value
+parameters — never two, never none:
+
+| Parameter | Takes | Written into the XML as | Use it for |
+|---|---|---|---|
+| `v` | any string | as it is | a binding (`client->_bind( )`), an event (`client->_event( )`), a `{/path}` or `{= …}` template, an expression — and constant text, which needs no escaping |
+| `b` | an ABAP boolean | `true` / `false` | a flag: `editable`, `visible`, `enabled`. A bare `v = flag` does not compile (`v` is a string) and `v = xsdbool( … )` renders `X`, which UI5 does not read as true |
+| `t` | any string | escaped as a **literal** | text that comes from data — a name read from a table, a user's input. UI5 reads a brace in an attribute value as a binding, so through `v` a value such as `{A}` is resolved as a binding path (and can read arbitrary paths out of the model) instead of shown |
 
 ```abap
     )->a( n = `editable` b = mv_edit_mode
-    )->a( n = `visible`  b = xsdbool( lines( mt_item ) > 0 ) )
+    )->a( n = `visible`  b = xsdbool( lines( mt_item ) > 0 )
+    )->a( n = `title`    t = |Edit { ms_order-customer }| )
 ```
 
-For text that comes from data — a name read from a table, a user's input —
-pass `t`. UI5 reads a brace in an attribute value as a binding, so through `v`
-a value such as `{A}` is resolved as a binding path instead of shown; `t`
-escapes it and the text appears as written. `v` stays the form for bindings
-and literals:
+`t` is `z2ui5_cl_ui5_view_builder=>escape_literal( )` applied to the whole
+value. Call that method directly only when **one** attribute mixes literal
+text with a binding, so the escaping has to be applied to a part:
 
 ```abap
-    )->a( n = `title` t = |Edit { ms_order-customer }| )
+    )->a( n = `title` v = |{ z2ui5_cl_ui5_view_builder=>escape_literal( mv_search ) }: \{/COUNT\} hits| )
 ```
+
+XML escaping is a separate concern and is always applied on render, through
+every one of the three.
+
+### Ids
+
+An `id` is an attribute like any other — ``)->a( n = `id` v = `tab` )`` —
+and it is what a control call (`cs_event-control_by_id`), a popover's
+`by_id`, a nested view's anchor and `set_focus` address a control by. UI5
+prefixes it with the view's own id when the view is built, so the DOM and
+an event parameter carry `mainView--tab`: that is why `${$parameters>/id}`
+on [Backend](/cookbook/event_navigation/backend#parameters) comes back with
+the `--` in front, and why the backend side never writes the prefix — the
+frontend resolves the plain id inside the right view slot. A control cloned
+from an aggregation template has no id the backend can spell, which is what
+the `<id>/<aggregation>/<index>` form of a control call is for; see
+[Frontend](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend).
 
 Tips for working with views:
 - The [VS Code extension](/advanced/vscode) gives

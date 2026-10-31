@@ -1,5 +1,6 @@
 ---
 outline: [2, 4]
+description: The rules that decide whether an abap2UI5 app works, on one page - the single main( ) entry, the dispatch chain, public bound attributes, state in attributes, the aggregation rules - each with the recipe that explains it.
 ---
 # Cheat Sheet
 

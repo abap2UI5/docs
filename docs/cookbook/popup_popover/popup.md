@@ -10,7 +10,8 @@ description: Popups in abap2UI5 - a dialog built as a UI5 fragment in ABAP, the 
 ---
 # Popup
 
-UI5 offers popups that overlay specific parts of the view. This section walks through building them in abap2UI5.
+UI5 offers popups that overlay specific parts of the view. This section walks
+through building them in abap2UI5.
 
 ## General
 
@@ -18,24 +19,29 @@ To show a popup, call `client->popup_display` instead of `client->view_display`:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `FragmentDefinition` ns = `core`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Dialog`
-                )->a( n = `title` v = `Popup - Info`
+      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
 
-                )->tag( `Text`
-                    )->a( n = `text` v = `this is information shown in a popup` ).
+              )->ele( `Dialog`
+                  )->a( n = `title` v = `Popup - Info`
 
-    client->popup_display( popup->stringify( ) ).
+                  )->tag( `Text`
+                      )->a( n = `text` v = `this is information shown in a popup` ).
+
+      client->popup_display( popup->stringify( ) ).
+
+    ENDIF.
 
   ENDMETHOD.
 ```
 
 ## Flow Logic
-A typical popup flow shows a normal view, opens a popup, and finally closes it. Structure it like this:
+A typical popup flow shows a normal view, opens a popup, and finally closes it.
+Structure it like this:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -84,7 +90,33 @@ A typical popup flow shows a normal view, opens a popup, and finally closes it. 
   ENDMETHOD.
 ```
 
-The popup has the same lifecycle as the main view: `popup_display( )` renders the XML and `popup_destroy( )` closes it. Changed ABAP data needs neither — the framework pushes the delta into the already-rendered popup with the response.
+The popup has the same lifecycle as the main view: `popup_display( )` renders
+the XML and `popup_destroy( )` closes it. Changed ABAP data needs neither — the
+framework pushes the delta into the already-rendered popup with the response.
+
+## One Popup, and What Closes It
+
+The popup slot holds **one** dialog. A second `popup_display( )` replaces
+the first — there is no stack on the frontend, so a dialog that opens
+another one and wants the first back afterwards keeps that stack in its own
+attributes and re-displays the previous popup when the second closes
+(`Z2UI5_CL_SMP_APP_161`). A popover shares the same rule in its own slot.
+
+A new **main view** closes it as well. `view_display( )` is a new screen,
+and the popup and the popover go with it: both live outside the main
+control tree and would otherwise float over a page they no longer belong to.
+A handler that re-renders the main view and wants the dialog to survive
+re-opens it in the same roundtrip — the frontend builds the main view first,
+then the popup the same response carries. The usual shape needs none of
+this: a handler inside a popup changes data and returns, and the dialog stays
+up with the new values pushed into it.
+
+For a message, a confirmation or a yes/no question there is no XML to write
+at all: `client->message_box_display( )` is a `sap.m.MessageBox` with its
+buttons as a table and its answer as a backend event —
+[Message](/cookbook/translation_messages/message#the-parameters-of-message-box-display)
+lists the parameters. Reach for a `Dialog` of your own when the popup holds
+input fields or a table.
 
 
 ## Separated App
@@ -95,7 +127,7 @@ then an ordinary `z2ui5_if_app` — it just displays into the popup slot instead
 of the main one, and ends by handing control back:
 
 ```abap
-CLASS z2ui5_cl_sample_confirm DEFINITION PUBLIC.
+CLASS zcl_sample_confirm DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -112,7 +144,7 @@ CLASS z2ui5_cl_sample_confirm DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_confirm IMPLEMENTATION.
+CLASS zcl_sample_confirm IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     CASE abap_true.
@@ -166,13 +198,13 @@ reads the answer back off the same instance when control returns:
 CASE abap_true.
 
   WHEN client->check_on_event( `DELETE` ).
-    DATA(lo_confirm) = NEW z2ui5_cl_sample_confirm( ).
+    DATA(lo_confirm) = NEW zcl_sample_confirm( ).
     lo_confirm->mv_question = `Delete this entry?`.
     client->nav_app_call( lo_confirm ).
 
   WHEN client->check_on_navigated( ).
     TRY.
-        DATA(lo_prev) = CAST z2ui5_cl_sample_confirm( client->get_app_prev( ) ).
+        DATA(lo_prev) = CAST zcl_sample_confirm( client->get_app_prev( ) ).
         IF lo_prev->confirmed( ) = abap_true.
           delete_entry( ).
         ENDIF.
@@ -195,7 +227,9 @@ about a dozen more — is the
 [popups add-on](https://github.com/abap2UI5-addons/popups), which is versioned
 on its own.
 
-To handle multiple stacked popups, note that abap2UI5 shows only one popup at a time on the frontend. But you can keep a popup stack in your backend logic and re-display the previous popup as needed. See `Z2UI5_CL_SMP_APP_161`.
+To handle multiple stacked popups, note that abap2UI5 shows only one popup at a
+time on the frontend. But you can keep a popup stack in your backend logic and
+re-display the previous popup as needed. See `Z2UI5_CL_SMP_APP_161`.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

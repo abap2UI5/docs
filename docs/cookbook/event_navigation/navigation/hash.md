@@ -4,6 +4,7 @@ samples:
   - z2ui5_cl_smp_app_468
   - z2ui5_cl_smp_app_480
   - z2ui5_cl_smp_app_499
+description: The URL hash in abap2UI5 - the framework's app routing with its modes, an app that owns its own hash with hash_set, hash_replace and hash_back, and which of the three owners to pick.
 ---
 # Hash
 
@@ -49,6 +50,8 @@ METHOD z2ui5_if_app~main.
   IF client->check_on_init( ).
     " an empty t_arg means cs_nav_mode-keep
     client->follow_up_action( client->cs_event-hash_routing ).
+    view_display( ).
+  ELSEIF client->check_on_navigated( ).
     view_display( ).
   ENDIF.
 
@@ -117,7 +120,7 @@ the navigation, and with routing enabled it pushes the same route history
 entry, so Back returns to the calling app.
 
 ```abap
-client->nav_app_call( NEW z2ui5_cl_new_app( ) ).
+client->nav_app_call( NEW zcl_sample_new_app( ) ).
 ```
 
 ## App-owned routing
@@ -186,12 +189,13 @@ fallback is then written as a **replace** instead, so the user lands on the
 start page rather than on whatever was in the browser before.
 
 ::: warning Without a listener, `hash_set( )` writes a suffix
-`hash_set( )` predates the listener and keeps its original behavior when no
-listener is registered: the value is appended to the hash rather than being the
-whole of it, which is what ``hash_set( `&my-app-state=detail` )``
-is doing. Registering the
-listener is what makes the value the *whole* app hash — and what makes browser
-Back reach your app at all.
+With no `hash_attach_changed` listener registered, the value of
+`hash_set( )` is **appended** to the hash the page already has rather than
+replacing it — ``hash_set( `&my-app-state=detail` )`` is that form, and
+`hash_replace( )` does the same, so writing a whole route on every roundtrip
+grows the URL. Registering the listener is what makes the value the *whole*
+app hash — and what makes browser Back reach your app at all. The history of
+the two spellings is on [Deprecations](/resources/deprecations#the-url-api-is-hash-and-app-state-now).
 :::
 
 For a complete example, see sample `Z2UI5_CL_SMP_APP_499` in the table below —

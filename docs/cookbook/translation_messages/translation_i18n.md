@@ -2,15 +2,33 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_519
+description: Translation in abap2UI5 - text elements, message classes and data element labels in the logon language instead of i18n files, which language the backend and the UI5 frontend each use, and translated view literals.
 ---
 # Translation
 
-Standard UI5 apps handle translations with i18n files stored as frontend artifacts. Since abap2UI5 apps live entirely on the ABAP backend, use ABAP's built-in translation tools instead — text elements, message classes, or data element descriptions.
+Standard UI5 apps handle translations with i18n files stored as frontend
+artifacts. Since abap2UI5 apps live entirely on the ABAP backend, use ABAP's
+built-in translation tools instead — text elements, message classes, or data
+element descriptions.
+
+## Which Language
+
+Two locales are in play, and they are set in two places. The **backend**
+runs in the SAP logon language, `sy-langu`: every text element, message
+class and data element label on this page comes back in it, and the
+`sap-language` URL parameter overrides it per start. The **UI5 frontend**
+keeps a locale of its own for date and number formatting, the calendar and
+the built-in control texts (*Search*, *Cancel*, the month names), derived
+from the browser and pinned with `sap-ui-language` or the bootstrap
+attribute `data-sap-ui-language`. The two agree in practice; when they must
+not be left to the browser, [Logon Language](/configuration/setup/logon_language)
+is where both are set.
 
 ## Text Element
-ABAP text elements translate messages, so they show up in different languages without code changes:
+ABAP text elements translate messages, so they show up in different languages
+without code changes:
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   DATA(lv_msg_translated) = 'this is a translatable message in english'(001).
   client->message_box_display( lv_msg_translated ).
@@ -19,9 +37,10 @@ ENDMETHOD.
 ```
 
 ## Messages
-Message classes translate messages and unify translation handling, making multi-language maintenance simpler:
+Message classes translate messages and unify translation handling, making
+multi-language maintenance simpler:
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_msg_translated).
   client->message_box_display( lv_msg_translated ).
@@ -29,13 +48,53 @@ Message classes translate messages and unify translation handling, making multi-
 ENDMETHOD.
 ```
 
+## View Literals
+
+A title, a label or a button text is a literal in the view, and the same
+sources translate it: a text element or a message is read in ABAP and
+written into the view with `t`, which escapes the value, so a translation
+that happens to carry a brace is shown rather than read as a binding:
+
+```abap
+)->ele( `Page`
+    )->a( n = `title` t = 'Invoices'(002)
+
+    )->tag( `Label`
+        )->a( n = `text` t = lcl_help=>get_data_element_text( `PRODUCT` )-short
+    )->tag( `Button`
+        )->a( n = `text`  t = 'Read'(003)
+        )->a( n = `press` v = client->_event( `READ` ) ).
+```
+
+The view is built per roundtrip, so a user who logs on in another language
+gets the view in that language without a second artifact anywhere.
+`Z2UI5_CL_SMP_APP_519` is a whole page written this way.
+
+## Numbers and Dates
+
+What a formatted amount or date *looks like* is the frontend locale's
+decision, not the backend's: a `sap.ui.model.type.Currency` or `Date`
+binding renders `1.234,56` or `1,234.56` and `15.01.2024` or `1/15/2024`
+according to `sap-ui-language`, from the same wire value. Bind the raw ABAP
+value and let the type format it — [Formatter](/cookbook/model/formatter)
+has the pattern per ABAP type — rather than formatting in ABAP with
+`sy-langu`, which would fix the notation to the backend's language and
+break the way back for an editable field.
+
 ## Data Element
-You can also read and show the short, medium, or long descriptions of data elements (DD04T). The helper class below reads them programmatically. It uses two approaches for backward compatibility: it first tries classic DDIC introspection via `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all ABAP releases). If that fails (e.g., in ABAP Cloud, which restricts classic DDIC APIs), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems without XCO installed:
+You can also read and show the short, medium, or long descriptions of data
+elements (DD04T). The helper class below reads them programmatically. It uses
+two approaches for backward compatibility: it first tries classic DDIC
+introspection via `cl_abap_elemdescr` and `GET_DDIC_FIELD` (available on all
+ABAP releases). If that fails (e.g., in ABAP Cloud, which restricts classic DDIC
+APIs), it falls back to the XCO library (`XCO_CP_ABAP_DICTIONARY`). Dynamic
+method calls (`CALL METHOD ... =>( )`) keep the code compiling even on systems
+without XCO installed:
 
 ::: code-group
 
 ```abap
-  METHOD z2ui5_if_app~main.
+METHOD z2ui5_if_app~main.
 
   DATA(ls_product_label) = lcl_help=>get_data_element_text( `PRODUCT` ).
   client->message_box_display( |{ ls_product_label-short }: 100 | ).
@@ -94,9 +153,9 @@ CLASS lcl_help IMPLEMENTATION.
     TRY.
         cl_abap_typedescr=>describe_by_name( `T100` ).
 
-        DATA(struct_desrc) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_name( `DFIES` ) ).
+        DATA(struct_descr) = CAST cl_abap_structdescr( cl_abap_structdescr=>describe_by_name( `DFIES` ) ).
 
-        CREATE DATA ddic_ref TYPE HANDLE struct_desrc.
+        CREATE DATA ddic_ref TYPE HANDLE struct_descr.
         ASSIGN ddic_ref->* TO FIELD-SYMBOL(<ddic>).
         ASSERT sy-subrc = 0.
 

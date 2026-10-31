@@ -62,13 +62,14 @@ popup calls.
 
 ## After the Tutorial
 
-The [Cookbook](/cookbook/view/definition) covers each topic again as a
+The [Cookbook](/cookbook/) covers each topic again as a
 reference chapter, and three catalogs of complete, tested apps continue from
 there:
 
 - [Learn](https://abap2ui5.github.io/samples-site/#learn) — one app per pattern, along a guided learning path
-- [Controls](https://abap2ui5.github.io/samples-site/) — UI5 demo kit samples rebuilt as abap2UI5 apps, searchable by control
-- [Stack](https://abap2ui5.github.io/samples-site/) — integration samples per technology, from RAP to WebSocket
+- the rest of the [sample catalog](https://abap2ui5.github.io/samples-site/) —
+  the UI5 demo kit samples rebuilt as abap2UI5 apps, searchable by control, and
+  the integration samples per technology, from RAP to WebSocket
 
-All three are sources of the one [sample catalog](https://abap2ui5.github.io/samples-site/), so a search covers
-every one of them at once.
+All three repositories feed the one catalog, so a search covers every one of
+them at once.

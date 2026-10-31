@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_173
   - z2ui5_cl_smp_app_176
+description: XML templating in abap2UI5 - UI5's template:repeat, template:if and template:with driven from bound ABAP data, a form generated from a meta model, and when to re-render.
 ---
 # XML Templating
 
@@ -88,7 +89,7 @@ expansion happen — three rows of data, three columns built by the outer loop,
 and each cell wired to its field by the inner one:
 
 ```abap
-CLASS z2ui5_cl_sample_templating DEFINITION PUBLIC.
+CLASS zcl_sample_templating DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -114,7 +115,7 @@ CLASS z2ui5_cl_sample_templating DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_templating IMPLEMENTATION.
+CLASS zcl_sample_templating IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -381,7 +382,7 @@ client->nest_view_display( val            = nested->stringify( )
 ELSEIF client->check_on_event( `TOGGLE_AGE` ).
   ASSIGN mt_layout[ fname = `AGE` ] TO FIELD-SYMBOL(<age>).
   <age>-visible = COND #( WHEN <age>-visible = `true` THEN `false` ELSE `true` ).
-  nest_view_display( ).
+  nested_display( ).   " the app's own method around the nest_view_display( ) call above
 ```
 
 ## Templating vs ABAP-side Composition

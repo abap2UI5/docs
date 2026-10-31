@@ -12,13 +12,17 @@ samples:
   - z2ui5_cl_smp_app_514
   - z2ui5_cl_smp_app_515
   - z2ui5_cl_smp_app_518
+description: Frontend events in abap2UI5 - client->follow_up_action( ) runs a browser-side action without a roundtrip when wired into the view, or after the response when called in main( ); the control calls and the view parameter.
 ---
 # Frontend
 
-If you don't want to handle the event in the backend, fire actions directly on the frontend. The difference between the two event styles:
+If you don't want to handle the event in the backend, fire actions directly on
+the frontend. The difference between the two event styles:
 
-- **`client->_event( )`** — causes a backend roundtrip; the event runs in the `main` method
-- **`client->follow_up_action( )`** — runs an action in the browser; no backend call
+- **`client->_event( )`** — causes a backend roundtrip; the event runs in the
+  `main` method
+- **`client->follow_up_action( )`** — runs an action in the browser; no backend
+  call
 
 ## The two positions
 
@@ -65,85 +69,74 @@ what it does.
 
 ## The frontend events
 
-The frontend events, as `z2ui5_if_client=>cs_event` carries them:
+Every frontend event is a constant of `z2ui5_if_client=>cs_event`, and the
+generated [client API reference](/resources/api) lists all of them with their
+arguments, straight from the interface on `main`. The families: the two
+`*_close` events for the popup and the popover, the browser actions
+(`clipboard_copy`, `set_title`, `set_favicon`, `open_new_tab`,
+`download_b64_file`, `system_logout`, …), the view actions (`set_focus`,
+`scroll_to`, `scroll_into_view`, `set_size_limit`, `set_odata_model`), the
+control calls (`control_by_id`, `control_global`, `binding_call`,
+`bind_element`), the smart-control handshakes, the launchpad calls
+(`cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`,
+`cross_app_nav_get_links`, `set_title_launchpad`, `set_app_full_width`), the
+`hash_*` and `app_state_*` family, `start_timer`, `keyboard_shortcut`,
+`store_data`, `play_audio`, `urlhelper` and `offline_queue`.
 
-```abap
-  CONSTANTS:
-    BEGIN OF cs_event,
+Two of them take an argument that is easy to miss. `start_timer` raises a
+backend event once after a delay (`t_arg` = event name, milliseconds), and an
+optional **third** argument `X` keeps the global busy indicator down for the
+tick — the `check_no_busy` of `_event( )` for a timer, so a poll whose backend
+call takes longer than a second no longer flashes the overlay. `offline_queue`
+(experimental) names the events of this app that wait in the browser while
+the backend cannot be reached instead of failing: `t_arg` = the toast text
+shown when one was kept (`&1` is how many wait; empty for no toast), then the
+event names. They are kept with their model changes across a reload and sent
+in order once the network is back; the page itself still needs the network to
+load.
 
-      "Framework
-      popup_close               TYPE string VALUE `POPUP_CLOSE`,
-      popover_close             TYPE string VALUE `POPOVER_CLOSE`,
-      set_size_limit            TYPE string VALUE `SET_SIZE_LIMIT`,
-      set_odata_model           TYPE string VALUE `SET_ODATA_MODEL`,
-      cross_app_nav_to_ext      TYPE string VALUE `CROSS_APP_NAV_TO_EXT`,
-      cross_app_nav_to_prev_app TYPE string VALUE `CROSS_APP_NAV_TO_PREV_APP`,
+Some of these events have their own pages:
+[`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds
+key combinations to backend events,
+[the `hash_*` family](/cookbook/event_navigation/navigation/hash) puts the URL
+fragment under the router's control or the app's own, and
+[`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls)
+wire variant management for smart controls. The dedicated cookbook pages under
+[Browser Interaction](/cookbook/browser_interaction/title) and
+[Device Capabilities](/cookbook/device_capabilities/upload_download) carry the
+argument list of each event.
 
-      "Actions
-      clipboard_copy            TYPE string VALUE `CLIPBOARD_COPY`,
-      set_title                 TYPE string VALUE `SET_TITLE`,
-      set_title_launchpad       TYPE string VALUE `SET_TITLE_LAUNCHPAD`,
-      set_favicon               TYPE string VALUE `SET_FAVICON`,
-      set_focus                 TYPE string VALUE `SET_FOCUS`,
-      scroll_to                 TYPE string VALUE `SCROLL_TO`,
-      scroll_into_view          TYPE string VALUE `SCROLL_INTO_VIEW`,
-      start_timer               TYPE string VALUE `START_TIMER`,
-      keyboard_shortcut         TYPE string VALUE `KEYBOARD_SHORTCUT`,
-      open_new_tab              TYPE string VALUE `OPEN_NEW_TAB`,
-      location_reload           TYPE string VALUE `LOCATION_RELOAD`,
-      system_logout             TYPE string VALUE `SYSTEM_LOGOUT`,
-      download_b64_file         TYPE string VALUE `DOWNLOAD_B64_FILE`,
-      urlhelper                 TYPE string VALUE `URLHELPER`,
-      store_data                TYPE string VALUE `STORE_DATA`,
-      play_audio                TYPE string VALUE `PLAY_AUDIO`,
-
-      "Control calls (positional t_arg)
-      control_by_id             TYPE string VALUE `CONTROL_BY_ID`,
-      control_global            TYPE string VALUE `CONTROL_GLOBAL`,
-      binding_call              TYPE string VALUE `BINDING_CALL`,
-      bind_element              TYPE string VALUE `BIND_ELEMENT`,
-
-      "Smart controls (sap.ui.comp)
-      smart_variant_init        TYPE string VALUE `SMART_VARIANT_INIT`,
-      filter_bar_variant_init   TYPE string VALUE `FILTER_BAR_VARIANT_INIT`,
-
-      "URL and app state - the hash_* family is named after UI5's
-      "sap/ui/core/routing/HashChanger
-      hash_set                  TYPE string VALUE `SET_PUSH_STATE`,
-      hash_replace              TYPE string VALUE `HASH_REPLACE`,
-      hash_back                 TYPE string VALUE `HASH_BACK`,
-      hash_attach_changed       TYPE string VALUE `HASH_ATTACH_CHANGED`,
-      hash_routing              TYPE string VALUE `SET_NAV_ROUTING`,
-      app_state_set_active      TYPE string VALUE `SET_APP_STATE_ACTIVE`,
-
-    END OF cs_event.
-```
-
-Some of these events have their own pages: [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds key combinations to backend events, [the `hash_*` family](/cookbook/event_navigation/navigation/hash) puts the URL fragment under the router's control or the app's own, and [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls) wire variant management for smart controls. The dedicated cookbook pages under [Browser Interaction](/cookbook/browser_interaction/title) and [Device Capabilities](/cookbook/device_capabilities/upload_download) carry the argument list of each event.
-
-For example, to open a new tab directly from a button press (no backend involved):
+For example, to open a new tab directly from a button press (no backend
+involved):
 ```abap
 METHOD z2ui5_if_app~main.
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`     v = `sap.m`
-            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+    IF client->check_on_navigated( ).
 
-            )->ele( `Page`
-                )->tag( `Button`
-                    )->a( n = `text`  v = `open new tab`
-                    )->a( n = `press` v = client->follow_up_action(
-                                             val   = client->cs_event-open_new_tab
-                                             t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report` ) ) ) ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    client->view_display( view->stringify( ) ).
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `open new tab`
+                      )->a( n = `press` v = client->follow_up_action(
+                                               val   = client->cs_event-open_new_tab
+                                               t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=zcl_my_report` ) ) ) ).
 
+      client->view_display( view->stringify( ) ).
+
+    ENDIF.
 
 ENDMETHOD.
 ```
 
-The URL has to be on the app's own origin — the frontend refuses any other with an error message, and the same holds for `location_reload`, which navigates the current tab to the URL in its one argument. For an external site, `urlhelper` with `REDIRECT` takes the target as a JSON argument and accepts any `http` or `https` address:
+The URL has to be on the app's own origin — the frontend refuses any other with
+an error message, and the same holds for `location_reload`, which navigates the
+current tab to the URL in its one argument. For an external site, `urlhelper`
+with `REDIRECT` takes the target as a JSON argument and accepts any `http` or
+`https` address:
 
 ```abap
 client->follow_up_action(
@@ -154,7 +147,11 @@ client->follow_up_action(
 
 ## Calling control methods on the frontend
 
-The control-call constants — `control_by_id`, `control_global`, `binding_call` and `bind_element` — are frontend events too, but instead of a fixed built-in action they operate on a control, a global object, a binding or a whole view slot. Their arguments are **positional**: an empty argument between two filled ones keeps its slot as ``` `` ```.
+The control-call constants — `control_by_id`, `control_global`, `binding_call`
+and `bind_element` — are frontend events too, but instead of a fixed built-in
+action they operate on a control, a global object, a binding or a whole view
+slot. Their arguments are **positional**: an empty argument between two filled
+ones keeps its slot as ``` `` ```.
 
 | Event            | `t_arg` (positional)                                                                 |
 | ---------------- | ------------------------------------------------------------------------------------ |
@@ -163,7 +160,21 @@ The control-call constants — `control_by_id`, `control_global`, `binding_call`
 | `binding_call`   | `id`, `aggregation`, `method`, `params…` — e.g. `filter` (path, operator, value1, value2) or `sort` (path, descending, group) on the aggregation's binding |
 | `bind_element`   | `index`, `_bind( table )` — element-bind a whole view slot to a table row, see below  |
 
-For `control_by_id`, any public control method is callable as long as it is not on the framework's **denylist**: methods that would break abap2UI5's own invariants (destroying views, re-rendering, detaching the framework's handlers, …) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`, `enablePostButton`, …) simply work. A small set of methods is additionally special-cased for typed arguments. `control_global` and `binding_call` remain strict whitelists — only the listed global objects and the binding methods `filter` / `sort` are callable. Three of those objects are less obvious than the rest: `POPUP-setWithinArea` confines every popup to one control instead of to the window (UI5 &ge; 1.89; an empty argument releases it again), `INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without rendering it (UI5 &ge; 1.78; `t_arg` = text, mode), and `FORMATTING-setCustomCurrencies` / `-addCustomCurrencies` register currency codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge; 1.120) — `set…` REPLACES the whole registration, `add…` MERGES codes into it.
+For `control_by_id`, any public control method is callable as long as it is not
+on the framework's **denylist**: methods that would break abap2UI5's own
+invariants (destroying views, re-rendering, detaching the framework's handlers,
+…) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`,
+`enablePostButton`, …) simply work. A small set of methods is additionally
+special-cased for typed arguments. `control_global` and `binding_call` remain
+strict whitelists — only the listed global objects and the binding methods
+`filter` / `sort` are callable. Three of those objects are less obvious than the
+rest: `POPUP-setWithinArea` confines every popup to one control instead of to
+the window (UI5 &ge; 1.89; an empty argument releases it again),
+`INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without
+rendering it (UI5 &ge; 1.78; `t_arg` = text, mode), and
+`FORMATTING-setCustomCurrencies` / `-addCustomCurrencies` register currency
+codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge; 1.120) —
+`set…` REPLACES the whole registration, `add…` MERGES codes into it.
 
 ```abap
 " toggle a MessagePopover open, anchored to the pressing button, no roundtrip
@@ -188,7 +199,9 @@ client->follow_up_action(
 Which options belong here and which stay on `client->message_box_display( )` is
 the subject of [Message](/cookbook/translation_messages/message).
 
-The same events also work as a **statement** in your `main` method, with the identical `t_arg` — then the browser runs them after the response arrives, once your backend work is done:
+The same events also work as a **statement** in your `main` method, with the
+identical `t_arg` — then the browser runs them after the response arrives, once
+your backend work is done:
 
 ```abap
 " after backend processing, let the wizard advance: setNextStep is the
@@ -201,7 +214,11 @@ client->follow_up_action(
 
 ### Element-binding a view slot: `bind_element`
 
-`bind_element` binds a whole view slot (popup, popover, main, …) to one row of a bound table — the abap2UI5 equivalent of `oControl.bindElement( )`. All *relative* bindings in that slot (`{NAME}`, `{CATEGORY}`, nested aggregations) then resolve against the selected row, so a detail popup needs no data copied into event arguments:
+`bind_element` binds a whole view slot (popup, popover, main, …) to one row of a
+bound table — the abap2UI5 equivalent of `oControl.bindElement( )`. All
+*relative* bindings in that slot (`{NAME}`, `{CATEGORY}`, nested aggregations)
+then resolve against the selected row, so a detail popup needs no data copied
+into event arguments:
 
 ```abap
 " element-bind the popup slot to row <index> of t_product
@@ -211,14 +228,20 @@ client->follow_up_action(
     t_arg = VALUE #( ( index ) ( client->_bind( t_product ) ) ) ).
 ```
 
-The `view` parameter selects the slot to bind; `t_arg` carries the row index and the table's binding path. See `Z2UI5_CL_SMP_APP_470` in the [samples repository](https://github.com/abap2UI5/samples) for a complete example.
+The `view` parameter selects the slot to bind; `t_arg` carries the row index and
+the table's binding path. See `Z2UI5_CL_SMP_APP_470` in the
+[samples repository](https://github.com/abap2UI5/samples) for a complete
+example.
 
 ### The `view` parameter
 
-For `control_by_id`, the control is looked up by id. `follow_up_action( )` takes a separate `view` parameter (default `cs_view-main`) that scopes this lookup:
+For `control_by_id`, the control is looked up by id. `follow_up_action( )` takes
+a separate `view` parameter (default `cs_view-main`) that scopes this lookup:
 
 - omit it (or pass `cs_view-main`) — the id is resolved across all open views;
-- pass `cs_view-popup` / `cs_view-popover` / `cs_view-nested` / … — the lookup is scoped to a control hosted in that view (e.g. a control living inside a popup).
+- pass `cs_view-popup` / `cs_view-popover` / `cs_view-nested` / … — the lookup
+  is scoped to a control hosted in that view (e.g. a control living inside a
+  popup).
 
 ```abap
 " call a method on a control that lives inside the popup view
@@ -229,26 +252,25 @@ press = client->follow_up_action(
     t_arg = VALUE #( ( `NavCon` ) ( `to` ) ( `${$parameters>/selectedKey}` ) ) )
 ```
 
-::: warning Migrated from a positional view slot
-The view used to be the second entry of `t_arg` (`id`, `view`, `method`, …). It is now the dedicated `view` importing parameter, and the framework injects it into the argument list itself. Older examples that still pass `` `MAIN` `` as the second `t_arg` element **no longer work** — the extra entry shifts every argument by one and the call fails on the frontend. Drop the positional view entry and use the `view` parameter instead.
-:::
+The slot is only ever the `view` parameter — a `` `MAIN` `` written into `t_arg`
+shifts every argument by one and the call fails on the frontend; see
+[Deprecations](/resources/deprecations#the-view-slot-of-a-control-call).
 
-`control_global` ignores `view` (it is not resolved by id), and `binding_call` always resolves its id across all open views. For `bind_element`, `view` selects the slot to element-bind (see above).
+`control_global` ignores `view` (it is not resolved by id), and `binding_call`
+always resolves its id across all open views. For `bind_element`, `view` selects
+the slot to element-bind (see above).
 
 ## Raw JavaScript
 
-There is no third way. `follow_up_action( )` used to take a raw JavaScript
-expression as `val` and run it in the browser; that form is gone. A `val` the
-frontend does not know as an event name is not run - it arrives as an unknown
-event and nothing happens. What the raw form was reached for has a
-`cs_event-*` equivalent: `control_global` for the UI5 globals (`MessageToast`,
-`MessageBox`, `BusyIndicator`, …), `control_by_id` for a control method,
-`hash_back` for `history.back( )`. Frontend code of the app's own ships as a
+There is no third way. A `val` the frontend does not know as an event name is
+not run — it arrives as an unknown event and nothing happens. What a script
+from the backend was reached for has a `cs_event-*` equivalent:
+`control_global` for the UI5 globals (`MessageToast`, `MessageBox`,
+`BusyIndicator`, …), `control_by_id` for a control method, `hash_back` for
+`history.back( )`. Frontend code of the app's own ships as a
 [Custom Control](/advanced/extensibility/custom_control) in the customer
-frontend BSP, with a defined interface and reviewable code - not as a string
-assembled in ABAP, which is what the raw form was: a `<script>` from the
-backend, executed with the user's privileges, outside UI5's output encoding and
-against any strict Content Security Policy.
+frontend BSP, with a defined interface and reviewable code; the removed form
+is on [Deprecations](/resources/deprecations#the-z2ui5-frontend-global).
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

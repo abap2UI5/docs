@@ -2,6 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_071
+description: The UI5 model size limit in abap2UI5 - why a list binding stops at 100 rows, and cs_event-set_size_limit to raise or reset it per view slot.
 ---
 # Size Limit
 
@@ -13,7 +14,7 @@ abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`
 Trigger the event from your controller with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
 client->follow_up_action(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
+    val   = client->cs_event-set_size_limit
     t_arg = VALUE #(
         ( `1000` )
         ( client->cs_view-main ) ) ).
@@ -24,14 +25,14 @@ After this call, the model bound to the main view accepts up to 1000 entries per
 To restore the default of `100`, omit the limit argument and pass only the view key:
 ```abap
 client->follow_up_action(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
+    val   = client->cs_event-set_size_limit
     t_arg = VALUE #( ( client->cs_view-main ) ) ).
 ```
 
 ## Complete Example
 The snippet below shows a `ComboBox` filled with 105 entries. Without raising the size limit, the dropdown would stop at item 100. A small form lets the user adjust the limit and the number of entries at runtime:
 ```abap
-CLASS z2ui5_cl_sample_size_limit DEFINITION PUBLIC.
+CLASS zcl_sample_size_limit DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -44,94 +45,102 @@ CLASS z2ui5_cl_sample_size_limit DEFINITION PUBLIC.
     DATA t_combo         TYPE STANDARD TABLE OF ty_s_combo WITH EMPTY KEY.
     DATA mv_size_limit   TYPE i VALUE 100.
     DATA mv_combo_number TYPE i VALUE 105.
+    DATA mv_selected     TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_size_limit IMPLEMENTATION.
+CLASS zcl_sample_size_limit IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE client->get( )-event.
-      WHEN `UPDATE_LIMIT`.
-        client->follow_up_action(
-            val   = z2ui5_if_client=>cs_event-set_size_limit
-            t_arg = VALUE #( ( CONV #( mv_size_limit ) ) ( client->cs_view-main ) ) ).
-        client->message_toast_display( `Size limit updated` ).
-        RETURN.
+    IF client->check_on_navigated( ).
 
-      WHEN `UPDATE_MODEL`.
-        t_combo = VALUE #( ).
-        DO mv_combo_number TIMES.
-          INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
-        ENDDO.
-        RETURN.
-    ENDCASE.
+      CLEAR t_combo.
+      DO mv_combo_number TIMES.
+        INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
+      ENDDO.
 
-    DO mv_combo_number TIMES.
-      INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
-    ENDDO.
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
 
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:core` v = `sap.ui.core`
-            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+              )->ele( `Page`
+                  )->a( n = `title` v = `Size Limit Demo`
 
-            )->ele( `Page`
-                )->a( n = `title` v = `Size Limit Demo`
+                  )->ele( n = `SimpleForm` ns = `form`
+                      )->a( n = `title`    v = `Settings`
+                      )->a( n = `editable` b = abap_true
 
-                )->ele( n = `SimpleForm` ns = `form`
-                    )->a( n = `title`    v = `Settings`
-                    )->a( n = `editable` b = abap_true
+                      )->ele( n = `content` ns = `form`
+                          )->tag( `Label`
+                              )->a( n = `text` v = `setSizeLimit`
+                          )->tag( `Input`
+                              )->a( n = `value` v = client->_bind( mv_size_limit )
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `update size limit`
+                              )->a( n = `press` v = client->_event( `UPDATE_LIMIT` )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Number of Entries`
+                          )->tag( `Input`
+                              )->a( n = `value` v = client->_bind( mv_combo_number )
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `update number of entries`
+                              )->a( n = `press` v = client->_event( `UPDATE_MODEL` )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `ComboBox`
+                          )->ele( `ComboBox`
+                              )->a( n = `items`       v = client->_bind( t_combo )
+                              )->a( n = `selectedKey` v = client->_bind( mv_selected )
 
-                    )->ele( n = `content` ns = `form`
-                        )->tag( `Label`
-                            )->a( n = `text` v = `setSizeLimit`
-                        )->tag( `Input`
-                            )->a( n = `value` v = client->_bind( mv_size_limit )
-                        )->tag( `Button`
-                            )->a( n = `text`  v = `update size limit`
-                            )->a( n = `press` v = client->_event( `UPDATE_LIMIT` )
-                        )->tag( `Label`
-                            )->a( n = `text` v = `Number of Entries`
-                        )->tag( `Input`
-                            )->a( n = `value` v = client->_bind( mv_combo_number )
-                        )->tag( `Button`
-                            )->a( n = `text`  v = `update number of entries`
-                            )->a( n = `press` v = client->_event( `UPDATE_MODEL` )
-                        )->tag( `Label`
-                            )->a( n = `text` v = `ComboBox`
-                        )->ele( `ComboBox`
-                            )->a( n = `items` v = client->_bind( t_combo )
+                              )->tag( n = `Item` ns = `core`
+                                  )->a( n = `key`  v = `{KEY}`
+                                  )->a( n = `text` v = `{TEXT}` ).
 
-                            )->tag( n = `Item` ns = `core`
-                                )->a( n = `key`  v = `{KEY}`
-                                )->a( n = `text` v = `{TEXT}` ).
+      client->view_display( view->stringify( ) ).
 
-    client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `UPDATE_LIMIT` ).
+      client->follow_up_action(
+          val   = client->cs_event-set_size_limit
+          t_arg = VALUE #( ( CONV #( mv_size_limit ) ) ( client->cs_view-main ) ) ).
+      client->message_toast_display( `Size limit updated` ).
+
+    ELSEIF client->check_on_event( `UPDATE_MODEL` ).
+      CLEAR t_combo.
+      DO mv_combo_number TIMES.
+        INSERT VALUE #( key = sy-index text = sy-index ) INTO TABLE t_combo.
+      ENDDO.
+
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
 ```
+
+The two event branches change the limit and the data and return: the view on
+screen is still the right one, and the framework pushes the refilled table
+into it. `CLEAR t_combo` before each fill is what keeps the second press from
+doubling the list.
 
 ## Other Views
 The same call applies to nested views, popups and popovers — just swap the view key:
 ```abap
 " Popup
 client->follow_up_action(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
+    val   = client->cs_event-set_size_limit
     t_arg = VALUE #( ( `500` ) ( client->cs_view-popup ) ) ).
 
 " Popover
 client->follow_up_action(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
+    val   = client->cs_event-set_size_limit
     t_arg = VALUE #( ( `500` ) ( client->cs_view-popover ) ) ).
 
 " Nested view
 client->follow_up_action(
-    val   = z2ui5_if_client=>cs_event-set_size_limit
+    val   = client->cs_event-set_size_limit
     t_arg = VALUE #( ( `500` ) ( client->cs_view-nested ) ) ).
 ```
 

@@ -4,6 +4,7 @@ samples:
   - z2ui5_cl_smp_app_024
   - z2ui5_cl_smp_app_488
   - z2ui5_cl_smp_app_279
+description: Navigation inside abap2UI5 - switching views within one class, calling another app class with nav_app_call( ), returning with nav_app_leave( ) and handing a result back to the caller.
 ---
 # Inner App
 
@@ -13,7 +14,10 @@ the abap2UI5 backend and its own app stack — it never leaves the page, and the
 launchpad, if there is one, does not hear about it. Navigating between *Fiori*
 apps is a different mechanism: [Cross App](/cookbook/event_navigation/navigation/cross_app).
 
-In abap2UI5, each app is a single ABAP class. You can pack all logic into one class, but keeping classes at a reasonable size is better practice. Splitting functionality into multiple interacting classes lets you build reusable apps and popups that work in different contexts.
+In abap2UI5, each app is a single ABAP class. You can pack all logic into one
+class, but keeping classes at a reasonable size is better practice. Splitting
+functionality into multiple interacting classes lets you build reusable apps and
+popups that work in different contexts.
 
 ## Within One Class
 
@@ -32,12 +36,13 @@ To call another app class:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_app) = NEW z2ui5_cl_new_app( ).
+    DATA(lo_app) = NEW zcl_sample_new_app( ).
     client->nav_app_call( lo_app ).
 
 ENDMETHOD.
 ```
-The framework keeps a call stack. From the newly called class, return to the previous app with:
+The framework keeps a call stack. From the newly called class, return to the
+previous app with:
 ```abap
   METHOD z2ui5_if_app~main.
 
@@ -45,16 +50,18 @@ The framework keeps a call stack. From the newly called class, return to the pre
 
 ENDMETHOD.
 ```
-To read data from the previous app, cast it like this. `check_on_navigated( )` is true on the first start as well, and `get_app_prev( )` then returns the running app itself, so the cast is guarded:
+To read data from the previous app, cast it like this. `check_on_navigated( )`
+is true on the first start as well, and `get_app_prev( )` then returns the
+running app itself, so the cast is guarded:
 ```abap
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
         TRY.
-            DATA(lo_called_app) = CAST z2ui5_cl_new_app( client->get_app_prev( ) ).
+            DATA(lo_called_app) = CAST zcl_sample_new_app( client->get_app_prev( ) ).
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
           CATCH cx_sy_move_cast_error.
-            " not back from z2ui5_cl_new_app - the first start, for one
+            " not back from zcl_sample_new_app - the first start, for one
         ENDTRY.
         view_display( ).
     ENDIF.
@@ -62,20 +69,69 @@ To read data from the previous app, cast it like this. `check_on_navigated( )` i
 ENDMETHOD.
 ```
 ::: warning Re-display your view on return
-When the called app took over the screen with its own `view_display( )`, the browser still shows that view after `nav_app_leave( )` — the framework does not restore the previous view automatically. Call `view_display( )` again in the `check_on_navigated( )` branch. Your class attributes survived the roundtrip serialization, so no data re-read is needed — only the view must be rendered again. See [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
+When the called app took over the screen with its own `view_display( )`, the
+browser still shows that view after `nav_app_leave( )` — the framework does not
+restore the previous view automatically. Call `view_display( )` again in the
+`check_on_navigated( )` branch. Your class attributes survived the roundtrip
+serialization, so no data re-read is needed — only the view must be rendered
+again. See
+[Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
 :::
-Called **with** an app instance, `nav_app_leave` works differently: it leaves the current app and starts the given one *without* pushing the current app onto the call stack — so there is nothing to return to. Use this to navigate forward while discarding the current app:
+Called **with** an app instance, `nav_app_leave` works differently: it leaves
+the current app and starts the given one *without* pushing the current app onto
+the call stack — so there is nothing to return to. Use this to navigate forward
+while discarding the current app:
 ```abap
   METHOD z2ui5_if_app~main.
 
-    DATA(lo_app) = NEW z2ui5_cl_new_app( ).
+    DATA(lo_app) = NEW zcl_sample_new_app( ).
     client->nav_app_leave( lo_app ).
 
 ENDMETHOD.
 ```
 ::: tip
-Sounds familiar? The abap2UI5 framework echoes classic `call screen` and `leave to screen` behavior.
+Sounds familiar? The abap2UI5 framework echoes classic `call screen` and
+`leave to screen` behavior.
 :::
+
+`nav_app_call( )` and both forms of `nav_app_leave( )` need a **bound**
+instance — `NEW zcl_sample_new_app( )` with whatever it needs set on it
+before the call. An unbound reference raises `NAV_APP_TARGET_NOT_BOUND` and
+the roundtrip ends in the error dialog. A plain `nav_app_leave( )` with
+nothing to return to — a root app, or a caller whose draft has expired — is
+dropped: the roundtrip ends on this app, which keeps the screen. Guard it
+with `check_app_prev_stack( )`, as the example below does.
+
+### Handing a Result Back
+
+Reading the called app's attributes through `get_app_prev( )` is one way
+back. The other is to hand the result over on the way out:
+`nav_app_leave( event = … r_data = … )` names an event the caller finds in
+`check_on_event( )` on arrival, so a return *with* a result is told from a
+plain return, and carries data the caller reads as
+`client->get( )-r_event_data`, a reference to a copy of it:
+
+```abap
+" in the called app
+ELSEIF client->check_on_event( `CONFIRM` ).
+  client->nav_app_leave( event  = `DATA_CONFIRMED`
+                         r_data = ms_result ).
+```
+
+```abap
+" in the caller: the way back enters through check_on_navigated( ),
+" with the event name and the payload in the same get( )
+WHEN client->check_on_navigated( ).
+  DATA(ls_get) = client->get( ).
+  IF ls_get-event = `DATA_CONFIRMED`.
+    ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
+    ms_result = <s_result>.
+  ENDIF.
+  view_display( ).
+```
+
+An intentionally empty value still arrives. `Z2UI5_CL_SMP_APP_488` is the
+pair of classes written out.
 
 ### The Whole Stack in One Class
 
@@ -84,7 +140,7 @@ another instance of itself shows the stack, the return and `get_app_prev( )`
 in one runnable piece — press **Run** and walk down and back up:
 
 ```abap
-CLASS z2ui5_cl_sample_stack DEFINITION PUBLIC.
+CLASS zcl_sample_stack DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -97,7 +153,7 @@ CLASS z2ui5_cl_sample_stack DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
+CLASS zcl_sample_stack IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
@@ -105,7 +161,7 @@ CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
       " Coming back up: read what the app above left on its own instance
       " (on the first start get_app_prev( ) is this instance, on the way
       " down it is the caller - only on the way up is it a deeper level)
-      DATA(lo_prev) = CAST z2ui5_cl_sample_stack( client->get_app_prev( ) ).
+      DATA(lo_prev) = CAST zcl_sample_stack( client->get_app_prev( ) ).
       IF lo_prev->mv_level > mv_level.
         mv_note = |back from level { lo_prev->mv_level }|.
       ENDIF.
@@ -131,7 +187,7 @@ CLASS z2ui5_cl_sample_stack IMPLEMENTATION.
       client->view_display( view->stringify( ) ).
 
     ELSEIF client->check_on_event( `DOWN` ).
-      DATA(lo_next) = NEW z2ui5_cl_sample_stack( ).
+      DATA(lo_next) = NEW zcl_sample_stack( ).
       lo_next->mv_level = mv_level + 1.
       client->nav_app_call( lo_next ).
 
@@ -149,7 +205,12 @@ there `nav_app_leave( )` has nothing to return to, the roundtrip simply ends on
 this app, and an enabled button would do nothing at all.
 
 ::: tip Browser Back & Forward
-By default, the browser's Back button leaves the abap2UI5 page — it does not step through the app stack. Enable [hash routing](/cookbook/event_navigation/navigation/hash) with `client->follow_up_action( client->cs_event-hash_routing )` to couple the browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps bookmarkable.
+By default, the browser's Back button leaves the abap2UI5 page — it does not
+step through the app stack. Enable
+[hash routing](/cookbook/event_navigation/navigation/hash) with
+`client->follow_up_action( client->cs_event-hash_routing )` to couple the
+browser's Back/Forward buttons to `nav_app_call` / `nav_app_leave` and make apps
+bookmarkable.
 :::
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->

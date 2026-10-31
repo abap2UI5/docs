@@ -3,6 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_008
   - z2ui5_cl_smp_app_464
+description: What happens when an exception escapes main( ) in abap2UI5 - the 500, the error dialog and the restart - and how to catch what can be predicted and show it as a message instead.
 ---
 # Exception
 
@@ -16,7 +17,8 @@ framework, or out of a wrong app name in the URL.
 ## What Happens When One Escapes
 
 1. **The roundtrip ends with HTTP 500.** No view is displayed, no model is
-   pushed, and — unless the app is sticky — the database work of that roundtrip
+   pushed, and — unless the app is stateful, see
+   [Statefulness](/cookbook/expert_more/statefulness) — the database work of that roundtrip
    is rolled back. The response body is not an SAP error page: the handler puts
    the **whole exception chain** in it, with each entry's class, message, source
    position and attributes, because that body is the only diagnostic that
@@ -68,7 +70,7 @@ locked object, a service that is not there — is better caught where it happens
 and shown as a message, which costs the user nothing:
 
 ```abap
-CLASS z2ui5_cl_sample_exception DEFINITION PUBLIC.
+CLASS zcl_sample_exception DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
@@ -77,7 +79,7 @@ CLASS z2ui5_cl_sample_exception DEFINITION PUBLIC.
   PRIVATE SECTION.
 ENDCLASS.
 
-CLASS z2ui5_cl_sample_exception IMPLEMENTATION.
+CLASS zcl_sample_exception IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
