@@ -39,7 +39,7 @@ const LOGO = withBase("/logo.png");
     <!-- The mark and the name, closed by a hairline. A link to the home page,
          which is what a brand is everywhere else on this origin; the nav says
          which section you are in, so the brand does not say it too. -->
-    <a class="a2ui5-brand" :href="HOME">
+    <a class="a2ui5-brand" href="https://abap2ui5.github.io/" target="_self">
       <img :src="LOGO" alt="" width="20" height="20">
       <span>abap2UI5</span>
     </a>

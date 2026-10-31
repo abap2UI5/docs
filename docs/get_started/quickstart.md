@@ -11,7 +11,7 @@ No system at hand? Two ways to see abap2UI5 run before anything is installed:
 - The [**playground**](https://abap2ui5.github.io/playground/) compiles the
   framework in your browser: write ABAP on the left, watch the app run on the
   right, nothing to install.
-- The [**sample catalog**](https://abap2ui5.github.io/playground/samples/)
+- The [**sample catalog**](https://abap2ui5.github.io/samples-site/)
   lists over 700 working apps, each with its ABAP printed in full and a
   button that runs it - a live demo of every pattern the cookbook describes.
 

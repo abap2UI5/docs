@@ -109,6 +109,7 @@ webview
 # Words the dictionary does not carry but a developer writes
 activations
 addon
+addons
 allowlist
 arg
 async

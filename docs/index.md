@@ -17,9 +17,12 @@ description: One ABAP class is one UI5 app - no JavaScript, no OData, no fronten
 # for somebody who arrived from a conference talk, a LinkedIn post or a
 # colleague's link, and who has not decided to read a manual yet.
 #
-# So the page answers, in this order: what it is (the hero), the four answers
-# a developer asks first — security, integration, AI — what one app looks
-# like, running right here, and then where to go next (the tiles).
+# So the page answers, in this order: what it is (the hero), what one app
+# looks like, running right here, and then where to go next (the tiles).
+# The case for the enterprise, the integration and the AI story used to be
+# three cards here as well - and the same three sections on the site for
+# managers and in the README. They are made once now, over there; the
+# tiles under the example hand the reader on.
 # Under it, one line of where the project lives. A reader who wants the
 # manual is one word away in the bar; this page does not compete with it.
 #
@@ -165,8 +168,8 @@ features:
     link: /get_started/quickstart
   - title: Find a sample for your use case
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="4.2" width="18.8" height="15.6" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" d="M2.6 9.1h18.8M8.2 9.1v10.7"/></svg>
-    details: Over 700 working apps, searchable by control, by library and by the UI5 release your system runs.
-    link: https://abap2ui5.github.io/playground/samples/
+    details: Hundreds of working apps, searchable by control, by library and by the UI5 release your system runs.
+    link: https://abap2ui5.github.io/samples-site/
     target: _self
   - title: Take an app to production
     icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M3.5 19.5V9l5.5 3.5V9l5.5 3.5V9l6 3.5v7zM3.5 19.5h17M6 4.5h3v7.5"/></svg>
@@ -178,52 +181,6 @@ features:
     link: https://abap2ui5.github.io/why/
     target: _self
 ---
-
-## Ready for your enterprise
-
-abap2UI5 runs inside the security, the process and the release cycle you
-already have:
-
-- **Security** — one HTTP endpoint, standard SAP logon, your own
-  authorizations, and a strict Content Security Policy.
-- **Process** — an app is an ABAP class, so transports, ATC and ABAP Unit
-  apply as they do to everything else you ship.
-- **Stability** — every release is tested on Standard ABAP and ABAP Cloud,
-  down to NetWeaver 7.02, and on UI5 1.71 and the current release.
-- **Accessibility** — views are standard UI5 views, as accessible as UI5
-  makes them.
-
-→ *More on [Security](/configuration/security). For your review board: the
-[review pack](https://github.com/abap2UI5/abap2UI5/blob/main/docs/review.md)
-and the [page for decision makers](https://abap2ui5.github.io/why/#what-you-keep).*
-
-## Plays well with what you have
-
-abap2UI5 complements your UI5 and RAP apps — it does not replace them, and
-lives right next to your existing solutions. It runs in a browser tab, a Fiori
-launchpad tile or SAP Build Work Zone.
-
-→ *More on [Integration](/integration/)*
-
-## Made for AI agents
-
-An app is one ABAP class, so an agent writes the whole thing — UI and logic —
-in one go, and a working app or a new screen is a matter of minutes. The
-abap2UI5 linter and the MCP server let the agent double-check its own work
-before a developer looks at it.
-
-→ *More on [Developing with AI](/get_started/ai)*
-
-## Tools of their own
-
-Three tools stand on their own, each on a page of its own: the
-[AI Studio](https://abap2ui5.github.io/playground/ai/) builds an app from a
-description, the [Layout Editor](https://abap2ui5.github.io/layout-editor/)
-turns a drag-and-drop layout into one app class, and the
-[Report converter](https://abap2ui5-addons.github.io/abap-cloud-gui/) turns a
-classic report into an app that runs on ABAP Cloud.
-
-→ *More on [Tooling](/advanced/tooling)*
 
 ## Try it out now
 

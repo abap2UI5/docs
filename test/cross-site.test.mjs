@@ -128,6 +128,8 @@ test('a cross-site link that points at a deployment which is gone is named as go
      and the manual went on naming all three in thirteen places. An internal
      link that dies fails the build; a link to the site next door just quietly
      stops being true. */
+  assert.equal(unreachable('/'), null, 'the home page');
+  assert.match(unreachable('/nowhere/'), /not a deployment/);
   assert.equal(unreachable('/playground/'), null);
   assert.equal(unreachable('/playground/samples/'), null);
   assert.equal(unreachable('/linter/'), null);

@@ -5,49 +5,29 @@ description: The optional add-ons around abap2UI5 - popups, HTTP and RFC connect
 # Add-ons
 
 abap2UI5 focuses on core capabilities — rendering views, handling events, and
-exchanging data. This keeps the framework lean and easy to maintain. The real
-strength lies in the ecosystem: **ready-to-use add-ons and community projects**
-that extend abap2UI5 for specific needs.
+exchanging data. What goes beyond that lives in add-ons: ready-to-use apps,
+building blocks, integration, operations and the developer tools, each a
+repository of its own in the
+[abap2UI5-addons](https://github.com/abap2UI5-addons) organization, each
+installed with abapGit and versioned on its own.
 
-## Available Add-ons
+**Every add-on, with a page of its own, is on
+[Addons & Tools](https://abap2ui5-addons.github.io/){target="_self"}** — what
+it does, what it needs, how it is installed. This page only says which
+add-ons this manual has a chapter about:
 
-Sixteen of them, in the [abap2UI5-addons](https://github.com/abap2UI5-addons)
-organization. Each installs with abapGit like the framework does, and each is
-versioned on its own rather than riding along with a framework release.
-
-| Add-on | What it is | Covered here |
-| --- | --- | --- |
-| [popups](https://github.com/abap2UI5-addons/popups) | Value help, search help, transport selection — and what the framework's built-in popups [moved to](/resources/deprecations#built-in-popups-%E2%86%92-popups-add-on) | [Popup](/cookbook/popup_popover/popup), [Value Help](/cookbook/expert_more/value_help) |
-| [selection-screen](https://github.com/abap2UI5-addons/selection-screen) | Selection screens and variants | |
-| [layout-management](https://github.com/abap2UI5-addons/layout-management) | Customizable table and form layouts with persistent variant management | |
-| [table-maintenance](https://github.com/abap2UI5-addons/table-maintenance) | Table maintenance in your browser | |
-| [table-content-loader](https://github.com/abap2UI5-addons/table-content-loader) | Upload and download table content | |
-| [se16n](https://github.com/abap2UI5-addons/se16n) | Cloudy SE16N | |
-| [sql-console](https://github.com/abap2UI5-addons/sql-console) | Run SQL commands in your browser | |
-| [lock-manager](https://github.com/abap2UI5-addons/lock-manager) | The lock logic as a reusable class — stale-lock cleanup and a "locked by X since…" message included | [Lock](/cookbook/expert_more/lock) |
-| [config-management](https://github.com/abap2UI5-addons/config-management) | Runtime customization of UI5 application settings | |
-| [custom-controls](https://github.com/abap2UI5-addons/custom-controls) | Custom controls for abap2UI5, delivered in their own BSP | [Custom Controls](/advanced/extensibility/custom_control) |
-| [custom-controls-customer](https://github.com/abap2UI5-addons/custom-controls-customer) | Your own UI5 artifacts — icon fonts, CSS and custom controls — without touching the framework | [Frontend](/advanced/extensibility/frontend) |
-| [http-connector](https://github.com/abap2UI5-addons/http-connector) | Call abap2UI5 apps remotely over HTTP | [HTTP Connector](/advanced/http) |
-| [rfc-connector](https://github.com/abap2UI5-addons/rfc-connector) | Call abap2UI5 apps remotely over RFC | [RFC Connector](/advanced/rfc) |
-| [launchpad-kpi](https://github.com/abap2UI5-addons/launchpad-kpi) | Show KPIs of abap2UI5 apps on the Fiori Launchpad | [Fiori Launchpad](/configuration/launchpad) |
-| [rap-ext](https://github.com/abap2UI5-addons/rap-ext) | Display RAP and CDS artifacts with abap2UI5 | [RAP](/cookbook/eml_cds_sql/rap) |
-| [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) | Apps written the way you write a classic report — selection screen, `WRITE` list, ALV, event blocks — on ABAP Cloud and down to 7.02 | [Apps Written Like Reports](/advanced/report_style), [Migrating Classic Reports](/advanced/report_migration) |
-
-Two more need abap2UI5 1.147.0 or later, because both build on what is in
-it: [admin-cockpit](https://github.com/abap2UI5-addons/admin-cockpit),
-usage, performance, errors and a security traffic light for an installation
-([Monitoring](/configuration/monitoring)), and
-[abap-agent-runtime](https://github.com/abap2UI5-addons/abap-agent-runtime), an MCP endpoint in the
-system through which AI agents operate abap2UI5 apps
-([Agent-Operable Apps](/advanced/agents)). abap-cloud-gui brings a
-converter as well since its release 1.0.0, report2cloud, which turns an
-existing classic report into a class of the add-on
-([Migrating Classic Reports](/advanced/report_migration)).
-
-An empty right-hand column is not a gap in the add-on — it is one this manual
-has not written a chapter about. The repository's own README is the reference
-in that case.
+| Add-on | Chapter |
+| --- | --- |
+| [popups](https://abap2ui5-addons.github.io/popups/){target="_self"} | [Popups](/cookbook/popup_popover/popup) |
+| [custom-controls](https://abap2ui5-addons.github.io/custom-controls/){target="_self"} | [Custom Controls](/advanced/extensibility/custom_control) |
+| [http-connector](https://abap2ui5-addons.github.io/http-connector/){target="_self"} | [HTTP Connector](/advanced/http) |
+| [rfc-connector](https://abap2ui5-addons.github.io/rfc-connector/){target="_self"} | [RFC Connector](/advanced/rfc) |
+| [launchpad-kpi](https://abap2ui5-addons.github.io/launchpad-kpi/){target="_self"} | [Fiori Launchpad](/configuration/launchpad) |
+| [rap-ext](https://abap2ui5-addons.github.io/rap-ext/){target="_self"} | [RAP](/cookbook/eml_cds_sql/rap) |
+| [admin-cockpit](https://abap2ui5-addons.github.io/admin-cockpit/){target="_self"} | [Monitoring](/configuration/monitoring) |
+| [abap-agent-runtime](https://abap2ui5-addons.github.io/abap-agent-runtime/){target="_self"} | [Agent-Operable Apps](/advanced/agents) |
+| [abap-cloud-gui](https://abap2ui5-addons.github.io/abap-cloud-gui/){target="_self"} | [Apps Written Like Reports](/advanced/report_style), [Migrating Classic Reports](/advanced/report_migration) |
+| [lock-manager](https://abap2ui5-addons.github.io/lock-manager/){target="_self"} | [Lock](/cookbook/expert_more/lock) |
 
 ## Open Source Projects
 
@@ -58,9 +38,6 @@ Other open-source projects use abap2UI5 — try them out:
 | [The Quest](https://github.com/nomssi/axage)  | A wizard's adventure game built on the AXAGE game engine |
 | [Advent of Code](https://github.com/joltdx/abap-advent-2023-template) | Template for the Advent of Code 2023 in ABAP  |
 | [Generic DDIC Searchhelp](https://github.com/axelmohnen/a2UI5-generic_search_hlp) | Generic DDIC searchhelp builder  |
-| [sql-console](https://github.com/abap2UI5-apps/sql-console) | Run SQL commands in your browser  |
-| [table-content-loader](https://github.com/abap2UI5-apps/table-content-loader) | Upload & download table content  |
-| [table-maintenance](https://github.com/abap2UI5-addons/table-maintenance) | Table maintenance in your browser |
 
 ## Contribution
 

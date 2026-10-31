@@ -180,7 +180,7 @@ state anywhere it is used.
 The mark is not the same thing as the interface around it, and the two carry
 different colors on purpose. The three sites this project publishes — this
 documentation, the [playground](https://abap2ui5.github.io/playground/) and the
-[sample catalog](https://abap2ui5.github.io/playground/samples/) — share one
+[sample catalog](https://abap2ui5.github.io/samples-site/) — share one
 bar, one palette and one accent, and that accent is **SAP blue**: it is the
 color of the platform these apps run on, it is what the playground fills its
 Run button with, and it clears AA for body text in both themes, which the red

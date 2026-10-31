@@ -201,7 +201,7 @@ To handle multiple stacked popups, note that abap2UI5 shows only one popup at a 
 
 ## Working Samples
 
-Complete apps from the [sample catalog](https://abap2ui5.github.io/playground/samples/)
+Complete apps from the [sample catalog](https://abap2ui5.github.io/samples-site/)
 that use what this page describes. Each is a single class in [abap2UI5/samples](https://github.com/abap2UI5/samples)
 unless its row names another of the three sample repositories — pull that repository with
 [abapGit](https://abapgit.org) and start the class with `?app_start=<class>`.

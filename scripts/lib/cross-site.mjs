@@ -79,7 +79,12 @@ export const RETIRED = new Map([
  * Is this a deployment that is still there? Takes the pathname of a URL that
  * `leavesTheSite` already accepted, and answers with the reason it is not.
  */
+/** The family's home page, abap2UI5/abap2UI5.github.io: the origin's root,
+ *  and only the root - a prefix of everything, so it is matched exactly. */
+export const HOME = '/';
+
 export function unreachable(pathname) {
+  if (pathname === HOME) return null;
   for (const at of NEIGHBOURS) if (pathname.startsWith(at)) return null;
   for (const [at, instead] of RETIRED) {
     if (pathname === at || pathname.startsWith(at)) return `retired — use ${instead}`;

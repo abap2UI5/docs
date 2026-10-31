@@ -42,15 +42,15 @@ does not have, an icon that is in no icon font. Both configurations are
 editable in a tab, so "why is it not warning here?" has an answer you can try.
 
 The playground is also the front door to the samples: the
-[sample catalog](https://abap2ui5.github.io/playground/samples/) lists every
+[sample catalog](https://abap2ui5.github.io/samples-site/) lists every
 sample of all three sample repositories — searchable by what an app does, by
 the control it builds and by the release your system runs — and each one
 opens in the editor. The three sources are one click each:
-[**Learn**](https://abap2ui5.github.io/playground/samples/?src=learn) for
+[**Learn**](https://abap2ui5.github.io/samples-site/#learn) for
 *“Where do I start?”*,
-[**Controls**](https://abap2ui5.github.io/playground/samples/?src=controls)
+[**Controls**](https://abap2ui5.github.io/samples-site/)
 for *“Which control does what?”* and
-[**Stack**](https://abap2ui5.github.io/playground/samples/?src=stack) for
+[**Stack**](https://abap2ui5.github.io/samples-site/) for
 *“Will my system run it?”*.
 
 **Use it** to try a control, to reproduce a problem in a form somebody else

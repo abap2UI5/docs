@@ -24,10 +24,14 @@ abap2UI5 is free and MIT-licensed — there is nothing to buy from the project i
 
 ## Contact
 
-abap2UI5 is an open-source project that values open, transparent communication. When you can, use public channels so others can join the conversation and benefit from it. Get in touch via these platforms:
+Use the public channels when you can, so others can join the conversation
+and benefit from it: an [issue](https://github.com/abap2UI5/abap2UI5/issues)
+on GitHub, the abap2UI5 channel on [Slack](https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email),
+or [LinkedIn](https://www.linkedin.com/company/abap2ui5). For private
+inquiries, email <contact@abap2UI5.org>. Since this is a spare-time project,
+replies might take some time.
 
-- Repository: Open an issue on [GitHub](https://github.com/abap2UI5/abap2UI5/issues)
-- Slack: Join the abap2UI5 channel on [abapGit Slack](https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email)
-- Social Media: Share your thoughts on [LinkedIn](https://www.linkedin.com/company/abap2ui5)
-
-For private inquiries, email <contact@abap2UI5.org>. Since this is a spare-time project, replies might take some time.
+Why the project is open source and stays so, what it stands on, and what you
+can give back is on
+[Community & Support](https://abap2ui5.github.io/why/community/){target="_self"},
+the page written for the people who approve a tool.

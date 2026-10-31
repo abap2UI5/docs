@@ -62,7 +62,7 @@ const toggleAppearance = inject("toggle-appearance", () => {
 <template>
   <!-- The rest of abap2UI5 behind one more button: light or dark, then the
        practical links (issues, release notes, install, support), the project's
-       tools and its repositories by kind - the same rows, in the same order,
+       tools and its repositories - the same rows, in the same order,
        as the other three bars carry. The switch says what a press does and
        swaps its whole label with the theme (style.css). -->
   <details ref="extra" class="a2ui5-extra">
@@ -81,7 +81,7 @@ const toggleAppearance = inject("toggle-appearance", () => {
       <a href="/docs/resources/support">Support</a>
       <a href="/docs/resources/contribution">Contribute</a>
       <a href="/docs/resources/sponsor">Sponsor</a>
-      <a href="https://abap2ui5.github.io/why/" target="_self">For decision makers</a>
+      <a href="https://abap2ui5.github.io/why/" target="_self">For managers</a>
       <span class="a2ui5-menu-head">Tools</span>
       <!-- The standalone tools: the AI Studio (an app built from a
            description, on the playground's deployment), the Layout Editor and
@@ -92,21 +92,11 @@ const toggleAppearance = inject("toggle-appearance", () => {
       <a href="https://abap2ui5.github.io/playground/ai/" target="_self">AI Studio</a>
       <a href="https://abap2ui5.github.io/layout-editor/" target="_self">Layout Editor</a>
       <a href="https://abap2ui5-addons.github.io/abap-cloud-gui/" target="_self">Report converter</a>
-      <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">Linter</a>
-      <!-- SAME ORIGIN, ANOTHER DEPLOYMENT: `target="_self"`, not the
-           `target="_blank"` the github.com rows carry, and not nothing - a
-           link to abap2ui5.github.io outside /docs/ that carries no target at
-           all is taken over by VitePress's router and lands on this site's
-           404 (scripts/lib/cross-site.mjs). It was bound to a constant that
-           stayed behind in SiteNav.vue when this menu became its own
-           component, which made it exactly that link for one build;
-           check:cross-site caught it. Written out, so the next split cannot
-           lose it again. -->
       <a href="https://abap2ui5.github.io/linter/" target="_self">Linter rules</a>
-      <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">VS Code extension</a>
-      <a href="/docs/advanced/mcp_server">MCP server</a>
-      <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">App template</a>
-      <a href="/docs/resources/addons">Add-ons</a>
+      <!-- Everything to install beside the framework, and the tools for the
+           editor, the pipeline and the agent, each with a page: a site of
+           its own. Not listed here a second time. -->
+      <a href="https://abap2ui5-addons.github.io/">Addons &amp; Tools</a>
       <span class="a2ui5-menu-head">Repositories</span>
       <div class="a2ui5-menu-repos">
         <div class="a2ui5-menu-group">
@@ -129,32 +119,7 @@ const toggleAppearance = inject("toggle-appearance", () => {
           <a href="https://github.com/abap2UI5/docs" target="_blank" rel="noopener">docs</a>
           <a href="https://github.com/abap2UI5/playground" target="_blank" rel="noopener">playground</a>
         </div>
-        <div class="a2ui5-menu-group">
-          <span class="a2ui5-menu-sub">Tools</span>
-          <a href="https://github.com/abap2UI5/linter" target="_blank" rel="noopener">linter</a>
-          <a href="https://github.com/abap2UI5/vscode-extension" target="_blank" rel="noopener">vscode-extension</a>
-          <a href="https://github.com/abap2UI5/mcp-server" target="_blank" rel="noopener">mcp-server</a>
-          <a href="https://github.com/abap2UI5/app-template" target="_blank" rel="noopener">app-template</a>
         </div>
-        <div class="a2ui5-menu-group">
-          <span class="a2ui5-menu-sub">Add-ons</span>
-          <a href="https://github.com/abap2UI5-addons/popups" target="_blank" rel="noopener">popups</a>
-          <a href="https://github.com/abap2UI5-addons/http-connector" target="_blank" rel="noopener">http-connector</a>
-          <a href="https://github.com/abap2UI5-addons/rfc-connector" target="_blank" rel="noopener">rfc-connector</a>
-          <a href="https://github.com/abap2UI5-addons/lock-manager" target="_blank" rel="noopener">lock-manager</a>
-          <a href="https://github.com/abap2UI5-addons/launchpad-kpi" target="_blank" rel="noopener">launchpad-kpi</a>
-          <a href="https://github.com/abap2UI5-addons/table-maintenance" target="_blank" rel="noopener">table-maintenance</a>
-          <a href="https://github.com/abap2UI5-addons/se16n" target="_blank" rel="noopener">se16n</a>
-          <a href="https://github.com/abap2UI5-addons/custom-controls" target="_blank" rel="noopener">custom-controls</a>
-          <a href="https://github.com/abap2UI5-addons" target="_blank" rel="noopener">All add-ons</a>
-        </div>
-        <div class="a2ui5-menu-group">
-          <span class="a2ui5-menu-sub">Apps</span>
-          <a href="https://github.com/abap2UI5-apps/sql-console" target="_blank" rel="noopener">sql-console</a>
-          <a href="https://github.com/abap2UI5-apps/table-content-loader" target="_blank" rel="noopener">table-content-loader</a>
-          <a href="https://github.com/abap2UI5-apps" target="_blank" rel="noopener">All apps</a>
-        </div>
-      </div>
     </div>
   </details>
 </template>
