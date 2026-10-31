@@ -147,4 +147,4 @@ is the next page: it is the smallest app that can exist, how to start it, and
 what each line of it does.
 
 If somebody else decides whether abap2UI5 may be used on your system,
-[abap2UI5 for decision makers](https://abap2ui5.github.io/why/) is the page written for them.
+[the case for abap2UI5](https://abap2ui5.github.io/why/) is the page written for them.

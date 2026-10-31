@@ -35,15 +35,19 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/check-images.mjs` | Every image under `docs/public`: a screenshot is WebP, a deliverable is one of the PNGs the logo page hands out, none is over its budget, and the build can measure each of them - `scripts/lib/images.mjs` is the reader |
 | `scripts/lib/prose.mjs` | What on a page is PROSE - not fenced or inline code, not a link target, a tag, a comment, a URL, a generated block or a frontmatter setting - and the house spelling of it, which is American: the British forms as patterns, each with the American form it becomes. `test/spelling.test.mjs` is the gate; `scripts/fix-spelling.mjs` (`npm run fix:spelling`) rewrites exactly the words the gate names |
 | `scripts/check-cross-site.mjs` | Every link out of this deployment and into a neighbouring one on the same origin carries a `target`, or VitePress's router swallows it and shows this site's 404 at the other site's URL. Reads the BUILT html, so it runs after `docs:build`; the rule and the reasoning are in `scripts/lib/cross-site.mjs` |
+| `scripts/generate-controls-reference.mjs` | Generates the custom-control reference — the block in `docs/resources/controls.md` — from `app/webapp/cc/*.js` on the framework branch this site tracks; `scripts/lib/controls.mjs` runs each module in an empty vm and records what it hands `extend( )`; `--check` is the freshness gate |
+| `scripts/check-audience.mjs` | Every prose line against the phrases of the decision-maker site (`scripts/lib/audience.mjs`): the manual is for developers and links https://abap2ui5.github.io/why/ instead of arguing it |
+| `scripts/lib/lifecycle.mjs` | The third half of `check-conventions.mjs`: in a runnable app class, `view_display( )` only under `check_on_init( )` / `check_on_navigated( )`; the `<!-- lifecycle: allow unconditional display — … -->` marker is the exception, and a stale one fails |
+| `scripts/lib/user-exit.mjs` | Reads `z2ui5_if_ui5_exit` and the defaults `z2ui5_cl_ui5_user_exit` assigns, for the generated block on `advanced/extensibility/user_exits.md` (written by `generate-api-reference.mjs`) |
 
 ## Build & verify — run before every commit
 
 ```bash
-npm run check          # test + check:version + docs:build + check:cross-site + check:images + check:examples + check:conventions + check:playground + check:api-names + check:api-reference + check:samples
+npm run check          # test + check:version + docs:build + check:cross-site + check:images + check:examples + check:conventions + check:line-length + check:vocabulary + check:audience + check:playground + check:api-names + check:api-reference + check:controls + check:samples
 ```
 
-A documentation repository has no compiler for its prose, but thirteen things
-in it are decidable, and all thirteen are decided before a merge:
+A documentation repository has no compiler for its prose, but fifteen things
+in it are decidable, and all fifteen are decided before a merge:
 
 | | |
 |---|---|
@@ -52,8 +56,10 @@ in it are decidable, and all thirteen are decided before a merge:
 | `docs:build` | a page that does not build is a page nobody can read |
 | `check:examples` | the ABAP in the fenced blocks, against the real framework: does it compile, and does the view it builds name controls and properties that exist on the UI5 floor this documentation targets. **It ran no abaplint rules at all until 2026-09-04** — the generated config had no `rules` block, so abaplint walked 139 files, ran nothing, and printed `0 issue(s) found` for years. Ten examples with an unbalanced parenthesis were sitting behind that. The three compile rules it runs now (`parser_error`, `check_syntax`, `unknown_types`) are the sample repositories' own; the reasoning for stopping there, measured against the full 188-rule set, is in the file. A fragment cannot be compiled, so every fence is also read for the two things decidable without a system: a call to a method of the frozen builder, and a `|…|` string template whose literal text runs over a line break (only a `{ … }` may) - nine binding strings were written that way and none compiled |
 | `check:api-names` | every `client->` name on the site — method, parameter, `cs_*` constant — against `z2ui5_if_client` on `main`, plus every `blob/main/` link into the framework's tree, plus **no name from the frozen package** (`src/99`: `z2ui5_cl_util*`, `z2ui5_cl_pop_*`, `z2ui5_cl_xml_view*`, `z2ui5_if_exit`, `z2ui5_if_types`, …) anywhere but on the deprecations page and in the changelog. `check:examples` compiles the fenced blocks that are whole CLASSES; this is the rest of the page: the sentence, the two-line snippet, the constant block a page reproduces, the source link. Four pages taught API that 1.143.0 had deleted and nothing was red |
-| `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` on `main` and compared byte for byte. Goes stale whenever the interface changes over there and the committed reference still describes the shape before it. `npm run generate:api` rewrites both |
-| `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them |
+| `check:api-reference` | the committed client API reference — the generated block in `resources/api.md` and `docs/public/api/client-api.json` — regenerated from `z2ui5_if_client` on `main` and compared byte for byte. Goes stale whenever the interface changes over there and the committed reference still describes the shape before it. `npm run generate:api` rewrites both. The same run renders the user exit — `z2ui5_if_ui5_exit` plus the defaults `z2ui5_cl_ui5_user_exit` seeds, read out of the class, not retyped (`scripts/lib/user-exit.mjs`, pinned by `test/user-exit.test.mjs`) — into the block between the same `api:` markers on `advanced/extensibility/user_exits.md`, and `--check` holds that block too. Three artifacts, not two |
+| `check:controls` | the committed custom-control reference — the generated block in `resources/controls.md` — regenerated from `app/webapp/cc/*.js` on `main` and compared byte for byte. The metadata (properties with type and default, events with parameters, aggregations) is read by RUNNING each module in an empty vm with stand-in dependencies (`scripts/lib/controls.mjs` says why a regex is the wrong tool: a default is sometimes an expression, and one control builds its definition first and hands it to `extend( )` by name). Each section links the pages of this site that use the control, found by walking them — so a cookbook page that starts using one changes the block, and the gate says to run `npm run generate:controls`. Lists the directory through the GitHub contents API (with `GITHUB_TOKEN` in CI) or `git ls-tree` with `A2UI5_HOME`; unreachable means SKIPPED, never a false OK. Pinned by `test/controls.test.mjs` |
+| `check:audience` | every prose line of the manual against the phrases of the site for decision makers — `license fee`, `per-user fee`, `subscription`, `ROI`, `total cost`, `vendor lock`, `SLA`, `decision maker`, `IT management`, `business case` (whole words, any case, plural allowed; `scripts/lib/audience.mjs` is the list) — on every page but the four whose subject they are: `resources/license.md`, `resources/support.md`, `resources/sponsor.md` and `get_started/about.md` (the hand-off sentence). **The manual is for developers and links https://abap2ui5.github.io/why/**; both AGENTS.md files said so and nothing held it, and the business case had grown back on a dozen pages (two whole essays, the comparison tables of two more, the openings of Performance and Security). A page that argues the case is a second, unmaintained copy of that site. The prose is `scripts/lib/prose.mjs`'s, so a fence, a link target or a comment is never a hit; plain "per user" is not on the list because a work process per user is a technical fact. Floor: exit 1 when no page was walked. Pinned by `test/audience.test.mjs` |
+| `check:conventions` | the fenced ABAP against the house style the reader meets next: the view-chain layout, and the three section blocks of an app class. `check:examples` asks whether an example compiles and names real API — both questions about the framework; neither can see that a snippet is written in a different style from every sample. Measured against [samples-controls](https://github.com/abap2UI5/samples-controls) (637 classes, gated, at zero): five chains here showed the reader a different tree than the one that renders, and 57 of 86 app classes carried neither `PROTECTED SECTION.` nor `PRIVATE SECTION.`. What this gate deliberately does NOT take over is the blank-line and `t_arg` continuation rules — those are pattern-lint *warnings* over there and that corpus carries 382 of them. And, third, the lifecycle: in every runnable app class (the Run button's own decision, so this and `check:playground` never disagree) a `client->view_display( )` in `main( )` must sit under an `IF`/`ELSEIF`/`WHEN` on `client->check_on_init( )` or `check_on_navigated( )` — a nested IF inherits the branch; `ELSE`, an event `WHEN` and a negated check (`= abap_false`, `NOT`) do not. Only `main( )` is read: the canonical shape calls a `view_display( )` method of the class from the branch, and following that call would be a compiler. Twenty cookbook classes sent their view on every roundtrip, the one thing Life Cycle, Common Failures and the tutorial tell the reader not to do, and nothing was red. A page that means the exception says so directly above the fence, `<!-- lifecycle: allow unconditional display — reason -->` (Step 2 of the tutorial, the first screen before events exist), and a marker whose example no longer needs it fails as loudly as a missing one. `scripts/lib/lifecycle.mjs`, pinned by `test/lifecycle.test.mjs` |
 | `check:line-length` | **a page that is wrapped has to stay wrapped.** The manual is not written to one column and should not be: 39 pages are wrapped, 59 are one line per paragraph, 64 are in between, so a site-wide column would be a reformat of two thirds of the pages rather than a gate. The drift is the decidable part - a page whose prose already sits inside 80 characters may not acquire a line outside it. That is what an editor does to a paragraph it rewrites: it hands it back as ONE long line, invisible in the editor, and from then on every diff of that paragraph is one changed line instead of three, so each later correction reads as a rewrite. It happened twice in two days on the same page. Held: 66 pages; the other 97 are left alone and start being held the day somebody wraps them. Not prose, and the reason each one is not: fenced code, frontmatter, tables (they wrap at the cell), HTML, headings and image alt text (one line by construction), the caption under an image when it repeats that alt text word for word (the two are meant to be comparable at a glance), a line that is only long because of one unbreakable URL, and the generated `samples:` and `api:` blocks (wrapping one by hand is a change the next regeneration undoes). `npm run fix:line-length` rewraps a drifted paragraph - whitespace only, and verified as such: the words are identical and the rendered article is identical, which is the check that caught the two bugs in the rewrapper (it tore the punctuation off a code span, and it swallowed a `:::` container into the paragraph) |
 | `check:vocabulary` | every prose word of the manual, against a dictionary (`dictionary-en`, the Hunspell en_US) and then against `scripts/lib/vocabulary.txt`, the 215 words this project uses that a dictionary does not carry. **`test/spelling.test.mjs` answers which SPELLING of a word; this one answers whether it is a word at all**, and nothing did: that test names British forms from a list, so a word that is neither spelling reads as prose it has no opinion about. `thant`, and then `havte`, `fullfll` and `requoirememnts`, went in through the browser editor, past all fourteen other gates and out to the published site in two days - and the second set stood in the FIRST SENTENCE of a page, which is where `scripts/lib/pages.mjs` takes the description from, so it read wrong in the search index, in `llms.txt` and under the card as well. The prose is `scripts/lib/prose.mjs`'s, the same reader the spelling test uses, so an ABAP keyword, a CSS property or a path is never a word here. Not a word either, each for a reason: a token carrying a digit or an underscore (`abap2UI5`, `z2ui5_if_app`), an acronym (`ICF`, `APIs`), camelCase (`liveChange`) - all identifiers, not English; a hyphenated compound is judged part by part, and emphasis inside a word (`**f**rontend`) is joined back up first. A word goes on the list when it is right and the dictionary simply does not have it; a word you are unsure about does not, because a list that absorbs doubt is how a gate like this stops catching anything. `--unused` names entries no page uses any more |
 | `check:playground` | every complete app class on the site either carries a **Run** button or a marker on its page saying why it cannot run. The rules that offer the button fail towards *not* offering one, so without this an example nobody ever measured is indistinguishable from an example that can never run — which is exactly how the coverage ledger below went stale. What stays undecidable by CI — does a *buttoned* example actually start — is the measurement the Run-button section describes |
@@ -61,11 +67,12 @@ in it are decidable, and all thirteen are decided before a merge:
 | `check:images` | every image under `docs/public`, against the three things a page can afford and the one it cannot: a screenshot is WebP (the PNG captures were 200 to 335 kB each, 2.9 MB across the manual, on pages of 20 kB of text; the same captures as WebP are a fifth of that), a deliverable is one of the PNGs the logo page hands out, nothing is over its budget, and the build can measure every one - an image it cannot size gets no width and height and moves the page when it lands |
 | `check:samples` | the **Working Samples** blocks and the source links a page writes by hand, against [abap2UI5/samples](https://github.com/abap2UI5/samples), [samples-controls](https://github.com/abap2UI5/samples-controls) and [samples-stack](https://github.com/abap2UI5/samples-stack) — a page may declare a class of any of the three |
 
-**All six walking gates carry a floor.** A gate that checked nothing reports
+**All eight walking gates carry a floor.** A gate that checked nothing reports
 the same shape as a gate that found nothing wrong — which is precisely how
 `check:examples` passed for years on an abaplint config with no rules in it. So
 `check:examples`, `check:conventions` and `check:playground` each exit 1 when
-their walk finds no example at all, and say which of the fence language, the
+their walk finds no example at all (`check:conventions` also when it judged no
+runnable class for the lifecycle), `check:audience` when it walked no page, and say which of the fence language, the
 page layout or the builder name is the likely cause - `check:conventions` when
 EITHER of its halves finds nothing (no chain, or no app class), and also when
 `chain-house-layout` stays silent on a canary chain built to break it, which is
@@ -76,7 +83,7 @@ or its glob stopped matching rather than that the manual went loose, and
 the same floor twice over: no HTML in `dist` at all, and no cross-site link on
 a site whose bar carries three of them on every page.
 
-The thirteen are written out in **three** places, and all three have to name the
+The fifteen are written out in **three** places, and all three have to name the
 same set: `package.json`'s `check` script, `.github/workflows/check.yml` for a
 pull request, and `.github/workflows/deploy.yml` before the site is published.
 `check.yml` runs them in the script's order; `deploy.yml` cannot, because it
@@ -103,7 +110,7 @@ the catalogue.
 
 There used to be one more, `check:counts`, holding four figures on a
 `resources/samples.md` page against the catalogues themselves. That page is
-gone — the cookbook links [the sample catalogue](https://abap2ui5.github.io/playground/samples/),
+gone — the cookbook links [the sample catalogue](https://abap2ui5.github.io/samples-site/),
 which introduces itself and counts itself — and with it the only prose
 copy of a number this repository does not own. `generate-llms.mjs` still counts
 the sample catalogues into `llms.txt`, which is why CI sparse-checks out
@@ -199,7 +206,7 @@ browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
 There are thirty-six of them. Eight are `/technical/*`: that whole section became
-the Know-How series under `/advanced/insights/` in one commit, and eight
+the Insights series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
 the project's front page on GitHub. The ninth is the troubleshooting page,
@@ -349,7 +356,7 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   every source link a page writes **by hand** — `github.com/abap2UI5/samples/blob/main/…`
   in the prose rather than in a generated block, and the same for the two
   sibling repositories — against that same checkout.
-  The 38 essay pages under `advanced/insights/` link a sample that way on
+  The Insights pages under `advanced/insights/` link a sample that way on
   purpose (none of them carries a block: a "Full source:" sentence is the shape
   an essay wants, not a see-also list at the end), and the samples repository
   renumbers, so such a link is one renumber away from a 404 with nothing
@@ -359,6 +366,10 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   markers, plus `docs/public/api/client-api.json` next to it, comes from
   `npm run generate:api` — edit the intro around the block by hand, never the
   block, and regenerate after a release bump or `check:api-reference` fails.
+  The user-exit block on `advanced/extensibility/user_exits.md` comes from the
+  same run, and the custom-control block on `resources/controls.md` from
+  `npm run generate:controls` (`check:controls`); `scripts/lib/line-length.mjs`
+  skips `samples:`, `api:` and `controls:` blocks alike.
 
 ## The Run button, and why its rules are hand-maintained
 

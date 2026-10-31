@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Checks the ABAP examples in this documentation against the two house
-// conventions the sample repositories gate, and this one did not.
+// Checks the ABAP examples in this documentation against the three house
+// conventions the pages teach and nothing read the code for.
 //
 // Why a gate of its own, next to check-examples.mjs: that one asks whether an
 // example COMPILES and whether the view it builds names API that exists. Both
@@ -24,7 +24,16 @@
 //                   empty; the sample corpus has them in 637 of 637. A reader
 //                   copying a snippet copies the shell as well.
 //
-// Both are decidable, which is the whole test for whether something belongs in
+//   lifecycle       a runnable app class that calls client->view_display( )
+//                   in main( ) outside an IF / WHEN on check_on_init( ) or
+//                   check_on_navigated( ) - the view sent on every roundtrip,
+//                   which every page says not to do and a third of the
+//                   examples did. The scanner is scripts/lib/lifecycle.mjs,
+//                   and a page that means it says so in a
+//                   `<!-- lifecycle: allow unconditional display — … -->`
+//                   marker above the fence.
+//
+// All three are decidable, which is the whole test for whether something belongs in
 // this repository's CI. What is NOT here, deliberately: the blank-line rules
 // around `end( )` and the `t_arg` continuation column. They are pattern-lint
 // WARNINGS over in samples-controls, and that corpus itself carries 382 of
@@ -42,6 +51,7 @@ import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkAbapSource } from '@abap2ui5/linter';
+import { auditLifecycle } from './lib/lifecycle.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = join(ROOT, 'docs');
@@ -162,6 +172,25 @@ for (const file of pages) {
   }
 }
 
+/* --------------------------------------------------------------- lifecycle */
+
+/* The same walk again, over the runnable app classes only - the ones a
+ * reader can start, and copies. The decision which those are is the Run
+ * button's (playground.mjs), so this and check-playground never disagree. */
+const lifecycleFindings = [];
+const lifecycleStale = [];
+let appsJudged = 0;
+let appsAllowed = 0;
+
+for (const file of pages) {
+  const page = file.slice(ROOT.length + 1);
+  const result = auditLifecycle(readFileSync(file, 'utf8'));
+  appsJudged += result.apps;
+  appsAllowed += result.allowed;
+  for (const f of result.findings) lifecycleFindings.push({ page, ...f });
+  for (const what of result.stale) lifecycleStale.push({ page, what });
+}
+
 /* ----------------------------------------------------------------- verdict */
 
 /* The same floor check-playground and check-examples carry: a walk that found
@@ -169,9 +198,9 @@ for (const file of pages) {
  * its own is a gate that checked nothing - the site has dozens of both, so a
  * zero on EITHER side means its walk stopped matching, not that the pages
  * went clean. */
-if (chainsJudged === 0 || classesJudged === 0) {
-  console.error(`check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) found in the fences —`);
-  console.error('has the fence language, the builder name or the class shape changed?');
+if (chainsJudged === 0 || classesJudged === 0 || appsJudged === 0) {
+  console.error(`check-conventions: ${chainsJudged} view chain(s), ${classesJudged} app class(es) and ${appsJudged} runnable app class(es) found in the fences —`);
+  console.error('has the fence language, the builder name, the class shape or the Run-button rule changed?');
   process.exit(1);
 }
 
@@ -191,7 +220,8 @@ if (!checkAbapSource(CANARY, CHAIN_OPTS).findings.some((f) => f.type === 'chain-
   process.exit(1);
 }
 
-console.log(`check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) in fenced examples`);
+console.log(`check-conventions: ${chainsJudged} view chain(s) and ${classesJudged} app class(es) in fenced examples, `
+  + `${appsJudged} of them runnable and read for the lifecycle (${appsAllowed} allowed by a marker)`);
 
 if (chainFindings.length) {
   console.error(`\n${chainFindings.length} chain(s) are not in the house layout — one call per line including`);
@@ -209,5 +239,23 @@ if (sectionFindings.length) {
   console.error('(abap2UI5 AGENTS.md, "Class sections"). A reader copies the shell with the class.');
 }
 
-if (chainFindings.length || sectionFindings.length) process.exit(1);
-if (!FIX) console.log('             layout and class shell match the sample corpora');
+if (lifecycleFindings.length) {
+  console.error(`\n${lifecycleFindings.length} app class(es) display the view on every roundtrip - client->view_display( )`);
+  console.error('in main( ) with no IF or WHEN on client->check_on_init( ) / check_on_navigated( )');
+  console.error('around it:\n');
+  for (const f of lifecycleFindings) console.error(`  - ${f.page}:${f.line}  ${f.name}: ${f.text}`);
+  console.error('\nBuild and display the view under check_on_init( ) or check_on_navigated( ) and');
+  console.error('handle events in the branches after it (cookbook/event_navigation/life_cycle.md).');
+  console.error('A page that means it says so directly above the fence:');
+  console.error('\n  <!-- lifecycle: allow unconditional display — <why this example is the exception> -->');
+}
+
+if (lifecycleStale.length) {
+  console.error(`\n${lifecycleStale.length} stale lifecycle marker(s):\n`);
+  for (const f of lifecycleStale) console.error(`  - ${f.page}: ${f.what}`);
+  console.error('\nA marker records why an example may display unconditionally. When that stops');
+  console.error('being true - the example was fixed, or moved, or went - the marker goes with it.');
+}
+
+if (chainFindings.length || sectionFindings.length || lifecycleFindings.length || lifecycleStale.length) process.exit(1);
+if (!FIX) console.log('             layout, class shell and lifecycle match what the pages teach');

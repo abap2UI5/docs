@@ -353,7 +353,7 @@ export default defineConfig({
                 text: "Barcode Scanning",
                 link: "/cookbook/device_capabilities/barcode_scanning",
               },
-              { text: "Audio, Video", link: "/cookbook/device_capabilities/audio" },
+              { text: "Audio", link: "/cookbook/device_capabilities/audio" },
               {
                 text: "Upload, Download",
                 link: "/cookbook/device_capabilities/upload_download",
@@ -626,6 +626,7 @@ export default defineConfig({
           // than in the Cookbook because it is a lookup destination, not a
           // reading path: the cookbook chapters explain, this page lists.
           { text: "Client API", link: "/resources/api" },
+          { text: "Custom Control Reference", link: "/resources/controls" },
           // No "Sample Catalogues" entry here any more. A page that only
           // described the three catalogues put a stop between the reader and
           // the corpus, and had to be kept true about counts and facets it

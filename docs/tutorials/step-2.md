@@ -8,6 +8,7 @@ A message box is not much of a UI. UI5 apps describe their screens as XML
 views — and in abap2UI5 you write that view in ABAP, with
 `z2ui5_cl_ui5_view_builder`:
 
+<!-- lifecycle: allow unconditional display — the first screen, before Step 3 introduces events and the check_on_* branches -->
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
   PUBLIC SECTION.

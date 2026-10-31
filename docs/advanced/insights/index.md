@@ -12,7 +12,7 @@ to the whole picture — what the framework rests on, how it works under the
 app, what a working day with it looks like, and where it belongs in the
 landscape. They are the "why it works like this" for an architect; the case
 for using it — what it costs, who runs it, how it compares as a decision — is
-made on [abap2UI5 for decision makers](https://abap2ui5.github.io/why/){target="_self"},
+made on [the case for abap2UI5](https://abap2ui5.github.io/why/){target="_self"},
 and is only linked from here.
 
 There is a good chance you will also pick up a few things about ABAP along the
