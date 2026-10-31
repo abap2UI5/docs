@@ -5,7 +5,8 @@ markdown. Kept here rather than on the published pages: they are publishing
 material, not documentation.
 
 The sections stand in the order the articles are numbered in
-`docs/advanced/insights/`, one per article, so this file is also the
+`src/content/essays/` of abap2UI5/insights (the series' own site,
+https://abap2ui5.github.io/insights/, since 2026-10-31), one per article, so this file is also the
 publishing order. Move a post here when an article moves there. A post whose
 article does not exist yet waits under *Not yet published* at the end, and
 moves up the day its article lands.
@@ -843,7 +844,7 @@ Plain text — LinkedIn renders no markdown. Draft, 848 characters.
 
 ## Not yet published
 
-Posts whose article is not in `docs/advanced/insights/` yet. Each moves up
+Posts whose article is not in abap2UI5/insights yet. Each moves up
 into the numbered order the day its article lands.
 
 ### No Cache, No Deploy, Any IDE
