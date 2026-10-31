@@ -136,14 +136,18 @@ export default defineConfig({
     );
   },
   themeConfig: {
+    // https://vitepress.dev/reference/default-theme-config
+    //
+    // THE DEFAULT THEME'S BAR, AS EVERY VITEPRESS SITE HAS IT: the logo and
+    // the name on the left, the search, the sections of the manual, the
+    // version, the light/dark switch and the two marks. Nothing of our own:
+    // a developer who has used one VitePress site knows where everything is.
     logo: "/logo.png",
-    // The mark and the name, nothing more - the brand the playground and the
-    // sample catalogue wear (src/shell/index.html, src/catalogue/index.html
-    // over there), so somebody moving between the three reads one bar rather
-    // than three. The bar's nav says which of them you are on, in bold, and a
-    // brand that said it too said it twice; style.css closes it with a
-    // hairline.
     siteTitle: "abap2UI5",
+    // The logo leads to the abap2UI5 home page, like the logo on every other
+    // abap2UI5 site (CONVENTION.md in abap2UI5/abap2UI5.github.io). Another
+    // deployment on the same origin, hence target _self (check:cross-site).
+    logoLink: { link: "https://abap2ui5.github.io/", target: "_self" },
     footer: {
       message: `
       <a href="/docs/resources/license">License</a> |
@@ -155,39 +159,27 @@ export default defineConfig({
         "https://github.com/abap2UI5/docs/tree/main/docs/:path",
       text: "Edit this page on GitHub",
     },
-    /* No `search` provider. VitePress's local search indexes the pages of THIS
-     * site and nothing else, and half of what a reader comes here to find is a
-     * sample in another repository - which meant knowing the catalogue existed
-     * and searching a second time, over there. The box in the middle of the bar
-     * is theme/SearchBox.vue, over one index that carries both areas
-     * (scripts/lib/search-index.mjs). The theme's own search slot stays empty;
-     * the component is rendered into `nav-bar-content-before`. */
-    // https://vitepress.dev/reference/default-theme-config
-    //
-    // EMPTY, AND THAT IS THE BAR'S SHAPE NOW. There were three dropdowns here
-    // - Guide, Links and the version number - and the bar they sat in has been
-    // rebuilt around the four sections of the project (Home, Documentation,
-    // Samples, Playground, in theme/SiteNav.vue), with the search in the
-    // middle and everything else behind the menu at the right-hand end. All
-    // three were duplicates of something the reader already had:
-    //
-    //   Guide      six entries, every one of them a section of the sidebar
-    //              that opens the moment Documentation is clicked. A dropdown
-    //              listing the navigation standing open below it is a second
-    //              copy to keep in step, and it drifted twice already - the
-    //              `// nav` / `// sidebar` markers in this file are the scar.
-    //   Links      seven repositories, all seven in the menu behind the bar's
-    //              last button, grouped by kind rather than flat.
-    //   1.144.0    four entries - release notes, support, contribute, sponsor
-    //              - all four already in that same menu. What was NOT
-    //              elsewhere is the NUMBER, which moved into the menu as its
-    //              first heading (`VERSION` in SiteMenu.vue; check:version
-    //              follows it there).
-    //
-    // So nothing was taken off the site, only out of the row. Keep it empty:
-    // an entry added here lands between the sections and the search box, and
-    // the row stops reading left to right.
-    nav: [],
+    // VitePress's own search, over the pages of this manual. The samples have
+    // their own search on their own site.
+    search: { provider: "local" },
+    // The sections of the manual, each opening its part of the sidebar, and
+    // the released version with what belongs to it. The version is what
+    // check:version reads (scripts/lib/release.mjs).
+    nav: [
+      { text: "Guide", link: "/get_started/about", activeMatch: "^/(get_started|configuration|advanced)/" },
+      { text: "Tutorial", link: "/tutorials/", activeMatch: "^/tutorials/" },
+      { text: "Cookbook", link: "/cookbook/", activeMatch: "^/cookbook/" },
+      { text: "API", link: "/resources/api", activeMatch: "^/resources/" },
+      {
+        text: "1.148.0",
+        items: [
+          { text: "Release notes", link: "/resources/changelog" },
+          { text: "Support", link: "/resources/support" },
+          { text: "Contribute", link: "/resources/contribution" },
+          { text: "Sponsor", link: "/resources/sponsor" },
+        ],
+      },
+    ],
     sidebar: [
       {
         // A SEQUENCE, AND IT READS AS ONE. What it is, install it, see one app
@@ -721,20 +713,11 @@ export default defineConfig({
       },
     ],
     outline: [2, 6],
-    // The two marks, as inline SVG rather than by name. VitePress draws a
-    // named icon from a CSS mask and, if that mask has not been generated,
-    // falls back to fetching the glyph from api.iconify.design - a CDN, which
-    // is the one thing every other mark on this site was taken off. These are
-    // the exact paths the playground's bar and the catalogue's carry
-    // (src/shell/index.html, src/catalogue/index.html), so the end of the bar
-    // is the same two shapes on all four documents rather than two drawings of
-    // the same two brands.
-    // EMPTY: the two marks are drawn by theme/TheBar.vue now, with the same
-    // inline paths the other three bars carry. They were `socialLinks` here,
-    // which the theme renders at the end of its own row - and holding them
-    // where this project's bar wants them took a block of margin and order
-    // overrides that is gone with them. A mark added here would reappear
-    // outside our bar, at the theme's size, in the theme's place.
-    socialLinks: [],
+    // Inline SVG rather than a named icon: a named one VitePress may fetch
+    // from a CDN.
+    socialLinks: [
+      { icon: { svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>' }, link: "https://github.com/abap2UI5/abap2UI5", ariaLabel: "abap2UI5 on GitHub" },
+      { icon: { svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg>' }, link: "https://www.linkedin.com/company/abap2ui5/", ariaLabel: "abap2UI5 on LinkedIn" },
+    ],
   },
 });

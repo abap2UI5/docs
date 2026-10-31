@@ -1,5 +1,10 @@
 /*
- * The search: what goes into the index, and what comes back out of it.
+ * The search index this site PUBLISHES (docs/search-index.json) and the
+ * matcher that reads it (scripts/lib/search-engine.js). The manual's own bar
+ * searches with VitePress's local search; this index - the manual's pages
+ * plus the three sample catalogues - is what the playground's search box
+ * fetches (src/shell/search-box.mjs over there, which carries a copy of the
+ * matcher).
  *
  * Two halves, both pinned here because both are the kind of thing that breaks
  * quietly. An index built from the wrong field still builds; a matcher that
@@ -18,7 +23,7 @@ import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { sampleEntries, docEntries, trimTerms, enrich } from '../scripts/lib/search-index.mjs';
-import { search, grouped, highlight, queryTerms } from '../docs/.vitepress/theme/search-engine.js';
+import { search, grouped, highlight, queryTerms } from '../scripts/lib/search-engine.js';
 import { terms, headings } from '../scripts/lib/pages.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -332,16 +337,6 @@ test('the highlight marks what was matched and nothing else', () => {
   assert.equal(parts.map(([t]) => t).join(''), 'carousel');
 });
 
-test('the search box in the bar carries the cross-site attribute on a sample hit', () => {
-  /* The same rule as the Run bar's link and for the same reason: a sample hit
-   * leaves this deployment for the catalogue, and a link the router swallows
-   * lands on this site's 404 (scripts/lib/cross-site.mjs). The gate cannot see
-   * it - the results are built in a browser - so it is checked as source. */
-  const box = readFileSync(join(ROOT, 'docs/.vitepress/theme/SearchBox.vue'), 'utf8');
-  const fn = box.slice(box.indexOf('function hrefOf'), box.indexOf('function go'));
-  assert.match(fn, /target:\s*'_self'/);
-});
-
 /* ── THE LAST THING YOU SEARCHED FOR ────────────────────────────────────────
  *
  * A hit opens another page, often on another deployment, and the box that
@@ -350,7 +345,7 @@ test('the search box in the bar carries the cross-site attribute on a sample hit
  * hit is opened and the next box starts with it - and, because it comes back
  * out of a localStorage anything on this origin can write to, what comes back
  * is checked rather than used. */
-const { rememberQuery, recallQuery } = await import('../docs/.vitepress/theme/search-engine.js');
+const { rememberQuery, recallQuery } = await import('../scripts/lib/search-engine.js');
 
 const QUERY_KEY = 'abap2ui5-playground:search';
 

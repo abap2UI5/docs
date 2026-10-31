@@ -20,20 +20,13 @@ import path from 'path';
 /** Where the version is written, and how to find it in each file. */
 const SITES = [
   {
-    /* The bar's menu, which is theme/SiteMenu.vue and not config.mjs any more. The
-     * number used to be a nav dropdown's label - `text: "1.144.0"` - and the
-     * dropdown is gone: its four entries were already in the menu behind the
-     * bar's last button, so the rebuilt bar kept the number and dropped the
-     * duplicate rows. A gate that still matched `text:` in config.mjs would
-     * have found the FIRST nav-shaped string in a 700-line file, which is
-     * exactly the silent wrong answer the shape checks below exist to
-     * prevent. */
-    /* SiteMenu.vue renders "Version x.y.z" in the bar's menu of every page.
-     * The file is where the number LIVES; moving it means changing this, and
-     * this gate is what says so. */
-    file: 'docs/.vitepress/theme/SiteMenu.vue',
+    /* The version dropdown in the bar - the default theme's nav, in
+     * config.mjs. Matched by its shape (a nav item whose text is nothing but
+     * a version number, followed by its items), not by the first `text:` in
+     * the file. */
+    file: 'docs/.vitepress/config.mjs',
     what: "the version the bar prints",
-    re: /const VERSION = "(\d+\.\d+\.\d+)"/,
+    re: /text: "(\d+\.\d+\.\d+)",\s*items:/,
   },
   {
     file: 'docs/resources/deprecations.md',

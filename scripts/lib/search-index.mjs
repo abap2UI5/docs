@@ -157,7 +157,7 @@ export function trimTerms(entries, { ceiling = 1 / 3 } = {}) {
  *
  * What is NOT here is the spelling with the space taken out - "messagebox"
  * for "Message Box": the matcher looks for that itself (`joined( )` in
- * theme/search-engine.js), at the weight of the field it is in.
+ * scripts/lib/search-engine.js), at the weight of the field it is in.
  */
 export const SYNONYMS = [
   ['readonly', 'editable'],
