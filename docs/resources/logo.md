@@ -99,12 +99,12 @@ the cover image of the project's LinkedIn page and its Bluesky profile. Both
 platforms lay the round profile picture over the lower left of the cover, so
 the text sits to the right of it, centered in the space that remains.
 
-The LinkedIn cover carries a faint tint of the red behind the text, fading to
-white towards the mark. LinkedIn puts every logo on a white tile with a few
-pixels of white around it, and a tint that ran under the tile showed that
-tile as a frame; white where the tile sits and color only where the text
-is leaves nothing to show. Bluesky crops the profile picture to a circle
-with no tile, so its banner is plain white.
+Both carry a faint tint of the red behind the text, fading to white towards
+the mark. LinkedIn puts every logo on a white tile with a few pixels of white
+around it, and a tint that ran under the tile showed that tile as a frame;
+white where the tile sits and color only where the text is leaves nothing to
+show. Bluesky crops the profile picture to a circle with no tile and would
+not need the fade, but the two profiles are meant to look alike.
 
 ![The LinkedIn cover: UI5 apps for ABAP, built by the team you already have](/banner_linkedin.png)
 
