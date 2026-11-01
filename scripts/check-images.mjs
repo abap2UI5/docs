@@ -7,7 +7,8 @@
  * are a fifth of that with no visible difference, so a screenshot is WebP
  * here, and this is what says so the next time somebody drags a PNG in. The
  * exceptions are the files the logo page hands OUT - the mark, the wordmark
- * on white, the code cover, the mascots, the preview card - which are PNG
+ * on white, the code cover, the profile banners, the mascots, the preview
+ * card - which are PNG
  * because that is what a reader downloads them as, and the icons, which the
  * browser wants as PNG. Those are listed, and anything not listed is a
  * screenshot.
@@ -35,6 +36,7 @@ const PUBLIC = path.join(ROOT, 'docs', 'public');
 const DELIVERABLE = [
   /^favicon\.(?:png|ico)$/, /^apple-touch-icon\.png$/, /^og-image\.png$/,
   /^logo\.png$/, /^logo_white_back\.png$/, /^code_cover\.png$/, /^mascots\//,
+  /^banner_linkedin\.png$/, /^banner_bluesky\.png$/,
 ];
 /* Content is a screenshot or the hero mark: WebP, and never more than this.
    The largest today is 62 kB. A deliverable is a PNG somebody downloads, and

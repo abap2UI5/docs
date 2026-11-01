@@ -62,6 +62,7 @@ anthropic
 api
 backend
 backends
+bluesky
 bundler
 cdnjs
 css
