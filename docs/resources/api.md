@@ -243,7 +243,7 @@ Returns `string`.
 
 ### `get`
 
-Everything the frontend sent with this roundtrip, as one structure (ty_s_get): the event and its arguments, the device, focus, scroll and UI5 runtime information, the browser location (s_config), the launchpad startup parameters (t_comp_params), the draft ids, data a returning app handed over (r_event_data) and the table cells this roundtrip's delta could not apply (t_model_skipped). Cheap to call more than once - the launchpad parameters are parsed once per roundtrip and remembered.
+Everything the frontend sent with this roundtrip, as one structure (ty_s_get): the event and its arguments, the device, focus, scroll and UI5 runtime information, the browser location (s_config), the launchpad startup parameters (t_comp_params), the draft ids, data a returning app handed over (r_event_data) and the table cells and bound scalars this roundtrip could not apply (t_model_skipped). Cheap to call more than once - the launchpad parameters are parsed once per roundtrip and remembered.
 
 Returns `ty_s_get`.
 
@@ -514,7 +514,7 @@ Defined as `STANDARD TABLE OF ty_s_name_value WITH EMPTY KEY`.
 
 ### `ty_s_model_skip`
 
-One table cell of this roundtrip's delta that could NOT be applied. The value DID arrive from the client, it just would not convert into the ABAP component behind the cell - `1,250.00` or `12.50 EUR` into a packed price, text into an integer. Such a cell is SKIPPED, never raised on: one unconvertible cell must not kill a delta that carries many good ones. This is the trace of that skip, and the only way an app can find out it happened - the browser still shows what the user typed, because the client model was updated before the roundtrip. Read it unconditionally at the top of main( ), NOT inside a Save branch: the delta travels with whatever roundtrip follows the edit, which need not be the press the app is interested in. The list is per-roundtrip - the next request sees an empty one.
+One value of this roundtrip's model that could NOT be applied - a table cell, or a bound scalar attribute. The value DID arrive from the client, it just would not convert into the ABAP type behind it - `1,250.00` or `12.50 EUR` into a packed price, text into an integer. Such a value is SKIPPED, never raised on: one unconvertible value must not kill a roundtrip that carries many good ones, and the attribute keeps its old value. This is the trace of that skip, and the only way an app can find out it happened - the browser still shows what the user typed, because the client model was updated before the roundtrip. Read it unconditionally at the top of main( ), NOT inside a Save branch: the delta travels with whatever roundtrip follows the edit, which need not be the press the app is interested in. The list is per-roundtrip - the next request sees an empty one.
 
 Reading the trace alone pushes no model, so the browser goes on showing the refused text until the app writes something. See z2ui5_cl_ui5_srv_model=>delta_apply_field, which fills it.
 
@@ -528,7 +528,7 @@ Reading the trace alone pushes no model, so the browser goes on showing the refu
 
 ### `ty_t_model_skip`
 
-The table of skipped cells get( )-t_model_skipped carries, one ty_s_model_skip row per cell this roundtrip's delta could not apply.
+The table of skipped values get( )-t_model_skipped carries, one ty_s_model_skip row per table cell or bound scalar this roundtrip could not apply.
 
 Defined as `STANDARD TABLE OF ty_s_model_skip WITH EMPTY KEY`.
 
