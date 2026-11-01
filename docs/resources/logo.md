@@ -92,6 +92,31 @@ header, a slide, a repository social preview.
 | File | [`code_cover.png`](/code_cover.png) |
 | Size | 2278 × 830, PNG, transparent background |
 
+## Profile Banners
+
+The claim of the home page, set in the site's own face and the mark's red, on
+white: the cover image of the project's LinkedIn page and its Bluesky profile.
+Both platforms lay the round profile picture over the lower left of the cover,
+so the text sits to the right of it, centered in the space that remains. The
+background is white because the profile card around it is white — a tinted
+cover reads as a mistake there, not as a design.
+
+![The LinkedIn cover: UI5 apps for ABAP, built by the team you already have](/banner_linkedin.png)
+
+| | |
+| --- | --- |
+| File | [`banner_linkedin.png`](/banner_linkedin.png) |
+| Size | 4512 × 764, PNG — four times the 1128 × 191 LinkedIn displays, so the text stays sharp once LinkedIn has scaled it down |
+| Used by | the cover of [the project's LinkedIn page](https://www.linkedin.com/company/abap2ui5/) |
+
+![The Bluesky banner: UI5 apps for ABAP, built by the team you already have](/banner_bluesky.png)
+
+| | |
+| --- | --- |
+| File | [`banner_bluesky.png`](/banner_bluesky.png) |
+| Size | 3000 × 1000, PNG — the 3:1 Bluesky asks for |
+| Used by | the banner of [the project's Bluesky profile](https://bsky.app/profile/abap2ui5.bsky.social) |
+
 ## Mascots
 
 Three animals travel with the project — on posts, slides and covers, where the
