@@ -148,11 +148,10 @@ export default defineConfig({
     // abap2UI5 site (CONVENTION.md in abap2UI5/abap2UI5.github.io). Another
     // deployment on the same origin, hence target _self (check:cross-site).
     logoLink: { link: "https://abap2ui5.github.io/", target: "_self" },
+    // The family's foot (CONVENTION.md section 5 in abap2UI5/abap2UI5.github.io):
+    // the same line as the home page, the licence and About, nothing more.
     footer: {
-      message: `
-      <a href="/docs/resources/license">License</a> |
-      <a href="/docs/resources/support#contact">Contact</a>`,
-      copyright: `Copyright © 2023-${new Date().getFullYear()} abap2UI5`,
+      message: `<a href="https://github.com/abap2UI5/abap2UI5/blob/main/LICENSE" target="_blank" rel="noopener">MIT licensed</a> · <a href="https://abap2ui5.github.io/about/" target="_self">About</a>`,
     },
     editLink: {
       pattern:
