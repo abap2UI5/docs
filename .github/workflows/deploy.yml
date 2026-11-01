@@ -176,6 +176,10 @@ jobs:
       # THE SITE THAT IS PUBLISHED: VitePress's build, from this repository
       # alone.
       - name: Build the site
+        # the search index lists the organisations' repositories and the
+        # framework's classes from the GitHub API (scripts/lib/search-family.mjs)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run docs:build
 
       # The one gate that cannot run before the build, because what it judges

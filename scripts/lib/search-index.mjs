@@ -17,10 +17,12 @@
  *            summary and keywords the sample repositories maintain for it, and
  *            a link to that sample's own page in the catalogue
  *
- * The playground is not an area. It has no content to find: its URL carries
+ * The playground is not a corpus. It has no content to find: its URL carries
  * the code in the editor, and a result that opened an empty editor would
- * answer no question anybody typed. It is a destination in the bar, not in the
- * index — the same reasoning that keeps it out of the position memory.
+ * answer no question anybody typed. It is a DESTINATION - one row of the
+ * `tools` area, with the layout editor and the AI builder, in
+ * search-family.mjs, which also brings in the repositories, the sister sites
+ * and the API.
  *
  * WHERE IT IS PUBLISHED, AND WHY THAT IS ENOUGH. `/docs/search-index.json`, on
  * the origin all four documents share, fetched by whichever of them the reader
@@ -34,6 +36,7 @@
 import fs from 'node:fs';
 import { entriesOf, loadCatalogue } from './catalogue.mjs';
 import { sidebarPages, fileOf, describe, title, headings, terms, SITE } from './pages.mjs';
+import { familyEntries } from './search-family.mjs';
 
 /** The three sample repositories, and where a reader is sent for a hit. */
 export const CORPORA = [
@@ -75,7 +78,7 @@ export function docEntries(pages = sidebarPages(), read = (link) => fs.readFileS
  *  three catalogues could be reached. A repository that could not is left out
  *  and reported - it costs its rows, never the build, which is the rule every
  *  other reader of these catalogues here already follows. */
-export function sampleEntries(catalogue, label) {
+export function sampleEntries(catalogue, label, repo) {
   return entriesOf(catalogue).map((e) => {
     const cls = String(e.class);
     /* The three repositories describe an entry with slightly different fields
@@ -102,6 +105,9 @@ export function sampleEntries(catalogue, label) {
           .toLowerCase().split(/[^\p{L}\p{N}._]+/u).filter(Boolean),
       )].join(' '),
       url: samplePage(cls),
+      /* the class itself, where its repository keeps it - the action beside
+       * the hit, for the reader who wants the code rather than the app */
+      ...(repo && (e.file || e.path) ? { links: [{ label: 'Source', url: `https://github.com/abap2UI5/${repo}/blob/main/${e.file || e.path}` }] } : {}),
     };
   });
 }
@@ -198,11 +204,17 @@ export async function buildIndex(root, { fetchFn = globalThis.fetch, log = () =>
       log(`  ${repo}: no catalogue reachable — its samples are not in this index`);
       continue;
     }
-    const rows = sampleEntries(found.catalogue, label);
+    const rows = sampleEntries(found.catalogue, label, repo);
     entries.push(...rows);
     areas.push({ area: 'samples', repo, label, count: rows.length });
     log(`  ${repo}: ${rows.length} sample(s) (${found.source})`);
   }
+
+  /* the rest of the family: where to go, the repositories, the sister
+   * sites, the API and the framework's source - search-family.mjs */
+  const family = await familyEntries({ fetchFn, log });
+  entries.push(...family.entries);
+  areas.push(...family.areas);
 
   return { built: new Date().toISOString(), areas, entries: enrich(entries) };
 }

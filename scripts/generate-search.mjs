@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// The search index the bar reads: every page of this site, every sample in the
-// three catalogues, one JSON document at /docs/search-index.json.
+// The search index the boxes of the family read: every page of this site, every
+// sample in the three catalogues and the rest of the family (repositories,
+// tools, the sister sites, the API - scripts/lib/search-family.mjs), one JSON
+// document at /docs/search-index.json.
 //
 // Runs inside `docs:build`, before vitepress, so the file is in docs/public/
 // when the build copies it - the same arrangement as generate-llms.mjs, and
@@ -24,7 +26,8 @@ const OUT = path.join(DOCS, 'public', 'search-index.json');
 const index = await buildIndex(ROOT, { log: (line) => console.log(line) });
 
 const docs = index.entries.filter((e) => e.area === 'docs').length;
-const samples = index.entries.length - docs;
+const samples = index.entries.filter((e) => e.area === 'samples').length;
+const rest = index.entries.length - docs - samples;
 
 /* The floor. An index with no page in it is a broken walk - the sidebar moved,
  * or config.mjs stopped exporting one - and an empty search box that reports
@@ -40,4 +43,4 @@ fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(index));
 
 const kb = Math.round(fs.statSync(OUT).size / 1024);
-console.log(`search-index.json: ${docs} page(s) + ${samples} sample(s) (${kb} kB)`);
+console.log(`search-index.json: ${docs} page(s) + ${samples} sample(s) + ${rest} from the rest of the family (${kb} kB)`);

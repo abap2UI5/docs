@@ -106,6 +106,10 @@ jobs:
       # alone. A page that does not build is a page nobody can read.
       - name: build the site
         if: ${{ !cancelled() }}
+        # the search index lists the organisations' repositories and the
+        # framework's classes from the GitHub API (scripts/lib/search-family.mjs)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: npm run docs:build
 
       # every link out of this deployment and into a neighbouring one on the
