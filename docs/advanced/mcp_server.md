@@ -234,7 +234,7 @@ deliberately does not have: your real systems.
 | `app_act` | Fill fields and fire an event by name, validated against the snapshot and sent as the real model delta, and get the next snapshot |
 | `run_unit_tests` | The test classes deployed with an app, run in the open-abap runtime: **assertions**, not pictures |
 | `verify_app` | **The whole loop in one call** — validate, deploy, build, unit tests, boot — stopping at the first stage that fails and reporting every stage before it |
-| `migrate_report` | Convert a **classic ABAP report** into an app class of the abap-cloud-gui add-on, with its converter report2cloud: the class files, the migration report (TODOs, tables and APIs not released on ABAP Cloud with their successors) and the refusals with `file:row:col`. `deploy: true` also builds it here and answers the agent snapshot of its selection screen. Needs an abap-cloud-gui checkout (1.0.0 or later) |
+| `migrate_report` | Convert a **classic ABAP report** into an app class of the abap-cloud-gui add-on, with its converter report2UI5, which converts the user interface and copies the logic as it is: the class files, the migration report (TODOs, what was not carried over) and the refusals with `file:row:col`. `deploy: true` also builds it here and answers the agent snapshot of its selection screen. Needs an abap-cloud-gui checkout (1.0.0 or later) |
 | `backend` | `status` / `start` / `stop` / `restart` of the local express backend |
 | `remove_app` | Delete a dev app from the sandbox, or list what is deployed |
 

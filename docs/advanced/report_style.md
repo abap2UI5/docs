@@ -14,9 +14,9 @@ on ABAP Cloud as well as on NetWeaver down to 7.02, and no UI5 view is
 written by hand.
 
 It suits a quick report or tool on ABAP Cloud, a first step into abap2UI5
-in familiar terms, and the classic reports a company takes to ABAP Cloud -
-[Migrating Classic Reports](/advanced/report_migration) converts those
-with report2cloud.
+in familiar terms, and the classic reports a company moves off the SAP GUI -
+[Migrating Classic Reports](/advanced/report_migration) converts their user
+interface with report2UI5.
 
 ## Installing It
 
@@ -108,7 +108,7 @@ reference for all of it.
 
 The samples of the add-on run on its own page,
 [abap2ui5-addons.github.io/abap-cloud-gui](https://abap2ui5-addons.github.io/abap-cloud-gui/):
-each classic report beside the class report2cloud writes of it and that
+each classic report beside the class report2UI5 writes of it and that
 class running as an abap2UI5 app, in a copy of the abap2UI5 playground that
 carries the add-on. A report of your own can be pasted there, converted and
 started the same way. The
