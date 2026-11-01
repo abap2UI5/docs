@@ -4,10 +4,12 @@ The posts that introduce each article. Plain text — LinkedIn renders no
 markdown. Kept here rather than on the published pages: they are publishing
 material, not documentation.
 
-The sections stand in the order the articles are numbered in
-`src/content/essays/` of abap2UI5/insights (the series' own site,
-https://abap2ui5.github.io/insights/, since 2026-10-31), one per article, so this file is also the
-publishing order. Move a post here when an article moves there. A post whose
+The sections stand in the order the articles were first published, one per
+article - the series' first numbering. Since 2026-11-01 the series' own site,
+https://abap2ui5.github.io/insights/ (`src/content/essays/` of
+abap2UI5/insights), numbers the articles in reading order instead, so a
+number here and a number there no longer agree; the title is what links a
+post to its article. Move a post here when an article moves there. A post whose
 article does not exist yet waits under *Not yet published* at the end, and
 moves up the day its article lands.
 

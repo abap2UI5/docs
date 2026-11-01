@@ -232,8 +232,10 @@ links sections of it and the new page keeps every section id;
 point at the section that carries each now.
 The largest group, forty-four, is `/advanced/insights/`: the series left the
 manual for a site of its own on 2026-10-31,
-https://abap2ui5.github.io/insights/ (abap2UI5/insights), where every essay
-kept its slug. One stub per essay and one for the index point at the same
+https://abap2ui5.github.io/insights/ (abap2UI5/insights). On 2026-11-01 the
+essays were renumbered there so that the number is the place in reading order,
+which changed most slugs; every stub was repointed at the current slug in the
+same change. One stub per essay and one for the index point at the same
 essay there, carrying the `#fragment`; the five older stubs of the series
 (three renumberings, and #35 and the first #37, which went to the page for
 decision makers) and the `/technical/*` ones point at the new site directly,
