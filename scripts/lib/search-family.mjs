@@ -96,7 +96,10 @@ export function siteEntries(feed, { area, label }) {
   for (const e of Array.isArray(feed?.entries) ? feed.entries : []) {
     if (typeof e?.title !== 'string' || !e.title.trim() || typeof e.url !== 'string' || !OWN.test(e.url)) continue;
     const entry = { area, group: label, title: e.title.trim(), text: typeof e.text === 'string' ? e.text : '', url: e.url };
-    if (Array.isArray(e.headings)) {
+    /* a url with a fragment already names its place on the page: a heading's
+     * anchor appended to it - which is what a box does with a heading hit -
+     * would make it `#a#b` */
+    if (Array.isArray(e.headings) && !e.url.includes('#')) {
       const hs = e.headings.filter((h) => Array.isArray(h) && typeof h[0] === 'string' && typeof h[1] === 'string');
       if (hs.length) entry.headings = hs;
     }

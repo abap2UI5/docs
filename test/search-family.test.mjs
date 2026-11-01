@@ -37,6 +37,8 @@ test('a feed of a sister site becomes entries of its area, and only what leads t
   assert.deepEqual(rows[0].headings, [['Why', 'why']], 'a malformed heading is dropped');
   assert.deepEqual(rows[1].links, [{ label: 'Repository', url: 'https://github.com/abap2UI5-addons/popups' }], 'a link off the project is dropped');
   assert.deepEqual(siteEntries(null, INSIGHTS), [], 'a feed that is not one is nothing');
+  const [section] = siteEntries({ entries: [{ title: 'Cost', url: 'https://abap2ui5.github.io/why/#what-it-costs', headings: [['Licence', 'what-it-costs']] }] }, INSIGHTS);
+  assert.equal(section.headings, undefined, 'a url with an anchor carries no headings of its own');
 });
 
 test('a repository is offered with its README and issues, an archived one is not', () => {
