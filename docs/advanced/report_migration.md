@@ -1,47 +1,54 @@
 ---
 outline: [2, 4]
-description: Converting a classic ABAP report - selection screen, event blocks, WRITE list, ALV - into an abap2UI5 app of the abap-cloud-gui add-on with its converter report2cloud, from the command line or through the MCP server's migrate_report tool, and what is left to do for ABAP Cloud.
+description: Converting the user interface of a classic ABAP report - selection screen, event blocks, WRITE list, ALV - into an abap2UI5 app of the abap-cloud-gui add-on with its converter report2UI5, from the command line or through the MCP server's migrate_report tool. The logic of the report stays the user's.
 ---
 # Migrating Classic Reports
 
 ::: info Released
-report2cloud is part of abap-cloud-gui since its release 1.0.0, the
-`migrate_report` tool part of the [MCP server](/advanced/mcp_server) since
-its 1.0.0.
+The converter is part of abap-cloud-gui since its release 1.0.0, where it
+was called report2cloud. The `migrate_report` tool is part of the
+[MCP server](/advanced/mcp_server) since its 1.0.0.
 :::
 
-ABAP Cloud has no `REPORT`, no `PARAMETERS`, no `WRITE` and no ALV, and a
-company with a few thousand Z reports cannot rewrite them by hand. The
+A classic report shows its user interface in the SAP GUI: a selection
+screen, a `WRITE` list, an ALV grid. The
 [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) add-on
-keeps the programming model of a report instead: a class inheriting from
-`z2ui5_cl_cgui_report` has the event blocks as methods and `write( )`,
-`alv( )` and `message( )` as calls, and runs as a UI5 app on ABAP Cloud as
-well as on NetWeaver down to 7.02. That makes the step from a report to a
-class mechanical, and **report2cloud** does it.
+keeps the programming model of a report for abap2UI5: a class inheriting
+from `z2ui5_cl_cgui_report` has the event blocks as methods and `write( )`,
+`alv( )` and `message( )` as calls, and runs as a UI5 app in the browser.
+That makes the step from the SAP GUI of a report to an abap2UI5 app
+mechanical, and **report2UI5** does it.
+
+**It converts the user interface and nothing else.** The selection screen,
+the event blocks, the list, the ALV, the messages and the popups become the
+calls of abap-cloud-gui. The logic of the report - its database access, the
+function modules and classes it calls, native SQL, batch input, background
+jobs - is copied as it is written. Whether that logic runs on the target
+system is up to you: the converter does not check whether a table or an API
+is released, and replaces nothing by a successor.
 
 The converter parses the report with `@abaplint/core`, the parser the whole
 ecosystem lints with. It is **deterministic** — the same report gives the same
-class, byte for byte — and it **refuses rather than guesses**: a statement that
-has no counterpart in a browser app is reported with file, line and column,
-and no class is written. Everything else in the report, its logic, is copied
-as it is written.
+class, byte for byte — and it **refuses rather than guesses**: a part of the
+user interface that has no counterpart in a browser app is reported with
+file, line and column, and no class is written.
 
 ## Running it
 
 ### From the command line
 
-report2cloud lives in the add-on's repository, beside the runtime it writes
+report2UI5 lives in the add-on's repository, beside the runtime it writes
 against, and is not published on npm:
 
 ```sh
 git clone https://github.com/abap2UI5-addons/abap-cloud-gui
 cd abap-cloud-gui && npm ci
-npm run report2cloud -- zflights.prog.abap --out src/02
+npm run report2ui5 -- zflights.prog.abap --out src/02
 ```
 
 `--class` names the class (default: `zcl_` and the report name), `--texts`
 points at the report's `.prog.xml` when it does not lie beside the source,
-`--check` lints the result with abaplint for 7.50 and for ABAP Cloud, and
+`--check` lints the result with abaplint for 7.50, and
 `--partial` writes the class even when statements were refused, with those
 statements marked. The exit code is 0 when the report was converted and 2
 when something was refused.
@@ -114,7 +121,7 @@ AT LINE-SELECTION.
 ```
 
 becomes, abbreviated (the full class is in the converter's
-[test snapshots](https://github.com/abap2UI5-addons/abap-cloud-gui/tree/e754afd0d60569c20e96d2f01b61c67255b50fff/tools/report2cloud/test/snapshots/zr2c_02_flights)):
+[test snapshots](https://github.com/abap2UI5-addons/abap-cloud-gui/tree/main/tools/report2ui5/test/snapshots/zr2c_02_flights)):
 
 ```abap
 CLASS z2ui5_cl_cgui_r2c_02 DEFINITION PUBLIC
@@ -192,18 +199,17 @@ CLASS z2ui5_cl_cgui_r2c_02 DEFINITION PUBLIC
   ENDMETHOD.
 ```
 
-The texts come from the text pool, the `SELECT` is in the strict syntax ABAP
-Cloud requires, `HIDE` travels with the hotspot and comes back in
-`at_line_selection( )`, and the short `MESSAGE i003` names its message class,
-because a class has no `MESSAGE-ID`. The migration report then says what is
-left: `SFLIGHT` is not released on ABAP Cloud — the hint is `/DMO/FLIGHT` or a
-CDS view of your own — and the message class `ZR2C` must exist in the target
-system.
+The texts come from the text pool, the `SELECT` is in the strict syntax,
+`HIDE` travels with the hotspot and comes back in `at_line_selection( )`, and
+the short `MESSAGE i003` names its message class, because a class has no
+`MESSAGE-ID`. The `SELECT` still reads `SFLIGHT`, and the message class
+`ZR2C` is still the one of the report: whether both exist on the target
+system is yours to check.
 
 ## What it converts
 
 The whole mapping, construct by construct, is the table in the converter's
-[README](https://github.com/abap2UI5-addons/abap-cloud-gui/blob/e754afd0d60569c20e96d2f01b61c67255b50fff/tools/report2cloud/README.md#the-mapping).
+[README](https://github.com/abap2UI5-addons/abap-cloud-gui/blob/main/tools/report2ui5/README.md#the-mapping).
 In short:
 
 | Classic | abap-cloud-gui |
@@ -218,61 +224,48 @@ In short:
 | `F4IF_INT_TABLE_VALUE_REQUEST` in an F4 | `value_help_popup( )` |
 | `FORM` / `PERFORM` | private methods; a `USING` parameter the FORM writes to becomes `CHANGING` |
 | global data | public attributes, cleared at the start of every run, as the classic report restarted after its list |
-| ABAP SQL | strict mode, host variables escaped with `@` |
+| ABAP SQL | strict mode, host variables escaped with `@`; the tables stay as they are |
+| native SQL, batch input, `GENERATE SUBROUTINE POOL`, `SUBMIT ... VIA JOB` | copied as written - no part of the user interface |
 | everything else | copied as written, comments included |
 
 ## What it refuses
 
 Each of these stops the conversion with `file:row:col` and the reason. All of
-them are collected, so one run lists everything there is to do:
+them are collected, so one run lists everything there is to do. The full list
+is in the converter's
+[README](https://github.com/abap2UI5-addons/abap-cloud-gui/blob/main/tools/report2ui5/README.md#refused);
+in short:
 
 | Construct | Why |
 | --- | --- |
-| `CALL SCREEN`, `MODULE`, `SET SCREEN`, `LEAVE TO SCREEN`, `CALL SUBSCREEN`, `SET CURSOR`, `CONTROLS` | dynpros have no counterpart in a browser app |
-| `CALL SELECTION-SCREEN`, selection screens of their own, tabbed blocks, function keys | only the standard selection screen is converted; a push button replaces a toolbar function |
-| `AT SELECTION-SCREEN ON BLOCK / RADIOBUTTON GROUP / HELP-REQUEST / END OF / EXIT-COMMAND` | not supported by abap-cloud-gui yet |
-| `CALL TRANSACTION`, batch input | no SAP GUI transaction can be started; call the released API instead |
-| `SUBMIT` | convert the other report too and navigate to its class |
-| `EXEC SQL` | native SQL is not available on ABAP Cloud |
-| page, cursor and print statements: `END-OF-PAGE`, `AT PFnn`, `READ LINE`, `MODIFY LINE`, `SCROLL LIST`, `NEW-PAGE PRINT ON`, … | the list has no pages, cursor, function keys or printing |
-| `LEAVE TO LIST-PROCESSING`, `LEAVE PROGRAM` | the list is shown after `start_of_selection( )`; there is nothing to leave |
-| `NODES`, `GET`, `REJECT` | logical databases |
-| `INCLUDE`, macros | the include is not part of the input and macros are not expanded — inline them first |
-| tables with header line, `SELECT` without `INTO` | not allowed in classes |
-| `PERFORM` into another program, a `PERFORM` whose parameters do not match the FORM | only the report's own FORMs become methods |
-| `POPUP_TO_CONFIRM`, `POPUP_TO_DECIDE`, `POPUP_GET_VALUES` | these wait for the answer, and a popup in abap2UI5 does not: `popup_to_confirm( )` and `at_user_command( )` instead |
-| `GUI_DOWNLOAD`, `GUI_UPLOAD`, `cl_gui_frontend_services`, `cl_gui_alv_grid` and the other SAP GUI controls | there is no SAP GUI frontend and no dynpro container |
-| other `REUSE_ALV_*` and `LVC_*` modules, `DYNP_VALUES_READ`, `BDC_*` | no counterpart |
+| `CALL SCREEN`, `MODULE`, `SET SCREEN` of a dynpro the converter cannot build | a dynpro of fields and the screen of one grid are converted; the rest has no counterpart in a browser app |
+| `READ LINE`, `MODIFY LINE` of another list, `SCROLL LIST`, `NEW-PAGE PRINT ON` | the list has no scroll position or print control |
+| `LEAVE TO LIST-PROCESSING`, `LEAVE TO TRANSACTION` | the list is shown after `start_of_selection( )`; there is no transaction to go to |
+| `NODES`, `GET`, `REJECT` | logical databases bring a selection screen of their own |
+| `PERFORM` into another program | only the report's own FORMs become methods |
+| the SAP GUI controls without a stand-in, other `REUSE_ALV_*` and `LVC_*` modules | no counterpart |
 | a local class that reads the report's globals, calls `PERFORM` or writes to the list | a local class cannot reach the attributes, methods or list of the generated class |
-| `GENERATE SUBROUTINE POOL`, `INSERT REPORT`, OLE | not available |
+| OLE, kernel calls, `EDITOR-CALL` | SAP GUI desktop integration |
 
-The refusals stay with a person. They are the places where the report does
-something a browser app does not do, and the answer is a design decision, not
-a translation.
+The refusals stay with a person. They are the places where the user
+interface of the report does something a browser app does not do, and the
+answer is a design decision, not a translation.
 
 ## The migration report
 
-Next to the class, `<class>.migration.md` is the work list: the refusals, the
-TODOs, the objects to check for ABAP Cloud, abaplint's findings (with
-`--check`), what was not carried over, and every mapped construct with its
-line in the report. The release check names every database table, DDIC type,
-function module, class and message class the class uses, with its first
-position in the generated class and, for the well-known ones, a released
-successor as a hint — `MARA` → `I_Product`, `KNA1` → `I_Customer`, `BKPF` →
-`I_JournalEntry`, `SFLIGHT` → `/DMO/FLIGHT`.
+Next to the class, `<class>.migration.md` lists the refusals, the TODOs,
+abaplint's findings (with `--check`), what was not carried over, and every
+mapped construct with its line in the report.
 
 ## What is left to you
 
-A converted class compiles against abap-cloud-gui on premise. That is not the
-same as a class that runs on ABAP Cloud, and the converter says so rather than
-hiding it:
+A converted class compiles against abap-cloud-gui on premise. The converter
+converts the user interface; the rest is yours:
 
-- **Unreleased tables and APIs need a successor from SAP.** The report's logic
-  still reads the tables and calls the APIs it read and called before.
-  Replacing them is not a syntax transformation: a released CDS view has other
-  field names, other keys, sometimes another granularity. That is the job of a
-  person, or of an AI model with the migration report as its work list — and
-  the successor in the report is a hint, not a guarantee.
+- **The logic of the report.** It still reads the tables and calls the APIs
+  it read and called before, and it may use native SQL, batch input or
+  background jobs. On ABAP Cloud only released objects are allowed - replace
+  what is not released yourself; the converter does not check it.
 - **Some behavior is approximated.** The positions and lengths of `WRITE` are
   dropped and its formats are not all kept; the classic screen's conversion to
   upper case is not carried over; a `TOP-OF-PAGE` header is written once and
@@ -282,29 +275,14 @@ hiding it:
   what was not carried over.
 - **It has not run on a real system yet.** The evidence is the converter's own
   tests: every class it generates from its corpus of classic reports compiles
-  with abaplint
-  for 7.50 (no finding), for 7.02 after the downport, and against the abap2UI5
-  linter, and its ABAP Cloud findings are exactly the unreleased objects the
-  migration report lists. Every class also runs — transpiled with the add-on
-  against abap2UI5's Node runtime, with seeded flight tables, and operated the
-  way a user operates it: fill the selection screen, Execute, click a hotspot
-  or a grid row, pick in the F4 popup, read the message popover, go back, run
-  again — against expectations written by hand from what the classic report
-  prints. None of that is an SAP system, and none of the classes has been
-  activated on one.
-
-## The loop for an AI model
-
-The conversion is deterministic so that the step after it can be iterative:
-
-1. report2cloud writes the class and the migration report — the work list.
-2. The model replaces one unreleased object, or works one TODO, at a time.
-3. Three checkers answer, without an SAP system: abaplint with the ABAP Cloud
-   configuration (released APIs, strict syntax), the
-   [abap2UI5 linter](/advanced/linter), and the transpiled backend — ABAP Unit,
-   or the report operated through its screen with the
-   [agent tools](/advanced/agents).
-4. Repeat until all three are clean and the work list is empty.
+  with abaplint for 7.50 (no finding), for 7.02 after the downport, and
+  against the abap2UI5 linter. Every class also runs — transpiled with the
+  add-on against abap2UI5's Node runtime, with seeded flight tables, and
+  operated the way a user operates it: fill the selection screen, Execute,
+  click a hotspot or a grid row, pick in the F4 popup, read the message
+  popover, go back, run again — against expectations written by hand from
+  what the classic report prints. None of that is an SAP system, and none of
+  the classes has been activated on one.
 
 ## Next Steps
 
@@ -315,4 +293,4 @@ The conversion is deterministic so that the step after it can be iterative:
 - [Agent-Operable Apps](/advanced/agents) — operating the converted report
   through its screen
 - [#29 When the API Is Not Released](https://abap2ui5.github.io/insights/29-when-the-api-is-not-released/){target="_self"}
-  — what to do about the objects the migration report lists
+  — what to do about the tables and APIs of the logic on ABAP Cloud
