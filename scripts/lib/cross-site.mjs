@@ -83,9 +83,13 @@ export const RETIRED = new Map([
 /** The family's home page, abap2UI5/abap2UI5.github.io: the origin's root,
  *  and only the root - a prefix of everything, so it is matched exactly. */
 export const HOME = '/';
+/** The home deployment's other pages, each matched exactly for the same
+ *  reason: About, which the family's foot links from every page
+ *  (CONVENTION.md section 5 over there). */
+export const HOME_PAGES = ['/about/'];
 
 export function unreachable(pathname) {
-  if (pathname === HOME) return null;
+  if (pathname === HOME || HOME_PAGES.includes(pathname)) return null;
   for (const at of NEIGHBOURS) if (pathname.startsWith(at)) return null;
   for (const [at, instead] of RETIRED) {
     if (pathname === at || pathname.startsWith(at)) return `retired — use ${instead}`;

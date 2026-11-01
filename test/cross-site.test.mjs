@@ -129,6 +129,8 @@ test('a cross-site link that points at a deployment which is gone is named as go
      link that dies fails the build; a link to the site next door just quietly
      stops being true. */
   assert.equal(unreachable('/'), null, 'the home page');
+  assert.equal(unreachable('/about/'), null, 'the home page\'s About, which the foot links');
+  assert.match(unreachable('/about/team/'), /not a deployment/, 'matched exactly, not as a prefix');
   assert.match(unreachable('/nowhere/'), /not a deployment/);
   assert.equal(unreachable('/playground/'), null);
   assert.equal(unreachable('/playground/samples/'), null);
