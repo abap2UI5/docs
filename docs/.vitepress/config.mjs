@@ -239,6 +239,10 @@ export default defineConfig({
         collapsed: true,
         items: [
           { text: "Excel Import into RAP", link: "/everyday/excel_import_rap" },
+          { text: "Mass Change", link: "/everyday/mass_change" },
+          { text: "Approval Worklist", link: "/everyday/approval_worklist" },
+          { text: "Report and Export", link: "/everyday/report_export" },
+          { text: "Concurrent Editing", link: "/everyday/concurrent_editing" },
         ],
       },
       {

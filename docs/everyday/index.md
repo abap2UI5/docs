@@ -21,6 +21,10 @@ built from and ends with a sample you can pull with abapGit and run.
 | Guide | The job | Needs |
 |---|---|---|
 | [Excel Import into RAP](/everyday/excel_import_rap) | Upload an `.xlsx` file, check every row, create the rows in a RAP business object and show each refusal on its row | XCO XLSX (ABAP Cloud, or on-premise 2023 and later), a RAP business object |
+| [Mass Change](/everyday/mass_change) | Select many rows, describe the change once, preview old and new values, save all with one `UPDATE` | a RAP business object (1909 and later) |
+| [Approval Worklist](/everyday/approval_worklist) | Show what waits for a decision, accept or reject several items at once through the business object's actions | a RAP business object with actions |
+| [Report and Export](/everyday/report_export) | A selection as range tables, one `SELECT`, a total, and the rows on the screen as an `.xlsx` download | XCO XLSX for the export |
+| [Concurrent Editing](/everyday/concurrent_editing) | Let two users edit the same instance without a lock while typing, and refuse a save over a change the user has not seen | a RAP business object with an ETag field |
 
 ## What makes a good guide
 
