@@ -167,6 +167,7 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/get_started/about", activeMatch: "^/(get_started|configuration|advanced)/" },
       { text: "Tutorial", link: "/tutorials/", activeMatch: "^/tutorials/" },
+      { text: "Everyday Work", link: "/everyday/", activeMatch: "^/everyday/" },
       { text: "Cookbook", link: "/cookbook/", activeMatch: "^/cookbook/" },
       { text: "API", link: "/resources/api", activeMatch: "^/resources/" },
       {
@@ -225,6 +226,23 @@ export default defineConfig({
           { text: "10. App Structure", link: "/tutorials/step-10" },
           { text: "11. To Production", link: "/tutorials/step-11" },
           { text: "12. Unit Tests", link: "/tutorials/step-12" },
+        ],
+      },
+      {
+        // Between the Tutorial and the Cookbook: a tutorial teaches one
+        // concept per step, a cookbook chapter answers one question - a guide
+        // here is a whole job from a real project, built from several
+        // chapters and backed by an installable sample. The row opens the
+        // index, which says what the section is and lists the guides.
+        text: "Everyday Work",
+        link: "/everyday/",
+        collapsed: true,
+        items: [
+          { text: "Excel Import into RAP", link: "/everyday/excel_import_rap" },
+          { text: "Mass Change", link: "/everyday/mass_change" },
+          { text: "Approval Worklist", link: "/everyday/approval_worklist" },
+          { text: "Report and Export", link: "/everyday/report_export" },
+          { text: "Concurrent Editing", link: "/everyday/concurrent_editing" },
         ],
       },
       {
