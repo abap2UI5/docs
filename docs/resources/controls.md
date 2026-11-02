@@ -121,7 +121,7 @@ Used on [Microsoft Excel](/integration/excel).
 
 Module `z2ui5.cc.FileUploader` ([source](https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/cc/FileUploader.js)). Extends `sap.ui.core.Control`.
 
-Used on [Spreadsheet](/cookbook/device_capabilities/spreadsheet), [Upload, Download](/cookbook/device_capabilities/upload_download), [Excel Import into RAP](/everyday/excel_import_rap).
+Used on [Spreadsheet](/cookbook/device_capabilities/spreadsheet), [Upload, Download](/cookbook/device_capabilities/upload_download), [Excel Import into RAP](/tutorials/everyday/excel_import_rap), [File Attachments](/tutorials/everyday/file_attachments).
 
 | Property | Type | Default |
 |---|---|---|

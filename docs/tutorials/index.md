@@ -45,6 +45,14 @@ no frontend project, no OData service.
 - **[Step 12: Unit Tests](/tutorials/step-12)** — test the app class
   like any ABAP class; no UI5 runtime involved.
 
+## Everyday Work
+
+The steps build one app to teach the framework. The
+[Everyday Work](/tutorials/everyday/) guides start where they end: each one
+takes a job from a real project - an Excel import, a mass change, an approval
+worklist, a report with export - and walks through it from the first click to
+the saved data, with a sample you can install.
+
 ## What You Should Know
 
 No prior abap2UI5 or UI5 experience is needed — the tutorial introduces every
@@ -62,7 +70,8 @@ popup calls.
 
 ## After the Tutorial
 
-The [Cookbook](/cookbook/) covers each topic again as a
+The [Everyday Work](/tutorials/everyday/) guides apply the steps to whole
+jobs, the [Cookbook](/cookbook/) covers each topic again as a
 reference chapter, and three catalogs of complete, tested apps continue from
 there:
 
