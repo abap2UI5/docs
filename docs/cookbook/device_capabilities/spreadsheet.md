@@ -208,6 +208,10 @@ ENDCLASS.
 ```
 :::
 
+::: tip **Into a business object**
+To create the uploaded rows in a RAP business object - with a preview, one `MODIFY ENTITIES` for all rows and every refusal shown on its row - see the guide [Excel Import into RAP](/everyday/excel_import_rap).
+:::
+
 ::: tip **ABAP Cloud**
 The code snippets above aren't ABAP Cloud compatible. To make them cloud-compatible, replace the code in the `lcl_help` class with functions from the `XCO_CP_XLSX` APIs.
 :::

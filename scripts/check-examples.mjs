@@ -161,6 +161,11 @@ function legacyFragments() {
        * `list( )->write( )`, which are its verbs, not the view builder's
        * (advanced/report_migration shows a converted report). */
       if (/z2ui5_cl_cgui_/i.test(code)) continue;
+      /* And SAP's XCO library, which is fluent throughout: an XLSX read is
+       * `xco_cp_xlsx=>document->for_file_content( )->read_access( )->…`
+       * (everyday/excel_import_rap). Its verbs are its own, and a fence that
+       * reads a worksheet builds no view. */
+      if (/\bxco_cp_/i.test(code)) continue;
       /* mid-chain: `)->input( )` */
       for (const call of code.matchAll(/\)->([a-z_][a-z0-9_]*)\(/gi)) {
         const verb = call[1].toLowerCase();
