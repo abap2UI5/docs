@@ -207,24 +207,32 @@ export default defineConfig({
         text: "Tutorial",
         link: "/tutorials/",
         collapsed: true,
-        // The section's own row opens the tutorial's index page, and the
-        // steps stand directly under it. They used to sit one level deeper,
-        // in a "Walkthrough" group that was the only thing in the section -
-        // two rows in front of the reader for one tutorial, and a caret that
-        // opened onto a second label before the first step.
+        // The section's own row opens the tutorial's index page. Under it
+        // two groups: the twelve steps, and the Everyday Work guides. The
+        // steps stood directly under the section while they were its only
+        // content (a "Walkthrough" group that held everything was two rows
+        // for one tutorial); with the guides beside them, each half gets its
+        // own collapsible group so the section opens on two rows, not
+        // thirteen.
         items: [
-          { text: "1. The App Class", link: "/tutorials/step-1" },
-          { text: "2. A First View", link: "/tutorials/step-2" },
-          { text: "3. Events", link: "/tutorials/step-3" },
-          { text: "4. Data Binding", link: "/tutorials/step-4" },
-          { text: "5. List Binding", link: "/tutorials/step-5" },
-          { text: "6. Row Events", link: "/tutorials/step-6" },
-          { text: "7. Popups", link: "/tutorials/step-7" },
-          { text: "8. Selection Screen", link: "/tutorials/step-8" },
-          { text: "9. Tables", link: "/tutorials/step-9" },
-          { text: "10. App Structure", link: "/tutorials/step-10" },
-          { text: "11. To Production", link: "/tutorials/step-11" },
-          { text: "12. Unit Tests", link: "/tutorials/step-12" },
+          {
+            text: "Walkthrough",
+            collapsed: true,
+            items: [
+              { text: "1. The App Class", link: "/tutorials/step-1" },
+              { text: "2. A First View", link: "/tutorials/step-2" },
+              { text: "3. Events", link: "/tutorials/step-3" },
+              { text: "4. Data Binding", link: "/tutorials/step-4" },
+              { text: "5. List Binding", link: "/tutorials/step-5" },
+              { text: "6. Row Events", link: "/tutorials/step-6" },
+              { text: "7. Popups", link: "/tutorials/step-7" },
+              { text: "8. Selection Screen", link: "/tutorials/step-8" },
+              { text: "9. Tables", link: "/tutorials/step-9" },
+              { text: "10. App Structure", link: "/tutorials/step-10" },
+              { text: "11. To Production", link: "/tutorials/step-11" },
+              { text: "12. Unit Tests", link: "/tutorials/step-12" },
+            ],
+          },
           {
             // The second half of the section: the steps teach one concept
             // each, a guide here is a whole job from a real project, built
