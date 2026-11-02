@@ -243,6 +243,10 @@ export default defineConfig({
           { text: "Approval Worklist", link: "/everyday/approval_worklist" },
           { text: "Report and Export", link: "/everyday/report_export" },
           { text: "Concurrent Editing", link: "/everyday/concurrent_editing" },
+          { text: "File Attachments", link: "/everyday/file_attachments" },
+          { text: "Send by Mail", link: "/everyday/send_by_mail" },
+          { text: "Print Forms as PDF", link: "/everyday/print_forms" },
+          { text: "React to Changes", link: "/everyday/react_to_changes" },
         ],
       },
       {

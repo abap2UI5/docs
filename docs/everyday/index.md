@@ -25,6 +25,10 @@ built from and ends with a sample you can pull with abapGit and run.
 | [Approval Worklist](/everyday/approval_worklist) | Show what waits for a decision, accept or reject several items at once through the business object's actions | a RAP business object with actions |
 | [Report and Export](/everyday/report_export) | A selection as range tables, one `SELECT`, a total, and the rows on the screen as an `.xlsx` download | XCO XLSX for the export |
 | [Concurrent Editing](/everyday/concurrent_editing) | Let two users edit the same instance without a lock while typing, and refuse a save over a change the user has not seen | a RAP business object with an ETag field |
+| [File Attachments](/everyday/file_attachments) | Store files in a business object, list them without their content, download and delete by key | a deep action parameter (ABAP Platform 2025 or ABAP Cloud) |
+| [Send by Mail](/everyday/send_by_mail) | A mail form next to the data, the attachment written when sending, a clear answer whether the mail left | `cl_bcs_mail_message` and outbound mail configured |
+| [Print Forms as PDF](/everyday/print_forms) | Render an existing Adobe Form into a PDF instead of a printer, one file or a ZIP of several | Adobe Document Services (on-premise) |
+| [React to Changes](/everyday/react_to_changes) | Log, notify or follow up whenever a business object changes, whoever changed it | RAP business events (ABAP Platform 2021 or ABAP Cloud) |
 
 ## What makes a good guide
 
