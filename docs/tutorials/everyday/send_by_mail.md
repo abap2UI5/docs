@@ -58,7 +58,7 @@ DATA(xlsx) = z2ui5_cl_smps_xlsx=>write( t_cells ).
 ```
 
 The same idea works for any format: a PDF from a form (see
-[Print Forms as PDF](/everyday/print_forms)), a CSV built with
+[Print Forms as PDF](/tutorials/everyday/print_forms)), a CSV built with
 `concat_lines_of( )`, a ZIP of several files with `cl_abap_zip`.
 
 ## Step 3: Send
@@ -131,7 +131,7 @@ server does not accept.
 ## Related
 
 - [E-Mail](/cookbook/expert_more/email) - the classic BCS API.
-- [Report and Export](/everyday/report_export) - the report a mail button
+- [Report and Export](/tutorials/everyday/report_export) - the report a mail button
   usually sits on.
 - [Spreadsheet](/cookbook/device_capabilities/spreadsheet) - writing the
   attachment.

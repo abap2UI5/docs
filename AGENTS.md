@@ -206,7 +206,7 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are seventy-nine of them. Eight are `/technical/*`: that whole section became
+There are eighty-five of them. Eight are `/technical/*`: that whole section became
 the Insights series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
@@ -242,6 +242,11 @@ decision makers) and the `/technical/*` ones point at the new site directly,
 so no old address takes two hops. The essays, their SVGs and their sidebar
 group are gone from this repository; the sidebar keeps one row, `Insights`,
 that leads there.
+The newest six are `/everyday/*`: the Everyday Work guides started on
+2026-11-02 as a section of their own in the bar and moved under the Tutorial
+the same day (`/tutorials/everyday/`), so the bar keeps its four sections.
+The five guides and the index that had been published for a few hours keep
+their old address, with the `#fragment`.
 
 Two things make this safe rather than a second set of pages to maintain:
 

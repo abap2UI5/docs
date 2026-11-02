@@ -117,7 +117,7 @@ For a screen that should update by itself:
 | Reaction | Business event? |
 |---|---|
 | A log or audit trail of changes | Yes - a data event and an `INSERT` |
-| A mail or a notification to someone | Yes - the handler sends it, see [Send by Mail](/everyday/send_by_mail) |
+| A mail or a notification to someone | Yes - the handler sends it, see [Send by Mail](/tutorials/everyday/send_by_mail) |
 | A follow-up document in another business object | Yes - the handler calls that business object with EML |
 | A check that may refuse the save | No - that is a validation of the business object |
 | A value that must be correct right after the save | No - that is a determination |

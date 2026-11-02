@@ -209,7 +209,7 @@ ENDCLASS.
 :::
 
 ::: tip **Into a business object**
-To create the uploaded rows in a RAP business object - with a preview, one `MODIFY ENTITIES` for all rows and every refusal shown on its row - see the guide [Excel Import into RAP](/everyday/excel_import_rap).
+To create the uploaded rows in a RAP business object - with a preview, one `MODIFY ENTITIES` for all rows and every refusal shown on its row - see the guide [Excel Import into RAP](/tutorials/everyday/excel_import_rap).
 :::
 
 ::: tip **ABAP Cloud**

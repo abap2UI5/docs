@@ -167,7 +167,6 @@ export default defineConfig({
     nav: [
       { text: "Guide", link: "/get_started/about", activeMatch: "^/(get_started|configuration|advanced)/" },
       { text: "Tutorial", link: "/tutorials/", activeMatch: "^/tutorials/" },
-      { text: "Everyday Work", link: "/everyday/", activeMatch: "^/everyday/" },
       { text: "Cookbook", link: "/cookbook/", activeMatch: "^/cookbook/" },
       { text: "API", link: "/resources/api", activeMatch: "^/resources/" },
       {
@@ -226,27 +225,29 @@ export default defineConfig({
           { text: "10. App Structure", link: "/tutorials/step-10" },
           { text: "11. To Production", link: "/tutorials/step-11" },
           { text: "12. Unit Tests", link: "/tutorials/step-12" },
-        ],
-      },
-      {
-        // Between the Tutorial and the Cookbook: a tutorial teaches one
-        // concept per step, a cookbook chapter answers one question - a guide
-        // here is a whole job from a real project, built from several
-        // chapters and backed by an installable sample. The row opens the
-        // index, which says what the section is and lists the guides.
-        text: "Everyday Work",
-        link: "/everyday/",
-        collapsed: true,
-        items: [
-          { text: "Excel Import into RAP", link: "/everyday/excel_import_rap" },
-          { text: "Mass Change", link: "/everyday/mass_change" },
-          { text: "Approval Worklist", link: "/everyday/approval_worklist" },
-          { text: "Report and Export", link: "/everyday/report_export" },
-          { text: "Concurrent Editing", link: "/everyday/concurrent_editing" },
-          { text: "File Attachments", link: "/everyday/file_attachments" },
-          { text: "Send by Mail", link: "/everyday/send_by_mail" },
-          { text: "Print Forms as PDF", link: "/everyday/print_forms" },
-          { text: "React to Changes", link: "/everyday/react_to_changes" },
+          {
+            // The second half of the section: the steps teach one concept
+            // each, a guide here is a whole job from a real project, built
+            // from several cookbook chapters and backed by an installable
+            // sample. A group of its own under the Tutorial rather than a
+            // section in the bar - it is learning by building, like the
+            // steps, and the bar keeps its four sections. The row opens the
+            // index, which says what the guides are and lists them.
+            text: "Everyday Work",
+            link: "/tutorials/everyday/",
+            collapsed: true,
+            items: [
+              { text: "Excel Import into RAP", link: "/tutorials/everyday/excel_import_rap" },
+              { text: "Mass Change", link: "/tutorials/everyday/mass_change" },
+              { text: "Approval Worklist", link: "/tutorials/everyday/approval_worklist" },
+              { text: "Report and Export", link: "/tutorials/everyday/report_export" },
+              { text: "Concurrent Editing", link: "/tutorials/everyday/concurrent_editing" },
+              { text: "File Attachments", link: "/tutorials/everyday/file_attachments" },
+              { text: "Send by Mail", link: "/tutorials/everyday/send_by_mail" },
+              { text: "Print Forms as PDF", link: "/tutorials/everyday/print_forms" },
+              { text: "React to Changes", link: "/tutorials/everyday/react_to_changes" },
+            ],
+          },
         ],
       },
       {
