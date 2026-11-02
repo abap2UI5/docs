@@ -25,7 +25,7 @@ step you are interested in.
 This is the app after the last building step — a few hundred lines of ABAP,
 no frontend project, no OData service.
 
-## Steps
+## Walkthrough
 
 - **[Step 1: The App Class](/tutorials/step-1)** — the smallest
   possible app: one class, one method, one message.
