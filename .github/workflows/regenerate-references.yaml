@@ -1,0 +1,90 @@
+# The client API reference (resources/api.md, public/api/client-api.json, the
+# user-exit block) and the custom-control reference (resources/controls.md)
+# are generated from abap2UI5 main. check:api-reference and check:controls
+# fail the moment an interface or a control changes over there - and with
+# them every deploy, because deploy.yml runs the same gates: from 2026-11-03
+# to 2026-11-04 the site was not published at all, because z2ui5_if_client
+# had gained _bind_tab and _bind_tab_row and nobody had run
+# `npm run generate:api` here.
+#
+# So, every day before the deploy (05:00): regenerate both, and when that
+# changes anything, open (or update) one pull request with the result - the
+# same move bump-linter.yaml makes for the linter.
+name: regenerate-references
+
+on:
+  schedule:
+    - cron: '23 4 * * *'   # daily 04:23 UTC - before deploy.yml at 05:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  # To start check.yml on the PR's branch (below).
+  actions: write
+
+concurrency:
+  group: regenerate-references
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+    - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+      with:
+        node-version: '22'
+        cache: npm
+    - run: npm ci
+
+    - name: Regenerate the references from abap2UI5 main
+      id: gen
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        npm run generate:api
+        npm run generate:controls
+        if git diff --quiet; then
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          git diff --stat
+        fi
+
+    # The gates that read what was just written: both freshness checks (they
+    # must hold now), the prose the generated blocks add, and the build.
+    - if: steps.gen.outputs.changed == 'true'
+      run: npm run check:api-reference
+    - if: steps.gen.outputs.changed == 'true'
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: npm run check:controls
+    - if: steps.gen.outputs.changed == 'true'
+      run: npm run check:vocabulary
+    - if: steps.gen.outputs.changed == 'true'
+      run: npm run docs:build
+
+    - if: steps.gen.outputs.changed == 'true'
+      id: pr
+      uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+      with:
+        branch: regenerate-references
+        title: 'chore: regenerate the API and controls references'
+        commit-message: 'chore: regenerate the API and controls references from abap2UI5 main'
+        body: |
+          `z2ui5_if_client`, the user exit or a custom control changed on
+          abap2UI5 `main`; `npm run generate:api` and
+          `npm run generate:controls` rewrote the generated references.
+          Until this is merged, check:api-reference / check:controls fail
+          and deploy.yml does not publish the site.
+
+    # A push or a PR made with the workflow's own GITHUB_TOKEN starts no
+    # workflow runs - GitHub's rule against loops - so check.yml never ran on
+    # this PR. workflow_dispatch is exempt.
+    - if: steps.pr.outputs.pull-request-operation == 'created' || steps.pr.outputs.pull-request-operation == 'updated'
+      run: gh workflow run check.yml --ref regenerate-references
+      env:
+        GH_TOKEN: ${{ github.token }}
