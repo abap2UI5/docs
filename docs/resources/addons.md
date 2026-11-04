@@ -29,6 +29,16 @@ add-ons this manual has a chapter about:
 | [abap-cloud-gui](https://abap2ui5-addons.github.io/abap-cloud-gui/){target="_self"} | [Apps Written Like Reports](/advanced/report_style), [Migrating Classic Reports](/advanced/report_migration) |
 | [lock-manager](https://abap2ui5-addons.github.io/lock-manager/){target="_self"} | [Lock](/cookbook/expert_more/lock) |
 
+## Namespaces & Tables
+
+Installed in one system, the core and every add-on share one set of names.
+[Namespaces & tables](https://abap2ui5-addons.github.io/namespaces/){target="_self"}
+lists every ABAP object of the core and of each add-on - the name segment of
+its classes (`z2ui5_cl_<segment>_…`), its table numbers (`z2ui5_t_NN`, with
+the ones still free), its ICF nodes and BSP applications - and shows where two
+of them collide. Check it before you name a class or number a table of a new
+add-on.
+
 ## Open Source Projects
 
 Other open-source projects use abap2UI5 — try them out:
