@@ -20,7 +20,7 @@ Each page stands on its own; the table says where to start.
 | SAP Mobile Start on iOS and Android | The tiles of your Work Zone site, mirrored | [Mobile Start](/configuration/mobile_start) |
 | A native app on iOS and Android | A generic shell around a webview, with a bridge to the scanner | [Native Mobile Shell](/integration/mobile_shell) |
 | Microsoft Teams | A personal tab of a Teams app of your own | [Microsoft Teams](/integration/teams) |
-| Microsoft Excel | A task pane add-in; the app can read and write the workbook | [Microsoft Excel](/integration/excel) |
+| Microsoft Excel | A task pane add-in; the app can read and write the workbook | [Excel Add-in](/integration/excel) |
 | Another ABAP system | A connector that forwards every roundtrip | [RFC Connector](/advanced/rfc), [HTTP Connector](/advanced/http) |
 | An AI agent | The app's screen as data, over MCP | [Agent-Operable Apps](/advanced/agents) |
 
@@ -50,5 +50,5 @@ A frame brings a second question with it, the sign-in. The SAP session
 cookie inside a frame is a cookie of another site than the one in the
 address bar, and browsers treat those more strictly. The pages on
 [Microsoft Teams](/integration/teams#sign-in) and
-[Microsoft Excel](/integration/excel#excel-on-the-web) say what that means
+[Excel Add-in](/integration/excel#excel-on-the-web) say what that means
 there.

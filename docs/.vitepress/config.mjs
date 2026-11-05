@@ -570,7 +570,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   { text: "Microsoft Teams", link: "/integration/teams" },
-                  { text: "Microsoft Excel", link: "/integration/excel" },
+                  { text: "Excel Add-in", link: "/integration/excel" },
                 ],
               },
               {
