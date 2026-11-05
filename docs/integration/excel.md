@@ -1,14 +1,14 @@
 ---
 outline: [2, 4]
-description: abap2UI5 apps in the task pane of Microsoft Excel with the abap2UI5 add-in for Excel - a host page on your SAP system, the add-in manifest, the deployment, Excel on the web, and the ExcelBridge control that lets the app read and write the workbook.
+description: abap2UI5 apps in the task pane of Microsoft Excel with the Excel Add-in - a host page on your SAP system, the add-in manifest, the deployment, Excel on the web, and the ExcelBridge control that lets the app read and write the workbook.
 ---
-# Microsoft Excel
+# Excel Add-in
 
 An abap2UI5 app can run in the task pane of Excel, the panel on the right of
 the workbook, and it can read and write that workbook. The app stays an ABAP
 class: it puts an ABAP table into a sheet, or takes the cells the user has
 selected back into the app, with the custom control `z2ui5.cc.ExcelBridge`.
-The add-in around it is [`abap2UI5-addons/office-addin`](https://github.com/abap2UI5-addons/office-addin):
+The Excel Add-in around it is [`abap2UI5-addons/office-addin`](https://github.com/abap2UI5-addons/office-addin):
 a host page you pull into your system with abapGit, and a manifest that tells
 Excel where it is.
 

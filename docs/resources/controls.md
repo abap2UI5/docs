@@ -92,7 +92,7 @@ Bridge between an abap2UI5 app and the Excel workbook it runs next to, for an ap
 
 Module `z2ui5.cc.ExcelBridge` ([source](https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/cc/ExcelBridge.js)). Extends `sap.ui.core.Control`.
 
-Used on [Microsoft Excel](/integration/excel).
+Used on [Excel Add-in](/integration/excel).
 
 | Property | Type | Default |
 |---|---|---|
