@@ -12,7 +12,7 @@ No system at hand? Two ways to see abap2UI5 run before anything is installed:
   framework in your browser: write ABAP on the left, watch the app run on the
   right, nothing to install.
 - The [**sample catalog**](https://abap2ui5.github.io/samples-site/)
-  lists over 700 working apps, each with its ABAP printed in full and a
+  lists hundreds of working apps, each with its ABAP printed in full and a
   button that runs it - a live demo of every pattern the cookbook describes.
 
 Both are also where to send a colleague who wants to see it before reading on.
@@ -35,9 +35,21 @@ Four things the three steps below assume:
 ## 1. Install the Framework via abapGit
 
 Pull [abap2UI5](https://github.com/abap2UI5/abap2UI5) with
-[abapGit](https://abapgit.org). For anything beyond a first look, pull a
-[release](https://github.com/abap2UI5/abap2UI5/releases/) rather than `main` —
-see [Productive Usage](/configuration/productive_usage) for why.
+[abapGit](https://abapgit.org). Which branch or tag depends on the system:
+
+| Your system | What to pull | Where it is explained |
+| --- | --- | --- |
+| ABAP 7.50 or newer, on premise or private cloud | The newest tag without a suffix, `X.Y.Z` - or `main` for a first look | [Versioning](/configuration/versioning) |
+| ABAP 7.02 to 7.4x | The same version with the suffix `-702`, `X.Y.Z-702` - a downported build of the same release | [Downporting](/advanced/downporting) |
+| BTP ABAP Environment or S/4 Public Cloud | The newest tag without a suffix, with abapGit for Eclipse | [S/4 Public Cloud](/configuration/s4_public_cloud) |
+
+On the [releases page](https://github.com/abap2UI5/abap2UI5/releases/) every
+version appears twice, once with the suffix and once without; the one GitHub
+marks *Latest* is not the newer, only the one published last. In abapGit a tag
+is chosen on the repository's page: *Branch* → *Switch* → *Tags*, or the tag
+typed into the *Branch* field of the online repository. For anything beyond a
+first look, pull a tag rather than `main` - see
+[Productive Usage](/configuration/productive_usage) for why.
 
 ![abapGit repository installation screen for abap2UI5](/get_started/image.webp)
 

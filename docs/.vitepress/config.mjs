@@ -46,6 +46,9 @@ export default defineConfig({
    * The raw markdown is unaffected: publicDir copies the files regardless of
    * whether they are also treated as pages. */
   srcExclude: ["public/**"],
+  // /docs/sitemap.xml, one entry per page: the root's robots.txt
+  // (abap2UI5/abap2UI5.github.io) names it next to the sister sites' ones.
+  sitemap: { hostname: SITE_URL },
   head: [
     ["link", { rel: "shortcut icon", href: "/docs/favicon.ico" }],
     [
