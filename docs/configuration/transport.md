@@ -23,11 +23,13 @@ what does not travel and is set per system instead.
 | The Admin Cockpit (optional) | package of its own, tables `Z2UI5_T_CK_*` | yes; its administrators and settings are table rows and are set per system |
 | Your apps | one class per app, plus the texts, tables and other objects it uses | yes |
 
-Pull the framework with the folder logic `PREFIX` that its `.abapgit.xml`
-declares; the sub-package names are derived from the root package you pick,
-and a long root name leaves the deeper ones no room (the package name is
-capped at 30 characters) - [S/4 Public Cloud](/configuration/s4_public_cloud)
-shows the dialog.
+Pull the framework - a release tag, the one the
+[Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit)
+table names for the system - with the folder logic `PREFIX` that its
+`.abapgit.xml` declares; the sub-package names are derived from the root
+package you pick, and a long root name leaves the deeper ones no room (the
+package name is capped at 30 characters) -
+[S/4 Public Cloud](/configuration/s4_public_cloud) shows the dialog.
 
 ## The Order
 

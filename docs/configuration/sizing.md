@@ -88,7 +88,7 @@ expiry the one the exit holds. The number to watch in operation is the row
 count against this estimate; a count well above it means the cleanup is not
 running (no app has been started for a while) or that an app writes much
 larger rows than assumed - the cockpit's *Drafts & Housekeeping* tab shows
-both ([Basis Runbook](/configuration/runbook#the-draft-table-z2ui5_t_01)).
+both ([Basis Runbook](/configuration/runbook#the-draft-table-z2ui5-t-01)).
 
 Two things the estimate ignores, on purpose: a stateful app writes rows only
 on the paths that keep a bookmarkable draft, and the cleanup is a `DELETE`

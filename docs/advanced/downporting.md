@@ -7,7 +7,7 @@ description: abap2UI5 below ABAP 7.50 - the downported branch supports NetWeaver
 abap2UI5 works right away on ABAP 7.50 and later. On an earlier release, install the downported version, which supports R/3 NetWeaver 7.02 and later.
 
 ## Branch
-To install on an older system, use the `702` branch:
+To install on an older system, use the `702` branch - or rather its tag, `X.Y.Z-702`, which the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table names next to the tag of every other system:
 | Branch    | System                |
 |-----------| ----------------------------|
 | main     | S/4 Public Cloud, BTP ABAP Environment, S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver ≥7.50 |
@@ -17,7 +17,7 @@ Some sample projects and other repositories also ship a downported version. Chec
 
 ## Installation
 The installation on an old release follows the normal [Quickstart](/get_started/quickstart) flow with two adjustments:
-1. Pull the `702` branch with abapGit — abapGit itself is 7.02-compatible, so deployment to old ECC machines works the same way as everywhere else
+1. Pull the `X.Y.Z-702` tag with abapGit (the `702` branch itself is force-pushed on every rebuild, so a tag is what to pin) — abapGit itself is 7.02-compatible, so deployment to old ECC machines works the same way as everywhere else
 2. Create the HTTP handler (SICF service) with the 7.02-compatible handler syntax instead of the modern snippet
 
 After that, call your HTTP handler from the browser and abap2UI5 is ready for use — even on your old machine.
