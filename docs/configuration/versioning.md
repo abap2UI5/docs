@@ -97,7 +97,9 @@ rest.
    `npx @abap2ui5/linter src --fix-dry-run` shows what it would change.
 3. **Pull the tag** on the development system: in abapGit, switch the
    repository to the new tag and pull. Pull a tag, not `main` - `main` may
-   carry an API no release has yet.
+   carry an API no release has yet. Which tag belongs to which system
+   (`X.Y.Z`, or `X.Y.Z-702` below 7.50) is the table in the
+   [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit).
 4. **The frontend, if a BSP is installed.** An installation that only uses
    the ICF node has nothing else to pull: the frontend is embedded in the
    package (`src/01/03`). An installation with the frontend as a BSP in the

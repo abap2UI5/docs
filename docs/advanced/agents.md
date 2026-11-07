@@ -393,7 +393,7 @@ Instead of `true`, an object configures it:
 A key the endpoint does not know is refused at start, because a misspelled
 `forbidden` would otherwise leave the event open.
 
-### Opting an app in
+### Opting a CAP app in
 
 A JavaScript app opts in where it is defined, with the `agent` option of
 `defineApp`, and classifies its events there:
@@ -413,7 +413,7 @@ the app on the screen and the app the session was started with, so a popup an
 app calls is covered by that app's rules. An action classified `confirm` or
 `forbidden` carries `"policy"` in the snapshot.
 
-### Security model
+### Security model of the CAP endpoint
 
 - **Off by default**, and an app is reachable only when it opted in or the
   configuration names it.
@@ -463,7 +463,7 @@ restart are lost, as a browser tab's are. Only the newest session of its line,
 with its draft not expired, is restored, and only for the user whose agent
 reached it.
 
-### Connecting a client
+### Connecting a client to CAP
 
 ```sh
 claude mcp add --transport http bookshop http://localhost:4004/rest/root/z2ui5/mcp \

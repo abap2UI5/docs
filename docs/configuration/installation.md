@@ -20,7 +20,7 @@ The setup in `S/4 On-Premise` matches `S/4 Private Cloud`. Follow the [Fiori Lau
 The setup matches `S/4 Private Cloud`. Depending on your release, you might also be able to add the apps to Launchpads. Follow the [Fiori Launchpad](/configuration/launchpad) guide.
 
 ## R/3 NetWeaver (<7.50)
-For R/3 NetWeaver versions below 7.50, install the downported version with syntax tweaks for earlier releases. abap2UI5 runs on releases as far back as 7.02. See [Downporting](/advanced/downporting) for details.
+For R/3 NetWeaver versions below 7.50, install the downported version with syntax tweaks for earlier releases. abap2UI5 runs on releases as far back as 7.02. The tag to pull is `X.Y.Z-702`, the downported build of the same release - the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table lists it next to the tag of every other system. See [Downporting](/advanced/downporting) for details.
 
 ## BTP ABAP Environment
 The setup in `BTP ABAP Environment` matches `S/4 Public Cloud`. Follow the [S/4 Public Cloud](/configuration/s4_public_cloud) guide.

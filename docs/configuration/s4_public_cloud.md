@@ -16,7 +16,7 @@ covers both. To install abap2UI5, follow these steps:
 
 S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only classes, interfaces, and tables, so you can pull it without issues.
 
-Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/).
+Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the newest tag without a suffix, `X.Y.Z` - the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table says which tag belongs to which system.
 
 ::: warning **Two choices you cannot change later without relinking**
 **Folder logic must be `PREFIX`.** It is what `.abapgit.xml` declares, and the repository's package tree is built for it.
