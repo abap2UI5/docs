@@ -138,9 +138,11 @@ Used on [Spreadsheet](/cookbook/device_capabilities/spreadsheet), [Upload, Downl
 | `buttonOnly` | `boolean` | `false` |
 | `multiple` | `boolean` | `false` |
 | `checkDirectUpload` | `boolean` | `false` |
+| `maximumFileSize` | `float` | `0` |
 
 | Event | Parameters |
 |---|---|
+| `fileSizeExceed` | `fileName` (`string`), `fileSize` (`float`) |
 | `upload` | *none* — may be prevented |
 
 | Aggregation | Type | |
