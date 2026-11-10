@@ -17,11 +17,16 @@ ENDMETHOD.
 
 Without an override, abap2UI5 uses the OpenUI5 cache-buster URL — i.e. the current latest OpenUI5 build (see [Pinning a Version](#pinning-a-version) below before relying on this in production).
 
+::: warning ABAP Cloud
+ABAP Cloud sends a Content Security Policy header of its own with every HTTP service, and the browser enforces it next to the one abap2UI5 writes. Its `script-src` trusts the SAP hosts only, so the OpenUI5 CDN is refused there. In ABAP Cloud the default is therefore `https://ui5.sap.com/resources/sap-ui-cachebuster/sap-ui-core.js` — SAPUI5 latest. To bootstrap from another host, set it in the exit **and** add it to the trusted sites of the system (app `Maintain Protection Allowlists`, tab *Content Security Policy*).
+:::
+
 ## Common Sources
 
 | URL                                                                       | When to use it |
 |---------------------------------------------------------------------------|----------------|
 | `https://sdk.openui5.org/resources/sap-ui-cachebuster/sap-ui-core.js`     | OpenUI5 latest, cache-buster enabled — the abap2UI5 default |
+| `https://ui5.sap.com/resources/sap-ui-cachebuster/sap-ui-core.js`         | SAPUI5 latest, cache-buster enabled — the abap2UI5 default in ABAP Cloud |
 | `https://sdk.openui5.org/1.120.0/resources/sap-ui-core.js`                | OpenUI5, pinned version |
 | `https://ui5.sap.com/resources/sap-ui-core.js`                            | SAPUI5 latest |
 | `https://ui5.sap.com/1.120.0/resources/sap-ui-core.js`                    | SAPUI5, pinned version |
