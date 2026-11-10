@@ -53,6 +53,8 @@ sapconnect
 searchhelp
 steampunkification
 subaccount
+watchpoint
+watchpoints
 worklist
 worklists
 xsdbool
