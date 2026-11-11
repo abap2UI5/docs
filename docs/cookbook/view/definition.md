@@ -20,6 +20,13 @@ paste it into your ABAP class, and it renders.
 
 ## Sending a View
 
+![The main view fills the screen; a nested view is a part of it, a popup lies on top of it, a popover sits beside one control](/cookbook/view/view-slots.svg)
+
+`view_display( )` fills the first of these four slots;
+[nested views](/cookbook/view/nested_views),
+[popups](/cookbook/popup_popover/popup) and
+[popovers](/cookbook/popup_popover/popover) have a page each.
+
 The simplest case: build an XML string and ship it to the client.
 
 ```abap

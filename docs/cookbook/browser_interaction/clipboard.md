@@ -14,7 +14,7 @@ CLASS zcl_sample_clipboard DEFINITION PUBLIC.
 
   PUBLIC SECTION.
     INTERFACES z2ui5_if_app.
-    DATA mv_text TYPE string.
+    DATA mv_text TYPE string VALUE `Hello from abap2UI5`.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -23,32 +23,26 @@ ENDCLASS.
 CLASS zcl_sample_clipboard IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      WHEN client->check_on_init( ).
-        mv_text = `Hello from abap2UI5`.
+              )->ele( `Page`
+                  )->tag( `Input`
+                      )->a( n = `value` v = client->_bind( mv_text )
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `copy to clipboard`
+                      )->a( n = `press` v = client->_event( `COPY` ) ).
 
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-                )->ele( `Page`
-                    )->tag( `Input`
-                        )->a( n = `value` v = client->_bind( mv_text )
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `copy to clipboard`
-                        )->a( n = `press` v = client->_event( `COPY` ) ).
-
-        client->view_display( view->stringify( ) ).
-
-      WHEN client->check_on_event( `COPY` ).
-        client->follow_up_action(
-            val   = client->cs_event-clipboard_copy
-            t_arg = VALUE #( ( mv_text ) ) ).
-        client->message_toast_display( `copied` ).
-
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `COPY` ).
+      client->follow_up_action(
+          val   = client->cs_event-clipboard_copy
+          t_arg = VALUE #( ( mv_text ) ) ).
+      client->message_toast_display( `copied` ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

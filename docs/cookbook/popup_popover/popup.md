@@ -126,6 +126,8 @@ For a cleaner source layout, put a popup in its own class and call it via
 then an ordinary `z2ui5_if_app` — it just displays into the popup slot instead
 of the main one, and ends by handing control back:
 
+![The caller sets the question and calls the popup class, the popup displays and leaves, the caller runs again and reads the answer from the popup instance](/cookbook/popup_popover/popup-return.svg)
+
 ```abap
 CLASS zcl_sample_confirm DEFINITION PUBLIC.
 
@@ -147,39 +149,34 @@ ENDCLASS.
 CLASS zcl_sample_confirm IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
 
-      WHEN client->check_on_navigated( ).
-        DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `FragmentDefinition` ns = `core`
-                )->a( n = `xmlns`      v = `sap.m`
-                )->a( n = `xmlns:core` v = `sap.ui.core`
+              )->ele( `Dialog`
+                  )->a( n = `title` v = `Please confirm`
 
-                )->ele( `Dialog`
-                    )->a( n = `title` v = `Please confirm`
+                  )->tag( `Text`
+                      )->a( n = `text` v = client->_bind( mv_question )
 
-                    )->tag( `Text`
-                        )->a( n = `text` v = client->_bind( mv_question )
+                  )->ele( `buttons`
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `OK`
+                          )->a( n = `press` v = client->_event( `CONFIRM` )
+                      )->tag( `Button`
+                          )->a( n = `text`  v = `Cancel`
+                          )->a( n = `press` v = client->_event( `CANCEL` ) ).
 
-                    )->ele( `buttons`
-                        )->tag( `Button`
-                            )->a( n = `text`  v = `OK`
-                            )->a( n = `press` v = client->_event( `CONFIRM` )
-                        )->tag( `Button`
-                            )->a( n = `text`  v = `Cancel`
-                            )->a( n = `press` v = client->_event( `CANCEL` ) ).
-
-        client->popup_display( popup->stringify( ) ).
-
-      WHEN client->check_on_event( `CONFIRM` ).
-        mv_confirmed = abap_true.
-        client->nav_app_leave( ).
-
-      WHEN client->check_on_event( `CANCEL` ).
-        mv_confirmed = abap_false.
-        client->nav_app_leave( ).
-
-    ENDCASE.
+      client->popup_display( popup->stringify( ) ).
+    ELSEIF client->check_on_event( `CONFIRM` ).
+      mv_confirmed = abap_true.
+      client->nav_app_leave( ).
+    ELSEIF client->check_on_event( `CANCEL` ).
+      mv_confirmed = abap_false.
+      client->nav_app_leave( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -195,26 +192,22 @@ The caller sets the question, hands the instance to `nav_app_call( )`, and
 reads the answer back off the same instance when control returns:
 
 ```abap
-CASE abap_true.
-
-  WHEN client->check_on_event( `DELETE` ).
-    DATA(lo_confirm) = NEW zcl_sample_confirm( ).
-    lo_confirm->mv_question = `Delete this entry?`.
-    client->nav_app_call( lo_confirm ).
-
-  WHEN client->check_on_navigated( ).
-    TRY.
-        DATA(lo_prev) = CAST zcl_sample_confirm( client->get_app_prev( ) ).
-        IF lo_prev->confirmed( ) = abap_true.
-          delete_entry( ).
-        ENDIF.
-      CATCH cx_sy_move_cast_error.
-        " not back from the popup - on the first start get_app_prev( )
-        " is this app itself
-    ENDTRY.
-    view_display( ).
-
-ENDCASE.
+IF client->check_on_event( `DELETE` ).
+  DATA(lo_confirm) = NEW zcl_sample_confirm( ).
+  lo_confirm->mv_question = `Delete this entry?`.
+  client->nav_app_call( lo_confirm ).
+ELSEIF client->check_on_navigated( ).
+  TRY.
+      DATA(lo_prev) = CAST zcl_sample_confirm( client->get_app_prev( ) ).
+      IF lo_prev->confirmed( ) = abap_true.
+        delete_entry( ).
+      ENDIF.
+    CATCH cx_sy_move_cast_error.
+      " not back from the popup - on the first start get_app_prev( )
+      " is this app itself
+  ENDTRY.
+  view_display( ).
+ENDIF.
 ```
 
 Two things carry the whole pattern: the popup's answer is an **attribute** on

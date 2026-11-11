@@ -39,28 +39,24 @@ CLASS zcl_sample_srtti IMPLEMENTATION.
 
     me->client = client.
 
-    CASE abap_true.
+    IF client->check_on_init( ).
+      " a table type that exists only at runtime: the line type is read
+      " from the DDIC by name, the table type built from it
+      DATA(lo_struct) = cl_abap_structdescr=>describe_by_name( `USR01` ).
+      DATA(lo_table)  = cl_abap_tabledescr=>create(
+                            p_line_type  = CAST #( lo_struct )
+                            p_table_kind = cl_abap_tabledescr=>tablekind_std
+                            p_unique     = abap_false ).
+      CREATE DATA mr_tab TYPE HANDLE lo_table.
 
-      WHEN client->check_on_init( ).
-        " a table type that exists only at runtime: the line type is read
-        " from the DDIC by name, the table type built from it
-        DATA(lo_struct) = cl_abap_structdescr=>describe_by_name( `USR01` ).
-        DATA(lo_table)  = cl_abap_tabledescr=>create(
-                              p_line_type  = CAST #( lo_struct )
-                              p_table_kind = cl_abap_tabledescr=>tablekind_std
-                              p_unique     = abap_false ).
-        CREATE DATA mr_tab TYPE HANDLE lo_table.
+      FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
+      ASSIGN mr_tab->* TO <tab>.
+      SELECT * FROM usr01 INTO TABLE @<tab> UP TO 10 ROWS.
 
-        FIELD-SYMBOLS <tab> TYPE STANDARD TABLE.
-        ASSIGN mr_tab->* TO <tab>.
-        SELECT * FROM usr01 INTO TABLE @<tab> UP TO 10 ROWS.
-
-        view_display( ).
-
-      WHEN client->check_on_navigated( ).
-        view_display( ).
-
-    ENDCASE.
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ENDIF.
 
   ENDMETHOD.
 

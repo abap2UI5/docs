@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Debugging an abap2UI5 app - the external breakpoint for an HTTP request, what the 500 body carries and how check_hide_error_details changes it, the error id that links a user's report to the monitor, the built-in developer tools, and the ICM and ICF traces.
+description: Debugging an abap2UI5 app - the external breakpoint for an HTTP request, what the 500 body carries and how check_hide_error_details changes it, the error id that links a user's report to the monitor, the built-in developer tools, the ICM and ICF traces, and the debugger of the playground.
 ---
 # Debugging
 Since all logic runs in ABAP, you can debug everything in the ABAP environment. Set an external breakpoint, because abap2UI5 apps are called externally via HTTP.
@@ -42,6 +42,11 @@ A request that fails before `main( )` runs — a 401, a 403 from the [CSRF check
 - **`SMICM` → menu *Goto → Trace File*** (trace level 2 or higher for one reproduction, back to 1 afterwards) shows the request on the ICM level — the host it came in on, the path, whether a web dispatcher or a proxy rewrote it, which is where a wrong `Origin` or a wrong forwarded host shows up. The HTTP cache behind a stale frontend is cleared there too (menu *Goto → HTTP Plug-In → Server Cache → Invalidate*).
 
 The browser's network tab beside them shows the request as the frontend sent it: the status, the body of the response and, for a 500, the same text the overlay shows.
+
+## In the playground
+The [**playground**](https://abap2ui5.github.io/playground/) runs your class in the browser, and it has a debugger of its own — no system and no external breakpoint needed. Click left of a line number (or press `F9`) to set a breakpoint, or write `BREAK-POINT`; the next roundtrip that reaches the line stops there, and the **Debugger** tab under the editor shows the call stack, the locals and parameters, the attributes of `me` and the system fields. The keys are the SAP debugger's: `F5` step into, `F6` step over, `F7` return, `F8` continue, `Shift+F8` stop.
+
+Beside that: run to the cursor, a condition on a breakpoint (`lv_count > 5`), watches and watchpoints, a stop at `RAISE EXCEPTION`, a value changed by double-click, a table opened as a grid, and the value under the mouse while stopped. It stops in your own classes only — the framework runs without breakpoints — and in unit tests and class constructors as well as in roundtrips.
 
 ## Issues
 If your code looks correct but you suspect a bug in the abap2UI5 framework, build a minimal sample that reproduces the bug and open an issue on the abap2UI5 repository — we'll investigate and fix it.

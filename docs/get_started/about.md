@@ -45,6 +45,10 @@ The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML 
 
 No ABAP session survives between two clicks, and that is deliberate: the app's state is written to a draft on the server, the browser keeps only its id, and the draft is restored before `main( )` runs again, so each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
 
+![One roundtrip in five steps: the draft is loaded, the user's changes are applied, main( ) runs, the response is built and the draft is saved under a new id](/get_started/roundtrip.svg)
+
+→ *The [Insights](https://abap2ui5.github.io/insights/07-one-click-one-request/) take each of the five steps apart, and compare the result with [RAP](https://abap2ui5.github.io/insights/36-rap-or-abap2ui5/) and [UI5 freestyle](https://abap2ui5.github.io/insights/37-freestyle-or-abap2ui5/)*
+
 Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea behind htmx, Hotwire and Phoenix LiveView. abap2UI5 applies it to UI5.
 
 

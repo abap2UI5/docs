@@ -260,27 +260,21 @@ CLASS zcl_sample_table_select IMPLEMENTATION.
 
     me->client = client.
 
-    CASE abap_true.
-      WHEN client->check_on_init( ).
-        t_tab = VALUE #( ( title = `entry 01` value = `red` )
-                         ( title = `entry 02` value = `blue` )
-                         ( title = `entry 03` value = `green` ) ).
-        view_display( ).
-
-      WHEN client->check_on_navigated( ).
-        view_display( ).
-
-      WHEN client->check_on_event( `SELECTED` ).
-        DATA(lv_count) = REDUCE i( INIT n = 0 FOR ls IN t_tab WHERE ( selkz = abap_true ) NEXT n = n + 1 ).
-        client->message_toast_display( |{ lv_count } selected| ).
-
-      WHEN client->check_on_event( `ADD` ).
-        INSERT VALUE #( title = |entry { lines( t_tab ) + 1 }| ) INTO TABLE t_tab.
-
-      WHEN client->check_on_event( `DELETE` ).
-        DELETE t_tab WHERE selkz = abap_true.
-
-    ENDCASE.
+    IF client->check_on_init( ).
+      t_tab = VALUE #( ( title = `entry 01` value = `red` )
+                       ( title = `entry 02` value = `blue` )
+                       ( title = `entry 03` value = `green` ) ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `SELECTED` ).
+      DATA(lv_count) = REDUCE i( INIT n = 0 FOR ls IN t_tab WHERE ( selkz = abap_true ) NEXT n = n + 1 ).
+      client->message_toast_display( |{ lv_count } selected| ).
+    ELSEIF client->check_on_event( `ADD` ).
+      INSERT VALUE #( title = |entry { lines( t_tab ) + 1 }| ) INTO TABLE t_tab.
+    ELSEIF client->check_on_event( `DELETE` ).
+      DELETE t_tab WHERE selkz = abap_true.
+    ENDIF.
 
   ENDMETHOD.
 

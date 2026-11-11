@@ -76,58 +76,53 @@ ENDCLASS.
 CLASS zcl_sample_f4 IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      WHEN client->check_on_navigated( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->ele( `Page`
+                  )->a( n = `title` v = `Value help`
 
-                )->ele( `Page`
-                    )->a( n = `title` v = `Value help`
+                  )->tag( `Input`
+                      )->a( n = `value`            v = client->_bind( mv_carrid )
+                      )->a( n = `placeholder`      v = `press the value-help icon`
+                      )->a( n = `valueHelpRequest` v = client->_event( `F4` )
+                      )->a( n = `showValueHelp`    b = abap_true ).
 
-                    )->tag( `Input`
-                        )->a( n = `value`            v = client->_bind( mv_carrid )
-                        )->a( n = `placeholder`      v = `press the value-help icon`
-                        )->a( n = `valueHelpRequest` v = client->_event( `F4` )
-                        )->a( n = `showValueHelp`    b = abap_true ).
+      client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `F4` ).
+      " On a system this is your SELECT:
+      "   SELECT carrid, carrname FROM scarr INTO TABLE @mt_carriers.
+      mt_carriers = VALUE #( ( carrid = `LH` carrname = `Lufthansa` )
+                             ( carrid = `UA` carrname = `United Airlines` )
+                             ( carrid = `AA` carrname = `American Airlines` )
+                             ( carrid = `SQ` carrname = `Singapore Airlines` ) ).
 
-        client->view_display( view->stringify( ) ).
+      DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
 
-      WHEN client->check_on_event( `F4` ).
-        " On a system this is your SELECT:
-        "   SELECT carrid, carrname FROM scarr INTO TABLE @mt_carriers.
-        mt_carriers = VALUE #( ( carrid = `LH` carrname = `Lufthansa` )
-                               ( carrid = `UA` carrname = `United Airlines` )
-                               ( carrid = `AA` carrname = `American Airlines` )
-                               ( carrid = `SQ` carrname = `Singapore Airlines` ) ).
+              )->ele( `Dialog`
+                  )->a( n = `title` v = `Choose airline`
 
-        DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `FragmentDefinition` ns = `core`
-                )->a( n = `xmlns`      v = `sap.m`
-                )->a( n = `xmlns:core` v = `sap.ui.core`
+                  )->ele( `List`
+                      )->a( n = `items` v = client->_bind( mt_carriers )
 
-                )->ele( `Dialog`
-                    )->a( n = `title` v = `Choose airline`
+                      )->ele( `items`
+                          )->tag( `StandardListItem`
+                              )->a( n = `title`       v = `{CARRNAME}`
+                              )->a( n = `description` v = `{CARRID}`
+                              )->a( n = `type`        v = `Active`
+                              )->a( n = `press`       v = client->_event( val = `PICK` arg = `${CARRID}` ) ).
 
-                    )->ele( `List`
-                        )->a( n = `items` v = client->_bind( mt_carriers )
-
-                        )->ele( `items`
-                            )->tag( `StandardListItem`
-                                )->a( n = `title`       v = `{CARRNAME}`
-                                )->a( n = `description` v = `{CARRID}`
-                                )->a( n = `type`        v = `Active`
-                                )->a( n = `press`       v = client->_event( val = `PICK` arg = `${CARRID}` ) ).
-
-        client->popup_display( popup->stringify( ) ).
-
-      WHEN client->check_on_event( `PICK` ).
-        mv_carrid = client->get_event_arg( ).
-        client->popup_destroy( ).
-
-    ENDCASE.
+      client->popup_display( popup->stringify( ) ).
+    ELSEIF client->check_on_event( `PICK` ).
+      mv_carrid = client->get_event_arg( ).
+      client->popup_destroy( ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

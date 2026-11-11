@@ -32,6 +32,8 @@ internal table are two branches of one class, not two classes.
 
 ## Between App Classes
 
+![Three states of the stack: the list alone, the detail on top while the list waits as a draft, and the list again after the detail left](/cookbook/event_navigation/stack.svg)
+
 To call another app class:
 ```abap
   METHOD z2ui5_if_app~main.
