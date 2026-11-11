@@ -73,6 +73,8 @@ CLASS zcl_sample_life_cycle IMPLEMENTATION.
 ENDCLASS.
 ```
 
+![Which lifecycle check is true in which situation: the first start sets init and navigated, an event sets only the event check, a return from a sub-app and a restored bookmark set navigated](/cookbook/event_navigation/which-branch.svg)
+
 This `IF` / `ELSEIF` chain is the shape every page of this manual, the [Tutorial](/tutorials/) and the samples use. Four things make it the recommended one:
 
 1. **Store `client` on `me->client`** so handler methods can use it without passing it around.

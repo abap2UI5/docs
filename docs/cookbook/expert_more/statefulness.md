@@ -12,6 +12,8 @@ By default, abap2UI5 runs **stateless** like any other UI5 freestyle app, with o
 
 For the small set of cases where a sticky backend session is needed — classic GUI-style locking, heavy session-bound resources, RFC connections that must stay open — abap2UI5 can also run in **stateful** mode.
 
+![Stateless: three roundtrips with nothing but a draft row between them. Stateful: the same three roundtrips inside one session that stays with the user](/cookbook/expert_more/stateless-stateful.svg)
+
 ## Stateless (default)
 | Phase | What happens |
 |---|---|
