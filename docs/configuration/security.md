@@ -199,9 +199,40 @@ script: script-src 'self' ui5.sap.com ...
 From `1.84` on nothing needs it; leave the default alone there.
 :::
 
+### Sending the CSP as a Response Header
+By default the CSP is a `<meta>` tag in the page. A productive installation
+sends it as a response header as well: the browser enforces a header before it
+parses the first byte of the page, and `frame-ancestors` works only there. Add
+one entry named `Content-Security-Policy` to `t_security_header` in the user
+exit. Its value is the policy alone, without the `<meta>` tag around it:
+
+```abap
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
+
+    " the policy for a system that serves UI5 itself - add the host
+    " UI5 is loaded from when it comes from somewhere else
+    APPEND VALUE #(
+        n = `Content-Security-Policy`
+        v = `default-src 'self' data: blob:; `             &&
+            `script-src 'self' 'wasm-unsafe-eval'; `       &&
+            `style-src 'self' 'unsafe-inline'; `           &&
+            `img-src 'self' data: blob:; `                 &&
+            `connect-src 'self'; worker-src 'self' blob:; ` &&
+            `object-src 'none'; base-uri 'self'; `         &&
+            `frame-ancestors 'self'` )
+        TO cs_config-t_security_header.
+
+ENDMETHOD.
+```
+
+The framework adds the hash of its own inline script to this header, as it
+does for the `<meta>` tag. To try a policy without blocking anything, name the
+entry `Content-Security-Policy-Report-Only` first and watch the browser
+console.
+
 ## Response headers
-Not everything hardening can be done in a `<meta>` CSP is done there — a page
-served over HTTP carries headers too, and some directives only work as one.
+A `<meta>` CSP cannot do all of the hardening. A page served over HTTP carries
+headers too, and some directives only work in a header.
 abap2UI5 sets these on every response, out of the box:
 
 | Header | Value | What it does |

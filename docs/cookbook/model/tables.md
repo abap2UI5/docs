@@ -41,12 +41,15 @@ CLASS zcl_sample_table IMPLEMENTATION.
 
     IF client->check_on_navigated( ).
 
-      DO 100 TIMES.
-        INSERT VALUE #(
-          count = sy-index
-          value = `red`
-          descr = `this is a description` ) INTO TABLE mt_itab.
-      ENDDO.
+      " the branch runs again on every return, so fill the table only once
+      IF mt_itab IS INITIAL.
+        DO 100 TIMES.
+          INSERT VALUE #(
+            count = sy-index
+            value = `red`
+            descr = `this is a description` ) INTO TABLE mt_itab.
+        ENDDO.
+      ENDIF.
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
@@ -99,12 +102,15 @@ binding is the same `_bind`:
 
     IF client->check_on_navigated( ).
 
-      DO 100 TIMES.
-        INSERT VALUE #(
-          count = sy-index
-          value = `red`
-          descr = `this is a description` ) INTO TABLE mt_itab.
-      ENDDO.
+      " the branch runs again on every return, so fill the table only once
+      IF mt_itab IS INITIAL.
+        DO 100 TIMES.
+          INSERT VALUE #(
+            count = sy-index
+            value = `red`
+            descr = `this is a description` ) INTO TABLE mt_itab.
+        ENDDO.
+      ENDIF.
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`

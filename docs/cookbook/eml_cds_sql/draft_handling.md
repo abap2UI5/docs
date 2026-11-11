@@ -10,6 +10,13 @@ description: Drive a draft-enabled RAP business object from an abap2UI5 app with
 ---
 # Draft Handling
 
+::: info Two things are called "draft"
+This page is about the **RAP draft**: a record a user is still editing. abap2UI5
+also saves your app instance between two clicks, in the table `z2ui5_t_01`,
+and calls that copy the *app draft*. The two are unrelated. See the
+[Glossary](/get_started/glossary).
+:::
+
 ## Drafts Are a RAP Feature — and You Can Use Them with abap2UI5
 
 RAP draft handling — `with draft` in the behavior definition, a draft table, the standard actions `Edit`, `Resume`, `Activate` and `Discard` — lives inside the business object, so any consumer that speaks EML gets it, and an abap2UI5 app is such a consumer. If you know drafts from RAP, the only new part on this page is wiring the EML to an abap2UI5 view instead of a Fiori Elements UI: skim ahead to [The Four Building Blocks](#the-four-building-blocks).

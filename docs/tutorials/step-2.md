@@ -52,6 +52,10 @@ aggregation is available, because the builder never knew any of them by name:
 | `a( )` | set **one** attribute on the control the chain points at |
 | `end( )` | ascend to the parent |
 
+The parameters are short on purpose, because you type them on every line:
+`n` is the **name** of the control or attribute, `v` is its **value**, and
+`ns` is the XML **namespace** the control lives in (none for `sap.m`).
+
 The single rule: `a( )` applies to the control the chain currently points at,
 so attributes follow their control — and a control gets them *before* its
 first child. The root `mvc:View` and its `xmlns` declarations are written by

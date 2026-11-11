@@ -103,8 +103,17 @@ ENDCLASS.
 ```
 :::
 
-Next, use transaction `SICF` to create an HTTP service and enter your handler
-class in the service's **Handler List** tab, then activate the node:
+Next, create the HTTP service that the browser will call:
+
+1. Start transaction `SICF` and press **Execute**.
+2. Open the tree down to `default_host` → `sap` → `bc`.
+3. Right-click `bc` and choose **New Sub-Element**. Enter a name, for example
+   `zabap2ui5`. The name becomes the last part of the URL.
+4. On the **Handler List** tab, enter your handler class
+   `ZCL_MY_ABAP2UI5_HTTP_HANDLER`, then save.
+5. Back in the tree, right-click the new node and choose **Activate Service**.
+
+The node is no longer grayed out: the service is active.
 
 <img width="743" height="697" alt="SICF service creation dialog in transaction SICF" src="https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4" /> <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.webp)
@@ -127,17 +136,21 @@ Cloud compatibility, whichever handler this system runs.
 :::
 
 ## 3. First Launch
-Open the HTTP endpoint in your browser — in `SICF`, right-click your service
-node and choose **Test Service** (the URL looks like
-`https://<host>:<port>/sap/bc/<your_service>`). This startup page is also where
-you will launch your own apps later:
+Open the HTTP endpoint in your browser: in `SICF`, right-click your service
+node and choose **Test Service**. The URL looks like
+`https://<host>:<port>/sap/bc/zabap2ui5`. The browser shows the abap2UI5
+startup page. It is also where you will launch your own apps later:
 <img width="800" height="429" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
-Press `check` to verify your installation, then launch the bundled test app to
-confirm everything works.
+Now check that an app starts:
 
-You should now see the page of the startup app. That is the whole install
-verified: abapGit pull, handler, service and app class. If you see something
-else instead:
+1. In the input field under **Step 4**, enter `z2ui5_cl_ui5_app_hi_world`, the
+   test app that comes with the framework.
+2. Press **Check**. The class name turns into a link under **Step 5**.
+3. Click the link. A new tab opens with the page **abap2UI5 - Hello World**.
+4. Enter a name and press **Post**. A message box answers `Your name is …`.
+
+That is the whole install verified: abapGit pull, handler, service and app
+class. If you see something else instead:
 
 - **The browser shows an ICF error page or a plain 404** — the request never
   reached the handler. In `SICF`, check that the service node is *activated*

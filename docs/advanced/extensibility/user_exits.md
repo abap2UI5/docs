@@ -24,9 +24,11 @@ fall-back to the defaults.
 ## The two methods
 
 Both methods take an `is_context` importing parameter describing the request
-and a `cs_config` changing parameter holding the configuration, and both are
-called more than once per request. Neither may keep state or write to the
-database: read configuration, set fields, return.
+and a `cs_config` changing parameter holding the configuration. Neither is
+called exactly once: `set_config_http_get` runs for the page and again for the
+headers of every later response, `set_config_http_post` runs up to three times
+for one roundtrip. So neither may keep state or write to the database: read
+configuration, set fields, return.
 
 **`set_config_http_get`** runs at most once per request. On the page request —
 the GET that fetches the HTML shell — the result builds the page: UI5 source

@@ -43,7 +43,7 @@ This page is the technical picture. What abap2UI5 means for an organization - wh
 
 The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view, the framework sends it to the browser in one response with the JSON model its controls bind to, and every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
 
-No ABAP session survives between two clicks, and that is deliberate: the app's state is written to a draft on the server, the browser keeps only its id, and the draft is restored before `main( )` runs again, so each request is a new ABAP session holding your app exactly as the user left it — stateless like any other UI5 app, which is what makes it scale. For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
+One click is one **roundtrip**: the browser sends a request, `main( )` runs once, the answer comes back. No ABAP session waits between two clicks. After each roundtrip the framework saves your app object on the server, and the browser keeps only the id of that copy. Before the next call of `main( )` the copy is restored, so your app is exactly as the user left it. The saved copy is called the app **draft** (it is not a RAP draft). This makes an app stateless like any other UI5 app, which is what makes it scale. Every word is in the [Glossary](/get_started/glossary). For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
 
 ![One roundtrip in five steps: the draft is loaded, the user's changes are applied, main( ) runs, the response is built and the draft is saved under a new id](/get_started/roundtrip.svg)
 

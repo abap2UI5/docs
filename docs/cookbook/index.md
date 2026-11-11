@@ -7,7 +7,8 @@ description: The map of the cookbook - one row per group, from the view and the 
 Concrete problems and their solutions, one chapter each, grouped by what an
 app is made of. The [Cheat Sheet](/cookbook/cheat_sheet) is the checklist to
 keep open while working; the groups below are where each rule on it is
-explained in full.
+explained in full. Every word the chapters rely on is defined in the
+[Glossary](/get_started/glossary).
 
 | Group | What it covers | Start with |
 |---|---|---|

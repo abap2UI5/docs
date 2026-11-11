@@ -36,7 +36,7 @@ through the [user exit](/advanced/extensibility/user_exits):
 |---|---|---|
 | UI5 is loaded from the public CDN (`sdk.openui5.org`, cache-buster URL) | point `cs_config-src` at an on-stack or otherwise controlled UI5, pinned to a version - [Bootstrapping](/configuration/setup/ui5_bootstrapping) | the CDN serves the entire JavaScript runtime into an authenticated session, and a cache-buster URL cannot be integrity-pinned |
 | Error details are shown | `cs_config-check_hide_error_details = abap_true` in `set_config_http_post` | the 500 body renders the full exception chain, including the public attributes of SAP's and your own exception classes |
-| The CSP is a `<meta>` policy | a real `Content-Security-Policy` response header through `t_security_header` - [Security](/configuration/security#content-security-policy) | a header is enforced before the first byte of the body is parsed |
+| The CSP is a `<meta>` policy | a real `Content-Security-Policy` response header through `t_security_header` - [Security](/configuration/security#sending-the-csp-as-a-response-header) | a header is enforced before the first byte of the body is parsed |
 | The ICF node is reachable by everyone with a logon | an authorization object on the node, as for any service - [Authorization](/configuration/authorization) | whether the node can be reached is the outer gate; the app's `main( )` is the inner one |
 
 A fifth switch is worth knowing: `check_trust_forwarded_host` is on by

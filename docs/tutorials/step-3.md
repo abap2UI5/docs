@@ -75,10 +75,10 @@ ENDCLASS.
 - ``client->_event( `SAY_HELLO` )`` wires the button: it returns the press
   handler that sends the event — with the name you chose — back to `main`.
 
-`check_on_init( )` implies `check_on_navigated( )`, so init comes first and
-the `IF`/`ELSEIF` chain takes each roundtrip through one branch. The full
-picture is on the
-[Life Cycle](/cookbook/event_navigation/life_cycle) page.
+These two checks are all this tutorial needs. A third one, `check_on_init( )`,
+is true only on the very first call and is the place for one-time setup; when
+you use it, it comes first in the `IF`/`ELSEIF` chain. The full picture is on
+the [Life Cycle](/cookbook/event_navigation/life_cycle) page.
 
 Next: data leaves the browser and reaches your class — without a single line
 of transfer code.

@@ -201,6 +201,7 @@ export default defineConfig({
           { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Developing with AI", link: "/get_started/ai" },
+          { text: "Glossary", link: "/get_started/glossary" },
         ],
       },
       {

@@ -26,7 +26,8 @@ ENDCLASS.
 
 Open the abap2UI5 startup page in your browser — the page the
 [Quickstart](/get_started/quickstart#_3-first-launch) ends on — enter the class
-name `ZCL_APP_HELLO_WORLD` in the input field, and launch it.
+name `ZCL_APP_HELLO_WORLD` in the input field, press **Check**, and click the
+link that appears.
 
 That is a complete abap2UI5 app: one class, one method, no frontend project and
 no OData service.
@@ -106,9 +107,11 @@ CLASS zcl_app_hello_screen IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Type a name, press the button, and the toast greets it. Three things are
-happening, and none of them needed any code you had to write yourself:
+Type a name, press the button, and the toast greets it. Four things are
+happening, and you wrote no JavaScript and no data transfer for any of them:
 
+- `check_on_navigated( )` is true when the screen has to be drawn: on the
+  first call, and whenever the user comes back to this app
 - the **view** is a UI5 XML view, built in ABAP with `z2ui5_cl_ui5_view_builder`
 - `client->_bind( name )` ties the input to the public attribute, so what the
   user types is in `name` on the next roundtrip
@@ -119,8 +122,8 @@ happening, and none of them needed any code you had to write yourself:
 
 Press `Ctrl+F12` in any running app to open the **Developer Tools** — the
 problems, every roundtrip with its request and response, the rendered view XML
-and the model data of each slot. It is the first place to look when
-something does not render the way you expected:
+and the model data of the view and of every popup. It is the first place to look
+when something does not render the way you expected:
 
 ![Developer Tools opened with Ctrl+F12 showing code, view, and model](/get_started/image-2.webp)
 
