@@ -31,28 +31,23 @@ ENDCLASS.
 CLASS zcl_sample_title IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      WHEN client->check_on_init( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->ele( `Page`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `change title`
+                      )->a( n = `press` v = client->_event( `RENAME` ) ).
 
-                )->ele( `Page`
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `change title`
-                        )->a( n = `press` v = client->_event( `RENAME` ) ).
-
-        client->view_display( view->stringify( ) ).
-
-
-      WHEN client->check_on_event( `RENAME` ).
-        client->follow_up_action(
-            val   = client->cs_event-set_title
-            t_arg = VALUE #( ( `Invoice 4711` ) ) ).
-
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `RENAME` ).
+      client->follow_up_action(
+          val   = client->cs_event-set_title
+          t_arg = VALUE #( ( `Invoice 4711` ) ) ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

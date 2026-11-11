@@ -33,37 +33,51 @@ CLASS zcl_sample_timer DEFINITION PUBLIC.
     DATA counter TYPE i.
 
   PROTECTED SECTION.
+    DATA client TYPE REF TO z2ui5_if_client.
+
+    METHODS view_display.
+    METHODS timer_start.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_sample_timer IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    me->client = client.
+    IF client->check_on_init( ).
+      view_display( ).
+      timer_start( ).           " once - a return must not start a second one
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `TICK` ).
+      counter = counter + 1.
+      timer_start( ).           " re-arm: the timer fires once
+    ENDIF.
 
-      WHEN client->check_on_init( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+  ENDMETHOD.
 
-                )->ele( `Page`
-                    )->a( n = `title` v = `abap2UI5 - Timer`
+  METHOD view_display.
 
-                    )->tag( `Text`
-                        )->a( n = `text` v = client->_bind( counter ) ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-        client->view_display( view->stringify( ) ).
+            )->ele( `Page`
+                )->a( n = `title` v = `abap2UI5 - Timer`
 
-        client->follow_up_action( val   = client->cs_event-start_timer
-                        t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
+                )->tag( `Text`
+                    )->a( n = `text` v = client->_bind( counter ) ).
 
-      WHEN client->check_on_event( `TICK` ).
-        counter = counter + 1.
-        client->follow_up_action( val   = client->cs_event-start_timer
-                        t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
+    client->view_display( view->stringify( ) ).
 
-    ENDCASE.
+  ENDMETHOD.
+
+  METHOD timer_start.
+
+    client->follow_up_action( val   = client->cs_event-start_timer
+                              t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
 
   ENDMETHOD.
 ENDCLASS.

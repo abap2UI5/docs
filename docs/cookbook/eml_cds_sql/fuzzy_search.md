@@ -95,19 +95,14 @@ CLASS zcl_sample_fuzzy IMPLEMENTATION.
 
     me->client = client.
 
-    CASE abap_true.
-
-      WHEN client->check_on_init( ).
-        load_data( ).
-        view_display( ).
-
-      WHEN client->check_on_navigated( ).
-        view_display( ).
-
-      WHEN client->check_on_event( `SEARCH` ).
-        load_data( ).
-
-    ENDCASE.
+    IF client->check_on_init( ).
+      load_data( ).
+      view_display( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).
+    ELSEIF client->check_on_event( `SEARCH` ).
+      load_data( ).
+    ENDIF.
 
   ENDMETHOD.
 

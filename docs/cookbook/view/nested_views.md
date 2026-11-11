@@ -169,21 +169,20 @@ CLASS zcl_sample_nest_fcl IMPLEMENTATION.
 
     me->client = client.
 
-    CASE abap_true.
-      WHEN client->check_on_init( ).
-        t_tab = VALUE #( ( title = `Order 4711` )
-                         ( title = `Order 4712` )
-                         ( title = `Order 4713` ) ).
-        view_display_master( ).
-      WHEN client->check_on_navigated( ).
-        view_display_master( ).
-      WHEN client->check_on_event( `SELCHANGE` ).
-        DATA(ls_row) = VALUE #( t_tab[ selected = abap_true ] OPTIONAL ).
-        t_tab2 = VALUE #( ( title = |{ ls_row-title } - item 10| )
-                          ( title = |{ ls_row-title } - item 20| ) ).
-        mv_layout = `TwoColumnsMidExpanded`.
-        view_display_detail( ).
-    ENDCASE.
+    IF client->check_on_init( ).
+      t_tab = VALUE #( ( title = `Order 4711` )
+                       ( title = `Order 4712` )
+                       ( title = `Order 4713` ) ).
+      view_display_master( ).
+    ELSEIF client->check_on_navigated( ).
+      view_display_master( ).
+    ELSEIF client->check_on_event( `SELCHANGE` ).
+      DATA(ls_row) = VALUE #( t_tab[ selected = abap_true ] OPTIONAL ).
+      t_tab2 = VALUE #( ( title = |{ ls_row-title } - item 10| )
+                        ( title = |{ ls_row-title } - item 20| ) ).
+      mv_layout = `TwoColumnsMidExpanded`.
+      view_display_detail( ).
+    ENDIF.
 
   ENDMETHOD.
 

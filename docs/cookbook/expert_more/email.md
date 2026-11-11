@@ -27,58 +27,54 @@ ENDCLASS.
 CLASS zcl_sample_email IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
 
-      WHEN client->check_on_navigated( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`      v = `sap.m`
-                )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
-                )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+              )->ele( `Page`
+                  )->a( n = `title` v = `Send E-Mail`
 
-                )->ele( `Page`
-                    )->a( n = `title` v = `Send E-Mail`
+                  )->ele( n = `SimpleForm` ns = `form`
+                      )->a( n = `editable` b = abap_true
 
-                    )->ele( n = `SimpleForm` ns = `form`
-                        )->a( n = `editable` b = abap_true
+                      )->ele( n = `content` ns = `form`
+                          )->tag( `Label`
+                              )->a( n = `text` v = `To`
+                          )->tag( `Input`
+                              )->a( n = `value` v = client->_bind( mv_to )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Subject`
+                          )->tag( `Input`
+                              )->a( n = `value` v = client->_bind( mv_subject )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Body`
+                          )->tag( `TextArea`
+                              )->a( n = `value` v = client->_bind( mv_body )
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `send`
+                              )->a( n = `press` v = client->_event( `SEND` ) ).
 
-                        )->ele( n = `content` ns = `form`
-                            )->tag( `Label`
-                                )->a( n = `text` v = `To`
-                            )->tag( `Input`
-                                )->a( n = `value` v = client->_bind( mv_to )
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Subject`
-                            )->tag( `Input`
-                                )->a( n = `value` v = client->_bind( mv_subject )
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Body`
-                            )->tag( `TextArea`
-                                )->a( n = `value` v = client->_bind( mv_body )
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `send`
-                                )->a( n = `press` v = client->_event( `SEND` ) ).
-
-        client->view_display( view->stringify( ) ).
-
-      WHEN client->check_on_event( `SEND` ).
-        TRY.
-            DATA(lo_request)  = cl_bcs=>create_persistent( ).
-            DATA(lo_document) = cl_document_bcs=>create_document(
-                i_type    = `RAW`
-                i_text    = cl_bcs_convert=>string_to_soli( mv_body )
-                i_subject = CONV so_obj_des( mv_subject ) ).
-            lo_request->set_document( lo_document ).
-            lo_request->add_recipient(
-                i_recipient = cl_cam_address_bcs=>create_internet_address( CONV ad_smtpadr( mv_to ) ) ).
-            lo_request->send( ).
-            COMMIT WORK.
-            client->message_toast_display( `mail queued` ).
-          CATCH cx_bcs INTO DATA(lx).
-            client->message_box_display( lx ).
-        ENDTRY.
-
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `SEND` ).
+      TRY.
+          DATA(lo_request)  = cl_bcs=>create_persistent( ).
+          DATA(lo_document) = cl_document_bcs=>create_document(
+              i_type    = `RAW`
+              i_text    = cl_bcs_convert=>string_to_soli( mv_body )
+              i_subject = CONV so_obj_des( mv_subject ) ).
+          lo_request->set_document( lo_document ).
+          lo_request->add_recipient(
+              i_recipient = cl_cam_address_bcs=>create_internet_address( CONV ad_smtpadr( mv_to ) ) ).
+          lo_request->send( ).
+          COMMIT WORK.
+          client->message_toast_display( `mail queued` ).
+        CATCH cx_bcs INTO DATA(lx).
+          client->message_box_display( lx ).
+      ENDTRY.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
