@@ -66,6 +66,8 @@ This method works with tables, trees, and other nested data structures — see
 Bind an attribute to an editable control (e.g. `input`). After an event, the
 framework has already synced the user's changes back to your ABAP attribute:
 
+![The attribute is bound, appears as a path in the view and the model, the Input shows it, and what the user types travels back into the attribute before main( ) runs](/cookbook/model/bound-value.svg)
+
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
 

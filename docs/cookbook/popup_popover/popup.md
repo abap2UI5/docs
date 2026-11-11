@@ -126,6 +126,8 @@ For a cleaner source layout, put a popup in its own class and call it via
 then an ordinary `z2ui5_if_app` — it just displays into the popup slot instead
 of the main one, and ends by handing control back:
 
+![The caller sets the question and calls the popup class, the popup displays and leaves, the caller runs again and reads the answer from the popup instance](/cookbook/popup_popover/popup-return.svg)
+
 ```abap
 CLASS zcl_sample_confirm DEFINITION PUBLIC.
 
