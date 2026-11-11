@@ -464,7 +464,17 @@ also the worklist for the next measurement. What the gate cannot decide, and
 says so, is whether a buttoned example actually starts; that stays a
 measurement.
 
-**To redo the measurement** — after adding examples, or after the playground
+**The measurement also runs weekly over there** (since 2026-11):
+abap2UI5/playground's `docs-examples.yml` checks out this repository, takes
+the worklist from `scripts/list-runnable.mjs --json`, opens every example in
+a fresh playground build and writes "n of m started" with a row per failing
+page into its job summary; a red run opens or extends one `docs-examples`
+issue there. It reads this repository's main, so a page changed here is
+measured within a week without anyone asking. `list-runnable.mjs` must keep
+running on plain Node with nothing installed - that job does not `npm ci`
+here.
+
+**To redo the measurement** by hand — after adding examples, or after the playground
 changes — take the worklist from `npm run runnable`, build the playground,
 serve it, and open each example in it, checking that the status line reaches
 `running` and that the app frame contains something:
