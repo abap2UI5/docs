@@ -106,10 +106,10 @@ See [Popup](/cookbook/popup_popover/popup) and the worked example in [the tutori
 
 ## Event-Name Casing Mismatch
 
-`client->check_on_event( 'POST' )` matches only if the XML fires the event with the exact same string — case included. Typical mistakes: `press = client->_event( 'post' )` paired with `WHEN client->check_on_event( 'POST' )`, or stray whitespace from a string template. The `WHEN` branch is skipped, no handler runs, and the click appears to do nothing.
+`client->check_on_event( 'POST' )` matches only if the XML fires the event with the exact same string — case included. Typical mistakes: `press = client->_event( 'post' )` paired with `ELSEIF client->check_on_event( 'POST' )`, or stray whitespace from a string template. The branch is skipped, no handler runs, and the click appears to do nothing.
 
 Where to look:
-- **Browser network tab**: the request payload contains the event name as the browser sent it. Compare it character-for-character against your `WHEN` literal.
+- **Browser network tab**: the request payload contains the event name as the browser sent it. Compare it character-for-character against the literal in your `check_on_event( )`.
 - **Declare a constant per event name** rather than typing the string twice - `client->cs_event-*` are the frontend actions of `follow_up_action( )`, not names for your own events. For custom events, declare a constant in the class and reference both ends from the same source — typos then fail to compile instead of failing silently at runtime.
 
 ## State Lost Between Events

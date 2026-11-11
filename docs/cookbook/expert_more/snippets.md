@@ -12,7 +12,7 @@ Copy-paste starting points for the most common app shapes. Each snippet is a com
 
 ## Basic App Structure
 
-The skeleton every abap2UI5 app starts from: implement `z2ui5_if_app`, dispatch on lifecycle phases with `CASE abap_true`, build the view in `check_on_init`, react to user actions in `check_on_event`.
+The skeleton every abap2UI5 app starts from: implement `z2ui5_if_app`, dispatch on lifecycle phases with one `IF` / `ELSEIF` chain, build the view in `check_on_navigated` (true on the first start as well), react to user actions in `check_on_event`.
 
 ```abap
 CLASS zcl_sample_skeleton DEFINITION PUBLIC.
@@ -27,29 +27,25 @@ ENDCLASS.
 CLASS zcl_sample_skeleton IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-      WHEN client->check_on_init( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->ele( `Page`
+                  )->a( n = `title` v = `My App`
 
-                )->ele( `Page`
-                    )->a( n = `title` v = `My App`
+                  )->tag( `Text`
+                      )->a( n = `text` v = `Hello World`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `Go`
+                      )->a( n = `press` v = client->_event( `GO` ) ).
 
-                    )->tag( `Text`
-                        )->a( n = `text` v = `Hello World`
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `Go`
-                        )->a( n = `press` v = client->_event( `GO` ) ).
-
-        client->view_display( view->stringify( ) ).
-
-      WHEN client->check_on_event( `GO` ).
-        client->message_box_display( `Button pressed!` ).
-
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `GO` ).
+      client->message_box_display( `Button pressed!` ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -75,55 +71,51 @@ ENDCLASS.
 CLASS zcl_sample_selection IMPLEMENTATION.
   METHOD z2ui5_if_app~main.
 
-    CASE abap_true.
+    IF client->check_on_navigated( ).
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+              )->a( n = `xmlns:form` v = `sap.ui.layout.form`
 
-      WHEN client->check_on_init( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-                )->a( n = `xmlns:form` v = `sap.ui.layout.form`
+              )->ele( `Page`
+                  )->a( n = `title` v = `Selection Screen`
 
-                )->ele( `Page`
-                    )->a( n = `title` v = `Selection Screen`
+                  )->ele( n = `SimpleForm` ns = `form`
+                      )->a( n = `title`    v = `Selection Criteria`
+                      )->a( n = `editable` b = abap_true
 
-                    )->ele( n = `SimpleForm` ns = `form`
-                        )->a( n = `title`    v = `Selection Criteria`
-                        )->a( n = `editable` b = abap_true
+                      )->ele( n = `content` ns = `form`
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Carrier ID`
+                          )->tag( `Input`
+                              )->a( n = `value` v = client->_bind( carrid )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Connection ID`
+                          )->tag( `Input`
+                              )->a( n = `value` v = client->_bind( connid )
+                          )->tag( `Label`
+                              )->a( n = `text` v = `Flight Date`
+                          )->tag( `DatePicker`
+                              )->a( n = `value` v = client->_bind( fldate )
 
-                        )->ele( n = `content` ns = `form`
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Carrier ID`
-                            )->tag( `Input`
-                                )->a( n = `value` v = client->_bind( carrid )
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Connection ID`
-                            )->tag( `Input`
-                                )->a( n = `value` v = client->_bind( connid )
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Flight Date`
-                            )->tag( `DatePicker`
-                                )->a( n = `value` v = client->_bind( fldate )
+                      )->end(
+                  )->end(
 
-                        )->end(
-                    )->end(
+                  )->ele( `footer`
+                      )->ele( `OverflowToolbar`
+                          )->tag( `ToolbarSpacer`
+                          )->tag( `Button`
+                              )->a( n = `text`  v = `Execute`
+                              )->a( n = `type`  v = `Emphasized`
+                              )->a( n = `press` v = client->_event( `EXECUTE` ) ).
 
-                    )->ele( `footer`
-                        )->ele( `OverflowToolbar`
-                            )->tag( `ToolbarSpacer`
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `Execute`
-                                )->a( n = `type`  v = `Emphasized`
-                                )->a( n = `press` v = client->_event( `EXECUTE` ) ).
-
-        client->view_display( view->stringify( ) ).
-
-      WHEN client->check_on_event( `EXECUTE` ).
-        " run the search with carrid / connid / fldate
-        client->message_box_display(
-            |Executing with { carrid } / { connid } / { fldate }| ).
-
-    ENDCASE.
+      client->view_display( view->stringify( ) ).
+    ELSEIF client->check_on_event( `EXECUTE` ).
+      " run the search with carrid / connid / fldate
+      client->message_box_display(
+          |Executing with { carrid } / { connid } / { fldate }| ).
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.

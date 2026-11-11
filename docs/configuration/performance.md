@@ -22,31 +22,27 @@ The biggest optimization is **not** rebuilding the view on every event:
 ```abap
 METHOD z2ui5_if_app~main.
 
-  CASE abap_true.
+  IF client->check_on_navigated( ).
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
 
-    WHEN client->check_on_init( ).
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+            )->ele( `Page`
+                )->a( n = `title` v = `My App`
 
-              )->ele( `Page`
-                  )->a( n = `title` v = `My App`
+                )->tag( `Text`
+                    )->a( n = `text` v = client->_bind( mv_text )
+                )->tag( `Button`
+                    )->a( n = `text`  v = `update`
+                    )->a( n = `press` v = client->_event( `UPDATE` ) ).
 
-                  )->tag( `Text`
-                      )->a( n = `text` v = client->_bind( mv_text )
-                  )->tag( `Button`
-                      )->a( n = `text`  v = `update`
-                      )->a( n = `press` v = client->_event( `UPDATE` ) ).
-
-      client->view_display( view->stringify( ) ).
-
-    WHEN client->check_on_event( `UPDATE` ).
-      " no view_display( ), and nothing else either - the changed value is
-      " pushed with the response
-      mv_text = `new value`.
-
-  ENDCASE.
+    client->view_display( view->stringify( ) ).
+  ELSEIF client->check_on_event( `UPDATE` ).
+    " no view_display( ), and nothing else either - the changed value is
+    " pushed with the response
+    mv_text = `new value`.
+  ENDIF.
 
 ENDMETHOD.
 ```

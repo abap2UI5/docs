@@ -7,7 +7,7 @@ description: The abap2UI5 app life cycle - every request enters main( ), and che
 ---
 # Life Cycle
 
-Every request enters the `main` method. `CASE abap_true` dispatches between initialization, navigation returns, and user events using `` client->check_on_init( ) ``, `` client->check_on_event( `EVENT_NAME` ) ``, and `` client->check_on_navigated( ) ``. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
+Every request enters the `main` method. One `IF` / `ELSEIF` chain dispatches between initialization, navigation returns, and user events using `` client->check_on_init( ) ``, `` client->check_on_event( `EVENT_NAME` ) ``, and `` client->check_on_navigated( ) ``. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
 
 ```abap
 CLASS zcl_sample_life_cycle DEFINITION PUBLIC.
@@ -33,15 +33,14 @@ CLASS zcl_sample_life_cycle IMPLEMENTATION.
 
     me->client = client.
 
-    CASE abap_true.
-      WHEN client->check_on_init( ).
-        value = `World`.        " one-time setup ...
-        view_display( ).        " ... and the first screen
-      WHEN client->check_on_navigated( ).
-        view_display( ).        " back from a sub-app or a value help: hand a view back
-      WHEN client->check_on_event( `POST` ).
-        on_post( ).
-    ENDCASE.
+    IF client->check_on_init( ).
+      value = `World`.        " one-time setup ...
+      view_display( ).        " ... and the first screen
+    ELSEIF client->check_on_navigated( ).
+      view_display( ).        " back from a sub-app or a value help: hand a view back
+    ELSEIF client->check_on_event( `POST` ).
+      on_post( ).
+    ENDIF.
 
   ENDMETHOD.
 
@@ -74,14 +73,14 @@ CLASS zcl_sample_life_cycle IMPLEMENTATION.
 ENDCLASS.
 ```
 
-Whether you dispatch with `CASE abap_true` (as above) or with an equivalent `IF` / `ELSEIF` chain (as the [Hello World](/get_started/hello_world) page and the first steps of the [Tutorial](/tutorials/) do) is a matter of taste — the structure is what counts. Four things make this the recommended shape:
+This `IF` / `ELSEIF` chain is the shape every page of this manual, the [Tutorial](/tutorials/) and the samples use. Four things make it the recommended one:
 
 1. **Store `client` on `me->client`** so handler methods can use it without passing it around.
-2. **Dispatch by event name** — `` check_on_event( `POST` ) `` rather than a generic `` CASE client->get( )-event `` with a second dispatch level. Each event gets its own `WHEN`. (With many events or extracted handler methods, the `CASE client->get( )-event` form is a fine alternative — the walkthrough's [last step](/tutorials/step-10) uses it.)
-3. **One display method per view** — `view_display( )` above, called from every `WHEN` that should rebuild the screen. Two of them must: `check_on_init`, and `check_on_navigated`, which is the branch a return from a sub-app or a value help comes back through. Event handlers that only mutate state and reuse the existing view (a button press inside a popup, a toast) skip it — see [The View Is Only Sent When You Call `view_display`](#the-view-is-only-sent-when-you-call-view-display) below.
-4. **`check_on_init` first, `check_on_navigated` after it.** Not alphabetical order and not taste: `check_on_init( )` means *this app instance has never run*, and every path to an instance's first `main( )` raises the navigated flag **as well**. The two are not exclusive, so in a `CASE abap_true` — where the first matching `WHEN` wins — putting the navigated branch first swallows the very first roundtrip and the one-time setup in the init branch never runs.
+2. **Dispatch by event name** — `` check_on_event( `POST` ) `` rather than a generic `` CASE client->get( )-event `` with a second dispatch level. Each event gets its own `ELSEIF`. (With many events or extracted handler methods, the `CASE client->get( )-event` form is a fine alternative — the walkthrough's [last step](/tutorials/step-10) uses it.)
+3. **One display method per view** — `view_display( )` above, called from every branch that should rebuild the screen. Two of them must: `check_on_init`, and `check_on_navigated`, which is the branch a return from a sub-app or a value help comes back through. Event handlers that only mutate state and reuse the existing view (a button press inside a popup, a toast) skip it — see [The View Is Only Sent When You Call `view_display`](#the-view-is-only-sent-when-you-call-view-display) below.
+4. **`check_on_init` first, `check_on_navigated` after it.** Not alphabetical order and not taste: `check_on_init( )` means *this app instance has never run*, and every path to an instance's first `main( )` raises the navigated flag **as well**. The two are not exclusive, so in the chain — where the first matching branch wins — putting the navigated branch first swallows the very first roundtrip and the one-time setup in the init branch never runs.
 
-For a tiny app with one or two events, inline the view and the handler directly in the `WHEN` branches and skip the handler methods entirely. [Hello World](/get_started/hello_world) shows this variant; the walkthrough's [last step](/tutorials/step-10) shows the full version with multiple handler methods, a popup, and persistence. Both follow the same pattern — only the amount of code inside each branch differs.
+For a tiny app with one or two events, inline the view and the handler directly in the branches and skip the handler methods entirely. [Hello World](/get_started/hello_world) shows this variant; the walkthrough's [last step](/tutorials/step-10) shows the full version with multiple handler methods, a popup, and persistence. Both follow the same pattern — only the amount of code inside each branch differs.
 
 ## Lifecycle Pitfalls
 
@@ -102,12 +101,11 @@ This trips up apps that build their view only under `check_on_init`:
 
 ```abap
 " WRONG — screen is blank after returning from the sub-app
-CASE abap_true.
-  WHEN client->check_on_init( ).
-    view_display( ).                " runs only the first time
-  WHEN client->check_on_event( `OPEN_POPUP` ).
-    client->nav_app_call( ... ).
-ENDCASE.
+IF client->check_on_init( ).
+  view_display( ).                " runs only the first time
+ELSEIF client->check_on_event( `OPEN_POPUP` ).
+  client->nav_app_call( ... ).
+ENDIF.
 ```
 
 When the sub-app is left, `main` runs again, but neither `check_on_init` nor any event matches, so `view_display( )` is never called and the user is left looking at a stale or empty screen. Nothing reports it: the response simply carries no view, and the browser keeps showing whatever was on it.
@@ -116,12 +114,11 @@ Display from the navigation-return branch as well. `check_on_navigated( )` cover
 
 ```abap
 " CORRECT — the view is rebuilt on first display and on every return
-CASE abap_true.
-  WHEN client->check_on_navigated( ).
-    view_display( ).
-  WHEN client->check_on_event( `OPEN_POPUP` ).
-    client->nav_app_call( ... ).
-ENDCASE.
+IF client->check_on_navigated( ).
+  view_display( ).
+ELSEIF client->check_on_event( `OPEN_POPUP` ).
+  client->nav_app_call( ... ).
+ENDIF.
 ```
 
 Reserve `check_on_init` for one-time setup that must *not* repeat on return — loading initial data, setting defaults — and keep it first in the `CASE`, as the sample at the top of this page does: it is the more specific of the two, and the more general one has to come after it. A fork whose init branch does nothing the navigated branch does not do is four lines saying what the navigated branch says alone.
