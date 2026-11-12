@@ -39,6 +39,11 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+A page with the title **Walkthrough - Step 2** and the text **Hello World**
+in it. No message box this time.
+:::
+
 ## The Four Verbs
 
 You are writing a UI5 XML view, one control per call. The builder has four

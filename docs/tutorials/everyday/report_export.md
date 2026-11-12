@@ -17,6 +17,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_031` in
 `13`). It reports on the travels of the business object `Z2UI5_R_SMPS_TRV`
 and exports with the XCO XLSX library.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 | Part | What it is |

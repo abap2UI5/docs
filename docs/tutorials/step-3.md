@@ -53,19 +53,19 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+The page from Step 2 with a **Say Hello** button under the text. Press it:
+a small message, **Hello from abap2UI5!**, appears at the bottom and fades.
+:::
+
 ## The Lifecycle
 
-```text
-┌──────────┐       ┌──────────┐       ┌──────────┐
-│ Browser  │──────>│  main()  │──────>│ Browser  │
-│ (Start)  │  HTTP │  view    │  HTTP │ (View)   │
-└──────────┘       └──────────┘       └────┬─────┘
-                                           │ user clicks
-┌──────────┐       ┌──────────┐       ┌────┴─────┐
-│ Browser  │<──────│  main()  │<──────│ Browser  │
-│ (Toast)  │  HTTP │  event   │  HTTP │ (Event)  │
-└──────────┘       └──────────┘       └──────────┘
-```
+`main` ran twice to get you there, once per roundtrip:
+
+| Roundtrip | What the browser sent | Which branch of `main` ran | What came back |
+| --- | --- | --- | --- |
+| 1 | the start of the app | `check_on_navigated( )` | the view |
+| 2 | the event `SAY_HELLO` | ``check_on_event( `SAY_HELLO` )`` | the toast |
 
 - **`check_on_navigated( )`** is true when the app has to draw its screen —
   on the first start, and again whenever the user navigates back to it later.

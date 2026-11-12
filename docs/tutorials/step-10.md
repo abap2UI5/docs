@@ -9,9 +9,20 @@ samples:
 
 Everything so far lived in one `main` method, and by now that method does five
 different jobs. Real apps — the framework's own, and the sample catalogs' —
-separate the phases into methods. This step adds no new concept: it puts the
-code where a reader expects it, and assembles every part of the tutorial —
+separate the phases into methods. This step is mostly a rearrangement: it puts
+the code where a reader expects it, and assembles every part of the tutorial —
 Step 8's selection screen above Step 9's table — into the complete app.
+
+Three calls are new, and all three are small:
+
+| New call | What it does |
+| --- | --- |
+| `check_on_event( )` without a name | true for **any** event; a `CASE client->get_event( )` then picks the handler |
+| `_event_nav_app_leave( )` | the press handler of a back button: it leaves this app |
+| `check_app_prev_stack( )` | true when another app called this one, so there is somewhere to go back to |
+
+The attribute spelling `b =` next to `n =` is new as well: it passes an ABAP
+boolean where `v =` passes a string.
 
 ## What It Does
 
@@ -266,13 +277,18 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+The selection form of Step 8 above the table of Step 9. **Read Invoices**
+fills the table, the pencil opens the dialog, **Save** writes the new date
+into the row.
+:::
+
 ## The Structure
 
-- **`main` is a pure dispatcher.** It stashes `client` in a protected attribute
-  — so the handler methods can use it without passing it around, and
-  protected rather than public because nothing binds it and a public
-  attribute would be serialized into the draft for nothing — and routes
-  each roundtrip to the method for its phase. `check_on_event( )` without an
+- **`main` is a pure dispatcher.** It keeps `client` in a protected attribute,
+  so the handler methods can use it without passing it around. Protected and
+  not public, because nothing binds it. Then it routes each roundtrip to the
+  method for its phase. `check_on_event( )` without an
   argument is true for *any* event; the `CASE` in `on_event` decides which one.
   Both dispatch shapes are fine, and
   [Life Cycle](/cookbook/event_navigation/life_cycle) compares them: dispatch
@@ -283,8 +299,8 @@ ENDCLASS.
   reference and the methods are implementation.
 - **One method per screen, one per data operation.** `view_display` and
   `popup_edit_display` build; `data_read` and `data_update` touch the database.
-  When an app grows, those are the seams it grows along — and the two data
-  methods are the only places a `SELECT` or an `UPDATE` ever appears.
+  When an app grows, it grows along these methods. The two data methods are
+  the only places a `SELECT` or an `UPDATE` ever appears.
 - **A back button, when there is somewhere to go.** `navButtonPress` and
   `showNavButton` give the page the standard back navigation, shown only when
   this app was called from another one — see
@@ -310,7 +326,8 @@ playground:
 - **[Step 11: From Playground to Production](/tutorials/step-11)** —
   real data, the transport order, authorization, and the URL users start from,
 - **[Step 12: Unit Tests](/tutorials/step-12)** — the structure of
-  this step pays off: the data methods are testable without any UI.
+  this step is what makes that possible: the data methods are testable
+  without any UI.
 
 And for everything beyond the walkthrough:
 

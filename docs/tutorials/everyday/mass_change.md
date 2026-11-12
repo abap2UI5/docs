@@ -16,6 +16,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_029` in
 [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) (package
 `03`), on the travel business object `Z2UI5_R_SMPS_TRV`.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 | Roundtrip | What happens |

@@ -128,7 +128,31 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+A form titled **Selection** with the fields **Supplier**, **Delivery Date
+From** and **Delivery Date To**, and a button **Read Invoices**. The list under
+it is empty. Press the button: the list fills. Enter a supplier and press it
+again: only that supplier's invoices stay.
+:::
+
 ## What Is New
+
+This step is longer than the ones before, but only **one idea is new**: the
+app asks first and reads the data on an event, not at the start. The other
+points below are details of the form. Read them when you need them.
+
+### The New Idea
+
+- **The event handler reads data, and nothing else.** No `view_display( )` in
+  the `READ` branch: the view already exists in the browser, only `t_invoices`
+  changed, and every roundtrip that changed bound data pushes the new model by
+  itself.
+- **The `SELECT` is the point.** In your system the demo data and the three
+  `DELETE`s are one `SELECT` with a `WHERE` clause. abap2UI5 does not abstract
+  the database layer. Reading and writing stays plain ABAP, which makes it easy
+  to plug into code you already have.
+
+### Details of the Form
 
 - **A form, from a second statement.** The chain is split: `view` holds the
   root, `page` holds the `Page`, and the form and the list are each filled from
@@ -145,14 +169,6 @@ ENDCLASS.
   to match the ABAP type behind the binding: `yyyy-MM-dd` is the shape a
   `string` compares by and the one an ABAP `d` travels in, so the same
   pattern works for both — see [Formatter → Date](/cookbook/model/formatter#date).
-- **The event handler reads data, and nothing else.** No `view_display( )` in
-  the `READ` branch: the view already exists in the browser, only `t_invoices`
-  changed, and every roundtrip that changed bound data pushes the new model by
-  itself.
-- **The `SELECT` is the point.** In your system the demo data and the three
-  `DELETE`s are one `SELECT` with a `WHERE` clause. abap2UI5 does not abstract
-  the database layer — reading and writing stays plain ABAP, which is what
-  makes it easy to plug into code you already have.
 
 Next, the list becomes a real table.
 

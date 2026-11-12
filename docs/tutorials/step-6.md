@@ -74,6 +74,11 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+The same list, but a row now reacts to a click. Click **Milk**: the message
+reads **4 x Milk from Green Growers**.
+:::
+
 ## Events With Arguments
 
 - **`type = Active`** makes the whole row clickable and gives it press
@@ -83,9 +88,16 @@ ENDCLASS.
   `${...}` syntax is resolved *per row* in the browser — each clone of the
   template carries its own product name. On the server,
   `client->get_event_arg( )` returns it, and a table read finds the row.
-  `arg` is the one-value spelling of `t_arg`: it is exactly
-  ``t_arg = VALUE #( ( `${PRODUCT}` ) )``, and from two values on `t_arg` is
-  the parameter to use.
+- **One brace or a dollar and a brace.** The two spellings look alike and do
+  different jobs:
+
+  | Written | Where | What it does |
+  | --- | --- | --- |
+  | `{PRODUCT}` | in a property, such as `title` | **shows** the field of the row |
+  | `${PRODUCT}` | in the `arg` of an event | **sends** the value of the field with the event |
+
+  To send more than one value, use `t_arg` instead of `arg` — see
+  [Event → Backend](/cookbook/event_navigation/backend).
 - **The state is still there.** `t_invoices` was filled in the
   `check_on_navigated` branch of an earlier roundtrip — the framework
   restored it before this one, so the event handler can read it. That is the

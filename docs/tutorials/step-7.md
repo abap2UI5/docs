@@ -114,6 +114,13 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+The list from Step 6. Click a row: a dialog **Edit** plus the product name
+opens, with the quantity in an input field. Change it and press **Save**: the
+dialog closes, a message confirms the update, and the row shows the new
+quantity.
+:::
+
 ## What Is New
 
 - **`s_edit` is the popup's model.** The `EDIT` handler copies the clicked

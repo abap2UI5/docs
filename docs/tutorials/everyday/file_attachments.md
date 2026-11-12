@@ -17,6 +17,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_016` in
 `11`). Its business object `Z2UI5_R_SMPS_FIL` keeps one row per file and
 takes new files only through its static action `uploadFile`.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 | Part | How |

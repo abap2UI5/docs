@@ -333,7 +333,7 @@ ENDCLASS.
 ```
 
 Run them as always — in ADT with `Ctrl+Shift+F10`. Three tests, three
-different seams:
+different entry points:
 
 - **`read_filters_by_supplier`** fills the selection screen's backing
   structure `s_search` — a plain public attribute — calls `data_read` and
@@ -344,8 +344,8 @@ different seams:
 - **`update_writes_back`** plays the popup workflow without the popup: fill
   `s_edit` the way the dialog's bindings would, call `data_update`, and check
   the table. When the demo data becomes a real `UPDATE` in
-  [Step 11](/tutorials/step-11), this is the test that grows a
-  test double for the database layer — the seam is already in place.
+  [Step 11](/tutorials/step-11), this is the test that gets a
+  test double for the database layer. The method to replace is already there.
 
 ## Why This Worked
 

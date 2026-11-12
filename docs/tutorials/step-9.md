@@ -153,6 +153,13 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+A table **Invoices** with the columns **Product**, **Supplier**, **Quantity**
+and **Delivery Date**, and a pencil button at the end of each row. The pencil
+opens the dialog from Step 7, now for the delivery date. The selection form of
+Step 8 is not there in this step.
+:::
+
 ## Columns and Cells
 
 - **A table is two aggregations.** `columns` holds one `Column` per column,

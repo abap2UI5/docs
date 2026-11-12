@@ -35,23 +35,43 @@ Four things the three steps below assume:
 ## 1. Install the Framework via abapGit
 
 Pull [abap2UI5](https://github.com/abap2UI5/abap2UI5) with
-[abapGit](https://abapgit.org). Which branch or tag depends on the system:
+[abapGit](https://abapgit.org): *New Online*, the repository URL
+`https://github.com/abap2UI5/abap2UI5`, a package of your choice, then *Pull*.
 
-| Your system | What to pull | Where it is explained |
-| --- | --- | --- |
-| ABAP 7.50 or newer, on premise or private cloud | The newest tag without a suffix, `X.Y.Z` - or `main` for a first look | [Versioning](/configuration/versioning) |
-| ABAP 7.02 to 7.4x | The same version with the suffix `-702`, `X.Y.Z-702` - a downported build of the same release | [Downporting](/advanced/downporting) |
-| BTP ABAP Environment or S/4 Public Cloud | The newest tag without a suffix, with abapGit for Eclipse | [S/4 Public Cloud](/configuration/s4_public_cloud) |
+**For a first look on ABAP 7.50 or newer, pull the branch `main`. That is
+all.** On an older system, or for anything you will keep, pull a release tag:
 
-On the [releases page](https://github.com/abap2UI5/abap2UI5/releases/) every
-version appears twice, once with the suffix and once without; the one GitHub
-marks *Latest* is not the newer, only the one published last. In abapGit a tag
-is chosen on the repository's page: *Branch* → *Switch* → *Tags*, or the tag
-typed into the *Branch* field of the online repository. For anything beyond a
-first look, pull a tag rather than `main` - see
-[Productive Usage](/configuration/productive_usage) for why.
+| Your system | What to pull |
+| --- | --- |
+| ABAP 7.50 or newer, on premise or private cloud | The newest release tag, `X.Y.Z` |
+| ABAP 7.02 to 7.4x | The same release with the suffix `-702`, `X.Y.Z-702` |
+| BTP ABAP Environment or S/4 Public Cloud | The newest release tag, `X.Y.Z`, with abapGit for Eclipse |
 
-![abapGit repository installation screen for abap2UI5](/get_started/image.webp)
+`X.Y.Z` is the number of the newest release. It is the version shown in the
+menu at the top of this page.
+
+::: details How to choose a tag, and why
+The newest release is at the top of the
+[releases page](https://github.com/abap2UI5/abap2UI5/releases/). Every release
+appears there twice, once with the suffix `-702` and once without. GitHub marks
+one of the two as *Latest*; that is only the one published last, not a newer
+version.
+
+In abapGit a tag is chosen on the repository's page: *Branch* → *Switch* →
+*Tags*. You can also type the tag into the *Branch* field of the online
+repository.
+
+The `-702` tag is a downported build of the same release, with the same
+features: see [Downporting](/advanced/downporting). Why a tag and not `main`
+for a productive system: see [Versioning](/configuration/versioning) and
+[Productive Usage](/configuration/productive_usage). The cloud systems have a
+page of their own: [S/4 Public Cloud](/configuration/s4_public_cloud).
+:::
+
+![The abap2UI5 repository in abapGit after the pull, with the list of pulled objects](/get_started/image.webp)
+
+*After the pull, abapGit lists the objects of the framework. The screenshot is
+from an earlier release, so some class names differ from today's.*
 
 ::: details ABAP Cloud
 On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT) and
@@ -60,7 +80,7 @@ mass-activate the pulled objects afterwards — the
 screenshot by screenshot, including the two link choices that cannot be changed
 later.
 
-![abapGit installation for ABAP Cloud environments](/get_started/image-4.webp)
+![abapGit for Eclipse: the abapGit Repositories view in ADT](/get_started/image-4.webp)
 :::
 
 The framework is everything you need: the HTTP endpoint you create next serves
@@ -140,7 +160,7 @@ Open the HTTP endpoint in your browser: in `SICF`, right-click your service
 node and choose **Test Service**. The URL looks like
 `https://<host>:<port>/sap/bc/zabap2ui5`. The browser shows the abap2UI5
 startup page. It is also where you will launch your own apps later:
-<img width="800" height="429" alt="abap2UI5 startup page with check button and test app launcher" src="https://github.com/user-attachments/assets/c8962298-068d-4efb-a853-c44a9b9cda56">
+![The abap2UI5 startup page: a class name entered under Step 4, the Check button below it, and the link that opens the app under Step 5](/get_started/startup.webp)
 Now check that an app starts:
 
 1. In the input field under **Step 4**, enter `z2ui5_cl_ui5_app_hi_world`, the

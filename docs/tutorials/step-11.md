@@ -17,9 +17,9 @@ verify step at its end.
 
 ## Make the Data Real
 
-Step 10 separated the app into seams on purpose, and this is the step where
-that pays off the first time: `data_read` and `data_update` are the **only**
-two methods that touch data. Each carries the real statement as a comment —
+Step 10 gave every job its own method on purpose, and this is the first step
+that profits from it: `data_read` and `data_update` are the **only** two
+methods that touch data. Each carries the real statement as a comment —
 replace the `VALUE #( … )` demo table with the `SELECT` printed above it, and
 the in-memory update with the `UPDATE`, and no other method changes. View,
 events and popup never knew the data was fake.
@@ -99,8 +99,8 @@ S/4 Private Cloud and On-Premise to the tile chain on
 
 ## What to Take Away
 
-- The seams from Step 10 are production seams: making the data real touched
-  two methods and nothing else
+- The split of Step 10 holds in production: making the data real touched two
+  methods and nothing else
 - Pin a release, and read the changelog when you move it
 - Transport bottom-up — framework, service, Hello World, then the app — so a
   failure names its layer

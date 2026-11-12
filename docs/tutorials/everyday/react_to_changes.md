@@ -23,6 +23,9 @@ The worked example is package `05` of
 shows the log the handler writes. Business events need ABAP Platform 2021 or
 ABAP Cloud.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the Solution
 
 | Part | Where it lives | What it does |

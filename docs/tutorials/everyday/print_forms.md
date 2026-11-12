@@ -17,6 +17,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_024` in
 `14`). It renders any form whose name is typed in, and downloads one PDF or a
 ZIP of several. It needs Standard ABAP and Adobe Document Services (ADS).
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 | Step | What happens |

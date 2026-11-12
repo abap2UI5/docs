@@ -249,14 +249,15 @@ export default defineConfig({
             link: "/tutorials/everyday/",
             collapsed: true,
             items: [
+              // the guides that need no RAP business object first, as the index lists them
+              { text: "Report and Export", link: "/tutorials/everyday/report_export" },
+              { text: "Send by Mail", link: "/tutorials/everyday/send_by_mail" },
+              { text: "Print Forms as PDF", link: "/tutorials/everyday/print_forms" },
               { text: "Excel Import into RAP", link: "/tutorials/everyday/excel_import_rap" },
               { text: "Mass Change", link: "/tutorials/everyday/mass_change" },
               { text: "Approval Worklist", link: "/tutorials/everyday/approval_worklist" },
-              { text: "Report and Export", link: "/tutorials/everyday/report_export" },
               { text: "Concurrent Editing", link: "/tutorials/everyday/concurrent_editing" },
               { text: "File Attachments", link: "/tutorials/everyday/file_attachments" },
-              { text: "Send by Mail", link: "/tutorials/everyday/send_by_mail" },
-              { text: "Print Forms as PDF", link: "/tutorials/everyday/print_forms" },
               { text: "React to Changes", link: "/tutorials/everyday/react_to_changes" },
             ],
           },

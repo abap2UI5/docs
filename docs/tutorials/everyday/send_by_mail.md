@@ -16,6 +16,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_023` in
 [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) (package
 `13`). It sends a table as an `.xlsx` attachment with `cl_bcs_mail_message`.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 | Part | What it does |
