@@ -183,8 +183,9 @@ of `{ name, source }` files. That contract is the playground's
 frame's height comes back as a `postMessage` from `abap2ui5-playground`.
 Nothing else of the playground is known here.
 
-**The neighbours are links.** Samples and Playground in the bar
-(`theme/SiteNav.vue`) are plain links to the other sites. They share this
+**The neighbours are links.** The mark in the bar (the home page), the
+Insights row in the sidebar, About in the foot and the Run bar's link are plain
+links to the other sites. They share this
 origin, so each carries a `target` - without it VitePress's router takes the
 link over and draws this site's 404 at the other site's URL, which is what
 `check:cross-site` holds.
@@ -206,7 +207,7 @@ hand-written HTML file behind at its old address — a canonical link, a
 browser does not follow it. `docs/public/configuration/troubleshooting.html`
 is the worked example.
 
-There are eighty-five of them. Eight are `/technical/*`: that whole section became
+Eight of them are `/technical/*`: that whole section became
 the Insights series under `/advanced/insights/` in one commit, and eight
 addresses that had been public for years stopped existing with it — one of
 them, `/technical/concept`, is linked from the framework's README, which is
@@ -256,10 +257,8 @@ Two things make this safe rather than a second set of pages to maintain:
   the `meta refresh` with the same URL, and check both when a page moves.
 - **The 404 is the net under the rest.** Not every renamed address gets a
   stub: the bar is "public, and linked from outside this organisation, where
-  we cannot fix it". Everything else lands on `404.html`, which carries the
-  whole page index and guesses from the words of the address — see the
-  scoring note there, and in particular why a word is worth what it narrows
-  down rather than one point per hit.
+  we cannot fix it". Everything else lands on the theme's own 404 page,
+  VitePress's default, which links back to the start of the manual.
 
 Delete a stub when the old URL has stopped receiving traffic, not before.
 
@@ -301,15 +300,13 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   `npm run check:cross-site` (after a build) says so if you forget. A link to
   another host needs nothing.
 
-- **`themeConfig.nav` is empty, and it stays empty.** The bar carries the four
-  sections of the project (`theme/SiteNav.vue`), the search, and everything
-  else behind the menu at its right-hand end. An entry added back to `nav`
-  lands between the sections and the search box and the row stops reading left
-  to right. What used to be there — Guide, Links, the version number — is
-  written out in `config.mjs` where the array was, including where each one
-  went. The `// nav` / `// sidebar` markers left in the sidebar are the scar of
-  the duplication that dropdown cost: two of its entries stood twice in one
-  file, and a replace-first edit hit the wrong one and looked like it worked.
+- **`themeConfig.nav` is the bar.** The theme's own: Guide, Tutorial,
+  Cookbook, API, and the release number with Release notes, Support,
+  Contribute and Sponsor under it; the search and the project's links follow.
+  The release number is what `check:version` reads. The `// sidebar` markers
+  in the sidebar are the scar of the duplication that dropdown costs: entries
+  of the bar stand a second time in the sidebar of the same file, and a
+  replace-first edit hit the wrong one and looked like it worked.
 - **The prose is American English, and a test holds it to that.** Behavior,
   color, license, catalog, optimize - because SAP writes "authorization",
   "Customizing" and "behavior definition", and a manual spelled the other way
@@ -406,9 +403,7 @@ who asks for less data (`prefers-reduced-data`, or `navigator.connection
 .saveData`) is never sent it and keeps the button. Nor is a reader on a phone
 (`pointer: coarse`, or a column under 860px): the start was measured at 33 MB
 before compression, and `saveData` is a flag most phones never set. There the
-button stays, and the 137-line listing folds to its first screen with a *Show
-all* button under it (`site.js`, `foldOnPhone`) — it was 4,000 of the front
-door's 6,900px on a 390px screen. **A self-start that fails is
+button stays and the reader decides. **A self-start that fails is
 silent** — the button comes back and no error is printed, because a message
 about something nobody asked for reads as a broken front door when what is
 broken is the network.
@@ -508,8 +503,9 @@ refuses the pair when they disagree, exactly as a system does. Renaming the
 class to the open file's is enough — nothing in these examples depends on
 its name.
 
-The bookkeeping, printed by the gate on every run: **82 complete app classes,
-63 with a button, 19 excluded on purpose**, every exclusion a marker on its
+The bookkeeping is printed by the gate on every run (`npm run
+check:playground`): how many complete app classes the site has, how many carry
+a button and how many are excluded on purpose, every exclusion a marker on its
 page.
 
 **The last full measurement — 2026-09-04, all 63 opened in a served playground

@@ -74,7 +74,7 @@ test('a sample entry is built from whichever fields its repository uses', () => 
    * lower case - an upper-case class in the JSON (samples-stack writes them
    * that way) must not produce a link to a page that is not there. */
   const [stack] = sampleEntries(STACK, 'Stack');
-  assert.equal(stack.url, 'https://abap2ui5.github.io/playground/samples/z2ui5_cl_smps_app_010/');
+  assert.equal(stack.url, 'https://abap2ui5.github.io/samples-site/sample/z2ui5_cl_smps_app_010/');
 
   const [carousel] = sampleEntries(CONTROLS, 'Controls');
   assert.match(carousel.terms, /carousel/);
@@ -134,6 +134,11 @@ test('a heading anchor is the one VitePress generates', () => {
   assert.deepEqual(headings('## 3. First Launch\n').map((h) => h.anchor), ['_3-first-launch']);
   assert.deepEqual(headings('## `template:repeat` — Loops\n').map((h) => h.anchor), ['template-repeat-—-loops']);
   assert.deepEqual(headings('# EML\n\n## EML\n\ntext\n\n## EML\n').map((h) => h.anchor), ['eml-1', 'eml-2']);
+  /* An id written into the heading is its anchor, and not part of its text
+   * (configuration/productive_usage.html, cookbook/eml_cds_sql/eml.html). */
+  assert.deepEqual(headings('## Before Go-Live {#four-defaults-to-change-before-go-live}\n'),
+    [{ text: 'Before Go-Live', anchor: 'four-defaults-to-change-before-go-live' }]);
+  assert.deepEqual(headings('# EML\n\n## Read and Modify {#eml-1}\n').map((h) => h.anchor), ['eml-1']);
 });
 
 /* ------------------------------------------------------------ the matcher */

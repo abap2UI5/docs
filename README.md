@@ -53,20 +53,19 @@ changing anything beyond prose.
 
 ### The bar, and what the search covers
 
-The bar is the mark, then the four sections — **Home**, **Documentation**,
-**Samples**, **Playground** — then one search box, then the project's links.
-The first two sections are this site; Samples and Playground are the two
-neighbouring deployments on the same origin, and all four bars across them are
-kept identical by hand.
+The bar is VitePress's own: the mark, which leads to the abap2UI5 home page,
+the sections of the manual — **Guide**, **Tutorial**, **Cookbook**, **API** —
+and the release number with its menu, then the search, then the project's
+links (`themeConfig` in `docs/.vitepress/config.mjs`).
 
-The search covers **both areas at once**: every page here, and every one of the
-~770 samples in [samples](https://github.com/abap2UI5/samples),
+The bar's search is VitePress's local search over the pages of this manual.
+Besides it, `npm run search` generates one index of every page here and every
+sample in [samples](https://github.com/abap2UI5/samples),
 [samples-controls](https://github.com/abap2UI5/samples-controls) and
-[samples-stack](https://github.com/abap2UI5/samples-stack). It reads one
-generated index (`npm run search`), published at
+[samples-stack](https://github.com/abap2UI5/samples-stack), published at
 [`/docs/search-index.json`](https://abap2ui5.github.io/docs/search-index.json)
-and fetched by the playground and the catalogue too, so one query answers from
-one place wherever it is typed.
+and fetched by the search box on the home page and by the playground, so one
+query answers from one place wherever it is typed there.
 
 ### What the site publishes for machines
 
@@ -105,9 +104,9 @@ Which blocks get a button is decided in `docs/.vitepress/playground.mjs`, and
 the rule is narrow on purpose — a button on an example that cannot run is worse
 than no button. It has to be a complete class implementing `z2ui5_if_app` that
 displays something and needs nothing the browser has not got: no table of its
-own, no CDS entity, no add-on repository, no on-premise SAP class. **64 of the
-83 complete app classes here** clear that today (`npm run check:playground`
-prints the current count). Every rule was written from an example
+own, no CDS entity, no add-on repository, no on-premise SAP class. `npm run
+check:playground` prints how many of the complete app classes here clear that
+today. Every rule was written from an example
 watched failing in a real playground; `test/playground.test.mjs` keeps one
 fixture per shape, and [AGENTS.md](AGENTS.md) says how to redo the measurement.
 

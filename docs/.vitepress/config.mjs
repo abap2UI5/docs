@@ -48,7 +48,9 @@ export default defineConfig({
   srcExclude: ["public/**"],
   // /docs/sitemap.xml, one entry per page: the root's robots.txt
   // (abap2UI5/abap2UI5.github.io) names it next to the sister sites' ones.
-  sitemap: { hostname: SITE_URL },
+  // The trailing slash matters: the sitemap resolves each page against this
+  // as a URL, and without it the /docs/ segment is dropped from every entry.
+  sitemap: { hostname: `${SITE_URL}/` },
   head: [
     ["link", { rel: "shortcut icon", href: "/docs/favicon.ico" }],
     [
