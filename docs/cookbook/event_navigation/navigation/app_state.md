@@ -25,7 +25,7 @@ ENDMETHOD.
 
 From then on the URL carries the id of the current state, and a reload, a
 bookmark, or that URL opened in another tab or on another device comes back to
-this app with that state — for the same user: a draft belongs to the user who
+this app with that state — for the same user: an [app draft](/get_started/glossary) belongs to the user who
 created it, so the URL in somebody else's browser starts the app fresh.
 `client->app_state_set_active( abap_false )` switches the URL tracking off
 again.
@@ -33,13 +33,13 @@ again.
 An example URL: <br>
 `.../sap/bc/z2ui5?sap-client=001&app_start=z2ui5_cl_smp_app_004#/z2ui5-xapp-state=024251849E5A1EDFB1DAE2C97C8CE8C2`
 
-**Nothing extra is stored for this.** The draft the framework already persists
-between two roundtrips — the same one
+**Nothing extra is stored for this.** The app draft the framework already
+persists between two roundtrips — the same one
 [Statefulness](/cookbook/expert_more/statefulness) describes — *is* the state
 container; the app state only puts its id in the URL, where a browser can keep
-it. The hash value is a server-side key pointing at that draft, so the cost is
-a hash that changes, and the limit is the draft's own lifetime: once it expires
-(`draft_exp_time_in_hours` in the
+it. The hash value is a server-side key pointing at that app draft, so the cost
+is a hash that changes, and the limit is the app draft's own lifetime: once it
+expires (`draft_exp_time_in_hours` in the
 [User Exits](/advanced/extensibility/user_exits), four hours by default), the
 link no longer restores anything.
 
@@ -76,13 +76,11 @@ CLASS zcl_sample_app_state IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
-    ENDIF.
+    ELSEIF client->check_on_event( `BUTTON_POST` ).
+      client->message_toast_display( `data updated and url adjusted` ).
+      client->app_state_set_active( ).
 
-    CASE client->get( )-event.
-      WHEN `BUTTON_POST`.
-        client->message_toast_display( `data updated and url adjusted` ).
-        client->app_state_set_active( ).
-    ENDCASE.
+    ENDIF.
 
   ENDMETHOD.
 ENDCLASS.
@@ -156,13 +154,13 @@ can be shown as well as copied.
 ## What the Link Restores
 
 The browser sends the state id back with its first request, and the framework
-loads the app from that draft. The screen comes back as it was — the same input
-values, the same selection — because that is what the draft holds.
+loads the app from that app draft. The screen comes back as it was — the same
+input values, the same selection — because that is what the app draft holds.
 
-Only for the user the draft belongs to, though. The framework binds every draft
-to its owner, and another user opening the link gets the app started fresh,
-exactly as if the draft had expired — a leaked link shows nobody else the
-screen.
+Only for the user the app draft belongs to, though. The framework binds every
+app draft to its owner, and another user opening the link gets the app started
+fresh, exactly as if the app draft had expired — a leaked link shows nobody else
+the screen.
 
 What it does **not** carry is anything the app read from outside itself. A
 `SELECT` runs again on the restore, so a list is refreshed rather than frozen,
@@ -170,10 +168,10 @@ and authorizations are checked as they stand now: an app-state link is a link
 to a *screen*, not a copy of the data on it.
 
 ::: warning A restored state enters through `check_on_navigated`
-Opening an app-state link loads the app from its draft and runs `main( )` with
-`client->check_on_navigated( )` true — `check_on_init( )` stays false, because
-the instance already existed when the link was made. Display the view in that
-branch, or the link opens to whatever the browser was showing before.
+Opening an app-state link loads the app from its app draft and runs `main( )`
+with `client->check_on_navigated( )` true — `check_on_init( )` stays false,
+because the instance already existed when the link was made. Display the view in
+that branch, or the link opens to whatever the browser was showing before.
 `check_on_navigated( )` covers the first start as well, so it is the complete
 display condition on its own. Same rule as everywhere else:
 [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
@@ -188,7 +186,7 @@ its own hash — all three want the same string. Use one of them per app; see
 ## Bookmarking
 
 The same URL works as a bookmark, with the same limit: the server keeps the
-draft behind it for a configurable time, four hours by default. A bookmark
+app draft behind it for a configurable time, four hours by default. A bookmark
 older than that opens the app, not the state — see the
 [draft service](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/01/z2ui5_cl_ui5_srv_draft.clas.abap)
 source and the `draft_exp_time_in_hours`

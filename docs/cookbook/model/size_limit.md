@@ -8,10 +8,10 @@ description: The UI5 model size limit in abap2UI5 - why a list binding stops at 
 
 Every UI5 JSON model has a built-in upper limit on the number of items it will expose to a list binding. By default this limit is `100`. If you bind a `ComboBox`, `Table` or any other aggregation to a table that contains more than 100 entries, only the first 100 are rendered — the rest are silently dropped. This is a UI5 design decision, documented under [`sap.ui.model.Model#setSizeLimit`](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.Model%23methods/setSizeLimit).
 
-abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
+abap2UI5 exposes this setting through the frontend action `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
 
 ## Set the Limit
-Trigger the event from your controller with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
+Run the action from your app class with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
 client->follow_up_action(
     val   = client->cs_event-set_size_limit

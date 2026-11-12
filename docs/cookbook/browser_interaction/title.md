@@ -16,7 +16,7 @@ whatever the app last set.
 
 ## Standalone
 
-To change the title after the app is running — for example, to reflect the current record — call the `set_title` frontend event from the backend:
+To change the title after the app is running — for example, to reflect the current record — call the `set_title` frontend action from the backend:
 
 ```abap
 CLASS zcl_sample_title DEFINITION PUBLIC.

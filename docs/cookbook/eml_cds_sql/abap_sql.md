@@ -4,7 +4,7 @@ description: Read and change database data with ABAP SQL in an abap2UI5 app and 
 ---
 # ABAP SQL
 
-ABAP SQL is the standard way to read and change data in the database directly from ABAP. In an abap2UI5 controller you can issue `SELECT`, `INSERT`, `UPDATE`, `DELETE`, and `MODIFY` statements the same way as in any ABAP program, and bind the result straight to a UI5 view.
+ABAP SQL is the standard way to read and change data in the database directly from ABAP. In an abap2UI5 app class you can issue `SELECT`, `INSERT`, `UPDATE`, `DELETE`, and `MODIFY` statements the same way as in any ABAP program, and bind the result straight to a UI5 view.
 
 ## Read Data
 
@@ -94,7 +94,6 @@ IF client->check_on_navigated( ).
 ELSEIF client->check_on_event( `SEARCH` ).
 
   load_data( ).
-
 ENDIF.
 ```
 
@@ -128,7 +127,7 @@ SELECT FROM sflight AS f
 
 `INSERT`, `UPDATE`, `DELETE`, and `MODIFY` are issued from event handlers — wrap them in a transaction and commit explicitly:
 ```abap
-WHEN client->check_on_event( `SAVE` ).
+ELSEIF client->check_on_event( `SAVE` ).
 
   MODIFY zorders FROM TABLE @mt_orders.
   IF sy-subrc = 0.

@@ -140,7 +140,7 @@ otherwise fold the tree.
 ## Reacting to Expand and Collapse
 
 `toggleOpenState` fires when the user opens or closes a node, with the
-item's index and whether it is expanded now. Wire it like any backend event
+item's index and whether it is expanded now. Bind it like any backend event
 and read the parameters from `t_arg`:
 
 ```abap

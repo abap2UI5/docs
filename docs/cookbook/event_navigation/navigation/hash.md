@@ -79,7 +79,7 @@ carries — and therefore what Back/Forward, a reload, or a bookmark restores:
 | --------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `default` | *(hash untouched)*        | No routing — framework behavior as before this feature.                                                                        |
 | `fresh`   | `#/app/<CLASS>`           | The app starts **fresh**: a clean instance, no preserved input.                                                                |
-| `keep`    | `#/app/<CLASS>/<DRAFT>`   | The exact preserved state is restored (all user input), falling back to a fresh start once the draft has expired.              |
+| `keep`    | `#/app/<CLASS>/<DRAFT>`   | The exact preserved state is restored (all user input), falling back to a fresh start once the [app draft](/get_started/glossary) has expired.              |
 
 ```abap
 " route by class only - Back/reload/bookmark always restart the app fresh
@@ -88,24 +88,25 @@ client->follow_up_action( val   = client->cs_event-hash_routing
 ```
 
 ::: tip Back restores the calling app as the user left it
-In `keep` mode, the calling app's route entry is advanced to the draft saved for
-it during the `nav_app_call`. Pressing Back therefore restores the calling app
-**as the user left it** — including every bound value that changed on the client
-since the last render and traveled to the backend with the triggering event.
+In `keep` mode, the calling app's route entry is advanced to the app draft saved
+for it during the `nav_app_call`. Pressing Back therefore restores the calling
+app **as the user left it** — including every bound value that changed on the
+client since the last render and traveled to the backend with the triggering
+event.
 :::
 
 ::: warning Draft expiry
-`keep` routes carry a server draft id. Once the draft has expired (see
-`draft_exp_time_in_hours` in the
+`keep` routes carry a server-side app draft id. Once the app draft has expired
+(see `draft_exp_time_in_hours` in the
 [User Exits](/advanced/extensibility/user_exits)), the route falls back to a
 fresh start of the app class.
 :::
 
 ::: warning A `keep` restore enters through `check_on_navigated`, not `check_on_init`
 Restoring a `keep` route (browser Back/Forward, a reload, a bookmark) loads the
-app from its draft and runs `main( )` with `client->check_on_navigated( )` true
-— `check_on_init( )` stays false, the instance already exists. As everywhere
-else, render the view in that branch (see
+app from its app draft and runs `main( )` with `client->check_on_navigated( )`
+true — `check_on_init( )` stays false, the instance already exists. As
+everywhere else, render the view in that branch (see
 [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init)).
 An app that renders only on `check_on_init( )` answers without a view and the
 browser keeps showing the previous screen — a Forward press onto such an app
@@ -153,15 +154,13 @@ edit of the address bar, a deep link — fires the registered event. The hash th
 browser now stands on rides along with that request, and with every other one:
 
 ```abap
-CASE client->get_event( ).
 
-  WHEN `HASH_CHANGED`.
-    " the router's routeMatched: show the page the hash now names.
-    " s_config-hash is the browser's raw location hash - `#/detail`,
-    " and inside a launchpad the shell's own part stands in front of it
-    check_detail = xsdbool( client->get( )-s_config-hash CS `/detail` ).
-
-ENDCASE.
+IF client->check_on_event( `HASH_CHANGED` ).
+  " the router's routeMatched: show the page the hash now names.
+  " s_config-hash is the browser's raw location hash - `#/detail`,
+  " and inside a launchpad the shell's own part stands in front of it
+  check_detail = xsdbool( client->get( )-s_config-hash CS `/detail` ).
+ENDIF.
 ```
 
 Because `s_config-hash` arrives on *every* request, a cold start on `#/detail`

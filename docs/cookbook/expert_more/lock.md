@@ -355,16 +355,16 @@ On read, remember the record's change timestamp. On save, re-read and reject if 
 METHOD data_read.
   SELECT SINGLE aedat, UPD_TMSTMP FROM vbak
     WHERE vbeln = @vbeln
-    INTO ( @token_aedat, @token_aezet ).
+    INTO ( @token_aedat, @token_tmstmp ).
 ENDMETHOD.
 
 METHOD on_event_save.
 
   SELECT SINGLE aedat, UPD_TMSTMP FROM vbak
     WHERE vbeln = @vbeln
-    INTO ( @DATA(now_aedat), @DATA(now_aezet) ).
+    INTO ( @DATA(now_aedat), @DATA(now_tmstmp) ).
 
-  IF now_aedat <> token_aedat OR now_aezet <> token_aezet.
+  IF now_aedat <> token_aedat OR now_tmstmp <> token_tmstmp.
     client->message_box_display( `Record changed — please reload.` ).
     RETURN.
   ENDIF.
@@ -407,7 +407,7 @@ CLASS zcl_sample_lock_3 DEFINITION PUBLIC.
     DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
 
     DATA token_aedat TYPE vbak-aedat.
-    DATA token_aezet TYPE vbak-UPD_TMSTMP.
+    DATA token_tmstmp TYPE vbak-UPD_TMSTMP.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -444,7 +444,7 @@ CLASS zcl_sample_lock_3 IMPLEMENTATION.
     SELECT SINGLE auart, aedat, UPD_TMSTMP
       FROM vbak
       WHERE vbeln = @vbeln
-      INTO ( @auart, @token_aedat, @token_aezet ).
+      INTO ( @auart, @token_aedat, @token_tmstmp ).
 
   ENDMETHOD.
 
@@ -452,14 +452,14 @@ CLASS zcl_sample_lock_3 IMPLEMENTATION.
   METHOD on_event_save.
 
     DATA current_aedat TYPE vbak-aedat.
-    DATA current_aezet TYPE vbak-UPD_TMSTMP.
+    DATA current_tmstmp TYPE vbak-UPD_TMSTMP.
 
     SELECT SINGLE aedat, UPD_TMSTMP
       FROM vbak
       WHERE vbeln = @vbeln
-      INTO ( @current_aedat, @current_aezet ).
+      INTO ( @current_aedat, @current_tmstmp ).
 
-    IF current_aedat <> token_aedat OR current_aezet <> token_aezet.
+    IF current_aedat <> token_aedat OR current_tmstmp <> token_tmstmp.
       client->message_box_display(
         |Sales order { vbeln } has been changed by another user since you opened it. Please refresh.| ).
       RETURN.
@@ -522,7 +522,39 @@ ENDCLASS.
 </details>
 
 ## 4. Combined (recommended default)
-**Lock at Save** plus the **Optimistic Check** is the safest stateless pattern and the sensible production default — the enqueue serializes parallel saves of *this* app, the timestamp check catches everyone else.
+**Lock at Save** plus the **Optimistic Check** is the safest stateless pattern and the sensible production default. The enqueue makes parallel saves of *this* app wait for each other, and the timestamp check catches everyone else. The save handler does both, in this order:
+```abap
+METHOD on_event_save.
+
+  " 1. lock, so that no second save runs at the same time
+  CALL FUNCTION 'ENQUEUE_EVVBAK'
+    EXPORTING
+      vbeln        = vbeln
+    EXCEPTIONS
+      foreign_lock = 1
+      OTHERS       = 2.
+  IF sy-subrc <> 0.
+    client->message_box_display( `Another user is saving this order. Try again.` ).
+    RETURN.
+  ENDIF.
+
+  " 2. compare the timestamp with the one remembered on read
+  SELECT SINGLE aedat, UPD_TMSTMP FROM vbak
+    WHERE vbeln = @vbeln
+    INTO ( @DATA(now_aedat), @DATA(now_tmstmp) ).
+
+  IF now_aedat <> token_aedat OR now_tmstmp <> token_tmstmp.
+    CALL FUNCTION 'DEQUEUE_EVVBAK' EXPORTING vbeln = vbeln.
+    client->message_box_display( `Record changed — please reload.` ).
+    RETURN.
+  ENDIF.
+
+  " 3. write, then release the lock
+  " ...write through...
+  CALL FUNCTION 'DEQUEUE_EVVBAK' EXPORTING vbeln = vbeln.
+
+ENDMETHOD.
+```
 
 <details>
 <summary>Full source — <code>ZCL_SAMPLE_LOCK_4</code></summary>
@@ -553,7 +585,7 @@ CLASS zcl_sample_lock_4 DEFINITION PUBLIC.
     DATA vbeln TYPE vbak-vbeln VALUE `0000004711`.
 
     DATA token_aedat TYPE vbak-aedat.
-    DATA token_aezet TYPE vbak-UPD_TMSTMP.
+    DATA token_tmstmp TYPE vbak-UPD_TMSTMP.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -590,7 +622,7 @@ CLASS zcl_sample_lock_4 IMPLEMENTATION.
     SELECT SINGLE auart, aedat, UPD_TMSTMP
       FROM vbak
       WHERE vbeln = @vbeln
-      INTO ( @auart, @token_aedat, @token_aezet ).
+      INTO ( @auart, @token_aedat, @token_tmstmp ).
 
   ENDMETHOD.
 
@@ -613,14 +645,14 @@ CLASS zcl_sample_lock_4 IMPLEMENTATION.
     ENDIF.
 
     DATA current_aedat TYPE vbak-aedat.
-    DATA current_aezet TYPE vbak-UPD_TMSTMP.
+    DATA current_tmstmp TYPE vbak-UPD_TMSTMP.
 
     SELECT SINGLE aedat, UPD_TMSTMP
       FROM vbak
       WHERE vbeln = @vbeln
-      INTO ( @current_aedat, @current_aezet ).
+      INTO ( @current_aedat, @current_tmstmp ).
 
-    IF current_aedat <> token_aedat OR current_aezet <> token_aezet.
+    IF current_aedat <> token_aedat OR current_tmstmp <> token_tmstmp.
 
       CALL FUNCTION 'DEQUEUE_EVVBAK'
         EXPORTING
@@ -964,7 +996,7 @@ CLASS zcl_sample_lock_6 DEFINITION PUBLIC.
     DATA vbeln       TYPE vbak-vbeln VALUE `0000004711`.
     DATA locked_by   TYPE string.
     DATA token_aedat TYPE vbak-aedat.
-    DATA token_aezet TYPE vbak-UPD_TMSTMP.
+    DATA token_tmstmp TYPE vbak-UPD_TMSTMP.
 
     METHODS on_init.
     METHODS on_event_save.
@@ -1052,7 +1084,7 @@ CLASS zcl_sample_lock_6 IMPLEMENTATION.
     SELECT SINGLE auart, aedat, UPD_TMSTMP
       FROM vbak
       WHERE vbeln = @vbeln
-      INTO ( @auart, @token_aedat, @token_aezet ).
+      INTO ( @auart, @token_aedat, @token_tmstmp ).
 
   ENDMETHOD.
 
@@ -1075,14 +1107,14 @@ CLASS zcl_sample_lock_6 IMPLEMENTATION.
     ENDIF.
 
     DATA current_aedat TYPE vbak-aedat.
-    DATA current_aezet TYPE vbak-UPD_TMSTMP.
+    DATA current_tmstmp TYPE vbak-UPD_TMSTMP.
 
     SELECT SINGLE aedat, UPD_TMSTMP
       FROM vbak
       WHERE vbeln = @vbeln
-      INTO ( @current_aedat, @current_aezet ).
+      INTO ( @current_aedat, @current_tmstmp ).
 
-    IF current_aedat <> token_aedat OR current_aezet <> token_aezet.
+    IF current_aedat <> token_aedat OR current_tmstmp <> token_tmstmp.
 
       CALL FUNCTION 'DEQUEUE_EVVBAK'
         EXPORTING

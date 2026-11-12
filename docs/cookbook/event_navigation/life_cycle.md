@@ -73,14 +73,14 @@ CLASS zcl_sample_life_cycle IMPLEMENTATION.
 ENDCLASS.
 ```
 
-![Which lifecycle check is true in which situation: the first start sets init and navigated, an event sets only the event check, a return from a sub-app and a restored bookmark set navigated](/cookbook/event_navigation/which-branch.svg)
+![Which lifecycle check is true in which situation: the first start sets init and navigated, an event sets only the event check, a return from a sub-app or a popup and a restored bookmark set navigated](/cookbook/event_navigation/which-branch.svg)
 
-This `IF` / `ELSEIF` chain is the shape every page of this manual, the [Tutorial](/tutorials/) and the samples use. Four things make it the recommended one:
+This `IF` / `ELSEIF` chain is the shape the cookbook, the [Tutorial](/tutorials/) and the samples use. An app with no one-time setup leaves the init branch out and starts with `check_on_navigated( )`; the rest stays the same. Four things make it the recommended shape:
 
 1. **Store `client` on `me->client`** so handler methods can use it without passing it around.
-2. **Dispatch by event name** — `` check_on_event( `POST` ) `` rather than a generic `` CASE client->get( )-event `` with a second dispatch level. Each event gets its own `ELSEIF`. (With many events or extracted handler methods, the `CASE client->get( )-event` form is a fine alternative — the walkthrough's [last step](/tutorials/step-10) uses it.)
+2. **Dispatch by event name** with `` check_on_event( `POST` ) ``. Each event gets its own `ELSEIF`, so init, navigation and events are one chain and exactly one branch runs per roundtrip. A second `IF` block, or a `CASE client->get( )-event` after the chain, can run two branches in one roundtrip. Only an app with many events moves them into one handler method with a `CASE` inside, as the walkthrough's [last step](/tutorials/step-10) does.
 3. **One display method per view** — `view_display( )` above, called from every branch that should rebuild the screen. Two of them must: `check_on_init`, and `check_on_navigated`, which is the branch a return from a sub-app or a value help comes back through. Event handlers that only mutate state and reuse the existing view (a button press inside a popup, a toast) skip it — see [The View Is Only Sent When You Call `view_display`](#the-view-is-only-sent-when-you-call-view-display) below.
-4. **`check_on_init` first, `check_on_navigated` after it.** Not alphabetical order and not taste: `check_on_init( )` means *this app instance has never run*, and every path to an instance's first `main( )` raises the navigated flag **as well**. The two are not exclusive, so in the chain — where the first matching branch wins — putting the navigated branch first swallows the very first roundtrip and the one-time setup in the init branch never runs.
+4. **`check_on_init` first, `check_on_navigated` after it.** The order matters. `check_on_init( )` means *this app instance has never run*. On that first call `check_on_navigated( )` is true **as well**. In a chain the first matching branch wins, so a navigated branch that stands first takes the first roundtrip, and the one-time setup in the init branch never runs.
 
 For a tiny app with one or two events, inline the view and the handler directly in the branches and skip the handler methods entirely. [Hello World](/get_started/hello_world) shows this variant; the walkthrough's [last step](/tutorials/step-10) shows the full version with multiple handler methods, a popup, and persistence. Both follow the same pattern — only the amount of code inside each branch differs.
 
@@ -112,7 +112,7 @@ ENDIF.
 
 When the sub-app is left, `main` runs again, but neither `check_on_init` nor any event matches, so `view_display( )` is never called and the user is left looking at a stale or empty screen. Nothing reports it: the response simply carries no view, and the browser keeps showing whatever was on it.
 
-Display from the navigation-return branch as well. `check_on_navigated( )` covers strictly more than `check_on_init( )` does — the first display of the app raises it too, along with a `nav_app_leave( )`, a called sub-app or value help closing, and a bookmarked draft being restored — so an app with no one-time setup to do can react to it alone and drop the init branch entirely:
+Display from the navigation-return branch as well. `check_on_navigated( )` is true in every case where `check_on_init( )` is true, and in three more: after a `nav_app_leave( )`, when a called sub-app or value help closes, and when a bookmarked [app draft](/get_started/glossary) is restored. An app with no one-time setup can therefore react to it alone and drop the init branch:
 
 ```abap
 " CORRECT — the view is rebuilt on first display and on every return
@@ -123,16 +123,16 @@ ELSEIF client->check_on_event( `OPEN_POPUP` ).
 ENDIF.
 ```
 
-Reserve `check_on_init` for one-time setup that must *not* repeat on return — loading initial data, setting defaults — and keep it first in the `CASE`, as the sample at the top of this page does: it is the more specific of the two, and the more general one has to come after it. A fork whose init branch does nothing the navigated branch does not do is four lines saying what the navigated branch says alone.
+Reserve `check_on_init` for one-time setup that must *not* repeat on return — loading initial data, setting defaults — and keep it first in the chain, as the sample at the top of this page does: it is the more specific of the two, and the more general one has to come after it. If the init branch would do the same as the navigated branch, keep only the navigated branch.
 
 As a rule of thumb: anything needed to **show the screen** belongs in a branch that also fires on navigation return.
 
 ### `check_on_event` Fires Once Per Roundtrip
-Every HTTP request carries at most one event. `check_on_event( )` returns `abap_true` exactly once per call to `main`, for that single event. Only one roundtrip is in flight at a time: if the user clicks a second button before the first response has landed, that click is dropped, not queued — the busy indicator comes up instead. A wire registered with `s_ctrl-check_queue_last` keeps its last event and sends it once the response is in, as its own `main` call. Two events are never batched into one request.
+Every HTTP request carries at most one event. `check_on_event( )` returns `abap_true` exactly once per call to `main`, for that single event. Only one roundtrip is in flight at a time: if the user clicks a second button before the first response has landed, that click is dropped, not queued — the busy indicator comes up instead. An event registered with `s_ctrl-check_queue_last` keeps its last occurrence and sends it once the response is in, as its own `main` call. Two events are never batched into one request.
 
 Two consequences follow:
 - **Do not assume event ordering inside one `main`.** You cannot look at "the previous event" from within an event handler; the previous event ran in a separate request and the work process has been released since.
-- **State across events lives in class attributes.** Between two events abap2UI5 serializes the whole app instance and stores it **on the server** — a draft row in `z2ui5_t_01`, which expires after four hours by default. The browser carries the draft id, never the state.
+- **State across events lives in class attributes.** Between two events abap2UI5 serializes the whole app instance and stores it **on the server**: the app draft, a row in `z2ui5_t_01` that expires after four hours by default. The browser carries the id of the app draft, never the state.
 
   Every attribute survives, whatever its visibility: `PUBLIC` is what `_bind( )` needs in order to *reach* an attribute, not what keeps it alive. Unbound working state therefore belongs in `PROTECTED` — a bloated public section only makes every roundtrip serialize more. What does not survive is what the serializer cannot write: local variables, open cursors, acquired locks, and references to classes that are not serializable. For sessions that need surviving server-side resources, see [Statefulness](/cookbook/expert_more/statefulness).
 

@@ -30,7 +30,7 @@ DATA(lv_order) = VALUE #( client->get( )-t_comp_params[ n = `SalesOrder` ]-v OPT
 ```
 
 ## Open a New Tab
-Open a URL in a new browser tab via a frontend event:
+Open a URL in a new browser tab via a frontend action:
 ```abap
 DATA(lv_url) = `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report`.
 client->follow_up_action(
@@ -54,7 +54,7 @@ client->follow_up_action(
 The other three open the device's mail client, messaging app or phone app with
 the fields filled in. The second argument is always one structure whose
 upper-case components name the fields — as JSON, or as the binding of a bound
-structure, which works from a view wire and from a handler alike:
+structure, which works in a view attribute and in a handler alike:
 
 | Method | Fields |
 |---|---|

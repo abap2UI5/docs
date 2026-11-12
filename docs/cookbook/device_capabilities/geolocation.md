@@ -104,7 +104,7 @@ ENDCLASS.
 | `finished` | the position was read and the bound properties hold it |
 | `error` | the position could not be read; the parameters `code` and `message` say why — `1` permission denied, `2` position unavailable, `3` timeout, and `0` when the browser has no Geolocation API at all, which is what an insecure origin looks like |
 
-The control shows nothing of its own, so without the `error` event a denied permission is invisible: `finished` never fires, the bound attributes stay empty and the console carries one line. Wire the event, as the example does, and tell the user what to allow.
+The control shows nothing of its own, so without the `error` event a denied permission is invisible: `finished` never fires, the bound attributes stay empty and the console carries one line. Handle the event, as the example does, and tell the user what to allow.
 
 ::: tip **Browser Permissions**
 Geolocation needs the user to grant permission in the browser. Serve your HTTP endpoint over HTTPS, since most browsers block geolocation on non-secure origins.

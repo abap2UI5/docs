@@ -56,7 +56,7 @@ CLASS zcl_sample_upload IMPLEMENTATION.
 ENDCLASS.
 ```
 
-`mv_value` holds the whole file, so a large upload is a large roundtrip and a large draft; split the data URL at the comma and decode the payload with `cl_web_http_utility=>decode_x_base64( )` as [Spreadsheet](/cookbook/device_capabilities/spreadsheet#upload) does.
+`mv_value` holds the whole file, so a large upload is a large roundtrip and a large [app draft](/get_started/glossary); split the data URL at the comma and decode the payload with `cl_web_http_utility=>decode_x_base64( )` as [Spreadsheet](/cookbook/device_capabilities/spreadsheet#upload) does.
 
 ### Properties and Events
 
@@ -73,7 +73,7 @@ ENDCLASS.
 | `multiple` | let the user pick several files; each one arrives in its own `upload` event, in order |
 | `enabled`, `visible`, `tooltip` | as on any control |
 
-The control has one event, `upload`. The inner control's `change` is consumed by the control itself — it remembers the picked files and enables the *Upload* button — so there is nothing to wire for it; with `checkDirectUpload` the pick is the upload.
+The control has one event, `upload`. The inner control's `change` is consumed by the control itself — it remembers the picked files and enables the *Upload* button — so there is no event to bind for it; with `checkDirectUpload` the pick is the upload.
 
 ## Download
 

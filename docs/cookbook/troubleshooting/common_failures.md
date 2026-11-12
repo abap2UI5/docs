@@ -32,7 +32,7 @@ BINDING_ERROR - No class attribute for binding found -
 Please check if the bound values are public attributes of your class
 ```
 
-Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error view. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
+Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error dialog. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
 
 Where to look:
 - **The error text itself.** Unlike a binding-path mismatch, this failure is reported by name — if you are reading a browser-console warning, you are looking at the section above, not at this one.
@@ -78,7 +78,7 @@ abap2UI5 does not re-render automatically. After `check_on_init( )`, after a nav
 
 Where to look:
 - **Symptom**: blank page on first load (the `check_on_init` branch is missing `view_display`), or a button that "does nothing visible" even though state changed and the handler ran.
-- **ABAP debugger**: confirm the `WHEN client->check_on_event( ... )` branch actually executes. The bug is almost always a missing `view_display( )` call, not a wrong event.
+- **ABAP debugger**: confirm the `ELSEIF client->check_on_event( ... )` branch actually executes. The bug is almost always a missing `view_display( )` call, not a wrong event.
 
 See [Life Cycle → The View Is Only Sent When You Call `view_display`](/cookbook/event_navigation/life_cycle#the-view-is-only-sent-when-you-call-view-display).
 
@@ -114,18 +114,18 @@ Where to look:
 
 ## State Lost Between Events
 
-Between two events the app instance is serialized into a draft record on the **server** and read back on the next request; the browser only carries the draft id. **Attributes** of serializable types survive — at any visibility, `PROTECTED` and `PRIVATE` included. What does not survive is everything that is not an attribute or cannot be written: local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects.
+Between two events the app instance is serialized into the [app draft](/get_started/glossary), a record on the **server**, and read back on the next request; the browser only carries the draft id. **Attributes** of serializable types survive — at any visibility, `PROTECTED` and `PRIVATE` included. What does not survive is everything that is not an attribute or cannot be written: local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects.
 
 Where to look:
 - **Symptom**: a value set in one event is empty on the next; a calculated value built up in `check_on_init` is gone by the time the user clicks; a singleton or "global" state appears to reset between roundtrips.
 - **Fix**: move surviving state out of the method into an attribute with a concrete, serializable type — it does not have to be public for that; only `_bind( )` needs public. If serialization itself is the problem the roundtrip says so, with `APP_SERIALIZATION_ERROR`. For resources that genuinely need to live server-side across events (file handles, persistent locks, expensive caches), see [Statefulness](/cookbook/expert_more/statefulness).
-- **The draft expires.** Four hours by default — an app left open longer starts fresh rather than restoring.
+- **The app draft expires.** Four hours by default — an app left open longer starts fresh rather than restoring.
 
 ## Error Index
 
 The sections above start from a behavior — nothing renders, data does not
 update. This index starts from the other end: a literal message in front of
-you, in the error view of a failed roundtrip or in the browser console. Every
+you, in the error dialog of a failed roundtrip or in the browser console. Every
 message below is one the framework or UI5 actually produces; find yours, and
 the entry says what caused it and where the fix is explained.
 
@@ -173,7 +173,7 @@ live across events.
 
 Two apps hand control to each other forever inside a single request — most
 often a `nav_app_call( )` that runs unconditionally in `main( )` instead of
-inside an event or `check_on_navigated( )` branch, so the called app's first
+inside an event or `check_on_navigated( )` branch, so the sub-app's first
 roundtrip immediately navigates again. Guard the navigation; see
 [Navigation](/cookbook/event_navigation/navigation/inner_app).
 

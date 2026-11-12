@@ -11,11 +11,23 @@ samples:
   - z2ui5_cl_smp_app_160
   - z2ui5_cl_smp_app_143
   - z2ui5_cl_smp_app_459
-description: Tables in abap2UI5 - binding an internal table to a UI5 table, editable cells, nested structures, and the working samples for each.
+description: Tables in abap2UI5 - binding an internal table to a UI5 table, editable cells, which row was clicked, selection, sorting and filtering, nested structures, and the working samples for each.
 ---
 # Tables
 
-This section walks through rendering tabular and nested data in views.
+An internal table becomes a UI5 table in two steps: bind the table to the
+`items` of the control, and describe **one** row. UI5 repeats that row for
+every line of the internal table.
+
+| I want to… | Section |
+| --- | --- |
+| show an internal table | [Basic Table](#basic-table) |
+| let the user edit cells | [Editable](#editable) |
+| know which row was clicked | [Which Row Was Clicked](#which-row-was-clicked) |
+| know which cell was changed | [Events on Cell Level](#events-on-cell-level) |
+| let the user select rows, add and delete rows | [Selection](#selection) |
+| sort or filter | [Sorting and Filtering](#sorting-and-filtering) |
+| show a long table | [Growing](#growing) |
 
 ## Basic Table
 The example below binds a simple table to a UI5 control:
@@ -94,65 +106,57 @@ CLASS zcl_sample_table IMPLEMENTATION.
 ENDCLASS.
 ```
 
+Three lines carry the table:
+
+- ``)->a( n = `items` v = client->_bind( mt_itab )`` binds the internal table.
+  `items` is the *aggregation* of the table, UI5's word for the list of
+  children a control holds.
+- The `ColumnListItem` under `items` is the *template*: the one row that UI5
+  copies for every line of `mt_itab`.
+- `{COUNT}` inside the template is a path **relative to the row**. It reads
+  the component `count` of the line this copy stands for. The name is the
+  ABAP component name in upper case, in braces.
+
 ## Editable
-To make a table editable, use editable cell controls (e.g. `input`) — the
-binding is the same `_bind`:
+
+To make the cells editable, put an input control into the row template
+instead of a `Text`. Only the three cells of the example above change:
+
 ```abap
-  METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      " the branch runs again on every return, so fill the table only once
-      IF mt_itab IS INITIAL.
-        DO 100 TIMES.
-          INSERT VALUE #(
-            count = sy-index
-            value = `red`
-            descr = `this is a description` ) INTO TABLE mt_itab.
-        ENDDO.
-      ENDIF.
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-              )->ele( `Page`
-                  )->ele( `Table`
-                      )->a( n = `items` v = client->_bind( mt_itab )
-
-                      )->ele( `columns`
-                          )->ele( `Column`
-                              )->tag( `Text`
-                                  )->a( n = `text` v = `Count`
-                          )->end(
-                          )->ele( `Column`
-                              )->tag( `Text`
-                                  )->a( n = `text` v = `Value`
-                          )->end(
-                          )->ele( `Column`
-                              )->tag( `Text`
-                                  )->a( n = `text` v = `Description`
-                          )->end(
-
-                      )->end(
-
-                      )->ele( `items`
-                          )->ele( `ColumnListItem`
-                              )->ele( `cells`
-                                  )->tag( `Input`
-                                      )->a( n = `value` v = `{COUNT}`
-                                  )->tag( `Input`
-                                      )->a( n = `value` v = `{VALUE}`
-                                  )->tag( `Input`
-                                      )->a( n = `value` v = `{DESCR}` ).
-
-      client->view_display( view->stringify( ) ).
-
-    ENDIF.
-
-  ENDMETHOD.
+)->ele( `cells`
+    )->tag( `Input`
+        )->a( n = `value` v = `{COUNT}`
+    )->tag( `Input`
+        )->a( n = `value` v = `{VALUE}`
+    )->tag( `Input`
+        )->a( n = `value` v = `{DESCR}` ).
 ```
+
+The table binding stays the same `_bind( mt_itab )`.
+
+## Which Row Was Clicked
+
+Send a field of the row with the event. `${COUNT}` in the `arg` of
+`_event( )` is resolved per row in the browser, so the handler receives the
+value of the row the user clicked:
+
+```abap
+)->ele( `ColumnListItem`
+    )->a( n = `type`  v = `Active`
+    )->a( n = `press` v = client->_event( val = `ROW_PRESS`
+                                          arg = `${COUNT}` )
+```
+
+```abap
+ELSEIF client->check_on_event( `ROW_PRESS` ).
+  DATA(lv_count) = client->get_event_arg( ).
+  READ TABLE mt_itab INTO DATA(ls_row) WITH KEY count = CONV i( lv_count ).
+```
+
+Note the two spellings: `{COUNT}` in a property *shows* the field, `${COUNT}`
+in an event argument *sends* it.
+[Backend](/cookbook/event_navigation/backend#source) lists everything an
+argument can carry.
 
 ## Nested Structures
 You can also bind nested structures — use `structure/component` as the binding
@@ -378,26 +382,32 @@ see [Size Limit](/cookbook/model/size_limit).
 
 ## Sorting and Filtering
 
-Two places can do it. **In the backend**, a sort button is an event: `SORT
-t_tab BY value` in its branch, and the sorted table reaches the view with the
-model push — no re-render, and the order survives the next roundtrip because
-it *is* the data (`Z2UI5_CL_SMP_APP_006`). A search field works the same way
-with a `DELETE` or a filtered re-read (`Z2UI5_CL_SMP_APP_045`,
-`Z2UI5_CL_SMP_APP_053`); for a live search over every keystroke, wire
-`liveChange` with `s_ctrl-check_queue_last` and `check_no_busy`, as
-[Backend](/cookbook/event_navigation/backend#the-per-wire-options-s-ctrl)
-explains and `Z2UI5_CL_SMP_APP_059` shows.
+A table can be sorted and filtered in two places: in ABAP, or in the browser.
 
-**In the browser**, `cs_event-binding_call` applies a filter or sorter to the
-aggregation binding of a control — the controller's
-`getBinding( 'items' ).filter( … )` — and the model data stays untouched. The
-arguments are positional: id, aggregation, method, then the method's own
-parameters. `filter` takes path, operator, value1 and an optional value2;
-empty values clear the filter. `sort` takes path, descending and group as
-`X`/``:
+### In the Backend
+
+A sort button is an event. Its branch runs `SORT t_tab BY value`, and the
+sorted table reaches the view with the response. The view is not sent again,
+and the order survives the next roundtrip because it *is* the data
+(`Z2UI5_CL_SMP_APP_006`). A search field works the same way with a `DELETE`
+or a filtered re-read (`Z2UI5_CL_SMP_APP_045`, `Z2UI5_CL_SMP_APP_053`).
+
+For a live search on every keystroke, use `liveChange` with
+`s_ctrl-check_queue_last` and `check_no_busy`.
+[Backend](/cookbook/event_navigation/backend#the-per-wire-options-s-ctrl)
+explains the two flags and `Z2UI5_CL_SMP_APP_059` shows them.
+
+### In the Browser
+
+`cs_event-binding_call` applies a filter or a sorter to the table in the
+browser. A UI5 developer knows it as `getBinding( 'items' ).filter( … )`. The
+model data stays untouched. The arguments are positional: id, aggregation,
+method, then the method's own parameters. `filter` takes path, operator,
+value1 and an optional value2; empty values clear the filter. `sort` takes
+path, descending and group as `X`/``:
 
 ```abap
-" wired into a SearchField: filters the table in the browser, no roundtrip
+" in a SearchField attribute: filters the table in the browser, no roundtrip
 )->tag( `SearchField`
     )->a( n = `liveChange` v = client->follow_up_action(
                                  val   = client->cs_event-binding_call
@@ -412,15 +422,15 @@ client->follow_up_action( val   = client->cs_event-binding_call
                                            ( `VALUE` ) ( `X` ) ) ).
 ```
 
-The table needs an `id` (`tab` above) for the call to find it. A client-side
-sort is cosmetic: the internal table keeps its order, and a `view_display( )`
-renders the binding fresh.
+The table needs an `id` (`tab` above) for the call to find it. A sort in the
+browser changes only what the user sees: the internal table keeps its order,
+and the next `view_display( )` shows that order again.
 
 ## Events on Cell Level
 
 A cell is a control, so it fires events like any other, and `t_arg` tells the
-handler which row it was. Relative paths work inside the row template —
-`${INDEX}` is the row's own field — and `$source` is the cell that fired:
+handler which row it was. Relative paths work inside the row template:
+`${INDEX}` is a field of the row, and `$source` is the cell that fired.
 
 ```abap
 )->tag( `Input`

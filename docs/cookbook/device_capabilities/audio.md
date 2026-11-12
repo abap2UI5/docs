@@ -8,7 +8,7 @@ description: Play a sound from the backend with the play_audio frontend action -
 
 ## Play Sounds
 
-Audio feedback is handy in some scenarios. Fire the `play_audio` frontend event with the URL of a sound file — for example a `.wav` from the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`.
+Audio feedback is handy in some scenarios. Fire the `play_audio` frontend action with the URL of a sound file — for example a `.wav` from the SAP MIME repository at `/SAP/PUBLIC/BC/ABAP/mime_demo/bam.wav`.
 
 The example below is a typical input-validation beep: when the user submits an empty Company Code, the app plays an alert sound and shows an error message; a filled input is simply accepted and cleared:
 

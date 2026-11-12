@@ -12,29 +12,31 @@ samples:
   - z2ui5_cl_smp_app_514
   - z2ui5_cl_smp_app_515
   - z2ui5_cl_smp_app_518
-description: Frontend events in abap2UI5 - client->follow_up_action( ) runs a browser-side action without a roundtrip when wired into the view, or after the response when called in main( ); the control calls and the view parameter.
+description: Frontend actions in abap2UI5 - client->follow_up_action( ) runs a browser-side action without a roundtrip when written into the view, or after the response when called in main( ); the control calls and the view parameter.
 ---
 # Frontend
 
-If you don't want to handle the event in the backend, fire actions directly on
-the frontend. The difference between the two event styles:
+A frontend action is something the browser does by itself: close a popup, set
+the focus, copy a text, open a tab. The app asks for it with
+`client->follow_up_action( )`. Where you write the call decides when the
+browser runs it:
 
-- **`client->_event( )`** — causes a backend roundtrip; the event runs in the
-  `main` method
-- **`client->follow_up_action( )`** — runs an action in the browser; no backend
-  call
+| Where you write it | When the browser runs it | Roundtrip |
+|---|---|---|
+| in a view attribute, e.g. as the value of `press` | when the user clicks | none: `main` is not called |
+| as a statement in `main` | after the response of this roundtrip has arrived | the one that is already running |
+
+Compare this with `client->_event( )`, which always sends the click to the
+backend and runs `main`: see [Backend](/cookbook/event_navigation/backend).
 
 ## The two positions
 
-`follow_up_action( )` is **one method in two positions**, and the position is
-what decides *when* the browser runs the action. The call is the same either
-way — same `val`, same `t_arg`, same `view` — so there is one method to learn
-and not two.
+The call is the same in both positions: same `val`, same `t_arg`, same `view`.
+There is one method to learn.
 
-**In a view attribute**, its result is a string that is consumed as the
-attribute's value, and the action is wired to the control. The browser runs it
-when the user presses, with no roundtrip at all: the backend never hears about
-the click.
+**In a view attribute**, the result of the call is the value of the
+attribute. The action is attached to the control, and the browser runs it
+when the user clicks. The backend is not called:
 
 ```abap
 )->tag( `Button`
@@ -42,34 +44,31 @@ the click.
     )->a( n = `press` v = client->follow_up_action( client->cs_event-popup_close ) )
 ```
 
-(An event that takes no arguments needs no `t_arg` at all, and `val` can be
-passed positionally, as here.)
+(An action that takes no arguments needs no `t_arg`, and `val` can be passed
+without its name, as here.)
 
-**As a statement** in `main`, the same call is scheduled instead of wired, and
-the browser runs it once the response arrives — i.e. *after* your backend work
-is done. This is the follow-up in the name: finish the event handler, then have
-the frontend do one more thing.
+**As a statement** in `main`, the same call is scheduled. The browser runs
+the action once the response arrives, so *after* your backend work is done.
+This is the follow-up in the name: finish the event handler, then let the
+frontend do one more thing.
 
 ```abap
-CASE client->get( )-event.
-  WHEN `SAVE`.
-    save( ).
-    client->message_toast_display( `saved` ).
-    client->follow_up_action(               " runs in the browser after this response
-        val   = client->cs_event-set_title
-        t_arg = VALUE #( ( |Invoice { mv_id }| ) ) ).
-ENDCASE.
+IF client->check_on_event( `SAVE` ).
+  save( ).
+  client->message_toast_display( `saved` ).
+  client->follow_up_action(               " runs in the browser after this response
+      val   = client->cs_event-set_title
+      t_arg = VALUE #( ( |Invoice { mv_id }| ) ) ).
+ENDIF.
 ```
 
-Neither form is a special case of the other, and the same events are available
-in both: everything in the table below can be wired to a control *or* scheduled
-after a roundtrip. Pick the position by when the action has to happen, not by
-what it does.
+Every action in the list below works in both positions. Choose the position
+by *when* the action has to happen, not by what it does.
 
 
-## The frontend events
+## The Frontend Actions {#the-frontend-events}
 
-Every frontend event is a constant of `z2ui5_if_client=>cs_event`, and the
+Every frontend action is a constant of `z2ui5_if_client=>cs_event`, and the
 generated [client API reference](/resources/api) lists all of them with their
 arguments, straight from the interface on `main`. The families: the two
 `*_close` events for the popup and the popover, the browser actions
@@ -101,7 +100,7 @@ key combinations to backend events,
 [the `hash_*` family](/cookbook/event_navigation/navigation/hash) puts the URL
 fragment under the router's control or the app's own, and
 [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls)
-wire variant management for smart controls. The dedicated cookbook pages under
+set up variant management for smart controls. The dedicated cookbook pages under
 [Browser Interaction](/cookbook/browser_interaction/title) and
 [Device Capabilities](/cookbook/device_capabilities/upload_download) carry the
 argument list of each event.
@@ -148,7 +147,7 @@ client->follow_up_action(
 ## Calling control methods on the frontend
 
 The control-call constants — `control_by_id`, `control_global`, `binding_call`
-and `bind_element` — are frontend events too, but instead of a fixed built-in
+and `bind_element` — are frontend actions too, but instead of a fixed built-in
 action they operate on a control, a global object, a binding or a whole view
 slot. Their arguments are **positional**: an empty argument between two filled
 ones keeps its slot as ``` `` ```.
@@ -262,9 +261,10 @@ the slot to element-bind (see above).
 
 ## Raw JavaScript
 
-There is no third way. A `val` the frontend does not know as an event name is
-not run — it arrives as an unknown event and nothing happens. What a script
-from the backend was reached for has a `cs_event-*` equivalent:
+The backend cannot send JavaScript to the browser. A `val` that is not one of
+the `cs_event` names is not run: it arrives as an unknown action and nothing
+happens. Everything a script was typically used for has a `cs_event-*`
+replacement:
 `control_global` for the UI5 globals (`MessageToast`, `MessageBox`,
 `BusyIndicator`, …), `control_by_id` for a control method, `hash_back` for
 `history.back( )`. Frontend code of the app's own ships as a

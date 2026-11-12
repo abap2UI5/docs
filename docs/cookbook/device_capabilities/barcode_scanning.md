@@ -67,7 +67,7 @@ This feature needs SAPUI5 - OpenUI5 does not ship the barcode scanner.
 Inside the [native mobile shell](/integration/mobile_shell), the framework's own `z2ui5:NativeBridgeScan` control calls the phone's scanner through the shell's bridge and hands the code back in `OnScan`; in a plain browser it renders nothing, so the same view runs in both places. The control and the shell are described on that page.
 
 ## Focus Handling
-Most scanner devices emulate a keyboard. In that case, add an input field and move the focus from the backend — the scanned data flows into the input as if typed. After each Enter key press, the handler fires the `set_focus` frontend event for the next field:
+Most scanner devices emulate a keyboard. In that case, add an input field and move the focus from the backend — the scanned data flows into the input as if typed. After each Enter key press, the handler fires the `set_focus` frontend action for the next field:
 
 ```abap
 ELSEIF client->check_on_event( `ONE_ENTER` ).
@@ -79,7 +79,7 @@ The complete form with two inputs chained this way is on [Focus](/cookbook/brows
 
 ## Play Sounds
 
-Audio feedback is handy in some scenarios. Fire the `play_audio` frontend event with the URL of a sound file — for example a `.wav` from the SAP MIME repository:
+Audio feedback is handy in some scenarios. Fire the `play_audio` frontend action with the URL of a sound file — for example a `.wav` from the SAP MIME repository:
 
 ```abap
 client->follow_up_action( val   = client->cs_event-play_audio

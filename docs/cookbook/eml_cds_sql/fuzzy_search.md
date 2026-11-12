@@ -6,7 +6,7 @@ description: A typo-tolerant search over an ABAP table with SAP HANA's fuzzy CON
 
 SAP HANA can match strings tolerantly — typos, missing letters, transposed characters — with the `CONTAINS` predicate in fuzzy mode: the score is a value between `0.0` (no match) and `1.0` (exact match), and `FUZZY( )` takes the threshold below which a row is filtered out. `CONTAINS` and `SCORE( )` are HANA SQL, not ABAP SQL, so an ABAP program reaches them through an AMDP — here as a CDS table function, which a plain `SELECT` then reads like any view.
 
-Wired to a UI5 `SearchField` in the table toolbar, that gives an ALV-style search that forgives the user's typing.
+Bound to a UI5 `SearchField` in the table toolbar, that gives an ALV-style search that forgives the user's typing.
 
 ## What It Needs
 

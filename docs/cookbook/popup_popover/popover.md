@@ -43,33 +43,31 @@ CLASS zcl_sample_popover IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
+
+    ELSEIF client->check_on_event( `POPOVER_OPEN` ).
+      DATA(popover) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `FragmentDefinition` ns = `core`
+              )->a( n = `xmlns`      v = `sap.m`
+              )->a( n = `xmlns:core` v = `sap.ui.core`
+
+              )->ele( `Popover`
+                  )->a( n = `placement` v = `Left`
+
+                  )->tag( `Text`
+                      )->a( n = `text` v = `this is a popover`
+                  )->tag( `Button`
+                      )->a( n = `id`    v = `my_id`
+                      )->a( n = `text`  v = `close`
+                      )->a( n = `press` v = client->_event( `POPOVER_CLOSE` ) ).
+
+      client->popover_display(
+          xml   = popover->stringify( )
+          by_id = `TEST` ).
+
+    ELSEIF client->check_on_event( `POPOVER_CLOSE` ).
+      client->popover_destroy( ).
+
     ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN `POPOVER_OPEN`.
-        DATA(popover) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `FragmentDefinition` ns = `core`
-                )->a( n = `xmlns`      v = `sap.m`
-                )->a( n = `xmlns:core` v = `sap.ui.core`
-
-                )->ele( `Popover`
-                    )->a( n = `placement` v = `Left`
-
-                    )->tag( `Text`
-                        )->a( n = `text` v = `this is a popover`
-                    )->tag( `Button`
-                        )->a( n = `id`    v = `my_id`
-                        )->a( n = `text`  v = `close`
-                        )->a( n = `press` v = client->_event( `POPOVER_CLOSE` ) ).
-
-        client->popover_display(
-            xml   = popover->stringify( )
-            by_id = `TEST` ).
-
-      WHEN `POPOVER_CLOSE`.
-        client->popover_destroy( ).
-    ENDCASE.
 
   ENDMETHOD.
 ENDCLASS.
@@ -128,7 +126,7 @@ the button with `cs_event-control_by_id` and the method `toggleBy`:
 argument if it is closed, and closes it if it is open — the controller
 pattern `oPopover.openBy( oButton )` / `oPopover.close( )` as one
 whitelisted method. The same call works as a statement after a handler, as
-`Z2UI5_CL_SMP_APP_465` does; wired into the view as above it is the
+`Z2UI5_CL_SMP_APP_465` does; written into a view attribute as above it is the
 no-roundtrip case. The popover's bindings resolve against the app's model
 either way, so what it shows is still ABAP data.
 

@@ -10,10 +10,28 @@ description: Read, create and change RAP business objects with EML from an abap2
 ---
 # EML
 
-All examples in these docs work without EML. But on a recent ABAP release, you can also use this feature in abap2UI5 apps.
+EML, the Entity Manipulation Language, is the ABAP syntax for working with RAP
+business objects: `READ ENTITIES` reads them, `MODIFY ENTITIES` creates,
+changes and deletes them, and `COMMIT ENTITIES` saves. An abap2UI5 app can
+use all three in its event handlers.
 
-## EML
-The Entity Manipulation Language simplifies work with RAP business objects by giving a consistent way to read, create, update, and delete entities.
+Use EML when a RAP business object for your data already exists. The
+validations and determinations of the object then run for your app as
+well. Without a business object, read and write with
+[ABAP SQL](/cookbook/eml_cds_sql/abap_sql); no example outside this chapter
+needs EML.
+
+Two things differ from EML inside a RAP handler:
+
+- **You commit yourself.** The app is not inside the RAP framework, so
+  nothing is saved until the app calls `COMMIT ENTITIES`.
+- **You show the messages yourself.** What the business object reports
+  comes back in `FAILED` and `REPORTED`, and the app hands it to
+  `client->message_box_display( )`. See [Failure Handling](#failure-handling).
+
+EML needs a recent ABAP release.
+
+## Read and Modify {#eml-1}
 
 ### Read
 Use `READ ENTITIES` to fetch sales orders and show them in a UI5 table:

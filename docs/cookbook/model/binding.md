@@ -119,7 +119,7 @@ for why every app is shaped this way.
 
 
 ::: warning **Bound Attributes Must Be Public**
-`_bind( )` resolves your class attributes from outside the controller via
+`_bind( )` resolves your class attributes from outside the app class via
 dynamic ASSIGN, and it only sees the `PUBLIC SECTION`. Passing a `PROTECTED` or
 `PRIVATE` attribute — or a local variable — is **not** silent: the framework
 finds no attribute for the reference and raises
@@ -129,7 +129,7 @@ BINDING_ERROR - No class attribute for binding found -
 Please check if the bound values are public attributes of your class
 ```
 
-which reaches the browser as a 500 and is shown in the error view. The
+which reaches the browser as a 500 and is shown in the error dialog. The
 compiler cannot catch it (the call takes `TYPE data`), but the runtime says
 exactly what is wrong.
 
@@ -173,27 +173,75 @@ item — see [Tables](/cookbook/model/tables).
 parameters cover the cases where the default shape of the model is not what
 the control needs:
 
-| Parameter | What it does |
+| Parameter | Use it when |
 |---|---|
-| `path = abap_true` | returns the model **path** of the attribute (`/NAME`) instead of the binding (`{/NAME}`) — what a `parts:` array, a `binding_call` filter or sorter and `bind_element` need. `_bind_path( )` is the same thing under a readable name, see below |
-| `tab` / `tab_index` | bind **one cell** of an internal table: pass the table as `tab`, the row number (1-based, the ABAP way) as `tab_index`, and the row's component itself as `val` — ``_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )`` renders `{/MT_EMP/0/NAME}`. The cell is found by **reference**, so a copy of the value is refused with `BINDING_ERROR_TAB_CELL_LEVEL`. For a repeating aggregation bind the table itself and keep the template's fields relative |
-| `omit_initial` | leaves **initial** fields out of the serialized model instead of sending them as `""`, `0` or `false`. An ABAP field is never absent, so by default every field reaches the client as an explicit value, which overrides the UI5 property default — and an enum-typed property rejects the empty string outright. Set it when the rows of a bound template fill different subsets of the same properties |
-| `omit_initial_paths` | the same omission scoped to the listed fields (upper-case column names). For the case where the blanket flag is too coarse: an `abap_false` that must reach the client is itself initial, so list the numeric and enum columns and leave the booleans |
-| `json` | the bound string already **contains JSON** — it is spliced into the model as a node instead of being sent as a quoted string. For a control property that needs an object no typed ABAP value can be, such as a `sap.ui.integration` card manifest whose keys (`sap.app`, `sap.card`) are not valid ABAP field names. Outbound only |
-| `switch_default_model` | writes the binding against the named `http` model — where abap2UI5's own data lives once `view_display( switch_default_model_path = … )` has made an OData service the view's default model, see [Smart Controls](/cookbook/expert_more/smart_controls) |
+| `path = abap_true` | you need the model path (`/NAME`), not the binding (`{/NAME}`) |
+| `tab` / `tab_index` | you bind one cell of an internal table |
+| `omit_initial` | initial fields must be left out of the model |
+| `omit_initial_paths` | only some initial fields must be left out |
+| `json` | the string already contains JSON |
+| `switch_default_model` | an OData service is the default model of the view |
 
 `custom_mapper` and `custom_filter` still compile but are obsolete — see
 [Deprecations](/resources/deprecations).
 
+### `path`
+
+`path = abap_true` returns the model **path** of the attribute (`/NAME`)
+instead of the binding (`{/NAME}`). A `parts:` array, a `binding_call` filter
+or sorter and `bind_element` need the path. `_bind_path( )` is the same thing
+under a readable name, see [below](#bind-path).
+
+### `tab` and `tab_index`
+
+They bind **one cell** of an internal table. Pass the table as `tab`, the row
+number as `tab_index` (starting at 1, the ABAP way), and the component of the
+row as `val`:
+
+```abap
+client->_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )   " {/MT_EMP/0/NAME}
+```
+
+The cell is found by **reference**, so a copy of the value is refused with
+`BINDING_ERROR_TAB_CELL_LEVEL`. For a table that repeats a row template, bind
+the table itself and keep the fields of the template relative, as
+[Tables](/cookbook/model/tables) shows.
+
+### `omit_initial` and `omit_initial_paths`
+
+`omit_initial` leaves **initial** fields out of the model. Without it they are
+sent as `""`, `0` or `false`. An ABAP field always has a value, so by default
+every field reaches the browser as an explicit value. That value overrides
+the default of the UI5 property, and a property with an enum type rejects the
+empty string. Set the flag when the rows of a bound template fill different
+subsets of the same properties.
+
+`omit_initial_paths` does the same for the listed fields only (column names
+in upper case). Use it when the flag for all fields is too coarse: an
+`abap_false` that must reach the browser is itself initial, so list the
+numeric and enum columns and leave the booleans.
+
+### `json`
+
+The bound string already **contains JSON**. It is put into the model as a
+node, not sent as a quoted string. This is for a control property that needs
+an object no typed ABAP value can be, such as the manifest of a
+`sap.ui.integration` card, whose keys (`sap.app`, `sap.card`) are not valid
+ABAP field names. It works in one direction only, from ABAP to the browser.
+
+### `switch_default_model`
+
+It writes the binding against the named `http` model. That is where the data
+of abap2UI5 lives once `view_display( switch_default_model_path = … )` has
+made an OData service the default model of the view, see
+[Smart Controls](/cookbook/expert_more/smart_controls).
+
 ### `_bind_path( )`
 
-`client->_bind_path( val )` is `_bind( val = val path = abap_true )` byte for
-byte, delegating to it rather than repeating it. It exists because the two
-forms of `_bind( )` read nothing alike: `_bind( t_products )` says what it
-does, the path form needs a named `val` and a boolean whose name means nothing
-to a reader who does not know the method. It takes one parameter on purpose —
-the moment a second one is needed (`tab`, `omit_initial`, `json`), `_bind( )`
-is the right call and `path` stays on it.
+`client->_bind_path( val )` is the same call as
+`_bind( val = val path = abap_true )` under a name that says what it returns.
+It takes one parameter. When a second one is needed (`tab`, `omit_initial`,
+`json`), use `_bind( )` with `path = abap_true`.
 
 ```abap
 )->a( n = `value` v = |\{ path: '{ client->_bind_path( amount ) }', type: 'sap.ui.model.type.Float' \}|
@@ -202,16 +250,21 @@ is the right call and `path` stays on it.
 ## When a Value Does Not Convert
 
 A value travels back as text and is converted into the ABAP type behind the
-binding. A string that will not convert — `1,250.00` typed into an `Input`
-bound to a packed amount, letters into an integer — is **skipped, not raised
-on**: the attribute keeps its old value, the roundtrip goes on, and the browser
-still shows what the user typed, because the client model was updated before
-the request went out. The skip is traced in `client->get( )-t_model_skipped`,
-one row per refused value with the attribute name, the row and field for a
-table cell, and the raw text as it arrived. Read it at the top of `main( )`
-rather than inside a Save branch, since the delta travels with whatever
-roundtrip follows the edit; the list is per roundtrip. Reading it pushes no
-model, so the refused text stays on screen until the app writes something.
+binding. Some strings will not convert: `1,250.00` typed into an `Input` bound
+to a packed amount, or letters typed into an integer. Such a value is
+**skipped, and no exception is raised**. Three things then hold:
+
+- the attribute keeps its old value, and the roundtrip goes on
+- the browser still shows what the user typed, because the model in the
+  browser was updated before the request went out
+- the skip is recorded in `client->get( )-t_model_skipped`: one row per
+  refused value, with the attribute name, the row and field for a table
+  cell, and the raw text as it arrived
+
+Read that table at the top of `main( )`, not inside a Save branch: the changed
+values travel with whatever roundtrip follows the edit, and the list is per
+roundtrip. Reading it sends no model, so the refused text stays on screen
+until the app writes something.
 
 The errors that *do* stop a roundtrip are the ones about the binding itself:
 `BINDING_ERROR` for an attribute `_bind( )` cannot reach, and

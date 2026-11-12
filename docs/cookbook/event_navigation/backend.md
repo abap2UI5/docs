@@ -3,18 +3,20 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_167
   - z2ui5_cl_smp_app_197
-description: Backend events in abap2UI5 - client->_event( ) wires a control event to main( ), with arguments from the source control, the event parameters or the model, and the per-wire options in s_ctrl.
+description: Backend events in abap2UI5 - client->_event( ) attaches an event name to a control and main( ) handles it, with arguments from the source control, the event parameters or the model, and the options per event in s_ctrl.
 ---
 # Backend
 
-UI5 control properties can both display data and fire events. To run backend
-logic when an event fires, use the `client->_event` method.
+An event is what the user did: a button press, a row click, a changed field.
+`client->_event( )` attaches an event name to a control, and
+`client->check_on_event( )` asks for that name in `main`. Each event is one
+roundtrip.
 
 ## Basic
-As an example, we use the `press` property of a button. To fire events to the
-backend, assign the result of ``client->_event( `MY_EVENT_NAME` )`` to the
-matching UI5 control property. The backend can then read the event details with
-`client->get( )-event`.
+
+Assign the result of ``client->_event( `MY_EVENT_NAME` )`` to the event
+property of the control, here the `press` of a button. When the user presses
+it, `main` runs and the branch with the same name is taken:
 
 ```abap
 METHOD z2ui5_if_app~main.
@@ -40,138 +42,66 @@ METHOD z2ui5_if_app~main.
 
 ENDMETHOD.
 ```
-If the backend needs more details about the event, use the `arg` parameter to
-add extra info. Three prefixes are available:
 
-- **`$source`** — the UI5 control that fired the event (e.g., `${$source>/text}`
-  returns the button text)
-- **`$parameters`** — the event parameters defined by the UI5 control (e.g.,
-  `${$parameters>/id}` returns the element ID)
-- **`$event`** — the UI5 event object itself (e.g., `$event>sId` returns the
-  event type like `press`). Note: unlike the other two prefixes, `$event` is
-  written without the `${...}` wrapper and without a leading `/` — see the
-  [Event](#event) section below.
+## Sending a Value with the Event {#source}
 
-`arg` carries one value, which is what most events need. For two or more, use
-`t_arg` instead and pass them as a table — ``t_arg = VALUE #( (
-`${$source>/text}` ) ( `${$parameters>/id}` ) )`` — and read them back in the
-same order with `client->get_event_arg( 2 )`, `( 3 )` and so on. The two are the
-same wire: `arg = x` is exactly ``t_arg = VALUE #( ( x ) )``.
+Often the backend needs to know more than the event name: which row, which
+text, which key. The parameter `arg` sends one value along, and
+`client->get_event_arg( )` reads it in the handler. Only two lines of the
+example above change:
+
+```abap
+)->a( n = `press` v = client->_event(
+                        val = `BUTTON_POST`
+                        arg = `${$source>/text}` ) ).   " the text of the button
+```
+
+```abap
+ELSEIF client->check_on_event( `BUTTON_POST` ).
+  client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
+```
+
+What `arg` contains decides where the value comes from:
+
+| You write in `arg` | The handler receives | Example result |
+|---|---|---|
+| `${$source>/text}` | a property of the control that fired the event | `post` |
+| `${$parameters>/id}` | a parameter of the UI5 event | `mainView--button_id` |
+| `$event>sId` | an attribute of the UI5 event object | `press` |
+| `${PRODUCT}` | a field of the table row the control stands in | the `PRODUCT` of that row |
+| `` `$` && client->_bind( name ) `` | the current value of a bound attribute — see [Model Properties](#model-properties) | what the user typed |
+
+### Parameters
+
+`${$parameters>/id}` reads the parameter `id` of the event. Every UI5 control
+documents the parameters of its events in the UI5 API reference; a `press`
+has the `id` of the control, which UI5 qualifies with the view, for example
+`mainView--button_id`.
+
+### Event
+
+`$event>sId` reads the attribute `sId` of the UI5 event object, which is the
+name of the event (`press`). `$event` is written differently from the other
+two: without the `${...}` around it and without a leading `/`, because it
+names the event object itself.
+
+::: warning
+You can read any attribute of the event object, but use only public and
+released ones. Others can change with the next UI5 version.
+:::
 
 For details, see the
 [UI5 docs on event handler arguments](https://openui5.hana.ondemand.com/#/topic/b0fb4de7364f4bcbb053a99aa645affe)
 and sample `Z2UI5_CL_SMP_APP_167`.
 
-## Source
-Send properties of the event source control to the backend. The syntax
-`${$source>/text}` reads the `text` property of the UI5 control that fired the
-event — here, the button itself, returning the button's label (`post`):
-
-```abap
-METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-              )->ele( `Page`
-                  )->tag( `Button`
-                      )->a( n = `text`  v = `post`
-                      )->a( n = `press` v = client->_event(
-                                            val = `BUTTON_POST`
-                                            " reads the button text → result: "post"
-                                            arg = `${$source>/text}` ) ).
-
-      client->view_display( view->stringify( ) ).
-
-    ELSEIF client->check_on_event( `BUTTON_POST` ).
-      client->message_box_display( |The button text is { client->get_event_arg( ) }| ).
-
-    ENDIF.
-
-ENDMETHOD.
-```
-
-## Parameters
-Read parameters of the event. The syntax `${$parameters>/id}` reads the `id`
-parameter out of the event's parameter map — UI5 builds a qualified ID like
-`mainView--button_id`:
-```abap
-METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-              )->ele( `Page`
-                  )->tag( `Button`
-                      )->a( n = `id`    v = `button_id`
-                      )->a( n = `text`  v = `post`
-                      )->a( n = `press` v = client->_event(
-                                            val = `BUTTON_POST`
-                                            " reads the event parameter 'id' → result: "mainView--button_id"
-                                            arg = `${$parameters>/id}` ) ).
-
-      client->view_display( view->stringify( ) ).
-
-    ELSEIF client->check_on_event( `BUTTON_POST` ).
-      client->message_box_display( |The button id is { client->get_event_arg( ) }| ).
-
-    ENDIF.
-
-ENDMETHOD.
-```
-
-## Event
-Read specific properties of the event object. The syntax `$event>sId` reads the
-`sId` attribute of the UI5 event — here it returns the event type name
-(`press`). Note: there's no `${...}` wrapper because `$event` directly
-references the event object:
-```abap
-METHOD z2ui5_if_app~main.
-
-    IF client->check_on_navigated( ).
-
-      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-          )->ele( n = `View` ns = `mvc`
-              )->a( n = `xmlns`     v = `sap.m`
-              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
-
-              )->ele( `Page`
-                  )->tag( `Button`
-                      )->a( n = `text`  v = `post`
-                      )->a( n = `press` v = client->_event(
-                                            val = `BUTTON_POST`
-                                            " reads an event-object attribute → result: "press"
-                                            arg = `$event>sId` ) ).
-
-      client->view_display( view->stringify( ) ).
-
-    ELSEIF client->check_on_event( `BUTTON_POST` ).
-      client->message_box_display( |The event id is { client->get_event_arg( ) }| ).
-
-    ENDIF.
-
-ENDMETHOD.
-```
-::: warning
-You can read any object attribute, but use only public and released attributes
-to avoid compatibility issues with future UI5 versions.
-:::
-
 ## More Than One Argument
 
-`get_event_arg( )` without a value reads the first argument, which is the only
-one a wire written with `arg =` carries. A wire written with `t_arg` carries
-as many as the table has rows, in that order, and `get_event_arg( n )` reads
-position `n`; a position that does not exist answers the empty string, and the
-whole list is `client->get( )-t_event_arg`:
+`arg` sends one value, which is what most events need. For two or more, use
+`t_arg` and pass them as a table. `arg = x` is the short form of
+``t_arg = VALUE #( ( x ) )``. In the handler, `get_event_arg( )` reads the
+first value and `get_event_arg( n )` reads the value at position `n`. A
+position that does not exist returns an empty string. The whole list is in
+`client->get( )-t_event_arg`:
 
 ```abap
 )->a( n = `press` v = client->_event(
@@ -182,35 +112,35 @@ whole list is `client->get( )-t_event_arg`:
 ```
 
 ```abap
-CASE client->get( )-event.
-    WHEN `ROW_PRESS`.
-        DATA(lv_title) = client->get_event_arg( ).
-        DATA(lv_id)    = client->get_event_arg( 2 ).
-        DATA(lv_type)  = client->get_event_arg( 3 ).
-ENDCASE.
+IF client->check_on_event( `ROW_PRESS` ).
+    DATA(lv_title) = client->get_event_arg( ).
+    DATA(lv_id)    = client->get_event_arg( 2 ).
+    DATA(lv_type)  = client->get_event_arg( 3 ).
+ENDIF.
 ```
 
 An argument that starts with `$` or `{` is written into the view **raw**, as a
-live UI5 expression — that is how `${$source>/KEY}` reaches the handler as the
-row's value. The flip side is that data which may start with those characters
-(text a user typed, a key from a foreign system) would be *evaluated* rather
-than passed. A wire that carries data rather than bindings sets
-`s_ctrl-check_arg_literal`, which quotes every argument of that wire as a
+live UI5 expression. That is how `${$source>/KEY}` reaches the handler as the
+row's value. The same rule is a risk for plain data: a text a user typed, or a
+key from a foreign system, may start with one of those characters and would
+then be *evaluated* instead of passed. An event that sends data, not bindings,
+sets `s_ctrl-check_arg_literal`. It quotes every argument of that event as a
 string; see the next section.
 
-## The Per-Wire Options: `s_ctrl`
+## Options per Event: `s_ctrl` {#the-per-wire-options-s-ctrl}
 
-`_event( )` takes a third parameter, `s_ctrl`, a structure of flags that are
-baked into the wire when the view is built. Each one answers a question a
-plain `press` never asks:
+`_event( )` takes a further parameter, `s_ctrl`. It is a structure of flags
+that belong to this one `_event( )` call, the *event binding*, and are fixed
+when the view is built. Each flag answers a question a plain `press` never
+asks:
 
 | Flag | What it decides |
 |---|---|
-| `check_queue_last` | While a roundtrip is in flight, the **last** event fired on this wire is kept and dispatched once the response has landed, instead of being dropped. One roundtrip at a time, order preserved, and the backend ends on the control's current value. This is the flag for a per-keystroke wire — `liveChange`, `liveSearch`, `sliderChange` — which without it loses every keystroke typed while a roundtrip runs, the last one included |
-| `check_no_busy` | Keeps the global busy indicator down for this wire. The roundtrip, the busy *state* and the guard are unchanged; only the full-screen overlay is not shown. For a per-keystroke wire the overlay is the wrong feedback — the user is looking at the field, not waiting for a screen — and from the second character on it flashes over the field. Pair it with `check_queue_last`: nothing is lost and nothing blinks |
+| `check_queue_last` | While a roundtrip is in flight, the **last** event fired by this event binding is kept and dispatched once the response has landed, instead of being dropped. One roundtrip at a time, order preserved, and the backend ends on the control's current value. This is the flag for an event that fires on every keystroke — `liveChange`, `liveSearch`, `sliderChange` — which without it loses every keystroke typed while a roundtrip runs, the last one included |
+| `check_no_busy` | Keeps the global busy indicator down for this event. The roundtrip, the busy *state* and the guard are unchanged; only the full-screen overlay is not shown. For an event on every keystroke the overlay is the wrong feedback — the user is looking at the field, not waiting for a screen — and from the second character on it flashes over the field. Pair it with `check_queue_last`: nothing is lost and nothing blinks |
 | `check_prevent_default` | Cancels the control's built-in default for this event before the roundtrip (`oEvent.preventDefault( )`) — a `sap.tnt` `NavigationListItem` press that must not select the item, a `Link` that must not follow its `href`. The event is still sent, so the backend decides what happens instead |
-| `prevent_default_expr` | The same veto decided **per firing** instead of per wire: a client expression evaluated when the event fires, which cancels the default only when it is truthy, e.g. `${$parameters>/column}.getId().indexOf('COL_DATE') >= 0` — one wire protects one column and lets the rest through. Wins over the flag when both are set |
-| `check_arg_literal` | Quotes **every** argument of this wire as a string. The form for a wire whose arguments are data rather than bindings — see [More Than One Argument](#more-than-one-argument) above |
+| `prevent_default_expr` | The same veto decided **each time the event fires**, not once for the event binding: a client expression evaluated when the event fires, which cancels the default only when it is truthy, e.g. `${$parameters>/column}.getId().indexOf('COL_DATE') >= 0` — one event binding protects one column and lets the rest through. Wins over the flag when both are set |
+| `check_arg_literal` | Quotes **every** argument of this event as a string. The form for an event whose arguments are data, not bindings — see [More Than One Argument](#more-than-one-argument) above |
 
 The live search is the case that needs two of them at once:
 
@@ -248,11 +178,10 @@ that closes it has to carry:
 ```
 
 ```abap
-CASE client->get( )-event.
-    WHEN `SAVE`.
-        DATA(image) = client->get_event_arg( ).
-        client->popup_destroy( ).
-ENDCASE.
+IF client->check_on_event( `SAVE` ).
+    DATA(image) = client->get_event_arg( ).
+    client->popup_destroy( ).
+ENDIF.
 ```
 
 The slot is one of the `cs_view` keys — `MAIN`, `NEST`, `NEST2`, `POPUP`,
@@ -284,7 +213,8 @@ handler can tell which panel or tab a press came from without an id of its
 own: ``arg = `$controller.textPath( ${$parameters>/item} )` ``.
 
 ## Model Properties
-Read model properties bound to the event:
+Send the current value of a bound attribute with the event. `_bind( )` returns
+the binding path in braces, and the `$` in front turns it into an argument:
 ```abap
 CLASS zcl_sample_event_model DEFINITION PUBLIC.
 

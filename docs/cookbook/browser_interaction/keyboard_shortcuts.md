@@ -6,7 +6,7 @@ description: Bind a key combination to a named backend event with the keyboard_s
 ---
 # Keyboard Shortcuts
 
-The `keyboard_shortcut` frontend event binds a key combination to a **named backend event** — the declarative equivalent of a `sap.ui.core.CommandExecution` shortcut, which needs a controller method and therefore has no place in a controller-less abap2UI5 app. The binding is pure data: the key combination and the name of the backend event it fires.
+The `keyboard_shortcut` frontend action binds a key combination to a **named backend event** — the declarative equivalent of a `sap.ui.core.CommandExecution` shortcut, which needs a controller method and therefore has no place in a controller-less abap2UI5 app. The binding is pure data: the key combination and the name of the backend event it fires.
 
 ## Registering a Shortcut
 

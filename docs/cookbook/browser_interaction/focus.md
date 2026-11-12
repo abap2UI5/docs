@@ -24,7 +24,7 @@ DATA(selection_end)   = focus-selection_end.     " caret end, in chars
 
 ## Set the Focus
 
-Set the input focus from the backend with the `set_focus` frontend event. Pass the target control's `id` as the first argument — the framework moves the cursor to that field after the next roundtrip.
+Set the input focus from the backend with the `set_focus` frontend action. Pass the target control's `id` as the first argument — the framework moves the cursor to that field after the next roundtrip.
 
 This is useful for guided data entry, barcode scanning, or any flow where the next field to focus depends on backend logic.
 

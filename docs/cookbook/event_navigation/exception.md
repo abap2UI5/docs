@@ -33,7 +33,7 @@ framework, or out of a wrong app name in the URL.
 3. **The app is over.** There is no *continue* on that dialog by design: the
    roundtrip that would have carried the app's next state is the one that
    failed, so what is on screen no longer matches anything on the server. The
-   user restarts, and the app starts from its first screen — unless its draft
+   user restarts, and the app starts from its first screen — unless its [app draft](/get_started/glossary)
    id is in the URL, through the
    [app state](/cookbook/event_navigation/navigation/app_state) or hash routing
    in `KEEP` mode, which brings it back to where it was.

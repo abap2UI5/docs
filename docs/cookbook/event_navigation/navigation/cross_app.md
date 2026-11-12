@@ -59,13 +59,13 @@ To go back to the launchpad app the user came from:
     )->a( n = `press` v = client->follow_up_action( client->cs_event-cross_app_nav_to_prev_app )
 ```
 
-Both are ordinary [frontend events](/cookbook/event_navigation/frontend), so
-they work in the two positions every frontend event does: wired to a control as
-above, or as a statement in `main` when the navigation should follow some
-backend work. The arguments differ between the two, though. The object literal
-and the `$` binding above are resolved by UI5 when the press fires; a statement
-sends its arguments as data, so there the target has to be JSON,
-`{"semanticObject":"Z2UI5_CL_LP_SAMPLE_04","action":"display"}`, and the
+Both are ordinary [frontend actions](/cookbook/event_navigation/frontend), so
+they work in the two positions every frontend action does: written into a view
+attribute as above, or as a statement in `main` when the navigation should
+follow some backend work. The arguments differ between the two, though. The
+object literal and the `$` binding above are resolved by UI5 when the press
+fires; a statement sends its arguments as data, so there the target has to be
+JSON, `{"semanticObject":"Z2UI5_CL_LP_SAMPLE_04","action":"display"}`, and the
 parameters a JSON object of their values.
 
 ## Which Apps Can I Navigate To?

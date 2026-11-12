@@ -69,7 +69,7 @@ Without an annotated `UI.LineItem` the SmartTable starts with no columns at all,
 
 ### The `SMART_VARIANT_INIT` Handshake
 
-In a classic UI5 app, the controller calls `initialise( )` on the variant management once the smart controls have registered. Without it, the page variant never gets a personalizable control — saving a view fails in `sap.ui.fl` and stored views are never loaded. In abap2UI5, the `smart_variant_init` frontend event performs this handshake; it waits until the smart controls have registered (which they do once their OData metadata has arrived):
+In a classic UI5 app, the controller calls `initialise( )` on the variant management once the smart controls have registered. Without it, the page variant never gets a personalizable control — saving a view fails in `sap.ui.fl` and stored views are never loaded. In abap2UI5, the `smart_variant_init` frontend action performs this handshake; it waits until the smart controls have registered (which they do once their OData metadata has arrived):
 
 ```abap
 client->follow_up_action( val   = client->cs_event-smart_variant_init
@@ -80,7 +80,7 @@ client->follow_up_action( val   = client->cs_event-smart_variant_init
 
 ## Classic FilterBar with Variants
 
-A **classic** `sap.ui.comp.filterbar.FilterBar` knows nothing about variants: every list-report controller hand-writes the same callbacks (`registerFetchData` / `registerApplyData` / `registerGetFiltersWithValues`), adds a `PersonalizableInfo` and marks the variant dirty on each filter change. That is boilerplate over the bar's own filter items — data, not app logic — so the framework owns it. The `filter_bar_variant_init` frontend event wires a classic FilterBar to a `SmartVariantManagement` with no JavaScript in the app:
+A **classic** `sap.ui.comp.filterbar.FilterBar` knows nothing about variants: every list-report controller hand-writes the same callbacks (`registerFetchData` / `registerApplyData` / `registerGetFiltersWithValues`), adds a `PersonalizableInfo` and marks the variant dirty on each filter change. That is boilerplate over the bar's own filter items — data, not app logic — so the framework owns it. The `filter_bar_variant_init` frontend action wires a classic FilterBar to a `SmartVariantManagement` with no JavaScript in the app:
 
 ```abap
 client->follow_up_action( val   = client->cs_event-filter_bar_variant_init

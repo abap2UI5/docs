@@ -376,7 +376,7 @@ CLASS zcl_sample_currency IMPLEMENTATION.
 ENDCLASS.
 ```
 
-The page's back button is the current idiom: `navButtonPress` wired to
+The page's back button is the current idiom: `navButtonPress` bound to
 `client->_event_nav_app_leave( )` leaves the app without a branch in `main( )`,
 and `showNavButton` bound to `check_app_prev_stack( )` shows the button only
 when there is an app to return to. The same class is sample

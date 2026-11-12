@@ -7,7 +7,7 @@ description: Copy text to the clipboard with the clipboard_copy frontend action,
 ---
 # Clipboard
 
-Copy arbitrary text to the user's clipboard with the frontend event `client->cs_event-clipboard_copy`. The text travels as the first `t_arg` entry and is passed to the browser's `navigator.clipboard.writeText` API, which performs the copy entirely in the browser. An argument that is JSON — a bound structure or table passed as `` |${ client->_bind( ms_data ) }| `` — is copied as its JSON text, not as `[object Object]`.
+Copy arbitrary text to the user's clipboard with the frontend action `client->cs_event-clipboard_copy`. The text travels as the first `t_arg` entry and is passed to the browser's `navigator.clipboard.writeText` API, which performs the copy entirely in the browser. An argument that is JSON — a bound structure or table passed as `` |${ client->_bind( ms_data ) }| `` — is copied as its JSON text, not as `[object Object]`.
 
 ```abap
 CLASS zcl_sample_clipboard DEFINITION PUBLIC.
@@ -78,7 +78,7 @@ client->follow_up_action( val   = client->cs_event-store_data
                           t_arg = VALUE #( ( |${ client->_bind( ms_storage ) }| ) ) ).
 ```
 
-The `${ }` spelling is what makes the same call work on a view wire, where a bare `{/MS_STORAGE}` would be read as an object literal and never fire; a handler resolves both. An empty `value` removes the key. `value` may also be a structure or a table — it is stored as JSON and comes back in the same shape.
+The `${ }` spelling is what makes the same call work in a view attribute, where a bare `{/MS_STORAGE}` would be read as an object literal and never fire; a handler resolves both. An empty `value` removes the key. `value` may also be a structure or a table — it is stored as JSON and comes back in the same shape.
 
 The read side is the control, declared with `xmlns:z2ui5="z2ui5.cc"`: it reads `key` under `prefix` from the store named by `type` after every rendering, writes a stored value into its bound `value` and fires `finished` when that value differs from what the binding holds — so one roundtrip per real change, and none while the stored and the bound value agree:
 

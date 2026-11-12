@@ -7,7 +7,7 @@ description: Raise a backend event after a delay with the start_timer frontend a
 ---
 # Timer
 
-Fire a backend event after a delay with the `start_timer` frontend event. Handy for dashboards, status monitors, or any case that needs a delayed or periodic update without user interaction.
+Fire a backend event after a delay with the `start_timer` frontend action. Handy for dashboards, status monitors, or any case that needs a delayed or periodic update without user interaction.
 
 Pass the event name to fire and the delay in milliseconds:
 
@@ -90,11 +90,11 @@ The counter increments every 2 seconds. To stop the loop, simply don't re-arm th
 A single `start_timer` call fires once — perfect for a deferred action like opening a new tab after a short delay:
 
 ```abap
-WHEN client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
+ELSEIF client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
   client->follow_up_action( val   = client->cs_event-start_timer
                   t_arg = VALUE #( ( `FIRE_OPEN_TAB` ) ( `500` ) ) ).
 
-WHEN client->check_on_event( `FIRE_OPEN_TAB` ).
+ELSEIF client->check_on_event( `FIRE_OPEN_TAB` ).
   client->follow_up_action( val   = client->cs_event-open_new_tab
                   t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report` ) ) ).
 ```
@@ -110,7 +110,7 @@ Every roundtrip cancels the pending timer, which is why a poll re-arms it in eve
 Each tick is a backend roundtrip like any other, so when the backend takes longer than a second, the full-screen busy indicator comes up. For a tick nobody is waiting on — a background poll, or a carousel or ticker that moves on by itself — the overlay then flashes over a screen the user is only reading. Pass `` `X` `` as a third argument to keep it down for that tick:
 
 ```abap
-WHEN client->check_on_event( `TICK` ).
+ELSEIF client->check_on_event( `TICK` ).
   " read the new status ...
   client->follow_up_action( val   = client->cs_event-start_timer
                             t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `X` ) ) ).
@@ -118,7 +118,7 @@ WHEN client->check_on_event( `TICK` ).
 
 The flag belongs to the tick that call arms, so a repeating timer passes it again every time it re-arms. Write it as the string `` `X` ``, not `abap_true`: `t_arg` is a string table, and abaplint's syntax check rejects a `c` value such as `abap_true` as one of its rows.
 
-Only the overlay goes — the flag does for the tick what [`check_no_busy`](/resources/api#event) does for an `_event( )` wire. The tick is still the one roundtrip in flight: a click that lands while it runs is dropped, as during any roundtrip, and brings the overlay up at once. Leave the flag off for a tick the user is actually waiting for; there the overlay is what tells them the app is working.
+Only the overlay goes — the flag does for the tick what [`check_no_busy`](/resources/api#event) does for an `_event( )`. The tick is still the one roundtrip in flight: a click that lands while it runs is dropped, as during any roundtrip, and brings the overlay up at once. Leave the flag off for a tick the user is actually waiting for; there the overlay is what tells them the app is working.
 
 ::: warning
 Each timer tick causes a full backend roundtrip. Use sensible intervals (e.g. 2000 ms or more) to avoid heavy server load.

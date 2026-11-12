@@ -49,12 +49,12 @@ client->view_display( view->stringify( ) ).
 is therefore a **model update and nothing else**:
 
 ```abap
-CASE client->get_event( ).
-  WHEN `NUMERIC`.
-    mode = `numeric`.
-  WHEN `OFF`.
-    mode = `none`.
-ENDCASE.
+IF client->check_on_event( `NUMERIC` ).
+  mode = `numeric`.
+
+ELSEIF client->check_on_event( `OFF` ).
+  mode = `none`.
+ENDIF.
 ```
 
 No follow-up action travels, and there is no ordering to get right between an

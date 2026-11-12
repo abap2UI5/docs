@@ -68,7 +68,7 @@ The control renders a button; pressing it opens a dialog with the live camera st
 | Event | |
 |---|---|
 | `OnPhoto` | a photo was captured; `photo` carries the same data URL as `value` |
-| `press` | the trigger button was pressed, before the dialog opens. A wire with `s_ctrl-check_prevent_default` vetoes the dialog, so an app can refuse the camera from ABAP |
+| `press` | the trigger button was pressed, before the dialog opens. An `_event( )` with `s_ctrl-check_prevent_default` vetoes the dialog, so an app can refuse the camera from ABAP |
 
 A failure — no HTTPS, a denied permission, a camera another app holds — is shown on a status line inside the dialog and logged to the browser console; no event reaches the backend for it.
 
