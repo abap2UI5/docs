@@ -91,11 +91,11 @@ Only the public API is a contract. Every other segment may be restructured in
 any release.
 
 ::: tip Enforced, not just documented
-A CI gate of the framework, `.github/scripts/object-naming-gate.mjs`
+A CI check of the framework, `.github/scripts/object-naming-gate.mjs`
 (`npm run check:naming`), fails the build when an object outside the public
 API, the frozen package and the two mirrored libraries is added without the
 `ui5` / `ui5f` segment. abaplint's own naming rule only checks the `Z2UI5_`
-prefix, so without that gate a new segment would drift in unnoticed.
+prefix, so without that check a new segment would drift in unnoticed.
 :::
 
 ### Package Layout
@@ -230,7 +230,7 @@ abaplint rewrites object names and every reference the compiler can see — a
 `TYPE REF TO`, a static call, an `INTERFACES` — and leaves a string literal as
 it is. No production code of the framework names one of its own objects in a
 literal (a dynamic lookup takes the name from a typed reference instead), and
-the gate `.github/scripts/rename-literal-gate.mjs` (`npm run check:rename`)
+the check `.github/scripts/rename-literal-gate.mjs` (`npm run check:rename`)
 keeps it that way: it fails a pull request that adds such a literal, and the
 `build-rename` workflow runs it once more over the renamed tree. Two things
 stay outside the rename on purpose.

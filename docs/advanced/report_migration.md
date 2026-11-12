@@ -58,7 +58,7 @@ What it writes is abapGit format, ready to pull:
 | File | What it is |
 | --- | --- |
 | `<class>.clas.abap` | the report class |
-| `<class>.clas.xml` | its sidecar, described with the title of the report |
+| `<class>.clas.xml` | its abapGit metadata file, described with the title of the report |
 | `<class>.clas.locals_def.abap`, `.locals_imp.abap` | the local classes and interfaces of the report, if it has any |
 | `<class>.migration.md` | the migration report — see [below](#the-migration-report) |
 

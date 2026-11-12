@@ -10,6 +10,11 @@ process the landscape already has - the framework is a package of workbench
 objects like any other. This page is about what travels, in which order, and
 what does not travel and is set per system instead.
 
+![The framework comes from GitHub to the development system with abapGit and goes on to quality and production by transport](/configuration/image-3.webp){ width=80% }
+
+*abapGit is used once, on the development system. Every later system gets
+the objects by transport.*
+
 ## What Travels
 
 | Object | Type | Travels? |
@@ -43,9 +48,10 @@ package name is capped at 30 characters) -
 4. **The frontend BSP**, when the launchpad is used, and the tile
    configuration - [Fiori Launchpad](/configuration/launchpad).
 5. **A Hello World check** on the target system before any app arrives:
-   open the node, press *check* on the start page, start the bundled test
-   app. That verifies pull, handler, node, exit and table at once - the same
-   check as the Quickstart's, on the production system.
+   open the node, enter `z2ui5_cl_ui5_app_hi_world` on the start page,
+   press **Check** and open the link. You should see the page *abap2UI5 -
+   Hello World*. That verifies pull, handler, node, exit and table at once -
+   the same check as the Quickstart's, on the production system.
 6. **Your apps.** One class per app; whatever else the app uses - message
    classes, tables, CDS views, function modules - travels with it as it would
    for a report.
@@ -66,7 +72,7 @@ field, SSL requirements - is set on the system it runs on:
   convention. Either way, **activation is per system**: after an import the
   node is inactive until it is activated there.
 - The authorization field of the node is checked against `S_ICF` and is the
-  outer gate of the installation - [Authorization](/configuration/authorization).
+  outer check of the installation - [Authorization](/configuration/authorization).
 - The logon procedure and the SSO setup are standard ICF and belong to the
   Basis team's landscape conventions - [Basis Runbook](/configuration/runbook#the-icf-node).
 
@@ -126,7 +132,7 @@ mechanics differ:
 ## A 7.02 System
 
 Below 7.50 the installation is the `702` branch - the same framework, its
-syntax rewritten by abaplint on every push - and the tag to pin is
+syntax rewritten by abaplint on every push - and the tag to pull is
 `X.Y.Z-702` ([Downporting](/advanced/downporting)). What differs in the
 transport:
 

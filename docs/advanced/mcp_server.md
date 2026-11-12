@@ -28,7 +28,7 @@ examples -> app_guide -> validate_view + screenshot_view -> deploy_app -> build_
 
 Everything it runs locally is infrastructure that already guards the abap2UI5
 ecosystem in CI: the abaplint transpiler and the open-abap runtime, the
-framework's express shim, the samples-controls build and boot gates, and the
+framework's express shim, the samples-controls build and boot checks, and the
 [linter](/advanced/linter)'s validation core.
 
 ## What "MCP" means here
@@ -44,8 +44,21 @@ mode), Claude Desktop.
 
 ## Setting it up
 
-The tools need different things, so the setup is **leveled**: stop at the
-level whose tools you want. Each level adds the ones below it, and a tool whose
+For the usual case, follow
+[AI Setup: The Recommended Path](/advanced/ai_path): one command registers the
+server, and one more adds the browser. This section is the complete
+reference.
+
+The tools need different things, so the setup has **levels**: stop at the
+level whose tools you want.
+
+| Level | You install | Size, time | Tools you get |
+|---|---|---|---|
+| 0 | nothing but the server | none | the knowledge tools: guide, API reference, samples, docs search |
+| 1 | the linter | about 3 MB, a minute | `validate_view`, `screenshot_view` |
+| 2 | clones of the framework and the sample repositories | about 110 MB | the same tools offline, plus `scope_of` and `deploy_app` |
+| 3 | a browser, and one build | a browser download, about a minute | `build_backend`, `run_app`, `interact_app`, `run_unit_tests`, `verify_app` and the `app_*` tools |
+ Each level adds the ones below it, and a tool whose
 prerequisites are missing answers with a message naming what it needs rather
 than failing — the server starts either way. `setup_status` says in one read
 what resolves, what is built and what is still missing.
@@ -190,11 +203,11 @@ To run a checkout instead, swap those two lines for `"command": "node"` and
 The three `env` entries point the server at checkouts that are not its
 siblings — which they cannot be when it runs from npx. Set one only for a
 checkout you actually have, and to its real path; leave the others out, and
-leave `env` out entirely without any. A variable that is set decides alone: a
-placeholder or a wrong path does not fall back to the linter npx installed
+leave `env` out entirely without any. When a variable is set, the server uses
+only that path. With a placeholder or a wrong path, the tools report the
+checkout as missing: they do not fall back to the linter npx installed
 beside the server, to the GitHub mirror, or — for `A2UI5_HOME` — to the
-`@abap2ui5/node-runtime` backend, and the tools report that checkout missing
-instead. VS Code wants the same object under a top-level `"servers"` key
+`@abap2ui5/node-runtime` backend. VS Code wants the same object under a top-level `"servers"` key
 instead of `"mcpServers"`.
 
 ::: tip Using VS Code?
@@ -210,8 +223,8 @@ deliberately does not have: your real systems.
 | `setup_status` | What resolves, what is built, what is missing and how to fix it — in one read. The tool to call first, and whenever another one says something is missing |
 | `capabilities` | Whether abap2UI5 can express a UI5 feature **at all**, from the verified capability map. The question to ask before writing a line of ABAP |
 | `app_guide` | **How to build an app**, live from the framework checkout: the app class template, lifecycle, the view-builder chain, binding, events, popups, navigation, portability |
-| `scaffold_app` | The files a new project starts from, live from app-template — both gate configs, the CI workflow, the abapGit metadata, an `AGENTS.md` and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
-| `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both gate configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing |
+| `scaffold_app` | The files a new project starts from, live from app-template — both lint configs, the CI workflow, the abapGit metadata, an `AGENTS.md` and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
+| `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both lint configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing |
 | `examples` | Search the three sample catalogs for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
 | `read_example` | The source of a sample an `examples` hit named — the whole class, from the checkout or fetched from GitHub |
 | `api_reference` | The client API an app calls, `z2ui5_if_client`, parsed live **with its ABAP-Doc**: methods, parameters, defaults and the `cs_*` constants, looked up instead of guessed |
@@ -219,10 +232,10 @@ deliberately does not have: your real systems.
 | `generation_rules` | The rulebook for porting a UI5 demo-kit sample into the samples-controls corpus — a different job from `app_guide` |
 | `pitfalls` | The catalogs of defects **a green run does not catch**: `{ area: "abap" }` for abapGit import, activation, extended check, downport and runtime; `{ area: "view" }` for the oldest UI5 release. Every entry is a defect that actually shipped |
 | `scope_of` | In/out-of-scope verdict for a UI5 control (since ≤ 1.71, not deprecated) |
-| `validate_view` | **Seconds, not minutes**: the [linter](/advanced/linter)'s gates, from ABAP source or raw XML, judged by your project's own `abap2ui5lint.jsonc`. Findings come with severity, message, line and column — and what each rule that fired *means*, so interpreting one needs no web search |
+| `validate_view` | **Seconds, not minutes**: the [linter](/advanced/linter)'s checks, from ABAP source or raw XML, judged by your project's own `abap2ui5lint.jsonc`. Findings come with severity, message, line and column — and what each rule that fired *means*, so interpreting one needs no web search |
 | `fix_view` | The linter's **mechanical** fixes applied, and the corrected source handed back — nothing is written anywhere |
 | `screenshot_view` | **See the view in seconds**, with no build and no backend: reconstructed, rendered and returned as an image. Several viewports in one session, any theme, and preview data for the tables a `SELECT` would fill |
-| `deploy_app` | Write the class plus its abapGit sidecar (and its test classes) into a gitignored sandbox and abaplint it against the full framework context |
+| `deploy_app` | Write the class plus its abapGit metadata file (`.clas.xml`) (and its test classes) into a gitignored sandbox and abaplint it against the full framework context |
 | `read_app` | A deployed app's source, read back as it sits in the sandbox, and whether the built backend already carries it |
 | `build_backend` | Get the transpiled Node backend — the framework's released build, or its npm package, with only the deployed apps transpiled on top |
 | `build_log` | The last build's full output, page by page — the error the result's short tail cut off |
@@ -283,7 +296,7 @@ database table it reads, which the local backend does not have.
    drive an event, `run_unit_tests` for the assertions. Then edit, validate,
    deploy, build, run again. `verify_app` does the validation, deploy, build,
    unit tests and boot in one call, and stops at the first stage that fails.
-8. `pitfalls` before calling it done — the defects no gate here can see: what
+8. `pitfalls` before calling it done — the defects no check here can see: what
    the class does on a *real* system, and what the view does on the *oldest*
    one. A green loop is not the same as a shipped app.
 
@@ -308,9 +321,9 @@ database table it reads, which the local backend does not have.
 
 ## Next Steps
 
-- [Developing with AI](/get_started/ai) — the whole AI setup in rising order of
-  effort; this server is the top rung
-- [abap2UI5 linter](/advanced/linter) — the gates behind `validate_view` and
+- [AI Setup: The Recommended Path](/advanced/ai_path) — the three steps this
+  server is part of
+- [abap2UI5 linter](/advanced/linter) — the checks behind `validate_view` and
   `screenshot_view`
 - [VS Code Extension](/advanced/vscode) — registers this server for you, and
   adds the real-system tools

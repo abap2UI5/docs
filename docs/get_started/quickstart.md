@@ -28,7 +28,7 @@ Four things the three steps below assume:
 - **Developer authorization**, plus the right to create and activate an ICF
   node in `SICF` — on many systems a Basis task, so ask early.
 - **A package** for the handler class. A local `$TMP` package is fine for a
-  first look; a transportable one comes with [Productive Usage](/configuration/productive_usage).
+  first look; a transportable one comes with [Go-Live Checklist](/configuration/productive_usage).
 - **The browser reaches the OpenUI5 CDN**, or the system serves UI5 itself —
   see [Bootstrapping](/configuration/setup/ui5_bootstrapping) for the second case.
 
@@ -64,7 +64,7 @@ repository.
 The `-702` tag is a downported build of the same release, with the same
 features: see [Downporting](/advanced/downporting). Why a tag and not `main`
 for a productive system: see [Versioning](/configuration/versioning) and
-[Productive Usage](/configuration/productive_usage). The cloud systems have a
+[Go-Live Checklist](/configuration/productive_usage). The cloud systems have a
 page of their own: [S/4 Public Cloud](/configuration/s4_public_cloud).
 :::
 

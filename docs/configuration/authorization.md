@@ -4,7 +4,15 @@ description: Authorization for abap2UI5 apps at the service level or in the app 
 ---
 # Authorization
 
-abap2UI5 gives you flexibility in managing authorization. It has no built-in authorization mechanism, so you can build your own solution at either the service or the app level.
+abap2UI5 has no authorization mechanism of its own. You use the ones ABAP already has, in three places:
+
+| Layer | Decides | Where |
+|---|---|---|
+| The ICF node | who reaches abap2UI5 at all | `SICF`: the field *SAP Authorization* on the node; `PFCG`: the object `S_ICF` in a role. No code |
+| The HTTP handler class | a check of your own for everything behind one node | an `AUTHORITY-CHECK` in your handler class, before it calls the framework |
+| The app class | which user may run this app, and which data it may show | an `AUTHORITY-CHECK` at the top of `main( )` |
+
+The recommended pattern: **one node per department or application area, and a check inside every app**. A node per app is not needed.
 
 ## Service-Level
 The HTTP handler decides **who reaches abap2UI5 at all** - not which app runs. Logon procedure, SSO and the authorization field of the node in `SICF` (checked against `S_ICF`) work as on any other ICF service, and need no code.
@@ -16,7 +24,9 @@ Every ICF node has a field *SAP Authorization* on its *Service Data* tab in `SIC
 2. In `PFCG`, add `S_ICF` to the role of the users who may use the apps behind that node: `ICF_FIELD` = `SERVICE`, `ICF_VALUE` = `Z2UI5_SALES`.
 3. A user without that value gets the standard *not authorized* page of the ICF before any ABAP of yours runs.
 
-The check is per node, so the recommended pattern is **one node per area and an app-level check inside the apps**: one ICF node per department or application area, each with its own `S_ICF` value and its own handler class calling `z2ui5_cl_ui5_http_handler=>run( )`, decides who may reach that area at all; which app of the area a user may run, and which data it may show, is decided in the app class (below). A node per app does not scale and is not needed, because the class name a node starts is user input anyway.
+The check is per node. Create one ICF node per department or application area, each with its own `S_ICF` value and its own handler class that calls `z2ui5_cl_ui5_http_handler=>run( )`. The node decides who may reach that area at all.
+
+Which app of the area a user may run, and which data it may show, is decided in the app class ([below](#app-level)). A node per app does not help: the class name a node starts comes from the browser, so a user can send another one.
 
 For a check of your own beyond `S_ICF`, put it in the handler before it calls the framework:
 

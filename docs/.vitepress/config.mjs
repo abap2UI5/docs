@@ -454,12 +454,15 @@ export default defineConfig({
         // the list under it did not say. Every section link is now the first
         // page under it, and test/sidebar-titles.test.mjs holds it.
         text: "Configuration",
-        link: "/configuration/installation",
+        link: "/configuration/productive_usage",
         collapsed: true,
         items: [
           // The file keeps its name - the URL has been public for years - and
           // the page says what it is about: not how to install the framework
           // (that is the Quickstart) but where the endpoint lives per system.
+          // first on purpose: it is the page a Basis admin needs before go-live,
+          // and it links every other page of the chapter
+          { text: "Go-Live Checklist", link: "/configuration/productive_usage" },
           { text: "Deployment Scenarios", link: "/configuration/installation" },
           {
             text: "Setup",
@@ -482,7 +485,6 @@ export default defineConfig({
           // goes looking for the other.
           { text: "Monitoring", link: "/configuration/monitoring" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
-          { text: "Productive Usage", link: "/configuration/productive_usage" },
           // The operations pages behind it, in the order a Basis team meets
           // them: what a release is and how to move, what travels, what to
           // watch, how much it costs in work processes and table rows.
@@ -630,6 +632,7 @@ export default defineConfig({
               { text: "abap2UI5 linter", link: "/advanced/linter" },
               { text: "MCP Server", link: "/advanced/mcp_server" },
               { text: "VS Code Extension", link: "/advanced/vscode" },
+              { text: "AI Setup: The Recommended Path", link: "/advanced/ai_path" },
               { text: "Agent Setup", link: "/advanced/agent_setup" },
             ],
           },

@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: The optional tooling around abap2UI5, in the order a developer meets it - the playground, the layout editor, the Claude Code plugin and MCP server, the VS Code extension, the linter in CI, the headless frontend and the agent runtime - each with what it does, when to use it and how to start it.
+description: The optional tooling around abap2UI5, in the order a developer meets it - the playground, the layout editor, the Claude Code plugin and MCP server, the VS Code extension, the linter in CI, the headless frontend and the agent add-on - each with what it does, when to use it and how to start it.
 ---
 # Tooling
 
@@ -20,7 +20,7 @@ does what, and which versions go together, is on
 [npm Packages](/advanced/npm_packages).
 
 ```
-playground -> layout editor -> plugin + MCP server -> VS Code -> linter in CI -> headless frontend -> agent runtime
+playground -> layout editor -> plugin + MCP server -> VS Code -> linter in CI -> headless frontend -> agent add-on 
 (try it in    (sketch the      (an agent writes,      (write,     (every push,   (test a session   (agents use the
  the browser)  view, get a      checks and runs it,    lint, F9)   annotated)     in ABAP Unit)     app in the system)
                class)           no system)
@@ -107,18 +107,19 @@ and read the errors and the screenshot. The agent writes, checks, runs, looks
 and iterates — on your machine. It works with any MCP client: Claude Code,
 Cursor, VS Code in agent mode, Claude Desktop.
 
-**Use it** whenever an assistant writes the code. The cheaper rungs — the
-paragraph to paste and the index to point at — are on
-[Developing with AI](/get_started/ai); this is the top one.
+**Use it** whenever an assistant writes the code.
+[AI Setup: The Recommended Path](/advanced/ai_path) puts it into three steps;
+the step before any tool, a paragraph to paste, is on
+[Developing with AI](/get_started/ai).
 
 ```sh
 claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server abap2ui5-mcp
 ```
 
 That is the view checks out of the box; the screenshot, sandbox and run tools
-are a leveled setup, and `setup_status` tells the agent what else works on
-this machine. For Claude Code the **plugin** bundles the server with the
-framework's agent skills — building an app, the ABAP and UI5 pitfall
+need more setup, level by level, and `setup_status` tells the agent what else
+works on this machine. For Claude Code the **plugin** bundles the server with
+the framework's agent skills — building an app, the ABAP and UI5 pitfall
 catalogs, the view-chain layout — in one install:
 
 ```text
@@ -127,9 +128,7 @@ catalogs, the view-chain layout — in one install:
 ```
 
 [MCP Server](/advanced/mcp_server) has the whole of it: what MCP means here,
-the three setup levels, every tool and the loop they are meant to be used in.
-[Agent Setup](/advanced/agent_setup) is the rest of an agent's setup, in
-rising order of effort.
+the setup levels and every tool.
 
 ## 4. VS Code extension: lint while you type, F9 against a system
 
@@ -182,8 +181,8 @@ not merely render wrongly but fails to load at all.
 
 The playground, the MCP server and the editor above all run this same linter.
 **Use it** in CI so that nothing reaches a system that the three did not
-catch — and so that a project nobody opens in those tools is held to the same
-floor. The GitHub Action is the whole setup:
+catch — and so that a project nobody opens in those tools passes the same
+checks. The GitHub Action is the whole setup:
 
 ```yaml
 steps:
@@ -202,7 +201,7 @@ npx @abap2ui5/linter src
 ```
 
 The [linter page](/advanced/linter) has the rest: reading a finding, the two
-gates, `--fix`, waiving a rule, and the baseline for switching it on over a
+checks, `--fix`, waiving a rule, and the baseline for switching it on over a
 codebase that already exists.
 
 ## 6. Headless frontend: a user session as an ABAP Unit test
@@ -240,7 +239,7 @@ which was never the part with your bugs in it. Install it with abapGit next
 to the framework; [Step 12](/tutorials/step-12#testing-the-roundtrip) of the
 walkthrough shows it in a project.
 
-## 7. Agent runtime: apps operated by agents in the system
+## 7. Agent add-on: apps operated by agents in the system
 
 [**abap2UI5-addons/abap-agent-runtime**](https://github.com/abap2UI5-addons/abap-agent-runtime)
 — an MCP endpoint inside the SAP system itself, written in ABAP. Any MCP
@@ -253,12 +252,8 @@ next to the app: whatever the app lets a user do on a screen, it lets an agent
 do, and nothing more. Underneath it is the headless frontend above, playing
 the browser's half of the protocol.
 
-::: info Not in a release yet
-The add-on is on `main` of abap-agent-runtime and its generated `standard` /
-`cloud` branches, pulled into a 7.5x on-premise system but not yet run in
-production, and its API may still change before 1.0. Its CHANGELOG says
-when it does.
-:::
+The add-on is not in a release yet; its status is on
+[Agent-Operable Apps](/advanced/agents#in-production-the-agent-add-on).
 
 **Use it** when the users of an app are AI agents — any MCP client —
 acting for the people who log on. The endpoint is
@@ -281,8 +276,8 @@ four tools, the opt-in interface, the policies and the security model.
 
 - [Developing with AI](/get_started/ai) — the cheapest steps for an assistant,
   before any of the tools above
-- [Agent Setup](/advanced/agent_setup) — the conventions file, the gates, the
-  MCP loop and the editor, in rising order of effort
+- [AI Setup: The Recommended Path](/advanced/ai_path) — three steps for an
+  assistant that checks its own work
 - [Working Off-Stack](/advanced/working_off_stack) — the app-template that has
   the linter and the agent setup wired in
 - [Agent-Operable Apps](/advanced/agents) — the other direction: an agent

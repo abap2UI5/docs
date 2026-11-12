@@ -239,7 +239,9 @@ or another key - exactly as with `?app_start=` on abap2UI5's own page, so
 embedding the app changes nothing here. The framework checks the type and not
 the user: a class that does not implement `z2ui5_if_app` is refused before it
 is instantiated, and a draft belongs to the user who created it. Who may run
-what is decided in two places, and both are ordinary ABAP:
+what is decided in the layers that
+[Authorization](/configuration/authorization) describes. Two of them matter
+for an embedded app, and both are ordinary ABAP:
 
 - **The node decides who reaches abap2UI5 at all.** Logon procedure, SSO and
   the authorization field of the node in `SICF` (checked against `S_ICF`)
@@ -297,7 +299,7 @@ which move every Fiori app of the system at once as well. The frontend comes
 from the backend, so browser and server always run the same version.
 
 Pin a [release](https://github.com/abap2UI5/abap2UI5/releases/) rather than
-tracking `main` ([Productive Usage](/configuration/productive_usage)). To keep
+tracking `main` ([Go-Live Checklist](/configuration/productive_usage)). To keep
 the embedded sections on a fixed version while development moves on, install
 abap2UI5 a second time under another prefix ([Renaming](/advanced/renaming))
 with a node of its own, and point the control's `endpoint` at it.

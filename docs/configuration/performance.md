@@ -48,9 +48,7 @@ ENDMETHOD.
 ```
 
 
-## Suggestions
-Want to tune your app further? A few tips:
-- Call `client->view_display` only when needed — on initialization and when the view structure changes. For a pure data change, set the attribute and return; the framework pushes the delta and UI5 re-renders only the controls that changed.
+## Keep the Model and the Instance Small
 
 - Bind data with `client->_bind` — the framework sends only the paths the user actually edited back to ABAP (a delta), so read-only and untouched fields cost nothing on the return trip.
 - Declare public attributes in your app class only for variables shown on the frontend: public is what `_bind( )` needs to reach an attribute, and only what is bound becomes part of the model sent to the browser. Every attribute of the instance, whatever its visibility, is serialized into the draft either way - read on every click, written on every click - so keep large data out of the instance rather than merely private. What a draft row holds and how big the table gets is on [Sizing](/configuration/sizing#what-a-draft-row-holds).
@@ -59,5 +57,5 @@ Want to tune your app further? A few tips:
 ## Measuring It
 To see where the time goes in production rather than guess, log the roundtrips: the [roundtrip monitor](/configuration/monitoring) reports every roundtrip's duration in three phases — reading the draft, your app's `main( )`, building the response — plus the model and response sizes and the browser's own measure, and the Admin Cockpit add-on turns that into p95 times per app and hints such as a model that has grown too large. *From abap2UI5 1.147.0 on.*
 
-## Performance Issues?
-If you hit performance issues, build a sample and submit a pull request to the samples repository. We're glad to analyze it and see whether abap2UI5 can be made even faster.
+## Still Slow?
+Build a small sample that shows the problem and send it as a pull request to the [samples repository](https://github.com/abap2UI5/samples). The maintainers analyze it and check whether the framework can be made faster.

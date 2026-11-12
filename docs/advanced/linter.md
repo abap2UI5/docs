@@ -100,7 +100,8 @@ Which severities break the build is a separate decision from what is reported:
 
 ## What it checks
 
-Two gates run over every file, and they answer different questions.
+Two checks run over every file, and they answer different questions. The
+linter calls each of them a *gate*: a check that has to pass.
 
 ### The property gate
 

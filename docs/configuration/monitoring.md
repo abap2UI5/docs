@@ -11,144 +11,16 @@ add-on is installed from its own repository with abapGit, like every add-on.
 
 abap2UI5 serves every roundtrip and keeps no record of any of them. That is on
 purpose: what to log, where, for how long and under which privacy rules is a
-decision of the installation, not of the framework. What the framework offers
-instead is a **seam** — one interface it calls after every roundtrip, with
-everything it knows about it — and an add-on that builds the usual answers on
-top of it.
+decision of the installation, not of the framework. The framework offers two
+things instead:
 
-## The roundtrip monitor
+| You are | You want | Read |
+| --- | --- | --- |
+| an administrator | to see whether abap2UI5 is used, fast and safely configured, without writing code | [Admin Cockpit](#admin-cockpit), the add-on |
+| a developer | to write your own log of roundtrips | [The roundtrip monitor](#the-roundtrip-monitor), the interface the add-on is built on |
 
-`z2ui5_if_ui5_monitor` is an interface in the released API. Implement it in a
-class of your own, in a package of your own, and abap2UI5 finds the class the
-way it finds the [user exit](/advanced/extensibility/user_exits): the first
-class implementing the interface, sorted by name, looked up once per roll area.
-Its one method, `on_roundtrip`, is called once per POST roundtrip, after the
-response is built — on success and on failure alike.
-
-It is not called for the page request (GET), for HEAD, or for a POST the
-[CSRF check](/configuration/security#cross-site-request-forgery-csrf) rejected:
-none of them runs an app.
-
-### Switch it on
-
-The monitor is **off until the user exit switches it on**. Nothing seeds the
-switch: without it the framework does not even look for an implementing
-class. Set `check_monitor_active` in `set_config_http_post` of your
-[user exit](/advanced/extensibility/user_exits):
-
-```abap
-METHOD z2ui5_if_ui5_exit~set_config_http_post.
-  cs_config-check_monitor_active = abap_true.
-ENDMETHOD.
-```
-
-The field is read on every roundtrip, so setting it back to `abap_false`
-stops the monitor on the next one — in a running stateful session too.
-
-Why opt-in: a monitor is code of another package running inside every
-roundtrip of every app. What the method raises is caught (below), but a
-syntax error in the monitor class, or in any class it uses, is the runtime
-error `SYNTAX_ERROR` — a short dump no `CATCH` stops, on every request of
-every user. Only code that is never called cannot do that. So switch the
-monitor on once its package is pulled completely, active and checked, and
-not before.
-
-### What a roundtrip reports
-
-`on_roundtrip` receives one structure, `is_roundtrip`:
-
-| Field | Content |
-| --- | --- |
-| `app` | the app class that answered, upper case — or the one that failed; empty when the request failed before an app was resolved |
-| `event` | the event of this roundtrip, empty on a first start or a navigation |
-| `draft_id`, `draft_id_prev` | the draft id the response carries and the one the request came with; `draft_id` is empty on failure, `draft_id_prev` on a first start |
-| `uname` | the user |
-| `check_sticky` | the app runs in a stateful session — this decides the LUW, below |
-| `check_start` | the first request of an app start |
-| `timestampl` | when the roundtrip started, UTC |
-| `ms_total`, `ms_load`, `ms_main`, `ms_render` | milliseconds in total and per phase: reading the request and the draft, the app's `main( )`, building the response and saving the draft |
-| `bytes_request`, `bytes_response`, `bytes_model` | the sizes of the JSON strings in characters; the response and the model are 0 on failure |
-| `ms_client_prev` | how long the **previous** roundtrip took as the browser measured it, sent along with this request; 0 when unknown |
-| `check_error`, `error_text`, `error_class` | whether it failed, the full exception chain as the error response renders it — with the same error id the user sees — and the class of the root cause |
-
-### An implementation
-
-A monitor that keeps the slow and the failed roundtrips in a table of your own:
-
-```abap
-CLASS zcl_my_roundtrip_monitor DEFINITION PUBLIC FINAL CREATE PUBLIC.
-
-  PUBLIC SECTION.
-    INTERFACES z2ui5_if_ui5_monitor.
-
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
-
-
-CLASS zcl_my_roundtrip_monitor IMPLEMENTATION.
-
-  METHOD z2ui5_if_ui5_monitor~on_roundtrip.
-
-    " only what is worth reading later
-    IF is_roundtrip-check_error = abap_false AND is_roundtrip-ms_total < 2000.
-      RETURN.
-    ENDIF.
-
-    " a stateful app owns the LUW - committing here would commit its work
-    IF is_roundtrip-check_sticky = abap_true.
-      RETURN.
-    ENDIF.
-
-    TRY.
-        " zmy_rt_log is a table of your own
-        DATA(ls_log) = VALUE zmy_rt_log( app         = is_roundtrip-app
-                                         event       = is_roundtrip-event
-                                         uname       = is_roundtrip-uname
-                                         timestampl  = is_roundtrip-timestampl
-                                         ms_total    = is_roundtrip-ms_total
-                                         error_class = is_roundtrip-error_class ).
-        INSERT zmy_rt_log FROM @ls_log.
-        COMMIT WORK.
-      CATCH cx_root ##NO_HANDLER.
-        " a monitor never breaks an app
-    ENDTRY.
-
-  ENDMETHOD.
-
-ENDCLASS.
-```
-
-### The rules an implementation lives by
-
-- **It is synchronous.** Whatever the method costs, the user waits for. Keep it
-  to a few single-row statements and decide early what to skip.
-- **It fails open.** Anything the method raises is caught and ignored, and so
-  is a class that cannot be instantiated: a broken monitor costs its log
-  entries, never the app. The user exit does the opposite and fails closed,
-  because it is a hardening control; a monitor only watches.
-- **The LUW depends on `check_sticky`.** For an app that is not sticky the LUW
-  is empty when the monitor runs: on success the framework has committed its
-  draft save, on failure it rolled the LUW back before the call. A
-  `COMMIT WORK` in the monitor commits its own writes and nothing of the app.
-  For a sticky app the LUW belongs to the app, which may hold uncommitted work
-  and locks across roundtrips — do not commit then. Keep the entry and write it
-  on a later roundtrip that is not sticky, or through a database connection of
-  its own.
-- **Commit yourself.** The framework offers no commit helper; an
-  implementation issues `COMMIT WORK` itself.
-- **One monitor is called.** With two implementing classes on a system, the
-  first by name wins — the same rule as the user exit, so the choice does not
-  change after a transport or a system copy. A monitor that has to feed two
-  consumers calls the second one itself.
-
-While the switch is off nothing changes at all: the exit is asked for the
-flag and the class repository is not consulted. With the switch on and no
-implementing class, the lookup runs once per roll area and finds nothing. A
-host without a class repository — the framework running on Node — and a unit
-test install a monitor directly with
-`z2ui5_cl_ui5_srv_monitor=>set_monitor( )`; a monitor installed that way is
-the host's choice and bypasses the switch.
+The words *roundtrip* and *app draft* are explained in the
+[Glossary](/get_started/glossary).
 
 ## Admin Cockpit
 
@@ -180,6 +52,10 @@ the CSP, the response headers — is explained on the
 
 ### Installation
 
+Which branch you need depends on your abap2UI5 release: **1.147.0 or later:
+branch `main`, then switch the monitor on. 1.146.0: branch `standalone`, then
+change one line in your handler.** The steps:
+
 1. Install the framework first (1.146.0 or later).
 2. Install the cockpit with abapGit into a package of its own. Pick the
    branch by your abap2UI5 release:
@@ -193,8 +69,10 @@ the CSP, the response headers — is explained on the
    interface, because abapGit always pulls a whole repository and that class
    cannot activate without the interface. Once your abap2UI5 has it, switch
    the repository to `main` and pull.
-3. Start the cockpit right away: until somebody has claimed it, it shows
-   nothing but a screen for claiming the administrator role (below).
+3. Start the cockpit right away with `?app_start=z2ui5_cl_cockpit_app`. You
+   should see one button, *Claim the administrator role*: until somebody has
+   claimed it, the cockpit shows nothing else (see
+   [Who may open it](#who-may-open-it)). Press it.
 4. Feed it. Two ways, which can be combined — with both, the monitor counts
    and the handler line only records the request and response bodies:
 
@@ -205,12 +83,13 @@ the CSP, the response headers — is explained on the
      and records the roundtrip. Do this once the pull is complete and every
      object is active.
    - **The monitor**, with branch `main`: switch it on in your user exit, as
-     described [above](#switch-it-on) —
+     described [below](#switch-it-on) —
      `cs_config-check_monitor_active = abap_true` in `set_config_http_post`.
      It adds the phases of a roundtrip. Until the exit says so, abap2UI5
      calls no monitor, and the usage, error and performance tabs stay empty.
 
-The README of the add-on carries the ABAP Cloud form of the handler line.
+After the next click in any app, the Overview tab counts a roundtrip. The
+README of the add-on carries the ABAP Cloud form of the handler line.
 
 ### Who may open it
 
@@ -276,38 +155,6 @@ z2ui5_cl_cockpit_auth=>reset_admins( ).
 
 Both commit, and both are written to the change log.
 
-### The change log
-
-Every change made through the cockpit is recorded with time, user, action and
-details: the claim and a reset, administrators added and removed, settings
-saved, drafts deleted, logs purged, the housekeeping job, and every
-reproduced error. The Settings tab shows it, newest first. It lives in the
-cockpit's table `Z2UI5_T_CK_AUD` and is kept as long as the aggregates.
-
-### What it records
-
-The add-on's monitor class maps the roundtrip structure by name and hands it
-to a recorder, which writes aggregates per day, hour, app and event — counts,
-errors, the time of each phase, sizes and a latency histogram the p95 is read
-from — plus one raw row for each failed or slow roundtrip. The mode decides how
-much: `ALL`, `SAMPLE` (every error and a share of the rest), `ERRORS` or `OFF`.
-Its own tables purge themselves by retention once a day.
-
-The aggregates are added up without row locks: a roundtrip lands in the row of
-its hour with one `UPDATE … SET cnt = cnt + 1, …`, which is atomic on every
-database, so two work processes never lose each other's counts and nobody
-waits. The sums — milliseconds and kilobytes — are `DEC 15` columns: an
-`INT4` overflows at 2.1 billion, which the milliseconds of one busy app can
-reach within an hour, `INT8` does not exist below 7.50, and `DEC 15` exists on
-every release and on ABAP Cloud. Increments are capped at the largest value
-the column holds rather than overflowing, and totals over several days are
-shown capped the same way.
-
-It follows the LUW rule above: for a sticky app it writes nothing and keeps
-the entry in the roll area until the first roundtrip there that is not sticky.
-A session that ends while still sticky loses those entries — the price of
-never touching the app's LUW.
-
 ### Privacy
 
 No user names are stored by default. Users are counted under a pseudonym made
@@ -322,6 +169,24 @@ no. 6 BetrVG, whether or not anybody intends to evaluate individuals. The
 default and the "no counting" mode are designed to stay on the side of
 aggregate system monitoring; agree plain user names with your works council and
 your data protection officer before switching them on.
+
+### Housekeeping as a job
+
+What the Drafts & Housekeeping tab does — delete expired drafts through the
+framework's own draft store, purge the cockpit's rows past their retention —
+is one call for a background job, `z2ui5_cl_cockpit_job=>run( )`: a two-line
+report scheduled in SM36 on Standard ABAP, an application job on ABAP Cloud.
+
+The cockpit runs on ABAP Cloud and on Standard ABAP from 7.50, with a 7.02
+downport checked in its CI, and its UI runs on UI5 1.71 and later.
+
+### The change log
+
+Every change made through the cockpit is recorded with time, user, action and
+details: the claim and a reset, administrators added and removed, settings
+saved, drafts deleted, logs purged, the housekeeping job, and every
+reproduced error. The Settings tab shows it, newest first. It lives in the
+cockpit's table `Z2UI5_T_CK_AUD` and is kept as long as the aggregates.
 
 ### Reproducing an error
 
@@ -342,7 +207,7 @@ log first.
 
 What can be reproduced, all of it stated in the dialog:
 
-- **Draft-based apps only** — a sticky (stateful) app keeps no draft to resume.
+- **Stateless apps only** — a stateful app keeps no draft to resume.
 - **Only drafts that still exist** — drafts expire, after 4 hours by default.
 - **Only your own drafts** — abap2UI5 binds a draft to its owner. The cockpit
   knows the owner from the user name (user tracking with plain names) or from
@@ -374,20 +239,172 @@ The security traffic light gets a line for it: a disabled endpoint is green,
 an enabled one without an agent administrator is red, and one that allows
 every app class or reaches no app at all is yellow.
 
-### Housekeeping as a job
+### What the cockpit records
 
-What the Drafts & Housekeeping tab does — delete expired drafts through the
-framework's own draft store, purge the cockpit's rows past their retention —
-is one call for a background job, `z2ui5_cl_cockpit_job=>run( )`: a two-line
-report scheduled in SM36 on Standard ABAP, an application job on ABAP Cloud.
+The add-on's monitor class maps the roundtrip structure by name and hands it
+to a recorder, which writes aggregates per day, hour, app and event — counts,
+errors, the time of each phase, sizes and a latency histogram the p95 is read
+from — plus one raw row for each failed or slow roundtrip. The mode decides how
+much: `ALL`, `SAMPLE` (every error and a share of the rest), `ERRORS` or `OFF`.
+Its own tables purge themselves by retention once a day.
 
-The cockpit runs on ABAP Cloud and on Standard ABAP from 7.50, with a 7.02
-downport checked in its CI, and its UI runs on UI5 1.71 and later.
+The aggregates are added up without row locks: a roundtrip lands in the row of
+its hour with one `UPDATE … SET cnt = cnt + 1, …`, which is atomic on every
+database, so two work processes never lose each other's counts and nobody
+waits. The sums — milliseconds and kilobytes — are `DEC 15` columns: an
+`INT4` overflows at 2.1 billion, which the milliseconds of one busy app can
+reach within an hour, `INT8` does not exist below 7.50, and `DEC 15` exists on
+every release and on ABAP Cloud. Increments are capped at the largest value
+the column holds rather than overflowing, and totals over several days are
+shown capped the same way.
+
+It follows the [LUW rule](#the-rules-an-implementation-lives-by): for a
+stateful app it writes nothing and keeps the entry in the roll area until the
+first roundtrip there that is not stateful. A session that ends while still
+stateful loses those entries. That is the price of never touching the app's
+LUW.
+
+## The roundtrip monitor
+
+*For developers who write their own log. An administrator who installs the
+cockpit needs only [Switch it on](#switch-it-on) from this part.*
+
+`z2ui5_if_ui5_monitor` is an interface in the released API. Implement it in a
+class of your own, in a package of your own, and abap2UI5 finds the class the
+way it finds the [user exit](/advanced/extensibility/user_exits): the first
+class implementing the interface, sorted by name, looked up once per roll area.
+Its one method, `on_roundtrip`, is called once per POST roundtrip, after the
+response is built — on success and on failure alike.
+
+It is not called for the page request (GET), for HEAD, or for a POST the
+[CSRF check](/configuration/security#cross-site-request-forgery-csrf) rejected:
+none of them runs an app.
+
+### Switch it on
+
+The monitor is **off until the user exit switches it on**. The switch has no
+default value: without it the framework does not even look for an
+implementing class. Set `check_monitor_active` in `set_config_http_post` of your
+[user exit](/advanced/extensibility/user_exits):
+
+```abap
+METHOD z2ui5_if_ui5_exit~set_config_http_post.
+  cs_config-check_monitor_active = abap_true.
+ENDMETHOD.
+```
+
+The field is read on every roundtrip, so setting it back to `abap_false`
+stops the monitor on the next one — in a running stateful session too.
+
+Switch the monitor on only after its package is pulled completely, active
+and free of syntax errors. The reason: a monitor is code of another package
+that runs inside every roundtrip of every app. What the method raises is
+caught (below). A syntax error in the monitor class, or in any class it uses,
+is different: it is the runtime error `SYNTAX_ERROR`, a short dump that no
+`CATCH` stops, on every request of every user.
+
+### What a roundtrip reports
+
+`on_roundtrip` receives one structure, `is_roundtrip`:
+
+| Field | Content |
+| --- | --- |
+| `app` | the app class that answered, upper case — or the one that failed; empty when the request failed before an app was resolved |
+| `event` | the event of this roundtrip, empty on a first start or a navigation |
+| `draft_id`, `draft_id_prev` | the draft id the response carries and the one the request came with; `draft_id` is empty on failure, `draft_id_prev` on a first start |
+| `uname` | the user |
+| `check_sticky` | `abap_true` when the app runs in a stateful session — this decides the LUW, below |
+| `check_start` | the first request of an app start |
+| `timestampl` | when the roundtrip started, UTC |
+| `ms_total`, `ms_load`, `ms_main`, `ms_render` | milliseconds in total and per phase: reading the request and the draft, the app's `main( )`, building the response and saving the draft |
+| `bytes_request`, `bytes_response`, `bytes_model` | the sizes of the JSON strings in characters; the response and the model are 0 on failure |
+| `ms_client_prev` | how long the **previous** roundtrip took as the browser measured it, sent along with this request; 0 when unknown |
+| `check_error`, `error_text`, `error_class` | whether it failed, the full exception chain as the error response renders it — with the same error id the user sees — and the class of the root cause |
+
+### An implementation
+
+A monitor that keeps the slow and the failed roundtrips in a table of your own:
+
+```abap
+CLASS zcl_my_roundtrip_monitor DEFINITION PUBLIC FINAL CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_ui5_monitor.
+
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+CLASS zcl_my_roundtrip_monitor IMPLEMENTATION.
+
+  METHOD z2ui5_if_ui5_monitor~on_roundtrip.
+
+    " only what is worth reading later
+    IF is_roundtrip-check_error = abap_false AND is_roundtrip-ms_total < 2000.
+      RETURN.
+    ENDIF.
+
+    " a stateful app owns the LUW - committing here would commit its work
+    IF is_roundtrip-check_sticky = abap_true.
+      RETURN.
+    ENDIF.
+
+    TRY.
+        " zmy_rt_log is a table of your own
+        DATA(ls_log) = VALUE zmy_rt_log( app         = is_roundtrip-app
+                                         event       = is_roundtrip-event
+                                         uname       = is_roundtrip-uname
+                                         timestampl  = is_roundtrip-timestampl
+                                         ms_total    = is_roundtrip-ms_total
+                                         error_class = is_roundtrip-error_class ).
+        INSERT zmy_rt_log FROM @ls_log.
+        COMMIT WORK.
+      CATCH cx_root ##NO_HANDLER.
+        " a monitor never breaks an app
+    ENDTRY.
+
+  ENDMETHOD.
+
+ENDCLASS.
+```
+
+### The rules an implementation lives by
+
+- **It is synchronous.** Whatever the method costs, the user waits for. Keep it
+  to a few single-row statements and decide early what to skip.
+- **Its errors are ignored.** Anything the method raises is caught and
+  ignored, and so is a class that cannot be instantiated: a broken monitor
+  loses its log entries and never stops the app. The user exit does the
+  opposite: an exit that cannot run stops the request with an error, because
+  it carries security settings. A monitor only watches.
+- **The LUW depends on `check_sticky`.** For a stateless app (`check_sticky`
+  is `abap_false`) the LUW is empty when the monitor runs: on success the
+  framework has committed its draft save, on failure it rolled the LUW back
+  before the call. A `COMMIT WORK` in the monitor commits its own writes and
+  nothing of the app. For a stateful app the LUW belongs to the app, which
+  may hold uncommitted work and locks across roundtrips — do not commit
+  then. Keep the entry and write it on a later roundtrip that is stateless,
+  or through a database connection of its own.
+- **Commit yourself.** The framework offers no commit helper; an
+  implementation issues `COMMIT WORK` itself.
+- **One monitor is called.** With two implementing classes on a system, the
+  first by name wins — the same rule as the user exit, so the choice does not
+  change after a transport or a system copy. A monitor that has to feed two
+  consumers calls the second one itself.
+
+While the switch is off nothing changes at all: the exit is asked for the
+flag and the class repository is not consulted. With the switch on and no
+implementing class, the lookup runs once per roll area and finds nothing. A
+host without a class repository — the framework running on Node — and a unit
+test install a monitor directly with
+`z2ui5_cl_ui5_srv_monitor=>set_monitor( )`; a monitor installed that way is
+the host's choice and bypasses the switch.
 
 ## Next Steps
 
 - [User Exits](/advanced/extensibility/user_exits) — the other interface the
-  framework finds on its own, and the one that fails closed
+  framework finds on its own, and the one whose errors stop the request
 - [Security](/configuration/security) — what the cockpit's traffic light checks
 - [Performance](/configuration/performance) — what to do about a slow p95
 - [Agent-Operable Apps](/advanced/agents) — the same roundtrip, driven by an AI

@@ -23,8 +23,8 @@ repository, already assembled.
 | `src/zcl_app_001` | a working app — an input, a bound table, an event — in the canonical shape its `AGENTS.md` describes |
 | `abaplint.jsonc` | ABAP syntax and style, with the framework resolved as a dependency, so it compiles the app **without an SAP system** |
 | `abap2ui5lint.jsonc` | the [abap2UI5 linter](/advanced/linter) — the view your ABAP builds, judged against the UI5 API and against your own class |
-| `.github/workflows/check.yml` | both gates on every push and pull request: abaplint at the version `package-lock.json` pins, the linter through its GitHub Action, whose pin the template keeps on the release line of its linter devDependency |
-| `AGENTS.md` | the conventions an AI assistant should follow in this project, plus a `.claude/settings.json` allowlist so it can run the gates without asking |
+| `.github/workflows/check.yml` | both checks on every push and pull request: abaplint at the version `package-lock.json` pins, the linter through its GitHub Action, whose pin the template keeps on the release line of its linter devDependency |
+| `AGENTS.md` | the conventions an AI assistant should follow in this project, plus a `.claude/settings.json` allowlist so it can run the checks without asking |
 
 ## From template to first green check
 
@@ -59,8 +59,8 @@ node scripts/rename.mjs --class zcl_my_app --package "My App" --repo my-app
 ```
 
 Add `--dry` first to see what it would touch. It renames the class in the ABAP
-**and** the `CLSNAME` in its `.clas.xml` sidecar — changing only one gives you
-an object abapGit imports under one name and ABAP activates under another.
+**and** the `CLSNAME` in its `.clas.xml` metadata file — changing only one gives
+you an object abapGit imports under one name and ABAP activates under another.
 
 Two things it deliberately leaves to you: the **namespace** (`abaplint.jsonc`
 requires `^ZCL_` or `^ZCX_`; change `object_naming` there if you develop behind
@@ -71,7 +71,7 @@ names abap2UI5 as the copyright holder.
 
 Install the [framework](/get_started/quickstart) and then your own repository,
 both with [abapGit](https://abapgit.org). The starter app needs framework
-**1.143.0** or newer — the first release it compiles against; the gates lint
+**1.143.0** or newer — the first release it compiles against; the checks lint
 it against the release `abaplint.jsonc` pins. Open
 `<your endpoint>?app_start=zcl_my_app` and you are looking at the same app the
 checks just passed.
@@ -79,5 +79,5 @@ checks just passed.
 ## Next Steps
 
 - [Tooling](/advanced/tooling) — the editor and agent side of the same loop
-- [abap2UI5 linter](/advanced/linter) — what the view gate actually
+- [abap2UI5 linter](/advanced/linter) — what the view check actually
   checks, and how to adopt it on a codebase that already exists

@@ -26,7 +26,7 @@ The work process is released when the response is sent. Nothing is kept:
 no session, no enqueue, no open connection. The next click of the same user
 may land on any work process of any application server, because the whole
 state travels as the draft id in the request and the row in the database.
-No server affinity is needed, and none is set - the only call that pins
+No server affinity is needed, and none is set - the only call that binds
 anything is `set_session_stateful( )`, below.
 
 An event that changes nothing bound sends no model; an event that changes a
@@ -100,15 +100,15 @@ of few rows each.
 `client->set_session_stateful( )` switches the ABAP session of this app to
 stateful from that roundtrip on: the same work process answers every later
 roundtrip of this user, and enqueue locks, open RFC connections and whatever the
-app does not serialize survive between clicks. The price is **one pinned dialog
-work process per active user of that app** for as long as the session lives,
-which is why it is meant for a few internal, low-traffic apps. The session ends
-when the app calls `set_session_stateful( abap_false )`, when the frontend's
-session-terminate ping arrives (a `HEAD` the frontend sends when the app ends -
-a restart or the component's exit), or when the ICF session times out on the
-system's terms - check that timeout with Basis, the framework sets none. Pair
-every switch on with a switch off on every exit path. Stateful sessions do not
-exist on ABAP Cloud. The trade-offs are on
+app does not serialize survive between clicks. The price is **one reserved
+dialog work process per active user of that app** for as long as the session
+lives, which is why it is meant for a few internal, low-traffic apps. The
+session ends when the app calls `set_session_stateful( abap_false )`, when the
+frontend's session-terminate ping arrives (a `HEAD` the frontend sends when the
+app ends - a restart or the component's exit), or when the ICF session times out
+on the system's terms - check that timeout with Basis, the framework sets none.
+Pair every switch on with a switch off on every exit path. Stateful sessions do
+not exist on ABAP Cloud. The trade-offs are on
 [Statefulness](/cookbook/expert_more/statefulness).
 
 ## Model Size

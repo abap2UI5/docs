@@ -35,7 +35,7 @@ Your app class travels through the landscape; the framework underneath it
 should hold still while it does. There is no fixed "stable" version — instead,
 pin the installation to a [release](https://github.com/abap2UI5/abap2UI5/releases/)
 rather than tracking `main`, and update deliberately:
-[Productive Usage](/configuration/productive_usage) explains the policy, the
+[Go-Live Checklist](/configuration/productive_usage) explains the policy, the
 [Release Notes](/resources/changelog) list every change, and the
 [Deprecations](/resources/deprecations) page names what is on its way out and
 what replaces it. If other abap2UI5 apps already run in production and you

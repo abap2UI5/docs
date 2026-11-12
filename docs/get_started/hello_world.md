@@ -147,7 +147,7 @@ class you can run in the browser.
   holds hundreds of working apps with their ABAP printed in full.
 - **Look a pattern up.** The [Cookbook](/cookbook/) is the reference for
   everyday work.
-- **Go live.** [Productive Usage](/configuration/productive_usage) is the page
+- **Go live.** [Go-Live Checklist](/configuration/productive_usage) is the page
   to read before the first go-live.
 - **Need somebody's approval?** Send them
   [the case for abap2UI5](https://abap2ui5.github.io/why/){target="_self"}.

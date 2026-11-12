@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Release tags and cadence of abap2UI5, what counts as stable API, the frozen package, how deprecations are announced, and how to upgrade, pin, roll back and re-test.
+description: Release tags and cadence of abap2UI5, what counts as stable API, the frozen package, how deprecations are announced, and how to upgrade, stay on a release, roll back and re-test.
 ---
 # Versioning, Upgrade
 
@@ -37,7 +37,7 @@ The released API is the package `src/02`, nine objects:
 | `z2ui5_if_ui5_monitor` | the roundtrip monitor - [Monitoring](/configuration/monitoring) |
 | `z2ui5_cl_ui5_http_handler` | the handler your ICF handler class calls |
 | `z2ui5_cl_ui5_view_builder` | the view builder |
-| `z2ui5_if_ui5_llm`, `z2ui5_cx_ui5_llm`, `z2ui5_cl_ui5_llm` | the language model seam |
+| `z2ui5_if_ui5_llm`, `z2ui5_cx_ui5_llm`, `z2ui5_cl_ui5_llm` | the language model interface |
 
 A normalized snapshot of this package is compared on every pull request, so a
 change to it is a deliberate decision rather than a side effect, and the
@@ -56,7 +56,7 @@ built-in popups whose successor is the
 - it ships with every release, unchanged, so an app that uses it keeps
   compiling and running after an upgrade;
 - nothing in the framework calls it, and its production code is not changed -
-  a gate in the framework's CI refuses the change;
+  a check in the framework's CI refuses the change;
 - it is not API. What it holds is listed on
   [Deprecations](/resources/deprecations) with the replacement for each.
 
@@ -73,10 +73,10 @@ Three places, in this order:
    becomes the GitHub release notes - with a `!` for a change and a `-` for a
    removal, and `BREAKING` written out where a call stops compiling.
 2. The [Deprecations](/resources/deprecations) page: one row per call, the
-   replacement, and a status column that names the release the change shipped
-   in or says *removed* with that release. Rows marked *next release* are on
-   `main` and not in a tag yet - what is coming if you pin, what you have if
-   you track `main`.
+   replacement, and a status column that names the release the change shipped in
+   or says *removed* with that release. Rows marked *next release* are on `main`
+   and not in a tag yet - what is coming if you stay on a release tag, what you
+   have if you track `main`.
 3. The interface itself: an obsolete method of `z2ui5_if_client` carries
    *obsolete* in its documentation comment and stays callable; the
    [API reference](/resources/api) leaves it out.
@@ -104,22 +104,13 @@ rest.
    the ICF node has nothing else to pull: the frontend is embedded in the
    package (`src/01/03`). An installation with the frontend as a BSP in the
    UI5 ABAP repository pulls the matching branch of the
-   [frontend repository](https://github.com/abap2UI5/frontend):
+   [frontend repository](https://github.com/abap2UI5/frontend).
 
-   | Branch | System | Frontend |
-   |---|---|---|
-   | `standard` | S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver 7.50 and later | classic |
-   | `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x) |
-   | `standard_new` | S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver 7.50 and later | the embed control - loads the frontend from the backend |
-   | `cloud` | S/4 Public Cloud, BTP ABAP Environment | classic |
-   | `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x) |
-   | `cloud_new` | S/4 Public Cloud, BTP ABAP Environment | the embed control |
-
-   The `_new` branches carry no copy of the frontend: their app is one view
-   with the embed control, which fetches the frontend from the backend it
-   runs against, so an upgrade of abap2UI5 needs no frontend pull. They need
-   an abap2UI5 newer than 1.146.0. Every branch keeps the same objects, names
-   and endpoints, so a system switches between them by pulling another one.
+   Which branch belongs to which system, and which of them need no pull
+   after an upgrade, is the table under
+   [Deployment Scenarios](/configuration/installation#frontend-branches). The
+   `_new` branches carry no copy of the frontend, so an upgrade of abap2UI5
+   needs no frontend pull there.
 5. **Transport** framework and frontend together to the next system, then
    your apps - [Transport, Landscape](/configuration/transport).
 
@@ -131,7 +122,7 @@ behind, which is what the `_new` branches remove.
 
 A system below 7.50 installs the `702` branch, generated from `main` by
 abaplint's downport on every push - [Downporting](/advanced/downporting). It
-is force-pushed on every rebuild, so pin the `X.Y.Z-702` tag rather than the
+is force-pushed on every rebuild, so pull the `X.Y.Z-702` tag rather than the
 branch: the tag is the downport of exactly the commit the release was cut
 from, checked by the release job. The `-702` release carries the sources and
 no built assets.
@@ -179,6 +170,6 @@ again on the quality system:
 - **The launchpad tiles**, if any: the app index of the UI5 repository has
   to know the new content of the BSP - [Fiori Launchpad](/configuration/launchpad#troubleshooting).
 
-Something the newer release does differently is not a bug in your app; it
-is a changelog entry you have not read yet. Read the entries between the two
-releases first, then open an issue with a sample.
+When an app behaves differently after the upgrade, read the changelog entries
+between the two releases first: the change is usually described there. If it
+is not, open an issue with a sample.

@@ -5,10 +5,15 @@ description: The Basis view of an abap2UI5 installation - the ICF node, ICM and 
 # Basis Runbook
 
 What the person who runs the system needs to know about an abap2UI5
-installation, object by object. Every statement here is either verified
-against the framework's source or says "check your system" - the framework
-sets no profile parameter and knows nothing about your ICM, so the SAP side
-is yours to look up.
+installation, object by object: where to look when something breaks, and what
+to do regularly. What to set once before go-live is the checklist on
+[Go-Live Checklist](/configuration/productive_usage).
+
+Every statement here is either verified against the framework's source or
+says "check your system". The framework sets no profile parameter and knows
+nothing about your ICM, so the SAP side is yours to look up. The words
+*roundtrip* and *app draft* are explained in the
+[Glossary](/get_started/glossary).
 
 ## The ICF Node
 
@@ -61,7 +66,7 @@ and deliberately without a secondary index.
 |---|---|
 | `MANDT`, `ID` | the client and the draft id, a 32-character UUID; the id is what the browser holds between two clicks |
 | `ID_PREV`, `ID_PREV_APP`, `ID_PREV_APP_STACK` | the previous draft of the same app, the draft of the calling app, and the app stack - what Back and `nav_app_leave( )` follow |
-| `UNAME` | the user who wrote the row; every read is checked against it and fails closed, so a leaked or guessed id loads nothing for anyone else |
+| `UNAME` | the user who wrote the row; every read is checked against it and refused when the user differs, so a leaked or guessed id loads nothing for anyone else |
 | `TIMESTAMPL` | when the row was written, UTC |
 | `DATA` | the app instance as XML - every attribute of the class, whatever its visibility, bound or not |
 
@@ -70,12 +75,9 @@ new row with a fresh id and leaves the previous one in place (it is what
 Back restores). A stateful app writes a row only on the paths that need a
 bookmarkable draft - [Statefulness](/cookbook/expert_more/statefulness).
 
-**Cleanup runs on every app start**, not on every roundtrip: the first request
-of an app - a start from the page, a launchpad tile, a bookmark or a route
-restore - runs one `DELETE` of every row older than the expiry across the whole
-table, every user's rows, followed by a `COMMIT WORK`. The expiry is
-`draft_exp_time_in_hours` of the user exit's `set_config_http_post`, **4 hours
-by default**; a value of zero or below falls back to the default. To shorten it:
+**To change how long a draft is kept**, set `draft_exp_time_in_hours` in
+`set_config_http_post` of the user exit. The default is **4 hours**; a value
+of zero or below falls back to the default:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_post.
@@ -85,7 +87,12 @@ METHOD z2ui5_if_ui5_exit~set_config_http_post.
 ENDMETHOD.
 ```
 
-Shortening it also shortens how long a bookmark, an app-state link and a
+**Cleanup runs on every app start**, not on every roundtrip. The first request
+of an app - a start from the page, a launchpad tile, a bookmark or a route
+restore - runs one `DELETE` of every row older than the expiry, across the
+whole table and for every user, followed by a `COMMIT WORK`.
+
+A shorter expiry also shortens how long a bookmark, an app-state link and a
 Back step keep working: a bookmark or app-state link whose draft expired
 starts the app fresh with a toast saying so; an ordinary click on an expired
 draft is answered with the error page, and the next start is a fresh app.
@@ -143,9 +150,9 @@ libraries, is excluded from the rules. An ATC or Code Inspector run of your own
 over the package will report findings against your variant that the
 project's rules do not share - naming conventions above all, and the
 unavoidable ones of a framework that creates objects and calls methods
-dynamically. Treat them as your variant's opinion about code you do not own;
-a finding that is a real defect belongs in an issue of the framework, with
-the object name.
+dynamically. Such findings come from the rules of your variant, not from a
+defect, and need no action. When a finding is a real defect, open an issue in
+the framework's repository and name the object.
 
 The objects are in the `Z2UI5_` namespace, which is a customer namespace by
 SAP's rules and reserved for abap2UI5 by the project's. A system whose ATC
@@ -168,14 +175,16 @@ which, and what the logout event ends.
 
 ## Housekeeping Checklist
 
-- [ ] The node is active on this system, with the authorization field set
-- [ ] The exit names a controlled, pinned UI5 bootstrap source, hides error
-      details, sends the CSP as a header, and trusts `X-Forwarded-Host` only
-      behind a proxy
+The settings for go-live - the node's authorization, the UI5 source, hidden
+error details, the CSP header, the proxy setting - are the checklist on
+[Go-Live Checklist](/configuration/productive_usage). What follows is what to
+look at regularly afterwards:
+
 - [ ] `draft_exp_time_in_hours` fits the longest session a user keeps open
 - [ ] The row count of `Z2UI5_T_01` is watched, and a background job deletes
       expired rows on a system where app starts are rare
-- [ ] The monitor is switched on only where its package is active and checked
+- [ ] The monitor is switched on only where its package is active and has
+      no syntax error
 - [ ] The release and the UI5 version are recorded, and the changelog is read
       before the next pull - [Versioning, Upgrade](/configuration/versioning)
 - [ ] The cockpit's security traffic light is green, or every yellow has a

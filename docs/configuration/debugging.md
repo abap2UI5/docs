@@ -27,8 +27,11 @@ On the frontend, abap2UI5 behaves like a standard UI5 app, so the usual tools an
 
 ### Developer Tools
 Press `Ctrl+F12` to open the built-in **Developer Tools** of abap2UI5:
-![Developer Tools showing XML View and Data Model inspection](/configuration/debug.webp)
-Six tabs cover the whole roundtrip: **Overview**, **Problems**, **Roundtrips** (each request and its response), **View & Data** (the rendered XML and the model of the slot you pick — main, popup, popover, nested), **System** and **Search**.
+![The developer tools on the Roundtrips tab, with two recorded roundtrips of the Hello World app](/configuration/debug.webp)
+
+*The developer tools on the Roundtrips tab, with two recorded roundtrips of the Hello World app*
+
+Six tabs cover the whole roundtrip: **Overview**, **Problems**, **Roundtrips** (each request and its response, with the sub-tabs **History**, **Request**, **Response**, **Actions**, **Model Diff** and **View Diff**), **View & Data** (the rendered XML and the model of the slot you pick — main, popup, popover, nested), **System** and **Search**.
 
 The footer offers **Retry**, **Restart**, **Logout**, a jump to **ADT**, **Copy**, **Report a Bug** and an **Export** that bundles everything — including the running app's ABAP class source — into one blob you can attach to a bug report. Error popups also carry a copy-to-clipboard button for the same purpose.
 
@@ -49,4 +52,4 @@ The [**playground**](https://abap2ui5.github.io/playground/) runs your class in 
 Beside that: run to the cursor, a condition on a breakpoint (`lv_count > 5`), watches and watchpoints, a stop at `RAISE EXCEPTION`, a value changed by double-click, a table opened as a grid, and the value under the mouse while stopped. It stops in your own classes only — the framework runs without breakpoints — and in unit tests and class constructors as well as in roundtrips.
 
 ## Issues
-If your code looks correct but you suspect a bug in the abap2UI5 framework, build a minimal sample that reproduces the bug and open an issue on the abap2UI5 repository — we'll investigate and fix it.
+If your code looks correct but you suspect a bug in the abap2UI5 framework, build a minimal sample that reproduces the bug and open an issue on the abap2UI5 repository. The maintainers investigate it there.

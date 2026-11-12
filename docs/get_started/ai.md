@@ -44,8 +44,8 @@ reason is structural:
 
 Two things turn those properties into a working session, and both cost a
 minute: a paragraph to paste, and an index to point at. The rest — the
-conventions file, the gates, the MCP loop, the editor — is
-[Agent Setup](/advanced/agent_setup), in rising order of effort.
+conventions file, the checks, the MCP server, the editor — is
+[AI Setup: The Recommended Path](/advanced/ai_path), three steps in order.
 
 ## Paste the essentials
 
@@ -100,8 +100,8 @@ working from what abap2UI5 is today rather than from what it recalls.
 
 - [AI Studio](https://abap2ui5.github.io/playground/ai/) — an app from a
   description, built and run in the browser
-- [Agent Setup](/advanced/agent_setup) — the conventions file, the gates, the
-  MCP loop and the editor, in rising order of effort
+- [AI Setup: The Recommended Path](/advanced/ai_path) — what to install first,
+  in three steps, and what each one costs
 - [Working Off-Stack](/advanced/working_off_stack) — the repository all of this
   assumes
 - [Tooling](/advanced/tooling) — the human side of the same loop

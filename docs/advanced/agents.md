@@ -27,6 +27,23 @@ interpret, and no second API next to the app: whatever the app lets a user do
 on a screen, it lets an agent do, through the app's own `main( )` — and nothing
 more.
 
+## Who Reads What
+
+This page serves four readers. Go straight to your part:
+
+| You are | You want | Read |
+| --- | --- | --- |
+| a developer | an agent that tries out the app you are writing, without a system | [While developing](#while-developing-the-mcp-server) |
+| a developer | the same on real data, from the editor | [On your system from VS Code](#on-your-system-from-vs-code) |
+| an administrator | agents that operate apps for users in the SAP system: installation, policies, security | [In production: the agent add-on](#in-production-the-agent-add-on) |
+| a CAP developer | the same in a CAP project | [The fourth implementation: CAP](#the-fourth-implementation-cap) |
+| anyone who builds a client | the data format, the four tools and their limits | [The snapshot](#what-an-agent-sees-the-snapshot), [The four tools](#the-four-tools), [What the snapshot cannot see](#what-the-snapshot-cannot-see) |
+
+The page calls the ABAP add-on in the SAP system *the agent add-on*
+everywhere; its repository is named abap-agent-runtime.
+
+## Four Places, One Set of Tools
+
 The same four tools exist in four places, for four different jobs:
 
 | Where | Runs against | What it is for |
@@ -208,10 +225,9 @@ listed and answer with how to switch them on, without contacting the system.
 
 [**abap2UI5-addons/abap-agent-runtime**](https://github.com/abap2UI5-addons/abap-agent-runtime) puts an
 MCP endpoint into the SAP system itself, written in ABAP. It is not in a
-release yet: what its README describes is on `main` and on the generated
-`standard` / `cloud` branches, pulled into a 7.5x on-premise system and not
-yet run in production; the ABAP Cloud setup is written down but marked *to
-verify on your system*. Any MCP client that
+release yet (see the note at the top of this page): it was pulled into a 7.5x
+on-premise system and has not yet run in production, and its ABAP Cloud setup
+is written down but marked *to verify on your system*. Any MCP client that
 connects to a remote server over HTTP calls `/sap/bc/z2ui5_agent`, and the
 endpoint operates the app inside the system as the user who logged on. No
 Node, no browser, no technical user.
@@ -479,18 +495,24 @@ against.
 
 ## What the snapshot cannot see
 
-Common to all four: anything computed in the browser — formatters, composite
-bindings, complex expression bindings, and the value of an event parameter
-beyond the row parameters above (a control-valued one, such as the `item` of a
-`MessagePopover`'s event, must be passed in `args`); client-only state such as
-the open tab of an `IconTabBar`, a selection without a `selected` binding or a
-growing table's loaded page; named models (a message list bound to the
-`message` model is listed under `unsupported`), element bindings and XML
-templating; custom controls (listed under `unsupported`, not described);
-frontend actions such as opening a new tab or copying to the clipboard (listed,
-never performed); nested tables, `MultiInput` tokens, file uploads, drag and
-drop. An app built from standard controls bound to its own attributes is
-operable as it stands.
+Common to all four places. The snapshot does not contain:
+
+- **Anything computed in the browser**: formatters, composite bindings and
+  complex expression bindings.
+- **Event parameters beyond the row parameters above.** A control-valued
+  one, such as the `item` of a `MessagePopover`'s event, must be passed in
+  `args`.
+- **State that only the browser holds**: the open tab of an `IconTabBar`, a
+  selection without a `selected` binding, the loaded page of a growing table.
+- **Named models, element bindings and XML templating.** A message list
+  bound to the `message` model is listed under `unsupported`.
+- **Custom controls**: listed under `unsupported`, not described.
+- **Frontend actions**, such as opening a new tab or copying to the
+  clipboard: listed, never performed.
+- **Nested tables, `MultiInput` tokens, file uploads, drag and drop.**
+
+An app built from standard controls bound to its own attributes can be
+operated as it stands.
 
 ## Testing the roundtrip in ABAP
 
@@ -508,7 +530,7 @@ request, `set_json( )` to send each value typed, and `close_layer( )` for
 - [MCP Server](/advanced/mcp_server) — the sandbox the development tools run in
 - [VS Code Extension](/advanced/vscode) — the system tools and the setting that
   allows them
-- [Agent Setup](/advanced/agent_setup) — the rest of an agent's setup, in rising
-  order of effort
+- [AI Setup: The Recommended Path](/advanced/ai_path) — the setup for an
+  agent that writes apps
 - [Monitoring](/configuration/monitoring) — the same roundtrips, logged
 - [cap2UI5](https://cap2ui5.github.io/docs/) — abap2UI5 in a CAP project

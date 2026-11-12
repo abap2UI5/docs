@@ -8,7 +8,7 @@ renders what the backend sends. This page is the data-flow rule, the threat
 model, and the HTTP hardening the framework ships: the Content Security
 Policy, the response headers and the CSRF check. The framework's own
 [security model](https://github.com/abap2UI5/abap2UI5/blob/main/docs/security.md)
-names the gate or test behind each guarantee, and
+names the check or test behind each guarantee, and
 [SECURITY.md](https://github.com/abap2UI5/abap2UI5/blob/main/SECURITY.md) is
 the disclosure process.
 
@@ -62,8 +62,8 @@ input:
 
 | The client controls | What the framework does with it |
 |---|---|
-| The app class name (`app_start`, the hash route, the first POST) | refused before instantiation unless the class implements `z2ui5_if_app` - a type check, not an authorization. Which user may run which app is decided in the app's `main( )`, by design; the ICF node's authorization field decides who reaches the node at all - [Authorization](/configuration/authorization) |
-| The draft id | not a secret: it travels in bookmark URLs and app-state links. Every read of `Z2UI5_T_01` is checked against the `UNAME` that wrote the row and fails closed, so a leaked or guessed id loads nothing for another user and degrades to a fresh app start |
+| The app class name (`app_start`, the hash route, the first POST) | refused before instantiation unless the class implements `z2ui5_if_app` - a type check, not an authorization. Which user may run which app is decided in the app's `main( )`, by design; the ICF node's authorization field decides who reaches the node at all - the three layers are on [Authorization](/configuration/authorization) |
+| The draft id | not a secret: it travels in bookmark URLs and app-state links. Every read of `Z2UI5_T_01` is checked against the `UNAME` that wrote the row and refused when the user differs, so a leaked or guessed id loads nothing for another user and ends in a fresh app start |
 | The model delta | applied to the bound attributes and to nothing else; validation of the values is the app's |
 | The event name and its arguments | dispatched to the app's `main( )`; the app decides what an event means |
 | A `control_by_id` / `control_global` call it replays | a method outside the whitelists, or on a denylist of framework-hostile methods (`destroy`, `setModel`, `bind*`, `attach*`, `fireEvent`, `rerender`, `invalidate`, the generic aggregation and association mutators, anything starting with `_`), is logged and dropped - the backend is the trusted driver, the lists guard the framework's own invariants rather than form a security boundary |
@@ -93,10 +93,10 @@ fixed set of trusted sources — the SAP and OpenUI5 CDN hosts, and nothing else
 an installation that loads from another host adds it in the user exit, to the
 one directive that needs it. The complete policy is shown below. It also carries
 two hardening directives — `object-src 'none'` and `base-uri 'self'` — that
-block plugin content and pin `<base>` to the app origin. It deliberately carries
-**no** `frame-ancestors`: browsers ignore that directive in a `<meta>` CSP (and
-log a console warning about it), so cross-origin framing is forbidden by the
-real `X-Frame-Options` response header instead — see
+block plugin content and restrict `<base>` to the app origin. It deliberately
+carries **no** `frame-ancestors`: browsers ignore that directive in a `<meta>`
+CSP (and log a console warning about it), so cross-origin framing is forbidden
+by the real `X-Frame-Options` response header instead — see
 [Response headers](#response-headers) below.
 
 The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts:
@@ -301,9 +301,9 @@ own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or
 may not be there. The check compares the host authority of the request's
 `Origin` (or `Referer`) header against the `Host` header — or, by default,
 against the first `X-Forwarded-Host` when a proxy sent one
-(`cs_config-check_trust_forwarded_host`; an installation without a proxy hardens
-the gate by switching it to `abap_false`) — a cross-origin POST is rejected with
-an error response before any app logic runs.
+(`cs_config-check_trust_forwarded_host`; an installation without a proxy makes
+the check stricter by switching it to `abap_false`) — a cross-origin POST is
+rejected with an error response before any app logic runs.
 
 **CSRF protection is active by default.** A fresh install rejects cross-origin
 POSTs without any configuration. If your endpoint must accept cross-origin POSTs

@@ -272,7 +272,7 @@ can help while the chain is being written rather than after it:
 list, form, master & detail, popup — and every template ships linter-clean.
 *"New Project from Template"* puts the same into an empty folder together with
 everything that makes it a project: app-template's `abaplint.jsonc` and
-`abap2ui5lint.jsonc`, its `AGENTS.md`, the CI workflow running both gates, and
+`abap2ui5lint.jsonc`, its `AGENTS.md`, the CI workflow running both checks, and
 the abapGit files. See [Working Off-Stack](/advanced/working_off_stack) for
 what that project then looks like.
 
@@ -280,8 +280,9 @@ what that project then looks like.
 
 The extension registers the [abap2UI5 MCP server](/advanced/mcp_server) for
 every MCP client in the window — Copilot agent mode, Claude Code, anything else
-speaking MCP — so an agent working in your editor has the systemless dev loop
-without any separate configuration. Point `abap2ui5.mcp.reposRoot` at the folder
+speaking MCP — so an agent working in your editor can check and run an app
+without a system and without any separate configuration. That is step 1 of
+[AI Setup: The Recommended Path](/advanced/ai_path). Point `abap2ui5.mcp.reposRoot` at the folder
 holding the checkouts and the extension passes the paths through.
 
 It adds a **second** server of its own for the half the MCP server deliberately
@@ -355,7 +356,7 @@ Every command is in the Command Palette (`Ctrl/Cmd + Shift + P`) under
 
 ## Next Steps
 
-- [abap2UI5 linter](/advanced/linter) — the gates behind the editor diagnostics
+- [abap2UI5 linter](/advanced/linter) — the checks behind the editor diagnostics
 - [MCP Server](/advanced/mcp_server) — the systemless loop the extension
   registers for agents
 - [Agent-Operable Apps](/advanced/agents) — the app tools, the snapshot they
