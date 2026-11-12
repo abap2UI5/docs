@@ -9,6 +9,10 @@ description: The abap2UI5 app life cycle - every request enters main( ), and che
 
 Every request enters the `main` method. One `IF` / `ELSEIF` chain dispatches between initialization, navigation returns, and user events using `` client->check_on_init( ) ``, `` client->check_on_event( `EVENT_NAME` ) ``, and `` client->check_on_navigated( ) ``. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
 
+![One roundtrip in five steps: the app draft is loaded, the user's changes are applied, main( ) runs, the response is built and the app draft is saved under a new id](/get_started/roundtrip.svg)
+
+The picture shows one roundtrip. Your code is step 3: `main` runs once per click, on an instance the framework has just restored.
+
 ```abap
 CLASS zcl_sample_life_cycle DEFINITION PUBLIC.
 

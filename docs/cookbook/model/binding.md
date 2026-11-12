@@ -68,6 +68,9 @@ framework has already synced the user's changes back to your ABAP attribute:
 
 ![The attribute is bound, appears as a path in the view and the model, the Input shows it, and what the user types travels back into the attribute before main( ) runs](/cookbook/model/bound-value.svg)
 
+The picture uses an attribute `quantity` as its example. The class below binds
+`name` the same way.
+
 ```abap
 CLASS zcl_app_hello_world DEFINITION PUBLIC.
 
