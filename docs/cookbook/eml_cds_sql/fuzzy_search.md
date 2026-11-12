@@ -12,7 +12,7 @@ Bound to a UI5 `SearchField` in the table toolbar, that gives an ALV-style searc
 
 - **SAP HANA as the primary database.** The table function is implemented in SQLScript and runs on HANA only; on another database the `SELECT` raises `cx_amdp_execution_failed` at runtime.
 - **ABAP 7.40 SP05 or later** for CDS table functions and AMDP; both are available in ABAP Cloud as well.
-- The `@Search.searchable` and `@Search.fuzzinessThreshold` annotations of a CDS view are not an alternative here: they drive the `$search` of an OData service (SADL, Fiori elements) and a plain ABAP SQL `SELECT` over such a view ignores them.
+- The `@Search.searchable` and `@Search.fuzzinessThreshold` annotations of a CDS view are not an alternative here. They drive the `$search` of an OData service (SADL, Fiori elements). A plain ABAP SQL `SELECT` over such a view ignores them.
 
 ## The Table Function
 

@@ -24,9 +24,9 @@ its own: the app builds it as XML and shows it with `client->popup_display( )`.
 
 The usual flow has three steps: the app shows its view, an event opens the
 popup, and an event from inside the popup closes it. The popup is built like a
-view, with two differences: the root is a `FragmentDefinition` (UI5's name for
-a piece of XML that is not a whole view), and it is shown with
-`popup_display( )` instead of `view_display( )`:
+view, with two differences. The root is a `FragmentDefinition`, UI5's name for a
+piece of XML that is not a whole view. And it is shown with `popup_display( )`
+instead of `view_display( )`:
 
 ```abap
   METHOD z2ui5_if_app~main.

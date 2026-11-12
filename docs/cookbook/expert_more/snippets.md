@@ -12,7 +12,7 @@ Copy-paste starting points for the most common app shapes. Each snippet is a com
 
 ## Basic App Structure
 
-The skeleton every abap2UI5 app starts from: implement `z2ui5_if_app`, dispatch on lifecycle phases with one `IF` / `ELSEIF` chain, build the view in `check_on_navigated` (true on the first start as well), react to user actions in `check_on_event`.
+The skeleton every abap2UI5 app starts from. Implement `z2ui5_if_app` and dispatch on lifecycle phases with one `IF` / `ELSEIF` chain. Build the view in `check_on_navigated`, which is true on the first start as well, and react to user actions in `check_on_event`.
 
 ```abap
 CLASS zcl_sample_skeleton DEFINITION PUBLIC.

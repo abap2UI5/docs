@@ -106,10 +106,10 @@ CSP and log a console warning about it. Cross-origin framing is forbidden by the
 The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts:
 nothing abap2UI5 ships evaluates code, and UI5 from `1.84` on loads its modules
 without `eval()`. The page's one inline script is allowed by its SHA-256 hash,
-which the framework appends to `script-src` after the exit ran, so an injected
-`<script>`, an `onerror=` attribute or a `javascript:` URL is refused by the
-browser. Only a popup on UI5 `1.71` to `1.82` can still need `'unsafe-eval'` —
-see [Older releases](#older-releases-switching-unsafe-eval-on) below.
+which the framework appends to `script-src` after the exit ran. So the browser
+refuses an injected `<script>`, an `onerror=` attribute or a `javascript:` URL.
+Only a popup on UI5 `1.71` to `1.82` can still need `'unsafe-eval'` — see
+[Older releases](#older-releases-switching-unsafe-eval-on) below.
 
 What `script-src` does carry is `'wasm-unsafe-eval'`. It lets a script the page
 already runs compile WebAssembly and nothing else — a string still never becomes
@@ -170,8 +170,8 @@ the page's inline script — `'unsafe-inline'` would be ignored beside a hash
 anyway.
 
 ### Older releases: switching `'unsafe-eval'` on
-On UI5 `1.71` to `1.82` a popup is processed synchronously, and a module that
-the popup's XML only names in a binding type or a `core:require` is fetched and
+On UI5 `1.71` to `1.82` a popup is processed synchronously. A module that the
+popup's XML only names in a binding type or a `core:require` is then fetched and
 evaluated as a string on the spot. The frontend loads the popup's controls
 asynchronously first, so the shipped popups stay clean — but a module it cannot
 see from the XML still needs `'unsafe-eval'` on those releases. Such an
@@ -250,9 +250,9 @@ abap2UI5 sets these on every response, out of the box:
 They live in `cs_config-t_security_header` and are set in the same
 [user exit](/advanced/extensibility/user_exits) as the CSP, so an installation
 behind a proxy that already sets one of them can drop or change it. Caching is
-not among them: the handler decides it per verb — the page is checked against
-its `ETag` and answered with a `304`, every other response is `no-store` — and
-an exit entry named `cache-control` still wins over that:
+not among them, because the handler decides it per verb. The page is checked
+against its `ETag` and answered with a `304`, and every other response is
+`no-store`. An exit entry named `cache-control` still wins over that:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.

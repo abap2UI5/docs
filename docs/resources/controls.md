@@ -25,13 +25,13 @@ DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
         )->stringify( ).
 ```
 
-A property is bound like a property of any control, an event is wired to
-the backend with `client->_event( )`, and the event's parameters arrive as
-described on the [Backend Events](/cookbook/event_navigation/backend) page. What a
-control does and when to use it is on the cookbook page its section links;
-this page **is** the contract those pages explain against, generated from
-the control's own metadata on the framework's `main` branch by
-`npm run generate:controls` and held fresh by `check:controls`. Edit the
+A property is bound like a property of any control, an event is wired to the
+backend with `client->_event( )`, and the event's parameters arrive as described
+on the [Backend Events](/cookbook/event_navigation/backend) page. What a control
+does and when to use it is on the cookbook page its section links. This page
+**is** the contract those pages explain against. It is generated from the
+control's own metadata on the framework's `main` branch by
+`npm run generate:controls`, and `check:controls` holds it fresh. Edit the
 intro, never the block.
 
 How to write a control of your own, and ship it with an app, is on

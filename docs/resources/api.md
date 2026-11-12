@@ -8,14 +8,14 @@ description: The complete abap2UI5 client API — every method, parameter and co
 Everything an app calls at runtime comes through one interface:
 [`z2ui5_if_client`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_if_client.intf.abap),
 handed to the app as `client` on every roundtrip. This page **is** that
-interface, generated from its source on the framework's `main` branch — the
-same ref every example on this site is compiled against: every method with
-its parameters, types and defaults, every `cs_*` constant structure, and the
-documentation written in the source itself. That puts it ahead of the newest
-release by design. A name that is on `main` and not yet in a release is marked
-*next release* on [Deprecations](/resources/deprecations), next to the
-spelling the release still has; the release number itself is in the menu
-behind the bar's last button.
+interface, generated from its source on the framework's `main` branch. Every
+example on this site is compiled against the same branch. The page lists every
+method with its parameters, types and defaults, every `cs_*` constant structure,
+and the documentation written in the source itself. That puts it ahead of the
+newest release by design. A name that is on `main` and not yet in a release is
+marked *next release* on [Deprecations](/resources/deprecations), next to the
+spelling the release still has. The release number itself is in the menu behind
+the bar's last button.
 
 The interface is deliberately small and deliberately stable. How the pieces
 fit together — the lifecycle, binding, events — is what the

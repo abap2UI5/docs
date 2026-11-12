@@ -183,10 +183,9 @@ builder chain and judges the two together. It reports:
   does not have **yet** on the release you target
 - bindings that point at nothing
 - events nothing handles
-- deprecated controls
- With its render package installed it also loads every
-view in a headless browser, which is the only way to find a view that does
-not merely render wrongly but fails to load at all.
+- deprecated controls With its render package installed it also loads every view
+  in a headless browser. That is the only way to find a view that fails to load
+  at all.
 
 The playground, the MCP server and the editor above all run this same linter.
 **Use it** in CI so that nothing reaches a system that the three did not

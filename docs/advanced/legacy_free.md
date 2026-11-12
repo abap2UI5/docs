@@ -15,11 +15,13 @@ repository today); the branches below carry it.
 
 `*-legacy-free` is a parallel distribution of OpenUI5/SAPUI5 (starting with the
 1.136.x line) that ships the same controls and APIs as the regular 1.x build,
-but with everything deprecated removed up front. In practice that means no
-`jQuery.sap.*`, no `sap.ui.getCore()`, no synchronous module loading
-(`sap.ui.requireSync`, sync XHR), no global view/controller factories, no jQuery
-bundled into the core, and none of the compatibility shims that 1.x kept around
-for backwards compatibility.
+but with everything deprecated removed up front. In practice these are gone:
+
+- `jQuery.sap.*` and `sap.ui.getCore()`
+- synchronous module loading (`sap.ui.requireSync`, sync XHR)
+- the global view and controller factories
+- the jQuery bundled into the core
+- the compatibility shims that 1.x kept for backwards compatibility
 
 UI5 2.x enforces exactly this surface, so the legacy-free build is a preview
 of it on a 1.x release: what runs on it runs on 2.x, and what breaks on it

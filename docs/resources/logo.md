@@ -64,8 +64,8 @@ event — see [Title](/cookbook/browser_interaction/title).
 ## Link Preview
 
 What LinkedIn, Slack, WhatsApp and X show when a documentation link is shared:
-the mark, the name and the one-line claim, on white. 1200 × 630 — the ratio
-those platforms render as a large card rather than a thumbnail.
+the mark, the name and the one-line claim, on white. The size is 1200 × 630, the
+ratio those platforms render as a large card and not as a thumbnail.
 
 ![The abap2UI5 link preview card](/og-image.png){width=480}
 
@@ -99,12 +99,12 @@ the cover image of the project's LinkedIn page and its Bluesky profile. Both
 platforms lay the round profile picture over the lower left of the cover, so
 the text sits to the right of it, centered in the space that remains.
 
-Both carry a faint tint of the red behind the text, fading to white towards
-the mark. LinkedIn puts every logo on a white tile with a few pixels of white
-around it, and a tint that ran under the tile showed that tile as a frame;
-white where the tile sits and color only where the text is leaves nothing to
-show. Bluesky crops the profile picture to a circle with no tile and would
-not need the fade, but the two profiles are meant to look alike.
+Both carry a faint tint of the red behind the text, fading to white towards the
+mark. LinkedIn puts every logo on a white tile with a few pixels of white around
+it. A tint that ran under the tile showed that tile as a frame. So the banner is
+white where the tile sits and has color only where the text is. Bluesky crops
+the profile picture to a circle with no tile and would not need the fade, but
+the two profiles are meant to look alike.
 
 ![The LinkedIn cover: UI5 apps for ABAP, built by the team you already have](/banner_linkedin.png)
 
@@ -141,13 +141,13 @@ JPEG noise, roughly `#F5011D` — three reds that are each almost, but not quite
 the red of the mark. The brand copies move that red onto `#D03C4A`: the flat
 fill of each drawing lands on it exactly, so a mascot next to the logo is the
 same red as the logo. Only the red ink moved, in proportion to how much of it a
-pixel carries — shading and highlights become darker and lighter shades of that
-one red, and the outlines and the sloth's cream fur are untouched.
+pixel carries. Shading and highlights become darker and lighter shades of that
+one red. The outlines and the sloth's cream fur are untouched.
 
 The transparent copies are cut out along the drawing, not along its white. The
-white behind the sheep and the white of its wool are the same white, so the
-background was found by flooding in from the border — white that no path from
-the edge reaches is inside the animal and stays: the wool, the monitor, the
+white behind the sheep and the white of its wool are the same white. So the
+background was found by flooding in from the border. White that no path from the
+edge reaches is inside the animal and stays: the wool, the monitor, the
 keyboard. The soft gray edge these drawings carry is dropped rather than kept
 half-transparent, which is what would otherwise show as a gray halo on every
 background that is not white.
@@ -209,13 +209,13 @@ every mascot above — one value, and no second shade for a hover or a pressed
 state anywhere it is used.
 
 The mark is not the same thing as the interface around it, and the two carry
-different colors on purpose. The three sites this project publishes — this
+different colors on purpose. This project publishes three sites: this
 documentation, the [playground](https://abap2ui5.github.io/playground/) and the
-[sample catalog](https://abap2ui5.github.io/samples-site/) — share one
-bar, one palette and one accent, and that accent is **SAP blue**: it is the
-color of the platform these apps run on, it is what the playground fills its
-Run button with, and it clears AA for body text in both themes, which the red
-does not do on a dark ground. So a link on this page is blue and the mark at
+[sample catalog](https://abap2ui5.github.io/samples-site/). They share one bar,
+one palette and one accent, and that accent is **SAP blue**. Blue is the color
+of the platform these apps run on, and the playground fills its Run button with
+it. It also passes the AA contrast level for body text in both themes, which the
+red does not do on a dark ground. So a link on this page is blue and the mark at
 the top of it is red, and neither is a mistake.
 
 | | Hex | Where |
@@ -229,10 +229,9 @@ a button still keeps its color: that rule was never about which color it was.
 
 The site's own tokens come from the playground's own stylesheet, which this
 build borrows whole (`scripts/site-css/docs.css` adds what only the manual
-needs), so that the four stay one palette. Take the hex values from this table
-rather than picking them out of a screenshot with a color dropper: a PNG scaled
-in a browser hands you an interpolated pixel, which is a color that appears
-nowhere in the brand.
+needs), so that the four stay one palette. Take the hex values from this table,
+not from a screenshot with a color dropper. A PNG scaled in a browser hands you
+an interpolated pixel, a color that appears nowhere in the brand.
 
 ## Using the Mark
 

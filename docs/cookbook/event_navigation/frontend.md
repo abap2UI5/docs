@@ -72,17 +72,17 @@ by *when* the action has to happen, not by what it does.
 
 Every frontend action is a constant of `z2ui5_if_client=>cs_event`, and the
 generated [client API reference](/resources/api) lists all of them with their
-arguments, straight from the interface on `main`. The families: the two
-`*_close` events for the popup and the popover, the browser actions
-(`clipboard_copy`, `set_title`, `set_favicon`, `open_new_tab`,
-`download_b64_file`, `system_logout`, …), the view actions (`set_focus`,
-`scroll_to`, `scroll_into_view`, `set_size_limit`, `set_odata_model`), the
-control calls (`control_by_id`, `control_global`, `binding_call`,
-`bind_element`), the smart-control handshakes, the launchpad calls
-(`cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`,
-`cross_app_nav_get_links`, `set_title_launchpad`, `set_app_full_width`), the
-`hash_*` and `app_state_*` family, `start_timer`, `keyboard_shortcut`,
-`store_data`, `play_audio`, `urlhelper` and `offline_queue`.
+arguments, straight from the interface on `main`. They fall into families:
+
+| Family | Constants |
+| --- | --- |
+| close a popup or popover | the two `*_close` events |
+| browser | `clipboard_copy`, `set_title`, `set_favicon`, `open_new_tab`, `download_b64_file`, `system_logout`, … |
+| view | `set_focus`, `scroll_to`, `scroll_into_view`, `set_size_limit`, `set_odata_model` |
+| control calls | `control_by_id`, `control_global`, `binding_call`, `bind_element` |
+| launchpad | `cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`, `cross_app_nav_get_links`, `set_title_launchpad`, `set_app_full_width` |
+| URL | the `hash_*` and `app_state_*` family |
+| other | `start_timer`, `keyboard_shortcut`, `store_data`, `play_audio`, `urlhelper`, `offline_queue`, the smart-control handshakes |
 
 Two of them take an argument that is easy to miss.
 

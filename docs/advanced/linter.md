@@ -233,9 +233,10 @@ Among them: the superseded calls on [Deprecations](/resources/deprecations)
 rewritten to their successors, a missing `$` inserted in an event argument, a
 missing `xmlns:` declaration added at the view root.
 
-Nothing else is touched. A correction that would have to **guess** — which of
-two duplicate attributes survives, what event a `_bind` on an event slot meant
-to raise — is worse than the finding it replaces, so it is reported instead.
+Nothing else is touched. Some corrections would have to **guess**: which of two
+duplicate attributes survives, or what event a `_bind` on an event slot meant to
+raise. A guess is worse than the finding it replaces, so such a case is reported
+instead.
 
 ## Waiving a rule
 
@@ -303,13 +304,13 @@ above.
 | `deprecated-library` | a library deprecated *whole*: `sap.ui.commons` and `sap.ui.ux3` (1.38), `sap.makit` (1.38), `sap.me` (1.34), the legacy chart classes under `sap.viz.ui5` (1.32) |
 
 All three are held against `--ui5`: a control deprecated in 1.120 is not
-reported for a 1.71 system, because there it is simply a control. The last of
-the three is the one nothing else catches — a deprecated library is absent from
-the metadata the other rules read, so a `<c:Button>` out of `sap.ui.commons`
-used to pass every check in silence. It is also the one that actually happens:
-half of that library's control names (`Button`, `Label`, `Dialog`, `Panel`,
-`ComboBox`) have a namesake in `sap.m`, so XML copied from an old tutorial
-drags the dead namespace along and still renders something.
+reported for a 1.71 system, because there it is simply a control. Nothing else
+catches the last of the three. A deprecated library is absent from the metadata
+the other rules read, so a `<c:Button>` out of `sap.ui.commons` used to pass
+every check without a finding. It is also the case that really happens. Half of
+that library's control names (`Button`, `Label`, `Dialog`, `Panel`, `ComboBox`)
+exist in `sap.m` too. So XML copied from an old tutorial brings the dead
+namespace along and still renders something.
 
 For anything the snapshot cannot know yet,
 [ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is SAP's

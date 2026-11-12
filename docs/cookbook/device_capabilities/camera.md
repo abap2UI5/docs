@@ -52,7 +52,7 @@ CLASS zcl_sample_camera IMPLEMENTATION.
 ENDCLASS.
 ```
 
-The control renders a button; pressing it opens a dialog with the live camera stream and a *Capture* button. The capture writes the full-resolution JPEG into `value` as a `data:image/jpeg;base64,…` URL and a 300 px wide preview into `thumbnail`, then fires `OnPhoto`. Bind `thumbnail` to an `Image`, as above, and leave the full picture out of the view — it travels in the model either way, and a photo from a phone camera is a few megabytes of base64.
+The control renders a button; pressing it opens a dialog with the live camera stream and a *Capture* button. The capture writes the full-resolution JPEG into `value` as a `data:image/jpeg;base64,…` URL and a 300 px wide preview into `thumbnail`, then fires `OnPhoto`. Bind `thumbnail` to an `Image`, as above, and leave the full picture out of the view. It travels in the model either way, and a photo from a phone camera is a few megabytes of base64.
 
 ## Properties and Events
 

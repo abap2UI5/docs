@@ -113,8 +113,8 @@ it rewrites the mechanical part and reports the rest.
    your apps - [Transport, Landscape](/configuration/transport).
 
 The embedded frontend and the backend are one package, so browser and server
-run the same release by construction; a BSP is the one piece that can fall
-behind, which is what the `_new` branches remove.
+always run the same release. A BSP is the one piece that can fall behind, and
+the `_new` branches remove that risk.
 
 ## The 702 Branch
 

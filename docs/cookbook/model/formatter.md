@@ -21,7 +21,7 @@ UI5 formatter types use a special JSON-based binding syntax with these key eleme
 
 Note on ABAP syntax: inside string templates (`|...|`), escape the curly braces as `\{` and `\}`, because `{ }` normally denotes an embedded ABAP expression.
 
-`client->_bind_path( )` returns only the raw model path rather than the full binding expression (it is `_bind( val = … path = abap_true )` under a readable name — see [Binding](/cookbook/model/binding#bind-path)), so you can embed it inside the `parts` array or a single-path `path:` entry. The path is e.g. `/AMOUNT`, **unquoted** — so the quotes around it are yours to write, and they have to be `'` or `"`. A backtick is an ABAP string delimiter, not a UI5 one: written here it survives into the binding string, and UI5 answers with a syntax error and renders nothing at all.
+`client->_bind_path( )` returns only the raw model path, not the full binding expression, so you can embed it inside the `parts` array or a single-path `path:` entry. It is `_bind( val = … path = abap_true )` under a readable name, see [Binding](/cookbook/model/binding#bind-path). The path is e.g. `/AMOUNT`, **unquoted** — so the quotes around it are yours to write, and they have to be `'` or `"`. A backtick is an ABAP string delimiter, not a UI5 one: written here it survives into the binding string, and UI5 answers with a syntax error and renders nothing at all.
 
 For example, this ABAP code:
 ```abap

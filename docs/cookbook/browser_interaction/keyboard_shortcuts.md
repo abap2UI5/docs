@@ -82,7 +82,7 @@ The same registration also works without a backend roundtrip: write the `follow_
 
 ## Scoped Shortcuts
 
-An optional third argument scopes the registration, the way a `sap.ui.core.CommandExecution` in a popover's `dependents` shadows the page-level one for the same command while the popover is open. The scope is either a view slot — `POPUP`, `POPOVER`, `NEST`, `NEST2` or `MAIN`, the values of `cs_view` — or the id of a control declared in the view that can be open or closed, such as a `Dialog` in `dependents` opened with `control_by_id`. A control scope wins over a slot scope, the innermost open slot wins over an outer one, and the registration without a scope applies when no scope is open:
+An optional third argument scopes the registration, the way a `sap.ui.core.CommandExecution` in a popover's `dependents` shadows the page-level one for the same command while the popover is open. The scope is one of two things. It can be a view slot: `POPUP`, `POPOVER`, `NEST`, `NEST2` or `MAIN`, the values of `cs_view`. Or it is the id of a control declared in the view that can be open or closed, such as a `Dialog` in `dependents` opened with `control_by_id`. A control scope wins over a slot scope, the innermost open slot wins over an outer one, and the registration without a scope applies when no scope is open:
 
 ```abap
 " page level: Ctrl+S saves the record

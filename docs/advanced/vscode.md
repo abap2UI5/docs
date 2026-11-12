@@ -246,10 +246,10 @@ can help while the chain is being written rather than after it:
   list renders a device matrix in one browser session. *Compare with HEAD* puts
   the committed version beside the working tree. That answers what no linter
   can: *did my change do what I meant to the view?*
-- **Outline and navigation** — the `ele( )`/`tag( )` hierarchy as a tree in the
-  Outline pane; Go to Definition between `client->_event( 'GO' )` and the
-  `WHEN 'GO'` that handles it, in both directions; and on a binding path, to
-  the `TYPES` field that declares it.
+- **Outline and navigation** — the Outline pane shows the `ele( )`/`tag( )`
+  hierarchy as a tree. Go to Definition jumps between `client->_event( 'GO' )`
+  and the `WHEN 'GO'` that handles it, in both directions. On a binding path it
+  jumps to the `TYPES` field that declares it.
 - **F2 renames the strings an app is wired together with.** An abap2UI5 app ties
   its two halves together with literals, and nothing connects the two ends. So
   renaming one normally means a text search, and a missed occurrence gives no

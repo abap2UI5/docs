@@ -7,9 +7,9 @@ samples:
 # Step 7: Popups
 
 Clicking a row now opens a dialog to edit the invoice's quantity. A popup is
-built with the same builder and the same verbs as the view — only the root
-element changes (`core:FragmentDefinition` instead of `mvc:View`), and it is
-handed to `popup_display( )` while the main view stays untouched behind it:
+built with the same builder and the same verbs as the view. Only the root
+element changes: `core:FragmentDefinition` instead of `mvc:View`. The popup is
+handed to `popup_display( )`, and the main view stays untouched behind it:
 
 ```abap
 CLASS zcl_app_walkthrough DEFINITION PUBLIC.
