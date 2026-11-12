@@ -71,9 +71,9 @@ export const NEIGHBOURS = [
 
 /** What a retired deployment was replaced BY, so the error can say it. */
 export const RETIRED = new Map([
-  ['/samples/', 'the sample catalogue: /playground/samples/?src=learn'],
-  ['/samples-controls/', 'the sample catalogue: /playground/samples/?src=controls'],
-  ['/samples-stack/', 'the sample catalogue: /playground/samples/?src=stack'],
+  ['/samples/', 'the sample catalogue: /samples-site/#learn'],
+  ['/samples-controls/', 'the sample catalogue: /samples-site/#controls'],
+  ['/samples-stack/', 'the sample catalogue: /samples-site/#stack'],
 ]);
 
 /**

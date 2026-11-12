@@ -45,10 +45,12 @@ export const CORPORA = [
   { repo: 'samples-stack', label: 'Stack' },
 ];
 
-/* The catalogue publishes one static page per sample, at /samples/<class>/ -
- * tools/sample-pages.mjs in abap2UI5/playground. A hit therefore lands on the
- * sample itself rather than on a catalogue filtered down to it. */
-const CATALOGUE = 'https://abap2ui5.github.io/playground/samples';
+/* The catalogue publishes one static page per sample, at
+ * /samples-site/sample/<class>/ - src/pages/sample/[slug].astro in
+ * abap2UI5/samples-site, the slug the class in lower case. A hit therefore
+ * lands on the sample itself rather than on a catalogue filtered down to it.
+ * (The pages that used to be at /playground/samples/<class>/ are redirects.) */
+const CATALOGUE = 'https://abap2ui5.github.io/samples-site/sample';
 const samplePage = (cls) => `${CATALOGUE}/${cls.toLowerCase()}/`;
 
 /** The documentation half: one entry per page of this site. */

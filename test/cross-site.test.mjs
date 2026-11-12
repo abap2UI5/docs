@@ -137,9 +137,9 @@ test('a cross-site link that points at a deployment which is gone is named as go
   assert.equal(unreachable('/linter/'), null);
 
   // Retired, and the message says what to use instead - the whole point of it.
-  assert.match(unreachable('/samples/'), /retired.*\/playground\/samples\/\?src=learn/);
-  assert.match(unreachable('/samples-controls/'), /retired.*src=controls/);
-  assert.match(unreachable('/samples-stack/'), /retired.*src=stack/);
+  assert.match(unreachable('/samples/'), /retired.*\/samples-site\/#learn/);
+  assert.match(unreachable('/samples-controls/'), /retired.*samples-site\/#controls/);
+  assert.match(unreachable('/samples-stack/'), /retired.*samples-site\/#stack/);
   // ...including a page under one of them, which is how they were linked.
   assert.match(unreachable('/samples-controls/index.html'), /retired/);
 

@@ -56,7 +56,8 @@ export async function url({ code, view } = {}) {
  *  520px high (or `data-height`), an app-only one growing with the height the
  *  frame reports. */
 export function setUp(root = document) {
-  for (const el of root.querySelectorAll('.abap2ui5-demo:not([data-mounted])')) mount(el);
+  // Returned, so a caller can await the mounts and catch one that fails.
+  return Promise.all([...root.querySelectorAll('.abap2ui5-demo:not([data-mounted])')].map(mount));
 }
 
 async function mount(el) {

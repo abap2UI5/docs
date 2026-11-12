@@ -116,7 +116,7 @@ async function start(button, { unasked = false } = {}) {
   if (unasked) holdStill(container);
   container.append(demo);
   try {
-    embed.setUp(container);
+    await embed.setUp(container);
   } catch (e) {
     /* A loader that threw while mounting left the example stuck on
      * "Starting…" with its button disabled; it is put back the way the
@@ -306,12 +306,15 @@ function holdStill(container) {
  * - measured at 33 MB before compression, six to eight over the wire - and
  * `saveData` is a flag most phones never set. Under a coarse pointer, or on
  * a column too narrow for the editor and the app side by side, the button
- * stays and the reader decides; the listing folds instead (site.js). */
+ * stays and the reader decides. */
 const onADesk = () => matchMedia?.('(pointer: fine)').matches && window.innerWidth >= 860;
+
+/* Module scope, so an example already watched is not handed to a second
+ * observer when the self-start is armed again after a navigation. */
+const seen = new WeakSet();
 
 function armSelfStart() {
   if (!window.IntersectionObserver || wantsLessData() || !onADesk()) return;
-  const seen = new WeakSet();
   const watch = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;

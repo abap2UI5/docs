@@ -216,13 +216,17 @@ export function headings(body) {
     // `setup-1`, as the renderer does); only the second and third are listed.
     const m = /^ {0,3}(#{1,6})\s+(.+?)\s*$/.exec(line);
     if (!m) continue;
-    const text = m[2].replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*`]/g, '').trim();
+    // `## Before Go-Live {#four-defaults}`: the id written in the heading is
+    // its anchor, verbatim, and the braces are not part of its text.
+    const custom = /\s*\{#([^\s}]+)\}$/.exec(m[2]);
+    const raw = custom ? m[2].slice(0, custom.index) : m[2];
+    const text = raw.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1').replace(/[*`]/g, '').trim();
     if (!text) continue;
-    const slug = slugify(text);
+    const slug = custom ? custom[1] : slugify(text);
     const n = seen.get(slug) ?? 0;
     seen.set(slug, n + 1);
     if (m[1].length === 1 || m[1].length > 3) continue;
-    out.push({ text, anchor: n === 0 ? slug : `${slug}-${n}` });
+    out.push({ text, anchor: custom || n === 0 ? slug : `${slug}-${n}` });
   }
   return out;
 }
