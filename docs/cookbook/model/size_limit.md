@@ -4,14 +4,14 @@ samples:
   - z2ui5_cl_smp_app_071
 description: The UI5 model size limit in abap2UI5 - why a list binding stops at 100 rows, and cs_event-set_size_limit to raise or reset it per view slot.
 ---
-# Size Limit
+# More than 100 Rows
 
 Every UI5 JSON model has a built-in upper limit on the number of items it will expose to a list binding. By default this limit is `100`. If you bind a `ComboBox`, `Table` or any other aggregation to a table that contains more than 100 entries, only the first 100 are rendered — the rest are silently dropped. This is a UI5 design decision, documented under [`sap.ui.model.Model#setSizeLimit`](https://sapui5.hana.ondemand.com/sdk/#/api/sap.ui.model.Model%23methods/setSizeLimit).
 
-abap2UI5 exposes this setting through the built-in client event `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
+abap2UI5 exposes this setting through the frontend action `SET_SIZE_LIMIT`, so you can raise (or reset) the limit per view directly from ABAP.
 
 ## Set the Limit
-Trigger the event from your controller with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
+Run the action from your app class with `client->follow_up_action`. The first argument is the new limit, the second is the view key — use the constants `client->cs_view-main`, `-nested`, `-nested2`, `-popup`, or `-popover` to stay type-safe (their underlying values are `MAIN`, `NEST`, `NEST2`, `POPUP`, `POPOVER`):
 ```abap
 client->follow_up_action(
     val   = client->cs_event-set_size_limit
@@ -120,10 +120,10 @@ CLASS zcl_sample_size_limit IMPLEMENTATION.
 ENDCLASS.
 ```
 
-The two event branches change the limit and the data and return: the view on
-screen is still the right one, and the framework pushes the refilled table
-into it. `CLEAR t_combo` before each fill is what keeps the second press from
-doubling the list.
+The two event branches change the limit and the data and return. The view on
+screen is still the right one, and the framework sends the refilled table to
+it. The `CLEAR t_combo` before each fill keeps the second press from doubling
+the list.
 
 ## Other Views
 The same call applies to nested views, popups and popovers — just swap the view key:
@@ -146,11 +146,12 @@ client->follow_up_action(
 
 ::: warning The main view and the two nested views share one limit
 Only the popup and the popover own a model of their own. `MAIN`, `NEST` and
-`NEST2` are one control tree and inherit **one** JSON model through UI5 model
-propagation, so a limit set on any of them lands on that shared model and the
-**largest** of the three wins. Raising it for the nested view raises it for the
-main view too, and resetting the main view changes nothing while the nested one
-still asks for more. Reset all three to get back to `100`.
+`NEST2` are one control tree and share **one** JSON model, which UI5 hands
+down from parent to child. A limit set on any of them therefore applies to that
+shared model, and the **largest** of the three wins. Raising it for the nested
+view raises it for the main view too. Resetting the main view changes nothing
+while the nested one still asks for more. Reset all three to get back to
+`100`.
 :::
 
 ::: tip **When to raise it**

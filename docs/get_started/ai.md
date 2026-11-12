@@ -1,23 +1,23 @@
 ---
 outline: [2, 4]
-description: Developing abap2UI5 apps with an AI assistant - the AI Studio that builds an app from a description in the browser, one paragraph to paste into a prompt, and the linter and MCP server that let an agent check its own work without a system.
+description: Developing abap2UI5 apps with an AI assistant - the AI Studio builds an app from a description in the browser, and one paragraph to paste makes any assistant useful. The linter and the MCP server let an agent check its own work without a system.
 ---
 # Developing with AI
 
 ## Build an app in the browser
 
 The quickest way to see it: the
-[**AI Studio**](https://abap2ui5.github.io/playground/ai/) builds an app from
-a description, in your browser, with nothing to install. Describe the app -
-*"a table of flights with a search field"* - and the model writes it as an
-abap2UI5 class into the editor beside the chat, runs it against the real
-framework, reads what the checks and the app said, and fixes it until it is
-clean. Attach a specification, a screenshot or a spreadsheet and it builds
-from that. Pick the ABAP release of your system in the header, so the code
-is checked against it, and download the class for abapGit when it fits. You
-bring the API key (Anthropic, or any OpenAI-compatible server such as
-Ollama); the page has no server of its own and nothing leaves your browser
-but the request to the model.
+[**AI Studio**](https://abap2ui5.github.io/playground/ai/) builds an app from a
+description, in your browser, with nothing to install. Describe the app, for
+example *"a table of flights with a search field"*. The model writes it as an
+abap2UI5 class into the editor beside the chat and runs it against the real
+framework. It reads what the checks and the app said, and fixes the class until
+it is clean. Attach a specification, a screenshot or a spreadsheet and it builds
+from that. Pick the ABAP release of your system in the header, so the code is
+checked against it, and download the class for abapGit when it fits. You bring
+the API key (Anthropic, or any OpenAI-compatible server such as Ollama). The
+page has no server of its own, and nothing leaves your browser but the request
+to the model.
 
 The rest of this page is for the assistant you already work with.
 
@@ -32,11 +32,11 @@ reason is structural:
   class, in one language. An agent never has to keep an ABAP backend and a
   JavaScript frontend in step, because there is no second half to drift.
 - **The sample catalog is there to learn from.** The
-  [sample catalog](https://abap2ui5.github.io/samples-site/) holds
-  complete, tested apps from all three repositories — one per pattern, every
-  one linted and rendered, each with the ABAP printed in full — so "has
-  somebody already built a value help, a tree, navigation between two apps?"
-  is a question with a real answer instead of a guess.
+  [sample catalog](https://abap2ui5.github.io/samples-site/) holds complete,
+  tested apps from all three repositories. There is one per pattern, every one
+  is linted and rendered, and each shows its ABAP in full. So the question "has
+  somebody already built a value help, a tree, navigation between two apps?" has
+  a real answer.
 - **The result can be checked without an SAP system.** The
   [abap2UI5 linter](/advanced/linter) reconstructs the UI5 view out of the ABAP
   that builds it and reports what UI5 does not have. An agent that can verify
@@ -44,8 +44,8 @@ reason is structural:
 
 Two things turn those properties into a working session, and both cost a
 minute: a paragraph to paste, and an index to point at. The rest — the
-conventions file, the gates, the MCP loop, the editor — is
-[Agent Setup](/advanced/agent_setup), in rising order of effort.
+conventions file, the checks, the MCP server, the editor — is
+[AI Setup: The Recommended Path](/advanced/ai_path), three steps in order.
 
 ## Paste the essentials
 
@@ -100,8 +100,8 @@ working from what abap2UI5 is today rather than from what it recalls.
 
 - [AI Studio](https://abap2ui5.github.io/playground/ai/) — an app from a
   description, built and run in the browser
-- [Agent Setup](/advanced/agent_setup) — the conventions file, the gates, the
-  MCP loop and the editor, in rising order of effort
+- [AI Setup: The Recommended Path](/advanced/ai_path) — what to install first,
+  in three steps, and what each one costs
 - [Working Off-Stack](/advanced/working_off_stack) — the repository all of this
   assumes
 - [Tooling](/advanced/tooling) — the human side of the same loop

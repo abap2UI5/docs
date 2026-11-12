@@ -7,9 +7,25 @@ description: XML templating in abap2UI5 - UI5's template:repeat, template:if and
 ---
 # XML Templating
 
-XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace — `template:repeat`, `template:if`, `template:then`, `template:elseif`, `template:else`, `template:with` — and expands them into plain XML *before* the control tree is created. abap2UI5 exposes these instructions through the fluent builder so you can drive the expansion from ABAP data.
+XML Templating lets the **data decide which controls a view has**: one column
+per row of a field catalog, one input per field of a meta model. Most apps do
+not need it. Check here first:
 
-It is the technique behind every **metadata-driven** UI: the input of the expansion is a *meta model* — data about the view, such as which columns a table has or which fields of which type a form shows — rather than the data the controls display. A UI5 app hands the preprocessor the OData meta model of its service; in abap2UI5 the meta model is plain ABAP data you bind like any other attribute (see [Meta Model](#meta-model-a-form-from-a-field-catalog) below).
+| What you want | What to use |
+| --- | --- |
+| a control that exists only under a condition | an ABAP `IF` around the builder call |
+| one control per row of an internal table | an ABAP `LOOP` that calls the builder for each row |
+| a value shown or hidden while the app runs | a bound `visible` property, see [Binding](/cookbook/model/binding) |
+| rows of a table | a normal table binding, see [Tables](/cookbook/model/tables) |
+| the columns of a table, or the fields of a form, taken from data **and expanded by UI5 in the view** | XML Templating, this page |
+
+The first four rows are plain ABAP and plain binding. They are easier to
+write and to debug. [Templating vs ABAP-side Composition](#templating-vs-abap-side-composition)
+at the end of this page compares the two in detail.
+
+XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace: `template:repeat`, `template:if`, `template:then`, `template:elseif`, `template:else`, `template:with`. It expands them into plain XML *before* the control tree is created. abap2UI5 offers these instructions through the view builder, so you can drive the expansion from ABAP data.
+
+It is the technique behind every **metadata-driven** UI. The input of the expansion is a *meta model*: data about the view, such as which columns a table has or which fields of which type a form shows. It is not the data the controls display. A UI5 app hands the preprocessor the OData meta model of its service. In abap2UI5 the meta model is plain ABAP data you bind like any other attribute (see [Meta Model](#meta-model-a-form-from-a-field-catalog) below).
 
 See the official UI5 references for the underlying mechanics:
 [XML Templating](https://sapui5.hana.ondemand.com/sdk/#/topic/5ee619fc1370463ea674ee04b65ed83b),
@@ -25,7 +41,7 @@ This timing has two consequences:
 - **Expansion is build-time.** A `template:repeat` over an internal table produces a fixed number of controls; the expanded XML is what UI5 renders.
 - **Data changes do not re-template.** If the data driving the template changes, the existing expansion stays as is. To pick up the change you must rebuild the view (`view_display`) or the templated fragment (`nest_view_display`) — see [Re-rendering](#re-rendering) below.
 
-abap2UI5 wires up the templating model for you. Every variable you bind with `client->_bind( ... )` is reachable inside templates via the `template>` model prefix:
+abap2UI5 sets up the templating model for you. Every variable you bind with `client->_bind( ... )` is reachable inside templates via the `template>` model prefix:
 
 | ABAP binding                       | Path inside templates       |
 | ---------------------------------- | --------------------------- |
@@ -75,7 +91,7 @@ view->ele( `Table`
 
 Notes on the snippet:
 
-- `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells). `template` is an element namespace like any other, so the builder needs nothing beyond `ns = template` on the element — the prefix itself is declared once on the view's root.
+- `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells). `template` is an element namespace like any other. The builder needs nothing beyond `ns = template` on the element, and the prefix itself is declared once on the view's root.
 - Inside the loop, `{L0>FNAME}` is a templating-time read — it ends up as the literal string `NAME`/`DATE`/`AGE` in the expanded XML.
 - `{= '{' + ${L1>FNAME} + '}' }` is an [expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0) that **constructs another binding string at templating time**. With `L1>FNAME = NAME` it expands to `text="{NAME}"`, which becomes a normal runtime binding against the row of `mt_data`. This is the standard pattern for templated tables: outer loop builds the columns, inner loop builds the cells, expression binding wires each cell to the right field of the row.
 - `list` is a list binding like any other, so it takes the binding-info form too: `{path: '...', startIndex: 0, length: 2}` cuts the loop to a slice of the table — see [Meta Model](#meta-model-a-form-from-a-field-catalog) below.
@@ -86,7 +102,7 @@ The full sample is `Z2UI5_CL_SMP_APP_173`.
 
 The fragments above are two halves of one view. Press **Run** to see the
 expansion happen — three rows of data, three columns built by the outer loop,
-and each cell wired to its field by the inner one:
+and each cell bound to its field by the inner one:
 
 ```abap
 CLASS zcl_sample_templating DEFINITION PUBLIC.
@@ -322,10 +338,9 @@ Because templating runs once, the view must be rebuilt for changes in the templa
 **Rebuild the whole view** — simplest, works for most apps. After the user toggles a flag, render the view again:
 
 ```abap
-CASE client->get( )-event.
-  WHEN `CHANGE_FLAG`.
-    view_display( ).   " builds and ships the view again
-ENDCASE.
+IF client->check_on_event( `CHANGE_FLAG` ).
+  view_display( ).   " builds and ships the view again
+ENDIF.
 ```
 
 This is the pattern used in `Z2UI5_CL_SMP_APP_173`: the switch fires `CHANGE_FLAG`, `view_display` runs, the new value of `mv_flag` flows through `template:if`, and the icon swaps.

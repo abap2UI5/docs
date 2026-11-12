@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Every place an abap2UI5 app can appear outside its own browser tab - Fiori Launchpad, SAP Build Work Zone, SAP Mobile Start, a native mobile shell, other UI5 apps and web pages, Microsoft Teams, Microsoft Excel, another ABAP system and AI agents.
+description: Every place an abap2UI5 app can appear outside its own browser tab - Fiori Launchpad, SAP Build Work Zone, SAP Mobile Start and a native mobile shell. Also other UI5 apps and web pages, Microsoft Teams, Microsoft Excel, another ABAP system and AI agents.
 ---
 # Integration
 
@@ -34,12 +34,12 @@ Zone, the embed control and the Excel add-in load the abap2UI5 frontend into
 a page of their own, next to the rest of it. abap2UI5's own node is never
 framed, and nothing about its HTTP handler changes.
 
-**The app runs in a frame.** A Microsoft Teams tab shows a web page in a
-frame of its own, on another origin than Teams. abap2UI5 forbids exactly
-that by default: every response carries `X-Frame-Options: SAMEORIGIN`, so a
-browser refuses to show the app in a frame anyone else put around it. That is
-the protection against clickjacking, and it stays on until an installation
-says which hosts may frame it - a few lines in a
+**The app runs in a frame.** A Microsoft Teams tab shows a web page in a frame
+of its own, on another origin than Teams. abap2UI5 forbids exactly that by
+default. Every response carries `X-Frame-Options: SAMEORIGIN`, so a browser
+refuses to show the app in a frame anyone else put around it. That is the
+protection against clickjacking. It stays on until an installation says which
+hosts may frame it. That takes a few lines in a
 [user exit](/advanced/extensibility/user_exits), shown on the Teams page.
 
 Excel on the web sits between the two: the add-in's own page is framed by

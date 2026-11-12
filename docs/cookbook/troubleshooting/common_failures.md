@@ -2,19 +2,19 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_496
-description: The ten most common ways an abap2UI5 app fails without an ABAP exception - a binding that resolves to nothing, a non-public attribute, type coercion, malformed XML, a missing or surplus view_display, a popup never destroyed - with the symptom and where to look.
+description: The ten most common ways an abap2UI5 app fails without an ABAP exception, each with its symptom and where to look. Among them an empty binding, a non-public attribute, malformed XML and a missing view_display.
 ---
 # Common Failures
 
 Not every problem raises an ABAP exception. Many failures surface only in the browser, fail silently, or look like framework bugs when they are actually pattern mistakes. The sections below cover the ten most common ones — what the symptom looks like and where to find the real cause.
 
 ::: tip Developer Tools first
-Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/debugging) — its **Error** and **Log** tabs (under **Problems**) and **Request** and **Response** (under **Roundtrips**) show most of what the browser-DevTools steps below dig for, without leaving the app.
+Press `Ctrl+F12` in the running app to open the built-in [Developer Tools](/configuration/debugging). Its **Error** and **Log** tabs (under **Problems**) and its **Request** and **Response** tabs (under **Roundtrips**) show most of what the browser-DevTools steps below look for, without leaving the app.
 :::
 
 ## Binding-Path Mismatch
 
-When a `_bind` path does not resolve against the JSON model on the frontend — typically because the public attribute was renamed, the data was never sent, or the path is mistyped — UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
+Sometimes a `_bind` path does not resolve against the JSON model on the frontend. Typical causes: the public attribute was renamed, the data was never sent, or the path is mistyped. UI5 does **not** raise an ABAP exception. The control simply renders empty or with a default value.
 
 Where to look:
 - **Browser console.** UI5 logs a warning like `Binding "/path/to/field" was not found in model` from `sap.ui.model.json.JSONModel`. Open the browser DevTools console and filter by `sap.ui.model`.
@@ -32,7 +32,7 @@ BINDING_ERROR - No class attribute for binding found -
 Please check if the bound values are public attributes of your class
 ```
 
-Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error view. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
+Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error dialog. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
 
 Where to look:
 - **The error text itself.** Unlike a binding-path mismatch, this failure is reported by name — if you are reading a browser-console warning, you are looking at the section above, not at this one.
@@ -42,10 +42,17 @@ See [Life Cycle → Bound Attributes Must Be Public](/cookbook/event_navigation/
 
 ## Type Coercion Without an Explicit UI5 Type
 
-ABAP and UI5 do not share a type system. A `d` field goes on the wire as the ISO string `2024-01-15`, a `t` as `12:30:00` and a `timestamp` as `2024-01-15T12:30:00Z`; packed numbers arrive as JSON numbers without locale formatting; and a flag declared as `c LENGTH 1` travels as the string `"X"` - only the boolean ABAP types (`abap_bool`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`. The control renders the raw value, parses it wrong, or treats it as empty.
+ABAP and UI5 do not share a type system:
+
+- a `d` field is sent as the ISO string `2024-01-15`, a `t` as `12:30:00` and a `timestamp` as `2024-01-15T12:30:00Z`
+- packed numbers arrive as JSON numbers without locale formatting
+- a flag declared as `c LENGTH 1` is sent as the string `"X"`
+- only the boolean ABAP types (`abap_bool`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`
+
+The control renders the raw value, parses it wrong, or treats it as empty.
 
 Where to look:
-- **Symptom**: a `DatePicker` shows the date in the wrong pattern or ignores the locale; a `CheckBox` is always unchecked although the flag is `'X'` - the attribute is a `c LENGTH 1`, not `abap_bool`; numeric inputs lose decimals or render with the wrong separator.
+- **Symptom**: a `DatePicker` shows the date in the wrong pattern or ignores the locale. A `CheckBox` is always unchecked although the flag is `'X'`: the attribute is a `c LENGTH 1`, not `abap_bool`. Numeric inputs lose decimals or render with the wrong separator.
 - **Fix**: type the flag `abap_bool` and bind it directly; attach a `sap.ui.model.type.Date` / `Float` / `Currency` to the binding where the locale or the pattern matters, or write a formatter.
 
 See [Binding → Data-Type Mapping](/cookbook/model/binding#data-type-mapping) for the type-mapping table and [Formatter](/cookbook/model/formatter) for the patterns.
@@ -78,7 +85,7 @@ abap2UI5 does not re-render automatically. After `check_on_init( )`, after a nav
 
 Where to look:
 - **Symptom**: blank page on first load (the `check_on_init` branch is missing `view_display`), or a button that "does nothing visible" even though state changed and the handler ran.
-- **ABAP debugger**: confirm the `WHEN client->check_on_event( ... )` branch actually executes. The bug is almost always a missing `view_display( )` call, not a wrong event.
+- **ABAP debugger**: confirm the `ELSEIF client->check_on_event( ... )` branch actually executes. The bug is almost always a missing `view_display( )` call, not a wrong event.
 
 See [Life Cycle → The View Is Only Sent When You Call `view_display`](/cookbook/event_navigation/life_cycle#the-view-is-only-sent-when-you-call-view-display).
 
@@ -114,18 +121,18 @@ Where to look:
 
 ## State Lost Between Events
 
-Between two events the app instance is serialized into a draft record on the **server** and read back on the next request; the browser only carries the draft id. **Attributes** of serializable types survive — at any visibility, `PROTECTED` and `PRIVATE` included. What does not survive is everything that is not an attribute or cannot be written: local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects.
+Between two events the app instance is serialized into the [app draft](/get_started/glossary), a record on the **server**, and read back on the next request; the browser only carries the draft id. **Attributes** of serializable types survive — at any visibility, `PROTECTED` and `PRIVATE` included. What does not survive is everything that is not an attribute or cannot be written: local variables, `DATA(...)` declarations inside an event handler, open database cursors, acquired locks, and `REF TO` references to non-serializable objects.
 
 Where to look:
-- **Symptom**: a value set in one event is empty on the next; a calculated value built up in `check_on_init` is gone by the time the user clicks; a singleton or "global" state appears to reset between roundtrips.
+- **Symptom**: a value set in one event is empty on the next. A calculated value built up in `check_on_init` is gone by the time the user clicks. A singleton or "global" state appears to reset between roundtrips.
 - **Fix**: move surviving state out of the method into an attribute with a concrete, serializable type — it does not have to be public for that; only `_bind( )` needs public. If serialization itself is the problem the roundtrip says so, with `APP_SERIALIZATION_ERROR`. For resources that genuinely need to live server-side across events (file handles, persistent locks, expensive caches), see [Statefulness](/cookbook/expert_more/statefulness).
-- **The draft expires.** Four hours by default — an app left open longer starts fresh rather than restoring.
+- **The app draft expires.** Four hours by default — an app left open longer starts fresh rather than restoring.
 
 ## Error Index
 
 The sections above start from a behavior — nothing renders, data does not
 update. This index starts from the other end: a literal message in front of
-you, in the error view of a failed roundtrip or in the browser console. Every
+you, in the error dialog of a failed roundtrip or in the browser console. Every
 message below is one the framework or UI5 actually produces; find yours, and
 the entry says what caused it and where the fix is explained.
 
@@ -146,10 +153,11 @@ local variable. Covered in full under
 
 ### `BINDING_ERROR_TAB_CELL_LEVEL - Row index out of range`
 
-A cell binding — `client->_bind( val = … tab = … tab_index = … )` — names a
-row the table does not have: the index is off (it is 1-based, like every ABAP
-index), or the table was refilled or shortened after the index was computed
-and before the view was built. Rebuild the view from the current table state.
+A cell binding, `client->_bind( val = … tab = … tab_index = … )`, names a
+row the table does not have. Either the index is off (it is 1-based, like
+every ABAP index), or the table was refilled or shortened after the index was
+computed and before the view was built. Rebuild the view from the current
+table state.
 
 ### `BINDING_ERROR_TAB_CELL_LEVEL - No class attribute for binding found - Please check if the bound values are public attributes of your class`
 
@@ -173,20 +181,20 @@ live across events.
 
 Two apps hand control to each other forever inside a single request — most
 often a `nav_app_call( )` that runs unconditionally in `main( )` instead of
-inside an event or `check_on_navigated( )` branch, so the called app's first
+inside an event or `check_on_navigated( )` branch, so the sub-app's first
 roundtrip immediately navigates again. Guard the navigation; see
 [Navigation](/cookbook/event_navigation/navigation/inner_app).
 
 ### `failed to load 'sap/m/....js'` — browser console, view does not appear
 
 UI5 resolved a tag in your view as a *control class* and requested a file
-that does not exist. Two ways to get there: a control name that is not on the
-UI5 release your system serves, or a generic child tag (`ele( 'footer' )`)
-naming an aggregation the parent does not have **on that release** — UI5 then
-tries to load it as a control. `sap.m.Dialog`'s `footer`, for example, is
-public only in newer releases; on an older one, use `buttons`. The
-[linter](/advanced/linter) decides both against the release you target,
-without a system.
+that does not exist. There are two causes. The first is a control name that is
+not on the UI5 release your system serves. The second is a generic child tag
+(`ele( 'footer' )`) that names an aggregation the parent does not have **on
+that release**; UI5 then tries to load it as a control. For example, the
+`footer` of `sap.m.Dialog` is public only in newer releases; on an older one,
+use `buttons`. The [linter](/advanced/linter) decides both against the release you
+target, without a system.
 
 ### `Binding "/PATH" was not found in model` — browser console warning, control renders empty
 
@@ -223,12 +231,12 @@ frontend branch ships with.
 
 ### `Literals across more than one line are not allowed` — abapGit pull, and the app class is empty afterwards
 
-An import-time failure, not a runtime one: a source line longer than 255
-characters. abapGit reports the error for that object and **carries on**, so
-what stays behind is an empty class stub — the tree looks imported, the app
-is gone. Pull again after the line is split (in your own code: break long
-literals into `&&` chunks); check the abapGit log rather than the package
-tree to see which objects really arrived.
+This failure happens at import time, not at runtime: a source line is longer
+than 255 characters. abapGit reports the error for that object and **carries
+on**. What stays behind is an empty class stub: the tree looks imported, but
+the app is gone. Split the line (in your own code: break long literals into
+`&&` chunks) and pull again. Check the abapGit log, not the package tree, to
+see which objects really arrived.
 
 ### An icon is simply missing — no message anywhere
 

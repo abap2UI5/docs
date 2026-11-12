@@ -16,6 +16,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_029` in
 [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) (package
 `03`), on the travel business object `Z2UI5_R_SMPS_TRV`.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 | Roundtrip | What happens |
@@ -143,11 +146,11 @@ roll back, drop the refused rows, send the rest again.
 
 - **Many rows.** Several hundred rows per COMMIT are fine. For thousands,
   save in packages, and say in the status which package a row was in.
-- **Only what the user may change.** If the business object has instance
-  feature control, ask it before offering the change: `GET PERMISSIONS` tells
-  per row whether an update is allowed, and the preview can mark the rows it
-  would not accept. `Z2UI5_CL_SMPS_APP_017` in package `12` of samples-stack
-  shows the statement.
+- **Only what the user may change.** If the business object has instance feature
+  control, ask it before offering the change. `GET PERMISSIONS` tells per row
+  whether an update is allowed. The preview can then mark the rows the business
+  object would not accept. `Z2UI5_CL_SMPS_APP_017` in package `12` of
+  samples-stack shows the statement.
 - **Draft-enabled business objects.** A mass change usually goes to the
   active instances. If a row has an open draft, the business object refuses
   the update of the active one, and the message says so.

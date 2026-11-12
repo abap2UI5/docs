@@ -76,16 +76,16 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-Whichever source it is, the box shows the messages by severity, the most
-severe deciding its type; a log carries more than a message class does — a
-timestamp per entry, the sequence number — and that is what the message
-dialog of the popups add-on below renders where a box cannot.
+Whichever source it is, the box shows the messages by severity, and the most
+severe one decides its type. A log carries more than a message class does: a
+timestamp per entry and the sequence number. A box cannot show those; the
+message dialog of the popups add-on below can.
 
 ::: tip Something richer than a message box
 A message box is a list of lines. For a sortable table of the log with its
-severities, timestamps and long texts, either build the view yourself from the
-same data — it is an internal table like any other, see
-[Tables](/cookbook/model/tables) — or take the ready-made message dialog from
+severities, timestamps and long texts, you have two options. Build the view
+yourself from the same data, which is an internal table like any other (see
+[Tables](/cookbook/model/tables)). Or take the ready-made message dialog from
 the [popups add-on](https://github.com/abap2UI5-addons/popups).
 :::
 

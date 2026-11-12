@@ -54,12 +54,19 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+An input field that holds **World**, and the **Say Hello** button. Type your
+name over it and press the button: the message reads **Hello** plus what you
+typed.
+:::
+
 ## How the Value Travels
 
 - **`DATA recipient TYPE string`** — a public attribute is the model. After
-  every roundtrip the framework serializes the whole app instance into a draft
-  on the server and restores it before the next one, so your class keeps its
-  state without any session handling. Attributes you `_bind( )` must be in the
+  every roundtrip the framework saves the whole app instance on the server and
+  restores it before the next one. That saved copy is the
+  [app draft](/get_started/glossary), and it is why your class keeps its state
+  without any session handling. Attributes you `_bind( )` must be in the
   `PUBLIC SECTION` — the framework reaches them dynamically, and a private or
   protected one fails the roundtrip with `BINDING_ERROR`. (Everything else may
   stay protected; it is serialized either way. Full rules on the

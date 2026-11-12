@@ -5,9 +5,9 @@ description: The HTTP Connector add-on - a consumer system forwards every abap2U
 # HTTP Connector
 
 The [HTTP Connector](https://github.com/abap2UI5-addons/http-connector) calls
-abap2UI5 apps on one ABAP system from the browser of another, like the
-[RFC Connector](/advanced/rfc) but over an HTTP destination: the browser
-talks to a **consumer system**, which forwards every request through an SM59
+abap2UI5 apps on one ABAP system from the browser of another. It works like the
+[RFC Connector](/advanced/rfc) but over an HTTP destination. The browser talks
+to a **consumer system**, which forwards every request through an SM59
 destination to the **source system** where the apps run.
 
 ## When to use
@@ -62,30 +62,29 @@ Then open `.../sap/bc/z2ui5_http` of the **consumer system** in the browser.
 
 The browser authenticates against the consumer system's ICF node
 `/sap/bc/z2ui5_http`, like on any abap2UI5 installation. The source system's
-node `/sap/bc/z2ui5_http_srv` is called by the consumer system, and it
-authenticates whatever the SM59 destination carries: with logon data
-maintained on the destination — the shape the README names — every app on
-the source system runs under that destination user, whoever is in front of
-the browser. The README does not describe user propagation (an assertion
-ticket or a certificate for the current user, for instance), so whether the
-browser user reaches the source system is an open question of your
-destination setup: check in SM59 which logon the destination uses, and check
-what `sy-uname` holds in an app on the source system. Authorization checks
-in the apps run on the source system against that user. The source node is
-an abap2UI5 endpoint in its own right — secure it like the one on the
-consumer system, see [Security](/configuration/security).
+node `/sap/bc/z2ui5_http_srv` is called by the consumer system. It authenticates
+whatever the SM59 destination carries. The README names one setup: logon data
+maintained on the destination. With it, every app on the source system runs
+under that destination user, whoever is in front of the browser. The README does
+not describe user propagation, for instance an assertion ticket or a certificate
+for the current user. So whether the browser user reaches the source system
+depends on your destination setup. Check in SM59 which logon the destination
+uses, and check what `sy-uname` holds in an app on the source system.
+Authorization checks in the apps run on the source system against that user. The
+source node is an abap2UI5 endpoint in its own right — secure it like the one on
+the consumer system, see [Security](/configuration/security).
 
-Headers are not forwarded, and neither is the consumer's path: a request
-header an app reads through the user exit on the source system does not
-arrive, and the exit sees the path of the source node.
+Headers and the consumer's path are not forwarded. A request header an app reads
+through the user exit on the source system does not arrive. The exit sees the
+path of the source node.
 
 ## Limitations
 
 - **Stateless apps only.** A stateful app (`client->set_session_stateful( )`)
-  needs the ICF session of the system it runs on; the consumer opens a new
-  HTTP connection per request and does not forward the `sap-contextid` header
-  the frontend uses to address that session. Apps that keep their state in
-  the draft table — the default — work unchanged.
+  needs the ICF session of the system it runs on. The consumer opens a new HTTP
+  connection per request. It does not forward the `sap-contextid` header the
+  frontend uses to address that session. Apps that keep their state in the draft
+  table — the default — work unchanged.
 - **Method, body, query string and status travel — headers and the consumer's
   path do not.**
 

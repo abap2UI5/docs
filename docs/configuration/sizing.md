@@ -26,7 +26,7 @@ The work process is released when the response is sent. Nothing is kept:
 no session, no enqueue, no open connection. The next click of the same user
 may land on any work process of any application server, because the whole
 state travels as the draft id in the request and the row in the database.
-No server affinity is needed, and none is set - the only call that pins
+No server affinity is needed, and none is set - the only call that binds
 anything is `set_session_stateful( )`, below.
 
 An event that changes nothing bound sends no model; an event that changes a
@@ -48,9 +48,9 @@ row from then on, read and deserialized on every click, and written back
 again. The model sent to the browser, by contrast, holds only what is bound
 with `_bind( )`. Two consequences:
 
-- Keep large data out of the instance rather than merely private: select it
-  in the event that needs it, hold a key instead of a result set, or bind
-  the page the user sees and keep the rest in the database.
+- Keep large data out of the instance; making it private is not enough. Select
+  it in the event that needs it, hold a key instead of a result set, or bind the
+  page the user sees and keep the rest in the database.
 - A bound table is in both: in the draft row and in the model that crosses
   the wire. The cockpit raises a hint at a model over 1 MB.
 
@@ -82,33 +82,38 @@ your own:
 | rows in the table | 200 × 30 × 4 = 24,000 |
 | size of the table | 24,000 × 40 KB ≈ 960 MB |
 
-The same example with the expiry at 1 hour is 240 MB; with instances of
-10 KB it is 240 MB at 4 hours. Row size is the lever the developer holds,
-expiry the one the exit holds. The number to watch in operation is the row
-count against this estimate; a count well above it means the cleanup is not
-running (no app has been started for a while) or that an app writes much
-larger rows than assumed - the cockpit's *Drafts & Housekeeping* tab shows
-both ([Basis Runbook](/configuration/runbook#the-draft-table-z2ui5-t-01)).
+The same example with the expiry at 1 hour is 240 MB; with instances of 10 KB it
+is 240 MB at 4 hours. Row size is the lever the developer holds, expiry the one
+the exit holds. In operation, watch the row count against this estimate. A count
+well above it has one of two causes: the cleanup is not running (no app has been
+started for a while), or an app writes much larger rows than assumed. The
+cockpit's *Drafts & Housekeeping* tab shows both
+([Basis Runbook](/configuration/runbook#the-draft-table-z2ui5-t-01)).
 
-Two things the estimate ignores, on purpose: a stateful app writes rows only
-on the paths that keep a bookmarkable draft, and the cleanup is a `DELETE`
-across the table at every app start, which on a busy system is many deletes
-of few rows each.
+The estimate ignores two things on purpose. A stateful app writes rows only on
+the paths that keep a bookmarkable draft. And the cleanup is a `DELETE` across
+the table at every app start, which on a busy system is many deletes of few rows
+each.
 
 ## Stateful Sessions
 
 `client->set_session_stateful( )` switches the ABAP session of this app to
-stateful from that roundtrip on: the same work process answers every later
-roundtrip of this user, and enqueue locks, open RFC connections and whatever the
-app does not serialize survive between clicks. The price is **one pinned dialog
+stateful from that roundtrip on. The same work process then answers every later
+roundtrip of this user. Enqueue locks, open RFC connections and whatever the app
+does not serialize survive between clicks. The price is **one reserved dialog
 work process per active user of that app** for as long as the session lives,
 which is why it is meant for a few internal, low-traffic apps. The session ends
-when the app calls `set_session_stateful( abap_false )`, when the frontend's
-session-terminate ping arrives (a `HEAD` the frontend sends when the app ends -
-a restart or the component's exit), or when the ICF session times out on the
-system's terms - check that timeout with Basis, the framework sets none. Pair
-every switch on with a switch off on every exit path. Stateful sessions do not
-exist on ABAP Cloud. The trade-offs are on
+in one of three ways:
+
+- the app calls `set_session_stateful( abap_false )`
+- the frontend's session-terminate ping arrives: a `HEAD` the frontend sends
+  when the app ends (a restart or the component's exit)
+- the ICF session times out; the framework sets no timeout, so check the
+  system's value with Basis
+
+
+Pair every switch on with a switch off on every exit path. Stateful sessions do
+not exist on ABAP Cloud. The trade-offs are on
 [Statefulness](/cookbook/expert_more/statefulness).
 
 ## Model Size
@@ -125,10 +130,10 @@ limits apply to it:
 - **The cockpit's hints.** The Performance tab flags a model over 1 MB, a
   large response, a slow p95 and app state that grows from roundtrip to
   roundtrip.
-- **Compression.** The handler asks ICF to gzip the page and the JSON where
-  the client accepts it, which is a 70 to 85 percent cut in transfer on a
-  system whose ICM does not compress already; it does not shrink what the
-  browser has to parse.
+- **Compression.** The handler asks ICF to gzip the page and the JSON where the
+  client accepts it. On a system whose ICM does not compress already, that cuts
+  the transfer by 70 to 85 percent. It does not shrink what the browser has to
+  parse.
 
 What the monitor records per roundtrip - `bytes_request`, `bytes_response`,
 `bytes_model`, the three phases and the browser's own measure of the

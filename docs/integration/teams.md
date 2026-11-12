@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Show an abap2UI5 app in Microsoft Teams as a personal tab - why it is not an Adaptive Card, the user exit that lets Teams frame the app, a wrapper page with the Teams JavaScript library, the app manifest, the upload, and the sign-in.
+description: Show an abap2UI5 app in Microsoft Teams as a personal tab - why it is not an Adaptive Card, and the user exit that lets Teams frame the app. Then a wrapper page with the Teams JavaScript library, the app manifest, the upload, and the sign-in.
 ---
 # Microsoft Teams
 
@@ -88,9 +88,9 @@ ENDCLASS.
 ```
 
 The hosts are the ones Microsoft lists for Teams and the other Microsoft 365
-apps that can show a tab. `'self'` is the wrapper page when it is served by
-the same SAP system; if it lives on another host, add that origin to the list,
-because a browser checks every frame around the app, not only the outermost.
+apps that can show a tab. `'self'` is the wrapper page when it is served by the
+same SAP system. If it lives on another host, add that origin to the list. A
+browser checks every frame around the app, not only the outermost.
 
 The header only adds `frame-ancestors`. The rest of the policy abap2UI5 sends
 stays as it is, so scripts and styles are as restricted as before.
@@ -207,16 +207,15 @@ The app then appears under **Apps**, and **Pin** puts it in the left rail.
 The tab shows whatever the SAP system answers, including its sign-in, and
 that is the part to plan for:
 
-- **Single sign-on is the setup that works.** Users are signed in to
-  Microsoft Entra ID in Teams already; with SAML or OpenID Connect between
-  the SAP system and Entra ID they arrive signed in, and nobody sees a login
-  form in the tab.
-- **A login page in a frame often fails.** Many identity providers refuse to
-  be framed, for the same clickjacking reason abap2UI5 does, and a basic
-  authentication prompt inside a frame is up to the client to show or not.
-- **The session cookie has to be allowed in a frame.** The tab is a frame
-  inside a Teams page, so the SAP session cookie is a third-party cookie
-  there, wherever the wrapper page lives, and a browser sends it only with
+- **Single sign-on is the setup that works.** Users are signed in to Microsoft
+  Entra ID in Teams already. With SAML or OpenID Connect between the SAP system
+  and Entra ID they arrive signed in, and nobody sees a login form in the tab.
+- **A login page in a frame often fails.** Many identity providers refuse to be
+  framed, for the same clickjacking reason abap2UI5 does. And the client decides
+  whether it shows a basic authentication prompt inside a frame.
+- **The session cookie has to be allowed in a frame.** The tab is a frame inside
+  a Teams page. So the SAP session cookie is a third-party cookie there,
+  wherever the wrapper page lives. A browser sends it only with
   `SameSite=None; Secure`. On the ABAP side that is the profile parameter
   `icf/set_SameSiteAttribute`. A browser that blocks third-party cookies
   altogether loses the session.

@@ -17,12 +17,12 @@ Some sample projects and other repositories also ship a downported version. Chec
 
 ## Installation
 The installation on an old release follows the normal [Quickstart](/get_started/quickstart) flow with two adjustments:
-1. Pull the `X.Y.Z-702` tag with abapGit (the `702` branch itself is force-pushed on every rebuild, so a tag is what to pin) — abapGit itself is 7.02-compatible, so deployment to old ECC machines works the same way as everywhere else
+1. Pull the `X.Y.Z-702` tag with abapGit. Use a tag, because the `702` branch itself is force-pushed on every rebuild. abapGit itself is 7.02-compatible, so deployment to old ECC machines works the same way as everywhere else
 2. Create the HTTP handler (SICF service) with the 7.02-compatible handler syntax instead of the modern snippet
 
 After that, call your HTTP handler from the browser and abap2UI5 is ready for use — even on your old machine.
 
-If you later want to reach these apps from the cloud, use the [RFC Connector](/advanced/rfc): it calls abap2UI5 apps on legacy systems via BTP destination and RFC, integrating them into Steampunk, S/4 Public Cloud, Fiori Launchpads, or SAP Mobile Start. The [HTTP Connector](/advanced/http) offers the same over HTTP.
+If you later want to reach these apps from the cloud, use the [RFC Connector](/advanced/rfc). It calls abap2UI5 apps on legacy systems via BTP destination and RFC. That integrates them into Steampunk, S/4 Public Cloud, Fiori Launchpads, or SAP Mobile Start. The [HTTP Connector](/advanced/http) offers the same over HTTP.
 
 ## How It Works
 The `702` branch is not maintained by hand — it is **generated** from `main` by an automated GitHub Actions workflow on every change. The pipeline runs [abaplint](https://abaplint.org)'s downport rule (`abaplint --fix` with a 7.02 target configuration), which rewrites modern syntax into 7.02-compatible equivalents, for example:
@@ -41,9 +41,9 @@ Automatic syntax rewriting is only the last step. The codebase is compatible wit
 
 **1. Only basic technology.** No OData services, CDS views, or new EML syntax — none of these exist on older ECCs. Conversely, no SAP GUI or other statements forbidden in ABAP Cloud. The only universally available technology is a plain HTTP service (defined via SICF on-premise, via Eclipse in the cloud), and that is all abap2UI5 needs for communication.
 
-**2. Few SAP dependencies.** SAP APIs like `/UI2/CL_JSON` or function modules may be missing or behave differently on certain releases, and their availability per release is poorly documented. abap2UI5 therefore replaces SAP dependencies with open-source projects where possible — most importantly [ajson](/technical/tools/ajson) for JSON handling, which is compatible from 7.02 to ABAP Cloud and ships bundled under the `z2ui5` namespace. Browse [dotabap.org](https://dotabap.org) for more open-source projects that can reduce your own dependencies.
+**2. Few SAP dependencies.** SAP APIs like `/UI2/CL_JSON` or function modules may be missing or behave differently on certain releases, and their availability per release is poorly documented. abap2UI5 therefore replaces SAP dependencies with open-source projects where possible. The most important one is [ajson](/technical/tools/ajson) for JSON handling. It is compatible from 7.02 to ABAP Cloud and ships bundled under the `z2ui5` namespace. Browse [dotabap.org](https://dotabap.org) for more open-source projects that can reduce your own dependencies.
 
-**3. Version-independent code.** Where a dependency is unavoidable and SAP offers different APIs per language version (e.g., generating UUIDs), abap2UI5 uses a hybrid approach: dynamic ABAP calls the new API in ABAP for Cloud and falls back to the classic API in Standard ABAP — one code line, no syntax errors on either side. Not always elegant, but very pragmatic.
+**3. Version-independent code.** Sometimes a dependency is unavoidable and SAP offers different APIs per language version, e.g., for generating UUIDs. There abap2UI5 uses a hybrid approach. A dynamic ABAP call uses the new API in ABAP for Cloud and falls back to the classic API in Standard ABAP. The result is one code line with no syntax errors on either side.
 
 **4. Downported syntax.** The main code line is written in 7.50 syntax and the `702` branch is generated automatically, as described above.
 

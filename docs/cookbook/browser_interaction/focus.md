@@ -24,13 +24,13 @@ DATA(selection_end)   = focus-selection_end.     " caret end, in chars
 
 ## Set the Focus
 
-Set the input focus from the backend with the `set_focus` frontend event. Pass the target control's `id` as the first argument — the framework moves the cursor to that field after the next roundtrip.
+Set the input focus from the backend with the `set_focus` frontend action. Pass the target control's `id` as the first argument — the framework moves the cursor to that field after the next roundtrip.
 
 This is useful for guided data entry, barcode scanning, or any flow where the next field to focus depends on backend logic.
 
 ## Basic Usage
 
-After processing an event, call `client->follow_up_action( )` with `cs_event-set_focus` and the id of the input to focus next. (The value bindings on the inputs are omitted here to keep the focus logic clear — see [Barcode Scanning](/cookbook/device_capabilities/barcode_scanning) for the same form with bound inputs.)
+After processing an event, call `client->follow_up_action( )` with `cs_event-set_focus` and the id of the input to focus next. The value bindings on the inputs are left out here to keep the focus logic clear. [Barcode Scanning](/cookbook/device_capabilities/barcode_scanning) shows the same form with bound inputs.
 
 ```abap
 CLASS zcl_sample_focus DEFINITION PUBLIC.

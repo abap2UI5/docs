@@ -10,6 +10,11 @@ process the landscape already has - the framework is a package of workbench
 objects like any other. This page is about what travels, in which order, and
 what does not travel and is set per system instead.
 
+![The framework comes from GitHub to the development system with abapGit and goes on to quality and production by transport](/configuration/image-3.webp){ width=80% }
+
+*abapGit is used once, on the development system. Every later system gets
+the objects by transport.*
+
 ## What Travels
 
 | Object | Type | Travels? |
@@ -23,13 +28,13 @@ what does not travel and is set per system instead.
 | The Admin Cockpit (optional) | package of its own, tables `Z2UI5_T_CK_*` | yes; its administrators and settings are table rows and are set per system |
 | Your apps | one class per app, plus the texts, tables and other objects it uses | yes |
 
-Pull the framework - a release tag, the one the
-[Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit)
-table names for the system - with the folder logic `PREFIX` that its
-`.abapgit.xml` declares; the sub-package names are derived from the root
-package you pick, and a long root name leaves the deeper ones no room (the
-package name is capped at 30 characters) -
-[S/4 Public Cloud](/configuration/s4_public_cloud) shows the dialog.
+Pull the framework as a release tag: the one the
+[Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table
+names for the system. Use the folder logic `PREFIX` that its `.abapgit.xml`
+declares. The sub-package names are derived from the root package you pick. A
+package name is capped at 30 characters, so a long root name leaves the deeper
+ones no room. [S/4 Public Cloud](/configuration/s4_public_cloud) shows the
+dialog.
 
 ## The Order
 
@@ -43,9 +48,10 @@ package name is capped at 30 characters) -
 4. **The frontend BSP**, when the launchpad is used, and the tile
    configuration - [Fiori Launchpad](/configuration/launchpad).
 5. **A Hello World check** on the target system before any app arrives:
-   open the node, press *check* on the start page, start the bundled test
-   app. That verifies pull, handler, node, exit and table at once - the same
-   check as the Quickstart's, on the production system.
+   open the node, enter `z2ui5_cl_ui5_app_hi_world` on the start page,
+   press **Check** and open the link. You should see the page *abap2UI5 -
+   Hello World*. That verifies pull, handler, node, exit and table at once -
+   the same check as the Quickstart's, on the production system.
 6. **Your apps.** One class per app; whatever else the app uses - message
    classes, tables, CDS views, function modules - travels with it as it would
    for a report.
@@ -60,19 +66,19 @@ class, which is workbench code and the same everywhere. Everything else on
 the node - whether it is active, the logon procedure, the authorization
 field, SSL requirements - is set on the system it runs on:
 
-- A service is a workbench object of its own (abapGit serializes one, and
-  `SICF` can put one into a transport request), and many landscapes create
-  the node by hand on every system instead - check your landscape's
-  convention. Either way, **activation is per system**: after an import the
-  node is inactive until it is activated there.
+- A service is a workbench object of its own: abapGit serializes one, and `SICF`
+  can put one into a transport request. Many landscapes create the node by hand
+  on every system instead. Check your landscape's convention. Either way,
+  **activation is per system**: after an import the node is inactive until it is
+  activated there.
 - The authorization field of the node is checked against `S_ICF` and is the
-  outer gate of the installation - [Authorization](/configuration/authorization).
+  outer check of the installation - [Authorization](/configuration/authorization).
 - The logon procedure and the SSO setup are standard ICF and belong to the
   Basis team's landscape conventions - [Basis Runbook](/configuration/runbook#the-icf-node).
 
-The launchpad frontend branch pulls more than the BSP: next to it come an
-ICF node `z2ui5` and its handler class `z2ui5_cl_lp_handler`, as abapGit
-objects of the same package, so they travel with the BSP; the cloud branches
+The launchpad frontend branch pulls more than the BSP. Next to it come an ICF
+node `z2ui5` and its handler class `z2ui5_cl_lp_handler`. They are abapGit
+objects of the same package, so they travel with the BSP. The cloud branches
 ship the HTTP service and the IAM artifacts the same way. Activation of that
 node is per system as well.
 
@@ -99,10 +105,10 @@ what the exit produced on the system it runs on.
 ## Parallel Installations
 
 Two installations of abap2UI5 cannot share a package name or an object name:
-every object abapGit pulls is global in the system. To keep production apps
-on one release while new development moves to another, install the framework
-a second time under another prefix with the renaming build - each copy has
-its own package, draft table, node and exit, and they travel separately -
+every object abapGit pulls is global in the system. To keep production apps on
+one release while new development moves to another, install the framework a
+second time under another prefix with the renaming build. Each copy has its own
+package, draft table, node and exit, and the copies travel separately. See
 [Namespaces, Renaming](/advanced/renaming).
 
 ## ABAP Cloud
@@ -110,10 +116,10 @@ its own package, draft table, node and exit, and they travel separately -
 On S/4 Public Cloud and BTP ABAP Environment the same objects exist, the
 mechanics differ:
 
-- abapGit for Eclipse (ADT) pulls the repository into a package that belongs
-  to a **software component**; the software component is what moves through
-  the landscape, and abap2UI5 travels inside it with everything else in that
-  package - [S/4 Public Cloud](/configuration/s4_public_cloud).
+- abapGit for Eclipse (ADT) pulls the repository into a package that belongs to
+  a **software component**. The software component is what moves through the
+  landscape. abap2UI5 travels inside it with everything else in that package;
+  see [S/4 Public Cloud](/configuration/s4_public_cloud).
 - The HTTP service is a development object of the package, created in ADT
   (the handler class implements `if_http_service_extension`), so it travels
   with the component rather than being created per system.
@@ -126,7 +132,7 @@ mechanics differ:
 ## A 7.02 System
 
 Below 7.50 the installation is the `702` branch - the same framework, its
-syntax rewritten by abaplint on every push - and the tag to pin is
+syntax rewritten by abaplint on every push - and the tag to pull is
 `X.Y.Z-702` ([Downporting](/advanced/downporting)). What differs in the
 transport:
 

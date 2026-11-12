@@ -168,6 +168,10 @@ features:
 
 ## Try it out now
 
+Everything you see on the right is the one ABAP class on the left. Click the
+pencil in a row, change the delivery date and press **Save** — then change the
+code and press **Run**.
+
 ```abap edit
 CLASS zcl_app_invoices DEFINITION PUBLIC.
   PUBLIC SECTION.

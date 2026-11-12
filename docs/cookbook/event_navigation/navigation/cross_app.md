@@ -6,12 +6,12 @@ samples:
   - z2ui5_cl_smps_app_481
 description: Cross-app navigation in abap2UI5 - leaving for another Fiori app through the launchpad shell with cross_app_nav_to_ext, reading startup parameters on arrival, listing the intents of a semantic object, and the shell title.
 ---
-# Cross App
+# Launchpad Navigation
 
 Navigation *out of* your app and into another Fiori app, and back. This is the
 launchpad's own navigation, not abap2UI5's: it goes through the FLP shell, so
 the launchpad's history, its back button and its app-to-app contract all keep
-working. [Inner App](/cookbook/event_navigation/navigation/inner_app) is the other direction — calling one of your
+working. [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) is the other direction — calling one of your
 own abap2UI5 classes, which never leaves the page and which the launchpad
 never hears about.
 
@@ -59,24 +59,24 @@ To go back to the launchpad app the user came from:
     )->a( n = `press` v = client->follow_up_action( client->cs_event-cross_app_nav_to_prev_app )
 ```
 
-Both are ordinary [frontend events](/cookbook/event_navigation/frontend), so
-they work in the two positions every frontend event does: wired to a control as
-above, or as a statement in `main` when the navigation should follow some
-backend work. The arguments differ between the two, though. The object literal
-and the `$` binding above are resolved by UI5 when the press fires; a statement
-sends its arguments as data, so there the target has to be JSON,
-`{"semanticObject":"Z2UI5_CL_LP_SAMPLE_04","action":"display"}`, and the
-parameters a JSON object of their values.
+Both are ordinary [frontend actions](/cookbook/event_navigation/frontend), so
+they work in the two positions every frontend action does. Write them into a
+view attribute as above, or as a statement in `main` when the navigation should
+follow some backend work. The arguments differ between the two positions. In a
+view attribute, UI5 resolves the object literal and the `$` binding when the
+press fires. A statement sends its arguments as data. So there the target has to
+be JSON, `{"semanticObject":"Z2UI5_CL_LP_SAMPLE_04","action":"display"}`, and
+the parameters are a JSON object of their values.
 
 ## Which Apps Can I Navigate To?
 
-`cross_app_nav_get_links` asks the shell for the intents the launchpad
-offers *this user* for a semantic object — the list a Fiori elements smart
-link shows in its popover — and hands the answer back as a backend event.
-`t_arg` is the target, the parameters and the event name; target and
-parameters are read like those of `cross_app_nav_to_ext`, an action in the
-target narrows the list, and the parameters drop the intents a mandatory
-parameter of which is missing:
+`cross_app_nav_get_links` asks the shell which intents the launchpad offers
+*this user* for a semantic object. It is the list a Fiori elements smart link
+shows in its popover. The answer comes back as a backend event. `t_arg` is the
+target, the parameters and the event name. Target and parameters are read like
+those of `cross_app_nav_to_ext`. An action in the target narrows the list. An
+intent is left out when one of its mandatory parameters is missing from the
+parameters:
 
 ```abap
 client->follow_up_action(

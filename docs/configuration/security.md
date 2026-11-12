@@ -8,7 +8,7 @@ renders what the backend sends. This page is the data-flow rule, the threat
 model, and the HTTP hardening the framework ships: the Content Security
 Policy, the response headers and the CSRF check. The framework's own
 [security model](https://github.com/abap2UI5/abap2UI5/blob/main/docs/security.md)
-names the gate or test behind each guarantee, and
+names the check or test behind each guarantee, and
 [SECURITY.md](https://github.com/abap2UI5/abap2UI5/blob/main/SECURITY.md) is
 the disclosure process.
 
@@ -21,10 +21,10 @@ externally, with security managed like any other UI5 app.
 The ICF (Internet Communication Framework) node level handles authentication.
 You get full control over the ICF node configuration, including visibility
 settings, login procedures, and other security settings. abap2UI5 adds no user
-store, no token and no session concept beyond the ICF session: a request that
+store, no token and no session concept beyond the ICF session. A request that
 reaches the handler has passed SAP logon, and `sy-uname` is the user. SSO, SAML
-and Kerberos are the node's logon procedure, configured as for any ICF service;
-which sessions a logout then has to end is on [Logout](/configuration/logout).
+and Kerberos are the node's logon procedure, configured as for any ICF service.
+[Logout](/configuration/logout) says which sessions a logout then has to end.
 
 ## Authorization
 As an app developer, you have full flexibility over authorization. Set it up at
@@ -36,24 +36,25 @@ authorization for your endpoint, see the
 One rule decides what the browser gets to see, and it is worth stating
 precisely:
 
-- **What is bound goes to the browser.** An attribute passed to `_bind( )`
-  is part of the JSON model of the view, sent with the response and - that
-  is what two-way binding means - writable from the client on the next
-  roundtrip. A value that drives a database write or a dynamic `WHERE`
-  clause is validated in the app before it is used, as a screen field would
-  be.
+- **What is bound goes to the browser.** An attribute passed to `_bind( )` is
+  part of the JSON model of the view and is sent with the response. Two-way
+  binding means that the client can write it back on the next roundtrip. A value
+  that drives a database write or a dynamic `WHERE` clause is validated in the
+  app before it is used, as a screen field would be.
 - **What is public but unbound stays on the server.** The model is built
   from the bound attributes only; a public attribute no view binds is never
   serialized for the browser.
-- **The whole instance goes into the draft.** Every attribute of the app
-  class, whatever its visibility, is serialized into `Z2UI5_T_01` between
-  two roundtrips - on the server, in the database of the system, in a row
-  bound to the user who wrote it.
-- **Nothing else leaves.** The business logic is ABAP and is never sent; the
-  view is XML the app built; a follow-up action is data (an event name and
-  its arguments), never code. The 500 body carries the exception chain and
-  the app, event and draft context - never the host name, client or user -
-  and `check_hide_error_details` replaces it with a generic message.
+- **The whole instance goes into the draft.** Every attribute of the app class,
+  whatever its visibility, is serialized into `Z2UI5_T_01` between two
+  roundtrips. That [app draft](/get_started/glossary) stays on the server, in
+  the database of the system, in a row bound to the user who wrote it.
+- **Nothing else leaves.** The business logic is ABAP and is never sent. The
+  view is XML the app built. A follow-up action is data (an event name and its
+  arguments), never code. The 500 body carries the exception chain and the app,
+  event and draft context. It never carries the host name, client or user, and
+  `check_hide_error_details` replaces it with a generic message.
+
+![The path of a request: browser, ICF node (logon and the S_ICF authorization), your handler class (an optional check of your own), the abap2UI5 handler (CSRF check, response headers and CSP from the exit class), and the app's main( ) with its own AUTHORITY-CHECK; the app draft is read from and written to table z2ui5_t_01](/configuration/request-path.svg)
 
 ## Threat Model
 What the framework guarantees, what the app has to do, and what the
@@ -62,8 +63,8 @@ input:
 
 | The client controls | What the framework does with it |
 |---|---|
-| The app class name (`app_start`, the hash route, the first POST) | refused before instantiation unless the class implements `z2ui5_if_app` - a type check, not an authorization. Which user may run which app is decided in the app's `main( )`, by design; the ICF node's authorization field decides who reaches the node at all - [Authorization](/configuration/authorization) |
-| The draft id | not a secret: it travels in bookmark URLs and app-state links. Every read of `Z2UI5_T_01` is checked against the `UNAME` that wrote the row and fails closed, so a leaked or guessed id loads nothing for another user and degrades to a fresh app start |
+| The app class name (`app_start`, the hash route, the first POST) | refused before instantiation unless the class implements `z2ui5_if_app` - a type check, not an authorization. Which user may run which app is decided in the app's `main( )`, by design; the ICF node's authorization field decides who reaches the node at all - the three layers are on [Authorization](/configuration/authorization) |
+| The draft id | not a secret: it travels in bookmark URLs and app-state links. Every read of `Z2UI5_T_01` is checked against the `UNAME` that wrote the row and refused when the user differs, so a leaked or guessed id loads nothing for another user and ends in a fresh app start |
 | The model delta | applied to the bound attributes and to nothing else; validation of the values is the app's |
 | The event name and its arguments | dispatched to the app's `main( )`; the app decides what an event means |
 | A `control_by_id` / `control_global` call it replays | a method outside the whitelists, or on a denylist of framework-hostile methods (`destroy`, `setModel`, `bind*`, `attach*`, `fireEvent`, `rerender`, `invalidate`, the generic aggregation and association mutators, anything starting with `_`), is logged and dropped - the backend is the trusted driver, the lists guard the framework's own invariants rather than form a security boundary |
@@ -71,32 +72,35 @@ input:
 | `X-Forwarded-Host` | compared against `Origin` by the CSRF check when `check_trust_forwarded_host` is on (the default, for proxies); a client can set the header itself, so an installation without a proxy switches it off |
 | `Origin` / `Referer` on a POST | the CSRF check, on by default: a cross-origin POST is rejected with 403 before any app logic runs |
 
-What the operator sets, all in the [user exit](/advanced/extensibility/user_exits):
-`check_hide_error_details` (the exception chain off the 500 body),
-`check_trust_forwarded_host`, `check_csrf_active`, the bootstrap source
-(`cs_config-src` - a public CDN serves the whole JavaScript runtime into an
-authenticated session), the CSP and the response headers below. The Admin
+The operator sets the following, all in the [user exit](/advanced/extensibility/user_exits):
+
+- `check_hide_error_details`: the exception chain off the 500 body
+- `check_trust_forwarded_host`
+- `check_csrf_active`
+- the bootstrap source `cs_config-src`: a public CDN serves the whole JavaScript
+  runtime into an authenticated session
+- the CSP and the response headers below
+ The Admin
 Cockpit reads all of them off the running system as a traffic light -
 [Monitoring](/configuration/monitoring#admin-cockpit).
 
-What the app has to do, and no framework setting replaces: the
-authorization check in `main( )`, the validation of every bound value, and
-the decision what reaches the DOM - HTML in a message passes a sanitizer, a
-link the message link policy, but neither is a reason to put untrusted
-markup into a message in the first place.
+The app has three duties that no framework setting replaces: the authorization
+check in `main( )`, the validation of every bound value, and the decision what
+reaches the DOM. HTML in a message passes a sanitizer, and a link passes the
+message link policy. Still, do not put untrusted markup into a message.
 
 ## Content-Security-Policy
 To strengthen security, abap2UI5 uses a Content Security Policy (CSP) by
 default. CSP blocks attacks like cross-site scripting (XSS) and data injection
 by restricting which resources the browser can load. The default policy allows a
-fixed set of trusted sources — the SAP and OpenUI5 CDN hosts, and nothing else;
-an installation that loads from another host adds it in the user exit, to the
+fixed set of trusted sources: the SAP and OpenUI5 CDN hosts, and nothing else.
+An installation that loads from another host adds it in the user exit, to the
 one directive that needs it. The complete policy is shown below. It also carries
 two hardening directives — `object-src 'none'` and `base-uri 'self'` — that
-block plugin content and pin `<base>` to the app origin. It deliberately carries
-**no** `frame-ancestors`: browsers ignore that directive in a `<meta>` CSP (and
-log a console warning about it), so cross-origin framing is forbidden by the
-real `X-Frame-Options` response header instead — see
+block plugin content and restrict `<base>` to the app origin. It deliberately
+carries **no** `frame-ancestors`. Browsers ignore that directive in a `<meta>`
+CSP and log a console warning about it. Cross-origin framing is forbidden by the
+`X-Frame-Options` response header instead; see
 [Response headers](#response-headers) below.
 
 The default carries **no** `'unsafe-eval'` and no `'unsafe-inline'` for scripts:
@@ -136,18 +140,18 @@ afterwards):
     object-src 'none'; base-uri 'self';"/>
 ```
 
-`script-src` and `style-src` are written out rather than left to the
-`default-src` fallback on purpose: `default-src` carries `data:` and `blob:` for
-images, fonts and media, and a `data:` that falls through to `script-src` is a
-textbook CSP bypass. `style-src` keeps `'unsafe-inline'` because UI5 renders
-style attributes itself.
+`script-src` and `style-src` are written out on purpose and not left to the
+`default-src` fallback. `default-src` carries `data:` and `blob:` for images,
+fonts and media. A `data:` that falls through to `script-src` is a well-known
+CSP bypass. `style-src` keeps `'unsafe-inline'` because UI5 renders style
+attributes itself.
 
 ### Customizing the CSP
 If needed, adjust the CSP in the
 [user exit](/advanced/extensibility/user_exits). The exit runs after the
-framework fills in the default, so edit the directive you need rather than
-replacing the whole tag — a copy of the tag goes stale with the next release, an
-edit does not:
+framework fills in the default. So edit only the directive you need and do not
+replace the whole tag. A copy of the tag is outdated after the next release; an
+edit is not:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
@@ -199,9 +203,40 @@ script: script-src 'self' ui5.sap.com ...
 From `1.84` on nothing needs it; leave the default alone there.
 :::
 
+### Sending the CSP as a Response Header
+By default the CSP is a `<meta>` tag in the page. A productive installation
+sends it as a response header as well: the browser enforces a header before it
+parses the first byte of the page, and `frame-ancestors` works only there. Add
+one entry named `Content-Security-Policy` to `t_security_header` in the user
+exit. Its value is the policy alone, without the `<meta>` tag around it:
+
+```abap
+METHOD z2ui5_if_ui5_exit~set_config_http_get.
+
+    " the policy for a system that serves UI5 itself - add the host
+    " UI5 is loaded from when it comes from somewhere else
+    APPEND VALUE #(
+        n = `Content-Security-Policy`
+        v = `default-src 'self' data: blob:; `             &&
+            `script-src 'self' 'wasm-unsafe-eval'; `       &&
+            `style-src 'self' 'unsafe-inline'; `           &&
+            `img-src 'self' data: blob:; `                 &&
+            `connect-src 'self'; worker-src 'self' blob:; ` &&
+            `object-src 'none'; base-uri 'self'; `         &&
+            `frame-ancestors 'self'` )
+        TO cs_config-t_security_header.
+
+ENDMETHOD.
+```
+
+The framework adds the hash of its own inline script to this header, as it
+does for the `<meta>` tag. To try a policy without blocking anything, name the
+entry `Content-Security-Policy-Report-Only` first and watch the browser
+console.
+
 ## Response headers
-Not everything hardening can be done in a `<meta>` CSP is done there — a page
-served over HTTP carries headers too, and some directives only work as one.
+A `<meta>` CSP cannot do all of the hardening. A page served over HTTP carries
+headers too, and some directives only work in a header.
 abap2UI5 sets these on every response, out of the box:
 
 | Header | Value | What it does |
@@ -231,11 +266,11 @@ ENDMETHOD.
 ```
 
 ### Two headers only an HTTPS installation gets
-`Strict-Transport-Security` and `Cross-Origin-Opener-Policy` are **not** in
-that list, both for the same reason: they belong to a deployment served over
-TLS, and abap2UI5 cannot see from inside the ICF node whether TLS terminated in
-front of it — the request hands out the path, the parameters and the `Host`,
-never the scheme.
+`Strict-Transport-Security` and `Cross-Origin-Opener-Policy` are **not** in that
+list, both for the same reason. They belong to a deployment served over TLS.
+abap2UI5 cannot see from inside the ICF node whether TLS terminated in front of
+it: the request hands out the path, the parameters and the `Host`, never the
+scheme.
 
 COOP is the one with a visible symptom. A browser honors it on a
 **trustworthy origin** only (`https://…`, or a `localhost` host), so on a
@@ -268,11 +303,11 @@ ENDMETHOD.
 Every state-changing request in abap2UI5 is a POST, so the framework ships its
 own CSRF defense instead of relying on a fronting SAP ICF/CSRF layer that may or
 may not be there. The check compares the host authority of the request's
-`Origin` (or `Referer`) header against the `Host` header — or, by default,
-against the first `X-Forwarded-Host` when a proxy sent one
-(`cs_config-check_trust_forwarded_host`; an installation without a proxy hardens
-the gate by switching it to `abap_false`) — a cross-origin POST is rejected with
-an error response before any app logic runs.
+`Origin` (or `Referer`) header against the `Host` header. By default it compares
+against the first `X-Forwarded-Host` instead when a proxy sent one
+(`cs_config-check_trust_forwarded_host`). An installation without a proxy makes
+the check stricter by switching that field to `abap_false`. A cross-origin POST
+is rejected with an error response before any app logic runs.
 
 **CSRF protection is active by default.** A fresh install rejects cross-origin
 POSTs without any configuration. If your endpoint must accept cross-origin POSTs

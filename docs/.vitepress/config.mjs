@@ -201,6 +201,7 @@ export default defineConfig({
           { text: "Quickstart", link: "/get_started/quickstart" },
           { text: "Hello World", link: "/get_started/hello_world" },
           { text: "Developing with AI", link: "/get_started/ai" },
+          { text: "Glossary", link: "/get_started/glossary" },
         ],
       },
       {
@@ -248,15 +249,29 @@ export default defineConfig({
             link: "/tutorials/everyday/",
             collapsed: true,
             items: [
+              // the guides that need no RAP business object first, as the index lists them
+              { text: "Report and Export", link: "/tutorials/everyday/report_export" },
+              { text: "Send by Mail", link: "/tutorials/everyday/send_by_mail" },
+              { text: "Print Forms as PDF", link: "/tutorials/everyday/print_forms" },
               { text: "Excel Import into RAP", link: "/tutorials/everyday/excel_import_rap" },
               { text: "Mass Change", link: "/tutorials/everyday/mass_change" },
               { text: "Approval Worklist", link: "/tutorials/everyday/approval_worklist" },
-              { text: "Report and Export", link: "/tutorials/everyday/report_export" },
               { text: "Concurrent Editing", link: "/tutorials/everyday/concurrent_editing" },
               { text: "File Attachments", link: "/tutorials/everyday/file_attachments" },
-              { text: "Send by Mail", link: "/tutorials/everyday/send_by_mail" },
-              { text: "Print Forms as PDF", link: "/tutorials/everyday/print_forms" },
               { text: "React to Changes", link: "/tutorials/everyday/react_to_changes" },
+            ],
+          },
+          {
+            // For the reader who writes reports and ALVs today. The two pages
+            // stood under Advanced Topics > Releases, Stacks, where that
+            // reader never looked; their addresses are unchanged.
+            text: "Coming from Classic Reports",
+            collapsed: true,
+            items: [
+              // an app written as a report: the short way in for new code
+              { text: "Apps Written Like Reports", link: "/advanced/report_style" },
+              // a classic report taken to ABAP Cloud with the abap-cloud-gui add-on
+              { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
             ],
           },
         ],
@@ -286,7 +301,7 @@ export default defineConfig({
             link: "/cookbook/view/definition",
             collapsed: true,
             items: [
-              { text: "Definition", link: "/cookbook/view/definition" },
+              { text: "Building a View", link: "/cookbook/view/definition" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
             ],
@@ -307,7 +322,7 @@ export default defineConfig({
               { text: "Tables", link: "/cookbook/model/tables" },
               { text: "Trees", link: "/cookbook/model/trees" },
               { text: "Device Model", link: "/cookbook/model/device_model" },
-              { text: "Size Limit", link: "/cookbook/model/size_limit" },
+              { text: "More than 100 Rows", link: "/cookbook/model/size_limit" },
             ],
           },
           {
@@ -315,26 +330,26 @@ export default defineConfig({
             link: "/cookbook/event_navigation/life_cycle",
             collapsed: true,
             items: [
-              { text: "Life Cycle", link: "/cookbook/event_navigation/life_cycle" },
+              { text: "App Structure: init, navigated, event", link: "/cookbook/event_navigation/life_cycle" },
               {
                 text: "Event",
                 link: "/cookbook/event_navigation/backend",
                 items: [
-                  { text: "Backend", link: "/cookbook/event_navigation/backend" },
-                  { text: "Frontend", link: "/cookbook/event_navigation/frontend" },
+                  { text: "Handling Events in ABAP", link: "/cookbook/event_navigation/backend" },
+                  { text: "Frontend Actions", link: "/cookbook/event_navigation/frontend" },
                 ],
               },
               {
                 text: "Navigation",
                 link: "/cookbook/event_navigation/navigation/inner_app",
                 items: [
-                  { text: "Inner App", link: "/cookbook/event_navigation/navigation/inner_app" },
-                  { text: "Cross App", link: "/cookbook/event_navigation/navigation/cross_app" },
-                  { text: "Hash", link: "/cookbook/event_navigation/navigation/hash" },
+                  { text: "Navigating Between Apps", link: "/cookbook/event_navigation/navigation/inner_app" },
+                  { text: "Launchpad Navigation", link: "/cookbook/event_navigation/navigation/cross_app" },
+                  { text: "URL Hash and Routing", link: "/cookbook/event_navigation/navigation/hash" },
                   { text: "App State, Share, Bookmark", link: "/cookbook/event_navigation/navigation/app_state" },
                 ],
               },
-              { text: "Exception", link: "/cookbook/event_navigation/exception" },
+              { text: "Errors and Exceptions", link: "/cookbook/event_navigation/exception" },
             ],
           },
           {
@@ -376,7 +391,7 @@ export default defineConfig({
             link: "/cookbook/device_capabilities/info",
             collapsed: true,
             items: [
-              { text: "Info", link: "/cookbook/device_capabilities/info" },
+              { text: "Frontend Info", link: "/cookbook/device_capabilities/info" },
               { text: "Camera", link: "/cookbook/device_capabilities/camera" },
               {
                 text: "Geolocation",
@@ -403,6 +418,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Lock", link: "/cookbook/expert_more/lock" },
+              { text: "Lock: Full Source", link: "/cookbook/expert_more/lock_sources" },
               { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
               { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
@@ -424,6 +440,7 @@ export default defineConfig({
               { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
               { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
               { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
+              { text: "RAP Draft: The Full Edit Screen", link: "/cookbook/eml_cds_sql/draft_edit_screen" },
               { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
               { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
             ],
@@ -452,12 +469,15 @@ export default defineConfig({
         // the list under it did not say. Every section link is now the first
         // page under it, and test/sidebar-titles.test.mjs holds it.
         text: "Configuration",
-        link: "/configuration/installation",
+        link: "/configuration/productive_usage",
         collapsed: true,
         items: [
           // The file keeps its name - the URL has been public for years - and
           // the page says what it is about: not how to install the framework
           // (that is the Quickstart) but where the endpoint lives per system.
+          // first on purpose: it is the page a Basis admin needs before go-live,
+          // and it links every other page of the chapter
+          { text: "Go-Live Checklist", link: "/configuration/productive_usage" },
           { text: "Deployment Scenarios", link: "/configuration/installation" },
           {
             text: "Setup",
@@ -480,7 +500,6 @@ export default defineConfig({
           // goes looking for the other.
           { text: "Monitoring", link: "/configuration/monitoring" },
           { text: "UI5 Versions", link: "/configuration/ui5_versions" },
-          { text: "Productive Usage", link: "/configuration/productive_usage" },
           // The operations pages behind it, in the order a Basis team meets
           // them: what a release is and how to move, what travels, what to
           // watch, how much it costs in work processes and table rows.
@@ -601,12 +620,6 @@ export default defineConfig({
               { text: "Downporting", link: "/advanced/downporting" },
               { text: "Namespaces, Renaming", link: "/advanced/renaming" },
               { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
-              // A classic report taken to ABAP Cloud as a class of the
-              // abap-cloud-gui add-on - another stack the code was not
-              // written for, which is what this group is about.
-              { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
-              // its counterpart for new code: an app written as a report
-              { text: "Apps Written Like Reports", link: "/advanced/report_style" },
               { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
             ],
           },
@@ -628,6 +641,7 @@ export default defineConfig({
               { text: "abap2UI5 linter", link: "/advanced/linter" },
               { text: "MCP Server", link: "/advanced/mcp_server" },
               { text: "VS Code Extension", link: "/advanced/vscode" },
+              { text: "AI Setup: The Recommended Path", link: "/advanced/ai_path" },
               { text: "Agent Setup", link: "/advanced/agent_setup" },
             ],
           },

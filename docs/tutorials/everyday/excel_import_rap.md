@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_028
-description: Import an Excel file into a RAP business object - upload with the FileUploader, read with XCO XLSX, check and preview every row, create all rows with one MODIFY ENTITIES and show each refusal on the row it belongs to.
+description: Import an Excel file into a RAP business object - upload with the FileUploader, read with XCO XLSX, check and preview every row. Then create all rows with one MODIFY ENTITIES and show each refusal on the row it belongs to.
 ---
 # Excel Import into RAP
 
@@ -17,6 +17,9 @@ The finished app is `Z2UI5_CL_SMPS_APP_028` in
 `13`). It imports travels into the business object `Z2UI5_R_SMPS_TRV` that
 ships with package `03`, and the snippets below are taken from it.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Shape of the App
 
 Three roundtrips, each with one job:
@@ -30,7 +33,7 @@ Three roundtrips, each with one job:
 Splitting upload and import is the important decision. A file with a date in
 the wrong format should be fixed before anything is created, and a user who
 sees the rows first notices a wrong column at a glance. The business object
-still has the last word: the preview only checks what the app can check on
+still decides in the end: the preview only checks what the app can check on
 its own.
 
 ## Step 1: Bring the File to the Backend

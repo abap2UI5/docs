@@ -1,12 +1,12 @@
 ---
 outline: [2, 4]
-description: S-RTTI is how abap2UI5 serializes the data references of an app instance into the draft - every TYPE REF TO data attribute travels with its runtime type - as a mirrored copy under z2ui5_cl_srt_* that app code does not call.
+description: S-RTTI is how abap2UI5 serializes the data references of an app instance into the draft - every TYPE REF TO data attribute travels with its runtime type. It ships as a mirrored copy under z2ui5_cl_srt_* that app code does not call.
 ---
 # S-RTTI
 
-Between two roundtrips abap2UI5 serializes the whole app instance into a draft row and reads it back for the next `main( )` (see [Life Cycle](/cookbook/event_navigation/life_cycle#check-on-event-fires-once-per-roundtrip)). The standard transformation that does it, `CALL TRANSFORMATION id`, writes an attribute by its declared type — and a data reference has none that would help: `TYPE REF TO data` says nothing about the table or structure behind it, and a type created at runtime with `cl_abap_tabledescr=>create( )` exists nowhere a transformation could look it up.
+Between two roundtrips abap2UI5 serializes the whole app instance into a draft row and reads it back for the next `main( )` (see [Life Cycle](/cookbook/event_navigation/life_cycle#check-on-event-fires-once-per-roundtrip)). The standard transformation that does it, `CALL TRANSFORMATION id`, writes an attribute by its declared type. A data reference has no declared type that would help. `TYPE REF TO data` says nothing about the table or structure behind it. And a type created at runtime with `cl_abap_tabledescr=>create( )` exists nowhere a transformation could look it up.
 
-The framework ships [S-RTTI](https://github.com/sandraros/S-RTTI) for exactly that gap: it wraps the RTTS type description of a data object in a serializable object, so type and data can be written as one and the data object rebuilt from both.
+The framework ships [S-RTTI](https://github.com/sandraros/S-RTTI) for exactly that gap. It wraps the RTTS type description of a data object in a serializable object. So type and data can be written together, and the data object can be rebuilt from both.
 
 ## What the Serializer Does
 
@@ -92,7 +92,7 @@ The table type is rebuilt from the draft on every roundtrip; the app never names
 
 - **Object references are not serialized.** The walk skips every attribute of type kind `oref` — a `TYPE REF TO` a class or an interface — and the draft carries no objects. Keep a model instance or a helper object out of the attributes, or recreate it in `main( )`.
 - **A type S-RTTI does not know raises `z2ui5_cx_srt`.** Elementary types, structures, tables, references, classes and interfaces are described; any other type kind — one a future ABAP release adds — ends the save with that exception.
-- **A dictionary type is resolved by name on the way back.** S-RTTI stores the absolute name of a dictionary type and describes it again on load, so a draft written before a change to the DDIC object reads back against the changed definition — or not at all.
+- **A dictionary type is resolved by name on the way back.** S-RTTI stores the absolute name of a dictionary type and describes it again on load. So a draft written before a change to the DDIC object is read back against the changed definition, or cannot be read at all.
 - **A reference to a reference** (`MR_REF->*` is itself `TYPE REF TO data`) is reached through its parent; a longer chain is not followed.
 
 An attribute that is declared with a type — a DDIC table type, a `TYPES` of the class — never goes through S-RTTI at all; only the attributes whose type kind is a data reference do.

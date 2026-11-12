@@ -22,6 +22,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_032` in
 `03`), on the travel business object `Z2UI5_R_SMPS_TRV`. Its edit popup has a
 *Change by Someone Else* button that plays the second user.
 
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
+
 ## The Version of an Instance
 
 A RAP business object usually has it already. The behavior definition of the

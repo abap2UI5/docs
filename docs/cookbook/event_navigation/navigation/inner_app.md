@@ -6,13 +6,13 @@ samples:
   - z2ui5_cl_smp_app_279
 description: Navigation inside abap2UI5 - switching views within one class, calling another app class with nav_app_call( ), returning with nav_app_leave( ) and handing a result back to the caller.
 ---
-# Inner App
+# Navigating Between Apps
 
 Navigation *inside* one abap2UI5 deployment: switching screens within a class,
 and calling one of your app classes from another. Everything here runs through
 the abap2UI5 backend and its own app stack — it never leaves the page, and the
 launchpad, if there is one, does not hear about it. Navigating between *Fiori*
-apps is a different mechanism: [Cross App](/cookbook/event_navigation/navigation/cross_app).
+apps is a different mechanism: [Launchpad Navigation](/cookbook/event_navigation/navigation/cross_app).
 
 In abap2UI5, each app is a single ABAP class. You can pack all logic into one
 class, but keeping classes at a reasonable size is better practice. Splitting
@@ -21,36 +21,96 @@ popups that work in different contexts.
 
 ## Within One Class
 
-Use class attributes to track the current state and switch views as needed. A
-flag, an enum-like string or a step number decides which view
-`view_display( )` builds, and the event handlers move it along. This keeps the
-navigation in a single ABAP class with no app stack involved — no call, no
-return, and nothing to unwind.
+Two screens that share their data belong in one class. An attribute remembers
+which screen is shown, the events change it, and `view_display( )` builds the
+view that matches. There is no call and no return, so the app stack is not
+involved:
 
-Reach for it whenever the screens share their data. Two views over the same
+```abap
+CLASS zcl_sample_two_screens DEFINITION PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES z2ui5_if_app.
+
+  PROTECTED SECTION.
+    DATA client    TYPE REF TO z2ui5_if_client.
+    DATA mv_screen TYPE string VALUE `LIST`.
+
+    METHODS view_display.
+
+  PRIVATE SECTION.
+ENDCLASS.
+
+CLASS zcl_sample_two_screens IMPLEMENTATION.
+  METHOD z2ui5_if_app~main.
+
+    me->client = client.
+
+    IF client->check_on_navigated( ).
+      view_display( ).
+
+    ELSEIF client->check_on_event( `SHOW_DETAIL` ).
+      mv_screen = `DETAIL`.
+      view_display( ).
+
+    ELSEIF client->check_on_event( `BACK` ).
+      mv_screen = `LIST`.
+      view_display( ).
+
+    ENDIF.
+
+  ENDMETHOD.
+
+  METHOD view_display.
+
+    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+        )->ele( n = `View` ns = `mvc`
+            )->a( n = `xmlns`     v = `sap.m`
+            )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc` ).
+
+    IF mv_screen = `LIST`.
+      view->ele( `Page`
+          )->a( n = `title` v = `List`
+          )->tag( `Button`
+              )->a( n = `text`  v = `show the detail`
+              )->a( n = `press` v = client->_event( `SHOW_DETAIL` ) ).
+    ELSE.
+      view->ele( `Page`
+          )->a( n = `title`          v = `Detail`
+          )->a( n = `showNavButton`  v = `true`
+          )->a( n = `navButtonPress` v = client->_event( `BACK` )
+          )->tag( `Text`
+              )->a( n = `text` v = `the second screen of the same class` ).
+    ENDIF.
+
+    client->view_display( view->stringify( ) ).
+
+  ENDMETHOD.
+ENDCLASS.
+```
+
+Use this form whenever the screens share their data. Two views over the same
 internal table are two branches of one class, not two classes.
 
 ## Between App Classes
 
-![Three states of the stack: the list alone, the detail on top while the list waits as a draft, and the list again after the detail left](/cookbook/event_navigation/stack.svg)
+![Three states of the stack: the list alone, the detail on top while the list waits as an app draft, and the list again after the detail left](/cookbook/event_navigation/stack.svg)
 
-To call another app class:
+To call another app class, create an instance and hand it to `nav_app_call( )`.
+The call belongs **inside an event branch**. A `nav_app_call( )` that runs on
+every call of `main` starts the other app again on every return, which is an
+endless loop:
 ```abap
-  METHOD z2ui5_if_app~main.
-
-    DATA(lo_app) = NEW zcl_sample_new_app( ).
-    client->nav_app_call( lo_app ).
-
-ENDMETHOD.
+ELSEIF client->check_on_event( `OPEN_DETAIL` ).
+  DATA(lo_app) = NEW zcl_sample_new_app( ).
+  client->nav_app_call( lo_app ).
 ```
-The framework keeps a call stack. From the newly called class, return to the
-previous app with:
+The framework keeps a call stack. The app that was called is the *sub-app*.
+It returns to the app that called it with `nav_app_leave( )`, again from an
+event branch:
 ```abap
-  METHOD z2ui5_if_app~main.
-
-    client->nav_app_leave( ).
-
-ENDMETHOD.
+ELSEIF client->check_on_event( `BACK` ).
+  client->nav_app_leave( ).
 ```
 To read data from the previous app, cast it like this. `check_on_navigated( )`
 is true on the first start as well, and `get_app_prev( )` then returns the
@@ -71,25 +131,22 @@ running app itself, so the cast is guarded:
 ENDMETHOD.
 ```
 ::: warning Re-display your view on return
-When the called app took over the screen with its own `view_display( )`, the
+When the sub-app took over the screen with its own `view_display( )`, the
 browser still shows that view after `nav_app_leave( )` — the framework does not
 restore the previous view automatically. Call `view_display( )` again in the
 `check_on_navigated( )` branch. Your class attributes survived the roundtrip
 serialization, so no data re-read is needed — only the view must be rendered
 again. See
-[Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
+[App Structure](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
 :::
 Called **with** an app instance, `nav_app_leave` works differently: it leaves
 the current app and starts the given one *without* pushing the current app onto
 the call stack — so there is nothing to return to. Use this to navigate forward
 while discarding the current app:
 ```abap
-  METHOD z2ui5_if_app~main.
-
-    DATA(lo_app) = NEW zcl_sample_new_app( ).
-    client->nav_app_leave( lo_app ).
-
-ENDMETHOD.
+ELSEIF client->check_on_event( `NEXT` ).
+  DATA(lo_app) = NEW zcl_sample_new_app( ).
+  client->nav_app_leave( lo_app ).
 ```
 ::: tip
 Sounds familiar? The abap2UI5 framework echoes classic `call screen` and
@@ -100,21 +157,21 @@ Sounds familiar? The abap2UI5 framework echoes classic `call screen` and
 instance — `NEW zcl_sample_new_app( )` with whatever it needs set on it
 before the call. An unbound reference raises `NAV_APP_TARGET_NOT_BOUND` and
 the roundtrip ends in the error dialog. A plain `nav_app_leave( )` with
-nothing to return to — a root app, or a caller whose draft has expired — is
+nothing to return to — a root app, or a caller whose [app draft](/get_started/glossary) has expired — is
 dropped: the roundtrip ends on this app, which keeps the screen. Guard it
 with `check_app_prev_stack( )`, as the example below does.
 
 ### Handing a Result Back
 
-Reading the called app's attributes through `get_app_prev( )` is one way
-back. The other is to hand the result over on the way out:
-`nav_app_leave( event = … r_data = … )` names an event the caller finds in
-`check_on_event( )` on arrival, so a return *with* a result is told from a
-plain return, and carries data the caller reads as
-`client->get( )-r_event_data`, a reference to a copy of it:
+Reading the sub-app's attributes through `get_app_prev( )` is one way
+back. The other is to hand the result over on the way out with
+`nav_app_leave( event = … r_data = … )`. The caller finds that event in
+`check_on_event( )` on arrival, so it can tell a return *with* a result from
+a plain return. The data arrives in `client->get( )-r_event_data`, a
+reference to a copy of it:
 
 ```abap
-" in the called app
+" in the sub-app
 ELSEIF client->check_on_event( `CONFIRM` ).
   client->nav_app_leave( event  = `DATA_CONFIRMED`
                          r_data = ms_result ).
@@ -123,13 +180,14 @@ ELSEIF client->check_on_event( `CONFIRM` ).
 ```abap
 " in the caller: the way back enters through check_on_navigated( ),
 " with the event name and the payload in the same get( )
-WHEN client->check_on_navigated( ).
+IF client->check_on_navigated( ).
   DATA(ls_get) = client->get( ).
   IF ls_get-event = `DATA_CONFIRMED`.
     ASSIGN ls_get-r_event_data->* TO FIELD-SYMBOL(<s_result>).
     ms_result = <s_result>.
   ENDIF.
   view_display( ).
+ENDIF.
 ```
 
 An intentionally empty value still arrives. `Z2UI5_CL_SMP_APP_488` is the
@@ -137,7 +195,7 @@ pair of classes written out.
 
 ### The Whole Stack in One Class
 
-The called app does not have to be a *different* class. An app that calls
+The sub-app does not have to be a *different* class. An app that calls
 another instance of itself shows the stack, the return and `get_app_prev( )`
 in one runnable piece — press **Run** and walk down and back up:
 

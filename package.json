@@ -20,6 +20,7 @@
     "check:conventions": "node scripts/check-conventions.mjs",
     "check:line-length": "node scripts/check-line-length.mjs",
     "check:vocabulary": "node scripts/check-vocabulary.mjs",
+    "report:sentences": "node scripts/report-sentences.mjs",
     "fix:line-length": "node scripts/check-line-length.mjs --fix",
     "fmt:chains": "node scripts/check-conventions.mjs --fix",
     "check:playground": "node scripts/check-playground.mjs",

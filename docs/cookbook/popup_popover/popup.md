@@ -10,16 +10,44 @@ description: Popups in abap2UI5 - a dialog built as a UI5 fragment in ABAP, the 
 ---
 # Popup
 
-UI5 offers popups that overlay specific parts of the view. This section walks
-through building them in abap2UI5.
+A popup is a dialog that lies over the view. In abap2UI5 it is a small view of
+its own: the app builds it as XML and shows it with `client->popup_display( )`.
 
-## General
+| I want to… | Section |
+| --- | --- |
+| show a dialog and close it again | [Open and Close a Popup](#open-and-close-a-popup) |
+| ask a yes/no question or show a message | [Just a Question? Use a Message Box](#just-a-question-use-a-message-box) |
+| reuse one popup in several apps and get its answer | [A Reusable Popup as Its Own Class](#separated-app) |
+| open a popup from a popup | [One Popup at a Time](#one-popup-and-what-closes-it) |
 
-To show a popup, call `client->popup_display` instead of `client->view_display`:
+## Open and Close a Popup
+
+The usual flow has three steps: the app shows its view, an event opens the
+popup, and an event from inside the popup closes it. The popup is built like a
+view, with two differences: the root is a `FragmentDefinition` (UI5's name for
+a piece of XML that is not a whole view), and it is shown with
+`popup_display( )` instead of `view_display( )`:
+
 ```abap
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `abap2UI5 - Popups`
+
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `open the popup`
+                      )->a( n = `press` v = client->_event( `POPUP_OPEN` ) ).
+
+      client->view_display( view->stringify( ) ).
+
+    ELSEIF client->check_on_event( `POPUP_OPEN` ).
 
       DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `FragmentDefinition` ns = `core`
@@ -27,104 +55,55 @@ To show a popup, call `client->popup_display` instead of `client->view_display`:
               )->a( n = `xmlns:core` v = `sap.ui.core`
 
               )->ele( `Dialog`
-                  )->a( n = `title` v = `Popup - Info`
+                  )->a( n = `title` v = `Popup`
 
                   )->tag( `Text`
-                      )->a( n = `text` v = `this is information shown in a popup` ).
+                      )->a( n = `text` v = `this is a text in a popup`
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `close`
+                      )->a( n = `press` v = client->_event( `POPUP_CLOSE` ) ).
 
       client->popup_display( popup->stringify( ) ).
 
+    ELSEIF client->check_on_event( `POPUP_CLOSE` ).
+
+      client->popup_destroy( ).
+
     ENDIF.
 
   ENDMETHOD.
 ```
 
-## Flow Logic
-A typical popup flow shows a normal view, opens a popup, and finally closes it.
-Structure it like this:
-```abap
-  METHOD z2ui5_if_app~main.
+Two calls are all there is: `client->popup_display( xml )` opens the popup
+and `client->popup_destroy( )` closes it. Changed data needs neither. When a
+bound attribute changes while the popup is open, the framework sends the new
+value into the open popup with the response.
 
-    IF client->check_on_navigated( ).
-        DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `View` ns = `mvc`
-                )->a( n = `xmlns`     v = `sap.m`
-                )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+The view behind the popup stays as it is. Opening and closing a popup sends
+no new main view.
 
-                )->ele( `Page`
-                    )->a( n = `title` v = `abap2UI5 - Popups`
+A popup binds data exactly like a view: `_bind( )` works inside it, and what
+the user typed is in the attribute on the next roundtrip.
+An input field in a popup therefore needs nothing extra to get its value
+back to the app.
 
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `popup rendering, no background rendering`
-                        )->a( n = `press` v = client->_event( `POPUP_OPEN` ) ).
+## Just a Question? Use a Message Box
 
-        client->view_display( view->stringify( ) ).
-
-    ENDIF.
-
-    CASE client->get( )-event.
-
-      WHEN `POPUP_OPEN`.
-        DATA(popup) = z2ui5_cl_ui5_view_builder=>factory(
-            )->ele( n = `FragmentDefinition` ns = `core`
-                )->a( n = `xmlns`      v = `sap.m`
-                )->a( n = `xmlns:core` v = `sap.ui.core`
-
-                )->ele( `Dialog`
-                    )->a( n = `title` v = `Popup`
-
-                    )->tag( `Text`
-                        )->a( n = `text` v = `this is a text in a popup`
-                    )->tag( `Button`
-                        )->a( n = `text`  v = `close`
-                        )->a( n = `press` v = client->_event( `POPUP_CLOSE` ) ).
-
-        client->popup_display( popup->stringify( ) ).
-
-
-      WHEN `POPUP_CLOSE`.
-        client->popup_destroy( ).
-
-    ENDCASE.
-
-  ENDMETHOD.
-```
-
-The popup has the same lifecycle as the main view: `popup_display( )` renders
-the XML and `popup_destroy( )` closes it. Changed ABAP data needs neither — the
-framework pushes the delta into the already-rendered popup with the response.
-
-## One Popup, and What Closes It
-
-The popup slot holds **one** dialog. A second `popup_display( )` replaces
-the first — there is no stack on the frontend, so a dialog that opens
-another one and wants the first back afterwards keeps that stack in its own
-attributes and re-displays the previous popup when the second closes
-(`Z2UI5_CL_SMP_APP_161`). A popover shares the same rule in its own slot.
-
-A new **main view** closes it as well. `view_display( )` is a new screen,
-and the popup and the popover go with it: both live outside the main
-control tree and would otherwise float over a page they no longer belong to.
-A handler that re-renders the main view and wants the dialog to survive
-re-opens it in the same roundtrip — the frontend builds the main view first,
-then the popup the same response carries. The usual shape needs none of
-this: a handler inside a popup changes data and returns, and the dialog stays
-up with the new values pushed into it.
-
-For a message, a confirmation or a yes/no question there is no XML to write
-at all: `client->message_box_display( )` is a `sap.m.MessageBox` with its
-buttons as a table and its answer as a backend event —
+A message, a confirmation or a yes/no question needs no XML at all.
+`client->message_box_display( )` shows a `sap.m.MessageBox`. Its buttons are
+a table, and its answer arrives as a backend event.
 [Message](/cookbook/translation_messages/message#the-parameters-of-message-box-display)
-lists the parameters. Reach for a `Dialog` of your own when the popup holds
-input fields or a table.
+lists the parameters. Build a `Dialog` of your own when the popup holds input
+fields or a table.
 
+## A Reusable Popup as Its Own Class {#separated-app}
 
-## Separated App
-
-For a cleaner source layout, put a popup in its own class and call it via
-[navigation](/cookbook/event_navigation/navigation/inner_app). The popup is
-then an ordinary `z2ui5_if_app` — it just displays into the popup slot instead
-of the main one, and ends by handing control back:
+A popup that several apps need goes into a class of its own. The caller starts
+it with [navigation](/cookbook/event_navigation/navigation/inner_app), like
+any other app. Such a popup is an ordinary `z2ui5_if_app`. It differs from a
+normal app in two points: it calls `popup_display( )` instead of
+`view_display( )`, and it ends with `nav_app_leave( )`, which hands control
+back to the caller:
 
 ![The caller sets the question and calls the popup class, the popup displays and leaves, the caller runs again and reads the answer from the popup instance](/cookbook/popup_popover/popup-return.svg)
 
@@ -210,19 +189,41 @@ ELSEIF client->check_on_navigated( ).
 ENDIF.
 ```
 
-Two things carry the whole pattern: the popup's answer is an **attribute** on
-its own instance, and `get_app_prev( )` is how the caller reaches it. Nothing
-is passed back through events. No view binds the answer, so it stays
-protected and the caller reads it through `confirmed( )`.
+Two things carry the whole pattern. The popup keeps its answer in an
+**attribute** of its own instance, and the caller reaches that instance with
+`get_app_prev( )`. No view binds the answer, so the attribute stays protected
+and the caller reads it through `confirmed( )`.
 
-A ready-made set of these — confirm, select, ranges, file up- and download and
-about a dozen more — is the
+There is a second way to get the answer back. The popup can hand it over
+when it leaves: `nav_app_leave( event = … r_data = … )` gives the caller an
+event name and the data in one step. Use it when the caller has to tell
+"returned with a result" from "just returned".
+[Handing a Result Back](/cookbook/event_navigation/navigation/inner_app#handing-a-result-back)
+shows both sides.
+
+A ready-made set of such popups — confirm, select, ranges, file up- and
+download and about a dozen more — is the
 [popups add-on](https://github.com/abap2UI5-addons/popups), which is versioned
 on its own.
 
-To handle multiple stacked popups, note that abap2UI5 shows only one popup at a
-time on the frontend. But you can keep a popup stack in your backend logic and
-re-display the previous popup as needed. See `Z2UI5_CL_SMP_APP_161`.
+## One Popup at a Time {#one-popup-and-what-closes-it}
+
+The frontend shows **one** popup. A second `popup_display( )` replaces the
+first, because the frontend keeps no stack of popups. A popup that opens another
+one and wants to come back afterwards keeps that stack itself: it remembers in
+an attribute which popup was open, and displays it again when the second one
+closes. Sample `Z2UI5_CL_SMP_APP_161` does exactly that. A popover follows the
+same rule, separately from the popup.
+
+A new **main view** closes the popup as well. `view_display( )` is a new
+screen, and the popup and the popover go with it. Both live outside the main
+view and would otherwise float over a page they no longer belong to. A
+handler that sends a new main view and wants the popup to stay calls
+`popup_display( )` again in the same roundtrip. The frontend then builds the
+main view first and the popup after it.
+
+Most popups need none of this. A handler inside a popup changes data and
+returns, and the popup stays open with the new values in it.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

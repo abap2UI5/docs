@@ -1,13 +1,13 @@
 ---
 outline: [2, 4]
-description: The Z2UI5_ prefix and the segment scheme of every object abap2UI5 and its ecosystem install, the package layout, and how the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own.
+description: The Z2UI5_ prefix and the naming scheme of every object abap2UI5 and its add-ons install, and the package layout. How the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own.
 ---
 # Namespaces, Renaming
 
 Everything abap2UI5 installs lives under a single prefix: `Z2UI5_`. The first
 half of this page describes what that prefix covers and how the names inside it
-are structured; the second half is about installing abap2UI5 under a *different*
-prefix, which is what makes several installations in one system possible.
+are structured. The second half is about installing abap2UI5 under a *different*
+prefix. That is what makes several installations in one system possible.
 
 ## The `z2ui5` Namespace
 
@@ -72,30 +72,30 @@ prefix alone would let them collide; the segment is what keeps them apart.
 
 The two tables share one rule and one exception. The rule: an object's segment
 tells you which repository it was pulled from. The exception: frozen code keeps
-the segment it was born with, so a repository's `src/99` can hold a segment that
-is no longer issued — the popups add-on ships as `z2ui5_cl_popup_*` today, and
-its `src/99` still carries the `pop` and `demo` names it started with, just as
-the framework's own `src/99` does.
+the segment it started with. So a repository's `src/99` can hold a segment that
+is no longer issued. For example, the popups add-on ships as `z2ui5_cl_popup_*`
+today, and its `src/99` still carries the `pop` and `demo` names it started
+with. The framework's own `src/99` does the same.
 
 ::: tip The segment can reach the frontend too
 For the two custom-control repositories the segment also names the BSP and the
-resourceRoot it is served under: `cci` ships the BSP `Z2UI5_CCI` under the root
-`z2ui5_cci`, `ccc` ships `Z2UI5_CCC` under `z2ui5_ccc`. abap2UI5 reserves both
+resourceRoot it is served under. `cci` ships the BSP `Z2UI5_CCI` under the root
+`z2ui5_cci`. `ccc` ships `Z2UI5_CCC` under `z2ui5_ccc`. abap2UI5 reserves both
 roots in its `manifest.json`, which is what makes those BSPs loadable without
-patching any framework file. The two differ in the last letter only, and a typo
-in a view's `xmlns:` surfaces only as a failed module request in the browser
-console — so when a custom control does not render, check that letter first.
+patching any framework file. The two differ in the last letter only. A typo in a
+view's `xmlns:` shows only as a failed module request in the browser console. So
+when a custom control does not render, check that letter first.
 :::
 
 Only the public API is a contract. Every other segment may be restructured in
 any release.
 
 ::: tip Enforced, not just documented
-A CI gate of the framework, `.github/scripts/object-naming-gate.mjs`
-(`npm run check:naming`), fails the build when an object outside the public
-API, the frozen package and the two mirrored libraries is added without the
-`ui5` / `ui5f` segment. abaplint's own naming rule only checks the `Z2UI5_`
-prefix, so without that gate a new segment would drift in unnoticed.
+The framework has a CI check for this: `.github/scripts/object-naming-gate.mjs`
+(`npm run check:naming`). It fails the build when a new object lacks the `ui5` /
+`ui5f` segment. The public API, the frozen package and the two mirrored
+libraries are exempt. abaplint's own naming rule only checks the `Z2UI5_`
+prefix, so without that check a new segment would drift in unnoticed.
 :::
 
 ### Package Layout
@@ -182,9 +182,9 @@ simply implement the renamed app interface — e.g., `z2ui5_sd_if_app` or
 
 ### How It Works
 [abaplint](https://abaplint.org) can rename ABAP artifacts across a whole
-repository: you define rename patterns (old name → new name, including regular
-expressions) in an abaplint configuration, and `abaplint --rename` rewrites
-every class, interface, and reference consistently, writing the result to an
+repository. You define rename patterns (old name → new name, including regular
+expressions) in an abaplint configuration. `abaplint --rename` then rewrites
+every class, interface and reference consistently and writes the result to an
 output folder:
 
 ```jsonc [abaplint.json]
@@ -209,9 +209,9 @@ the result as a ready-to-install branch. Renaming abap2UI5 takes just two steps:
 
 1. **Fork** the [abap2UI5 repository](https://github.com/abap2UI5/abap2UI5)
 2. **Run the Action** — in your fork, open the *Actions* tab (enable workflows
-   when asked), select the **build-rename** workflow, and start it with your new
-   namespace (a letter followed by letters, digits or underscores, max. 10
-   characters, e.g., `ZMYUI5`)
+   when asked) and select the **build-rename** workflow. Start it with your new
+   namespace, e.g., `ZMYUI5`: a letter followed by letters, digits or
+   underscores, max. 10 characters
 
 The workflow runs `abaplint --rename` with the checked-in configuration
 `.github/abaplint/rename.jsonc` and pushes the renamed sources to the branch
@@ -221,19 +221,18 @@ abapGit** into your ABAP system for a parallel installation next to the
 original.
 
 To upgrade an installation later, sync your fork with upstream and re-run the
-workflow with the same name: the branch is updated to the current state (nothing
-is pushed when there are no content changes), and you simply pull again with
-abapGit.
+workflow with the same name. The branch is updated to the current state; nothing
+is pushed when there are no content changes. Then pull again with abapGit.
 
 ### What Renaming Does Not Cover
-abaplint rewrites object names and every reference the compiler can see — a
-`TYPE REF TO`, a static call, an `INTERFACES` — and leaves a string literal as
-it is. No production code of the framework names one of its own objects in a
-literal (a dynamic lookup takes the name from a typed reference instead), and
-the gate `.github/scripts/rename-literal-gate.mjs` (`npm run check:rename`)
-keeps it that way: it fails a pull request that adds such a literal, and the
-`build-rename` workflow runs it once more over the renamed tree. Two things
-stay outside the rename on purpose.
+abaplint rewrites object names and every reference the compiler can see: a
+`TYPE REF TO`, a static call, an `INTERFACES`. It leaves a string literal as it
+is. No production code of the framework names one of its own objects in a
+literal; a dynamic lookup takes the name from a typed reference instead. The
+check `.github/scripts/rename-literal-gate.mjs` (`npm run check:rename`) keeps
+it that way. It fails a pull request that adds such a literal, and the
+`build-rename` workflow runs it once more over the renamed tree. Two things stay
+outside the rename on purpose.
 
 **The frontend namespace.** Module IDs and the `z2ui5.cc` XML namespace
 stay `z2ui5` in a renamed installation — see
@@ -248,14 +247,14 @@ branch is `rename_ca2ui5`. The namespace has to be set up in the target system
 can pull into it.
 
 ### Renaming in Practice: ajson
-abap2UI5 itself relies on this feature: its JSON handling comes from the
+abap2UI5 itself relies on this feature. Its JSON handling comes from the
 open-source project [ajson](https://github.com/sbcgua/ajson), which is
-integrated under the `z2ui5` namespace via renaming — so there are no collisions
+integrated under the `z2ui5` namespace via renaming. So there are no collisions
 if you pull both abap2UI5 and ajson separately into the same system. A GitHub
 Action in the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson)
-repository checks weekly for upstream changes and automatically creates a pull
+repository checks weekly for upstream changes. It automatically creates a pull
 request with the latest ajson version renamed to `z2ui5`. abapGit bundles ajson
-under its own namespace the same way — renaming with abaplint also makes it
+under its own namespace the same way. So renaming with abaplint also makes it
 possible to integrate open-source projects into each other.
 
 ### Background

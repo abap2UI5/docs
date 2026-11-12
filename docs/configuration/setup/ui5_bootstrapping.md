@@ -3,7 +3,7 @@ outline: [2, 4]
 ---
 # Bootstrapping
 
-Bootstrapping is the process of loading the UI5 runtime into the browser. abap2UI5 generates a `<script src="…/sap-ui-core.js">` tag in the page `<head>`; the URL decides which UI5 version is loaded, from which delivery channel (CDN or your own server) and whether the cache-buster is active.
+Bootstrapping is the process of loading the UI5 runtime into the browser. abap2UI5 generates a `<script src="…/sap-ui-core.js">` tag in the page `<head>`. The URL decides three things: which UI5 version is loaded, from which source (CDN or your own server), and whether the cache-buster is active.
 
 ## Pick a Bootstrap Source
 

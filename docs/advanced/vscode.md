@@ -75,12 +75,12 @@ app between tab and panel without restarting it.
 
 An embedded iframe has **no** SAP session, so a direct call would end in a
 **401**. In `tab` and `panel` mode the extension therefore starts a small auth
-proxy on `127.0.0.1`: it asks once for your SAP user and password (the same
-ones you use in ADT, kept in VS Code's SecretStorage), attaches them to every
-request, and rewrites `Origin` and `Referer` so origin-validating CSRF checks
-accept the app's POSTs. To make embedding possible at all it strips
-`X-Frame-Options` and the `frame-ancestors` CSP directive from the responses,
-and it accepts self-signed certificates.
+proxy on `127.0.0.1`. It asks once for your SAP user and password. They are the
+same ones you use in ADT, and they are kept in VS Code's SecretStorage. The
+proxy attaches them to every request. It also rewrites `Origin` and `Referer`,
+so that CSRF checks which validate the origin accept the app's POSTs. To make
+embedding possible at all it strips `X-Frame-Options` and the `frame-ancestors`
+CSP directive from the responses, and it accepts self-signed certificates.
 
 ::: warning Basic auth required
 The system must accept basic auth. Pure SSO/SAML without a basic-auth fallback
@@ -92,13 +92,13 @@ Credentials"* forgets the password again.
 
 The most common first-run failure is a launch URL that is slightly wrong, and
 its symptom in the preview is a white rectangle that says nothing. *"abap2UI5:
-Check System Connection"* diagnoses it: the command walks the exact route F9
-takes — the same URL expansion, the same stored credentials, the same proxy —
-and reports step by step where a launch would end: the URL's shape, the host,
-the logon, the ICF path, the page itself, each with the fix next to the
-failing step. The full report lands in the **abap2UI5** output channel. This
-also works for a system installed five minutes ago, which makes it the
-diagnosis step of the [Quickstart](/get_started/quickstart#_3-first-launch).
+Check System Connection"* diagnoses it. The command walks the exact route F9
+takes: the same URL expansion, the same stored credentials, the same proxy. It
+reports step by step where a launch would end: the URL's shape, the host, the
+logon, the ICF path, the page itself. Each failing step comes with its fix. The
+full report lands in the **abap2UI5** output channel. This also works for a
+system installed five minutes ago, which makes it the diagnosis step of the
+[Quickstart](/get_started/quickstart#_3-first-launch).
 
 ### Reload on activation, not on save
 
@@ -111,10 +111,10 @@ does. So the preview reloads on activation:
 | `save` | Reload on every save — for setups where saving already publishes the change |
 | `never` | Only F9, the reload button or the status bar |
 
-Activating from somewhere else works as well: while the preview shows the *not
-activated* badge, the extension watches the class's ADT metadata on the server
-and reloads as soon as it is active again — whether you used Ctrl+F3, the ABAP
-remote filesystem's own button, or even Eclipse.
+Activating from somewhere else works as well. While the preview shows the *not
+activated* badge, the extension watches the class's ADT metadata on the server.
+It reloads as soon as the class is active again, whether you used Ctrl+F3, the
+ABAP remote filesystem's own button, or Eclipse.
 
 ### What the preview gives you beyond a browser tab
 
@@ -158,22 +158,23 @@ the findings land in the Problems panel before the app ever reaches a system:
   runtime, from a hand-written binding path the model does not have to an
   ABAP boolean written straight into the view.
 - **The render gate** is the expensive one and stays on save and on demand.
-  Install it once with *"abap2UI5: Install Render Gate"*: the command downloads
-  a self-contained checker bundle and Chromium into the extension's storage and
-  runs everything with VS Code's own runtime — no node, npm or PATH setup on
-  the machine.
+  Install it once with *"abap2UI5: Install Render Gate"*. The command downloads
+  a self-contained checker bundle and Chromium into the extension's storage. It
+  runs everything with VS Code's own runtime, so the machine needs no node, npm
+  or PATH setup.
 - **The system can answer the settings.** After the first F9 the extension
   reads the system's `sap-ui-version.json` and offers, once per system, to
   align `viewCheck.minUi5` and `.distribution` with what the system actually
   runs. The detected version stays visible in the status bar.
 
-**Quick fixes.** Every finding whose correction is mechanical carries it, and
-the lightbulb offers it — plus *fix all in this file*, as a command, as a
-CodeLens above the class, as *Fix All View Findings in the Workspace* in one
-undo step, and as `source.fixAll.abap2ui5` for `editor.codeActionsOnSave`. The
-other quick fix on any finding is **suppress on this line**, which writes the
-linter's own directive — so waiving something here waives it in CI too, and a
-line waived in CI no longer squiggles here.
+**Quick fixes.** Every finding whose correction is mechanical carries that
+correction, and the lightbulb offers it. *Fix all in this file* is available as
+a command and as a CodeLens above the class. *Fix All View Findings in the
+Workspace* does the same for every file in one undo step, and
+`source.fixAll.abap2ui5` does it for `editor.codeActionsOnSave`. The other quick
+fix on any finding is **suppress on this line**, which writes the linter's own
+directive. So a finding you waive here is waived in CI too, and a line waived in
+CI is no longer underlined here.
 
 **The repository config wins.** An `abap2ui5lint.jsonc` in the repo is what the
 CLI and the Action check against, so it overrides the VS Code settings wherever
@@ -214,10 +215,10 @@ can help while the chain is being written rather than after it:
 - **Emmet for chains** — `Page>content>Button*3`, then *"Expand Abbreviation to
   a Chain"*, and the chain that builds it is written in the house layout.
   `#id`, `[attr=value]` and `{text}` work as in Emmet.
-- **Extract to View Method** — a real screen is one very long statement. Put
-  the cursor on the `)->ele( )` that should start a new method, name it, and
-  the tail becomes a helper method taking the builder handle, with the
-  declaration written into the class and the call left behind. It extracts a
+- **Extract to View Method** — a real screen is one very long statement. Put the
+  cursor on the `)->ele( )` that should start a new method and name it. The tail
+  becomes a helper method that takes the builder handle. The declaration is
+  written into the class, and the call stays where the tail was. It extracts a
   *tail* and refuses rather than guesses.
 - **Convert XML View to Builder Chain** — paste a UI5 demo kit sample (or any
   view XML) and get the builder chain out, in the corpus style. What the
@@ -237,24 +238,24 @@ can help while the chain is being written rather than after it:
   preview does. The findings are mirrored onto the XML lines they concern, and
   **Go to Definition** on any line jumps back to the builder call that produced
   it.
-- **Preview View (No System)** renders the view and shows the **picture** —
-  no system, no activation, no launch URL. It is the render gate turned around:
-  the view is kept standing and photographed instead of thrown away. A
+- **Preview View (No System)** renders the view and shows the **picture** — no
+  system, no activation, no launch URL. It is the render gate turned around: the
+  view is kept standing and photographed instead of thrown away. A
   `<class>.mock.json` next to the source fills the tables a `SELECT` would fill,
   and the caption always says which model was used. A comma-separated viewport
-  list renders a device matrix in one browser session, and *Compare with HEAD*
-  puts the committed version beside the working tree — answering what no linter
+  list renders a device matrix in one browser session. *Compare with HEAD* puts
+  the committed version beside the working tree. That answers what no linter
   can: *did my change do what I meant to the view?*
 - **Outline and navigation** — the `ele( )`/`tag( )` hierarchy as a tree in the
   Outline pane; Go to Definition between `client->_event( 'GO' )` and the
   `WHEN 'GO'` that handles it, in both directions; and on a binding path, to
   the `TYPES` field that declares it.
-- **F2 renames the strings an app is wired together with.** An abap2UI5 app
-  ties its two halves together with literals and nothing connects the ends, so
-  renaming one is normally a grep and missing one is silent. F2 takes an event,
-  a control id (with every wire addressing it) or a bound attribute
-  (`mv_title` and `{/MV_TITLE}` together) all at once. Position decides what a
-  literal is, never its text.
+- **F2 renames the strings an app is wired together with.** An abap2UI5 app ties
+  its two halves together with literals, and nothing connects the two ends. So
+  renaming one normally means a text search, and a missed occurrence gives no
+  error. F2 takes an event, a control id (with every wire addressing it) or a
+  bound attribute (`mv_title` and `{/MV_TITLE}` together) all at once. Position
+  decides what a literal is, never its text.
 - **App navigation map** — every `z2ui5_if_app` class in the workspace and each
   `nav_app_call( )` between them, as a clickable graph.
 - **The apps of this workspace** — the Explorer view listing every app class
@@ -272,17 +273,19 @@ can help while the chain is being written rather than after it:
 list, form, master & detail, popup — and every template ships linter-clean.
 *"New Project from Template"* puts the same into an empty folder together with
 everything that makes it a project: app-template's `abaplint.jsonc` and
-`abap2ui5lint.jsonc`, its `AGENTS.md`, the CI workflow running both gates, and
+`abap2ui5lint.jsonc`, its `AGENTS.md`, the CI workflow running both checks, and
 the abapGit files. See [Working Off-Stack](/advanced/working_off_stack) for
 what that project then looks like.
 
 ## For AI agents
 
 The extension registers the [abap2UI5 MCP server](/advanced/mcp_server) for
-every MCP client in the window — Copilot agent mode, Claude Code, anything else
-speaking MCP — so an agent working in your editor has the systemless dev loop
-without any separate configuration. Point `abap2ui5.mcp.reposRoot` at the folder
-holding the checkouts and the extension passes the paths through.
+every MCP client in the window: Copilot agent mode, Claude Code, anything else
+speaking MCP. So an agent working in your editor can check and run an app
+without a system and without any separate configuration. That is step 1 of
+[AI Setup: The Recommended Path](/advanced/ai_path). Point
+`abap2ui5.mcp.reposRoot` at the folder holding the checkouts and the extension
+passes the paths through.
 
 It adds a **second** server of its own for the half the MCP server deliberately
 does not have: your configured **systems**.
@@ -300,13 +303,13 @@ builds and boots the transpiled sandbox, this one runs a class on a system.
 ### Operating an app on the system
 
 The same server gets the four app tools of the
-[MCP server](/advanced/mcp_server) — `app_list`, `app_start`, `app_describe`
-and `app_act` — on your real system. An agent reads the app's screen as an
-*agent snapshot* (its fields and values, its actions, tables and messages),
-fills fields by model path or label and fires events by name, over the
-abap2UI5 JSON protocol: no browser, no screenshot, and anything not on the
-screen is refused with what is. [Agent-Operable Apps](/advanced/agents)
-describes the snapshot and the tools.
+[MCP server](/advanced/mcp_server) — `app_list`, `app_start`, `app_describe` and
+`app_act` — on your real system. An agent reads the app's screen as an *agent
+snapshot*: its fields and values, its actions, tables and messages. It fills
+fields by model path or label and fires events by name, over the abap2UI5 JSON
+protocol. It needs no browser and no screenshot. An act on something that is not
+on the screen is refused, and the refusal names what is on the screen.
+[Agent-Operable Apps](/advanced/agents) describes the snapshot and the tools.
 
 They run through the proxy on the active system **as you**, and an event may
 save, post or delete data. So they do nothing until you set
@@ -321,15 +324,25 @@ active system on their own.
 The extension ships a web bundle, so it also runs in
 [vscode.dev](https://vscode.dev), github.dev and browser-based SAP Business
 Application Studio. Everything that needs no process and no socket works there:
-completion and hover, the property gate live while typing, the reconstructed
-XML view, the outline and event navigation, *Convert XML View to Builder
-Chain*, the snippets and the whole template gallery. The repository's
+
+- completion and hover
+- the property gate, live while typing
+- the reconstructed XML view
+- the outline and event navigation
+- *Convert XML View to Builder Chain*
+- the snippets and the whole template gallery
+ The repository's
 `abap2ui5lint.jsonc` is honored there too, so vscode.dev agrees with CI.
 
-Desktop-only, and hidden from the palette on the web: the embedded preview with
-its proxy, traffic log, screenshot and pin; Ctrl+F3 activation and the ADT
-integration; the render gate; the workspace-wide check and quick fixes; the
-navigation map; the Control Properties view; and the MCP servers.
+These features are desktop-only and hidden from the palette on the web:
+
+- the embedded preview with its proxy, traffic log, screenshot and pin
+- Ctrl+F3 activation and the ADT integration
+- the render gate
+- the workspace-wide check and quick fixes
+- the navigation map
+- the Control Properties view
+- the MCP servers
 
 ## The settings worth knowing
 
@@ -355,7 +368,7 @@ Every command is in the Command Palette (`Ctrl/Cmd + Shift + P`) under
 
 ## Next Steps
 
-- [abap2UI5 linter](/advanced/linter) — the gates behind the editor diagnostics
+- [abap2UI5 linter](/advanced/linter) — the checks behind the editor diagnostics
 - [MCP Server](/advanced/mcp_server) — the systemless loop the extension
   registers for agents
 - [Agent-Operable Apps](/advanced/agents) — the app tools, the snapshot they

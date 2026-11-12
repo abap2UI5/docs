@@ -5,10 +5,10 @@ description: The RFC Connector add-on - a consumer system forwards every abap2UI
 # RFC Connector
 
 The [RFC Connector](https://github.com/abap2UI5-addons/rfc-connector) calls
-abap2UI5 apps on one ABAP system from the browser of another: the browser
-talks to a **consumer system**, which forwards every request through an SM59
-RFC destination to the **source system** where the apps run. The apps stay
-where they are and run unchanged.
+abap2UI5 apps on one ABAP system from the browser of another. The browser talks
+to a **consumer system**, which forwards every request through an SM59 RFC
+destination to the **source system** where the apps run. The apps stay where
+they are and run unchanged.
 
 ## When to use
 
@@ -65,17 +65,16 @@ The consumer bootstraps UI5 for the source system's apps:
 
 ## Who authenticates whom
 
-The browser authenticates against the consumer system's ICF node, like on
-any abap2UI5 installation. The source system sees the RFC call, and it
-authenticates whatever the SM59 destination carries: with logon data
-maintained on the destination — the shape the README names — every app on
-the source system runs under that destination user, whoever is in front of
-the browser. The README does not describe user propagation (a trusted RFC
-destination with the current user, for instance), so whether the browser
-user reaches the source system is an open question of your destination
-setup: check in SM59 which user the destination logs on with, and check what
-`sy-uname` holds in an app on the source system. Authorization checks in the
-apps run on the source system against that user.
+The browser authenticates against the consumer system's ICF node, like on any
+abap2UI5 installation. The source system sees the RFC call. It authenticates
+whatever the SM59 destination carries. The README names one setup: logon data
+maintained on the destination. With it, every app on the source system runs
+under that destination user, whoever is in front of the browser. The README does
+not describe user propagation, for instance a trusted RFC destination with the
+current user. So whether the browser user reaches the source system depends on
+your destination setup. Check in SM59 which user the destination logs on with,
+and check what `sy-uname` holds in an app on the source system. Authorization
+checks in the apps run on the source system against that user.
 
 Headers are not forwarded: a request header an app reads through the user
 exit on the source system does not arrive.

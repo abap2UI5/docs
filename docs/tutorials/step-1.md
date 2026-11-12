@@ -6,6 +6,10 @@ samples:
 ---
 # Step 1: The App Class
 
+This is the class from [Hello World](/get_started/hello_world) again, under the
+name the tutorial keeps from here to Step 10. If you ran it there, read on at
+[What Just Happened](#what-just-happened).
+
 Every abap2UI5 app is one ABAP class implementing the interface
 `z2ui5_if_app`. That interface has a single method, `main`, and the framework
 calls it with one parameter: `client`, your only API. This is the smallest app
@@ -31,6 +35,11 @@ Press **Run this example** under the code — the class starts right here in
 the browser. To run it in your own system instead, copy it in, open the
 abap2UI5 startup page (see the [Quickstart](/get_started/quickstart)), and
 enter the class name.
+
+::: tip You should see
+A message box with the text **Hello World** and an **OK** button, on an
+otherwise empty page.
+:::
 
 ## What Just Happened
 
@@ -64,10 +73,10 @@ ENDINTERFACE.
 ```
 
 `if_serializable_object` is there because the framework stores your whole
-instance between two roundtrips and reads it back — which is what lets a
-class attribute survive from one click to the next. `id_draft` and `id_app`
-are the ids it manages for that; you never set them. (The interface also
-carries the framework's version and license as constants.)
+instance between two roundtrips and reads it back. That is why a class attribute
+keeps its value from one click to the next. `id_draft` and `id_app` are the ids
+it manages for that; you never set them. (The interface also carries the
+framework's version and license as constants.)
 
 
 Next, we replace the message box with a real UI5 view.

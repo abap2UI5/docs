@@ -68,7 +68,7 @@ The control renders a button; pressing it opens a dialog with the live camera st
 | Event | |
 |---|---|
 | `OnPhoto` | a photo was captured; `photo` carries the same data URL as `value` |
-| `press` | the trigger button was pressed, before the dialog opens. A wire with `s_ctrl-check_prevent_default` vetoes the dialog, so an app can refuse the camera from ABAP |
+| `press` | the trigger button was pressed, before the dialog opens. An `_event( )` with `s_ctrl-check_prevent_default` vetoes the dialog, so an app can refuse the camera from ABAP |
 
 A failure — no HTTPS, a denied permission, a camera another app holds — is shown on a status line inside the dialog and logged to the browser console; no event reaches the backend for it.
 
@@ -85,7 +85,7 @@ A failure — no HTTPS, a denied permission, a camera another app holds — is s
     )->a( n = `OnPhoto`     v = client->_event( `CAPTURE` ) )
 ```
 
-Before the page has the camera permission a browser lists the cameras without ids or labels, so the list is read again every time the dropdown opens and whenever the browser reports a device change — after the first photo the names are there.
+Before the page has the camera permission, a browser lists the cameras without ids or labels. The list is therefore read again every time the dropdown opens and whenever the browser reports a device change. After the first photo the names are there.
 
 ::: tip **Browser Restrictions**
 Camera access relies on browser permissions and security settings. Most browsers need HTTPS and display a permission prompt. Watch for browser warnings while testing.

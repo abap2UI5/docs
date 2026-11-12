@@ -13,17 +13,23 @@ description: Messages in abap2UI5 - message_toast_display( ) and message_box_dis
 ---
 # Message
 
-Showing messages is an everyday task for ABAP developers. The functions below
-cover the most common cases.
+Two calls show a message to the user. Both are called in an event branch of
+`main`, like any other reaction to an event.
+
+| I want to… | Call |
+| --- | --- |
+| confirm something briefly, without a click | `client->message_toast_display( )` |
+| show a message the user must close | `client->message_box_display( )` |
+| show an error | ``message_box_display( text = … type = `error` )`` |
+| show `sy`, a BAPIRET table or an exception | pass it as `text`, see [SY, BAPIRET, CX_ROOT](#sy-bapiret-cx-root) |
+| ask a question and get the answer | `message_box_display( )` with `actions` and `onclose`, see [the parameters](#the-parameters-of-message-box-display) |
 
 ## Message Toast
 
 For brief notifications like success confirmations, use the message toast:
 
 ```abap
-METHOD z2ui5_if_app~main.
-  client->message_toast_display( `this is a message` ).
-ENDMETHOD.
+client->message_toast_display( `this is a message` ).
 ```
 
 ## Message Box
@@ -32,19 +38,15 @@ When the user needs to acknowledge the message, show a message box they must
 close:
 
 ```abap
-METHOD z2ui5_if_app~main.
-  client->message_box_display( `this is a message` ).
-ENDMETHOD.
+client->message_box_display( `this is a message` ).
 ```
 
 For error messages, change the type:
 
 ```abap
-METHOD z2ui5_if_app~main.
-  client->message_box_display(
-    text = `This is an error message`
-    type = `error` ).
-ENDMETHOD.
+client->message_box_display(
+  text = `This is an error message`
+  type = `error` ).
 ```
 
 ## SY, BAPIRET, CX_ROOT
@@ -53,38 +55,26 @@ functions:
 
 ### SY
 ```abap
-METHOD z2ui5_if_app~main.
-
-  MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_dummy).
-  client->message_box_display( sy ).
-
-ENDMETHOD.
+MESSAGE ID `NET` TYPE `I` NUMBER `001` INTO DATA(lv_dummy).
+client->message_box_display( sy ).
 ```
 ### BAPIRET
 ```abap
-METHOD z2ui5_if_app~main.
-
-  DATA lt_bapiret TYPE STANDARD TABLE OF bapiret2.
-  CALL FUNCTION `BAPI_USER_GET_DETAIL`
-    EXPORTING
-      username = sy-uname
-    TABLES
-      return   = lt_bapiret.
-  client->message_box_display( lt_bapiret ).
-
-ENDMETHOD.
+DATA lt_bapiret TYPE STANDARD TABLE OF bapiret2.
+CALL FUNCTION `BAPI_USER_GET_DETAIL`
+  EXPORTING
+    username = sy-uname
+  TABLES
+    return   = lt_bapiret.
+client->message_box_display( lt_bapiret ).
 ```
 ### CX_ROOT
 ```abap
-METHOD z2ui5_if_app~main.
-
-  TRY.
-    DATA(lv_val) = 1 / 0.
-  CATCH cx_root INTO DATA(lx).
-    client->message_box_display( lx ).
-  ENDTRY.
-
-ENDMETHOD.
+TRY.
+  DATA(lv_val) = 1 / 0.
+CATCH cx_root INTO DATA(lx).
+  client->message_box_display( lx ).
+ENDTRY.
 ```
 The framework accepts other inputs too — pass your message structure and the
 message box shows it.
@@ -95,11 +85,11 @@ Both of the calls above have a second form, and the two answer different
 questions.
 
 `client->message_toast_display( )` and `client->message_box_display( )` are the
-**ABAP side**. Hand them what the app already holds — a text, a BAPIRET2 table,
-a log, an exception, a structure, a whole table — and they work out the
-severity, the title and the rendering themselves, as the section above shows.
-What they take as parameters is what an ABAP app decides: the data, the kind of
-box, the buttons as a `string_table`, and the backend event raised when the box
+**ABAP side**. Hand them what the app already holds: a text, a BAPIRET2 table,
+a log, an exception, a structure, a whole table. They work out the severity,
+the title and the rendering themselves, as the section above shows. Their
+parameters are the things an ABAP app decides: the data, the kind of box, the
+buttons as a `string_table`, and the backend event raised when the box
 closes.
 
 A plain **UI5 option** — where a toast docks, how wide the box is, which icon it
@@ -126,15 +116,15 @@ arrive as an object rather than as a string that looks like one. Both ways end
 in the same frontend code: `onClose` stays a backend event name on either path,
 and the details of a box are expanded on either path.
 
-The UI5 options — where a toast docks, a box's icon, width or text
-direction — are set this way and only this way; the parameter list on
-[Deprecations](/resources/deprecations#the-ui5-options-of-message-toast-display-message-box-display)
-is the one to check when an older app does not compile.
+The UI5 options (where a toast docks, a box's icon, width or text direction)
+are set this way and only this way. When an older app does not compile, check
+the parameter list on
+[Deprecations](/resources/deprecations#the-ui5-options-of-message-toast-display-message-box-display).
 
 The global call has one more property the client method cannot have: it can be
-**wired into the view**, where it runs without a round-trip at all. Extra
-arguments fill the `{0}`, `{1}` placeholders of the text, so a button can say
-what was pressed without asking the backend:
+**written into a view attribute**, where it runs without a roundtrip at all.
+Extra arguments fill the `{0}`, `{1}` placeholders of the text, so a button can
+say what was pressed without asking the backend:
 
 ```abap
 )->tag( `Button`
@@ -152,17 +142,43 @@ objects this call reaches.
 
 ## The Parameters of `message_box_display( )`
 
-| Parameter | What it does |
+| Parameter | What it sets |
 |---|---|
-| `text` | what to show — `TYPE any`: a text, a message structure or table (`BAPIRET2`, `T100`, RAP, `symsg`, a log object, an exception), an HTML string, a business table, a nested structure, an object, a number. Messages are recognized first and set severity and title themselves; several become one box typed by the most severe. The one case that shows nothing is complex data that is initial — an empty message table stays silent |
+| `text` | what to show: a text, or a message structure, table or object |
 | `type` | the kind of box, which decides icon and default title: `information` (the default), `warning`, `error`, `success`, `confirm`, `alert` or `show` |
-| `title` | the title bar text; the type's own title when empty |
-| `actions` | the buttons, as `sap.m.MessageBox.Action` names (`OK`, `CANCEL`, `YES`, `NO`, `ABORT`, `RETRY`, `IGNORE`, `CLOSE`, `DELETE`) or as free texts. Not supplied, UI5's default for the type applies — `OK` for information and success, `CLOSE` for error, `OK` and `CANCEL` for confirm — so an `onclose` handler should not expect `OK` alone |
-| `onclose` | a **backend** event name raised when the box closes; the action the user pressed arrives as the first event argument, `get_event_arg( )`, so one handler tells `DELETE` from `CANCEL` |
-| `emphasizedaction` | the one of the actions rendered as the emphasized button |
+| `title` | the text of the title bar; empty means the title of the type |
+| `actions` | the buttons |
+| `onclose` | the backend event raised when the box closes |
+| `emphasizedaction` | which of the actions is the emphasized button |
 | `initialfocus` | the action (or control id) that has the focus when the box opens |
-| `details` | a further text (or JSON) shown below the message, already unfolded — the box's *Show details* link is hidden |
+| `details` | a further text (or JSON) shown below the message |
 | `styleclass` | one or more CSS classes added to the box |
+
+### `text`
+
+`text` is `TYPE any`. It takes a text, a message structure or table
+(`BAPIRET2`, `T100`, RAP, `symsg`, a log object, an exception), an HTML
+string, a business table, a nested structure, an object or a number.
+Messages are recognized first and set severity and title themselves. Several
+messages become one box, typed by the most severe. One case shows nothing:
+complex data that is initial, so an empty message table stays silent.
+
+### `details`
+
+The text is shown already unfolded, and the *Show details* link of the box is
+hidden.
+
+### `actions` and `onclose`
+
+`actions` are the buttons, as `sap.m.MessageBox.Action` names (`OK`,
+`CANCEL`, `YES`, `NO`, `ABORT`, `RETRY`, `IGNORE`, `CLOSE`, `DELETE`) or as
+free texts. Without `actions`, UI5's default for the type applies: `OK` for
+information and success, `CLOSE` for error, `OK` and `CANCEL` for confirm. An
+`onclose` handler should therefore not expect `OK` alone.
+
+`onclose` is the name of a **backend** event that is raised when the box
+closes. The action the user pressed arrives as the first event argument,
+`get_event_arg( )`, so one handler tells `DELETE` from `CANCEL`.
 
 A confirmation is therefore one call and one branch:
 

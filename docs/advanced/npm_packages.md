@@ -62,18 +62,17 @@ Marketplace. It bundles the linter and starts the MCP server.
   accepts the `@abap2ui5/linter-render` versions of its own minor. The render
   runtime pins the OpenUI5 version the linter's metadata was generated from.
   Its old name, `@abap2ui5/render-runtime`, is deprecated.
-- **The embed control needs abap2UI5 1.145.0 or later** on the server, on
-  ABAP as well as through node-runtime or the CAP plugin — and 1.146.0 or
-  later wherever the page it sits in routes by the URL hash, such as a
-  [Fiori elements object page](/advanced/fiori). Its README lists what
-  1.145.0 does not do yet.
-- **The MCP server is coupled to the linter's range, and to nothing else.**
-  It declares `@abap2ui5/linter` and `@abap2ui5/linter-render` as peers in
-  a range of linter minors it moves with its releases —
-  `npm view @abap2ui5/mcp-server peerDependencies` prints the current one —
-  and npm installs the linter with it; a linter outside that range in a
-  project makes `npm install` refuse with `ERESOLVE` until the server moves
-  its range.
+- **The embed control needs abap2UI5 1.145.0 or later** on the server, on ABAP
+  as well as through node-runtime or the CAP plugin. It needs 1.146.0 or later
+  wherever the page it sits in routes by the URL hash, such as a
+  [Fiori elements object page](/advanced/fiori). Its README lists what 1.145.0
+  does not do yet.
+- **The MCP server is coupled to the linter's range, and to nothing else.** It
+  declares `@abap2ui5/linter` and `@abap2ui5/linter-render` as peers in a range
+  of linter minor versions, and it moves that range with its releases.
+  `npm view @abap2ui5/mcp-server peerDependencies` prints the current range. npm
+  installs the linter with the server. A linter outside that range in a project
+  makes `npm install` refuse with `ERESOLVE` until the server moves its range.
   It finds the linter next to it (a sibling checkout, `AI_VIEW_CHECK_HOME`, or
   the project's `node_modules`) and takes the framework from the newest plain
   release. The VS Code extension starts it without a version pin.
@@ -96,9 +95,11 @@ name:
 The translator reads ABAP with `@abaplint/core`, which is an optional peer of
 the plugin: a project that translates adds it with `npm add -D @abaplint/core`.
 
-The BSP tool has three commands: `app2bsp` writes an app folder as the
-abapGit repository of a BSP, `bsp2app` turns a serialized BSP back into
-an app folder, and `check` holds a BSP to the page rules (names the
-system accepts, no line over 255 characters). Its
-[README](https://github.com/abap2UI5/abap2UI5/tree/main/tools/bsp#readme)
-has the options, and the same functions are exported for a script.
+The BSP tool has three commands:
+
+- `app2bsp` writes an app folder as the abapGit repository of a BSP.
+- `bsp2app` turns a serialized BSP back into an app folder.
+- `check` holds a BSP to the page rules: names the system accepts, no line over
+  255 characters. Its
+  [README](https://github.com/abap2UI5/abap2UI5/tree/main/tools/bsp#readme) has
+  the options, and the same functions are exported for a script.

@@ -137,7 +137,7 @@ For a ready-made picker with sorting, multi-select and a search field, the
 
 ## DDIC Search Help
 
-For value helps that exist as DDIC search help objects (`SE11` → search help), the [generic search help builder](https://github.com/axelmohnen/a2UI5-generic_search_hlp) wraps the F4 framework so you can fire any standard search help by name and get the picked row back. Install it like any other [add-on](/resources/addons).
+Some value helps exist as DDIC search help objects (`SE11` → search help). For those, the [generic search help builder](https://github.com/axelmohnen/a2UI5-generic_search_hlp) wraps the F4 framework: you start any standard search help by name and get the picked row back. Install it like any other [add-on](/resources/addons).
 
 ## Custom Dialog
 

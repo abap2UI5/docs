@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_024
-description: Turn an Adobe Form into a PDF from an abap2UI5 app - the generated function module between FP_JOB_OPEN and FP_JOB_CLOSE with the PDF returned instead of printed, one PDF as a download or several as a ZIP, and what ADS needs.
+description: Turn an Adobe Form into a PDF from an abap2UI5 app - the generated function module between FP_JOB_OPEN and FP_JOB_CLOSE returns the PDF and does not print it. One PDF as a download or several as a ZIP, and what ADS needs.
 ---
 # Print Forms as PDF
 
@@ -16,6 +16,9 @@ The worked example is `Z2UI5_CL_SMPS_APP_024` in
 [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) (package
 `14`). It renders any form whose name is typed in, and downloads one PDF or a
 ZIP of several. It needs Standard ABAP and Adobe Document Services (ADS).
+
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
 
 ## The Shape of the App
 
@@ -116,11 +119,10 @@ the attachment of [Send by Mail](/tutorials/everyday/send_by_mail).
 - **ADS.** Adobe Document Services do the rendering; the system reaches them
   through the RFC destination `ADS` in `SM59`. When `FP_JOB_OPEN` fails right
   away, this is the first thing to check - the sample says so in its error.
-- **ABAP Cloud.** The classic runtime with `FP_JOB_OPEN` is not released
-  there. Forms are rendered by the Forms Service by Adobe through
-  `cl_fp_ads_util`, with the form template and the data as XML; the shape of
-  the app - render in the handler, hand the PDF to the browser - stays the
-  same.
+- **ABAP Cloud.** The classic runtime with `FP_JOB_OPEN` is not released there.
+  Forms are rendered by the Forms Service by Adobe through `cl_fp_ads_util`,
+  with the form template and the data as XML. The structure of the app stays the
+  same: render in the handler, hand the PDF to the browser.
 - **Many forms.** Rendering takes a noticeable moment per form. A few at a
   time are fine in a roundtrip; for a whole month of invoices, render in a
   background job and offer the result for download when it is done.

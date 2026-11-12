@@ -5,38 +5,38 @@ samples:
   - z2ui5_cl_smp_app_464
 description: What happens when an exception escapes main( ) in abap2UI5 - the 500, the error dialog and the restart - and how to catch what can be predicted and show it as a message instead.
 ---
-# Exception
+# Errors and Exceptions
 
-An exception that escapes your `main` method is **not** caught anywhere near
-your app. abap2UI5 lets it travel: there is exactly one top-level catch, in
-`z2ui5_cl_ui5_http_handler`, and everything the framework does about errors
-happens there. Knowing that one path is most of what this page is for — the
+An exception that leaves your `main` method is caught in one place only:
+the top-level catch in `z2ui5_cl_ui5_http_handler`. Everything the framework
+does about errors happens there. This page describes that one path. The
 behavior is the same whether the exception came out of your code, out of the
 framework, or out of a wrong app name in the URL.
 
 ## What Happens When One Escapes
 
-1. **The roundtrip ends with HTTP 500.** No view is displayed, no model is
-   pushed, and — unless the app is stateful, see
-   [Statefulness](/cookbook/expert_more/statefulness) — the database work of that roundtrip
-   is rolled back. The response body is not an SAP error page: the handler puts
-   the **whole exception chain** in it, with each entry's class, message, source
-   position and attributes, because that body is the only diagnostic that
-   survives the roundtrip. Nothing else anywhere records it.
+1. **The roundtrip ends with HTTP 500.** No view is displayed and no model is
+   sent. The database work of that roundtrip is rolled back, unless the app is
+   stateful (see [Statefulness](/cookbook/expert_more/statefulness)). The
+   response body is not an SAP error page. The handler puts the **whole
+   exception chain** in it, with each entry's class, message, source position
+   and attributes. That body is the only record of the error: nothing else
+   stores it.
 2. **The browser shows the error dialog.** An *Application Error* dialog
-   shows a short preview of the message and offers **Details** and **Copy** for
-   the full text and **Restart** to start over; Escape does not close it. When
+   shows a short preview of the message. It offers **Details** and **Copy** for
+   the full text and **Restart** to start over. Escape does not close it. When
    UI5 cannot render even that dialog, a fallback overlay drawn from raw DOM
-   takes its place — *Application Error - Please Restart The App*, with
-   **Refresh** / **Logout** — so the failure is still reported when it left the
+   takes its place: *Application Error - Please Restart The App*, with
+   **Refresh** / **Logout**. So the failure is reported even when it left the
    UI5 core itself unusable.
-3. **The app is over.** There is no *continue* on that dialog by design: the
-   roundtrip that would have carried the app's next state is the one that
-   failed, so what is on screen no longer matches anything on the server. The
-   user restarts, and the app starts from its first screen — unless its draft
-   id is in the URL, through the
-   [app state](/cookbook/event_navigation/navigation/app_state) or hash routing
-   in `KEEP` mode, which brings it back to where it was.
+3. **The app is over.** The dialog has no *continue* button, by design. The
+   roundtrip that failed is the one that would have carried the app's next
+   state, so what is on screen no longer matches anything on the server. The
+   user restarts, and the app starts from its first screen. One exception: when
+   the id of its [app draft](/get_started/glossary) is in the URL, the app
+   comes back to where it was. That is the case with the
+   [app state](/cookbook/event_navigation/navigation/app_state) or with hash
+   routing in `KEEP` mode.
 
 A short dump reaches the browser the same way — the application server's own
 500 page comes back instead of the handler's body, and the overlay strips it
@@ -65,9 +65,9 @@ while everything else on this page stays as it is.
 ## Handling It Yourself
 
 Everything above is the fallback, and reaching it means the user has lost the
-screen. Anything you can predict — a division by zero, a failed conversion, a
-locked object, a service that is not there — is better caught where it happens
-and shown as a message, which costs the user nothing:
+screen. Catch what you can predict where it happens: a division by zero, a
+failed conversion, a locked object, a service that is not there. Show it as a
+message, which costs the user nothing:
 
 ```abap
 CLASS zcl_sample_exception DEFINITION PUBLIC.

@@ -3,7 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_011
   - z2ui5_cl_smps_app_012
-description: Do something whenever a RAP business object changes - a log, a mail, a follow-up document - with business events raised in the save sequence and consumed by a handler class, and how the result reaches an abap2UI5 screen.
+description: Do something whenever a RAP business object changes - a log, a mail, a follow-up document. With business events raised in the save sequence and consumed by a handler class, and how the result reaches an abap2UI5 screen.
 ---
 # React to Changes
 
@@ -22,6 +22,9 @@ The worked example is package `05` of
 `Z2UI5_CL_SMPS_APP_011` creates and changes tickets, `Z2UI5_CL_SMPS_APP_012`
 shows the log the handler writes. Business events need ABAP Platform 2021 or
 ABAP Cloud.
+
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
 
 ## The Shape of the Solution
 

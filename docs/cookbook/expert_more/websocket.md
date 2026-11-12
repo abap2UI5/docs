@@ -2,11 +2,11 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_489
-description: Push from the server into an abap2UI5 app with an ABAP Push Channel - the APC and AMC setup on the server, and the WebSocket custom control that hands every message to the backend as an event.
+description: Push from the server into an abap2UI5 app with an ABAP Push Channel - the APC and AMC setup on the server, and the WebSocket control that hands every message to the backend as an event.
 ---
 # WebSocket
 
-Stateless roundtrips are fine for click-driven UIs, but some scenarios need the server to *push* — a news feed, a job-status indicator, a chat. abap2UI5 has no special API for this; you use SAP's standard WebSocket stack, and the frontend's `z2ui5:Websocket` control turns every message the channel delivers into an abap2UI5 event — no JavaScript in the app.
+Stateless roundtrips are fine for click-driven UIs, but some scenarios need the server to *push*: a news feed, a job-status indicator, a chat. abap2UI5 has no special API for this. You use SAP's standard WebSocket stack, and the frontend's `z2ui5:Websocket` control turns every message the channel delivers into an abap2UI5 event. The app needs no JavaScript.
 
 The building blocks:
 
@@ -108,7 +108,9 @@ The `RECEIVED` handler only changes bound data, so the view stays as it is and t
 | `received` | one message arrived and `value` holds it |
 | `error` | the connection could not be opened or was closed without the app asking; `code` is the WebSocket close code (`1006` for a handshake that never completed — an inactive ICF node, a rejected logon, an unknown APC application) or `CONSTRUCT` when the browser refused the URL, `message` the text |
 
-Messages and errors are queued in the browser and handed over one per roundtrip, in the order they happened: a burst of messages while a roundtrip is in flight is not lost, and the queue holds 100 items before it drops new ones and logs it. After a connection the app did not close, the control reconnects with an increasing delay, from half a second up to thirty, and after five failed attempts in a row it stops until `path` or `checkActive` changes — each failure has fired `error`, so the backend heard about every one.
+Messages and errors are queued in the browser and handed over one per roundtrip, in the order they happened. A burst of messages during a running roundtrip is not lost. The queue holds 100 items; after that it drops new ones and logs it.
+
+After a connection the app did not close, the control reconnects with an increasing delay, from half a second up to thirty seconds. After five failed attempts in a row it stops until `path` or `checkActive` changes. Each failure has fired `error`, so the backend heard about every one.
 
 ## When to Reach For It
 

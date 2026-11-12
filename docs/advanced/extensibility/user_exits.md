@@ -24,9 +24,16 @@ fall-back to the defaults.
 ## The two methods
 
 Both methods take an `is_context` importing parameter describing the request
-and a `cs_config` changing parameter holding the configuration, and both are
-called more than once per request. Neither may keep state or write to the
-database: read configuration, set fields, return.
+and a `cs_config` changing parameter holding the configuration. Neither is
+called exactly once: `set_config_http_get` runs for the page and again for the
+headers of every later response, `set_config_http_post` runs up to three times
+for one roundtrip. So neither may keep state or write to the database: read
+configuration, set fields, return.
+
+| Method | Called when | How often | Must be |
+|---|---|---|---|
+| `set_config_http_get` | the browser asks for the page (GET), and for every later response, to read its `t_security_header` | at most once per request | cheap, and without side effects |
+| `set_config_http_post` | on every POST and HEAD: the CSRF check, the monitor switch, the draft cleanup, the error response | up to three times per roundtrip | cheap and idempotent: the same input gives the same output |
 
 **`set_config_http_get`** runs at most once per request. On the page request —
 the GET that fetches the HTML shell — the result builds the page: UI5 source
@@ -36,17 +43,23 @@ the same result is read once more for its `t_security_header`, which every
 response of the handler carries. The handler caches the structure per
 request, so the method is not called a second time for the headers.
 
-**`set_config_http_post`** is what the backend decides per roundtrip, and the
-framework asks for it wherever it needs one of its fields, with a fresh
-empty structure each time: the CSRF gate on every POST and HEAD, before any
-app code runs; the roundtrip monitor, to see whether it is switched on; the
-draft cleanup on an app's first start; the error response, to decide how
-much of an exception the browser may see; and the start page's check of the
-same flag. That is several calls in one request, so the method has to be
-cheap and idempotent — the same input gives the same output, and nothing
-changes because it ran.
+**`set_config_http_post`** is what the backend decides per roundtrip. The
+framework asks for it wherever it needs one of its fields, with a fresh empty
+structure each time:
 
-The example sets the theme and keeps drafts twice as long as the default:
+- the CSRF check on every POST and HEAD, before any app code runs
+- the roundtrip monitor, to see whether it is switched on
+- the draft cleanup on an app's first start
+- the error response, to decide how much of an exception the browser may see
+- the start page's check of the same flag
+
+That is several calls in one request, so the method has to be cheap and
+idempotent: the same input gives the same output, and nothing changes because it
+ran.
+
+The example sets the theme and keeps drafts twice as long as the default. A
+class with the settings a productive system needs is on
+[Go-Live Checklist](/configuration/productive_usage#a-production-user-exit):
 
 ```abap
 CLASS zcl_sample_user_exit DEFINITION PUBLIC.
@@ -109,9 +122,9 @@ field is explained on another page, that page is the place to read:
 - `content_security_policy`, `t_security_header`, `check_csrf_active`,
   `check_trust_forwarded_host` — [Security](/configuration/security): the
   CSP meta tag and how to edit one directive of it rather than replace the
-  tag, the response headers, and the CSRF gate with its two switches. Both
+  tag, the response headers, and the CSRF check with its two switches. Both
   switches default to `abap_true`; an installation that is not behind a
-  proxy hardens the gate by setting `check_trust_forwarded_host` to
+  proxy makes the check stricter by setting `check_trust_forwarded_host` to
   `abap_false`, and only an endpoint that must accept cross-origin POSTs
   sets `check_csrf_active` to `abap_false`.
 - `check_hide_error_details` — off by default: an exception nobody catches is
@@ -119,11 +132,11 @@ field is explained on another page, that page is the place to read:
   names and source positions included. A production system sets it to
   `abap_true` and the browser gets a bare `Internal Server Error`; see
   [Exception](/cookbook/event_navigation/exception).
-- `check_monitor_active` — off by default, and nothing seeds it: the
-  roundtrip monitor `z2ui5_if_ui5_monitor` is only called when the exit sets
-  it to `abap_true`. The monitor is a second interface found the same way as
-  the exit, and unlike the exit it fails open — a monitor that raises costs
-  its log entry, never the app. Available from abap2UI5 1.147.0 on; see
+- `check_monitor_active` — off by default, and the framework never sets it: the
+  roundtrip monitor `z2ui5_if_ui5_monitor` is only called when the exit sets it
+  to `abap_true`. The monitor is a second interface found the same way as the
+  exit. Unlike the exit, its errors are ignored: a monitor that raises loses its
+  log entry and never stops the app. Available from abap2UI5 1.147.0 on; see
   [Monitoring](/configuration/monitoring).
 - `draft_exp_time_in_hours` — how long the backend keeps a draft before the
   cleanup on an app's first start deletes it. The default is 4 hours, and a

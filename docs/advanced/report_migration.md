@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Converting the user interface of a classic ABAP report - selection screen, event blocks, WRITE list, ALV - into an abap2UI5 app of the abap-cloud-gui add-on with its converter report2UI5, from the command line or through the MCP server's migrate_report tool. The logic of the report stays the user's.
+description: Converting the user interface of a classic ABAP report - selection screen, event blocks, WRITE list, ALV - into an abap2UI5 app. The converter report2UI5 of the abap-cloud-gui add-on does it, from the command line or through the MCP server's migrate_report tool. The logic of the report stays the user's.
 ---
 # Migrating Classic Reports
 
@@ -28,10 +28,10 @@ system is up to you: the converter does not check whether a table or an API
 is released, and replaces nothing by a successor.
 
 The converter parses the report with `@abaplint/core`, the parser the whole
-ecosystem lints with. It is **deterministic** — the same report gives the same
-class, byte for byte — and it **refuses rather than guesses**: a part of the
-user interface that has no counterpart in a browser app is reported with
-file, line and column, and no class is written.
+ecosystem lints with. It is **deterministic**: the same report gives the same
+class, byte for byte. And it **refuses rather than guesses**. A part of the user
+interface that has no counterpart in a browser app is reported with file, line
+and column, and no class is written.
 
 ## Running it
 
@@ -46,25 +46,29 @@ cd abap-cloud-gui && npm ci
 npm run report2ui5 -- zflights.prog.abap --out src/02
 ```
 
-`--class` names the class (default: `zcl_` and the report name), `--texts`
-points at the report's `.prog.xml` when it does not lie beside the source,
-`--check` lints the result with abaplint for 7.50, and
-`--partial` writes the class even when statements were refused, with those
-statements marked. The exit code is 0 when the report was converted and 2
-when something was refused.
+The options:
+
+- `--class` names the class (default: `zcl_` and the report name).
+- `--texts` points at the report's `.prog.xml` when it does not lie beside the
+  source.
+- `--check` lints the result with abaplint for 7.50.
+- `--partial` writes the class even when statements were refused, with those
+  statements marked. The exit code is 0 when the report was converted and 2 when
+  something was refused.
 
 What it writes is abapGit format, ready to pull:
 
 | File | What it is |
 | --- | --- |
 | `<class>.clas.abap` | the report class |
-| `<class>.clas.xml` | its sidecar, described with the title of the report |
+| `<class>.clas.xml` | its abapGit metadata file, described with the title of the report |
 | `<class>.clas.locals_def.abap`, `.locals_imp.abap` | the local classes and interfaces of the report, if it has any |
 | `<class>.migration.md` | the migration report — see [below](#the-migration-report) |
 
-The selection texts, the text symbols and the title live in the text pool,
-not in the source. abapGit writes them into `<report>.prog.xml`; with that
-file the class gets the real texts, without it placeholders and a TODO each.
+The selection texts, the text symbols and the title live in the text pool, not
+in the source. abapGit writes them into `<report>.prog.xml`. With that file the
+class gets the real texts. Without it the class gets placeholders and a TODO for
+each.
 
 ### From an AI agent: `migrate_report`
 
@@ -80,14 +84,14 @@ an abap-cloud-gui checkout (`ABAP_CLOUD_GUI_HOME`, or a sibling
 | `partial` | optional: on refusals, still return the draft class with the refused statements marked |
 | `deploy` | optional: also deploy the class into the local sandbox and start it |
 
-The answer carries the generated files, the migration report and the
-refusals with `file:row:col`. With `deploy: true` the class is written into
-the sandbox together with the add-on's runtime and the popups it calls, the
-backend is built, and the answer gains the
+The answer carries the generated files, the migration report and the refusals
+with `file:row:col`. With `deploy: true` the class is written into the sandbox
+together with the add-on's runtime and the popups it calls, and the backend is
+built. The answer then also carries the
 [agent snapshot](/advanced/agents#what-an-agent-sees-the-snapshot) of the
-selection screen; `app_act` with `CGUI_EXECUTE` runs the report from there.
-The database tables the report reads are not in the local backend: the
-selection screen runs, a run that reads them does not.
+selection screen. `app_act` with `CGUI_EXECUTE` runs the report from there. The
+database tables the report reads are not in the local backend: the selection
+screen runs, a run that reads them does not.
 
 ## Before and after
 
@@ -267,22 +271,22 @@ converts the user interface; the rest is yours:
   background jobs. On ABAP Cloud only released objects are allowed - replace
   what is not released yourself; the converter does not check it.
 - **Some behavior is approximated.** The positions and lengths of `WRITE` are
-  dropped and its formats are not all kept; the classic screen's conversion to
-  upper case is not carried over; a `TOP-OF-PAGE` header is written once and
-  after each `NEW-PAGE`, not at every page break; `STOP` outside
-  `START-OF-SELECTION` becomes a `RETURN` with a TODO; ALV cells show dates and
-  times as the model carries them. The migration report lists, per class,
-  what was not carried over.
+  dropped, and its formats are not all kept. The classic screen's conversion to
+  upper case is not carried over. A `TOP-OF-PAGE` header is written once and
+  after each `NEW-PAGE`, not at every page break. `STOP` outside
+  `START-OF-SELECTION` becomes a `RETURN` with a TODO. ALV cells show dates and
+  times as the model carries them. The migration report lists, per class, what
+  was not carried over.
 - **It has not run on a real system yet.** The evidence is the converter's own
-  tests: every class it generates from its corpus of classic reports compiles
-  with abaplint for 7.50 (no finding), for 7.02 after the downport, and
-  against the abap2UI5 linter. Every class also runs — transpiled with the
-  add-on against abap2UI5's Node runtime, with seeded flight tables, and
-  operated the way a user operates it: fill the selection screen, Execute,
-  click a hotspot or a grid row, pick in the F4 popup, read the message
-  popover, go back, run again — against expectations written by hand from
-  what the classic report prints. None of that is an SAP system, and none of
-  the classes has been activated on one.
+  tests. Every class it generates from its set of classic test reports compiles
+  with abaplint for 7.50 (no finding) and for 7.02 after the downport, and
+  passes the abap2UI5 linter. Every class also runs: it is transpiled with the
+  add-on against abap2UI5's Node runtime, with seeded flight tables. The test
+  operates it the way a user does: fill the selection screen, Execute, click a
+  hotspot or a grid row, pick in the F4 popup, read the message popover, go
+  back, run again. The results are compared with expectations written by hand
+  from what the classic report prints. None of that is an SAP system, and none
+  of the classes has been activated on one.
 
 ## Next Steps
 

@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_023
-description: Send what the app shows by mail - the attachment written in the backend, cl_bcs_mail_message on ABAP Cloud and current releases, the outbound configuration a mail needs, the status after the send, and how to test it.
+description: Send what the app shows by mail - the attachment written in the backend, with cl_bcs_mail_message on ABAP Cloud and current releases. Also the outbound configuration a mail needs, the status after the send, and how to test it.
 ---
 # Send by Mail
 
@@ -15,6 +15,9 @@ the system and its configuration, which is where most of the trouble is.
 The worked example is `Z2UI5_CL_SMPS_APP_023` in
 [abap2UI5/samples-stack](https://github.com/abap2UI5/samples-stack) (package
 `13`). It sends a table as an `.xlsx` attachment with `cl_bcs_mail_message`.
+
+To install it, pull the branch of that package with abapGit: see
+[Getting the Sample](/tutorials/everyday/#getting-the-sample).
 
 ## The Shape of the App
 

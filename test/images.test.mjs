@@ -22,7 +22,7 @@ const PUBLIC = join(dirname(fileURLToPath(import.meta.url)), '..', 'docs', 'publ
 
 test('a lossy WebP - the screenshots - is read from its VP8 frame header', () => {
   assert.deepEqual(measureImage(join(PUBLIC, 'get_started/image.webp')), { w: 1600, h: 765 });
-  assert.deepEqual(measureImage(join(PUBLIC, 'configuration/debug.webp')), { w: 1600, h: 843 });
+  assert.deepEqual(measureImage(join(PUBLIC, 'configuration/debug.webp')), { w: 1600, h: 1018 });
 });
 
 test('a lossless WebP - the hero mark - is read from its VP8L bits', () => {

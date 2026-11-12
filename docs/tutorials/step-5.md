@@ -67,6 +67,12 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 ENDCLASS.
 ```
 
+::: tip You should see
+A list with the header **Invoices** and five rows. Each row shows a product
+(**Pineapple**, **Milk**, …), its supplier under it and the quantity on the
+right.
+:::
+
 ## One Template, Many Rows
 
 - **The table binds like the string did.** ``client->_bind( t_invoices )``

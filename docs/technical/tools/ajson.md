@@ -30,4 +30,4 @@ Nor is there a substitute to reach for: `/ui2/cl_json` is not released for ABAP 
 
 Every ajson update and bug fix flows into abap2UI5 automatically via GitHub Actions and the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository. You always run the latest stable version — no manual steps needed.
 
-That automation is the other half of the argument above: the copy in your system moves without anybody in this project reviewing the diff for app-facing impact, because nothing app-facing is supposed to depend on it.
+That automation is the second reason for the rule above. The copy in your system changes without anybody in this project reviewing the diff for its effect on apps, because no app is supposed to depend on it.

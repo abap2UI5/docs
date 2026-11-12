@@ -39,11 +39,14 @@ that matches your system into your ABAP system with
 | `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x preview) |
 | `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x preview) |
 
+All six frontend branches side by side are on
+[Deployment Scenarios](/configuration/installation#frontend-branches).
+
 The v2 branches install the frontend under the same `z2ui5` name as the classic
-branches. To evaluate the legacy-free frontend side by side with the classic one
-in the same system, run abap2UI5's
+branches. You can evaluate the legacy-free frontend side by side with the
+classic one in the same system. To do that, run abap2UI5's
 [`frontend_deploy`](https://github.com/abap2UI5/abap2UI5/actions/workflows/frontend_deploy.yaml)
-workflow with a branch name of the form `standard_v2_<name>`: it generates that
+workflow with a branch name of the form `standard_v2_<name>`. It generates that
 branch of the frontend repository with the whole deployment identity (BSP, ICF
 nodes, handler class) under a different name. This is for the BSP of
 `standard_v2`; the [frontend repository](https://github.com/abap2UI5/frontend)

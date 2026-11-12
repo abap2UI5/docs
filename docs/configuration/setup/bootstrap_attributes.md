@@ -48,7 +48,7 @@ ENDMETHOD.
 | `data-sap-ui-resourceroots`     | Resource roots for custom libraries. Set by abap2UI5 (`z2ui5`) — fixed; your own controls load through the reserved [`z2ui5_ccc` root](/advanced/extensibility/custom_control) instead. |
 | `data-sap-ui-xx-componentpreload` | Component-preload strategy for very large apps. |
 
-The attributes abap2UI5 writes itself (`data-sap-ui-async`, `data-sap-ui-frameOptions`, `data-sap-ui-compatVersion`, `data-sap-ui-bindingSyntax`, `data-sap-ui-theme`, …) cannot be overridden here: the rows are appended after them, and a browser keeps the first of two attributes with the same name. `t_add_config` adds attributes; the theme has its own field (`cs_config-theme`).
+The attributes abap2UI5 writes itself (`data-sap-ui-async`, `data-sap-ui-frameOptions`, `data-sap-ui-compatVersion`, `data-sap-ui-bindingSyntax`, `data-sap-ui-theme`, …) cannot be overridden here. The rows are appended after them, and a browser keeps the first of two attributes with the same name. `t_add_config` adds attributes; the theme has its own field (`cs_config-theme`).
 
 ## See Also
 

@@ -6,7 +6,7 @@ samples:
   - z2ui5_cl_smp_app_499
 description: The URL hash in abap2UI5 - the framework's app routing with its modes, an app that owns its own hash with hash_set, hash_replace and hash_back, and which of the three owners to pick.
 ---
-# Hash
+# URL Hash and Routing
 
 The URL hash is one string, and in abap2UI5 exactly one thing may own it at a
 time. There are three candidates, and picking between them is most of what this
@@ -21,9 +21,12 @@ page is about:
 They are not additive: each writes the same hash, so a second one turned on
 takes the first one's meaning away. Decide once, per app.
 
+![The four URL modes - default, app state, hash routing, app-owned hash - and what reload, the Back button and a bookmark do in each](/cookbook/event_navigation/url-modes.svg)
+
 ::: tip The names follow UI5's
 Everything on this page that touches the URL fragment is named after
-`sap/ui/core/routing/HashChanger`: `hash_set( )` is `setHash`,
+`sap/ui/core/routing/HashChanger`, the UI5 class that reads and writes the
+part of the URL after the `#`. So `hash_set( )` is `setHash`,
 `hash_replace( )` is `replaceHash`, `cs_event-hash_attach_changed` is
 `attachHashChanged`, and `cs_event-hash_back` is the `onNavBack` pattern.
 `nav_*` keeps meaning real navigation between apps, `app_state_*` is the state
@@ -58,13 +61,13 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-**The mode belongs to the app, like a manifest.** The framework remembers it
-and re-sends it whenever the frontend may not still hold it — a page load, a
-Back/Forward restore, a navigation hop — so one call per app is enough, and an
-app called with `nav_app_call( )` inherits the caller's mode. What it does
-*not* do is leak: a navigation hop that lands on an app which never asked for
-routing turns the hash tracking off again, so leaving a routed app for a plain
-one no longer leaves a stale `#/app/<CLASS>/<DRAFT>` in the address bar.
+**The mode belongs to the app, like a manifest.** One call per app is enough.
+The framework remembers the mode and sends it again whenever the frontend may
+have lost it: after a page load, a Back/Forward restore or a navigation hop. An
+app called with `nav_app_call( )` inherits the caller's mode. The mode does not
+spread to other apps: when a navigation hop lands on an app that never asked
+for routing, the hash tracking is switched off again. So leaving a routed app
+for a plain one leaves no stale `#/app/<CLASS>/<DRAFT>` in the address bar.
 
 Once enabled, a forward navigation to another app (`client->nav_app_call`)
 pushes a new route history entry — the routing equivalent of a UI5 `navTo`. The
@@ -79,7 +82,7 @@ carries — and therefore what Back/Forward, a reload, or a bookmark restores:
 | --------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `default` | *(hash untouched)*        | No routing — framework behavior as before this feature.                                                                        |
 | `fresh`   | `#/app/<CLASS>`           | The app starts **fresh**: a clean instance, no preserved input.                                                                |
-| `keep`    | `#/app/<CLASS>/<DRAFT>`   | The exact preserved state is restored (all user input), falling back to a fresh start once the draft has expired.              |
+| `keep`    | `#/app/<CLASS>/<DRAFT>`   | The exact preserved state is restored (all user input), falling back to a fresh start once the [app draft](/get_started/glossary) has expired.              |
 
 ```abap
 " route by class only - Back/reload/bookmark always restart the app fresh
@@ -88,25 +91,26 @@ client->follow_up_action( val   = client->cs_event-hash_routing
 ```
 
 ::: tip Back restores the calling app as the user left it
-In `keep` mode, the calling app's route entry is advanced to the draft saved for
-it during the `nav_app_call`. Pressing Back therefore restores the calling app
-**as the user left it** — including every bound value that changed on the client
-since the last render and traveled to the backend with the triggering event.
+In `keep` mode, the calling app's route entry is advanced to the app draft saved
+for it during the `nav_app_call`. Pressing Back therefore restores the calling
+app **as the user left it** — including every bound value that changed on the
+client since the last render and traveled to the backend with the triggering
+event.
 :::
 
 ::: warning Draft expiry
-`keep` routes carry a server draft id. Once the draft has expired (see
-`draft_exp_time_in_hours` in the
+`keep` routes carry a server-side app draft id. Once the app draft has expired
+(see `draft_exp_time_in_hours` in the
 [User Exits](/advanced/extensibility/user_exits)), the route falls back to a
 fresh start of the app class.
 :::
 
 ::: warning A `keep` restore enters through `check_on_navigated`, not `check_on_init`
 Restoring a `keep` route (browser Back/Forward, a reload, a bookmark) loads the
-app from its draft and runs `main( )` with `client->check_on_navigated( )` true
-— `check_on_init( )` stays false, the instance already exists. As everywhere
-else, render the view in that branch (see
-[Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init)).
+app from its app draft and runs `main( )` with `client->check_on_navigated( )`
+true — `check_on_init( )` stays false, the instance already exists. As
+everywhere else, render the view in that branch (see
+[App Structure](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init)).
 An app that renders only on `check_on_init( )` answers without a view and the
 browser keeps showing the previous screen — a Forward press onto such an app
 appears to do nothing. This applies to **every** app reachable through routing,
@@ -126,11 +130,12 @@ client->nav_app_call( NEW zcl_sample_new_app( ) ).
 ## App-owned routing
 
 The router gives you one route per *app*. An app with several screens of its
-own — a list and a detail, a wizard, a FlexibleColumnLayout — wants the URL to
-follow **those** instead: no hash on start, `#/detail` while the user is on the
-detail page, and the browser's Back button switching pages inside the *running*
-instance rather than restarting anything. That is what a UI5 router does, and
-`cs_event-hash_attach_changed` is how an app gets the same semantics.
+own (a list and a detail, a wizard, a FlexibleColumnLayout) wants the URL to
+follow **those** screens instead. That means: no hash on start, `#/detail`
+while the user is on the detail page, and a browser Back button that switches
+pages inside the *running* instance and restarts nothing. That is what a UI5
+router does, and `cs_event-hash_attach_changed` gives an app the same
+behavior.
 
 Register it with the name of a backend event, in `view_display( )`:
 
@@ -153,15 +158,13 @@ edit of the address bar, a deep link — fires the registered event. The hash th
 browser now stands on rides along with that request, and with every other one:
 
 ```abap
-CASE client->get_event( ).
 
-  WHEN `HASH_CHANGED`.
-    " the router's routeMatched: show the page the hash now names.
-    " s_config-hash is the browser's raw location hash - `#/detail`,
-    " and inside a launchpad the shell's own part stands in front of it
-    check_detail = xsdbool( client->get( )-s_config-hash CS `/detail` ).
-
-ENDCASE.
+IF client->check_on_event( `HASH_CHANGED` ).
+  " the router's routeMatched: show the page the hash now names.
+  " s_config-hash is the browser's raw location hash - `#/detail`,
+  " and inside a launchpad the shell's own part stands in front of it
+  check_detail = xsdbool( client->get( )-s_config-hash CS `/detail` ).
+ENDIF.
 ```
 
 Because `s_config-hash` arrives on *every* request, a cold start on `#/detail`
@@ -190,12 +193,13 @@ start page rather than on whatever was in the browser before.
 
 ::: warning Without a listener, `hash_set( )` writes a suffix
 With no `hash_attach_changed` listener registered, the value of
-`hash_set( )` is **appended** to the hash the page already has rather than
-replacing it — ``hash_set( `&my-app-state=detail` )`` is that form, and
+`hash_set( )` is **appended** to the hash the page already has. It does not
+replace it. ``hash_set( `&my-app-state=detail` )`` is that form, and
 `hash_replace( )` does the same, so writing a whole route on every roundtrip
-grows the URL. Registering the listener is what makes the value the *whole*
-app hash — and what makes browser Back reach your app at all. The history of
-the two spellings is on [Deprecations](/resources/deprecations#the-url-api-is-hash-and-app-state-now).
+makes the URL grow. Registering the listener makes the value the *whole* app
+hash, and it is also what lets browser Back reach your app at all. The history
+of the two spellings is on
+[Deprecations](/resources/deprecations#the-url-api-is-hash-and-app-state-now).
 :::
 
 For a complete example, see sample `Z2UI5_CL_SMP_APP_499` in the table below —
