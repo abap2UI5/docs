@@ -261,6 +261,19 @@ export default defineConfig({
               { text: "React to Changes", link: "/tutorials/everyday/react_to_changes" },
             ],
           },
+          {
+            // For the reader who writes reports and ALVs today. The two pages
+            // stood under Advanced Topics > Releases, Stacks, where that
+            // reader never looked; their addresses are unchanged.
+            text: "Coming from Classic Reports",
+            collapsed: true,
+            items: [
+              // an app written as a report: the short way in for new code
+              { text: "Apps Written Like Reports", link: "/advanced/report_style" },
+              // a classic report taken to ABAP Cloud with the abap-cloud-gui add-on
+              { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
+            ],
+          },
         ],
       },
       {
@@ -605,12 +618,6 @@ export default defineConfig({
               { text: "Downporting", link: "/advanced/downporting" },
               { text: "Namespaces, Renaming", link: "/advanced/renaming" },
               { text: "Working Off-Stack", link: "/advanced/working_off_stack" },
-              // A classic report taken to ABAP Cloud as a class of the
-              // abap-cloud-gui add-on - another stack the code was not
-              // written for, which is what this group is about.
-              { text: "Migrating Classic Reports", link: "/advanced/report_migration" },
-              // its counterpart for new code: an app written as a report
-              { text: "Apps Written Like Reports", link: "/advanced/report_style" },
               { text: "UI5 Legacy-Free", link: "/advanced/legacy_free" },
             ],
           },
