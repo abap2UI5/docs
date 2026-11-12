@@ -488,7 +488,7 @@
         {
           "name": "val",
           "type": "data",
-          "doc": "the attribute to bind - a PUBLIC attribute of the app (or a component of one), passed by reference: the framework reaches it by name on the next roundtrip, so a local variable, a copy or a protected attribute cannot be bound (BINDING_ERROR). Or a DATA REFERENCE to it - REF #( mt_rows ), an attribute TYPE REF TO data holding a table typed at runtime - bound as what it points to, so no ASSIGN is needed to bind it (the same two forms _bind_tab( ) takes). A reference that points nowhere yet raises BINDING_ERROR."
+          "doc": "the attribute to bind - a PUBLIC attribute of the app (or a component of one), passed by reference: the framework reaches it by name on the next roundtrip, so a local variable, a copy or a protected attribute cannot be bound (BINDING_ERROR). Or a DATA REFERENCE to it - REF #( mt_rows ), an attribute TYPE REF TO data holding a table typed at runtime - bound as what it points to, so no ASSIGN is needed to bind it (the same two forms window_bind_tab( ) takes). A reference that points nowhere yet raises BINDING_ERROR."
         },
         {
           "name": "path",
@@ -553,12 +553,12 @@
       "returns": "string"
     },
     {
-      "name": "_bind_tab",
-      "group": "Data binding",
+      "name": "window_bind_tab",
+      "group": "Other",
       "doc": [
-        "Bind a LARGE table to a list control - the browser gets it a window at a time instead of whole. Returns the value binding like _bind( ) (`items = client->_bind_tab( mt_rows )`); the rows of the template bind relative (`{NAME}`), as with _bind( ).",
+        "Bind a LARGE table to a list control - the browser gets it a window at a time instead of whole. Returns the value binding like _bind( ) (`items = client->window_bind_tab( mt_rows )`); the rows of the template bind relative (`{NAME}`), as with _bind( ).",
         "The rows stay in the app's attribute. The response carries the first `window` rows, and next to them the window's state under `/__WINDOW/<path>` - TOTAL, the rows the filter lets through, COUNT, the rows sent, and SIZE. The control's list binding knows the full length and asks the framework for the next window when a growing sap.m.Table or List grows or a sap.ui.table.Table scrolls - a roundtrip of the framework's own that does NOT call main( ). Sorting and filtering the binding - the column menu of sap.ui.table (sortProperty, filterProperty), a cs_event-binding_call sort or filter - run on the server over ALL rows, and the browser gets the first window of the new order. A cell edited or a row ticked lands in the row of the table it was made in, whatever order the browser showed.",
-        "Sorters and filters written into the binding info of the view are not applied - the rows arrive in the order the server gives. The app sets that order with t_sort and t_filter: they take effect when they differ from the ones the previous _bind_tab( ) of the table passed, so a view rendered again keeps what the user sorted and filtered in the browser, and a new sort the app passes (from a layout, a dialog) replaces it. Passing an empty table clears it the same way."
+        "Sorters and filters written into the binding info of the view are not applied - the rows arrive in the order the server gives. The app sets that order with t_sort and t_filter: they take effect when they differ from the ones the previous window_bind_tab( ) of the table passed, so a view rendered again keeps what the user sorted and filtered in the browser, and a new sort the app passes (from a layout, a dialog) replaces it. Passing an empty table clears it the same way."
       ],
       "parameters": [
         {
@@ -588,16 +588,16 @@
       "returns": "string"
     },
     {
-      "name": "_bind_tab_row",
-      "group": "Data binding",
+      "name": "window_get_row",
+      "group": "Other",
       "doc": [
-        "The row of a _bind_tab( ) table that a row of the browser shows. The browser holds the rows in the order the server sorted and filtered them, so the index in a binding path an event hands over (`$event.getSource().getBindingContext().getPath()` -> `/MT_ROWS/5`) is a position in THAT order, not the row of the table: row 6 shown may be row 4711 of mt_rows. This answers it - the same order the response was built with. A table that is no window answers row itself."
+        "The row of a window_bind_tab( ) table that a row of the browser shows. The browser holds the rows in the order the server sorted and filtered them, so the index in a binding path an event hands over (`$event.getSource().getBindingContext().getPath()` -> `/MT_ROWS/5`) is a position in THAT order, not the row of the table: row 6 shown may be row 4711 of mt_rows. This answers it - the same order the response was built with. A table that is no window answers row itself."
       ],
       "parameters": [
         {
           "name": "val",
           "type": "data",
-          "doc": "the table, as passed to _bind_tab( ) - the table or a data reference to it."
+          "doc": "the table, as passed to window_bind_tab( ) - the table or a data reference to it."
         },
         {
           "name": "row",
@@ -1510,7 +1510,7 @@
     {
       "name": "ty_s_bind_tab_sort",
       "doc": [
-        "One sorter of _bind_tab( ): the column (the upper-case component name of the row) and the direction. The first sorter that tells two rows apart decides."
+        "One sorter of window_bind_tab( ): the column (the upper-case component name of the row) and the direction. The first sorter that tells two rows apart decides."
       ],
       "members": [
         {
@@ -1531,7 +1531,7 @@
     {
       "name": "ty_s_bind_tab_filter",
       "doc": [
-        "One condition of the filter of _bind_tab( ). The conditions of one group are ORed, the groups ANDed - the conditions on one column ORed, the columns ANDed, as UI5 combines a list binding's filters. operator is a sap.ui.model.FilterOperator: EQ NE LT LE GT GE BT NB Contains NotContains StartsWith NotStartsWith EndsWith NotEndsWith; value2 is the upper bound of BT / NB. Numbers, dates (yyyy-MM-dd or yyyyMMdd), times and booleans (true / false) compare as such, text without regard to case."
+        "One condition of the filter of window_bind_tab( ). The conditions of one group are ORed, the groups ANDed - the conditions on one column ORed, the columns ANDed, as UI5 combines a list binding's filters. operator is a sap.ui.model.FilterOperator: EQ NE LT LE GT GE BT NB Contains NotContains StartsWith NotStartsWith EndsWith NotEndsWith; value2 is the upper bound of BT / NB. Numbers, dates (yyyy-MM-dd or yyyyMMdd), times and booleans (true / false) compare as such, text without regard to case."
       ],
       "members": [
         {

@@ -147,7 +147,7 @@ Bind a public attribute of the app to the view. Returns the binding expression f
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `val` | `data` |  | the attribute to bind - a PUBLIC attribute of the app (or a component of one), passed by reference: the framework reaches it by name on the next roundtrip, so a local variable, a copy or a protected attribute cannot be bound (BINDING_ERROR). Or a DATA REFERENCE to it - REF #( mt_rows ), an attribute TYPE REF TO data holding a table typed at runtime - bound as what it points to, so no ASSIGN is needed to bind it (the same two forms _bind_tab( ) takes). A reference that points nowhere yet raises BINDING_ERROR. |
+| `val` | `data` |  | the attribute to bind - a PUBLIC attribute of the app (or a component of one), passed by reference: the framework reaches it by name on the next roundtrip, so a local variable, a copy or a protected attribute cannot be bound (BINDING_ERROR). Or a DATA REFERENCE to it - REF #( mt_rows ), an attribute TYPE REF TO data holding a table typed at runtime - bound as what it points to, so no ASSIGN is needed to bind it (the same two forms window_bind_tab( ) takes). A reference that points nowhere yet raises BINDING_ERROR. |
 | `path` | `abap_bool` | `abap_false` | abap_true returns the model PATH of val instead of the value binding - what a bound aggregation, a binding_call filter or sorter and bindElement need; _bind_path( ) is the readable spelling of it. |
 | `tab` | `data` | *optional* | bind ONE CELL of an internal table instead of a whole attribute: pass the table here (or a data reference to it, as for val) and the row number in tab_index, and the bound value as val - the row component itself, e.g. `_bind( val = mt_emp[ 1 ]-name tab = mt_emp tab_index = 1 )` -> `{/MT_EMP/0/NAME}`. The cell is identified by REFERENCE: val has to BE the component of that row, not a copy of its value (a helper variable holding the same string is refused with BINDING_ERROR_TAB_CELL_LEVEL). One toolchain caveat, not an ABAP one, and only for an app that DOWNPORTS with abaplint older than 2.120.51: that downport lowered a table expression read at COMPONENT level to `READ TABLE ... INTO <wa>` - a copy - so the cell was refused on code correct at the v750 target. Fixed upstream (abaplint/abaplint#4276): the outline is `ASSIGNING` from 2.120.51 on, which is what the write path of the same rule always emitted. On an older abaplint, assign the row first - `ASSIGN tab[ n ] TO <row>`, then `val = <row>-comp` - which that rule already lowered with ASSIGNING and which is 7.02-native. Measured, not assumed: the transpiler resolves every form correctly; only the old downport lost the reference. What travels is still the whole table - this only writes a row-qualified path into the view, so the model keeps the ARRAY shape while the view addresses single rows. Use it where the original model is an array but the view repeats controls instead of binding an aggregation (six statically written panels over /Employee/0..5), which is otherwise written as a series of flat attributes (emp1_name, emp2_name, ...) and loses that shape. For a REPEATING aggregation bind the table itself (`items = _bind( mt_emp )`) and keep the template's fields relative. |
 | `tab_index` | `i` | *optional* | the row of tab to address, counted the ABAP way from 1 - the client path is 0-based, so tab_index = 1 renders as `/0/`. A row that does not exist raises BINDING_ERROR_TAB_CELL_LEVEL instead of dumping, but note that writing the val argument as `tab[ n ]` already dumps on the ABAP side when row n is missing - seed the table before building the view. |
@@ -171,34 +171,6 @@ Deliberately ONE parameter. The moment a second is needed - tab / tab_index for 
 | `val` | `data` |  | the public attribute whose model path is returned - the same reference rule as _bind( ). |
 
 Returns `string`.
-
-### `_bind_tab`
-
-Bind a LARGE table to a list control - the browser gets it a window at a time instead of whole. Returns the value binding like _bind( ) (`items = client->_bind_tab( mt_rows )`); the rows of the template bind relative (`{NAME}`), as with _bind( ).
-
-The rows stay in the app's attribute. The response carries the first `window` rows, and next to them the window's state under `/__WINDOW/<path>` - TOTAL, the rows the filter lets through, COUNT, the rows sent, and SIZE. The control's list binding knows the full length and asks the framework for the next window when a growing sap.m.Table or List grows or a sap.ui.table.Table scrolls - a roundtrip of the framework's own that does NOT call main( ). Sorting and filtering the binding - the column menu of sap.ui.table (sortProperty, filterProperty), a cs_event-binding_call sort or filter - run on the server over ALL rows, and the browser gets the first window of the new order. A cell edited or a row ticked lands in the row of the table it was made in, whatever order the browser showed.
-
-Sorters and filters written into the binding info of the view are not applied - the rows arrive in the order the server gives. The app sets that order with t_sort and t_filter: they take effect when they differ from the ones the previous _bind_tab( ) of the table passed, so a view rendered again keeps what the user sorted and filtered in the browser, and a new sort the app passes (from a layout, a dialog) replaces it. Passing an empty table clears it the same way.
-
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| `val` | `data` |  | the table - a public STANDARD table attribute of the app, passed by reference like _bind( ), or a data reference to one (REF #( mt_rows ), or an attribute TYPE REF TO data pointing to the table). |
-| `window` | `i` | `100` | the rows the browser gets at a time; at least 1. |
-| `t_sort` | `ty_t_bind_tab_sort` | *optional* | the order of the rows - see above when it applies. |
-| `t_filter` | `ty_t_bind_tab_filter` | *optional* | the rows that show - see above when it applies. |
-
-Returns `string`.
-
-### `_bind_tab_row`
-
-The row of a _bind_tab( ) table that a row of the browser shows. The browser holds the rows in the order the server sorted and filtered them, so the index in a binding path an event hands over (`$event.getSource().getBindingContext().getPath()` -> `/MT_ROWS/5`) is a position in THAT order, not the row of the table: row 6 shown may be row 4711 of mt_rows. This answers it - the same order the response was built with. A table that is no window answers row itself.
-
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| `val` | `data` |  | the table, as passed to _bind_tab( ) - the table or a data reference to it. |
-| `row` | `i` |  | the position in the browser, counted from 1: the index of the binding path plus 1. |
-
-Returns `i`.
 
 ## Events and frontend actions
 
@@ -431,6 +403,36 @@ Switch the ABAP session of this app to STATEFUL from this roundtrip on - the wor
 |---|---|---|---|
 | `val` | `abap_bool` | `abap_true` | abap_true (the default) makes the session stateful, abap_false makes it stateless again. |
 
+## Other
+
+### `window_bind_tab`
+
+Bind a LARGE table to a list control - the browser gets it a window at a time instead of whole. Returns the value binding like _bind( ) (`items = client->window_bind_tab( mt_rows )`); the rows of the template bind relative (`{NAME}`), as with _bind( ).
+
+The rows stay in the app's attribute. The response carries the first `window` rows, and next to them the window's state under `/__WINDOW/<path>` - TOTAL, the rows the filter lets through, COUNT, the rows sent, and SIZE. The control's list binding knows the full length and asks the framework for the next window when a growing sap.m.Table or List grows or a sap.ui.table.Table scrolls - a roundtrip of the framework's own that does NOT call main( ). Sorting and filtering the binding - the column menu of sap.ui.table (sortProperty, filterProperty), a cs_event-binding_call sort or filter - run on the server over ALL rows, and the browser gets the first window of the new order. A cell edited or a row ticked lands in the row of the table it was made in, whatever order the browser showed.
+
+Sorters and filters written into the binding info of the view are not applied - the rows arrive in the order the server gives. The app sets that order with t_sort and t_filter: they take effect when they differ from the ones the previous window_bind_tab( ) of the table passed, so a view rendered again keeps what the user sorted and filtered in the browser, and a new sort the app passes (from a layout, a dialog) replaces it. Passing an empty table clears it the same way.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `val` | `data` |  | the table - a public STANDARD table attribute of the app, passed by reference like _bind( ), or a data reference to one (REF #( mt_rows ), or an attribute TYPE REF TO data pointing to the table). |
+| `window` | `i` | `100` | the rows the browser gets at a time; at least 1. |
+| `t_sort` | `ty_t_bind_tab_sort` | *optional* | the order of the rows - see above when it applies. |
+| `t_filter` | `ty_t_bind_tab_filter` | *optional* | the rows that show - see above when it applies. |
+
+Returns `string`.
+
+### `window_get_row`
+
+The row of a window_bind_tab( ) table that a row of the browser shows. The browser holds the rows in the order the server sorted and filtered them, so the index in a binding path an event hands over (`$event.getSource().getBindingContext().getPath()` -> `/MT_ROWS/5`) is a position in THAT order, not the row of the table: row 6 shown may be row 4711 of mt_rows. This answers it - the same order the response was built with. A table that is no window answers row itself.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `val` | `data` |  | the table, as passed to window_bind_tab( ) - the table or a data reference to it. |
+| `row` | `i` |  | the position in the browser, counted from 1: the index of the binding path plus 1. |
+
+Returns `i`.
+
 ## Constants
 
 The values an app compares against or passes on: `cs_event` names every
@@ -635,7 +637,7 @@ The per-wire options of _event( ) - see the documentation on the method for what
 
 ### `ty_s_bind_tab_sort`
 
-One sorter of _bind_tab( ): the column (the upper-case component name of the row) and the direction. The first sorter that tells two rows apart decides.
+One sorter of window_bind_tab( ): the column (the upper-case component name of the row) and the direction. The first sorter that tells two rows apart decides.
 
 | Field | Type |
 |---|---|
@@ -648,7 +650,7 @@ Defined as `STANDARD TABLE OF ty_s_bind_tab_sort WITH EMPTY KEY`.
 
 ### `ty_s_bind_tab_filter`
 
-One condition of the filter of _bind_tab( ). The conditions of one group are ORed, the groups ANDed - the conditions on one column ORed, the columns ANDed, as UI5 combines a list binding's filters. operator is a sap.ui.model.FilterOperator: EQ NE LT LE GT GE BT NB Contains NotContains StartsWith NotStartsWith EndsWith NotEndsWith; value2 is the upper bound of BT / NB. Numbers, dates (yyyy-MM-dd or yyyyMMdd), times and booleans (true / false) compare as such, text without regard to case.
+One condition of the filter of window_bind_tab( ). The conditions of one group are ORed, the groups ANDed - the conditions on one column ORed, the columns ANDed, as UI5 combines a list binding's filters. operator is a sap.ui.model.FilterOperator: EQ NE LT LE GT GE BT NB Contains NotContains StartsWith NotStartsWith EndsWith NotEndsWith; value2 is the upper bound of BT / NB. Numbers, dates (yyyy-MM-dd or yyyyMMdd), times and booleans (true / false) compare as such, text without regard to case.
 
 | Field | Type |
 |---|---|
