@@ -73,7 +73,7 @@ ENDCLASS.
 | `multiple` | let the user pick several files; each one arrives in its own `upload` event, in order |
 | `enabled`, `visible`, `tooltip` | as on any control |
 
-The control has one event, `upload`. The inner control's `change` is consumed by the control itself — it remembers the picked files and enables the *Upload* button — so there is no event to bind for it; with `checkDirectUpload` the pick is the upload.
+The control has one event, `upload`. The control consumes the inner control's `change` itself: it remembers the picked files and enables the *Upload* button. So there is no event to bind for it. With `checkDirectUpload` the pick is the upload.
 
 ## Download
 

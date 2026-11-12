@@ -86,12 +86,12 @@ client->follow_up_action(
                      ( `LINKS` ) ) ).
 ```
 
-The event is raised once the shell has answered, its first argument a JSON
-array with one object per intent — `intent` (the hash), `text`, `subTitle`,
-and the hash split into `semanticObject`, `action` and `params`, ready to be
-handed to `cross_app_nav_to_ext`. Outside the launchpad the call is a logged
-no-op and the event is not raised, so a handler that waits for `LINKS` must
-not be the only way forward.
+The event is raised once the shell has answered. Its first argument is a JSON
+array with one object per intent. Each object carries `intent` (the hash),
+`text` and `subTitle`, and the hash split into `semanticObject`, `action` and
+`params`, ready to be handed to `cross_app_nav_to_ext`. Outside the launchpad
+the call is a logged no-op and the event is not raised, so a handler that waits
+for `LINKS` must not be the only way forward.
 
 ## Arriving From Another App
 

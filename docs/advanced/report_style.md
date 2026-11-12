@@ -4,14 +4,13 @@ description: Apps written the way you write a classic ABAP report - selection sc
 ---
 # Apps Written Like Reports
 
-ABAP Cloud has no selection screen, no `WRITE` list and no `CL_SALV_TABLE`.
-The [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui)
-add-on brings the programming model of a classic report to abap2UI5
-instead: a class inheriting from `z2ui5_cl_cgui_report` has the event
-blocks as methods, `PARAMETERS` and `SELECT-OPTIONS` as attributes, and
-`write( )`, `alv( )` and `message( )` as calls. It runs as an abap2UI5 app,
-on ABAP Cloud as well as on NetWeaver down to 7.02, and no UI5 view is
-written by hand.
+ABAP Cloud has no selection screen, no `WRITE` list and no `CL_SALV_TABLE`. The
+[abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) add-on
+brings the programming model of a classic report to abap2UI5 instead. A class
+inheriting from `z2ui5_cl_cgui_report` has the event blocks as methods and
+`PARAMETERS` and `SELECT-OPTIONS` as attributes. `write( )`, `alv( )` and
+`message( )` are calls. It runs as an abap2UI5 app, on ABAP Cloud as well as on
+NetWeaver down to 7.02, and no UI5 view is written by hand.
 
 It suits three cases: a quick report or tool on ABAP Cloud, a first step into
 abap2UI5 in familiar terms, and the classic reports a company moves off the SAP

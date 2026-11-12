@@ -49,7 +49,7 @@ For everything else — and especially anything user-facing on a busy system —
 
 ## Trade-offs
 ::: warning
-A stateful session **pins one work process per active user** for the lifetime of the app. On a system with a handful of dialog work processes, a few dozen idle stateful sessions are enough to starve everyone else. Use it sparingly, on internal low-traffic apps, and always pair `set_session_stateful( )` with an explicit `set_session_stateful( abap_false )` on every exit path — otherwise a leaked enqueue or a pinned work process blocks future users until the session times out.
+A stateful session **pins one work process per active user** for the lifetime of the app. On a system with a handful of dialog work processes, a few dozen idle stateful sessions are enough to starve everyone else. Use it sparingly, on internal low-traffic apps. Always pair `set_session_stateful( )` with an explicit `set_session_stateful( abap_false )` on every exit path. Otherwise a leaked enqueue or a pinned work process blocks future users until the session times out.
 :::
 
 A few rules of thumb:

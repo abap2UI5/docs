@@ -9,9 +9,9 @@ instead, with the old and the new code next to each other.
 
 ::: tip Not the same as deprecated UI5 controls
 This page is about **abap2UI5's own** API. Controls SAP has deprecated in UI5
-itself — `sap.ui.commons`, the legacy charts, the Belize themes — are not
-abap2UI5's to deprecate and are not listed anywhere here: the framework passes
-your XML through unchanged, so every one of them still renders. The
+itself are not listed here: `sap.ui.commons`, the legacy charts, the Belize
+themes. They are not abap2UI5's to deprecate. The framework passes your XML
+through unchanged, so every one of them still renders. The
 [linter](/advanced/linter) reports them against the release *your* system runs,
 and [ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the
 always-current list.
@@ -91,9 +91,9 @@ tell you what is coming if you do not.
 `nest2_view_model_update( )`, `popup_model_update( )` and
 `popover_model_update( )` are **empty methods**.
 
-The model is pushed automatically now: the framework compares the model state
-before `main( )` — taken after the incoming client deltas were applied — with
-the state after `main( )` returned, and when they differ it sends the model to
+The model is pushed automatically now. The framework takes the model state
+before `main( )`, after the incoming client deltas were applied, and compares it
+with the state after `main( )` returned. When they differ, it sends the model to
 every open view slot. A handler can no longer render stale by forgetting a call,
 and an unchanged model sends nothing at all.
 
@@ -235,10 +235,10 @@ break.
 
 `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_`
 variants are **gone**; an app that names one fails at compile time. They never
-reached the frontend as events of their own — the backend rewrote each of them
-into `cs_event-control_by_id` with method `to` — so the migration is to write
-that call, which additionally reaches every *other* method of a NavContainer
-instead of the single `to` the constants could express:
+reached the frontend as events of their own: the backend rewrote each of them
+into `cs_event-control_by_id` with method `to`. So the migration is to write
+that call. It also reaches every *other* method of a NavContainer, where the
+constants could express only `to`:
 
 ```abap
 " old
@@ -264,15 +264,15 @@ client->follow_up_action( val   = client->cs_event-control_by_id
 One difference worth knowing when migrating the MAIN variant: `cs_view-main`
 travels as the *empty* slot where the removed constant injected the literal
 `MAIN`. An empty slot resolves the id across every open view, so it still finds
-a container in the main view — it is wider, never narrower, and only an id that
+a container in the main view. It is wider, never narrower. Only an id that
 exists in two open slots at once could tell the two apart.
 
 ### `z2ui5_cl_xml_view` → `z2ui5_cl_ui5_view_builder`
 
 `z2ui5_cl_ui5_view_builder` is the generic XML view builder that replaces the
-typed wrapper methods of `z2ui5_cl_xml_view`: instead of one method per control
-it builds any UI5 XML 1:1, so a control that has no wrapper is no longer a dead
-end.
+typed wrapper methods of `z2ui5_cl_xml_view`. It has no method per control and
+builds any UI5 XML 1:1. So a control without a wrapper can be used like any
+other.
 
 ```abap
 " old
@@ -340,11 +340,11 @@ existing calls keep compiling. See [Add-ons](/resources/addons).
 
 `z2ui5_cl_util`, `z2ui5_cl_util_ext`, `z2ui5_cl_util_db`, `z2ui5_cl_util_http`,
 `z2ui5_cl_util_log`, `z2ui5_cl_util_msg`, `z2ui5_cl_util_range`,
-`z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` are
-no longer part of abap2UI5 from the next release on (*next release*; up to
-1.148.0 they still ship in its frozen package `src/99/01`). They moved,
-unchanged, to [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). Inside
-the framework they were replaced by an internal context class.
+`z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` leave
+abap2UI5 with the next release (*next release*). Up to 1.148.0 they still ship
+in its frozen package `src/99/01`. They moved, unchanged, to
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). Inside the framework
+they were replaced by an internal context class.
 
 ::: warning Code that still uses them: install abap2UI5-ext
 Pull [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) with abapGit next
@@ -356,31 +356,32 @@ needs it; every other add-on carries its own copy of what it uses.
 
 There is no public replacement API for app code. Treat the classes as
 stable-but-closed rather than as something to migrate away from today; for new
-code, copy what you need from [`abap-util`](https://github.com/abap-util/abap-util).
-No page of this documentation uses them any more: what the
-examples reached them for is SAP standard — `cl_web_http_utility` for base64
-(`cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases), and
-a failing library raises its own exception instead of being wrapped. For the
-JSON they were also reached for, see the section below.
+code, copy what you need from
+[`abap-util`](https://github.com/abap-util/abap-util). No page of this
+documentation uses them any more. What the examples used them for is SAP
+standard: `cl_web_http_utility` for base64, or
+`cl_http_utility=>if_http_utility~encode_x_base64( )` on older releases. A
+failing library raises its own exception instead of being wrapped. For the JSON
+they were also reached for, see the section below.
 :::
 
 ### JSON is built and read by hand
 
 **There is deliberately no released JSON parser or writer, and there is no
-substitute to reach for.** `/ui2/cl_json` is not released for ABAP Cloud,
-`xco_cp_json` is missing on 7.02, and the bundled [ajson](/technical/tools/ajson)
-is the framework's model engine — a mirrored copy of an external project, which
-the abap2UI5 linter reports as `non-released-api` when an app names it, and it
-is right to.
+substitute to reach for.** `/ui2/cl_json` is not released for ABAP Cloud, and
+`xco_cp_json` is missing on 7.02. The bundled [ajson](/technical/tools/ajson) is
+the framework's model engine, a mirrored copy of an external project. The
+abap2UI5 linter reports it as `non-released-api` when an app names it, and that
+finding is correct.
 
 There was a released reader, `z2ui5_cl_ui5_json`, for two weeks in September
 2026. It was removed again before it had shipped in any release, so no
 installation ever had it and nothing has to be migrated away from it.
 
 **Outbound — a control property that must receive an object.** A
-`sap.ui.integration` Card manifest is the case this exists for: its keys
+`sap.ui.integration` Card manifest is the case this exists for. Its keys
 (`sap.app`, `sap.card`) are not valid ABAP field names, so no typed ABAP value
-can be that object, and UI5 reads a *string* manifest as a manifest URL. Keep
+can be that object. And UI5 reads a *string* manifest as a manifest URL. Keep
 the JSON in a `string` attribute, compose it in ABAP, and bind it as a node:
 
 ```abap
@@ -402,19 +403,18 @@ one property across an array of objects) are the pattern to copy: find
 
 Two limits worth knowing before you copy it:
 
-- **It is a reader for FLAT payloads.** A control-valued event parameter is
-  marshaled as an object of the control's `ID` plus its public properties, and
-  a property whose value is itself an object or an array travels as one — the
-  frontend passes such a value through rather than flattening it. A `find` walk
-  answers the flat case; a nested one is a sign to bind the value into the model
-  instead of parsing it out of an event argument, which is what a two-way bound
-  attribute does for you with no parsing at all.
+- **It is a reader for FLAT payloads.** A control-valued event parameter is sent
+  as an object of the control's `ID` plus its public properties. A property
+  whose value is itself an object or an array travels as one: the frontend
+  passes such a value through and does not flatten it. A `find` walk answers the
+  flat case. For a nested value, bind it into the model instead of parsing it
+  out of an event argument. A two-way bound attribute does that for you with no
+  parsing at all.
 - **A payload composed from user input needs escaping on both ends.** The
-  samples above read what the *framework* wrote. If your own app also writes the
-  JSON — publishing into an AMC channel, say — then a quote the user typed
-  reaches the reader as `\"`, and a `substring_before` on the next quote ends
-  the value early.
-  `Z2UI5_CL_SMPS_APP_489`
+  samples above read what the *framework* wrote. Your own app may also write the
+  JSON, for example when it publishes into an AMC channel. Then a quote the user
+  typed reaches the reader as `\"`, and a `substring_before` on the next quote
+  ends the value early. `Z2UI5_CL_SMPS_APP_489`
   ([samples-stack](https://github.com/abap2UI5/samples-stack/blob/main/src/07/z2ui5_cl_smps_app_489.clas.abap))
   is that case written out: a writer that escapes and a reader that walks the
   value resolving escapes.
@@ -462,10 +462,10 @@ argument, `` `X` `` (1.146.0) — see
 
 ### `cs_config-title` → `cs_event-set_title`
 
-The page title used to be set in the user exit and the tab title while the app
-runs with the `set_title` frontend event — two mechanisms for one string, which
-could disagree about what the tab says. The one that stays is the one the app
-can reach at any point in its life:
+The page title used to be set in the user exit, and the tab title with the
+`set_title` frontend event while the app runs. These were two mechanisms for one
+string, and they could disagree about what the tab says. The one that stays is
+the one the app can reach at any point in its life:
 
 ```abap
 " old - in your z2ui5_if_exit implementation
@@ -563,11 +563,11 @@ which one that is.
 
 ### The `view` parameter of `_bind( )` / `_bind_edit( )`
 
-**Removed.** It dates from the time each view slot had a model of its own; today
-one model serves every open slot, so there was nothing left for it to select —
-the parameter was inert, never passed on internally, for as long as it carried
-the obsolete mark. Deleting it is the whole migration, and a call that still
-names it does not compile.
+**Removed.** It dates from the time each view slot had a model of its own. Today
+one model serves every open slot, so there was nothing left for it to select.
+The parameter had no effect for as long as it carried the obsolete mark.
+Deleting it is the whole migration, and a call that still names it does not
+compile.
 
 ```abap
 " old
@@ -650,10 +650,10 @@ The first two also had an *event* spelling — `cs_event-set_push_state` and
 `cs_event-app_state_set_active`. They are removed with the methods, so the
 whole family is `hash_*` / `app_state_*` and nothing else.
 
-**Removed.** Everything but the last shared its wire value with the surviving
-name — the old spelling and the new one reached the same branch — so there was
-no behavior to migrate, only a name, and a call that still writes an old one
-does not compile:
+**Removed.** Every name but the last sent the same value as the name that stays,
+so the old spelling and the new one reached the same branch. There was no
+behavior to migrate, only a name. A call that still writes an old one does not
+compile:
 
 ```abap
 " before
@@ -666,12 +666,11 @@ client->follow_up_action( client->cs_event-hash_routing ).
 ```
 
 `cs_event-clipboard_app_state` is the one that was not a pure rename: it
-composed the link in the browser and could only put it on the clipboard, and
-its frontend handler is gone with the constant. The replacement hands the
-string to the backend, which is what lets an app show it in an `Input`, mail it
-or render it as a QR code — and the composed link keeps a Fiori Launchpad's
-shell hash, so a recipient lands in the app instead of on the launchpad home
-page:
+composed the link in the browser and could only put it on the clipboard, and its
+frontend handler is gone with the constant. The replacement hands the string to
+the backend. So an app can show it in an `Input`, mail it or render it as a QR
+code. The composed link also keeps a Fiori Launchpad's shell hash, so a
+recipient lands in the app instead of on the launchpad home page:
 
 ```abap
 " before - fire and forget, the link never existed in ABAP
@@ -699,16 +698,16 @@ app the URL semantics of a UI5 router — is on
 
 ### `check_allow_multi_req` → `check_queue_last`
 
-`s_ctrl-check_allow_multi_req` sent the event while another round-trip was
-still running. Every firing went out at once and the responses could land in
-any order — but only the newest response may commit its result, so each earlier
-round-trip was work the backend did to have its answer thrown away.
+`s_ctrl-check_allow_multi_req` sent the event while another round-trip was still
+running. Every firing went out at once and the responses could land in any
+order. But only the newest response may commit its result. So the backend did
+each earlier round-trip only to have its answer thrown away.
 
-The case it was reached for is the wire that fires per keystroke — `liveChange`,
-`liveSearch`, `sliderChange` — and `check_queue_last` serves that one properly:
-while a round-trip is in flight the **last** event fired on the wire is kept and
-dispatched once the response has landed. One round-trip at a time, order
-preserved, and the backend ends on the control's current value.
+It was used for an event that fires per keystroke: `liveChange`, `liveSearch`,
+`sliderChange`. `check_queue_last` serves that case properly. While a round-trip
+is in flight, the **last** event fired is kept and dispatched once the response
+has landed. One round-trip at a time, order preserved, and the backend ends on
+the control's current value.
 
 ```abap
 " old - one round-trip per keystroke, responses in any order

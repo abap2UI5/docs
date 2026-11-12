@@ -262,7 +262,7 @@ ms_meta = VALUE #(
 Four instructions turn it into a form:
 
 - **`template:with`** gives the meta model a short name: `path = template>/MS_META`, `var = meta`, and everything inside reads `{meta>...}`. The `path` attribute is a plain path, without braces.
-- **Nested `template:repeat`** — the outer loop runs over the groups and writes a `core:Title` per group, the inner one runs over `{group>T_FIELD}`, a path relative to the outer loop's variable, and writes a `Label` and a control per field.
+- **Nested `template:repeat`** — the outer loop runs over the groups and writes a `core:Title` per group. The inner one runs over `{group>T_FIELD}`, a path relative to the outer loop's variable. It writes a `Label` and a control per field.
 - **`template:if` / `template:elseif` / `template:else`** picks that control from the field's type.
 - **`startIndex` / `length`** in the binding info of a `list` cut the loop — the header shows the first two fields of the first group only.
 

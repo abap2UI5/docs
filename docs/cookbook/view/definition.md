@@ -247,10 +247,11 @@ to `sap.m.Avatar`, which is the one to use; ``ns = `f` `` produces `<f:Avatar>`
 — `sap.f.Avatar`, deprecated since 1.73. Both `sap.m.Avatar` and the deprecation
 arrived in 1.73, so on 1.71 and 1.72 `sap.f.Avatar` is the only one there is.
 `AvatarGroup` and `AvatarGroupItem` (1.73 too) are the other way round: those
-really do live in `sap.f` and need the prefix. The same shape catches whole
-libraries — half of `sap.ui.commons` (`Button`, `Label`, `Dialog`, `Panel`, …)
-has a namesake in `sap.m`, so XML copied from an old tutorial can drag a library
-that has been dead since 1.38 along with it and still render something.
+really do live in `sap.f` and need the prefix. The same happens with whole
+libraries. Half of the controls of `sap.ui.commons` (`Button`, `Label`,
+`Dialog`, `Panel`, …) exist under the same name in `sap.m`. So XML copied from
+an old tutorial can bring a library along that has been dead since 1.38, and
+still render something.
 
 ## Choosing a Control
 

@@ -36,10 +36,10 @@ source system exposes one ordinary abap2UI5 endpoint.
 Requirements, from the add-on's README:
 
 - Standard ABAP 7.50 or higher on both systems.
-- abap2UI5 on both systems: on the **consumer** a release newer than
-  1.146.0 (the connector forwards the query string through a utility that
-  learned it after that release), on the **source** 1.143.0 or newer (the
-  first release with `z2ui5_cl_ui5_http_handler`).
+- abap2UI5 on both systems. The **consumer** needs a release newer than
+  1.146.0: the connector forwards the query string through a utility that
+  learned it after that release. The **source** needs 1.143.0 or newer, the
+  first release with `z2ui5_cl_ui5_http_handler`.
 - On the consumer system an SM59 destination of type G or H to the source
   system, with path prefix `/sap/bc/z2ui5_http_srv/` and logon data
   maintained.

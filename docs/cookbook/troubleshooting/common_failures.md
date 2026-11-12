@@ -179,10 +179,10 @@ live across events.
 
 ### `Dispatch limit of 1000 app navigations in one request reached - check for an endless nav_app_call/nav_app_leave loop in main( )`
 
-Two apps hand control to each other forever inside a single request — most
-often a `nav_app_call( )` that runs unconditionally in `main( )` instead of
-inside an event or `check_on_navigated( )` branch, so the sub-app's first
-roundtrip immediately navigates again. Guard the navigation; see
+Two apps hand control to each other forever inside a single request. The
+usual cause is a `nav_app_call( )` that runs unconditionally in `main( )`
+instead of inside an event or `check_on_navigated( )` branch. The sub-app's
+first roundtrip then immediately navigates again. Guard the navigation; see
 [Navigation](/cookbook/event_navigation/navigation/inner_app).
 
 ### `failed to load 'sap/m/....js'` — browser console, view does not appear
@@ -204,7 +204,7 @@ Not an error — the control simply stays empty. Covered in full under
 ### `"" is of type string, expected <enum type> for property "..."` — browser console, app dies when a table empties
 
 An enum-typed property (`type`, `state`, `valueState`, …) inside an
-aggregation template is bound to a field that arrives as an empty string —
+aggregation template is bound to a field that arrives as an empty string.
 ABAP has no null, so an unfilled `TYPE string` serializes as `""`, and `""`
 is a member of no UI5 enum. The first render passes; the failure comes when
 the bound table is *emptied*, because UI5 then evaluates the template with no
@@ -215,8 +215,8 @@ binding an explicit fallback to the enum's default value.
 ### `EvalError: Evaluating a string as JavaScript violates the following Content Security Policy directive ...` — a popup does not open
 
 An old UI5 release (`1.71` to `1.82`) meets a popup that names a module it has
-not loaded yet - in a binding type or a `core:require` - and evaluates it as a
-string, which the default policy forbids. Either bootstrap `1.84` or newer, or
+not loaded yet, in a binding type or a `core:require`. It evaluates the module
+as a string, which the default policy forbids. Either bootstrap `1.84` or newer, or
 switch `'unsafe-eval'` on for `script-src` in the user exit — see
 [Security → Older releases](/configuration/security#older-releases-switching-unsafe-eval-on).
 

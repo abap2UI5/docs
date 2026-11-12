@@ -169,9 +169,9 @@ store, no token and no session concept beyond the ICF session. The node's logon
 procedure may accept a logon ticket, a SAML assertion, SPNEGO, X.509 or basic
 authentication. In every case the handler sees the result as `sy-uname`.
 Configure it on the node like on any other ICF service. For logout, know one
-thing: a user of an abap2UI5 app may hold up to three sessions at once (the
-launchpad shell, the ICF session, a BSP context), and ending one does not end
-the others. [Logout](/configuration/logout) lists which startup context owns
+thing: a user of an abap2UI5 app may hold up to three sessions at once. They are
+the launchpad shell, the ICF session and a BSP context, and ending one does not
+end the others. [Logout](/configuration/logout) lists which startup context owns
 which session, and what the logout event ends.
 
 ## Housekeeping Checklist

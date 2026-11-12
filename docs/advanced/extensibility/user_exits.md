@@ -6,12 +6,12 @@ description: The user exit z2ui5_if_ui5_exit - when set_config_http_get and set_
 
 The framework has one extension point for an installation: the interface
 [`z2ui5_if_ui5_exit`](https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_if_ui5_exit.intf.abap).
-A class that implements it, in a package of your own and **not** in the
-abap2UI5 packages, is found by the framework and called on every request. The
-shipped class
+A class that implements it, in a package of your own and **not** in the abap2UI5
+packages, is found by the framework and called on every request. The shipped
+class
 [`z2ui5_cl_ui5_user_exit`](https://github.com/abap2UI5/abap2UI5/blob/main/src/01/04/z2ui5_cl_ui5_user_exit.clas.abap)
-looks the class up, fills every field of the configuration with its default,
-and only then calls yours — so an exit sets the fields it cares about and
+looks the class up and fills every field of the configuration with its default.
+Only then does it call yours. So an exit sets the fields it cares about and
 leaves the rest alone.
 
 Only one exit can be active. When more than one class implements the

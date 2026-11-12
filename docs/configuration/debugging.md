@@ -50,7 +50,7 @@ Another option: the SAP default debugging tool, the [UI5 Inspector](https://chro
 A request that fails before `main( )` runs — a 401, a 403 from the [CSRF check](/configuration/security#cross-site-request-forgery-csrf) or from the node's authorization, a 404 on the service path, a timeout — leaves no 500 body to read. Two standard traces say what happened to it:
 
 - **`SICF` → the node → *Edit → Trace*** records every request of that node with its headers and its status. The *Error Pages* tab of the node decides what a logon or an authorization failure shows instead of your app.
-- **`SMICM` → menu *Goto → Trace File*** (trace level 2 or higher for one reproduction, back to 1 afterwards) shows the request on the ICM level: the host it came in on, the path, and whether a web dispatcher or a proxy rewrote it. A wrong `Origin` or a wrong forwarded host shows up there. The HTTP cache behind a stale frontend is cleared there too (menu *Goto → HTTP Plug-In → Server Cache → Invalidate*).
+- **`SMICM` → menu *Goto → Trace File*** shows the request on the ICM level: the host it came in on, the path, and whether a web dispatcher or a proxy rewrote it. Set trace level 2 or higher for one reproduction, and back to 1 afterwards. A wrong `Origin` or a wrong forwarded host shows up there. The HTTP cache behind a stale frontend is cleared there too (menu *Goto → HTTP Plug-In → Server Cache → Invalidate*).
 
 The browser's network tab beside them shows the request as the frontend sent it: the status, the body of the response and, for a 500, the same text the overlay shows.
 

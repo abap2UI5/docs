@@ -10,14 +10,14 @@ was called report2cloud. The `migrate_report` tool is part of the
 [MCP server](/advanced/mcp_server) since its 1.0.0.
 :::
 
-A classic report shows its user interface in the SAP GUI: a selection
-screen, a `WRITE` list, an ALV grid. The
-[abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) add-on
-keeps the programming model of a report for abap2UI5: a class inheriting
-from `z2ui5_cl_cgui_report` has the event blocks as methods and `write( )`,
-`alv( )` and `message( )` as calls, and runs as a UI5 app in the browser.
-That makes the step from the SAP GUI of a report to an abap2UI5 app
-mechanical, and **report2UI5** does it.
+A classic report shows its user interface in the SAP GUI: a selection screen, a
+`WRITE` list, an ALV grid. The
+[abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui) add-on keeps
+the programming model of a report for abap2UI5. A class inheriting from
+`z2ui5_cl_cgui_report` has the event blocks as methods and `write( )`, `alv( )`
+and `message( )` as calls. It runs as a UI5 app in the browser. That makes the
+step from the SAP GUI of a report to an abap2UI5 app mechanical, and
+**report2UI5** does it.
 
 **It converts the user interface and nothing else.** The selection screen,
 the event blocks, the list, the ALV, the messages and the popups become the
@@ -203,12 +203,12 @@ CLASS z2ui5_cl_cgui_r2c_02 DEFINITION PUBLIC
   ENDMETHOD.
 ```
 
-The texts come from the text pool, the `SELECT` is in the strict syntax,
-`HIDE` travels with the hotspot and comes back in `at_line_selection( )`, and
-the short `MESSAGE i003` names its message class, because a class has no
-`MESSAGE-ID`. The `SELECT` still reads `SFLIGHT`, and the message class
-`ZR2C` is still the one of the report: whether both exist on the target
-system is yours to check.
+Four things changed. The texts come from the text pool. The `SELECT` is in the
+strict syntax. `HIDE` travels with the hotspot and comes back in
+`at_line_selection( )`. And the short `MESSAGE i003` names its message class,
+because a class has no `MESSAGE-ID`. The `SELECT` still reads `SFLIGHT`, and the
+message class `ZR2C` is still the one of the report: whether both exist on the
+target system is yours to check.
 
 ## What it converts
 

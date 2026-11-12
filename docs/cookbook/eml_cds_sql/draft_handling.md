@@ -19,7 +19,7 @@ and calls that copy the *app draft*. The two are unrelated. See the
 
 ## Drafts Are a RAP Feature — and You Can Use Them with abap2UI5
 
-RAP draft handling — `with draft` in the behavior definition, a draft table, the standard actions `Edit`, `Resume`, `Activate` and `Discard` — lives inside the business object, so any consumer that speaks EML gets it, and an abap2UI5 app is such a consumer. If you know drafts from RAP, the only new part on this page is wiring the EML to an abap2UI5 view instead of a Fiori Elements UI: skim ahead to [The Four Building Blocks](#the-four-building-blocks).
+RAP draft handling lives inside the business object: `with draft` in the behavior definition, a draft table, and the standard actions `Edit`, `Resume`, `Activate` and `Discard`. So any consumer that speaks EML gets it, and an abap2UI5 app is such a consumer. If you know drafts from RAP, the only new part on this page is wiring the EML to an abap2UI5 view instead of a Fiori Elements UI: skim ahead to [The Four Building Blocks](#the-four-building-blocks).
 
 ## What Is a Draft?
 

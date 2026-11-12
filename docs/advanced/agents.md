@@ -125,9 +125,9 @@ table, and `app_act({ event, row })` picks that row the way the click does. It
 sets the row's selection field (in single select it clears the others) and sends
 that as the model delta. It fills the event's parameters `selectedItem`,
 `selectedItems` and `selectedContexts` from the selected rows. The same goes for
-the row parameters of the ordinary row events, such as `listItem` of an
-`itemPress` or `rowIndex` and `rowContext` of a grid table's
-`rowSelectionChange`, for the shapes views write them in
+the row parameters of the ordinary row events. Examples are `listItem` of an
+`itemPress`, and `rowIndex` and `rowContext` of a grid table's
+`rowSelectionChange`. They are filled for the shapes views write them in
 (`.getBindingContext().getProperty('NAME')`, `.getCells()[0].getText()`, …). A
 parameter the client cannot compute is refused, naming the argument, so the
 agent passes it in `args` instead.
@@ -419,14 +419,14 @@ defineApp("ZCL_JS_BOOKS", class { /* ... */ }, {
 });
 ```
 
-`agent: true` opts in with every event allowed; `agent: false` keeps the app
-out whatever `apps` says, for an app that administers something. An event is
-`allowed`, `confirm` or `forbidden`, as in the agent add-on, and the app's word
-and the configuration's are both applied — the stricter wins, so a project can
-tighten what an app allows but not loosen it. A setting `"APP:EVENT"` covers
-the app on the screen and the app the session was started with, so a popup an
-app calls is covered by that app's rules. An action classified `confirm` or
-`forbidden` carries `"policy"` in the snapshot.
+`agent: true` opts in with every event allowed; `agent: false` keeps the app out
+whatever `apps` says, for an app that administers something. An event is
+`allowed`, `confirm` or `forbidden`, as in the agent add-on. The app's setting
+and the configuration's are both applied, and the stricter one wins. So a
+project can tighten what an app allows, but not loosen it. A setting
+`"APP:EVENT"` covers the app on the screen and the app the session was started
+with, so a popup an app calls is covered by that app's rules. An action
+classified `confirm` or `forbidden` carries `"policy"` in the snapshot.
 
 ### Security model of the CAP endpoint
 
@@ -453,16 +453,15 @@ app calls is covered by that app's rules. An action classified `confirm` or
 ### The audit log
 
 Every call writes a row to the CDS entity `cap2ui5.AgentLog`: time, user, the
-MCP client's `User-Agent`, tool, app, the session in and out, event,
-arguments, the outcome (`ok`, `refused`, `confirm`, `forbidden`, `error`) and
-the refusal. The **values** an agent entered are never stored, only which
-fields it filled. Like the drafts, the entity is part of the model and in no
-service — the next `cds deploy` creates its table whether the endpoint is on
-or not. A row older than `retention` days (90 unless set) is deleted, swept
-by an agent call at most once an hour; `0` keeps every row, and the plugin's
-`purgeAgentLog( )` runs the same delete from a job of your own. To show it,
-expose it in a service of your own with a `@restrict` such as
-`where: 'owner = $user'`.
+MCP client's `User-Agent`, tool, app, the session in and out, event, arguments,
+the outcome (`ok`, `refused`, `confirm`, `forbidden`, `error`) and the refusal.
+The **values** an agent entered are never stored, only which fields it filled.
+Like the drafts, the entity is part of the model and in no service — the next
+`cds deploy` creates its table whether the endpoint is on or not. A row older
+than `retention` days (90 unless set) is deleted. An agent call does that at
+most once an hour. `0` keeps every row, and the plugin's `purgeAgentLog( )` runs
+the same delete from a job of your own. To show it, expose it in a service of
+your own with a `@restrict` such as `where: 'owner = $user'`.
 
 ### Sessions and restarts
 
@@ -518,10 +517,10 @@ The engine under the add-on is useful on its own, and older than the add-on:
 [abap2UI5/headless-frontend](https://github.com/abap2UI5/headless-frontend)
 plays the browser's side of the protocol inside ABAP, which makes a whole user
 session an ABAP Unit test. [Step 12](/tutorials/step-12#testing-the-roundtrip)
-of the walkthrough shows it; the add-on uses its session API — `resume( )`,
-`get_state( )` and `get_layers( )` — to continue a session in the next HTTP
-request, `set_json( )` to send each value typed, and `close_layer( )` for
-`@CLOSE_POPUP` and `@CLOSE_POPOVER`.
+of the walkthrough shows it. The add-on uses its session API: `resume( )`,
+`get_state( )` and `get_layers( )` continue a session in the next HTTP request,
+`set_json( )` sends each value typed, and `close_layer( )` serves `@CLOSE_POPUP`
+and `@CLOSE_POPOVER`.
 
 ## Next Steps
 

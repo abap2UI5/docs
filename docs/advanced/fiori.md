@@ -4,11 +4,11 @@ description: Running an abap2UI5 app inside the object page of a Fiori elements 
 ---
 # Fiori Elements Integration
 
-An abap2UI5 app can run inside the object page of a Fiori elements app, next
-to the sections the annotations make. The control `z2ui5.embed.Container`
-from the npm package
+An abap2UI5 app can run inside the object page of a Fiori elements app, next to
+the sections the annotations make. The control `z2ui5.embed.Container` from the
+npm package
 [`@abap2ui5/embed-control`](https://www.npmjs.com/package/@abap2ui5/embed-control)
-does the work: it sits in a fragment, is bound to the object on the page, and
+does the work. It sits in a fragment and is bound to the object on the page. It
 hands fields of that object to the ABAP class as startup parameters.
 
 <img width="747" height="387" alt="abap2UI5 app embedded in Fiori Elements object page" src="https://github.com/user-attachments/assets/c14d5732-3b8c-4fa5-83ab-6d188a4d87db" />
@@ -128,11 +128,10 @@ sap.ui.define([], () => {
 - The section is bound to the object, so `ID` is the key of the customer on
   the page. Nothing starts before the page has one, and another customer ends
   the running abap2UI5 session and starts a new one with its key.
-- `targetType: 'any'` is needed for `params`. An OData V4 binding converts
-  the value of a service property into the type of the control property, and
-  an `Edm.String` does not convert into the object `params` is ("Don't know
-  how to format String to object"). With it, the formatter gets the key as it
-  is.
+- `targetType: 'any'` is needed for `params`. An OData V4 binding converts the
+  value of a service property into the type of the control property. `params` is
+  an object, and an `Edm.String` does not convert into one ("Don't know how to
+  format String to object"). With it, the formatter gets the key as it is.
 - The control needs a height - a section gives it none of its own.
 
 ## OData V2: an object page extension
@@ -333,9 +332,9 @@ Cockpit shows the p95 per app (95 of 100 roundtrips are faster than this value).
 Look at that number on the quality system with the real data. *From abap2UI5
 1.147.0 on.*
 
-Do not switch an embedded app to `set_session_stateful( )`: that is the one
-setting that turns a container into an open session, one work process per user
-and container for as long as the page stays open.
+Do not switch an embedded app to `set_session_stateful( )`. That setting turns a
+container into an open session: one work process per user and container, for as
+long as the page stays open.
 
 ## Examples
 

@@ -8,8 +8,8 @@ An abap2UI5 app usually starts as a class typed straight into a system, living
 there and nowhere else. That is fine for a first app, but a second app needs
 more. Nothing versions such a class and nobody reviews it. The typical mistakes
 of an abap2UI5 app are invisible to the ABAP compiler and show up as a blank
-screen: a control that does not exist on the release your users are on, or a
-binding pointing at nothing.
+screen. Examples are a control that does not exist on the release your users are
+on, or a binding pointing at nothing.
 
 A real project is the same class in a git repository that abapGit pulls into
 the system, with the checks running before it gets there.
@@ -62,10 +62,12 @@ Add `--dry` first to see what it would touch. It renames the class in the ABAP
 **and** the `CLSNAME` in its `.clas.xml` metadata file — changing only one gives
 you an object abapGit imports under one name and ABAP activates under another.
 
-Two things it deliberately leaves to you: the **namespace** (`abaplint.jsonc`
-requires `^ZCL_` or `^ZCX_`; change `object_naming` there if you develop behind
-a company prefix or a registered namespace), and the **LICENSE**, which still
-names abap2UI5 as the copyright holder.
+Two things it deliberately leaves to you:
+
+- the **namespace**: `abaplint.jsonc` requires `^ZCL_` or `^ZCX_`. Change
+  `object_naming` there if you develop behind a company prefix or a registered
+  namespace.
+- the **LICENSE**, which still names abap2UI5 as the copyright holder.
 
 ## Then into the system
 

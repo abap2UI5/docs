@@ -6,10 +6,10 @@ description: The optional add-ons around abap2UI5 - popups, HTTP and RFC connect
 
 abap2UI5 focuses on core capabilities — rendering views, handling events, and
 exchanging data. What goes beyond that lives in add-ons: ready-to-use apps,
-building blocks, integration, operations and the developer tools, each a
+building blocks, integration, operations and the developer tools. Each is a
 repository of its own in the
-[abap2UI5-addons](https://github.com/abap2UI5-addons) organization, each
-installed with abapGit and versioned on its own.
+[abap2UI5-addons](https://github.com/abap2UI5-addons) organization, installed
+with abapGit and versioned on its own.
 
 **Every add-on, with a page of its own, is on
 [Addons & Tools](https://abap2ui5-addons.github.io/){target="_self"}** — what
@@ -33,11 +33,11 @@ add-ons this manual has a chapter about:
 
 Installed in one system, the core and every add-on share one set of names.
 [Namespaces & tables](https://abap2ui5-addons.github.io/namespaces/){target="_self"}
-lists every ABAP object of the core and of each add-on - the name segment of
-its classes (`z2ui5_cl_<segment>_…`), its table numbers (`z2ui5_t_NN`, with
-the ones still free), its ICF nodes and BSP applications - and shows where two
-of them collide. Check it before you name a class or number a table of a new
-add-on.
+lists every ABAP object of the core and of each add-on. For each it names the
+name segment of its classes (`z2ui5_cl_<segment>_…`), its table numbers
+(`z2ui5_t_NN`, with the ones still free), its ICF nodes and its BSP
+applications. It also shows where two of them collide. Check it before you name
+a class or number a table of a new add-on.
 
 ## Open Source Projects
 
