@@ -1,21 +1,20 @@
 ---
 outline: [2, 4]
-description: The abap2UI5 native mobile shell - a proof of concept that runs abap2UI5 apps in a generic iOS and Android app built for the SAP mobile stack, with a bridge to the camera, and the NativeBridgeScan control that uses it.
+description: The abap2UI5 native mobile shell - a proof of concept that runs abap2UI5 apps in a generic iOS and Android app built for the SAP mobile stack. With a bridge to the camera, and the NativeBridgeScan control that uses it.
 ---
 # Native Mobile Shell
 
-[abap2UI5/mobile-shell](https://github.com/abap2UI5/mobile-shell) runs
-abap2UI5 apps in a native app on iOS and Android. The app is a generic shell:
-it knows one URL, shows the regular abap2UI5 frontend in a webview, and
-offers the page a small bridge to what a browser cannot reach - the native
-barcode scanner, push notifications, the biometric unlock. Every screen
-still comes from the ABAP class, so a change to an app never needs a new
-release in an app store.
+[abap2UI5/mobile-shell](https://github.com/abap2UI5/mobile-shell) runs abap2UI5
+apps in a native app on iOS and Android. The app is a generic shell. It knows
+one URL and shows the regular abap2UI5 frontend in a webview. It offers the page
+a small bridge to what a browser cannot reach: the native barcode scanner, push
+notifications, the biometric unlock. Every screen still comes from the ABAP
+class, so a change to an app never needs a new release in an app store.
 
 ::: info Preview — proof of concept
-The shell is a proof of concept, not a product: it has no releases, and
-parts of it - the onboarding flow of the SAP BTP SDK, push notifications -
-need accounts with SAP, Google and Apple to switch on. Its
+The shell is a proof of concept, not a product. It has no releases. Parts of it
+need accounts with SAP, Google and Apple to switch on: the onboarding flow of
+the SAP BTP SDK and push notifications. Its
 [PLAN.md](https://github.com/abap2UI5/mobile-shell/blob/main/PLAN.md) has the
 state of every phase.
 :::
@@ -64,9 +63,9 @@ The sample app in the repository's `abap/src` is the worked example.
 ## Distribution
 
 The shell reads its settings from the device management your organization
-already uses: the abap2UI5 URL, a forced app lock and screenshot protection
-come in as managed configuration on Android and iOS, so no user has to type
-an address. A device without such management is set up by scanning a QR
-code with the URL. The repository's
+already uses. The abap2UI5 URL, a forced app lock and screenshot protection come
+in as managed configuration on Android and iOS. So no user has to type an
+address. A device without such management is set up by scanning a QR code with
+the URL. The repository's
 [distribution guide](https://github.com/abap2UI5/mobile-shell/blob/main/docs/DISTRIBUTION.md)
 has the details and the checklist for production.

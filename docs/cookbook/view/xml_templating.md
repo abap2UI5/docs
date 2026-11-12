@@ -23,9 +23,9 @@ The first four rows are plain ABAP and plain binding. They are easier to
 write and to debug. [Templating vs ABAP-side Composition](#templating-vs-abap-side-composition)
 at the end of this page compares the two in detail.
 
-XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace — `template:repeat`, `template:if`, `template:then`, `template:elseif`, `template:else`, `template:with` — and expands them into plain XML *before* the control tree is created. abap2UI5 exposes these instructions through the fluent builder so you can drive the expansion from ABAP data.
+XML Templating is a **UI5 preprocessor feature**, not an abap2UI5 invention. The UI5 runtime understands a small set of instructions in the `template` XML namespace: `template:repeat`, `template:if`, `template:then`, `template:elseif`, `template:else`, `template:with`. It expands them into plain XML *before* the control tree is created. abap2UI5 offers these instructions through the view builder, so you can drive the expansion from ABAP data.
 
-It is the technique behind every **metadata-driven** UI: the input of the expansion is a *meta model* — data about the view, such as which columns a table has or which fields of which type a form shows — rather than the data the controls display. A UI5 app hands the preprocessor the OData meta model of its service; in abap2UI5 the meta model is plain ABAP data you bind like any other attribute (see [Meta Model](#meta-model-a-form-from-a-field-catalog) below).
+It is the technique behind every **metadata-driven** UI. The input of the expansion is a *meta model*: data about the view, such as which columns a table has or which fields of which type a form shows. It is not the data the controls display. A UI5 app hands the preprocessor the OData meta model of its service. In abap2UI5 the meta model is plain ABAP data you bind like any other attribute (see [Meta Model](#meta-model-a-form-from-a-field-catalog) below).
 
 See the official UI5 references for the underlying mechanics:
 [XML Templating](https://sapui5.hana.ondemand.com/sdk/#/topic/5ee619fc1370463ea674ee04b65ed83b),
@@ -91,7 +91,7 @@ view->ele( `Table`
 
 Notes on the snippet:
 
-- `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells). `template` is an element namespace like any other, so the builder needs nothing beyond `ns = template` on the element — the prefix itself is declared once on the view's root.
+- `list` is the binding path that drives the loop; `var` is the alias used inside the loop body (here `L0` for the column headers, `L1` for the cells). `template` is an element namespace like any other. The builder needs nothing beyond `ns = template` on the element, and the prefix itself is declared once on the view's root.
 - Inside the loop, `{L0>FNAME}` is a templating-time read — it ends up as the literal string `NAME`/`DATE`/`AGE` in the expanded XML.
 - `{= '{' + ${L1>FNAME} + '}' }` is an [expression binding](https://sapui5.hana.ondemand.com/sdk/#/topic/daf6852a04b44d118963968a1239d2c0) that **constructs another binding string at templating time**. With `L1>FNAME = NAME` it expands to `text="{NAME}"`, which becomes a normal runtime binding against the row of `mt_data`. This is the standard pattern for templated tables: outer loop builds the columns, inner loop builds the cells, expression binding wires each cell to the right field of the row.
 - `list` is a list binding like any other, so it takes the binding-info form too: `{path: '...', startIndex: 0, length: 2}` cuts the loop to a slice of the table — see [Meta Model](#meta-model-a-form-from-a-field-catalog) below.

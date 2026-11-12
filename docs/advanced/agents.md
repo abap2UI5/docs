@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: AI agents operating abap2UI5 apps - four tools that read an app's screen as data, fill its fields and fire its events over the app's own JSON protocol, in the MCP server, in the VS Code extension, as an ABAP-native endpoint in the system and in a CAP server with cap2UI5.
+description: AI agents operating abap2UI5 apps - four tools read an app's screen as data, fill its fields and fire its events over the app's own JSON protocol. They run in the MCP server, in the VS Code extension, as an ABAP endpoint in the system and in a CAP server with cap2UI5.
 ---
 # Agent-Operable Apps
 
@@ -13,19 +13,19 @@ generated `standard` / `cloud` branches and not in a release yet — its API may
 still change before 1.0, and its CHANGELOG says when it does.
 :::
 
-An abap2UI5 app is one ABAP class, and its whole conversation with the outside
-world is one JSON request in and one JSON response out: the browser sends what
-the user typed and the name of the event, the backend sends back a view, a
-model and some messages. The browser is not the only thing that can hold up its
-end of that conversation.
+An abap2UI5 app is one ABAP class. Its whole conversation with the outside world
+is one JSON request in and one JSON response out. The browser sends what the
+user typed and the name of the event. The backend sends back a view, a model and
+some messages. A program other than the browser can take the browser's part in
+that conversation.
 
 Four tools — `app_list`, `app_start`, `app_describe` and `app_act` — let an AI
 agent operate **any** abap2UI5 app that way. The agent reads the screen as
 structured data, fills fields by model path or label and fires events by the
-name the app gave them. No browser, no CSS selector, no screenshot to
-interpret, and no second API next to the app: whatever the app lets a user do
-on a screen, it lets an agent do, through the app's own `main( )` — and nothing
-more.
+name the app gave them. The agent needs no browser, no CSS selector and no
+screenshot to interpret, and the app needs no second API. Whatever the app lets
+a user do on a screen, it lets an agent do, through the app's own `main( )`, and
+nothing more.
 
 ## Who Reads What
 
@@ -98,11 +98,11 @@ the current screen. All four implementations produce the same shape (version
 A dynamic event argument is written as a descriptor the client fills in at act
 time: `$row:NAME` is the field of the row the action is fired on, `$model:/PATH`
 a value of the model. The ids (`f1`, `a1`, `t1`) are stable within one snapshot
-only. New keys and values arrive within version 1 as long as they are additive —
-a client ignores a key it does not know — and only a renamed or removed key, or
-a changed meaning, raises the version. A popup is modal, so while one is open
-only the popup is described — the page behind it is not reachable in the browser
-either; a popover is not, and the page stays described beside it.
+only. New keys and values arrive within version 1 as long as they are additive:
+a client ignores a key it does not know. Only a renamed or removed key, or a
+changed meaning, raises the version. A popup is modal, so while one is open only
+the popup is described. The page behind it is not reachable in the browser
+either. A popover is not modal, and the page stays described beside it.
 
 ## The four tools
 
@@ -119,32 +119,32 @@ Selecting a table row is setting its selection field. Without an event the
 values stay **pending**, the way typing does in a browser; with one they go out
 as the same model delta the UI5 frontend would send.
 
-**Picking from a selection dialog.** The `confirm` of a `SelectDialog` or a
-`TableSelectDialog` — the value help a user clicks a row in — is a row action
-of its table, and `app_act({ event, row })` picks that row the way the click
-does: it sets the row's selection field (in single select it clears the others),
-sends that as the model delta and fills the event's parameters —
-`selectedItem`, `selectedItems`, `selectedContexts` — from the selected rows.
-The same goes for the row parameters of the ordinary row events, such as
-`listItem` of an `itemPress` or `rowIndex` and `rowContext` of a grid table's
+**Picking from a selection dialog.** A `SelectDialog` or a `TableSelectDialog`
+is the value help a user clicks a row in. Its `confirm` is a row action of its
+table, and `app_act({ event, row })` picks that row the way the click does. It
+sets the row's selection field (in single select it clears the others) and sends
+that as the model delta. It fills the event's parameters `selectedItem`,
+`selectedItems` and `selectedContexts` from the selected rows. The same goes for
+the row parameters of the ordinary row events, such as `listItem` of an
+`itemPress` or `rowIndex` and `rowContext` of a grid table's
 `rowSelectionChange`, for the shapes views write them in
-(`.getBindingContext().getProperty('NAME')`, `.getCells()[0].getText()`, …).
-A parameter the client cannot compute is refused, naming the argument, so the
+(`.getBindingContext().getProperty('NAME')`, `.getCells()[0].getText()`, …). A
+parameter the client cannot compute is refused, naming the argument, so the
 agent passes it in `args` instead.
 
-**Reading a message list.** The items of a `MessagePopover` or a
-`MessageView` are messages of the snapshot, with `source` `popover` or
-`messageview` and their subtitle and description where they have one —
-whether the popover is open or not, so the messages an app collects there are
-readable without the click that opens it.
+**Reading a message list.** The items of a `MessagePopover` or a `MessageView`
+are messages of the snapshot. They carry `source` `popover` or `messageview`,
+and their subtitle and description where they have one. This holds whether the
+popover is open or not, so the messages an app collects there are readable
+without the click that opens it.
 
-**Everything is validated against the snapshot before anything is sent.** An
-event that is not on the screen, a field that is not editable, a choice
-outside its values, the page's controls while a popup is open — each is
-refused with a sentence naming what is wrong and what *is* allowed, and a
-refused act changes nothing. `@CLOSE_POPUP` and `@CLOSE_POPOVER` close a dialog
-the way the browser closes it, without a roundtrip. Only the current draft id
-of a session is accepted.
+**Everything is validated against the snapshot before anything is sent.** Four
+things are refused: an event that is not on the screen, a field that is not
+editable, a choice outside its values, and the page's controls while a popup is
+open. The refusal is a sentence that names what is wrong and what *is* allowed.
+A refused act changes nothing. `@CLOSE_POPUP` and `@CLOSE_POPOVER` close a
+dialog the way the browser closes it, without a roundtrip. Only the current
+draft id of a session is accepted.
 
 A short session against the value-help sample of abap2UI5/samples:
 
@@ -169,28 +169,28 @@ hands the title of the picked item back to the app:
 </SelectDialog>
 ```
 
-In the snapshot that dialog is the table `t1` (`control`
-`sap.m.SelectDialog`, `selectionMode` `Single`) and `VH_CONFIRM` is a row
-action of it. `app_act { session, event: "VH_CONFIRM", row: 2 }` sends the
-event with the `NAME` of the third row as its argument — what the browser
-sends when that row is clicked.
+In the snapshot that dialog is the table `t1` (`control` `sap.m.SelectDialog`,
+`selectionMode` `Single`) and `VH_CONFIRM` is a row action of it.
+`app_act { session, event: "VH_CONFIRM", row: 2 }` sends the event with the
+`NAME` of the third row as its argument. That is what the browser sends when
+that row is clicked.
 
 The full reference — every derivation rule, the descriptors, the pick and the
 row event parameters, the refusals — is
 [`docs/agent-snapshot.md`](https://github.com/abap2UI5/mcp-server/blob/6bd3cc3a79e99f8027fb0b62cc968f4161bf1118/docs/agent-snapshot.md)
-in the MCP server's repository, at the commit this page was written against.
-The MCP server, the VS Code extension and cap2UI5 run that repository's own
-code; the agent add-on derives the same snapshot in ABAP, byte-identical to
-it on every recorded and synthetic case of its parity check.
+in the MCP server's repository, at the commit this page was written against. The
+MCP server, the VS Code extension and cap2UI5 run that repository's own code.
+The agent add-on derives the same snapshot in ABAP. Its parity check compares
+the two on every recorded and synthetic case, and they are byte-identical.
 
 ## While developing: the MCP server
 
 The [MCP server](/advanced/mcp_server) runs the four tools against its local
-backend — the framework transpiled to Node, with your deployed apps on top —
-so an agent can operate the app it just wrote with no SAP system at all. They
-need what `run_app` needs: a `build_backend` first (Level 3 of the setup).
-`app_list` lists the deployed apps and the framework's own; an app deployed
-after the last build is not listed until the next one.
+backend: the framework transpiled to Node, with your deployed apps on top. So an
+agent can operate the app it just wrote with no SAP system at all. They need
+what `run_app` needs: a `build_backend` first (Level 3 of the setup). `app_list`
+lists the deployed apps and the framework's own; an app deployed after the last
+build is not listed until the next one.
 
 The tools speak the protocol and answer with data; `interact_app` boots a
 headless browser, drives it with CSS selectors and answers with a picture. Use
@@ -223,28 +223,28 @@ listed and answer with how to switch them on, without contacting the system.
 
 ## In production: the agent add-on
 
-[**abap2UI5-addons/abap-agent-runtime**](https://github.com/abap2UI5-addons/abap-agent-runtime) puts an
-MCP endpoint into the SAP system itself, written in ABAP. It is not in a
-release yet (see the note at the top of this page): it was pulled into a 7.5x
-on-premise system and has not yet run in production, and its ABAP Cloud setup
-is written down but marked *to verify on your system*. Any MCP client that
-connects to a remote server over HTTP calls `/sap/bc/z2ui5_agent`, and the
-endpoint operates the app inside the system as the user who logged on. No
-Node, no browser, no technical user.
+[**abap2UI5-addons/abap-agent-runtime**](https://github.com/abap2UI5-addons/abap-agent-runtime)
+puts an MCP endpoint into the SAP system itself, written in ABAP. It is not in a
+release yet (see the note at the top of this page). It was pulled into a 7.5x
+on-premise system and has not yet run in production. Its ABAP Cloud setup is
+written down but marked *to verify on your system*. Any MCP client that connects
+to a remote server over HTTP calls `/sap/bc/z2ui5_agent`, and the endpoint
+operates the app inside the system as the user who logged on. No Node, no
+browser, no technical user.
 
 Underneath it is the [headless frontend](#testing-the-roundtrip-in-abap) that
 plays the browser's half of the protocol in ABAP. Every MCP call is one HTTP
-request, so a session lives between calls as the abap2UI5 draft plus one row
-holding what a browser would remember — the views of the open layers and the
-pending values.
+request. Between calls a session lives as the abap2UI5
+[app draft](/get_started/glossary) plus one row. That row holds what a browser
+would remember: the views of the open layers and the pending values.
 
 ### Installing and enabling it
 
-Install, each with abapGit: the framework, then
+Install three things, each with abapGit: the framework, then
 [abap2UI5/headless-frontend](https://github.com/abap2UI5/headless-frontend),
-then the add-on from the branch of your platform — `standard` for Standard ABAP
-from 7.50 (it brings the ICF node), `cloud` for ABAP Cloud (you create an HTTP
-service and a communication arrangement in ADT).
+then the add-on from the branch of your platform. The branch `standard` is for
+Standard ABAP from 7.50 and brings the ICF node. The branch `cloud` is for ABAP
+Cloud; there you create an HTTP service and a communication arrangement in ADT.
 
 The endpoint is **disabled** after installation. To switch it on:
 
@@ -298,12 +298,12 @@ CLASS zcl_sales_order_app IMPLEMENTATION.
 ENDCLASS.
 ```
 
-An empty `describe( )` is fine: every event is allowed then. Event names may
-be patterns (`DELETE*`, `*_POST`), the first matching rule decides, and
+An empty `describe( )` is fine: every event is allowed then. Event names may be
+patterns (`DELETE*`, `*_POST`). The first matching rule decides, and
 `default_policy` covers the events no rule names. `t_sensitive` lists model
 paths or names whose values the audit log masks. `describe( )` runs on a fresh
-instance of the class, never on the running app, so it answers for the class
-and not for a state of it.
+instance of the class, never on the running app. So it answers for the class and
+not for a state of it.
 
 An administrator can allow classes that do not implement the interface, deny
 classes that do, and classify events on top of what the app says — the
@@ -364,28 +364,27 @@ through the client's OAuth flow. Then ask the agent to call `app_list`.
   a stateful session lives within one HTTP request, and an MCP call is one
   request. `app_start` refuses them, and an app that switches to a stateful
   session midway ends the session.
-- **Only event arguments travel as text.** Values go out typed, as the
-  browser sends them — a boolean as `true` or `false`, a multi-choice value as
-  an array of keys, a number as a number — in the same model delta the
-  frontend builds: a table cell as a row change, everything else, a structure
-  holding a table included, as the whole attribute. The event's arguments —
-  `args` and the row arguments of a row action — are still sent as text: a
-  boolean as `X` or blank, an object or array as its JSON.
+- **Only event arguments travel as text.** Values go out typed, as the browser
+  sends them: a boolean as `true` or `false`, a multi-choice value as an array
+  of keys, a number as a number. They travel in the same model delta the
+  frontend builds. A table cell goes as a row change. Everything else goes as
+  the whole attribute, a structure holding a table included. The event's
+  arguments — `args` and the row arguments of a row action — are still sent as
+  text: a boolean as `X` or blank, an object or array as its JSON.
 - Labels, texts and messages are what the app wrote, in the user's logon
   language.
 
 ## The fourth implementation: CAP
 
 [cap2UI5](https://cap2ui5.github.io/docs/) runs abap2UI5 inside a CAP server,
-with CAP's users and CAP's database, and its plugin `@cap2ui5/cds-plugin`
-serves the same four tools itself: an MCP endpoint over HTTP, at
-`/rest/root/z2ui5/mcp` beside the app route. A tool call runs the route's own
-roundtrip handler in the same process, inside the MCP request — so the agent
-acts as the CAP user who called, with that user's drafts and roles, and there
-is no HTTP hop and no technical user. The snapshot is not a second
-implementation either: the plugin carries the MCP server's own code, copied
-unchanged at a recorded commit, so a cap2UI5 app is described exactly as the
-MCP server describes it.
+with CAP's users and CAP's database, and its plugin `@cap2ui5/cds-plugin` serves
+the same four tools itself: an MCP endpoint over HTTP, at `/rest/root/z2ui5/mcp`
+beside the app route. A tool call runs the route's own roundtrip handler in the
+same process, inside the MCP request. So the agent acts as the CAP user who
+called, with that user's drafts and roles. There is no HTTP hop and no technical
+user. The snapshot is not a second implementation either: the plugin carries the
+MCP server's own code, copied unchanged at a recorded commit, so a cap2UI5 app
+is described exactly as the MCP server describes it.
 
 ### Switching it on
 
@@ -467,17 +466,16 @@ expose it in a service of your own with a `@restrict` such as
 
 ### Sessions and restarts
 
-A session is the app's draft, owned by the user and expiring with it, plus
-what the plugin remembers of the screen — the open views, the pending edits,
-the last answer. That memory lives in the process and a restart loses it,
-while the drafts survive. So a session the server no longer knows is
-**restored from its draft**, the way the handover link restores it for a
-human: `app_describe` answers the restored screen under a new session id, and
-`app_act` sends nothing and names the new id, because the screen the agent
-chose its action on is no longer in front of it. Edits pending before the
-restart are lost, as a browser tab's are. Only the newest session of its line,
-with its draft not expired, is restored, and only for the user whose agent
-reached it.
+A session is the app's draft, owned by the user and expiring with it, plus what
+the plugin remembers of the screen — the open views, the pending edits, the last
+answer. That memory lives in the process and a restart loses it, while the
+drafts survive. So a session the server no longer knows is **restored from its
+draft**, the way the handover link restores it for a human. `app_describe`
+answers the restored screen under a new session id. `app_act` sends nothing and
+names the new id, because the screen the agent chose its action on is no longer
+in front of it. Edits pending before the restart are lost, as a browser tab's
+are. Only the newest session of its line, with its draft not expired, is
+restored, and only for the user whose agent reached it.
 
 ### Connecting a client to CAP
 

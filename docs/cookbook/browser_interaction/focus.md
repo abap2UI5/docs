@@ -30,7 +30,7 @@ This is useful for guided data entry, barcode scanning, or any flow where the ne
 
 ## Basic Usage
 
-After processing an event, call `client->follow_up_action( )` with `cs_event-set_focus` and the id of the input to focus next. (The value bindings on the inputs are omitted here to keep the focus logic clear — see [Barcode Scanning](/cookbook/device_capabilities/barcode_scanning) for the same form with bound inputs.)
+After processing an event, call `client->follow_up_action( )` with `cs_event-set_focus` and the id of the input to focus next. The value bindings on the inputs are left out here to keep the focus logic clear. [Barcode Scanning](/cookbook/device_capabilities/barcode_scanning) shows the same form with bound inputs.
 
 ```abap
 CLASS zcl_sample_focus DEFINITION PUBLIC.

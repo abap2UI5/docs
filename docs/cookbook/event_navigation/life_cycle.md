@@ -5,7 +5,7 @@ samples:
   - z2ui5_cl_smp_app_004
 description: The abap2UI5 app life cycle - every request enters main( ), and check_on_init, check_on_navigated and check_on_event tell you which case it is, pitfalls included.
 ---
-# Life Cycle
+# App Structure: init, navigated, event
 
 Every request enters the `main` method. One `IF` / `ELSEIF` chain dispatches between initialization, navigation returns, and user events using `` client->check_on_init( ) ``, `` client->check_on_event( `EVENT_NAME` ) ``, and `` client->check_on_navigated( ) ``. Each branch either does the work inline (tiny apps) or calls a named handler method (typical apps) — the **structure is always the same**.
 
@@ -73,7 +73,7 @@ CLASS zcl_sample_life_cycle IMPLEMENTATION.
 ENDCLASS.
 ```
 
-![Which lifecycle check is true in which situation: the first start sets init and navigated, an event sets only the event check, a return from a sub-app or a popup and a restored bookmark set navigated](/cookbook/event_navigation/which-branch.svg)
+![Which lifecycle check is true when: the first start sets init and navigated, an event sets only the event check, a return from a sub-app or a popup and a restored bookmark set navigated](/cookbook/event_navigation/which-branch.svg)
 
 This `IF` / `ELSEIF` chain is the shape the cookbook, the [Tutorial](/tutorials/) and the samples use. An app with no one-time setup leaves the init branch out and starts with `check_on_navigated( )`; the rest stays the same. Four things make it the recommended shape:
 
@@ -112,7 +112,7 @@ ENDIF.
 
 When the sub-app is left, `main` runs again, but neither `check_on_init` nor any event matches, so `view_display( )` is never called and the user is left looking at a stale or empty screen. Nothing reports it: the response simply carries no view, and the browser keeps showing whatever was on it.
 
-Display from the navigation-return branch as well. `check_on_navigated( )` is true in every case where `check_on_init( )` is true, and in three more: after a `nav_app_leave( )`, when a called sub-app or value help closes, and when a bookmarked [app draft](/get_started/glossary) is restored. An app with no one-time setup can therefore react to it alone and drop the init branch:
+Display from the navigation-return branch as well. `check_on_navigated( )` is true in every case where `check_on_init( )` is true. It is also true in three more cases: after a `nav_app_leave( )`, when a called sub-app or value help closes, and when a bookmarked [app draft](/get_started/glossary) is restored. An app with no one-time setup can therefore react to it alone and drop the init branch:
 
 ```abap
 " CORRECT — the view is rebuilt on first display and on every return
@@ -123,7 +123,7 @@ ELSEIF client->check_on_event( `OPEN_POPUP` ).
 ENDIF.
 ```
 
-Reserve `check_on_init` for one-time setup that must *not* repeat on return — loading initial data, setting defaults — and keep it first in the chain, as the sample at the top of this page does: it is the more specific of the two, and the more general one has to come after it. If the init branch would do the same as the navigated branch, keep only the navigated branch.
+Reserve `check_on_init` for one-time setup that must *not* repeat on return, such as loading initial data or setting defaults. Keep it first in the chain, as the sample at the top of this page does. It is the more specific of the two checks, so the more general one has to come after it. If the init branch would do the same as the navigated branch, keep only the navigated branch.
 
 As a rule of thumb: anything needed to **show the screen** belongs in a branch that also fires on navigation return.
 

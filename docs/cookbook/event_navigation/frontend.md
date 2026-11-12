@@ -14,7 +14,7 @@ samples:
   - z2ui5_cl_smp_app_518
 description: Frontend actions in abap2UI5 - client->follow_up_action( ) runs a browser-side action without a roundtrip when written into the view, or after the response when called in main( ); the control calls and the view parameter.
 ---
-# Frontend
+# Frontend Actions
 
 A frontend action is something the browser does by itself: close a popup, set
 the focus, copy a text, open a tab. The app asks for it with
@@ -27,7 +27,9 @@ browser runs it:
 | as a statement in `main` | after the response of this roundtrip has arrived | the one that is already running |
 
 Compare this with `client->_event( )`, which always sends the click to the
-backend and runs `main`: see [Backend](/cookbook/event_navigation/backend).
+backend and runs `main`: see [Handling Events in ABAP](/cookbook/event_navigation/backend).
+
+![Three timelines: _event( ) sends the click to main( ) and gets a response; follow_up_action( ) in a view attribute runs in the browser only, with no roundtrip; follow_up_action( ) as a statement in main( ) runs in the browser after the response](/cookbook/event_navigation/frontend-action.svg)
 
 ## The two positions
 
@@ -82,28 +84,33 @@ control calls (`control_by_id`, `control_global`, `binding_call`,
 `hash_*` and `app_state_*` family, `start_timer`, `keyboard_shortcut`,
 `store_data`, `play_audio`, `urlhelper` and `offline_queue`.
 
-Two of them take an argument that is easy to miss. `start_timer` raises a
-backend event once after a delay (`t_arg` = event name, milliseconds), and an
-optional **third** argument `X` keeps the global busy indicator down for the
-tick — the `check_no_busy` of `_event( )` for a timer, so a poll whose backend
-call takes longer than a second no longer flashes the overlay. `offline_queue`
-(experimental) names the events of this app that wait in the browser while
-the backend cannot be reached instead of failing: `t_arg` = the toast text
-shown when one was kept (`&1` is how many wait; empty for no toast), then the
-event names. They are kept with their model changes across a reload and sent
-in order once the network is back; the page itself still needs the network to
-load.
+Two of them take an argument that is easy to miss.
 
-Some of these events have their own pages:
-[`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts) binds
-key combinations to backend events,
-[the `hash_*` family](/cookbook/event_navigation/navigation/hash) puts the URL
-fragment under the router's control or the app's own, and
-[`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls)
-set up variant management for smart controls. The dedicated cookbook pages under
-[Browser Interaction](/cookbook/browser_interaction/title) and
+`start_timer` raises a backend event once after a delay (`t_arg` = event
+name, milliseconds). An optional **third** argument `X` keeps the global busy
+indicator off for that tick. It is the `check_no_busy` of `_event( )` for a
+timer: a poll whose backend call takes longer than a second no longer flashes
+the overlay.
+
+`offline_queue` (experimental) names the events of this app that wait in the
+browser while the backend cannot be reached. Without it they fail. `t_arg` is
+the toast text shown when an event was kept (`&1` is how many wait; empty for
+no toast), then the event names. The events are kept with their model changes
+across a reload and sent in order once the network is back. The page itself
+still needs the network to load.
+
+Some of these actions have their own pages:
+
+- [`keyboard_shortcut`](/cookbook/browser_interaction/keyboard_shortcuts)
+  binds key combinations to backend events
+- [the `hash_*` family](/cookbook/event_navigation/navigation/hash) lets the
+  router or the app itself control the URL fragment
+- [`smart_variant_init` / `filter_bar_variant_init`](/cookbook/expert_more/smart_controls)
+  set up variant management for smart controls
+
+The pages under [Browser Interaction](/cookbook/browser_interaction/title) and
 [Device Capabilities](/cookbook/device_capabilities/upload_download) carry the
-argument list of each event.
+argument list of each action.
 
 For example, to open a new tab directly from a button press (no backend
 involved):
@@ -131,11 +138,11 @@ METHOD z2ui5_if_app~main.
 ENDMETHOD.
 ```
 
-The URL has to be on the app's own origin — the frontend refuses any other with
-an error message, and the same holds for `location_reload`, which navigates the
-current tab to the URL in its one argument. For an external site, `urlhelper`
-with `REDIRECT` takes the target as a JSON argument and accepts any `http` or
-`https` address:
+The URL has to be on the app's own origin; the frontend refuses any other
+with an error message. The same holds for `location_reload`, which navigates
+the current tab to the URL in its one argument. For an external site, use
+`urlhelper` with `REDIRECT`. It takes the target as a JSON argument and
+accepts any `http` or `https` address:
 
 ```abap
 client->follow_up_action(
@@ -159,21 +166,25 @@ ones keeps its slot as ``` `` ```.
 | `binding_call`   | `id`, `aggregation`, `method`, `params…` — e.g. `filter` (path, operator, value1, value2) or `sort` (path, descending, group) on the aggregation's binding |
 | `bind_element`   | `index`, `_bind( table )` — element-bind a whole view slot to a table row, see below  |
 
-For `control_by_id`, any public control method is callable as long as it is not
-on the framework's **denylist**: methods that would break abap2UI5's own
-invariants (destroying views, re-rendering, detaching the framework's handlers,
-…) are blocked, ordinary setters and toggles (`setVisible`, `toggleBy`,
-`enablePostButton`, …) simply work. A small set of methods is additionally
-special-cased for typed arguments. `control_global` and `binding_call` remain
-strict whitelists — only the listed global objects and the binding methods
-`filter` / `sort` are callable. Three of those objects are less obvious than the
-rest: `POPUP-setWithinArea` confines every popup to one control instead of to
-the window (UI5 &ge; 1.89; an empty argument releases it again),
-`INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without
-rendering it (UI5 &ge; 1.78; `t_arg` = text, mode), and
-`FORMATTING-setCustomCurrencies` / `-addCustomCurrencies` register currency
-codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge; 1.120) —
-`set…` REPLACES the whole registration, `add…` MERGES codes into it.
+For `control_by_id`, any public control method can be called unless it is on
+the framework's **denylist**. The denylist blocks methods that would break
+abap2UI5 itself: destroying views, re-rendering, detaching the framework's
+handlers. Ordinary setters and toggles (`setVisible`, `toggleBy`,
+`enablePostButton`, …) simply work. A small set of methods also gets typed
+arguments.
+
+`control_global` and `binding_call` are strict allow lists: only the listed
+global objects and the binding methods `filter` / `sort` can be called. Three
+of those objects are less obvious than the rest:
+
+- `POPUP-setWithinArea` confines every popup to one control instead of to the
+  window (UI5 &ge; 1.89; an empty argument releases it again)
+- `INVISIBLE_MESSAGE-announce` reads a text out to a screen reader without
+  rendering it (UI5 &ge; 1.78; `t_arg` = text, mode)
+- `FORMATTING-setCustomCurrencies` / `-addCustomCurrencies` register currency
+  codes the standard `sap.ui.model.type.Currency` does not know (UI5 &ge;
+  1.120). `set…` REPLACES the whole registration, `add…` MERGES codes into
+  it.
 
 ```abap
 " toggle a MessagePopover open, anchored to the pressing button, no roundtrip

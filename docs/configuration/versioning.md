@@ -60,10 +60,9 @@ built-in popups whose successor is the
 - it is not API. What it holds is listed on
   [Deprecations](/resources/deprecations) with the replacement for each.
 
-An object leaves the package only when it is removed, and the framework's
-removal plan orders that: documentation first, then the samples, then the
-code, and a removal is a `BREAKING` entry in the changelog with the release
-it happened in.
+An object leaves the package only when it is removed. The framework's removal
+plan sets the order: documentation first, then the samples, then the code. A
+removal is a `BREAKING` entry in the changelog with the release it happened in.
 
 ## How Deprecations Are Announced
 
@@ -81,13 +80,12 @@ Three places, in this order:
    *obsolete* in its documentation comment and stays callable; the
    [API reference](/resources/api) leaves it out.
 
-There is no fixed period between a deprecation and its removal. What the
-history shows: the bulk of the removals of 2026 shipped in 1.144.1 and
-1.145.0 (September 2026), each with its replacement on the deprecations page,
-and the frozen package keeps the larger pieces - the predecessor builder, the
-popups, the utility classes - compiling across them. Run the linter with
-`--fix` before an upgrade; it rewrites the mechanical part and reports the
-rest.
+There is no fixed period between a deprecation and its removal. The history
+shows this: most of the removals of 2026 shipped in 1.144.1 and 1.145.0
+(September 2026), each with its replacement on the deprecations page. The frozen
+package keeps the larger pieces compiling across them: the predecessor builder,
+the popups, the utility classes. Run the linter with `--fix` before an upgrade;
+it rewrites the mechanical part and reports the rest.
 
 ## How to Upgrade
 
@@ -139,10 +137,10 @@ cache-buster that follows the newest OpenUI5 -
 
 ## Rollback
 
-Switch the abapGit repository back to the previous tag and pull; the objects
-of the newer release are overwritten with the older ones, and an object the
-older release does not have is deleted by the pull. The frontend BSP, if one
-is installed, goes back the same way.
+Switch the abapGit repository back to the previous tag and pull. The objects of
+the newer release are overwritten with the older ones. An object the older
+release does not have is deleted by the pull. The frontend BSP, if one is
+installed, goes back the same way.
 
 What a rollback does not undo is the draft table: rows written by the newer
 release stay in `Z2UI5_T_01` until they expire. A draft is the serialized app

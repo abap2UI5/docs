@@ -301,7 +301,7 @@ export default defineConfig({
             link: "/cookbook/view/definition",
             collapsed: true,
             items: [
-              { text: "Definition", link: "/cookbook/view/definition" },
+              { text: "Building a View", link: "/cookbook/view/definition" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
             ],
@@ -322,7 +322,7 @@ export default defineConfig({
               { text: "Tables", link: "/cookbook/model/tables" },
               { text: "Trees", link: "/cookbook/model/trees" },
               { text: "Device Model", link: "/cookbook/model/device_model" },
-              { text: "Size Limit", link: "/cookbook/model/size_limit" },
+              { text: "More than 100 Rows", link: "/cookbook/model/size_limit" },
             ],
           },
           {
@@ -330,26 +330,26 @@ export default defineConfig({
             link: "/cookbook/event_navigation/life_cycle",
             collapsed: true,
             items: [
-              { text: "Life Cycle", link: "/cookbook/event_navigation/life_cycle" },
+              { text: "App Structure: init, navigated, event", link: "/cookbook/event_navigation/life_cycle" },
               {
                 text: "Event",
                 link: "/cookbook/event_navigation/backend",
                 items: [
-                  { text: "Backend", link: "/cookbook/event_navigation/backend" },
-                  { text: "Frontend", link: "/cookbook/event_navigation/frontend" },
+                  { text: "Handling Events in ABAP", link: "/cookbook/event_navigation/backend" },
+                  { text: "Frontend Actions", link: "/cookbook/event_navigation/frontend" },
                 ],
               },
               {
                 text: "Navigation",
                 link: "/cookbook/event_navigation/navigation/inner_app",
                 items: [
-                  { text: "Inner App", link: "/cookbook/event_navigation/navigation/inner_app" },
-                  { text: "Cross App", link: "/cookbook/event_navigation/navigation/cross_app" },
-                  { text: "Hash", link: "/cookbook/event_navigation/navigation/hash" },
+                  { text: "Navigating Between Apps", link: "/cookbook/event_navigation/navigation/inner_app" },
+                  { text: "Launchpad Navigation", link: "/cookbook/event_navigation/navigation/cross_app" },
+                  { text: "URL Hash and Routing", link: "/cookbook/event_navigation/navigation/hash" },
                   { text: "App State, Share, Bookmark", link: "/cookbook/event_navigation/navigation/app_state" },
                 ],
               },
-              { text: "Exception", link: "/cookbook/event_navigation/exception" },
+              { text: "Errors and Exceptions", link: "/cookbook/event_navigation/exception" },
             ],
           },
           {
@@ -391,7 +391,7 @@ export default defineConfig({
             link: "/cookbook/device_capabilities/info",
             collapsed: true,
             items: [
-              { text: "Info", link: "/cookbook/device_capabilities/info" },
+              { text: "Frontend Info", link: "/cookbook/device_capabilities/info" },
               { text: "Camera", link: "/cookbook/device_capabilities/camera" },
               {
                 text: "Geolocation",
@@ -418,6 +418,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: "Lock", link: "/cookbook/expert_more/lock" },
+              { text: "Lock: Full Source", link: "/cookbook/expert_more/lock_sources" },
               { text: "Statefulness", link: "/cookbook/expert_more/statefulness" },
               { text: "WebSocket", link: "/cookbook/expert_more/websocket" },
               { text: "OData", link: "/cookbook/expert_more/odata" },
@@ -439,6 +440,7 @@ export default defineConfig({
               { text: "RAP", link: "/cookbook/eml_cds_sql/rap" },
               { text: "EML", link: "/cookbook/eml_cds_sql/eml" },
               { text: "Draft Handling", link: "/cookbook/eml_cds_sql/draft_handling" },
+              { text: "RAP Draft: The Full Edit Screen", link: "/cookbook/eml_cds_sql/draft_edit_screen" },
               { text: "CDS", link: "/cookbook/eml_cds_sql/cds" },
               { text: "ABAP SQL", link: "/cookbook/eml_cds_sql/abap_sql" },
             ],

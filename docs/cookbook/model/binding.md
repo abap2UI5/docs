@@ -114,7 +114,7 @@ ENDCLASS.
 The view is built once, in the `check_on_navigated( )` branch; the `POST`
 branch only reads `name`, which the framework has already written back. It
 does not call `view_display( )` again — the view on screen is still right,
-only the data changed. See [Life Cycle](/cookbook/event_navigation/life_cycle)
+only the data changed. See [App Structure](/cookbook/event_navigation/life_cycle)
 for why every app is shaped this way.
 
 

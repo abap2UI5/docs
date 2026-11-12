@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: The go-live checklist of an abap2UI5 installation - the six things to set before business users reach an app, where each is set and how to verify it, a production user exit to copy, and one row per operational topic.
+description: The go-live checklist of an abap2UI5 installation - the six things to set before business users reach an app, where each is set and how to verify it. With a production user exit to copy, and one row per operational topic.
 ---
 # Go-Live Checklist
 

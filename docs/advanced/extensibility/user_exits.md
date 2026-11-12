@@ -43,15 +43,19 @@ the same result is read once more for its `t_security_header`, which every
 response of the handler carries. The handler caches the structure per
 request, so the method is not called a second time for the headers.
 
-**`set_config_http_post`** is what the backend decides per roundtrip, and the
-framework asks for it wherever it needs one of its fields, with a fresh
-empty structure each time: the CSRF check on every POST and HEAD, before any
-app code runs; the roundtrip monitor, to see whether it is switched on; the
-draft cleanup on an app's first start; the error response, to decide how
-much of an exception the browser may see; and the start page's check of the
-same flag. That is several calls in one request, so the method has to be
-cheap and idempotent — the same input gives the same output, and nothing
-changes because it ran.
+**`set_config_http_post`** is what the backend decides per roundtrip. The
+framework asks for it wherever it needs one of its fields, with a fresh empty
+structure each time:
+
+- the CSRF check on every POST and HEAD, before any app code runs
+- the roundtrip monitor, to see whether it is switched on
+- the draft cleanup on an app's first start
+- the error response, to decide how much of an exception the browser may see
+- the start page's check of the same flag
+
+That is several calls in one request, so the method has to be cheap and
+idempotent: the same input gives the same output, and nothing changes because it
+ran.
 
 The example sets the theme and keeps drafts twice as long as the default. A
 class with the settings a productive system needs is on

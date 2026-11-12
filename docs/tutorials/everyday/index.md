@@ -1,15 +1,14 @@
 ---
 outline: [2, 4]
-description: Guides for the tasks that come up in real projects - each one a whole job from the first click to the saved data, built from the cookbook's pieces and backed by a sample you can install.
+description: Guides for the tasks that come up in real projects. Each one is a whole job from the first click to the saved data, built from cookbook chapters and backed by a sample you can install.
 ---
 # Everyday Work
 
 The [steps of the Tutorial](/tutorials/) teach the framework one concept at a
-time, and the [Cookbook](/cookbook/) answers one question per chapter: how to
-bind a table, how to open a popup, how to read a file. Real work is rarely one
-of those on its own. An import, a mass change or an approval screen needs half a
-dozen of them, in the right order, against a business object that has its own
-rules.
+time. The [Cookbook](/cookbook/) answers one question per chapter: how to bind a
+table, how to open a popup, how to read a file. Real work is rarely one of those
+on its own. An import, a mass change or an approval screen needs half a dozen of
+them, in the right order, against a business object that has its own rules.
 
 The guides here take one such job and walk through it from start to finish:
 what the user sees, which roundtrip does what, where the business logic stays,
@@ -61,7 +60,7 @@ The README of the repository lists every branch and the release each one needs.
 ## Suggest a Guide
 
 A guide belongs here when the job is common, takes more than one cookbook
-chapter, and has a decision in it that a reader would otherwise get wrong the
-first time: all or nothing versus row by row, a draft versus an active
-instance, where a check belongs. Suggestions are welcome in the
+chapter, and contains a decision that is easy to get wrong the first time.
+Examples of such decisions: all or nothing versus row by row, a draft versus an
+active instance, where a check belongs. Suggestions are welcome in the
 [discussions](https://github.com/abap2UI5/abap2UI5/discussions).

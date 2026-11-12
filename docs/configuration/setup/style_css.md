@@ -22,7 +22,7 @@ In the XML view you then reference your class via the `class` property:
         )->a( n = `class` v = `myRedButton` )
 ```
 
-The `class` lands on the control's outermost element, and a rule there loses wherever the theme styles an element inside it. A button's text color is set on its inner element, so `.myRedButton { color: red; }` alone leaves the text as it was; the rule above reaches into the button for that reason - through an internal class, with the caveat the tips below give. The same goes for the page: `body { background-color: … }` loses to the theme's `.sapUiBody` rule, and an `App` paints the theme's background over the body anyway.
+The `class` lands on the control's outermost element, and a rule there loses wherever the theme styles an element inside it. A button's text color is set on its inner element, so `.myRedButton { color: red; }` alone leaves the text as it was. That is why the rule above reaches into the button through an internal class. The tips below say what that costs. The same goes for the page: `body { background-color: … }` loses to the theme's `.sapUiBody` rule, and an `App` paints the theme's background over the body anyway.
 
 ## When to Use Custom CSS
 

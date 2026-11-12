@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_016
-description: Store files in a RAP business object and give them back - upload with the FileUploader into a static action with a deep parameter, a list that never loads the content, download by key and delete through the business object.
+description: Store files in a RAP business object and give them back - upload with the FileUploader into a static action with a deep parameter. Then a list that never loads the content, download by key and delete through the business object.
 ---
 # File Attachments
 
@@ -38,10 +38,10 @@ action instead:
 static action uploadFile deep parameter z2ui5_a_smps_file_upload result [1] $self;
 ```
 
-The action is the only way in, so every file goes through the same checks -
-the behavior pool refuses an empty file with a message - no matter whether
-it comes from this app, a Fiori elements UI or another program. The
-parameter is deep: a description on the first level, and the file one level
+The action is the only way in, so every file goes through the same checks. For
+example, the behavior pool refuses an empty file with a message. That holds
+whether the file comes from this app, a Fiori elements UI or another program.
+The parameter is deep: a description on the first level, and the file one level
 below, as content, MIME type and name.
 
 ## Step 2: Upload

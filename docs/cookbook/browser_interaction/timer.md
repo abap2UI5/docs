@@ -103,7 +103,9 @@ ELSEIF client->check_on_event( `FIRE_OPEN_TAB` ).
 
 There is one timer at a time. Calling `start_timer` again before the previous one fires replaces it — useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke.
 
-Every roundtrip cancels the pending timer, which is why a poll re-arms it in every response that keeps it going — and why no timer survives an app switch: the `nav_app_call( )` or `nav_app_leave( )` that changes the app is a roundtrip, and the timer that was pending is gone before the next app's `main( )` runs. A tick that comes due while a roundtrip is in flight — a popup's own event, a Back/Forward restore — is not dropped and does not abort that request: it waits for the response to land and fires right after it.
+Every roundtrip cancels the pending timer. That is why a poll starts the timer again in every response that keeps it going. It is also why no timer survives an app switch: the `nav_app_call( )` or `nav_app_leave( )` that changes the app is a roundtrip, and the pending timer is gone before the next app's `main( )` runs.
+
+A tick can come due while another roundtrip is still running, for example a popup's own event or a Back/Forward restore. Such a tick is not dropped and does not abort that request. It waits for the response and fires right after it.
 
 ## Without the Busy Indicator
 

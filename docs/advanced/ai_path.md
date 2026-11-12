@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: The recommended way to set up an AI assistant for abap2UI5 development in three steps - one plugin, one check command, one browser - with what each step gives you, what it costs, and a map of every other tool and when to add it.
+description: The recommended way to set up an AI assistant for abap2UI5 development in three steps - one plugin, one check command, one browser. With what each step gives you and costs, and a map of every other tool and when to add it.
 ---
 # AI Setup: The Recommended Path
 
@@ -84,6 +84,8 @@ picture of the screen.
 | 3 | a screenshot of the running app, and tools to fill fields and press buttons in it | a browser download, and about a minute for the first build |
 
 ## The Tool Map
+
+![The AI tools on two axes - who acts, you or the AI, and whether an SAP system is needed; the recommended path is the Claude Code or Copilot plugin and the MCP server as step 1 and the linter as step 2](/advanced/ai-tool-map.svg)
 
 Every other tool is an addition to these steps. Add one when its row
 describes what you need.

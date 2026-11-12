@@ -10,7 +10,7 @@ description: Bind a view to an OData V2 service next to the ABAP model with the 
 By default, you bind public attributes of your class to UI5 properties with `_bind`. For cases where you need access to large datasets, you can also use existing OData services. OData offers features like pagination and growing that improve performance with large amounts of data.
 
 ## Define Additional Model
-As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. The browser fetches the service itself, so it has to be on the same origin as the abap2UI5 page and active in `SICF`, and the logged-in user needs the authorization for it — the ABAP side of the app never reads it. The action below creates the model and exposes it under the name `FLIGHT`:
+As an example, we use the test OData service `/sap/opu/odata/DMO/UI_FLIGHT_R_V2/`, available on most ABAP systems. The browser fetches the service itself; the ABAP side of the app never reads it. So the service has to be on the same origin as the abap2UI5 page and active in `SICF`, and the logged-in user needs the authorization for it. The action below creates the model and exposes it under the name `FLIGHT`:
 ```abap
 client->follow_up_action(
     val   = z2ui5_if_client=>cs_event-set_odata_model
@@ -19,7 +19,7 @@ client->follow_up_action(
         ( `FLIGHT` ) ) ).
 ```
 
-`t_arg` is positional: the service URL, the model name (empty for the view's default model), and an optional third argument, the URI of an annotation file the model loads with its metadata — what smart controls read their `UI.LineItem` and value-help annotations from. The model belongs to the main view: it is created once the action runs and destroyed with the next `view_display( )`, so the action goes next to the display, in the navigated branch, not into every handler.
+`t_arg` is positional: the service URL, the model name (empty for the view's default model), and an optional third argument. The third argument is the URI of an annotation file the model loads with its metadata. Smart controls read their `UI.LineItem` and value-help annotations from it. The model belongs to the main view: it is created when the action runs and destroyed with the next `view_display( )`. So the action goes next to the display, in the navigated branch, not into every handler.
 ## Bind Data
 Next, bind the OData model to your view definition. Since we use a non-default model, name the model explicitly for each binding:
 ```abap

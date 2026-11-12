@@ -4,13 +4,12 @@ description: Unit-test the app class like any ABAP class — the data methods ar
 ---
 # Step 12: Unit Tests
 
-The app is in production since [Step 11](/tutorials/step-11), and
-changes will keep coming — a new filter, a second editable field, the next
-framework release. What lets the next transport leave with confidence is the
-same thing as in every other ABAP project: unit tests. This step adds them to
-the walkthrough app, and the point of it is how little abap2UI5 gets in the
-way — the methods worth testing are plain ABAP, so the test class is one you
-could have written before ever hearing of this framework.
+The app is in production since [Step 11](/tutorials/step-11), and changes will
+keep coming — a new filter, a second editable field, the next framework release.
+What lets the next transport leave with confidence is the same thing as in every
+other ABAP project: unit tests. This step adds them to the walkthrough app. It
+shows that abap2UI5 needs nothing special for this: the methods worth testing
+are plain ABAP. So the test class looks like any other ABAP Unit test class.
 
 ## The Class Under Test
 
@@ -364,23 +363,22 @@ different entry points:
   `s_edit` — are what tests fill and assert on. The UI enters the class the
   same way the test does.
 
-What the unit tests deliberately do not cover is the view: whether `Table`
-has an `items` aggregation is not a question ABAP can answer. That check
-exists too, without a system — the [abap2UI5 linter](/advanced/linter)
-reconstructs the view from the builder chain and validates it against UI5,
-and the [tooling page](/advanced/tooling) shows how it runs in CI next to
-these tests.
+What the unit tests deliberately do not cover is the view: whether `Table` has
+an `items` aggregation is not a question ABAP can answer. That check exists too,
+and it needs no system. The [abap2UI5 linter](/advanced/linter) reconstructs the
+view from the builder chain and validates it against UI5. The
+[tooling page](/advanced/tooling) shows how it runs in CI next to these tests.
 
 ## Testing the Roundtrip
 
 The tests above stop at the class on purpose: they call the data methods and
-never go through `main( )`. For the whole user session — the typed value,
-the event, the framework's dispatch, the draft —
+never go through `main( )`. A test can also cover the whole user session: the
+typed value, the event, the framework's dispatch, the draft. For that,
 [abap2UI5/headless-frontend](https://github.com/abap2UI5/headless-frontend)
-plays the browser's half of the protocol inside ABAP, so a test clicks and
+plays the browser's part of the protocol inside ABAP. A test then clicks and
 types against the running framework without a browser or HTTP. It is a
-repository of its own, not yet released, and its API follows the
-framework's engine rather than its released interface.
+repository of its own, not yet released, and its API follows the framework's
+engine rather than its released interface.
 
 ## What to Take Away
 

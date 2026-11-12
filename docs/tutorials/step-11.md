@@ -4,12 +4,11 @@ description: Take the finished walkthrough app to a real system — real data, a
 ---
 # Step 11: From Playground to Production
 
-The app from [Step 10](/tutorials/step-10) is finished — and so
-far it has run in the playground, or in your development system against demo
-data. This step takes it to the system your users work on. Unlike the ten
-steps before it, there is nothing new to build here: everything this step
-needs already has a configuration chapter, and what follows is those chapters
-in the order the invoice app meets them.
+The app from [Step 10](/tutorials/step-10) is finished — and so far it has run
+in the playground, or in your development system against demo data. This step
+takes it to the system your users work on. Unlike the ten steps before it, this
+step builds nothing new. Everything it needs already has a configuration
+chapter. What follows is those chapters in the order the invoice app meets them.
 
 If your framework installation is not done yet, that comes first — the
 [Quickstart](/get_started/quickstart) is the end-to-end path, including the
@@ -31,15 +30,15 @@ without SD.
 
 ## Pin the Framework
 
-Your app class travels through the landscape; the framework underneath it
-should hold still while it does. There is no fixed "stable" version — instead,
-pin the installation to a [release](https://github.com/abap2UI5/abap2UI5/releases/)
-rather than tracking `main`, and update deliberately:
+Your app class travels through the landscape; the framework underneath it should
+hold still while it does. There is no fixed "stable" version. Install a
+[release](https://github.com/abap2UI5/abap2UI5/releases/) and not `main`, and
+update when you decide to. Three pages help: the
 [Go-Live Checklist](/configuration/productive_usage) explains the policy, the
 [Release Notes](/resources/changelog) list every change, and the
-[Deprecations](/resources/deprecations) page names what is on its way out and
-what replaces it. If other abap2UI5 apps already run in production and you
-want new development decoupled from them, that page also points to the
+[Deprecations](/resources/deprecations) page names what will be removed and what
+replaces it. If other abap2UI5 apps already run in production and you want new
+development decoupled from them, that page also points to the
 [renaming feature](/advanced/renaming) — a second, independently versioned
 installation of the framework.
 
@@ -72,15 +71,16 @@ on the service node you created in the Quickstart. The framework's own
 defaults (a Content-Security-Policy, security response headers, CSRF
 protection on every POST) are already on; nothing to configure.
 
-**Authorization** — who may do *what* — stays yours, and the invoice app
-makes it concrete: whoever reaches the service can press *Read Invoices*, and
-whoever can open the edit dialog can press *Save*. The framework runs no
-check in between — the [Authorization](/configuration/authorization) page
-shows both places to put one: in the HTTP handler, gating which app classes a
-user may start at all, and in the app class, where an `AUTHORITY-CHECK` at
-the top of `main` — or one in `data_update`, if reading and writing separate —
-protects the operation itself. If you check only at the service level, make
-sure users cannot reach the app through navigation from another one.
+**Authorization** — who may do *what* — stays yours, and the invoice app makes
+it concrete: whoever reaches the service can press *Read Invoices*, and whoever
+can open the edit dialog can press *Save*. The framework runs no check in
+between. The [Authorization](/configuration/authorization) page shows both
+places to put one. The first is the HTTP handler, which decides who may reach
+the service at all. The second is the app class: an `AUTHORITY-CHECK` at the top
+of `main` protects the operation itself. Put one in `data_update` as well if
+reading and writing need separate authorizations. If you check only at the
+service level, make sure users cannot reach the app through navigation from
+another one.
 
 ## Give Users a Way In
 
@@ -90,12 +90,12 @@ Your users do not open `SICF`. What they need is the URL from the Quickstart:
 https://<host>:<port>/sap/bc/<your_service>?app_start=zcl_app_walkthrough
 ```
 
-That URL is a bookmark, an intranet link — or a tile: the
+That URL can be a bookmark, an intranet link, or a tile. The
 [Deployment Scenarios](/configuration/installation) page says what launching
-looks like per system, from the [Fiori Launchpad](/configuration/launchpad) on
-S/4 Private Cloud and On-Premise to the tile chain on
-[S/4 Public Cloud](/configuration/s4_public_cloud), and as a tile in
-[SAP Mobile Start](/configuration/mobile_start) on a phone.
+looks like per system. That ranges from the
+[Fiori Launchpad](/configuration/launchpad) on S/4 Private Cloud and On-Premise
+to the tile chain on [S/4 Public Cloud](/configuration/s4_public_cloud). On a
+phone the app can be a tile in [SAP Mobile Start](/configuration/mobile_start).
 
 ## What to Take Away
 

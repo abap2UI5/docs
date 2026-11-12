@@ -5,7 +5,7 @@ samples:
   - z2ui5_cl_smp_app_197
 description: Backend events in abap2UI5 - client->_event( ) attaches an event name to a control and main( ) handles it, with arguments from the source control, the event parameters or the model, and the options per event in s_ctrl.
 ---
-# Backend
+# Handling Events in ABAP
 
 An event is what the user did: a button press, a row click, a changed field.
 `client->_event( )` attaches an event name to a control, and
@@ -82,8 +82,8 @@ has the `id` of the control, which UI5 qualifies with the view, for example
 
 `$event>sId` reads the attribute `sId` of the UI5 event object, which is the
 name of the event (`press`). `$event` is written differently from the other
-two: without the `${...}` around it and without a leading `/`, because it
-names the event object itself.
+two. It has no `${...}` around it and no leading `/`, because it names the
+event object itself.
 
 ::: warning
 You can read any attribute of the event object, but use only public and
@@ -121,8 +121,8 @@ ENDIF.
 
 An argument that starts with `$` or `{` is written into the view **raw**, as a
 live UI5 expression. That is how `${$source>/KEY}` reaches the handler as the
-row's value. The same rule is a risk for plain data: a text a user typed, or a
-key from a foreign system, may start with one of those characters and would
+row's value. The same rule is a risk for plain data. A text a user typed, or a
+key from a foreign system, may start with one of those characters. It would
 then be *evaluated* instead of passed. An event that sends data, not bindings,
 sets `s_ctrl-check_arg_literal`. It quotes every argument of that event as a
 string; see the next section.
@@ -153,10 +153,10 @@ The live search is the case that needs two of them at once:
                                                    check_no_busy    = abap_true ) ) )
 ```
 
-Without the first flag the busy guard drops every keystroke that lands on a
-roundtrip already in flight, and the list stays at the value of the last
-*completed* roundtrip until the user pauses and types again. Without the
-second one the overlay flashes over the field while they type. Sample
+Without the first flag the busy guard drops every keystroke that arrives
+while a roundtrip is still running. The list then stays at the value of the
+last *completed* roundtrip until the user pauses and types again. Without the
+second flag the overlay flashes over the field while they type. Sample
 `Z2UI5_CL_SMP_APP_059` on [Tables](/cookbook/model/tables) is the live search
 written out in full.
 
@@ -194,11 +194,12 @@ The getter takes no arguments on purpose. To *call* a control, use
 a read.
 
 ::: tip It never throws, it logs
-A closed slot, an unknown id, a method the control does not have, or a getter
-that raises — each is written to the browser console and sent as the empty
-string. That is deliberate: an argument expression is evaluated while UI5
-dispatches the handler, so an expression that throws loses the whole **event**,
-leaving a button that does nothing and an app with no way to tell.
+Four things can go wrong in such an argument: the view is closed, the id is
+unknown, the control does not have the method, or a getter raises. Each case
+is written to the browser console and sent as the empty string. That is
+deliberate. An argument expression is evaluated while UI5 dispatches the
+handler, so an expression that throws would lose the whole **event**. The user
+would see a button that does nothing, and the app could not tell.
 :::
 
 `$controller.slotById( slot, id )` hands the control itself over, for a
@@ -207,10 +208,10 @@ miss — and a method call on that `null` is exactly the throw the tip above
 describes, so prefer `slotValue( )` whenever you want a value.
 
 `$controller.textPath( control )` is the other helper that addresses the live
-control tree rather than data: it answers the ancestor-text breadcrumb of the
-control that fired — the titles and labels on the way up from it — so a
-handler can tell which panel or tab a press came from without an id of its
-own: ``arg = `$controller.textPath( ${$parameters>/item} )` ``.
+control tree and not data. It returns the titles and labels on the way up from
+the control that fired. A handler can use them to tell which panel or tab a
+press came from, without an id of its own:
+``arg = `$controller.textPath( ${$parameters>/item} )` ``.
 
 ## Model Properties
 Send the current value of a bound attribute with the event. `_bind( )` returns

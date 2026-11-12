@@ -4,7 +4,7 @@ samples:
   - z2ui5_cl_smp_app_073
   - z2ui5_cl_smp_app_316
   - z2ui5_cl_smp_app_492
-description: Read the query string and the launchpad startup parameters, open a same-origin URL in a new tab, redirect, trigger a mail, SMS or phone call with the URL helper action, push a history entry, and log out.
+description: Read the query string and the launchpad startup parameters, open a URL in a new tab, redirect, start a mail or a phone call, add a history entry, and log out.
 ---
 # URL Handling
 
@@ -21,9 +21,9 @@ DATA(lv_search) = client->get( )-s_config-search.
 `s_config-search` is the raw query string of the page
 (`?app_start=…&sap-client=…`), and `s_config-origin`, `-pathname` and `-hash`
 are the other parts of the browser location. Inside the Fiori Launchpad the
-startup parameters of the target mapping do not arrive in the query string: they
-are parsed once per roundtrip into `client->get( )-t_comp_params`, a name/value
-table, and the same table carries the `--param` entries of the
+startup parameters of the target mapping do not arrive in the query string.
+They are parsed once per roundtrip into `client->get( )-t_comp_params`, a
+name/value table. The same table carries the `--param` entries of the
 [Excel add-in's manifest](/integration/excel#the-manifest):
 ```abap
 DATA(lv_order) = VALUE #( client->get( )-t_comp_params[ n = `SalesOrder` ]-v OPTIONAL ).
@@ -94,10 +94,10 @@ bookmarkable and the Back button steps through the states you pushed:
 client->hash_set( `&my-app-state=detail` ).
 ```
 
-That is one of three things that can own the URL hash, and which one an app
-should use is a decision of its own — see
-[Navigation → Hash](/cookbook/event_navigation/navigation/hash), which also
-covers framework routing, the twin `hash_replace( )` that writes *without* a
+That is one of three things that can own the URL hash. Which one an app
+should use is a decision of its own; see
+[URL Hash and Routing](/cookbook/event_navigation/navigation/hash). That page
+also covers framework routing, `hash_replace( )`, which writes *without* a
 history entry, and `cs_event-hash_back` for stepping back from ABAP.
 
 ::: tip Register a listener and the value becomes the whole hash

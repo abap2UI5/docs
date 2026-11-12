@@ -6,13 +6,13 @@ samples:
   - z2ui5_cl_smp_app_097
   - z2ui5_cl_smp_app_098
   - z2ui5_cl_smp_app_176
-description: Nested views in abap2UI5 - nest_view_display( ) renders a view fragment into an anchor control of the main view, so one part of the screen is re-rendered on its own; the parameters, the second slot and a master-detail with the FlexibleColumnLayout.
+description: Nested views in abap2UI5 - nest_view_display( ) renders a second view into a control of the main view, so one part of the screen is re-rendered on its own. With the parameters and a master-detail example.
 ---
 # Nested Views
 
 A **nested view** in abap2UI5 is a separate XML view fragment that you inject into a *placeholder* inside another view. The main view stays on screen; only the nested fragment is rendered (and later re-rendered or refreshed) independently. This is the standard pattern for master-detail screens, side panels, tab content, and anywhere you want one part of the UI to update without rebuilding the whole page.
 
-If you know SAPUI5's [nested views](https://sapui5.hana.ondemand.com/sdk/#/topic/df8c9c3d6f2a4d728ba7d6f4cb6c6d35) (`<mvc:XMLView viewName="..."/>`), the goal is the same — split the UI into independently managed pieces. In abap2UI5 the wiring is done from ABAP at runtime: instead of referencing a static view file, you build the nested view's XML in ABAP and tell the client to plug it into a named slot.
+If you know SAPUI5's [nested views](https://sapui5.hana.ondemand.com/sdk/#/topic/df8c9c3d6f2a4d728ba7d6f4cb6c6d35) (`<mvc:XMLView viewName="..."/>`), the goal is the same: split the UI into independently managed pieces. In abap2UI5 the wiring is done from ABAP at runtime. You do not reference a static view file. You build the nested view's XML in ABAP and tell the client which control of the main view to put it into.
 
 ## The Basic Pattern
 
@@ -90,7 +90,7 @@ ENDCLASS.
 
 What happens at runtime: `view_display` paints the main view; the page with `id="test"` sits on screen. When the user clicks the button, `nest_view_display` ships the nested XML to the client, which calls `removeAllContent( )` and then `addContent( ... )` on the control with that id. The nested fragment appears inside the page — without re-rendering the page itself.
 
-Press **Run** and then the button: the main view stays exactly where it is, the nested page appears inside it, and typing in the nested input and pressing *event* proves the two halves share one model — the toast reads back what the nested view bound.
+Press **Run** and then the button. The main view stays exactly where it is, and the nested page appears inside it. Now type in the nested input and press *event*: the toast reads back what the nested view bound, which shows that the two halves share one model.
 
 The full pattern (re-render everything vs. main only vs. nested only) is in `Z2UI5_CL_SMP_APP_065`.
 
@@ -103,7 +103,7 @@ The full pattern (re-render everything vs. main only vs. nested only) is in `Z2U
 | `method_insert`  | UI5 mutator method called on the anchor to add the nested view (e.g. `addContent`).                |
 | `method_destroy` | Optional. UI5 mutator method that removes the previous nested content before inserting the new one. |
 
-`method_insert` and `method_destroy` are plain UI5 control methods — pick whichever the anchor exposes. The choice depends on the anchor's aggregation:
+`method_insert` and `method_destroy` are plain UI5 control methods; pick the ones the anchor control has. The choice depends on the anchor's aggregation, which is the named list of child controls the nested view goes into:
 
 | Anchor control          | Typical `method_insert`     | Typical `method_destroy`        |
 | ----------------------- | --------------------------- | ------------------------------- |
@@ -259,7 +259,7 @@ Two details the demo depends on and that are easy to leave out:
   is true exactly once per app instance; a value help or a sub-app returning
   raises `check_on_navigated( )` alone, and without that branch the screen keeps
   showing whatever the other app left there. See
-  [Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
+  [App Structure](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
 
 The layout is bound editable (`mv_layout`), so events like *full-screen mode* or *close detail* simply update `mv_layout` — the changed model reaches the client with the response by itself. The FCL transitions itself; no view is rebuilt.
 

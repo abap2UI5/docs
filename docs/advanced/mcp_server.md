@@ -10,14 +10,15 @@ system: activate the class, launch the app, look at the screen. So the agent
 writes something plausible, and you are the one who finds out.
 
 [**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) closes that
-loop. It is published as `@abap2ui5/mcp-server` on npm — 1.0.0 is the
-current release, and the four `app_*` tools, `add_agent_setup` and
-`migrate_report` are part of it. It is an [MCP](https://modelcontextprotocol.io) server: a small program
-your AI client starts in the background, which gives the agent a set of tools
-it can call by itself. Those tools let it check a view, **look at a picture of
-it**, deploy the class into a local sandbox, transpile it to Node beside the
-framework, boot the app in a headless browser and read the errors — all on
-your machine, with **no SAP system involved**.
+loop. It is published as `@abap2ui5/mcp-server` on npm — 1.0.0 is the current
+release, and the four `app_*` tools, `add_agent_setup` and `migrate_report` are
+part of it. It is an [MCP](https://modelcontextprotocol.io) server: a small
+program your AI client starts in the background, which gives the agent a set of
+tools it can call by itself. With those tools the agent can check a view and
+**look at a picture of it**. It can deploy the class into a local sandbox,
+transpile it to Node beside the framework, boot the app in a headless browser
+and read the errors. All of that runs on your machine, with **no SAP system
+involved**.
 
 ```
 examples -> app_guide -> validate_view + screenshot_view -> deploy_app -> build_backend -> run_app -> pitfalls
@@ -26,10 +27,13 @@ examples -> app_guide -> validate_view + screenshot_view -> deploy_app -> build_
  already?)                   and what does it LOOK like)                              SCREENSHOT)      does not prove)
 ```
 
-Everything it runs locally is infrastructure that already guards the abap2UI5
-ecosystem in CI: the abaplint transpiler and the open-abap runtime, the
-framework's express shim, the samples-controls build and boot checks, and the
-[linter](/advanced/linter)'s validation core.
+Everything it runs locally is already used in CI across the abap2UI5
+repositories:
+
+- the abaplint transpiler and the open-abap runtime
+- the framework's express shim
+- the samples-controls build and boot checks
+- the [linter](/advanced/linter)'s validation core
 
 ## What "MCP" means here
 
@@ -58,10 +62,10 @@ level whose tools you want.
 | 1 | the linter | about 3 MB, a minute | `validate_view`, `screenshot_view` |
 | 2 | clones of the framework and the sample repositories | about 110 MB | the same tools offline, plus `scope_of` and `deploy_app` |
 | 3 | a browser, and one build | a browser download, about a minute | `build_backend`, `run_app`, `interact_app`, `run_unit_tests`, `verify_app` and the `app_*` tools |
- Each level adds the ones below it, and a tool whose
-prerequisites are missing answers with a message naming what it needs rather
-than failing — the server starts either way. `setup_status` says in one read
-what resolves, what is built and what is still missing.
+ Each level adds the ones below it. A tool whose prerequisites are missing
+ answers with a message that names what it needs. The server starts either way.
+ `setup_status` says in one read what resolves, what is built and what is still
+ missing.
 
 ### Level 0 — no checkout at all
 
@@ -110,10 +114,10 @@ claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server -p @abap2ui5/linter
 
 ### Level 2 — the sample catalogs and deploying (about 110 MB)
 
-Makes the Level 0 tools read local clones instead of the GitHub mirror —
-offline, and as current as your last pull — and adds `scope_of` and
-`deploy_app`. `scope_of` reads the OpenUI5 sources and so needs an OpenUI5
-checkout as well: `OPENUI5_SRC`, else `../fork-openui5` beside the
+Makes the Level 0 tools read local clones instead of the GitHub mirror. They
+then work offline and are as current as your last pull. This level also adds
+`scope_of` and `deploy_app`. `scope_of` reads the OpenUI5 sources and so needs
+an OpenUI5 checkout as well: `OPENUI5_SRC`, else `../fork-openui5` beside the
 samples-controls clone.
 
 ```sh
@@ -126,12 +130,12 @@ cd abap2UI5 && npm ci && cd ../samples-controls && npm ci
 
 `examples` needs only the clones — no install — and it is the cheapest useful
 thing here. It answers *"has somebody already built a value help, a tree,
-navigation between two apps?"* out of **every app the three repositories
-hold** — several hundred of them, and the catalog below says how many
-today — and hands back a class to read rather than a snippet to trust.
-Any one of the three is enough to start; a missing clone is reported in the
-answer, not fatal. All three are sources of the one
-[sample catalog](https://abap2ui5.github.io/samples-site/), which is where to read what each covers —
+navigation between two apps?"* out of **every app the three repositories hold**.
+That is several hundred apps; the catalog below says how many today. The answer
+is a whole class to read, not a snippet to trust. Any one of the three is enough
+to start; a missing clone is reported in the answer, not fatal. All three are
+sources of the one [sample catalog](https://abap2ui5.github.io/samples-site/),
+which is where to read what each covers —
 [Learn](https://abap2ui5.github.io/samples-site/#learn),
 [Controls](https://abap2ui5.github.io/samples-site/),
 [Stack](https://abap2ui5.github.io/samples-site/).
@@ -200,15 +204,15 @@ stdio shape:
 To run a checkout instead, swap those two lines for `"command": "node"` and
 `"args": ["/path/to/mcp-server/server.mjs"]`.
 
-The three `env` entries point the server at checkouts that are not its
-siblings — which they cannot be when it runs from npx. Set one only for a
-checkout you actually have, and to its real path; leave the others out, and
-leave `env` out entirely without any. When a variable is set, the server uses
-only that path. With a placeholder or a wrong path, the tools report the
-checkout as missing: they do not fall back to the linter npx installed
-beside the server, to the GitHub mirror, or — for `A2UI5_HOME` — to the
-`@abap2ui5/node-runtime` backend. VS Code wants the same object under a top-level `"servers"` key
-instead of `"mcpServers"`.
+The three `env` entries point the server at checkouts that are not its siblings
+— which they cannot be when it runs from npx. Set one only for a checkout you
+actually have, and to its real path; leave the others out, and leave `env` out
+entirely without any. When a variable is set, the server uses only that path.
+With a placeholder or a wrong path, the tools report the checkout as missing.
+They do not fall back to the linter npx installed beside the server or to the
+GitHub mirror. For `A2UI5_HOME` they do not fall back to the
+`@abap2ui5/node-runtime` backend either. VS Code wants the same object under a
+top-level `"servers"` key instead of `"mcpServers"`.
 
 ::: tip Using VS Code?
 The [abap2UI5 extension](/advanced/vscode) registers this server for you — no
@@ -256,26 +260,26 @@ Two of these look similar and are not: `screenshot_view` photographs the
 app** (a build, a real roundtrip, real behavior). They cost three orders of
 magnitude apart, and most iterations should end at the first.
 
-`interact_app` and the four `app_*` tools both drive the running app, and
-answer different questions. `interact_app` clicks through a headless browser by
-CSS selector and hands back a picture; `app_start` and `app_act` speak the
-protocol itself and hand back data — which fields the screen has and what is in
-them, which events it offers, what the messages say — and refuse an act the
-screen does not allow, naming what it does. Use the first for what only a
+`interact_app` and the four `app_*` tools both drive the running app, and answer
+different questions. `interact_app` clicks through a headless browser by CSS
+selector and hands back a picture. `app_start` and `app_act` speak the protocol
+itself and hand back data: which fields the screen has and what is in them,
+which events it offers, what the messages say. They refuse an act the screen
+does not allow, and name what it does allow. Use the first for what only a
 rendered page shows, the second for what an event *does*.
 [Agent-Operable Apps](/advanced/agents) describes the snapshot and the tools,
 which the VS Code extension, the agent add-on and cap2UI5 implement as well.
 
-`migrate_report` is the one tool that does not start from an empty class: it
-takes the source of an existing report — and its `.prog.xml`, for the real
-selection texts — and hands back the class that keeps the report's structure.
-The converter is not part of the server and not on npm; it runs from a
-checkout of [abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui)
-(`ABAP_CLOUD_GUI_HOME`, else a sibling `../abap-cloud-gui`, with `npm ci`
-done), and `setup_status` says when it is missing. With `deploy: true` the
-class goes into the sandbox together with the add-on's runtime and the popups
-it calls, and `app_act` with `CGUI_EXECUTE` runs the report — up to the first
-database table it reads, which the local backend does not have.
+`migrate_report` is the one tool that does not start from an empty class. It
+takes the source of an existing report, and its `.prog.xml` for the real
+selection texts. It hands back the class that keeps the report's structure. The
+converter is not part of the server and not on npm. It runs from a checkout of
+[abap-cloud-gui](https://github.com/abap2UI5-addons/abap-cloud-gui)
+(`ABAP_CLOUD_GUI_HOME`, else a sibling `../abap-cloud-gui`, with `npm ci` done).
+`setup_status` says when it is missing. With `deploy: true` the class goes into
+the sandbox together with the add-on's runtime and the popups it calls.
+`app_act` with `CGUI_EXECUTE` then runs the report up to the first database
+table it reads, because the local backend does not have that table.
 [Migrating Classic Reports](/advanced/report_migration) is the whole story.
 
 ## The intended loop

@@ -13,7 +13,7 @@ Embed your abap2UI5 apps into the SAP Fiori Launchpad (FLP) on S/4 On-Premise or
 
 ## Installation
 
-The Launchpad loads the abap2UI5 frontend from the UI5 ABAP repository of your system (as app `z2ui5`). Pull one branch of the [frontend repository](https://github.com/abap2UI5/frontend) via abapGit — every branch ships the frontend app as the BSP `Z2UI5` with the handler `Z2UI5_CL_LP_HANDLER` and the node `/sap/bc/z2ui5`, so the target mapping below is the same whichever you pick, and a system switches by pulling another branch into the same abapGit repository:
+The Launchpad loads the abap2UI5 frontend from the UI5 ABAP repository of your system (as app `z2ui5`). Pull one branch of the [frontend repository](https://github.com/abap2UI5/frontend) via abapGit. Every branch ships the frontend app as the BSP `Z2UI5` with the handler `Z2UI5_CL_LP_HANDLER` and the node `/sap/bc/z2ui5`. So the target mapping below is the same whichever you pick, and a system switches by pulling another branch into the same abapGit repository:
 
 | Branch | What the BSP carries | After an abap2UI5 update |
 |---|---|---|

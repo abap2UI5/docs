@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Setting up an AI agent for abap2UI5 development, step by step - the conventions file it reads, the checks it can run without a system, the MCP server that gives it the build-and-look loop, and the editor.
+description: Setting up an AI agent for abap2UI5 development, step by step - the conventions file it reads, the checks it can run without a system, the MCP server that lets it build and look at an app, and the editor.
 ---
 # Agent Setup
 
@@ -37,10 +37,10 @@ agent can run them on its own:
 npm run check
 ```
 
-The [abap2UI5 linter](/advanced/linter) half is the one that matters
-here: it reconstructs the view from the builder chain and reports the names UI5
-does not have, the properties that do not exist on the release you target, and
-the bindings that point at nothing.
+The [abap2UI5 linter](/advanced/linter) half is the one that matters here. It
+reconstructs the view from the builder chain. Then it reports the names UI5 does
+not have, the properties that do not exist on the release you target, and the
+bindings that point at nothing.
 
 ## Give it the MCP server {#give-it-the-loop}
 
@@ -71,26 +71,28 @@ order they are meant to be used in.
 
 ## From the editor
 
-The [VS Code extension](/advanced/vscode)
-registers that same MCP server for every client in the window — Copilot agent
-mode, Claude Code, anything else speaking MCP — so an agent working in your
-editor has the loop without any separate configuration. Point
-`abap2ui5.mcp.reposRoot` at the folder holding the checkouts and the extension
-passes the paths through.
+The [VS Code extension](/advanced/vscode) registers that same MCP server for
+every client in the window: Copilot agent mode, Claude Code, anything else
+speaking MCP. So an agent working in your editor has these tools without any
+separate configuration. Point `abap2ui5.mcp.reposRoot` at the folder holding the
+checkouts and the extension passes the paths through.
 
 It adds a second server of its own for the half that one deliberately does not
 have: your configured **systems**. An agent can list them, search app classes
-over ADT and get the app rendered on the real system as a screenshot — while
-every credential prompt stays an ordinary VS Code dialog the agent never sees.
+over ADT and get the app rendered on the real system as a screenshot. Every
+credential prompt stays an ordinary VS Code dialog that the agent never sees.
 
 ## Let it operate the app
 
-An agent can also *use* the app it wrote, not only look at it: four tools
-read the screen as data,
-fill fields by model path and fire events by name, over the app's own JSON
-protocol. They exist in the MCP server against the local sandbox, in the VS
-Code extension against your system once you allow it, and as an MCP endpoint
-inside the SAP system for agents working on behalf of users.
+An agent can also *use* the app it wrote, not only look at it. Four tools read
+the screen as data, fill fields by model path and fire events by name, over the
+app's own JSON protocol. They exist in three places:
+
+- in the MCP server, against the local sandbox
+- in the VS Code extension, against your system once you allow it
+- as an MCP endpoint inside the SAP system, for agents working on behalf of
+  users
+
 [Agent-Operable Apps](/advanced/agents) covers all three.
 
 ## Next Steps

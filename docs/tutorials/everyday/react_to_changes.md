@@ -3,7 +3,7 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_011
   - z2ui5_cl_smps_app_012
-description: Do something whenever a RAP business object changes - a log, a mail, a follow-up document - with business events raised in the save sequence and consumed by a handler class, and how the result reaches an abap2UI5 screen.
+description: Do something whenever a RAP business object changes - a log, a mail, a follow-up document. With business events raised in the save sequence and consumed by a handler class, and how the result reaches an abap2UI5 screen.
 ---
 # React to Changes
 

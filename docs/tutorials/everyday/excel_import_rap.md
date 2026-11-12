@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_028
-description: Import an Excel file into a RAP business object - upload with the FileUploader, read with XCO XLSX, check and preview every row, create all rows with one MODIFY ENTITIES and show each refusal on the row it belongs to.
+description: Import an Excel file into a RAP business object - upload with the FileUploader, read with XCO XLSX, check and preview every row. Then create all rows with one MODIFY ENTITIES and show each refusal on the row it belongs to.
 ---
 # Excel Import into RAP
 

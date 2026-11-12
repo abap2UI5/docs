@@ -75,10 +75,9 @@ from an earlier release, so some class names differ from today's.*
 
 ::: details ABAP Cloud
 On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT) and
-mass-activate the pulled objects afterwards — the
-[S/4 Public Cloud](/configuration/s4_public_cloud) page walks through it
-screenshot by screenshot, including the two link choices that cannot be changed
-later.
+mass-activate the pulled objects afterwards. The
+[S/4 Public Cloud](/configuration/s4_public_cloud) page shows every step with a
+screenshot, including the two link choices that cannot be changed later.
 
 ![abapGit for Eclipse: the abapGit Repositories view in ADT](/get_started/image-4.webp)
 :::

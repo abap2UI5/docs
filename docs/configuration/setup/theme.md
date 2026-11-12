@@ -30,7 +30,7 @@ The themes shipped with current UI5 versions are:
 | `sap_fiori_3_hcb`    | Quartz high-contrast black           |
 | `sap_fiori_3_hcw`    | Quartz high-contrast white           |
 
-The Horizon themes, the default among them, need UI5 1.102 or later. On an older release — 1.71, the oldest supported one, or an old UI5 a system serves itself — set a Quartz theme such as `sap_fiori_3`: UI5 there has no fallback for a `sap_` theme it does not ship, so the page loads no theme stylesheet and the controls render unstyled.
+The Horizon themes, the default among them, need UI5 1.102 or later. On an older release, set a Quartz theme such as `sap_fiori_3`. That applies to 1.71, the oldest supported release, and to an old UI5 a system serves itself. UI5 there has no fallback for a `sap_` theme it does not ship. With a Horizon theme the page would load no theme stylesheet, and the controls would render unstyled.
 
 See the official [list of available themes](https://sapui5.hana.ondemand.com/#/topic/4cfe7eff3001447a9d4b0abeaba95166) for the most up-to-date catalog.
 

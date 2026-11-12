@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: abap2UI5 apps in the task pane of Microsoft Excel with the Excel Add-in - a host page on your SAP system, the add-in manifest, the deployment, Excel on the web, and the ExcelBridge control that lets the app read and write the workbook.
+description: abap2UI5 apps in the task pane of Microsoft Excel with the Excel Add-in - a host page on your SAP system, the add-in manifest, the deployment and Excel on the web. And the ExcelBridge control that lets the app read and write the workbook.
 ---
 # Excel Add-in
 
@@ -155,15 +155,20 @@ client->follow_up_action( val   = client->cs_event-control_by_id
                           t_arg = VALUE #( ( `excel` ) ( `write` ) ) ).
 ```
 
-The control answers with the events `OnWritten` and `OnRead`, each carrying the
-`address` of the range and its `rowCount` and `columnCount`, `OnError` with a
-`message` and a `code`, and - with `selectionChange` on - `OnSelectionChange`
-with the `address` the user selected, held back for 300 ms so a drag across
-the sheet is one event. Values keep their types: a string is written as text,
-so a material number keeps its leading zeros and nothing becomes a formula;
-numbers stay numbers and ABAP dates become Excel dates. A call is capped at
-20,000 cells by default. Outside Excel, in a plain browser, the control fires
-`OnError`, so the same app runs in both places.
+The control answers with these events:
+
+- `OnWritten` and `OnRead`, each carrying the `address` of the range and its
+  `rowCount` and `columnCount`
+- `OnError` with a `message` and a `code`
+- `OnSelectionChange` with the `address` the user selected, when
+  `selectionChange` is on. It is held back for 300 ms, so a drag across the
+  sheet is one event.
+
+Values keep their types. A string is written as text, so a material number keeps
+its leading zeros and nothing becomes a formula. Numbers stay numbers, and ABAP
+dates become Excel dates. A call is capped at 20,000 cells by default. Outside
+Excel, in a plain browser, the control fires `OnError`, so the same app runs in
+both places.
 
 The demo app `Z2UI5_CL_XL_DEMO` in the repository is the worked example: a
 material list with *Export to Excel*, *Take selection* and a *Follow

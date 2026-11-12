@@ -6,13 +6,13 @@ samples:
   - z2ui5_cl_smp_app_279
 description: Navigation inside abap2UI5 - switching views within one class, calling another app class with nav_app_call( ), returning with nav_app_leave( ) and handing a result back to the caller.
 ---
-# Inner App
+# Navigating Between Apps
 
 Navigation *inside* one abap2UI5 deployment: switching screens within a class,
 and calling one of your app classes from another. Everything here runs through
 the abap2UI5 backend and its own app stack — it never leaves the page, and the
 launchpad, if there is one, does not hear about it. Navigating between *Fiori*
-apps is a different mechanism: [Cross App](/cookbook/event_navigation/navigation/cross_app).
+apps is a different mechanism: [Launchpad Navigation](/cookbook/event_navigation/navigation/cross_app).
 
 In abap2UI5, each app is a single ABAP class. You can pack all logic into one
 class, but keeping classes at a reasonable size is better practice. Splitting
@@ -137,7 +137,7 @@ restore the previous view automatically. Call `view_display( )` again in the
 `check_on_navigated( )` branch. Your class attributes survived the roundtrip
 serialization, so no data re-read is needed — only the view must be rendered
 again. See
-[Life Cycle](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
+[App Structure](/cookbook/event_navigation/life_cycle#returning-from-a-sub-app-hits-check-on-navigated-not-check-on-init).
 :::
 Called **with** an app instance, `nav_app_leave` works differently: it leaves
 the current app and starts the given one *without* pushing the current app onto
@@ -164,11 +164,11 @@ with `check_app_prev_stack( )`, as the example below does.
 ### Handing a Result Back
 
 Reading the sub-app's attributes through `get_app_prev( )` is one way
-back. The other is to hand the result over on the way out:
-`nav_app_leave( event = … r_data = … )` names an event the caller finds in
-`check_on_event( )` on arrival, so a return *with* a result is told from a
-plain return, and carries data the caller reads as
-`client->get( )-r_event_data`, a reference to a copy of it:
+back. The other is to hand the result over on the way out with
+`nav_app_leave( event = … r_data = … )`. The caller finds that event in
+`check_on_event( )` on arrival, so it can tell a return *with* a result from
+a plain return. The data arrives in `client->get( )-r_event_data`, a
+reference to a copy of it:
 
 ```abap
 " in the sub-app

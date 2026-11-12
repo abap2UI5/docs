@@ -5,7 +5,7 @@ samples:
   - z2ui5_cl_smp_app_445
 description: What the frontend sends with every roundtrip - the UI5 runtime, the device, the focus and the scroll positions - read from client->get( ) without a control or an event.
 ---
-# Info
+# Frontend Info
 
 abap2UI5 ships the current frontend state with every roundtrip. Read it from
 `client->get( )` — no custom control, no extra event needed. The relevant

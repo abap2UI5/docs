@@ -5,11 +5,13 @@ description: What comes after the first app - extending the framework, showing a
 # Advanced Topics
 
 Everything in this section is something you do to an app that already runs:
-extend the framework underneath it, show it somewhere besides a browser tab,
-take it to a release or a stack it was not written on, or set up the machine
-you write it on. None of it is needed for a first app — the
-[Quickstart](/get_started/quickstart) and the [Cookbook](/cookbook/) come
-first — and every group below stands on its own.
+
+- extend the framework underneath it
+- show it somewhere besides a browser tab
+- take it to a release or a stack it was not written on
+- set up the machine you write it on
+
+None of it is needed for a first app: the [Quickstart](/get_started/quickstart) and the [Cookbook](/cookbook/) come first. Every group below can be read on its own.
 
 | Group | What it covers | Start with |
 |---|---|---|

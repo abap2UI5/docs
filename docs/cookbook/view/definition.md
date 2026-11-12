@@ -6,7 +6,7 @@ samples:
   - z2ui5_cl_smp_app_255
 description: How an abap2UI5 view is defined - a standard UI5 XML view sent from ABAP, built with the view builder control by control, and where to look for controls.
 ---
-# Definition
+# Building a View
 
 abap2UI5 uses [SAP UI5](https://sapui5.hana.ondemand.com) on the frontend
 without modification. Whatever your ABAP code sends to the browser is a
@@ -65,10 +65,10 @@ Swap `<Text>` for any other control from the SDK; the framework doesn't care.
 ## The View Builder
 
 Writing raw XML by hand quickly turns cumbersome. abap2UI5 ships
-`z2ui5_cl_ui5_view_builder`, which produces the same XML by method chaining —
-one call per control, so the shape of the chain is the shape of the view.
-`stringify( )` renders the tree into the XML string the framework sends to the
-frontend:
+`z2ui5_cl_ui5_view_builder`, which produces the same XML by method chaining.
+There is one call per control, so the shape of the chain is the shape of the
+view. `stringify( )` renders the tree into the XML string the framework sends
+to the frontend:
 
 ```abap
 CLASS zcl_sample_view_builder DEFINITION PUBLIC.
@@ -109,7 +109,7 @@ Both classes produce the exact same view — press **Run** on either one and the
 same page comes up. Use whichever you prefer: raw strings are fine for a
 handful of lines, the builder scales better for real apps. Either way the
 view is built in the `check_on_navigated( )` branch and nowhere else; the
-reason is on [Life Cycle](/cookbook/event_navigation/life_cycle).
+reason is on [App Structure](/cookbook/event_navigation/life_cycle).
 
 Four verbs, and no catalog of controls behind them:
 
@@ -121,13 +121,13 @@ Four verbs, and no catalog of controls behind them:
 | `end( )` | ascend to the parent |
 
 There is exactly one rule: `a( )` applies to the control the chain is
-**pointing at** — the child just added by `ele( )` or `tag( )` — so an
-attribute always follows its own control, and a control has to receive its
+**pointing at**, which is the child just added by `ele( )` or `tag( )`. So an
+attribute always follows its own control, and a control receives its
 attributes *before* its first child. `ele( )` descends and is closed by an
-`end( )`; `tag( )` stays, so a run of leaves needs none. **The trailing
+`end( )`. `tag( )` stays, so a run of leaves needs no `end( )`. **The trailing
 `end( )`s are optional**: `stringify( )` always renders from the root, no
-matter where the chain stopped, which is why every example on this site ends
-on its last attribute and not on a run of `end( )`s.
+matter where the chain stopped. That is why every example on this site ends on
+its last attribute and not on a run of `end( )`s.
 
 The root `mvc:View` and its `xmlns` declarations are written by hand, exactly
 as in a real UI5 view — the builder does not invent them for you.
@@ -170,17 +170,23 @@ every one of the three.
 
 ### Ids
 
-An `id` is an attribute like any other — ``)->a( n = `id` v = `tab` )`` —
-and it is what a control call (`cs_event-control_by_id`), a popover's
-`by_id`, a nested view's anchor and `set_focus` address a control by. UI5
-prefixes it with the view's own id when the view is built, so the DOM and
-an event parameter carry `mainView--tab`: that is why `${$parameters>/id}`
-on [Backend](/cookbook/event_navigation/backend#parameters) comes back with
-the `--` in front, and why the backend side never writes the prefix — the
-frontend resolves the plain id inside the right view slot. A control cloned
-from an aggregation template has no id the backend can spell, which is what
-the `<id>/<aggregation>/<index>` form of a control call is for; see
-[Frontend](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend).
+An `id` is an attribute like any other: ``)->a( n = `id` v = `tab` )``.
+Four things address a control by its id: a control call
+(`cs_event-control_by_id`), a popover's `by_id`, the anchor of a nested view,
+and `set_focus`.
+
+UI5 prefixes the id with the view's own id when the view is built, so the DOM
+and an event parameter carry `mainView--tab`. That is why
+`${$parameters>/id}` on
+[Handling Events in ABAP](/cookbook/event_navigation/backend#parameters) comes
+back with the `--` in front. The backend side never writes the prefix: the
+frontend finds the plain id inside the right view.
+
+An aggregation is a list of child controls, such as the `items` of a table. Its
+template is the one row UI5 copies for every entry. A control cloned from such a
+template has no id the backend can spell. For such a control, use the
+`<id>/<aggregation>/<index>` form of a control call; see
+[Frontend Actions](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend).
 
 Tips for working with views:
 - The [VS Code extension](/advanced/vscode) gives
@@ -200,9 +206,9 @@ UI5 itself is not permissive. Every UI5 control defines specific aggregations
 aggregation accepts only certain child control types (often a particular
 interface or base class).
 
-Combining controls in a way that violates these rules can lead to broken
-rendering, missing controls, layout glitches, runtime errors in the browser
-console, or subtle bugs that only show up on certain devices or themes.
+Combining controls in a way that violates these rules can break the screen:
+controls are missing or misplaced, the browser console shows runtime errors,
+or a bug appears only on certain devices or themes.
 
 **Always check the [UI5 SDK](https://sapui5.hana.ondemand.com) for each
 control** to confirm:
@@ -226,15 +232,14 @@ anything visual:
 Find a control you like in the UI5 docs, copy its XML, paste it into
 `view_display( )` — done. abap2UI5 has no separate control catalog to learn.
 
-One thing the SDK will not warn you about while you copy: the control may be
-deprecated. Because the XML is passed through 1:1, a deprecated control renders
-exactly like any other — until UI5 removes it, which has already happened once
-(the Belize themes went in 1.136). Nothing in the framework stops you, so this
-is a question to hand to a tool rather than to remember: the
-[linter](/advanced/linter) reports a deprecated control, member or whole library
-against the release *your* system runs, and
-[ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated) is the
-always-current list.
+The SDK does not warn you about one thing while you copy: the control may be
+deprecated. The XML is passed through 1:1, so a deprecated control renders
+exactly like any other until UI5 removes it. That has already happened once:
+the Belize themes were removed in 1.136. Nothing in the framework stops you,
+so leave this question to a tool. The [linter](/advanced/linter) reports a
+deprecated control, member or whole library against the release *your* system
+runs. The always-current list is
+[ui5.sap.com/#/api/deprecated](https://ui5.sap.com/#/api/deprecated).
 
 The one trap worth knowing by hand is the *namespace* of a control that exists
 twice. `Avatar` written with no `ns` resolves through the view's default `xmlns`

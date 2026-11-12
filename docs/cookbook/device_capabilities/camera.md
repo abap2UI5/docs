@@ -85,7 +85,7 @@ A failure — no HTTPS, a denied permission, a camera another app holds — is s
     )->a( n = `OnPhoto`     v = client->_event( `CAPTURE` ) )
 ```
 
-Before the page has the camera permission a browser lists the cameras without ids or labels, so the list is read again every time the dropdown opens and whenever the browser reports a device change — after the first photo the names are there.
+Before the page has the camera permission, a browser lists the cameras without ids or labels. The list is therefore read again every time the dropdown opens and whenever the browser reports a device change. After the first photo the names are there.
 
 ::: tip **Browser Restrictions**
 Camera access relies on browser permissions and security settings. Most browsers need HTTPS and display a permission prompt. Watch for browser warnings while testing.

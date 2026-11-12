@@ -172,9 +172,9 @@ Step 8 is not there in this step.
   rather than a child.
 - **`tab` holds the table.** The chain is split again: the `Table` goes into a
   variable, and `columns` and `items` are filled from it in two statements. A
-  single chain would work too, but it would need two bare `end( )` calls after
-  the last column — out of the `Column`, out of `columns` — before `items`
-  could open, which is exactly the count a reader gets wrong.
+  single chain would work too. But it would need two bare `end( )` calls after
+  the last column before `items` could open: one out of the `Column`, one out of
+  `columns`. That count is easy to get wrong.
 - **The fifth column has no header text and a fixed `10%` width.** It only
   carries the edit button defined in the row cells — this is how a row action
   gets a column of its own.

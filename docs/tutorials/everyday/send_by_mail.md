@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_023
-description: Send what the app shows by mail - the attachment written in the backend, cl_bcs_mail_message on ABAP Cloud and current releases, the outbound configuration a mail needs, the status after the send, and how to test it.
+description: Send what the app shows by mail - the attachment written in the backend, with cl_bcs_mail_message on ABAP Cloud and current releases. Also the outbound configuration a mail needs, the status after the send, and how to test it.
 ---
 # Send by Mail
 

@@ -46,7 +46,7 @@ how it compares, what it costs — is on
 
 ## How It Works
 
-The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view, the framework sends it to the browser in one response with the JSON model its controls bind to, and every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
+The frontend is a UI5 shell that only renders. Your ABAP class builds a UI5 XML view. The framework sends it to the browser in one response, together with the JSON model its controls bind to. Every user interaction comes back as a fresh call into `main( )`. No OData service sits in between.
 
 One click is one **roundtrip**: the browser sends a request, `main( )` runs once, the answer comes back. No ABAP session waits between two clicks. After each roundtrip the framework saves your app object on the server, and the browser keeps only the id of that copy. Before the next call of `main( )` the copy is restored, so your app is exactly as the user left it. The saved copy is called the app **draft** (it is not a RAP draft). This makes an app stateless like any other UI5 app, which is what makes it scale. Every word is in the [Glossary](/get_started/glossary). For the few cases that need a pinned session, a [stateful mode](/cookbook/expert_more/statefulness) exists.
 
@@ -86,7 +86,7 @@ Below 7.50 you pull the `X.Y.Z-702` tag instead of `X.Y.Z` — same features, ge
 from `main` automatically; the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table says which tag belongs to which system. See [Downporting](/advanced/downporting).
 
 ### UI5 Versions
-The frontend is UI5 itself, loaded at bootstrap like it is for any other UI5 app. abap2UI5 bootstraps OpenUI5 from its public CDN by default; a single exit points it at SAPUI5, at a pinned version, or at the UI5 already delivered by your own system — which is what a system without internet access uses. `1.71` is the oldest supported release, and every change is tested against UI5 2.x as well.
+The frontend is UI5 itself, loaded at bootstrap like it is for any other UI5 app. abap2UI5 bootstraps OpenUI5 from its public CDN by default. A single exit points it at SAPUI5, at a fixed version, or at the UI5 already delivered by your own system. A system without internet access uses the last option. `1.71` is the oldest supported release, and every change is tested against UI5 2.x as well.
 
 → *See [UI5 Versions](/configuration/ui5_versions) for the distributions, and [Bootstrapping](/configuration/setup/ui5_bootstrapping) for choosing the source*
 

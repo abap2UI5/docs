@@ -14,7 +14,7 @@ abap2UI5 is OData/RAP-agnostic — it doesn't care where data lives. You keep al
 
 ## RAP is a Programming Model — abap2UI5 is Not
 
-**RAP (RESTful Application Programming Model)** is a full-stack programming model. It prescribes how you design, expose, and consume business objects: you define entities with CDS views, declare their behavior in Behavior Definitions (BDEFs), implement handlers in Behavior Implementation classes, and expose everything as an OData V4 service consumed by a Fiori Elements frontend. Every layer is part of the model.
+**RAP (RESTful Application Programming Model)** is a full-stack programming model. It prescribes how you design, expose, and consume business objects. You define entities with CDS views and declare their behavior in Behavior Definitions (BDEFs). You implement handlers in Behavior Implementation classes. Then you expose everything as an OData V4 service consumed by a Fiori Elements frontend. Every layer is part of the model.
 
 **abap2UI5 is not a programming model.** It is a UI rendering library — a single ABAP interface your class implements. It has no opinion on how you structure your data, which access layer you use, or how your business logic is organized. There is no CDS requirement, no BDEF, no OData service. abap2UI5 simply calls your `main` method on each user interaction and renders whatever view you return.
 
@@ -22,7 +22,7 @@ This distinction matters: RAP defines the architecture *around* your application
 
 ## abap2UI5 is Agnostic
 
-Because abap2UI5 imposes no access layer, the app class reads and writes with whatever fits — ABAP SQL, CDS views, EML including RAP actions, function modules and BAPIs — since it is a plain ABAP class and any statement that is valid in ABAP is valid there.
+abap2UI5 imposes no access layer. The app class is a plain ABAP class, so any statement that is valid in ABAP is valid there. It reads and writes with whatever fits: ABAP SQL, CDS views, EML including RAP actions, function modules and BAPIs.
 
 ## Using RAP Functionality from Outside
 

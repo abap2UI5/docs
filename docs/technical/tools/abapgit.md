@@ -29,10 +29,10 @@ updates by pulling again. The folder logic is `PREFIX`, so the `src/00` to
 
 ## Apps as abapGit Artifacts
 
-An abap2UI5 app is an ABAP class, so it is an abapGit object like any other: a
+An abap2UI5 app is an ABAP class, so it is an abapGit object like any other. A
 repository of app classes is pulled the same way as the framework, with no
-separate frontend deployment, and one pull installs every class in it —
-on-premise and, through abapGit for Eclipse, on ABAP Cloud.
+separate frontend deployment. One pull installs every class in it, on-premise
+and, through abapGit for Eclipse, on ABAP Cloud.
 
 ## Contribution
 

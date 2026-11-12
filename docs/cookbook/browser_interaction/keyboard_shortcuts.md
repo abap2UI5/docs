@@ -65,8 +65,8 @@ Pressing the combination fires the backend event exactly like a button press wou
 ## Behavior
 
 - **Spelling** follows the UI5 convention: `Ctrl+S`, `Ctrl+Shift+D`, `F2`. Common aliases are normalized (`Cmd`/`Command` → `Meta`, `Control` → `Ctrl`, `Esc` → `Escape`, `Return` → `Enter`, …), so registration and keypress match for any spelling. The `+` key itself is spelled with the separator as the key: `Ctrl++`.
-- **A character the layout only produces with Shift** — `+` and `?` on a US keyboard, the digits on AZERTY — arrives with Shift held, so a registration without `Shift` matches it as well; `Ctrl+Shift+S` and `Ctrl+S` stay apart, because a letter's case is the Shift.
-- **The focused field is committed first.** A shortcut pressed while typing in an input comes before the field's `change`, so the frontend commits the field the way leaving it would, and the backend sees the typed value.
+- **A character the layout only produces with Shift** arrives with Shift held. Examples are `+` and `?` on a US keyboard and the digits on AZERTY. A registration without `Shift` therefore matches it as well. `Ctrl+Shift+S` and `Ctrl+S` stay apart, because for a letter Shift decides the case.
+- **The focused field is committed first.** A shortcut pressed while typing in an input comes before the field's `change`. The frontend therefore commits the field the way leaving it would, and the backend sees the typed value.
 - **One registration per combination and scope.** Registering the same combination again rebinds it — no need to unregister first.
 - **Unregister** a combination by sending it with an empty event name:
 

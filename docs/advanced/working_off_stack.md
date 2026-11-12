@@ -5,11 +5,11 @@ description: An abap2UI5 app as a git repository that abapGit pulls into the sys
 # Working Off-Stack
 
 An abap2UI5 app usually starts as a class typed straight into a system, living
-there and nowhere else. That is fine for a first app and not fine for a second
-one: nothing versions it, nobody reviews it, and the mistakes an abap2UI5 app
-makes — a control that does not
-exist on the release your users are on, a binding pointing at nothing — are
-invisible to the ABAP compiler and show up as a blank screen.
+there and nowhere else. That is fine for a first app, but a second app needs
+more. Nothing versions such a class and nobody reviews it. The typical mistakes
+of an abap2UI5 app are invisible to the ABAP compiler and show up as a blank
+screen: a control that does not exist on the release your users are on, or a
+binding pointing at nothing.
 
 A real project is the same class in a git repository that abapGit pulls into
 the system, with the checks running before it gets there.

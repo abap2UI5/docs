@@ -12,23 +12,23 @@ that explains it in full.
 
 | I want to… | Write | More |
 |---|---|---|
-| show the screen | `client->view_display( view->stringify( ) )` | [Definition](/cookbook/view/definition) |
+| show the screen | `client->view_display( view->stringify( ) )` | [Building a View](/cookbook/view/definition) |
 | show a value | ``)->tag( `Text` )->a( n = `text` v = client->_bind( name ) )`` | [Binding](/cookbook/model/binding) |
 | let the user edit a value | ``)->tag( `Input` )->a( n = `value` v = client->_bind( name ) )`` — the same `_bind( )`, what the user typed is in `name` on the next roundtrip | [Binding](/cookbook/model/binding#editing-data) |
-| react to a button | ``)->a( n = `press` v = client->_event( `SAVE` ) )``, then ``ELSEIF client->check_on_event( `SAVE` ).`` | [Backend](/cookbook/event_navigation/backend) |
-| send a value with the event | ``client->_event( val = `SHOW` arg = `${PRODUCT}` )``, then `client->get_event_arg( )` | [Backend](/cookbook/event_navigation/backend#source) |
+| react to a button | ``)->a( n = `press` v = client->_event( `SAVE` ) )``, then ``ELSEIF client->check_on_event( `SAVE` ).`` | [Handling Events in ABAP](/cookbook/event_navigation/backend) |
+| send a value with the event | ``client->_event( val = `SHOW` arg = `${PRODUCT}` )``, then `client->get_event_arg( )` | [Handling Events in ABAP](/cookbook/event_navigation/backend#source) |
 | show a short message | ``client->message_toast_display( `saved` )`` | [Message](/cookbook/translation_messages/message) |
 | show a message the user must close | ``client->message_box_display( text = `not found` type = `error` )`` | [Message](/cookbook/translation_messages/message#message-box) |
 | open a popup | `client->popup_display( popup->stringify( ) )` | [Popup](/cookbook/popup_popover/popup) |
 | close the popup | `client->popup_destroy( )` | [Popup](/cookbook/popup_popover/popup) |
-| start another app | `client->nav_app_call( NEW zcl_other_app( ) )` | [Inner App](/cookbook/event_navigation/navigation/inner_app) |
-| go back to the calling app | `client->nav_app_leave( )` | [Inner App](/cookbook/event_navigation/navigation/inner_app) |
-| read what the sub-app left | `CAST zcl_other_app( client->get_app_prev( ) )` | [Inner App](/cookbook/event_navigation/navigation/inner_app) |
+| start another app | `client->nav_app_call( NEW zcl_other_app( ) )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
+| go back to the calling app | `client->nav_app_leave( )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
+| read what the sub-app left | `CAST zcl_other_app( client->get_app_prev( ) )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
 | set the focus | ``client->follow_up_action( val = client->cs_event-set_focus t_arg = VALUE #( ( `id_input` ) ) )`` | [Focus](/cookbook/browser_interaction/focus) |
 | run `main` again after a delay | ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) )`` | [Timer](/cookbook/browser_interaction/timer) |
 | copy a text to the clipboard | ``client->follow_up_action( val = client->cs_event-clipboard_copy t_arg = VALUE #( ( mv_text ) ) )`` | [Clipboard](/cookbook/browser_interaction/clipboard) |
 | open a URL in a new tab | `client->follow_up_action( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) )` | [URL Handling](/cookbook/browser_interaction/url_handling) |
-| show more than 100 table rows | ``client->follow_up_action( val = client->cs_event-set_size_limit t_arg = VALUE #( ( `1000` ) ( client->cs_view-main ) ) )`` | [Size Limit](/cookbook/model/size_limit) |
+| show more than 100 table rows | ``client->follow_up_action( val = client->cs_event-set_size_limit t_arg = VALUE #( ( `1000` ) ( client->cs_view-main ) ) )`` | [More than 100 Rows](/cookbook/model/size_limit) |
 | send a file to the browser | `client->follow_up_action( val = client->cs_event-download_b64_file t_arg = VALUE #( ( mv_data_url ) ( mv_file_name ) ) )` | [Upload, Download](/cookbook/device_capabilities/upload_download) |
 
 The value of an attribute goes into one of three parameters of `a( )`:
@@ -43,12 +43,12 @@ The value of an attribute goes into one of three parameters of `a( )`:
 
 | Rule | Why it matters |
 |---|---|
-| Implement `z2ui5_if_app` and put everything in the single `main` method | It is the only entry point the framework calls — on the initial load *and* on every user interaction → [Life Cycle](/cookbook/event_navigation/life_cycle) |
-| Dispatch with one `IF` / `ELSEIF` chain over `check_on_init( )`, `check_on_navigated( )` and `check_on_event( )` | `check_on_init( )` implies `check_on_navigated( )`, so init goes first; separate `IF` blocks let two branches run in the same roundtrip → [Life Cycle](/cookbook/event_navigation/life_cycle) |
+| Implement `z2ui5_if_app` and put everything in the single `main` method | It is the only entry point the framework calls — on the initial load *and* on every user interaction → [App Structure](/cookbook/event_navigation/life_cycle) |
+| Dispatch with one `IF` / `ELSEIF` chain over `check_on_init( )`, `check_on_navigated( )` and `check_on_event( )` | `check_on_init( )` implies `check_on_navigated( )`, so init goes first; separate `IF` blocks let two branches run in the same roundtrip → [App Structure](/cookbook/event_navigation/life_cycle) |
 | Always call `view_display( )` in the `check_on_navigated( )` branch | After a sub-app returns via `nav_app_leave( )`, the browser still shows *its* view — without a re-display the user is left on a stale or blank screen → [Navigation](/cookbook/event_navigation/navigation/inner_app) |
 | Declare every attribute you bind in the `PUBLIC SECTION` | Binding works via dynamic `ASSIGN` and cannot reach `PROTECTED` / `PRIVATE`; the roundtrip fails with `BINDING_ERROR` → [Binding](/cookbook/model/binding) |
 | Keep state in attributes, not in local variables | Between two events the app instance is serialized into the [app draft](/get_started/glossary) on the SERVER and read back — attributes survive at any visibility; locals, `DATA(...)` declarations, open cursors and locks do not → [Statefulness](/cookbook/expert_more/statefulness) |
-| Respect the UI5 aggregation rules even though the builder does not enforce them | The builder lets you nest anything inside anything; UI5 does not, and the mismatch surfaces as broken rendering rather than a syntax error → [Definition](/cookbook/view/definition) |
+| Respect the UI5 aggregation rules even though the builder does not enforce them | The builder lets you nest anything inside anything; UI5 does not, and the mismatch surfaces as broken rendering rather than a syntax error → [Building a View](/cookbook/view/definition) |
 | Never use a deprecated UI5 control | It renders today and vanishes on the next UI5 upgrade — and the XML is passed through unchanged, so nothing in the framework stops you → [linter](/advanced/linter), which reports it against the release your system runs |
 | Take a ready-made dialog from the popups add-on before building your own | Confirm, select, file up/download, ranges, PDF and about a dozen more, versioned on their own → [popups add-on](https://github.com/abap2UI5-addons/popups) |
 | Use backtick string literals (`` ` ``) | Project-wide convention in the framework, the samples and this documentation; keeps ABAP string handling consistent |
@@ -62,7 +62,7 @@ The value of an attribute goes into one of three parameters of `a( )`:
         )->a( n = `enabled` b = abap_false )   " → enabled="false"
 ```
 
-Through `v` a bare flag does not compile — `v` is a string, and a `c` field is not type-compatible with it — and a flag-valued expression such as `xsdbool( … )` is written verbatim: `abap_true` arrives in the view as `enabled="X"` and `abap_false` as an empty value. `X` is not the `true` UI5 expects, and that one is no syntax error — the view renders, and on 1.71 the control is disabled.
+Through `v` a bare flag does not compile, because `v` is a string and a `c` field is not type-compatible with it. A flag-valued expression such as `xsdbool( … )` does compile and is written as it is: `abap_true` arrives in the view as `enabled="X"` and `abap_false` as an empty value. But `X` is not the `true` UI5 expects. There is no syntax error: the view renders, and on 1.71 the control is disabled.
 
 A **literal** is a string and belongs in `v`, unquoted by any flag variable:
 

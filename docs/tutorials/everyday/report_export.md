@@ -2,7 +2,7 @@
 outline: [2, 4]
 samples:
   - z2ui5_cl_smps_app_031
-description: The everyday report - a selection turned into range tables, one SELECT on a CDS view entity, a result table with a total per currency, and the rows on the screen exported as an Excel file with XCO.
+description: The everyday report - a selection turned into range tables, one SELECT on a CDS view entity and a result table with a total per currency. The rows on the screen are exported as an Excel file with XCO.
 ---
 # Report and Export
 

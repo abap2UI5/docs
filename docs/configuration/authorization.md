@@ -18,7 +18,7 @@ The recommended pattern: **one node per department or application area, and a ch
 The HTTP handler decides **who reaches abap2UI5 at all** - not which app runs. Logon procedure, SSO and the authorization field of the node in `SICF` (checked against `S_ICF`) work as on any other ICF service, and need no code.
 
 ### The ICF node's authorization field
-Every ICF node has a field *SAP Authorization* on its *Service Data* tab in `SICF`. A node with a value there is reachable only by a user whose roles carry the authorization object `S_ICF` with `ICF_FIELD = SERVICE` and `ICF_VALUE` equal to that value; a node without a value is reachable by every user who can log on. So, without any code:
+Every ICF node has a field *SAP Authorization* on its *Service Data* tab in `SICF`. A node with a value there is reachable only by a user whose roles carry the authorization object `S_ICF` with `ICF_FIELD = SERVICE` and `ICF_VALUE` equal to that value. A node without a value is reachable by every user who can log on. So, without any code:
 
 1. In `SICF`, open the node of your abap2UI5 service (`/sap/bc/z2ui5`, or one of your own), tab *Service Data*, and enter a value in *SAP Authorization*, for example `Z2UI5_SALES`.
 2. In `PFCG`, add `S_ICF` to the role of the users who may use the apps behind that node: `ICF_FIELD` = `SERVICE`, `ICF_VALUE` = `Z2UI5_SALES`.
@@ -61,7 +61,14 @@ ENDCLASS.
 The example uses a custom authorization object `Z_APP_AUTH` with an `APP` field — define the object in transaction `SU21` and assign it to the matching roles on your system. Create one node per user group or department, each with a handler like this, to separate who may reach which group of apps.
 
 ::: warning Do not decide on `app_start` in the handler
-It is tempting to read the class from the request - ``server->request->get_form_field( `app_start` )`` - and refuse the ones a user may not run. That does not work. `app_start` is a URL parameter of the first page request only: the roundtrips are POSTs to the service URI, the class travels in the body of the first one (from the launchpad and from the [embed control](/advanced/fiori) it never is in the URL at all), every roundtrip after the start carries no class name, and `nav_app_call( )` changes the app without the client naming it. A handler that refuses on that parameter either breaks every roundtrip or checks nothing. Which app may run is decided in the app.
+It is tempting to read the class from the request - ``server->request->get_form_field( `app_start` )`` - and refuse the ones a user may not run. That does not work. `app_start` is a URL parameter of the first page request only:
+
+- The roundtrips are POSTs to the service URI.
+- The class travels in the body of the first one. From the launchpad and from the [embed control](/advanced/fiori) it is never in the URL at all.
+- Every roundtrip after the start carries no class name.
+- `nav_app_call( )` changes the app without the client naming it.
+
+A handler that refuses on that parameter either breaks every roundtrip or checks nothing. Which app may run is decided in the app.
 :::
 
 ## App-Level

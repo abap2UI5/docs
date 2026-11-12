@@ -209,11 +209,11 @@ on its own.
 ## One Popup at a Time {#one-popup-and-what-closes-it}
 
 The frontend shows **one** popup. A second `popup_display( )` replaces the
-first, because the frontend keeps no stack of popups. A popup that opens
-another one and wants to come back afterwards keeps that stack itself: it
-remembers in an attribute which popup was open, and displays it again when
-the second one closes. `Z2UI5_CL_SMP_APP_161` does exactly that. A popover
-follows the same rule, separately from the popup.
+first, because the frontend keeps no stack of popups. A popup that opens another
+one and wants to come back afterwards keeps that stack itself: it remembers in
+an attribute which popup was open, and displays it again when the second one
+closes. Sample `Z2UI5_CL_SMP_APP_161` does exactly that. A popover follows the
+same rule, separately from the popup.
 
 A new **main view** closes the popup as well. `view_display( )` is a new
 screen, and the popup and the popover go with it. Both live outside the main

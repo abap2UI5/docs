@@ -78,31 +78,37 @@ compares the model before and after `main( )` and pushes the difference into the
 open popover, without re-rendering its XML. A handler that only changes data has
 nothing else to call.
 
-`by_id` is the id of the control the popover opens by — `sap.m.Popover`'s
-`openBy` — and is usually the button whose press this roundtrip handles.
-`popover_destroy( )` closes it; one popover at a time, and a new
-`view_display( )` closes it with the screen, as for a popup.
+`by_id` is the id of the control the popover opens next to (`openBy` of
+`sap.m.Popover`). It is usually the button whose press this roundtrip handles.
+`popover_destroy( )` closes the popover. Only one popover is open at a time,
+and a new `view_display( )` closes it with the screen, as for a popup.
 
 ## Placement
 
-`placement` is where the popover lands relative to its anchor, a value of
-`sap.m.PlacementType`: `Left`, `Right`, `Top`, `Bottom`, the four
-`Preferred…` variants that fall back to the opposite side when there is no
-room (`PreferredLeftOrFlip`, `PreferredRightOrFlip`, `PreferredTopOrFlip`,
-`PreferredBottomOrFlip`), the pairs that pick one of two sides (`Vertical`,
-`Horizontal`, `VerticalPreferredTop`, `VerticalPreferredBottom`,
-`HorizontalPreferredLeft`, `HorizontalPreferredRight`) and `Auto`. The
-default is `Right`. Sample `Z2UI5_CL_SMP_APP_026` switches between them at
-runtime — the value is bound, so changing it is a model push and the next
+`placement` says where the popover appears relative to its anchor. It is a
+value of `sap.m.PlacementType`:
+
+- `Left`, `Right`, `Top`, `Bottom`
+- four `Preferred…` variants that fall back to the opposite side when there is
+  no room: `PreferredLeftOrFlip`, `PreferredRightOrFlip`, `PreferredTopOrFlip`,
+  `PreferredBottomOrFlip`
+- six that pick one of two sides: `Vertical`, `Horizontal`,
+  `VerticalPreferredTop`, `VerticalPreferredBottom`,
+  `HorizontalPreferredLeft`, `HorizontalPreferredRight`
+- `Auto`
+
+The default is `Right`. Sample `Z2UI5_CL_SMP_APP_026` switches between them at
+runtime. The value is bound, so changing it is a model update and the next
 open uses it.
 
 ## Without a Roundtrip: `toggleBy`
 
-A popover that only shows what the view already holds — a menu, a help text,
-a `MessagePopover` — does not need the backend to open it. Declare it in the
-view, inside the page's `dependents` aggregation so it is part of the control
-tree without being rendered in the page, give it an `id`, and toggle it from
-the button with `cs_event-control_by_id` and the method `toggleBy`:
+Some popovers only show what the view already holds: a menu, a help text, a
+`MessagePopover`. Such a popover does not need the backend to open it. Declare
+it in the view, inside the page's `dependents` aggregation. There it is part
+of the control tree without being rendered in the page. Give it an `id`, and
+toggle it from the button with `cs_event-control_by_id` and the method
+`toggleBy`:
 
 ```abap
 )->ele( `dependents`

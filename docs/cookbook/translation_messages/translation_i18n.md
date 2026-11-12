@@ -13,16 +13,19 @@ element descriptions.
 
 ## Which Language
 
-Two locales are in play, and they are set in two places. The **backend**
-runs in the SAP logon language, `sy-langu`: every text element, message
-class and data element label on this page comes back in it, and the
-`sap-language` URL parameter overrides it per start. The **UI5 frontend**
-keeps a locale of its own for date and number formatting, the calendar and
-the built-in control texts (*Search*, *Cancel*, the month names), derived
-from the browser and pinned with `sap-ui-language` or the bootstrap
-attribute `data-sap-ui-language`. The two agree in practice; when they must
-not be left to the browser, [Logon Language](/configuration/setup/logon_language)
-is where both are set.
+Two locales are in play, and they are set in two places.
+
+The **backend** runs in the SAP logon language, `sy-langu`. Every text
+element, message class and data element label on this page comes back in it.
+The `sap-language` URL parameter overrides it per start.
+
+The **UI5 frontend** keeps a locale of its own for date and number
+formatting, the calendar and the built-in control texts (*Search*, *Cancel*,
+the month names). It is derived from the browser and fixed with
+`sap-ui-language` or the bootstrap attribute `data-sap-ui-language`.
+
+The two agree in practice. When they must not be left to the browser,
+[Logon Language](/configuration/setup/logon_language) is where both are set.
 
 ## Text Element
 ABAP text elements translate messages, so they show up in different languages
@@ -50,10 +53,10 @@ ENDMETHOD.
 
 ## View Literals
 
-A title, a label or a button text is a literal in the view, and the same
-sources translate it: a text element or a message is read in ABAP and
-written into the view with `t`, which escapes the value, so a translation
-that happens to carry a brace is shown rather than read as a binding:
+A title, a label or a button text is a literal in the view, and the same sources
+translate it. Read a text element or a message in ABAP and write it into the
+view with `t`. This parameter escapes the value, so a translation that happens
+to contain a brace is shown as text and not read as a binding:
 
 ```abap
 )->ele( `Page`
@@ -72,14 +75,14 @@ gets the view in that language without a second artifact anywhere.
 
 ## Numbers and Dates
 
-What a formatted amount or date *looks like* is the frontend locale's
-decision, not the backend's: a `sap.ui.model.type.Currency` or `Date`
-binding renders `1.234,56` or `1,234.56` and `15.01.2024` or `1/15/2024`
-according to `sap-ui-language`, from the same wire value. Bind the raw ABAP
-value and let the type format it — [Formatter](/cookbook/model/formatter)
-has the pattern per ABAP type — rather than formatting in ABAP with
-`sy-langu`, which would fix the notation to the backend's language and
-break the way back for an editable field.
+What a formatted amount or date *looks like* is decided by the frontend
+locale, not by the backend. A `sap.ui.model.type.Currency` or `Date` binding
+renders `1.234,56` or `1,234.56` and `15.01.2024` or `1/15/2024` according to
+`sap-ui-language`, from the same value. So bind the raw ABAP value and let the
+type format it; [Formatter](/cookbook/model/formatter) has the pattern per
+ABAP type. Do not format in ABAP with `sy-langu`: that would fix the notation
+to the backend's language, and an editable field could no longer be read
+back.
 
 ## Data Element
 You can also read and show the short, medium, or long descriptions of data

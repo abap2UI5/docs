@@ -121,19 +121,20 @@ Type the attribute `abap_bool` and the problem disappears; that is the fix, not
 an expression binding.
 :::
 
-An expression binding (`{= ${/MV_FLAG} === 'X' }`) is the wrong tool here twice
-over: it compares against a value that is not on the wire, and an expression
-binding cannot write back, so the box would not flip the attribute even if the
-comparison held.
+An expression binding (`{= ${/MV_FLAG} === 'X' }`) is the wrong tool here for
+two reasons. It compares against a value that is not sent to the browser. And
+an expression binding cannot write back, so the box would not change the
+attribute even if the comparison held.
 
 ::: tip A boolean written into the view is a different question
-All of the above is about a **bound** value. An ABAP boolean put straight into
-the XML as an attribute value — `)->a( n = `visible` v = xsdbool( … ) )` — is
-stringified to `X` or to an empty string (a bare `v = flag` does not even
-compile: `v` is a string), and UI5 reads a boolean attribute as true only
-when it says `true`: on 1.71 `abap_true` renders the control **hidden**, and
-a newer release logs `X` as invalid and ignores it, leaving the property at
-its default. Use the builder's boolean parameter for that:
+All of the above is about a **bound** value. It is different for an ABAP
+boolean put straight into the XML as an attribute value:
+`)->a( n = `visible` v = xsdbool( … ) )`. It is turned into the string `X` or
+into an empty string. (A bare `v = flag` does not even compile, because `v` is
+a string.) UI5 reads a boolean attribute as true only when it says `true`. On
+1.71 `abap_true` therefore renders the control **hidden**. A newer release
+logs `X` as invalid and ignores it, which leaves the property at its default.
+Use the builder's boolean parameter for that:
 `)->a( n = `visible` b = flag )`. The linter rule
 [`unconverted-abap-boolean`](/advanced/linter) catches it.
 :::
@@ -194,11 +195,11 @@ of Greenwich the picker shows the day before; where that matters, bind the
 | `DateCreateObject` | anything the JS `Date` constructor parses (an ISO string: a `d`, `timestamp` or `utclong` attribute) | a `Date` |
 | `expandInlineIcons` | a formatted-text string carrying `%%icon:sap-icon://<name>%%` placeholders | the same text with the theme's icon glyphs inlined — for a `MessageStrip` text |
 
-An **initial or empty** value yields `null`, never an `Invalid Date`. That
-matters more than it sounds: an Invalid Date is truthy, so a control accepts it
-and fails much later — a `sap.ui.unified` calendar throws for every rendered
-day and takes the whole view down. `null` is what "no date" means to a UI5 date
-property, so an optional date field in a bound row stays empty instead.
+An **initial or empty** value yields `null`, never an `Invalid Date`. This
+is important. An Invalid Date counts as a value, so a control accepts it and
+fails much later: a `sap.ui.unified` calendar throws for every rendered day
+and takes the whole view down. To a UI5 date property, `null` means "no
+date", so an optional date field in a bound row simply stays empty.
 
 The module grows through framework pull requests only; a helper of your own
 goes in your own module and is required the same way. See
@@ -207,7 +208,9 @@ goes in your own module and is required the same way. See
 
 ## Full Worked Example
 
-The class below combines the Currency and Digit Sequence patterns in one app and demonstrates every `formatOptions` variant listed under [Currency](#currency):
+The class below combines the Currency and Digit Sequence patterns in one app.
+It shows an amount as an editable currency field, the same amount without its
+currency code, and a number without its leading zeros:
 
 ```abap
 CLASS zcl_sample_currency DEFINITION PUBLIC.
@@ -219,10 +222,6 @@ CLASS zcl_sample_currency DEFINITION PUBLIC.
     DATA numeric  TYPE n LENGTH 12.
 
   PROTECTED SECTION.
-    DATA client TYPE REF TO z2ui5_if_client.
-
-    METHODS view_display.
-
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -230,157 +229,57 @@ CLASS zcl_sample_currency IMPLEMENTATION.
 
   METHOD z2ui5_if_app~main.
 
-    me->client = client.
+    IF client->check_on_navigated( ).
 
-    IF client->check_on_init( ).
-      numeric  = `000000000012`.
-      amount   = `123456789.123`.
-      currency = `USD`.
-      view_display( ).
-    ELSEIF client->check_on_navigated( ).
-      view_display( ).
+      " the branch runs again on every return, so set the values only once
+      IF currency IS INITIAL.
+        numeric  = `000000000012`.
+        amount   = `123456789.123`.
+        currency = `USD`.
+      ENDIF.
+
+      DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
+          )->ele( n = `View` ns = `mvc`
+              )->a( n = `xmlns`     v = `sap.m`
+              )->a( n = `xmlns:mvc` v = `sap.ui.core.mvc`
+
+              )->ele( `Page`
+                  )->a( n = `title` v = `abap2UI5 - Currency Format`
+
+                  )->tag( `Input`
+                      )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
+                                         && | '{ client->_bind_path( currency ) }' ],|
+                                         && | type: 'sap.ui.model.type.Currency' \}|
+                  )->tag( `Text`
+                      )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
+                                        && | '{ client->_bind_path( currency ) }' ],|
+                                        && | type: 'sap.ui.model.type.Currency',|
+                                        && | formatOptions: \{ showMeasure: false \} \}|
+                  )->tag( `Text`
+                      )->a( n = `text` v = |\{ path: '{ client->_bind_path( numeric ) }',|
+                                        && | type: 'sap.ui.model.odata.type.String',|
+                                        && | constraints: \{ isDigitSequence: true \} \}|
+                  )->tag( `Button`
+                      )->a( n = `text`  v = `send`
+                      )->a( n = `press` v = client->_event( `BUTTON` ) ).
+
+      client->view_display( view->stringify( ) ).
+
     ELSEIF client->check_on_event( `BUTTON` ).
-      " the roundtrip is the point of this button: the edited values travel
-      " to the server and come back, and every formatter above renders them
-      " again from the model
+      " the edited values travel to the server and come back, and every
+      " formatter renders them again from the model
       client->message_toast_display( |Amount { amount }, currency { currency }| ).
     ENDIF.
-
-  ENDMETHOD.
-
-  METHOD view_display.
-
-    DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
-        )->ele( n = `View` ns = `mvc`
-            )->a( n = `xmlns`      v = `sap.m`
-            )->a( n = `xmlns:mvc`  v = `sap.ui.core.mvc`
-            )->a( n = `xmlns:form` v = `sap.ui.layout.form`
-
-            )->ele( `Shell`
-                )->ele( `Page`
-                    )->a( n = `title`          v = `abap2UI5 - Currency Format`
-                    )->a( n = `navButtonPress` v = client->_event_nav_app_leave( )
-                    )->a( n = `showNavButton`  b = client->check_app_prev_stack( )
-
-                    )->ele( n = `SimpleForm` ns = `form`
-                        )->a( n = `title`    v = `Currency`
-                        )->a( n = `editable` b = abap_true
-
-                        )->ele( n = `content` ns = `form`
-                            )->tag( `Title`
-                                )->a( n = `text` v = `Input`
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Documentation`
-                            )->tag( `Link`
-                                )->a( n = `text`   v = `https://sdk.openui5.org/api/sap.ui.model.type.Currency`
-                                )->a( n = `href`   v = `https://sdk.openui5.org/api/sap.ui.model.type.Currency`
-                                )->a( n = `target` v = `_blank`
-
-                            )->tag( `Label`
-                                )->a( n = `text` v = `One field`
-                            )->tag( `Input`
-                                )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency' \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Two fields`
-                            )->tag( `Input`
-                                )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency',|
-                                                   && | formatOptions: \{ showMeasure: false \} \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Two fields`
-                            )->tag( `Input`
-                                )->a( n = `value` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency',|
-                                                   && | formatOptions: \{ showNumber: false \} \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Default`
-                            )->tag( `Text`
-                                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency' \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `preserveDecimals:false`
-                            )->tag( `Text`
-                                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency',|
-                                                   && | formatOptions: \{ preserveDecimals: false \} \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `currencyCode:false`
-                            )->tag( `Text`
-                                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency',|
-                                                   && | formatOptions: \{ currencyCode: false \} \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `style:'short'`
-                            )->tag( `Text`
-                                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency',|
-                                                   && | formatOptions: \{ style: 'short' \} \}|
-                            )->tag( `Label`
-                                )->a( n = `text` v = `style:'long'`
-                            )->tag( `Text`
-                                )->a( n = `text` v = |\{ parts: [ '{ client->_bind_path( amount ) }',|
-                                                   && | '{ client->_bind_path( currency ) }' ],|
-                                                   && | type: 'sap.ui.model.type.Currency',|
-                                                   && | formatOptions: \{ style: 'long' \} \}|
-
-                            )->tag( `Label`
-                                )->a( n = `text` v = `event`
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `send`
-                                )->a( n = `press` v = client->_event( `BUTTON` )
-
-                        )->end(
-                    )->end(
-
-                    " Remove leading zeros from a numeric string with OData type formatting.
-                    " isDigitSequence: true tells the formatter to treat the value as a digit
-                    " sequence — resolves to: { path: "/NUMERIC",
-                    " type: 'sap.ui.model.odata.type.String',
-                    " constraints: { isDigitSequence: true } }
-                    )->ele( n = `SimpleForm` ns = `form`
-                        )->a( n = `title`    v = `No Zeros`
-                        )->a( n = `editable` b = abap_true
-
-                        )->ele( n = `content` ns = `form`
-                            )->tag( `Title`
-                                )->a( n = `text` v = `Input`
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Documentation`
-                            )->tag( `Link`
-                                )->a( n = `text`   v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
-                                )->a( n = `href`   v = `https://sdk.openui5.org/api/sap.ui.model.odata.type.String%23methods/formatValue`
-                                )->a( n = `target` v = `_blank`
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Numeric`
-                            )->tag( `Input`
-                                )->a( n = `value` v = client->_bind( numeric )
-                            )->tag( `Label`
-                                )->a( n = `text` v = `Without leading Zeros`
-                            )->tag( `Text`
-                                )->a( n = `text` v = |\{ path: '{ client->_bind_path( numeric ) }',|
-                                                  && | type: 'sap.ui.model.odata.type.String',|
-                                                  && | constraints: \{ isDigitSequence: true \} \}| ).
-
-    client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
 
 ENDCLASS.
 ```
 
-The page's back button is the current idiom: `navButtonPress` bound to
-`client->_event_nav_app_leave( )` leaves the app without a branch in `main( )`,
-and `showNavButton` bound to `check_app_prev_stack( )` shows the button only
-when there is an app to return to. The same class is sample
-`Z2UI5_CL_SMP_APP_067` in the [samples repository](https://github.com/abap2UI5/samples).
+Sample `Z2UI5_CL_SMP_APP_067` in the
+[samples repository](https://github.com/abap2UI5/samples) is the long version:
+it shows every `formatOptions` variant listed under [Currency](#currency) side
+by side.
 
 <!-- samples:start (generated by scripts/link-samples.mjs — do not edit) -->
 

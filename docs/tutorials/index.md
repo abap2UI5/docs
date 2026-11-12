@@ -4,12 +4,12 @@ description: Learn abap2UI5 by building — a step-by-step walkthrough where eve
 ---
 # Tutorial
 
-Learn abap2UI5 by building something. The **Tutorial** grows a small invoice
-app from a single message box into a complete application, one concept per
-step: the app class and its lifecycle, views written in ABAP, events, data
-binding, lists, tables, a selection screen and popups — and then takes the
-finished app out of the playground: to production in Step 11, and under unit
-tests in Step 12.
+Learn abap2UI5 by building something. The **Tutorial** grows a small invoice app
+from a single message box into a complete application, one concept per step. The
+concepts are the app class and its lifecycle, views written in ABAP, events,
+data binding, lists, tables, a selection screen and popups. Then the finished
+app leaves the playground: Step 11 takes it to production, and Step 12 adds unit
+tests.
 
 Each building step (1–10) is a **complete, runnable class** — the whole app as
 it stands at that point, not a fragment. Press the Run button under the code
@@ -48,9 +48,9 @@ no frontend project, no OData service.
 ## Everyday Work
 
 The steps build one app to teach the framework. The
-[Everyday Work](/tutorials/everyday/) guides start where they end: each one
-takes a job from a real project - an Excel import, a mass change, an approval
-worklist, a report with export - and walks through it from the first click to
+[Everyday Work](/tutorials/everyday/) guides start where the steps end. Each one
+takes a job from a real project: an Excel import, a mass change, an approval
+worklist, a report with export. It goes through that job from the first click to
 the saved data, with a sample you can install.
 
 ## What You Should Know

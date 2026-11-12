@@ -4,14 +4,16 @@ description: The abap2UI5 linter reconstructs the UI5 view out of the ABAP that 
 ---
 # abap2UI5 linter
 
-The view an abap2UI5 app shows does not exist until the app runs. It is built
-by a chain of `z2ui5_cl_ui5_view_builder` calls and handed to the browser as a
+The view an abap2UI5 app shows does not exist until the app runs. It is built by
+a chain of `z2ui5_cl_ui5_view_builder` calls and handed to the browser as a
 string, so the ABAP compiler never sees a control name, and no UI5 tooling ever
-sees the class. Between the two sits a whole class of defect nothing catches: a
-binding path the model has no field for, an event argument the control never
-delivers, a control that exists in the newest UI5 and not on the release your
-users are on. The app activates, the class compiles, and the screen comes up
-empty.
+sees the class. Between the two sits a whole class of defect that neither of
+them catches:
+
+- a binding path the model has no field for
+- an event argument the control never delivers
+- a control that exists in the newest UI5 and not on the release your users are
+  on The app activates, the class compiles, and the screen comes up empty.
 
 [`@abap2ui5/linter`](https://github.com/abap2UI5/linter) closes that gap. It
 reconstructs the view from the builder chain and judges the class and the view
@@ -77,16 +79,16 @@ much it matters:
 | `warning` | it works where it was written, but not necessarily on the target system (version floor, deprecation) — or the data behind it is not what the author thinks it is |
 | `hint` | worth knowing, never wrong by itself |
 
-**The rule id** at the end of the line is the key to everything else: it is what
-you name in the config to change or switch a rule off, what a source waiver
-names, and the anchor of that rule's page in the full reference at
-[abap2ui5.github.io/linter](https://abap2ui5.github.io/linter/) — every rule is
-documented one page away, with what it means, why it exists, the offending
-source next to the same source fixed, and a link into the module in the linter
-that decides it. Every report carries those addresses rather than the bare id:
-the terminal output ends in a reference block naming each rule it reported, a
-job summary links each row, and a GitHub annotation ends in its rule id and a
-link straight at the before/after pair.
+**The rule id** at the end of the line is the key to everything else. You name
+it in the config to change a rule or switch it off, and a source waiver names it
+too. It is also the anchor of that rule's page in the full reference at
+[abap2ui5.github.io/linter](https://abap2ui5.github.io/linter/). That page says
+what the rule means and why it exists. It shows the offending source next to the
+same source fixed, and links the module in the linter that decides it. Every
+report carries those addresses, not only the bare id. The terminal output ends
+in a reference block that names each rule it reported. A job summary links each
+row. A GitHub annotation ends in its rule id and a link to the before/after
+pair.
 
 Which severities break the build is a separate decision from what is reported:
 `--fail-on error|warning|hint|never` sets the exit code (default `warning`,
@@ -146,10 +148,10 @@ your config promised cannot quietly disappear from a green pipeline.
 
 ### The abap2UI5 rules
 
-On top of the UI5 rules sit the ones that are the reason this tool exists
-rather than a UI5 linter: the defects that live *between* the ABAP class and
-the view it builds, and stay **silent** at runtime. A few, to give the shape of
-them:
+On top of the UI5 rules come the rules a plain UI5 linter cannot have, and they
+are the reason this tool exists. They find the defects that live *between* the
+ABAP class and the view it builds, and stay **silent** at runtime. A few, to
+give the shape of them:
 
 | Rule | What it catches |
 | --- | --- |
@@ -210,8 +212,8 @@ src/zcl_travel_list.clas.abap
 src/zcl_travel_list.mock.json     ->  { "MT_ROWS": [ { "NAME": "Berlin - Rome" } ] }
 ```
 
-It is **merged over** the derived model rather than replacing it, so the file
-only has to name the table you want filled; every other binding keeps
+It is **merged over** the derived model and does not replace it. So the file
+only has to name the table you want filled, and every other binding keeps
 resolving. `--screenshot-model <file.json>` does the same without a file lying
 next to the source.
 
@@ -288,11 +290,11 @@ are reported as `sapui5-only-control`.
 
 ### Deprecated controls
 
-This is the same setting seen from the other end, and it is why abap2UI5 has no
-list of deprecated controls to keep: the framework passes your XML through
-unchanged, so **every** control UI5 still knows will render — including the ones
-SAP has deprecated — and whether that matters depends entirely on the release
-you named above.
+This is the same setting seen from the other end. It is also why abap2UI5 keeps
+no list of deprecated controls. The framework passes your XML through unchanged,
+so **every** control UI5 still knows will render, including the ones SAP has
+deprecated. Whether that matters depends entirely on the release you named
+above.
 
 | | |
 |---|---|
@@ -365,14 +367,14 @@ jobs:
 
 Findings are annotated onto the pull-request diff by default. Ask for
 `screenshots: build/screenshots` and the job also **photographs every checked
-view** — the review artifact CI could not produce before, and it runs whether
+view**. A reviewer gets a picture of each view from CI. The step runs whether
 the check passed or failed, because the failing run is where a reviewer most
 wants to see the view.
 
 The render gate runs by default, which costs the job a UI5 runtime and a
-Chromium download; `render: false` skips both and still runs every static rule.
-`@v0` is a moving tag that follows the newest `0.x` release — which is the
-point of a linter, and the reason to pin `@v0.1.0` where a build has to stay
+Chromium download. `render: false` skips both and still runs every static rule.
+`@v0` is a moving tag that follows the newest `0.x` release, so the job always
+gets the newest rules. Use the fixed tag `@v0.1.0` where a build has to stay
 reproducible.
 
 Other output formats fit other places: `--format markdown` for a job summary,

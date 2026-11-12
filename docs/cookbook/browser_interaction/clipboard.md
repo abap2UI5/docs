@@ -53,7 +53,7 @@ ENDCLASS.
 To share the current app state instead of a custom string, compose the link with `client->app_state_get_href( )` and hand it to the same `clipboard_copy` action — see [App State](/cookbook/event_navigation/navigation/app_state).
 
 ::: warning
-The browser's Clipboard API requires HTTPS (or `localhost`). On plain HTTP, and wherever `writeText` is refused, the frontend falls back to the older `document.execCommand('copy')`, which a browser allows only shortly after a user interaction — a copy that still fails is logged to the browser console, not reported to the user.
+The browser's Clipboard API requires HTTPS (or `localhost`). On plain HTTP, and wherever `writeText` is refused, the frontend falls back to the older `document.execCommand('copy')`. A browser allows that call only shortly after a user interaction. A copy that still fails is logged to the browser console; the user gets no message.
 :::
 
 ## Local and Session Storage
@@ -80,7 +80,7 @@ client->follow_up_action( val   = client->cs_event-store_data
 
 The `${ }` spelling is what makes the same call work in a view attribute, where a bare `{/MS_STORAGE}` would be read as an object literal and never fire; a handler resolves both. An empty `value` removes the key. `value` may also be a structure or a table — it is stored as JSON and comes back in the same shape.
 
-The read side is the control, declared with `xmlns:z2ui5="z2ui5.cc"`: it reads `key` under `prefix` from the store named by `type` after every rendering, writes a stored value into its bound `value` and fires `finished` when that value differs from what the binding holds — so one roundtrip per real change, and none while the stored and the bound value agree:
+The read side is the control, declared with `xmlns:z2ui5="z2ui5.cc"`. After every rendering it reads `key` under `prefix` from the store named by `type` and writes a stored value into its bound `value`. It fires `finished` when that value differs from what the binding holds. So there is one roundtrip per real change, and none while the stored and the bound value agree:
 
 ```abap
 )->tag( n = `Storage` ns = `z2ui5`

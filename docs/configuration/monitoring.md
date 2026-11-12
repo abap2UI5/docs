@@ -25,9 +25,9 @@ The words *roundtrip* and *app draft* are explained in the
 ## Admin Cockpit
 
 [**abap2UI5-addons/admin-cockpit**](https://github.com/abap2UI5-addons/admin-cockpit)
-answers the three questions asked before abap2UI5 goes to production — *is it
-used, is it fast, is it safely configured?* — as an abap2UI5 app, installed
-with abapGit next to the framework and started like any other app:
+answers the three questions asked before abap2UI5 goes to production: *is it
+used, is it fast, is it safely configured?* It is an abap2UI5 app itself. You
+install it with abapGit next to the framework and start it like any other app:
 
 ```
 ?app_start=z2ui5_cl_cockpit_app
@@ -158,10 +158,10 @@ Both commit, and both are written to the change log.
 ### Privacy
 
 No user names are stored by default. Users are counted under a pseudonym made
-from the user name and a salt that is replaced every day, so a pseudonym can
-neither be traced back to a name nor linked to the same user on another day —
-hence "users per day", never "users per month". Counting can be switched off
-entirely, or switched to plain user names.
+from the user name and a salt that is replaced every day. So a pseudonym cannot
+be traced back to a name, and it cannot be linked to the same user on another
+day. That is why the cockpit shows "users per day" and never "users per month".
+Counting can be switched off entirely, or switched to plain user names.
 
 Recording which employee used which application, when and how fast can be
 subject to co-determination by a works council — in Germany under § 87 (1)
@@ -172,10 +172,11 @@ your data protection officer before switching them on.
 
 ### Housekeeping as a job
 
-What the Drafts & Housekeeping tab does — delete expired drafts through the
-framework's own draft store, purge the cockpit's rows past their retention —
-is one call for a background job, `z2ui5_cl_cockpit_job=>run( )`: a two-line
-report scheduled in SM36 on Standard ABAP, an application job on ABAP Cloud.
+The Drafts & Housekeeping tab does two things: it deletes expired drafts through
+the framework's own draft store, and it purges the cockpit's rows past their
+retention. A background job does the same with one call,
+`z2ui5_cl_cockpit_job=>run( )`. On Standard ABAP that is a two-line report
+scheduled in SM36. On ABAP Cloud it is an application job.
 
 The cockpit runs on ABAP Cloud and on Standard ABAP from 7.50, with a 7.02
 downport checked in its CI, and its UI runs on UI5 1.71 and later.
@@ -183,19 +184,20 @@ downport checked in its CI, and its UI runs on UI5 1.71 and later.
 ### The change log
 
 Every change made through the cockpit is recorded with time, user, action and
-details: the claim and a reset, administrators added and removed, settings
-saved, drafts deleted, logs purged, the housekeeping job, and every
+details. That covers the claim and a reset, administrators added and removed,
+settings saved, drafts deleted, logs purged, the housekeeping job, and every
 reproduced error. The Settings tab shows it, newest first. It lives in the
 cockpit's table `Z2UI5_T_CK_AUD` and is kept as long as the aggregates.
 
 ### Reproducing an error
 
-When the headless frontend from [Step 12](/tutorials/step-12#testing-the-roundtrip)
-of the walkthrough is installed, the detail of an error group offers
-**Reproduce…** for the selected occurrence. It resumes the draft the failed
-request came with and fires the same event again through the simulator, so the
-app runs exactly as it ran for the user; the cockpit shows the exception
-chain, the messages the app showed and the view the roundtrip displayed.
+When the headless frontend from
+[Step 12](/tutorials/step-12#testing-the-roundtrip) of the walkthrough is
+installed, the detail of an error group offers **Reproduce…** for the selected
+occurrence. It resumes the draft the failed request came with and fires the same
+event again through the simulator. So the app runs exactly as it ran for the
+user. The cockpit then shows the exception chain, the messages the app showed
+and the view the roundtrip displayed.
 
 ::: warning It re-runs the app logic for real
 Whatever the event writes, posts or sends happens again — as the
@@ -211,8 +213,9 @@ What can be reproduced, all of it stated in the dialog:
 - **Only drafts that still exist** — drafts expire, after 4 hours by default.
 - **Only your own drafts** — abap2UI5 binds a draft to its owner. The cockpit
   knows the owner from the user name (user tracking with plain names) or from
-  today's pseudonym (the default, same UTC day only); otherwise it tries, and
-  the simulator reports that there is no draft when it is somebody else's.
+  today's pseudonym (the default, same UTC day only). Without either it still
+  tries, and the simulator reports that there is no draft when the draft is
+  somebody else's.
 - **The event, not the values** — what the user typed in that roundtrip and
   the event's arguments are not recorded, so they are not replayed.
 
@@ -227,36 +230,36 @@ no dependency in either direction:
 
 - whether the endpoint is enabled, the apps opted in, the app classes allowed
   or denied, and the agent administrators;
-- calls per day, per app and per MCP client, each with the calls refused by
-  **policy** (endpoint disabled, app not enabled for agents, event forbidden
-  or reserved for a human) and those refused or failed otherwise
-  (**validation**: a wrong field or value, an unknown or expired session, an
-  exception in the app);
+- calls per day, per app and per MCP client. Each number is split into two
+  groups. Calls refused by **policy**: endpoint disabled, app not enabled for
+  agents, event forbidden or reserved for a human. Calls refused or failed
+  otherwise (**validation**): a wrong field or value, an unknown or expired
+  session, an exception in the app;
 - the last calls with operation, event, outcome and text — the user only with
   user tracking set to plain names.
 
-The security traffic light gets a line for it: a disabled endpoint is green,
-an enabled one without an agent administrator is red, and one that allows
-every app class or reaches no app at all is yellow.
+The security traffic light gets a line for it. A disabled endpoint is green. An
+enabled one without an agent administrator is red. One that allows every app
+class, or reaches no app at all, is yellow.
 
 ### What the cockpit records
 
-The add-on's monitor class maps the roundtrip structure by name and hands it
-to a recorder, which writes aggregates per day, hour, app and event — counts,
+The add-on's monitor class maps the roundtrip structure by name and hands it to
+a recorder. The recorder writes aggregates per day, hour, app and event: counts,
 errors, the time of each phase, sizes and a latency histogram the p95 is read
-from — plus one raw row for each failed or slow roundtrip. The mode decides how
-much: `ALL`, `SAMPLE` (every error and a share of the rest), `ERRORS` or `OFF`.
-Its own tables purge themselves by retention once a day.
+from. It also writes one raw row for each failed or slow roundtrip. The mode
+decides how much: `ALL`, `SAMPLE` (every error and a share of the rest),
+`ERRORS` or `OFF`. Its own tables purge themselves by retention once a day.
 
-The aggregates are added up without row locks: a roundtrip lands in the row of
-its hour with one `UPDATE … SET cnt = cnt + 1, …`, which is atomic on every
-database, so two work processes never lose each other's counts and nobody
-waits. The sums — milliseconds and kilobytes — are `DEC 15` columns: an
-`INT4` overflows at 2.1 billion, which the milliseconds of one busy app can
-reach within an hour, `INT8` does not exist below 7.50, and `DEC 15` exists on
-every release and on ABAP Cloud. Increments are capped at the largest value
-the column holds rather than overflowing, and totals over several days are
-shown capped the same way.
+The aggregates are added up without row locks. A roundtrip lands in the row of
+its hour with one `UPDATE … SET cnt = cnt + 1, …`. That statement is atomic on
+every database, so two work processes never lose each other's counts and nobody
+waits. The sums (milliseconds and kilobytes) are `DEC 15` columns. An `INT4`
+overflows at 2.1 billion, which the milliseconds of one busy app can reach
+within an hour. `INT8` does not exist below 7.50. `DEC 15` exists on every
+release and on ABAP Cloud. Increments are capped at the largest value the column
+holds rather than overflowing, and totals over several days are shown capped the
+same way.
 
 It follows the [LUW rule](#the-rules-an-implementation-lives-by): for a
 stateful app it writes nothing and keeps the entry in the roll area until the
@@ -270,11 +273,11 @@ LUW.
 cockpit needs only [Switch it on](#switch-it-on) from this part.*
 
 `z2ui5_if_ui5_monitor` is an interface in the released API. Implement it in a
-class of your own, in a package of your own, and abap2UI5 finds the class the
-way it finds the [user exit](/advanced/extensibility/user_exits): the first
-class implementing the interface, sorted by name, looked up once per roll area.
-Its one method, `on_roundtrip`, is called once per POST roundtrip, after the
-response is built — on success and on failure alike.
+class of your own, in a package of your own. abap2UI5 finds the class the way it
+finds the [user exit](/advanced/extensibility/user_exits): it takes the first
+class implementing the interface, sorted by name, and looks it up once per roll
+area. Its one method, `on_roundtrip`, is called once per POST roundtrip, after
+the response is built — on success and on failure alike.
 
 It is not called for the page request (GET), for HEAD, or for a POST the
 [CSRF check](/configuration/security#cross-site-request-forgery-csrf) rejected:
@@ -378,20 +381,20 @@ ENDCLASS.
   loses its log entries and never stops the app. The user exit does the
   opposite: an exit that cannot run stops the request with an error, because
   it carries security settings. A monitor only watches.
-- **The LUW depends on `check_sticky`.** For a stateless app (`check_sticky`
-  is `abap_false`) the LUW is empty when the monitor runs: on success the
-  framework has committed its draft save, on failure it rolled the LUW back
-  before the call. A `COMMIT WORK` in the monitor commits its own writes and
-  nothing of the app. For a stateful app the LUW belongs to the app, which
-  may hold uncommitted work and locks across roundtrips — do not commit
-  then. Keep the entry and write it on a later roundtrip that is stateless,
-  or through a database connection of its own.
+- **The LUW depends on `check_sticky`.** For a stateless app (`check_sticky` is
+  `abap_false`) the LUW is empty when the monitor runs. On success the framework
+  has committed its draft save. On failure it rolled the LUW back before the
+  call. A `COMMIT WORK` in the monitor commits its own writes and nothing of the
+  app. For a stateful app the LUW belongs to the app, which may hold uncommitted
+  work and locks across roundtrips. Do not commit then. Keep the entry and write
+  it on a later roundtrip that is stateless, or through a database connection of
+  its own.
 - **Commit yourself.** The framework offers no commit helper; an
   implementation issues `COMMIT WORK` itself.
 - **One monitor is called.** With two implementing classes on a system, the
-  first by name wins — the same rule as the user exit, so the choice does not
-  change after a transport or a system copy. A monitor that has to feed two
-  consumers calls the second one itself.
+  first by name wins. That is the same rule as for the user exit, so the choice
+  does not change after a transport or a system copy. A monitor that has to feed
+  two consumers calls the second one itself.
 
 While the switch is off nothing changes at all: the exit is asked for the
 flag and the class repository is not consulted. With the switch on and no

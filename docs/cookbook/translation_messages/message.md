@@ -85,11 +85,11 @@ Both of the calls above have a second form, and the two answer different
 questions.
 
 `client->message_toast_display( )` and `client->message_box_display( )` are the
-**ABAP side**. Hand them what the app already holds — a text, a BAPIRET2 table,
-a log, an exception, a structure, a whole table — and they work out the
-severity, the title and the rendering themselves, as the section above shows.
-What they take as parameters is what an ABAP app decides: the data, the kind of
-box, the buttons as a `string_table`, and the backend event raised when the box
+**ABAP side**. Hand them what the app already holds: a text, a BAPIRET2 table,
+a log, an exception, a structure, a whole table. They work out the severity,
+the title and the rendering themselves, as the section above shows. Their
+parameters are the things an ABAP app decides: the data, the kind of box, the
+buttons as a `string_table`, and the backend event raised when the box
 closes.
 
 A plain **UI5 option** — where a toast docks, how wide the box is, which icon it
@@ -116,10 +116,10 @@ arrive as an object rather than as a string that looks like one. Both ways end
 in the same frontend code: `onClose` stays a backend event name on either path,
 and the details of a box are expanded on either path.
 
-The UI5 options — where a toast docks, a box's icon, width or text
-direction — are set this way and only this way; the parameter list on
-[Deprecations](/resources/deprecations#the-ui5-options-of-message-toast-display-message-box-display)
-is the one to check when an older app does not compile.
+The UI5 options (where a toast docks, a box's icon, width or text direction)
+are set this way and only this way. When an older app does not compile, check
+the parameter list on
+[Deprecations](/resources/deprecations#the-ui5-options-of-message-toast-display-message-box-display).
 
 The global call has one more property the client method cannot have: it can be
 **written into a view attribute**, where it runs without a roundtrip at all.

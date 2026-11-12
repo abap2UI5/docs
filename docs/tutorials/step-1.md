@@ -73,10 +73,10 @@ ENDINTERFACE.
 ```
 
 `if_serializable_object` is there because the framework stores your whole
-instance between two roundtrips and reads it back — which is what lets a
-class attribute survive from one click to the next. `id_draft` and `id_app`
-are the ids it manages for that; you never set them. (The interface also
-carries the framework's version and license as constants.)
+instance between two roundtrips and reads it back. That is why a class attribute
+keeps its value from one click to the next. `id_draft` and `id_app` are the ids
+it manages for that; you never set them. (The interface also carries the
+framework's version and license as constants.)
 
 
 Next, we replace the message box with a real UI5 view.
