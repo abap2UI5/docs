@@ -63,7 +63,7 @@ export const NEIGHBOURS = [
   '/playground/',           // the playground, and the sample catalogue under it
   '/linter/',               // the linter's rule reference
   '/layout-editor/',        // the layout editor, published by abap2UI5/layout-editor's pages workflow
-  '/web-abap2UI5-build/',   // a live build of the frontend, credited on Sponsor
+  '/browser-demo/',         // the frozen in-browser demo, published by abap2UI5/browser-demo
   '/why/',                  // abap2UI5 for decision makers, published by abap2UI5/why
   '/insights/',             // the Insights essays, published by abap2UI5/insights
   '/samples-site/',         // the sample catalogue's own site, published by abap2UI5/samples-site
@@ -74,6 +74,7 @@ export const RETIRED = new Map([
   ['/samples/', 'the sample catalogue: /samples-site/#learn'],
   ['/samples-controls/', 'the sample catalogue: /samples-site/#controls'],
   ['/samples-stack/', 'the sample catalogue: /samples-site/#stack'],
+  ['/web-abap2UI5-build/', 'the browser demo: /browser-demo/'],
 ]);
 
 /**
