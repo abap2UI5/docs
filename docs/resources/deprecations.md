@@ -40,7 +40,7 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.148.0**. Entries marked *next release* are already
+The released version is **1.149.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
@@ -73,7 +73,8 @@ tell you what is coming if you do not.
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
-| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, *next release* |
+| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
+| the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
 | `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
@@ -340,9 +341,9 @@ existing calls keep compiling. See [Add-ons](/resources/addons).
 
 `z2ui5_cl_util`, `z2ui5_cl_util_ext`, `z2ui5_cl_util_db`, `z2ui5_cl_util_http`,
 `z2ui5_cl_util_log`, `z2ui5_cl_util_msg`, `z2ui5_cl_util_range`,
-`z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` leave
-abap2UI5 with the next release (*next release*). Up to 1.148.0 they still ship
-in its frozen package `src/99/01`. They moved, unchanged, to
+`z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` left
+abap2UI5 with 1.149.0. Up to 1.148.0 they shipped in its frozen package
+`src/99/01`. They moved, unchanged, to
 [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). Inside the framework
 they were replaced by an internal context class.
 
@@ -421,44 +422,6 @@ Two limits worth knowing before you copy it:
 
 An app parsing genuinely arbitrary, nested JSON is doing something this
 framework does not hand it a tool for.
-
-### Invisible custom controls
-
-Earlier versions of abap2UI5 needed an invisible helper control in the view for
-every common browser interaction. Each one is a frontend event now, called from
-ABAP with no control in the view at all:
-
-| Control | Replacement |
-|---|---|
-| `Timer` | `cs_event-start_timer` — [Timer](/cookbook/browser_interaction/timer) |
-| `Focus` | `cs_event-set_focus` — [Focus](/cookbook/browser_interaction/focus) |
-| `Scrolling` | `cs_event-scroll_to` / `scroll_into_view` — [Scrolling](/cookbook/browser_interaction/scrolling) |
-| `Title` | `cs_event-set_title` — [Title](/cookbook/browser_interaction/title) |
-| `LPTitle` | `cs_event-set_title_launchpad` — [Title](/cookbook/browser_interaction/title) |
-| `Favicon` | `cs_event-set_favicon` |
-| `Info` | `client->get( )-s_device` / `-s_ui5` / `-s_focus` / `-s_scroll` — [Device Info](/cookbook/device_capabilities/info) |
-| `History` | `client->hash_set( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
-
-The pattern is the same for all of them — drop the control from the view and
-call the event after your event handler:
-
-```abap
-" old - an invisible control in the view carried the title
-view->_generic( name = `Title` ns = `z2ui5` )->_cc_plain_xml( `Invoice 4711` ).
-
-" new - no control, one call
-client->follow_up_action( val   = client->cs_event-set_title
-                          t_arg = VALUE #( ( `Invoice 4711` ) ) ).
-```
-
-The controls still ship and views that use them keep rendering. See
-[Frontend](/cookbook/event_navigation/frontend) for the full argument
-list of each event.
-
-Migrating a `Timer` whose `finished` wire kept the busy indicator down with
-`s_ctrl-check_no_busy`: `cs_event-start_timer` takes the same flag as its third
-argument, `` `X` `` (1.146.0) — see
-[Timer](/cookbook/browser_interaction/timer#without-the-busy-indicator).
 
 ### `cs_config-title` → `cs_event-set_title`
 
@@ -818,3 +781,41 @@ included):
 ```
 
 See [Formatter](/cookbook/model/formatter).
+
+### Invisible custom controls
+
+Earlier versions of abap2UI5 needed an invisible helper control in the view for
+every common browser interaction. Each one is a frontend event now, called from
+ABAP with no control in the view at all:
+
+| Control | Replacement |
+|---|---|
+| `Timer` | `cs_event-start_timer` — [Timer](/cookbook/browser_interaction/timer) |
+| `Focus` | `cs_event-set_focus` — [Focus](/cookbook/browser_interaction/focus) |
+| `Scrolling` | `cs_event-scroll_to` / `scroll_into_view` — [Scrolling](/cookbook/browser_interaction/scrolling) |
+| `Title` | `cs_event-set_title` — [Title](/cookbook/browser_interaction/title) |
+| `LPTitle` | `cs_event-set_title_launchpad` — [Title](/cookbook/browser_interaction/title) |
+| `Favicon` | `cs_event-set_favicon` |
+| `Info` | `client->get( )-s_device` / `-s_ui5` / `-s_focus` / `-s_scroll` — [Device Info](/cookbook/device_capabilities/info) |
+| `History` | `client->hash_set( )` — [URL Handling](/cookbook/browser_interaction/url_handling) |
+
+The pattern is the same for all of them — drop the control from the view and
+call the event after your event handler:
+
+```abap
+" old - an invisible control in the view carried the title
+view->_generic( name = `Title` ns = `z2ui5` )->_cc_plain_xml( `Invoice 4711` ).
+
+" new - no control, one call
+client->follow_up_action( val   = client->cs_event-set_title
+                          t_arg = VALUE #( ( `Invoice 4711` ) ) ).
+```
+
+The eight controls are **removed** with 1.149.0: a view that still names one
+fails to load. See [Frontend](/cookbook/event_navigation/frontend) for the full
+argument list of each event.
+
+Migrating a `Timer` whose `finished` wire kept the busy indicator down with
+`s_ctrl-check_no_busy`: `cs_event-start_timer` takes the same flag as its third
+argument, `` `X` `` (1.146.0) — see
+[Timer](/cookbook/browser_interaction/timer#without-the-busy-indicator).

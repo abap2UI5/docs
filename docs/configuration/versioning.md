@@ -19,8 +19,8 @@ rebuilt from `main` on every push. An installation reads its own release from
 the constant `z2ui5_if_app=>version`, which abapGit shows and the delivered
 frontend is stamped with.
 
-There is no fixed cadence. In 2026 the changelog lists eight releases, from
-1.142.0 on 2026-07-20 to 1.148.0 on 2026-10-14, after a gap of seven months
+There is no fixed cadence. In 2026 the changelog lists nine releases, from
+1.142.0 on 2026-07-20 to 1.149.0 on 2026-11-16, after a gap of seven months
 before that; two of them shipped on the same day. Read the dates on the
 [changelog](/resources/changelog) rather than planning on an interval. The
 framework's security policy supports the latest release only.
