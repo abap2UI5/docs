@@ -519,6 +519,9 @@ export default defineConfig({
           // where the other places an app can appear are; their URLs stayed.
           // What was left of "ABAP Cloud, BTP" was this one page, so it
           // stands in the row rather than in a group of one.
+          // what differs on BTP ABAP Environment and S/4 Public Cloud, with
+          // links to the detailed pages; S/4 Public Cloud holds the steps
+          { text: "ABAP Cloud", link: "/configuration/abap_cloud" },
           { text: "S/4 Public Cloud", link: "/configuration/s4_public_cloud" },
         ],
       },

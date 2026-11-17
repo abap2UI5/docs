@@ -12,7 +12,7 @@ abap2UI5 apps run directly behind an HTTP service. That is the simplest setup, a
 | System | What to pull | Can business users use the HTTP endpoint? | Frontend app needed? | Guide |
 |---|---|---|---|---|
 | S/4 Public Cloud | tag `X.Y.Z`, with abapGit for Eclipse | no - the endpoint needs the `S_DEVELOP` authorization | yes, plus a tile | [S/4 Public Cloud](/configuration/s4_public_cloud) |
-| BTP ABAP Environment | tag `X.Y.Z`, with abapGit for Eclipse | no - same as S/4 Public Cloud | yes, plus a tile | [S/4 Public Cloud](/configuration/s4_public_cloud) |
+| BTP ABAP Environment | tag `X.Y.Z`, with abapGit for Eclipse | no - same as S/4 Public Cloud | yes, plus a tile | [ABAP Cloud](/configuration/abap_cloud) |
 | S/4 Private Cloud | tag `X.Y.Z` | yes | only for the Fiori Launchpad | [Fiori Launchpad](/configuration/launchpad) |
 | S/4 On-Premise | tag `X.Y.Z` | yes | only for the Fiori Launchpad | [Fiori Launchpad](/configuration/launchpad) |
 | R/3 NetWeaver 7.50 and later | tag `X.Y.Z` | yes | only for the Fiori Launchpad, where the release has one | [Fiori Launchpad](/configuration/launchpad) |
@@ -38,7 +38,7 @@ A frontend app is the abap2UI5 frontend as an app in the UI5 ABAP repository. Pu
 Every branch keeps the same objects, names and endpoints, so a system switches between them by pulling another branch into the same abapGit repository. The `_new` branches need an abap2UI5 newer than 1.146.0.
 
 ## S/4 Public Cloud
-In `S/4 Public Cloud`, the HTTP endpoint needs `S_DEVELOP` authorization, so only developers can use it. To make an app reachable for business users, install a frontend app and add a tile. See [S/4 Public Cloud](/configuration/s4_public_cloud) for the steps.
+In `S/4 Public Cloud`, the HTTP endpoint needs `S_DEVELOP` authorization, so only developers can use it. To make an app reachable for business users, install a frontend app and add a tile. See [S/4 Public Cloud](/configuration/s4_public_cloud) for the steps, and [ABAP Cloud](/configuration/abap_cloud) for what else differs there.
 
 ## S/4 Private Cloud
 In `S/4 Private Cloud`, business users can use the HTTP endpoint, and you manage its authorizations as for any service. To also use the SAP Fiori Launchpad, install a frontend app. See [Fiori Launchpad](/configuration/launchpad).
@@ -53,4 +53,4 @@ The same as `S/4 Private Cloud`. Whether you can add the apps to a Launchpad dep
 Below 7.50, install the downported version: the same release with its syntax rewritten for older systems. abap2UI5 runs on releases as far back as 7.02. The tag to pull is `X.Y.Z-702`. See [Downporting](/advanced/downporting).
 
 ## BTP ABAP Environment
-The same as `S/4 Public Cloud`. Follow the [S/4 Public Cloud](/configuration/s4_public_cloud) guide.
+The same as `S/4 Public Cloud`: both are ABAP Cloud. [ABAP Cloud](/configuration/abap_cloud) says what differs from Standard ABAP and links each step; the screenshots of the installation are on [S/4 Public Cloud](/configuration/s4_public_cloud).
