@@ -129,7 +129,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 
                       )->tag( `Button`
                           )->a( n = `text`  v = `Cancel`
-                          )->a( n = `press` v = client->_event( `CANCEL` )
+                          )->a( n = `press` v = client->follow_up_action( val = client->cs_event-popup_close )
                       )->tag( `Button`
                           )->a( n = `text`  v = `Save`
                           )->a( n = `press` v = client->_event( `SAVE` )
@@ -142,10 +142,6 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
       t_invoices[ product = s_edit-product ]-delivery_date = s_edit-delivery_date.
       client->popup_destroy( ).
       client->message_toast_display( |{ s_edit-product } updated.| ).
-
-    ELSEIF client->check_on_event( `CANCEL` ).
-
-      client->popup_destroy( ).
 
     ENDIF.
 
