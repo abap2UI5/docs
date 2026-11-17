@@ -339,15 +339,15 @@ long as the page stays open.
 ## Examples
 
 Both examples are developed in
-[abap2UI5/samples-embed-control](https://github.com/abap2UI5/samples-embed-control),
-where they take the package from npm, and run without an SAP system as well:
+[abap2UI5/embed-control](https://github.com/abap2UI5/embed-control/tree/main/examples),
+next to the control itself, and run without an SAP system as well:
 their OData service comes from a mock server, abap2UI5 from
 [`@abap2ui5/node-runtime`](https://www.npmjs.com/package/@abap2ui5/node-runtime).
 
-- [`fiori-elements`](https://github.com/abap2UI5/samples-embed-control/tree/main/fiori-elements) -
+- [`fiori-elements`](https://github.com/abap2UI5/embed-control/tree/main/examples/fiori-elements) -
   OData V4, list report and object page of customers, the control in a
   custom section.
-- [`fiori-elements-v2`](https://github.com/abap2UI5/samples-embed-control/tree/main/fiori-elements-v2)
+- [`fiori-elements-v2`](https://github.com/abap2UI5/embed-control/tree/main/examples/fiori-elements-v2)
   - OData V2, list report and object page of countries, the control in an object
   page extension. Its folder `abap/` holds the RAP service the app reads and the
   abap2UI5 app it starts. The service consists of the CDS view entity on
@@ -358,10 +358,10 @@ their OData service comes from a mock server, abap2UI5 from
 ### On a system: the branch `rap`
 
 The branch
-[`rap`](https://github.com/abap2UI5/samples-embed-control/tree/rap) of
-[abap2UI5/samples-embed-control](https://github.com/abap2UI5/samples-embed-control)
+[`rap`](https://github.com/abap2UI5/embed-control/tree/rap) of
+[abap2UI5/embed-control](https://github.com/abap2UI5/embed-control)
 installs the OData V2 example with one abapGit pull: the RAP service, the
-class, and the app as the BSP `Z2UI5_HOST_FE`, with the control from npm.
+class, and the app as the BSP `Z2UI5_HOST_FE`, with the control.
 
 1. Install abap2UI5 1.146.0 or later and activate its HTTP service
    `/sap/bc/z2ui5`.
