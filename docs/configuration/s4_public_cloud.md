@@ -8,7 +8,10 @@ abap2UI5 runs on S/4 Public Cloud as an on-stack extension. It is written in the
 
 The setup in the **BTP ABAP Environment** is the same as in S/4 Public Cloud -
 both are ABAP for Cloud, both install through the ADT abapGit - so this page
-covers both. To install abap2UI5, follow these steps:
+covers both. What else differs from Standard ABAP - the handler, the UI5
+bootstrap, outbound HTTP, what is not available - is on
+[ABAP Cloud](/configuration/abap_cloud). To install abap2UI5, follow these
+steps:
 
 ## 1. Install abap2UI5 with abapGit
 

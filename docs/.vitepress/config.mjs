@@ -306,6 +306,8 @@ export default defineConfig({
               { text: "Building a View", link: "/cookbook/view/definition" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
+              // what the controls bring, what the view has to say, what nobody has tested
+              { text: "Accessibility", link: "/cookbook/view/accessibility" },
             ],
           },
           {
@@ -325,6 +327,8 @@ export default defineConfig({
               { text: "Trees", link: "/cookbook/model/trees" },
               { text: "Device Model", link: "/cookbook/model/device_model" },
               { text: "More than 100 Rows", link: "/cookbook/model/size_limit" },
+              // a table too large to send whole: the browser gets a window of it
+              { text: "Windowed Tables", link: "/cookbook/model/windowed_tables" },
             ],
           },
           {
@@ -515,6 +519,9 @@ export default defineConfig({
           // where the other places an app can appear are; their URLs stayed.
           // What was left of "ABAP Cloud, BTP" was this one page, so it
           // stands in the row rather than in a group of one.
+          // what differs on BTP ABAP Environment and S/4 Public Cloud, with
+          // links to the detailed pages; S/4 Public Cloud holds the steps
+          { text: "ABAP Cloud", link: "/configuration/abap_cloud" },
           { text: "S/4 Public Cloud", link: "/configuration/s4_public_cloud" },
         ],
       },

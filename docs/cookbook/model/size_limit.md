@@ -155,7 +155,7 @@ while the nested one still asks for more. Reset all three to get back to
 :::
 
 ::: tip **When to raise it**
-Raise the limit only as high as you actually need. Large bindings increase memory consumption on the frontend and slow down rendering. For very large datasets, prefer a server-side pattern (OData with `growing`, paging, filtering) instead of pushing everything into the model.
+Raise the limit only as high as you actually need. Large bindings increase memory consumption on the frontend and slow down rendering. For very large datasets, send the browser a window of the table instead of all of it: [Windowed Tables](/cookbook/model/windowed_tables) grow, sort and filter on the server.
 :::
 
 For a runnable sample, see `Z2UI5_CL_SMP_APP_071` in the [samples repository](https://github.com/abap2UI5/samples).

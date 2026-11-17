@@ -28,6 +28,7 @@ every line of the internal table.
 | let the user select rows, add and delete rows | [Selection](#selection) |
 | sort or filter | [Sorting and Filtering](#sorting-and-filtering) |
 | show a long table | [Growing](#growing) |
+| show a table too large to send whole | [Windowed Tables](/cookbook/model/windowed_tables) |
 
 ## Basic Table
 The example below binds a simple table to a UI5 control:
@@ -381,6 +382,10 @@ with a sticky header:
 The binding itself stops at 100 rows regardless of `growing` — that is the
 UI5 model's size limit, raised per view slot with `cs_event-set_size_limit`;
 see [More than 100 Rows](/cookbook/model/size_limit).
+
+For a table too large to send whole, bind it with `window_bind_tab( )`
+instead: the browser gets a window of the rows and asks the server for the
+next one as the table grows - [Windowed Tables](/cookbook/model/windowed_tables).
 
 ## Sorting and Filtering
 

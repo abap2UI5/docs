@@ -22,6 +22,7 @@ explained in full. Every word the chapters rely on is defined in the
 | know which table row was clicked | [Tables → Which Row Was Clicked](/cookbook/model/tables#which-row-was-clicked) |
 | sort or filter a table | [Tables → Sorting and Filtering](/cookbook/model/tables#sorting-and-filtering) |
 | show more than 100 rows | [More than 100 Rows](/cookbook/model/size_limit#set-the-limit) |
+| show a table too large to send whole | [Windowed Tables](/cookbook/model/windowed_tables) |
 | react to a button | [Backend → Basic](/cookbook/event_navigation/backend#basic) |
 | send a value with an event | [Backend → Sending a Value with the Event](/cookbook/event_navigation/backend#source) |
 | do something in the browser without a roundtrip | [Frontend Actions](/cookbook/event_navigation/frontend#the-two-positions) |
@@ -35,6 +36,7 @@ explained in full. Every word the chapters rely on is defined in the
 | show a toast, an error or a BAPIRET table | [Message](/cookbook/translation_messages/message#sy-bapiret-cx-root) |
 | handle an exception | [Errors and Exceptions](/cookbook/event_navigation/exception#handling-it-yourself) |
 | set the focus | [Focus](/cookbook/browser_interaction/focus#set-the-focus) |
+| make a view usable with keyboard and screen reader | [Accessibility](/cookbook/view/accessibility#what-the-view-has-to-say) |
 | refresh the screen every few seconds | [Timer](/cookbook/browser_interaction/timer#periodic-refresh) |
 | upload or download a file | [Upload, Download](/cookbook/device_capabilities/upload_download#upload) |
 | keep two users from overwriting each other | [Lock → Which Strategy?](/cookbook/expert_more/lock#which-strategy) |
@@ -45,8 +47,8 @@ explained in full. Every word the chapters rely on is defined in the
 
 | Group | What it covers | Start with |
 |---|---|---|
-| View | Building the view in ABAP, nested views, XML templating | [Building a View](/cookbook/view/definition) |
-| Model | Binding, expression binding and formatters, tables, trees, the device model, the size limit | [Binding](/cookbook/model/binding) |
+| View | Building the view in ABAP, nested views, XML templating, accessibility | [Building a View](/cookbook/view/definition) |
+| Model | Binding, expression binding and formatters, tables, trees, the device model, the size limit, windowed tables | [Binding](/cookbook/model/binding) |
 | Event, Navigation | The life cycle, backend and frontend actions, navigation inside and between apps, the hash and the app state, exceptions | [App Structure](/cookbook/event_navigation/life_cycle) |
 | Popup, Popover | Dialogs and popovers as fragments of their own | [Popup](/cookbook/popup_popover/popup) |
 | Translation, Messages | Messages, logging, translation with i18n | [Message](/cookbook/translation_messages/message) |
