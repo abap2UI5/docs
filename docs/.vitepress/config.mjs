@@ -325,6 +325,8 @@ export default defineConfig({
               { text: "Trees", link: "/cookbook/model/trees" },
               { text: "Device Model", link: "/cookbook/model/device_model" },
               { text: "More than 100 Rows", link: "/cookbook/model/size_limit" },
+              // a table too large to send whole: the browser gets a window of it
+              { text: "Windowed Tables", link: "/cookbook/model/windowed_tables" },
             ],
           },
           {
