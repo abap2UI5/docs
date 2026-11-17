@@ -306,6 +306,8 @@ export default defineConfig({
               { text: "Building a View", link: "/cookbook/view/definition" },
               { text: "Nested Views", link: "/cookbook/view/nested_views" },
               { text: "XML Templating", link: "/cookbook/view/xml_templating" },
+              // what the controls bring, what the view has to say, what nobody has tested
+              { text: "Accessibility", link: "/cookbook/view/accessibility" },
             ],
           },
           {
