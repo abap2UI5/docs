@@ -58,14 +58,11 @@ CLASS zcl_sample_popover IMPLEMENTATION.
                   )->tag( `Button`
                       )->a( n = `id`    v = `my_id`
                       )->a( n = `text`  v = `close`
-                      )->a( n = `press` v = client->_event( `POPOVER_CLOSE` ) ).
+                      )->a( n = `press` v = client->follow_up_action( val = client->cs_event-popover_close ) ).
 
       client->popover_display(
           xml   = popover->stringify( )
           by_id = `TEST` ).
-
-    ELSEIF client->check_on_event( `POPOVER_CLOSE` ).
-      client->popover_destroy( ).
 
     ENDIF.
 
@@ -80,8 +77,11 @@ nothing else to call.
 
 `by_id` is the id of the control the popover opens next to (`openBy` of
 `sap.m.Popover`). It is usually the button whose press this roundtrip handles.
-`popover_destroy( )` closes the popover. Only one popover is open at a time,
-and a new `view_display( )` closes it with the screen, as for a popup.
+The close button needs no roundtrip: `client->follow_up_action( )` with
+`cs_event-popover_close` closes the popover in the browser. A handler that has
+backend work to do first closes it with `popover_destroy( )`. Only one popover
+is open at a time, and a new `view_display( )` closes it with the screen, as for
+a popup.
 
 ## Placement
 

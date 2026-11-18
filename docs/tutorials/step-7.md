@@ -90,7 +90,7 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
 
                       )->tag( `Button`
                           )->a( n = `text`  v = `Cancel`
-                          )->a( n = `press` v = client->_event( `CANCEL` )
+                          )->a( n = `press` v = client->follow_up_action( val = client->cs_event-popup_close )
                       )->tag( `Button`
                           )->a( n = `text`  v = `Save`
                           )->a( n = `press` v = client->_event( `SAVE` )
@@ -103,10 +103,6 @@ CLASS zcl_app_walkthrough IMPLEMENTATION.
       t_invoices[ product = s_edit-product ]-quantity = s_edit-quantity.
       client->popup_destroy( ).
       client->message_toast_display( |{ s_edit-product } updated.| ).
-
-    ELSEIF client->check_on_event( `CANCEL` ).
-
-      client->popup_destroy( ).
 
     ENDIF.
 
@@ -128,6 +124,9 @@ quantity.
   time `SAVE` arrives, the attribute already holds the new value.
 - **`popup_display( )` / `popup_destroy( )`** show and close the dialog. The
   main view is never rebuilt — it waits behind the popup.
+- **Cancel needs no roundtrip.** Its button calls `client->follow_up_action( )`
+  with `cs_event-popup_close`, which closes the dialog in the browser; only
+  `SAVE` has backend work to do.
 - **`t` for the title.** It carries the product name, which is data: through
   `v` a brace in it would be read as a binding, through `t` it is shown as
   written.
