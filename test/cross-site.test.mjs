@@ -4,7 +4,7 @@
  * scripts/check-cross-site.mjs walks the built HTML and demands a `target` on
  * every link that leaves this deployment for a neighbouring one on the same
  * origin — because without it VitePress's router takes the link over, finds no
- * page of this site behind /playground/ and renders the 404 there. The rule
+ * page of this site behind /browser-playground/ and renders the 404 there. The rule
  * has to be exactly as narrow as the router's own: too wide and it demands an
  * attribute on links that work perfectly (another host, a JSON file); too
  * narrow and the bar breaks again in silence.
@@ -26,15 +26,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 test('a link into a neighbouring deployment is the case the router gets wrong', () => {
   for (const href of [
-    'https://abap2ui5.github.io/playground/',
-    'https://abap2ui5.github.io/playground/samples/',
-    'https://abap2ui5.github.io/playground/samples/?q=table&lib=sap.m',
-    'https://abap2ui5.github.io/playground/#src=CLASS%20zcl',
+    'https://abap2ui5.github.io/browser-playground/',
+    'https://abap2ui5.github.io/browser-playground/samples/',
+    'https://abap2ui5.github.io/browser-playground/samples/?q=table&lib=sap.m',
+    'https://abap2ui5.github.io/browser-playground/#src=CLASS%20zcl',
     'https://abap2ui5.github.io/linter/',
     'https://abap2ui5.github.io/samples/',
     /* Written root-relative rather than absolute: the same link, and the
      * router does not care which form it was written in. */
-    '/playground/',
+    '/browser-playground/',
     '/linter/rules.html',
   ]) {
     assert.ok(leavesTheSite(href), `${href} leaves the site and needs a target`);
@@ -61,8 +61,8 @@ test('a relative link is resolved against the page it is written on', () => {
   assert.equal(leavesTheSite('./../model/device_model.html', page), null);
   assert.equal(leavesTheSite('./../../configuration/ui5_versions.html', page), null);
   /* Far enough up and it really does leave: two more levels and this is
-   * /playground/, not a page of the manual. */
-  assert.ok(leavesTheSite('./../../../playground/', page));
+   * /browser-playground/, not a page of the manual. */
+  assert.ok(leavesTheSite('./../../../browser-playground/', page));
 });
 
 test('another host is never touched by the router, whatever it points at', () => {
@@ -81,20 +81,20 @@ test('a file the router would not treat as a page needs no attribute', () => {
   /* The extension list is VitePress's, copied. Demanding the attribute here
    * would be a rule that cannot be justified from what the router does. */
   for (const href of [
-    'https://abap2ui5.github.io/playground/samples/catalogue.json',
+    'https://abap2ui5.github.io/browser-playground/samples/catalogue.json',
     'https://abap2ui5.github.io/linter/rules.txt',
-    'https://abap2ui5.github.io/playground/embed/abap2ui5-embed.js',
+    'https://abap2ui5.github.io/browser-playground/embed/abap2ui5-embed.js',
   ]) {
     assert.equal(leavesTheSite(href), null, `${href} is not a page`);
   }
-  assert.ok(leavesTheSite('https://abap2ui5.github.io/playground/index.html'), '.html is a page');
+  assert.ok(leavesTheSite('https://abap2ui5.github.io/browser-playground/index.html'), '.html is a page');
 });
 
 test('the scan reads the attributes off the tag, quotes and all', () => {
   const html = `
-    <a href="https://abap2ui5.github.io/playground/">Playground</a>
+    <a href="https://abap2ui5.github.io/browser-playground/">Playground</a>
     <a href="https://abap2ui5.github.io/linter/" target="_self">Linter rules</a>
-    <a href="https://abap2ui5.github.io/playground/samples/" title="a > b in a title">Samples</a>
+    <a href="https://abap2ui5.github.io/browser-playground/samples/" title="a > b in a title">Samples</a>
     <a href="/docs/resources/api.html">API</a>
     <a href="https://github.com/abap2UI5/docs" target="_blank" rel="noopener">docs</a>
   `;
@@ -132,9 +132,12 @@ test('a cross-site link that points at a deployment which is gone is named as go
   assert.equal(unreachable('/about/'), null, 'the home page\'s About, which the foot links');
   assert.match(unreachable('/about/team/'), /not a deployment/, 'matched exactly, not as a prefix');
   assert.match(unreachable('/nowhere/'), /not a deployment/);
-  assert.equal(unreachable('/playground/'), null);
-  assert.equal(unreachable('/playground/samples/'), null);
+  assert.equal(unreachable('/browser-playground/'), null);
+  assert.equal(unreachable('/browser-playground/samples/apps.json'), null);
   assert.equal(unreachable('/linter/'), null);
+  assert.equal(unreachable('/docs-manager/'), null);
+  assert.equal(unreachable('/docs-insights/06-ui5-over-the-wire/'), null);
+  assert.equal(unreachable('/browser-layout-editor/'), null);
 
   // Retired, and the message says what to use instead - the whole point of it.
   assert.match(unreachable('/samples/'), /retired.*\/samples-site\/#learn/);
@@ -142,6 +145,12 @@ test('a cross-site link that points at a deployment which is gone is named as go
   assert.match(unreachable('/samples-stack/'), /retired.*samples-site\/#stack/);
   // ...including a page under one of them, which is how they were linked.
   assert.match(unreachable('/samples-controls/index.html'), /retired/);
+  // The sites renamed with their repositories on 2026-11-17: GitHub Pages
+  // does not redirect them, so a link here names the new path.
+  assert.match(unreachable('/playground/'), /retired.*\/browser-playground\//);
+  assert.match(unreachable('/layout-editor/'), /retired.*\/browser-layout-editor\//);
+  assert.match(unreachable('/why/'), /retired.*\/docs-manager\//);
+  assert.match(unreachable('/insights/06-ui5-over-the-wire/'), /retired.*\/docs-insights\//);
 
   // And anything nobody has named is not waved through.
   assert.equal(unreachable('/somewhere-else/'), 'not a deployment this origin serves');

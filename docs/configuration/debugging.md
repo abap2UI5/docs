@@ -55,7 +55,7 @@ A request that fails before `main( )` runs — a 401, a 403 from the [CSRF check
 The browser's network tab beside them shows the request as the frontend sent it: the status, the body of the response and, for a 500, the same text the overlay shows.
 
 ## In the playground
-The [**playground**](https://abap2ui5.github.io/playground/) runs your class in the browser, and it has a debugger of its own. It needs no system and no external breakpoint. Click left of a line number (or press `F9`) to set a breakpoint, or write `BREAK-POINT`. The next roundtrip that reaches the line stops there. The **Debugger** tab under the editor then shows the call stack, the locals and parameters, the attributes of `me` and the system fields. The keys are the SAP debugger's: `F5` step into, `F6` step over, `F7` return, `F8` continue, `Shift+F8` stop.
+The [**playground**](https://abap2ui5.github.io/browser-playground/) runs your class in the browser, and it has a debugger of its own. It needs no system and no external breakpoint. Click left of a line number (or press `F9`) to set a breakpoint, or write `BREAK-POINT`. The next roundtrip that reaches the line stops there. The **Debugger** tab under the editor then shows the call stack, the locals and parameters, the attributes of `me` and the system fields. The keys are the SAP debugger's: `F5` step into, `F6` step over, `F7` return, `F8` continue, `Shift+F8` stop.
 
 It also offers:
 

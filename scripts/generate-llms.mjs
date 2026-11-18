@@ -192,7 +192,7 @@ const index = [
   '  ABAP, data is bound both ways, and the app is stateless like any other UI5 app',
   '- Not for: offline apps or real-time collaboration; the layout editor emits a class, there is no designer at runtime',
   '- Support: the community, on GitHub issues and Slack; no vendor and no SLA',
-  '- Tooling: a browser playground at https://abap2ui5.github.io/playground/ that runs an app with no SAP system,',
+  '- Tooling: a browser playground at https://abap2ui5.github.io/browser-playground/ that runs an app with no SAP system,',
   '  a drag-and-drop layout editor that emits one app class, an MCP server with a Claude Code plugin, a VS Code',
   '  extension, a linter (`@abap2ui5/linter` on npm, also a GitHub Action), and a headless frontend that tests an app',
   `  in ABAP Unit - all on [Tooling](${SITE}/advanced/tooling.md), in the order a developer meets them`,
@@ -214,12 +214,12 @@ const index = [
      interface offer?", and the answer to both is published - every sample
      class with an index of its own, and the interface generated from the
      source - and neither was named here. Both are one fetch. */
-  '- [the playground](https://abap2ui5.github.io/playground/llms.txt): how to open a class in the',
+  '- [the playground](https://abap2ui5.github.io/browser-playground/llms.txt): how to open a class in the',
   '  browser by URL, how to embed a running example in a page of your own, and',
   '  where the samples are as data',
-  `- [the sample catalogue](https://abap2ui5.github.io/playground/samples/llms.txt): ${allThree}`,
+  `- [the sample catalogue](https://abap2ui5.github.io/samples-site/): ${allThree}`,
   '  from three repositories, each with a page of its own and the',
-  '  class in full. That file describes `apps.json`, the whole index as data:',
+  '  class in full. [apps.json](https://abap2ui5.github.io/browser-playground/samples/apps.json) is the whole index as data:',
   '  what each sample builds, the controls and libraries it needs, the oldest',
   '  UI5 release it runs on, and whether it runs in a browser with no system',
   '- [client-api.json](' + SITE + '/api/client-api.json): every method, parameter and',

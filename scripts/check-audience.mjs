@@ -40,7 +40,7 @@ if (findings.length) {
   console.error('             teaching it:\n');
   for (const f of findings) console.error(`  ${f.file}:${f.line}  "${f.phrase}"`);
   console.error('\nThe manual is for developers. What abap2UI5 costs, how it compares and who');
-  console.error('approves it is https://abap2ui5.github.io/why/ - link that page (with');
+  console.error('approves it is https://abap2ui5.github.io/docs-manager/ - link that page (with');
   console.error('{target="_self"}, it shares the origin) and take the sentence out. Only');
   console.error(`${[...ALLOWED].join(', ')} may use these words.`);
   process.exit(1);

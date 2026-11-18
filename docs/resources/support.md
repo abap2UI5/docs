@@ -18,7 +18,7 @@ If you need a specific feature that isn't there yet, open an issue — a good wa
 
 ## Commercial Support
 
-abap2UI5 is free and MIT-licensed — there is nothing to buy from the project itself. Companies and freelancers active in the ecosystem are listed under [Who runs it](https://abap2ui5.github.io/why/#who-runs-it){target="_self"} on the why-site. To be listed there, reach out at <contact@abap2UI5.org>.
+abap2UI5 is free and MIT-licensed — there is nothing to buy from the project itself. Companies and freelancers active in the ecosystem are listed under [Who runs it](https://abap2ui5.github.io/docs-manager/#who-runs-it){target="_self"} on the page for decision makers. To be listed there, reach out at <contact@abap2UI5.org>.
 
 ## Contact
 
@@ -31,5 +31,5 @@ replies might take some time.
 
 Why the project is open source and stays so, what it stands on, and what you
 can give back is on
-[Community & Support](https://abap2ui5.github.io/why/community/){target="_self"},
+[Community & Support](https://abap2ui5.github.io/docs-manager/community/){target="_self"},
 the page written for the people who approve a tool.

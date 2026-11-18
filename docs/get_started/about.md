@@ -35,14 +35,14 @@ A finished app looks like any other UI5 app, because it is one — a selection s
 ::: tip Next: install it
 The [Quickstart](/get_started/quickstart) takes you from abapGit to a running
 app in three steps. No system at hand? The
-[playground](https://abap2ui5.github.io/playground/){target="_self"} runs the
+[playground](https://abap2ui5.github.io/browser-playground/){target="_self"} runs the
 same class in your browser.
 :::
 
 This page is the technical picture: what an app is, how one click travels, and
 what it runs on. What abap2UI5 means for an organization — what it can build,
 how it compares, what it costs — is on
-[abap2UI5 for decision makers](https://abap2ui5.github.io/why/).
+[abap2UI5 for decision makers](https://abap2ui5.github.io/docs-manager/).
 
 ## How It Works
 
@@ -52,7 +52,7 @@ One click is one **roundtrip**: the browser sends a request, `main( )` runs once
 
 ![One roundtrip in five steps: the draft is loaded, the user's changes are applied, main( ) runs, the response is built and the draft is saved under a new id](/get_started/roundtrip.svg)
 
-→ *The [Insights](https://abap2ui5.github.io/insights/07-one-click-one-request/) take each of the five steps apart, and compare the result with [RAP](https://abap2ui5.github.io/insights/36-rap-or-abap2ui5/) and [UI5 freestyle](https://abap2ui5.github.io/insights/37-freestyle-or-abap2ui5/)*
+→ *The [Insights](https://abap2ui5.github.io/docs-insights/07-one-click-one-request/) take each of the five steps apart, and compare the result with [RAP](https://abap2ui5.github.io/docs-insights/36-rap-or-abap2ui5/) and [UI5 freestyle](https://abap2ui5.github.io/docs-insights/37-freestyle-or-abap2ui5/)*
 
 Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea behind htmx, Hotwire and Phoenix LiveView. abap2UI5 applies it to UI5.
 
@@ -97,7 +97,7 @@ An app runs in a browser tab on its own, or embedded into:
 - Fiori Launchpads on S/4 On-Premise
 - Tiles on S/4 Public Cloud
 - Build Work Zone Websites on BTP
-- Any UI5 app of your own, a Fiori elements page or a UI Integration Card, with the [embed control](https://github.com/abap2UI5/embed-control) (`@abap2ui5/embed-control` on npm)
+- Any UI5 app of your own, a Fiori elements page or a UI Integration Card, with the [embed control](https://github.com/abap2UI5-addons/embed-ui5-control) (`@abap2ui5/embed-control` on npm)
 - A tab in Microsoft Teams, the task pane of Microsoft Excel, or a native app on iOS and Android
 
 → *See [Integration](/integration/) for every place an app can appear*

@@ -31,7 +31,7 @@ playground -> layout editor -> plugin + MCP server -> VS Code -> linter in CI ->
 
 ## 1. Playground: ABAP in the browser
 
-[**abap2ui5.github.io/playground**](https://abap2ui5.github.io/playground/)
+[**abap2ui5.github.io/browser-playground**](https://abap2ui5.github.io/browser-playground/)
 — ABAP on the left, the running app on the right, and nothing in between but
 the browser. The framework is transpiled to JavaScript at build time; your
 class is compiled the moment you press *Run*, in about 20 ms, and starts
@@ -63,12 +63,12 @@ browser. The same dialog has *Download for abapGit*, a zip laid out as a
 repository, which is the way from the sketch into a system.
 
 Nothing to install: open the link. The source is
-[abap2UI5/playground](https://github.com/abap2UI5/playground), and every
+[abap2UI5/browser-playground](https://github.com/abap2UI5/browser-playground), and every
 fenced example on this site with a **Run** button runs in it.
 
 ## 2. Layout editor: drag and drop, one class out
 
-[**abap2ui5.github.io/layout-editor**](https://abap2ui5.github.io/layout-editor/)
+[**abap2ui5.github.io/browser-layout-editor**](https://abap2ui5.github.io/browser-layout-editor/)
 — lay out a UI5 view by drag and drop, set its properties, bind its fields and
 name its events. The result is **one ABAP class**: an abap2UI5 app with the
 view, its data and its events, laid out like every sample. Controls and outline
@@ -95,7 +95,7 @@ Export → abapGit: New Offline → Import ZIP → pull → ?app_start=zcl_my_ap
 ```
 
 Nothing to install: open the link. The source is
-[abap2UI5/layout-editor](https://github.com/abap2UI5/layout-editor).
+[abap2UI5/browser-layout-editor](https://github.com/abap2UI5/browser-layout-editor).
 
 ## 3. Claude Code plugin and MCP server: the loop for an agent
 

@@ -90,7 +90,7 @@ The human-readable half is the [Client API page](https://abap2ui5.github.io/docs
 
 ### Running an example from the page
 
-An ABAP example that the [playground](https://github.com/abap2UI5/playground)
+An ABAP example that the [playground](https://github.com/abap2UI5/browser-playground)
 can start carries a **Run this example** button under it, and pressing it puts
 the running app under the code — the framework compiled into the page, no
 server and no SAP system anywhere. The code that runs is read out of the block

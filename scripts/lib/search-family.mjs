@@ -49,14 +49,14 @@ export const ORGS = ['abap2UI5', 'abap2UI5-addons'];
 /** The places a reader GOES to. `terms` are the words people use for them,
  *  which is the whole reason these are entries and not tiles on a page. */
 export const DESTINATIONS = [
-  { title: 'Playground', text: 'Write ABAP in the browser and run the app beside it - no SAP system needed.', url: 'https://abap2ui5.github.io/playground/', terms: 'try online browser editor run abap without system sandbox' },
-  { title: 'Layout Editor', text: 'Design a UI5 view by drag and drop, then export it as an ABAP class.', url: 'https://abap2ui5.github.io/layout-editor/', terms: 'drag drop designer wysiwyg view editor layout builder' },
-  { title: 'AI App Builder', text: 'Describe the app you need; the AI writes it and you download it for abapGit.', url: 'https://abap2ui5.github.io/playground/ai/', terms: 'ai llm generate app chatgpt claude prompt builder' },
-  { title: 'AI Agent', text: 'Let the AI operate a running app: describe the task in the chat and watch it work.', url: 'https://abap2ui5.github.io/playground/pilot/', terms: 'ai agent pilot automate operate chat' },
+  { title: 'Playground', text: 'Write ABAP in the browser and run the app beside it - no SAP system needed.', url: 'https://abap2ui5.github.io/browser-playground/', terms: 'try online browser editor run abap without system sandbox' },
+  { title: 'Layout Editor', text: 'Design a UI5 view by drag and drop, then export it as an ABAP class.', url: 'https://abap2ui5.github.io/browser-layout-editor/', terms: 'drag drop designer wysiwyg view editor layout builder' },
+  { title: 'AI App Builder', text: 'Describe the app you need; the AI writes it and you download it for abapGit.', url: 'https://abap2ui5.github.io/browser-playground/ai/', terms: 'ai llm generate app chatgpt claude prompt builder' },
+  { title: 'AI Agent', text: 'Let the AI operate a running app: describe the task in the chat and watch it work.', url: 'https://abap2ui5.github.io/browser-playground/pilot/', terms: 'ai agent pilot automate operate chat' },
   { title: 'Sample catalogue', text: 'Every sample app, by control and UI5 release, each runnable in the playground.', url: 'https://abap2ui5.github.io/samples-site/', terms: 'samples examples demos catalogue catalog controls' },
   { title: 'Documentation', text: 'The manual: how it works, how to install it, how to build apps.', url: 'https://abap2ui5.github.io/docs/', terms: 'docs manual guide handbook' },
-  { title: 'Insights', text: 'Short essays on the idea: how it works, where it belongs, running it.', url: 'https://abap2ui5.github.io/insights/', terms: 'essays articles blog background architecture' },
-  { title: 'Why abap2UI5', text: 'For decision makers: what it builds, who runs it, what it costs.', url: 'https://abap2ui5.github.io/why/', terms: 'managers business case cost decision evaluate' },
+  { title: 'Insights', text: 'Short essays on the idea: how it works, where it belongs, running it.', url: 'https://abap2ui5.github.io/docs-insights/', terms: 'essays articles blog background architecture' },
+  { title: 'Why abap2UI5', text: 'For decision makers: what it builds, who runs it, what it costs.', url: 'https://abap2ui5.github.io/docs-manager/', terms: 'managers business case cost decision evaluate' },
   { title: 'Addons & Tools', text: 'Addons for your system, tools for your editor and pipeline, each with a page.', url: 'https://abap2ui5-addons.github.io/', terms: 'addons extensions plugins tools' },
   { title: 'Home', text: 'The entry page of abap2UI5.', url: 'https://abap2ui5.github.io/', terms: 'start home entry' },
   { title: 'Slack', text: 'The community channel #abap2ui5 on the abapGit Slack.', url: 'https://abapgit.slack.com/join/shared_invite/zt-46tqufaht-QlrxTzlDqlx85CWbeUnOqg#/shared-invite/email', terms: 'chat community help ask question' },
@@ -71,8 +71,8 @@ export function destinationEntries() {
 
 /** The sites that publish a search.json, and the area each becomes. */
 export const SITES = [
-  { area: 'insights', label: 'Insights', url: 'https://abap2ui5.github.io/insights/search.json' },
-  { area: 'why', label: 'Why abap2UI5', url: 'https://abap2ui5.github.io/why/search.json' },
+  { area: 'insights', label: 'Insights', url: 'https://abap2ui5.github.io/docs-insights/search.json' },
+  { area: 'why', label: 'Why abap2UI5', url: 'https://abap2ui5.github.io/docs-manager/search.json' },
   { area: 'addons', label: 'Addons & Tools', url: 'https://abap2ui5-addons.github.io/search.json' },
 ];
 

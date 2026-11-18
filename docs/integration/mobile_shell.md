@@ -4,7 +4,7 @@ description: The abap2UI5 native mobile shell - a proof of concept that runs aba
 ---
 # Native Mobile Shell
 
-[abap2UI5/mobile-shell](https://github.com/abap2UI5/mobile-shell) runs abap2UI5
+[abap2UI5-addons/embed-mobile](https://github.com/abap2UI5-addons/embed-mobile) runs abap2UI5
 apps in a native app on iOS and Android. The app is a generic shell. It knows
 one URL and shows the regular abap2UI5 frontend in a webview. It offers the page
 a small bridge to what a browser cannot reach: the native barcode scanner, push
@@ -15,7 +15,7 @@ class, so a change to an app never needs a new release in an app store.
 The shell is a proof of concept, not a product. It has no releases. Parts of it
 need accounts with SAP, Google and Apple to switch on: the onboarding flow of
 the SAP BTP SDK and push notifications. Its
-[PLAN.md](https://github.com/abap2UI5/mobile-shell/blob/main/PLAN.md) has the
+[PLAN.md](https://github.com/abap2UI5-addons/embed-mobile/blob/main/PLAN.md) has the
 state of every phase.
 :::
 
@@ -67,5 +67,5 @@ already uses. The abap2UI5 URL, a forced app lock and screenshot protection come
 in as managed configuration on Android and iOS. So no user has to type an
 address. A device without such management is set up by scanning a QR code with
 the URL. The repository's
-[distribution guide](https://github.com/abap2UI5/mobile-shell/blob/main/docs/DISTRIBUTION.md)
+[distribution guide](https://github.com/abap2UI5-addons/embed-mobile/blob/main/docs/DISTRIBUTION.md)
 has the details and the checklist for production.

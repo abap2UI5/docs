@@ -29,7 +29,7 @@ for.
 
 ---
 
-The same two files and the same notice are in abap2UI5/playground under
+The same two files and the same notice are in abap2UI5/browser-playground under
 src/fonts/. This copy is .txt rather than .md because every .md under
 docs/public is generated (see .gitignore) - the raw-markdown mirror of the
 pages, not a file anybody wrote.

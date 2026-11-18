@@ -22,7 +22,7 @@ Other open-source projects extend abap2UI5. Please consider sponsoring their mai
 - Syntax downporting via the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Namespace renaming with [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Browser testing with [Playwright](https://playwright.dev/), and the ABAP runtime in the browser from [open-abap](https://github.com/open-abap) and the [abaplint transpiler](https://github.com/abaplint/transpiler) [(larshp)](https://github.com/larshp)
-- Live demos via the [playground](https://abap2ui5.github.io/playground/){target="_self"}, built in [abap2UI5/playground](https://github.com/abap2UI5/playground) on that runtime
+- Live demos via the [playground](https://abap2ui5.github.io/browser-playground/){target="_self"}, built in [abap2UI5/browser-playground](https://github.com/abap2UI5/browser-playground) on that runtime
 - Code cleanup with [ABAP Cleaner](https://github.com/SAP/abap-cleaner) [(contributors)](https://github.com/SAP/abap-cleaner/graphs/contributors)
 - Documentation built with [VitePress](https://vitepress.dev/) [(contributors)](https://github.com/vuejs/vitepress/graphs/contributors)
 

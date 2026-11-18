@@ -24,9 +24,9 @@ test('a feed of a sister site becomes entries of its area, and only what leads t
   const rows = siteEntries({
     site: 'Insights',
     entries: [
-      { title: '#21 The Lock Is Gone by the Next Click', text: 'ENQUEUE inside one roundtrip.', headings: [['Why', 'why'], ['bad']], terms: 'enqueue lock', url: 'https://abap2ui5.github.io/insights/21-the-lock/' },
+      { title: '#21 The Lock Is Gone by the Next Click', text: 'ENQUEUE inside one roundtrip.', headings: [['Why', 'why'], ['bad']], terms: 'enqueue lock', url: 'https://abap2ui5.github.io/docs-insights/21-the-lock/' },
       { title: 'Elsewhere', text: 'a page of somebody else', url: 'https://example.com/' },
-      { title: '', url: 'https://abap2ui5.github.io/insights/x/' },
+      { title: '', url: 'https://abap2ui5.github.io/docs-insights/x/' },
       { title: 'No url' },
       { title: 'Addon', url: 'https://abap2ui5-addons.github.io/popups/', links: [{ label: 'Repository', url: 'https://github.com/abap2UI5-addons/popups' }, { label: 'Off', url: 'https://example.com/' }] },
     ],
@@ -37,7 +37,7 @@ test('a feed of a sister site becomes entries of its area, and only what leads t
   assert.deepEqual(rows[0].headings, [['Why', 'why']], 'a malformed heading is dropped');
   assert.deepEqual(rows[1].links, [{ label: 'Repository', url: 'https://github.com/abap2UI5-addons/popups' }], 'a link off the project is dropped');
   assert.deepEqual(siteEntries(null, INSIGHTS), [], 'a feed that is not one is nothing');
-  const [section] = siteEntries({ entries: [{ title: 'Cost', url: 'https://abap2ui5.github.io/why/#what-it-costs', headings: [['Licence', 'what-it-costs']] }] }, INSIGHTS);
+  const [section] = siteEntries({ entries: [{ title: 'Cost', url: 'https://abap2ui5.github.io/docs-manager/#what-it-costs', headings: [['Licence', 'what-it-costs']] }] }, INSIGHTS);
   assert.equal(section.headings, undefined, 'a url with an anchor carries no headings of its own');
 });
 
@@ -98,7 +98,7 @@ test('a source that is down costs its rows, never the build', async () => {
 const ENTRIES = [
   ...destinationEntries(),
   ...repoEntries([{ full_name: 'abap2UI5/linter', description: 'A static code analysis tool', topics: [] }, { full_name: 'abap2UI5-addons/popups', description: 'Value-Help, Search-Help, Transport', topics: [] }]),
-  { area: 'samples', group: 'Controls', title: 'Carousel', text: 'A carousel.', code: 'z2ui5_cl_smpc_app_398', url: 'https://abap2ui5.github.io/playground/samples/z2ui5_cl_smpc_app_398/', links: [{ label: 'Source', url: 'https://github.com/abap2UI5/samples-controls/blob/main/src/x.clas.abap' }] },
+  { area: 'samples', group: 'Controls', title: 'Carousel', text: 'A carousel.', code: 'z2ui5_cl_smpc_app_398', url: 'https://abap2ui5.github.io/browser-playground/samples/z2ui5_cl_smpc_app_398/', links: [{ label: 'Source', url: 'https://github.com/abap2UI5/samples-controls/blob/main/src/x.clas.abap' }] },
   { area: 'api', group: 'API', title: 'client->view_display( )', text: 'Display the MAIN view.', code: 'view_display', url: 'https://abap2ui5.github.io/docs/resources/api.html#view-display' },
   { area: 'docs', group: 'Cookbook', title: 'Popup', text: 'One popup and what closes it.', url: 'https://abap2ui5.github.io/docs/cookbook/popup.html' },
 ];
@@ -116,11 +116,11 @@ test('a query that names something jumps to it', () => {
   const at = (q) => jumps(ENTRIES, q).map((j) => (j.entry ? j.entry.url : j.url));
   assert.deepEqual(at('#1234'), ['https://github.com/abap2UI5/abap2UI5/issues/1234']);
   assert.deepEqual(at('issue 42'), ['https://github.com/abap2UI5/abap2UI5/issues/42']);
-  assert.deepEqual(at('Z2UI5_CL_SMPC_APP_398'), ['https://abap2ui5.github.io/playground/samples/z2ui5_cl_smpc_app_398/']);
+  assert.deepEqual(at('Z2UI5_CL_SMPC_APP_398'), ['https://abap2ui5.github.io/browser-playground/samples/z2ui5_cl_smpc_app_398/']);
   assert.deepEqual(at('view_display'), ['https://abap2ui5.github.io/docs/resources/api.html#view-display']);
   assert.deepEqual(at('linter'), ['https://github.com/abap2UI5/linter']);
   assert.deepEqual(at('abap2UI5-addons/popups'), ['https://github.com/abap2UI5-addons/popups']);
-  assert.deepEqual(at('layout editor'), ['https://abap2ui5.github.io/layout-editor/']);
+  assert.deepEqual(at('layout editor'), ['https://abap2ui5.github.io/browser-layout-editor/']);
   assert.match(at('z2ui5_cl_nowhere')[0], /^https:\/\/github\.com\/search\?q=.*z2ui5_cl_nowhere&type=code$/, 'a class in no entry: the code search');
   assert.deepEqual(at('how do i close a popup'), [], 'a question is answered by the list');
   assert.deepEqual(at('#12a'), []);

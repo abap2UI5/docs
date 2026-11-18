@@ -4,7 +4,7 @@
  *
  * The documentation, the playground, the sample catalogue and the linter's
  * rule pages are separate deployments on ONE origin
- * (abap2ui5.github.io/docs, /playground, /playground/samples, /linter). That
+ * (abap2ui5.github.io/docs, /browser-playground, /samples-site, /linter). That
  * shared origin is deliberate: it is what lets the four bars share a theme and
  * a position memory through one localStorage. It is also what breaks a plain
  * link between them.
@@ -60,12 +60,12 @@ export const SITE = {
  * somebody makes rather than a URL nobody rereads.
  */
 export const NEIGHBOURS = [
-  '/playground/',           // the playground, and the sample catalogue under it
+  '/browser-playground/',   // the playground, published by abap2UI5/browser-playground
   '/linter/',               // the linter's rule reference
-  '/layout-editor/',        // the layout editor, published by abap2UI5/layout-editor's pages workflow
+  '/browser-layout-editor/', // the layout editor, published by abap2UI5/browser-layout-editor's pages workflow
   '/browser-demo/',         // the frozen in-browser demo, published by abap2UI5/browser-demo
-  '/why/',                  // abap2UI5 for decision makers, published by abap2UI5/why
-  '/insights/',             // the Insights essays, published by abap2UI5/insights
+  '/docs-manager/',         // abap2UI5 for decision makers, published by abap2UI5/docs-manager
+  '/docs-insights/',        // the Insights essays, published by abap2UI5/docs-insights
   '/samples-site/',         // the sample catalogue's own site, published by abap2UI5/samples-site
 ];
 
@@ -75,6 +75,14 @@ export const RETIRED = new Map([
   ['/samples-controls/', 'the sample catalogue: /samples-site/#controls'],
   ['/samples-stack/', 'the sample catalogue: /samples-site/#stack'],
   ['/web-abap2UI5-build/', 'the browser demo: /browser-demo/'],
+  /* Renamed with their repositories on 2026-11-17. GitHub Pages does not
+   * redirect a project site that moves with its repository; the old paths
+   * answer only through redirects kept elsewhere, so a link here takes the
+   * new path directly. */
+  ['/playground/', 'the playground: /browser-playground/'],
+  ['/layout-editor/', 'the layout editor: /browser-layout-editor/'],
+  ['/why/', 'the page for decision makers: /docs-manager/'],
+  ['/insights/', 'the Insights essays: /docs-insights/'],
 ]);
 
 /**
@@ -107,7 +115,7 @@ export function unreachable(pathname) {
  * the same rule: when it moves over there, move it here.
  *
  * It matters because it is the difference between a link that needs the
- * attribute and one that does not. /playground/ has no extension, so the
+ * attribute and one that does not. /browser-playground/ has no extension, so the
  * router treats it as a page and takes it over. /samples/catalogue.json ends
  * in a known extension, so the router leaves it alone and no attribute is
  * needed — demanding one there would be a rule nobody could justify from what

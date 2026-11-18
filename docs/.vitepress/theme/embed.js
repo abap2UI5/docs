@@ -6,7 +6,7 @@
  * builds. What they share is a URL contract, written down by the playground
  * (src/embed/abap2ui5-embed.js and src/shell/share.mjs over there):
  *
- *   https://abap2ui5.github.io/playground/?embed=1[&view=app]#2<base64url>
+ *   https://abap2ui5.github.io/browser-playground/?embed=1[&view=app]#2<base64url>
  *
  * `embed=1` hides everything but the code and the app, `view=app` the code as
  * well, and the fragment is one version character ("2") followed by the
@@ -19,7 +19,7 @@
  * everything else on their own.
  */
 
-export const PLAYGROUND = 'https://abap2ui5.github.io/playground/';
+export const PLAYGROUND = 'https://abap2ui5.github.io/browser-playground/';
 const FROM_PLAYGROUND = 'abap2ui5-playground';
 
 /* abapGit names a file after the object in it, and the playground refuses a
