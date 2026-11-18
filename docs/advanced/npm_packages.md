@@ -19,7 +19,7 @@ decide which ones fit are here.
 | [`@abap2ui5/mcp-server`](https://www.npmjs.com/package/@abap2ui5/mcp-server) | the development loop for AI agents | [abap2UI5/mcp-server](https://github.com/abap2UI5/mcp-server) |
 | [`@abap2ui5/node-runtime`](https://www.npmjs.com/package/@abap2ui5/node-runtime) | the framework transpiled to JavaScript, with an HTTP handler | [abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5) |
 | [`@abap2ui5/bsp`](https://www.npmjs.com/package/@abap2ui5/bsp) | a UI5 app as an abapGit BSP, and back | [abap2UI5/abap2UI5](https://github.com/abap2UI5/abap2UI5/tree/main/tools/bsp) |
-| [`@abap2ui5/embed-control`](https://www.npmjs.com/package/@abap2ui5/embed-control) | a UI5 control that runs an abap2UI5 app inside another UI5 app | [abap2UI5/embed-control](https://github.com/abap2UI5/embed-control) |
+| [`@abap2ui5/embed-control`](https://www.npmjs.com/package/@abap2ui5/embed-control) | a UI5 control that runs an abap2UI5 app inside another UI5 app | [abap2UI5-addons/embed-ui5-control](https://github.com/abap2UI5-addons/embed-ui5-control) |
 | [`@cap2ui5/cds-plugin`](https://www.npmjs.com/package/@cap2ui5/cds-plugin) | abap2UI5 in a CAP project, apps as JavaScript classes | [cap2UI5/cap2UI5](https://github.com/cap2UI5/cap2UI5) |
 | [`@cap2ui5/samples`](https://www.npmjs.com/package/@cap2ui5/samples) | the samples as apps for the CAP plugin | [cap2UI5/samples](https://github.com/cap2UI5/samples) |
 

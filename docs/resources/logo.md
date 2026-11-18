@@ -210,7 +210,7 @@ state anywhere it is used.
 
 The mark is not the same thing as the interface around it, and the two carry
 different colors on purpose. This project publishes three sites: this
-documentation, the [playground](https://abap2ui5.github.io/playground/) and the
+documentation, the [playground](https://abap2ui5.github.io/browser-playground/) and the
 [sample catalog](https://abap2ui5.github.io/samples-site/). They share one bar,
 one palette and one accent, and that accent is **SAP blue**. Blue is the color
 of the platform these apps run on, and the playground fills its Run button with

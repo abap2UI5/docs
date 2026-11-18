@@ -463,7 +463,7 @@ export function rememberQuery(query) {
 }
 
 /** Forget what was searched for - the box calls it on a reload, which starts
- *  the site over (search-box.mjs in abap2UI5/playground imports it from its
+ *  the site over (search-box.mjs in abap2UI5/browser-playground imports it from its
  *  copy of this file). */
 export function forgetQuery() {
   try {

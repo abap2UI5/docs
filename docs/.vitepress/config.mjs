@@ -698,13 +698,13 @@ export default defineConfig({
           { text: "Deprecations", link: "/resources/deprecations" },
           {
             // The series of essays has a site of its own since 2026-10-31,
-            // https://abap2ui5.github.io/insights/ (abap2UI5/insights) - one
+            // https://abap2ui5.github.io/docs-insights/ (abap2UI5/docs-insights) - one
             // row here instead of thirty-eight. Another deployment on this
             // origin, hence target _self (check:cross-site); the old
             // addresses under /advanced/insights/ are stubs in docs/public/
             // that point at the same essay there.
             text: "Insights",
-            link: "https://abap2ui5.github.io/insights/",
+            link: "https://abap2ui5.github.io/docs-insights/",
             target: "_self",
           },
           {

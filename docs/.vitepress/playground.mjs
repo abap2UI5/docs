@@ -1,7 +1,7 @@
 /*
  * A Run button on the examples that can actually run.
  *
- * The playground (abap2UI5/playground) is the whole framework compiled into a
+ * The playground (abap2UI5/browser-playground) is the whole framework compiled into a
  * page: ABAP in, a running UI5 app out, no server and no SAP system anywhere.
  * It can be embedded, and the code it runs can travel in the URL fragment —
  * which means an example printed here can be started from here, without this

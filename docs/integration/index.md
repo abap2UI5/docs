@@ -16,7 +16,7 @@ Each page stands on its own; the table says where to start.
 | Fiori Launchpad on S/4HANA on-premise or private cloud | A tile with a target mapping on the `z2ui5` app | [Fiori Launchpad](/configuration/launchpad) |
 | SAP Build Work Zone | A connector app on BTP, forwarding through a destination | [Build Work Zone](/configuration/btp) |
 | A Fiori elements object page, your own UI5 app, a UI Integration Card | The `z2ui5.embed.Container` control from npm | [Fiori Elements Integration](/advanced/fiori) |
-| Any web page - React, Vue, Angular or plain HTML | The custom element `<abap2ui5-app>` of an alternative frontend built on UI5 Web Components, for the controls of the portable view profile | [`frontend-webcomponent`](https://github.com/abap2UI5/frontend-webcomponent) |
+| Any web page - React, Vue, Angular or plain HTML | The custom element `<abap2ui5-app>` of an alternative frontend built on UI5 Web Components, for the controls of the portable view profile | [`embed-webcomponent`](https://github.com/abap2UI5-addons/embed-webcomponent) |
 | SAP Mobile Start on iOS and Android | The tiles of your Work Zone site, mirrored | [Mobile Start](/configuration/mobile_start) |
 | A native app on iOS and Android | A generic shell around a webview, with a bridge to the scanner | [Native Mobile Shell](/integration/mobile_shell) |
 | Microsoft Teams | A personal tab of a Teams app of your own | [Microsoft Teams](/integration/teams) |

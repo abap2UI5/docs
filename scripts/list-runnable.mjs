@@ -15,7 +15,7 @@
  * So this prints the list, out of the same `playground.mjs` that decides the
  * button - never a second copy of those rules. With `--json` it prints the
  * examples with their ABAP, ready to drive a served playground with; the
- * driving half lives where the browser harness already is (abap2UI5/playground
+ * driving half lives where the browser harness already is (abap2UI5/browser-playground
  * has one), not in a documentation repository that would need Playwright as a
  * dependency to run it once a quarter.
  *

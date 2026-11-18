@@ -117,7 +117,7 @@ The page shows each classic report beside the class report2UI5 writes from it,
 and that class running as an abap2UI5 app. It is a copy of the abap2UI5
 playground that carries the add-on. A report of your own can be pasted there,
 converted and started the same way. The
-[abap2UI5 playground](https://abap2ui5.github.io/playground/) itself runs the
+[abap2UI5 playground](https://abap2ui5.github.io/browser-playground/) itself runs the
 framework alone and does not carry the add-on.
 
 In a system, the samples are part of the package:

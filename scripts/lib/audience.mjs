@@ -3,7 +3,7 @@
  *
  * The manual is for the person who builds with abap2UI5. The case for the
  * person who approves it - what it costs, how it compares, who runs it - is
- * a site of its own (https://abap2ui5.github.io/why/), and AGENTS.md says to
+ * a site of its own (https://abap2ui5.github.io/docs-manager/), and AGENTS.md says to
  * link it and never argue it here a second time. The pages did argue it,
  * for years and in passing: a sentence about licensing in a cookbook
  * chapter, a paragraph on the business case in a configuration page. Each

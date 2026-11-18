@@ -8,7 +8,7 @@ description: Install abap2UI5 with abapGit and start your first app, or try it f
 
 No system at hand? Two ways to see abap2UI5 run before anything is installed:
 
-- The [**playground**](https://abap2ui5.github.io/playground/) compiles the
+- The [**playground**](https://abap2ui5.github.io/browser-playground/) compiles the
   framework in your browser: write ABAP on the left, watch the app run on the
   right, nothing to install.
 - The [**sample catalog**](https://abap2ui5.github.io/samples-site/)
@@ -191,4 +191,4 @@ is the next page: it is the smallest app that can exist, how to start it, and
 what each line of it does.
 
 If somebody else decides whether abap2UI5 may be used on your system,
-[the case for abap2UI5](https://abap2ui5.github.io/why/) is the page written for them.
+[the case for abap2UI5](https://abap2ui5.github.io/docs-manager/) is the page written for them.

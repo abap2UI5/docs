@@ -339,29 +339,32 @@ long as the page stays open.
 ## Examples
 
 Both examples are developed in
-[abap2UI5/embed-control](https://github.com/abap2UI5/embed-control/tree/main/examples),
+[abap2UI5-addons/embed-ui5-control](https://github.com/abap2UI5-addons/embed-ui5-control/tree/main/examples),
 next to the control itself, and run without an SAP system as well:
 their OData service comes from a mock server, abap2UI5 from
 [`@abap2ui5/node-runtime`](https://www.npmjs.com/package/@abap2ui5/node-runtime).
 
-- [`fiori-elements`](https://github.com/abap2UI5/embed-control/tree/main/examples/fiori-elements) -
-  OData V4, list report and object page of customers, the control in a
-  custom section.
-- [`fiori-elements-v2`](https://github.com/abap2UI5/embed-control/tree/main/examples/fiori-elements-v2)
-  - OData V2, list report and object page of countries, the control in an object
-  page extension. Its folder `abap/` holds the RAP service the app reads and the
-  abap2UI5 app it starts. The service consists of the CDS view entity on
-  `T005T`, its metadata extension, the service definition and the OData V2
-  binding. The app is the class `Z2UI5_CL_EMBED_COUNTRY`, which shows the
-  startup parameters and reads the country again from the view.
+- [`fiori-elements`](https://github.com/abap2UI5-addons/embed-ui5-control/tree/main/examples/fiori-elements) -
+  OData V4, list report and object page of customers, the control in two
+  custom sections: two abap2UI5 apps side by side, each in a session of its
+  own.
+- [`fiori-elements-v2`](https://github.com/abap2UI5-addons/embed-ui5-control/tree/main/examples/fiori-elements-v2)
+  - OData V2, list report and object page of countries, the control in two
+  object page extensions. Its folder `abap/` holds the RAP service the app reads
+  and the two abap2UI5 apps it starts. The service consists of the CDS view
+  entity on `T005T`, its metadata extension, the service definition and the
+  OData V2 binding. The apps are the class `Z2UI5_CL_EMBED_COUNTRY`, which
+  shows the startup parameters and reads the country again from the view, and
+  `Z2UI5_CL_EMBED_LANGUAGES`, which lists the name of the country in every
+  language of the system.
 
 ### On a system: the branch `rap`
 
 The branch
-[`rap`](https://github.com/abap2UI5/embed-control/tree/rap) of
-[abap2UI5/embed-control](https://github.com/abap2UI5/embed-control)
+[`rap`](https://github.com/abap2UI5-addons/embed-ui5-control/tree/rap) of
+[abap2UI5-addons/embed-ui5-control](https://github.com/abap2UI5-addons/embed-ui5-control)
 installs the OData V2 example with one abapGit pull: the RAP service, the
-class, and the app as the BSP `Z2UI5_HOST_FE`, with the control.
+two classes, and the app as the BSP `Z2UI5_HOST_FE`, with the control.
 
 1. Install abap2UI5 1.146.0 or later and activate its HTTP service
    `/sap/bc/z2ui5`.

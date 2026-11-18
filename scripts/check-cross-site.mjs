@@ -3,7 +3,7 @@
 //
 // The three sites share an origin, and a same-origin link that looks like a
 // page is taken over by VitePress's router — which then cannot find a page of
-// THIS site behind /playground/ and renders the 404 instead. Every link out of
+// THIS site behind /browser-playground/ and renders the 404 instead. Every link out of
 // the manual and into a neighbouring deployment was broken that way at once:
 // both bar items, the Linter rules row in the menu, and the Run bar's link
 // into the playground. The whole reasoning is at the top of
@@ -129,7 +129,7 @@ if (broken.length) {
   console.error('which has no page of THIS site to render at that address and shows the 404 —');
   console.error('at the neighbour\'s URL, so it reads as the other site being broken.');
   console.error('\nAdd the attribute where the link is written:');
-  console.error('\n  <a href="https://abap2ui5.github.io/playground/" target="_self">Playground</a>');
+  console.error('\n  <a href="https://abap2ui5.github.io/browser-playground/" target="_self">Playground</a>');
   console.error('\n`_self` because these sites are one site and open in one tab; any `target` opts');
   console.error('the link out of the router. scripts/lib/cross-site.mjs says why in full.');
   process.exit(1);

@@ -7,7 +7,7 @@ description: Developing abap2UI5 apps with an AI assistant - the AI Studio build
 ## Build an app in the browser
 
 The quickest way to see it: the
-[**AI Studio**](https://abap2ui5.github.io/playground/ai/) builds an app from a
+[**AI Studio**](https://abap2ui5.github.io/browser-playground/ai/) builds an app from a
 description, in your browser, with nothing to install. Describe the app, for
 example *"a table of flights with a search field"*. The model writes it as an
 abap2UI5 class into the editor beside the chat and runs it against the real
@@ -72,7 +72,7 @@ The shape of an abap2UI5 app:
    the app class itself, which is serialized.
 
 Before building something from scratch, check whether it exists: the sample
-catalog's index at https://abap2ui5.github.io/playground/samples/apps.json lists
+catalog's index at https://abap2ui5.github.io/browser-playground/samples/apps.json lists
 every sample of all three sample repositories with title, summary and keywords,
 and https://abap2ui5.github.io/samples-site/sample/<class>/ prints each one's ABAP.
 
@@ -98,7 +98,7 @@ working from what abap2UI5 is today rather than from what it recalls.
 
 ## Next Steps
 
-- [AI Studio](https://abap2ui5.github.io/playground/ai/) — an app from a
+- [AI Studio](https://abap2ui5.github.io/browser-playground/ai/) — an app from a
   description, built and run in the browser
 - [AI Setup: The Recommended Path](/advanced/ai_path) — what to install first,
   in three steps, and what each one costs

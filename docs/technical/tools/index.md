@@ -22,7 +22,7 @@ here.
 
 abap2UI5 uses [open-abap](https://github.com/open-abap) to run unit tests and
 frontend tests, and to execute samples directly in your browser - with no
-backend needed. It is what the [playground](https://abap2ui5.github.io/playground/)
+backend needed. It is what the [playground](https://abap2ui5.github.io/browser-playground/)
 and the [MCP server](/advanced/mcp_server) run the framework on.
 
 ## abap-cleaner

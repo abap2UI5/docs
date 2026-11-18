@@ -296,5 +296,5 @@ converts the user interface; the rest is yours:
   deploys into
 - [Agent-Operable Apps](/advanced/agents) — operating the converted report
   through its screen
-- [#33 When the API Is Not Released](https://abap2ui5.github.io/insights/33-when-the-api-is-not-released/){target="_self"}
+- [#33 When the API Is Not Released](https://abap2ui5.github.io/docs-insights/33-when-the-api-is-not-released/){target="_self"}
   — what to do about the tables and APIs of the logic on ABAP Cloud

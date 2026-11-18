@@ -24,10 +24,10 @@ deployed by merging it.
   and nothing a reader types is sent anywhere.
 - **The one thing that executes is the Run button.** A fenced example that
   carries one links into
-  [abap2UI5/playground](https://github.com/abap2UI5/playground), which
+  [abap2UI5/browser-playground](https://github.com/abap2UI5/browser-playground), which
   transpiles the ABAP and runs it **in the reader's own browser**. The code
   travels in the URL fragment, which a browser never sends to a server. The
-  playground's own [security policy](https://github.com/abap2UI5/playground/blob/main/SECURITY.md)
+  playground's own [security policy](https://github.com/abap2UI5/browser-playground/blob/main/SECURITY.md)
   covers what happens once the reader is there.
 - **The pages are not a source of truth about the framework.** The API
   reference, the version numbers and the sample links are generated from, or
@@ -38,7 +38,7 @@ deployed by merging it.
   organisation's own: the framework's interface and the sample catalogues from
   `raw.githubusercontent.com`, and the bar, two stylesheets, the search box and
   the ABAP highlighter from the playground's published site
-  (`abap2ui5.github.io/playground`), which the build runs to colour the
+  (`abap2ui5.github.io/browser-playground`), which the build runs to colour the
   examples - so a compromise of that deployment would reach this build.
 
 ## Out of scope

@@ -9,7 +9,7 @@ need three steps to start. Each step is useful on its own, so you can stop
 after any of them. None of them needs an SAP system.
 
 To only try what an assistant can do, without installing anything, open the
-[AI Studio](https://abap2ui5.github.io/playground/ai/) in the browser. The
+[AI Studio](https://abap2ui5.github.io/browser-playground/ai/) in the browser. The
 steps below are for the assistant you work with every day.
 
 ## The Three Steps
@@ -92,9 +92,9 @@ describes what you need.
 
 | Tool | Needs an SAP system? | Who acts | When to add it |
 |---|---|---|---|
-| [AI Studio](https://abap2ui5.github.io/playground/ai/) | no | the AI, in your browser | to try an idea without installing anything |
-| [Playground](https://abap2ui5.github.io/playground/) | no | you | to try a control or share a small example |
-| [Layout editor](https://abap2ui5.github.io/layout-editor/) | no | you | to sketch a first screen by drag and drop |
+| [AI Studio](https://abap2ui5.github.io/browser-playground/ai/) | no | the AI, in your browser | to try an idea without installing anything |
+| [Playground](https://abap2ui5.github.io/browser-playground/) | no | you | to try a control or share a small example |
+| [Layout editor](https://abap2ui5.github.io/browser-layout-editor/) | no | you | to sketch a first screen by drag and drop |
 | Claude Code plugin, Copilot plugin | no | the AI | step 1 |
 | [MCP server](/advanced/mcp_server) | no | the AI | step 1; its page lists every tool and the larger setups |
 | [Linter](/advanced/linter) | no | you, the AI and CI | step 2; also alone in CI for any project |
