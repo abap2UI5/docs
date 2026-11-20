@@ -175,7 +175,7 @@ export default defineConfig({
       { text: "Cookbook", link: "/cookbook/", activeMatch: "^/cookbook/" },
       { text: "API", link: "/resources/api", activeMatch: "^/resources/" },
       {
-        text: "1.149.0",
+        text: "1.150.0",
         items: [
           { text: "Release notes", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
