@@ -1,7 +1,8 @@
 /*
  * controls — the custom controls the frontend ships, read out of their source.
  *
- * Every control under app/webapp/cc/ in abap2UI5/abap2UI5 is a UI5 module:
+ * Every control under bundle/webapp/cc/ (app/webapp/cc/ before the frontend
+ * became the bundle of the embed control) in abap2UI5/abap2UI5 is a UI5 module:
  * `sap.ui.define([deps], (Control, …) => Control.extend("z2ui5.cc.Name", {
  * metadata: { properties, events, aggregations }, … }))`. An app reaches one
  * from its view as `<z2ui5:Name>` under `xmlns:z2ui5="z2ui5.cc"`, and what it
@@ -31,8 +32,15 @@ import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
 import { fetchInterface, frameworkHome } from './client-interface.mjs';
 
-/** Where the controls are in a clone of the framework. */
-export const controlsDir = 'app/webapp/cc';
+/** Where the controls are in the framework, newest place first: the frontend
+ *  moved from app/webapp to bundle/webapp when it became the bundle the embed
+ *  control loads. A ref is read from the first of them that has controls, so
+ *  the reference follows main across the move without a release of this
+ *  site in between. */
+export const CONTROL_DIRS = Object.freeze(['bundle/webapp/cc', 'app/webapp/cc']);
+/** The directory the last listing found the controls in - a live binding,
+ *  set by listControlFiles( ). */
+export let controlsDir = CONTROL_DIRS[0];
 
 /** The namespace a view declares them under, and the prefix the view
  *  builder's `ns` names. */
@@ -183,11 +191,28 @@ export function describeControl(file, source) {
  *  gives - or, without one, from the repository's contents API, which is the
  *  one way to list a directory of GitHub without a clone. */
 export async function listControlFiles(ref, { home = frameworkHome() } = {}) {
+  const tried = [];
+  for (const dir of CONTROL_DIRS) {
+    try {
+      const files = await listDir(ref, dir, { home });
+      if (files.length) {
+        controlsDir = dir;
+        return files;
+      }
+      tried.push(`${dir}: no .js file`);
+    } catch (err) {
+      tried.push(`${dir}: ${err.message}`);
+    }
+  }
+  throw new Error(tried.join('; '));
+}
+
+async function listDir(ref, dir, { home }) {
   if (home) {
     const tried = [];
     for (const spec of [ref, `origin/${ref}`]) {
       try {
-        const out = execFileSync('git', ['-C', home, 'ls-tree', '--name-only', spec, `${controlsDir}/`], {
+        const out = execFileSync('git', ['-C', home, 'ls-tree', '--name-only', spec, `${dir}/`], {
           encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
         });
         return out.split('\n').map((l) => l.trim()).filter((l) => l.endsWith('.js')).map((l) => path.basename(l)).sort();
@@ -197,7 +222,7 @@ export async function listControlFiles(ref, { home = frameworkHome() } = {}) {
     }
     throw new Error(`not in the clone at ${home} - ${tried.join('; ')}`);
   }
-  const url = `https://api.github.com/repos/abap2UI5/abap2UI5/contents/${controlsDir}?ref=${encodeURIComponent(ref)}`;
+  const url = `https://api.github.com/repos/abap2UI5/abap2UI5/contents/${dir}?ref=${encodeURIComponent(ref)}`;
   /* GITHUB_TOKEN when the environment has one (CI does, check:version
    * already uses it): the unauthenticated limit of the contents API is 60
    * calls an hour PER ADDRESS, and a shared egress address spends that on
@@ -205,7 +230,8 @@ export async function listControlFiles(ref, { home = frameworkHome() } = {}) {
    * reported as "not resolved", which --check SKIPS on rather than fails. */
   const headers = process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {};
   const res = await fetch(url, { signal: AbortSignal.timeout(20000), headers });
-  if (!res.ok) throw new Error(`HTTP ${res.status} listing ${controlsDir}`);
+  if (res.status === 404) return [];
+  if (!res.ok) throw new Error(`HTTP ${res.status} listing ${dir}`);
   const entries = await res.json();
   return entries.filter((e) => e.type === 'file' && e.name.endsWith('.js')).map((e) => e.name).sort();
 }

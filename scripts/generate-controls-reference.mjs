@@ -3,7 +3,7 @@
  * generate-controls-reference — the custom controls as a page, generated
  * from their source.
  *
- * The frontend ships seventeen controls under app/webapp/cc/ that a view
+ * The frontend ships seventeen controls under bundle/webapp/cc/ that a view
  * reaches as `<z2ui5:Name>`: a camera, a file uploader, the device position,
  * a WebSocket, the Excel bridge, the dirty flag. Each declares what an app
  * can bind and wire in its UI5 metadata - properties with a type and a
