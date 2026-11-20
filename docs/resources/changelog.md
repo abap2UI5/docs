@@ -7,6 +7,14 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.150.0
+2026-11-20
+- Drafts: a draft row with a blank owner - one written before the `UNAME` column - is no longer read, found, counted or overwritten as anyone's. 1.149.x tolerated such rows for the upgrade window; that tolerance is gone, as planned
+- Repositories moved and renamed: the embed control is [`abap2UI5-addons/embed-ui5-control`](https://github.com/abap2UI5-addons/embed-ui5-control), the mobile shell [`abap2UI5-addons/embed-mobile`](https://github.com/abap2UI5-addons/embed-mobile), the web component frontend [`abap2UI5-addons/embed-webcomponent`](https://github.com/abap2UI5-addons/embed-webcomponent), the Excel add-in [`abap2UI5-addons/embed-excel`](https://github.com/abap2UI5-addons/embed-excel), the playground [`abap2UI5/browser-playground`](https://github.com/abap2UI5/browser-playground) and the legacy utilities [`abap2UI5/abap2UI5-obsolet`](https://github.com/abap2UI5/abap2UI5-obsolet)
+- `window_bind_tab( )` on a table behind a data reference: an edit in the browser - a checkbox, a cell, the selection of a `TableSelectDialog` - now reaches the app. The frontend sent the whole node instead of the delta of its rows, and the backend never writes a windowed table back whole, so the edit was dropped
+- RTTI helpers of `z2ui5_cl_ui5_util_context`: an initial reference no longer ends the request in the runtime error `REFERENCE_IS_INITIAL`. `rtti_get_typedescr_by_data_ref`, `rtti_get_t_attri_by_oref` and `rtti_get_t_attri_by_any` raise `z2ui5_cx_ui5_util_error` with `RTTI_REFERENCE_IS_INITIAL`; `rtti_check_table_standard` and `rtti_get_flat_components` answer false or empty
+- `@abap2ui5/node-runtime`: `abap2ui5-own-apps` keeps the host's DDIC that the transpiler writes into `output/project/_ddic.mjs` and loads it before the host's classes. 1.149.0 refused every host with a table or data element of its own
+
 ## 1.149.0
 2026-11-16
 - Windowed tables: `client->window_bind_tab( val = mt_rows window = 100 )` binds a large table and sends it to the browser `window` rows at a time. The list binding of a growing `sap.m.Table` / `sap.m.List` or of a `sap.ui.table.Table` asks the framework for the next window as it grows or scrolls, in a roundtrip that does not call `main( )`. Sorting and filtering the binding - the column menu of `sap.ui.table`, a `cs_event-binding_call` sort or filter - run on the server over all rows, and an edit or a selection lands in the row of the table it was made in. The app sets an order and a filter of its own with `t_sort` / `t_filter`; `t_filter` and the filter of the binding apply together (AND), the sort is the last one set. `/__WINDOW/<path>/TOTAL` counts the rows the filter lets through
