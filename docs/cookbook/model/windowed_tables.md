@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Windowed tables in abap2UI5 - client->window_bind_tab( ) sends a large table to the browser a window at a time, sorts and filters it on the server, and window_get_row( ) maps a position the browser shows back to the row of the table. From 1.149.0 on.
+description: Windowed tables in abap2UI5 - client->window_bind_tab( ) binds the rows the app has loaded and the total, and the list binding asks the app for more rows, or for a new sort or filter, the way an OData service is asked. In this shape from the next release on; 1.149.0 had a server-side window.
 ---
 # Windowed Tables
 
@@ -11,39 +11,33 @@ rows nobody looks at, and the
 [size limit](/cookbook/model/size_limit) has to be raised before it shows them
 at all.
 
-`client->window_bind_tab( )` binds the table so that the browser gets a
-**window** of it - the first 100 rows, say - and asks for the next window when
-the list grows or scrolls. The rows stay in the attribute of your app.
-Sorting and filtering run on the server, over all rows. *From abap2UI5
-1.149.0 on.*
+`client->window_bind_tab( )` binds the rows **your app has loaded so far** -
+the first 100, say - together with the number of rows there are in all. When
+the list grows or scrolls past them, or the user sorts or filters it, the
+list binding asks your app for rows, and your app reads them: the way an OData
+service answers `$skip`, `$top`, `$orderby` and `$filter`. The framework
+neither sorts nor filters nor counts. *In this shape from the next release
+on - 1.149.0 had a server-side window, see
+[Coming from 1.149.0](#coming-from-1-149-0).*
 
 | I want to… | Section |
 | --- | --- |
 | know whether I need it | [When to Use It](#when-to-use-it) |
 | bind a table this way | [The Call](#the-call) |
+| answer the browser's requests | [The Request](#the-request) |
 | see a whole app | [A Complete Example](#a-complete-example) |
 | use a `sap.ui.table.Table` | [Grid Table](#grid-table) |
 | know which row an event means | [Which Row Was Pressed](#which-row-was-pressed) |
-| sort or filter from the app | [The App's Order and the User's](#the-app-s-order-and-the-user-s) |
 | know what does not work | [Limits](#limits) |
+| move an app from 1.149.0 | [Coming from 1.149.0](#coming-from-1-149-0) |
 
 ## When to Use It
 
 Use it when a table is too large to send whole: thousands of rows that the
-user scrolls through, sorts and filters, but never reads all at once. Keep
-`_bind( )` for a table the user sees in full, a table of a few dozen rows, and
-a table inside the rows of another table.
-
-A windowed table changes three things at once:
-
-- **What travels.** The response carries the rows of the window, not the
-  table.
-- **Who sorts and filters.** The server, over all rows. The browser holds
-  only a part of them, so it cannot.
-- **What the draft costs.** The table is kept next to the app in the draft,
-  not inside its serialization. While its rows stay the same from one
-  roundtrip to the next, it is not serialized again
-  ([Performance](/configuration/performance#large-tables)).
+user scrolls through, sorts and filters, but never reads all at once - above
+all rows that come from the database, where your app can read exactly the
+window it needs. Keep `_bind( )` for a table the user sees in full, a table of
+a few dozen rows, and a table inside the rows of another table.
 
 ## The Call
 
@@ -54,6 +48,8 @@ template binds relatively, exactly as with `_bind( )`:
 ```abap
 )->ele( `Table`
     )->a( n = `items`            v = client->window_bind_tab( val    = mt_rows
+                                                              total  = mv_total
+                                                              event  = `ROWS`
                                                               window = 50 )
     )->a( n = `growing`          v = `true`
     )->a( n = `growingThreshold` v = `20`
@@ -61,48 +57,53 @@ template binds relatively, exactly as with `_bind( )`:
 
 | Parameter | What it is |
 | --- | --- |
-| `val` | the table: a public `STANDARD` table attribute of the app, passed like `_bind( )`. A data reference to one works too - `REF #( mt_rows )`, or an attribute `TYPE REF TO data` pointing to a table |
-| `window` | the rows the browser gets at a time; default 100, at least 1 |
-| `t_sort` | the order of the rows, type `z2ui5_if_client=>ty_t_bind_tab_sort`: a column (the upper-case component name) and `descending`. The first sorter that tells two rows apart decides |
-| `t_filter` | the rows that show, type `z2ui5_if_client=>ty_t_bind_tab_filter`: `group`, `path`, `operator`, `value1`, `value2`. A row passes a group when it meets one of its conditions, and the filter when it passes every group |
+| `val` | the rows loaded so far, in the order the browser shows them: a public `STANDARD` table attribute of the app, passed like `_bind( )`. A data reference to one works too - `REF #( mt_rows )`, or an attribute `TYPE REF TO data` pointing to a table |
+| `total` | the rows there are in all - what the list shows as its length. Pass an attribute of the app: the framework reads it anew with every response, so an event that loads rows only sets it |
+| `event` | the event of your app the browser's requests arrive as |
+| `window` | the rows the browser asks for at a time; default 100, at least 1 |
 
-The operators are the names of `sap.ui.model.FilterOperator`: `EQ`, `NE`,
-`LT`, `LE`, `GT`, `GE`, `BT`, `NB`, `Contains`, `NotContains`, `StartsWith`,
-`NotStartsWith`, `EndsWith` and `NotEndsWith`. `value2` is the upper bound of
-`BT` and `NB`. Numbers, dates (`yyyy-MM-dd` or `yyyyMMdd`), times and booleans
-(`true` / `false`) compare as such; text compares without regard to case.
+A growing `sap.m.Table` then shows *More [50 / 5000]*, and a
+`sap.ui.table.Table` a scroll bar for all rows. To show the count, bind the
+total like any value: `client->_bind( mv_total )`.
 
-Next to the rows, the model carries the state of the window under
-`/__WINDOW/<path>`: `TOTAL` (the rows the filter lets through), `COUNT` (the
-rows sent) and `SIZE` (one window). Bind `TOTAL` to show the user how many
-rows there are. `_bind_path( )` gives the path of the table:
+## The Request
 
-```abap
-)->tag( `Text`
-    )->a( n = `text` v = |\{/__WINDOW{ client->_bind_path( mt_rows ) }/TOTAL\} rows|
-```
+When the browser needs rows it does not hold, your `main( )` runs with the
+event you named, and `client->get( )-r_event_data` points to a
+`z2ui5_if_client=>ty_s_window_request`:
 
-## What the Browser Does
+| Component | What it is |
+| --- | --- |
+| `reason` | why the browser asks, a value of `z2ui5_if_client=>cs_window_reason` |
+| `skip` | the rows the browser holds - for `MORE`, where to go on |
+| `top` | the rows it wants now |
+| `t_sort` | the sorters of the binding, type `ty_t_bind_tab_sort`: `path` (the upper-case column) and `descending` - for `SORT` and `FILTER` |
+| `t_filter` | the filter of the binding, type `ty_t_bind_tab_filter`: `group`, `path`, `operator`, `value1`, `value2` - for `SORT` and `FILTER` |
+| `path` | the model path of the table - which table asks, when several share one event |
 
-The list binding of a windowed table is one of the framework's own. It
-answers its length with `TOTAL`, so a growing `sap.m.Table` shows
-*More [20 / 5000]* and a `sap.ui.table.Table` scrolls over all rows.
-When the control asks for rows past the ones it holds, the binding asks the
-server for the next windows:
+The three reasons:
 
-- **Growing and scrolling.** The request is a roundtrip of the framework's
-  own. It does **not** call your `main( )`, and it shows no busy indicator.
-  The server answers with more rows of the same order.
-- **Sorting and filtering.** The column menu of a `sap.ui.table.Table`
-  (`sortProperty`, `filterProperty`) and a `cs_event-binding_call` with
-  `sort` or `filter` reach the server instead of sorting the rows in the
-  browser. The server sorts or filters all rows and sends the first window of
-  the new order. This roundtrip does not call `main( )` either.
-- **Edits.** A cell edited or a row ticked is sent with the next roundtrip,
-  as for any bound table, and lands in the row of the table it was made in -
-  whatever order the browser showed.
+- **`MORE`** - the list grew or scrolled past the rows it holds. Append `top`
+  rows to the table, after the ones it has.
+- **`SORT`** - a column was sorted. Read the first `top` rows again, in the
+  order of `t_sort`.
+- **`FILTER`** - a column was filtered or a search ran. Read the first `top`
+  rows again, of the rows `t_filter` lets through, and set the total.
 
-A search field and a sort button that work on the server, with
+`SORT` and `FILTER` both carry the binding's sorters **and** its filter, so
+your app always gets the whole state of the columns in one request. A row
+passes a filter group when it meets one of the group's conditions, and the
+filter when it passes every group. The operators are the names of
+`sap.ui.model.FilterOperator`: `EQ`, `NE`, `LT`, `LE`, `GT`, `GE`, `BT`, `NB`,
+`Contains`, `NotContains`, `StartsWith`, `NotStartsWith`, `EndsWith` and
+`NotEndsWith`; `value2` is the upper bound of `BT` and `NB`. What a sort or a
+filter means is your app's to decide - an `ORDER BY` and a `WHERE`, a CDS
+view, an RFC.
+
+Nothing is rendered again: change the table and the total, and the response
+pushes both. The request shows no busy indicator for `MORE`.
+
+A search field and a sort button that ask the app, with
 `cs_event-binding_call` ([Frontend Actions](/cookbook/event_navigation/frontend#calling-control-methods-on-the-frontend)).
 The table needs an `id` for the call to find it:
 
@@ -127,13 +128,14 @@ The table needs an `id` for the call to find it:
 
 On a table bound with `_bind( )` the same two calls sort and filter in the
 browser ([Tables](/cookbook/model/tables#in-the-browser)). On a windowed table
-they go to the server. The view does not change.
+they become a request to your app. The view does not change.
 
 ## A Complete Example
 
-Five thousand rows in a growing `sap.m.Table`, fifty at a time. A row can be
-ticked and pressed, a button counts the ticked rows, and another sets the
-app's own order:
+Five thousand rows in a growing `sap.m.Table`, fifty at a time. The rows come
+from `mt_db`, which stands in for a database table; the app reads windows of
+it for the event `ROWS`. A row can be pressed, and the search field filters
+by name:
 
 ```abap
 CLASS zcl_sample_window DEFINITION PUBLIC.
@@ -143,21 +145,31 @@ CLASS zcl_sample_window DEFINITION PUBLIC.
 
     TYPES:
       BEGIN OF ty_s_row,
-        id       TYPE i,
-        name     TYPE string,
-        price    TYPE p LENGTH 8 DECIMALS 2,
-        selected TYPE abap_bool,
+        id    TYPE i,
+        name  TYPE string,
+        price TYPE p LENGTH 8 DECIMALS 2,
       END OF ty_s_row.
-    DATA mt_rows   TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+    TYPES ty_t_row TYPE STANDARD TABLE OF ty_s_row WITH EMPTY KEY.
+
+    DATA mt_rows   TYPE ty_t_row.
+    DATA mv_total  TYPE i.
     DATA mv_result TYPE string.
 
   PROTECTED SECTION.
     DATA client TYPE REF TO z2ui5_if_client.
+    " stands in for a database table
+    DATA mt_db TYPE ty_t_row.
+    DATA mt_sort TYPE z2ui5_if_client=>ty_t_bind_tab_sort.
+    DATA mt_filter TYPE z2ui5_if_client=>ty_t_bind_tab_filter.
 
     METHODS view_display.
+    METHODS on_rows.
+    METHODS load
+      IMPORTING
+        skip TYPE i
+        top  TYPE i.
 
   PRIVATE SECTION.
-    CONSTANTS c_window TYPE i VALUE 50.
 
 ENDCLASS.
 
@@ -170,29 +182,84 @@ CLASS zcl_sample_window IMPLEMENTATION.
       DO 5000 TIMES.
         INSERT VALUE #( id    = sy-index
                         name  = |Item { sy-index }|
-                        price = ( sy-index * 37 ) MOD 251 ) INTO TABLE mt_rows.
+                        price = ( sy-index * 37 ) MOD 251 ) INTO TABLE mt_db.
       ENDDO.
+      load( skip = 0
+            top  = 50 ).
       view_display( ).
 
     ELSEIF client->check_on_navigated( ).
       view_display( ).
 
+    ELSEIF client->check_on_event( `ROWS` ).
+      on_rows( ).
+
     ELSEIF client->check_on_event( `ROW` ).
-      " the argument is a position in the order the browser shows, from 0
-      DATA(lv_row) = client->window_get_row( val = mt_rows
-                                             row = CONV i( client->get_event_arg( ) ) + 1 ).
-      mv_result = COND #( WHEN lv_row > 0 THEN |{ mt_rows[ lv_row ]-name } pressed| ELSE `no row` ).
-
-    ELSEIF client->check_on_event( `CHECK` ).
-      DATA(lv_count) = REDUCE i( INIT n = 0 FOR ls IN mt_rows WHERE ( selected = abap_true ) NEXT n = n + 1 ).
-      mv_result = |{ lv_count } rows ticked|.
-
-    ELSEIF client->check_on_event( `HIGHEST_ID` ).
-      " the app's order: binding the table again is enough, no view_display( )
-      client->window_bind_tab( val    = mt_rows
-                               window = c_window
-                               t_sort = VALUE #( ( path = `ID` descending = abap_true ) ) ).
+      " the argument is the row's index in mt_rows, from 0
+      mv_result = |{ mt_rows[ CONV i( client->get_event_arg( ) ) + 1 ]-name } pressed|.
     ENDIF.
+
+  ENDMETHOD.
+
+  METHOD on_rows.
+
+    FIELD-SYMBOLS <request> TYPE z2ui5_if_client=>ty_s_window_request.
+
+    DATA(lr_request) = client->get( )-r_event_data.
+    ASSIGN lr_request->* TO <request>.
+
+    IF <request>-reason = z2ui5_if_client=>cs_window_reason-more.
+      load( skip = lines( mt_rows )
+            top  = <request>-top ).
+      RETURN.
+    ENDIF.
+
+    " SORT or FILTER: the new state of the columns, from the first row on
+    mt_sort   = <request>-t_sort.
+    mt_filter = <request>-t_filter.
+    load( skip = 0
+          top  = <request>-top ).
+
+  ENDMETHOD.
+
+  METHOD load.
+
+    DATA lt_hit TYPE ty_t_row.
+
+    " WHERE - the search field sends NAME Contains the query
+    LOOP AT mt_db INTO DATA(ls_row).
+      DATA(lv_match) = abap_true.
+      LOOP AT mt_filter INTO DATA(ls_filter) WHERE path = `NAME`.
+        IF to_upper( ls_row-name ) NS to_upper( ls_filter-value1 ).
+          lv_match = abap_false.
+        ENDIF.
+      ENDLOOP.
+      IF lv_match = abap_true.
+        APPEND ls_row TO lt_hit.
+      ENDIF.
+    ENDLOOP.
+    mv_total = lines( lt_hit ).
+
+    " ORDER BY
+    DATA(ls_sort) = VALUE #( mt_sort[ 1 ] OPTIONAL ).
+    IF ls_sort-path IS NOT INITIAL.
+      IF ls_sort-descending = abap_true.
+        SORT lt_hit BY (ls_sort-path) DESCENDING.
+      ELSE.
+        SORT lt_hit BY (ls_sort-path) ASCENDING.
+      ENDIF.
+    ENDIF.
+
+    " OFFSET skip, UP TO top ROWS
+    IF skip = 0.
+      CLEAR mt_rows.
+    ENDIF.
+    LOOP AT lt_hit INTO ls_row FROM skip + 1.
+      IF lines( mt_rows ) >= skip + top.
+        EXIT.
+      ENDIF.
+      APPEND ls_row TO mt_rows.
+    ENDLOOP.
 
   ENDMETHOD.
 
@@ -209,23 +276,29 @@ CLASS zcl_sample_window IMPLEMENTATION.
                 )->ele( `Table`
                     )->a( n = `id`               v = `tab`
                     )->a( n = `items`            v = client->window_bind_tab( val    = mt_rows
-                                                                              window = c_window )
+                                                                              total  = mv_total
+                                                                              event  = `ROWS`
+                                                                              window = 50 )
                     )->a( n = `growing`          v = `true`
                     )->a( n = `growingThreshold` v = `20`
 
                     )->ele( `headerToolbar`
                         )->ele( `OverflowToolbar`
-                            )->tag( `Title`
-                                )->a( n = `text` v = |\{/__WINDOW{ client->_bind_path( mt_rows ) }/TOTAL\} rows|
+                            )->tag( `ObjectNumber`
+                                )->a( n = `number` v = client->_bind( mv_total )
+                                )->a( n = `unit`   v = `rows`
                             )->tag( `ToolbarSpacer`
                             )->tag( `Text`
                                 )->a( n = `text` v = client->_bind( mv_result )
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `Highest id first`
-                                )->a( n = `press` v = client->_event( `HIGHEST_ID` )
-                            )->tag( `Button`
-                                )->a( n = `text`  v = `Count ticked`
-                                )->a( n = `press` v = client->_event( `CHECK` )
+                            )->tag( `SearchField`
+                                )->a( n = `width`  v = `12rem`
+                                )->a( n = `search` v = client->follow_up_action( val   = client->cs_event-binding_call
+                                                                                 t_arg = VALUE #( ( `tab` )
+                                                                                                  ( `items` )
+                                                                                                  ( `filter` )
+                                                                                                  ( `NAME` )
+                                                                                                  ( `Contains` )
+                                                                                                  ( `${$parameters>/query}` ) ) )
                         )->end(
                     )->end(
 
@@ -238,10 +311,6 @@ CLASS zcl_sample_window IMPLEMENTATION.
                             )->tag( `Text`
                                 )->a( n = `text` v = `Price`
                         )->end(
-                        )->ele( `Column`
-                            )->tag( `Text`
-                                )->a( n = `text` v = `Ticked`
-                        )->end(
                     )->end(
 
                     )->ele( `items`
@@ -253,9 +322,7 @@ CLASS zcl_sample_window IMPLEMENTATION.
                                 )->tag( `Text`
                                     )->a( n = `text` v = `{NAME}`
                                 )->tag( `Text`
-                                    )->a( n = `text` v = `{PRICE}`
-                                )->tag( `CheckBox`
-                                    )->a( n = `selected` v = `{SELECTED}` ).
+                                    )->a( n = `text` v = `{PRICE}` ).
 
     client->view_display( view->stringify( ) ).
 
@@ -266,26 +333,27 @@ ENDCLASS.
 What to try:
 
 - Press *More* twice. The first press stays inside the 50 rows the browser
-  holds; the second asks the server for the next window. `main( )` runs
-  for neither.
-- Tick a few rows, press *Highest id first*, tick more, press *Count
-  ticked*. The count reads the internal table in its own order and finds
-  every tick in the row it was made in.
-- Press a row. The handler names the row of `mt_rows` behind it, also after
-  the sort.
+  holds; the second runs `main( )` with `ROWS` and `MORE`, and the app
+  appends the next 50.
+- Search for `item 12`. The app filters, counts and sends the first rows of
+  the result; the count in the toolbar follows.
+- Press a row. Its index is the row of `mt_rows` - the table is exactly what
+  the browser shows.
 
-`CHECK` loops over `mt_rows` like any table: the rows are all there, in the
-order the app filled them. Only the browser sees them sorted.
+In a real app `load( )` is one `SELECT` with `WHERE`, `ORDER BY`,
+`OFFSET skip` and `UP TO top ROWS`, plus a `SELECT COUNT(*)` for the total.
 
 ## Grid Table
 
-A `sap.ui.table.Table` takes the same binding in `rows`. It asks for the next
-window as the user scrolls. A column with `sortProperty` and `filterProperty`
-gets the column menu, and both run on the server:
+A `sap.ui.table.Table` takes the same binding in `rows`. It asks for more rows
+as the user scrolls. A column with `sortProperty` and `filterProperty` gets
+the column menu, and what the user picks there arrives as `SORT` or `FILTER`:
 
 ```abap
 )->ele( n = `Table` ns = `t`
     )->a( n = `rows`            v = client->window_bind_tab( val    = mt_rows
+                                                             total  = mv_total
+                                                             event  = `ROWS`
                                                              window = 30 )
     )->a( n = `visibleRowCount` v = `10`
     )->ele( n = `columns` ns = `t`
@@ -301,63 +369,19 @@ gets the column menu, and both run on the server:
                     )->a( n = `text` v = `{NAME}` ).
 ```
 
-The view declares `xmlns:t` as `sap.ui.table`. The column menu calls
-`sort( )` and `filter( )` on the binding, and the binding sends both to the
-server.
+The view declares `xmlns:t` as `sap.ui.table`. The column menu's filter sends
+`Contains` for a text column.
 
 ## Which Row Was Pressed
 
-The browser holds the rows in the order the server sorted and filtered them.
-So the index in a binding path that an event hands over - `/MT_ROWS/5` - is a
-**position in that order**, not the row of the table. Row 6 on screen may be
-row 4711 of `mt_rows`.
-
-`client->window_get_row( )` answers which row it is, in the same order the
-response was built with:
-
-```abap
-DATA(lv_row) = client->window_get_row( val = mt_rows
-                                       row = lv_position + 1 ).
-```
-
-| Parameter | What it is |
-| --- | --- |
-| `val` | the table, as passed to `window_bind_tab( )` - the table or a data reference to it |
-| `row` | the position in the browser, counted from 1: the index of the binding path plus 1 |
-| result | the row of the table, counted from 1; `0` when the position is past the rows the filter lets through |
-
-For a table that is not windowed it answers `row` itself. Send the position
-from the row with
+The table bound is exactly what the browser shows, in that order. So the
+index in a binding path that an event hands over - `/MT_ROWS/5` - is the row
+of the table: `mt_rows[ 5 + 1 ]`. Send it from the row with
 `$event.getSource().getBindingContext().getPath().split('/').pop()`, as in the
-example above. When the handler needs the data of the row rather than its
-position, sending a key field (`${ID}`) and reading the table by it is simpler
-and needs no mapping ([Tables](/cookbook/model/tables#which-row-was-clicked)).
-
-## The App's Order and the User's
-
-The server keeps one order per windowed table - a sort and a filter - and
-nobody else does. The next window is more rows of the same order, whoever set
-it, and `window_get_row( )` and every edit follow it. Two parties can change
-it: the app, with `t_sort` and `t_filter`, and the user, through the list
-binding (the column menu, a `binding_call`).
-
-- **There is one sort: the last one set.** A sort the user picks replaces the
-  app's, and a new sort from the app replaces the user's.
-- **The filter has two parts, and a row has to pass both.** `t_filter` and the
-  filter of the binding apply together. A column filter narrows what `t_filter`
-  lets through, a new `t_filter` keeps the user's column filter, and clearing
-  one leaves the other.
-- **`t_sort` and `t_filter` take effect when they change.** They apply when
-  they differ from the ones the previous `window_bind_tab( )` of the table
-  passed. So a view rendered again keeps what the user sorted and filtered,
-  and a new order from the app - from a dialog, a layout, a button - replaces
-  it. An empty table clears it the same way. The other side of this: passing
-  the same `t_sort` a second time does not bring it back after the user
-  sorted by a column; the app has to pass a different one.
-
-Binding the table again in an event handler is enough to set a new order; the
-example's `HIGHEST_ID` branch does nothing else. The new window reaches the
-browser in the same roundtrip, without a `view_display( )`.
+example above. A cell edited or a row ticked lands in the same row. When the
+handler needs the data of the row rather than its position, sending a key
+field (`${ID}`) works as for any table
+([Tables](/cookbook/model/tables#which-row-was-clicked)).
 
 ## Limits
 
@@ -368,22 +392,29 @@ browser in the same roundtrip, without a `view_display( )`.
   windowed.
 - **Sorters and filters in the view are ignored.** A `sorter` or `filters`
   written into the binding info of the view is not applied; the rows arrive
-  in the order the server gives. Use `t_sort` and `t_filter`, or the
-  binding's own `sort` and `filter`.
-- **Not every filter has a form for the server.** A filter with a test
-  function, or a nesting deeper than an AND of ORs, is not sent; the browser
-  logs `WINDOW: a filter of this shape is not sent to the server`.
+  in the order your app gives.
+- **Not every filter has a wire form.** A filter with a test function, or a
+  nesting deeper than an AND of ORs, is not sent; the browser logs
+  `WINDOW: a filter of this shape is not sent to the server`.
 - **The control has to ask by range.** A growing `sap.m.Table` or
   `sap.m.List` and a `sap.ui.table.Table` do. A list that does not grow asks
-  for no range and shows the window it holds.
-- **The browser never sends the table whole.** An edit travels as a change of
-  single cells. A whole table value sent back for a windowed table is refused,
-  so the table cannot be cut down to the window by accident.
-- **A data reference costs more in the draft.** A table behind a data
-  reference is serialized with the reference on every roundtrip; only a table
-  attribute gets the reuse described under
-  [Performance](/configuration/performance#large-tables).
-- **`__WINDOW` is reserved.** Do not name an attribute of the app that way.
+  for no range and shows the rows it holds.
+- **`__WINDOW` is reserved.** The model carries the state of the window under
+  `/__WINDOW/<path>`; do not name an attribute of the app that way.
+
+## Coming from 1.149.0
+
+In 1.149.0 the framework held the whole table, sorted and filtered it on the
+server and answered the window requests without the app. That is gone:
+
+- `window_bind_tab( )` takes `total` and `event` instead of `t_sort` and
+  `t_filter`. `val` holds the loaded rows, not all of them.
+- `window_get_row( )` is removed: the index of a row on screen is its index
+  in the table.
+- An order of the app's own is the order it loads in - set it before the
+  first `load( )`, as sample
+  [`z2ui5_cl_smp_app_547`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_547.clas.abap)
+  does.
 
 The full contract - what travels, in which order, and what a backend has to
 do - is the specification

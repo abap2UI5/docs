@@ -82,22 +82,15 @@ arguments, straight from the interface on `main`. They fall into families:
 | control calls | `control_by_id`, `control_global`, `binding_call`, `bind_element` |
 | launchpad | `cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`, `cross_app_nav_get_links`, `set_title_launchpad`, `set_app_full_width` |
 | URL | the `hash_*` and `app_state_*` family |
-| other | `start_timer`, `keyboard_shortcut`, `store_data`, `play_audio`, `urlhelper`, `offline_queue`, the smart-control handshakes |
+| other | `start_timer`, `keyboard_shortcut`, `store_data`, `play_audio`, `urlhelper`, the smart-control handshakes |
 
-Two of them take an argument that is easy to miss.
+One of them takes an argument that is easy to miss.
 
 `start_timer` raises a backend event once after a delay (`t_arg` = event
 name, milliseconds). An optional **third** argument `X` keeps the global busy
 indicator off for that tick. It is the `check_no_busy` of `_event( )` for a
 timer: a poll whose backend call takes longer than a second no longer flashes
 the overlay.
-
-`offline_queue` (experimental) names the events of this app that wait in the
-browser while the backend cannot be reached. Without it they fail. `t_arg` is
-the toast text shown when an event was kept (`&1` is how many wait; empty for
-no toast), then the event names. The events are kept with their model changes
-across a reload and sent in order once the network is back. The page itself
-still needs the network to load.
 
 Some of these actions have their own pages:
 

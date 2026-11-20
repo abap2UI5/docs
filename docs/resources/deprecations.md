@@ -46,6 +46,9 @@ tell you what is coming if you do not.
 
 | What you have | What to write | Status |
 |---|---|---|
+| `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-149-0) | **removed**, *next release* |
+| `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, *next release* |
+| `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, *next release* |
 | `view_model_update( )` and its four variants | delete the call | 1.143.0 |
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
