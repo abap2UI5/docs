@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Windowed tables in abap2UI5 - client->window_bind_tab( ) binds the rows the app has loaded and the total, and the list binding asks the app for more rows, or for a new sort or filter, the way an OData service is asked. In this shape from the next release on; 1.149.0 had a server-side window.
+description: Windowed tables in abap2UI5 - client->window_bind_tab( ) binds the rows the app has loaded and the total, and the list binding asks the app for more rows, or for a new sort or filter, the way an OData service is asked. In this shape from the next release on; 1.149.0 and 1.150.0 had a server-side window.
 ---
 # Windowed Tables
 
@@ -17,8 +17,8 @@ the list grows or scrolls past them, or the user sorts or filters it, the
 list binding asks your app for rows, and your app reads them: the way an OData
 service answers `$skip`, `$top`, `$orderby` and `$filter`. The framework
 neither sorts nor filters nor counts. *In this shape from the next release
-on - 1.149.0 had a server-side window, see
-[Coming from 1.149.0](#coming-from-1-149-0).*
+on - 1.149.0 and 1.150.0 had a server-side window, see
+[Coming from 1.150.0](#coming-from-1-150-0).*
 
 | I want to… | Section |
 | --- | --- |
@@ -29,7 +29,7 @@ on - 1.149.0 had a server-side window, see
 | use a `sap.ui.table.Table` | [Grid Table](#grid-table) |
 | know which row an event means | [Which Row Was Pressed](#which-row-was-pressed) |
 | know what does not work | [Limits](#limits) |
-| move an app from 1.149.0 | [Coming from 1.149.0](#coming-from-1-149-0) |
+| move an app from 1.149.0 or 1.150.0 | [Coming from 1.150.0](#coming-from-1-150-0) |
 
 ## When to Use It
 
@@ -402,10 +402,10 @@ field (`${ID}`) works as for any table
 - **`__WINDOW` is reserved.** The model carries the state of the window under
   `/__WINDOW/<path>`; do not name an attribute of the app that way.
 
-## Coming from 1.149.0
+## Coming from 1.150.0
 
-In 1.149.0 the framework held the whole table, sorted and filtered it on the
-server and answered the window requests without the app. That is gone:
+In 1.149.0 and 1.150.0 the framework held the whole table, sorted and filtered
+it on the server and answered the window requests without the app. That is gone:
 
 - `window_bind_tab( )` takes `total` and `event` instead of `t_sort` and
   `t_filter`. `val` holds the loaded rows, not all of them.
