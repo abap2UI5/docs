@@ -55,7 +55,6 @@ The release notes document measured effects of this work:
 | --- | --- | --- |
 | 1.147.0 | a bound table of flat rows and a flat structure are written to JSON directly | a start roundtrip with 4000 bound rows: 1.1 s to 0.6 s |
 | 1.147.0 | the developer tools are a second bundle, loaded the first time they open | the page the browser loads first is about a fifth smaller |
-| 1.149.0 | a windowed table is kept next to the app in the draft and not serialized again while its rows stay the same | a roundtrip that leaves a table of 10,000 rows as it is: 650 ms to 70-80 ms on the Node host |
 
 The figures are the framework's own, each from one setup. Your system has
 others; the monitor below gives them.
@@ -139,13 +138,12 @@ other tools exist:
   Raising it with `cs_event-set_size_limit`
   ([More than 100 Rows](/cookbook/model/size_limit)) shows more, but every row
   is still sent, parsed and held by the browser.
-- **A windowed table.** `client->window_bind_tab( )` sends the browser a window
-  of the rows and lets it ask for the next one; sorting and filtering run on
-  the server ([Windowed Tables](/cookbook/model/windowed_tables)). The draft
-  keeps the table next to the app, and while its rows stay the same it is not
-  serialized again - the 650 ms to 70-80 ms in the table above. Only the
-  roundtrips that change rows serialize it, and every draft still holds all
-  rows. A table behind a data reference does not get this reuse.
+- **A windowed table.** `client->window_bind_tab( )` binds only the rows the
+  app has loaded, plus the total, and the browser asks the app for more as
+  the user scrolls, sorts or filters
+  ([Windowed Tables](/cookbook/model/windowed_tables)). The app reads a window
+  from the database the way an OData service does, so neither the model nor
+  the draft holds more than the rows the user has seen.
 
 For a list the user has to search rather than scroll, a filtered read per
 search is still the cheapest table of all: the rows that match, and no

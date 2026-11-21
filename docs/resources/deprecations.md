@@ -46,6 +46,9 @@ tell you what is coming if you do not.
 
 | What you have | What to write | Status |
 |---|---|---|
+| `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-150-0) | **removed**, *next release* |
+| `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, *next release* |
+| `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, *next release* |
 | `view_model_update( )` and its four variants | delete the call | 1.143.0 |
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | 1.142.0 |
@@ -76,7 +79,8 @@ tell you what is coming if you do not.
 | `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
 | the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
-| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` | 1.144.0 |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, *next release* |
+| `z2ui5_cl_http_handler` (the handler class an ICF node names) | `z2ui5_cl_ui5_http_handler` - same methods, it was an empty subclass | **removed**, *next release* |
 | `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
 | `set_app_state_active( )`, `cs_event-set_app_state_active` | `app_state_set_active( )`, `cs_event-app_state_set_active` | **removed**, 1.144.1 |
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, 1.144.1 |
@@ -470,16 +474,14 @@ CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
 ENDCLASS.
 ```
 
-**Nothing has to change today.** Both interfaces ship, and abap2UI5 looks up
-both when it searches for your exit class — a class implementing the old one is
-found and called exactly as before. A class implementing *both* is called once,
-through the new interface. The types on `z2ui5_if_exit` are references to the
-ones on `z2ui5_if_ui5_exit`, not copies, so a config structure that gains a
-field gains it under either name.
-
-`z2ui5_if_exit` is deleted after a transition period, so move your exit over
-when you next touch it. The new name shipped with 1.144.0, and every exit
-example on this site is written against it.
+**`z2ui5_if_exit` is deleted with the next release**, and abap2UI5 no longer
+looks it up. An exit class that still implements it does not compile, and
+until it is moved over the installation runs on the shipped defaults - no
+custom Content-Security-Policy, theme or bootstrap. Move it over before you
+upgrade: replace the interface and rename the two methods to
+`z2ui5_if_ui5_exit~set_config_http_get` and `~set_config_http_post` -
+parameters and types are the same. The new name shipped with 1.144.0, and
+every exit example on this site is written against it.
 
 ### `z2ui5_if_types` → the object that uses the type
 

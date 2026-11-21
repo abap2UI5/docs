@@ -384,8 +384,8 @@ UI5 model's size limit, raised per view slot with `cs_event-set_size_limit`;
 see [More than 100 Rows](/cookbook/model/size_limit).
 
 For a table too large to send whole, bind it with `window_bind_tab( )`
-instead: the browser gets a window of the rows and asks the server for the
-next one as the table grows - [Windowed Tables](/cookbook/model/windowed_tables).
+instead: the app loads a window of the rows and the browser asks the app for
+the next one as the table grows - [Windowed Tables](/cookbook/model/windowed_tables).
 
 ## Sorting and Filtering
 

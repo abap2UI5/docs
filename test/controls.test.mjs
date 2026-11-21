@@ -69,7 +69,7 @@ test('the control as the page describes it', () => {
   const c = describeControl('Geolocation.js', fixture);
   assert.equal(c.tag, 'z2ui5:Geolocation');
   assert.equal(c.fullName, 'z2ui5.cc.Geolocation');
-  assert.equal(c.file, 'app/webapp/cc/Geolocation.js');
+  assert.equal(c.file, 'bundle/webapp/cc/Geolocation.js');
   assert.deepEqual(c.properties.map((p) => [p.name, p.type, p.defaultValue]), [
     ['latitude', 'string', ''],
     ['timeout', 'string', '5000'],
