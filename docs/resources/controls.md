@@ -236,7 +236,7 @@ Module `z2ui5.cc.MultiInputExt` ([source](https://github.com/abap2UI5/abap2UI5/b
 
 ## `z2ui5:NativeBridgeScan`
 
-Scan button for an app running inside the abap2UI5 native mobile shell (abap2UI5/mobile-shell).
+Scan button for an app running inside the abap2UI5 native mobile shell (abap2UI5-addons/embed-mobile).
 
 Module `z2ui5.cc.NativeBridgeScan` ([source](https://github.com/abap2UI5/abap2UI5/blob/main/app/webapp/cc/NativeBridgeScan.js)). Extends `sap.ui.core.Control`.
 
