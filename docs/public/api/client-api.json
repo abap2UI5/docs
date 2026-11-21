@@ -1,7 +1,7 @@
 {
   "description": "The abap2UI5 client API: everything an app may call on `client`, read from z2ui5_if_client on the framework branch this documentation tracks. Ahead of the newest release by design - resources/deprecations.html says what is not in a tag yet.",
-  "ref": "DEV-PRE",
-  "source": "https://github.com/abap2UI5/abap2UI5/blob/DEV-PRE/src/02/z2ui5_if_client.intf.abap",
+  "ref": "main",
+  "source": "https://github.com/abap2UI5/abap2UI5/blob/main/src/02/z2ui5_if_client.intf.abap",
   "documentation": "https://abap2ui5.github.io/docs/resources/api.html",
   "methods": [
     {
