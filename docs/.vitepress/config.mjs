@@ -695,6 +695,9 @@ export default defineConfig({
           // it closes by asking the reader to add their project.
           { text: "Add-ons", link: "/resources/addons" },
           { text: "Release Notes", link: "/resources/changelog" },
+          // The overview of the update to the first release after 1.150.0,
+          // for users and add-on users: the actions first, then what is new.
+          { text: "What Changed in November 2026", link: "/resources/whats_new_2026_11" },
           { text: "Deprecations", link: "/resources/deprecations" },
           {
             // The series of essays has a site of its own since 2026-10-31,
