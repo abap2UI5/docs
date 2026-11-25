@@ -27,7 +27,7 @@ abap2UI5 can be launched in three ways. Each one creates a different combination
 |---|---|---|
 | Fiori Launchpad tile | `…/sap/bc/ui2/flp#Z2UI5-display` | yes |
 | ICF HTTP handler (e.g. `Z2UI5_CL_UI5_HTTP_HANDLER`) | `…/sap/bc/<your-service>` | no |
-| BSP application (`Z2UI5` — the same BSP on every branch of the frontend repository, `standard`, `standard_v2` and `standard_new`) | `…/sap/bc/bsp/sap/z2ui5/index.html` | no |
+| BSP application (`Z2UI5` — part of the abap2UI5 package `src/03`, the app the launchpad starts) | `…/sap/bc/bsp/sap/z2ui5/index.html` | no |
 
 ### Session Layers
 Up to three independent SAP sessions can exist at once. Different cookies, different lifetimes, different ways to end them:

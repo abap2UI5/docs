@@ -13,15 +13,17 @@ Embed your abap2UI5 apps into the SAP Fiori Launchpad (FLP) on S/4 On-Premise or
 
 ## Installation
 
-The Launchpad loads the abap2UI5 frontend from the UI5 ABAP repository of your system (as app `z2ui5`). Pull one branch of the [frontend repository](https://github.com/abap2UI5/frontend) via abapGit. Every branch ships the frontend app as the BSP `Z2UI5` with the handler `Z2UI5_CL_LP_HANDLER` and the node `/sap/bc/z2ui5`. So the target mapping below is the same whichever you pick, and a system switches by pulling another branch into the same abapGit repository:
+The Launchpad starts abap2UI5 from the UI5 ABAP repository of your system (as app `z2ui5`): the BSP `Z2UI5`. It is part of abap2UI5 itself - its package `src/03`, next to the node `/sap/bc/z2ui5` and its handler `Z2UI5_CL_UI5_ICF_HANDLER` - so the abapGit pull that installs the framework installs it too (`main`, or `702` below 7.50; a release tag carries it from the first release after 1.150.0 on). Nothing else is pulled, and the target mapping below needs nothing more.
 
-| Branch | What the BSP carries | After an abap2UI5 update |
-|---|---|---|
-| `standard` | a generated copy of the abap2UI5 frontend | pull the matching frontend branch as well |
-| `standard_v2` | the same, on the [legacy-free](/advanced/legacy_free) UI5 runtime | pull the matching frontend branch as well |
-| `standard_new` | no copy of the frontend: one view with one `z2ui5.embed.Container`, which loads the frontend from the backend (`?z2ui5-bundle`) at run time | nothing — the frontend always has the backend's version |
+The BSP carries no copy of the frontend: one view with one `z2ui5.embed.Container`, which loads the frontend from the node (`?z2ui5-bundle`) at run time. After an abap2UI5 update there is nothing to pull again - the frontend always has the backend's version. The trade-off: the frontend is fetched from the backend on every page load instead of being served out of the BSP. For ABAP Cloud see [S/4 Public Cloud](/configuration/s4_public_cloud). After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
 
-The branches for every system, the ABAP Cloud ones included, are side by side on [Deployment Scenarios](/configuration/installation#frontend-branches). `standard_new` (and `cloud_new` for ABAP Cloud, see [S/4 Public Cloud](/configuration/s4_public_cloud)) needs an abap2UI5 newer than 1.146.0 and exists since the 1.147.0 release. The trade-off: the frontend is fetched from the backend on every page load instead of being served out of the BSP. The legacy-free runtime and the renamed `standard_<name>` builds are not covered by it yet. After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
+### Coming from the Frontend Repository
+
+Until 2026-11-17 the BSP came from a second repository, abap2UI5/frontend (branches `standard`, `standard_v2`, `standard_new`), which is retired. If an abapGit repository on your system still points at one of its branches:
+
+1. Remove that repository from abapGit **without deleting its objects**.
+2. Pull abap2UI5. The node `/sap/bc/z2ui5` and the BSP `Z2UI5` keep their names and become part of its package, so the target mapping and the tiles stay as they are. The node's handler is `Z2UI5_CL_UI5_ICF_HANDLER` from then on.
+3. Delete the class `Z2UI5_CL_LP_HANDLER` the old branches delivered - nothing names it after the pull.
 
 ## Target Mapping
 Use these parameters for target mapping in your Launchpad configuration. abap2UI5 uses the app's class name as the Semantic Object so each app gets its own navigation target — replace `Z2UI5_CL_MY_APP` with your app class:

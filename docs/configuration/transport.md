@@ -45,8 +45,9 @@ dialog.
    in the same request, or a later one.
 3. **The ICF node.** Create or import it, and activate it: an imported node
    is not active until somebody activates it on that system.
-4. **The frontend BSP**, when the launchpad is used, and the tile
-   configuration - [Fiori Launchpad](/configuration/launchpad).
+4. **The tile configuration**, when the launchpad is used - the BSP `Z2UI5`
+   is part of the framework package and travels with it
+   ([Fiori Launchpad](/configuration/launchpad)).
 5. **A Hello World check** on the target system before any app arrives:
    open the node, enter `z2ui5_cl_ui5_app_hi_world` on the start page,
    press **Check** and open the link. You should see the page *abap2UI5 -
@@ -76,11 +77,11 @@ field, SSL requirements - is set on the system it runs on:
 - The logon procedure and the SSO setup are standard ICF and belong to the
   Basis team's landscape conventions - [Basis Runbook](/configuration/runbook#the-icf-node).
 
-The launchpad frontend branch pulls more than the BSP. Next to it come an ICF
-node `z2ui5` and its handler class `z2ui5_cl_lp_handler`. They are abapGit
-objects of the same package, so they travel with the BSP. The cloud branches
-ship the HTTP service and the IAM artifacts the same way. Activation of that
-node is per system as well.
+The framework brings a node of its own: `/sap/bc/z2ui5` with its handler
+class `z2ui5_cl_ui5_icf_handler`, next to the BSP `Z2UI5` (package `src/03`).
+They are abapGit objects of the framework package, so they travel with it. The
+branch `cloud` ships the HTTP service and the IAM artifacts the same way.
+Activation of that node is per system as well.
 
 ## Per-System Settings
 
@@ -138,7 +139,7 @@ transport:
 
 - The handler class is written in 7.02 syntax; the Quickstart's snippet uses
   constructs the release does not have.
-- The frontend repository lists no branch for a release below 7.50; apps
-  run from the node, or are reached from a newer system through the
-  [RFC](/advanced/rfc) or [HTTP](/advanced/http) connector.
+- Apps run from the node, or are reached from a newer system through the
+  [RFC](/advanced/rfc) or [HTTP](/advanced/http) connector; a launchpad tile
+  needs a release that has a launchpad.
 - The draft table and the user exit are the same; so is the order above.

@@ -17,7 +17,7 @@ steps:
 
 S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only classes, interfaces, and tables, so you can pull it without issues.
 
-Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the newest tag without a suffix, `X.Y.Z` - the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table says which tag belongs to which system.
+Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the newest tag without a suffix, `X.Y.Z` - the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table says which tag belongs to which system. Or pull the branch `cloud` of abap2UI5 instead: the same framework plus the HTTP service of step 3, generated from `main` on every push (it has no release tags of its own).
 
 ::: warning **Two choices you cannot change later without relinking**
 **Folder logic must be `PREFIX`.** It is what `.abapgit.xml` declares, and the repository's package tree is built for it.
@@ -69,11 +69,11 @@ Now you'll see that all artifacts are active:
 
 ## 3. Set Up the HTTP Service
 
-Build an HTTP handler manually or use the cloud branch of the [frontend](https://github.com/abap2UI5/frontend) repository.
+Build an HTTP handler manually ([ABAP Cloud](/configuration/abap_cloud#the-handler)), or use the one the branch `cloud` of [abap2UI5](https://github.com/abap2UI5/abap2UI5/tree/cloud) brings: the HTTP service `Z2UI5` (`/sap/bc/http/sap/z2ui5`), its handler `Z2UI5_CL_UI5_ICF_HANDLER` and the IAM objects around it, an IAM app and a business catalog.
 
 **Important:** In S/4 Public Cloud, accessing the HTTP endpoint needs `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes the scenario unfit for production.
 
-For production, finish the frontend deployment and tile configuration in the steps below.
+For production, finish the app deployment and tile configuration in the steps below.
 
 ## 4. Deploy the UI5 App (Optional)
 
@@ -81,10 +81,10 @@ Up to here the HTTP service is enough — you can open it and use abap2UI5 with 
 
 ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with the [SAP Fiori Tools](https://marketplace.visualstudio.com/items?itemName=SAPSE.sap-ux-fiori-tools-extension-pack) extension pack instead.
 
-1. Clone the branch that matches your stack: `cloud` for the classic UI5 runtime, `cloud_v2` for the [legacy-free](/advanced/legacy_free) one (UI5 2.x preview), or `cloud_new`. `cloud_new` carries no copy of the frontend. Its app is one view with one `z2ui5.embed.Container` that loads the frontend from the backend at run time, so an abap2UI5 update needs no new deployment of the app. `cloud_new` needs an abap2UI5 newer than 1.146.0 and exists since 1.147.0. Its cost: the frontend is fetched from the HTTP service on every page load, and it does not cover the legacy-free runtime yet. Every branch uses the same service, objects and launchpad settings, so a system switches by deploying another one:
+1. Clone the branch `cloud` of abap2UI5. Its folder `app` is the app as a Fiori project: one view with one `z2ui5.embed.Container` that loads the frontend from the HTTP service at run time, so an abap2UI5 update needs no new deployment of the app. Its cost: the frontend is fetched from the HTTP service on every page load.
 
    ```sh
-   git clone --branch cloud --single-branch https://github.com/abap2UI5/frontend.git
+   git clone --branch cloud --single-branch https://github.com/abap2UI5/abap2UI5.git
    ```
 
 2. In the `app` folder, open the Fiori **Application Info** page and add a **deployment configuration** pointing at your system. Keep the target package name short here too.
@@ -94,9 +94,13 @@ ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with t
 ::: tip **Where the deployed app sends its requests**
 Only the *separately deployed* app needs this — when the backend serves the page itself, it tells the frontend to post back to the same URL.
 
-The `cloud`, `cloud_v2` and `cloud_new` branches ship `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path an HTTP service with ID `Z2UI5` is published under. If you created the service under a **different ID**, change that entry in `manifest.json` to match. Otherwise the POSTs go to a service that does not exist. The app then fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
+The app of the branch `cloud` ships `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path an HTTP service with ID `Z2UI5` is published under. If you created the service under a **different ID**, change that entry in `manifest.json` to match. Otherwise the POSTs go to a service that does not exist. The app then fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
 
-The on-premise branches (`standard`, `standard_v2`, `standard_new`) use the SICF path `/sap/bc/z2ui5` instead.
+The BSP `Z2UI5` that `main` brings for on-premise systems uses the SICF path `/sap/bc/z2ui5` instead.
+:::
+
+::: tip **Coming from the frontend repository**
+Until 2026-11-17 the HTTP service, its handler, the IAM objects and the app came from the branches `cloud`, `cloud_v2` and `cloud_new` of a second repository, abap2UI5/frontend, which is retired. If an abapGit repository on your system still points at one of them, remove it from abapGit **without deleting its objects**, then pull the branch `cloud` of abap2UI5. The HTTP service and the IAM objects keep their names; the handler is `Z2UI5_CL_UI5_ICF_HANDLER` from then on, and the class `Z2UI5_CL_LP_HANDLER` can be deleted afterwards.
 :::
 
 ## 5. Give Business Users Access (Optional)
