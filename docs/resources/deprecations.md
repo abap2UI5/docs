@@ -76,8 +76,8 @@ tell you what is coming if you do not.
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
-| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
-| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, the built-in popups `z2ui5_cl_pop_*` | install [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, *next release* |
+| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
+| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, the built-in popups `z2ui5_cl_pop_*` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, *next release* |
 | the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, 1.151.0 |
@@ -351,11 +351,11 @@ existing calls keep compiling. See [Add-ons](/resources/addons).
 `z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` left
 abap2UI5 with 1.149.0. Up to 1.148.0 they shipped in its frozen package
 `src/99/01`. They moved, unchanged, to
-[abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet). Inside the framework
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). Inside the framework
 they were replaced by an internal context class.
 
-::: warning Code that still uses them: install abap2UI5-obsolet
-Pull [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) with abapGit next
+::: warning Code that still uses them: install abap2UI5-ext
+Pull [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) with abapGit next
 to abap2UI5 (`main`, on NetWeaver 7.02 - 7.4x its branch `702`) and everything
 keeps working as before - the table and its data stay in your system. Without
 it, code naming one of these classes no longer activates after the upgrade.
@@ -364,11 +364,11 @@ needs it; every other add-on carries its own copy of what it uses.
 
 1.151.0 moves the rest of the frozen package the same way:
 `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types` and the
-`z2ui5_cl_pop_*` popups ship from abap2UI5-obsolet as well, same names. From
+`z2ui5_cl_pop_*` popups ship from abap2UI5-ext as well, same names. From
 2026-11-17 to 2026-11-25 all of these objects were in abap2UI5/frontend
 instead, which is retired: an installation that pulled them from there changes
 the URL of that abapGit repository to
-`https://github.com/abap2UI5/abap2UI5-obsolet` (branch `main`, or `702`) and
+`https://github.com/abap2UI5/abap2UI5-ext` (branch `main`, or `702`) and
 pulls. Nothing is deleted; the objects are the same.
 
 There is no public replacement API for app code. Treat the classes as

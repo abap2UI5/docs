@@ -23,7 +23,7 @@ What to do when you update, step by step: [What Changed in November 2026](/resou
 - Wire protocol 3 (VIEWS / NAV / ACTIONS, `S_FRONT.ROUTE`, event flags as one object) - apps change nothing
 
 **Removed**
-- BREAKING: `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types` and the `z2ui5_cl_pop_*` popups left the core; with the utilities they ship from [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet). An installation that took them from abap2UI5/frontend changes that abapGit repository's URL to abap2UI5-obsolet and pulls
+- BREAKING: `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types` and the `z2ui5_cl_pop_*` popups left the core; with the utilities they ship from [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). An installation that took them from abap2UI5/frontend changes that abapGit repository's URL to abap2UI5-ext and pulls
 - BREAKING: `z2ui5_cl_http_handler` (use `z2ui5_cl_ui5_http_handler`) and the former exit interface `z2ui5_if_exit` (implement `z2ui5_if_ui5_exit`)
 - BREAKING: `_bind_edit( )` and the five `*_model_update( )` methods - the [linter](/advanced/linter) fixes both with `--fix`
 - BREAKING: windowed tables are app-driven - `t_sort`, `t_filter` and `window_get_row( )` are gone, see [Windowed Tables](/cookbook/model/windowed_tables#coming-from-1-150-0)

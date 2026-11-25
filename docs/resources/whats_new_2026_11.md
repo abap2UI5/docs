@@ -9,7 +9,7 @@ released as 1.151.0. Two things make it matter for every installation: one
 abapGit pull of abap2UI5 is now a running installation, with the ICF node, its
 handler and the launchpad BSP included, and the legacy objects the core no
 longer ships live in one place,
-[abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet). On top of that
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). On top of that
 come a declarative timer, new navigation helpers, a test harness for apps,
 smaller drafts and a faster first page load - and new features in the popups,
 layout-management, table-maintenance and custom-controls add-ons. The
@@ -37,14 +37,14 @@ first three items.
   every push and carries the HTTP service, its handler, the IAM objects and the
   app as a Fiori project in `app/`. It replaces the branch `cloud_new` of the
   frontend repository. See [S/4 Public Cloud](/configuration/s4_public_cloud).
-- [ ] **Still using legacy objects? Install abap2UI5-obsolet.** The old view
+- [ ] **Still using legacy objects? Install abap2UI5-ext.** The old view
   builder, the built-in popups, the old types interface, the utility classes,
   their exception class and their table are no longer part of the core. They
   ship, unchanged and under the same names, from
-  [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) (`main`, or
+  [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) (`main`, or
   `702` on NetWeaver 7.02 - 7.4x). If you installed them from the frontend
   repository between 2026-11-17 and 2026-11-25, change the URL of that
-  abapGit repository to abap2UI5-obsolet and pull. Do not confirm the deletion
+  abapGit repository to abap2UI5-ext and pull. Do not confirm the deletion
   of the utilities' table - it and its data stay in the system. The full list
   is on [Deprecations](/resources/deprecations#version-status).
 - [ ] **Exit class: implement `z2ui5_if_ui5_exit`.** The former name of the
@@ -260,8 +260,8 @@ first three items.
 | ICF handler `z2ui5_cl_lp_handler` | renamed `z2ui5_cl_ui5_icf_handler` | delete the old class after the pull |
 | cloud HTTP service and app | abap2UI5, branch `cloud` | pull the branch `cloud` |
 | abap2UI5/frontend | retired | remove it from abapGit without deleting its objects |
-| old view builder, built-in popups, old types interface | abap2UI5-obsolet | install it next to abap2UI5 |
-| utility classes, their exception class and table | abap2UI5-obsolet | install it next to abap2UI5 |
+| old view builder, built-in popups, old types interface | abap2UI5-ext | install it next to abap2UI5 |
+| utility classes, their exception class and table | abap2UI5-ext | install it next to abap2UI5 |
 | former exit interface | deleted | implement `z2ui5_if_ui5_exit` |
 | former HTTP handler name | deleted | name `z2ui5_cl_ui5_http_handler` |
 | `_bind_edit( )` | removed | `_bind( )` |
@@ -284,5 +284,5 @@ first three items.
 - [Release Notes](/resources/changelog) - every release
 - [The changelog on DEV](https://github.com/abap2UI5/abap2UI5/blob/DEV/changelog.txt) -
   the full list of changes, section "unreleased"
-- [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) - the
+- [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) - the
   legacy objects and how to switch to the repository
