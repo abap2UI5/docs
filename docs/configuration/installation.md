@@ -22,7 +22,7 @@ abap2UI5 apps run directly behind an HTTP service. That is the simplest setup, a
 
 ## What a Pull Brings {#frontend-branches}
 
-One pull of abap2UI5 is a running installation. Since 2026-11-17 the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler` and the BSP `Z2UI5` for the launchpad are part of abap2UI5 itself (its package `src/03`); a release tag carries them from the first release after 1.150.0 on. There is no second repository to pull:
+One pull of abap2UI5 is a running installation. Since 2026-11-17 the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler` and the BSP `Z2UI5` for the launchpad are part of abap2UI5 itself (its package `src/03`); a release tag carries them from 1.151.0 on. There is no second repository to pull:
 
 | Branch | System | What it brings besides the framework | After an abap2UI5 upgrade |
 |---|---|---|---|

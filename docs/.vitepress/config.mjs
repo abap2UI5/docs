@@ -175,7 +175,7 @@ export default defineConfig({
       { text: "Cookbook", link: "/cookbook/", activeMatch: "^/cookbook/" },
       { text: "API", link: "/resources/api", activeMatch: "^/resources/" },
       {
-        text: "1.150.0",
+        text: "1.151.0",
         items: [
           { text: "Release notes", link: "/resources/changelog" },
           { text: "Support", link: "/resources/support" },
@@ -695,7 +695,7 @@ export default defineConfig({
           // it closes by asking the reader to add their project.
           { text: "Add-ons", link: "/resources/addons" },
           { text: "Release Notes", link: "/resources/changelog" },
-          // The overview of the update to the first release after 1.150.0,
+          // The overview of the update to 1.151.0,
           // for users and add-on users: the actions first, then what is new.
           { text: "What Changed in November 2026", link: "/resources/whats_new_2026_11" },
           { text: "Deprecations", link: "/resources/deprecations" },

@@ -13,7 +13,7 @@ Embed your abap2UI5 apps into the SAP Fiori Launchpad (FLP) on S/4 On-Premise or
 
 ## Installation
 
-The Launchpad starts abap2UI5 from the UI5 ABAP repository of your system (as app `z2ui5`): the BSP `Z2UI5`. It is part of abap2UI5 itself - its package `src/03`, next to the node `/sap/bc/z2ui5` and its handler `Z2UI5_CL_UI5_ICF_HANDLER` - so the abapGit pull that installs the framework installs it too (`main`, or `702` below 7.50; a release tag carries it from the first release after 1.150.0 on). Nothing else is pulled, and the target mapping below needs nothing more.
+The Launchpad starts abap2UI5 from the UI5 ABAP repository of your system (as app `z2ui5`): the BSP `Z2UI5`. It is part of abap2UI5 itself - its package `src/03`, next to the node `/sap/bc/z2ui5` and its handler `Z2UI5_CL_UI5_ICF_HANDLER` - so the abapGit pull that installs the framework installs it too (`main`, or `702` below 7.50; a release tag carries it from 1.151.0 on). Nothing else is pulled, and the target mapping below needs nothing more.
 
 The BSP carries no copy of the frontend: one view with one `z2ui5.embed.Container`, which loads the frontend from the node (`?z2ui5-bundle`) at run time. After an abap2UI5 update there is nothing to pull again - the frontend always has the backend's version. The trade-off: the frontend is fetched from the backend on every page load instead of being served out of the BSP. For ABAP Cloud see [S/4 Public Cloud](/configuration/s4_public_cloud). After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
 

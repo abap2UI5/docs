@@ -1,20 +1,20 @@
 ---
 outline: [2, 3]
-description: What changes for abap2UI5 users and add-on users with the first release after 1.150.0 - the actions to take when you update, the new API, the add-ons and what moved.
+description: What changes for abap2UI5 users and add-on users with 1.151.0 - the actions to take when you update, the new API, the add-ons and what moved.
 ---
 # What Changed in November 2026
 
 In November 2026 the abap2UI5 repositories were reorganized, and the work is
-now being merged into the first release after 1.150.0 (no number is decided
-yet). Two things make it matter for every installation: one abapGit pull of
-abap2UI5 is now a running installation, with the ICF node, its handler and the
-launchpad BSP included, and the legacy objects the core no longer ships live
-in one place, [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet).
-On top of that come a declarative timer, new navigation helpers, a test
-harness for apps, smaller drafts and a faster first page load - and new
-features in the popups, layout-management, table-maintenance and
-custom-controls add-ons. The [Release Notes](/resources/changelog) list the
-release once it is tagged; this page is the overview for the update.
+released as 1.151.0. Two things make it matter for every installation: one
+abapGit pull of abap2UI5 is now a running installation, with the ICF node, its
+handler and the launchpad BSP included, and the legacy objects the core no
+longer ships live in one place,
+[abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet). On top of that
+come a declarative timer, new navigation helpers, a test harness for apps,
+smaller drafts and a faster first page load - and new features in the popups,
+layout-management, table-maintenance and custom-controls add-ons. The
+[Release Notes](/resources/changelog) list the release once it is tagged; this
+page is the overview for the update.
 
 ## Do This When You Update
 
