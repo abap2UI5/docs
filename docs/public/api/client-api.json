@@ -93,14 +93,15 @@
       "name": "hash_set",
       "group": "Hash and app state",
       "doc": [
-        "HashChanger#setHash: write VAL as the app's URL hash - a PUSHED history entry, so the browser Back button has a step to take. The 1:1 counterpart of a UI5 router's navTo. With cs_event-hash_attach_changed registered the value is the WHOLE app hash (`/Page2`); without a listener VAL is APPENDED to the hash the page already has - a suffix such as `&my-app-state=detail`, written with history.pushState."
+        "HashChanger#setHash: write VAL as the app's URL hash - a PUSHED history entry, so the browser Back button has a step to take. The 1:1 counterpart of a UI5 router's navTo. The value is the WHOLE app hash (`/Page2`).",
+        "The app has to OWN the hash: register a listener with cs_event-hash_attach_changed first (the same roundtrip is fine), so the Back onto what was written reaches the app. Without one, and under hash_routing - where the hash is the router's - nothing is written and the frontend says so in its log. (Until 2026-11 the value was then appended to the hash the page had, as a suffix.)"
       ],
       "parameters": [
         {
           "name": "val",
           "type": "string",
           "optional": true,
-          "doc": "the hash to write - the whole app hash (`/Page2`) with a hash_attach_changed listener registered, otherwise the suffix appended to the hash the page already has."
+          "doc": "the whole app hash to write (`/Page2`)."
         }
       ]
     },
@@ -108,7 +109,7 @@
       "name": "hash_replace",
       "group": "Hash and app state",
       "doc": [
-        "HashChanger#replaceHash: write VAL as the app's URL hash WITHOUT a new history entry - the UI5 router's navTo( ..., true ). What FlexibleColumnLayout apps do when a NAVIGATION ARROW changes the layout: the URL follows, but Back does not step through arrow drags. As for hash_set( ), only with cs_event-hash_attach_changed registered is the value the WHOLE app hash; without a listener VAL is APPENDED to the hash the page already has, so writing a whole route (`/repo/1`) on every roundtrip grows the URL (`#/repo/1/repo/1`). An app that owns its routes registers the listener (in view_display( ), see hash_attach_changed)."
+        "HashChanger#replaceHash: write VAL as the app's URL hash WITHOUT a new history entry - the UI5 router's navTo( ..., true ). What FlexibleColumnLayout apps do when a NAVIGATION ARROW changes the layout: the URL follows, but Back does not step through arrow drags. As for hash_set( ), the value is the WHOLE app hash and the app has to own the hash: it registers the listener (in view_display( ), see cs_event-hash_attach_changed). Without one nothing is written."
       ],
       "parameters": [
         {
@@ -254,6 +255,23 @@
       "returns": "ty_s_get"
     },
     {
+      "name": "get_start_param",
+      "group": "Other",
+      "doc": [
+        "One start parameter of the page, by name - whichever way the app was started: standalone with `?lgn=0001&app=MENU`, from a launchpad tile whose target mapping hands `lgn` and `app` over as startupParameters, or from a launchpad intent `#Object-action?lgn=0001`. The sources are asked in this order and the first that has the parameter with a value answers:",
+        "1. the URL query (get( )-s_config-search), including what the launchpad packs into `sap-startup-params`; 2. the launchpad startupParameters (get( )-t_comp_params - the first value of a parameter with several); 3. the query of the launchpad intent in the URL hash - the part in front of `&/` (the app's own route behind it is not read).",
+        "The name is matched without regard to case (`LGN`, `lgn` and `Lgn` are one parameter); the value comes back exactly as the source carries it - not upper-cased, and in the URL not percent-decoded. Empty when no source has the parameter. Meant for main( ) of the first app; it stays readable on every later roundtrip and in every app the user navigates to, since the parameters belong to the page."
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "type": "clike",
+          "doc": "the parameter's name, in any case."
+        }
+      ],
+      "returns": "string"
+    },
+    {
       "name": "get_event",
       "group": "Reading the request",
       "doc": [
@@ -328,6 +346,12 @@
           "type": "data",
           "optional": true,
           "doc": "data handed to the target, read there as get( )-r_event_data (a reference to a copy of it). An intentionally empty value still arrives."
+        },
+        {
+          "name": "keep_messages",
+          "type": "abap_bool",
+          "default": "abap_false",
+          "doc": "abap_true: the message toasts and boxes this app queued in this roundtrip (message_toast_display( ), message_box_display( ), a follow_up_action( ) of cs_event-control_global on MESSAGE_TOAST/MESSAGE_BOX) are shown after the target has rendered, ahead of the target's own - `Saved.` survives the return to the list. Not supplied, everything this app queued is dropped with its screen, as always. A box carried over keeps its onclose: that event is raised in the target app, which has to know it. Appended at the END of the list (rule 5)."
         }
       ],
       "returns": "string"
@@ -343,6 +367,18 @@
           "name": "app",
           "type": "REF TO z2ui5_if_app",
           "doc": "a bound instance of the app to call - NEW zcl_other_app( ) with whatever it needs set on it before the call; an unbound reference raises NAV_APP_TARGET_NOT_BOUND."
+        },
+        {
+          "name": "tag",
+          "type": "clike",
+          "optional": true,
+          "doc": "a name of the caller's own for WHY it calls - `CONFIRM_DELETE`, `PICK_UNIT`. It comes back with the screen: when the called app has left and this main( ) runs again, get_nav_tag( ) answers it, so an app that opens the same popup class for several purposes tells the returns apart without a flag attribute per purpose. Not supplied, the app has no tag. Appended at the END of the list (rule 5)."
+        },
+        {
+          "name": "keep_messages",
+          "type": "abap_bool",
+          "default": "abap_false",
+          "doc": "abap_true: the message toasts and boxes this app queued in this roundtrip are shown after the called app has rendered, ahead of its own (see nav_app_leave( )). Not supplied, they are dropped with this app's screen."
         }
       ],
       "returns": "string"
@@ -356,7 +392,7 @@
         "An error MESSAGE without a text gets a standard text as well, naming its message class and number where it has them.",
         "What this method carries is what an ABAP app decides: the data in any shape it has, the kind of box, the buttons as a table, the backend event its closing raises. A plain sap.m.MessageBox option that abap2UI5 only passes through is set on the CONTROL instead - through the whitelisted global call, whose last argument is the UI5 option object 1:1:",
         "``client->follow_up_action( val = client->cs_event-control_global t_arg = VALUE #( ( `MESSAGE_BOX` ) ( `error` ) ( `Not saved.` ) ( `{\"contentWidth\":\"30rem\",\"icon\":\"WARNING\"}` ) ) )``",
-        "The method IS the box type there, and the option object lands in the same frontend code this method reaches. `textDirection`, `icon`, `closeOnNavigation`, `dependentOn` (UI5 1.124 on) and `contentWidth` were parameters here until 2026-09 and travel that way now."
+        "The method IS the box type there, and the option object lands in the same frontend code this method reaches. `textDirection`, `closeOnNavigation`, `dependentOn` (UI5 1.124 on) and `contentWidth` were parameters here until 2026-09 and travel that way now; `icon` left with them by mistake and is a parameter again (2026-11)."
       ],
       "parameters": [
         {
@@ -411,6 +447,12 @@
           "type": "clike",
           "optional": true,
           "doc": "a further text (or JSON) shown below the message, already unfolded (the box's \"Show details\" link is hidden)."
+        },
+        {
+          "name": "icon",
+          "type": "clike",
+          "optional": true,
+          "doc": "the icon of the box instead of the type's own: a sap.m.MessageBox.Icon name (`WARNING`) or a `sap-icon://` URI."
         }
       ]
     },
@@ -598,7 +640,8 @@
         "**cs_event-smart_variant_init** - run the initialise( ) handshake sap.ui.comp variant management needs (a controller would call oSmartVariantManagement.initialise( fnCallback, oPersonalizableControl )), t_arg = SmartVariantManagement id, personalizable control id (optional, default: the first control that registered itself): ``client->follow_up_action( val = client->cs_event-smart_variant_init t_arg = VALUE #( ( `pageVariant` ) ) )``. Without it the control keeps no personalizable control, saving a view fails inside sap.ui.fl and stored variants are never loaded. The action waits for that registration, which the smart controls do once their OData metadata has loaded.",
         "**cs_event-filter_bar_variant_init** - wire a classic sap.ui.comp.filterbar.FilterBar to a SmartVariantManagement, t_arg = SmartVariantManagement id, FilterBar id: ``client->follow_up_action( val = client->cs_event-filter_bar_variant_init t_arg = VALUE #( ( `variant` ) ( `filterbar` ) ) )``. A SmartFilterBar knows its own fields and registers itself (see smart_variant_init above); a classic FilterBar does not, so a list report normally hand-writes the same controller boilerplate - registerFetchData / registerApplyData / registerGetFiltersWithValues, addPersonalizableControl( ) with a PersonalizableInfo, and a change handler per filter field that marks the variant as modified. This action does all of it, so saving, selecting and restoring a variant works without a single line of JavaScript. The restored values reach the backend through the binding of the filter fields, no extra roundtrip needed.",
         "**cs_event-keyboard_shortcut** - bind a key combination to a named backend event, the declarative equivalent of a sap.ui.core.CommandExecution shortcut, t_arg = combination, event name: ``client->follow_up_action( val = client->cs_event-keyboard_shortcut t_arg = VALUE #( ( `Ctrl+S` ) ( `SAVE` ) ) )``. The combination is spelled like the UI5 one (`Ctrl+S`, `Ctrl+Shift+D`, `F2`; ctrl/shift/alt/meta in any order, cmd/command/option/control accepted as aliases). Pressing it fires the event exactly like a button press and suppresses the browser's own default for the combination. Registering the same combination again rebinds it; an empty event name removes it. The registrations belong to the running app and are dropped when another app takes over. An optional THIRD t_arg SCOPES the shortcut: the scoped registration wins while its scope is OPEN and the unscoped one applies otherwise, which is how a UI5 CommandExecution in a Popover's dependents shadows the page-level one for the same command. A scope is either a view slot (cs_view-popover/popup/nested/nested2/main) or the ID OF A CONTROL that can be open or closed - a Popover/Dialog declared in the view and opened with control_by_id openBy, which never enters a framework slot. A control scope beats a slot scope (it is the more specific statement), then the innermost open slot wins. An empty event name removes the registration of THAT scope only.",
-        "**cs_event-start_timer** - raise a BACKEND event once after a delay, t_arg = event name, delay in milliseconds: ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `5000` ) ) )``. There is one timer per app: arming it again replaces the pending one, and every roundtrip cancels it, so a repeating timer - a poll, a carousel - is re-armed by every response that keeps it going. A tick that meets a roundtrip in flight waits for it instead of being dropped. The tick is a roundtrip like any other and raises the global busy indicator after the usual one-second delay; an optional THIRD t_arg `X` (abap_bool as `X`/``, like every flag in t_arg) keeps it down - the check_no_busy of _event( ) for the tick, so a poll whose backend call takes longer than that no longer flashes the full-screen overlay: ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `X` ) ) )``. As with check_no_busy only the overlay goes: the tick is still the one roundtrip in flight, and a click that lands meanwhile is dropped by the busy guard and raises the overlay at once, like every dropped click.",
+        "**cs_event-start_timer** - raise a BACKEND event once after a delay, t_arg = event name, delay in milliseconds: ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `5000` ) ) )``. There is one timer per app: arming it again replaces the pending one, and every roundtrip cancels it, so a one-shot timer that should go on - a poll, a carousel - is re-armed by every response that keeps it going (or repeats by itself, see the FOURTH t_arg below). A tick that meets a roundtrip in flight waits for it instead of being dropped. The tick is a roundtrip like any other and raises the global busy indicator after the usual one-second delay; an optional THIRD t_arg `X` (abap_bool as `X`/``, like every flag in t_arg) keeps it down - the check_no_busy of _event( ) for the tick, so a poll whose backend call takes longer than that no longer flashes the full-screen overlay: ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `X` ) ) )``. As with check_no_busy only the overlay goes: the tick is still the one roundtrip in flight. A click that lands meanwhile is held back and sent once the tick's response is applied. An optional FOURTH t_arg `X` REPEATS the timer: once a response has been applied the browser arms the same tick again - same event, delay and no-busy flag - so the app arms it once and does not re-arm it per tick: ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `` ) ( `X` ) ) )``. A user event in between does not end it: the pending tick is cancelled while the event's roundtrip runs, and armed again, with the full delay, after its response. It keeps running under a popup or popover of the same app. It ends with cs_event-stop_timer, with a new start_timer (which replaces it - one without the fourth t_arg is a one-shot timer again), with every navigation to another app (nav_app_call / nav_app_leave, a popup app included - an app that wants its poll back after a called app returned starts it again in its check_on_navigated( ) branch), with a browser Back/Forward restore, with the error overlay and with the end of the component. A tick that changed nothing answers with the draft it continued and writes none - the repeat needs no state in the app. A poll that should come back by itself after a navigation is declared with timer_set( ) instead: the framework arms it whenever the app gets the screen and stops it when the app is left.",
+        "**cs_event-stop_timer** - end the timer: the pending tick is cancelled and a repeating one is not armed again; no t_arg. Stopping when no timer runs does nothing: ``client->follow_up_action( client->cs_event-stop_timer )``. In the wired form (``v = client->follow_up_action( ... )`` on a press) it stops the timer in the browser without a roundtrip.",
         "**cs_event-hash_attach_changed** - APP-OWNED hash routing (HashChanger#attachHashChanged), the 1:1 counterpart of a UI5 router's own hash (`#/Page2`) for an app that does NOT use hash_routing, t_arg = a backend event name: ``client->follow_up_action( val = client->cs_event-hash_attach_changed t_arg = VALUE #( ( `HASH_CHANGED` ) ) )``. From then on hash_set( `/Page2` ) writes that value as the whole app hash (a pushed history entry), hash_replace( ) the same without a new entry, and a hash change the app did not write itself - browser Back/Forward, a manual URL edit - fires the registered event; the hash the browser now stands on arrives with that request (and with every other one, a fresh deep-link start included) in get( )-s_config-hash, so the app decides what to show. While registered, the framework leaves the hash entirely alone. Calling it without t_arg unregisters. The registration dies with an app switch - register it in view_display( ), so every render (a draft restore included) re-asserts it. Mutually exclusive with hash_routing (a routed app's hash belongs to the router) and with app_state_set_active (both claim the whole hash).",
         "**cs_event-hash_back** - the UI5 onNavBack pattern: without t_arg one real step back in the browser history (`window.history.go(-1)` - the step is CONSUMED, and the resulting hash change fires the registered event). With t_arg = a fallback hash it guards the cold deep link the way UI5's recommended onNavBack does: when this page load never pushed an app hash, there is no in-app step to take, so the fallback is written as a REPLACE instead of falling out of the app - and the change fires the registered event, which shows the fallback route: ``client->follow_up_action( val = client->cs_event-hash_back t_arg = VALUE #( ( `/` ) ) )``.",
         "**cs_event-store_data** - write a structure into the browser's local or session storage, the write half of the invisible z2ui5:Storage control that reads it back. t_arg = the structure holding TYPE (`local`/`session`), PREFIX, KEY and VALUE - handed over as the BINDING of that structure, so the frontend takes the current value: ``client->follow_up_action( val = client->cs_event-store_data t_arg = VALUE #( ( |${ client->_bind( ms_storage ) }| ) ) )``. It works from a view wire and from a handler alike: on a wire UI5 resolves the binding when the view is built, and a follow-up action queued in a handler carries the model PATH, which the frontend resolves when it runs. The ``$`` is what makes the wire form work: a bare ``{/MS_STORAGE}`` travels raw into the handler expression, where UI5 reads it as an object literal and the wire never fires - only ``${ }`` is a binding there. A handler resolves both spellings. An empty VALUE removes the key.",
@@ -606,7 +649,7 @@
         "**cs_event-urlhelper** - sap.m.URLHelper, t_arg = method, params. The method is REDIRECT, TRIGGER_EMAIL, TRIGGER_SMS or TRIGGER_TEL; params is ONE structure whose upper-case components name the fields: REDIRECT URL (http/https only) and NEW_WINDOW, TRIGGER_EMAIL EMAIL, SUBJECT, BODY, CC, BCC and NEW_WINDOW, TRIGGER_SMS TEL, TEXT and NEW_WINDOW, TRIGGER_TEL TEL. Pass it as JSON or as the binding of a structure with those components - ``client->follow_up_action( val = client->cs_event-urlhelper t_arg = VALUE #( ( `TRIGGER_EMAIL` ) ( |${ client->_bind( ms_mail ) }| ) ) )`` - which works from a view wire and from a handler alike (the bare ``{/MS_MAIL}`` of a handler too). A field carrying CR or LF refuses the call. The object-literal spelling a view wire may use, { URL: '...' }, is no JSON and is refused when it is queued from a handler.",
         "**cs_event-cross_app_nav_to_ext** - Fiori Launchpad cross-app navigation (CrossApplicationNavigation hrefForExternal + toExternal), t_arg = target, params, mode. The target is the intent, {\"semanticObject\":\"SO\",\"action\":\"display\"} as JSON or the binding of a structure with those two components; params are the startup parameters of the target app, the binding of a flat structure (each component one parameter) or JSON, empty for none; mode `EXT` opens the intent in a NEW window instead of navigating the shell, and needs the empty params slot in front of it when there are none: ``client->follow_up_action( val = client->cs_event-cross_app_nav_to_ext t_arg = VALUE #( ( `{\"semanticObject\":\"SO\",\"action\":\"display\"}` ) ( |${ client->_bind( ms_params ) }| ) ) )``. A bound target or params structure works from a view wire and from a handler alike (the bare ``{/MS_PARAMS}`` of a handler too); a path with nothing bound refuses the navigation. The JS object-literal target { semanticObject: \"SO\", action: \"display\" } only works on a view wire - queued from a handler it is no JSON and is refused, so prefer the JSON spelling. Outside the launchpad the call is a logged no-op. **cs_event-cross_app_nav_to_prev_app** - backToPreviousApp( ), no t_arg. **cs_event-cross_app_nav_get_links** - the intents the launchpad offers the user for a semantic object (CrossApplicationNavigation getLinks) - the list a Fiori elements smart link shows in its popover - handed back as a backend event, t_arg = target, params, event. Target and params are read like those of cross_app_nav_to_ext; the target needs the semanticObject, an action narrows the list, and the params drop the intents a mandatory parameter of which is missing. The event is raised once getLinks has answered, its first argument a JSON array with one object per intent - intent (the hash), text, subTitle and the hash split into semanticObject, action and params, ready for cross_app_nav_to_ext: ``client->follow_up_action( val = client->cs_event-cross_app_nav_get_links t_arg = VALUE #( ( `{\"semanticObject\":\"BusinessPartner\"}` ) ( `{\"BusinessPartner\":\"4711\"}` ) ( `LINKS` ) ) )``. Outside the launchpad the call is a logged no-op and the event is not raised.",
         "**cs_event-bind_element** - element-bind a whole view slot to one row of a bound table, the oView.bindElement( ) of a master-detail popup, so the fragment's relative bindings resolve against that row. t_arg = row index (0-based), table binding; the slot is the view parameter: ``client->follow_up_action( val = client->cs_event-bind_element view = client->cs_view-popup t_arg = VALUE #( ( |{ lv_index }| ) ( client->_bind( mt_tab ) ) ) )``. An index that is empty or no non-negative integer is logged and the view keeps the binding it has.",
-        "**The browser actions**, t_arg in order: clipboard_copy - the text (a JSON object or array is copied as its JSON text); set_title - the page title; set_title_launchpad - the shell title inside the launchpad (silently nothing outside it); set_app_full_width - inside the launchpad the app's width: X (abap_true) for the full screen, like a Fiori elements app with fullWidth in its manifest, empty or none for the shell's letterbox again (silently nothing outside it); set_favicon - the icon URL; play_audio - the audio URL; download_b64_file - the data URL (data:<mime>;base64,...) and the file name; open_new_tab - a same-origin URL, opened with noopener; location_reload - a same-origin URL the page navigates to; system_logout - an optional same-origin logout URL, without one the launchpad logout or the ICF logoff.",
+        "**The browser actions**, t_arg in order: clipboard_copy - the text (a JSON object or array is copied as its JSON text); set_title - the title of the screen: the page title, and inside the launchpad the shell title as well, so one call titles the app in both environments (an embedded app whose host keeps the page changes neither); set_title_launchpad - the shell title only, inside the launchpad (silently nothing outside it; an embedded app whose host keeps the page sets none either, with a log line); set_app_full_width - inside the launchpad the app's width: X (abap_true) for the full screen, like a Fiori elements app with fullWidth in its manifest, empty or none for the shell's letterbox again (silently nothing outside it); set_favicon - the icon URL; play_audio - the audio URL; download_b64_file - the data URL (data:<mime>;base64,...) and the file name; open_new_tab - a same-origin URL, opened with noopener; location_reload - a same-origin URL the page navigates to; system_logout - an optional same-origin logout URL, without one the launchpad logout or the ICF logoff.",
         "**The view actions**, t_arg in order: set_focus - control id, selection start, selection end (both optional); scroll_to - control id, top and left in px, behavior (`auto`, `smooth`, `instant`); scroll_into_view - control id, behavior (default `smooth`), block (default `start`), inline (default `nearest`); set_size_limit - the model size limit, the view slot (cs_view-*, which is REQUIRED - the view alone resets the slot to the default of 100); set_odata_model - the service URL, the model name (empty: the default model), the annotation URI (optional). popup_close and popover_close take no t_arg; hash_set, hash_replace and app_state_set_active are the methods of the same name."
       ],
       "parameters": [
@@ -685,6 +728,75 @@
       ],
       "parameters": [],
       "returns": "REF TO z2ui5_if_app"
+    },
+    {
+      "name": "check_nav_pending",
+      "group": "Other",
+      "doc": [
+        "Whether THIS roundtrip already ends in a navigation: true from the moment main( ) has called nav_app_call( ) or nav_app_leave( ), false before. For a base class or a helper that runs after the app's own handlers and must not prepare a screen this app is about to give away - arm a refresh timer, convert the bound data for output, clear messages the next app still has to pick up:",
+        "IF client->check_nav_pending( ) = abap_false. client->follow_up_action( val = client->cs_event-start_timer ... ). ENDIF.",
+        "It answers for the navigation REQUESTED in this main( ), not for the one that brought the app here - that is check_on_navigated( ). A leave with nothing to go back to counts as pending as well: the request was made, the framework drops it when the roundtrip ends. It is the public form of get( )-_s_nav, which is internal and stays only for the code that reads it. Appended at the END of the interface (rule 5)."
+      ],
+      "parameters": [],
+      "returns": "abap_bool"
+    },
+    {
+      "name": "get_nav_tag",
+      "group": "Other",
+      "doc": [
+        "The tag this app gave its last nav_app_call( tag = ... ), on the roundtrip the called app comes BACK on - and only then:",
+        "IF client->check_on_navigated( ). CASE client->get_nav_tag( ). WHEN `CONFIRM_DELETE`. IF CAST zcl_popup_confirm( client->get_app_prev( ) )->result( ) = abap_true. ... WHEN `PICK_UNIT`. ... ENDCASE. view_display( ). ENDIF.",
+        "Empty on every other roundtrip: on the first start, on an event, when this app was itself called, and when the call carried no tag. The tag is the caller's and travels in its own draft, so the called app needs no change and never sees it - a popup of an add-on works as it is. A call chain keeps one tag per level: A calls B with `X`, B calls C with `Y`, C leaves and B reads `Y`, B leaves and A reads `X`. Appended at the END of the interface (rule 5)."
+      ],
+      "parameters": [],
+      "returns": "string"
+    },
+    {
+      "name": "check_on_nav_back",
+      "group": "App lifecycle",
+      "doc": [
+        "TRUE on the one roundtrip on which this app gets the screen BACK from an app it called: the called app (or one it called on) left with nav_app_leave( ) - in a handler or through a press wired with _event_nav_app_leave( ) - and this instance is where the leave lands. That covers a popup app closing (an add-on's value help, a confirm or an error popup app), a leave with or without a nav tag, with event, r_data or keep_messages, and a leave several levels up to nav_app_leave( client->get_app( id ) ). On that roundtrip get_app_prev( ) is the instance that just left - cast it to read its result:",
+        "IF client->check_on_nav_back( ). DATA(li_prev) = client->get_app_prev( ). IF li_prev IS INSTANCE OF zcl_popup_confirm. IF CAST zcl_popup_confirm( li_prev )->result( ) = abap_true. ... ENDIF. ENDIF.",
+        "FALSE on every other roundtrip: the first start (get_app_prev( ) is the app itself there), every roundtrip of a called app including its first (get_app_prev( ) is the caller there), every event after the return, a browser Back/Forward or reload under hash routing (KEEP or FRESH restores the app from its route like a start), an app-state bookmark, nav_app_call( me ) (a new screen of the same instance, not a return), a leave to a NEW instance (it replaces the leaving app - a forward move) and a leave with nothing to return to (dropped). A popup the app displays itself with popup_display( ) is no navigation at all. check_on_navigated( ) is true on both directions of a hop, on the first start and on a restore; this method is true on the way back only, so it implies check_on_navigated( ). It needs no tag - get_nav_tag( ) answers on the same roundtrip when the call carried one. Appended at the END of the interface (rule 5)."
+      ],
+      "parameters": [],
+      "returns": "abap_bool"
+    },
+    {
+      "name": "timer_set",
+      "group": "Other",
+      "doc": [
+        "DECLARE the repeating timer of this app: the backend event EVENT is raised every DELAY_MS milliseconds for as long as this app has the screen, and the framework - not the app - keeps it running:",
+        "IF client->check_on_init( ). client->timer_set( event = `REFRESH` delay_ms = 5000 no_busy = abap_true ). ENDIF.",
+        "The declaration is stored with the app (in its draft, not in an attribute of the app) and the framework arms it as a repeating cs_event-start_timer whenever this app gets the screen: on its first display, when an app it called - a popup app included - leaves again, and on a browser Back/Forward restore or an app-state link of its draft. It is stopped when the app is left (nav_app_call, nav_app_leave) and armed again when it comes back - the app does not re-arm it in a check_on_navigated( ) branch. Calling it again with the same values is harmless: an unchanged timer that runs is not sent again, so an app may state it in every roundtrip (from its render method, say), and the unchanged tick keeps answering with the draft it continued. Calling it with other values replaces the timer from this response on. A user event in between pauses the timer like the repeating START_TIMER: the next tick comes the full delay after the event's response.",
+        "The imperative actions keep working next to it, and the last statement wins: a follow_up_action( ) with cs_event-start_timer or stop_timer takes the timer over for this app and drops the declaration (call timer_set( ) again to hand it back). timer_stop( ) ends the declared timer only. One timer per app, as for START_TIMER. Appended at the END of the interface (rule 5)."
+      ],
+      "parameters": [
+        {
+          "name": "event",
+          "type": "clike",
+          "doc": "the backend event of every tick (check_on_event( )). Empty: the same as timer_stop( )."
+        },
+        {
+          "name": "delay_ms",
+          "type": "i",
+          "doc": "milliseconds between two ticks. 0 or less: the same as timer_stop( )."
+        },
+        {
+          "name": "no_busy",
+          "type": "abap_bool",
+          "default": "abap_false",
+          "doc": "abap_true keeps the global busy indicator down during a tick - the check_no_busy of _event( )."
+        }
+      ]
+    },
+    {
+      "name": "timer_stop",
+      "group": "Other",
+      "doc": [
+        "End the timer declared with timer_set( ): the browser stops it with this response, and it is not armed again when the app gets the screen back. Nothing is sent when it did not run. Appended at the END of the interface (rule 5)."
+      ],
+      "parameters": []
     }
   ],
   "constants": [
@@ -988,6 +1100,12 @@
           "type": "string",
           "value": "SET_APP_FULL_WIDTH",
           "label": "experimental"
+        },
+        {
+          "name": "stop_timer",
+          "type": "string",
+          "value": "STOP_TIMER",
+          "label": "appended at the end (rule 5): the counterpart of start_timer"
         }
       ]
     },
