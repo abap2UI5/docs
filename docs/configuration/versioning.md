@@ -98,23 +98,18 @@ it rewrites the mechanical part and reports the rest.
    carry an API no release has yet. Which tag belongs to which system
    (`X.Y.Z`, or `X.Y.Z-702` below 7.50) is the table in the
    [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit).
-4. **The frontend, if a BSP is installed.** An installation that only uses
-   the ICF node has nothing else to pull: the frontend is embedded in the
-   package (`src/01/03`). An installation with the frontend as a BSP in the
-   UI5 ABAP repository pulls the matching branch of the
-   [frontend repository](https://github.com/abap2UI5/frontend).
-
-   Which branch belongs to which system, and which of them need no pull
-   after an upgrade, is the table under
-   [Deployment Scenarios](/configuration/installation#frontend-branches). The
-   `_new` branches carry no copy of the frontend, so an upgrade of abap2UI5
-   needs no frontend pull there.
-5. **Transport** framework and frontend together to the next system, then
-   your apps - [Transport, Landscape](/configuration/transport).
+4. **Nothing else to pull for the frontend.** It is embedded in the package
+   (`src/01/03`), and the BSP `Z2UI5` for the launchpad is part of the same
+   pull (`src/03`). The BSP carries no copy of the frontend - it loads it from
+   the node - so it needs nothing after an upgrade. An installation whose BSP
+   still comes from the retired abap2UI5/frontend repository switches once:
+   [Fiori Launchpad](/configuration/launchpad#coming-from-the-frontend-repository).
+5. **Transport** the framework, node and BSP included, to the next system,
+   then your apps - [Transport, Landscape](/configuration/transport).
 
 The embedded frontend and the backend are one package, so browser and server
-always run the same release. A BSP is the one piece that can fall behind, and
-the `_new` branches remove that risk.
+always run the same release, and the BSP cannot fall behind either: it loads
+the frontend from the node.
 
 ## The 702 Branch
 
@@ -139,8 +134,9 @@ cache-buster that follows the newest OpenUI5 -
 
 Switch the abapGit repository back to the previous tag and pull. The objects of
 the newer release are overwritten with the older ones. An object the older
-release does not have is deleted by the pull. The frontend BSP, if one is
-installed, goes back the same way.
+release does not have is deleted by the pull. The node and the BSP go back the
+same way; a rollback to 1.150.0 or older, from before they were part of the
+package, deletes them.
 
 What a rollback does not undo is the draft table: rows written by the newer
 release stay in `Z2UI5_T_01` until they expire. A draft is the serialized app

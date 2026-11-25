@@ -110,9 +110,9 @@ blocked script names the directive of the policy that refused it.
 |---|---|---|
 | The framework package and its sub-packages | `src/00` external libraries, `src/01` the engine and the embedded frontend, `src/02` the released API, `src/99` the frozen compatibility package | an abapGit pull of a [release tag](https://github.com/abap2UI5/abap2UI5/releases/) |
 | Table `Z2UI5_T_01` | the table of the app drafts: the saved app instance between two roundtrips, client-dependent, one row per roundtrip | part of the package (`src/01/01`) |
-| An HTTP handler class and an ICF node | a class of yours calling `z2ui5_cl_ui5_http_handler=>run( )`, entered in the handler list of a node in `SICF` | created on each system - see the [Quickstart](/get_started/quickstart#_2-set-up-http-handler-and-service) |
+| An HTTP handler class and an ICF node | the node `/sap/bc/z2ui5` with its handler `z2ui5_cl_ui5_icf_handler`, or a class of yours calling `z2ui5_cl_ui5_http_handler=>run( )`, entered in the handler list of a node in `SICF` | part of the package (`src/03`, from 1.151.0 on), or created on each system - see the [Quickstart](/get_started/quickstart#_2-set-up-http-handler-and-service) |
 | A user exit class | a class of yours implementing `z2ui5_if_ui5_exit`, in a package of your own; it carries the production settings above | your package - see [User Exits](/advanced/extensibility/user_exits) |
-| BSP `Z2UI5` | the frontend as an app in the UI5 ABAP repository, pulled from the [frontend repository](https://github.com/abap2UI5/frontend) | only when apps run as [launchpad](/configuration/launchpad) tiles or in a [Fiori elements host](/advanced/fiori) |
+| BSP `Z2UI5` | the launchpad app in the UI5 ABAP repository - one view that loads the frontend from the node | part of the package (`src/03`); used only when apps run as [launchpad](/configuration/launchpad) tiles or in a [Fiori elements host](/advanced/fiori) |
 | The monitor tables `Z2UI5_T_CK_*` | the Admin Cockpit's own tables | only when the [cockpit](/configuration/monitoring#admin-cockpit) is installed |
 
 The ICF node serves the frontend itself: the page request carries the whole

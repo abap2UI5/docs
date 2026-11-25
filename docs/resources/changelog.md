@@ -7,6 +7,28 @@ description: The abap2UI5 release notes - every release with its changes, newest
 See [Deprecations](/resources/deprecations) for what is superseded but still
 shipping, and for the full removal list with migration notes.
 
+## 1.151.0
+2026-11-25
+
+What to do when you update, step by step: [What Changed in November 2026](/resources/whats_new_2026_11).
+- One pull is a running installation: the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler` (was `z2ui5_cl_lp_handler`) and the BSP `Z2UI5` for the launchpad are part of abap2UI5 (package `src/03`). Node and BSP keep their names. [abap2UI5/frontend](https://github.com/abap2UI5/frontend) is retired - remove it from abapGit without deleting its objects, then pull abap2UI5
+- ABAP Cloud: the branch `cloud`, generated from `main`, carries the HTTP service, its handler, the IAM objects and the app as a Fiori project in `app/`
+- Navigation: `check_on_nav_back( )`, `nav_app_call( tag = ... )` with `get_nav_tag( )`, `check_nav_pending( )` and `keep_messages` on `nav_app_leave( )` / `nav_app_call( )`
+- Timers: `timer_set( )` and `timer_stop( )` declare a timer per app that the framework arms whenever the app gets the screen; `START_TIMER` repeats, the new event `STOP_TIMER` ends it, and a tick that changes nothing writes no draft
+- Launchpad: `set_title` titles the shell as well, `get_start_param( )` reads a start parameter however the app was started
+- Drafts: smaller (only the needed rows, no type descriptors) and pruned per chain with the user exit field `draft_keep_per_chain` (2 by default)
+- `z2ui5_cl_ui5_test`: a public test harness that drives an app from ABAP Unit through the real framework, one roundtrip per call
+- Binding: attributes an interface declares and fields with a namespace (`/ABC/FIELD`) bind; `z2ui5_cl_ui5_view_builder=>component_path( )` returns the relative path of such a column
+- Speed: the frontend is a cached, smaller bundle and loads while UI5 boots - the first view is on screen about 0.5 s earlier
+- Wire protocol 3 (VIEWS / NAV / ACTIONS, `S_FRONT.ROUTE`, event flags as one object) - apps change nothing
+
+**Removed**
+- BREAKING: `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types` and the `z2ui5_cl_pop_*` popups left the core; with the utilities they ship from [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). An installation that took them from abap2UI5/frontend changes that abapGit repository's URL to abap2UI5-ext and pulls
+- BREAKING: `z2ui5_cl_http_handler` (use `z2ui5_cl_ui5_http_handler`) and the former exit interface `z2ui5_if_exit` (implement `z2ui5_if_ui5_exit`)
+- BREAKING: `_bind_edit( )` and the five `*_model_update( )` methods - the [linter](/advanced/linter) fixes both with `--fix`
+- BREAKING: windowed tables are app-driven - `t_sort`, `t_filter` and `window_get_row( )` are gone, see [Windowed Tables](/cookbook/model/windowed_tables#coming-from-1-150-0)
+- BREAKING: the offline queue (experimental); `hash_set( )` / `hash_replace( )` write only for an app with a hash listener; an own draft store implements `prune_chain( )` and `touch( )`
+
 ## 1.150.0
 2026-11-20
 - Drafts: a draft row with a blank owner - one written before the `UNAME` column - is no longer read, found, counted or overwritten as anyone's. 1.149.x tolerated such rows for the upgrade window; that tolerance is gone, as planned

@@ -1,15 +1,14 @@
 ---
 outline: [2, 4]
-description: The legacy-free variant of the abap2UI5 frontend - the v2 branches of the frontend repository bootstrapped from OpenUI5's legacy-free distribution, what that distribution leaves out, and how to install it next to the classic frontend.
+description: The legacy-free variant of the abap2UI5 frontend - bootstrapped from OpenUI5's legacy-free distribution, what that distribution leaves out, and why there is no build of it to install at the moment.
 ---
 # UI5 Legacy-Free
 
-The abap2UI5 frontend is also available as a **legacy-free** variant,
+The abap2UI5 frontend had a **legacy-free** variant until 2026-11,
 bootstrapped from the legacy-free distribution of OpenUI5 — the build without
 `jQuery.sap.*`, synchronous APIs and the other deprecated globals. Which
-version it loads is pinned in the frontend's bootstrap
-(`1.142.0-legacy-free` in `tools/app2app_v2/patch-v2.mjs` of the framework
-repository today); the branches below carry it.
+version it loads is pinned in its bootstrap patch (`1.142.0-legacy-free` in
+`tools/app2app_v2/patch-v2.mjs` of the framework repository).
 
 ## What is UI5 Legacy-Free?
 
@@ -26,33 +25,22 @@ but with everything deprecated removed up front. In practice these are gone:
 UI5 2.x enforces exactly this surface, so the legacy-free build is a preview
 of it on a 1.x release: what runs on it runs on 2.x, and what breaks on it
 would break on 2.x. The abap2UI5 frontend and its custom controls are held
-to that surface by the `UI5_2X` check of the framework's CI, and the v2
-branches are how an installation runs on it today.
+to that surface by the `UI5_2X` check of the framework's CI.
 
 ## Installation
 
-The legacy-free frontend ships as the `v2` branches of the
-[frontend repository](https://github.com/abap2UI5/frontend). Pull the branch
-that matches your system into your ABAP system with
-[abapGit](https://abapgit.org) and activate — there is no separate build step:
+There is no legacy-free build to install at the moment. It shipped as the
+branches `standard_v2` and `cloud_v2` of abap2UI5/frontend, a second
+repository that is retired: since 2026-11-17 the BSP and the cloud app are part
+of abap2UI5 itself ([Deployment Scenarios](/configuration/installation#frontend-branches)),
+and the v2 branches are no longer built. The bootstrap patch stays in the
+framework repository until it is decided whether the variant comes back.
 
-| Branch | System | UI5 |
-|--------------|-------------------------------------------------------|-----------------------------|
-| `cloud_v2` | S/4 Public Cloud, BTP ABAP Environment | legacy-free (UI5 2.x preview) |
-| `standard_v2` | S/4 Private Cloud, S/4 On-Premise | legacy-free (UI5 2.x preview) |
-
-All six frontend branches side by side are on
-[Deployment Scenarios](/configuration/installation#frontend-branches).
-
-The v2 branches install the frontend under the same `z2ui5` name as the classic
-branches. You can evaluate the legacy-free frontend side by side with the
-classic one in the same system. To do that, run abap2UI5's
-[`frontend_deploy`](https://github.com/abap2UI5/abap2UI5/actions/workflows/frontend_deploy.yaml)
-workflow with a branch name of the form `standard_v2_<name>`. It generates that
-branch of the frontend repository with the whole deployment identity (BSP, ICF
-nodes, handler class) under a different name. This is for the BSP of
-`standard_v2`; the [frontend repository](https://github.com/abap2UI5/frontend)
-has the details.
+An installation that pulled `standard_v2` or `cloud_v2` switches the way every
+frontend branch does: remove that repository from abapGit **without deleting
+its objects**, then pull abap2UI5 - [Fiori Launchpad](/configuration/launchpad#coming-from-the-frontend-repository),
+[S/4 Public Cloud](/configuration/s4_public_cloud#_4-deploy-the-ui5-app-optional).
+It then runs the classic UI5 build again.
 
 ## Learn More
 

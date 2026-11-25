@@ -40,18 +40,18 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 ## Version status
 
-The released version is **1.150.0**. Entries marked *next release* are already
+The released version is **1.151.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
 | What you have | What to write | Status |
 |---|---|---|
-| `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-150-0) | **removed**, *next release* |
-| `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, *next release* |
-| `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, *next release* |
-| `view_model_update( )` and its four variants | delete the call | 1.143.0 |
+| `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-150-0) | **removed**, 1.151.0 |
+| `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, 1.151.0 |
+| `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, 1.151.0 |
+| `view_model_update( )` and its four variants | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
-| `_bind_edit( )` | `_bind( )` | 1.142.0 |
+| `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, 1.151.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
 | the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
@@ -76,11 +76,12 @@ tell you what is coming if you do not.
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
-| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
+| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
+| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, the built-in popups `z2ui5_cl_pop_*` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, *next release* |
 | the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
-| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, *next release* |
-| `z2ui5_cl_http_handler` (the handler class an ICF node names) | `z2ui5_cl_ui5_http_handler` - same methods, it was an empty subclass | **removed**, *next release* |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, 1.151.0 |
+| `z2ui5_cl_http_handler` (the handler class an ICF node names) | `z2ui5_cl_ui5_http_handler` - same methods, it was an empty subclass | **removed**, 1.151.0 |
 | `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
 | `set_app_state_active( )`, `cs_event-set_app_state_active` | `app_state_set_active( )`, `cs_event-app_state_set_active` | **removed**, 1.144.1 |
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, 1.144.1 |
@@ -94,7 +95,8 @@ tell you what is coming if you do not.
 
 `view_model_update( )`, `nest_view_model_update( )`,
 `nest2_view_model_update( )`, `popup_model_update( )` and
-`popover_model_update( )` are **empty methods**.
+`popover_model_update( )` are **empty methods**. 1.151.0 removes
+them - a call no longer compiles then.
 
 The model is pushed automatically now. The framework takes the model state
 before `main( )`, after the incoming client deltas were applied, and compares it
@@ -153,7 +155,8 @@ Arguments stay untouched, so this is a pure rename — which is why
 
 Earlier releases split binding into a display-only `_bind` and a writable
 `_bind_edit`. That split is gone: there is only **one** binding left, and
-`_bind_edit` is an alias of `_bind` with identical behavior.
+`_bind_edit` is an alias of `_bind` with identical behavior. 1.151.0
+removes it - a call no longer compiles then.
 
 ```abap
 " old
@@ -348,16 +351,25 @@ existing calls keep compiling. See [Add-ons](/resources/addons).
 `z2ui5_cl_util_xml`, `z2ui5_cx_util_error` and the table `Z2UI5_T_91` left
 abap2UI5 with 1.149.0. Up to 1.148.0 they shipped in its frozen package
 `src/99/01`. They moved, unchanged, to
-[abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet). Inside the framework
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext). Inside the framework
 they were replaced by an internal context class.
 
-::: warning Code that still uses them: install abap2UI5-obsolet
-Pull [abap2UI5-obsolet](https://github.com/abap2UI5/abap2UI5-obsolet) with abapGit next
+::: warning Code that still uses them: install abap2UI5-ext
+Pull [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) with abapGit next
 to abap2UI5 (`main`, on NetWeaver 7.02 - 7.4x its branch `702`) and everything
 keeps working as before - the table and its data stay in your system. Without
 it, code naming one of these classes no longer activates after the upgrade.
 The add-on [layout-management](https://github.com/abap2UI5-addons/layout-management)
 needs it; every other add-on carries its own copy of what it uses.
+
+1.151.0 moves the rest of the frozen package the same way:
+`z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types` and the
+`z2ui5_cl_pop_*` popups ship from abap2UI5-ext as well, same names. From
+2026-11-17 to 2026-11-25 all of these objects were in abap2UI5/frontend
+instead, which is retired: an installation that pulled them from there changes
+the URL of that abapGit repository to
+`https://github.com/abap2UI5/abap2UI5-ext` (branch `main`, or `702`) and
+pulls. Nothing is deleted; the objects are the same.
 
 There is no public replacement API for app code. Treat the classes as
 stable-but-closed rather than as something to migrate away from today; for new
@@ -474,7 +486,7 @@ CLASS zcl_a2ui5_user_exit DEFINITION PUBLIC.
 ENDCLASS.
 ```
 
-**`z2ui5_if_exit` is deleted with the next release**, and abap2UI5 no longer
+**`z2ui5_if_exit` is deleted with 1.151.0**, and abap2UI5 no longer
 looks it up. An exit class that still implements it does not compile, and
 until it is moved over the installation runs on the shipped defaults - no
 custom Content-Security-Policy, theme or bootstrap. Move it over before you

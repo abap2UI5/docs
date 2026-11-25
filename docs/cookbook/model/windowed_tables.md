@@ -16,7 +16,7 @@ the first 100, say - together with the number of rows there are in all. When
 the list grows or scrolls past them, or the user sorts or filters it, the
 list binding asks your app for rows, and your app reads them: the way an OData
 service answers `$skip`, `$top`, `$orderby` and `$filter`. The framework
-neither sorts nor filters nor counts. *In this shape from the next release
+neither sorts nor filters nor counts. *In this shape from 1.151.0
 on - 1.149.0 and 1.150.0 had a server-side window, see
 [Coming from 1.150.0](#coming-from-1-150-0).*
 

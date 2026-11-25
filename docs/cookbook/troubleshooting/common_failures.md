@@ -226,8 +226,8 @@ The deployed UI5 app posts to the HTTP service path written in its
 `manifest.json`, and that service does not exist under this ID on your
 system. The error does not say which URL it tried. Align the
 `sap.app.dataSources.http.uri` entry with the service you created — see
-[S/4 Public Cloud](/configuration/s4_public_cloud) for the paths each
-frontend branch ships with.
+[S/4 Public Cloud](/configuration/s4_public_cloud) for the path the app of
+the branch `cloud` ships with.
 
 ### `Literals across more than one line are not allowed` — abapGit pull, and the app class is empty afterwards
 

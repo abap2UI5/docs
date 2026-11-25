@@ -71,9 +71,10 @@ Environment as well:
 2. **Mass-activate.** ADT abapGit pulls every object inactive. Activate them
    all, and repeat until nothing is left inactive.
 3. **Create the handler class and the HTTP service** in ADT
-   ([below](#the-handler)). Open the service URL: the start page of abap2UI5
+   ([below](#the-handler)) - or pull the branch `cloud` of abap2UI5 in step
+   1, which brings both. Open the service URL: the start page of abap2UI5
    appears, with *ABAP for Cloud* ticked.
-4. **For business users:** deploy the frontend app and put a tile in front
+4. **For business users:** deploy the app and put a tile in front
    of it ([Launchpad and Work Zone](#launchpad-and-work-zone)).
 
 What travels to the next system, and in which order, is on
@@ -179,8 +180,8 @@ the pages of this site meet:
 The HTTP service needs `S_DEVELOP`, so a business user reaches an app through
 a tile. That takes two things:
 
-- **The frontend app**, deployed from VS Code with the SAP Fiori tools - one of
-  the branches `cloud`, `cloud_v2` or `cloud_new` of the frontend repository
+- **The app**, deployed from VS Code with the SAP Fiori tools - the folder
+  `app` of the branch `cloud` of abap2UI5
   ([Deployment Scenarios](/configuration/installation#frontend-branches),
   [S/4 Public Cloud](/configuration/s4_public_cloud#_4-deploy-the-ui5-app-optional)).
 - **The chain of objects behind a tile**: launchpad app descriptor item, IAM
@@ -202,6 +203,6 @@ the HTTP service and a connector app forwards to it
 - **Compression.** On ABAP Cloud the platform compresses the responses
   ([Basis Runbook](/configuration/runbook#icm-http)).
 - **Upgrades.** Pull the next tag with abapGit for Eclipse and activate what
-  arrives inactive; with the `cloud_new` frontend branch the deployed app needs
-  no new deployment
+  arrives inactive; the deployed app loads the frontend from the HTTP service
+  and needs no new deployment
   ([Versioning, Upgrade](/configuration/versioning#how-to-upgrade)).
