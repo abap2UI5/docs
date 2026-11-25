@@ -49,9 +49,9 @@ tell you what is coming if you do not.
 | `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-150-0) | **removed**, *next release* |
 | `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, *next release* |
 | `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, *next release* |
-| `view_model_update( )` and its four variants | delete the call | 1.143.0 |
+| `view_model_update( )` and its four variants | delete the call | deprecated 1.143.0, **removed**, *next release* |
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
-| `_bind_edit( )` | `_bind( )` | 1.142.0 |
+| `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, *next release* |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
 | the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
@@ -95,7 +95,8 @@ tell you what is coming if you do not.
 
 `view_model_update( )`, `nest_view_model_update( )`,
 `nest2_view_model_update( )`, `popup_model_update( )` and
-`popover_model_update( )` are **empty methods**.
+`popover_model_update( )` are **empty methods**. The next release removes
+them - a call no longer compiles then.
 
 The model is pushed automatically now. The framework takes the model state
 before `main( )`, after the incoming client deltas were applied, and compares it
@@ -154,7 +155,8 @@ Arguments stay untouched, so this is a pure rename — which is why
 
 Earlier releases split binding into a display-only `_bind` and a writable
 `_bind_edit`. That split is gone: there is only **one** binding left, and
-`_bind_edit` is an alias of `_bind` with identical behavior.
+`_bind_edit` is an alias of `_bind` with identical behavior. The next release
+removes it - a call no longer compiles then.
 
 ```abap
 " old
