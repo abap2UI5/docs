@@ -10,7 +10,8 @@ abap2UI5 works right away on ABAP 7.50 and later. On an earlier release, install
 To install on an older system, use the `702` branch - or rather its tag, `X.Y.Z-702`, which the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table names next to the tag of every other system:
 | Branch    | System                |
 |-----------| ----------------------------|
-| main     | S/4 Public Cloud, BTP ABAP Environment, S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver ≥7.50 |
+| main     | S/4 Private Cloud, S/4 On-Premise, R/3 NetWeaver ≥7.50 |
+| cloud    | S/4 Public Cloud, BTP ABAP Environment |
 | 702  |  R/3 NetWeaver ≥7.02   |
 
 Some sample projects and other repositories also ship a downported version. Check whether a `702` branch is available.
@@ -18,9 +19,9 @@ Some sample projects and other repositories also ship a downported version. Chec
 ## Installation
 The installation on an old release follows the normal [Quickstart](/get_started/quickstart) flow with two adjustments:
 1. Pull the `X.Y.Z-702` tag with abapGit. Use a tag, because the `702` branch itself is force-pushed on every rebuild. abapGit itself is 7.02-compatible, so deployment to old ECC machines works the same way as everywhere else
-2. Create the HTTP handler (SICF service) with the 7.02-compatible handler syntax instead of the modern snippet
+2. Activate the ICF node `/sap/bc/z2ui5` in `SICF`: the branch brings it with its handler `z2ui5_cl_ui5_icf_handler`, downported like the rest. A node of your own works as well, with a handler class in 7.02-compatible syntax instead of the modern snippet
 
-After that, call your HTTP handler from the browser and abap2UI5 is ready for use — even on your old machine.
+After that, open the node in the browser and abap2UI5 is ready for use — even on your old machine. The branch brings no BSP for the Fiori Launchpad: that app needs a newer UI5 than these releases ship.
 
 If you later want to reach these apps from the cloud, use the [RFC Connector](/advanced/rfc). It calls abap2UI5 apps on legacy systems via BTP destination and RFC. That integrates them into Steampunk, S/4 Public Cloud, Fiori Launchpads, or SAP Mobile Start. The [HTTP Connector](/advanced/http) offers the same over HTTP.
 

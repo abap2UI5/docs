@@ -38,7 +38,7 @@ Marketplace. It bundles the linter and starts the MCP server.
 
 @abap2ui5/embed-control ──talks HTTP to──▶ abap2UI5 on ABAP, node-runtime or the CAP plugin
 
-@abap2ui5/bsp ── depends on nothing; the embed control's CI uses it to write the BSP of its examples
+@abap2ui5/bsp ── depends on nothing; abap2UI5 writes its BSP Z2UI5 with it, the embed control's CI the BSP of its examples
 ```
 
 ## Which versions go together

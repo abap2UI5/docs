@@ -19,18 +19,20 @@ the objects by transport.*
 
 | Object | Type | Travels? |
 |---|---|---|
-| The framework package with its sub-packages (`src/00` to `src/02` and `src/99`) | classes, interfaces, one table | yes - one transport, the whole package tree |
+| The framework package with its sub-packages (`src/00` to `src/03`) | classes, interfaces, one table, the ICF node and the BSP | yes - one transport, the whole package tree |
 | `Z2UI5_T_01` | transparent table, delivery class A, client-dependent | the definition travels; its rows do not and must not - they are the drafts of the system they were written on |
-| Your HTTP handler class | class in your package | yes |
+| Your HTTP handler class, if you use a node of your own | class in your package | yes |
 | The ICF node | `SICF` service | see below |
 | Your user exit class | class in your package | yes - its settings are code, and that is the point: the same exit runs on every system |
-| BSP `Z2UI5` (launchpad only) | BSP application in the UI5 ABAP repository | yes, like any UI5 app deployed to the repository |
+| BSP `Z2UI5` (launchpad only) | BSP application in the UI5 ABAP repository, part of the framework package (`src/03`) | yes, like any UI5 app deployed to the repository |
+| abap2UI5-ext (only if your code uses the legacy objects) | package of its own: the predecessor view builder, the built-in popups, the utility classes | yes |
 | The Admin Cockpit (optional) | package of its own, tables `Z2UI5_T_CK_*` | yes; its administrators and settings are table rows and are set per system |
 | Your apps | one class per app, plus the texts, tables and other objects it uses | yes |
 
 Pull the framework as a release tag: the one the
 [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table
-names for the system. Use the folder logic `PREFIX` that its `.abapgit.xml`
+names for the system - on ABAP Cloud, which has no tags of its own, the branch
+`cloud`. Use the folder logic `PREFIX` that its `.abapgit.xml`
 declares. The sub-package names are derived from the root package you pick. A
 package name is capped at 30 characters, so a long root name leaves the deeper
 ones no room. [S/4 Public Cloud](/configuration/s4_public_cloud) shows the
@@ -117,13 +119,15 @@ package, draft table, node and exit, and the copies travel separately. See
 On S/4 Public Cloud and BTP ABAP Environment the same objects exist, the
 mechanics differ:
 
-- abapGit for Eclipse (ADT) pulls the repository into a package that belongs to
-  a **software component**. The software component is what moves through the
+- abapGit for Eclipse (ADT) pulls the branch `cloud` into a package that belongs
+  to a **software component**. The software component is what moves through the
   landscape. abap2UI5 travels inside it with everything else in that package;
   see [S/4 Public Cloud](/configuration/s4_public_cloud).
-- The HTTP service is a development object of the package, created in ADT
-  (the handler class implements `if_http_service_extension`), so it travels
-  with the component rather than being created per system.
+- The HTTP service is a development object of the package - the branch
+  `cloud` brings the service `Z2UI5` with its handler and the IAM objects, or
+  you create one in ADT (the handler class implements
+  `if_http_service_extension`) - so it travels with the component rather than
+  being created per system.
 - On S/4 Public Cloud the endpoint itself needs `S_DEVELOP`, which rules it
   out for business users; the way to them is the frontend app and a tile -
   [Deployment Scenarios](/configuration/installation#s-4-public-cloud).
@@ -137,8 +141,9 @@ syntax rewritten by abaplint on every push - and the tag to pull is
 `X.Y.Z-702` ([Downporting](/advanced/downporting)). What differs in the
 transport:
 
-- The handler class is written in 7.02 syntax; the Quickstart's snippet uses
-  constructs the release does not have.
+- The branch brings the node `/sap/bc/z2ui5` and its handler, downported, but
+  no BSP. A handler class of your own is written in 7.02 syntax; the
+  Quickstart's snippet uses constructs the release does not have.
 - Apps run from the node, or are reached from a newer system through the
   [RFC](/advanced/rfc) or [HTTP](/advanced/http) connector; a launchpad tile
   needs a release that has a launchpad.

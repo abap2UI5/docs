@@ -57,7 +57,7 @@ prefix alone would let them collide; the segment is what keeps them apart.
 | `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the released classes and interfaces of `src/02` that carry it (`z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, the `z2ui5_*_ui5_llm` objects) |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
-| `util`, `pop`, `xml_view` | Frozen — see [Deprecations](/resources/deprecations) |
+| `util`, `pop`, `xml_view` | Frozen, shipped from [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) — see [Deprecations](/resources/deprecations) |
 
 **Everything else that installs under `Z2UI5_`:**
 
@@ -75,7 +75,7 @@ tells you which repository it was pulled from. The exception: frozen code keeps
 the segment it started with. So a repository's `src/99` can hold a segment that
 is no longer issued. For example, the popups add-on ships as `z2ui5_cl_popup_*`
 today, and its `src/99` still carries the `pop` and `demo` names it started
-with. The framework's own `src/99` does the same.
+with. abap2UI5-ext does the same with the objects that left the framework.
 
 ::: tip The segment can reach the frontend too
 For the two custom-control repositories the segment also names the BSP and the
@@ -93,9 +93,9 @@ any release.
 ::: tip Enforced, not just documented
 The framework has a CI check for this: `.github/scripts/object-naming-gate.mjs`
 (`npm run check:naming`). It fails the build when a new object lacks the `ui5` /
-`ui5f` segment. The public API, the frozen package and the two mirrored
-libraries are exempt. abaplint's own naming rule only checks the `Z2UI5_`
-prefix, so without that check a new segment would drift in unnoticed.
+`ui5f` segment. The public API and the two mirrored libraries are exempt.
+abaplint's own naming rule only checks the `Z2UI5_` prefix, so without that
+check a new segment would drift in unnoticed.
 :::
 
 ### Package Layout
@@ -108,10 +108,10 @@ hierarchy in your system. For the framework repository that is:
 | `src/00/` | External libraries — ajson (`src/00/01`), S-RTTI (`src/00/02`) and the framework's own utility classes (`src/00/03`) |
 | `src/01/` | Internal use only — draft persistence, request handling, event routing, binding, and the generated frontend |
 | `src/02/` | The released API — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, and `z2ui5_if_ui5_llm` with `z2ui5_cl_ui5_llm` and `z2ui5_cx_ui5_llm` |
-| `src/99/` | Frozen — see [Deprecations](/resources/deprecations) |
+| `src/03/` | The service — the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler`, and the BSP `Z2UI5` for the launchpad. On the branch `cloud` the HTTP service, its handler and the IAM objects take its place |
 
 The package a class sits in is the honest answer to "may I use this?": `src/02`
-yes, `src/01` no, `src/99` only if your app already does.
+yes, `src/01` and `src/03` no.
 
 ### Name Length
 ABAP object names are limited to 30 characters, and abap2UI5 does not spend all
@@ -119,9 +119,9 @@ of them: every object name in `src/` stays at **25 characters or less**. The
 remaining five are headroom for renaming — a namespace of up to 10 characters
 replaces the 5-character `z2ui5` and still fits into 30.
 
-This is why the generated frontend classes carry compressed names like
-`z2ui5_cl_ui5f_scrfocus_js` rather than spelled-out ones: the generator caps
-them and fails rather than truncating silently.
+This is why the generated frontend classes carry short names like
+`z2ui5_cl_ui5f_bundle` and `z2ui5_cl_ui5f_preload`: the generator caps them and
+fails rather than truncating silently.
 
 ### The Frontend Namespace
 `z2ui5` exists a second time — in the browser, as the UI5 module namespace. It
@@ -218,7 +218,8 @@ The workflow runs `abaplint --rename` with the checked-in configuration
 `rename_<name>` (e.g., `rename_zmyui5`). The branch contains the complete
 renamed `src` tree together with a matching `.abapgit.xml` — **pull it with
 abapGit** into your ABAP system for a parallel installation next to the
-original.
+original. The ICF node, its handler and the BSP of `src/03` are renamed with
+the rest, so the branch is a whole installation.
 
 To upgrade an installation later, sync your fork with upstream and re-run the
 workflow with the same name. The branch is updated to the current state; nothing

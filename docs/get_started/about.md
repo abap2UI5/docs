@@ -82,7 +82,7 @@ Works with both ABAP Cloud and Standard ABAP:
 - S/4 Private Cloud or On-Premise (ABAP for Cloud, Standard ABAP)
 - R/3 NetWeaver AS ABAP 7.02 or later (Standard ABAP)
 
-Below 7.50 you pull the `X.Y.Z-702` tag instead of `X.Y.Z` — same features, generated
+Below 7.50 you pull the `X.Y.Z-702` tag instead of `X.Y.Z`, and on ABAP Cloud the branch `cloud` — same features, generated
 from `main` automatically; the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table says which tag belongs to which system. See [Downporting](/advanced/downporting).
 
 ### UI5 Versions

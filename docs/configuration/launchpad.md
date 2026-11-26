@@ -13,13 +13,13 @@ Embed your abap2UI5 apps into the SAP Fiori Launchpad (FLP) on S/4 On-Premise or
 
 ## Installation
 
-The Launchpad starts abap2UI5 from the UI5 ABAP repository of your system (as app `z2ui5`): the BSP `Z2UI5`. It is part of abap2UI5 itself - its package `src/03`, next to the node `/sap/bc/z2ui5` and its handler `Z2UI5_CL_UI5_ICF_HANDLER` - so the abapGit pull that installs the framework installs it too (`main`, or `702` below 7.50; a release tag carries it from 1.151.0 on). Nothing else is pulled, and the target mapping below needs nothing more.
+The Launchpad starts abap2UI5 from the UI5 ABAP repository of your system (as app `z2ui5`): the BSP `Z2UI5`. It is part of abap2UI5 itself - its package `src/03`, next to the node `/sap/bc/z2ui5` and its handler `Z2UI5_CL_UI5_ICF_HANDLER` - so the abapGit pull that installs the framework installs it too (`main`, or a release tag from 1.151.0 on). The downported branch `702` brings no BSP: the app needs a newer UI5 than releases below 7.50 ship. Nothing else is pulled, and the target mapping below needs nothing more.
 
 The BSP carries no copy of the frontend: one view with one `z2ui5.embed.Container`, which loads the frontend from the node (`?z2ui5-bundle`) at run time. After an abap2UI5 update there is nothing to pull again - the frontend always has the backend's version. The trade-off: the frontend is fetched from the backend on every page load instead of being served out of the BSP. For ABAP Cloud see [S/4 Public Cloud](/configuration/s4_public_cloud). After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
 
 ### Coming from the Frontend Repository
 
-Until 2026-11-17 the BSP came from a second repository, abap2UI5/frontend (branches `standard`, `standard_v2`, `standard_new`), which is retired. If an abapGit repository on your system still points at one of its branches:
+Until 2026-11-17 the BSP came from a second repository, abap2UI5/frontend (branches `standard`, `standard_v2`, `standard_new`), which is retired: its branches stay available, frozen at 1.150.0. If an abapGit repository on your system still points at one of its branches:
 
 1. Remove that repository from abapGit **without deleting its objects**.
 2. Pull abap2UI5. The node `/sap/bc/z2ui5` and the BSP `Z2UI5` keep their names and become part of its package, so the target mapping and the tiles stay as they are. The node's handler is `Z2UI5_CL_UI5_ICF_HANDLER` from then on.
@@ -56,7 +56,13 @@ client->follow_up_action(
 ```
 
 ### Read Startup Parameters
-Parameters from the target mapping (or the start URL) arrive as name/value pairs in `client->get( )-t_comp_params`:
+`client->get_start_param( )` reads one start parameter, whichever way the app was started: the URL query first, then the launchpad's startup parameters from the target mapping, then the query of the launchpad intent in the hash. The name is matched in any case; the value comes back as the source carries it, and empty when no source has the parameter:
+
+```abap
+DATA(lv_product) = client->get_start_param( `PRODUCT` ).
+```
+
+The parameters belong to the page, so they stay readable on every later roundtrip and in every app the user navigates to. The launchpad's startup parameters are also available as name/value pairs in `client->get( )-t_comp_params`:
 
 ```abap
 DATA(lt_params) = client->get( )-t_comp_params.
@@ -91,7 +97,7 @@ Sometimes installation via abapGit causes cache-related issues. Here's how to cl
 ### Manual Deployment
 If clearing caches doesn't fix it, push the frontend app manually:
 
-1. Download the webapp folder of the project.
+1. Build the app the BSP is written from: the folder `app_source` of abap2UI5, with `npm install` and `npm run build`. Its `dist` folder is what to push.
 
 2. Use the SAP program `/UI5/UI5_REPOSITORY_LOAD` to push the app to the server.
 <img width="942" height="858" alt="UI5 Repository Load program for manual frontend deployment" src="https://github.com/user-attachments/assets/2eac29f4-596e-4bab-8a17-7a8f86630b95">

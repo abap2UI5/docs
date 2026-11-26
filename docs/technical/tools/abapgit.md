@@ -24,7 +24,7 @@ screenshot by screenshot. With abapGit in place, the
 The framework is developed in an ABAP system and serialized into its GitHub
 repository with abapGit; a system installs it by pulling that repository, and
 updates by pulling again. The folder logic is `PREFIX`, so the `src/00` to
-`src/99` folders become sub-packages of the package you pick (see
+`src/03` folders become sub-packages of the package you pick (see
 [Namespaces, Renaming](/advanced/renaming#package-layout)).
 
 ## Apps as abapGit Artifacts

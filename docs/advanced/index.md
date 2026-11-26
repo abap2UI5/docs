@@ -15,7 +15,7 @@ None of it is needed for a first app: the [Quickstart](/get_started/quickstart) 
 
 | Group | What it covers | Start with |
 |---|---|---|
-| Extensibility | User exits on the HTTP handler, the frontend artifacts as an app of your own, custom UI5 controls | [User Exits](/advanced/extensibility/user_exits) |
+| Extensibility | User exits on the HTTP handler, working on the frontend itself, custom UI5 controls | [User Exits](/advanced/extensibility/user_exits) |
 | Integration | The Fiori Launchpad, SAP Build Work Zone, Mobile Start, a native mobile shell, Microsoft Teams and Excel, another ABAP system and AI agents | [Integration](/integration/) |
 | Releases, Stacks | The downport to NetWeaver 7.02, renaming the `Z2UI5_` prefix, developing in a repository off the stack, converting classic reports for ABAP Cloud, the legacy-free UI5 runtime | [Downporting](/advanced/downporting) |
 | Developer Setup | The tooling around the framework, the linter, the MCP server, the VS Code extension, and the setup for an AI agent | [Tooling](/advanced/tooling) |

@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Release tags and cadence of abap2UI5, what counts as stable API, the frozen package, how deprecations are announced, and how to upgrade, stay on a release, roll back and re-test.
+description: Release tags and cadence of abap2UI5, what counts as stable API, the legacy objects in abap2UI5-ext, how deprecations are announced, and how to upgrade, stay on a release, roll back and re-test.
 ---
 # Versioning, Upgrade
 
@@ -17,10 +17,11 @@ the downported branch. The tag is the only thing in the repository that does
 not move - `main` is pulled by abapGit as it is on the day, the `702` branch is
 rebuilt from `main` on every push. An installation reads its own release from
 the constant `z2ui5_if_app=>version`, which abapGit shows and the delivered
-frontend is stamped with.
+frontend is stamped with. The branch `cloud`, abap2UI5 for ABAP Cloud, is
+generated from `main` on every push as well and carries no tags.
 
-There is no fixed cadence. In 2026 the changelog lists nine releases, from
-1.142.0 on 2026-07-20 to 1.149.0 on 2026-11-16, after a gap of seven months
+There is no fixed cadence. In 2026 the changelog lists eleven releases, from
+1.142.0 on 2026-07-20 to 1.151.0 on 2026-11-25, after a gap of seven months
 before that; two of them shipped on the same day. Read the dates on the
 [changelog](/resources/changelog) rather than planning on an interval. The
 framework's security policy supports the latest release only.
@@ -46,23 +47,24 @@ is internal: it may change between any two releases without a note. The
 [linter](/advanced/linter) reports a call into it as `non-released-api`, which
 is the check to run over your apps before an upgrade.
 
-## The Frozen Package
+## The Legacy Objects
 
-`src/99` is the compatibility package: the predecessor view builder, the
-superseded exit and types interfaces, the retired utility classes and the
-built-in popups whose successor is the
-[popups add-on](https://github.com/abap2UI5-addons/popups). Frozen means:
+The predecessor view builder, the superseded types interface, the retired
+utility classes and the built-in popups whose successor is the
+[popups add-on](https://github.com/abap2UI5-addons/popups) are no longer part
+of the framework. They ship, frozen, from
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext), a repository a system
+installs next to abap2UI5 when its code still names one of them. Frozen means:
 
-- it ships with every release, unchanged, so an app that uses it keeps
-  compiling and running after an upgrade;
-- nothing in the framework calls it, and its production code is not changed -
-  a check in the framework's CI refuses the change;
-- it is not API. What it holds is listed on
+- the objects keep their names and are not changed, so an app that uses them
+  keeps compiling and running after an upgrade of abap2UI5;
+- nothing in the framework calls them;
+- they are not API. What they hold is listed on
   [Deprecations](/resources/deprecations) with the replacement for each.
 
-An object leaves the package only when it is removed. The framework's removal
-plan sets the order: documentation first, then the samples, then the code. A
-removal is a `BREAKING` entry in the changelog with the release it happened in.
+A removal is a `BREAKING` entry in the changelog with the release it happened
+in. The framework's removal plan sets the order: documentation first, then the
+samples, then the code.
 
 ## How Deprecations Are Announced
 
@@ -82,9 +84,10 @@ Three places, in this order:
 
 There is no fixed period between a deprecation and its removal. The history
 shows this: most of the removals of 2026 shipped in 1.144.1 and 1.145.0
-(September 2026), each with its replacement on the deprecations page. The frozen
-package keeps the larger pieces compiling across them: the predecessor builder,
-the popups, the utility classes. Run the linter with `--fix` before an upgrade;
+(September 2026), each with its replacement on the deprecations page.
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) keeps the larger
+pieces compiling across them: the predecessor builder, the popups, the utility
+classes. Run the linter with `--fix` before an upgrade;
 it rewrites the mechanical part and reports the rest.
 
 ## How to Upgrade
@@ -98,6 +101,9 @@ it rewrites the mechanical part and reports the rest.
    carry an API no release has yet. Which tag belongs to which system
    (`X.Y.Z`, or `X.Y.Z-702` below 7.50) is the table in the
    [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit).
+   On ABAP Cloud pull the branch `cloud` again instead.
+   A system that uses the legacy objects pulls
+   [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) in the same step.
 4. **Nothing else to pull for the frontend.** It is embedded in the package
    (`src/01/03`), and the BSP `Z2UI5` for the launchpad is part of the same
    pull (`src/03`). The BSP carries no copy of the frontend - it loads it from
