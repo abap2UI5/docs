@@ -112,19 +112,18 @@ event branch:
 ELSEIF client->check_on_event( `BACK` ).
   client->nav_app_leave( ).
 ```
-To read data from the previous app, cast it like this. `check_on_navigated( )`
-is true on the first start as well, and `get_app_prev( )` then returns the
-running app itself, so the cast is guarded:
+To read data from the previous app, cast it on the way back.
+`check_on_navigated( )` is true on the first start as well, while
+`check_on_nav_back( )` is true only on the one roundtrip on which the app gets
+the screen back from an app it called - a popup app closing included:
 ```abap
   METHOD z2ui5_if_app~main.
 
     IF client->check_on_navigated( ).
-        TRY.
+        IF client->check_on_nav_back( ).
             DATA(lo_called_app) = CAST zcl_sample_new_app( client->get_app_prev( ) ).
             client->message_box_display( `Input made in the previous app:` && lo_called_app->mv_input ).
-          CATCH cx_sy_move_cast_error.
-            " not back from zcl_sample_new_app - the first start, for one
-        ENDTRY.
+        ENDIF.
         view_display( ).
     ENDIF.
 
@@ -192,6 +191,51 @@ ENDIF.
 
 An intentionally empty value still arrives. `Z2UI5_CL_SMP_APP_488` is the
 pair of classes written out.
+
+### Telling Returns Apart
+
+An app that calls one class for several purposes - one popup app for two
+fields, say - names the purpose in the call with `tag`, and reads it with
+`get_nav_tag( )` on the roundtrip the called app comes back on. The tag is
+the caller's; the called app never sees it:
+
+```abap
+ELSEIF client->check_on_event( `VALUE_HELP_FROM` ).
+  client->nav_app_call( app = NEW zcl_sample_new_app( )
+                        tag = `FROM` ).
+```
+
+```abap
+IF client->check_on_navigated( ).
+  CASE client->get_nav_tag( ).
+    WHEN `FROM`.
+      " ... take the result for the first field
+    WHEN `TO`.
+      " ... and for the second
+  ENDCASE.
+  view_display( ).
+ENDIF.
+```
+
+`check_nav_pending( )` says whether this roundtrip already ends in a
+navigation - true once `main( )` has called `nav_app_call( )` or
+`nav_app_leave( )`. A base class asks it before it arms a timer or clears the
+messages of a screen the app is about to give away.
+
+### Messages Across a Navigation
+
+A message toast or box queued in the roundtrip that navigates belongs to the
+screen it was queued on, which goes away. `keep_messages = abap_true` on
+`nav_app_leave( )` or `nav_app_call( )` shows it after the target app has
+rendered instead:
+
+```abap
+ELSEIF client->check_on_event( `SAVE` ).
+  client->message_toast_display( `Saved` ).
+  client->nav_app_leave( keep_messages = abap_true ).
+```
+
+A carried message box keeps its close event, which the target app receives.
 
 ### The Whole Stack in One Class
 

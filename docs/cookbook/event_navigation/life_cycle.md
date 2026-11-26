@@ -127,6 +127,8 @@ ELSEIF client->check_on_event( `OPEN_POPUP` ).
 ENDIF.
 ```
 
+To tell the return from a called app apart from the other cases, ask `check_on_nav_back( )`: it is true only on the one roundtrip on which the app gets the screen back from an app it called, a popup app closing included - see [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app).
+
 Reserve `check_on_init` for one-time setup that must *not* repeat on return, such as loading initial data or setting defaults. Keep it first in the chain, as the sample at the top of this page does. It is the more specific of the two checks, so the more general one has to come after it. If the init branch would do the same as the navigated branch, keep only the navigated branch.
 
 As a rule of thumb: anything needed to **show the screen** belongs in a branch that also fires on navigation return.

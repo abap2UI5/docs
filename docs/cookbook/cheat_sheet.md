@@ -24,8 +24,10 @@ that explains it in full.
 | start another app | `client->nav_app_call( NEW zcl_other_app( ) )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
 | go back to the calling app | `client->nav_app_leave( )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
 | read what the sub-app left | `CAST zcl_other_app( client->get_app_prev( ) )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
+| know that the sub-app came back | `client->check_on_nav_back( )` | [Navigating Between Apps](/cookbook/event_navigation/navigation/inner_app) |
 | set the focus | ``client->follow_up_action( val = client->cs_event-set_focus t_arg = VALUE #( ( `id_input` ) ) )`` | [Focus](/cookbook/browser_interaction/focus) |
 | run `main` again after a delay | ``client->follow_up_action( val = client->cs_event-start_timer t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) )`` | [Timer](/cookbook/browser_interaction/timer) |
+| run `main` every few seconds | ``client->timer_set( event = `TICK` delay_ms = 2000 )`` | [Timer](/cookbook/browser_interaction/timer) |
 | copy a text to the clipboard | ``client->follow_up_action( val = client->cs_event-clipboard_copy t_arg = VALUE #( ( mv_text ) ) )`` | [Clipboard](/cookbook/browser_interaction/clipboard) |
 | open a URL in a new tab | `client->follow_up_action( val = client->cs_event-open_new_tab t_arg = VALUE #( ( mv_url ) ) )` | [URL Handling](/cookbook/browser_interaction/url_handling) |
 | show more than 100 table rows | ``client->follow_up_action( val = client->cs_event-set_size_limit t_arg = VALUE #( ( `1000` ) ( client->cs_view-main ) ) )`` | [More than 100 Rows](/cookbook/model/size_limit) |
