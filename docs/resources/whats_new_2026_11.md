@@ -244,7 +244,7 @@ first three items.
 
 [abap2UI5-addons/custom-controls](https://github.com/abap2UI5-addons/custom-controls)
 
-- NetworkStatus (`z2ui5_cl_cci_network_status`): online, offline or server
+- NetworkStatus (`z2ui5_cl_cci_net_status`): online, offline or server
   not reachable, with signal bars and latency, measured in the browser.
 - Clock (`z2ui5_cl_cci_clock`): date and time ticking in the browser; it fits
   an overflow menu.
@@ -258,6 +258,10 @@ first three items.
 |---|---|---|
 | ICF node `/sap/bc/z2ui5` and BSP `Z2UI5` | abap2UI5, package `src/03` | pull abap2UI5 |
 | ICF handler `z2ui5_cl_lp_handler` | renamed `z2ui5_cl_ui5_icf_handler` | delete the old class after the pull |
+| custom-controls `z2ui5_cl_cci_rich_text_editor` | renamed `z2ui5_cl_cci_rich_text` (room for a namespace rename) | change the apps that call it, delete the old class after the pull |
+| custom-controls `z2ui5_cl_cci_barcode_scanner` | renamed `z2ui5_cl_cci_barcode_scan` (room for a namespace rename) | change the apps that call it, delete the old class after the pull |
+| custom-controls `z2ui5_cl_cci_network_status` | renamed `z2ui5_cl_cci_net_status` (room for a namespace rename) | change the apps that call it, delete the old class after the pull |
+| custom-controls `z2ui5_cl_cci_signature_pad` | renamed `z2ui5_cl_cci_signature` (room for a namespace rename) | change the apps that call it, delete the old class after the pull |
 | cloud HTTP service and app | abap2UI5, branch `cloud` | pull the branch `cloud` |
 | abap2UI5/frontend | retired | remove it from abapGit without deleting its objects |
 | old view builder, built-in popups, old types interface | abap2UI5-ext | install it next to abap2UI5 |
