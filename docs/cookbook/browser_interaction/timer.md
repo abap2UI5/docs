@@ -3,27 +3,20 @@ outline: [2, 4]
 samples:
   - z2ui5_cl_smp_app_064
   - z2ui5_cl_smp_app_028
-description: Raise a backend event after a delay with the start_timer frontend action - one pending timer per app, re-armed for a poll, with an optional flag that keeps the busy indicator down.
+description: Raise a backend event on a timer - timer_set( ) declares a repeating timer the framework keeps running while the app has the screen; the start_timer frontend action fires once or repeats, with an optional flag that keeps the busy indicator down.
 ---
 # Timer
 
-Fire a backend event after a delay with the `start_timer` frontend action. Handy for dashboards, status monitors, or any case that needs a delayed or periodic update without user interaction.
+Raise a backend event after a delay, or every few seconds, without user interaction. Handy for dashboards, status monitors, or any case that needs a delayed or periodic update. There are two ways:
 
-Pass the event name to fire and the delay in milliseconds:
+- `client->timer_set( )` **declares** a repeating timer for the app. The framework keeps it running for as long as the app has the screen.
+- The `start_timer` frontend action fires **once** after a delay, or repeats when asked to.
 
-```abap
-client->follow_up_action(
-    val   = client->cs_event-start_timer
-    t_arg = VALUE #( ( `REFRESH` ) ( `2000` ) ) ).
-```
-
-After 2 seconds the browser triggers a backend roundtrip with the event name `REFRESH`, which you handle via `check_on_event` like any other event.
-
-An optional third argument keeps the busy indicator down for the tick — see [Without the Busy Indicator](#without-the-busy-indicator).
+Each tick is an event like any other, handled with `check_on_event( )`.
 
 ## Periodic Refresh
 
-To get a repeating timer, simply re-arm it at the end of each handler:
+Declare the timer once, with the event of every tick and the delay in milliseconds:
 
 ```abap
 CLASS zcl_sample_timer DEFINITION PUBLIC.
@@ -36,7 +29,6 @@ CLASS zcl_sample_timer DEFINITION PUBLIC.
     DATA client TYPE REF TO z2ui5_if_client.
 
     METHODS view_display.
-    METHODS timer_start.
 
   PRIVATE SECTION.
 ENDCLASS.
@@ -47,12 +39,11 @@ CLASS zcl_sample_timer IMPLEMENTATION.
     me->client = client.
     IF client->check_on_init( ).
       view_display( ).
-      timer_start( ).           " once - a return must not start a second one
+      client->timer_set( event = `TICK` delay_ms = 2000 ).
     ELSEIF client->check_on_navigated( ).
       view_display( ).
     ELSEIF client->check_on_event( `TICK` ).
       counter = counter + 1.
-      timer_start( ).           " re-arm: the timer fires once
     ENDIF.
 
   ENDMETHOD.
@@ -73,21 +64,20 @@ CLASS zcl_sample_timer IMPLEMENTATION.
     client->view_display( view->stringify( ) ).
 
   ENDMETHOD.
-
-  METHOD timer_start.
-
-    client->follow_up_action( val   = client->cs_event-start_timer
-                              t_arg = VALUE #( ( `TICK` ) ( `2000` ) ) ).
-
-  ENDMETHOD.
 ENDCLASS.
 ```
 
-The counter increments every 2 seconds. To stop the loop, simply don't re-arm the timer in the handler.
+The counter increments every 2 seconds. The declaration is stored with the app, in its draft, and the framework arms it whenever the app gets the screen: on its first display, when an app it called - a popup app included - leaves again, and on a browser Back/Forward restore or an app-state link. It stops when the app is left with `nav_app_call( )` or `nav_app_leave( )` and runs again when the app comes back, so the `check_on_navigated( )` branch has nothing to re-arm.
+
+- **Stop it** with `client->timer_stop( )`. An empty event or a delay of 0 does the same.
+- **Change it** by calling `timer_set( )` with other values; the new timer runs from this response on.
+- **State it on every roundtrip** if that is simpler, for example from the method that renders the view: an unchanged timer that runs is not sent again, and a tick that leaves the app unchanged writes no new draft.
+
+A user event between two ticks pauses the timer: the next tick comes the full delay after that event's response. A click that meets a tick in flight is not lost; it is sent once the tick's response is applied.
 
 ## One-Shot Timer
 
-A single `start_timer` call fires once — perfect for a deferred action like opening a new tab after a short delay:
+The `start_timer` frontend action fires once - perfect for a deferred action like opening a new tab after a short delay. Pass the event name and the delay in milliseconds:
 
 ```abap
 ELSEIF client->check_on_event( `BUTTON_OPEN_NEW_TAB` ).
@@ -99,28 +89,41 @@ ELSEIF client->check_on_event( `FIRE_OPEN_TAB` ).
                   t_arg = VALUE #( ( `/sap/bc/z2ui5?app_start=z2ui5_cl_my_report` ) ) ).
 ```
 
-## Replacing a Pending Timer
-
-There is one timer at a time. Calling `start_timer` again before the previous one fires replaces it — useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke.
-
-Every roundtrip cancels the pending timer. That is why a poll starts the timer again in every response that keeps it going. It is also why no timer survives an app switch: the `nav_app_call( )` or `nav_app_leave( )` that changes the app is a roundtrip, and the pending timer is gone before the next app's `main( )` runs.
+There is one timer per app. Calling `start_timer` again before the previous one fires replaces it - useful for a debounce, e.g. auto-saving an input field 500 ms after the last keystroke. A `start_timer` also takes the timer over from a `timer_set( )` declaration and drops the declaration; call `timer_set( )` again to hand it back.
 
 A tick can come due while another roundtrip is still running, for example a popup's own event or a Back/Forward restore. Such a tick is not dropped and does not abort that request. It waits for the response and fires right after it.
 
-## Without the Busy Indicator
+## Repeating Without a Declaration
 
-Each tick is a backend roundtrip like any other, so when the backend takes longer than a second, the full-screen busy indicator comes up. For a tick nobody is waiting on — a background poll, or a carousel or ticker that moves on by itself — the overlay then flashes over a screen the user is only reading. Pass `` `X` `` as a third argument to keep it down for that tick:
+A fourth argument `` `X` `` - the arguments are event, delay, the no-busy flag and the repeat flag - makes `start_timer` repeat: the browser arms the same tick again after every response, and a user event in between pauses it. It keeps running under a popup of the same app and ends with `cs_event-stop_timer`, a new `start_timer`, a navigation to another app or a Back/Forward restore:
 
 ```abap
-ELSEIF client->check_on_event( `TICK` ).
-  " read the new status ...
-  client->follow_up_action( val   = client->cs_event-start_timer
-                            t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `X` ) ) ).
+client->follow_up_action( val   = client->cs_event-start_timer
+                          t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `` ) ( `X` ) ) ).
 ```
 
-The flag belongs to the tick that call arms, so a repeating timer passes it again every time it re-arms. Write it as the string `` `X` ``, not `abap_true`: `t_arg` is a string table, and abaplint's syntax check rejects a `c` value such as `abap_true` as one of its rows.
+`cs_event-stop_timer` cancels the pending tick and ends a repeating timer. Wired to a button, it stops the timer in the browser without a roundtrip. Prefer `timer_set( )` for a poll: it also comes back after a navigation.
 
-Only the overlay goes — the flag does for the tick what [`check_no_busy`](/resources/api#event) does for an `_event( )`. The tick is still the one roundtrip in flight: a click that lands while it runs is dropped, as during any roundtrip, and brings the overlay up at once. Leave the flag off for a tick the user is actually waiting for; there the overlay is what tells them the app is working.
+## Without the Busy Indicator
+
+Each tick is a backend roundtrip like any other, so when the backend takes longer than a second, the full-screen busy indicator comes up. For a tick nobody is waiting on - a background poll, or a carousel or ticker that moves on by itself - the overlay then flashes over a screen the user is only reading. Keep it down with `no_busy`:
+
+```abap
+client->timer_set( event    = `TICK`
+                   delay_ms = 5000
+                   no_busy  = abap_true ).
+```
+
+With `start_timer` it is the third argument, `` `X` ``:
+
+```abap
+client->follow_up_action( val   = client->cs_event-start_timer
+                          t_arg = VALUE #( ( `TICK` ) ( `5000` ) ( `X` ) ) ).
+```
+
+Write it as the string `` `X` ``, not `abap_true`: `t_arg` is a string table, and abaplint's syntax check rejects a `c` value such as `abap_true` as one of its rows.
+
+Only the overlay goes - the flag does for the tick what [`check_no_busy`](/resources/api#event) does for an `_event( )`. Leave it off for a tick the user is actually waiting for; there the overlay is what tells them the app is working.
 
 ::: warning
 Each timer tick causes a full backend roundtrip. Use sensible intervals (e.g. 2000 ms or more) to avoid heavy server load.

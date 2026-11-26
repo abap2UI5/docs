@@ -77,7 +77,7 @@ tell you what is coming if you do not.
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
 | `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
-| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, the built-in popups `z2ui5_cl_pop_*` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, *next release* |
+| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, the built-in popups `z2ui5_cl_pop_*` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.151.0 |
 | the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, 1.151.0 |
@@ -90,48 +90,6 @@ tell you what is coming if you do not.
 | the UI5 options of `message_toast_display( )` / `message_box_display( )` | set them on the control, through `cs_event-control_global` | **removed**, 1.144.1 |
 
 ## Obsolete: still compiles
-
-### The model-update methods do nothing
-
-`view_model_update( )`, `nest_view_model_update( )`,
-`nest2_view_model_update( )`, `popup_model_update( )` and
-`popover_model_update( )` are **empty methods**. 1.151.0 removes
-them - a call no longer compiles then.
-
-The model is pushed automatically now. The framework takes the model state
-before `main( )`, after the incoming client deltas were applied, and compares it
-with the state after `main( )` returned. When they differ, it sends the model to
-every open view slot. A handler can no longer render stale by forgetting a call,
-and an unchanged model sends nothing at all.
-
-```abap
-" old
-METHOD z2ui5_if_app~main.
-  CASE client->get( )-event.
-    WHEN `BUTTON_POST`.
-      ms_data-status = `posted`.
-      client->view_model_update( ).      " <-- delete this
-  ENDCASE.
-ENDMETHOD.
-
-" new
-METHOD z2ui5_if_app~main.
-  CASE client->get( )-event.
-    WHEN `BUTTON_POST`.
-      ms_data-status = `posted`.
-  ENDCASE.
-ENDMETHOD.
-```
-
-Delete the calls — they read as "the model is pushed here" where nothing
-happens. `npx @abap2ui5/linter src --fix` removes them for you.
-
-::: warning One case genuinely changed
-What is gone with these methods is the ability to force an **unchanged** model
-back onto the client. That had one legitimate use: resetting a control that
-wrote a bound property on its own without sending it back. Rebuild the view with
-`view_display( )` for that.
-:::
 
 ### `_event_client( )` → `follow_up_action( )`
 
@@ -150,29 +108,6 @@ roundtrip-free wire, byte for byte.
 
 Arguments stay untouched, so this is a pure rename — which is why
 `--fix` does it.
-
-### `_bind_edit( )` → `_bind( )`
-
-Earlier releases split binding into a display-only `_bind` and a writable
-`_bind_edit`. That split is gone: there is only **one** binding left, and
-`_bind_edit` is an alias of `_bind` with identical behavior. 1.151.0
-removes it - a call no longer compiles then.
-
-```abap
-" old
-value = client->_bind_edit( ms_data-name )
-
-" new
-value = client->_bind( ms_data-name )
-```
-
-`custom_mapper_back` / `custom_filter_back` are still accepted so the source
-keeps compiling, but they are **no longer evaluated** — a call that passes one
-is doing nothing with it. Drop the arguments together with the rename; that is
-the one `_bind_edit` case `--fix` reports instead of rewriting, because removing
-an argument is not a rename.
-
-See [Data Binding](/cookbook/model/binding) for the full picture.
 
 ### `custom_mapper` / `custom_filter` on `_bind( )`
 
@@ -310,10 +245,12 @@ give an element its attributes before its first child.
 ::: tip Released in 1.143.0 — and nothing you have has to be rewritten
 `z2ui5_cl_ui5_view_builder` ships in 1.143.0, and this documentation is written
 against it throughout. `z2ui5_cl_xml_view` and `z2ui5_cl_xml_view_cc` are
-**frozen, not removed**: they ship unchanged and keep working, so a view that
-works today never has to be touched. Frozen means no new controls and no new
-properties — write the current builder for anything new, and migrate an old
-view when you are editing it anyway rather than for its own sake.
+**frozen, not removed**: since 1.151.0 they ship, unchanged, from
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) instead of the
+framework. With that repository installed next to abap2UI5 they keep working, so
+a view that works today never has to be touched. Frozen means no new controls
+and no new properties — write the current builder for anything new, and migrate
+an old view when you are editing it anyway rather than for its own sake.
 
 On 1.142.0 or older the typed builder is what you have; the chain above needs
 1.143.0.
@@ -327,8 +264,9 @@ the one to use.
 ### Built-in popups → popups add-on
 
 The built-in popup apps (`z2ui5_cl_pop_table`, `z2ui5_cl_pop_to_confirm`,
-`z2ui5_cl_pop_messages`, `z2ui5_cl_pop_get_range`, …) moved into the frozen
-package. Their successor is the separate
+`z2ui5_cl_pop_messages`, `z2ui5_cl_pop_get_range`, …) are frozen and ship,
+since 1.151.0, from [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext)
+instead of the framework. Their successor is the separate
 [popups add-on](https://github.com/abap2UI5-addons/popups), which is versioned on
 its own instead of riding along with the framework.
 
@@ -341,8 +279,8 @@ z2ui5_cl_popup_to_confirm=>factory( `Delete this entry?` )
 ```
 
 The name gains the two letters `up`: the add-on ships under `z2ui5_cl_popup_*`,
-the frozen built-ins are `z2ui5_cl_pop_*`. The shipped classes are unchanged, so
-existing calls keep compiling. See [Add-ons](/resources/addons).
+the frozen built-ins are `z2ui5_cl_pop_*`. The classes in abap2UI5-ext are
+unchanged, so existing calls keep compiling with that repository installed. See [Add-ons](/resources/addons).
 
 ### Utility classes
 
@@ -362,7 +300,7 @@ it, code naming one of these classes no longer activates after the upgrade.
 The add-on [layout-management](https://github.com/abap2UI5-addons/layout-management)
 needs it; every other add-on carries its own copy of what it uses.
 
-1.151.0 moves the rest of the frozen package the same way:
+1.151.0 moved the rest of the frozen package the same way:
 `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types` and the
 `z2ui5_cl_pop_*` popups ship from abap2UI5-ext as well, same names. From
 2026-11-17 to 2026-11-25 all of these objects were in abap2UI5/frontend
@@ -466,6 +404,113 @@ any app can speak. Inside a Fiori Launchpad shell the title is
 `cs_event-set_title_launchpad`, unchanged. See
 [Title](/cookbook/browser_interaction/title).
 
+### `z2ui5_if_types` → the object that uses the type
+
+`z2ui5_if_types` was a shared interface holding the types the API passes
+around. Each of them now sits on the object whose signature is the reason it
+exists, so the type you need is declared where you already are:
+
+| What you have | What to write |
+|---|---|
+| `z2ui5_if_types=>ty_s_get` | `z2ui5_if_client=>ty_s_get` — the return type of `get( )` |
+| `z2ui5_if_types=>ty_s_event_control` | `z2ui5_if_client=>ty_s_event_control` — the `s_ctrl` of `_event( )` |
+| `z2ui5_if_types=>ty_s_name_value` / `ty_t_name_value` | `z2ui5_if_client=>ty_s_name_value` / `ty_t_name_value` |
+| `z2ui5_if_types=>cs_device` | `z2ui5_if_client=>cs_device` |
+| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_ui5_exit`, whose two methods take them |
+| `z2ui5_if_types=>ty_s_draft` | `z2ui5_cl_ui5_srv_draft=>ty_s_draft` |
+| `z2ui5_if_types=>ty_s_config` | written out inside `z2ui5_if_client=>ty_s_get-s_config` |
+
+```abap
+" old
+DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
+
+" new
+DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
+```
+
+Nothing was deleted. `z2ui5_if_types` still ships, unchanged, from
+[abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext), so a declaration that
+names it still compiles with that repository installed. Four
+of the types have changed since they moved, though, and the frozen copies did
+not follow: `ty_s_get` carries `t_model_skipped` now, `ty_s_event_control`
+lost `check_allow_multi_req` and gained four flags, `ty_s_http_config` lost
+`title` and `custom_js`, and `ty_s_http_config_post` gained
+`check_trust_forwarded_host`. A variable of an old type therefore no longer
+fits the signature it was declared for — `ls_get = client->get( )` and
+`_event( s_ctrl = ls_ctrl )` are both a syntax error — and has to be declared
+with the new name. The other types are identical field for field; change those
+when you next touch the class.
+
+## Removed: does not compile any more
+
+Every name below is **gone from the framework**, not merely marked. A call
+that still writes one fails at activation, so these are the entries to work
+through before you pull a release that carries them — the table above says
+which one that is.
+
+### The model-update methods do nothing
+
+`view_model_update( )`, `nest_view_model_update( )`,
+`nest2_view_model_update( )`, `popup_model_update( )` and
+`popover_model_update( )` were **empty methods**. 1.151.0 removed
+them - a call no longer compiles.
+
+The model is pushed automatically now. The framework takes the model state
+before `main( )`, after the incoming client deltas were applied, and compares it
+with the state after `main( )` returned. When they differ, it sends the model to
+every open view slot. A handler can no longer render stale by forgetting a call,
+and an unchanged model sends nothing at all.
+
+```abap
+" old
+METHOD z2ui5_if_app~main.
+  CASE client->get( )-event.
+    WHEN `BUTTON_POST`.
+      ms_data-status = `posted`.
+      client->view_model_update( ).      " <-- delete this
+  ENDCASE.
+ENDMETHOD.
+
+" new
+METHOD z2ui5_if_app~main.
+  CASE client->get( )-event.
+    WHEN `BUTTON_POST`.
+      ms_data-status = `posted`.
+  ENDCASE.
+ENDMETHOD.
+```
+
+Delete the calls. `npx @abap2ui5/linter src --fix` removes them for you.
+
+::: warning One case genuinely changed
+What is gone with these methods is the ability to force an **unchanged** model
+back onto the client. That had one legitimate use: resetting a control that
+wrote a bound property on its own without sending it back. Rebuild the view with
+`view_display( )` for that.
+:::
+
+### `_bind_edit( )` → `_bind( )`
+
+Earlier releases split binding into a display-only `_bind` and a writable
+`_bind_edit`. That split is gone: there is only **one** binding left, and
+`_bind_edit` was an alias of `_bind` with identical behavior. 1.151.0
+removed it - a call no longer compiles.
+
+```abap
+" old
+value = client->_bind_edit( ms_data-name )
+
+" new
+value = client->_bind( ms_data-name )
+```
+
+`custom_mapper_back` / `custom_filter_back` went with it: they had not been
+evaluated for several releases. Drop the arguments together with the rename;
+that is the one `_bind_edit` case `--fix` reports instead of rewriting, because
+removing an argument is not a rename.
+
+See [Data Binding](/cookbook/model/binding) for the full picture.
+
 ### `z2ui5_if_exit` → `z2ui5_if_ui5_exit`
 
 The user-exit interface follows the framework's naming: everything that is the
@@ -494,49 +539,6 @@ upgrade: replace the interface and rename the two methods to
 `z2ui5_if_ui5_exit~set_config_http_get` and `~set_config_http_post` -
 parameters and types are the same. The new name shipped with 1.144.0, and
 every exit example on this site is written against it.
-
-### `z2ui5_if_types` → the object that uses the type
-
-`z2ui5_if_types` was a shared interface holding the types the API passes
-around. Each of them now sits on the object whose signature is the reason it
-exists, so the type you need is declared where you already are:
-
-| What you have | What to write |
-|---|---|
-| `z2ui5_if_types=>ty_s_get` | `z2ui5_if_client=>ty_s_get` — the return type of `get( )` |
-| `z2ui5_if_types=>ty_s_event_control` | `z2ui5_if_client=>ty_s_event_control` — the `s_ctrl` of `_event( )` |
-| `z2ui5_if_types=>ty_s_name_value` / `ty_t_name_value` | `z2ui5_if_client=>ty_s_name_value` / `ty_t_name_value` |
-| `z2ui5_if_types=>cs_device` | `z2ui5_if_client=>cs_device` |
-| `z2ui5_if_types=>ty_s_http_context` / `ty_s_http_config` / `ty_s_http_config_post` | the same names on `z2ui5_if_ui5_exit`, whose two methods take them |
-| `z2ui5_if_types=>ty_s_draft` | `z2ui5_cl_ui5_srv_draft=>ty_s_draft` |
-| `z2ui5_if_types=>ty_s_config` | written out inside `z2ui5_if_client=>ty_s_get-s_config` |
-
-```abap
-" old
-DATA ls_get TYPE z2ui5_if_types=>ty_s_get.
-
-" new
-DATA ls_get TYPE z2ui5_if_client=>ty_s_get.
-```
-
-Nothing was deleted. `z2ui5_if_types` still ships, unchanged, from the
-framework's frozen package, so a declaration that names it still compiles. Four
-of the types have changed since they moved, though, and the frozen copies did
-not follow: `ty_s_get` carries `t_model_skipped` now, `ty_s_event_control`
-lost `check_allow_multi_req` and gained four flags, `ty_s_http_config` lost
-`title` and `custom_js`, and `ty_s_http_config_post` gained
-`check_trust_forwarded_host`. A variable of an old type therefore no longer
-fits the signature it was declared for — `ls_get = client->get( )` and
-`_event( s_ctrl = ls_ctrl )` are both a syntax error — and has to be declared
-with the new name. The other types are identical field for field; change those
-when you next touch the class.
-
-## Removed: does not compile any more
-
-Every name below is **gone from the framework**, not merely marked. A call
-that still writes one fails at activation, so these are the entries to work
-through before you pull a release that carries them — the table above says
-which one that is.
 
 ### The `view` parameter of `_bind( )` / `_bind_edit( )`
 

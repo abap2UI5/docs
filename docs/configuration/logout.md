@@ -26,7 +26,7 @@ abap2UI5 can be launched in three ways. Each one creates a different combination
 | Context | Typical URL | Fiori Launchpad shell? |
 |---|---|---|
 | Fiori Launchpad tile | `…/sap/bc/ui2/flp#Z2UI5-display` | yes |
-| ICF HTTP handler (e.g. `Z2UI5_CL_UI5_HTTP_HANDLER`) | `…/sap/bc/<your-service>` | no |
+| ICF HTTP handler (`Z2UI5_CL_UI5_ICF_HANDLER`, or a class of yours) | `…/sap/bc/z2ui5` or `…/sap/bc/<your-service>` | no |
 | BSP application (`Z2UI5` — part of the abap2UI5 package `src/03`, the app the launchpad starts) | `…/sap/bc/bsp/sap/z2ui5/index.html` | no |
 
 ### Session Layers

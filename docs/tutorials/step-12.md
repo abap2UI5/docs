@@ -371,12 +371,33 @@ view from the builder chain and validates it against UI5. The
 
 The tests above stop at the class on purpose: they call the data methods and
 never go through `main( )`. A test can also cover the whole user session: the
-typed value, the event, the framework's dispatch, the draft. For that,
-[abap2UI5/headless-frontend](https://github.com/abap2UI5/headless-frontend)
-plays the browser's part of the protocol inside ABAP. A test then clicks and
-types against the running framework without a browser or HTTP. It is a
-repository of its own, not yet released, and its API follows the framework's
-engine rather than its released interface.
+typed value, the event, the framework's dispatch, the draft. The framework
+brings a harness for that, `z2ui5_cl_ui5_test`. It drives the app through the
+real framework, one roundtrip per call, without a browser, HTTP or a test
+double of the client:
+
+```abap
+  METHOD search_by_supplier.
+
+    DATA(test) = z2ui5_cl_ui5_test=>start( NEW zcl_app_walkthrough( ) ).
+    test->set_model( path = `/S_SEARCH/SUPPLIER` val = `Green Growers` ).
+    test->event( `READ` ).
+
+    DATA(cut) = CAST zcl_app_walkthrough( test->app( ) ).
+    cl_abap_unit_assert=>assert_equals(
+        act = lines( cut->t_invoices )
+        exp = 2 ).
+
+  ENDMETHOD.
+```
+
+`start( )` is the first roundtrip, `set_model( )` is what the user types into
+the bound control, written as the binding path, and `event( )` is a press of a
+control wired with `_event( )`. Every roundtrip saves the app as a draft and
+the next one restores it from there, so `app( )` answers the instance of the
+last roundtrip - read it again after every step. `view_xml( )`,
+`popup_xml( )`, `model( )` and `messages( )` read what the browser would show.
+The drafts stay in memory; nothing reaches the draft table.
 
 ## What to Take Away
 

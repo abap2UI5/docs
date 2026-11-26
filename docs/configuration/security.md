@@ -13,9 +13,10 @@ names the check or test behind each guarantee, and
 the disclosure process.
 
 ## HTTP Endpoint
-The abap2UI5 framework runs as an HTTP handler. You build the HTTP handler and
-call the abap2UI5 API inside it. Users access abap2UI5 by calling the endpoint
-externally, with security managed like any other UI5 app.
+The abap2UI5 framework runs as an HTTP handler: the node `/sap/bc/z2ui5` it
+brings, with its handler class `z2ui5_cl_ui5_icf_handler`, or a node of your own
+whose handler class calls the abap2UI5 API. Users access abap2UI5 by calling the
+endpoint externally, with security managed like any other UI5 app.
 
 ## Authentication
 The ICF (Internet Communication Framework) node level handles authentication.

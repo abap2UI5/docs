@@ -15,9 +15,9 @@ steps:
 
 ## 1. Install abap2UI5 with abapGit
 
-S/4 Public Cloud supports only the ADT abapGit version. abap2UI5 contains only classes, interfaces, and tables, so you can pull it without issues.
+S/4 Public Cloud supports only the ADT abapGit version. The branch `cloud` of abap2UI5 contains only what ABAP Cloud can import - classes, interfaces, tables, the HTTP service and the IAM objects - so you can pull it without issues.
 
-Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the newest tag without a suffix, `X.Y.Z` - the [Quickstart](/get_started/quickstart#_1-install-the-framework-via-abapgit) table says which tag belongs to which system. Or pull the branch `cloud` of abap2UI5 instead: the same framework plus the HTTP service of step 3, generated from `main` on every push (it has no release tags of its own).
+Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the branch `cloud`: the framework of `main` plus the HTTP service of step 3, generated from `main` on every push (it has no release tags of its own). A release tag `X.Y.Z` is not for these systems: it carries the ICF node, a handler on `if_http_extension` and a BSP, none of which exists on ABAP Cloud.
 
 ::: warning **Two choices you cannot change later without relinking**
 **Folder logic must be `PREFIX`.** It is what `.abapgit.xml` declares, and the repository's package tree is built for it.
@@ -69,7 +69,7 @@ Now you'll see that all artifacts are active:
 
 ## 3. Set Up the HTTP Service
 
-Build an HTTP handler manually ([ABAP Cloud](/configuration/abap_cloud#the-handler)), or use the one the branch `cloud` of [abap2UI5](https://github.com/abap2UI5/abap2UI5/tree/cloud) brings: the HTTP service `Z2UI5` (`/sap/bc/http/sap/z2ui5`), its handler `Z2UI5_CL_UI5_ICF_HANDLER` and the IAM objects around it, an IAM app and a business catalog.
+The branch `cloud` of [abap2UI5](https://github.com/abap2UI5/abap2UI5/tree/cloud) brings the HTTP service `Z2UI5` (`/sap/bc/http/sap/z2ui5`), its handler `Z2UI5_CL_UI5_ICF_HANDLER` and the IAM objects around it, an IAM app and a business catalog: open the service URL and the start page of abap2UI5 appears. A service of your own takes a handler class of your own ([ABAP Cloud](/configuration/abap_cloud#the-handler)).
 
 **Important:** In S/4 Public Cloud, accessing the HTTP endpoint needs `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes the scenario unfit for production.
 

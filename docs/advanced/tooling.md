@@ -243,7 +243,12 @@ covered.
 
 **Use it** for the tests between the unit test of a method and a browser driven
 by Playwright. It covers the whole roundtrip without the browser, and your own
-bugs are not in the browser. Install it with abapGit next to the framework;
+bugs are not in the browser. Install it with abapGit next to the framework.
+
+The framework itself brings a harness of the same kind, `z2ui5_cl_ui5_test`:
+`start( )`, `set_model( )`, `event( )`, `timer( )` and `leave( )` drive the
+app through the real framework, `view_xml( )`, `model( )` and `messages( )`
+read what the browser would show, and nothing else has to be installed.
 [Step 12](/tutorials/step-12#testing-the-roundtrip) of the walkthrough shows it
 in a project.
 

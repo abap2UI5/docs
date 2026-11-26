@@ -82,7 +82,7 @@ arguments, straight from the interface on `main`. They fall into families:
 | control calls | `control_by_id`, `control_global`, `binding_call`, `bind_element` |
 | launchpad | `cross_app_nav_to_ext`, `cross_app_nav_to_prev_app`, `cross_app_nav_get_links`, `set_title_launchpad`, `set_app_full_width` |
 | URL | the `hash_*` and `app_state_*` family |
-| other | `start_timer`, `keyboard_shortcut`, `store_data`, `play_audio`, `urlhelper`, the smart-control handshakes |
+| other | `start_timer`, `stop_timer`, `keyboard_shortcut`, `store_data`, `play_audio`, `urlhelper`, the smart-control handshakes |
 
 One of them takes an argument that is easy to miss.
 
@@ -90,7 +90,10 @@ One of them takes an argument that is easy to miss.
 name, milliseconds). An optional **third** argument `X` keeps the global busy
 indicator off for that tick. It is the `check_no_busy` of `_event( )` for a
 timer: a poll whose backend call takes longer than a second no longer flashes
-the overlay.
+the overlay. A **fourth** argument `X` makes the timer repeat until
+`stop_timer` ends it. For a poll, `client->timer_set( )` is the simpler
+choice: the framework keeps that timer running while the app has the screen -
+[Timer](/cookbook/browser_interaction/timer).
 
 Some of these actions have their own pages:
 

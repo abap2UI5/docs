@@ -21,9 +21,9 @@ One node, one handler class, one framework call:
 
 | | |
 |---|---|
-| Path | whatever you created in `SICF` - the Quickstart's example is `/sap/bc/<your_service>` |
-| Handler | your class implementing `if_http_extension`, whose `handle_request` calls `z2ui5_cl_ui5_http_handler=>run( server )`; on ABAP Cloud `if_http_service_extension` and `run( req = request res = response )` |
-| Verbs | `GET` answers the page (the whole embedded frontend, checked against its `ETag` and answered with `304` when unchanged); `POST` is a roundtrip; `HEAD` is sent by the frontend only - the session-terminate ping and the CSRF token fetch |
+| Path | `/sap/bc/z2ui5`, the node the framework brings, or one you created in `SICF` - [Quickstart](/get_started/quickstart#_2-activate-the-http-service) |
+| Handler | `z2ui5_cl_ui5_icf_handler` on the framework's node, or your class implementing `if_http_extension`, whose `handle_request` calls `z2ui5_cl_ui5_http_handler=>run( server )`; on ABAP Cloud `if_http_service_extension` and `run( req = request res = response )` |
+| Verbs | `GET` answers the page - a minimal UI5 app around the embed control, checked against its `ETag` and answered with `304` when unchanged - and, with `?z2ui5-bundle`, the frontend bundle the page loads (asked for by its version and cached by the browser); `POST` is a roundtrip; `HEAD` is sent by the frontend only - the session-terminate ping and the CSRF token fetch |
 | Logon | the node's logon procedure is standard ICF: whatever the *Logon Data* tab says applies, SSO included. A request that reaches the handler has passed SAP logon, and `sy-uname` is the user |
 | Authorization | the node's authorization field is checked against `S_ICF`; a check of your own goes into the handler before the framework call - [Authorization](/configuration/authorization) |
 | Error pages | `/sap/public/bc/icf/logoff`, where the logout event sends the browser, is the system's; its target is configured under *Error Pages → Logoff Page* of that node - [Logout](/configuration/logout#sicf-configuration) |
@@ -35,8 +35,8 @@ missing answers a 500 from ICF, not the framework's error page.
 ## ICM, HTTP
 
 - **Compression.** Since 1.143.0 the handler asks the ICF runtime to gzip
-  every response the client accepts compressed: the page (several hundred
-  KB of embedded frontend) and the roundtrip JSON. On an ICM profile that
+  every response the client accepts compressed: the page, the frontend bundle
+  (about 250 KB) and the roundtrip JSON. On an ICM profile that
   compresses already this is a no-op; where it does not, it is a 70 to 85
   percent transfer cut. On ABAP Cloud the platform router compresses and the
   call is not made.
@@ -146,7 +146,7 @@ tab.
 
 The framework's own CI lints the package with abaplint under three rule sets
 - Standard ABAP, ABAP Cloud (released APIs only, no classic statements) and
-  7.02 - over `src/01`, `src/02` and `src/99`; `src/00`, the external libraries,
+  7.02 - over `src/01` to `src/03`; `src/00`, the external libraries,
   is excluded from the rules. An ATC or Code Inspector run of your own over the
   package will report findings against your variant that the project's rules do
   not share. Most are naming conventions. Others are unavoidable for a framework

@@ -63,17 +63,18 @@ The steps, in order - each one is shown with screenshots on
 [S/4 Public Cloud](/configuration/s4_public_cloud), which covers the BTP ABAP
 Environment as well:
 
-1. **Pull with abapGit for Eclipse.** Pull the newest release tag without a
-   suffix, `X.Y.Z`, into a package of your own. Folder logic `PREFIX`, and a
+1. **Pull with abapGit for Eclipse.** Pull the branch `cloud` of abap2UI5
+   into a package of your own - not a release tag, whose `src/03` is the
+   Standard ABAP service. Folder logic `PREFIX`, and a
    short package name: the sub-packages are derived from it, and a package
    name has 30 characters at most
    ([S/4 Public Cloud](/configuration/s4_public_cloud#_1-install-abap2ui5-with-abapgit)).
 2. **Mass-activate.** ADT abapGit pulls every object inactive. Activate them
    all, and repeat until nothing is left inactive.
-3. **Create the handler class and the HTTP service** in ADT
-   ([below](#the-handler)) - or pull the branch `cloud` of abap2UI5 in step
-   1, which brings both. Open the service URL: the start page of abap2UI5
-   appears, with *ABAP for Cloud* ticked.
+3. **Open the HTTP service** `Z2UI5` the branch brings
+   (`/sap/bc/http/sap/z2ui5`): the start page of abap2UI5 appears, with
+   *ABAP for Cloud* ticked. A service of your own takes a handler class of
+   your own ([below](#the-handler)).
 4. **For business users:** deploy the app and put a tile in front
    of it ([Launchpad and Work Zone](#launchpad-and-work-zone)).
 
@@ -82,8 +83,11 @@ What travels to the next system, and in which order, is on
 
 ## The Handler
 
-The handler implements `if_http_service_extension` and hands the request and
-the response to the framework:
+The branch `cloud` brings one, `z2ui5_cl_ui5_icf_handler`, behind its HTTP
+service `Z2UI5`. A service of your own - another path, another
+authorization - takes a handler class of your own. It implements
+`if_http_service_extension` and hands the request and the response to the
+framework:
 
 ```abap
 CLASS zcl_my_abap2UI5_http_handler DEFINITION PUBLIC.
@@ -202,7 +206,7 @@ the HTTP service and a connector app forwards to it
   ([Monitoring](/configuration/monitoring#housekeeping-as-a-job)).
 - **Compression.** On ABAP Cloud the platform compresses the responses
   ([Basis Runbook](/configuration/runbook#icm-http)).
-- **Upgrades.** Pull the next tag with abapGit for Eclipse and activate what
-  arrives inactive; the deployed app loads the frontend from the HTTP service
-  and needs no new deployment
+- **Upgrades.** Pull the branch `cloud` again with abapGit for Eclipse and
+  activate what arrives inactive; the deployed app loads the frontend from the
+  HTTP service and needs no new deployment
   ([Versioning, Upgrade](/configuration/versioning#how-to-upgrade)).

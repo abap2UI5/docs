@@ -25,10 +25,10 @@ Four things the three steps below assume:
   abap2UI5 in. New to it? Follow the
   [abapGit installation guide](https://docs.abapgit.org/user-guide/getting-started/install.html);
   the [abapGit](/technical/tools/abapgit) page says what the project uses it for.
-- **Developer authorization**, plus the right to create and activate an ICF
-  node in `SICF` — on many systems a Basis task, so ask early.
-- **A package** for the handler class. A local `$TMP` package is fine for a
-  first look; a transportable one comes with [Go-Live Checklist](/configuration/productive_usage).
+- **Developer authorization**, plus the right to activate an ICF node in
+  `SICF` — on many systems a Basis task, so ask early.
+- **A package** for the pull. A local `$TMP` package is fine for a first look;
+  a transportable one comes with [Go-Live Checklist](/configuration/productive_usage).
 - **The browser reaches the OpenUI5 CDN**, or the system serves UI5 itself —
   see [Bootstrapping](/configuration/setup/ui5_bootstrapping) for the second case.
 
@@ -45,10 +45,11 @@ all.** On an older system, or for anything you will keep, pull a release tag:
 | --- | --- |
 | ABAP 7.50 or newer, on premise or private cloud | The newest release tag, `X.Y.Z` |
 | ABAP 7.02 to 7.4x | The same release with the suffix `-702`, `X.Y.Z-702` |
-| BTP ABAP Environment or S/4 Public Cloud | The newest release tag, `X.Y.Z`, with abapGit for Eclipse |
+| BTP ABAP Environment or S/4 Public Cloud | The branch `cloud`, with abapGit for Eclipse |
 
 `X.Y.Z` is the number of the newest release. It is the version shown in the
-menu at the top of this page.
+menu at the top of this page. The branch `cloud` has no tags of its own: it is
+generated from `main` on every push.
 
 ::: details How to choose a tag, and why
 The newest release is at the top of the
@@ -74,24 +75,42 @@ page of their own: [S/4 Public Cloud](/configuration/s4_public_cloud).
 from an earlier release, so some class names differ from today's.*
 
 ::: details ABAP Cloud
-On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT) and
-mass-activate the pulled objects afterwards. The
+On BTP ABAP Environment and S/4 Public Cloud, use abapGit for Eclipse (ADT),
+pull the branch `cloud` and mass-activate the pulled objects afterwards. The
 [S/4 Public Cloud](/configuration/s4_public_cloud) page shows every step with a
 screenshot, including the two link choices that cannot be changed later.
 
 ![abapGit for Eclipse: the abapGit Repositories view in ADT](/get_started/image-4.webp)
 :::
 
-The framework is everything you need: the HTTP endpoint you create next serves
-the UI5 frontend itself, so there is no separate frontend to deploy. For a
-launchpad or a Fiori Elements host, the frontend can also be deployed as an app
-of its own into the UI5 ABAP repository — see
-[Fiori Launchpad](/configuration/launchpad#installation).
+One pull is a running installation: besides the framework it brings the ICF
+node `/sap/bc/z2ui5` with its handler class `z2ui5_cl_ui5_icf_handler`, and
+the BSP `Z2UI5` for the [Fiori Launchpad](/configuration/launchpad#installation).
+The node serves the UI5 frontend itself, so there is no separate frontend to
+deploy. On ABAP Cloud the branch `cloud` brings the HTTP service `Z2UI5` in
+place of the node.
 
-## 2. Set Up HTTP Handler and Service
-Create a package and define an HTTP handler class. Use the **ABAP** tab for
-Standard ABAP systems (R/3 NetWeaver, S/4 On-Premise / Private Cloud); use the
-**ABAP Cloud** tab only on BTP ABAP Environment or S/4 Public Cloud:
+## 2. Activate the HTTP Service
+
+abapGit creates the node, but a node is active only once it is activated on the
+system:
+
+1. Start transaction `SICF` and press **Execute**.
+2. Open the tree down to `default_host` → `sap` → `bc` → `z2ui5`.
+3. Right-click `z2ui5` and choose **Activate Service**.
+
+The node is no longer grayed out: the service is active. On ABAP Cloud the
+HTTP service of the branch `cloud` is reached as `/sap/bc/http/sap/z2ui5`
+([S/4 Public Cloud](/configuration/s4_public_cloud#_3-set-up-the-http-service)).
+
+### A Node of Your Own
+
+The node `/sap/bc/z2ui5` is all a first look needs. A node of your own - a
+different path, its own logon settings or
+[authorization](/configuration/authorization) - takes a handler class that
+calls the framework. Use the **ABAP** tab for Standard ABAP systems (R/3
+NetWeaver, S/4 On-Premise / Private Cloud); use the **ABAP Cloud** tab only on
+BTP ABAP Environment or S/4 Public Cloud:
 
 ::: code-group
 
@@ -122,17 +141,14 @@ ENDCLASS.
 ```
 :::
 
-Next, create the HTTP service that the browser will call:
+Then create the node the browser will call:
 
-1. Start transaction `SICF` and press **Execute**.
-2. Open the tree down to `default_host` → `sap` → `bc`.
-3. Right-click `bc` and choose **New Sub-Element**. Enter a name, for example
+1. In `SICF`, open the tree down to `default_host` → `sap` → `bc`.
+2. Right-click `bc` and choose **New Sub-Element**. Enter a name, for example
    `zabap2ui5`. The name becomes the last part of the URL.
-4. On the **Handler List** tab, enter your handler class
+3. On the **Handler List** tab, enter your handler class
    `ZCL_MY_ABAP2UI5_HTTP_HANDLER`, then save.
-5. Back in the tree, right-click the new node and choose **Activate Service**.
-
-The node is no longer grayed out: the service is active.
+4. Back in the tree, right-click the new node and choose **Activate Service**.
 
 <img width="743" height="697" alt="SICF service creation dialog in transaction SICF" src="https://github.com/user-attachments/assets/b76d9459-79be-40e1-a00e-b4e8cbbab9d4" /> <br>
 ![HTTP handler class assignment in SICF service configuration](/get_started/image-5.webp)
@@ -144,8 +160,8 @@ For ABAP Cloud environments, follow the [SAP HTTP service tutorial](https://deve
 :::
 
 ::: tip **Security**
-abap2UI5 talks only to the HTTP service you define, giving you full control over
-accessibility, authentication, and other security aspects.
+abap2UI5 talks only to the HTTP service it runs behind, giving you full control
+over accessibility, authentication, and other security aspects.
 :::
 
 ::: tip **ABAP Language Versions**
@@ -155,9 +171,9 @@ Cloud compatibility, whichever handler this system runs.
 :::
 
 ## 3. First Launch
-Open the HTTP endpoint in your browser: in `SICF`, right-click your service
-node and choose **Test Service**. The URL looks like
-`https://<host>:<port>/sap/bc/zabap2ui5`. The browser shows the abap2UI5
+Open the HTTP endpoint in your browser: in `SICF`, right-click the node
+`z2ui5` (or your own) and choose **Test Service**. The URL looks like
+`https://<host>:<port>/sap/bc/z2ui5`. The browser shows the abap2UI5
 startup page. It is also where you will launch your own apps later:
 ![The abap2UI5 startup page: a class name entered under Step 4, the Check button below it, and the link that opens the app under Step 5](/get_started/startup.webp)
 Now check that an app starts:
@@ -168,7 +184,7 @@ Now check that an app starts:
 3. Click the link. A new tab opens with the page **abap2UI5 - Hello World**.
 4. Enter a name and press **Post**. A message box answers `Your name is …`.
 
-That is the whole install verified: abapGit pull, handler, service and app
+That is the whole install verified: abapGit pull, node, handler and app
 class. If you see something else instead:
 
 - **The browser shows an ICF error page or a plain 404** — the request never
