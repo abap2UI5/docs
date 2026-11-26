@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: The Z2UI5_ prefix and the naming scheme of every object abap2UI5 and its add-ons install, and the package layout. How the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own.
+description: The Z2UI5_ prefix and the naming scheme of every object abap2UI5 and its add-ons install, and the package layout. How the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own. The manual way for ABAP Cloud and 7.02, and two installations in one launchpad.
 ---
 # Namespaces, Renaming
 
@@ -135,9 +135,17 @@ ABAP object at all:
 | Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
 
 Renaming the ABAP side does not touch any of these — they stay `z2ui5` in every
-installation, renamed or not. That is deliberate: the frontend namespace lives
-inside one browser page, where only one abap2UI5 installation is ever loaded, so
-there is nothing for it to collide with.
+installation, renamed or not. A renamed BSP keeps the UI5 identity as well: the
+component `z2ui5.Component`, the app id `z2ui5` and the inbound `z2ui5-display`.
+On the standalone URL of the BSP or the ICF node that is safe, because that page
+loads one installation and nothing else.
+
+The Fiori launchpad is different: it is one page for the whole session. When a
+user opens an app of one renamed installation and then an app of another one of
+a different version, the second may run on the frontend modules the first has
+already loaded, and its frontend and backend no longer match. That has not been
+tested yet. Until it is, give each launchpad one abap2UI5 installation, or
+isolate the second one, for example by starting its apps in their own iframe.
 
 ### Your Own Objects
 Nothing about the framework's naming applies to your apps. An app is a class in
@@ -219,11 +227,56 @@ The workflow runs `abaplint --rename` with the checked-in configuration
 renamed `src` tree together with a matching `.abapgit.xml` — **pull it with
 abapGit** into your ABAP system for a parallel installation next to the
 original. The ICF node, its handler and the BSP of `src/03` are renamed with
-the rest, so the branch is a whole installation.
+the rest, so the branch is a whole installation for Standard ABAP from 7.50.
+For ABAP Cloud and for 7.02 see
+[ABAP Cloud and 7.02](#abap-cloud-and-7-02) below.
 
 To upgrade an installation later, sync your fork with upstream and re-run the
 workflow with the same name. The branch is updated to the current state; nothing
 is pushed when there are no content changes. Then pull again with abapGit.
+
+### ABAP Cloud and 7.02
+`build-rename` renames the branch `main`. There is no renamed build of the
+branches `cloud` and `702` yet, so on these platforms you rename by hand.
+
+**ABAP Cloud (branch `cloud`).** The packages `src/00` to `src/02` are the same
+on `cloud` as on `main`, and the rename handles them. The service package
+`src/03` is not: on `cloud` it holds an HTTP service, a communication scenario
+and IAM objects, and the abaplint rename does not cover these types. They are
+created in ADT anyway, so you create them yourself:
+
+1. Run `build-rename` as described above, or `npm run rename` in a checkout of
+   `main` with your prefix in place of the placeholder `znamespace_` in
+   `.github/abaplint/rename.jsonc`. Both run the same abaplint rename.
+2. Take `src/00`, `src/01` and `src/02` of the result, without `src/03`: that is
+   the Standard ABAP service and does not activate on ABAP Cloud. Push them to a
+   branch of your fork and pull that branch with abapGit for Eclipse, as on
+   [ABAP Cloud](/configuration/abap_cloud#installation).
+3. In ADT, create the objects of `src/03` of the branch `cloud` under your name,
+   in a package of your own:
+
+| On the branch `cloud` | Object type | Create as |
+|---|---|---|
+| `z2ui5_cl_ui5_icf_handler` | Class implementing `if_http_service_extension` | `<name>_cl_ui5_icf_handler`, calling `<name>_cl_ui5_http_handler=>run( )` ([The Handler](/configuration/abap_cloud#the-handler)) |
+| `Z2UI5` | HTTP service, with its authorization default values (SUSH) | `<NAME>`, handler `<name>_cl_ui5_icf_handler` |
+| `Z2UI5_HTTP` | Communication scenario (SCO2) with its inbound service `Z2UI5_HTTP_IBS` (SIA6) | `<NAME>_HTTP` |
+| `Z2UI5_IAM_EXT` | IAM app (SIA6) for the HTTP service | `<NAME>_IAM_EXT` |
+| `Z2UI5_BC` | Business catalog (SIA1) | `<NAME>_BC` |
+| `Z2UI5_BC_0001` | Business catalog app assignment (SIA7) of the IAM app | `<NAME>_BC_0001` |
+
+The IAM app on `cloud` also names the deployed launchpad app. If business users
+reach the renamed installation through a tile, deploy the folder `app` under a
+name of your own, with its data source pointing at the renamed HTTP service, and
+read [The Frontend Namespace](#the-frontend-namespace) about two installations
+in one launchpad first.
+
+**7.02 (branch `702`).** There is no renamed 7.02 variant yet. The downport does
+not depend on the prefix, so downport the renamed tree yourself: in a checkout
+of `main`, replace `src/` with the `src/` of your branch `rename_<name>` and run
+`npm run auto_downport`. It runs the downport on `src/` in place with abaplint
+(`npm run downport`) and leaves the BSP out, as the branch `702` does. Push the
+result to a branch of your fork and pull it with abapGit -
+[Downporting](/advanced/downporting).
 
 ### What Renaming Does Not Cover
 abaplint rewrites object names and every reference the compiler can see: a
@@ -236,8 +289,9 @@ it that way. It fails a pull request that adds such a literal, and the
 outside the rename on purpose.
 
 **The frontend namespace.** Module IDs and the `z2ui5.cc` XML namespace
-stay `z2ui5` in a renamed installation — see
-[The Frontend Namespace](#the-frontend-namespace) above.
+stay `z2ui5` in a renamed installation, and so does the UI5 identity of the
+BSP. Two renamed installations in one launchpad session are therefore not
+tested yet — see [The Frontend Namespace](#the-frontend-namespace) above.
 
 **Real SAP namespaces.** The `build-rename` workflow takes a plain name
 (`ZMYUI5`) or a registered SAP namespace with both slashes (`/CA2UI5/`), at
