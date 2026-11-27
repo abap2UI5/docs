@@ -55,41 +55,44 @@ and its release-notes line starts with `BREAKING:` and links that issue. A
 release tag is the way to defer a migration: an installation can stay on the
 previous tag until its code has moved over.
 
-Each entry is in one of three states, and the three tables below are the three
-parts of this page.
-
-**Still in the core** - marked obsolete, compiles on 1.151.0 as it is
-([details](#obsolete-still-compiles)):
-
-| What you have | What to write | Obsolete since |
-|---|---|---|
-| `_event_client( )` | `follow_up_action( )` | 1.143.0 |
-| `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
-
-**Moved to abap2UI5-ext** - frozen, compiles only with
+Each entry is in one of three states, and they are the three parts of this
+page: [still in the core](#obsolete-still-compiles) - marked obsolete, compiles
+on 1.151.0 as it is (a bare release number in the table);
+[moved to abap2UI5-ext](#moved-to-abap2ui5-ext) - frozen, compiles only with
 [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) installed next to
-abap2UI5 ([details](#moved-to-abap2ui5-ext)):
+abap2UI5 (**moved out**); and [removed](#removed) - gone from every
+repository, a call does not compile. A name that was deprecated in one release
+and moved out in a later one has a row for each.
 
-| What you have | What to write for new code | Frozen since | Moved out |
-|---|---|---|---|
-| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc` | `z2ui5_cl_ui5_view_builder` | 1.143.0 | 1.151.0 |
-| the built-in popups `z2ui5_cl_pop_*` | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 | 1.151.0 |
-| `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 | 1.151.0 |
-| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | SAP standard, or a copy from [`abap-util`](https://github.com/abap-util/abap-util) - see [Utility classes](#utility-classes) | — | 1.149.0 |
-
-**Removed** - gone from every repository, a call does not compile
-([details](#removed)):
+Every row of this table that names ABAP API and nothing else is also published
+as data, for tools:
+[deprecations.json](https://abap2ui5.github.io/docs/api/deprecations.json).
 
 | What you have | What to write | Status |
 |---|---|---|
 | `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-150-0) | **removed**, 1.151.0 |
 | `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, 1.151.0 |
 | `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, 1.151.0 |
-| `view_model_update( )` and its four variants | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
+| `view_model_update( )`, `nest_view_model_update( )`, `nest2_view_model_update( )`, `popup_model_update( )`, `popover_model_update( )` | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
+| `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, 1.151.0 |
-| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, 1.151.0 |
-| `z2ui5_cl_http_handler` (the handler class an ICF node names) | `z2ui5_cl_ui5_http_handler` - same methods, it was an empty subclass | **removed**, 1.151.0 |
-| the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event, `timer_set( )` or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
+| `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
+| `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
+| the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
+| `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |
+| `cs_event-nav_container_to` (and its `nest_` / `nest2_` / `popup_` / `popover_` variants) | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, 1.144.1 |
+| `Z2UI5_T_02` (the DDIC structure) | name a type your own system has | **removed**, 1.144.1 |
+| `cs_event-image_editor_popup_close` | `_event( arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` )` plus the app's own `popup_destroy( )` | **removed**, 1.144.1 |
+| `z2ui5_if_app~check_sticky` / `z2ui5_if_app~check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
+| `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
+| `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
+| `cs_event-history_back` | `nav_app_leave( )` or `cs_event-hash_back` | **removed**, 1.143.0 |
+| `client->get( )-viewname` | delete the read | **removed**, 1.143.0 |
+| `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, 1.143.0 |
+| `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` | **removed**, 1.142.0 |
+| `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, 1.144.1 |
+| `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
+| `z2ui5_cl_pop_*` (the built-in popups) | `z2ui5_cl_popup_*` from the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, 1.145.0 |
 | `cs_event-z2ui5` | a custom control in `z2ui5_ccc`, called by `cs_event-control_by_id` | **removed**, 1.145.0 |
 | `z2ui5_cl_pop_js_loader` | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
@@ -97,26 +100,18 @@ abap2UI5 ([details](#moved-to-abap2ui5-ext)):
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
-| `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
-| the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
-| `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |
-| `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, 1.144.1 |
-| the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, 1.144.1 |
-| `cs_event-image_editor_popup_close` | `_event( arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` )` plus the app's own `popup_destroy( )` | **removed**, 1.144.1 |
-| `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, 1.144.1 |
+| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, `Z2UI5_T_91` (the table) | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
+| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, `z2ui5_cl_pop_*` (the built-in popups) | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.151.0 |
+| the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event, `timer_set( )` or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
+| `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
+| `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, 1.151.0 |
+| `z2ui5_cl_http_handler` (the handler class an ICF node names) | `z2ui5_cl_ui5_http_handler` - same methods, it was an empty subclass | **removed**, 1.151.0 |
 | `set_push_state( )`, `cs_event-set_push_state` | `hash_set( )`, `cs_event-hash_set` | **removed**, 1.144.1 |
 | `set_app_state_active( )`, `cs_event-set_app_state_active` | `app_state_set_active( )`, `cs_event-app_state_set_active` | **removed**, 1.144.1 |
 | `cs_event-set_nav_routing` | `cs_event-hash_routing` | **removed**, 1.144.1 |
 | `cs_event-clipboard_app_state` | `app_state_get_href( )` + `cs_event-clipboard_copy` | **removed**, 1.144.1 |
 | `_event( s_ctrl-check_allow_multi_req )` | `s_ctrl-check_queue_last` | **removed**, 1.144.1 |
-| the UI5 options of `message_toast_display( )` / `message_box_display( )` - all but `icon` on the box, which is a parameter again from 1.151.0 on | set them on the control, through `cs_event-control_global` | **removed**, 1.144.1 |
-| `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
-| `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
-| `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
-| `cs_event-history_back` | `nav_app_leave( )` or `cs_event-hash_back` | **removed**, 1.143.0 |
-| `client->get( )-viewname` | delete the read | **removed**, 1.143.0 |
-| `Formatter.round2DP` and four siblings | compute it in ABAP | **removed**, 1.143.0 |
-| `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` from abap2UI5-ext | **removed**, 1.142.0 |
+| the UI5 options of `message_toast_display( )` / `message_box_display( )` | set them on the control, through `cs_event-control_global` | **removed**, 1.144.1 |
 
 ## Still in the core: compiles {#obsolete-still-compiles}
 

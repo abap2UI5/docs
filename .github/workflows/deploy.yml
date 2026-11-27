@@ -166,6 +166,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npm run check:controls
+      - name: deprecations data freshness
+        if: ${{ !cancelled() }}
+        run: npm run check:deprecations
       - name: sample links
         if: ${{ !cancelled() }}
         run: npm run check:samples

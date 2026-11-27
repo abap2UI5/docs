@@ -22,10 +22,16 @@ project* is — and it is read automatically, by every session, without anybody
 remembering to paste anything.
 
 The [app-template](/advanced/working_off_stack) ships one written for
-app-building: the class shape, the lifecycle, the view builder, binding,
-events, and the checks to run before calling the work done. It also ships a
-`.claude/settings.json` allowlist so an agent can run `npm run check` itself
-instead of stopping to ask.
+app-building, and keeps it short, because every session reads all of it. It
+holds the project's own part: the files, the commands, and the checks to run
+before calling the work done. Below that stand the essentials of the
+framework's app-building guide: the class shape, the lifecycle, the view
+builder, binding and events. The full guide is one file,
+`.claude/skills/build-an-app/references/building-apps.md`. The four skills
+under `.claude/skills/` are a short `SKILL.md` each, with the long sections
+under `references/`, so an agent loads a section when the task needs it. The
+template also ships a `.claude/settings.json` allowlist so an agent can run
+`npm run check` itself instead of stopping to ask.
 
 ## Give it the checks {#give-it-the-gates}
 

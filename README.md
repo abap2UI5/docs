@@ -15,13 +15,13 @@ Every contribution makes the documentation better for the community!
 ```sh
 npm ci
 npm run docs:dev     # the site, with hot reload
-npm run check        # what CI runs, all fifteen steps
+npm run check        # what CI runs, all sixteen steps
 ```
 
 ### What CI checks
 
-A documentation repository has no compiler for its prose, but fifteen things in
-it are decidable, and `npm run check` decides all fifteen before a merge — the
+A documentation repository has no compiler for its prose, but sixteen things in
+it are decidable, and `npm run check` decides all sixteen before a merge — the
 site builds (`docs:build`, VitePress, which is what is published), every link
 into a neighbouring site on this origin
 — the playground, the catalogue — still leads there rather than to this site's
@@ -31,7 +31,9 @@ in the same house style as the sample corpora — chain layout and class shell �
 (`check:conventions`), every `client->` name and
 `cs_*` constant the prose and snippets mention still exists in the framework
 on `main` (`check:api-names`), the generated client API reference still
-matches the interface there (`check:api-reference`), the sample
+matches the interface there (`check:api-reference`), the deprecations
+published as data still say what the deprecations page says
+(`check:deprecations`), the sample
 links still match the sample repositories (`check:samples`), every complete
 app example carries a playground Run button or its declared reason not to
 (`check:playground`), the release
@@ -47,7 +49,7 @@ passed. Several of these go stale without anybody touching this repository (a
 release is published elsewhere, a sample class is renamed elsewhere), which is
 why the deploy re-runs them rather than trusting the merge.
 
-**[AGENTS.md](AGENTS.md) describes each of the fifteen**, what a failure means and
+**[AGENTS.md](AGENTS.md) describes each of the sixteen**, what a failure means and
 which of them need a sibling checkout to say anything at all — read it before
 changing anything beyond prose.
 

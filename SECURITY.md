@@ -45,7 +45,7 @@ deployed by merging it.
 
 - A page that is out of date, incomplete, or wrong about the framework. That is
   a documentation bug and belongs in
-  [an issue](https://github.com/abap2UI5/docs/issues) — it is what the fifteen
+  [an issue](https://github.com/abap2UI5/docs/issues) — it is what the sixteen
   gates in [AGENTS.md](AGENTS.md) exist to catch, so a report that names one
   they missed is genuinely useful.
 - Anything a reader does to their own browser tab with code they wrote

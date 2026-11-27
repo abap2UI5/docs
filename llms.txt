@@ -15,6 +15,11 @@
 - https://abap2ui5.github.io/docs/api/client-api.json — the client API
   (z2ui5_if_client at the pinned release) as one JSON document; this one IS
   committed, at docs/public/api/client-api.json
+- https://abap2ui5.github.io/docs/api/deprecations.json — every abap2UI5 name
+  that was deprecated, removed or moved to another repository, with its
+  replacement and the release; generated from the table on
+  docs/resources/deprecations.md and committed, at
+  docs/public/api/deprecations.json
 
 Working in this checkout instead? The pages are under docs/, the sidebar in
 docs/.vitepress/config.mjs, and AGENTS.md is the briefing — read it before
