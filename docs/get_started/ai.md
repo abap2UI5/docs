@@ -84,17 +84,21 @@ inventing it.
 
 ## Point it at the right index
 
-Two files describe this project to a machine, and they answer different
+Four files describe this project to a machine, and they answer different
 questions:
 
 | | |
 | --- | --- |
 | [`abap2ui5.github.io/docs/llms.txt`](https://abap2ui5.github.io/docs/llms.txt) | the map of the **prose** — every chapter of this site with one line of what it covers, and [`llms-full.txt`](https://abap2ui5.github.io/docs/llms-full.txt) for all of it in one fetch |
 | [`github.com/abap2UI5/abap2UI5/llms.txt`](https://github.com/abap2UI5/abap2UI5/blob/main/llms.txt) | the map of the **code** — the interface files to read instead of guessing at a signature, and the guide for building apps that ships with the framework |
+| [`abap2ui5-addons.github.io/llms.txt`](https://abap2ui5-addons.github.io/llms.txt) | the map of the **add-ons** — when to use each, the classes an app calls and what to install first; [`addons.json`](https://abap2ui5-addons.github.io/addons.json) is the same as data |
+| [`abap2ui5.github.io/docs/api/deprecations.json`](https://abap2ui5.github.io/docs/api/deprecations.json) | the **names that changed** — every name [Deprecations](/resources/deprecations) lists as deprecated, removed or moved out, with what to write instead |
 
-Both are short and both are free to give an assistant that has web access.
-This is the cheapest step on the page: an agent that has read either one is
-working from what abap2UI5 is today rather than from what it recalls.
+All four are free to give an assistant that has web access. This is the
+cheapest step on the page: an agent that has read either of the first two is
+working from what abap2UI5 is today rather than from what it recalls. The
+last one is for the names it recalls anyway: most of what was written about
+abap2UI5 before 1.143.0 names an API that has been replaced.
 
 ## Next Steps
 

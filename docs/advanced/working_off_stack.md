@@ -24,7 +24,8 @@ repository, already assembled.
 | `abaplint.jsonc` | ABAP syntax and style, with the framework resolved as a dependency, so it compiles the app **without an SAP system** |
 | `abap2ui5lint.jsonc` | the [abap2UI5 linter](/advanced/linter) — the view your ABAP builds, judged against the UI5 API and against your own class |
 | `.github/workflows/check.yml` | both checks on every push and pull request: abaplint at the version `package-lock.json` pins, the linter through its GitHub Action, whose pin the template keeps on the release line of its linter devDependency |
-| `AGENTS.md` | the conventions an AI assistant should follow in this project, plus a `.claude/settings.json` allowlist so it can run the checks without asking |
+| `AGENTS.md` | the conventions an AI assistant should follow in this project and the essentials of the app-building guide, plus a `.claude/settings.json` allowlist so it can run the checks without asking |
+| `.claude/skills/` | four skills an agent loads on demand; the full app-building guide is one file among them, `build-an-app/references/building-apps.md` |
 
 ## From template to first green check
 
@@ -47,6 +48,18 @@ npm run fix                   # apply the corrections the linter can make itself
 
 The full check loads every view in a headless browser, which needs Chromium
 once: `npx playwright install chromium`.
+
+An app that calls a class of an [add-on](/resources/addons) needs one more
+step, because abaplint resolves the framework alone and reports the add-on's
+class as not found:
+
+```sh
+npm run add-addon -- popups   # registers the add-on in abaplint.jsonc
+npm run doctor                # names the add-on when a check fails that way
+```
+
+`add-addon` also registers the add-ons the named one depends on. On the system
+an add-on stays an abapGit installation of its own.
 
 ## Make it yours
 

@@ -14,7 +14,11 @@ with abapGit and versioned on its own.
 **Every add-on, with a page of its own, is on
 [Addons & Tools](https://abap2ui5-addons.github.io/){target="_self"}** — what
 it does, what it needs, how it is installed. This page only says which
-add-ons this manual has a chapter about:
+add-ons this manual has a chapter about. The same catalog is published for
+tools and AI assistants, as
+[`llms.txt`](https://abap2ui5-addons.github.io/llms.txt) and
+[`addons.json`](https://abap2ui5-addons.github.io/addons.json): for each add-on
+when to use it, the classes an app calls and what it depends on.
 
 | Add-on | Chapter |
 | --- | --- |

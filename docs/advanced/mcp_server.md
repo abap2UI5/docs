@@ -10,7 +10,7 @@ system: activate the class, launch the app, look at the screen. So the agent
 writes something plausible, and you are the one who finds out.
 
 [**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) closes that
-loop. It is published as `@abap2ui5/mcp-server` on npm — 1.0.0 is the current
+loop. It is published as `@abap2ui5/mcp-server` on npm — 1.2.0 is the current
 release, and the four `app_*` tools, `add_agent_setup` and `migrate_report` are
 part of it. It is an [MCP](https://modelcontextprotocol.io) server: a small
 program your AI client starts in the background, which gives the agent a set of
@@ -71,7 +71,8 @@ level whose tools you want.
 
 The knowledge tools (`app_guide`, `api_reference`, `pitfalls`,
 `capabilities`, `examples`, `read_example`, `docs_search`, `scaffold_app`,
-`generation_rules`) read files the repositories commit. With no checkout
+`generation_rules`) read files the repositories commit. So does `addons`, from
+the release after 1.2.0 on. With no checkout
 there, they read the same files from GitHub, kept for a day in a per-user
 cache. `A2UI5_MCP_REMOTE=0` or `A2UI5_MCP_OFFLINE=1` switches that off. The
 docs mirror lists its pages through GitHub's API, which allows 60
@@ -216,8 +217,7 @@ top-level `"servers"` key instead of `"mcpServers"`.
 
 ::: tip Using VS Code?
 The [abap2UI5 extension](/advanced/vscode) registers this server for you — no
-JSON to write — and adds a second one of its own for the half this server
-deliberately does not have: your real systems.
+JSON to write — and adds a second one of its own for your real systems.
 :::
 
 ## The tools
@@ -227,10 +227,11 @@ deliberately does not have: your real systems.
 | `setup_status` | What resolves, what is built, what is missing and how to fix it — in one read. The tool to call first, and whenever another one says something is missing |
 | `capabilities` | Whether abap2UI5 can express a UI5 feature **at all**, from the verified capability map. The question to ask before writing a line of ABAP |
 | `app_guide` | **How to build an app**, live from the framework checkout: the app class template, lifecycle, the view-builder chain, binding, events, popups, navigation, portability |
-| `scaffold_app` | The files a new project starts from, live from app-template — both lint configs, the CI workflow, the abapGit metadata, an `AGENTS.md` and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
+| `scaffold_app` | The files a new project starts from, live from app-template — both lint configs, the CI workflow, the abapGit metadata, an `AGENTS.md`, the skills and a working app class. `{ class: "zcl_my_app" }` renames it throughout, including the sidecar's `CLSNAME`, which is what decides whether the object activates |
 | `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both lint configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing |
 | `examples` | Search the three sample catalogs for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
 | `read_example` | The source of a sample an `examples` hit named — the whole class, from the checkout or fetched from GitHub |
+| `addons` | Whether an [add-on](/resources/addons) already does it, from the catalog of abap2UI5-addons: every add-on in groups, the ones matching a `query`, or one `repo` in full — the classes an app calls, a usage snippet and the abapGit repositories to install, in order. Not in 1.2.0; it comes with the release after it |
 | `api_reference` | The client API an app calls, `z2ui5_if_client`, parsed live **with its ABAP-Doc**: methods, parameters, defaults and the `cs_*` constants, looked up instead of guessed |
 | `docs_search` | Full-text search over this documentation: page, heading, snippet and the published URL |
 | `generation_rules` | The rulebook for porting a UI5 demo-kit sample into the samples-controls corpus — a different job from `app_guide` |
@@ -281,6 +282,54 @@ the sandbox together with the add-on's runtime and the popups it calls.
 `app_act` with `CGUI_EXECUTE` then runs the report up to the first database
 table it reads, because the local backend does not have that table.
 [Migrating Classic Reports](/advanced/report_migration) is the whole story.
+
+## System mode
+
+Everything above runs without a system. With `A2UI5_MCP_SYSTEM_URL` set, the
+same server does something else: it offers the app tools against a **real SAP
+system**, logged on as the configured user — `system_status`, `app_list`,
+`app_start`, `app_describe` and `app_act`. The sandbox tools are not offered
+in this mode; register the server twice, once with and once without the
+variable, to have both. An `app_act` there runs for real and may save, post
+or delete data, so use a development system. The
+[README](https://github.com/abap2UI5/mcp-server#system-mode-operating-apps-on-a-real-sap-system)
+of the server lists the variables and what to know before switching it on.
+
+### Writing a class to the system
+
+::: warning Experimental, opt-in, and not in a release yet
+The three tools below are not part of 1.2.0; they come with the release after
+it. They have been tested only against a simulated system in the server's own
+test suite, **never against a real SAP system**. Expect differences on one,
+use a development system, and read every answer.
+:::
+
+System mode operates apps that are already on the system. With
+`A2UI5_MCP_SYSTEM_WRITE=1` set **in addition to** `A2UI5_MCP_SYSTEM_URL`, it
+lists three more tools that put a class there over the ADT REST API. Without
+that variable they are not listed, and a call by name is refused before
+anything is sent.
+
+| Tool | What it does |
+| --- | --- |
+| `system_write_class` | Creates or updates a global class from its abapGit files — the source, optionally the test classes, and the description from the `.clas.xml`. Leaves the class inactive |
+| `system_activate` | Activates the class and returns the activation messages, each with file, line and column |
+| `system_unit_tests` | Runs the ABAP Unit tests of the class |
+
+The tools are conservative by construction:
+
+- **Customer names only.** A class name has to start with `Z`, `Y` or a
+  namespace; `A2UI5_MCP_SYSTEM_WRITE_ALLOW` narrows that to a pattern of your
+  own. `Z2UI5_*` and SAP's own objects are always refused.
+- **No transport request is chosen or created.** `package` is required, and
+  every package but `$TMP` needs `transport`.
+- **Nobody else's work is overwritten silently.** An existing class last
+  changed by another user is refused unless the call says `overwrite: true`.
+- **No lock is left behind.** Once the class is locked, the unlock is sent
+  whatever happens.
+
+Only the class is written, not its local class includes and no other object
+type. abapGit stays the way to bring a whole repository onto a system.
 
 ## The intended loop
 
