@@ -277,6 +277,16 @@ The newest six are `/everyday/*`: the Everyday Work guides started on
 the same day (`/tutorials/everyday/`), so the bar keeps its four sections.
 The five guides and the index that had been published for a few hours keep
 their old address, with the `#fragment`.
+The largest batch after the Insights, fifty-two, was added on 2026-11-27 for
+addresses search engines still list: an assistant asked to build an app with
+no setup at all searched the web, fetched `development/model/tables` and
+`advanced/agent`, got the 404 for both and wrote the app from memory, in the
+API of two years ago. Fifty are the `/development/*` pages the Cookbook took
+over on 2026-05-22, each pointing at the page that carries it now (followed
+through the later renames, so no hop is taken twice); pages deleted then have
+none. The other two are `advanced/agent` (AI-Assisted Development, removed
+2026-08-01, now `get_started/ai`) and `get_started/full_example` (folded into
+the Tutorial 2026-08-21). All carry the `#fragment`.
 
 Two things make this safe rather than a second set of pages to maintain:
 

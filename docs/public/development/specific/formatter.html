@@ -1,0 +1,29 @@
+<!doctype html>
+<!--
+  Redirect for the page that used to live at /docs/development/specific/formatter.html.
+
+  The development section became the Cookbook on 2026-05-22 (2ad03935 and the
+  commits of that day), every page under a new address. Search engines still
+  list the old ones and answer abap2UI5 questions from them - an assistant
+  asked to build an app with no setup fetched one and got the 404 - so the
+  renamed pages keep answering. Pages deleted then have no stub; the 404 is
+  the net for those. The script carries the #fragment; the meta refresh is
+  the fallback without script and drops it. Delete this file only when the
+  old URL has stopped receiving traffic.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Page moved - abap2UI5</title>
+    <link rel="canonical" href="https://abap2ui5.github.io/docs/cookbook/model/formatter.html">
+    <meta http-equiv="refresh" content="0; url=/docs/cookbook/model/formatter.html">
+    <meta name="robots" content="noindex">
+    <script>location.replace('/docs/cookbook/model/formatter.html' + location.hash);</script>
+  </head>
+  <body>
+    <p>
+      This page moved to
+      <a href="/docs/cookbook/model/formatter.html">Formatter</a>.
+    </p>
+  </body>
+</html>

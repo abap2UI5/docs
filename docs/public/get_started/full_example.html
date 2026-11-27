@@ -1,0 +1,29 @@
+<!doctype html>
+<!--
+  Redirect for the page that used to live at /docs/get_started/full_example.html.
+
+  "Full Example" was folded into the walkthrough on 2026-08-21 (cf1d67bb),
+  which became the Tutorial: the same app, built up step by step.
+
+  Search engines still list the old address and answer abap2UI5 questions
+  from it - an assistant asked to build an app with no setup lands there - so
+  it keeps working. The meta refresh is the fallback without script and drops
+  the #fragment. Delete this file only when the old URL has stopped
+  receiving traffic.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Page moved - abap2UI5</title>
+    <link rel="canonical" href="https://abap2ui5.github.io/docs/tutorials/index.html">
+    <meta http-equiv="refresh" content="0; url=/docs/tutorials/index.html">
+    <meta name="robots" content="noindex">
+    <script>location.replace('/docs/tutorials/index.html' + location.hash);</script>
+  </head>
+  <body>
+    <p>
+      This page moved to
+      <a href="/docs/tutorials/index.html">the Tutorial</a>.
+    </p>
+  </body>
+</html>
