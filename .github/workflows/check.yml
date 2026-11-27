@@ -218,6 +218,15 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: npm run check:controls
 
+      # docs/public/api/deprecations.json, regenerated from the version table
+      # on resources/deprecations.md and compared byte for byte. The page is
+      # the truth and the file is what tools read, so a row changed on the
+      # page and not regenerated is a tool repeating last month's answer.
+      # Both halves are in this tree: no network, never skipped
+      - name: deprecations data freshness
+        if: ${{ !cancelled() }}
+        run: npm run check:deprecations
+
       # the Working Samples blocks: still generated from what the catalogue says
       # today, still pointing at classes that exist, and still pointed back at
       # from those classes. A link into another repository is the one kind that
