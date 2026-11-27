@@ -11,7 +11,9 @@ handed to the app as `client` on every roundtrip. This page **is** that
 interface, generated from its source on the framework's `main` branch. Every
 example on this site is compiled against the same branch. The page lists every
 method with its parameters, types and defaults, every `cs_*` constant structure,
-and the documentation written in the source itself. That puts it ahead of the
+and the documentation written in the source itself - all but what the
+interface marks obsolete, which is on
+[Deprecations](/resources/deprecations) instead. That puts it ahead of the
 newest release by design. A name that is on `main` and not yet in a release is
 marked *next release* on [Deprecations](/resources/deprecations), next to the
 spelling the release still has. The release number itself is in the menu behind

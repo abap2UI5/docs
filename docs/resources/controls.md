@@ -180,6 +180,8 @@ A document of its own - HTML the app wrote, with its own styles - shown in an if
 
 Module `z2ui5.cc.HTMLFrame` ([source](https://github.com/abap2UI5/abap2UI5/blob/main/bundle/webapp/cc/HTMLFrame.js)). Extends `sap.ui.core.Control`.
 
+Used on [Demo Output](/cookbook/expert_more/demo_output).
+
 | Property | Type | Default |
 |---|---|---|
 | `content` | `string` | *(empty)* |

@@ -4,7 +4,7 @@ samples:
   - z2ui5_cl_smp_app_073
   - z2ui5_cl_smp_app_316
   - z2ui5_cl_smp_app_492
-description: Read the query string and the launchpad startup parameters, open a URL in a new tab, redirect, start a mail or a phone call, add a history entry, and log out.
+description: Read a start parameter, the query string and the launchpad startup parameters, open a URL in a new tab, redirect, start a mail or a phone call, add a history entry, and log out.
 ---
 # URL Handling
 
@@ -13,20 +13,32 @@ links in new tabs, or managing browser history.
 
 ## Read URL Parameters
 
-Read query parameters from the current URL via the config object:
+`client->get_start_param( )` answers one start parameter by name, whichever
+way the app was started:
 ```abap
-DATA(lv_search) = client->get( )-s_config-search.
+DATA(lv_order) = client->get_start_param( `SalesOrder` ).
 ```
 
-`s_config-search` is the raw query string of the page
-(`?app_start=…&sap-client=…`), and `s_config-origin`, `-pathname` and `-hash`
-are the other parts of the browser location. Inside the Fiori Launchpad the
-startup parameters of the target mapping do not arrive in the query string.
-They are parsed once per roundtrip into `client->get( )-t_comp_params`, a
-name/value table. The same table carries the `--param` entries of the
+It asks three sources in order and the first that has the parameter with a
+value answers: the query string of the page (`?SalesOrder=4711`), the startup
+parameters a launchpad target mapping hands over, and the query of the
+launchpad intent in the hash (`#SalesOrder-display?SalesOrder=4711`). The
+name is matched without regard to case; the value comes back as the source
+carries it, in the URL not percent-decoded, and empty when no source has the
+parameter. The parameters belong to the page, so the call answers the same on
+every later roundtrip and in every app the user navigates to.
+
+The sources themselves are in the config object. `s_config-search` is the raw
+query string of the page (`?app_start=…&sap-client=…`), and
+`s_config-origin`, `-pathname` and `-hash` are the other parts of the browser
+location. The startup parameters are parsed once per roundtrip into
+`client->get( )-t_comp_params`, a name/value table, which is where a
+parameter with several values has all of them. The same table carries the
+`--param` entries of the
 [Excel add-in's manifest](/integration/excel#the-manifest):
 ```abap
-DATA(lv_order) = VALUE #( client->get( )-t_comp_params[ n = `SalesOrder` ]-v OPTIONAL ).
+DATA(lv_search) = client->get( )-s_config-search.
+DATA(lt_params) = client->get( )-t_comp_params.
 ```
 
 ## Open a New Tab
@@ -86,29 +98,23 @@ sent from the server here; to send a mail from ABAP, see
 
 ## Browser History
 
-`client->hash_set( )` (UI5's `HashChanger#setHash`) writes a pushed entry into
-the browser history from the backend, so a state inside your app becomes
-bookmarkable and the Back button steps through the states you pushed:
+`client->hash_set( )` (UI5's `HashChanger#setHash`) writes the app's URL hash
+as a pushed entry into the browser history, so a state inside your app becomes
+bookmarkable and the Back button steps through the states you pushed. The app
+has to own the hash first: it registers a listener with
+`cs_event-hash_attach_changed`, and the value is the whole app hash:
 
 ```abap
-client->hash_set( `&my-app-state=detail` ).
+client->follow_up_action( val   = client->cs_event-hash_attach_changed
+                          t_arg = VALUE #( ( `HASH_CHANGED` ) ) ).
+client->hash_set( `/detail` ).
 ```
 
-That is one of three things that can own the URL hash. Which one an app
-should use is a decision of its own; see
-[URL Hash and Routing](/cookbook/event_navigation/navigation/hash). That page
-also covers framework routing, `hash_replace( )`, which writes *without* a
-history entry, and `cs_event-hash_back` for stepping back from ABAP.
-
-::: tip Register a listener and the value becomes the whole hash
-Used on its own, as above, `hash_set( )` appends its value to the hash. An app
-that registers
-`cs_event-hash_attach_changed` owns the hash outright, and the same call then
-writes `#/detail` the way a UI5 router does, with browser Back/Forward
-round-tripping back into the running app. That is the
-[app-owned routing](/cookbook/event_navigation/navigation/hash#app-owned-routing)
-section.
-:::
+Without the listener nothing is written, and the frontend says so in its log.
+The listener, `hash_replace( )`, which writes *without* a history entry,
+`cs_event-hash_back` for stepping back from ABAP, and the two other things
+that can own the hash are all on
+[URL Hash and Routing](/cookbook/event_navigation/navigation/hash#app-owned-routing).
 
 ## All Three in One App
 
@@ -119,6 +125,7 @@ CLASS zcl_sample_url DEFINITION PUBLIC.
     INTERFACES z2ui5_if_app.
 
     DATA mv_search TYPE string.
+    DATA mv_hash   TYPE string.
 
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -130,6 +137,7 @@ CLASS zcl_sample_url IMPLEMENTATION.
     IF client->check_on_navigated( ).
 
       mv_search = client->get( )-s_config-search.
+      mv_hash   = client->get( )-s_config-hash.
 
       DATA(view) = z2ui5_cl_ui5_view_builder=>factory(
           )->ele( n = `View` ns = `mvc`
@@ -143,6 +151,10 @@ CLASS zcl_sample_url IMPLEMENTATION.
                       )->a( n = `text` v = `the query string this app was started with:`
                   )->tag( `Text`
                       )->a( n = `text` v = client->_bind( mv_search )
+                  )->tag( `Label`
+                      )->a( n = `text` v = `the hash the browser stands on:`
+                  )->tag( `Text`
+                      )->a( n = `text` v = client->_bind( mv_hash )
                   )->tag( `Button`
                       )->a( n = `text`  v = `open the report in a new tab`
                       )->a( n = `press` v = client->follow_up_action(
@@ -154,9 +166,18 @@ CLASS zcl_sample_url IMPLEMENTATION.
 
       client->view_display( view->stringify( ) ).
 
+      " the app owns the hash from here on; registered with every render
+      client->follow_up_action( val   = client->cs_event-hash_attach_changed
+                                t_arg = VALUE #( ( `HASH_CHANGED` ) ) ).
+
     ELSEIF client->check_on_event( `PUSH` ).
-      client->hash_set( `&my-app-state=detail` ).
+      client->hash_set( `/detail` ).
+      mv_hash = `#/detail`.
       client->message_toast_display( `pushed - the browser Back button now has a step to take` ).
+
+    ELSEIF client->check_on_event( `HASH_CHANGED` ).
+      " browser Back or Forward: the hash the browser now stands on
+      mv_hash = client->get( )-s_config-hash.
 
     ENDIF.
 
@@ -166,7 +187,8 @@ ENDCLASS.
 
 The *open a new tab* button carries no roundtrip at all — the call sits in the
 view attribute, so the browser runs it on the press. The *push* button does,
-because the backend decides what to push.
+because the backend decides what to push. A browser Back after it fires
+`HASH_CHANGED`, and the app shows the hash it is back on.
 
 ## Logout
 

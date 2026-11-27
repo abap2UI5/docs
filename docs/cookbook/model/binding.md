@@ -6,7 +6,7 @@ samples:
   - z2ui5_cl_smp_app_166
   - z2ui5_cl_smp_app_144
   - z2ui5_cl_smp_app_061
-description: Data binding in abap2UI5 - client->_bind( ) shares ABAP variables with the UI5 view, for displaying and editing data, binding to structures, and the data-type mapping.
+description: Data binding in abap2UI5 - client->_bind( ) shares ABAP variables with the UI5 view, for displaying and editing data, binding to structures, data references, interface attributes and fields with a namespace, and the data-type mapping.
 ---
 # Binding
 
@@ -136,8 +136,10 @@ which reaches the browser as a 500 and is shown in the error dialog. The
 compiler cannot catch it (the call takes `TYPE data`), but the runtime says
 exactly what is wrong.
 
-Always declare bound data in `PUBLIC SECTION`. This resembles the PAI/PBO logic,
-where data lived in global variables. See also
+Always declare bound data in `PUBLIC SECTION`. A public attribute that an
+interface of the app declares counts as well
+([below](#data-references-interface-attributes-namespaces)). This resembles
+the PAI/PBO logic, where data lived in global variables. See also
 [Life Cycle → Lifecycle Pitfalls](/cookbook/event_navigation/life_cycle#lifecycle-pitfalls).
 :::
 
@@ -169,6 +171,53 @@ DATA edit_row TYPE ts_order.
 Nested structures follow the same rule recursively (`edit_row-address-city` →
 `/EDIT_ROW/ADDRESS/CITY`). Internal tables of structures use one row context per
 item — see [Tables](/cookbook/model/tables).
+
+## Data References, Interface Attributes, Namespaces
+
+Three shapes of an attribute bind without extra work.
+
+**A data reference.** `val` (and `tab`) take a reference in place of the
+attribute itself, and it is bound as what it points to. So a table typed at
+runtime, held in an attribute `TYPE REF TO data`, needs no `ASSIGN` to be
+bound:
+
+```abap
+" PUBLIC SECTION
+DATA mt_rows TYPE STANDARD TABLE OF ts_order WITH EMPTY KEY.
+DATA mr_any  TYPE REF TO data.   " a table created at runtime
+
+" in the view
+)->a( n = `items` v = client->_bind( REF #( mt_rows ) )
+)->a( n = `items` v = client->_bind( mr_any )
+```
+
+What it points to still has to be reachable from a public attribute of the
+app. A reference that points nowhere yet raises `BINDING_ERROR`.
+
+**An attribute an interface declares.** An app that implements an interface
+of its own binds the attributes the interface brings, and so does an object
+the app holds through an interface reference:
+
+```abap
+client->_bind( zif_my_state~mv_value )
+client->_bind( mi_state->mv_value )
+```
+
+**A field with a namespace.** A component named `/ABC/FIELD` is bound like any
+other, `client->_bind( ms_row-/abc/field )`. In the model the namespace
+becomes a level of its own, so the field of a row is read at `ABC/FIELD`.
+That matters in a row template whose column names are only known at runtime:
+`{/ABC/FIELD}`, the name as it is, would be an absolute path from the model
+root. `z2ui5_cl_ui5_view_builder=>component_path( )` returns the path
+relative to the row for any column name, and leaves a name without a
+namespace unchanged:
+
+```abap
+)->tag( `Text`
+    )->a( n = `text` v = |\{{ z2ui5_cl_ui5_view_builder=>component_path( lv_name ) }\}| )
+```
+
+Pass the name as RTTI writes it, in upper case.
 
 ## `_bind( )` Options
 

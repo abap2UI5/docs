@@ -82,6 +82,22 @@ SAP system. If something is not covered by those files, say so instead of
 inventing it.
 ```
 
+## Install the skills
+
+The paragraph above works everywhere. An assistant that takes plugins or
+skills gets the same knowledge installed instead, kept current with the
+framework, from the abap2UI5 repository itself:
+
+| Assistant | Command | What it brings |
+| --- | --- | --- |
+| Claude Code | `/plugin marketplace add abap2UI5/abap2UI5`, then `/plugin install abap2ui5@abap2ui5` | four skills, five slash commands and the [MCP server](/advanced/mcp_server) |
+| GitHub Copilot | `copilot plugin install abap2UI5/abap2UI5:plugin-copilot` in the Copilot CLI | the same skills and commands, a reviewer agent and the MCP server |
+| any agent that reads `SKILL.md` (Cursor, Codex and others) | `npx skills add abap2UI5/abap2UI5` | the four skills alone; the MCP server is registered by hand |
+
+The four skills are `build-an-app`, `view-chain-layout`, `abap-check` and
+`ui5-check`. What to install first and what each step costs is on
+[AI Setup: The Recommended Path](/advanced/ai_path).
+
 ## Point it at the right index
 
 Two files describe this project to a machine, and they answer different

@@ -18,7 +18,7 @@ Sometimes a `_bind` path does not resolve against the JSON model on the frontend
 
 Where to look:
 - **Browser console.** UI5 logs a warning like `Binding "/path/to/field" was not found in model` from `sap.ui.model.json.JSONModel`. Open the browser DevTools console and filter by `sap.ui.model`.
-- **Network tab.** Inspect the abap2UI5 response payload — the JSON model is included verbatim. If the field is absent or named differently than your binding path, you have your answer.
+- **Network tab.** Inspect the abap2UI5 response payload of the roundtrip that sent the view — the JSON model is in it under `MODEL`. If the field is absent or named differently than your binding path, you have your answer. A later response carries the model only when a bound value changed.
 - **ABAP side.** Nothing. The backend never learns the binding failed. Asserting "no console warnings" is the only way to catch this in tests.
 
 Binding silently drops the write-back when the path is invalid — your ABAP attribute keeps its old value after the next event. Cross-check the attribute value in the debugger if data is mysteriously not updating.
@@ -32,7 +32,7 @@ BINDING_ERROR - No class attribute for binding found -
 Please check if the bound values are public attributes of your class
 ```
 
-Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error dialog. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`.)
+Nothing catches it on the way out, so the roundtrip answers 500 and the message lands in the error dialog. (A `_bind( val = … tab = … )` cell binding raises the same thing under `BINDING_ERROR_TAB_CELL_LEVEL`, with the row and the table it looked in.)
 
 Where to look:
 - **The error text itself.** Unlike a binding-path mismatch, this failure is reported by name — if you are reading a browser-console warning, you are looking at the section above, not at this one.
@@ -47,7 +47,7 @@ ABAP and UI5 do not share a type system:
 - a `d` field is sent as the ISO string `2024-01-15`, a `t` as `12:30:00` and a `timestamp` as `2024-01-15T12:30:00Z`
 - packed numbers arrive as JSON numbers without locale formatting
 - a flag declared as `c LENGTH 1` is sent as the string `"X"`
-- only the boolean ABAP types (`abap_bool`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`
+- only the boolean ABAP types (`abap_bool`, `abap_boolean`, `xsdboolean`, `flag`, `xfeld`) become a JSON `true` / `false`
 
 The control renders the raw value, parses it wrong, or treats it as empty.
 
@@ -97,7 +97,7 @@ The opposite mistake: calling `view_display( )` from every event handler, even w
 - lost focus and cursor position in inputs,
 - noticeably slower responses on large views.
 
-Rebuild only when the view structure changes. For pure state mutations (an edit, a save, a row update, a popup close), mutate the public attribute and return — the framework re-serializes the model on every response and the view rebinds automatically.
+Rebuild only when the view structure changes. For pure state mutations (an edit, a save, a row update, a popup close), mutate the public attribute and return — the framework compares the bound values before and after `main( )`, sends what changed, and the view rebinds automatically.
 
 See [Life Cycle → Lifecycle Pitfalls](/cookbook/event_navigation/life_cycle#lifecycle-pitfalls).
 
@@ -159,7 +159,7 @@ every ABAP index), or the table was refilled or shortened after the index was
 computed and before the view was built. Rebuild the view from the current
 table state.
 
-### `BINDING_ERROR_TAB_CELL_LEVEL - No class attribute for binding found - Please check if the bound values are public attributes of your class`
+### `BINDING_ERROR_TAB_CELL_LEVEL - No class attribute for binding found in row <n> of '<table>' - Please check if the bound values are public attributes of your class`
 
 The same cell binding, but `val` is not a field of the row `tab_index` names.
 The cell is found by **reference**, not by value, so the classic case is a

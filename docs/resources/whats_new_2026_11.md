@@ -13,8 +13,8 @@ longer ships live in one place,
 come a declarative timer, new navigation helpers, a test harness for apps,
 smaller drafts and a faster first page load - and new features in the popups,
 layout-management, table-maintenance and custom-controls add-ons. The
-[Release Notes](/resources/changelog) list the release once it is tagged; this
-page is the overview for the update.
+[Release Notes](/resources/changelog#_1-151-0) list the release, 1.151.0 of
+2026-11-25; this page is the overview for the update.
 
 ## Do This When You Update
 
@@ -286,7 +286,7 @@ first three items.
 - [Deprecations](/resources/deprecations) - every superseded name with its
   successor
 - [Release Notes](/resources/changelog) - every release
-- [The changelog on DEV](https://github.com/abap2UI5/abap2UI5/blob/DEV/changelog.txt) -
-  the full list of changes, section "unreleased"
+- [The changelog of the framework](https://github.com/abap2UI5/abap2UI5/blob/main/changelog.txt) -
+  the same list at its source, section "v1.151.0"
 - [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) - the
   legacy objects and how to switch to the repository
