@@ -226,6 +226,14 @@ const index = [
   '- [client-api.json](' + SITE + '/api/client-api.json): every method, parameter and',
   '  constant of `z2ui5_if_client` at this release, generated from the source -',
   '  the same reference as the API page, as data',
+  /* The names a model learned from old examples - z2ui5_cl_xml_view,
+     _bind_edit( ), z2ui5_cl_pop_to_confirm - and what became of each. The
+     deprecations page says it in prose; this is the same table as one fetch,
+     generated from it (generate-deprecations.mjs). */
+  '- [deprecations.json](' + SITE + '/api/deprecations.json): every abap2UI5 name that',
+  '  was deprecated, removed or moved to another repository - its status, the',
+  '  release, what to write instead and where it went. Check a name against',
+  '  this before writing it from memory',
   '',
   ...[...bySection].flatMap(([section, list]) => [
     `## ${section}`,

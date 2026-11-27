@@ -44,22 +44,26 @@ The released version is **1.151.0**. Entries marked *next release* are already
 on `main` but not in a release yet — they matter if you pull `main`, and they
 tell you what is coming if you do not.
 
+Every row of this table that names ABAP API and nothing else is also published
+as data, for tools:
+[deprecations.json](https://abap2ui5.github.io/docs/api/deprecations.json).
+
 | What you have | What to write | Status |
 |---|---|---|
 | `window_bind_tab( t_sort = … t_filter = … )` | `window_bind_tab( val total event )` - the app loads, sorts and filters on the event, see [Windowed Tables](../cookbook/model/windowed_tables#coming-from-1-150-0) | **removed**, 1.151.0 |
 | `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, 1.151.0 |
 | `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, 1.151.0 |
-| `view_model_update( )` and its four variants | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
+| `view_model_update( )`, `nest_view_model_update( )`, `nest2_view_model_update( )`, `popup_model_update( )`, `popover_model_update( )` | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, 1.151.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
 | the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
 | `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |
-| `cs_event-nav_container_to` and its `nest_` / `nest2_` / `popup_` / `popover_` variants | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, 1.144.1 |
-| the DDIC structure `Z2UI5_T_02` | name a type your own system has | **removed**, 1.144.1 |
+| `cs_event-nav_container_to` (and its `nest_` / `nest2_` / `popup_` / `popover_` variants) | `cs_event-control_by_id` with method `to`, the slot as the `view` parameter | **removed**, 1.144.1 |
+| `Z2UI5_T_02` (the DDIC structure) | name a type your own system has | **removed**, 1.144.1 |
 | `cs_event-image_editor_popup_close` | `_event( arg = `$controller.slotValue('POPUP','myEditor','getImagePngDataURL')` )` plus the app's own `popup_destroy( )` | **removed**, 1.144.1 |
-| `z2ui5_if_app~check_sticky` / `check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
+| `z2ui5_if_app~check_sticky` / `z2ui5_if_app~check_initialized` | `set_session_stateful( )` / `check_on_init( )` | **removed**, 1.143.0 |
 | `set_nav_back( )` / `set_nav_routing( )` | `follow_up_action( )` | **removed**, 1.143.0 |
 | `cs_event-nav_to_route` | `nav_app_call( )` | **removed**, 1.143.0 |
 | `cs_event-history_back` | `nav_app_leave( )` or `cs_event-hash_back` | **removed**, 1.143.0 |
@@ -68,7 +72,7 @@ tell you what is coming if you do not.
 | `z2ui5_cl_util_api*`, `z2ui5_cl_pop_bal` | `z2ui5_cl_util` / `z2ui5_cl_util_ext` | **removed**, 1.142.0 |
 | `cs_event-wizard_set_next_step` | two `control_by_id` calls | **removed**, 1.144.1 |
 | `z2ui5_cl_xml_view` | `z2ui5_cl_ui5_view_builder` | 1.143.0 |
-| built-in popups | the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
+| `z2ui5_cl_pop_*` (the built-in popups) | `z2ui5_cl_popup_*` from the [popups add-on](https://github.com/abap2UI5-addons/popups) | 1.142.0 |
 | `z2ui5.Util`, `z2ui5.Formatter`, module `z2ui5/Util` | `core:require` of `z2ui5/model/formatter` | **removed**, 1.145.0 |
 | `cs_event-z2ui5` | a custom control in `z2ui5_ccc`, called by `cs_event-control_by_id` | **removed**, 1.145.0 |
 | `z2ui5_cl_pop_js_loader` | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
@@ -76,8 +80,8 @@ tell you what is coming if you do not.
 | `custom_js` in the user exit's HTTP config | a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | raw JavaScript in `follow_up_action( )` | `cs_event-control_global`, `cs_event-control_by_id`, `cs_event-hash_back`, or a custom control in `z2ui5_ccc` | **removed**, 1.145.0 |
 | `cs_config-title` | `cs_event-set_title` | **removed**, 1.145.0 |
-| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, table `Z2UI5_T_91` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
-| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, the built-in popups `z2ui5_cl_pop_*` | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.151.0 |
+| `z2ui5_cl_util*`, `z2ui5_cx_util_error`, `Z2UI5_T_91` (the table) | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.149.0 |
+| `z2ui5_cl_xml_view`, `z2ui5_cl_xml_view_cc`, `z2ui5_if_types`, `z2ui5_cl_pop_*` (the built-in popups) | install [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see [Utility classes](#utility-classes) | **moved out**, 1.151.0 |
 | the invisible custom controls `z2ui5.cc.Timer`, `Focus`, `Scrolling`, `Title`, `LPTitle`, `Favicon`, `History`, `Info` | a frontend event or `client->get( )` — see [Invisible custom controls](#invisible-custom-controls) | **removed**, 1.149.0 |
 | `z2ui5_if_types=>…` | the same type on the object that uses it | 1.144.0 |
 | `z2ui5_if_exit` | `z2ui5_if_ui5_exit` — see the section below | **removed**, 1.151.0 |

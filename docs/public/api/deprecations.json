@@ -1,0 +1,369 @@
+{
+  "schema": 1,
+  "source": "https://abap2ui5.github.io/docs/resources/deprecations",
+  "matching": "An entry with \"pattern\": true matches every name its * stands for. An exact entry outranks a pattern, a longer pattern a shorter one.",
+  "entries": [
+    {
+      "name": "t_sort",
+      "kind": "parameter",
+      "of": "window_bind_tab",
+      "status": "removed",
+      "replacement": "window_bind_tab( val total event ) - the app loads, sorts and filters on the event, see Windowed Tables (https://abap2ui5.github.io/docs/cookbook/model/windowed_tables#coming-from-1-150-0)",
+      "since": "1.151.0"
+    },
+    {
+      "name": "t_filter",
+      "kind": "parameter",
+      "of": "window_bind_tab",
+      "status": "removed",
+      "replacement": "window_bind_tab( val total event ) - the app loads, sorts and filters on the event, see Windowed Tables (https://abap2ui5.github.io/docs/cookbook/model/windowed_tables#coming-from-1-150-0)",
+      "since": "1.151.0"
+    },
+    {
+      "name": "window_get_row",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "the index of the row on screen is its index in the table",
+      "since": "1.151.0"
+    },
+    {
+      "name": "cs_event-offline_queue",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "delete the call - an event without a network ends in the error dialog with Retry",
+      "since": "1.151.0"
+    },
+    {
+      "name": "view_model_update",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "delete the call",
+      "since": "1.151.0",
+      "note": "deprecated since 1.143.0"
+    },
+    {
+      "name": "nest_view_model_update",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "delete the call",
+      "since": "1.151.0",
+      "note": "deprecated since 1.143.0"
+    },
+    {
+      "name": "nest2_view_model_update",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "delete the call",
+      "since": "1.151.0",
+      "note": "deprecated since 1.143.0"
+    },
+    {
+      "name": "popup_model_update",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "delete the call",
+      "since": "1.151.0",
+      "note": "deprecated since 1.143.0"
+    },
+    {
+      "name": "popover_model_update",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "delete the call",
+      "since": "1.151.0",
+      "note": "deprecated since 1.143.0"
+    },
+    {
+      "name": "_event_client",
+      "kind": "method",
+      "status": "deprecated",
+      "replacement": "follow_up_action( )",
+      "since": "1.143.0"
+    },
+    {
+      "name": "_bind_edit",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "_bind( )",
+      "since": "1.151.0",
+      "note": "deprecated since 1.142.0"
+    },
+    {
+      "name": "custom_mapper",
+      "kind": "parameter",
+      "of": "_bind",
+      "status": "deprecated",
+      "replacement": "omit_initial / omit_initial_paths / json, or shape it in ABAP",
+      "since": "1.143.0"
+    },
+    {
+      "name": "custom_filter",
+      "kind": "parameter",
+      "of": "_bind",
+      "status": "deprecated",
+      "replacement": "omit_initial / omit_initial_paths / json, or shape it in ABAP",
+      "since": "1.143.0"
+    },
+    {
+      "name": "view",
+      "kind": "parameter",
+      "of": "_bind",
+      "status": "removed",
+      "replacement": "omit the parameter",
+      "since": "1.144.1"
+    },
+    {
+      "name": "cs_event-keyboard_set_mode",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "the bound inputMode property of z2ui5.cc.InputExt — see Soft Keyboard (https://abap2ui5.github.io/docs/cookbook/browser_interaction/soft_keyboard)",
+      "since": "1.144.1"
+    },
+    {
+      "name": "cs_event-nav_container_to",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "cs_event-control_by_id with method to, the slot as the view parameter",
+      "since": "1.144.1",
+      "note": "and its nest_ / nest2_ / popup_ / popover_ variants"
+    },
+    {
+      "name": "z2ui5_t_02",
+      "kind": "dictionary-object",
+      "status": "removed",
+      "replacement": "name a type your own system has",
+      "since": "1.144.1",
+      "note": "the DDIC structure"
+    },
+    {
+      "name": "cs_event-image_editor_popup_close",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "_event( arg = $controller.slotValue('POPUP','myEditor','getImagePngDataURL') ) plus the app's own popup_destroy( )",
+      "since": "1.144.1"
+    },
+    {
+      "name": "z2ui5_if_app~check_sticky",
+      "kind": "attribute",
+      "status": "removed",
+      "replacement": "set_session_stateful( )",
+      "since": "1.143.0"
+    },
+    {
+      "name": "z2ui5_if_app~check_initialized",
+      "kind": "attribute",
+      "status": "removed",
+      "replacement": "check_on_init( )",
+      "since": "1.143.0"
+    },
+    {
+      "name": "set_nav_back",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "follow_up_action( )",
+      "since": "1.143.0"
+    },
+    {
+      "name": "set_nav_routing",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "follow_up_action( )",
+      "since": "1.143.0"
+    },
+    {
+      "name": "cs_event-nav_to_route",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "nav_app_call( )",
+      "since": "1.143.0"
+    },
+    {
+      "name": "cs_event-history_back",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "nav_app_leave( ) or cs_event-hash_back",
+      "since": "1.143.0"
+    },
+    {
+      "name": "viewname",
+      "kind": "field",
+      "of": "get",
+      "status": "removed",
+      "replacement": "delete the read",
+      "since": "1.143.0"
+    },
+    {
+      "name": "z2ui5_cl_util_api*",
+      "kind": "class",
+      "pattern": true,
+      "status": "removed",
+      "replacement": "z2ui5_cl_util / z2ui5_cl_util_ext",
+      "since": "1.142.0"
+    },
+    {
+      "name": "z2ui5_cl_pop_bal",
+      "kind": "class",
+      "status": "removed",
+      "replacement": "z2ui5_cl_util / z2ui5_cl_util_ext",
+      "since": "1.142.0"
+    },
+    {
+      "name": "cs_event-wizard_set_next_step",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "two control_by_id calls",
+      "since": "1.144.1"
+    },
+    {
+      "name": "z2ui5_cl_xml_view",
+      "kind": "class",
+      "status": "moved",
+      "replacement": "z2ui5_cl_ui5_view_builder",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.151.0",
+      "note": "deprecated since 1.143.0; install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "z2ui5_cl_pop_*",
+      "kind": "class",
+      "pattern": true,
+      "status": "moved",
+      "replacement": "z2ui5_cl_popup_* from the popups add-on (https://github.com/abap2UI5-addons/popups)",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.151.0",
+      "note": "the built-in popups; deprecated since 1.142.0; install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "cs_event-z2ui5",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "a custom control in z2ui5_ccc, called by cs_event-control_by_id",
+      "since": "1.145.0"
+    },
+    {
+      "name": "z2ui5_cl_pop_js_loader",
+      "kind": "class",
+      "status": "removed",
+      "replacement": "a custom control in z2ui5_ccc",
+      "since": "1.145.0"
+    },
+    {
+      "name": "cs_config-title",
+      "kind": "field",
+      "status": "removed",
+      "replacement": "cs_event-set_title",
+      "since": "1.145.0"
+    },
+    {
+      "name": "z2ui5_cl_util*",
+      "kind": "class",
+      "pattern": true,
+      "status": "moved",
+      "replacement": "",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.149.0",
+      "note": "install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "z2ui5_cx_util_error",
+      "kind": "class",
+      "status": "moved",
+      "replacement": "",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.149.0",
+      "note": "install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "z2ui5_t_91",
+      "kind": "dictionary-object",
+      "status": "moved",
+      "replacement": "",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.149.0",
+      "note": "the table; install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "z2ui5_cl_xml_view_cc",
+      "kind": "class",
+      "status": "moved",
+      "replacement": "",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.151.0",
+      "note": "install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "z2ui5_if_types",
+      "kind": "interface",
+      "status": "moved",
+      "replacement": "the same type on the object that uses it",
+      "movedTo": "abap2UI5/abap2UI5-ext",
+      "since": "1.151.0",
+      "note": "deprecated since 1.144.0; install abap2UI5-ext (https://github.com/abap2UI5/abap2UI5-ext) next to abap2UI5 — see Utility classes (https://abap2ui5.github.io/docs/resources/deprecations#utility-classes)"
+    },
+    {
+      "name": "z2ui5_if_exit",
+      "kind": "interface",
+      "status": "removed",
+      "replacement": "z2ui5_if_ui5_exit — see the section below",
+      "since": "1.151.0"
+    },
+    {
+      "name": "z2ui5_cl_http_handler",
+      "kind": "class",
+      "status": "removed",
+      "replacement": "z2ui5_cl_ui5_http_handler - same methods, it was an empty subclass",
+      "since": "1.151.0",
+      "note": "the handler class an ICF node names"
+    },
+    {
+      "name": "set_push_state",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "hash_set( )",
+      "since": "1.144.1"
+    },
+    {
+      "name": "cs_event-set_push_state",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "cs_event-hash_set",
+      "since": "1.144.1"
+    },
+    {
+      "name": "set_app_state_active",
+      "kind": "method",
+      "status": "removed",
+      "replacement": "app_state_set_active( )",
+      "since": "1.144.1"
+    },
+    {
+      "name": "cs_event-set_app_state_active",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "cs_event-app_state_set_active",
+      "since": "1.144.1"
+    },
+    {
+      "name": "cs_event-set_nav_routing",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "cs_event-hash_routing",
+      "since": "1.144.1"
+    },
+    {
+      "name": "cs_event-clipboard_app_state",
+      "kind": "constant",
+      "status": "removed",
+      "replacement": "app_state_get_href( ) + cs_event-clipboard_copy",
+      "since": "1.144.1"
+    },
+    {
+      "name": "s_ctrl-check_allow_multi_req",
+      "kind": "field",
+      "of": "_event",
+      "status": "removed",
+      "replacement": "s_ctrl-check_queue_last",
+      "since": "1.144.1"
+    }
+  ]
+}
