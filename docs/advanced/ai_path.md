@@ -56,10 +56,12 @@ npx skills add abap2UI5/abap2UI5
 What you should see: ask the assistant "which abap2UI5 tools do you have?".
 It lists tools such as `examples`, `app_guide` and `validate_view`.
 
-If it lists none, the server is not running. A project's own `.mcp.json` is
-not enough on its own: Claude Code asks once whether to trust a server it
-finds there, and a session with nobody to answer, such as a cloud session,
-may not start it at all. Approve it in advance in `.claude/settings.json`:
+If it lists none, the server is not registered for this project. Install the
+plugin or run the command above. A project with its own `.mcp.json` brings
+the server along. On your computer, Claude Code first asks once whether you
+trust the folder, then once more for the server. This setting in
+`.claude/settings.json` approves the server in advance, so only the first
+question remains:
 
 ```json
 {
@@ -67,6 +69,7 @@ may not start it at all. Approve it in advance in `.claude/settings.json`:
 }
 ```
 
+A cloud session on claude.ai starts the server from `.mcp.json` by itself.
 A project made from the
 [app template](https://github.com/abap2UI5/app-template) carries both files,
 and its `AGENTS.md` tells the assistant which tool to call when.
