@@ -62,6 +62,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { frameworkRef } from './lib/release.mjs';
+import { skip } from './lib/skip.mjs';
 import { fetchInterface, interfaceSource, parseInterface, interfacePath, exitInterfacePath, exitClassPath } from './lib/client-interface.mjs';
 import { prose, cell } from './lib/api-markdown.mjs';
 import { parseExitDefaults, renderExitBlock, EXIT_FLOOR } from './lib/user-exit.mjs';
@@ -95,10 +96,7 @@ try {
   console.log(`read ${interfaceSource(REF)}`);
 } catch (err) {
   console.log(`z2ui5_if_client at ${REF}: not resolved (${err.message})`);
-  if (CHECK) {
-    console.log('SKIPPED: nothing was verified.');
-    process.exit(0);
-  }
+  if (CHECK) skip('nothing was verified.');
   console.error('nothing to generate from - try again with a network, or point A2UI5_HOME at a clone of abap2UI5/abap2UI5.');
   process.exit(1);
 }
@@ -115,10 +113,7 @@ try {
   console.log(`read ${interfaceSource(REF, undefined, exitClassPath)}`);
 } catch (err) {
   console.log(`z2ui5_if_ui5_exit at ${REF}: not resolved (${err.message})`);
-  if (CHECK) {
-    console.log('SKIPPED: nothing was verified.');
-    process.exit(0);
-  }
+  if (CHECK) skip('nothing was verified.');
   console.error('nothing to generate from - try again with a network, or point A2UI5_HOME at a clone of abap2UI5/abap2UI5.');
   process.exit(1);
 }

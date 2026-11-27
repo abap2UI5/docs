@@ -36,6 +36,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { readSites } from './lib/release.mjs';
+import { strict } from './lib/skip.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const API = 'https://api.github.com/repos/abap2UI5/abap2UI5/releases/latest';
@@ -119,8 +120,14 @@ if (problems.length) {
  * run compared the three places against each other and against nothing else —
  * saying "names the release that exists" there claims exactly the thing the
  * line above has just reported as UNVERIFIED, which is how a green run comes
- * to mean less than a reader thinks. Still exit 0 either way: an unreachable
- * API is not a documentation defect. */
+ * to mean less than a reader thinks. On a laptop that is exit 0: an
+ * unreachable API is not a documentation defect. Under CI it is exit 1
+ * (lib/skip.mjs): the deploy is the one place the comparison has to happen. */
+if (!latest && strict()) {
+  console.error('\nSKIPPED under CI: the release API was not reached, so the release was not checked.');
+  console.error('A gate that verified nothing fails here rather than pass - re-run once the API is reachable.');
+  process.exit(1);
+}
 console.log(latest
   ? 'the documentation names the release that exists - OK'
   : 'the three places agree with each other - OK (against the actual release: not checked)');

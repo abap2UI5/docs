@@ -15,7 +15,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { summarise, describe } from '../scripts/lib/pages.mjs';
+import { summarise, describe, fenceTracker } from '../scripts/lib/pages.mjs';
 
 test('a page says what it declares, whatever its first paragraph is', () => {
   const body = '---\ndescription: The one sentence this page chose\n---\n\n# Title\n\nSomething else entirely.';
@@ -95,4 +95,10 @@ test('a question mark and an exclamation mark end a sentence too', () => {
     'The view is a string the app produced for this request. Which raises a question: what stops the next one '
       + 'from producing another?',
   );
+});
+
+test('a fence is closed only by its own mark, at least as long, with nothing after it', () => {
+  const inFence = fenceTracker();
+  const lines = ['text', '````md', '```abap', '[a](/x)', '```', 'still inside', '````', '[b](/y)', '~~~', '```', '~~~', 'out'];
+  assert.deepEqual(lines.map((l) => inFence(l)), [false, true, true, true, true, true, true, false, true, true, true, false]);
 });

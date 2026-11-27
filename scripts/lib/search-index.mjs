@@ -36,7 +36,7 @@
 import fs from 'node:fs';
 import { entriesOf, loadCatalogue } from './catalogue.mjs';
 import { sidebarPages, fileOf, describe, title, headings, terms, SITE } from './pages.mjs';
-import { familyEntries } from './search-family.mjs';
+import { familyEntries, SITES } from './search-family.mjs';
 
 /** The three sample repositories, and where a reader is sent for a hit. */
 export const CORPORA = [
@@ -219,4 +219,66 @@ export async function buildIndex(root, { fetchFn = globalThis.fetch, log = () =>
   areas.push(...family.areas);
 
   return { built: new Date().toISOString(), areas, entries: enrich(entries) };
+}
+
+/* ── IS THE INDEX WHOLE ───────────────────────────────────────────────────
+ *
+ * Every source may fail and costs its rows - but a source that fails costs
+ * them SILENTLY: the build goes green, the deploy publishes an index without
+ * the addons or without a sample catalogue, and nobody learns of it until a
+ * reader concludes the family has nothing on their question. So the areas
+ * the build came back with are held to the list of areas a complete index
+ * carries, and to the index that is published right now: an area with no
+ * entry at all, or one that lost more than half of its entries since the last
+ * deploy, is a source that broke, not a family that shrank.
+ * scripts/generate-search.mjs fails on it under CI and warns elsewhere.
+ */
+
+/** Every area a complete index carries, by the label the index reports. */
+export const EXPECTED_AREAS = [
+  'Documentation',
+  ...CORPORA.map((c) => c.label),
+  'Go to',
+  'Repositories',
+  ...SITES.map((s) => s.label),
+  'API',
+  'Framework source',
+];
+
+/** Where the index the boxes read today is published. */
+export const PUBLISHED_INDEX = 'https://abap2ui5.github.io/docs/search-index.json';
+
+/**
+ * What is missing from `areas` (the `areas` of an index just built): every
+ * expected area without an entry, and - when the published index's `areas`
+ * are at hand - every area that shrank below `shrink` of its published count.
+ * An empty list is a whole index.
+ */
+export function areaProblems(areas, { expected = EXPECTED_AREAS, published = null, shrink = 0.5 } = {}) {
+  const count = new Map();
+  for (const a of areas || []) count.set(a.label, (count.get(a.label) || 0) + (a.count || 0));
+  const problems = [];
+  for (const label of expected) {
+    if (!count.get(label)) problems.push(`${label}: no entry in this index - its source failed`);
+  }
+  for (const p of published || []) {
+    const now = count.get(p.label) || 0;
+    if (now > 0 && p.count > 0 && now < p.count * shrink) {
+      problems.push(`${p.label}: ${now} entr${now === 1 ? 'y' : 'ies'}, the published index has ${p.count} - shrank by more than half`);
+    }
+  }
+  return problems;
+}
+
+/** The `areas` of the published index, or null when it cannot be read -
+ *  the comparison is a second opinion, never a reason to fail by itself. */
+export async function publishedAreas({ fetchFn = globalThis.fetch, url = PUBLISHED_INDEX } = {}) {
+  try {
+    const res = await fetchFn(url, { signal: AbortSignal.timeout(20000) });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return Array.isArray(json.areas) ? json.areas : null;
+  } catch {
+    return null;
+  }
 }
