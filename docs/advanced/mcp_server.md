@@ -10,12 +10,12 @@ system: activate the class, launch the app, look at the screen. So the agent
 writes something plausible, and you are the one who finds out.
 
 [**abap2UI5/mcp-server**](https://github.com/abap2UI5/mcp-server) closes that
-loop. It is published as `@abap2ui5/mcp-server` on npm — 1.2.0 is the current
-release, and the four `app_*` tools, `add_agent_setup` and `migrate_report` are
-part of it. It is an [MCP](https://modelcontextprotocol.io) server: a small
-program your AI client starts in the background, which gives the agent a set of
-tools it can call by itself. With those tools the agent can check a view and
-**look at a picture of it**. It can deploy the class into a local sandbox,
+loop. It is published as `@abap2ui5/mcp-server` on npm — 1.3.0 is the current
+release, and the four `app_*` tools, `add_agent_setup`, `migrate_report` and
+`addons` are part of it. It is an [MCP](https://modelcontextprotocol.io) server:
+a small program your AI client starts in the background, which gives the agent a
+set of tools it can call by itself. With those tools the agent can check a view
+and **look at a picture of it**. It can deploy the class into a local sandbox,
 transpile it to Node beside the framework, boot the app in a headless browser
 and read the errors. All of that runs on your machine, with **no SAP system
 involved**.
@@ -69,13 +69,12 @@ level whose tools you want.
 
 ### Level 0 — no checkout at all
 
-The knowledge tools (`app_guide`, `api_reference`, `pitfalls`,
-`capabilities`, `examples`, `read_example`, `docs_search`, `scaffold_app`,
-`generation_rules`) read files the repositories commit. So does `addons`, from
-the release after 1.2.0 on. With no checkout
-there, they read the same files from GitHub, kept for a day in a per-user
-cache. `A2UI5_MCP_REMOTE=0` or `A2UI5_MCP_OFFLINE=1` switches that off. The
-docs mirror lists its pages through GitHub's API, which allows 60
+The knowledge tools (`app_guide`, `api_reference`, `pitfalls`, `capabilities`,
+`examples`, `read_example`, `docs_search`, `scaffold_app`, `generation_rules`)
+read files the repositories commit. So does `addons`, from 1.3.0 on. With no
+checkout there, they read the same files from GitHub, kept for a day in a
+per-user cache. `A2UI5_MCP_REMOTE=0` or `A2UI5_MCP_OFFLINE=1` switches that off.
+The docs mirror lists its pages through GitHub's API, which allows 60
 unauthenticated requests an hour; a `GITHUB_TOKEN` in the environment raises
 that.
 
@@ -231,7 +230,7 @@ JSON to write — and adds a second one of its own for your real systems.
 | `add_agent_setup` | Set up an **existing** project for AI work, from app-template: `AGENTS.md`, the skills, `.mcp.json`, both lint configs and the CI job, written into `project_dir`. Never overwrites a file; `package.json` and `.gitignore` only gain what is missing |
 | `examples` | Search the three sample catalogs for a working use of a control or a pattern. Answers with a class to read, never with a snippet to trust |
 | `read_example` | The source of a sample an `examples` hit named — the whole class, from the checkout or fetched from GitHub |
-| `addons` | Whether an [add-on](/resources/addons) already does it, from the catalog of abap2UI5-addons: every add-on in groups, the ones matching a `query`, or one `repo` in full — the classes an app calls, a usage snippet and the abapGit repositories to install, in order. Not in 1.2.0; it comes with the release after it |
+| `addons` | Whether an [add-on](/resources/addons) already does it, from the catalog of abap2UI5-addons: every add-on in groups, the ones matching a `query`, or one `repo` in full — the classes an app calls, a usage snippet and the abapGit repositories to install, in order. Since 1.3.0 |
 | `api_reference` | The client API an app calls, `z2ui5_if_client`, parsed live **with its ABAP-Doc**: methods, parameters, defaults and the `cs_*` constants, looked up instead of guessed |
 | `docs_search` | Full-text search over this documentation: page, heading, snippet and the published URL |
 | `generation_rules` | The rulebook for porting a UI5 demo-kit sample into the samples-controls corpus — a different job from `app_guide` |
@@ -297,10 +296,10 @@ of the server lists the variables and what to know before switching it on.
 
 ### Writing a class to the system
 
-::: warning Experimental, opt-in, and not in a release yet
-The three tools below are not part of 1.2.0; they come with the release after
-it. They have been tested only against a simulated system in the server's own
-test suite, **never against a real SAP system**. Expect differences on one,
+::: warning Experimental and opt-in
+The three tools below are part of the server from 1.3.0 on. They have been
+tested only against a simulated system in the server's own test suite,
+**never against a real SAP system**. Expect differences on one,
 use a development system, and read every answer.
 :::
 
