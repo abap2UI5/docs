@@ -39,6 +39,7 @@ person reads the page. Do not put "as an AI, …" prose back into `docs/`.
 | `scripts/generate-controls-reference.mjs` | Generates the custom-control reference — the block in `docs/resources/controls.md` — from `bundle/webapp/cc/*.js` (`app/webapp/cc/` before the move) on the framework branch this site tracks; `scripts/lib/controls.mjs` runs each module in an empty vm and records what it hands `extend( )`; `--check` is the freshness gate |
 | `scripts/check-audience.mjs` | Every prose line against the phrases of the decision-maker site (`scripts/lib/audience.mjs`): the manual is for developers and links https://abap2ui5.github.io/docs-manager/ instead of arguing it |
 | `scripts/lib/lifecycle.mjs` | The third half of `check-conventions.mjs`: in a runnable app class, `view_display( )` only under `check_on_init( )` / `check_on_navigated( )`; the `<!-- lifecycle: allow unconditional display — … -->` marker is the exception, and a stale one fails |
+| `scripts/report-changes.mjs` | **A report, not a gate** (`npm run report:changes`): for every entry of the framework's `changelog.txt` that changes, removes or adds something, the names it carries and every page that mentions one, marked when the page has not been changed since the release date. `--release x.y.z`, `--unreleased`, `--stale`, `--all`. `scripts/lib/changes.mjs` reads the changelog and the names, pinned by `test/changes.test.mjs`. Run it after every release bump - see *A sentence about behaviour is checked by nobody*, below |
 | `scripts/lib/user-exit.mjs` | Reads `z2ui5_if_ui5_exit` and the defaults `z2ui5_cl_ui5_user_exit` assigns, for the generated block on `advanced/extensibility/user_exits.md` (written by `generate-api-reference.mjs`) |
 
 ## Build & verify — run before every commit
@@ -298,6 +299,26 @@ Delete a stub when the old URL has stopped receiving traffic, not before.
   working tree is never read, because the branch a neighbouring checkout
   happens to be on must not change a gate's verdict. Every run prints where
   the interface came from — read the line before trusting an OK.
+
+- **A sentence about behaviour is checked by nobody.** Every gate here is a
+  question about names or form: the method exists, the example compiles, the
+  page is wrapped. 1.151.0 changed what `hash_set( )` does without a
+  listener, what `set_title` titles inside the launchpad, how often
+  `set_config_http_post` is asked and how the draft table grows - every name
+  stayed valid, every gate stayed green, and about twenty-five pages went on
+  describing 1.150 until all 155 were read against the source on 2026-11-27.
+  Most of the drift sat in topics told on several pages (the content of the
+  branch `cloud` on seven, the draft mechanics on four), so the rule that
+  came out of it is **one owner page per topic, the others link**: the
+  branches on `configuration/installation.md`, the draft table on
+  `configuration/sizing.md`, the URL hash on
+  `cookbook/event_navigation/navigation/hash.md`, titles on
+  `cookbook/browser_interaction/title.md`. What a machine can do is name the
+  pages to read again: `npm run report:changes` after a release bump lists,
+  per changelog entry, every page that mentions a name the entry carries. It
+  is a worklist, not a verdict - a listed page is where a sentence about the
+  change would be, and a gate that went red until forty files were touched
+  would teach people to touch files.
 
 - **A link to a neighbouring site needs `target="_self"`, and looks fine
   without it.** The playground, the catalogue and the linter's rule pages are

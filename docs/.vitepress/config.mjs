@@ -170,7 +170,7 @@ export default defineConfig({
     // the released version with what belongs to it. The version is what
     // check:version reads (scripts/lib/release.mjs).
     nav: [
-      { text: "Guide", link: "/get_started/about", activeMatch: "^/(get_started|configuration|advanced)/" },
+      { text: "Guide", link: "/get_started/about", activeMatch: "^/(get_started|configuration|advanced|integration|technical)/" },
       { text: "Tutorial", link: "/tutorials/", activeMatch: "^/tutorials/" },
       { text: "Cookbook", link: "/cookbook/", activeMatch: "^/cookbook/" },
       { text: "API", link: "/resources/api", activeMatch: "^/resources/" },
@@ -485,6 +485,16 @@ export default defineConfig({
           // and it links every other page of the chapter
           { text: "Go-Live Checklist", link: "/configuration/productive_usage" },
           { text: "Deployment Scenarios", link: "/configuration/installation" },
+          // The two ABAP Cloud pages stand directly under Deployment
+          // Scenarios, which sends a reader to them: where to install comes
+          // before how to configure. They stood last, after Logout and
+          // Debugging, where a reader on a cloud system met every on-premise
+          // page first. ABAP Cloud says what differs on BTP ABAP Environment
+          // and S/4 Public Cloud and links the detailed pages; S/4 Public
+          // Cloud holds the steps. (The Launchpad, Work Zone and Mobile Start
+          // are under Integration; their URLs stayed.)
+          { text: "ABAP Cloud", link: "/configuration/abap_cloud" },
+          { text: "S/4 Public Cloud", link: "/configuration/s4_public_cloud" },
           {
             text: "Setup",
             link: "/configuration/setup",
@@ -515,14 +525,6 @@ export default defineConfig({
           { text: "Sizing", link: "/configuration/sizing" },
           { text: "Logout", link: "/configuration/logout" },
           { text: "Debugging", link: "/configuration/debugging" },
-          // The Launchpad, Work Zone and Mobile Start moved to Integration,
-          // where the other places an app can appear are; their URLs stayed.
-          // What was left of "ABAP Cloud, BTP" was this one page, so it
-          // stands in the row rather than in a group of one.
-          // what differs on BTP ABAP Environment and S/4 Public Cloud, with
-          // links to the detailed pages; S/4 Public Cloud holds the steps
-          { text: "ABAP Cloud", link: "/configuration/abap_cloud" },
-          { text: "S/4 Public Cloud", link: "/configuration/s4_public_cloud" },
         ],
       },
       {
