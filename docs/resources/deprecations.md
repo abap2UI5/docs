@@ -38,6 +38,7 @@ npx @abap2ui5/linter src --fix-dry-run  # show what it would change, write nothi
 | `obsolete-frontend-event` | `_event_client( )` | rewrites to `follow_up_action( )` |
 | `unconverted-abap-boolean` | an ABAP boolean written into a view as `'X'` | moves it onto `a( b = … )` |
 | `non-released-api` | anything outside the released `src/02` package | reported only |
+| `removed-api` | a removed name no row above covers — a class, a `client->` method, a `cs_event` constant, a parameter — with the release that removed it and what to write instead | reported only |
 
 What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
