@@ -116,6 +116,20 @@ working from what abap2UI5 is today rather than from what it recalls. The
 last one is for the names it recalls anyway: most of what was written about
 abap2UI5 before 1.143.0 names an API that has been replaced.
 
+## When the Assistant Finds a Bug
+
+An assistant that hits a defect of abap2UI5 or its tools — not of the app it
+is writing — tends to work around it and move on, and the next developer runs
+into the same thing. Ask it to say so instead: to show the defect with the
+smallest app that reproduces it, then to draft the issue for you. With the
+[MCP server](/advanced/mcp_server) from its release after 1.3.0, that is one
+tool call, `report_issue`: it opens the right repository's bug form with the
+fields filled in and lists the open issues that look the same. It posts
+nothing; you read the draft and file it. Without the server, the bug form of
+[abap2UI5](https://github.com/abap2UI5/abap2UI5/issues/new?template=bug_report.yml)
+takes the same fields. A report with a class that reproduces the bug is the one
+a maintainer can act on the same day.
+
 ## Next Steps
 
 - [AI Studio](https://abap2ui5.github.io/browser-playground/ai/) — an app from a

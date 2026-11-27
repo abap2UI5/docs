@@ -1,0 +1,38 @@
+name: Bug report
+description: A page is wrong, out of date, or its example does not compile or run
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A bug of the framework itself belongs in abap2UI5/abap2UI5. Drafted by an AI assistant? The MCP
+        server's `report_issue` tool fills this form in - read it before you submit. Its field ids
+        (description, reproduction, version, environment, context) are what it fills; keep them.
+  - type: textarea
+    id: description
+    attributes:
+      label: What is wrong?
+      description: The page (its URL) and what it says - and what is true instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: How to see it
+      description: The example as you ran it, and the error it gave; or the API name the page uses and where the current one is documented.
+      render: abap
+  - type: input
+    id: version
+    attributes:
+      label: abap2UI5 version
+      description: The release you compared the page with (z2ui5_if_app=>version).
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Only when it matters - system release, ABAP Cloud, UI5 version.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Whether an AI assistant found it (which one), and anything else.
