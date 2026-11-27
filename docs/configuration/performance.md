@@ -55,6 +55,9 @@ The release notes document measured effects of this work:
 | --- | --- | --- |
 | 1.147.0 | a bound table of flat rows and a flat structure are written to JSON directly | a start roundtrip with 4000 bound rows: 1.1 s to 0.6 s |
 | 1.147.0 | the developer tools are a second bundle, loaded the first time they open | the page the browser loads first is about a fifth smaller |
+| 1.151.0 | the frontend is a cached, smaller bundle that loads while UI5 boots | the first view is on screen about 0.5 s earlier |
+| 1.151.0 | the custom controls are a bundle of their own, loaded when a view uses one | not measured |
+| 1.151.0 | a draft holds only the rows it needs and no type descriptors, and a chain is pruned on every save | not measured |
 
 The figures are the framework's own, each from one setup. Your system has
 others; the monitor below gives them.
@@ -200,12 +203,13 @@ does not exist ([Statefulness](/cookbook/expert_more/statefulness)).
 
 ## The Draft Table
 
-Every roundtrip of a stateless app inserts a row into `Z2UI5_T_01` and leaves
-the previous one in place; rows older than `draft_exp_time_in_hours` (4 by
-default) are deleted on every app start. The table settles at the roundtrips
-of one expiry window, times the size of a row. The size of a row is the size
-of the instance, which is why the section above matters twice. The table has
-no secondary index, on purpose: an index would cost time on every write. The
+Every roundtrip of a stateless app that changed something inserts a row into
+`Z2UI5_T_01`. A chain of roundtrips keeps its two newest rows, and rows older
+than `draft_exp_time_in_hours` (4 by default) are deleted on every app start.
+How large the table gets from that is on
+[Sizing](/configuration/sizing#draft-table-growth). The size of a row is the
+size of the instance, which is why the section above matters twice. The table
+has no secondary index, on purpose: an index would cost time on every write. The
 expiry, the cleanup and what to watch are on the
 [Basis Runbook](/configuration/runbook#the-draft-table-z2ui5-t-01).
 

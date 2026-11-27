@@ -21,6 +21,7 @@
     "check:line-length": "node scripts/check-line-length.mjs",
     "check:vocabulary": "node scripts/check-vocabulary.mjs",
     "report:sentences": "node scripts/report-sentences.mjs",
+    "report:changes": "node scripts/report-changes.mjs",
     "fix:line-length": "node scripts/check-line-length.mjs --fix",
     "fmt:chains": "node scripts/check-conventions.mjs --fix",
     "check:playground": "node scripts/check-playground.mjs",
@@ -46,7 +47,7 @@
     "fix:spelling": "node scripts/fix-spelling.mjs"
   },
   "devDependencies": {
-    "@abap2ui5/linter": "^0.11.3",
+    "@abap2ui5/linter": "^0.12.1",
     "@abaplint/cli": "^2.120.91",
     "dictionary-en": "^4.0.0",
     "nspell": "^2.1.5",

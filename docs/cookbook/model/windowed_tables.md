@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: Windowed tables in abap2UI5 - client->window_bind_tab( ) binds the rows the app has loaded and the total, and the list binding asks the app for more rows, or for a new sort or filter, the way an OData service is asked. In this shape from the next release on; 1.149.0 and 1.150.0 had a server-side window.
+description: Windowed tables in abap2UI5 - client->window_bind_tab( ) binds the rows the app has loaded and the total, and the list binding asks the app for more rows, or for a new sort or filter, the way an OData service is asked. In this shape from 1.151.0 on.
 ---
 # Windowed Tables
 

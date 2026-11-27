@@ -71,9 +71,10 @@ ENDCLASS.
 | `style` | the button type of the browse button, as `sap.ui.unified.FileUploader` takes it (`Emphasized`, `Transparent`, …) |
 | `checkDirectUpload` | `true` sends the file right after it was picked and renders no *Upload* button |
 | `multiple` | let the user pick several files; each one arrives in its own `upload` event, in order |
+| `maximumFileSize` | the largest file that is read, in megabytes; `0`, the default, reads every file. A larger file is not read into `value` |
 | `enabled`, `visible`, `tooltip` | as on any control |
 
-The control has one event, `upload`. The control consumes the inner control's `change` itself: it remembers the picked files and enables the *Upload* button. So there is no event to bind for it. With `checkDirectUpload` the pick is the upload.
+The control has two events. `upload` is the file arriving. `fileSizeExceed` fires once for each picked file over `maximumFileSize`, with the parameters `fileName` and `fileSize` (in megabytes), so the backend can tell the user which file was refused: `client->_event( val = `TOO_LARGE` t_arg = VALUE #( ( `${$parameters>/fileName}` ) ) )`. The control consumes the inner control's `change` itself: it remembers the picked files and enables the *Upload* button. So there is no event to bind for it. With `checkDirectUpload` the pick is the upload.
 
 ## Download
 

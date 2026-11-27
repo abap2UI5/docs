@@ -62,6 +62,32 @@ ENDCLASS.
 
 Swap `<Text>` for any other control from the SDK; the framework doesn't care.
 
+### Page Transitions
+
+By default a new main view replaces the old one at once. `view_display( )`
+takes a `transition`, one of the names `sap.m.NavContainer` knows, and the
+old view then stays on screen until the new one is built and leaves with the
+animation:
+
+```abap
+client->view_display( val        = view->stringify( )
+                      transition = client->cs_transition-slide ).
+```
+
+| `cs_transition` | What plays |
+|---|---|
+| `slide` | the new page comes in from the right |
+| `base_slide` | the classic full-width slide; a UI5 release before 1.74 plays `slide` |
+| `fade` | the pages cross-fade |
+| `flip` | the page turns over |
+| `show` | no animation, but the old page stays up until the new one is built |
+
+Pass it where the *screen* changes, in the `check_on_navigated( )` branch, and
+not on every re-render. The way back needs nothing: after `nav_app_leave( )`
+or a browser Back under hash routing, the page being left runs the transition
+it arrived with in reverse. An app that steps back between its own screens,
+the Previous button of a wizard, says so with `transition_back = abap_true`.
+
 ## The View Builder
 
 Writing raw XML by hand quickly turns cumbersome. abap2UI5 ships

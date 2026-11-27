@@ -13,8 +13,8 @@ longer ships live in one place,
 come a declarative timer, new navigation helpers, a test harness for apps,
 smaller drafts and a faster first page load - and new features in the popups,
 layout-management, table-maintenance and custom-controls add-ons. The
-[Release Notes](/resources/changelog) list the release once it is tagged; this
-page is the overview for the update.
+[Release Notes](/resources/changelog#_1-151-0) list the release, 1.151.0 of
+2026-11-25; this page is the overview for the update.
 
 ## Do This When You Update
 
@@ -32,7 +32,7 @@ first three items.
   `standard_new`, `cloud`, ...), remove it from abapGit **without deleting
   its objects**, then pull abap2UI5. The old handler `Z2UI5_CL_LP_HANDLER` is
   named by nothing afterwards and can be deleted. See
-  [Fiori Launchpad](/configuration/launchpad#coming-from-the-frontend-repository).
+  [Fiori Launchpad](/configuration/installation#frontend-branches).
 - [ ] **ABAP Cloud: pull the branch `cloud`.** It is generated from `main` on
   every push and carries the HTTP service, its handler, the IAM objects and the
   app as a Fiori project in `app/`. It replaces the branch `cloud_new` of the
@@ -286,7 +286,7 @@ first three items.
 - [Deprecations](/resources/deprecations) - every superseded name with its
   successor
 - [Release Notes](/resources/changelog) - every release
-- [The changelog on DEV](https://github.com/abap2UI5/abap2UI5/blob/DEV/changelog.txt) -
-  the full list of changes, section "unreleased"
+- [The changelog of the framework](https://github.com/abap2UI5/abap2UI5/blob/main/changelog.txt) -
+  the same list at its source, section "v1.151.0"
 - [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) - the
   legacy objects and how to switch to the repository

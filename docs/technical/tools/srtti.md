@@ -103,4 +103,4 @@ S-RTTI plugs directly into the `z2ui5` namespace and installs with abap2UI5 auto
 
 ## Updates
 
-Every S-RTTI update and bug fix flows into abap2UI5 automatically via GitHub Actions and the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository, so you always run the latest version.
+S-RTTI updates and bug fixes reach abap2UI5 through the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository: once a month a GitHub Actions workflow of the framework refreshes the copy and opens a pull request with the difference.

@@ -43,6 +43,9 @@ draft, so the only cost is a hash that changes. The limit is the lifetime of
 the app draft: once it expires, the link no longer restores anything. The
 lifetime is `draft_exp_time_in_hours` in the
 [User Exits](/advanced/extensibility/user_exits), four hours by default.
+Within that lifetime every link stays good: the per-save cleanup of older
+drafts (`draft_keep_per_chain`) leaves an app with an active app state alone,
+because its URL names every draft.
 
 ## A Complete App
 

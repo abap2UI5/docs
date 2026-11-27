@@ -25,15 +25,15 @@ fall-back to the defaults.
 
 Both methods take an `is_context` importing parameter describing the request
 and a `cs_config` changing parameter holding the configuration. Neither is
-called exactly once: `set_config_http_get` runs for the page and again for the
-headers of every later response, `set_config_http_post` runs up to three times
-for one roundtrip. So neither may keep state or write to the database: read
-configuration, set fields, return.
+promised to run exactly once: `set_config_http_get` runs for the page and
+again for the headers of every later response, and `set_config_http_post` is
+asked once per request but again after it raised. So neither may keep state or
+write to the database: read configuration, set fields, return.
 
 | Method | Called when | How often | Must be |
 |---|---|---|---|
 | `set_config_http_get` | the browser asks for the page (GET), and for every later response, to read its `t_security_header` | at most once per request | cheap, and without side effects |
-| `set_config_http_post` | on every POST and HEAD: the CSRF check, the monitor switch, the draft cleanup, the error response | up to three times per roundtrip | cheap and idempotent: the same input gives the same output |
+| `set_config_http_post` | on every POST and HEAD: the CSRF check, the monitor switch, the draft cleanup, the error response | once per request; again after an exit that raised | cheap and idempotent: the same input gives the same output |
 
 **`set_config_http_get`** runs at most once per request. On the page request —
 the GET that fetches the HTML shell — the result builds the page: UI5 source
@@ -43,9 +43,8 @@ the same result is read once more for its `t_security_header`, which every
 response of the handler carries. The handler caches the structure per
 request, so the method is not called a second time for the headers.
 
-**`set_config_http_post`** is what the backend decides per roundtrip. The
-framework asks for it wherever it needs one of its fields, with a fresh empty
-structure each time:
+**`set_config_http_post`** is what the backend decides per roundtrip. Several
+places of one request read its fields:
 
 - the CSRF check on every POST and HEAD, before any app code runs
 - the roundtrip monitor, to see whether it is switched on
@@ -53,9 +52,12 @@ structure each time:
 - the error response, to decide how much of an exception the browser may see
 - the start page's check of the same flag
 
-That is several calls in one request, so the method has to be cheap and
-idempotent: the same input gives the same output, and nothing changes because it
-ran.
+The framework asks the exit once per request and hands the answer to all of
+them. Two cases call it again: an exit that raised is asked by the next
+reader, and a reader outside an HTTP request asks every time. The answer is
+never kept beyond the request, so a switch the exit flips takes effect on the
+next roundtrip. The method still has to be cheap and idempotent: the same
+input gives the same output, and nothing changes because it ran.
 
 The example sets the theme and keeps drafts twice as long as the default. A
 class with the settings a productive system needs is on
@@ -141,6 +143,13 @@ field is explained on another page, that page is the place to read:
 - `draft_exp_time_in_hours` — how long the backend keeps a draft before the
   cleanup on an app's first start deletes it. The default is 4 hours, and a
   value of 0 or less falls back to it, so the expiry is always positive.
+- `draft_keep_per_chain` — how many drafts of one app's chain of roundtrips
+  survive each save. The default is 2; values from 2 to 50 are taken as they
+  are, 1 is raised to 2, and 0 switches the pruning off, so every draft stays
+  until it expires. What is never pruned, and what the setting does to the
+  size of the table, is on
+  [Sizing](/configuration/sizing#draft-table-growth). Available from abap2UI5
+  1.151.0 on.
 
 ## Reference
 

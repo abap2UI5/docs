@@ -176,23 +176,43 @@ IF client->check_on_event( `DELETE` ).
   lo_confirm->mv_question = `Delete this entry?`.
   client->nav_app_call( lo_confirm ).
 ELSEIF client->check_on_navigated( ).
-  TRY.
-      DATA(lo_prev) = CAST zcl_sample_confirm( client->get_app_prev( ) ).
-      IF lo_prev->confirmed( ) = abap_true.
-        delete_entry( ).
-      ENDIF.
-    CATCH cx_sy_move_cast_error.
-      " not back from the popup - on the first start get_app_prev( )
-      " is this app itself
-  ENDTRY.
+  IF client->check_on_nav_back( ).
+    " back from the popup: get_app_prev( ) is the instance that just left
+    DATA(lo_prev) = CAST zcl_sample_confirm( client->get_app_prev( ) ).
+    IF lo_prev->confirmed( ) = abap_true.
+      delete_entry( ).
+    ENDIF.
+  ENDIF.
   view_display( ).
 ENDIF.
 ```
 
-Two things carry the whole pattern. The popup keeps its answer in an
-**attribute** of its own instance, and the caller reaches that instance with
-`get_app_prev( )`. No view binds the answer, so the attribute stays protected
-and the caller reads it through `confirmed( )`.
+Three things carry the whole pattern. The popup keeps its answer in an
+**attribute** of its own instance. `check_on_nav_back( )` is true on the one
+roundtrip on which the caller gets the screen back from an app it called, and
+on no other: not on the first start, and not on a restore. And on that
+roundtrip `get_app_prev( )` is the popup instance. No view binds the answer,
+so the attribute stays protected and the caller reads it through
+`confirmed( )`.
+
+A caller that opens the same popup for several purposes, or several popups,
+names the purpose in the call and reads it back on the return, so no cast
+decides which one came back:
+
+```abap
+client->nav_app_call( app = lo_confirm
+                      tag = `DELETE` ).
+
+" on the roundtrip the popup comes back on
+CASE client->get_nav_tag( ).
+  WHEN `DELETE`.
+    " ...
+ENDCASE.
+```
+
+The tag is the caller's own. The popup class never sees it and needs no change
+for it. [Navigation](/cookbook/event_navigation/navigation/inner_app) has the
+details of both calls.
 
 There is a second way to get the answer back. The popup can hand it over
 when it leaves: `nav_app_leave( event = … r_data = … )` gives the caller an

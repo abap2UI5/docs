@@ -4,11 +4,11 @@ description: abap2UI5 on ABAP Cloud - BTP ABAP Environment and S/4 Public Cloud 
 ---
 # ABAP Cloud
 
-ABAP Cloud is the development model of the **BTP ABAP Environment** and of
-**S/4 Public Cloud**: code in the language version *ABAP for Cloud
-Development*, using released APIs only. abap2UI5 runs there as an ordinary
-ABAP Cloud development - classes, interfaces and one table, no BSP, no
-function group. This page collects what is different there and links the
+ABAP Cloud is the development model of the **BTP ABAP Environment** and of **S/4
+Public Cloud**: code in the language version *ABAP for Cloud Development*, using
+released APIs only. abap2UI5 runs there as an ordinary ABAP Cloud development -
+classes, interfaces, one table, and an HTTP service with its IAM objects; no
+BSP, no function group. This page collects what is different there and links the
 pages that cover each step in detail.
 
 | I want to… | Section |
@@ -64,8 +64,9 @@ The steps, in order - each one is shown with screenshots on
 Environment as well:
 
 1. **Pull with abapGit for Eclipse.** Pull the branch `cloud` of abap2UI5
-   into a package of your own - not a release tag, whose `src/03` is the
-   Standard ABAP service. Folder logic `PREFIX`, and a
+   into a package of your own - not a release tag
+   ([Deployment Scenarios](/configuration/installation#frontend-branches)
+   says what each branch carries). Folder logic `PREFIX`, and a
    short package name: the sub-packages are derived from it, and a package
    name has 30 characters at most
    ([S/4 Public Cloud](/configuration/s4_public_cloud#_1-install-abap2ui5-with-abapgit)).
@@ -184,12 +185,12 @@ the pages of this site meet:
 The HTTP service needs `S_DEVELOP`, so a business user reaches an app through
 a tile. That takes two things:
 
-- **The app**, deployed from VS Code with the SAP Fiori tools - the folder
-  `app` of the branch `cloud` of abap2UI5
-  ([Deployment Scenarios](/configuration/installation#frontend-branches),
-  [S/4 Public Cloud](/configuration/s4_public_cloud#_4-deploy-the-ui5-app-optional)).
-- **The chain of objects behind a tile**: launchpad app descriptor item, IAM
-  app, business catalog, business role, then space and page
+- **The app**, deployed with the SAP Fiori tools - the folder `app` of the
+  branch `cloud` of abap2UI5
+  ([S/4 Public Cloud](/configuration/s4_public_cloud#_4-deploy-the-ui5-app-optional)).
+- **The chain of objects behind a tile**: the IAM app and the business
+  catalog the pull brings, then a business role, a space and a page of your
+  own
   ([S/4 Public Cloud](/configuration/s4_public_cloud#_5-give-business-users-access-optional)).
 
 To show the apps in SAP Build Work Zone instead, a BTP destination points at

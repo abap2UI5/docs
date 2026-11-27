@@ -191,15 +191,13 @@ in-app step to take, and a plain Back would fall out of the app entirely. The
 fallback is then written as a **replace** instead, so the user lands on the
 start page rather than on whatever was in the browser before.
 
-::: warning Without a listener, `hash_set( )` writes a suffix
-With no `hash_attach_changed` listener registered, the value of
-`hash_set( )` is **appended** to the hash the page already has. It does not
-replace it. ``hash_set( `&my-app-state=detail` )`` is that form, and
-`hash_replace( )` does the same, so writing a whole route on every roundtrip
-makes the URL grow. Registering the listener makes the value the *whole* app
-hash, and it is also what lets browser Back reach your app at all. The history
-of the two spellings is on
-[Deprecations](/resources/deprecations#the-url-api-is-hash-and-app-state-now).
+::: warning Without a listener, nothing is written
+`hash_set( )` and `hash_replace( )` write only for an app that owns the hash.
+With no `hash_attach_changed` listener registered, and under `hash_routing`,
+where the hash is the router's, the call writes nothing and the frontend says
+so in its log. Register the listener first; the same roundtrip is fine. The
+value is always the *whole* app hash (`/detail`), and the listener is also
+what lets browser Back reach your app at all.
 :::
 
 For a complete example, see sample `Z2UI5_CL_SMP_APP_499` in the table below —

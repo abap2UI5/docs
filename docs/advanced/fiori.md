@@ -367,7 +367,8 @@ installs the OData V2 example with one abapGit pull: the RAP service, the
 two classes, and the app as the BSP `Z2UI5_HOST_FE`, with the control.
 
 1. Install abap2UI5 1.146.0 or later and activate its HTTP service
-   `/sap/bc/z2ui5`.
+   `/sap/bc/z2ui5`. From 1.151.0 on the pull brings that node; on an older
+   release it is the node you created yourself.
 2. Pull the branch `rap` with abapGit into a new package.
 3. Publish the service binding `Z2UI5_UI_EMBED_COUNTRY_O2` (ADT: open it,
    **Publish**) if the pull did not, and activate the ICF nodes

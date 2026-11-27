@@ -171,7 +171,7 @@ IF client->check_on_navigated( ).
     client->set_session_stateful( ).
   ELSE.
     client->message_box_display( `Locked by another user.` ).
-    client->nav_app_leave( ).
+    client->nav_app_leave( keep_messages = abap_true ).
     RETURN.
   ENDIF.
 
@@ -188,7 +188,7 @@ CALL FUNCTION `DEQUEUE_EVVBAK`
 client->set_session_stateful( abap_false ).
 ```
 
-Each active user pins a work process, and a leaked enqueue blocks the record until the session times out — the cost and the rules for paying it are on [Statefulness → Trade-offs](/cookbook/expert_more/statefulness#trade-offs).
+Each active user pins a work process, and a leaked enqueue blocks the record until the session times out. A navigation to another app writes the app draft with a `COMMIT WORK`, which ends an open logical unit of work. The cost and the rules for paying it are on [Statefulness → Trade-offs](/cookbook/expert_more/statefulness#trade-offs).
 
 → Full source: [`ZCL_SAMPLE_LOCK_5`](/cookbook/expert_more/lock_sources#lock-5)
 

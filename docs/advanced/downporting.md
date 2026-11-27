@@ -26,7 +26,7 @@ After that, open the node in the browser and abap2UI5 is ready for use — even 
 If you later want to reach these apps from the cloud, use the [RFC Connector](/advanced/rfc). It calls abap2UI5 apps on legacy systems via BTP destination and RFC. That integrates them into Steampunk, S/4 Public Cloud, Fiori Launchpads, or SAP Mobile Start. The [HTTP Connector](/advanced/http) offers the same over HTTP.
 
 ## How It Works
-The `702` branch is not maintained by hand — it is **generated** from `main` by an automated GitHub Actions workflow on every change. The pipeline runs [abaplint](https://abaplint.org)'s downport rule (`abaplint --fix` with a 7.02 target configuration), which rewrites modern syntax into 7.02-compatible equivalents, for example:
+The `702` branch is not maintained by hand — it is **generated** from `main` by an automated GitHub Actions workflow whenever the ABAP sources or the downport tooling change. The pipeline runs [abaplint](https://abaplint.org)'s downport rule (`abaplint --fix` with a 7.02 target configuration), which rewrites modern syntax into 7.02-compatible equivalents, for example:
 
 - inline declarations `DATA(x) = ...` → separate `DATA` statements
 - constructor expressions (`VALUE #( )`, `NEW #( )`, `CONV #( )`) → classic statements

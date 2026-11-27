@@ -46,7 +46,7 @@ installation of the framework.
 
 abap2UI5 ships as ABAP objects, so the way to production is the transport
 process you already have — with one ordering rule, spelled out on the
-[Transport](/configuration/productive_usage#transport) page:
+[Transport, Landscape](/configuration/transport) page:
 
 1. Transport the framework and the HTTP service first.
 2. On the target system, activate the service if needed, and adjust the
@@ -65,10 +65,10 @@ a broken step 3 is installation, not your app.
 Two different questions, answered in two different places — the
 [Security](/configuration/security) page is the map:
 
-**Authentication** — who gets in at all — is the ICF node's job, exactly as
-for any other service on your system: logon procedure, visibility, all of it
-on the service node you created in the Quickstart. The framework's own
-defaults (a Content-Security-Policy, security response headers, CSRF
+**Authentication** — who gets in at all — is the ICF node's job, exactly as for
+any other service on your system: logon procedure, visibility, all of it on the
+service node `/sap/bc/z2ui5` you activated in the Quickstart. The framework's
+own defaults (a Content-Security-Policy, security response headers, CSRF
 protection on every POST) are already on; nothing to configure.
 
 **Authorization** — who may do *what* — stays yours, and the invoice app makes
@@ -76,11 +76,12 @@ it concrete: whoever reaches the service can press *Read Invoices*, and whoever
 can open the edit dialog can press *Save*. The framework runs no check in
 between. The [Authorization](/configuration/authorization) page shows both
 places to put one. The first is the HTTP handler, which decides who may reach
-the service at all. The second is the app class: an `AUTHORITY-CHECK` at the top
-of `main` protects the operation itself. Put one in `data_update` as well if
-reading and writing need separate authorizations. If you check only at the
-service level, make sure users cannot reach the app through navigation from
-another one.
+the service at all - a handler of your own on a node of your own, because the
+one the pull brings only hands the request to the framework. The second is the
+app class: an `AUTHORITY-CHECK` at the top of `main` protects the operation
+itself. Put one in `data_update` as well if reading and writing need separate
+authorizations. If you check only at the service level, make sure users cannot
+reach the app through navigation from another one.
 
 ## Give Users a Way In
 

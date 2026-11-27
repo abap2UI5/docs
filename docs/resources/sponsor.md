@@ -19,7 +19,7 @@ Other open-source projects extend abap2UI5. Please consider sponsoring their mai
 - JSON handling with [ajson](https://github.com/sbcgua/ajson) [(sbcgua)](https://github.com/sbcgua)
 - Runtime serialization with [S-RTTI](https://github.com/sandraros/S-RTTI) [(sandrarossi)](https://github.com/sandraros)
 - ABAP Cloud and Standard compatibility with [Steampunkification](https://github.com/heliconialabs/steampunkification) [(contributors)](https://github.com/heliconialabs/steampunkification/graphs/contributors)
-- Syntax downporting via the [downport repositories](https://github.com/abap2UI5-downports) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
+- Syntax downporting via the [downport branch](https://github.com/abap2UI5/abap2UI5/tree/702) by [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Namespace renaming with [abaplint](https://abaplint.org/) [(larshp)](https://github.com/larshp)
 - Browser testing with [Playwright](https://playwright.dev/), and the ABAP runtime in the browser from [open-abap](https://github.com/open-abap) and the [abaplint transpiler](https://github.com/abaplint/transpiler) [(larshp)](https://github.com/larshp)
 - Live demos via the [playground](https://abap2ui5.github.io/browser-playground/){target="_self"}, built in [abap2UI5/browser-playground](https://github.com/abap2UI5/browser-playground) on that runtime

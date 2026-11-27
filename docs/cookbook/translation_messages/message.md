@@ -88,12 +88,12 @@ questions.
 **ABAP side**. Hand them what the app already holds: a text, a BAPIRET2 table,
 a log, an exception, a structure, a whole table. They work out the severity,
 the title and the rendering themselves, as the section above shows. Their
-parameters are the things an ABAP app decides: the data, the kind of box, the
-buttons as a `string_table`, and the backend event raised when the box
-closes.
+parameters are the things an ABAP app decides: the data, the kind of box, its
+icon, the buttons as a `string_table`, and the backend event raised when the
+box closes.
 
-A plain **UI5 option** — where a toast docks, how wide the box is, which icon it
-carries — is not an ABAP decision, and it is set on the control instead. The
+A plain **UI5 option** — where a toast docks, how wide the box is, its text
+direction — is not an ABAP decision, and it is set on the control instead. The
 whitelisted global call reaches `sap.m.MessageToast` and `sap.m.MessageBox`
 directly, and its last argument is the option object of that API 1:1:
 
@@ -106,7 +106,7 @@ METHOD z2ui5_if_app~main.
     t_arg = VALUE #( ( `MESSAGE_BOX` )
                      ( `error` )
                      ( `Not saved.` )
-                     ( `{"contentWidth":"30rem","icon":"WARNING"}` ) ) ).
+                     ( `{"contentWidth":"30rem"}` ) ) ).
 
 ENDMETHOD.
 ```
@@ -116,8 +116,8 @@ arrive as an object rather than as a string that looks like one. Both ways end
 in the same frontend code: `onClose` stays a backend event name on either path,
 and the details of a box are expanded on either path.
 
-The UI5 options (where a toast docks, a box's icon, width or text direction)
-are set this way and only this way. When an older app does not compile, check
+The UI5 options (where a toast docks, a box's width or text direction) are
+set this way and only this way. When an older app does not compile, check
 the parameter list on
 [Deprecations](/resources/deprecations#the-ui5-options-of-message-toast-display-message-box-display).
 
@@ -153,6 +153,7 @@ objects this call reaches.
 | `initialfocus` | the action (or control id) that has the focus when the box opens |
 | `details` | a further text (or JSON) shown below the message |
 | `styleclass` | one or more CSS classes added to the box |
+| `icon` | the icon of the box instead of the one of the type: a `sap.m.MessageBox.Icon` name (`WARNING`) or a `sap-icon://` URI |
 
 ### `text`
 
@@ -161,7 +162,12 @@ objects this call reaches.
 string, a business table, a nested structure, an object or a number.
 Messages are recognized first and set severity and title themselves. Several
 messages become one box, typed by the most severe. One case shows nothing:
-complex data that is initial, so an empty message table stays silent.
+complex data that is initial, so an empty message table stays silent. The
+exception is ``type = `error` ``: an error box over an empty value shows the
+standard text *The operation failed, no further details available*, so an
+empty RAP `REPORTED` after a failed save still tells the user something. An
+error message without a text gets a standard text as well, with its message
+class and number.
 
 ### `details`
 

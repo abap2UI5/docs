@@ -9,18 +9,19 @@ The UI5 bootstrap script tag in `index.html` accepts a long list of `data-sap-ui
 <script id="sap-ui-bootstrap"
         src="…/sap-ui-core.js"
         data-sap-ui-theme="sap_horizon"
-        data-sap-ui-resourceroots='{ "z2ui5": "./" }'
+        data-sap-ui-resourceroots='{ "z2ui5": "./", "abap2ui5.page": "./" }'
         data-sap-ui-oninit="onInitComponent"
         data-sap-ui-compatVersion="edge"
         data-sap-ui-async="true"
         data-sap-ui-frameOptions="trusted"
-        data-sap-ui-bindingSyntax="complex">
+        data-sap-ui-bindingSyntax="complex"
+        data-sap-ui-libs="sap.m">
 </script>
 ```
 
 ## Add Attributes
 
-To add an attribute, append a row to `cs_config-t_add_config`. Each row contributes one `name='value'` pair to the script tag — after the defaults above, which therefore cannot be overridden this way (see the note below the table):
+To add an attribute, append a row to `cs_config-t_add_config`. Each row contributes one `name='value'` pair to the script tag — after the defaults above, which therefore cannot be overridden this way (see the note below the table). The one exception is `data-sap-ui-libs`: the framework writes its default `sap.m` only when your rows name no libraries, so the row below replaces it:
 
 ```abap
 METHOD z2ui5_if_ui5_exit~set_config_http_get.
@@ -37,7 +38,7 @@ ENDMETHOD.
 
 | Attribute                       | Purpose |
 |---------------------------------|---------|
-| `data-sap-ui-libs`              | Comma-separated list of UI5 libraries to preload (e.g. `sap.m,sap.ui.table`). Trade load time against startup speed. |
+| `data-sap-ui-libs`              | Comma-separated list of UI5 libraries to preload (e.g. `sap.m,sap.ui.table`). Trade load time against startup speed. abap2UI5 sets `sap.m` from 1.151.0 on; a row of your own replaces that default, so keep `sap.m` in your list. |
 | `data-sap-ui-language`          | UI5 locale; overrides the browser language. See [Language](/configuration/setup/logon_language). |
 | `data-sap-ui-compatVersion`     | Compatibility version, controls UI5 behavior for deprecated APIs. Set to `edge` by abap2UI5 — fixed. |
 | `data-sap-ui-async`             | Asynchronous module loading. Set to `true` by abap2UI5 — fixed. |
@@ -45,10 +46,10 @@ ENDMETHOD.
 | `data-sap-ui-frameOptions`      | Clickjacking protection: `trusted`, `allow`, `deny`. Set to `trusted` by abap2UI5 — fixed. |
 | `data-sap-ui-allowlistService`  | Endpoint for the URL allowlist service. UI5 1.85 and later; before 1.85 the attribute is `data-sap-ui-whitelistService`, and the new name is ignored. |
 | `data-sap-ui-bindingSyntax`     | Binding syntax: `complex` or `simple`. Set to `complex` by abap2UI5 — fixed, and its expressions require it. |
-| `data-sap-ui-resourceroots`     | Resource roots for custom libraries. Set by abap2UI5 (`z2ui5`) — fixed; your own controls load through the reserved [`z2ui5_ccc` root](/advanced/extensibility/custom_control) instead. |
+| `data-sap-ui-resourceroots`     | Resource roots for custom libraries. Set by abap2UI5 (`z2ui5` and `abap2ui5.page`) — fixed; your own controls load through the reserved [`z2ui5_ccc` root](/advanced/extensibility/custom_control) instead. |
 | `data-sap-ui-xx-componentpreload` | Component-preload strategy for very large apps. |
 
-The attributes abap2UI5 writes itself (`data-sap-ui-async`, `data-sap-ui-frameOptions`, `data-sap-ui-compatVersion`, `data-sap-ui-bindingSyntax`, `data-sap-ui-theme`, …) cannot be overridden here. The rows are appended after them, and a browser keeps the first of two attributes with the same name. `t_add_config` adds attributes; the theme has its own field (`cs_config-theme`).
+The attributes abap2UI5 writes itself (`data-sap-ui-async`, `data-sap-ui-frameOptions`, `data-sap-ui-compatVersion`, `data-sap-ui-bindingSyntax`, `data-sap-ui-theme`, …) cannot be overridden here. The rows are appended after them, and a browser keeps the first of two attributes with the same name. `data-sap-ui-libs` is the exception described above: the framework leaves it out when a row of yours sets it, directly or inside `data-sap-ui-config`. `t_add_config` adds attributes; the theme has its own field (`cs_config-theme`).
 
 ## See Also
 

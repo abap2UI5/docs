@@ -720,7 +720,7 @@ CLASS zcl_sample_lock_5 IMPLEMENTATION.
 
     lock_release( ).
     client->message_toast_display( `Saved.` ).
-    client->nav_app_leave( ).
+    client->nav_app_leave( keep_messages = abap_true ).
 
   ENDMETHOD.
 
@@ -957,7 +957,7 @@ CLASS zcl_sample_lock_6 IMPLEMENTATION.
 
     soft_lock_release( ).
     client->message_toast_display( `Saved.` ).
-    client->nav_app_leave( ).
+    client->nav_app_leave( keep_messages = abap_true ).
 
   ENDMETHOD.
 

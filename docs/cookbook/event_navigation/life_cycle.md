@@ -138,7 +138,7 @@ Every HTTP request carries at most one event. `check_on_event( )` returns `abap_
 
 Two consequences follow:
 - **Do not assume event ordering inside one `main`.** You cannot look at "the previous event" from within an event handler; the previous event ran in a separate request and the work process has been released since.
-- **State across events lives in class attributes.** Between two events abap2UI5 serializes the whole app instance and stores it **on the server**: the app draft, a row in `z2ui5_t_01` that expires after four hours by default. The browser carries the id of the app draft, never the state.
+- **State across events lives in class attributes.** Between two events abap2UI5 serializes the whole app instance and stores it **on the server**: the app draft, a row in `z2ui5_t_01` that expires after four hours by default. Older drafts of the same app go earlier: each save keeps the newest two (`draft_keep_per_chain` in the [User Exits](/advanced/extensibility/user_exits)). The browser carries the id of the app draft, never the state.
 
   Every attribute survives, whatever its visibility: `PUBLIC` is what `_bind( )` needs in order to *reach* an attribute, not what keeps it alive. Unbound working state therefore belongs in `PROTECTED` — a bloated public section only makes every roundtrip serialize more. What does not survive is what the serializer cannot write: local variables, open cursors, acquired locks, and references to classes that are not serializable. For sessions that need surviving server-side resources, see [Statefulness](/cookbook/expert_more/statefulness).
 

@@ -25,6 +25,13 @@ small program that lets the assistant check a view by itself:
 /plugin install abap2ui5@abap2ui5
 ```
 
+In **GitHub Copilot**, install the Copilot plugin from the Copilot CLI. It
+brings the same skills and registers the same MCP server:
+
+```sh
+copilot plugin install abap2UI5/abap2UI5:plugin-copilot
+```
+
 In **VS Code**, install the [extension](/advanced/vscode) instead. It
 registers the same MCP server for every assistant in the window:
 
@@ -37,6 +44,13 @@ server alone:
 
 ```sh
 claude mcp add abap2ui5 -- npx --yes -p @abap2ui5/mcp-server abap2ui5-mcp
+```
+
+An agent that reads the open Agent Skills format takes the skills alone, and
+the MCP server with the command above:
+
+```sh
+npx skills add abap2UI5/abap2UI5
 ```
 
 What you should see: ask the assistant "which abap2UI5 tools do you have?".

@@ -23,6 +23,8 @@ For the small set of cases where a sticky backend session is needed — classic 
 
 No work process is pinned, no enqueue is held, no `SET/GET` parameters survive. This is the recommended default for productive apps.
 
+The app drafts do not pile up. On every save the framework deletes the older drafts of the same app and keeps the newest two, the user exit field `draft_keep_per_chain` ([User Exits](/advanced/extensibility/user_exits)); the drafts that Back, a popup, an [app state](/cookbook/event_navigation/navigation/app_state) link or a route restore still need are never deleted this way. A [timer](/cookbook/browser_interaction/timer) tick that changes nothing writes no draft at all.
+
 ## Stateful Sessions
 For private and on-premise systems, you can switch a running app to stateful mode. The same work process then handles every subsequent roundtrip of *this* user, and ABAP globals, locks, and open RFC connections survive between events:
 
@@ -55,6 +57,8 @@ A stateful session **pins one work process per active user** for the lifetime of
 A few rules of thumb:
 
 - **Always release on exit.** Call `set_session_stateful( abap_false )` in your back / cancel / save handlers, not just the happy path.
+- **One state per roundtrip.** Two calls in one roundtrip cancel out: the state at the end of the roundtrip is what the server gets.
+- **Navigation commits.** The framework still writes the app draft of a stateful app on every `nav_app_call( )` and `nav_app_leave( )`, and whenever the URL carries the app ([hash routing](/cookbook/event_navigation/navigation/hash), [app state](/cookbook/event_navigation/navigation/app_state)). That write is a `COMMIT WORK`, so a logical unit of work the app keeps open across roundtrips does not survive those paths.
 - **Keep sessions short.** A stateful session is a held resource, not a place to park work indefinitely.
 - **Public cloud is stateless only.** S/4 Public Cloud and the BTP ABAP Environment do not support stateful sessions. The released HTTP server interface of ABAP for Cloud has no `set_session_stateful`, so the framework's HTTP wrapper does nothing there. `set_session_stateful( )` compiles and runs, and the next roundtrip still lands in a fresh session. Design for the stateless model from day one if cloud-readiness matters.
 

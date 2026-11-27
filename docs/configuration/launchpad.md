@@ -17,16 +17,10 @@ The Launchpad starts abap2UI5 from the UI5 ABAP repository of your system (as ap
 
 The BSP carries no copy of the frontend: one view with one `z2ui5.embed.Container`, which loads the frontend from the node (`?z2ui5-bundle`) at run time. After an abap2UI5 update there is nothing to pull again - the frontend always has the backend's version. The trade-off: the frontend is fetched from the backend on every page load instead of being served out of the BSP. For ABAP Cloud see [S/4 Public Cloud](/configuration/s4_public_cloud). After the import, check that the app index is up to date (see [Troubleshooting](#troubleshooting) below).
 
-### Coming from the Frontend Repository
-
-Until 2026-11-17 the BSP came from a second repository, abap2UI5/frontend (branches `standard`, `standard_v2`, `standard_new`), which is retired: its branches stay available, frozen at 1.150.0. If an abapGit repository on your system still points at one of its branches:
-
-1. Remove that repository from abapGit **without deleting its objects**.
-2. Pull abap2UI5. The node `/sap/bc/z2ui5` and the BSP `Z2UI5` keep their names and become part of its package, so the target mapping and the tiles stay as they are. The node's handler is `Z2UI5_CL_UI5_ICF_HANDLER` from then on.
-3. Delete the class `Z2UI5_CL_LP_HANDLER` the old branches delivered - nothing names it after the pull.
+If an abapGit repository on your system still points at abap2UI5/frontend, where the BSP came from before 1.151.0, see [Coming from the frontend repository](/configuration/installation#frontend-branches).
 
 ## Target Mapping
-Use these parameters for target mapping in your Launchpad configuration. abap2UI5 uses the app's class name as the Semantic Object so each app gets its own navigation target — replace `Z2UI5_CL_MY_APP` with your app class:
+The BSP ships one inbound of its own, `z2ui5-display` (semantic object `z2ui5`, action `display`), which opens the start page of abap2UI5. To give one app a tile of its own, create a target mapping for it. The semantic object is yours to choose; a convention that keeps the targets apart is the name of the app class, as below. What decides which app starts is the parameter `app_start` — replace `Z2UI5_CL_MY_APP` with your app class:
 - Semantic Object: `Z2UI5_CL_MY_APP`
 - Action: `display`
 - URL: `/sap/bc/ui5_ui5/sap/z2ui5`
@@ -46,14 +40,16 @@ IF client->get( )-check_launchpad_active = abap_false.
 ENDIF.
 ```
 
-### Set the Tile Title Dynamically
-Change the Launchpad shell title from ABAP at any time with the `set_title_launchpad` frontend event:
+### Set the Title Dynamically
+`cs_event-set_title` titles the screen from ABAP at any time. Inside the Launchpad it sets the shell title as well, so one call covers an app that runs in both places:
 
 ```abap
 client->follow_up_action(
-    val   = z2ui5_if_client=>cs_event-set_title_launchpad
+    val   = z2ui5_if_client=>cs_event-set_title
     t_arg = VALUE #( ( `My Dynamic Title` ) ) ).
 ```
+
+`cs_event-set_title_launchpad` sets the shell title only. [Title](/cookbook/browser_interaction/title) has both in detail.
 
 ### Read Startup Parameters
 `client->get_start_param( )` reads one start parameter, whichever way the app was started: the URL query first, then the launchpad's startup parameters from the target mapping, then the query of the launchpad intent in the hash. The name is matched in any case; the value comes back as the source carries it, and empty when no source has the parameter:

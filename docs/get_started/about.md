@@ -69,8 +69,10 @@ Outside the SAP world this pattern has a name — *HTML Over-the-Wire*, the idea
   Authorization checks stay yours, in the app.
   → [Security](/configuration/security),
   [Authorization](/configuration/authorization)
-- **A small footprint.** Classes, interfaces and one table for the app drafts.
-  Everything else is an optional [add-on](/resources/addons).
+- **A small footprint.** Classes, interfaces and one table for the app drafts,
+  plus the service that serves them: an ICF node with its handler and a BSP
+  for the launchpad. Everything else is an optional
+  [add-on](/resources/addons).
 
 ## Compatibility
 

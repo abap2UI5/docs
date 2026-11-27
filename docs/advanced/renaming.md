@@ -1,6 +1,6 @@
 ---
 outline: [2, 4]
-description: The Z2UI5_ prefix and the naming scheme of every object abap2UI5 and its add-ons install, and the package layout. How the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own. The manual way for ABAP Cloud and 7.02, and two installations in one launchpad.
+description: The Z2UI5_ prefix and the naming scheme of every object abap2UI5 and its add-ons install, and the package layout. How the build-rename workflow installs the framework a second time under a prefix or registered namespace of your own. The 7.02 variant the same run builds, the manual way for ABAP Cloud, and two installations in one launchpad.
 ---
 # Namespaces, Renaming
 
@@ -54,7 +54,7 @@ prefix alone would let them collide; the segment is what keeps them apart.
 | Segment | Meaning |
 |---|---|
 | *(none)* — `z2ui5_if_app`, `z2ui5_if_client` | **The public API.** Both interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
-| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the released classes and interfaces of `src/02` that carry it (`z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, the `z2ui5_*_ui5_llm` objects) |
+| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the released classes and interfaces of `src/02` that carry it (`z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_cl_ui5_test`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, the `z2ui5_*_ui5_llm` objects) |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
 | `util`, `pop`, `xml_view` | Frozen, shipped from [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) — see [Deprecations](/resources/deprecations) |
@@ -107,8 +107,8 @@ hierarchy in your system. For the framework repository that is:
 |---|---|
 | `src/00/` | External libraries — ajson (`src/00/01`), S-RTTI (`src/00/02`) and the framework's own utility classes (`src/00/03`) |
 | `src/01/` | Internal use only — draft persistence, request handling, event routing, binding, and the generated frontend |
-| `src/02/` | The released API — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, and `z2ui5_if_ui5_llm` with `z2ui5_cl_ui5_llm` and `z2ui5_cx_ui5_llm` |
-| `src/03/` | The service — the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler`, and the BSP `Z2UI5` for the launchpad. On the branch `cloud` the HTTP service, its handler and the IAM objects take its place |
+| `src/02/` | The released API — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, `z2ui5_cl_ui5_test`, and `z2ui5_if_ui5_llm` with `z2ui5_cl_ui5_llm` and `z2ui5_cx_ui5_llm` |
+| `src/03/` | The service — the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler`, and the BSP `Z2UI5` for the launchpad. The branch `cloud` carries another package in its place ([Deployment Scenarios](/configuration/installation#frontend-branches)) |
 
 The package a class sits in is the honest answer to "may I use this?": `src/02`
 yes, `src/01` and `src/03` no.
@@ -207,8 +207,9 @@ output folder:
 The renamed copy is a complete, installable abapGit project under your own
 namespace — install it side by side with the original, pin it to a release, or
 ship it inside your product. The abap2UI5 CI runs this transformation on every
-change (`npm run rename`, workflow `build-rename.yaml`) to guarantee the
-codebase stays renameable.
+pull request (`npm run rename`, in the workflow `abaplint.yaml`) to guarantee
+the codebase stays renameable. The workflow `build-rename.yaml` below is the
+one you start yourself.
 
 ### Step-by-Step Guide
 Everything is already set up in the main repository: the on-demand GitHub Action
@@ -219,39 +220,39 @@ the result as a ready-to-install branch. Renaming abap2UI5 takes just two steps:
 2. **Run the Action** — in your fork, open the *Actions* tab (enable workflows
    when asked) and select the **build-rename** workflow. Start it with your new
    namespace, e.g., `ZMYUI5`: a letter followed by letters, digits or
-   underscores, max. 10 characters
+   underscores, max. 10 characters. The second input, `with_702`, is on by
+   default and also builds the 7.02 variant; switch it off if you do not need
+   one
 
 The workflow runs `abaplint --rename` with the checked-in configuration
-`.github/abaplint/rename.jsonc` and pushes the renamed sources to the branch
-`rename_<name>` (e.g., `rename_zmyui5`). The branch contains the complete
-renamed `src` tree together with a matching `.abapgit.xml` — **pull it with
-abapGit** into your ABAP system for a parallel installation next to the
-original. The ICF node, its handler and the BSP of `src/03` are renamed with
-the rest, so the branch is a whole installation for Standard ABAP from 7.50.
-For ABAP Cloud and for 7.02 see
-[ABAP Cloud and 7.02](#abap-cloud-and-7-02) below.
+`.github/abaplint/rename.jsonc` and pushes two branches:
+
+| Branch | For | Contents |
+|---|---|---|
+| `rename_<name>` (e.g., `rename_zmyui5`) | Standard ABAP from 7.50 | the complete renamed `src` tree with a matching `.abapgit.xml`. The ICF node, its handler and the BSP of `src/03` are renamed with the rest, so the branch is a whole installation |
+| `rename_<name>_702` | NetWeaver 7.02 to 7.4x | the same renamed tree, run through the downport that builds the branch `702` and linted with the 7.02 rules before it is pushed. No BSP, as on `702` ([Downporting](/advanced/downporting)) |
+
+**Pull the one that fits your system with abapGit** for a parallel installation
+next to the original. For ABAP Cloud see [ABAP Cloud](#abap-cloud-and-7-02)
+below.
 
 To upgrade an installation later, sync your fork with upstream and re-run the
-workflow with the same name. The branch is updated to the current state; nothing
-is pushed when there are no content changes. Then pull again with abapGit.
+workflow with the same name. The branches are updated to the current state;
+nothing is pushed when there are no content changes. Then pull again with
+abapGit.
 
-### ABAP Cloud and 7.02
-`build-rename` renames the branch `main`. There is no renamed build of the
-branches `cloud` and `702` yet, so on these platforms you rename by hand.
+### ABAP Cloud {#abap-cloud-and-7-02}
+There is no renamed build of the branch `cloud`: its service package holds an
+HTTP service, a communication scenario and IAM objects, and the rename does not
+cover these types. The packages `src/00` to `src/02` are the same on `cloud` as
+on `main`, and the rename handles them. The service objects are created in ADT
+anyway, so you create them yourself:
 
-**ABAP Cloud (branch `cloud`).** The packages `src/00` to `src/02` are the same
-on `cloud` as on `main`, and the rename handles them. The service package
-`src/03` is not: on `cloud` it holds an HTTP service, a communication scenario
-and IAM objects, and the abaplint rename does not cover these types. They are
-created in ADT anyway, so you create them yourself:
-
-1. Run `build-rename` as described above, or `npm run rename` in a checkout of
-   `main` with your prefix in place of the placeholder `znamespace_` in
-   `.github/abaplint/rename.jsonc`. Both run the same abaplint rename.
-2. Take `src/00`, `src/01` and `src/02` of the result, without `src/03`: that is
-   the Standard ABAP service and does not activate on ABAP Cloud. Push them to a
-   branch of your fork and pull that branch with abapGit for Eclipse, as on
-   [ABAP Cloud](/configuration/abap_cloud#installation).
+1. Run `build-rename` as described above.
+2. Take `src/00`, `src/01` and `src/02` of the branch `rename_<name>`, without
+   `src/03`: that is the Standard ABAP service and does not activate on ABAP
+   Cloud. Push them to a branch of your fork and pull that branch with abapGit
+   for Eclipse, as on [ABAP Cloud](/configuration/abap_cloud#installation).
 3. In ADT, create the objects of `src/03` of the branch `cloud` under your name,
    in a package of your own:
 
@@ -269,14 +270,6 @@ reach the renamed installation through a tile, deploy the folder `app` under a
 name of your own, with its data source pointing at the renamed HTTP service, and
 read [The Frontend Namespace](#the-frontend-namespace) about two installations
 in one launchpad first.
-
-**7.02 (branch `702`).** There is no renamed 7.02 variant yet. The downport does
-not depend on the prefix, so downport the renamed tree yourself: in a checkout
-of `main`, replace `src/` with the `src/` of your branch `rename_<name>` and run
-`npm run auto_downport`. It runs the downport on `src/` in place with abaplint
-(`npm run downport`) and leaves the BSP out, as the branch `702` does. Push the
-result to a branch of your fork and pull it with abapGit -
-[Downporting](/advanced/downporting).
 
 ### What Renaming Does Not Cover
 abaplint rewrites object names and every reference the compiler can see: a
@@ -305,10 +298,10 @@ can pull into it.
 abap2UI5 itself relies on this feature. Its JSON handling comes from the
 open-source project [ajson](https://github.com/sbcgua/ajson), which is
 integrated under the `z2ui5` namespace via renaming. So there are no collisions
-if you pull both abap2UI5 and ajson separately into the same system. A GitHub
-Action in the [mirror-ajson](https://github.com/abap2UI5/mirror-ajson)
-repository checks weekly for upstream changes. It automatically creates a pull
-request with the latest ajson version renamed to `z2ui5`. abapGit bundles ajson
+if you pull both abap2UI5 and ajson separately into the same system. The
+[mirror-ajson](https://github.com/abap2UI5/mirror-ajson) repository holds
+ajson renamed to `z2ui5`, and once a month a workflow of the framework opens a
+pull request with what changed there. abapGit bundles ajson
 under its own namespace the same way. So renaming with abaplint also makes it
 possible to integrate open-source projects into each other.
 

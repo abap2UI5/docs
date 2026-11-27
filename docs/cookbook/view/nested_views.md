@@ -113,7 +113,7 @@ The full pattern (re-render everything vs. main only vs. nested only) is in `Z2U
 | `FlexibleColumnLayout`  | `addEndColumnPage`          | `removeAllEndColumnPages`       |
 | `FlexibleColumnLayout`  | `addBeginColumnPage`        | `removeAllBeginColumnPages`     |
 
-Always pass `method_destroy` when the nested view is going to be replaced over the lifetime of the app; otherwise consecutive calls stack new fragments on top of the old ones.
+The previous nested view is destroyed on every `nest_view_display( )`, with or without `method_destroy`, so consecutive calls never stack. What `method_destroy` decides is the anchor's *other* content: with it, the aggregation is emptied first; without it, whatever else the anchor holds stays in place next to the new nested view.
 
 ## Independent Re-rendering
 
@@ -322,7 +322,7 @@ Plain composition is the right starting point: keep helper methods that take a p
 ## Tips
 
 - The anchor id must be unique in the main view. The framework calls `byId` on the rendered view to find it; duplicate ids break the lookup.
-- Always provide `method_destroy` when a nested slot will be replaced more than once. Forgetting it causes nested fragments to accumulate.
+- A replaced nested view never accumulates: the previous one is destroyed on every call. Pass `method_destroy` when the anchor should be emptied of everything else as well, and give the nested view a container of its own, so that emptying it takes nothing else along.
 - Build the nested view in its own method (e.g. `view_display_detail`) and call it both from the initial render and from event handlers. Two call sites, one definition.
 - If a nested view does not pick up a data change, the value did not change on the ABAP side of the roundtrip — the push itself is automatic. If a control simply isn't there, you need `nest_view_display( )` again.
 - For very large apps, look at `Z2UI5_CL_SMP_APP_104`, which loads each detail screen from a separate `z2ui5_if_app` class and renders it into the nested slot. It is an advanced pattern — start with the simpler form first.
