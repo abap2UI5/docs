@@ -28,10 +28,12 @@
  *             framework outside the frozen package, leading to its file.
  *
  * EVERY SOURCE MAY FAIL. The GitHub API, a sister site, raw.githubusercontent:
- * an unreachable one costs its rows and is reported, never the build - the
- * rule the sample catalogues already follow. An index with fewer areas is a
- * worse search; a failed deploy of the manual over a sister site's outage is
- * a worse documentation.
+ * an unreachable one costs its rows and is reported here, never this function
+ * - the rule the sample catalogues already follow. What it costs the BUILD is
+ * decided once, in scripts/generate-search.mjs: an area with no entry, or one
+ * halved against the published index (`areaProblems( )` in search-index.mjs),
+ * fails under CI and warns on a laptop, so an outage can no longer ship a
+ * smaller search with a green run.
  *
  * Issues and discussions are deliberately NOT indexed: a nightly copy of them
  * would be a day old when it mattered most. The box hands the query to

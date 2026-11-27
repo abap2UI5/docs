@@ -39,6 +39,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { frameworkRef } from './lib/release.mjs';
+import { skip } from './lib/skip.mjs';
 import { frameworkHome } from './lib/client-interface.mjs';
 import { fetchControls, usesControl, controlsDir, NAMESPACE } from './lib/controls.mjs';
 import { cell, codeSpan } from './lib/api-markdown.mjs';
@@ -69,10 +70,7 @@ try {
   console.log(`read ${controlsDir}/*.js at ${REF} ${home ? `in the clone at ${home} (A2UI5_HOME)` : 'from github.com'}`);
 } catch (err) {
   console.log(`${controlsDir} at ${REF}: not resolved (${err.message})`);
-  if (CHECK) {
-    console.log('SKIPPED: nothing was verified.');
-    process.exit(0);
-  }
+  if (CHECK) skip('nothing was verified.');
   console.error('nothing to generate from - try again with a network, or point A2UI5_HOME at a clone of abap2UI5/abap2UI5.');
   process.exit(1);
 }

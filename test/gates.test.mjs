@@ -30,6 +30,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { skip, strict } from '../scripts/lib/skip.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (f) => readFileSync(join(ROOT, f), 'utf8');
@@ -144,4 +145,29 @@ test('deploy.yml runs every gate before it uploads what it publishes', () => {
   all.forEach((step, i) => {
     if (gateOf(step)) assert.ok(i < upload, `${gateOf(step)} runs after the upload, so it gates nothing`);
   });
+});
+
+/* ── a gate that verified nothing ───────────────────────────────────────── */
+
+test('a skipped network gate passes on a laptop and fails under CI', () => {
+  const quiet = { log: console.log, error: console.error };
+  console.log = () => {};
+  console.error = () => {};
+  try {
+    assert.equal(skip('nothing was verified.', { env: {}, exit: (c) => c }), 0);
+    assert.equal(skip('nothing was verified.', { env: { CI: 'true' }, exit: (c) => c }), 1);
+  } finally {
+    Object.assign(console, quiet);
+  }
+  assert.equal(strict({}), false);
+  assert.equal(strict({ CI: '1' }), true);
+});
+
+test('every network gate skips through lib/skip.mjs, never with a bare exit 0', () => {
+  for (const f of ['scripts/check-api-names.mjs', 'scripts/generate-api-reference.mjs', 'scripts/generate-controls-reference.mjs']) {
+    const src = read(f);
+    assert.doesNotMatch(src, /SKIPPED: nothing was verified\.'\);\s*process\.exit\(0\)/, `${f} skips past CI`);
+    assert.match(src, /skip\('nothing was verified\.'\)/, `${f} does not use skip( )`);
+  }
+  assert.match(read('scripts/check-version.mjs'), /!latest && strict\(\)/, 'check-version passes an unreachable API under CI');
 });

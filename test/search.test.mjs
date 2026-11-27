@@ -22,7 +22,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { sampleEntries, docEntries, trimTerms, enrich } from '../scripts/lib/search-index.mjs';
+import { sampleEntries, docEntries, trimTerms, enrich, areaProblems, publishedAreas, EXPECTED_AREAS } from '../scripts/lib/search-index.mjs';
 import { search, grouped, highlight, queryTerms } from '../scripts/lib/search-engine.js';
 import { terms, headings } from '../scripts/lib/pages.mjs';
 
@@ -437,4 +437,35 @@ test('a page\'s terms leave out what its title and headings carry, and what ever
   const sample = { area: 'samples', terms: 'client framework' };
   trimTerms([sample, ...entries]);
   assert.equal(sample.terms, 'client framework');
+});
+
+/* ── is the index whole ──────────────────────────────────────────────────── */
+
+const whole = () => EXPECTED_AREAS.map((label) => ({ label, count: 40 }));
+
+test('an index with every area is whole', () => {
+  assert.deepEqual(areaProblems(whole()), []);
+  assert.deepEqual(areaProblems(whole(), { published: whole() }), []);
+});
+
+test('an area whose source failed is named, whether it is missing or empty', () => {
+  const areas = whole().filter((a) => a.label !== 'Addons & Tools');
+  areas.find((a) => a.label === 'Controls').count = 0;
+  const problems = areaProblems(areas);
+  assert.equal(problems.length, 2);
+  assert.ok(problems.some((p) => p.startsWith('Addons & Tools:')));
+  assert.ok(problems.some((p) => p.startsWith('Controls:')));
+});
+
+test('an area halved against the published index is named, a smaller dip is not', () => {
+  const published = whole().map((a) => ({ ...a, count: 100 }));
+  const now = whole().map((a) => ({ ...a, count: a.label === 'Repositories' ? 49 : 60 }));
+  assert.deepEqual(areaProblems(now, { published }).map((p) => p.split(':')[0]), ['Repositories']);
+});
+
+test('the two api areas count apart, and a published index that cannot be read is no opinion', async () => {
+  assert.ok(EXPECTED_AREAS.includes('API') && EXPECTED_AREAS.includes('Framework source'));
+  assert.equal(await publishedAreas({ fetchFn: async () => { throw new Error('offline'); } }), null);
+  assert.equal(await publishedAreas({ fetchFn: async () => ({ ok: false, status: 404 }) }), null);
+  assert.deepEqual(await publishedAreas({ fetchFn: async () => ({ ok: true, json: async () => ({ areas: [{ label: 'Go to', count: 1 }] }) }) }), [{ label: 'Go to', count: 1 }]);
 });

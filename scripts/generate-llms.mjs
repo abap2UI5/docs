@@ -47,7 +47,7 @@ import { countCatalogue } from './lib/catalogue.mjs';
 import {
   ROOT, DOCS, SITE,
   sidebarPages, markdownFiles, mdSuffix, linkOf, fileOf,
-  stripFrontmatter, describe, title,
+  stripFrontmatter, describe, title, fenceTracker,
 } from './lib/pages.mjs';
 import { declaredRelease } from './lib/release.mjs';
 
@@ -114,16 +114,14 @@ const relativeLink = (target, link) => {
   const url = new URL(target, `https://x${link}`);
   return absoluteLink(url.pathname + (url.hash ? `#${decodeURIComponent(url.hash.slice(1))}` : ''));
 };
+/* Inside a fence a link is code, not a link, and stays as written. Which line
+ * is inside one is lib/pages.mjs's answer (`fenceTracker( )`, markdown-it's
+ * rules), not a toggle of our own: a toggle on any ``` closed a ````md fence
+ * on the ``` inside it and rewrote the listing's links from there on. */
 function absoluteLinks(markdown, link) {
-  let fence = null;
+  const inFence = fenceTracker();
   return markdown.split('\n').map((line) => {
-    const open = /^\s*(`{3,}|~{3,})/.exec(line);
-    if (open) {
-      if (!fence) fence = open[1][0];
-      else if (open[1][0] === fence) fence = null;
-      return line;
-    }
-    if (fence) return line;
+    if (inFence(line)) return line;
     return line
       .replace(/\]\((\/(?!\/)[^)\s]*)/g, (m, target) => `](${absoluteLink(target)}`)
       .replace(/\]\((\.\.?\/[^)\s]*)/g, (m, target) => `](${relativeLink(target, link)}`);
