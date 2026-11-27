@@ -153,6 +153,21 @@ export default defineConfig({
     // abap2UI5 site (CONVENTION.md in abap2UI5/abap2UI5.github.io). Another
     // deployment on the same origin, hence target _self (check:cross-site).
     logoLink: { link: "https://abap2ui5.github.io/", target: "_self" },
+    // The 404, the one page every dead address ends on - an old search result,
+    // a blog from 2023, an assistant answering from either. VitePress's own
+    // quote said nothing; this one says the API moved and where the current
+    // one is written down, with the addresses spelled out so a reader that
+    // only gets the HTML (an assistant's fetch) has them too. Text only: the
+    // default theme renders `quote` as plain text.
+    notFound: {
+      title: "PAGE NOT FOUND",
+      quote:
+        "This address moved or no longer exists. Building an abap2UI5 app, maybe with an AI assistant? "
+        + "The API changed in releases 1.143 to 1.151 - z2ui5_cl_xml_view, _bind_edit and view_model_update are gone - "
+        + "so start from the current pages: https://abap2ui5.github.io/docs/get_started/ai.html (Developing with AI, "
+        + "with the MCP server) and https://abap2ui5.github.io/docs/llms.txt (the whole manual, for machines).",
+      linkText: "Go to the manual",
+    },
     // The family's foot (CONVENTION.md section 5 in abap2UI5/abap2UI5.github.io):
     // the same line as the home page, the licence and About, nothing more.
     footer: {

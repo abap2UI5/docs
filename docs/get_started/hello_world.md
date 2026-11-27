@@ -59,6 +59,15 @@ Name your own apps in your customer namespace (`Z...`/`Y...`). The `Z2UI5_`
 prefix is reserved for the framework and its samples.
 :::
 
+::: warning **Code from an older blog, or from an AI assistant?**
+Much of what was written about abap2UI5 before release 1.143 — and so much of
+what an assistant remembers — builds views and binds data with calls that are
+gone since 1.151. If a snippet does not compile, look its names up in
+[Deprecations](/resources/deprecations): every removed name with what replaced
+it. Working with an assistant, give it the [MCP server](/get_started/ai): it
+reads the current API and checks the code before you run it.
+:::
+
 ## A Real Screen, an Event and Data Exchange
 
 A message box is not an app. A real app has three more things: a **view** (the
