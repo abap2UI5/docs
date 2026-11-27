@@ -69,10 +69,15 @@ and deliberately without a secondary index.
 | `TIMESTAMPL` | when the row was written, UTC |
 | `DATA` | the app instance as XML - every attribute of the class, whatever its visibility, bound or not |
 
-**One `INSERT` per roundtrip.** Every roundtrip of a stateless app writes a
-new row with a fresh id and leaves the previous one in place (it is what
-Back restores). A stateful app writes a row only on the paths that need a
-bookmarkable draft - [Statefulness](/cookbook/expert_more/statefulness).
+**One `INSERT` per roundtrip, and one `DELETE` behind it.** Every roundtrip of
+a stateless app that changed something writes a new row with a fresh id. From
+1.151.0 on the same save deletes the draft two steps back in the app's chain,
+so a chain keeps two rows; the drafts Back and a popup return to are never
+deleted this way. The exit field `draft_keep_per_chain` sets the number, and 0
+keeps every row until it expires
+([Sizing](/configuration/sizing#draft-table-growth)). A stateful app writes a
+row only on the paths that need a bookmarkable draft -
+[Statefulness](/cookbook/expert_more/statefulness).
 
 **To change how long a draft is kept**, set `draft_exp_time_in_hours` in
 `set_config_http_post` of the user exit. The default is **4 hours**; a value
@@ -97,10 +102,11 @@ app fresh, with a toast saying so. An ordinary click on an expired draft is
 answered with the error page, and the next start is a fresh app.
 
 **What to watch.** The table's row count: on a system where every start cleans
-up, it settles at roughly the roundtrips of the last expiry window
-([Sizing](/configuration/sizing#draft-table-growth)). It grows past that in two
-cases: nobody starts an app for a long time while users keep clicking, so the
-cleanup has not run, or the instances are large. The framework's start page
+up, it settles at roughly two rows per app session of the last expiry window
+([Sizing](/configuration/sizing#draft-table-growth) has the estimate). It grows
+past that in three cases: nobody starts an app for a long time while users open
+new ones, so the cleanup has not run; the pruning is switched off or apps keep
+their state in the URL; or the instances are large. The framework's start page
 shows your own count and the total count. The Admin Cockpit's *Drafts &
 Housekeeping* tab shows rows, age, owners and expiry, and deletes the expired
 rows on demand. It also ships that deletion as a class for a background job
@@ -146,8 +152,9 @@ tab.
 
 The framework's own CI lints the package with abaplint under three rule sets
 - Standard ABAP, ABAP Cloud (released APIs only, no classic statements) and
-  7.02 - over `src/01` to `src/03`; `src/00`, the external libraries,
-  is excluded from the rules. An ATC or Code Inspector run of your own over the
+  7.02 - over `src/00` to `src/03`. Only the two mirrored libraries in
+  `src/00/01` and `src/00/02` are exempt from findings
+  ([abaplint](/technical/tools/abaplint)). An ATC or Code Inspector run of your own over the
   package will report findings against your variant that the project's rules do
   not share. Most are naming conventions. Others are unavoidable for a framework
   that creates objects and calls methods dynamically. Such findings come from

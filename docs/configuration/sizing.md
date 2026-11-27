@@ -60,35 +60,73 @@ roundtrip of the app, or let the cockpit show the size per app.
 
 ## Draft Table Growth
 
-Every roundtrip of a stateless app inserts a row and leaves the previous one
-in place. Rows older than `draft_exp_time_in_hours` (4 by default) are
-deleted on every app start, across all users. So the table settles at the
-rows written within one expiry window:
+This section is the one place that says how the table grows; the runbook, the
+performance page and the upgrade page link here.
+
+Every roundtrip of a stateless app that changed something inserts a row. Two
+rules then take rows away again:
+
+- **Pruning, on every save.** The roundtrips of one app in one browser tab form
+  a chain, each draft naming the one before it. A save deletes the draft at
+  depth `draft_keep_per_chain` + 1 of its chain, so a chain keeps that many
+  drafts: 2 by default, the newest and the one a retry of a lost response
+  continues. The exit field takes 2 to 50; 0 switches pruning off.
+- **Expiry, on every app start.** Rows older than `draft_exp_time_in_hours`
+  (4 by default) are deleted, across all users. This is what removes a chain
+  nobody continues: a closed tab, a finished session.
+
+Pruning never deletes a draft something still points to: the drafts of the app
+stack (the app Back returns to, the app under a popup), the draft of an app
+state link and the draft a route restore names. An app whose app state hash is
+active is not pruned at all, because its URL names every draft
+([App State](/cookbook/event_navigation/navigation/app_state)).
+
+So with the defaults the table settles at the chains that were continued or
+started within one expiry window, at two rows each:
 
 ```
-rows   ≈ users × roundtrips per user per hour × expiry in hours
+rows   ≈ app sessions within the expiry window × draft_keep_per_chain
+         + the protected drafts
 bytes  ≈ rows × average row size
 ```
 
-A worked example, with placeholder figures - replace every one of them with
-your own:
+An app session is one start of one app in one tab; every navigation to another
+app starts a chain of its own and protects the draft it came from. A worked
+example, with placeholder figures - replace every one of them with your own:
 
 | | Example value |
 |---|---|
-| concurrent users of abap2UI5 apps | 200 |
-| roundtrips per user per hour | 30 |
-| expiry | 4 hours (the default) |
+| users of abap2UI5 apps | 200 |
+| app sessions per user within the expiry window | 5 |
+| `draft_keep_per_chain` | 2 (the default) |
 | average row size | 40 KB |
-| rows in the table | 200 × 30 × 4 = 24,000 |
-| size of the table | 24,000 × 40 KB ≈ 960 MB |
+| rows in the table | 200 × 5 × 2 = 2,000, plus the protected drafts |
+| size of the table | 2,000 × 40 KB ≈ 80 MB |
 
-The same example with the expiry at 1 hour is 240 MB; with instances of 10 KB it
-is 240 MB at 4 hours. Row size is the lever the developer holds, expiry the one
-the exit holds. In operation, watch the row count against this estimate. A count
-well above it has one of two causes: the cleanup is not running (no app has been
-started for a while), or an app writes much larger rows than assumed. The
-cockpit's *Drafts & Housekeeping* tab shows both
-([Basis Runbook](/configuration/runbook#the-draft-table-z2ui5-t-01)).
+The number of roundtrips is not in that estimate any more: an app that polls
+every ten seconds keeps two drafts, not one per tick. It comes back in two
+cases, and then the table settles at everything written within one expiry
+window, which is also the upper bound for any installation:
+
+```
+rows   ≈ users × roundtrips per user per hour × expiry in hours
+```
+
+- `draft_keep_per_chain = 0` in the exit, which keeps every draft until it
+  expires - the behavior of every release before 1.151.0;
+- apps with an active app state hash.
+
+With 30 roundtrips per user per hour, the same 200 users write 200 × 30 × 4 =
+24,000 rows in a four-hour window, 960 MB at 40 KB a row.
+
+Row size is the lever the developer holds; expiry and the number of drafts
+kept are the ones the exit holds
+([User Exits](/advanced/extensibility/user_exits#set-config-http-post)). In
+operation, watch the row count against this estimate. A count well above it
+has one of three causes: the cleanup is not running (no app has been started
+for a while), pruning is switched off, or an app writes much larger rows than
+assumed. The cockpit's *Drafts & Housekeeping* tab shows the count and the
+sizes ([Basis Runbook](/configuration/runbook#the-draft-table-z2ui5-t-01)).
 
 The estimate ignores two things on purpose. A stateful app writes rows only on
 the paths that keep a bookmarkable draft. And the cleanup is a `DELETE` across

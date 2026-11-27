@@ -31,15 +31,15 @@ to that surface by the `UI5_2X` check of the framework's CI.
 
 There is no legacy-free build to install at the moment. It shipped as the
 branches `standard_v2` and `cloud_v2` of abap2UI5/frontend, a second
-repository that is retired: since 2026-11-17 the BSP and the cloud app are part
-of abap2UI5 itself ([Deployment Scenarios](/configuration/installation#frontend-branches)),
-and the v2 branches are no longer built. The bootstrap patch stays in the
+repository that is retired: from 1.151.0 (2026-11-25) on the BSP and the cloud
+app are part of abap2UI5 itself
+([Deployment Scenarios](/configuration/installation#frontend-branches)), and
+the v2 branches are no longer built. The bootstrap patch stays in the
 framework repository until it is decided whether the variant comes back.
 
 An installation that pulled `standard_v2` or `cloud_v2` switches the way every
-frontend branch does: remove that repository from abapGit **without deleting
-its objects**, then pull abap2UI5 - [Fiori Launchpad](/configuration/launchpad#coming-from-the-frontend-repository),
-[S/4 Public Cloud](/configuration/s4_public_cloud#_4-deploy-the-ui5-app-optional).
+frontend branch does
+([Coming from the frontend repository](/configuration/installation#frontend-branches)).
 It then runs the classic UI5 build again.
 
 ## Learn More

@@ -15,10 +15,12 @@ page is the list of what has a successor, the
 A release is two tags pushed together: `X.Y.Z` on `main` and `X.Y.Z-702` on
 the downported branch. The tag is the only thing in the repository that does
 not move - `main` is pulled by abapGit as it is on the day, the `702` branch is
-rebuilt from `main` on every push. An installation reads its own release from
-the constant `z2ui5_if_app=>version`, which abapGit shows and the delivered
-frontend is stamped with. The branch `cloud`, abap2UI5 for ABAP Cloud, is
-generated from `main` on every push as well and carries no tags.
+rebuilt from `main` whenever the ABAP sources change. An installation reads
+its own release from the constant `z2ui5_if_app=>version`, which abapGit shows
+and the delivered frontend is stamped with. The branch `cloud`, abap2UI5 for
+ABAP Cloud, is generated from `main` on every push and carries no tags. What
+each branch carries is on
+[Deployment Scenarios](/configuration/installation#frontend-branches).
 
 There is no fixed cadence. In 2026 the changelog lists eleven releases, from
 1.142.0 on 2026-07-20 to 1.151.0 on 2026-11-25, after a gap of seven months
@@ -28,7 +30,7 @@ framework's security policy supports the latest release only.
 
 ## What Is Stable API
 
-The released API is the package `src/02`, nine objects:
+The released API is the package `src/02`, ten objects:
 
 | Object | What it is |
 |---|---|
@@ -38,6 +40,7 @@ The released API is the package `src/02`, nine objects:
 | `z2ui5_if_ui5_monitor` | the roundtrip monitor - [Monitoring](/configuration/monitoring) |
 | `z2ui5_cl_ui5_http_handler` | the handler your ICF handler class calls |
 | `z2ui5_cl_ui5_view_builder` | the view builder |
+| `z2ui5_cl_ui5_test` | the test harness that drives an app from ABAP Unit, one roundtrip per call |
 | `z2ui5_if_ui5_llm`, `z2ui5_cx_ui5_llm`, `z2ui5_cl_ui5_llm` | the language model interface |
 
 A normalized snapshot of this package is compared on every pull request, so a
@@ -109,7 +112,7 @@ it rewrites the mechanical part and reports the rest.
    pull (`src/03`). The BSP carries no copy of the frontend - it loads it from
    the node - so it needs nothing after an upgrade. An installation whose BSP
    still comes from the retired abap2UI5/frontend repository switches once:
-   [Fiori Launchpad](/configuration/launchpad#coming-from-the-frontend-repository).
+   [Coming from the frontend repository](/configuration/installation#frontend-branches).
 5. **Transport** the framework, node and BSP included, to the next system,
    then your apps - [Transport, Landscape](/configuration/transport).
 
@@ -120,7 +123,8 @@ the frontend from the node.
 ## The 702 Branch
 
 A system below 7.50 installs the `702` branch, generated from `main` by
-abaplint's downport on every push - [Downporting](/advanced/downporting). It
+abaplint's downport whenever the ABAP sources or the downport tooling
+change - [Downporting](/advanced/downporting). It
 is force-pushed on every rebuild, so pull the `X.Y.Z-702` tag rather than the
 branch: the tag is the downport of exactly the commit the release was cut
 from, checked by the release job. The `-702` release carries the sources and
@@ -150,7 +154,7 @@ instance, and a serialization written by one release is not guaranteed to
 deserialize on another; the framework's changelog records such a case. The cost
 is one error page for a user whose draft does not load, and the next start is a
 fresh app; the rows are gone after `draft_exp_time_in_hours`, four hours by
-default. Re-test after a rollback the same way as after an upgrade.
+default ([Sizing](/configuration/sizing#draft-table-growth)). Re-test after a rollback the same way as after an upgrade.
 
 ## What to Re-Test
 

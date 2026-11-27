@@ -90,7 +90,17 @@ name:
 | MCP server | `npx -y -p @abap2ui5/mcp-server abap2ui5-mcp` | `npx --no-install abap2ui5-mcp` |
 | ABAP Unit runner | `npx -y -p @abap2ui5/mcp-server abap2ui5-unit` | `npx --no-install abap2ui5-unit` |
 | BSP tool | `npx @abap2ui5/bsp app2bsp webapp --name ZMYAPP` | `npx --no-install abap2ui5-bsp app2bsp webapp --name ZMYAPP` |
+| Transpiler for your own apps | `npx -y -p @abap2ui5/node-runtime abap2ui5-transpile abap abap2ui5` | `npx --no-install abap2ui5-transpile abap abap2ui5` |
 | cap2UI5 translator | `npx -y -p @cap2ui5/cds-plugin -p @abaplint/core cap2ui5 abap2js` | `npx --no-install cap2ui5 abap2js` |
+
+`abap2ui5-transpile` transpiles the framework and the classes in `abap/`
+together into a runtime in `abap2ui5/`; a host imports `serve` from
+`./abap2ui5/host.mjs` instead of from the package. With `--unit-tests` it also
+writes the ABAP Unit runner for your test classes, started with
+`node abap2ui5/index.mjs`. The package's second command, `abap2ui5-own-apps`,
+is the way before 1.148.0 and is deprecated; the
+[README of the package](https://www.npmjs.com/package/@abap2ui5/node-runtime)
+has both in full.
 
 The translator reads ABAP with `@abaplint/core`, which is an optional peer of
 the plugin: a project that translates adds it with `npm add -D @abaplint/core`.

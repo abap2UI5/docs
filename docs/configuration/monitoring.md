@@ -56,7 +56,9 @@ Which branch you need depends on your abap2UI5 release: **1.147.0 or later:
 branch `main`, then switch the monitor on. 1.146.0: branch `standalone`, then
 change one line in your handler.** The steps:
 
-1. Install the framework first (1.146.0 or later).
+1. Install the framework first (1.146.0 or later). From 1.151.0 on the pull
+   brings the node `/sap/bc/z2ui5` and its handler; that matters for the
+   handler line of step 4.
 2. Install the cockpit with abapGit into a package of its own. Pick the
    branch by your abap2UI5 release:
 
@@ -81,7 +83,13 @@ change one line in your handler.** The steps:
      replace `z2ui5_cl_ui5_http_handler=>run( server )` with
      `z2ui5_cl_cockpit_wire=>run( server )`. It runs abap2UI5, takes the time
      and records the roundtrip. Do this once the pull is complete and every
-     object is active.
+     object is active. The handler the framework ships from 1.151.0 on,
+     `z2ui5_cl_ui5_icf_handler`, is not yours to change - the next pull
+     overwrites it. So this way needs a node of your own with a handler class
+     of your own
+     ([Quickstart](/get_started/quickstart#a-node-of-your-own)); on the shipped
+     node
+     use the monitor.
    - **The monitor**, with branch `main`: switch it on in your user exit, as
      described [below](#switch-it-on) —
      `cs_config-check_monitor_active = abap_true` in `set_config_http_post`.

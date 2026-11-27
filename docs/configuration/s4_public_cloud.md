@@ -15,9 +15,7 @@ steps:
 
 ## 1. Install abap2UI5 with abapGit
 
-S/4 Public Cloud supports only the ADT abapGit version. The branch `cloud` of abap2UI5 contains only what ABAP Cloud can import - classes, interfaces, tables, the HTTP service and the IAM objects - so you can pull it without issues.
-
-Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the branch `cloud`: the framework of `main` plus the HTTP service of step 3, generated from `main` on every push (it has no release tags of its own). A release tag `X.Y.Z` is not for these systems: it carries the ICF node, a handler on `if_http_extension` and a BSP, none of which exists on ABAP Cloud.
+S/4 Public Cloud supports only the ADT abapGit version. Use the standard installation process with [abapGit for Eclipse](https://eclipse.abapgit.org/), and pull the branch `cloud` of abap2UI5. abapGit reads its `src/` folder, which holds only what ABAP Cloud can import: classes, interfaces, one table, the HTTP service of step 3 and the IAM objects of step 5. A release tag `X.Y.Z` is not for these systems. What each branch carries, and why the branch `cloud` has no release tags, is on [Deployment Scenarios](/configuration/installation#frontend-branches).
 
 ::: warning **Two choices you cannot change later without relinking**
 **Folder logic must be `PREFIX`.** It is what `.abapgit.xml` declares, and the repository's package tree is built for it.
@@ -69,7 +67,7 @@ Now you'll see that all artifacts are active:
 
 ## 3. Set Up the HTTP Service
 
-The branch `cloud` of [abap2UI5](https://github.com/abap2UI5/abap2UI5/tree/cloud) brings the HTTP service `Z2UI5` (`/sap/bc/http/sap/z2ui5`), its handler `Z2UI5_CL_UI5_ICF_HANDLER` and the IAM objects around it, an IAM app and a business catalog: open the service URL and the start page of abap2UI5 appears. A service of your own takes a handler class of your own ([ABAP Cloud](/configuration/abap_cloud#the-handler)).
+There is nothing to create: the pull brought the HTTP service `Z2UI5` and its handler `Z2UI5_CL_UI5_ICF_HANDLER`. Open the service in ADT and follow its URL, `/sap/bc/http/sap/z2ui5`: the start page of abap2UI5 appears, with *ABAP for Cloud* ticked. A service of your own - another path, another authorization - takes a handler class of your own ([ABAP Cloud](/configuration/abap_cloud#the-handler)).
 
 **Important:** In S/4 Public Cloud, accessing the HTTP endpoint needs `S_DEVELOP` authorization. This is the quickest way to test in development environments, but makes the scenario unfit for production.
 
@@ -79,7 +77,7 @@ For production, finish the app deployment and tile configuration in the steps be
 
 Up to here the HTTP service is enough — you can open it and use abap2UI5 with a developer role. Deploying the app is what makes it reachable for **business users**, through a Launchpad tile.
 
-ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with the [SAP Fiori Tools](https://marketplace.visualstudio.com/items?itemName=SAPSE.sap-ux-fiori-tools-extension-pack) extension pack instead.
+ADT abapGit cannot import a UI5 app (BSP), so this step runs from SAP Business Application Studio, or from VS Code with the [SAP Fiori Tools](https://marketplace.visualstudio.com/items?itemName=SAPSE.sap-ux-fiori-tools-extension-pack) extension pack.
 
 1. Clone the branch `cloud` of abap2UI5. Its folder `app` is the app as a Fiori project: one view with one `z2ui5.embed.Container` that loads the frontend from the HTTP service at run time, so an abap2UI5 update needs no new deployment of the app. Its cost: the frontend is fetched from the HTTP service on every page load.
 
@@ -87,38 +85,50 @@ ADT abapGit cannot import a UI5 app (BSP), so this step runs from VS Code with t
    git clone --branch cloud --single-branch https://github.com/abap2UI5/abap2UI5.git
    ```
 
-2. In the `app` folder, open the Fiori **Application Info** page and add a **deployment configuration** pointing at your system. Keep the target package name short here too.
-3. Add a **Launchpad configuration** in the same place. It writes the descriptors that let a tile start the app; pick the semantic object and action that suit your scenario.
-4. Deploy.
+   ::: warning **Deploy `app`, not `app_source`**
+   The branch carries the whole repository, so a folder `app_source` sits next to `app`. It is the source of the BSP for Standard ABAP and posts to the ICF node `/sap/bc/z2ui5`, which does not exist on ABAP Cloud.
+   :::
+
+2. In the `app` folder, run `npm install`, then open the Fiori **Application Info** page and add a **deployment configuration** pointing at your system. Name the app `Z2UI5`: that is the UI5 app the IAM app of step 5 names. Keep the target package name short here too.
+3. Deploy.
+
+A **Launchpad configuration** is not needed. The `manifest.json` of the app already carries the inbound a tile starts it with: `z2ui5-display`, semantic object `z2ui5`, action `display`.
 
 ::: tip **Where the deployed app sends its requests**
 Only the *separately deployed* app needs this — when the backend serves the page itself, it tells the frontend to post back to the same URL.
 
-The app of the branch `cloud` ships `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path an HTTP service with ID `Z2UI5` is published under. If you created the service under a **different ID**, change that entry in `manifest.json` to match. Otherwise the POSTs go to a service that does not exist. The app then fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
-
-The BSP `Z2UI5` that `main` brings for on-premise systems uses the SICF path `/sap/bc/z2ui5` instead.
+The app of the branch `cloud` ships `sap.app.dataSources.http.uri` as `/sap/bc/http/sap/z2ui5`, the path the HTTP service `Z2UI5` is published under. If you use a service of your own under a **different ID**, change that entry in `manifest.json` to match. Otherwise the POSTs go to a service that does not exist. The app then fails with a `403 ICFEUCONFORBIDDEN` (UCON) error, which does not say which URL it was.
 :::
 
-::: tip **Coming from the frontend repository**
-Until 2026-11-17 the HTTP service, its handler, the IAM objects and the app came from the branches `cloud`, `cloud_v2` and `cloud_new` of a second repository, abap2UI5/frontend, which is retired. If an abapGit repository on your system still points at one of them, remove it from abapGit **without deleting its objects**, then pull the branch `cloud` of abap2UI5. The HTTP service and the IAM objects keep their names; the handler is `Z2UI5_CL_UI5_ICF_HANDLER` from then on, and the class `Z2UI5_CL_LP_HANDLER` can be deleted afterwards.
-:::
+If an abapGit repository on your system still points at abap2UI5/frontend, where the service and the app came from before 1.151.0, see [Coming from the frontend repository](/configuration/installation#frontend-branches).
 
 ## 5. Give Business Users Access (Optional)
 
-Opening the HTTP service directly works because a developer has `S_DEVELOP`. A business user has not, so the app has to be reached through a tile — which means one chain of objects, each published locally before the next one can see it:
+Opening the HTTP service directly works because a developer has `S_DEVELOP`. A business user has not, so the app has to be reached through a tile — which means one chain of objects:
 
-**LADI → IAM App → Business Catalog → Business Role → Space, Page, Tile**
+**App with its inbound → IAM App → Business Catalog → Business Role → Space, Page, Tile**
 
-1. **Launchpad App Descriptor Item (LADI)** — create it and add the navigation parameters naming the app to start.
+The pull brought the middle of that chain, so only its ends are left to do:
 
-   ::: warning **The `id` has to be UPPERCASE**
-   A lower-case `id` is rejected, and the form editor may refuse to save without making clear why. Use *Open With → Source Editor* to edit the descriptor directly.
-   :::
+| Object | Name | Where it comes from |
+|---|---|---|
+| The app and its inbound `z2ui5-display` | `Z2UI5` | deployed in step 4 |
+| IAM app, with the HTTP service `Z2UI5` in it | `Z2UI5_IAM_EXT` | the pull |
+| Business catalog, with the IAM app assigned | `Z2UI5_BC` | the pull |
+| Business role | yours | you |
+| Space, page, tile | yours | you |
 
-2. **IAM App** — create one, include the **HTTP service**, add the LADI from step 1, and publish locally.
-3. **Business Catalog** — link the IAM App to it and publish locally.
-4. **Business Role** — add the business catalog to a role in the ABAP Launchpad.
-5. **Space and page** — create them and place the tile, so the user has somewhere to click.
+1. **IAM app and business catalog** — open `Z2UI5_IAM_EXT` and `Z2UI5_BC` in ADT and check that both are active. If the catalog is not offered in the next step, use *Publish Locally* on the IAM app first and on the catalog second: each object has to be published before the next one can see it.
+2. **Business Role** — add the business catalog `Z2UI5_BC` to a role in the ABAP Launchpad and assign the role to the users.
+3. **Space and page** — create them and place the tile, so the user has somewhere to click.
+
+### A Chain of Your Own
+
+If you deployed the app under another name, or want a catalog of your own, build the same chain yourself: an IAM app that includes the **HTTP service** and names your app, published locally; a business catalog with that IAM app, published locally; then the role, the space and the page as above. Where no deployed app carries the inbound, a **Launchpad App Descriptor Item (LADI)** takes its place, with the navigation parameters naming the app to start.
+
+::: warning **The `id` of a LADI has to be UPPERCASE**
+A lower-case `id` is rejected, and the form editor may refuse to save without making clear why. Use *Open With → Source Editor* to edit the descriptor directly.
+:::
 
 SAP's tutorial [Integrate List Report into ABAP Fiori Launchpad](https://developers.sap.com/tutorials/abap-environment-integrate-app-into-flp.html) covers the generic mechanics of the IAM app, the business catalog and the business role. The SAP Help page [Launchpad App Descriptor Items](https://help.sap.com/docs/btp/sap-business-technology-platform/launchpad-app-descriptor-items) covers the descriptor item.
 

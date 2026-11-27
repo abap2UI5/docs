@@ -171,7 +171,7 @@ IF client->check_on_navigated( ).
     client->set_session_stateful( ).
   ELSE.
     client->message_box_display( `Locked by another user.` ).
-    client->nav_app_leave( ).
+    client->nav_app_leave( keep_messages = abap_true ).
     RETURN.
   ENDIF.
 

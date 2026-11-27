@@ -137,7 +137,7 @@ mechanics differ:
 ## A 7.02 System
 
 Below 7.50 the installation is the `702` branch - the same framework, its
-syntax rewritten by abaplint on every push - and the tag to pull is
+syntax rewritten by abaplint - and the tag to pull is
 `X.Y.Z-702` ([Downporting](/advanced/downporting)). What differs in the
 transport:
 

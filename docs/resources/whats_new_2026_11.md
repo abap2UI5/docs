@@ -32,7 +32,7 @@ first three items.
   `standard_new`, `cloud`, ...), remove it from abapGit **without deleting
   its objects**, then pull abap2UI5. The old handler `Z2UI5_CL_LP_HANDLER` is
   named by nothing afterwards and can be deleted. See
-  [Fiori Launchpad](/configuration/launchpad#coming-from-the-frontend-repository).
+  [Fiori Launchpad](/configuration/installation#frontend-branches).
 - [ ] **ABAP Cloud: pull the branch `cloud`.** It is generated from `main` on
   every push and carries the HTTP service, its handler, the IAM objects and the
   app as a Fiori project in `app/`. It replaces the branch `cloud_new` of the

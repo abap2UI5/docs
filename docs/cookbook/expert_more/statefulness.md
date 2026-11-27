@@ -23,7 +23,7 @@ For the small set of cases where a sticky backend session is needed — classic 
 
 No work process is pinned, no enqueue is held, no `SET/GET` parameters survive. This is the recommended default for productive apps.
 
-The app drafts do not pile up. On every save the framework deletes the older drafts of the same app and keeps the newest two, the user exit field `draft_keep_per_chain` ([User Exits](/advanced/extensibility/user_exits)); the drafts that Back, a popup, an [app state](/cookbook/event_navigation/navigation/app_state) link or a route restore still need are never deleted this way. A [timer](/cookbook/event_navigation/timer) tick that changes nothing writes no draft at all.
+The app drafts do not pile up. On every save the framework deletes the older drafts of the same app and keeps the newest two, the user exit field `draft_keep_per_chain` ([User Exits](/advanced/extensibility/user_exits)); the drafts that Back, a popup, an [app state](/cookbook/event_navigation/navigation/app_state) link or a route restore still need are never deleted this way. A [timer](/cookbook/browser_interaction/timer) tick that changes nothing writes no draft at all.
 
 ## Stateful Sessions
 For private and on-premise systems, you can switch a running app to stateful mode. The same work process then handles every subsequent roundtrip of *this* user, and ABAP globals, locks, and open RFC connections survive between events:

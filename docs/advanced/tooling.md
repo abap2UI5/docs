@@ -129,6 +129,10 @@ catalogs, the view-chain layout — in one install:
 /plugin install abap2ui5@abap2ui5
 ```
 
+For GitHub Copilot the same bundle is the Copilot plugin; the install command,
+and the one for the skills alone, are on
+[AI Setup: The Recommended Path](/advanced/ai_path#step-1-give-the-assistant-the-knowledge-and-the-tools).
+
 [MCP Server](/advanced/mcp_server) has the whole of it: what MCP means here,
 the setup levels and every tool.
 
