@@ -78,11 +78,12 @@ today, and its `src/99` still carries the `pop` and `demo` names it started
 with. abap2UI5-ext does the same with the objects that left the framework.
 
 ::: tip The segment can reach the frontend too
-For the two custom-control repositories the segment also names the BSP and the
-resourceRoot it is served under. `cci` ships the BSP `Z2UI5_CCI` under the root
-`z2ui5_cci`. `ccc` ships `Z2UI5_CCC` under `z2ui5_ccc`. abap2UI5 reserves both
-roots in its `manifest.json`, which is what makes those BSPs loadable without
-patching any framework file. The two differ in the last letter only. A typo in a
+For the two custom-control repositories the segment also names the
+resourceRoot of their controls. `cci` loads under the root `z2ui5_cci`, served
+by the abap2UI5 endpoint out of the add-on's classes. `ccc` ships the BSP
+`Z2UI5_CCC` under `z2ui5_ccc`. abap2UI5 reserves both roots in its
+`manifest.json`, which is what makes those controls loadable without patching
+any framework file. The two differ in the last letter only. A typo in a
 view's `xmlns:` shows only as a failed module request in the browser console. So
 when a custom control does not render, check that letter first.
 :::
@@ -132,7 +133,7 @@ ABAP object at all:
 |---|---|
 | Module IDs | `z2ui5/core/Server`, `z2ui5/model/formatter` |
 | Custom control XML namespace | `xmlns:z2ui5="z2ui5.cc"` → `z2ui5/cc/<Name>` |
-| Reserved sibling roots | `z2ui5_cci` and `z2ui5_ccc`, each served from its own BSP (see above) |
+| Reserved sibling roots | `z2ui5_cci` (served by the endpoint) and `z2ui5_ccc` (served by its BSP), see above |
 
 Renaming the ABAP side does not touch any of these — they stay `z2ui5` in every
 installation, renamed or not. A renamed BSP keeps the UI5 identity as well: the
@@ -235,6 +236,13 @@ The workflow runs `abaplint --rename` with the checked-in configuration
 **Pull the one that fits your system with abapGit** for a parallel installation
 next to the original. For ABAP Cloud see [ABAP Cloud](#abap-cloud-and-7-02)
 below.
+
+**Rename the add-ons with the same name.** An add-on with a `build-rename`
+workflow of its own, such as custom-controls, renames every reference to
+abap2UI5 along, so its branch `rename_<name>` runs on the abap2UI5 renamed with
+that name. The renamed endpoint asks for the community controls under its own
+prefix as well: `zmyui5_cl_cci_bundle` in `ZMYUI5`, `/ca2ui5/cl_cci_bundle` in
+`/CA2UI5/`.
 
 To upgrade an installation later, sync your fork with upstream and re-run the
 workflow with the same name. The branches are updated to the current state;

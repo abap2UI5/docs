@@ -50,6 +50,10 @@ SAP Build Work Zone needs these additional properties to route requests correctl
 
 After that, the tile opens your abap2UI5 app inside the Work Zone shell; the same content is also picked up by [SAP Mobile Start](/configuration/mobile_start).
 
+### Custom Controls
+
+The destination reaches one path of the backend, `/sap/bc/z2ui5`, so a control works in Work Zone only when that endpoint serves it. The controls of the [custom-controls](https://github.com/abap2UI5-addons/custom-controls) add-on do: the endpoint answers them out of the add-on's classes (`?z2ui5-bundle=cci`), with no BSP and no second destination. Pull an add-on version without the BSP `Z2UI5_CCI` and an abap2UI5 version that serves `?z2ui5-bundle=cci`. Controls served by a BSP of their own, such as `Z2UI5_CCC` from [custom-controls-customer](https://github.com/abap2UI5-addons/custom-controls-customer), are not under that path and do not load behind the destination ([Custom Controls](/advanced/extensibility/custom_control)).
+
 ## Background
 The steps above are complete on their own. The article series they come from has a screenshot of every dialog:
 - [Installation & Configuration of BTP](https://www.linkedin.com/pulse/abap2ui5-integration-sap-business-technology-platform-13-installation-lf1re/)
