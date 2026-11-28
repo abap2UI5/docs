@@ -320,7 +320,7 @@ export function parseInterface(text, { memberNotes = false } = {}) {
         const def = /^(.*?)\s+DEFAULT\s+(.+)$/i.exec(rest);
         if (def) { dflt = def[2].trim(); rest = def[1]; }
         // a plain comment standing before a parameter is a note on THAT
-        // parameter (`_bind` marks `view` and `custom_mapper` obsolete this way)
+        // parameter (`_bind` marked `view` and `custom_mapper` obsolete this way)
         const noteText = takeNote().join(' ').replace(/\s+/g, ' ').trim();
         const entry = {
           name,
