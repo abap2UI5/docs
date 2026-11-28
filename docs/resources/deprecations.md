@@ -79,6 +79,7 @@ as data, for tools:
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, 1.151.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | deprecated 1.143.0, **removed**, 1.152.0 |
+| `z2ui5_if_ui5_llm`, `z2ui5_cl_ui5_llm` (`create_claude( )`, `create_openai( )`, `create_local( )`, `guide( )`), `z2ui5_cx_ui5_llm` | `z2ui5_cl_agent_llm=>create( )` of the [agent add-on](https://github.com/abap2UI5-addons/abap-agent-runtime) | **removed**, 1.152.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
 | the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
 | `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |

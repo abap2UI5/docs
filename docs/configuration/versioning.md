@@ -41,7 +41,6 @@ The released API is the package `src/02`, ten objects:
 | `z2ui5_cl_ui5_http_handler` | the handler your ICF handler class calls |
 | `z2ui5_cl_ui5_view_builder` | the view builder |
 | `z2ui5_cl_ui5_test` | the test harness that drives an app from ABAP Unit, one roundtrip per call |
-| `z2ui5_if_ui5_llm`, `z2ui5_cx_ui5_llm`, `z2ui5_cl_ui5_llm` | the language model interface |
 
 A normalized snapshot of this package is compared on every pull request, so a
 change to it is a deliberate decision rather than a side effect, and the
