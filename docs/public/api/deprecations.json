@@ -76,9 +76,10 @@
     {
       "name": "_event_client",
       "kind": "method",
-      "status": "deprecated",
+      "status": "removed",
       "replacement": "follow_up_action( )",
-      "since": "1.143.0"
+      "since": "1.152.0",
+      "note": "deprecated since 1.143.0"
     },
     {
       "name": "_bind_edit",
