@@ -149,13 +149,13 @@ function legacyFragments() {
     if (md.includes('This page still shows the previous view builder')) continue;
     for (const m of md.matchAll(/^```abap\b[^\n]*\n([\s\S]*?)^```/gm)) {
       const code = m[1];
-      /* The other fluent API in this documentation. `z2ui5_cl_ui5_ajson` chains
+      /* The other fluent API in this documentation. `z2ui5_cl_ui5_ajs` chains
        * the same way and its verbs are its own, so a fence building JSON is
        * not a view chain. Listed rather than guessed at from the receiver
        * name: most view fragments here start mid-chain, with no receiver to
        * read, and a heuristic that needs one would skip exactly the fragments
        * this gate exists for. */
-      if (/z2ui5_cl_(?:ui5_)?ajson/i.test(code)) continue;
+      if (/z2ui5_cl_(?:ui5_ajs|ajson)/i.test(code)) continue;
       /* And the abap-cloud-gui add-on's report API: a class inheriting from
        * z2ui5_cl_cgui_report chains `screen->parameter( )` and
        * `list( )->write( )`, which are its verbs, not the view builder's

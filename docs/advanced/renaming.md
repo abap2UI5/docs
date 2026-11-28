@@ -301,7 +301,7 @@ integrated under the `z2ui5` namespace via renaming. So there are no collisions
 if you pull both abap2UI5 and ajson separately into the same system. The
 [mirror-ajson](https://github.com/abap-util/mirror-ajson) repository holds ajson
 renamed to the `zabaputil_` of `abap-util`, and once a month a workflow of the
-framework renames what it needs to `z2ui5_cl_ui5_ajson` and opens a pull request
+framework renames what it needs to `z2ui5_cl_ui5_ajs` and opens a pull request
 with what changed. abapGit bundles ajson under its own namespace the same way.
 So renaming with abaplint also makes it possible to integrate open-source
 projects into each other.
