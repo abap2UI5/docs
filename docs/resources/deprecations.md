@@ -434,7 +434,9 @@ compile. `custom_mapper_back` / `custom_filter_back` on `_bind_edit( )` went
 earlier, [with that method](#bind-edit).
 
 Everything they were reached for is declarative on `_bind( )` now, and each
-replacement has a sample that proves it:
+replacement has a sample that proves it. [JSON and the Shape of the
+Model](/cookbook/model/binding#json-and-the-shape-of-the-model) explains all
+of it in one place:
 
 | What you used AJSON for | What to write instead | Sample |
 |---|---|---|
