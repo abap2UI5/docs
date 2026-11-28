@@ -91,7 +91,7 @@ The table type is rebuilt from the draft on every roundtrip; the app never names
 ## Limits
 
 - **Object references are not serialized.** The walk skips every attribute of type kind `oref` — a `TYPE REF TO` a class or an interface — and the draft carries no objects. Keep a model instance or a helper object out of the attributes, or recreate it in `main( )`.
-- **A type S-RTTI does not know raises `z2ui5_cx_srt`.** Elementary types, structures, tables, references, classes and interfaces are described; any other type kind — one a future ABAP release adds — ends the save with that exception.
+- **A type S-RTTI does not know raises `z2ui5_cx_ui5_srt`.** Elementary types, structures, tables, references, classes and interfaces are described; any other type kind — one a future ABAP release adds — ends the save with that exception.
 - **A dictionary type is resolved by name on the way back.** S-RTTI stores the absolute name of a dictionary type and describes it again on load. So a draft written before a change to the DDIC object is read back against the changed definition, or cannot be read at all.
 - **A reference to a reference** (`MR_REF->*` is itself `TYPE REF TO data`) is reached through its parent; a longer chain is not followed.
 
@@ -99,8 +99,8 @@ An attribute that is declared with a type — a DDIC table type, a `TYPES` of th
 
 ## Integration
 
-S-RTTI plugs directly into the `z2ui5` namespace and installs with abap2UI5 automatically. The classes carry the `z2ui5_cl_srt_*` prefix (for example `z2ui5_cl_srt_datadescr`) and sit in `src/00/02`: a **mirrored copy** for the framework's own serializer, outside the released API, like the [ajson](/technical/tools/ajson) copy next to it. Do not call them from app code — the abap2UI5 linter reports such a call as `non-released-api`; an app that needs S-RTTI itself installs its own copy of the project.
+S-RTTI plugs directly into the `z2ui5` namespace and installs with abap2UI5 automatically. The classes carry the `z2ui5_cl_ui5_srt_*` prefix (for example `z2ui5_cl_ui5_srt_data`; before November 2026 `z2ui5_cl_srt_datadescr`) and sit in `src/00/02`: a **vendored copy** for the framework's own serializer, outside the released API, like the [ajson](/technical/tools/ajson) copy next to it. Do not call them from app code — the abap2UI5 linter reports such a call as `non-released-api`; an app that needs S-RTTI itself installs its own copy of the project.
 
 ## Updates
 
-S-RTTI updates and bug fixes reach abap2UI5 through the [mirror-srtti](https://github.com/abap2UI5/mirror-srtti) repository: once a month a GitHub Actions workflow of the framework refreshes the copy and opens a pull request with the difference.
+S-RTTI updates and bug fixes reach abap2UI5 through the [mirror-srtti](https://github.com/abap-util/mirror-srtti) repository of [`abap-util`](https://github.com/abap-util/abap-util), which renames S-RTTI to the `zabaputil_` prefix and applies its local patches. Once a month a GitHub Actions workflow of the framework takes the classes from there, renames them to its own names (`zabaputil_cl_srt_typedescr` becomes `z2ui5_cl_ui5_srt_type`) and opens a pull request with the difference.
