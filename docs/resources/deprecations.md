@@ -46,9 +46,10 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 The released version is **1.151.0**. An entry marked *next release* is already
 on `main` but not in a release yet - it matters if you pull `main`, and it
-tells you what is coming if you do not. One entry is *next release*:
-[`custom_mapper` / `custom_filter` on `_bind( )`](#bind-custom-mapper-filter),
-removed on `main` and listed under 1.152.0.
+tells you what is coming if you do not. Two entries are *next release*:
+[`custom_mapper` / `custom_filter` on `_bind( )`](#bind-custom-mapper-filter)
+and [`_event_client( )`](#event-client), removed on `main` and listed under
+1.152.0.
 
 The rule behind the statuses: **deprecate first, remove in a later release.**
 The deprecating release marks the name obsolete in the code, lists it here and
@@ -76,7 +77,7 @@ as data, for tools:
 | `window_get_row( )` | the index of the row on screen is its index in the table | **removed**, 1.151.0 |
 | `cs_event-offline_queue` | delete the call - an event without a network ends in the error dialog with *Retry* | **removed**, 1.151.0 |
 | `view_model_update( )`, `nest_view_model_update( )`, `nest2_view_model_update( )`, `popup_model_update( )`, `popover_model_update( )` | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
-| `_event_client( )` | `follow_up_action( )` | 1.143.0 |
+| `_event_client( )` | `follow_up_action( )` | deprecated 1.143.0, **removed**, 1.152.0 |
 | `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, 1.151.0 |
 | `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | deprecated 1.143.0, **removed**, 1.152.0 |
 | `z2ui5_if_ui5_llm`, `z2ui5_cl_ui5_llm`, `z2ui5_cx_ui5_llm` | `z2ui5_cl_agent_llm=>create( )` of the [agent add-on](https://github.com/abap2UI5-addons/abap-agent-runtime) | **removed**, 1.152.0 |
@@ -121,23 +122,8 @@ as data, for tools:
 Marked obsolete in `z2ui5_if_client`, still shipped and still evaluated. Code
 that uses one of these activates on 1.151.0 with nothing else installed.
 
-### `_event_client( )` → `follow_up_action( )`
-
-`follow_up_action( )` is the same call in the same position. It has a
-`RETURNING` parameter, so a call whose result is consumed — the view-attribute
-form — takes the same branch into `get_event_client( )` and emits the identical
-roundtrip-free wire, byte for byte.
-
-```abap
-" old
-)->a( n = `press` v = client->_event_client( val = client->cs_event-popup_close ) )
-
-" new
-)->a( n = `press` v = client->follow_up_action( val = client->cs_event-popup_close ) )
-```
-
-Arguments stay untouched, so this is a pure rename — which is why
-`--fix` does it.
+Nothing is in this state on `main` right now: the last entry,
+[`_event_client( )`](#event-client), is removed for 1.152.0.
 
 ## Moved to abap2UI5-ext: compiles with it installed {#moved-to-abap2ui5-ext}
 
@@ -421,6 +407,28 @@ that is the one `_bind_edit` case `--fix` reports instead of rewriting, because
 removing an argument is not a rename.
 
 See [Data Binding](/cookbook/model/binding) for the full picture.
+
+### `_event_client( )` → `follow_up_action( )` {#event-client}
+
+*Next release* - removed on `main`, not in 1.151.0 yet. Deprecated since
+1.143.0 ([#2715](https://github.com/abap2UI5/abap2UI5/issues/2715)).
+
+`follow_up_action( )` is the same call in the same position. It has a
+`RETURNING` parameter, so a call whose result is consumed — the view-attribute
+form — takes the same branch into `get_event_client( )` and emits the identical
+roundtrip-free wire, byte for byte.
+
+```abap
+" old
+)->a( n = `press` v = client->_event_client( val = client->cs_event-popup_close ) )
+
+" new
+)->a( n = `press` v = client->follow_up_action( val = client->cs_event-popup_close ) )
+```
+
+Arguments stay untouched, so this is a pure rename — which is why
+`--fix` does it. A class of your own that implements `z2ui5_if_client` (a
+wrapper around the client) drops its `_event_client` method.
 
 ### `custom_mapper` / `custom_filter` on `_bind( )` {#bind-custom-mapper-filter}
 
