@@ -46,8 +46,9 @@ What it cannot decide it leaves alone and reports, so a run is safe to repeat.
 
 The released version is **1.151.0**. An entry marked *next release* is already
 on `main` but not in a release yet - it matters if you pull `main`, and it
-tells you what is coming if you do not. No entry carries that mark at the
-moment.
+tells you what is coming if you do not. One entry is *next release*:
+[`custom_mapper` / `custom_filter` on `_bind( )`](#bind-custom-mapper-filter),
+removed on `main` and listed under 1.152.0.
 
 The rule behind the statuses: **deprecate first, remove in a later release.**
 The deprecating release marks the name obsolete in the code, lists it here and
@@ -77,7 +78,7 @@ as data, for tools:
 | `view_model_update( )`, `nest_view_model_update( )`, `nest2_view_model_update( )`, `popup_model_update( )`, `popover_model_update( )` | delete the call | deprecated 1.143.0, **removed**, 1.151.0 |
 | `_event_client( )` | `follow_up_action( )` | 1.143.0 |
 | `_bind_edit( )` | `_bind( )` | deprecated 1.142.0, **removed**, 1.151.0 |
-| `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | 1.143.0 |
+| `_bind( custom_mapper = … custom_filter = … )` | `omit_initial` / `omit_initial_paths` / `json`, or shape it in ABAP | deprecated 1.143.0, **removed**, 1.152.0 |
 | `_bind( view = … )` | omit the parameter | **removed**, 1.144.1 |
 | the view slot as the second `t_arg` entry of `cs_event-control_by_id` | the `view` parameter of `follow_up_action( )` | **removed** |
 | `cs_event-keyboard_set_mode` | the bound `inputMode` property of `z2ui5.cc.InputExt` — see [Soft Keyboard](../cookbook/browser_interaction/soft_keyboard) | **removed**, 1.144.1 |
@@ -136,72 +137,6 @@ roundtrip-free wire, byte for byte.
 
 Arguments stay untouched, so this is a pure rename — which is why
 `--fix` does it.
-
-### `custom_mapper` / `custom_filter` on `_bind( )`
-
-**No AJSON type belongs in a bind call any more.** Both parameters hand your app
-a reference into the bundled AJSON library — a mirrored copy of an external
-project, not a contract abap2UI5 owns. An app implementing
-`z2ui5_if_ajson_mapping` / `_filter` binds itself to whatever that mirror looks
-like today, and a resync of the mirror is free to break it. The same goes for
-`custom_mapper_back` / `custom_filter_back` on
-`_bind_edit( )`, which were inert on top of that and are
-[removed with it](#bind-edit).
-
-Everything they were reached for is declarative on `_bind( )` now, and each
-replacement has a sample that proves it:
-
-| What you used AJSON for | What to write instead | Sample |
-|---|---|---|
-| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_507.clas.abap) |
-| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_509.clas.abap) |
-| Anything else | Shape the value in ABAP before you bind it | — |
-
-```abap
-" old - a filter that drops initial fields
-client->_bind( val = ms_data custom_filter = NEW lcl_skip_initial( ) )
-
-" new
-client->_bind( val = ms_data omit_initial = abap_true )
-
-" or scoped to the fields that need it - an abap_false that MUST reach the
-" client is itself initial, so list the numeric/enum columns and leave booleans
-client->_bind( val                = ms_data
-               omit_initial_paths = VALUE #( ( `PRICE` ) ( `STATE` ) ) )
-```
-
-```abap
-" old - a mapper, so the model carries keys an ABAP structure cannot spell
-client->_bind( val = ms_card custom_mapper = lo_manifest_mapper )
-
-" new - the string already holds the JSON, so splice it in as a node
-client->_bind( val = mv_card_manifest json = abap_true )
-```
-
-#### Nothing to migrate, in practice
-
-Measured across [samples](https://github.com/abap2UI5/samples),
-[samples-controls](https://github.com/abap2UI5/samples-controls) and
-[samples-stack](https://github.com/abap2UI5/samples-stack): not one app class
-passes either parameter or implements either interface, and none ever did in
-their git history. If your own apps are the same — and most are — there is
-nothing to change, only nothing new to write. The linter has no rule for this
-one yet, so `grep -ri "custom_mapper\|custom_filter" src` is how you find out.
-
-#### One gap, and one thing that stays
-
-The single thing `_bind( )` deliberately cannot do is a mapping that differs
-**per direction**. That only ever lived on `_bind_edit( )`, where the `_back`
-halves had stopped being evaluated long before the method was removed, so it
-is not a working feature you would be giving up.
-
-And this is about the *interface*, not the library: AJSON stays. It is the model
-engine behind every roundtrip, and `json = abap_true` is implemented with it.
-What is going away is the leak of a mirrored library into the API your app
-compiles against.
-
-Both parameters are still evaluated and keep working — existing code does not
-break.
 
 ## Moved to abap2UI5-ext: compiles with it installed {#moved-to-abap2ui5-ext}
 
@@ -485,6 +420,78 @@ that is the one `_bind_edit` case `--fix` reports instead of rewriting, because
 removing an argument is not a rename.
 
 See [Data Binding](/cookbook/model/binding) for the full picture.
+
+### `custom_mapper` / `custom_filter` on `_bind( )` {#bind-custom-mapper-filter}
+
+*Next release* - removed on `main`, not in 1.151.0 yet. **No AJSON type
+belongs in a bind call any more.** Both parameters handed your app a reference
+into the bundled AJSON library — a mirrored copy of an external
+project, not a contract abap2UI5 owns. An app implementing
+`z2ui5_if_ajson_mapping` / `_filter` binds itself to whatever that mirror looks
+like today, and a resync of the mirror is free to break it. Obsolete since
+1.143.0, removed after 1.151.0: a call that still passes either one does not
+compile. `custom_mapper_back` / `custom_filter_back` on `_bind_edit( )` went
+earlier, [with that method](#bind-edit).
+
+Everything they were reached for is declarative on `_bind( )` now, and each
+replacement has a sample that proves it:
+
+| What you used AJSON for | What to write instead | Sample |
+|---|---|---|
+| Drop initial fields so the UI5 default applies (`create_empty_filter`) | `omit_initial`, or `omit_initial_paths` for single columns | [`Z2UI5_CL_SMP_APP_507`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_507.clas.abap) |
+| Get a model **node** instead of a quoted string — under keys no ABAP component could be named after | `json = abap_true` | [`Z2UI5_CL_SMP_APP_509`](https://github.com/abap2UI5/samples/blob/main/src/z2ui5_cl_smp_app_509.clas.abap) |
+| Anything else | Shape the value in ABAP before you bind it | — |
+
+```abap
+" old - a filter that drops initial fields
+client->_bind( val = ms_data custom_filter = NEW lcl_skip_initial( ) )
+
+" new
+client->_bind( val = ms_data omit_initial = abap_true )
+
+" or scoped to the fields that need it - an abap_false that MUST reach the
+" client is itself initial, so list the numeric/enum columns and leave booleans
+client->_bind( val                = ms_data
+               omit_initial_paths = VALUE #( ( `PRICE` ) ( `STATE` ) ) )
+```
+
+```abap
+" old - a mapper, so the model carries keys an ABAP structure cannot spell
+client->_bind( val = ms_card custom_mapper = lo_manifest_mapper )
+
+" new - the string already holds the JSON, so splice it in as a node
+client->_bind( val = mv_card_manifest json = abap_true )
+```
+
+#### Little to migrate, in practice
+
+Measured across [samples](https://github.com/abap2UI5/samples),
+[samples-controls](https://github.com/abap2UI5/samples-controls) and
+[samples-stack](https://github.com/abap2UI5/samples-stack): not one app class
+passes either parameter or implements either interface, and none ever did in
+their git history. Three add-ons did and were migrated before the removal:
+sql-console binds its export columns with `omit_initial`, rap-ext no longer
+forwards the two parameters, and custom-controls deleted
+`z2ui5_cl_cci_json_filter`, the empty-value filter apps used to pass - update
+those add-ons together with abap2UI5. The [linter](https://github.com/abap2UI5/linter)
+reports every call that still passes one, or
+`grep -ri "custom_mapper\|custom_filter" src` finds them.
+
+#### One gap, and one thing that stays
+
+The single thing `_bind( )` deliberately cannot do is a mapping that differs
+**per direction**. That only ever lived on `_bind_edit( )`, where the `_back`
+halves had stopped being evaluated long before the method was removed, so it
+is not a working feature you would be giving up.
+
+And this is about the *interface*, not the library: AJSON stays. It is the model
+engine behind every roundtrip, and `json = abap_true` is implemented with it.
+What went is the leak of a mirrored library into the API your app compiles
+against.
+
+A session that was open while the system was updated cannot be restored once:
+its stored state still carries the mapper slot. The user sees the error page a
+single time, and the next start is a fresh app.
 
 ### `z2ui5_if_exit` → `z2ui5_if_ui5_exit`
 

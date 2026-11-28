@@ -92,17 +92,19 @@
       "name": "custom_mapper",
       "kind": "parameter",
       "of": "_bind",
-      "status": "deprecated",
+      "status": "removed",
       "replacement": "omit_initial / omit_initial_paths / json, or shape it in ABAP",
-      "since": "1.143.0"
+      "since": "1.152.0",
+      "note": "deprecated since 1.143.0"
     },
     {
       "name": "custom_filter",
       "kind": "parameter",
       "of": "_bind",
-      "status": "deprecated",
+      "status": "removed",
       "replacement": "omit_initial / omit_initial_paths / json, or shape it in ABAP",
-      "since": "1.143.0"
+      "since": "1.152.0",
+      "note": "deprecated since 1.143.0"
     },
     {
       "name": "view",

@@ -234,8 +234,8 @@ the control needs:
 | `json` | the string already contains JSON |
 | `switch_default_model` | an OData service is the default model of the view |
 
-`custom_mapper` and `custom_filter` still compile but are obsolete — see
-[Deprecations](/resources/deprecations).
+`custom_mapper` and `custom_filter` are removed after 1.151.0 - see
+[Deprecations](/resources/deprecations#bind-custom-mapper-filter).
 
 ### `path`
 
