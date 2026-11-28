@@ -54,7 +54,7 @@ prefix alone would let them collide; the segment is what keeps them apart.
 | Segment | Meaning |
 |---|---|
 | *(none)* — `z2ui5_if_app`, `z2ui5_if_client` | **The public API.** Both interfaces carry no segment on purpose: they are the contract, and a contract does not move between layers |
-| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the released classes and interfaces of `src/02` that carry it (`z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_cl_ui5_test`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, the `z2ui5_*_ui5_llm` objects) |
+| `ui5` | The framework itself — the engine and the shipped apps (`z2ui5_cl_ui5_handler`, `z2ui5_cl_ui5_srv_draft`, `z2ui5_cl_ui5_app_start`), plus the released classes and interfaces of `src/02` that carry it (`z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_cl_ui5_test`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`) |
 | `ui5f` | The UI5 **f**rontend, embedded as ABAP string constants and **generated** — never edit one by hand, the next build overwrites it |
 | `ajson`, `srt` | [ajson](/technical/tools/ajson) and [S-RTTI](/technical/tools/srtti), mirrored from their upstream projects under this namespace |
 | `util`, `pop`, `xml_view` | Frozen, shipped from [abap2UI5-ext](https://github.com/abap2UI5/abap2UI5-ext) — see [Deprecations](/resources/deprecations) |
@@ -108,7 +108,7 @@ hierarchy in your system. For the framework repository that is:
 |---|---|
 | `src/00/` | External libraries — ajson (`src/00/01`), S-RTTI (`src/00/02`) and the framework's own utility classes (`src/00/03`) |
 | `src/01/` | Internal use only — draft persistence, request handling, event routing, binding, and the generated frontend |
-| `src/02/` | The released API — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, `z2ui5_cl_ui5_test`, and `z2ui5_if_ui5_llm` with `z2ui5_cl_ui5_llm` and `z2ui5_cx_ui5_llm` |
+| `src/02/` | The released API — `z2ui5_if_app`, `z2ui5_if_client`, `z2ui5_cl_ui5_http_handler`, `z2ui5_cl_ui5_view_builder`, `z2ui5_if_ui5_exit`, `z2ui5_if_ui5_monitor`, and `z2ui5_cl_ui5_test` |
 | `src/03/` | The service — the ICF node `/sap/bc/z2ui5`, its handler `z2ui5_cl_ui5_icf_handler`, and the BSP `Z2UI5` for the launchpad. The branch `cloud` carries another package in its place ([Deployment Scenarios](/configuration/installation#frontend-branches)) |
 
 The package a class sits in is the honest answer to "may I use this?": `src/02`

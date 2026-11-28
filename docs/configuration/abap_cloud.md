@@ -131,9 +131,9 @@ a custom theme on another host ([Theme](/configuration/setup/theme)).
 
 ## Outbound HTTP
 
-The framework's outbound HTTP - `z2ui5_cl_ui5_util_http` and through it the
-language model providers of `z2ui5_cl_ui5_llm` (`create_claude( )`,
-`create_openai( )`) - uses `CL_WEB_HTTP_CLIENT_MANAGER` on ABAP Cloud. The
+The framework's outbound HTTP - `z2ui5_cl_ui5_util_http`, which the
+[HTTP connector](https://github.com/abap2UI5-addons/connector-http) calls -
+uses `CL_WEB_HTTP_CLIENT_MANAGER` on ABAP Cloud. The
 `destination` parameter is read in three ways:
 
 | `destination` | What the framework creates |

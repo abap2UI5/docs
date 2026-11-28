@@ -107,6 +107,27 @@
       "note": "deprecated since 1.143.0"
     },
     {
+      "name": "z2ui5_if_ui5_llm",
+      "kind": "interface",
+      "status": "removed",
+      "replacement": "z2ui5_cl_agent_llm=>create( ) of the agent add-on (https://github.com/abap2UI5-addons/abap-agent-runtime)",
+      "since": "1.152.0"
+    },
+    {
+      "name": "z2ui5_cl_ui5_llm",
+      "kind": "class",
+      "status": "removed",
+      "replacement": "z2ui5_cl_agent_llm=>create( ) of the agent add-on (https://github.com/abap2UI5-addons/abap-agent-runtime)",
+      "since": "1.152.0"
+    },
+    {
+      "name": "z2ui5_cx_ui5_llm",
+      "kind": "class",
+      "status": "removed",
+      "replacement": "z2ui5_cl_agent_llm=>create( ) of the agent add-on (https://github.com/abap2UI5-addons/abap-agent-runtime)",
+      "since": "1.152.0"
+    },
+    {
       "name": "view",
       "kind": "parameter",
       "of": "_bind",
