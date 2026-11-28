@@ -279,7 +279,8 @@ The bound string already **contains JSON**. It is put into the model as a
 node, not sent as a quoted string. This is for a control property that needs
 an object no typed ABAP value can be, such as the manifest of a
 `sap.ui.integration` card, whose keys (`sap.app`, `sap.card`) are not valid
-ABAP field names. It works in one direction only, from ABAP to the browser.
+ABAP field names. It works in one direction only, from ABAP to the browser. See
+[Compose the JSON in ABAP](#compose-the-json-in-abap).
 
 ### `switch_default_model`
 
@@ -364,6 +365,110 @@ raw model path:
 
 See [Formatter](/cookbook/model/formatter) for the full example with
 `formatOptions`, `constraints`, and read-only display variants.
+
+## JSON and the Shape of the Model
+
+The framework writes the model from the ABAP value itself: a structure becomes
+an object, a table an array, and every key is the component name in upper case
+(`/MS_CHART/BORDER_WIDTH`). There is no hook that renames a key or drops one on
+the way out - the `custom_mapper` and `custom_filter` of earlier releases are
+[removed](/resources/deprecations#bind-custom-mapper-filter). When a control
+needs another shape, pick the first row that fits:
+
+| The control needs | Write |
+|---|---|
+| its own default where a field is initial | `omit_initial = abap_true`, or `omit_initial_paths` for some fields |
+| keys in `camelCase` (`borderWidth`) | a control that converts the names itself, or compose the JSON |
+| keys no ABAP name can carry (`sap.app`), or one object in one property | compose the JSON and bind it with `json = abap_true` |
+| to send a value back to ABAP | a plain field, structure or table, under its upper-case names |
+
+### Leave Initial Fields Out
+
+An ABAP field always has a value, so without a flag every field reaches the
+browser as `""`, `0` or `false`, and that value wins over the default of the
+control. With `omit_initial` an initial field is left out of the model, and
+the control falls back to its own default:
+
+```abap
+)->a( n = `config` v = client->_bind( val          = ms_config
+                                      omit_initial = abap_true ) )
+```
+
+The rows of a table always stay. A row whose fields are all initial arrives
+as an empty object, so the row numbers in the browser keep matching the ABAP
+table and an edit is written back into the right row.
+
+The flip side: a `0`, an empty string or `abap_false` cannot be sent this way,
+because each of them is initial. Two ways around it:
+
+- `omit_initial_paths` leaves out only the fields it lists - name the numeric
+  and enum fields and leave the booleans alone.
+- A setting whose default in the control is `true` can be typed as text
+  instead of `abap_bool`: `` `true` `` or `` `false` ``, empty for the default.
+  Only the empty string is initial, so `` `false` `` reaches the control. The
+  controls of [custom-controls](https://github.com/abap2UI5-addons/custom-controls)
+  type such settings this way.
+
+### Keys in camelCase
+
+Upper-case keys are what every binding path in abap2UI5 reads
+(`{/MS_ROW/NAME}`), so a standard UI5 control never sees the difference. Only
+a control that takes a whole configuration object in one property reads the
+keys itself - a chart library, a JavaScript widget. The controls of
+custom-controls turn `BORDER_WIDTH` into `borderWidth` before they hand the
+object on, so bind the structure with `omit_initial` and nothing else. A
+custom control of your own does the same in its property setter, or the app
+composes the JSON, as below.
+
+### Compose the JSON in ABAP
+
+When the keys cannot be ABAP names at all, or a property must receive an
+object in one piece, keep the JSON in a `string` attribute and bind it with
+`json = abap_true`. The manifest of a `sap.ui.integration` card is the typical
+case: its keys are `sap.app` and `sap.card`, and UI5 reads a manifest that
+arrives as a string as a URL.
+
+```abap
+" PUBLIC SECTION
+DATA mv_manifest TYPE string.
+
+" in main( ), before the view is built - escape what the user can type
+DATA(lv_title) = replace( val  = replace( val = mv_title sub = `\` with = `\\` occ = 0 )
+                          sub  = `"`
+                          with = `\"`
+                          occ  = 0 ).
+mv_manifest = |\{"sap.app":\{"id":"my.card","type":"card"\},|
+           && |"sap.card":\{"type":"List","header":\{"title":"{ lv_title }"\}\}\}|.
+
+" in the view
+)->a( n = `manifest` v = client->_bind( val = mv_manifest json = abap_true ) )
+```
+
+What the flag does and does not do:
+
+- The string is parsed on the way out. One that does not parse raises an
+  error in the roundtrip instead of reaching the browser as broken JSON.
+- Escape every value you put into the text: a backslash and a quote as shown,
+  and a line break as `\n` when the value can hold one.
+  [`Z2UI5_CL_SMPS_APP_489`](https://github.com/abap2UI5/samples-stack/blob/main/src/07/z2ui5_cl_smps_app_489.clas.abap)
+  is a complete writer.
+- It works in one direction only, from ABAP to the browser. What a control
+  changes in such a property stays in the browser and is never written back
+  into the attribute.
+- It needs a `string` attribute. A structure or a table bound with
+  `json = abap_true` is refused when the view is built. On a single cell
+  (`tab` / `tab_index`) the flag has no effect - whether a value holds JSON is
+  decided on the bind of the table.
+
+### Values That Come Back
+
+Binding in both directions works for the model the framework wrote: a field,
+a structure or a table, under upper-case keys. If a control has to send a
+value back to ABAP, bind that value as a plain attribute. If it can only
+report an object with keys of its own, let it raise an event and read the
+argument in the handler - [JSON is built and read by
+hand](/resources/deprecations#json-is-built-and-read-by-hand) shows how, and
+where that approach ends.
 
 ## Validation with `valueState`
 
